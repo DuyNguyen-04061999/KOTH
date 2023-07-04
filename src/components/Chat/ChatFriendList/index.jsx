@@ -36,9 +36,10 @@ export default function ChatFriendList() {
   const { width, height } = useWindowDimensions();
   const [searchFeild, setSearchFeild] = useState("");
   const { friendList } = useSelector((state) => state.chatReducer);
+  console.log(friendList);
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
-  const filterFriend = [];
+  // const filterFriend = [];
   const handleChangeSearchChat = (e) => {
     setSearchFeild(e.target.value);
   };
@@ -68,8 +69,9 @@ export default function ChatFriendList() {
   const renderListFriend1 = () => {
     return (
       <>
-        {filterFriend && filterFriend?.length > 0 ? (
-          filterFriend.filter().map((e, index) => {
+        {friendList && friendList?.length > 0 ? (
+          friendList.map((e, index) => {
+            console.log(e);
             return (
               <Box
                 key={index}
@@ -86,11 +88,11 @@ export default function ChatFriendList() {
               >
                 <Box>
                   <img
-                    src={images.Aa}
+                    src={e.userAccount.accountAvatar}
                     alt="..."
                     width={45}
                     height={45}
-                    style={{ borderRadius: "15%" }}
+                    style={{ borderRadius: "50%" }}
                     className="m-2"
                   />
                 </Box>
@@ -104,7 +106,7 @@ export default function ChatFriendList() {
                         fontWeight: "bolder",
                       }}
                     >
-                      {e.userInfo.username}
+                      {e.userName}
                     </h6>
                   </Box>
                 </Box>
@@ -153,16 +155,16 @@ export default function ChatFriendList() {
                 className="ms-2 me-2"
               />
               <Box display={"flex"} flexDirection={"column"}>
-                <h6 style={{ color: "#535f92", fontWeight: "bolder" }}>
+                <h6 style={{ color: "#535f92", fontWeight: "bolder",  }}>
                   {e?.userName}
                 </h6>
-                <span style={{ color: "#605b80" }}>
+                <span style={{ color: "#605b80", fontWeight:"500" }}>
                   {e.receiveMessages.map(e_m => e_m.messageContent)}
                 </span>
               </Box>
             </Box>
             <Box>
-              <span className="ms-2" style={{ color: "#535f92" }}>
+              <span className="ms-2" style={{ color: "#535f92", fontWeight:"500" }}>
                 {moment(e?.createdAt).format("HH:mm")}
               </span>
             </Box>
