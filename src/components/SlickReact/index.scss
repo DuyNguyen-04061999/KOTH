@@ -1,0 +1,14 @@
+.box-content{
+    color: wheat;
+    .box-banner{
+        color: wheat;
+        .img-zoom{
+            display: block;
+                  transition: all 0.3s;
+                  transform: scale(1);
+                  &:hover{
+                    transform: scale(1.1);
+                  }
+        }
+    }
+}

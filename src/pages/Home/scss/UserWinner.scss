@@ -1,0 +1,251 @@
+.userWinner {
+  padding: 0.5rem;
+}
+.userWinner {
+  .title {
+    // background-image: url(../../../assets/imagesLayout/popuptext.png);
+    // background-repeat: no-repeat;
+    // background-size: contain;
+    margin-bottom: 10px;
+    img {
+      width: 32px;
+      height: 22px;
+      margin-right: 5px;
+    }
+    h1 {
+      color: #00ffe9;
+      font-family: "NextBold";
+      text-transform: uppercase;
+      margin-bottom: 0px;
+      position: relative;
+      filter: drop-shadow(-1px 1px 0 #f027ff) drop-shadow(0px 0px 0 #f027ff)
+        drop-shadow(0px 0px 0 #f027ff) drop-shadow(0 0px 0 #f027ff);
+    }
+  }
+  .table {
+    .box-fa {
+      color: white;
+      border-radius: 15px 15px 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 200px;
+      .oneSt {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        img {
+          width: 280px;
+        }
+        .text-medal {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .title {
+            margin-bottom: 5px;
+            h3 {
+              font-weight: 500;
+              margin-top: 20px;
+              margin-bottom: 0px;
+            }
+            img {
+              border-radius: 15px;
+            }
+          }
+          .name {
+            margin-bottom: 15px;
+            h2 {
+              font-weight: 700;
+              padding: 0px !important;
+              margin: 0 !important;
+              color: aqua;
+            }
+          }
+          .game {
+            margin-bottom: 10px;
+            img {
+              width: 200px;
+              border-radius: 15px;
+            }
+          }
+          .total {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            span {
+              padding: 0px 10px;
+              background-color: #393856;
+              border-radius: 5px;
+              font-weight: 700;
+              color: white;
+              img {
+                width: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 576px) {
+  .userWinner {
+    .title {
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: url(../../../assets/imagesLayout/Topwinnerlist.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        top: -9px;
+        left: 0;
+      }
+      .group-left {
+        width: 100%;
+        .img-title {
+          // width: 10%;
+          img {
+            width: 20px;
+            height: 15px;
+            margin-right: 5px;
+          }
+        }
+        .text-title {
+          width: 100%;
+          position: relative;
+          &::before {
+            content: "";
+            background-image: url(../../../assets/imagesLayout/popuptext.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 95%;
+            height: 100%;
+          }
+          h1 {
+            margin-left: 10px;
+            color: #00ffe9;
+            font-family: "NextBold";
+            margin-bottom: 0px;
+            box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
+              rgba(0, 255, 233, 1) 0px 30px 60px -30px;
+            filter: drop-shadow(-1px 1px 0 #f027ff)
+              drop-shadow(0px 0px 0 #f027ff) drop-shadow(0px 0px 0 #f027ff)
+              drop-shadow(0 0px 0 #f027ff);
+          }
+        }
+        .btn-all {
+          width: 40px;
+          img {
+            width: 100%;
+            height: 20px;
+          }
+        }
+      }
+    }
+    .table {
+      .box-fa {
+        color: white;
+        border-radius: 15px 15px 0 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 200px;
+        .oneSt {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img {
+            width: 180px;
+          }
+          .on-ho {
+            background-image: url(../../../assets/imagesLayout/framestopwin.png);
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 150px;
+            height: 150px;
+            position: relative;
+            img {
+              width: 70px;
+              height: 70px;
+              left: 27%;
+              top: 29%;
+              position: absolute;
+            }
+          }
+          .text-medal {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            .title {
+              margin-bottom: 5px;
+              h3 {
+                font-weight: 500;
+                margin-top: 20px;
+                margin-bottom: 0px;
+                color: #7379e4;
+              }
+              img {
+                border-radius: 15px;
+              }
+            }
+            .name {
+              margin-bottom: 15px;
+              h2 {
+                font-weight: 700;
+                padding: 0px !important;
+                margin: 0 !important;
+                color: aqua;
+              }
+            }
+            .game {
+              margin-bottom: 5px !important;
+              filter: drop-shadow(1px 0 0 #6e65ea) drop-shadow(-1px 0 0 #6e65ea)
+                drop-shadow(0 1px 0 #6e65ea) drop-shadow(0 -1px 0 #6e65ea);
+              img {
+                width: 100px;
+                border-radius: 0 !important;
+                clip-path: polygon(
+                  0 0,
+                  91% 0,
+                  183% calc(100% - 0px),
+                  calc(100% - 95px) 100%,
+                  0px 90%,
+                  0px 20px
+                );
+              }
+            }
+            .total {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              span {
+                padding: 0px 20px;
+                background-color: #2c184a;
+                border: 1px solid #9e3bc3;
+                border-radius: 5px;
+                font-weight: 500;
+                color: #7379e4;
+                img {
+                  width: 15px;
+                  margin-bottom: 2px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

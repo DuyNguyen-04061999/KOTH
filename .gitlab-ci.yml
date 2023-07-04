@@ -1,0 +1,34 @@
+stages:
+  - build
+  - deploy
+build:
+  stage: build
+  image:
+    name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
+    entrypoint: ['']
+  only:
+    - development
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --cache=true --snapshotMode=redo --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --destination ${CI_REGISTRY_IMAGE}:latest
+    - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} and ${CI_REGISTRY_IMAGE}:latest"
+deploy:
+  stage: deploy
+  image:
+    name: python:3.6
+    entrypoint: ['']
+  only:
+    - development
+  before_script:
+    - apt-get update
+    - apt-get install -y ca-certificates curl
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
+  script:
+    - pip install awscli
+    - aws --version
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set region $AWS_DEFAULT_REGION
+    - ./kubectl --kubeconfig=$KUBE_CONFIG set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+

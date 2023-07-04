@@ -1,0 +1,34 @@
+import React, { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import UnityGameComponent from "../../components/GameManager/UnityGameComponent";
+
+export default function GameDetailPage() {
+  const { id } = useParams();
+  const [fetchGame, setFetchGame] = useState(true);
+  const [game, setGame] = useState(null);
+
+  useEffect(() => {
+    if (fetchGame)
+      axios
+        .get(process.env.REACT_APP_SOCKET_SERVER + `/api/list/${id}`)
+        .then((response) => {
+          if (response?.status === 200) {
+            setGame(response?.data);
+            setFetchGame(false);
+          } else {
+            setFetchGame(false);
+          }
+        });
+  });
+
+  return (
+    <Fragment>
+      {!fetchGame && game ? (
+        <UnityGameComponent GameFiles={game?.GameFiles} />
+      ) : (
+        <>Loading</>
+      )}
+    </Fragment>
+  );
+}

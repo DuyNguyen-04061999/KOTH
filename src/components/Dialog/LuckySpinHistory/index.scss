@@ -1,0 +1,29 @@
+.allMyBestContainerMobile {
+  width: 275px;
+  height: 30px;
+  background-color: #201836;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  div {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}
+.activeButtonMobile {
+  background-color: #69389e;
+  color: white;
+  font-weight: 500;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.passiveButtonMobile {
+  color: #857eae;
+  font-weight: 400;
+  cursor: pointer;
+  font-size: 12px;
+}

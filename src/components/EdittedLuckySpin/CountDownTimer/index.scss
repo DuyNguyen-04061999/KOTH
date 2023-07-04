@@ -1,0 +1,71 @@
+.CountDownContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  button {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    background-color: #361042;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    span {
+      margin-left: 5px;
+      color: white;
+      font-weight: bolder;
+    }
+    img {
+      margin-left: 10px;
+    }
+  }
+  p {
+    color: #9e8ec7;
+    margin-top: 13px;
+  }
+}
+.TimeContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  button {
+    width: 82px;
+    height: 45px;
+    color: white;
+    background-color: #361042;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+  }
+  color: white;
+}
+.SpinButtonPassive {
+  background-image: url("../../../assets/LuckySpin/spinButton.png");
+  width: 308px;
+  height: 52px;
+  border-radius: 3px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.SpinButtonActive {
+  background-image: url("../../../assets/LuckySpin/ActiveSpinButton.png");
+  width: 308px;
+  height: 52px;
+  border-radius: 3px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}

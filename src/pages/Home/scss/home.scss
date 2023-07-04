@@ -1,0 +1,1191 @@
+.home-page {
+  .banner-top {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    .banner-top-item1 {
+      max-width: 100%;
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border: 8px solid #5776e4;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      .btn1 {
+        width: 13%;
+        border: none;
+        bottom: 30%;
+        left: 10%;
+        position: absolute;
+        padding: 8px 17px;
+        border-radius: 10px;
+        color: white;
+        background-color: #36cdff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    }
+    .banner-top-item2 {
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+    .banner-top-item3 {
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      .btn3 {
+        border: none;
+        bottom: 38%;
+        position: absolute;
+        padding: 6px 17px;
+        border-radius: 17px;
+        color: white;
+        background-color: #eb70aa;
+        left: 8%;
+        font-weight: 600;
+      }
+    }
+  }
+  .top-rated-game {
+    .group {
+      .title {
+        padding: 15px 0px;
+        img {
+          margin-right: 5px;
+        }
+        h1 {
+          color: white;
+          margin: 0px;
+          position: relative;
+        }
+      }
+      .card-new-game {
+        display: flex;
+        // padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 15px;
+        .new {
+          padding: 10px 10px 10px 10px;
+          position: relative;
+          margin-right: 20px;
+          .card-item {
+            width: 280px;
+            height: 280px;
+            position: relative !important;
+            padding: 0px !important;
+            border: none;
+            background-color: transparent;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            .box {
+              width: 100%;
+              height: 100%;
+              padding: 0px !important;
+              position: relative;
+              overflow: hidden;
+              img {
+                position: relative;
+                height: auto;
+                object-fit: cover;
+                width: 100%;
+                display: block;
+                transition: all 0.3s;
+                transform: scale(1);
+                &:hover {
+                  transform: scale(1.1);
+                }
+              }
+            }
+           
+          }
+          .theme-pvp {
+            position: absolute;
+            top: -5px;
+            left: -9px;
+            display: flex;
+            align-items: center;
+            height: 25px;
+            border-radius: 8px 8px 8px 0;
+            border: none;
+            font-weight: 600;
+            color: white !important;
+            width: 75px;
+            height: 40px;
+            &::after {
+              content: "";
+              position: absolute;
+              border-left: 10px solid transparent;
+              border-top: 7px solid #32324e;
+              left: 0px;
+              top: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .leaderboard{
+    // padding: 10px !important;
+    .title {
+      padding: 15px 0px;
+      position: relative;
+      .group-left {
+        width: 100%;
+        .img-title {
+          img {
+            margin-right: 5px;
+          }
+          .icon-recomment{
+            width: 20px;
+            height: 16px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+          }
+        }
+        .text-title {
+          width: 100%;
+          position: relative;
+          &::before {
+            content: "";
+            background-image: url(../../../assets/imagesLayout/popuptext.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 65%;
+            height: 65%;
+          }
+          h1 {
+            margin-left: 10px;
+            color: white;
+            font-family: "NextBold";
+            margin-bottom: 0px;
+            position: relative;
+          }
+        }
+        .btn-all {
+          width: 40px;
+          img {
+            width: 100%;
+            height: 20px;
+          }
+        }
+      }
+    }
+    .board{
+      .board-top{
+        .content-board{
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-end;
+          .two-st{
+            .br-two-st{
+              position: relative;
+              .top-name{
+                .text-st{
+                  // position: absolute;
+                  // top: -65px;
+                  // left: 83px;
+                  // display: flex;
+                  // line-height: 1;
+                  h6{
+                    font-weight: 600;
+                    color: white;
+                    margin-bottom: 0 !important;
+                    font-size: 20px;
+                  }
+                  p{
+                    color: white;
+                    font-weight: 500;
+                    font-size: 15px;
+                  }
+                }
+                // .name-win{
+                //   position: absolute;
+                //   top: -20px;
+                //   left: 60px;
+                // }
+                .desc{
+                  // position: absolute;
+                  // top: 70px;
+                  // left: 9px;
+                  // display: flex;
+                  // flex-direction: column;
+                  // align-items: center;
+                  // width: 180px;
+                  .user{
+                    margin: 0 !important;
+                  }
+                  .gold{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    p{
+                      color: yellow;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .one-st{
+            .br-one-st{
+              position: relative;
+              .top-name{
+                .text-st{
+                  // position: absolute;
+                  // top: -65px;
+                  // left: 83px;
+                  // display: flex;
+                  // line-height: 1;
+                  h6{
+                    font-weight: 600;
+                    color: yellow;
+                    margin-bottom: 0 !important;
+                    font-size: 20px;
+                  }
+                  p{
+                    color: yellow;
+                    font-weight: 500;
+                    font-size: 15px;
+                  }
+                }
+                .name-win{
+                  // position: absolute;
+                  // top: -20px;
+                  // left: 60px;
+                }
+                .desc{
+                  // position: absolute;
+                  // top: 70px;
+                  // left: 9px;
+                  // display: flex;
+                  // flex-direction: column;
+                  // align-items: center;
+                  // width: 180px;
+                  .user{
+                    margin: 0 !important;
+                  }
+                  .gold{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    p{
+                      color: yellow;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .three-st{
+            .br-three-st{
+              position: relative;
+              .top-name{
+                .text-st{
+                  // position: absolute;
+                  // top: -65px;
+                  // left: 83px;
+                  // display: flex;
+                  // line-height: 1;
+                  h6{
+                    font-weight: 600;
+                    color: orange;
+                    margin-bottom: 0 !important;
+                    font-size: 20px;
+                  }
+                  p{
+                    color: orange;
+                    font-weight: 500;
+                    font-size: 15px;
+                  }
+                }
+                .name-win{
+                  // position: absolute;
+                  // top: -20px;
+                  // left: 60px;
+                }
+                .desc{
+                  // position: absolute;
+                  // top: 70px;
+                  // left: 9px;
+                  // display: flex;
+                  // flex-direction: column;
+                  // align-items: center;
+                  // width: 180px;
+                  .user{
+                    margin: 0 !important;
+                  }
+                  .gold{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    p{
+                      color: yellow;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .footer {
+    .footer-content {
+      display: flex;
+      align-items: flex-end;
+      margin-top: 30px;
+      justify-content: space-around;
+      .logo-footer {
+        width: 270px;
+        height: auto;
+      }
+      .text-footer {
+        h1 {
+          margin-top: 20px;
+          color: #9ba0ff;
+        }
+      }
+      .coin-content {
+        align-items: center;
+        justify-content: space-around;
+        .coin {
+          display: flex;
+          img {
+            width: 50px;
+            height: auto;
+            margin-left: 10px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+:root {
+  --card-height: 65vh;
+}
+
+@font-face {
+  font-family: "NextBold";
+  src: local("NextBold"),
+    url("../../../assets/font/CynthoNextBold.otf") format("truetype");
+  font-weight: bold;
+}
+
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
+}
+@media only screen and (min-device-width: 576px) and (max-device-width: 992px) {
+  .home-page {
+    .banner-top {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      .card-banner {
+        width: 100%;
+        cursor: pointer;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          padding: 10px 7px 10px 13px;
+        }
+      }
+      .banner-item {
+        padding-left: 17px;
+        padding-right: 17px;
+        img {
+          background-color: unset;
+        }
+      }
+    }
+    .top-rated-game {
+      padding: 10px !important;
+      .group {
+        .title {
+          padding: 5px 0px !important;
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            background-image: url(../../../assets/imagesLayout/Topratedgames.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            top: -8px;
+            left: -10px;
+            z-index: 0;
+            width: 75%;
+            height: 100%;
+          }
+          .group-left {
+            width: 100%;
+            .img-title {
+              img {
+                width: 20px;
+                height: 18px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+              }
+            }
+            .text-title {
+              width: 100%;
+              position: relative;
+              &::before {
+                content: "";
+                background-image: url(../../../assets/imagesLayout/popuptext.png);
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 95%;
+                height: 100%;
+              }
+              h1 {
+                margin-left: 10px;
+                color: white;
+                font-family: "NextBold";
+                margin-bottom: 0px;
+              }
+            }
+            .btn-all {
+              width: 40px;
+              img {
+                width: 100%;
+                height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .icon-animate {
+      animation: gelatine 1s infinite;
+    }
+  }
+  h1.title-text-desktop {
+    margin-left: 10px;
+    font-family: "NextBold";
+    margin-bottom: 0px;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .home-page {
+    .banner-top {
+      padding-top: 0px !important;
+      padding-bottom: 10px !important;
+      .card-banner {
+        width: 100%;
+        cursor: pointer;
+        .img {
+          border: none;
+          background-color: unset;
+          padding-bottom: 17px;
+          .bigbanner {
+            position: relative;
+            width: auto;
+            height: auto;
+            img {
+              object-fit: cover;
+              // border: 2px solid #5776e4;
+              // padding: 10px 7px 10px 13px;
+            }
+            .timepicker {
+              position: absolute;
+              color: white;
+              top: 60%;
+              left: 14%;
+              display: flex;
+              line-height: 1;
+              .days {
+                margin: 10px;
+              }
+              .hours {
+                margin: 10px;
+              }
+              .minutes {
+                margin: 10px;
+              }
+              .seconds {
+                margin: 10px;
+              }
+            }
+          }
+        }
+      }
+      .banner-item {
+        padding-left: 17px;
+        padding-right: 17px;
+        // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        img {
+          background-color: unset;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+      }
+    }
+    .top-rated-game {
+      padding: 10px !important;
+      .group {
+        .title {
+          padding: 5px 0px !important;
+          position: relative;
+          .group-left {
+            width: 100%;
+            .img-title {
+              img {
+                width: 20px;
+                height: 18px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+              }
+              .icon-recomment{
+                width: 20px;
+                height: 16px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+              }
+            }
+            .text-title {
+              width: 100%;
+              position: relative;
+              &::before {
+                content: "";
+                background-image: url(../../../assets/imagesLayout/popuptext.png);
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 5px;
+                left: 0;
+                width: 65%;
+                height: 65%;
+              }
+              h1 {
+                margin-left: 10px;
+                color: white;
+                font-family: "NextBold";
+                margin-bottom: 0px;
+              }
+            }
+            .btn-all {
+              width: 40px;
+              img {
+                width: 100%;
+                height: 20px;
+              }
+            }
+          }
+        }
+        .card-new-game {
+          display: flex;
+          // padding-left: 10px;
+          padding-right: 10px;
+          padding-top: 15px;
+          .new {
+            position: relative;
+            margin-right: 1px !important;
+            .card-item {
+              width: 102px !important;
+              height: 102px !important;
+              .box {
+                width: 102px !important;
+                height: 102px !important;
+                position: relative;
+                overflow: hidden;
+                img {
+                  height: auto;
+                  object-fit: cover;
+                  width: 100%;
+                  display: block;
+                  transition: all 0.3s;
+                  transform: scale(1);
+                  &:hover {
+                    transform: scale(1.1);
+                  }
+                }
+              }
+            }
+            .theme-pvp {
+              position: absolute;
+              top: 0px !important;
+              left: -2px !important;
+              display: flex;
+              align-items: center;
+              width: 50px !important;
+              height: 27px !important;
+              border-radius: 8px 8px 8px 0;
+              border: none;
+              font-weight: 600;
+              color: white !important;
+              &::after {
+                content: "";
+                position: absolute;
+                border-left: 10px solid transparent;
+                border-top: 7px solid #32324e;
+                left: 0px;
+                top: 25px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .leaderboard{
+      padding: 10px !important;
+      .title {
+        padding: 5px 0px !important;
+        position: relative;
+        .group-left {
+          width: 100%;
+          .img-title {
+            img {
+              width: 20px;
+              height: 18px;
+              margin-right: 5px;
+              margin-bottom: 5px;
+            }
+            .icon-recomment{
+              width: 20px;
+              height: 16px;
+              margin-right: 5px;
+              margin-bottom: 5px;
+            }
+          }
+          .text-title {
+            width: 100%;
+            position: relative;
+            &::before {
+              content: "";
+              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-repeat: no-repeat;
+              background-size: cover;
+              position: absolute;
+              top: 5px;
+              left: 0;
+              width: 65%;
+              height: 65%;
+            }
+            h1 {
+              margin-left: 10px;
+              color: white;
+              font-family: "NextBold";
+              margin-bottom: 0px;
+            }
+          }
+          .btn-all {
+            width: 40px;
+            img {
+              width: 100%;
+              height: 20px;
+            }
+          }
+        }
+      }
+      .board{
+        .board-top{
+          .content-board{
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            .two-st{
+              .br-two-st{
+                position: relative;
+                .top-name{
+                  .text-st{
+                    position: absolute;
+                    top: -37px;
+                    left: 42px;
+                    display: flex;
+                    h6{
+                      font-weight: 600;
+                      color: white;
+                    }
+                    p{
+                      color: white;
+                      font-weight: 100;
+                    }
+                  }
+                  .name-win{
+                    position: absolute;
+                    top: -10px;
+                    left: 35px;
+                  }
+                  .desc{
+                    position: absolute;
+                    top: 30px;
+                    left: 9px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 82px;
+                    .user{
+                      margin: 0 !important;
+                    }
+                    .gold{
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      p{
+                        color: yellow;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .one-st{
+              .br-one-st{
+                position: relative;
+                .top-name{
+                  .text-st{
+                    position: absolute;
+                    top: -37px;
+                    left: 42px;
+                    display: flex;
+                    h6{
+                      font-weight: 600;
+                      color: yellow;
+                    }
+                    p{
+                      color: yellow;
+                      font-weight: 100;
+                    }
+                  }
+                  .name-win{
+                    position: absolute;
+                    top: -10px;
+                    left: 35px;
+                  }
+                  .desc{
+                    position: absolute;
+                    top: 30px;
+                    left: 9px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 82px;
+                    .user{
+                      margin: 0 !important;
+                    }
+                    .gold{
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      p{
+                        color: yellow;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .three-st{
+              .br-three-st{
+                position: relative;
+                .top-name{
+                  .text-st{
+                    position: absolute;
+                    top: -37px;
+                    left: 42px;
+                    display: flex;
+                    h6{
+                      font-weight: 600;
+                      color: orange;
+                    }
+                    p{
+                      color: orange;
+                      font-weight: 100;
+                    }
+                  }
+                  .name-win{
+                    position: absolute;
+                    top: -10px;
+                    left: 35px;
+                  }
+                  .desc{
+                    position: absolute;
+                    top: 30px;
+                    left: 9px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 82px;
+                    .user{
+                      margin: 0 !important;
+                    }
+                    .gold{
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      p{
+                        color: yellow;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+   
+    .recommend {
+      padding: 10px !important;
+      .top-slider {
+        .title {
+          padding: 5px 0px !important;
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            background-image: url(../../../assets/imagesLayout/Recommendedgames.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            top: -8px;
+            left: -10px;
+            z-index: 0;
+            width: 75%;
+            height: 100%;
+          }
+          .group-left {
+            width: 100%;
+            .img-title {
+              img {
+                width: 20px;
+                height: 15px;
+                margin-right: 5px;
+              }
+            }
+            .text-title {
+              width: 100%;
+              position: relative;
+              &::before {
+                content: "";
+                background-image: url(../../../assets/imagesLayout/popuptext.png);
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 95%;
+                height: 100%;
+              }
+              h1 {
+                margin-left: 10px;
+                color: #00ffe9;
+                font-family: "NextBold";
+                margin-bottom: 0px;
+                box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
+                  rgba(0, 255, 233, 1) 0px 30px 60px -30px;
+                filter: drop-shadow(-1px 1px 0 #f027ff)
+                  drop-shadow(0px 0px 0 #f027ff) drop-shadow(0px 0px 0 #f027ff)
+                  drop-shadow(0 0px 0 #f027ff);
+              }
+            }
+            .btn-all {
+              width: 40px;
+              img {
+                width: 100%;
+                height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .game-type {
+      display: none;
+    }
+    .banner-bot {
+      display: none;
+    }
+    .payment2 {
+      display: none;
+    }
+    .battle {
+      .title {
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          background-image: url(../../../assets/imagesLayout/Recommendedgames.png);
+          background-size: contain;
+          background-repeat: no-repeat;
+          top: -8px;
+          left: -10px;
+          z-index: 0;
+          width: 75%;
+          height: 100%;
+        }
+        .group-left {
+          width: 100%;
+          .img-title {
+            img {
+              width: 20px;
+              height: 15px;
+              margin-right: 5px;
+            }
+          }
+          .text-title {
+            width: 100%;
+            position: relative;
+            &::before {
+              content: "";
+              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-repeat: no-repeat;
+              background-size: cover;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 95%;
+              height: 100%;
+            }
+            h1 {
+              margin-left: 10px;
+              color: #00ffe9;
+              font-family: "NextBold";
+              margin-bottom: 0px;
+              box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
+                rgba(0, 255, 233, 1) 0px 30px 60px -30px;
+              filter: drop-shadow(-1px 1px 0 #f027ff)
+                drop-shadow(0px 0px 0 #f027ff) drop-shadow(0px 0px 0 #f027ff)
+                drop-shadow(0 0px 0 #f027ff);
+            }
+          }
+          .btn-all {
+            width: 40px;
+            img {
+              width: 100%;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
+    .challenge {
+      .title {
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          background-image: url(../../../assets/imagesLayout/Recommendedgames.png);
+          background-size: contain;
+          background-repeat: no-repeat;
+          top: -8px;
+          left: -10px;
+          z-index: 0;
+          width: 75%;
+          height: 100%;
+        }
+        .group-left {
+          width: 100%;
+          .img-title {
+            img {
+              width: 20px;
+              height: 15px;
+              margin-right: 5px;
+            }
+          }
+          .text-title {
+            width: 100%;
+            position: relative;
+            &::before {
+              content: "";
+              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-repeat: no-repeat;
+              background-size: cover;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 95%;
+              height: 100%;
+            }
+            h1 {
+              margin-left: 10px;
+              color: #00ffe9;
+              font-family: "NextBold";
+              margin-bottom: 0px;
+              box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
+                rgba(0, 255, 233, 1) 0px 30px 60px -30px;
+              filter: drop-shadow(-1px 1px 0 #f027ff)
+                drop-shadow(0px 0px 0 #f027ff) drop-shadow(0px 0px 0 #f027ff)
+                drop-shadow(0 0px 0 #f027ff);
+            }
+          }
+          .btn-all {
+            width: 40px;
+            img {
+              width: 100%;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
+    .icon-animate {
+      animation: gelatine 1s infinite;
+    }
+    .coin {
+      padding: 10px;
+
+      .title {
+        // padding: 5px 0px !important;
+        padding-bottom: 1px !important;
+        position: relative;
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   background-image: url(../../../assets/imagesLayout/Topratedgames.png);
+        //   background-size: contain;
+        //   background-repeat: no-repeat;
+        //   top: -8px;
+        //   left: -10px;
+        //   z-index: 0;
+        //   width: 75%;
+        //   height: 100%;
+        // }
+        .group-left {
+          width: 100%;
+          .img-title {
+            img {
+              width: 20px;
+              height: 18px;
+              margin-right: 5px;
+              margin-bottom: 5px;
+            }
+          }
+          .text-title {
+            width: 100%;
+            position: relative;
+            &::before {
+              content: "";
+              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-repeat: no-repeat;
+              background-size: cover;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 95%;
+              height: 100%;
+            }
+            h1 {
+              margin-left: 10px;
+              color: #00ffe9;
+              font-family: "NextBold";
+              margin-bottom: 0px;
+              box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
+                rgba(0, 255, 233, 1) 0px 30px 60px -30px;
+              filter: drop-shadow(-1px 1px 0 #f027ff)
+                drop-shadow(0px 0px 0 #f027ff) drop-shadow(0px 0px 0 #f027ff)
+                drop-shadow(0 0px 0 #f027ff);
+            }
+          }
+          .btn-all {
+            width: 40px;
+            img {
+              width: 100%;
+              height: 20px;
+            }
+          }
+        }
+      }
+      .coin-content {
+        display: flex;
+        justify-content: space-around;
+        // background-color: #29203b;
+        padding: 10px;
+        // box-shadow: rgba(0,0,0,0.35) 0px 5px 15px;
+        .coin {
+          display: flex;
+          align-items: center;
+          img {
+            width: 20px;
+            height: 20px;
+          }
+          span {
+            color: white;
+            margin-left: 5px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+    .footer {
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .logo-footer {
+          width: 150px;
+          height: auto;
+        }
+        .text-footer {
+          h1 {
+            margin-top: 10px;
+            color: #9ba0ff;
+          }
+        }
+        .coin-content {
+          align-items: center;
+          justify-content: space-around;
+          .coin {
+            display: flex;
+            img {
+              width: 30px;
+              height: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+  h1.title-text-desktop {
+    margin-left: 10px;
+    color: white;
+    font-family: "NextBold";
+    margin-bottom: 0px;
+  }
+}
+
+.icon-animate {
+  animation: gelatine 1s infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+@keyframes gelatine {
+  from,
+  to {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+  50% {
+    transform: scale(1.1, 0.9);
+  }
+  75% {
+    transform: scale(0.95, 1.05);
+  }
+}
+
+h1.title-text-desktop {
+  margin-left: 10px;
+  color: white;
+  font-family: "NextBold";
+  margin-bottom: 0px;
+}
+

@@ -1,0 +1,19 @@
+.payment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@media screen and (max-width:"576px") {
+    .payment {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .visa{
+            img{
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

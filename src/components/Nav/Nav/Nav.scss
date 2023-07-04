@@ -1,0 +1,152 @@
+.nav-section {
+  // position: fixed;
+  position: sticky;
+  top: 65px;
+  // top: 97.95px;
+  transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.MuiTypography-root {
+  font-weight: 700 !important;
+  margin-left: 5px !important;
+}
+
+p {
+  margin-bottom: 0 !important;
+  font-weight: 700;
+  text-align: center;
+}
+
+.btn-sign-in {
+  position: relative;
+  background-color: #f624aa;
+  border-radius: 4px;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 5px 15px 5px 15px;
+  &::after {
+    content: "";
+    animation: button-pulse 2s ease-out infinite 1s;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.7, 0.5);
+    background-color: #f624aa;
+    z-index: 0;
+    transition: transform 1s linear;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border-radius: 4px;
+  }
+  span {
+    z-index: 1;
+    border: transparent;
+    position: relative;
+    color: white;
+    font-weight: 500;
+    font-size: 12px;
+  }
+}
+
+.btn-sign-up {
+  position: relative;
+  background-color: #5f61d5;
+  border-radius: 4px;
+  border: none;
+  padding: 5px 15px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  &::after {
+    content: "";
+    animation: button-pulse 2s ease-out infinite 1s;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.7, 0.5);
+    background-color: #5f61d5;
+    z-index: 0;
+    transition: transform 1s linear;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border-radius: 4px;
+  }
+  span {
+    z-index: 1;
+    border: transparent;
+    position: relative;
+    color: white;
+    font-weight: 500;
+    font-size: 12px;
+  }
+}
+
+
+// @media only screen and (min-device-width: 901px) and (max-device-width: 1184px) {
+//   .btn-nav{
+//     display: none;
+//     .btn-sign-in {
+//       position: relative;
+//       background-color: #f624aa;
+//       border-radius: 4px;
+//       border: none;
+//       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+//       max-width: 100px;
+//       min-width: 80px;
+//       height: 40px;
+//       &::after {
+//         content: "";
+//         animation: button-pulse 2s ease-out infinite 1s;
+//         position: absolute;
+//         left: 50%;
+//         top: 50%;
+//         transform: translate(-50%, -50%) scale(0.7, 0.5);
+//         background-color: #f624aa;
+//         z-index: 0;
+//         transition: transform 1s linear;
+//         width: calc(100% + 20px);
+//         height: calc(100% + 20px);
+//         border-radius: 4px;
+//       }
+//       span {
+//         z-index: 1;
+//         border: transparent;
+//         position: relative;
+//         color: white;
+//         font-weight: 500;
+//         font-size: 12px;
+//       }
+//     }
+    
+//     .btn-sign-up {
+//       position: relative;
+//       background-color: #5f61d5;
+//       border-radius: 4px;
+//       border: none;
+//       max-width: 200px;
+//       min-width: 80px;
+//       height: 40px;
+//       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+//       &::after {
+//         content: "";
+//         animation: button-pulse 2s ease-out infinite 1s;
+//         position: absolute;
+//         left: 50%;
+//         top: 50%;
+//         transform: translate(-50%, -50%) scale(0.7, 0.5);
+//         background-color: #5f61d5;
+//         z-index: 0;
+//         transition: transform 1s linear;
+//         width: calc(100% + 20px);
+//         height: calc(100% + 20px);
+//         border-radius: 4px;
+//       }
+//       span {
+//         z-index: 1;
+//         border: transparent;
+//         position: relative;
+//         color: white;
+//         font-weight: 500;
+//         font-size: 12px;
+//       }
+//     }
+//   }
+// }
