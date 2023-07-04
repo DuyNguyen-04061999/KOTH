@@ -171,7 +171,8 @@ export default function SelectRoom() {
         gameId: detailGame?.id,
       });
     }
-  }, [socket, token, detailGame, roomDetailInfo, roomIdSelect]);
+  });
+  
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);

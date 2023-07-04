@@ -7,7 +7,6 @@ import { CustomRouter, history } from "./components/Router";
 import { AlertComponent } from "./components/Alert";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
-import GameList from "./pages/GameList";
 import { useEffect, useState } from "react";
 import FAQPage from "./pages/FAQpage";
 import CountDownTimer from "./components/CountDownTimer";
@@ -71,6 +70,7 @@ import {
 import { useTracking } from "./utils/useTracking";
 import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
+import Tournament from "./pages/Tournament";
 
 function App() {
   useTracking("");
@@ -102,6 +102,7 @@ function App() {
         localStorage.setItem("NAME", user.userName);
         localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
+        localStorage.setItem("TOKEN", token);
         socket.emit("listMessage");
         socket.emit("listFriend");
         socket.emit("getTransaction");
@@ -137,6 +138,7 @@ function App() {
         localStorage.removeItem("NAME");
         localStorage.removeItem("PASS");
         localStorage.removeItem("KE");
+        localStorage.removeItem("TOKEN");
         store.dispatch(logoutSuccessFully("logoutSuccess"));
         store.dispatch(gameLogoutSuccessFully());
         store.dispatch(chatLogoutSuccessFully());
@@ -342,7 +344,7 @@ function App() {
               <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
               <Route path="/luckywheel" element={<LuckySpinComponent />} />
               <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
-              <Route path="/list-game" element={<GameList />} />
+              <Route path="/tournaments" element={<Tournament />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/countdowntimer" element={<CountDownTimer />} />
               <Route path="/search" element={<SearchPage />} />

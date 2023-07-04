@@ -7,7 +7,7 @@ build:
     name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     entrypoint: ['']
   only:
-    - development
+    - staging
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor --cache=true --snapshotMode=redo --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --destination ${CI_REGISTRY_IMAGE}:latest
@@ -18,7 +18,7 @@ deploy:
     name: python:3.6
     entrypoint: ['']
   only:
-    - development
+    - staging
   before_script:
     - apt-get update
     - apt-get install -y ca-certificates curl
