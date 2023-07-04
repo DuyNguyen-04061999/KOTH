@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import { AlertComponent } from "./components/Alert";
 import HomePage from "./pages/Home";
@@ -71,17 +71,6 @@ import {
 import { useTracking } from "./utils/useTracking";
 import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
-import { usePrevious } from "@uidotdev/usehooks";
-
-const DetectChange = () => {
-  const location = useLocation();
-  const prevLocation = usePrevious(location);
-  useEffect(() => {
-    console.log(location?.pathname, prevLocation?.pathname);
-  }, [location, prevLocation]);
-
-  return <></>;
-};
 
 function App() {
   useTracking("");
@@ -345,7 +334,6 @@ function App() {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <CustomRouter history={history}>
-            <DetectChange />
             <Routes>
               <Route path="" element={<HomePage />}>
                 <Route path="/home" element={<HomePage />} />

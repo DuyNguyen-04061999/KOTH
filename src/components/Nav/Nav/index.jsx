@@ -10,7 +10,7 @@ import {
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 
-export default function Navbar(props) {
+export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token, isNav } = useSelector((state) => state.authReducer);
@@ -149,7 +149,13 @@ export default function Navbar(props) {
               <Typography>Game Log</Typography>
             </Box>
             <Box className="d-flex align-items-center mt-1">
-              <img src={popup.faq} alt="..." className="p-1" width={40} height={"auto"} />
+              <img
+                src={popup.faq}
+                alt="..."
+                className="p-1"
+                width={40}
+                height={"auto"}
+              />
               <Typography
                 sx={{ cursor: "pointer" }}
                 onClick={() => {
@@ -159,31 +165,6 @@ export default function Navbar(props) {
                 FAQ
               </Typography>
             </Box>
-            {/* {token === null || token === "" ? (
-              <Box className="nav-resistration" sx={{ height: "150px" }}>
-                <p className="pt-2 pb-2">Registration</p>
-                <Box className="btn-nav d-flex justify-content-around pt-3">
-                  <button
-                    className="btn-sign-in signin"
-                    onClick={() => {
-                      dispatch(toggleLoginDialog());
-                      dispatch(clickTab(false));
-                    }}
-                  >
-                    <span>SIGN IN</span>
-                  </button>
-                  <button
-                    className="btn-sign-up signin"
-                    onClick={() => {
-                      dispatch(toggleLoginDialog());
-                      dispatch(clickTab(true));
-                    }}
-                  >
-                    <span>SIGN UP</span>
-                  </button>
-                </Box>
-              </Box>
-            ) : null} */}
           </Box>
           <Box>
             <hr style={{ color: "white" }} />
@@ -307,7 +288,7 @@ export default function Navbar(props) {
               className="nav-game-log d-flex align-items-center"
             >
               <img
-                 src={images.gamelogicon}
+                src={images.gamelogicon}
                 alt="..."
                 className="p-1"
                 width={35}
@@ -329,7 +310,7 @@ export default function Navbar(props) {
                 className="p-1"
                 width={40}
                 height={"auto"}
-                style={{cursor: "pointer"}}
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate(`/FAQ`);
                 }}

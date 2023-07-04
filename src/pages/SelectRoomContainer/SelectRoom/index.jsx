@@ -61,10 +61,6 @@ export default function SelectRoom() {
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
-  const location = useLocation();
-  useEffect(() => {
-    console.log(location?.pathname);
-  }, [location]);
   useEffect(() => {
     function checkIsFavorite() {
       let index = listFavoriteGame.findIndex((element) => {
@@ -158,20 +154,24 @@ export default function SelectRoom() {
   useEffect(() => {
     window.onbeforeunload = function () {
       localStorage.setItem("IDRoom", roomDetailInfo?.id);
-      localStorage.setItem("GameID", detailGame?.id);
     };
     return () => {
-      window.onbeforeunload = null;
+      window.onbeforeunload = function () {
+        localStorage.removeItem("IDRoom");
+      };
     };
   }, [roomDetailInfo, detailGame?.id]);
   useEffect(() => {
-    if (localStorage.getItem("IDRoom") && localStorage.getItem("GameID")) {
+    if (
+      localStorage.getItem("IDRoom") &&
+      token
+    ) {
       socket?.emit("leaveRoomGame", {
         roomId: localStorage.getItem("IDRoom"),
-        gameId: localStorage.getItem("GameID"),
+        gameId: detailGame?.id,
       });
     }
-  });
+  }, [socket, token, detailGame, roomDetailInfo, roomIdSelect]);
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -887,11 +887,14 @@ export default function SelectRoom() {
                         src={
                           roomDetailInfo?.membersInRoom &&
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length > 0
-                            ? process.env.REACT_APP_SOCKET_SERVER +
-                              "/" +
-                              JSON.parse(roomDetailInfo?.membersInRoom)[0]
+                            ? JSON.parse(roomDetailInfo?.membersInRoom)[0]
                                 ?.avatar
-                            : ""
+                              ? process.env.REACT_APP_SOCKET_SERVER +
+                                "/" +
+                                JSON.parse(roomDetailInfo?.membersInRoom)[0]
+                                  ?.avatar
+                              : images.undefinedAvatar
+                            : images.undefinedAvatar
                         }
                       />
                       <Box>
@@ -945,10 +948,13 @@ export default function SelectRoom() {
                               roomDetailInfo?.membersInRoom &&
                               JSON.parse(roomDetailInfo?.membersInRoom)
                                 ?.length > 1
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
                                     ?.avatar
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                      ?.avatar
+                                  : images.undefinedAvatar
                                 : images.undefinedAvatar
                             }
                           />

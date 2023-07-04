@@ -122,6 +122,12 @@ export const updateListDisLikeGame = (data) => {
     payload: data,
   };
 };
+export const updateLocationChanges = (data) => {
+  return {
+    type: "UPDATE_LOCATION_CHANGES",
+    payload: data,
+  };
+};
 
 const gameReducer = (
   state = {
@@ -139,6 +145,8 @@ const gameReducer = (
     typeLike: "",
     listLikeGame: [],
     listDislikeGame: [],
+    currentLoca: "",
+    previousLoca: "",
   },
   action
 ) => {
@@ -205,6 +213,13 @@ const gameReducer = (
       return {
         ...state,
         listDislikeGame: payload,
+      };
+    }
+    case "UPDATE_LOCATION_CHANGES": {
+      return {
+        ...state,
+        currentLoca: payload.currentLoca,
+        previousLoca: payload.previousLoca,
       };
     }
     default:
