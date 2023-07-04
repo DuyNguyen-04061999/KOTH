@@ -1,11 +1,9 @@
 import { Button, Container } from "@mui/material";
 import "./index.scss";
 import Layout from "../../components/Layout";
-import { useDispatch } from "react-redux";
 import _socket from "../../redux-saga-middleware/config/socket";
 
 export default function GameList() {
-  const dispatch = useDispatch()
   
   const renderS = () => {
     return (

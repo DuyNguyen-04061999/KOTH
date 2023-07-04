@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
   const { GameFiles, width, height } = props;
-  const { currentLoca, previousLoca } = useSelector(
-    (state) => state.gameReducer
-  );
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
       if (data[index]?.link?.includes(".loader.js")) {
