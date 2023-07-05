@@ -174,21 +174,23 @@ export default function GameLobbyDetailInfo() {
           className="d-flex flex-column"
         >
           <div></div>
-          <div className="">
-            <Typography
-              sx={{
+          <div>
+            <h2
+              style={{
                 color: "#ffffff",
-                fontSize: width < 576 ? "16px" : "35px",
+                fontSize: getFontSizeTitleDependOnWidth(width),
                 textAlign: "left",
                 marginTop: "0px",
+                marginLeft: "0px",
+                fontWeight: "500",
               }}
             >
               <b>{detailGame?.gameName}</b>
-            </Typography>
+            </h2>
             <Typography
               sx={{
                 fontSize: getFontSizeDependOnWidth(width),
-                color: "#8688be",
+                color: "#757ae5",
                 textAlign: "left",
               }}
             >
@@ -204,6 +206,7 @@ export default function GameLobbyDetailInfo() {
               paddingRight: width > 576 ? "120px" : 0,
               boxSizing: "border-box",
               width: "289px",
+              paddingLeft: "8px",
             }}
             className="pt-2"
           >
@@ -217,7 +220,7 @@ export default function GameLobbyDetailInfo() {
                 onClick={handleOnClickLikeGame}
                 src={
                   likeGame === false
-                    ? imagesFavorite.passiveLike
+                    ? imagesFavorite.passivePlayGameLike
                     : imagesFavorite.activeLike
                 }
                 className="cursor-pointer"
@@ -229,7 +232,7 @@ export default function GameLobbyDetailInfo() {
                   fontWeight: "bolder",
                   fontSize: width && getFontSizeDependOnWidth(width),
                   position: "absolute",
-                  bottom: "71px",
+                  bottom: "87px",
                   left: "35px",
                 }}
               >
@@ -248,19 +251,20 @@ export default function GameLobbyDetailInfo() {
                 onClick={handleOnClickDisLikeGame}
                 src={
                   disLikeGame === false
-                    ? imagesFavorite.passiveDislike
+                    ? imagesFavorite.passivePlayGameDislike
                     : imagesFavorite.activeDislike
                 }
                 className="cursor-pointer"
                 alt="..."
               ></Box>
+
               <span
                 style={{
                   color: "white",
                   fontWeight: "bolder",
                   fontSize: getFontSizeDependOnWidth(width),
                   position: "absolute",
-                  bottom: "71px",
+                  bottom: "87px",
                   left: "35px",
                 }}
               >
@@ -309,10 +313,11 @@ export default function GameLobbyDetailInfo() {
       </Box>
       <Box className="p-2">
         <Typography
-          className="fs-5 text-white"
+          className=" text-white"
           sx={{
             fontWeight: "600",
             textAlign: "left",
+            fontSize: getFontSizeTitleDependOnWidth(width),
           }}
         >
           How to play?
@@ -324,7 +329,6 @@ export default function GameLobbyDetailInfo() {
               if (!showMore && i_htp < 3) {
                 return (
                   <Typography
-                    className="mt-2"
                     sx={{
                       color: "#857cab",
                       textAlign: "left",
@@ -355,7 +359,6 @@ export default function GameLobbyDetailInfo() {
             }
           )}
         <Typography
-          className="mt-2"
           sx={{
             color: "#857cab",
             textAlign: "left",
@@ -380,11 +383,12 @@ export default function GameLobbyDetailInfo() {
         <Box className="d-flex mt-2">
           <Box
             component={"span"}
-            className="me-2 p-1 ps-2 pe-2 rounded cursor-pointer"
+            className="me-2 rounded cursor-pointer"
             sx={{
               background: "#462a71",
               color: "#757ae5",
               fontWeight: "600",
+              padding: "10px 30px",
               fontSize: getFontSizeDependOnWidth(width),
             }}
           >
@@ -392,11 +396,12 @@ export default function GameLobbyDetailInfo() {
           </Box>
           <Box
             component={"span"}
-            className="p-1 ps-2 pe-2 rounded cursor-pointer"
+            className="rounded cursor-pointer"
             sx={{
               background: "#462a71",
               color: "#757ae5",
               fontWeight: "600",
+              padding: "10px 30px",
               fontSize: getFontSizeDependOnWidth(width),
             }}
           >

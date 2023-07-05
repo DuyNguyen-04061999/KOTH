@@ -150,7 +150,7 @@ export default function SelectRoom() {
       setCountDisLikeGame(countDisLikeGame - 1);
     }
   };
-  
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -397,10 +397,10 @@ export default function SelectRoom() {
           return [...prevState];
         }
       });
-      if (localStorage.getItem("IDRoom") && localStorage.getItem("IDRoom")) {
-        localStorage.removeItem("IDRoom");
-        localStorage.removeItem("GameID");
-      }
+      // if (localStorage.getItem("IDRoom") && localStorage.getItem("IDRoom")) {
+      //   localStorage.removeItem("IDRoom");
+      //   localStorage.removeItem("GameID");
+      // }
     });
   });
   useEffect(() => {
@@ -587,7 +587,7 @@ export default function SelectRoom() {
       {!startGame && (
         <>
           {roomNav === true ? (
-            <Container>
+            <div className="container">
               <Box className="mt-5 mb-5">
                 <TitleHomeDesktopComponent
                   title={detailGame?.gameName}
@@ -595,14 +595,17 @@ export default function SelectRoom() {
                   noSeeAll={width && width < 576}
                 />
               </Box>
-              <h3 style={{ color: "white" }}>Create Room</h3>
+              <h3 style={{ color: "white", marginBottom: "24px" }}>
+                Create Room
+              </h3>
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   padding: "15px 30px",
-                  backgroundColor: "#271c37",
+                  backgroundColor: "#352658",
+                  borderRadius: "5px",
                 }}
               >
                 <Box
@@ -611,17 +614,20 @@ export default function SelectRoom() {
                     justifyContent: "space-between",
                     width: "400px",
                     alignItems: "center",
-                    color: "#fff",
+                    color: "#857cab",
                   }}
                 >
                   <h4>Select Betting</h4>
-                  <FormControl sx={{ width: "200px", color: "#fff" }}>
+                  <FormControl
+                    sx={{
+                      width: "200px",
+                      color: "#fff",
+                    }}
+                  >
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="DogeDold"
                       sx={{
                         color: "#fff",
+                        backgroundColor: "#513c82",
                       }}
                       onChange={(event) => {
                         setDogeGold(event.target.value);
@@ -643,6 +649,9 @@ export default function SelectRoom() {
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
+                      color: "#fff",
+                      fontWeight: "640",
+                      backgroundImage: "linear-gradient(#893af1,#7548ed)",
                     }}
                   >
                     Quick Join
@@ -660,6 +669,9 @@ export default function SelectRoom() {
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
+                      color: "#fff",
+                      fontWeight: "640",
+                      backgroundImage: "linear-gradient(#893af1,#7548ed)",
                     }}
                   >
                     Create Room
@@ -680,16 +692,19 @@ export default function SelectRoom() {
                     <Box
                       key={i_item}
                       sx={{ width: "50%" }}
-                      className="pe-2 mb-2 rounded"
+                      className={`${
+                        i_item % 2 === 0 ? "pe-3" : "ps-3"
+                      } mb-2 rounded  mt-3`}
                     >
                       <Box
                         sx={{
                           width: "100%",
                           height: "100%",
                           display: "flex",
-                          backgroundColor: "white",
+                          backgroundColor: "#352658",
                           justifyContent: "space-between",
                           alignItems: "center",
+                          borderRadius: "5px",
                         }}
                       >
                         <Box
@@ -700,12 +715,9 @@ export default function SelectRoom() {
                             alignItems: "center",
                             justifyContent: "center",
                             color: "#fff",
-                            backgroundColor:
-                              !item?.membersInRoom ||
-                              JSON.parse(item?.membersInRoom)?.length <
-                                item?.roomCountMember
-                                ? "green"
-                                : "yellow",
+                            backgroundColor: "#513c82",
+                            borderRadius: "5px",
+                            fontWeight: "700",
                           }}
                         >
                           {!item?.membersInRoom ||
@@ -716,62 +728,110 @@ export default function SelectRoom() {
                         </Box>
                         <Box
                           sx={{
-                            width: "50%",
+                            width: "60%",
                             display: "flex",
                             justifyContent: "space-around",
+                            alignItems: "center",
+                            color: "#757ae5",
+                            fontWeight: "640 ",
                           }}
                         >
                           <span>{item?.roomName}</span>
-                          <span>
-                            {JSON.parse(item?.membersInRoom)?.length || 0}/
-                            {item?.roomCountMember}
-                          </span>
-                          <span>{item?.roomBet}</span>
+                          <p style={{ position: "relative" }}>
+                            <img
+                              style={{
+                                marginRight: "5px",
+                                position: "absolute",
+                                left: "-22px",
+                              }}
+                              width="20px"
+                              alt="..."
+                              src={images.numberClient}
+                            />
+                            <span>
+                              {JSON.parse(item?.membersInRoom)?.length || 0}/
+                              {item?.roomCountMember}
+                            </span>
+                          </p>
+                          <p style={{ position: "relative" }}>
+                            <img
+                              style={{
+                                marginRight: "5px",
+                                position: "absolute",
+                                left: "-24px",
+                              }}
+                              width="20px"
+                              alt="..."
+                              src={images.goldIcon}
+                            />
+                            1000
+                          </p>
                         </Box>
                         <Box
                           sx={{
-                            width: "30%",
+                            width: "20%",
                             display: "flex",
                             justifyContent: "flex-end",
                             padding: "10px 10px 10px 0px",
                           }}
                         >
-                          <button
-                            onClick={() => {
-                              if (
-                                item?.roomStatus === 0 &&
-                                JSON.parse(item?.membersInRoom)?.length <
-                                  item?.roomCountMember
-                              ) {
-                                _socket.emit("joinRoomGame", {
-                                  roomId: item?.id,
-                                  gameId: detailGame?.id,
-                                });
-                                setRoomIdSelect(item?.id);
-                              } else {
-                                dispatch(
-                                  showAlert("error", "The room has been full")
-                                );
-                              }
-                            }}
-                            style={{
-                              borderRadius: "5px",
-                              border: "none",
-                              outline: "none",
-                              backgroundColor: "rgba(138,57,240,1)",
-                              color: "#fff",
-                              padding: "10px 30px",
-                            }}
-                          >
-                            Join
-                          </button>
+                          {item?.roomStatus === 0 &&
+                          JSON.parse(item?.membersInRoom)?.length <
+                            item?.roomCountMember ? (
+                            <button
+                              onClick={() => {
+                                if (
+                                  item?.roomStatus === 0 &&
+                                  JSON.parse(item?.membersInRoom)?.length <
+                                    item?.roomCountMember
+                                ) {
+                                  _socket.emit("joinRoomGame", {
+                                    roomId: item?.id,
+                                    gameId: detailGame?.id,
+                                  });
+                                  setRoomIdSelect(item?.id);
+                                } else {
+                                  dispatch(
+                                    showAlert("error", "The room has been full")
+                                  );
+                                }
+                              }}
+                              style={{
+                                borderRadius: "5px",
+                                border: "none",
+                                outline: "none",
+                                backgroundColor: "rgba(138,57,240,1)",
+                                color: "#fff",
+                                padding: "10px 30px",
+                                fontWeight: "640",
+                                backgroundImage:
+                                  "linear-gradient(#893af1,#7649ed)",
+                              }}
+                            >
+                              Join
+                            </button>
+                          ) : (
+                            <button
+                              style={{
+                                borderRadius: "5px",
+                                border: "none",
+                                outline: "none",
+                                backgroundColor: "#6f6684",
+                                color: "#9f97ac",
+                                padding: "10px 30px",
+                                fontWeight: "640",
+                              }}
+                            >
+                              Join
+                            </button>
+                          )}
                         </Box>
                       </Box>
                     </Box>
                   );
                 })}
               </Box>
-            </Container>
+            </div>
           ) : (
             <Container>
               <Box

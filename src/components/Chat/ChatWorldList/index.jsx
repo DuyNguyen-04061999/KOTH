@@ -169,7 +169,7 @@ export default function ChatWorldList() {
                         <Typography
                           sx={{
                             color: "#01f7e3",
-                            fontWeight: "bold", 
+                            fontWeight: "bold",
                           }}
                         >
                           {}

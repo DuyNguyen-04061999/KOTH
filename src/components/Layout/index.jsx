@@ -665,7 +665,13 @@ export default function Layout(props) {
                     }
                   }}
                 >
-                  <img src={images2.inviteG} alt="..." width={30} height={30} className="cursor-pointer" />
+                  <img
+                    src={images2.inviteG}
+                    alt="..."
+                    width={30}
+                    height={30}
+                    className="cursor-pointer"
+                  />
                 </Box>
                 <Box
                   component={"form"}

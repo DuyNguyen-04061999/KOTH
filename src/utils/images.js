@@ -28,7 +28,8 @@ import withdrawActive from "../assets/images/withdrawActive.png";
 import dogcoin from "../assets/images/dogcoin.png";
 import Doge from "../assets/images/Doge.png";
 import CloseButtonDeposit from "../assets/images/CloseButtonDeposit.png";
-
+import numberClient from "../assets/images/numberClient.png";
+import goldIcon from "../assets/images/GoldIcon.png";
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -124,11 +125,11 @@ import bannersignin from "../assets/imagesLayout/Sign/bannerLogin.png";
 import chose1 from "../assets/imagesLayout/Sign/chose_button.png";
 import chose2 from "../assets/imagesLayout/Sign/chose.png";
 
-import up01 from "../assets/imagesLayout/01.png";
-import up02 from "../assets/imagesLayout/02.png";
-import up03 from "../assets/imagesLayout/03.png";
-import up04 from "../assets/imagesLayout/04.png";
-import up05 from "../assets/imagesLayout/05.png";
+import up01 from "../assets/imagesLayout/01.svg";
+import up02 from "../assets/imagesLayout/02.svg";
+import up03 from "../assets/imagesLayout/03.svg";
+import up04 from "../assets/imagesLayout/04.svg";
+import up05 from "../assets/imagesLayout/05.svg";
 
 //---------------------------------------------------
 import video1 from "../assets/videoHover/Bida1.mp4";
@@ -197,6 +198,8 @@ export const images = {
   BackButtonDesposit: BackButtonDesposit,
   Doge: Doge,
   CloseButtonDeposit: CloseButtonDeposit,
+  numberClient: numberClient,
+  goldIcon: goldIcon,
 };
 
 export const images2 = {
