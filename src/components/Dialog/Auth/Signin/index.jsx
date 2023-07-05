@@ -161,7 +161,7 @@ function SimpleDialog(props) {
                             border: "none",
                           },
                           color: "#5a3d8f",
-                          fontWeight:"700",
+                          fontWeight: "700",
                           "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
                             padding: "0px !important",
                           },
@@ -198,7 +198,7 @@ function SimpleDialog(props) {
                             border: "none",
                           },
                           color: "#5a3d8f",
-                          fontWeight:"700",
+                          fontWeight: "700",
                           "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
                             padding: "0px !important",
                           },
@@ -337,7 +337,7 @@ function SimpleDialog(props) {
                               border: "none",
                             },
                             color: "#5a3d8f",
-                            fontWeight:"700",
+                            fontWeight: "700",
                             "& .css-1x51dt5-MuiInputBase-input-MuiInput-input":
                               {
                                 padding: "0px !important",
@@ -375,7 +375,7 @@ function SimpleDialog(props) {
                               border: "none",
                             },
                             color: "#5a3d8f",
-                            fontWeight:"700",
+                            fontWeight: "700",
                             "& .css-1x51dt5-MuiInputBase-input-MuiInput-input":
                               {
                                 padding: "0px !important",
@@ -409,7 +409,7 @@ function SimpleDialog(props) {
                           <span
                             style={{
                               color: "#faecf1",
-                              fontWeight:"500"
+                              fontWeight: "500",
                             }}
                           >
                             SIGN IN
