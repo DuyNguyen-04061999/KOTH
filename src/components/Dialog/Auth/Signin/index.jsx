@@ -140,11 +140,21 @@ function SimpleDialog(props) {
                         marginBottom: "20px",
                       }}
                     >
+                       <img
+                          src={sign.up01}
+                          alt="..."
+                          width={17}
+                          height={"auto"}
+                          style={{
+                            position: "absolute",
+                            top: width > 576 ? "11px" : "10px",
+                          }}
+                        />
                       <Input
                         id="login_username"
                         type="text"
                         value={username}
-                        placeholder="Enter User Name"
+                        placeholder="User Name"
                         autoComplete="username"
                         onChange={handleChangeUsername}
                         sx={{
@@ -160,10 +170,10 @@ function SimpleDialog(props) {
                           "&:hover": {
                             border: "none",
                           },
-                          color: "#5a3d8f",
-                          fontWeight: "700",
+                          color: "white",
+                          fontWeight: "500",
                           "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                            padding: "0px !important",
+                            padding: "0px 0px 0px 25px !important",
                           },
                         }}
                       />
@@ -177,9 +187,19 @@ function SimpleDialog(props) {
                         borderRadius: "5px",
                       }}
                     >
+                      <img
+                          src={sign.up02}
+                          alt="..."
+                          width={15}
+                          height={"auto"}
+                          style={{
+                            position: "absolute",
+                            top: width > 576 ? "10px" : "10px",
+                          }}
+                        />
                       <Input
                         id="login_password"
-                        placeholder="Enter Password"
+                        placeholder="Password"
                         type="password"
                         value={password}
                         autoComplete="current-password"
@@ -197,15 +217,15 @@ function SimpleDialog(props) {
                           "&:hover": {
                             border: "none",
                           },
-                          color: "#5a3d8f",
-                          fontWeight: "700",
+                          color: "white",
+                          fontWeight: "500",
                           "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                            padding: "0px !important",
+                            padding: "0px 0px 0px 25px !important",
                           },
                         }}
                       />
                     </FormControl>
-                    <Box className="d-flex justify-content-end mt-2">
+                    <Box className="d-flex justify-content-end mt-4">
                       <Box
                         sx={{
                           color: "#7671ba",
@@ -222,7 +242,7 @@ function SimpleDialog(props) {
                         style={{
                           background:
                             "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                          borderRadius: 1,
+                          borderRadius: 4,
                           border: "none",
                           padding: "8px 35px",
                         }}
@@ -231,6 +251,7 @@ function SimpleDialog(props) {
                         <span
                           style={{
                             color: "#faecf1",
+                            fontWeight: "700",
                           }}
                         >
                           SIGN IN
@@ -249,7 +270,9 @@ function SimpleDialog(props) {
                         }}
                       >
                         New User?
-                        <Typography sx={{ color: "yellow", cursor: "pointer" }}>
+                        <Typography
+                          sx={{ color: "#ffb600", cursor: "pointer" }}
+                        >
                           Create Account
                         </Typography>
                       </Box>
@@ -316,11 +339,21 @@ function SimpleDialog(props) {
                           marginBottom: "20px",
                         }}
                       >
+                        <img
+                          src={sign.up01}
+                          alt="..."
+                          width={17}
+                          height={"auto"}
+                          style={{
+                            position: "absolute",
+                            top: width > 576 ? "11px" : "10px",
+                          }}
+                        />
                         <Input
                           id="login_username"
                           type="text"
                           value={username}
-                          placeholder="Enter User Name"
+                          placeholder="User Name"
                           autoComplete="username"
                           onChange={handleChangeUsername}
                           sx={{
@@ -336,11 +369,11 @@ function SimpleDialog(props) {
                             "&:hover": {
                               border: "none",
                             },
-                            color: "#5a3d8f",
-                            fontWeight: "700",
+                            color: "white",
+                            fontWeight: "500",
                             "& .css-1x51dt5-MuiInputBase-input-MuiInput-input":
                               {
-                                padding: "0px !important",
+                                padding: "0px 0px 0px 25px !important",
                               },
                           }}
                         />
@@ -354,9 +387,19 @@ function SimpleDialog(props) {
                           borderRadius: "5px",
                         }}
                       >
+                        <img
+                          src={sign.up02}
+                          alt="..."
+                          width={15}
+                          height={"auto"}
+                          style={{
+                            position: "absolute",
+                            top: width > 576 ? "10px" : "10px",
+                          }}
+                        />
                         <Input
                           id="login_password"
-                          placeholder="Enter Password"
+                          placeholder="Password"
                           type="password"
                           value={password}
                           autoComplete="current-password"
@@ -374,11 +417,11 @@ function SimpleDialog(props) {
                             "&:hover": {
                               border: "none",
                             },
-                            color: "#5a3d8f",
-                            fontWeight: "700",
+                            color: "white",
+                            fontWeight: "500",
                             "& .css-1x51dt5-MuiInputBase-input-MuiInput-input":
                               {
-                                padding: "0px !important",
+                                padding: "0px 0px 0px 25px !important",
                               },
                           }}
                         />
@@ -388,6 +431,7 @@ function SimpleDialog(props) {
                           sx={{
                             color: "#7671ba",
                             fontWeight: "500",
+                            marginTop: width > 576 ? "15px" : "15px",
                           }}
                         >
                           Forgot Password ?
@@ -409,7 +453,7 @@ function SimpleDialog(props) {
                           <span
                             style={{
                               color: "#faecf1",
-                              fontWeight: "500",
+                              fontWeight: "700",
                             }}
                           >
                             SIGN IN

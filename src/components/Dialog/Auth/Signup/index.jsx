@@ -74,7 +74,9 @@ export default function Signup(props) {
     <Box>
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
         <Box>
-          <Typography variant="h5" className="text-center text-white mb-3">
+          <Typography variant="h5" className="text-center text-white"
+            sx={{marginBottom:width < 576 ? "30px" : "30px"}}
+          >
             Sign Up
           </Typography>
         </Box>
@@ -85,7 +87,7 @@ export default function Signup(props) {
             backgroundColor: "#1a132d",
             padding: width > 576 ? "5px 10px" :"5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
+            marginBottom:  width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -93,7 +95,7 @@ export default function Signup(props) {
             alt="..."
             width={17}
             height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "11px" : "10px" }}
+            style={{ position: "absolute", top: width > 576 ? "11px" : "10px", left: width > 576  ? "12px" : "10px"}}
           />
           <Input
             name="username"
@@ -103,7 +105,7 @@ export default function Signup(props) {
               setUsername(e.target.value);
             }}
             value={username}
-            placeholder="Enter User Name"
+            placeholder="User Name"
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
@@ -120,9 +122,9 @@ export default function Signup(props) {
               "&:placeholder": {
                 color: "white",
               },
-              color: "#5a3d8f",
-              fontWeight:"700",
-              padding: "0px 0px 0px 25px !important",
+              color: "white",
+              fontWeight:"500",
+              padding: "0px 0px 0px 35px !important",
             }}
           />
         </FormControl>
@@ -148,6 +150,7 @@ export default function Signup(props) {
                 className="mx-2"
                 style={{
                   color: "#5654a0",
+                  fontWeight:"500"
                 }}
               >
                 Mr
@@ -168,6 +171,7 @@ export default function Signup(props) {
                 className="mx-2"
                 style={{
                   color: "#5654a0",
+                  fontWeight:"500"
                 }}
               >
                 Mrs
@@ -188,6 +192,7 @@ export default function Signup(props) {
                 className="mx-2"
                 style={{
                   color: "#5654a0",
+                  fontWeight:"500"
                 }}
               >
                 Others
@@ -195,94 +200,6 @@ export default function Signup(props) {
             </Box>
           </Box>
         </Box>
-        {/* <FormControl
-          variant="standard"
-          sx={{
-            width: "100%",
-            backgroundColor: "#1a132d",
-            padding: width > 576 ? "10px" :"5px",
-            borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
-          }}
-        >
-          <img
-            src={sign.up01}
-            alt="..."
-            width={17}
-            height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "14px" : "10px" }}
-          />
-          <Input
-            type="text"
-            name="firstName"
-            autoComplete="username"
-            placeholder="Enter Firstname"
-            onChange={(e) => {
-              setFirstName(e.target.value);
-            }}
-            value={firstName}
-            sx={{
-              "&:before": {
-                borderBottom: "0px solid !important",
-                "&:hover": {
-                  borderBottom: "0px solid !important",
-                },
-              },
-              "&:after": {
-                borderBottom: "0px solid !important",
-              },
-              "&:hover": {
-                border: "none",
-              },
-              color: "#7671ba",
-              padding: "0px 0px 0px 25px !important",
-            }}
-          />
-        </FormControl>
-        <FormControl
-          variant="standard"
-          sx={{
-            width: "100%",
-            backgroundColor: "#1a132d",
-            padding: width > 576 ? "10px" :"5px",
-            borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
-          }}
-        >
-          <img
-            src={sign.up01}
-            alt="..."
-            width={17}
-            height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "14px" : "10px" }}
-          />
-          <Input
-            type="text"
-            name="lastName"
-            autoComplete="username"
-            placeholder="Enter Lastname"
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
-            value={lastName}
-            sx={{
-              "&:before": {
-                borderBottom: "0px solid !important",
-                "&:hover": {
-                  borderBottom: "0px solid !important",
-                },
-              },
-              "&:after": {
-                borderBottom: "0px solid !important",
-              },
-              "&:hover": {
-                border: "none",
-              },
-              color: "#7671ba",
-              padding: "0px 0px 0px 25px !important",
-            }}
-          />
-        </FormControl> */}
         <FormControl
           variant="standard"
           sx={{
@@ -290,7 +207,7 @@ export default function Signup(props) {
             backgroundColor: "#1a132d",
             padding: width > 576 ? "5px 10px" :"5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
+            marginBottom:  width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -298,12 +215,12 @@ export default function Signup(props) {
             alt="..."
             width={15}
             height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "10px" : "10px"}}
+            style={{ position: "absolute", top: width > 576 ? "10px" : "10px", left: width > 576  ? "12px" : "10px"}}
           />
           <Input
             type="password"
             name="password"
-            placeholder="Enter Password"
+            placeholder="Password"
             autoComplete="new-password"
             onChange={(e) => {
               setBlur(false);
@@ -324,9 +241,9 @@ export default function Signup(props) {
               "&:hover": {
                 border: "none",
               },
-              color: "#5a3d8f",
-              fontWeight:"700",
-              padding: "0px 0px 0px 25px !important",
+              color: "white",
+              fontWeight:"500",
+              padding: "0px 0px 0px 35px !important",
             }}
           />
         </FormControl>
@@ -337,7 +254,7 @@ export default function Signup(props) {
             backgroundColor: "#1a132d",
             padding: width > 576 ? "5px 10px" :"5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
+            marginBottom:  width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -345,7 +262,7 @@ export default function Signup(props) {
             alt="..."
             width={15}
             height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "10px" : "10px" }}
+            style={{ position: "absolute", top: width > 576 ? "10px" : "10px", left: width > 576  ? "12px" : "10px" }}
           />
           <Input
             type="password"
@@ -369,9 +286,9 @@ export default function Signup(props) {
               "&:hover": {
                 border: "none",
               },
-              color: "#5a3d8f",
-              fontWeight:"700",
-              padding: "0px 0px 0px 25px !important",
+              color: "white",
+              fontWeight:"500",
+              padding: "0px 0px 0px 35px !important",
             }}
           />
           {c_password !== password && blur === true ? (
@@ -385,7 +302,7 @@ export default function Signup(props) {
             backgroundColor: "#1a132d",
             padding: width > 576 ? "5px 10px" :"5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
+            marginBottom:  width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -393,12 +310,12 @@ export default function Signup(props) {
             alt="..."
             width={18}
             height={"auto"}
-            style={{ position: "absolute", top: "12px" }}
+            style={{ position: "absolute", top: "13px",  left: width > 576  ? "10px" : "8px" }}
           />
           <Input
             type="text"
             name="email"
-            placeholder="Enter Email"
+            placeholder="Email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -416,9 +333,9 @@ export default function Signup(props) {
               "&:hover": {
                 border: "none",
               },
-              color: "#5a3d8f",
-              fontWeight:"700",
-              padding: "0px 0px 0px 25px !important",
+              color: "white",
+              fontWeight:"500",
+              padding: "0px 0px 0px 35px !important",
             }}
           />{" "}
           {email && !email.includes("@gmail.com") && (
@@ -432,14 +349,14 @@ export default function Signup(props) {
             backgroundColor: "#1a132d",
             padding: width > 576 ? "5px 10px" :"5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
+            marginBottom:  width > 576 ? "10px" : "20px",
           }}
         >
           <img
             src={sign.up04}
             alt="..."
-            width={18}
-            style={{ position: "absolute", top: "12px" }}
+            width={13}
+            style={{ position: "absolute", top: "10px",  left: width > 576  ? "13px" : "10px" }}
           />
           <Input
             type="number"
@@ -448,7 +365,7 @@ export default function Signup(props) {
               setPhone(e.target.value);
             }}
             value={phone}
-            placeholder="Enter Mobile Number"
+            placeholder="Mobile Number"
             sx={{
               "&:before": {
                 borderBottom: " 0px solid !important ",
@@ -462,9 +379,9 @@ export default function Signup(props) {
               "&:hover": {
                 border: "none",
               },
-              color: "#5a3d8f",
-              fontWeight:"700",
-              padding: "0px 0px 0px 25px !important",
+              color: "white",
+              fontWeight:"500",
+              padding: "0px 0px 0px 35px !important",
             }}
           />
         </FormControl>
@@ -475,7 +392,7 @@ export default function Signup(props) {
             backgroundColor: "#1a132d",
             padding: width > 576 ? "5px 10px" :"5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "5px",
+            marginBottom:  width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -483,12 +400,12 @@ export default function Signup(props) {
             alt="..."
             width={18}
             height={"auto"}
-            style={{ position: "absolute", top: "12px" }}
+            style={{ position: "absolute", top: "12px",  left: width > 576  ? "12px" : "8px" }}
           />
           <Input
             id="input-with-icon-adornment"
             type="text"
-            placeholder="Enter Refcode"
+            placeholder="Refcode"
             onChange={(e) => {
               setRef(e.target.value);
             }}
@@ -506,29 +423,28 @@ export default function Signup(props) {
               "&:hover": {
                 border: "none",
               },
-              color: "#5a3d8f",
-              fontWeight:"700",
-              padding: "0px 0px 0px 25px !important",
+              color: "white",
+              fontWeight:"500",
+              padding: "0px 0px 0px 35px !important",
             }}
           />
         </FormControl>
-        <Box className="d-flex justify-content-center mb-3">
+        <Box className="d-flex justify-content-center mb-3" sx={{paddingTop:width < 576 ? "30px" : "0"}}>
           <Button
             type="submit"
             onClick={handleSubmitSignUp}
             className=" mt-2"
             disabled={disabledBtn}
             sx={{
-              background:
-                "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
               borderRadius: 1,
               padding: "8px 35px",
-              opacity: disabledBtn === true ? "0.1" : "",
+              background: disabledBtn === true ? "#6f6683" : "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)"
             }}
           >
             <span
               style={{
                 color: "#faecf1",
+                fontWeight:"700"
               }}
             >
               SIGN UP
