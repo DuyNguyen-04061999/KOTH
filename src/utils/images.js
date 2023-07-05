@@ -28,7 +28,8 @@ import withdrawActive from "../assets/images/withdrawActive.png";
 import dogcoin from "../assets/images/dogcoin.png";
 import Doge from "../assets/images/Doge.png";
 import CloseButtonDeposit from "../assets/images/CloseButtonDeposit.png";
-
+import numberClient from "../assets/images/numberClient.png";
+import goldIcon from "../assets/images/GoldIcon.png";
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -197,6 +198,8 @@ export const images = {
   BackButtonDesposit: BackButtonDesposit,
   Doge: Doge,
   CloseButtonDeposit: CloseButtonDeposit,
+  numberClient: numberClient,
+  goldIcon: goldIcon,
 };
 
 export const images2 = {

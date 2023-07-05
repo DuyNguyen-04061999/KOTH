@@ -1,7 +1,8 @@
 FROM node:18-alpine as build
 
 ENV REACT_APP_NAME=KOTH
-ENV REACT_APP_SOCKET_SERVER=https://api.kingofthehill.live
+ENV REACT_APP_SOCKET_SERVER=https://web-system-files.s3.ap-northeast-1.amazonaws.com
+ENV REACT_APP_END_POINT=https://api.kingofthehill.live
 
 WORKDIR /app
 COPY package.json ./

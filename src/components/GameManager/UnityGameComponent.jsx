@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
-  const { GameFiles, width, height } = props;
+  const { GameFiles, width, height, tournamentId, gameId } = props;
+  const { token } = useSelector(state => state.authReducer)
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
       if (data[index]?.link?.includes(".loader.js")) {
@@ -37,7 +39,7 @@ export default function UnityGameComponent(props) {
     }
   }
 
-  const { unityProvider, unload, UNSAFE__unityInstance } = useUnityContext({
+  const { unityProvider, unload, UNSAFE__unityInstance, addEventListener, removeEventListener, sendMessage } = useUnityContext({
     loaderUrl: getLoaderJs(GameFiles),
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
@@ -52,6 +54,35 @@ export default function UnityGameComponent(props) {
     localStorage.setItem("GameFiles", JSON.stringify(GameFiles));
   }, [GameFiles]);
   const [finishStatus, setfinishStatus] = useState(false);
+
+  const handleGameLoad = useCallback((ready) => {
+      if(ready) {
+        sendMessage("OverTheBridgeHome", "SetToken", {
+          token: token,
+          tournamentId: tournamentId,
+          gameId: gameId
+        });
+      }
+  }, [sendMessage, tournamentId, token, gameId]);
+
+  const handleFinalGame = useCallback(() => {
+     window.location.reload()
+  }, []);
+
+
+  useEffect(() => {
+    addEventListener("Ready", handleGameLoad);
+    return () => {
+      removeEventListener("Ready", handleGameLoad);
+    };
+  }, [addEventListener, removeEventListener, handleGameLoad]);
+
+  useEffect(() => {
+    addEventListener("GameOver", handleFinalGame);
+    return () => {
+      removeEventListener("GameOver", handleFinalGame);
+    };
+  }, [addEventListener, removeEventListener, handleFinalGame]);
 
   const onBackButtonEvent = async (e) => {
     e.preventDefault();
