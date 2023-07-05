@@ -1,10 +1,4 @@
-import {
-  Box,
-  FormControl,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
 import React, { Fragment, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
@@ -156,28 +150,6 @@ export default function SelectRoom() {
       setCountDisLikeGame(countDisLikeGame - 1);
     }
   };
-
-  // useEffect(() => {
-  //   window.onbeforeunload = function () {
-  //     localStorage.setItem("IDRoom", roomDetailInfo?.id);
-  //   };
-  //   return () => {
-  //     window.onbeforeunload = function () {
-  //       localStorage.removeItem("IDRoom");
-  //     };
-  //   };
-  // }, [roomDetailInfo, detailGame?.id]);
-  // useEffect(() => {
-  //   if (
-  //     localStorage.getItem("IDRoom") &&
-  //     token
-  //   ) {
-  //     socket?.emit("leaveRoomGame", {
-  //       roomId: localStorage.getItem("IDRoom"),
-  //       gameId: detailGame?.id,
-  //     });
-  //   }
-  // });
 
   useEffect(() => {
     const socket = _socket;

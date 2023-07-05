@@ -31,7 +31,7 @@ export default function UploadPage() {
     const check = prompt("Please enter password!")
 
     if(check === envs?.APP_PASSWORD && uploadItem?.length === 4 && data.get('avatar') && data.get('name') && checkExtension(fileExtension, uploadItem)) {
-      axios.post(process.env.REACT_APP_SOCKET_SERVER + '/api/upload', dataRequest, {
+      axios.post(process.env.REACT_APP_END_POINT + '/api/upload', dataRequest, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'X-Requested-With': XMLHttpRequest
