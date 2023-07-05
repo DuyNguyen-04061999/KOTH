@@ -88,11 +88,18 @@ export default function ChatFriendList() {
               >
                 <Box>
                   <img
-                    src={e.userAccount.accountAvatar}
+                    src={
+                      e.userAccount.accountAvatar &&
+                      e?.userAccount?.accountAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          e?.userAccount?.accountAvatar
+                        : images.undefinedAvatar
+                    }
                     alt="..."
                     width={45}
                     height={45}
-                    style={{ borderRadius: "50%" }}
+                    style={{ borderRadius: "50%", backgroundColor:"#1a151e" }}
                     className="m-2"
                   />
                 </Box>
@@ -155,16 +162,19 @@ export default function ChatFriendList() {
                 className="ms-2 me-2"
               />
               <Box display={"flex"} flexDirection={"column"}>
-                <h6 style={{ color: "#535f92", fontWeight: "bolder",  }}>
+                <h6 style={{ color: "#535f92", fontWeight: "bolder" }}>
                   {e?.userName}
                 </h6>
-                <span style={{ color: "#605b80", fontWeight:"500" }}>
-                  {e.receiveMessages.map(e_m => e_m.messageContent)}
+                <span style={{ color: "#605b80", fontWeight: "500" }}>
+                  {e.receiveMessages.map((e_m) => e_m.messageContent.slice(0,15) + `...`)}
                 </span>
               </Box>
             </Box>
             <Box>
-              <span className="ms-2" style={{ color: "#535f92", fontWeight:"500" }}>
+              <span
+                className="ms-2"
+                style={{ color: "#535f92", fontWeight: "500" }}
+              >
                 {moment(e?.createdAt).format("HH:mm")}
               </span>
             </Box>

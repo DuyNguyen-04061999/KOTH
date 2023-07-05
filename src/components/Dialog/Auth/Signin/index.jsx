@@ -664,7 +664,7 @@ export default function Dialoglg() {
                 ) : (
                   <img
                     style={{
-                      borderRadius: 5,
+                      borderRadius: 50,
                     }}
                     alt="Remy Sharp"
                     src={

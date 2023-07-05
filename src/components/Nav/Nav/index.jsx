@@ -42,13 +42,13 @@ export default function Navbar() {
               <img
                 src={images.homeicon}
                 alt="..."
-                className="p-1"
-                width={40}
+                className="p-1 me-1"
+                width={35}
                 height="auto"
               />
-              <Typography variant="h6" sx={{ cursor: "pointer" }}>
+              <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>
                 Home
-              </Typography>
+              </span>
             </Box>
             <hr style={{ color: "white" }} />
             <Box
@@ -65,11 +65,11 @@ export default function Navbar() {
               <img
                 src={images.luckySpinIncon}
                 alt="..."
-                className="p-1"
-                width={40}
+                className="p-1 me-1"
+                width={35}
                 height="auto"
               />
-              <Typography>Lucky Spin</Typography>
+              <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Lucky Spin</span>
             </Box>
             <hr style={{ color: "white" }} />
             <Box className="nav-pages">
@@ -87,11 +87,11 @@ export default function Navbar() {
                 <img
                   src={images.favoriteIcon}
                   alt="..."
-                  className="p-1"
-                  width={40}
+                  className="p-1 me-1"
+                  width={35}
                   height="auto"
                 />
-                <Typography>Favorites</Typography>
+                <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Favorites</span>
               </Box>
               <Box
                 style={{ cursor: "pointer" }}
@@ -103,11 +103,11 @@ export default function Navbar() {
                 <img
                   src={images.pvpicon}
                   alt="..."
-                  className="p-1"
-                  width={40}
+                  className="p-1 me-1"
+                  width={35}
                   height="auto"
                 />
-                <Typography>PVP Games</Typography>
+                <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>PVP Games</span>
               </Box>
               <Box
                 style={{ cursor: "pointer" }}
@@ -119,11 +119,11 @@ export default function Navbar() {
                 <img
                   src={images.playicon}
                   alt="..."
-                  className="p-1"
-                  width={40}
+                  className="p-1 me-1"
+                  width={35}
                   height={"auto"}
                 />
-                <Typography>Free To Play</Typography>
+                <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Free To Play</span>
               </Box>
             </Box>
             <hr style={{ color: "white" }} />
@@ -142,18 +142,18 @@ export default function Navbar() {
               <img
                 src={images.gamelogicon}
                 alt="..."
-                className="p-1"
-                width={35}
+                className="p-1 me-1"
+                width={30}
                 height="auto"
               />
-              <Typography>Game Log</Typography>
+              <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Game Log</span>
             </Box>
             <Box className="d-flex align-items-center mt-1">
               <img
                 src={popup.faq}
                 alt="..."
-                className="p-1"
-                width={40}
+                className="p-1 me-1"
+                width={38}
                 height={"auto"}
               />
               <Typography
@@ -323,3 +323,5 @@ export default function Navbar() {
     </Box>
   );
 }
+
+
