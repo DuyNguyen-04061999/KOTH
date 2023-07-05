@@ -57,11 +57,10 @@ export default function UnityGameComponent(props) {
 
   const handleGameLoad = useCallback(() => {
       console.log("Ready from FE", true);
-      sendMessage("OverTheBridgeHome", "SetToken", {
-        token: token,
-        tournamentId: tournamentId,
-        gameId: gameId
-      });
+      sendMessage("OverTheBridgeHome", "SetToken", token);
+      sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
+      sendMessage("OverTheBridgeHome", "SetGameId", gameId);
+      sendMessage("OverTheBridgeHome", "StartGame", "Start");
   }, [sendMessage, tournamentId, token, gameId]);
 
   const handleFinalGame = useCallback(() => {
