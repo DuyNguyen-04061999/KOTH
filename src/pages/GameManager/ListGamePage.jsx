@@ -15,7 +15,7 @@ export default function ListGamePage() {
   const { token } = useSelector(state => state.authReducer)
   
   useEffect(() => {
-    if(fetchGame) axios.get(process.env.REACT_APP_SOCKET_SERVER + '/api/list')
+    if(fetchGame) axios.get(process.env.REACT_APP_END_POINT + '/api/list')
     .then(response => {
       if(response?.status === 200) {
         setGames(response?.data)
@@ -27,7 +27,7 @@ export default function ListGamePage() {
   const handleDeleteGame = (id) => {
     const check = prompt("Please enter password!")
     if(check === envs?.APP_PASSWORD) {
-      axios.delete(process.env.REACT_APP_SOCKET_SERVER + `/api/list/${id}`)
+      axios.delete(process.env.REACT_APP_END_POINT + `/api/list/${id}`)
       .then(response => {
         if(response?.status === 200) {
             window.location.reload();
