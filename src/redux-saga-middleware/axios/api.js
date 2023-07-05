@@ -6,7 +6,7 @@ axios.defaults.xsrfHeaderName = "X-XSRF-TOKEN";
 export const API = axios.create({
     baseURL: process.env.REACT_APP_END_POINT,
     headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         "Authorization": "Bearer " + localStorage.getItem("JWT"),
         "x-access-token": localStorage.getItem("JWT")
     },
