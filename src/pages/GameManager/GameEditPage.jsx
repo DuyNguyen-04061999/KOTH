@@ -32,7 +32,7 @@ export default function GameEditPage() {
         const check = prompt("Please enter password!")
 
         if(check === envs?.APP_PASSWORD && ((uploadItem?.length === 4 && data.get('avatar') && data.get('name') && checkExtension(fileExtension, uploadItem)) || data.get('name') || data.get('avatar') || (uploadItem?.length === 4 && checkExtension(fileExtension, uploadItem)))) {
-        axios.post(process.env.REACT_APP_SOCKET_SERVER + '/api/list/edit/' + location?.state?.id, dataRequest, {
+        axios.post(process.env.REACT_APP_END_POINT + '/api/list/edit/' + location?.state?.id, dataRequest, {
             headers: {
             'Content-Type': 'multipart/form-data',
             'X-Requested-With': XMLHttpRequest
