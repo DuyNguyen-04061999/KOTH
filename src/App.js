@@ -102,7 +102,7 @@ function App() {
         localStorage.setItem("NAME", user.userName);
         localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
-        localStorage.setItem("TOKEN", token);
+        localStorage.setItem("token", token);
         socket.emit("listMessage");
         socket.emit("listFriend");
         socket.emit("getTransaction");
@@ -138,7 +138,7 @@ function App() {
         localStorage.removeItem("NAME");
         localStorage.removeItem("PASS");
         localStorage.removeItem("KE");
-        localStorage.removeItem("TOKEN");
+        localStorage.removeItem("token");
         store.dispatch(logoutSuccessFully("logoutSuccess"));
         store.dispatch(gameLogoutSuccessFully());
         store.dispatch(chatLogoutSuccessFully());

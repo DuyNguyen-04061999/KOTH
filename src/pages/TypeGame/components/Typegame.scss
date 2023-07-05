@@ -1,0 +1,22 @@
+.title-favorite{
+    width: 100%;
+    position: relative;
+    &::before {
+      content: "";
+      background-image: url(../../../assets/imagesLayout/popuptext.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: absolute;
+      top: 5px;
+      left: 0;
+      width: 65%;
+      height: 65%;
+    }
+    h1 {
+      margin-left: 10px;
+      color: white;
+      font-family: "NextBold";
+      margin-bottom: 0px;
+      position: relative;
+    }
+}

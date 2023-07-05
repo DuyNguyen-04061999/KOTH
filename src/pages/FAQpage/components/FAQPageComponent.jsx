@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Container } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useDispatch, useSelector } from "react-redux";
 import { getListFaq } from "../../../redux-saga-middleware/reducers/appReducer";
+import "../components/FAQPageComponent.scss";
 
 const FAQPageComponent = () => {
   const { width } = useWindowDimensions();
@@ -352,32 +353,34 @@ const FAQPageComponent = () => {
   };
 
   return (
-    <div className="pb-5">
-      <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
-        FAQ
-      </Typography>
-      <Grid container sx={{}}>
-        <Grid
-          item
-          xs={3}
-          md={2}
-          sx={{
-            color: "#9485b7",
-            backgroundColor: "#2a2535",
-            borderRight: "5px solid #1a151e",
-          }}
-        >
-          {renderTitle()}
+    <div className="pb-5 pt-5">
+      <Container maxWidth={"md"}>
+        <Box className="title-FAQ">
+          <h1>FAQ</h1>
+        </Box>
+        <Grid container sx={{}}>
+          <Grid
+            item
+            xs={3}
+            md={2}
+            sx={{
+              color: "#9485b7",
+              backgroundColor: "#2a2535",
+              borderRight: "5px solid #1a151e",
+            }}
+          >
+            {renderTitle()}
+          </Grid>
+          <Grid
+            item
+            xs={9}
+            md={10}
+            sx={{ color: "white", backgroundColor: "#2a2535" }}
+          >
+            {renderFaq()}
+          </Grid>
         </Grid>
-        <Grid
-          item
-          xs={9}
-          md={10}
-          sx={{ color: "white", backgroundColor: "#2a2535" }}
-        >
-          {renderFaq()}
-        </Grid>
-      </Grid>
+      </Container>
     </div>
   );
 };

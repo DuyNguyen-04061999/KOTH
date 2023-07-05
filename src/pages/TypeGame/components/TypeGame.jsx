@@ -1,10 +1,11 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SliderLayout from "../../../components/Slider";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
 import { getListGameByType } from "../../../redux-saga-middleware/reducers/gameReducer";
+import '../components/Typegame.scss'
 
 export default function TypeGame() {
   const { type } = useParams();
@@ -45,12 +46,12 @@ export default function TypeGame() {
 
   return (
     <>
-      <Box>
-        <Container maxWidth={"xl"}>
+      <Box className="p-4">
+        <Container maxWidth={"md"} >
           <Box className="title-favorite mb-4">
-            <Typography variant="h4" sx={{ color: "#fff" }}>
+            <h1 >
               {title && title}
-            </Typography>
+            </h1>
           </Box>
           <Box>
             <SliderLayout cards={listGameByType && listGameByType} />

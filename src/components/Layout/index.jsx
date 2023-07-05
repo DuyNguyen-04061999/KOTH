@@ -323,7 +323,7 @@ export default function Layout(props) {
                     type="text"
                     value={searchValue}
                     onChange={handleInputChange}
-                    placeholder="Search"
+                    placeholder="Want to find something"
                     style={{
                       width: "100%",
                       backgroundColor: "#1a151e",
