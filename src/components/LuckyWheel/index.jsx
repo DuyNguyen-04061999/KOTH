@@ -151,7 +151,9 @@ export default function LuckyWheel(props) {
         <span className="spinButton" onClick={startRotation}>
           <img alt="" src={images.SpinButton} />{" "}
         </span>
-        <img className="LuckySpinSlogan" alt="BTD" src={images.LuckySlogan} />
+        <img className="LuckySpinSlogan" alt="BTD" src={images.LuckySlogan} style={{
+          width: "100%"
+        }}/>
         <div className="spinBorder"></div>
         <img alt="BTD" className="spinBorderBG" src={images.Ellipse} />
       </div>{" "}
