@@ -30,6 +30,12 @@ import Doge from "../assets/images/Doge.png";
 import CloseButtonDeposit from "../assets/images/CloseButtonDeposit.png";
 import numberClient from "../assets/images/numberClient.png";
 import goldIcon from "../assets/images/GoldIcon.png";
+import CupIcon from "../assets/images/CupIcon.png";
+import GoldIconWhite from "../assets/images/GoldIconWhite.png";
+import userIconWhite from "../assets/images/userIconWhite.png";
+import waitingClient from "../assets/images/waitingClient.png";
+import Checked from "../assets/images/Checked.png";
+import UnCheck from "../assets/images/UnCheck.png";
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -75,6 +81,8 @@ import gold from "../assets/LuckySpin/gold.png";
 import closeButton from "../assets/LuckySpin/close button.png";
 import backButton from "../assets/LuckySpin/backbutton.png";
 import BackButtonDesposit from "../assets/images/BackButtonDeposit.png";
+import sendIcon from "../assets/images/sendIcon.png";
+import CheckIcon from "../assets/images/CheckIcon.png";
 //------------popup---------------
 
 import bookmark1 from "../assets/imagesLayout/popup/bookmark1.png";
@@ -200,6 +208,14 @@ export const images = {
   CloseButtonDeposit: CloseButtonDeposit,
   numberClient: numberClient,
   goldIcon: goldIcon,
+  CupIcon: CupIcon,
+  GoldIconWhite: GoldIconWhite,
+  userIconWhite: userIconWhite,
+  sendIcon: sendIcon,
+  CheckIcon: CheckIcon,
+  waitingClient: waitingClient,
+  Checked: Checked,
+  UnCheck: UnCheck,
 };
 
 export const images2 = {
