@@ -50,38 +50,11 @@ export default function UnityGameComponent(props) {
   async function handleClickBack() {
     await unload();
   }
+
   useEffect(() => {
     localStorage.setItem("GameFiles", JSON.stringify(GameFiles));
   }, [GameFiles]);
   const [finishStatus, setfinishStatus] = useState(false);
-
-  const handleGameLoad = useCallback(() => {
-      console.log("Ready from FE", true);
-      sendMessage("OverTheBridgeHome", "SetToken", {
-        token: token,
-        tournamentId: tournamentId,
-        gameId: gameId
-      });
-  }, [sendMessage, tournamentId, token, gameId]);
-
-  const handleFinalGame = useCallback(() => {
-     window.location.reload()
-  }, []);
-
-
-  useEffect(() => {
-    addEventListener("Ready", handleGameLoad);
-    return () => {
-      removeEventListener("Ready", handleGameLoad);
-    };
-  }, [addEventListener, removeEventListener, handleGameLoad]);
-
-  useEffect(() => {
-    addEventListener("GameOver", handleFinalGame);
-    return () => {
-      removeEventListener("GameOver", handleFinalGame);
-    };
-  }, [addEventListener, removeEventListener, handleFinalGame]);
 
   const onBackButtonEvent = async (e) => {
     e.preventDefault();
@@ -115,6 +88,34 @@ export default function UnityGameComponent(props) {
       window.removeEventListener("popstate", onBackButtonEvent);
     };
   });
+
+  const handleGameLoad = useCallback(() => {
+      console.log("Ready from FE", true);
+      sendMessage("OverTheBridgeHome", "SetToken", {
+        token: token,
+        tournamentId: tournamentId,
+        gameId: gameId
+      });
+  }, [sendMessage, tournamentId, token, gameId]);
+
+  const handleFinalGame = useCallback(() => {
+    window.location.reload()
+  }, []);
+
+
+  useEffect(() => {
+    addEventListener("Ready", handleGameLoad);
+    return () => {
+      removeEventListener("Ready", handleGameLoad);
+    };
+  }, [addEventListener, removeEventListener, handleGameLoad]);
+
+  useEffect(() => {
+    addEventListener("GameOver", handleFinalGame);
+    return () => {
+      removeEventListener("GameOver", handleFinalGame);
+    };
+  }, [addEventListener, removeEventListener, handleFinalGame]);
 
   return (
     <Unity
