@@ -3,14 +3,20 @@ stages:
   - deploy
 build:
   stage: build
-  image:
-    name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
-    entrypoint: ['']
+  image: docker:24.0.2
+  # Pinning the right Docker version for the service also
+  services:
+    - docker:24.0.2-dind
   only:
     - staging
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --cache=true --snapshotMode=redo --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --destination ${CI_REGISTRY_IMAGE}:latest
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+#    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+#    - /kaniko/executor --cache=true --snapshotMode=redo --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --destination ${CI_REGISTRY_IMAGE}:latest
     - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} and ${CI_REGISTRY_IMAGE}:latest"
 deploy:
   stage: deploy
