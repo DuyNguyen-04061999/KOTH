@@ -44,6 +44,7 @@ export default function Tournament() {
     });
 
     socket?.on("joinTournamentSuccess", (data) => {
+      console.log(data);
       setGames(data?.games)
       setTId(data?.id)
     });
@@ -51,6 +52,10 @@ export default function Tournament() {
     socket?.on("getListTournamentSuccess", (data) => {
       setTournaments(data);
       setFetchT(false);
+    });
+
+    socket?.on("startGameInTournamentSuccess", (data) => {
+      setStartGame(true)
     });
   }, [socket]);
 
@@ -63,7 +68,9 @@ export default function Tournament() {
               <Box key={i_g} onClick={() => {
                 setGameFiles(g?.GameFiles)
                 setGameIdSelect(g?.id)
-                setStartGame(true)
+                socket?.emit("startGameInTournament", {
+                  tournamentId: tId
+                })
               }} className="p-2 text-white">
                 {g?.gameName}
               </Box>

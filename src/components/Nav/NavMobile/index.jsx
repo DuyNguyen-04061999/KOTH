@@ -25,7 +25,7 @@ export default function NavMobile() {
 
   return (
     <>
-      {isLoginDialog === false ? (
+      {isLoginDialog === false && width <= 576 ? (
         <div className="mobile" style={{ display: `${hideNavMobile}` }}>
           <div className="content">
             {openMess === true ? (

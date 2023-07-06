@@ -247,7 +247,7 @@ export default function Layout(props) {
             }}
           >
             <AddFriendIcon className="me-2 pb-1" />
-            View Profile
+            View Profile{" "}
           </Box>
         </MenuItem>
         <MenuItem onClick={handleClose}>

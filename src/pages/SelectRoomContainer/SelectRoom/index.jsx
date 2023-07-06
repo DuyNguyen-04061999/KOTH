@@ -1,6 +1,12 @@
-import { Box, FormControl, Grid, MenuItem, Select, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  // Menu,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import React, { Fragment, useEffect } from "react";
-import { Container } from "react-bootstrap";
 import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +20,7 @@ import "./index.scss";
 import {
   convertToInternationalCurrencySystem,
   getFontSizeDependOnWidth,
+  getFontSizeTitleDependOnWidth,
   getIconSizeDependOnWith,
 } from "../../../utils/config";
 import { images } from "../../../utils/images";
@@ -26,6 +33,7 @@ import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer"
 import imagesFavorite from "../../../utils/imagesFavorite";
 import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
 import { updateUserGold } from "../../../redux-saga-middleware/reducers/authReducer";
+import styled from "styled-components";
 
 export default function SelectRoom() {
   const { width } = useWindowDimensions();
@@ -49,7 +57,20 @@ export default function SelectRoom() {
   const [countDisLikeGame, setCountDisLikeGame] = useState(0);
   const [socket, setSocket] = useState(null);
   const [fGame, setFGame] = useState(null);
+  const [check, setCheck] = useState(false);
   const dispatch = useDispatch();
+  const [betAmount] = useState(null);
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const openOption = Boolean(anchorEl);
+  const Test = styled.input`
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: #7c5ead;
+      font-weight: 600;
+    }
+  `;
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -434,7 +455,17 @@ export default function SelectRoom() {
       gameId: detailGame?.id,
     });
   };
-
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleOnClickBet = (betAmount) => {
+  //   setBetAmount(betAmount);
+  //   handleClose();
+  // };
+  console.log(listRoom);
   useEffect(() => {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
@@ -627,12 +658,12 @@ export default function SelectRoom() {
                       width: width < 576 ? "auto" : "200px",
                       color: "#fff",
                     }}
-                    size="small"
+                    size={width < 576 && "small"}
                   >
                     <Select
                       sx={{
                         color: "#fff",
-                        backgroundColor: "#513c82",
+                        backgroundColor: width < 576 ? "#513c82" : "#4e3a81",
                         fontSize:"10px",
                         fontWeight:"500"
                       }}
@@ -642,9 +673,34 @@ export default function SelectRoom() {
                       defaultValue={dogeGold}
                     >
                       <MenuItem value={0}>FREE</MenuItem>
-                      <MenuItem value={100}>100 DOGE</MenuItem>
-                      <MenuItem value={200}>200 DOGE</MenuItem>
-                      <MenuItem value={500}>500 DOGE</MenuItem>
+                      <MenuItem value={100}>
+                        <img
+                          alt="..."
+                          style={{ marginRight: "5px" }}
+                          width="20px"
+                          src={images.goldIcon}
+                        />
+                        100{" "}
+                      </MenuItem>
+                      <MenuItem value={200}>
+                        <img
+                          alt="..."
+                          style={{ marginRight: "5px" }}
+                          width="20px"
+                          src={images.goldIcon}
+                        />
+                        200
+                      </MenuItem>
+                      <MenuItem value={500}>
+                        {" "}
+                        <img
+                          alt="..."
+                          style={{ marginRight: "5px" }}
+                          width="20px"
+                          src={images.goldIcon}
+                        />
+                        500
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -686,167 +742,369 @@ export default function SelectRoom() {
                 </Box>
               </Box>
               <h3 style={{ color: "white", marginTop: "60px" }}>Select Room</h3>
-              <Grid container rowSpacing={1} columnSpacing={1}
-                // sx={{
-                //   width: "100%",
-                //   display: "flex",
-                //   flexWrap: width < 576 ? "nowrap" : "wrap",
-                //   flexDirection: width < 576 ? "column" : "",
-                //   boxSizing: "border-box",
-                // }}
-              >
-                {listRoom?.map((item, i_item) => {
-                  return (
-                    <Grid item md={6} xs={12}
-                      key={i_item}
-                      sx={{ width: width < 576 ?"100%" : "50%" }}
-                      // className={`${
-                      //   i_item % 2 === 0 ? "pe-3" : "ps-3"
-                      // } mb-2 rounded  mt-3`}
-                    >
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          display: "flex",
-                          backgroundColor: "#352658",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: width < 576 ? "15%" : "20%",
-                            height: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "#fff",
-                            backgroundColor: "#513c82",
-                            borderRadius: "5px",
-                            fontWeight: "700",
-                            padding:width < 576 ? "10px" : "0px"
-                          }}
-                        >
-                          {!item?.membersInRoom ||
-                          JSON.parse(item?.membersInRoom)?.length <
-                            item?.roomCountMember
-                            ? "Open"
-                            : "Full"}
-                        </Box>
-                        <Box
-                          sx={{
-                            width: "60%",
-                            display: "flex",
-                            justifyContent: "space-around",
-                            alignItems: "center",
-                            color: "#757ae5",
-                            fontWeight: "640 ",
-                          }}
-                        >
-                          <span>{item?.roomName.slice(0,5)}</span>
-                          <p style={{ position: "relative" }}>
-                            <img
-                              style={{
-                                marginRight: "5px",
-                                position: "absolute",
-                                left: "-22px",
-                              }}
-                              width={width < 576 ? "15px" : "20px"}
-                              alt="..."
-                              src={images.numberClient}
-                            />
-                            <span>
-                              {JSON.parse(item?.membersInRoom)?.length || 0}/
-                              {item?.roomCountMember}
-                            </span>
-                          </p>
-                          <p style={{ position: "relative" }}>
-                            <img
-                              style={{
-                                marginRight: "5px",
-                                position: "absolute",
-                                left: "-24px",
-                              }}
-                              width="20px"
-                              alt="..."
-                              src={images.goldIcon}
-                            />
-                            1000
-                          </p>
-                        </Box>
-                        <Box
-                          sx={{
-                            width: width < 576 ? "auto" : "20%",
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            padding: "10px 10px 10px 0px",
-                          }}
-                        >
-                          {item?.roomStatus === 0 &&
-                          JSON.parse(item?.membersInRoom)?.length <
-                            item?.roomCountMember ? (
-                            <button
-                              onClick={() => {
-                                if (
-                                  item?.roomStatus === 0 &&
-                                  JSON.parse(item?.membersInRoom)?.length <
-                                    item?.roomCountMember
-                                ) {
-                                  _socket.emit("joinRoomGame", {
-                                    roomId: item?.id,
-                                    gameId: detailGame?.id,
-                                  });
-                                  setRoomIdSelect(item?.id);
-                                } else {
-                                  dispatch(
-                                    showAlert("error", "The room has been full")
-                                  );
-                                }
-                              }}
-                              style={{
-                                borderRadius: "5px",
-                                border: "none",
-                                outline: "none",
-                                backgroundColor: "rgba(138,57,240,1)",
-                                color: "#fff",
-                                padding: width < 576 ? "5px 15px" : "10px 30px",
-                                fontWeight: "640",
-                                backgroundImage:
-                                  "linear-gradient(#893af1,#7649ed)",
-                              }}
-                            >
-                              Join
-                            </button>
-                          ) : (
-                            <button
-                              style={{
-                                borderRadius: "5px",
-                                border: "none",
-                                outline: "none",
-                                backgroundColor: "#6f6684",
-                                color: "#9f97ac",
-                                padding: width < 576 ? "5px 15px" : "10px 30px",
-                                fontWeight: "640",
-                              }}
-                            >
-                              Join
-                            </button>
-                          )}
-                        </Box>
-                      </Box>
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            </div>
-          ) : (
-            <Container>
               <Box
                 sx={{
                   width: "100%",
-                  backgroundColor: "#271c37",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  position: "relative",
+                }}
+              >
+                <button
+                  // onClick={handleClick}
+                  style={{
+                    padding: "8px 35px",
+                    border: "none",
+                    outline: "none",
+                    borderRadius: "5px",
+                    color: "#fff",
+                    fontWeight: "640",
+                    backgroundImage: "linear-gradient(#893af1,#7548ed)",
+                  }}
+                >
+                  Filters
+                </button>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <p style={{ color: "#7c81f3", marginRight: "5px" }}>
+                    Only show the open rooms
+                  </p>
+                  {!check ? (
+                    <img
+                      onClick={() => setCheck(!check)}
+                      alt="..."
+                      height="22px"
+                      width="22px"
+                      style={{ cursor: "pointer" }}
+                      src={images.UnCheck}
+                    />
+                  ) : (
+                    <img
+                      onClick={() => setCheck(!check)}
+                      alt="..."
+                      style={{
+                        cursor: "pointer",
+                        width: "22px",
+                        height: "22px",
+                      }}
+                      src={images.Checked}
+                    />
+                  )}
+                </Box>{" "}
+                {/* <Menu
+                  anchorEl={anchorEl}
+                  open={openOption}
+                  onClose={handleClose}
+                  sx={{
+                    ".MuiMenu-paper": { backgroundColor: "#4e378a !important" },
+
+                    "& .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper":
+                      {
+                        boxShadow: "unset",
+                        background: "#4e378a",
+                      },
+                    "& .css-6hp17o-MuiList-root-MuiMenu-list": {
+                      background: "#4e378a",
+                    },
+                    "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper":
+                      {
+                        position: "absolute",
+                        top: "50% !important",
+                        left: "40% !important",
+                        padding: "5px 20px",
+                      },
+                  }}
+                >
+                  <Typography sx={{ textAlign: "start" }}>
+                    Bet Amount
+                  </Typography>
+                  <Box
+                    sx={{
+                      padding: "5px",
+                      display: "flex",
+                    }}
+                  >
+                    <MenuItem
+                      onClick={() => handleOnClickBet(0)}
+                      className="text-white me-3"
+                      sx={{
+                        background:
+                          betAmount && betAmount === 0 ? "#a34dfe" : "#7649cd",
+                        width: "100%",
+                        fontWeight: "bold",
+                        padding: "5px 10px",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                        color: "#8a8df7 !important",
+                      }}
+                    >
+                      <span>Free</span>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleOnClickBet(100)}
+                      className="text-white me-3"
+                      sx={{
+                        background:
+                          betAmount && betAmount === 100
+                            ? "#a34dfe"
+                            : "#7649cd",
+                        width: "100%",
+                        fontWeight: "bold",
+                        padding: "5px 10px",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                        color: "#8a8df7 !important",
+                      }}
+                    >
+                      <img
+                        style={{
+                          marginRight: "5px",
+                        }}
+                        width="20px"
+                        alt="..."
+                        src={images.goldIcon}
+                      />
+                      <span>100</span>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleOnClickBet(200)}
+                      className="text-white me-3"
+                      sx={{
+                        background:
+                          betAmount && betAmount === 200
+                            ? "#a34dfe"
+                            : "#7649cd",
+                        width: "100%",
+                        fontWeight: "bold",
+                        padding: "5px 10px",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                        color: "#8a8df7 !important",
+                      }}
+                    >
+                      <img
+                        style={{
+                          marginRight: "5px",
+                        }}
+                        width="20px"
+                        alt="..."
+                        src={images.goldIcon}
+                      />
+                      <span>200</span>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleOnClickBet(500)}
+                      className=" text-white me-3"
+                      sx={{
+                        background:
+                          betAmount && betAmount === 500
+                            ? "#a34dfe"
+                            : "#7649cd",
+                        width: "100%",
+                        fontWeight: "bold",
+                        color: "#8a8df7 !important",
+                        padding: "5px 10px",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <img
+                        style={{
+                          marginRight: "5px",
+                        }}
+                        width="20px"
+                        alt="..."
+                        src={images.goldIcon}
+                      />
+                      <span>500</span>
+                    </MenuItem>
+                  </Box>
+                </Menu> */}
+              </Box>
+
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  boxSizing: "border-box",
+                }}
+              >
+                {listRoom
+                  ?.filter((item) => {
+                    if (betAmount) {
+                      return Number(item?.roomBet) === Number(betAmount);
+                    } else {
+                      return item;
+                    }
+                  })
+                  .filter((item) => {
+                    if (check === true) {
+                      return (
+                        !item?.membersInRoom ||
+                        JSON.parse(item?.membersInRoom)?.length <
+                          item?.roomCountMember
+                      );
+                    } else {
+                      return item;
+                    }
+                  })
+                  .map((item, i_item) => {
+                    return (
+                      <Box
+                        key={i_item}
+                        sx={{ width: width < 576 ? "100%" : "50%" }}
+                        className={width < 576 ? `mb-2 rounded mt-3` : `mb-2 rounded  mt-3 pe-2`}
+                      >
+                        <Box
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            backgroundColor: "#352658",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              width: "20%",
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "#fff",
+                              backgroundColor: "#513c82",
+                              borderRadius: "5px",
+                              fontWeight: "700",
+                            }}
+                          >
+                            {!item?.membersInRoom ||
+                            JSON.parse(item?.membersInRoom)?.length <
+                              item?.roomCountMember
+                              ? "Open"
+                              : "Full"}
+                          </Box>
+                          <Box
+                            sx={{
+                              width: "60%",
+                              display: "flex",
+                              justifyContent: "space-around",
+                              alignItems: "center",
+                              color: "#757ae5",
+                              fontWeight: "640",
+                            }}
+                          >
+                            <span style={{
+                            }}>{`Room ${i_item + 1}`}</span>
+                            <p style={{ position: "relative" }}>
+                              <img
+                                style={{
+                                  marginRight: "5px",
+                                  position: "absolute",
+                                  left: "-22px",
+                                }}
+                                width="20px"
+                                alt="..."
+                                src={images.numberClient}
+                              />
+                              <span>
+                                {JSON.parse(item?.membersInRoom)?.length || 0}/
+                                {item?.roomCountMember}
+                              </span>
+                            </p>
+                            <p style={{ position: "relative" }}>
+                              <img
+                                style={{
+                                  marginRight: "5px",
+                                  position: "absolute",
+                                  left: "-24px",
+                                }}
+                                width="20px"
+                                alt="..."
+                                src={images.goldIcon}
+                              />
+                              {item?.roomBet}
+                            </p>
+                          </Box>
+                          <Box
+                            sx={{
+                              width: "20%",
+                              display: "flex",
+                              justifyContent: "flex-end",
+                              padding: "10px 10px 10px 0px",
+                            }}
+                          >
+                            {item?.roomStatus === 0 &&
+                            JSON.parse(item?.membersInRoom)?.length <
+                              item?.roomCountMember ? (
+                              <button
+                                onClick={() => {
+                                  if (
+                                    item?.roomStatus === 0 &&
+                                    JSON.parse(item?.membersInRoom)?.length <
+                                      item?.roomCountMember
+                                  ) {
+                                    _socket.emit("joinRoomGame", {
+                                      roomId: item?.id,
+                                      gameId: detailGame?.id,
+                                    });
+                                    setRoomIdSelect(item?.id);
+                                  } else {
+                                    dispatch(
+                                      showAlert(
+                                        "error",
+                                        "The room has been full"
+                                      )
+                                    );
+                                  }
+                                }}
+                                style={{
+                                  borderRadius: "5px",
+                                  maxWidth: width < 576 ? "50px" : "none",
+                                  border: "none",
+                                  outline: "none",
+                                  backgroundColor: "rgba(138,57,240,1)",
+                                  color: "#fff",
+                                  padding: "10px 30px",
+                                  fontWeight: "640",
+                                  backgroundImage:
+                                    "linear-gradient(#893af1,#7649ed)",
+                                }}
+                                className="d-flex align-items-center justify-content-center"
+                              >
+                                Join
+                              </button>
+                            ) : (
+                              <button
+                                style={{
+                                  borderRadius: "5px",
+                                  maxWidth: width < 576 ? "50px" : "none",
+                                  border: "none",
+                                  outline: "none",
+                                  backgroundColor: "#6f6684",
+                                  color: "#9f97ac",
+                                  padding: "10px 30px",
+                                  fontWeight: "640",
+                                }}
+                                className="d-flex align-items-center justify-content-center"
+                              >
+                                Join
+                              </button>
+                            )}
+                          </Box>
+                        </Box>
+                      </Box>
+                    );
+                  })}
+              </Box>
+            </div>
+          ) : (
+            <div className="container">
+              <Box
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#403068",
                   boxSizing: "border-box",
                   padding: "10px 20px",
                   display: "flex",
@@ -854,7 +1112,14 @@ export default function SelectRoom() {
                   justifyContent: "space-between",
                 }}
               >
-                <h2>{roomDetailInfo?.roomName}</h2>
+                <span
+                  style={{
+                    fontSize: getFontSizeTitleDependOnWidth(width),
+                    fontWeight: "630",
+                  }}
+                >
+                  {roomDetailInfo?.roomName}
+                </span>
                 <Box
                   sx={{
                     display: "flex",
@@ -864,42 +1129,63 @@ export default function SelectRoom() {
                   }}
                 >
                   <Typography
-                    sx={{ fontSize: getFontSizeDependOnWidth(width) }}
+                    sx={{
+                      fontSize: getFontSizeDependOnWidth(width),
+                      position: "relative",
+                    }}
                   >
-                    <i
-                      style={{ marginRight: "3px" }}
-                      className="fa-solid fa-user"
-                    ></i>
+                    <img
+                      style={{
+                        position: "absolute",
+                        top: "0px",
+                        left: "-21px",
+                      }}
+                      width="19px"
+                      alt="..."
+                      src={images.numberClient}
+                    />
                     {(roomDetailInfo?.membersInRoom
                       ? JSON.parse(roomDetailInfo?.membersInRoom)?.length
                       : 0) || 0}
                     /{roomDetailInfo?.roomCountMember}
                   </Typography>
                   <Typography
-                    sx={{ fontSize: getFontSizeDependOnWidth(width) }}
+                    sx={{
+                      fontSize: getFontSizeDependOnWidth(width),
+                      position: "relative",
+                    }}
                   >
-                    <i
-                      style={{ marginRight: "3px" }}
-                      className="fa-solid fa-circle-dollar-to-slot"
-                    ></i>
+                    <img
+                      style={{
+                        position: "absolute",
+                        top: "-2px",
+                        left: "-28px",
+                      }}
+                      width="24px"
+                      alt="..."
+                      src={images.goldIcon}
+                    />
                     {roomDetailInfo?.roomBet}
                   </Typography>
                 </Box>
               </Box>
               <Box
-                sx={{ width: "100%", display: "flex", boxSizing: "border-box" }}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  boxSizing: "border-box",
+                }}
               >
                 <Box
                   sx={{
                     width: "55%",
                     height: "auto",
-                    background: "#271c37",
+                    background: "#291e3b",
                     boxSizing: "border-box",
-                    padding: "14px 20px",
+                    padding: "30px 35px 35px 35px",
                     color: "white",
                   }}
                 >
-                  {/* <Typography>Press ready to play</Typography> */}
                   <Box
                     sx={{
                       display: "flex",
@@ -914,7 +1200,9 @@ export default function SelectRoom() {
                         alignItems: "center",
                       }}
                     >
-                      <Typography>
+                      <Typography
+                        sx={{ fontSize: getFontSizeDependOnWidth(width) }}
+                      >
                         <i
                           style={{ marginRight: "5px" }}
                           className="fa-solid fa-crown"
@@ -928,9 +1216,10 @@ export default function SelectRoom() {
                       <img
                         alt="..."
                         style={{
-                          width: "80px",
-                          height: "80px",
+                          width: "100px",
+                          height: "100px",
                           borderRadius: "50%",
+                          marginTop: "6px",
                         }}
                         src={
                           roomDetailInfo?.membersInRoom &&
@@ -945,12 +1234,30 @@ export default function SelectRoom() {
                             : images.undefinedAvatar
                         }
                       />
-                      <Box>
-                        <i
-                          style={{ marginRight: "5px" }}
-                          className="fa-solid fa-trophy"
-                        ></i>
-                        <span>
+                      <Box
+                        sx={{
+                          color: "#757ae5",
+                          fontWeight: "650",
+                          marginTop: "6px",
+                          position: "relative",
+                        }}
+                      >
+                        <img
+                          style={{
+                            width: "20px",
+                            marginRight: "5px",
+                            position: "absolute",
+                            top: "10px",
+                            left: "-25px",
+                          }}
+                          alt="..."
+                          src={images.CupIcon}
+                        />
+                        <span
+                          style={{
+                            fontSize: getFontSizeTitleDependOnWidth(width),
+                          }}
+                        >
                           {roomDetailInfo?.membersInRoom &&
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length > 0
                             ? JSON.parse(roomDetailInfo?.membersInRoom)[0]?.win
@@ -963,81 +1270,106 @@ export default function SelectRoom() {
                         width: "100px",
                         textAlign: "center",
                         fontWeight: "bolder",
+                        fontSize: "50px",
                       }}
                     >
                       VS
                     </Box>
                     {roomDetailInfo?.membersInRoom &&
-                      JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1 && (
+                    JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1 ? (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          position: "relative",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Typography>
+                          {roomDetailInfo?.membersInRoom &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1
+                            ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                ?.username
+                            : ""}
+                        </Typography>
+                        <img
+                          alt="..."
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            borderRadius: "50%",
+                          }}
+                          src={
+                            roomDetailInfo?.membersInRoom &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                              1
+                              ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                  ?.avatar
+                                ? process.env.REACT_APP_SOCKET_SERVER +
+                                  "/" +
+                                  JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                    ?.avatar
+                                : images.undefinedAvatar
+                              : images.waitingClient
+                          }
+                        />
                         <Box
                           sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
+                            color: "#757ae5",
+                            fontWeight: "650",
                             position: "relative",
                           }}
                         >
-                          <Typography>
+                          <img
+                            style={{
+                              width: "20px",
+                              marginRight: "5px",
+                              position: "absolute",
+                              top: "10px",
+                              left: "-25px",
+                            }}
+                            alt="..."
+                            src={images.CupIcon}
+                          />
+                          <span>
                             {roomDetailInfo?.membersInRoom &&
                             JSON.parse(roomDetailInfo?.membersInRoom)?.length >
                               1
                               ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                                  ?.username
+                                  ?.win
                               : ""}
-                          </Typography>
-                          <img
-                            alt="..."
-                            style={{
-                              width: "80px",
-                              height: "80px",
-                              borderRadius: "50%",
-                            }}
-                            src={
-                              roomDetailInfo?.membersInRoom &&
-                              JSON.parse(roomDetailInfo?.membersInRoom)
-                                ?.length > 1
-                                ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                                    ?.avatar
-                                  ? process.env.REACT_APP_SOCKET_SERVER +
-                                    "/" +
-                                    JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                                      ?.avatar
-                                  : images.undefinedAvatar
-                                : images.undefinedAvatar
-                            }
-                          />
-                          <Box>
-                            <i
-                              style={{ marginRight: "5px" }}
-                              className="fa-solid fa-trophy"
-                            ></i>
-                            <span>
-                              {roomDetailInfo?.membersInRoom &&
-                              JSON.parse(roomDetailInfo?.membersInRoom)
-                                ?.length > 1
-                                ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                                    ?.win
-                                : ""}
-                            </span>
-                          </Box>
-                          {roomDetailInfo?.membersInRoom &&
-                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                              1 &&
-                            JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                              ?.ready === 1 && (
-                              <i
-                                style={{
-                                  position: "absolute",
-                                  top: "30%",
-                                  left: "23px",
-                                  color: "black",
-                                  fontSize: getIconSizeDependOnWith(width),
-                                }}
-                                className="fa-solid fa-check"
-                              ></i>
-                            )}
+                          </span>
                         </Box>
-                      )}
+                        {roomDetailInfo?.membersInRoom &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                            1 &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                            ?.ready === 1 && (
+                            <img
+                              style={{
+                                position: "absolute",
+                                top: "30%",
+                                left: "18px",
+                                color: "black",
+                                width: getIconSizeDependOnWith(width),
+                              }}
+                              alt="..."
+                              src={images.CheckIcon}
+                            />
+                          )}
+                      </Box>
+                    ) : (
+                      <img
+                        alt="..."
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          borderRadius: "50%",
+                        }}
+                        src={images.waitingClient}
+                      />
+                    )}
                   </Box>
                   {getOwner(
                     roomDetailInfo?.membersInRoom
@@ -1049,82 +1381,90 @@ export default function SelectRoom() {
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",
-                        marginTop: "10px",
+                        marginTop: "30px",
                       }}
                     >
                       <Box
                         sx={{
-                          width: "50%",
+                          width: "100%",
                           display: "flex",
                           justifyContent: "space-between",
                         }}
                       >
                         <button
                           style={{
-                            width: "40%",
-                            backgroundColor: "lightgray",
-                            color: "black",
+                            width: "22%",
+                            backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
+                            fontSize: getFontSizeDependOnWidth(width),
+                            color: "white",
+                            fontWeight: "600",
                             border: "none",
                             outline: "none",
                             borderRadius: "5px",
                             padding: "10px",
-                            fontWeight: "bolder",
+                            height: "42px",
                           }}
                         >
                           Invite Global
                         </button>
                         <button
                           style={{
-                            width: "40%",
-                            backgroundColor: "lightgray",
-                            color: "black",
+                            width: "22%",
+                            backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
+                            fontSize: getFontSizeDependOnWidth(width),
+                            color: "white",
+                            fontWeight: "600",
                             border: "none",
                             outline: "none",
                             borderRadius: "5px",
                             padding: "10px",
-                            fontWeight: "bolder",
+                            height: "42px",
                           }}
                         >
                           Invite Friend
                         </button>
-                        {/* <Box
-                        sx={{
-                          width: "45%",
-                          color: "black",
-                          display: "flex",
-                          position: "relative",
-                        }}
-                      >
-                        <input
-                          style={{
-                            width: "100%",
-                            borderRadius: "5px",
-                            border: "none",
-                            outline: "none",
-                            boxSizing: "border-box",
-                            padding: "10px 90px 10px 15px",
-                          }}
-                          placeholder="Enter player ID"
-                        />
-                        <button
-                          style={{
-                            border: "none",
-                            outline: "none",
-                            borderRadius: "5px",
-                            position: "absolute",
-                            backgroundImage:
-                              "linear-gradient(rgba(138,57,240,1),rgba(116,73,237,1))",
-                            color: "white",
-                            top: "0px",
-                            right: "0px",
-                            height: "100%",
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
+                        <Box
+                          sx={{
+                            width: "47%",
+                            color: "black",
+                            display: "flex",
+                            position: "relative",
                           }}
                         >
-                          Invite
-                        </button>
-                      </Box> */}
+                          <Test
+                            className="inputInviteFriend"
+                            style={{
+                              width: "100%",
+                              borderRadius: "5px",
+                              border: "none",
+                              outline: "none",
+                              boxSizing: "border-box",
+                              padding: "10px 90px 10px 15px",
+                              backgroundColor: "#181223",
+                              color: "#9b9acf",
+                            }}
+                            placeholder="Enter player ID"
+                          />
+                          <button
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              borderRadius: "5px",
+                              position: "absolute",
+                              backgroundImage:
+                                "linear-gradient(rgba(138,57,240,1),rgba(116,73,237,1))",
+                              color: "white",
+                              top: "0px",
+                              right: "0px",
+                              height: "100%",
+                              paddingLeft: "20px",
+                              paddingRight: "20px",
+                              fontWeight: "600",
+                            }}
+                          >
+                            Invite
+                          </button>
+                        </Box>
                       </Box>
                     </Box>
                   )}
@@ -1132,31 +1472,17 @@ export default function SelectRoom() {
                   <Box
                     sx={{
                       width: "100%",
-                      height: "400px",
-                      backgroundColor: "white",
-                      marginTop: "40px",
+                      height: "300px",
+                      backgroundColor: "#181223",
+                      marginTop: "30px",
                       borderRadius: "5px",
                       boxSizing: "border-box",
                       padding: "10px",
                       color: "black",
                     }}
-                  >
-                    {/* <Box
-                      sx={{
-                        display: "flex",
-                        marginTop: "5px",
-                        fontSize: getFontSizeDependOnWidth(width),
-                      }}
-                    >
-                      <span style={{ fontWeight: "bolder" }}>User 1: </span>
-                      <span style={{ marginLeft: "5px" }}>
-                        {" "}
-                        fhdsjkfhdskjfhsdkjfhksdjh
-                      </span>
-                    </Box> */}
-                  </Box>
+                  ></Box>
                   <Box sx={{ position: "relative" }}>
-                    <input
+                    <Test
                       placeholder="Type something ..."
                       style={{
                         marginTop: "10px",
@@ -1167,41 +1493,93 @@ export default function SelectRoom() {
                         border: "none",
                         outline: "none",
                         borderRadius: "5px",
+                        backgroundColor: "#181223",
                       }}
                     />
-                    <i
+
+                    <img
                       style={{
                         position: "absolute",
                         top: "25px",
                         right: "17px",
                         color: "black",
-                        fontSize: getFontSizeDependOnWidth(width),
+                        width: getFontSizeDependOnWidth(width),
                         cursor: "pointer",
                       }}
-                      className="fa-solid fa-paper-plane"
-                    ></i>
+                      alt="..."
+                      src={images.sendIcon}
+                    />
                   </Box>
                 </Box>
                 <Box
                   sx={{
                     width: "45%",
                     height: "auto",
-                    backgroundImage: detailGame?.gameAvatar
-                      ? `url(${
-                          process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          detailGame?.gameAvatar
-                        })`
-                      : "",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    padding: "14px 60px",
+                    padding: "80px 60px 35px 60px",
+                    backgroundColor: "#32244d",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "flex-end",
+                    justifyContent: "space-between",
                   }}
                 >
+                  <Box sx={{ color: "#9b9acf" }}>
+                    <h3 style={{ color: "white" }}>Control Buttons:</h3>
+                    <p style={{ textAlign: "start" }}>
+                      {" "}
+                      <span style={{ color: "white" }}>W A D</span> keys to
+                      moves.
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      {" "}
+                      <span style={{ color: "white" }}>Shift</span> key or
+                      double tap <span style={{ color: "white" }}>W</span> to
+                      run
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      {" "}
+                      <span style={{ color: "white" }}>C, Z</span> or{" "}
+                      <span style={{ color: "white" }}>Caps Lock</span> keys to
+                      dodge
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      {" "}
+                      <span style={{ color: "white" }}>T</span> key or{" "}
+                      <span style={{ color: "white" }}>Enter</span> to chat
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      {" "}
+                      <span style={{ color: "white" }}>B</span> key to open the
+                      store
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      {" "}
+                      <span style={{ color: "white" }}>/</span> key to initiate
+                      a command
+                    </p>
+                    <h3 style={{ color: "white", marginTop: "50px" }}>
+                      Commands:
+                    </h3>
+                    <p style={{ textAlign: "start" }}>
+                      <span style={{ color: "white" }}>/rtv - </span>Don't like
+                      this map? vote to to skip it!
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      <span style={{ color: "white" }}>/player -</span> View the
+                      current Players waiting
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      <span style={{ color: "white" }}>/xp - </span>Check your
+                      level and XP
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      <span style={{ color: "white" }}>/played - </span>See how
+                      long you have been playing
+                    </p>
+                    <p style={{ textAlign: "start" }}>
+                      <span style={{ color: "white" }}>/nobuffs - </span>Play on
+                      multiple maps without.....
+                    </p>
+                  </Box>
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
@@ -1212,8 +1590,9 @@ export default function SelectRoom() {
                         borderRadius: "5px",
                         border: "none",
                         outline: "none",
-                        backgroundColor: "lightgray",
+                        backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
                         fontSize: getFontSizeDependOnWidth(width),
+                        color: "white",
                         fontWeight: "bolder",
                       }}
                       onClick={() => {
@@ -1238,8 +1617,9 @@ export default function SelectRoom() {
                           borderRadius: "5px",
                           border: "none",
                           outline: "none",
-                          backgroundColor: "lightgray",
+                          backgroundImage: "linear-gradient(#9f3af1,#bf49ee)",
                           fontSize: getFontSizeDependOnWidth(width),
+                          color: "white",
                           fontWeight: "bolder",
                         }}
                         onClick={() => {
@@ -1264,8 +1644,9 @@ export default function SelectRoom() {
                           borderRadius: "5px",
                           border: "none",
                           outline: "none",
-                          backgroundColor: "lightgray",
+                          backgroundImage: "linear-gradient(#9f3af1,#bf49ee)",
                           fontSize: getFontSizeDependOnWidth(width),
+                          color: "white",
                           fontWeight: "bolder",
                         }}
                         onClick={() =>
@@ -1304,7 +1685,7 @@ export default function SelectRoom() {
                   </Box>
                 </Box>
               </Box>
-            </Container>
+            </div>
           )}
         </>
       )}

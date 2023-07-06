@@ -6,7 +6,7 @@ ENV REACT_APP_END_POINT=https://api.kingofthehill.live
 
 WORKDIR /app
 COPY package.json ./
-COPY package-lock.json ./
+#COPY package-lock.json ./
 RUN npm i --legacy-peer-deps
 COPY ./ ./
 
@@ -18,16 +18,3 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
 
 CMD ["nginx", "-g", "daemon off;"]
-
-
-#FROM node:18-alpine as build
-#
-#
-#
-#WORKDIR /app
-#COPY package.json ./
-#COPY package-lock.json ./
-#RUN npm i --legacy-peer-deps
-#COPY ./ ./
-#
-#CMD ["npm", "start"]
