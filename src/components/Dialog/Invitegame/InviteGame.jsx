@@ -152,7 +152,7 @@ export default function InviteGameDialog() {
                 <SearchIcon
                   sx={{
                     fontSize: "30px",
-                    color: "#54539a",
+                    color: "white",
                   }}
                 />
               </Box>

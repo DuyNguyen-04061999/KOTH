@@ -87,7 +87,7 @@ export default function ComponentChat() {
                   sx={{
                     width: "fit-content",
                     maxWidth: "80%",
-                    background: "#392144",
+                    background: "#2e233d",
                     color: "#7878a7",
                     fontSize: "14px",
                   }}
@@ -190,7 +190,7 @@ export default function ComponentChat() {
                   <Box
                     className="p-2 mt-2"
                     sx={{
-                      background: "#392144",
+                      background: "#4d3565",
                       color: "#7878a7",
                       borderRadius: 1,
                       fontSize: "14px",

@@ -155,7 +155,12 @@ export default function GameLobbyDetailInfo() {
           noSeeAll={true}
         />
       </Box>
-      <Box className="d-flex mt-5 img-playgame">
+      <Box
+        className="d-flex img-playgame"
+        sx={{
+          marginTop: width < 576 ? "1.5rem" : "3rem",
+        }}
+      >
         <img
           src={
             detailGame?.gameAvatar
@@ -165,9 +170,10 @@ export default function GameLobbyDetailInfo() {
               : ""
           }
           alt="Des"
-          width={width && width > 576 ? 250 : 100}
-          height={width && width > 576 ? 250 : 100}
+          width={width && width > 576 ? 250 : 150}
+          height={width && width > 576 ? 250 : 150}
           className="me-2 p-2"
+          style={{ objectFit: "cover" }}
         />
         <div
           style={{ justifyContent: "space-between", padding: "8px" }}
@@ -202,11 +208,12 @@ export default function GameLobbyDetailInfo() {
             sx={{
               flexGrow: "1",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: width < 576 ? "flex-start" : "space-between",
               paddingRight: width > 576 ? "120px" : 0,
               boxSizing: "border-box",
-              width: "289px",
+              width: width < 576 ? "auto" : "289px",
               paddingLeft: "8px",
+              alignItems:"center"
             }}
             className="pt-2"
           >
@@ -216,6 +223,7 @@ export default function GameLobbyDetailInfo() {
                 sx={{
                   width: width < 576 ? width / 20 : width / 68,
                   height: width < 576 ? width / 20 : width / 68,
+                  marginRight: width < 576 ? "10px" : "0",
                 }}
                 onClick={handleOnClickLikeGame}
                 src={
@@ -234,6 +242,7 @@ export default function GameLobbyDetailInfo() {
                   position: "absolute",
                   bottom: "87px",
                   left: "35px",
+                  display: width < 576 ? "none" : "block",
                 }}
               >
                 {countLikeGame &&
@@ -247,6 +256,7 @@ export default function GameLobbyDetailInfo() {
                   width: width < 576 ? width / 20 : width / 68,
                   height: width < 576 ? width / 20 : width / 68,
                   marginTop: "5px",
+                  marginRight: width < 576 ? "10px" : "0",
                 }}
                 onClick={handleOnClickDisLikeGame}
                 src={
@@ -266,6 +276,7 @@ export default function GameLobbyDetailInfo() {
                   position: "absolute",
                   bottom: "87px",
                   left: "35px",
+                  display: width < 576 ? "none" : "block",
                 }}
               >
                 {countDisLikeGame &&
@@ -286,6 +297,7 @@ export default function GameLobbyDetailInfo() {
               sx={{
                 width: width < 576 ? width / 20 : width / 68,
                 height: width < 576 ? width / 20 : width / 68,
+                marginRight: width < 576 ? "10px" : "0",
               }}
               className="cursor-pointer"
               src={fGame ? imagesFavorite.like : imagesFavorite.unlike}

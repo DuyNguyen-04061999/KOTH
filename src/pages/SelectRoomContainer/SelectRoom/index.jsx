@@ -1,4 +1,4 @@
-import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { Box, FormControl, Grid, MenuItem, Select, Typography } from "@mui/material";
 import React, { Fragment, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
@@ -603,7 +603,7 @@ export default function SelectRoom() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  padding: "15px 30px",
+                  padding: width < 576 ? "0px" : "15px 30px",
                   backgroundColor: "#352658",
                   borderRadius: "5px",
                 }}
@@ -612,22 +612,29 @@ export default function SelectRoom() {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    width: "400px",
+                    width: width < 576 ? "auto" : "400px",
                     alignItems: "center",
                     color: "#857cab",
                   }}
                 >
-                  <h4>Select Betting</h4>
+                  {width < 576 ? (<h6 style={{
+                    padding:"5px"
+                  }}>Select Betting</h6>) : (
+                    <h4>Select Betting</h4>
+                  )}
                   <FormControl
                     sx={{
-                      width: "200px",
+                      width: width < 576 ? "auto" : "200px",
                       color: "#fff",
                     }}
+                    size="small"
                   >
                     <Select
                       sx={{
                         color: "#fff",
                         backgroundColor: "#513c82",
+                        fontSize:"10px",
+                        fontWeight:"500"
                       }}
                       onChange={(event) => {
                         setDogeGold(event.target.value);
@@ -641,11 +648,11 @@ export default function SelectRoom() {
                     </Select>
                   </FormControl>
                 </Box>
-                <Box>
+                <Box sx={{display:"flex"}}>
                   <button
                     onClick={handleQuickJoin}
                     style={{
-                      padding: "10px 30px",
+                      padding: width < 576 ? "2px 7px" : "10px 30px",
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
@@ -654,7 +661,7 @@ export default function SelectRoom() {
                       backgroundImage: "linear-gradient(#893af1,#7548ed)",
                     }}
                   >
-                    Quick Join
+                    <span style={{fontSize:"12px"}}>Quick Join</span>
                   </button>
                   <button
                     onClick={() => {
@@ -665,7 +672,7 @@ export default function SelectRoom() {
                     }}
                     style={{
                       marginLeft: "10px",
-                      padding: "10px 30px",
+                      padding: width < 576 ? "2px 7px" : "10px 30px",
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
@@ -674,27 +681,28 @@ export default function SelectRoom() {
                       backgroundImage: "linear-gradient(#893af1,#7548ed)",
                     }}
                   >
-                    Create Room
+                    <span style={{fontSize:"12px"}}>Create Room</span>
                   </button>
                 </Box>
               </Box>
               <h3 style={{ color: "white", marginTop: "60px" }}>Select Room</h3>
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  flexWrap: "wrap",
-                  boxSizing: "border-box",
-                }}
+              <Grid container rowSpacing={1} columnSpacing={1}
+                // sx={{
+                //   width: "100%",
+                //   display: "flex",
+                //   flexWrap: width < 576 ? "nowrap" : "wrap",
+                //   flexDirection: width < 576 ? "column" : "",
+                //   boxSizing: "border-box",
+                // }}
               >
                 {listRoom?.map((item, i_item) => {
                   return (
-                    <Box
+                    <Grid item md={6} xs={12}
                       key={i_item}
-                      sx={{ width: "50%" }}
-                      className={`${
-                        i_item % 2 === 0 ? "pe-3" : "ps-3"
-                      } mb-2 rounded  mt-3`}
+                      sx={{ width: width < 576 ?"100%" : "50%" }}
+                      // className={`${
+                      //   i_item % 2 === 0 ? "pe-3" : "ps-3"
+                      // } mb-2 rounded  mt-3`}
                     >
                       <Box
                         sx={{
@@ -709,7 +717,7 @@ export default function SelectRoom() {
                       >
                         <Box
                           sx={{
-                            width: "20%",
+                            width: width < 576 ? "15%" : "20%",
                             height: "100%",
                             display: "flex",
                             alignItems: "center",
@@ -718,6 +726,7 @@ export default function SelectRoom() {
                             backgroundColor: "#513c82",
                             borderRadius: "5px",
                             fontWeight: "700",
+                            padding:width < 576 ? "10px" : "0px"
                           }}
                         >
                           {!item?.membersInRoom ||
@@ -736,7 +745,7 @@ export default function SelectRoom() {
                             fontWeight: "640 ",
                           }}
                         >
-                          <span>{item?.roomName}</span>
+                          <span>{item?.roomName.slice(0,5)}</span>
                           <p style={{ position: "relative" }}>
                             <img
                               style={{
@@ -744,7 +753,7 @@ export default function SelectRoom() {
                                 position: "absolute",
                                 left: "-22px",
                               }}
-                              width="20px"
+                              width={width < 576 ? "15px" : "20px"}
                               alt="..."
                               src={images.numberClient}
                             />
@@ -769,7 +778,7 @@ export default function SelectRoom() {
                         </Box>
                         <Box
                           sx={{
-                            width: "20%",
+                            width: width < 576 ? "auto" : "20%",
                             display: "flex",
                             justifyContent: "flex-end",
                             padding: "10px 10px 10px 0px",
@@ -802,7 +811,7 @@ export default function SelectRoom() {
                                 outline: "none",
                                 backgroundColor: "rgba(138,57,240,1)",
                                 color: "#fff",
-                                padding: "10px 30px",
+                                padding: width < 576 ? "5px 15px" : "10px 30px",
                                 fontWeight: "640",
                                 backgroundImage:
                                   "linear-gradient(#893af1,#7649ed)",
@@ -818,7 +827,7 @@ export default function SelectRoom() {
                                 outline: "none",
                                 backgroundColor: "#6f6684",
                                 color: "#9f97ac",
-                                padding: "10px 30px",
+                                padding: width < 576 ? "5px 15px" : "10px 30px",
                                 fontWeight: "640",
                               }}
                             >
@@ -827,10 +836,10 @@ export default function SelectRoom() {
                           )}
                         </Box>
                       </Box>
-                    </Box>
+                    </Grid>
                   );
                 })}
-              </Box>
+              </Grid>
             </div>
           ) : (
             <Container>

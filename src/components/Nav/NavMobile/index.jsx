@@ -18,7 +18,7 @@ export default function NavMobile() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const navigate = useNavigate();
-  const [hideNavMobile] = useState("none");
+  const [hideNavMobile] = useState("block");
   const {width} = useWindowDimensions()
   const dispatch = useDispatch();
   useEffect(() => {}, []);

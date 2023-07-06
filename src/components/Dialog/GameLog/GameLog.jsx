@@ -12,11 +12,11 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { images280423_l } from "../../../utils/images280423_l";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ArrowIcon from "@mui/icons-material/ArrowForwardIos";
 import GameLogDetailDialog from "../GameLogDetail";
 import { useDispatch, useSelector } from "react-redux";
+import CloseIcon from "@mui/icons-material/Close";
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
 
 export default function GameLogDialog(props) {
@@ -102,36 +102,38 @@ export default function GameLogDialog(props) {
             className="position-fixed d-flex justify-content-between align-items-center p-2 ps-2 pe-2 pb-2"
             sx={{
               width: width < 576 ? "100%" : wrapperWidth,
-              background: "#442960",
+              background: "#37285c",
               zIndex: 1305,
             }}
           >
             <Box className="d-flex align-items-center">
-              <img
-                src={images280423_l.back}
-                alt="..."
-                width={30}
-                className="img-fluid"
-                onClick={() => {
-                  dispatch(toggleGameLogDialog());
-                }}
-              />
               <span
                 className="mx-2"
                 style={{
-                  fontWeight: "bold",
-                  color: "#ba72e0",
+                  color: "white",
+                  fontWeight:"700"
                 }}
               >
                 GAME LOG
               </span>
             </Box>
+            <Box
+                onClick={() => {
+                  dispatch(toggleGameLogDialog());
+                }}
+              >
+                <CloseIcon
+                  sx={{
+                    color: "#6d5b9a",
+                  }}
+                />
+              </Box>
           </Box>
           <Box
             sx={{
               minHeight: width < 576 ? height - 46 : "unset",
               maxHeight: width < 576 ? "unset" : height - 100,
-              background: "#201724",
+              background: "#30224a",
               paddingTop: "46px",
               overflow: "auto",
               paddingBottom: "200px",
@@ -237,10 +239,11 @@ export default function GameLogDialog(props) {
               <Box
                 sx={{
                   width: "100%",
+                  fontWeight:"500"
                 }}
                 className="mt-3 text-white ps-2"
               >
-                Not data yet!
+                Data Not found !
               </Box>
             )}
           </Box>

@@ -1,4 +1,4 @@
-import { Box, Drawer, Grid, IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, Drawer, Grid, Menu, MenuItem } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
@@ -364,14 +364,15 @@ export default function Layout(props) {
           </AvatarGroup>
           <div className="icon-toggle">
             {chatPopup === false ? (
-              <IconButton
+              <Box
                 onClick={() => {
                   dispatch(openChatPopup());
                 }}
                 color="inherit"
                 aria-label="open drawer"
                 edge="end"
-                sx={{ backgroundColor: "#aa73db", borderRadius: "4px" }}
+                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px" }}
+                className="cursor-pointer"
               >
                 <img
                   src={images.chatbtn2}
@@ -379,16 +380,17 @@ export default function Layout(props) {
                   width={23}
                   height={23}
                 />
-              </IconButton>
+              </Box>
             ) : (
-              <IconButton
+              <Box
                 onClick={() => {
                   dispatch(closeChatPopup());
                 }}
                 color="inherit"
                 aria-label="open drawer"
                 edge="end"
-                sx={{ backgroundColor: "#aa73db", borderRadius: "4px" }}
+                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px" }}
+                className="cursor-pointer"
               >
                 <img
                   src={images.chatbtn2}
@@ -396,7 +398,7 @@ export default function Layout(props) {
                   width={23}
                   height={23}
                 />
-              </IconButton>
+              </Box>
             )}
           </div>
         </Toolbar>

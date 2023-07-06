@@ -194,7 +194,7 @@ export default function ChatGlobal(props) {
           <Box
             className="p-2 d-flex align-items-center justify-content-between"
             sx={{
-              backgroundColor: "#482555",
+              backgroundColor: "#462a71",
               width: "100%",
             }}
           >
@@ -231,7 +231,7 @@ export default function ChatGlobal(props) {
           <Box
             component="div"
             hidden={!showChat}
-            sx={{ backgroundColor: "#292033" }}
+            sx={{ backgroundColor: "#2e233d" }}
           >
             <ComponentChat />
           </Box>
@@ -241,7 +241,7 @@ export default function ChatGlobal(props) {
             sx={{
               position: "absolute",
               bottom: width < 576 ? "0px" : "64px",
-              background: "#482555",
+              background: "#322444",
               padding: "15px 20px ",
               zIndex: "20",
             }}
