@@ -465,7 +465,7 @@ export default function SelectRoom() {
   //   setBetAmount(betAmount);
   //   handleClose();
   // };
-  console.log(listRoom);
+  
   useEffect(() => {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);

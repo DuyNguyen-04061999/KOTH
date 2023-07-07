@@ -44,7 +44,6 @@ export default function Tournament() {
     });
 
     socket?.on("joinTournamentSuccess", (data) => {
-      console.log(data);
       setGames(data?.games)
       setTId(data?.id)
     });

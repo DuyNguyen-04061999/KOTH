@@ -68,7 +68,6 @@ export default function ChatFriendList() {
       <>
         {friendList && friendList?.length > 0 ? (
           friendList.map((e, index) => {
-            console.log(e);
             return (
               <Box
                 key={index}

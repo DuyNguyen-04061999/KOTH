@@ -39,7 +39,6 @@ export default function ChatWorldList() {
   const handleClick = (event, userName) => {
     setUserName(userName);
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget);
     setMessFromName(userName);
   };
   const checkExistInFriendList = () => {
@@ -100,7 +99,6 @@ export default function ChatWorldList() {
   const renderChat = worldMessage
     ?.filter((n) => n.messageType === "World")
     .map((e, index) => {
-      console.log(e);
       return (
         <Box
           key={index}
