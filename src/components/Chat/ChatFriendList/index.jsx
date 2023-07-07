@@ -9,7 +9,6 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-// import _socket from "../../../redux-saga-middleware/config/socket";
 import { updateContacterUsername } from "../../../redux-saga-middleware/reducers/chatReducer";
 
 const Test = styled.input`
@@ -36,10 +35,8 @@ export default function ChatFriendList() {
   const { width, height } = useWindowDimensions();
   const [searchFeild, setSearchFeild] = useState("");
   const { friendList } = useSelector((state) => state.chatReducer);
-  console.log(friendList);
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
-  // const filterFriend = [];
   const handleChangeSearchChat = (e) => {
     setSearchFeild(e.target.value);
   };
@@ -146,7 +143,7 @@ export default function ChatFriendList() {
               }
             }}
           >
-            <Box display={"flex"}>
+            <Box display={"flex"} alignItems={"center"}>
               <img
                 src={
                   e?.userAccount && e?.userAccount?.accountAvatar
@@ -158,14 +155,14 @@ export default function ChatFriendList() {
                 alt="..."
                 width={45}
                 height={45}
-                style={{ borderRadius: "15%" }}
+                style={{ borderRadius: "50%" }}
                 className="ms-2 me-2"
               />
               <Box display={"flex"} flexDirection={"column"}>
-                <h6 style={{ color: "#535f92", fontWeight: "bolder" }}>
+                <h5 style={{ color: "#535f92", fontWeight: "bolder" }}>
                   {e?.userName}
-                </h6>
-                <span style={{ color: "#605b80", fontWeight: "500" }}>
+                </h5>
+                <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
                   {e.receiveMessages.map((e_m) => e_m.messageContent.slice(0,15) + `...`)}
                 </span>
               </Box>

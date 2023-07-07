@@ -619,22 +619,36 @@ export default function SelectRoom() {
         <>
           {roomNav === true ? (
             <div className="container">
-              <Box className="mt-5 mb-5">
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  width: "100%",
+                }}
+                className={`${width < 576 ? "mt-1 mb-3" : "mt-5 mb-4"}`}
+              >
                 <TitleHomeDesktopComponent
-                  title={detailGame?.gameName}
+                  title={detailGame?.gameName?.toUpperCase()}
                   noicon={true}
                   noSeeAll={width && width < 576}
                 />
               </Box>
-              <h3 style={{ color: "white", marginBottom: "24px" }}>
+              <Typography
+                sx={{
+                  color: "white",
+                  marginBottom: width < 576 ? "24px" : "10px !important",
+                  textAlign: "start",
+                  fontSize: getFontSizeTitleDependOnWidth(width),
+                }}
+              >
                 Create Room
-              </h3>
+              </Typography>
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  padding: width < 576 ? "0px" : "15px 30px",
+                  padding: width < 576 ? "10px" : "15px 30px",
                   backgroundColor: "#352658",
                   borderRadius: "5px",
                 }}
@@ -648,14 +662,26 @@ export default function SelectRoom() {
                     color: "#857cab",
                   }}
                 >
-                  {width < 576 ? (<h6 style={{
-                    padding:"5px"
-                  }}>Select Betting</h6>) : (
-                    <h4>Select Betting</h4>
+                  {width < 576 ? (
+                    <div
+                      style={{
+                        lineHeight: "18px",
+                        fontSize: getFontSizeDependOnWidth(width),
+                        marginRight: width / 27,
+                      }}
+                    >
+                      <p style={{ textAlign: "start" }}>Select</p>
+                      <p style={{ textAlign: "start" }}> Betting:</p>
+                    </div>
+                  ) : (
+                    <Typography sx={{ fontSize: "20px" }}>
+                      Select Betting:
+                    </Typography>
                   )}
                   <FormControl
                     sx={{
-                      width: width < 576 ? "auto" : "200px",
+                      width: width < 576 ? parseFloat(width / 4.5) : "200px",
+                      height: width < 576 ? "30px" : "none",
                       color: "#fff",
                     }}
                     size={width < 576 ? "small" : "medium"}
@@ -664,51 +690,89 @@ export default function SelectRoom() {
                       sx={{
                         color: "#fff",
                         backgroundColor: width < 576 ? "#513c82" : "#4e3a81",
-                        fontSize:"10px",
-                        fontWeight:"500"
+                        fontSize: getFontSizeDependOnWidth(width),
+                        fontWeight: "500",
+                        height: width < 576 ? "40px" : "none",
+                        "&.css-1ujqymx-MuiButtonBase-root-MuiMenuItem-root": {
+                          minHeight: "20px !important",
+                        },
                       }}
                       onChange={(event) => {
                         setDogeGold(event.target.value);
                       }}
                       defaultValue={dogeGold}
                     >
-                      <MenuItem value={0}>FREE</MenuItem>
-                      <MenuItem value={100}>
+                      <MenuItem
+                        sx={{
+                          fontSize: getFontSizeDependOnWidth(width),
+                          minHeight: "20px !important",
+                        }}
+                        value={0}
+                      >
+                        FREE
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          fontSize: getFontSizeDependOnWidth(width),
+                          minHeight: "20px !important",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                        value={100}
+                      >
                         <img
                           alt="..."
                           style={{ marginRight: "5px" }}
-                          width="20px"
+                          width={getFontSizeDependOnWidth(width)}
                           src={images.goldIcon}
                         />
-                        100{" "}
+                        <span>100</span>{" "}
                       </MenuItem>
-                      <MenuItem value={200}>
+                      <MenuItem
+                        sx={{
+                          fontSize: getFontSizeDependOnWidth(width),
+                          minHeight: "20px !important",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                        value={200}
+                      >
                         <img
                           alt="..."
                           style={{ marginRight: "5px" }}
-                          width="20px"
+                          width={getFontSizeDependOnWidth(width)}
                           src={images.goldIcon}
                         />
-                        200
+                        <span>200</span>
                       </MenuItem>
-                      <MenuItem value={500}>
+                      <MenuItem
+                        sx={{
+                          fontSize: getFontSizeDependOnWidth(width),
+                          minHeight: "20px !important",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                        value={500}
+                      >
                         {" "}
                         <img
                           alt="..."
                           style={{ marginRight: "5px" }}
-                          width="20px"
+                          width={getFontSizeDependOnWidth(width)}
                           src={images.goldIcon}
                         />
-                        500
+                        <span>500</span>
                       </MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
-                <Box sx={{display:"flex"}}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
                   <button
                     onClick={handleQuickJoin}
                     style={{
-                      padding: width < 576 ? "2px 7px" : "10px 30px",
+                      padding: width < 576 ? "0px 0px" : "10px 20px",
+                      width: width < 576 ? width / 4.5 : "none",
+                      height: width < 576 ? "30px" : "none",
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
@@ -717,7 +781,9 @@ export default function SelectRoom() {
                       backgroundImage: "linear-gradient(#893af1,#7548ed)",
                     }}
                   >
-                    <span style={{fontSize:"12px"}}>Quick Join</span>
+                    <span style={{ fontSize: getFontSizeDependOnWidth(width) }}>
+                      Quick Join
+                    </span>
                   </button>
                   <button
                     onClick={() => {
@@ -727,8 +793,10 @@ export default function SelectRoom() {
                       });
                     }}
                     style={{
-                      marginLeft: "10px",
-                      padding: width < 576 ? "2px 7px" : "10px 30px",
+                      padding: width < 576 ? "0px 0px" : "10px 20px",
+                      marginLeft: width < 576 ? "10px" : "10px",
+                      width: width < 576 ? width / 4.5 : "none",
+                      height: width < 576 ? "30px" : "none",
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
@@ -737,11 +805,23 @@ export default function SelectRoom() {
                       backgroundImage: "linear-gradient(#893af1,#7548ed)",
                     }}
                   >
-                    <span style={{fontSize:"12px"}}>Create Room</span>
+                    <span style={{ fontSize: getFontSizeDependOnWidth(width) }}>
+                      Create Room
+                    </span>
                   </button>
                 </Box>
               </Box>
-              <h3 style={{ color: "white", marginTop: "60px" }}>Select Room</h3>
+              <Typography
+                className="mt-5"
+                style={{
+                  color: "white",
+                  marginTop: width < 576 ? "none" : "60px",
+                  textAlign: "start",
+                  fontSize: getFontSizeTitleDependOnWidth(width),
+                }}
+              >
+                Select Room
+              </Typography>
               <Box
                 sx={{
                   width: "100%",
@@ -750,22 +830,21 @@ export default function SelectRoom() {
                   position: "relative",
                 }}
               >
-                <button
-                  // onClick={handleClick}
-                  style={{
-                    padding: "8px 35px",
-                    border: "none",
-                    outline: "none",
-                    borderRadius: "5px",
-                    color: "#fff",
-                    fontWeight: "640",
-                    backgroundImage: "linear-gradient(#893af1,#7548ed)",
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                    justifyContent: "flex-end",
                   }}
                 >
-                  Filters
-                </button>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p style={{ color: "#7c81f3", marginRight: "5px" }}>
+                  <p
+                    style={{
+                      color: "#7c81f3",
+                      marginRight: "5px",
+                      fontSize: getFontSizeDependOnWidth(width),
+                    }}
+                  >
                     Only show the open rooms
                   </p>
                   {!check ? (
@@ -790,135 +869,6 @@ export default function SelectRoom() {
                     />
                   )}
                 </Box>{" "}
-                {/* <Menu
-                  anchorEl={anchorEl}
-                  open={openOption}
-                  onClose={handleClose}
-                  sx={{
-                    ".MuiMenu-paper": { backgroundColor: "#4e378a !important" },
-
-                    "& .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper":
-                      {
-                        boxShadow: "unset",
-                        background: "#4e378a",
-                      },
-                    "& .css-6hp17o-MuiList-root-MuiMenu-list": {
-                      background: "#4e378a",
-                    },
-                    "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper":
-                      {
-                        position: "absolute",
-                        top: "50% !important",
-                        left: "40% !important",
-                        padding: "5px 20px",
-                      },
-                  }}
-                >
-                  <Typography sx={{ textAlign: "start" }}>
-                    Bet Amount
-                  </Typography>
-                  <Box
-                    sx={{
-                      padding: "5px",
-                      display: "flex",
-                    }}
-                  >
-                    <MenuItem
-                      onClick={() => handleOnClickBet(0)}
-                      className="text-white me-3"
-                      sx={{
-                        background:
-                          betAmount && betAmount === 0 ? "#a34dfe" : "#7649cd",
-                        width: "100%",
-                        fontWeight: "bold",
-                        padding: "5px 10px",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                        color: "#8a8df7 !important",
-                      }}
-                    >
-                      <span>Free</span>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => handleOnClickBet(100)}
-                      className="text-white me-3"
-                      sx={{
-                        background:
-                          betAmount && betAmount === 100
-                            ? "#a34dfe"
-                            : "#7649cd",
-                        width: "100%",
-                        fontWeight: "bold",
-                        padding: "5px 10px",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                        color: "#8a8df7 !important",
-                      }}
-                    >
-                      <img
-                        style={{
-                          marginRight: "5px",
-                        }}
-                        width="20px"
-                        alt="..."
-                        src={images.goldIcon}
-                      />
-                      <span>100</span>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => handleOnClickBet(200)}
-                      className="text-white me-3"
-                      sx={{
-                        background:
-                          betAmount && betAmount === 200
-                            ? "#a34dfe"
-                            : "#7649cd",
-                        width: "100%",
-                        fontWeight: "bold",
-                        padding: "5px 10px",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                        color: "#8a8df7 !important",
-                      }}
-                    >
-                      <img
-                        style={{
-                          marginRight: "5px",
-                        }}
-                        width="20px"
-                        alt="..."
-                        src={images.goldIcon}
-                      />
-                      <span>200</span>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => handleOnClickBet(500)}
-                      className=" text-white me-3"
-                      sx={{
-                        background:
-                          betAmount && betAmount === 500
-                            ? "#a34dfe"
-                            : "#7649cd",
-                        width: "100%",
-                        fontWeight: "bold",
-                        color: "#8a8df7 !important",
-                        padding: "5px 10px",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <img
-                        style={{
-                          marginRight: "5px",
-                        }}
-                        width="20px"
-                        alt="..."
-                        src={images.goldIcon}
-                      />
-                      <span>500</span>
-                    </MenuItem>
-                  </Box>
-                </Menu> */}
               </Box>
 
               <Box
@@ -949,18 +899,29 @@ export default function SelectRoom() {
                     }
                   })
                   .map((item, i_item) => {
-                    return (
+                    return i_item % 2 === 0 ? (
                       <Box
                         key={i_item}
-                        sx={{ width: width < 576 ? "100%" : "50%" }}
-                        className={width < 576 ? `mb-2 rounded mt-3` : `mb-2 rounded  mt-3 pe-2`}
+                        sx={{
+                          width: width < 576 ? "100%" : "50%",
+                          marginTop: width < 576 ? "12px" : "20px",
+                          height: width < 576 ? "60px" : "none",
+                          paddingRight: width < 576 ? "none" : "10px",
+                        }}
+                        className={width < 576 ? `none` : `rounded`}
                       >
                         <Box
                           sx={{
                             width: "100%",
                             height: "100%",
                             display: "flex",
-                            backgroundColor: "#352658",
+                            backgroundColor:
+                              (item?.roomStatus === 0 &&
+                                !item?.membersInRoom) ||
+                              JSON.parse(item?.membersInRoom)?.length <
+                                item?.roomCountMember
+                                ? "#352658"
+                                : "#4a4463",
                             justifyContent: "space-between",
                             alignItems: "center",
                             borderRadius: "5px",
@@ -973,10 +934,21 @@ export default function SelectRoom() {
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              color: "#fff",
-                              backgroundColor: "#513c82",
-                              borderRadius: "5px",
+                              color:
+                                !item?.membersInRoom ||
+                                JSON.parse(item?.membersInRoom)?.length <
+                                  item?.roomCountMember
+                                  ? "#fff"
+                                  : "#9b90a4",
+                              backgroundColor:
+                                !item?.membersInRoom ||
+                                JSON.parse(item?.membersInRoom)?.length <
+                                  item?.roomCountMember
+                                  ? "#893bf0"
+                                  : "#6f6684",
+                              borderRadius: "5px 0px 0px 5px",
                               fontWeight: "700",
+                              fontSize: getFontSizeDependOnWidth(width),
                             }}
                           >
                             {!item?.membersInRoom ||
@@ -991,40 +963,69 @@ export default function SelectRoom() {
                               display: "flex",
                               justifyContent: "space-around",
                               alignItems: "center",
-                              color: "#757ae5",
+                              color:
+                                !item?.membersInRoom ||
+                                JSON.parse(item?.membersInRoom)?.length <
+                                  item?.roomCountMember
+                                  ? "#757ae5"
+                                  : "#6f6684",
                               fontWeight: "640",
                             }}
                           >
-                            <span style={{
-                            }}>{`Room ${i_item + 1}`}</span>
-                            <p style={{ position: "relative" }}>
+                            <span
+                              style={{
+                                fontSize: getFontSizeDependOnWidth(width),
+                              }}
+                            >{`Room ${i_item + 1}`}</span>
+                            <p
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                fontSize: getFontSizeDependOnWidth(width),
+                              }}
+                            >
                               <img
                                 style={{
-                                  marginRight: "5px",
-                                  position: "absolute",
-                                  left: "-22px",
+                                  marginRight: width < 576 ? "2px" : "5px",
+                                  width: getFontSizeDependOnWidth(width),
                                 }}
-                                width="20px"
                                 alt="..."
-                                src={images.numberClient}
+                                src={
+                                  !item?.membersInRoom ||
+                                  JSON.parse(item?.membersInRoom)?.length <
+                                    item?.roomCountMember
+                                    ? images.numberClient
+                                    : images.passiveUser
+                                }
                               />
                               <span>
                                 {JSON.parse(item?.membersInRoom)?.length || 0}/
                                 {item?.roomCountMember}
                               </span>
                             </p>
-                            <p style={{ position: "relative" }}>
+                            <p
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                fontSize: getFontSizeDependOnWidth(width),
+                              }}
+                            >
                               <img
                                 style={{
-                                  marginRight: "5px",
-                                  position: "absolute",
-                                  left: "-24px",
+                                  marginRight: width < 576 ? "2px" : "5px",
+                                  width: getFontSizeDependOnWidth(width),
                                 }}
-                                width="20px"
                                 alt="..."
-                                src={images.goldIcon}
+                                src={
+                                  !item?.membersInRoom ||
+                                  JSON.parse(item?.membersInRoom)?.length <
+                                    item?.roomCountMember
+                                    ? images.goldIcon
+                                    : images.passiveCoin
+                                }
                               />
-                              {item?.roomBet}
+                              {/* {item?.roomBet} */}
+                              500
                             </p>
                           </Box>
                           <Box
@@ -1032,10 +1033,13 @@ export default function SelectRoom() {
                               width: "20%",
                               display: "flex",
                               justifyContent: "flex-end",
-                              padding: "10px 10px 10px 0px",
+                              padding:
+                                width < 576
+                                  ? "20px 15px 20px 0px"
+                                  : "10px 10px 10px 0px",
                             }}
                           >
-                            {item?.roomStatus === 0 &&
+                            {!item?.membersInRoom ||
                             JSON.parse(item?.membersInRoom)?.length <
                               item?.roomCountMember ? (
                               <button
@@ -1061,15 +1065,20 @@ export default function SelectRoom() {
                                 }}
                                 style={{
                                   borderRadius: "5px",
-                                  maxWidth: width < 576 ? "50px" : "none",
+                                  width:
+                                    width < 576
+                                      ? parseFloat(width / 7.4)
+                                      : "none",
                                   border: "none",
                                   outline: "none",
+                                  height: width < 576 ? "30px" : "none",
                                   backgroundColor: "rgba(138,57,240,1)",
                                   color: "#fff",
-                                  padding: "10px 30px",
+                                  padding: width < 576 ? "none" : "10px 30px",
                                   fontWeight: "640",
                                   backgroundImage:
                                     "linear-gradient(#893af1,#7649ed)",
+                                  fontSize: getFontSizeDependOnWidth(width),
                                 }}
                                 className="d-flex align-items-center justify-content-center"
                               >
@@ -1079,13 +1088,228 @@ export default function SelectRoom() {
                               <button
                                 style={{
                                   borderRadius: "5px",
-                                  maxWidth: width < 576 ? "50px" : "none",
+                                  width:
+                                    width < 576
+                                      ? parseFloat(width / 7.4)
+                                      : "none",
                                   border: "none",
                                   outline: "none",
+                                  height: width < 576 ? "30px" : "none",
                                   backgroundColor: "#6f6684",
                                   color: "#9f97ac",
-                                  padding: "10px 30px",
+                                  padding: width < 576 ? "none" : "10px 30px",
                                   fontWeight: "640",
+                                  fontSize: getFontSizeDependOnWidth(width),
+                                }}
+                                className="d-flex align-items-center justify-content-center"
+                              >
+                                Join
+                              </button>
+                            )}
+                          </Box>
+                        </Box>
+                      </Box>
+                    ) : (
+                      <Box
+                        key={i_item}
+                        sx={{
+                          width: width < 576 ? "100%" : "50%",
+                          marginTop: width < 576 ? "12px" : "20px",
+                          height: width < 576 ? "60px" : "none",
+                          paddingLeft: width < 576 ? "none" : "10px",
+                        }}
+                        className={width < 576 ? `none` : `rounded`}
+                      >
+                        <Box
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            backgroundColor:
+                              (item?.roomStatus === 0 &&
+                                !item?.membersInRoom) ||
+                              JSON.parse(item?.membersInRoom)?.length <
+                                item?.roomCountMember
+                                ? "#352658"
+                                : "#4a4463",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              width: "20%",
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color:
+                                !item?.membersInRoom ||
+                                JSON.parse(item?.membersInRoom)?.length <
+                                  item?.roomCountMember
+                                  ? "#fff"
+                                  : "#9b90a4",
+                              backgroundColor:
+                                !item?.membersInRoom ||
+                                JSON.parse(item?.membersInRoom)?.length <
+                                  item?.roomCountMember
+                                  ? "#893bf0"
+                                  : "#6f6684",
+                              borderRadius: "5px 0px 0px 5px",
+                              fontWeight: "700",
+                              fontSize: getFontSizeDependOnWidth(width),
+                            }}
+                          >
+                            {!item?.membersInRoom ||
+                            JSON.parse(item?.membersInRoom)?.length <
+                              item?.roomCountMember
+                              ? "Open"
+                              : "Full"}
+                          </Box>
+                          <Box
+                            sx={{
+                              width: "60%",
+                              display: "flex",
+                              justifyContent: "space-around",
+                              alignItems: "center",
+                              color:
+                                !item?.membersInRoom ||
+                                JSON.parse(item?.membersInRoom)?.length <
+                                  item?.roomCountMember
+                                  ? "#757ae5"
+                                  : "#6f6684",
+                              fontWeight: "640",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: getFontSizeDependOnWidth(width),
+                              }}
+                            >{`Room ${i_item + 1}`}</span>
+                            <p
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                fontSize: getFontSizeDependOnWidth(width),
+                              }}
+                            >
+                              <img
+                                style={{
+                                  marginRight: width < 576 ? "2px" : "5px",
+                                  width: getFontSizeDependOnWidth(width),
+                                }}
+                                alt="..."
+                                src={
+                                  !item?.membersInRoom ||
+                                  JSON.parse(item?.membersInRoom)?.length <
+                                    item?.roomCountMember
+                                    ? images.numberClient
+                                    : images.passiveUser
+                                }
+                              />
+                              <span>
+                                {JSON.parse(item?.membersInRoom)?.length || 0}/
+                                {item?.roomCountMember}
+                              </span>
+                            </p>
+                            <p
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                fontSize: getFontSizeDependOnWidth(width),
+                              }}
+                            >
+                              <img
+                                style={{
+                                  marginRight: width < 576 ? "2px" : "5px",
+                                  width: getFontSizeDependOnWidth(width),
+                                }}
+                                alt="..."
+                                src={
+                                  !item?.membersInRoom ||
+                                  JSON.parse(item?.membersInRoom)?.length <
+                                    item?.roomCountMember
+                                    ? images.goldIcon
+                                    : images.passiveCoin
+                                }
+                              />
+                              {/* {item?.roomBet} */}
+                              500
+                            </p>
+                          </Box>
+                          <Box
+                            sx={{
+                              width: "20%",
+                              display: "flex",
+                              justifyContent: "flex-end",
+                              padding:
+                                width < 576
+                                  ? "20px 15px 20px 0px"
+                                  : "10px 10px 10px 0px",
+                            }}
+                          >
+                            {!item?.membersInRoom ||
+                            JSON.parse(item?.membersInRoom)?.length <
+                              item?.roomCountMember ? (
+                              <button
+                                onClick={() => {
+                                  if (
+                                    item?.roomStatus === 0 &&
+                                    JSON.parse(item?.membersInRoom)?.length <
+                                      item?.roomCountMember
+                                  ) {
+                                    _socket.emit("joinRoomGame", {
+                                      roomId: item?.id,
+                                      gameId: detailGame?.id,
+                                    });
+                                    setRoomIdSelect(item?.id);
+                                  } else {
+                                    dispatch(
+                                      showAlert(
+                                        "error",
+                                        "The room has been full"
+                                      )
+                                    );
+                                  }
+                                }}
+                                style={{
+                                  borderRadius: "5px",
+                                  width:
+                                    width < 576
+                                      ? parseFloat(width / 7.4)
+                                      : "none",
+                                  border: "none",
+                                  outline: "none",
+                                  height: width < 576 ? "30px" : "none",
+                                  backgroundColor: "rgba(138,57,240,1)",
+                                  color: "#fff",
+                                  padding: width < 576 ? "none" : "10px 30px",
+                                  fontWeight: "640",
+                                  backgroundImage:
+                                    "linear-gradient(#893af1,#7649ed)",
+                                  fontSize: getFontSizeDependOnWidth(width),
+                                }}
+                                className="d-flex align-items-center justify-content-center"
+                              >
+                                Join
+                              </button>
+                            ) : (
+                              <button
+                                style={{
+                                  borderRadius: "5px",
+                                  width:
+                                    width < 576
+                                      ? parseFloat(width / 7.4)
+                                      : "none",
+                                  border: "none",
+                                  outline: "none",
+                                  height: width < 576 ? "30px" : "none",
+                                  backgroundColor: "#6f6684",
+                                  color: "#9f97ac",
+                                  padding: width < 576 ? "none" : "10px 30px",
+                                  fontWeight: "640",
+                                  fontSize: getFontSizeDependOnWidth(width),
                                 }}
                                 className="d-flex align-items-center justify-content-center"
                               >
@@ -1318,7 +1542,8 @@ export default function SelectRoom() {
                           sx={{
                             color: "#757ae5",
                             fontWeight: "650",
-                            position: "relative",
+                            marginTop: "6px",
+                            position: "relative",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
                           }}
                         >
                           <img
@@ -1332,7 +1557,11 @@ export default function SelectRoom() {
                             alt="..."
                             src={images.CupIcon}
                           />
-                          <span>
+                          <span
+                            style={{
+                              fontSize: getFontSizeTitleDependOnWidth(width),
+                            }}
+                          >
                             {roomDetailInfo?.membersInRoom &&
                             JSON.parse(roomDetailInfo?.membersInRoom)?.length >
                               1
