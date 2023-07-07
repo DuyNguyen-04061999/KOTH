@@ -276,6 +276,18 @@ export default function ChatWorldList() {
                   >
                     <b style={{}}>{e?.messageFromName}</b>
                   </span>
+                  <Box>
+                    <span
+                      style={{
+                        color: "#494a8b",
+                        fontWeight: "bold",
+                        marginLeft: "15px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
+                    </span>
+                  </Box>
                 </Box>
                 <Box
                   sx={{
@@ -321,7 +333,7 @@ export default function ChatWorldList() {
                           >
                             <Box
                               sx={{
-                                width: "35%",
+                                width: "40%",
                                 height: "50px",
                               }}
                             >
@@ -337,20 +349,22 @@ export default function ChatWorldList() {
                                 }
                                 alt="..."
                                 width={"100%"}
-                                height={"100%"}
+                                height={"75px"}
                               />
                             </Box>
                             <Box
                               className="ms-2 d-flex flex-column flex-end"
-                              sx={{ width: "65%" }}
+                              sx={{ width: "60%" }}
                             >
                               <Typography
                                 sx={{
-                                  color: "#01f7e3",
+                                  color: "white",
                                   fontWeight: "bold",
+                                  textAlign:"left",
+                                  marginLeft:"0px !important"
                                 }}
                               >
-                                {}
+                                {e?.messageGameName.slice(0,10) + `...`}
                               </Typography>
                               <span className="text-white font-weight-bold">
                                 Price: {e?.messageBetPrice}
@@ -383,18 +397,6 @@ export default function ChatWorldList() {
                   </div>
                 </Box>
               </Box>
-              <Box>
-                    <span
-                      style={{
-                        color: "#494a8b",
-                        fontWeight: "bold",
-                        marginLeft: "15px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
-                    </span>
-                  </Box>
             </Box>
           )}
         </Box>
