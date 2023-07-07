@@ -94,7 +94,7 @@ export default function Home() {
               <Box className="banner-top">
                 <Slider {...settings}>
                   <div>
-                    <div style={{ margin: "10px", padding: "2%" }}>
+                    <div style={{ marginRight: "10px"}}>
                       <img
                         src={imagesV2.bn2}
                         alt="..."
@@ -105,7 +105,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div>
-                    <div style={{ margin: "10px", padding: "2%" }}>
+                    <div style={{ marginRight: "10px"}}>
                       <img
                         src={imagesV2.bn3}
                         alt="..."
@@ -118,7 +118,7 @@ export default function Home() {
                   <div>
                     <div
                       rel="noreferrer"
-                      style={{ margin: "10px", padding: "2%" }}
+                      style={{ marginRight: "10px"}}
                     >
                       <img
                         src={imagesV2.bn4}
@@ -131,7 +131,7 @@ export default function Home() {
                   <div>
                     <div
                       rel="noreferrer"
-                      style={{ margin: "10px", padding: "2%" }}
+                      style={{ marginRight: "10px"}}
                     >
                       <img
                         src={imagesV2.bn1}
@@ -144,7 +144,7 @@ export default function Home() {
                 </Slider>
               </Box>
               <Box className="top-rated-game mb-5">
-                <div className="group mt-5">
+                <div className="group">
                   <TitleHomeDesktopComponent
                     type="ratedGame"
                     title="PVP GAMES"
@@ -156,7 +156,7 @@ export default function Home() {
                     cards={listGame?.filter((item) => item?.gameType === "PVP")}
                   />
                 </div>
-                <div className="group mt-5">
+                <div className="group" style={{marginTop:"2.5rem"}}>
                   <TitleHomeDesktopComponent
                     type="ratedGame"
                     title="FREE TO PLAY"

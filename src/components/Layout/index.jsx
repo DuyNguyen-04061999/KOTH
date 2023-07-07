@@ -129,6 +129,7 @@ export default function Layout(props) {
   const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
   const [chatF, setChatF] = useState("");
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     if (resetInputValue === "logoutSuccess") {

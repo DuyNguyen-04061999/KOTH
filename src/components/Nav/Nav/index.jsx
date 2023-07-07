@@ -28,8 +28,9 @@ export default function Navbar() {
             justifyContent: "space-between",
             paddingBottom: "9px",
             transitionDuration: "all 1s",
+            paddingLeft:"20px"
           }}
-          className="ps-2 pe-2 pt-3 pb-3"
+          className="pe-2 pt-3 pb-3"
         >
           <Box>
             <Box
@@ -172,7 +173,7 @@ export default function Navbar() {
               <Box>
                 <Typography>Currencies</Typography>
               </Box>
-              <Box className="coin-total d-flex justify-content-evenly pt-3 pb-3">
+              <Box className="coin-total d-flex justify-content-evenly pt-3 pb-4">
                 <img src={popup.Doge2} alt="..." width={30} />
                 <img src={images.BNB} alt="..." width={30} />
                 <img src={images.BTC} alt="..." width={30} />
@@ -194,8 +195,10 @@ export default function Navbar() {
             paddingBottom: "9px",
             alignItems: "center",
             transitionDuration: "all 1s",
+            paddingLeft:"1px",
+            width:"80px !important"
           }}
-          className="ps-2 pe-2 pt-3"
+          className=" pe-2 pt-3"
         >
           <Box>
             <Box style={{ cursor: "pointer" }} className="nav-home d-flex">
@@ -203,7 +206,7 @@ export default function Navbar() {
                 src={images.homeicon}
                 alt="..."
                 className="p-1"
-                width={40}
+                width={35}
                 height="auto"
                 onClick={() => {
                   navigate(`/home`);
@@ -226,7 +229,7 @@ export default function Navbar() {
                 src={images.luckySpinIncon}
                 alt="..."
                 className="p-1"
-                width={40}
+                width={35}
                 height="auto"
               />
             </Box>
@@ -240,7 +243,7 @@ export default function Navbar() {
                   src={images.favoriteIcon}
                   alt="..."
                   className="p-1"
-                  width={40}
+                  width={35}
                   height="auto"
                   onClick={() => {
                     if (!token) {
@@ -259,7 +262,7 @@ export default function Navbar() {
                   src={images.pvpicon}
                   alt="..."
                   className="p-1"
-                  width={40}
+                  width={35}
                   height="auto"
                   onClick={() => {
                     navigate("/game-type/pvp");
@@ -274,7 +277,7 @@ export default function Navbar() {
                   src={images.playicon}
                   alt="..."
                   className="p-1"
-                  width={40}
+                  width={35}
                   height={"auto"}
                   onClick={() => {
                     navigate("/game-type/free");
