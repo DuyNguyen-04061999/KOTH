@@ -24,7 +24,7 @@ export default function GameLobbyInfo() {
         <div>
           <GameLobbyDetailInfo />
         </div>
-        <Box className="mt-5 mb-5">
+        <Box className={`${width < 576 ? "mt-2" : "mt-5"} mb-5`}>
           <TitleHomeDesktopComponent
             title="RELATED GAMES"
             noicon={true}
