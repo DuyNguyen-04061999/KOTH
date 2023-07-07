@@ -17,8 +17,8 @@ export default function SettingProfile({ closePopup }) {
 
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
-  const [fName, setFristName] = useState(firstName);
-  const [lName, setLastName] = useState(lastName);
+  const [fName, setFristName] = useState(firstName || "");
+  const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
   // const [mobilePhone, setMobilePhone] = useState(phone);
   const [disabledBtn, setDisabledBtn] = useState(true);

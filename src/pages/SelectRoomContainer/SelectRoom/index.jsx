@@ -684,7 +684,7 @@ export default function SelectRoom() {
                       height: width < 576 ? "30px" : "none",
                       color: "#fff",
                     }}
-                    size={width < 576 && "small"}
+                    size={width < 576 ? "small" : "medium"}
                   >
                     <Select
                       sx={{
