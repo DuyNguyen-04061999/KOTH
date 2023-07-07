@@ -585,12 +585,11 @@ export default function Dialoglg() {
                 variant="standard"
                 sx={{
                   minWidth: 110,
-                  borderRadius: "15px",
                   position: "relative",
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
-                  borderRadius:"5px !importanr"
+                  borderRadius:"5px !important"
                 }}
               >
                 <Box

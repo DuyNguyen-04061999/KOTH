@@ -1,4 +1,4 @@
-import { Box, Drawer, Grid, Menu, MenuItem } from "@mui/material";
+import { Box, Drawer, Grid } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
@@ -24,8 +24,6 @@ import { imageChat } from "../../utils/imagesChat";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import AddFriendIcon from "@mui/icons-material/Person";
-import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import { Search } from "@mui/icons-material";
@@ -171,14 +169,6 @@ export default function Layout(props) {
     if (history.action === "POP") {
     }
   }, []);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openOption = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   useEffect(() => {
     if (token === "" || token === null) {
@@ -494,7 +484,7 @@ export default function Layout(props) {
                       color: "rgb(160 88 199)",
                     }}
                   >
-                    <PriorityHighIcon onClick={handleClick} />
+                    <PriorityHighIcon />
                   </Box>
                 </Box>
                 <Box
