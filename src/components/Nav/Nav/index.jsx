@@ -28,7 +28,8 @@ export default function Navbar() {
             justifyContent: "space-between",
             paddingBottom: "9px",
             transitionDuration: "all 1s",
-            paddingLeft:"20px"
+            paddingLeft:"20px",
+            transition:"visibility 0.5s,all 0.25s ease-in-out;"
           }}
           className="pe-2 pt-3 pb-3"
         >
@@ -196,7 +197,8 @@ export default function Navbar() {
             alignItems: "center",
             transitionDuration: "all 1s",
             paddingLeft:"1px",
-            width:"80px !important"
+            width:"80px !important",
+            transition:"visibility 0.5s,all 0.25s ease-in-out;"
           }}
           className=" pe-2 pt-3"
         >

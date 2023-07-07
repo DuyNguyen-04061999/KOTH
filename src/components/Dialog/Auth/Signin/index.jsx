@@ -572,12 +572,12 @@ export default function Dialoglg() {
           />
         </Box>
       ) : (
-        <AvatarGroup className="d-flex align-items-center">
+        <AvatarGroup className="d-flex align-items-center" sx={{borderRadius:"5px !important"}}>
           {width < 576 ? null : (
             <Box
               style={{
                 backgroundColor: "#2c1943",
-                borderRadius: "0px 5px 5px 0px",
+                borderRadius: "5px 5px 5px 5px",
               }}
               className="d-flex align-items-center"
             >
@@ -590,6 +590,7 @@ export default function Dialoglg() {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
+                  borderRadius:"5px !importanr"
                 }}
               >
                 <Box
@@ -603,7 +604,9 @@ export default function Dialoglg() {
                 >
                   <div
                     className="d-flex flex-column justify-content-between align-items-center"
-                    style={{ padding: "0px 10px" }}
+                    style={{ 
+                      padding: "0px 10px",
+                   }}
                   >
                     {width > 576 && (
                       <div

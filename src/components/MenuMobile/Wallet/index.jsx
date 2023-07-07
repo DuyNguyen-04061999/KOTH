@@ -224,7 +224,7 @@ export default function DialogWallet(props) {
                   setValueDepositAddress(e.target.value)
                 }}
               />
-              <Box>
+              <Box className="cursor-pointer">
                 <img
                   src={images.copybutton}
                   alt=""

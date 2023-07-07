@@ -95,7 +95,7 @@ const Test = styled.input`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 2px;
+  border-radius: 5px;
   width: 100% !important;
   height: 100%;
   background: #27182e !important;
@@ -131,6 +131,7 @@ export default function Layout(props) {
   const dispatch = useDispatch();
   
 
+  
   useEffect(() => {
     if (resetInputValue === "logoutSuccess") {
       setChatF("");
@@ -217,7 +218,7 @@ export default function Layout(props) {
           dispatch(toggleProfileDialog());
         }}
       />
-      <Menu
+      {/* <Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={openOption}
@@ -265,7 +266,7 @@ export default function Layout(props) {
             Delete Friend
           </Box>
         </MenuItem>
-      </Menu>
+      </Menu> */}
       <InviteGameDialog />
       <GameLogDialog
         open={isGameLogDialog}
@@ -332,6 +333,7 @@ export default function Layout(props) {
                       padding: "7px 10px",
                       color: "#9485b7",
                       fontWeight: "500",
+                      borderRadius:5
                     }}
                   />
                   <button
@@ -560,17 +562,17 @@ export default function Layout(props) {
             >
               <div className="d-flex justify-content-between align-items-center">
                 <div
-                  className="d-flex align-items-center p-2"
+                  className="d-flex justify-content-center align-items-center p-2"
                   style={{
                     width: "50%",
                     backgroundColor: backgroundGlobal,
                     cursor: "pointer",
-                    borderRadius: "8px",
+                    borderRadius: "5px 5px 5px 5px",
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
                     setBackgroundGlobal("#61388e");
-                    setBackgroundPrivate("#261a35");
+                    setBackgroundPrivate("#462a71");
                   }}
                 >
                   <div>
@@ -582,24 +584,25 @@ export default function Layout(props) {
                   </div>
                   <div className="d-flex align-items-center">
                     <span
-                      className="fs-7 mx-3"
+                      className="fs-7 mx-2"
                       style={{
-                        color: tabChat === true ? "white" : "#60537b",
+                        color: tabChat === true ? "white" : "#8a78b3",
+                        fontWeight:"700"
                       }}
                     >
-                      <b>GLOBAL</b>
+                      Global
                     </span>
                   </div>
                 </div>
                 <div
-                  className="d-flex align-items-center p-2"
+                  className="d-flex justify-content-center align-items-center p-2"
                   style={{
                     width: "50%",
                     backgroundColor: backgroundPrivate,
                     cursor: "pointer",
                     display: "flex",
-                    justifyContent: "center",
-                    borderRadius: "8px",
+                    justifyContent: "start",
+                    borderRadius: "5px 5px 5px 5px",
                   }}
                   onClick={() => {
                     if (token === null || token === "") {
@@ -607,35 +610,36 @@ export default function Layout(props) {
                     } else {
                       dispatch(clickTabChat(false));
                       setBackgroundPrivate("#62388f");
-                      setBackgroundGlobal("#261a35");
+                      setBackgroundGlobal("#462a71");
                     }
                   }}
                 >
-                  <div>
+                  <div >
                     {tabChat === true ? (
                       <img
                         src={imageChat.privateicon1}
                         alt="Arrow"
-                        width={20}
+                        width={15}
                         className="img-fluid"
                       />
                     ) : (
                       <img
                         src={imageChat.privateicon2}
                         alt="Arrow"
-                        width={20}
+                        width={15}
                         className="img-fluid"
                       />
                     )}
                   </div>
                   <div className="d-flex align-items-center">
                     <span
-                      className="fs-7 mx-3"
+                      className="fs-7 mx-2"
                       style={{
-                        color: tabChat === false ? "white" : "#60537b",
+                        color: tabChat === false ? "white" : "#8a78b3",
+                        fontWeight:"700",
                       }}
                     >
-                      <b>PRIVATE</b>
+                      Private
                     </span>
                   </div>
                 </div>
@@ -650,7 +654,7 @@ export default function Layout(props) {
               <Box
                 className="d-flex justify-content-between align-items-center "
                 sx={{
-                  background: "#322444",
+                  background: "#4a3763",
                   padding: "15px 20px",
                 }}
               >

@@ -12,7 +12,7 @@ import icon from "../assets/imagesChat/icon.png";
 import invitegame from "../assets/imagesChat/invitegamebutton.png";
 import joinicon from "../assets/imagesChat/joinedicon.png";
 import playgamebutton from "../assets/imagesChat/playgamebutton.png";
-import privateicon1 from "../assets/imagesChat/privateicon1.png";
+import privateicon1 from "../assets/imagesChat/privateicon1.svg";
 import privateicon2 from "../assets/imagesChat/privateicon2.png";
 
 export const imageChat = {

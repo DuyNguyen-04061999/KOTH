@@ -530,7 +530,7 @@ export default function Home() {
                 }}
               >
                 <img
-                  width={width < 1260 ? "auto" : "50%"}
+                  width={width < 1260 ? "auto" : "200px"}
                   className="img-fluid"
                   src={images2.logo_text}
                   alt="..."
@@ -544,7 +544,7 @@ export default function Home() {
               >
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.Doge2}
                     alt="..."
@@ -552,7 +552,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.BNB}
                     alt="..."
@@ -560,7 +560,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.BTC}
                     alt="..."
@@ -568,7 +568,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.LCoin}
                     alt="..."
@@ -576,7 +576,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.TCoin}
                     alt="..."

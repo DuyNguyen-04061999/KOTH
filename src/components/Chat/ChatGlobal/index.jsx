@@ -10,7 +10,7 @@ import InviteGameDialog from "../../Dialog/Invitegame/InviteGame";
 import { imageChat } from "../../../utils/imagesChat";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
-import { images } from "../../../utils/images";
+import { images, images2 } from "../../../utils/images";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
@@ -241,16 +241,16 @@ export default function ChatGlobal(props) {
             sx={{
               position: "absolute",
               bottom: width < 576 ? "0px" : "64px",
-              background: "#322444",
+              background: "#4a3763",
               padding: "15px 20px ",
               zIndex: "20",
             }}
           >
             <Box>
               <img
-                src={imageChat.invitegame}
+                src={images2.inviteG}
                 alt="..."
-                width={45}
+                width={30}
                 height={30}
                 className="me-2"
                 style={{ zIndex: 9999 }}

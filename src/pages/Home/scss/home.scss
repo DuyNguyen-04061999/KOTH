@@ -123,6 +123,8 @@
   }
   .leaderboard{
     // padding: 10px !important;
+    padding-top: 27px;
+    padding-bottom: 27px;
     .title {
       padding: 15px 0px;
       position: relative;
@@ -144,7 +146,7 @@
           position: relative;
           &::before {
             content: "";
-            background-image: url(../../../assets/imagesLayout/popuptext.png);
+            background-image: url(../../../assets/imagesLayout/popuptext.svg);
             background-repeat: no-repeat;
             background-size: cover;
             position: absolute;
@@ -190,7 +192,7 @@
                     font-weight: 600;
                     color: white;
                     margin-bottom: 0 !important;
-                    font-size: 20px;
+                    font-size: 30px;
                   }
                   p{
                     color: white;
@@ -240,7 +242,7 @@
                     font-weight: 600;
                     color: yellow;
                     margin-bottom: 0 !important;
-                    font-size: 20px;
+                    font-size: 30px;
                   }
                   p{
                     color: yellow;
@@ -290,7 +292,7 @@
                     font-weight: 600;
                     color: orange;
                     margin-bottom: 0 !important;
-                    font-size: 20px;
+                    font-size: 30px;
                   }
                   p{
                     color: orange;
@@ -435,7 +437,7 @@
               position: relative;
               &::before {
                 content: "";
-                background-image: url(../../../assets/imagesLayout/popuptext.png);
+                background-image: url(../../../assets/imagesLayout/popuptext.svg);
                 background-repeat: no-repeat;
                 background-size: cover;
                 position: absolute;
@@ -555,7 +557,7 @@
               position: relative;
               &::before {
                 content: "";
-                background-image: url(../../../assets/imagesLayout/popuptext.png);
+                background-image: url(../../../assets/imagesLayout/popuptext.svg);
                 background-repeat: no-repeat;
                 background-size: cover;
                 position: absolute;
@@ -661,7 +663,7 @@
             position: relative;
             &::before {
               content: "";
-              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-image: url(../../../assets/imagesLayout/popuptext.svg);
               background-repeat: no-repeat;
               background-size: cover;
               position: absolute;
@@ -867,7 +869,7 @@
               position: relative;
               &::before {
                 content: "";
-                background-image: url(../../../assets/imagesLayout/popuptext.png);
+                background-image: url(../../../assets/imagesLayout/popuptext.svg);
                 background-repeat: no-repeat;
                 background-size: cover;
                 position: absolute;
@@ -937,7 +939,7 @@
             position: relative;
             &::before {
               content: "";
-              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-image: url(../../../assets/imagesLayout/popuptext.svg);
               background-repeat: no-repeat;
               background-size: cover;
               position: absolute;
@@ -997,7 +999,7 @@
             position: relative;
             &::before {
               content: "";
-              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-image: url(../../../assets/imagesLayout/popuptext.svg);
               background-repeat: no-repeat;
               background-size: cover;
               position: absolute;
@@ -1065,7 +1067,7 @@
             position: relative;
             &::before {
               content: "";
-              background-image: url(../../../assets/imagesLayout/popuptext.png);
+              background-image: url(../../../assets/imagesLayout/popuptext.svg);
               background-repeat: no-repeat;
               background-size: cover;
               position: absolute;
