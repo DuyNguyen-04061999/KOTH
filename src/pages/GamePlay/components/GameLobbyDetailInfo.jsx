@@ -151,7 +151,7 @@ export default function GameLobbyDetailInfo() {
       <Box className="mt-5">
         <TitleHomeDesktopComponent
           noicon={true}
-          title={detailGame?.gameName}
+          title={detailGame?.gameName?.toUpperCase()}
           noSeeAll={true}
         />
       </Box>
@@ -176,7 +176,10 @@ export default function GameLobbyDetailInfo() {
           style={{ objectFit: "cover" }}
         />
         <div
-          style={{ justifyContent: "space-between", padding: "8px" }}
+          style={{
+            justifyContent: "space-between",
+            padding: "0px 8px 8px 0px",
+          }}
           className="d-flex flex-column"
         >
           <div></div>
@@ -184,7 +187,7 @@ export default function GameLobbyDetailInfo() {
             <h2
               style={{
                 color: "#ffffff",
-                fontSize: getFontSizeTitleDependOnWidth(width),
+                fontSize: width < 576 ? "23px" : "35px",
                 textAlign: "left",
                 marginTop: "0px",
                 marginLeft: "0px",
@@ -195,9 +198,10 @@ export default function GameLobbyDetailInfo() {
             </h2>
             <Typography
               sx={{
-                fontSize: getFontSizeDependOnWidth(width),
+                fontSize: width < 576 ? "12px" : "20px",
                 color: "#757ae5",
                 textAlign: "left",
+                marginLeft: "0px !important",
               }}
             >
               By GadGame
@@ -212,10 +216,10 @@ export default function GameLobbyDetailInfo() {
               paddingRight: width > 576 ? "120px" : 0,
               boxSizing: "border-box",
               width: width < 576 ? "auto" : "289px",
-              paddingLeft: "8px",
-              alignItems:"center"
+              paddingLeft: "3px",
+              alignItems: "center",
+              marginTop: width < 576 ? "-20px" : "-66px",
             }}
-            className="pt-2"
           >
             <Box sx={{ position: "relative" }}>
               <Box
@@ -223,7 +227,7 @@ export default function GameLobbyDetailInfo() {
                 sx={{
                   width: width < 576 ? width / 20 : width / 68,
                   height: width < 576 ? width / 20 : width / 68,
-                  marginRight: width < 576 ? "10px" : "0",
+                  marginRight: width < 576 ? "25px" : "0",
                 }}
                 onClick={handleOnClickLikeGame}
                 src={
@@ -240,9 +244,8 @@ export default function GameLobbyDetailInfo() {
                   fontWeight: "bolder",
                   fontSize: width && getFontSizeDependOnWidth(width),
                   position: "absolute",
-                  bottom: "87px",
-                  left: "35px",
-                  display: width < 576 ? "none" : "block",
+                  bottom: "0px",
+                  left: width < 576 ? "27px" : "35px",
                 }}
               >
                 {countLikeGame &&
@@ -256,7 +259,7 @@ export default function GameLobbyDetailInfo() {
                   width: width < 576 ? width / 20 : width / 68,
                   height: width < 576 ? width / 20 : width / 68,
                   marginTop: "5px",
-                  marginRight: width < 576 ? "10px" : "0",
+                  marginRight: width < 576 ? "25px" : "0",
                 }}
                 onClick={handleOnClickDisLikeGame}
                 src={
@@ -274,9 +277,8 @@ export default function GameLobbyDetailInfo() {
                   fontWeight: "bolder",
                   fontSize: getFontSizeDependOnWidth(width),
                   position: "absolute",
-                  bottom: "87px",
-                  left: "35px",
-                  display: width < 576 ? "none" : "block",
+                  bottom: "0px",
+                  left: width < 576 ? "27px" : "35px",
                 }}
               >
                 {countDisLikeGame &&
@@ -309,8 +311,8 @@ export default function GameLobbyDetailInfo() {
             style={{
               border: "none",
               outline: "none",
-              width: "170px",
-              height: "45px",
+              width: width < 576 ? "115px" : "170px",
+              height: width < 576 ? "30px" : "45px",
               backgroundImage: "linear-gradient(#8a3af0,#7547ee)",
               color: "white",
               borderRadius: "5px",
@@ -323,12 +325,13 @@ export default function GameLobbyDetailInfo() {
           </button>
         </div>
       </Box>
-      <Box className="p-2">
+      <Box className="ps-2 mt-3">
         <Typography
-          className=" text-white"
+          className=" text-white mb-2"
           sx={{
             fontWeight: "600",
             textAlign: "left",
+            margintTop: "8px !important",
             fontSize: getFontSizeTitleDependOnWidth(width),
           }}
         >
@@ -375,6 +378,7 @@ export default function GameLobbyDetailInfo() {
             color: "#857cab",
             textAlign: "left",
             textDecoration: "underline",
+            fontSize: getFontSizeDependOnWidth(width),
           }}
           onClick={() => {
             setShowMore(!showMore);
@@ -383,7 +387,7 @@ export default function GameLobbyDetailInfo() {
           {showMore ? "Hidden" : "Show More"}
         </Typography>
         <Typography
-          className=" text-white mt-5"
+          className=" text-white mt-3"
           sx={{
             fontWeight: "600",
             textAlign: "left",
@@ -400,7 +404,7 @@ export default function GameLobbyDetailInfo() {
               background: "#462a71",
               color: "#757ae5",
               fontWeight: "600",
-              padding: "10px 30px",
+              padding: width < 576 ? "9px 14px" : "10px 30px",
               fontSize: getFontSizeDependOnWidth(width),
             }}
           >
@@ -413,7 +417,7 @@ export default function GameLobbyDetailInfo() {
               background: "#462a71",
               color: "#757ae5",
               fontWeight: "600",
-              padding: "10px 30px",
+              padding: width < 576 ? "9px 14px" : "10px 30px",
               fontSize: getFontSizeDependOnWidth(width),
             }}
           >

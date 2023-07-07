@@ -36,6 +36,8 @@ import userIconWhite from "../assets/images/userIconWhite.png";
 import waitingClient from "../assets/images/waitingClient.png";
 import Checked from "../assets/images/Checked.png";
 import UnCheck from "../assets/images/UnCheck.png";
+import passiveUser from "../assets/images/passiveUser.png";
+import passiveCoin from "../assets/images/passiveCoin.png";
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -216,6 +218,8 @@ export const images = {
   waitingClient: waitingClient,
   Checked: Checked,
   UnCheck: UnCheck,
+  passiveUser: passiveUser,
+  passiveCoin: passiveCoin,
 };
 
 export const images2 = {
