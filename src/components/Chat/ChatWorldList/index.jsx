@@ -39,6 +39,7 @@ export default function ChatWorldList() {
   const handleClick = (event, userName) => {
     setUserName(userName);
     setAnchorEl(event.currentTarget);
+    console.log(event.currentTarget);
     setMessFromName(userName);
   };
   const checkExistInFriendList = () => {
@@ -99,6 +100,7 @@ export default function ChatWorldList() {
   const renderChat = worldMessage
     ?.filter((n) => n.messageType === "World")
     .map((e, index) => {
+      console.log(e);
       return (
         <Box
           key={index}
@@ -128,22 +130,24 @@ export default function ChatWorldList() {
                     sx={{
                       width: "fit-content",
                       maxWidth: "80%",
-                      background: "#392144",
+                      background: "#4d3565",
                       color: "#7878a7",
                       fontSize: "14px",
+                      borderRadius:"5px"
                     }}
                     className="p-2"
                   >
-                    <span>You're invited to play:</span>
+                    <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span>
                     <Box
                       className="mt-2 p-2 d-flex"
                       sx={{
-                        backgroundColor: "#2a1932",
+                        backgroundColor: "#3e2a52",
+                        borderRadius:"5px"
                       }}
                     >
                       <Box
                         sx={{
-                          width: "35%",
+                          width: "40%",
                           height: "55px",
                         }}
                       >
@@ -159,21 +163,21 @@ export default function ChatWorldList() {
                           }
                           alt="..."
                           width={"100%"}
-                          height={"100%"}
+                          height={"75px"}
                         />
                       </Box>
                       <Box
                         className="ms-2 d-flex flex-column flex-end"
-                        sx={{ width: "65%" }}
+                        sx={{ width: "60%" }}
                       >
-                        <Typography
-                          sx={{
-                            color: "#01f7e3",
+                        <span
+                          style={{
+                            color: "white",
                             fontWeight: "bold",
                           }}
                         >
-                          {}
-                        </Typography>
+                          {e?.messageGameName.slice(0,10) + `...`}
+                        </span>
                         <span className="text-white font-weight-bold">
                           Price: {e?.messageBetPrice}
                         </span>
@@ -193,7 +197,7 @@ export default function ChatWorldList() {
                             borderRadius: "4px",
                           }}
                         >
-                          PLAY GAME
+                          PLAY NOW
                         </Box>
                       </Box>
                     </Box>
@@ -231,12 +235,13 @@ export default function ChatWorldList() {
                     <Box
                       className="p-2 mt-2"
                       sx={{
-                        background: "#392144",
-                        color: "#7878a7",
+                        background: "#4d3565",
+                        color: "#9b9acf",
                         fontSize: "14px",
-                        fontWeight: "500",
+                        fontWeight: "bold",
                         width: "100%",
                         wordWrap: "break-word",
+                        borderRadius: "5px",
                       }}
                     >
                       {e?.messageContent}
@@ -246,7 +251,7 @@ export default function ChatWorldList() {
               )}
             </>
           ) : (
-            <Box className="d-flex justify-content-between" sx={{}}>
+            <Box className="d-flex justify-content-between">
               <Box className="pt-2">
                 <Avatar
                   onClick={(event) => {
@@ -260,45 +265,37 @@ export default function ChatWorldList() {
                         e?.messageFromAvatar
                       : images.undefinedAvatar
                   }
-                  sx={{ borderRadius: "18%" }}
+                  sx={{ borderRadius: "50%" }}
                 />
               </Box>
-              <Box className="mx-2">
+              <Box className="mx-2" sx={{ borderRadius: "5px" }}>
                 <Box className="d-flex justify-content-between align-items-center">
                   <span
                     style={{
                       color: "#5e78b5",
+                      borderRadius: "5px",
                     }}
                   >
                     <b style={{}}>{e?.messageFromName}</b>
                   </span>
-                  <Box>
-                    <span
-                      style={{
-                        color: "#494a8b",
-                        fontWeight: "500",
-                        marginLeft: "15px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
-                    </span>
-                  </Box>
                 </Box>
                 <Box
                   sx={{
                     background: "#39294f",
-                    width: width < 576 ? width - 100 : 215,
+                    // width: width < 576 ? width - 100 : 215,
+                    width: "fit-content",
+                    maxWidth: width < 576 ? width - 100 : 215,
                     fontSize: "14px",
                     fontWeight: "500",
                     wordWrap: "break-word",
+                    borderRadius: "5px",
                   }}
                   className="p-2 mt-2 d-flex"
                 >
                   <div
                     style={{
-                      color: "rgb(194 191 245)",
-                      fontWeight: "500",
+                      color: "#9b9acf",
+                      fontWeight: "bold",
                       fontSize: "14px",
                       width: "100%",
                       wordWrap: "break-word" /* IE 5.5-7 */,
@@ -388,6 +385,18 @@ export default function ChatWorldList() {
                   </div>
                 </Box>
               </Box>
+              <Box>
+                    <span
+                      style={{
+                        color: "#494a8b",
+                        fontWeight: "bold",
+                        marginLeft: "15px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
+                    </span>
+                  </Box>
             </Box>
           )}
         </Box>
@@ -475,6 +484,7 @@ export default function ChatWorldList() {
                 background: "linear-gradient(180deg, #843ff0, #7748ed)",
                 width: "100%",
                 fontWeight: "bold",
+                borderRadius: "4px",
               }}
             >
               <AddFriendIcon className="me-1 pb-1" />
@@ -495,6 +505,7 @@ export default function ChatWorldList() {
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "100%",
                     fontWeight: "bold",
+                    borderRadius: "4px",
                   }}
                 >
                   <DeleteFriendIcon className="me-2 pb-1" />
@@ -502,17 +513,22 @@ export default function ChatWorldList() {
                 </Box>
               </MenuItem>
             ) : (
-              <MenuItem>
+              <MenuItem
+                sx={{
+                  padding: "5px",
+                }}
+              >
                 <Box
                   onClick={handleAddFriend}
-                  className="p-2 text-white"
+                  className="p-1 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "100%",
                     fontWeight: "bold",
+                    borderRadius: "4px",
                   }}
                 >
-                  <AddFriendIcon className="me-1 pb-1" />
+                  <AddFriendIcon className="me-2 pb-1" />
                   Add Friend
                 </Box>
               </MenuItem>

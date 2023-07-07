@@ -94,7 +94,7 @@ export default function Home() {
               <Box className="banner-top">
                 <Slider {...settings}>
                   <div>
-                    <div style={{ margin: "10px", padding: "2%" }}>
+                    <div style={{ marginRight: "10px"}}>
                       <img
                         src={imagesV2.bn2}
                         alt="..."
@@ -105,7 +105,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div>
-                    <div style={{ margin: "10px", padding: "2%" }}>
+                    <div style={{ marginRight: "10px"}}>
                       <img
                         src={imagesV2.bn3}
                         alt="..."
@@ -118,7 +118,7 @@ export default function Home() {
                   <div>
                     <div
                       rel="noreferrer"
-                      style={{ margin: "10px", padding: "2%" }}
+                      style={{ marginRight: "10px"}}
                     >
                       <img
                         src={imagesV2.bn4}
@@ -131,7 +131,7 @@ export default function Home() {
                   <div>
                     <div
                       rel="noreferrer"
-                      style={{ margin: "10px", padding: "2%" }}
+                      style={{ marginRight: "10px"}}
                     >
                       <img
                         src={imagesV2.bn1}
@@ -144,7 +144,7 @@ export default function Home() {
                 </Slider>
               </Box>
               <Box className="top-rated-game mb-5">
-                <div className="group mt-5">
+                <div className="group">
                   <TitleHomeDesktopComponent
                     type="ratedGame"
                     title="PVP GAMES"
@@ -156,7 +156,7 @@ export default function Home() {
                     cards={listGame?.filter((item) => item?.gameType === "PVP")}
                   />
                 </div>
-                <div className="group mt-5">
+                <div className="group" style={{marginTop:"2.5rem"}}>
                   <TitleHomeDesktopComponent
                     type="ratedGame"
                     title="FREE TO PLAY"
@@ -530,7 +530,7 @@ export default function Home() {
                 }}
               >
                 <img
-                  width={width < 1260 ? "auto" : "50%"}
+                  width={width < 1260 ? "auto" : "200px"}
                   className="img-fluid"
                   src={images2.logo_text}
                   alt="..."
@@ -544,7 +544,7 @@ export default function Home() {
               >
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.Doge2}
                     alt="..."
@@ -552,7 +552,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.BNB}
                     alt="..."
@@ -560,7 +560,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.BTC}
                     alt="..."
@@ -568,7 +568,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.LCoin}
                     alt="..."
@@ -576,7 +576,7 @@ export default function Home() {
                 </div>
                 <div>
                   <img
-                    width={50}
+                    width={40}
                     className="img-fluid"
                     src={popup.TCoin}
                     alt="..."

@@ -49,7 +49,7 @@ import icontopgame from "../assets/imagesLayout/icon topratedgames.png";
 import icontopwinner from "../assets/imagesLayout/icon topwinner.png";
 import iconbattlegame from "../assets/imagesLayout/iconbattle games.png";
 import notion from "../assets/imagesLayout/Notion.png";
-import popuptext from "../assets/imagesLayout/popuptext.png";
+import popuptext from "../assets/imagesLayout/popuptext.svg";
 import recommendedgame from "../assets/imagesLayout/Recommendedgames.png";
 import textbox from "../assets/imagesLayout/textbox.png";
 import toprated from "../assets/imagesLayout/Topratedgames.png";
