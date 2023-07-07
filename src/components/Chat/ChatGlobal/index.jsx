@@ -7,7 +7,6 @@ import { images280423_l } from "../../../utils/images280423_l";
 import { useEffect } from "react";
 import ComponentChat from "../componentChat";
 import InviteGameDialog from "../../Dialog/Invitegame/InviteGame";
-import { imageChat } from "../../../utils/imagesChat";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { images, images2 } from "../../../utils/images";
