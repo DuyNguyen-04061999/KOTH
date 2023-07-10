@@ -103,7 +103,8 @@ export default function ComponentChat() {
                   >
                     <Box
                       sx={{
-                        width: "35%",
+                        width: "40%",
+                        height:"50px"
                       }}
                     >
                       <img
@@ -118,23 +119,26 @@ export default function ComponentChat() {
                         }
                         alt="..."
                         width={"100%"}
-                        className="img-fluid"
+                        height={"75px"}
+                        // className="img-fluid"
                       />
                     </Box>
                     <Box
                       className="ms-2 d-flex flex-column flex-end"
-                      sx={{ width: "65%" }}
+                      sx={{ width: "60%" }}
                     >
                       <Typography
                         sx={{
-                          color: "#01f7e3",
+                          color: "white",
                           fontWeight: "bold",
+                          textAlign:"left",
+                          marginLeft:"0px !important"
                         }}
                       >
-                        {}
+                        {e?.messageGameName.slice(0,10) + `...`}
                       </Typography>
                       <span className="text-white font-weight-bold">
-                        Price: {e?.betGameInvite}
+                        Price: {e?.messageBetPrice}
                       </span>
                       <Box
                         onClick={() =>
