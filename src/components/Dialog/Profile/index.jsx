@@ -55,9 +55,9 @@ export default function DialogProfile(props) {
                   : images.undefinedAvatar
               }
               width={95}
-              style={{ borderRadius: "10px", height: "95px" }}
+              style={{ borderRadius: "50%", height: "95px" }}
             />
-            <Typography component={"h3"} className="mt-3 fs-3 text-bold">
+            <Typography component={"h3"} className="mt-2 fs-3 text-bold">
               {userNameProfile}
             </Typography>
             {token &&
@@ -124,7 +124,7 @@ export default function DialogProfile(props) {
             <Box className="Iduser d-flex flex-column align-items-start mb-3">
               <Typography
                 variant="inherit"
-                sx={{ color: "#7774be", fontWeight: "500" }}
+                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
               >
                 User ID
               </Typography>
@@ -133,7 +133,7 @@ export default function DialogProfile(props) {
                 sx={{
                   width: "100%",
                   backgroundColor: "#3d2c63",
-                  padding: "10px",
+                  padding: "7px 10px 7px 10px",
                   borderRadius: "5px",
                 }}
               >
@@ -164,6 +164,7 @@ export default function DialogProfile(props) {
                       color: "#fff",
                     },
                     color: "#fff",
+                    fontWeight:"700"
                   }}
                 />
               </FormControl>
@@ -173,7 +174,7 @@ export default function DialogProfile(props) {
                 <Box className="Email d-flex flex-column align-items-start mb-3">
                   <Typography
                     variant="inherit"
-                    sx={{ color: "#7774be", fontWeight: "500" }}
+                    sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
                   >
                     Email Address
                   </Typography>
@@ -182,7 +183,7 @@ export default function DialogProfile(props) {
                     sx={{
                       width: "100%",
                       backgroundColor: "#3d2c63",
-                      padding: "10px",
+                      padding: "7px 10px 7px 10px",
                       borderRadius: "5px",
                     }}
                   >
@@ -207,6 +208,7 @@ export default function DialogProfile(props) {
                           border: "none",
                         },
                         color: "white",
+                        fontWeight:"700"
                       }}
                     />
                   </FormControl>
@@ -214,7 +216,7 @@ export default function DialogProfile(props) {
                 <Box className="mobile-number d-flex flex-column align-items-start mb-3">
                   <Typography
                     variant="inherit"
-                    sx={{ color: "#7774be", fontWeight: "500" }}
+                    sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
                   >
                     Mobile Number
                   </Typography>
@@ -223,7 +225,7 @@ export default function DialogProfile(props) {
                     sx={{
                       width: "100%",
                       backgroundColor: "#3d2c63",
-                      padding: "10px",
+                      padding: "7px 10px 7px 10px",
                       borderRadius: "5px",
                       color: "white",
                     }}
@@ -250,6 +252,7 @@ export default function DialogProfile(props) {
                           border: "none",
                         },
                         color: "white",
+                        fontWeight:"700"
                       }}
                     />
                   </FormControl>
@@ -260,7 +263,7 @@ export default function DialogProfile(props) {
                 >
                   <Typography
                     variant="inherit"
-                    sx={{ color: "#7774be", fontWeight: "500" }}
+                    sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
                   >
                     Ref Code
                   </Typography>
@@ -299,11 +302,13 @@ export default function DialogProfile(props) {
                         },
                         color: "#fff",
                         marginLeft: "10px",
+                        fontWeight:"700"
                       }}
                     />
                     <Box>
                       <img
                         src={images.copybutton}
+                        className="cursor-pointer"
                         alt=""
                         onClick={() => {
                           copy(refCode);
@@ -351,13 +356,13 @@ export default function DialogProfile(props) {
             display={"flex"}
             flexDirection={"column"}
             sx={{
-              backgroundColor: "#2e2249",
+              backgroundColor: "#291e3a",
               width: width < 576 ? "100%" : "490px",
             }}
           >
             <Box
               className="box-head"
-              p={2}
+              p={1}
               display={"flex"}
               justifyContent={"space-between"}
               sx={{ backgroundColor: "#38285b" }}
@@ -365,6 +370,7 @@ export default function DialogProfile(props) {
               <Box display={"flex"} alignItems={"center"}>
                 {tab === 1 && (
                   <LeftIcon
+                    className="cursor-pointer"
                     sx={{
                       color: "#fff",
                     }}
@@ -373,9 +379,9 @@ export default function DialogProfile(props) {
                     }}
                   />
                 )}
-                <h3 className="text-white">
-                  {tab === 0 ? "User information" : "Nickname"}
-                </h3>
+                <h4 className="text-white">
+                  {tab === 0 ? "User information" : "Profile Setting"}
+                </h4>
               </Box>
               <CloseIcon
                 style={{

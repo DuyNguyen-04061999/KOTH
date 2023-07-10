@@ -9,11 +9,12 @@ import LoadingEffect from "../../../LoadingComponent";
 
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
-  const { firstName, lastName, email,
+  const {
+    firstName,
+    lastName,
+    email,
     //  phone
-     } = useSelector(
-    (state) => state.profileReducer
-  );
+  } = useSelector((state) => state.profileReducer);
 
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
@@ -27,14 +28,14 @@ export default function SettingProfile({ closePopup }) {
     if (
       fName === "" ||
       lName === "" ||
-      emailAddress === "" 
+      emailAddress === ""
       // mobilePhone === ""
     ) {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
     }
-  }, [fName, lName, emailAddress])
+  }, [fName, lName, emailAddress]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,9 +50,12 @@ export default function SettingProfile({ closePopup }) {
     return kb;
   }
   const sendUpdateProfile = () => {
-    if (fName && lName && emailAddress 
+    if (
+      fName &&
+      lName &&
+      emailAddress
       // && mobilePhone
-      ) {
+    ) {
       if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
         dispatch(showAlert("error", "Please attach image smaller 1MB"));
       } else {
@@ -93,7 +97,7 @@ export default function SettingProfile({ closePopup }) {
             <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
-                sx={{ color: "#7774be", fontWeight: "500" }}
+                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
               >
                 First Name
               </Typography>
@@ -101,7 +105,7 @@ export default function SettingProfile({ closePopup }) {
                 variant="standard"
                 sx={{
                   width: "100%",
-                  backgroundColor: "#1f1733",
+                  backgroundColor: "#181223",
                   padding: "10px",
                   borderRadius: "5px",
                 }}
@@ -138,7 +142,7 @@ export default function SettingProfile({ closePopup }) {
             <Box className="Last-Name mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
-                sx={{ color: "#7774be", fontWeight: "500" }}
+                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
               >
                 Last Name
               </Typography>
@@ -146,7 +150,7 @@ export default function SettingProfile({ closePopup }) {
                 variant="standard"
                 sx={{
                   width: "100%",
-                  backgroundColor: "#1f1733",
+                  backgroundColor: "#181223",
                   padding: "10px",
                   borderRadius: "5px",
                 }}
@@ -182,7 +186,7 @@ export default function SettingProfile({ closePopup }) {
             <Box className="Email mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
-                sx={{ color: "#7774be", fontWeight: "500" }}
+                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
               >
                 Email Address
               </Typography>
@@ -190,7 +194,7 @@ export default function SettingProfile({ closePopup }) {
                 variant="standard"
                 sx={{
                   width: "100%",
-                  backgroundColor: "#1f1733",
+                  backgroundColor: "#181223",
                   padding: "10px",
                   borderRadius: "5px",
                 }}
@@ -228,107 +232,8 @@ export default function SettingProfile({ closePopup }) {
                 </span>
               )}
             </Box>
-            {/* <Box
-              className="ref-code mb-3 d-flex flex-column align-items-start"
-              position={"relative"}
-            >
-              <Typography
-                variant="inherit"
-                sx={{ color: "#7774be", fontWeight: "500" }}
-              >
-                Ref Code
-              </Typography>
-              <FormControl
-                variant="standard"
-                sx={{
-                  padding: "10px",
-                  width: "100%",
-                  backgroundColor: "#3d2c63",
-                  borderRadius: "5px",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  color: "white",
-                }}
-              >
-                <Input
-                  id="input-with-icon-adornment"
-                  value={refCode}
-                  disabled
-                  sx={{
-                    "& .MuiInputBase-input.Mui-disabled": {
-                      WebkitTextFillColor: "#fff",
-                    },
-                    "&:before": {
-                      borderBottom: "0px solid !important",
-                      "&:hover": {
-                        borderBottom: "0px solid !important",
-                      },
-                    },
-                    "&:after": {
-                      borderBottom: "0px solid !important",
-                    },
-                    "&:hover": {
-                      border: "none",
-                    },
-                    color: "white",
-                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                      padding: "0px !important",
-                    },
-                  }}
-                />
-              </FormControl>
-            </Box>
-            <Box className="mobile-number mb-3 d-flex flex-column align-items-start">
-              <Typography
-                variant="inherit"
-                sx={{ color: "#7774be", fontWeight: "500" }}
-              >
-                Mobile Number
-              </Typography>
-              <FormControl
-                variant="standard"
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#3d2c63",
-                  padding: "10px",
-                  borderRadius: "5px",
-                  color: "white",
-                }}
-              >
-                <Input
-                  className="input-base"
-                  id="input-with-icon-adornment"
-                  type="number"
-                  value={mobilePhone}
-                  onChange={(e) => {
-                    setMobilePhone(e.target.value);
-                  }}
-                  placeholder="Enter Your Mobile Number "
-                  sx={{
-                    "&:before": {
-                      borderBottom: "0px solid !important",
-                      "&:hover": {
-                        borderBottom: "0px solid !important",
-                      },
-                    },
-                    "&:after": {
-                      borderBottom: "0px solid !important",
-                    },
-                    "&:hover": {
-                      border: "none",
-                    },
-                    color: "white",
-                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                      padding: "0px !important",
-                    },
-                  }}
-                />
-              </FormControl>
-            </Box> */}
           </Box>
-          <Box className="mt-5 mb-5 d-flex justify-content-center">
+          <Box className="mt-5 d-flex justify-content-center">
             <button
               className="text-white p-2"
               type="submit"

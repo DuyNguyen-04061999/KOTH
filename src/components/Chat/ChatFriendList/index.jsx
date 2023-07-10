@@ -162,9 +162,7 @@ export default function ChatFriendList() {
                   {e?.userName}
                 </h5>
                 <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
-                  {e.receiveMessages.map(
-                    (e_m) => e_m.messageContent.slice(0, 15) + `...`
-                  )}
+                  {e?.receiveMessages?.map((e_m) => e_m?.messageContent)}
                 </span>
               </Box>
             </Box>
