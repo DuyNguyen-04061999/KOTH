@@ -65,7 +65,6 @@ export default function SelectRoom() {
   const [socket, setSocket] = useState(null);
   const [fGame, setFGame] = useState(null);
   const [check, setCheck] = useState(false);
-  const [expand, setExpand] = useState(false);
   const [textContent, setTextContent] = useState("");
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
