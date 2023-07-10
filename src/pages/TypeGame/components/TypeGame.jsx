@@ -49,7 +49,7 @@ export default function TypeGame() {
       <Box className="p-4">
         <Container maxWidth={"md"}>
           <Box className="title-favorite mb-4">
-            <h1>{title && title}</h1>
+            <h2>{title && title}</h2>
           </Box>
           <Box>
             <SliderLayout cards={listGameByType && listGameByType} />

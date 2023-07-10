@@ -259,12 +259,21 @@ const FAQPageComponent = () => {
                 variant="h6"
                 sx={{
                   cursor: "pointer",
-                  padding: "15px",
+                  padding: "10px",
                   backgroundColor:
                     tabFaq && e?.title && e?.title === tabFaq
-                      ? "#42285b"
+                      ? "#5f3491"
                       : "unset",
                   fontSize: width > 576 ? "20 px" : "16px",
+                  marginLeft:"0px !important",
+                  marginRight:"10px !important",
+                  borderRadius:" 0px 7px 7px 0px",
+                  marginBottom:"10px",
+                  marginTop:"10px",
+                  color: tabFaq && e?.title && e?.title === tabFaq
+                  ? "#fff"
+                  : "#9b9acf",
+                  paddingLeft:"20px"
                 }}
                 onClick={() => {
                   setTabFaq(e?.title);
@@ -285,11 +294,11 @@ const FAQPageComponent = () => {
         <>
           {dataGlobal.map((e, index) => {
             return (
-              <div key={index} style={{ padding: "15px" }}>
+              <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "#605daf" }}>
+                <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
                   - {e.answer || e?.faqAnswer}
                 </Typography>
               </div>
@@ -302,11 +311,11 @@ const FAQPageComponent = () => {
         <>
           {dataAccount.map((e, index) => {
             return (
-              <div key={index} style={{ padding: "15px" }}>
+              <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "#605daf" }}>
+                <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
                   - {e.answer || e?.faqAnswer}
                 </Typography>
               </div>
@@ -319,11 +328,11 @@ const FAQPageComponent = () => {
         <>
           {dataWallet.map((e, index) => {
             return (
-              <div key={index} style={{ padding: "15px" }}>
+              <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "#605daf" }}>
+                <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
                   {e.answer || e?.faqAnswer}
                 </Typography>
               </div>
@@ -336,11 +345,11 @@ const FAQPageComponent = () => {
         <>
           {dataGames.map((e, index) => {
             return (
-              <div key={index} style={{ padding: "15px" }}>
+              <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "#605daf" }}>
+                <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
                   {e.answer || e?.faqAnswer}
                 </Typography>
               </div>
@@ -356,7 +365,7 @@ const FAQPageComponent = () => {
     <div className="pb-5 pt-5">
       <Container maxWidth={"md"}>
         <Box className="title-FAQ">
-          <h1>FAQ</h1>
+          <h2>FAQ</h2>
         </Box>
         <Grid container sx={{}}>
           <Grid
@@ -365,8 +374,8 @@ const FAQPageComponent = () => {
             md={2}
             sx={{
               color: "#9485b7",
-              backgroundColor: "#2a2535",
-              borderRight: "5px solid #1a151e",
+              backgroundColor: "#302642",
+              // borderRight: "5px solid #1a151e",
             }}
           >
             {renderTitle()}
@@ -375,7 +384,7 @@ const FAQPageComponent = () => {
             item
             xs={9}
             md={10}
-            sx={{ color: "white", backgroundColor: "#2a2535" }}
+            sx={{ color: "white", backgroundColor: "#282136" }}
           >
             {renderFaq()}
           </Grid>
