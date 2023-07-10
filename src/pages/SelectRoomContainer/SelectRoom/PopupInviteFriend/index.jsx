@@ -19,7 +19,7 @@ export default function PopupInviteFriend({ roomIdSelect }) {
   }, []);
   useEffect(() => {
     socket?.on(`inviteGameInRoom${roomIdSelect}Success`, (data) => {
-      console.log(data);
+      
     });
   }, [socket, roomIdSelect]);
   const handleOnClickCheck = (id) => {
@@ -33,7 +33,7 @@ export default function PopupInviteFriend({ roomIdSelect }) {
       );
     }
   };
-  console.log(userIds, socket);
+  
   return (
     <Dialog
       open={inviteFriendDialog}
@@ -126,14 +126,12 @@ export default function PopupInviteFriend({ roomIdSelect }) {
         >
           <Button
             onClick={() => {
-              console.log(detailGame?.id, roomIdSelect, userIds);
               socket?.emit("inviteGameInRoom", {
                 type: "friend",
                 gameId: detailGame?.id,
                 roomId: roomIdSelect,
                 userIds: userIds,
               });
-              console.log(123);
             }}
             sx={{
               backgroundImage: "linear-gradient(#8c39f0,#7449ee)",

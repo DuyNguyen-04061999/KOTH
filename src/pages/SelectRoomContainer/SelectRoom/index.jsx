@@ -38,9 +38,21 @@ import UnityGameComponent from "../../../components/GameManager/UnityGameCompone
 import { updateUserGold } from "../../../redux-saga-middleware/reducers/authReducer";
 import styled from "styled-components";
 import PopupInviteFriend from "./PopupInviteFriend";
+
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
+
+const Test = styled.input`
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: #7c5ead;
+      font-weight: 600;
+    }
+  `;
+
 export default function SelectRoom() {
   const { width } = useWindowDimensions();
   const { id } = useParams();
@@ -68,15 +80,7 @@ export default function SelectRoom() {
   const [textContent, setTextContent] = useState("");
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
-  const Test = styled.input`
-    &:focus {
-      outline: none;
-    }
-    &::placeholder {
-      color: #7c5ead;
-      font-weight: 600;
-    }
-  `;
+  
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -240,7 +244,7 @@ export default function SelectRoom() {
     }
     return {};
   }
-  console.log(chat);
+  
   useEffect(() => {
     socket?.on(
       `createRoomForGame${detailGame?.id}Success`,
@@ -455,7 +459,7 @@ export default function SelectRoom() {
   const handleOnchangeText = (e) => {
     setTextContent(e.target.value);
   };
-  console.log(textContent);
+  
   const handleOnClickUnReady = (ready) => {
     socket?.emit("readyRoomGame", {
       roomId: roomIdSelect,
@@ -1937,13 +1941,13 @@ export default function SelectRoom() {
 
                     <img
                       onClick={() => {
-                        console.log(textContent, roomIdSelect);
                         if (textContent !== "") {
                           socket?.emit("chatInRoom", {
                             message: textContent,
                             roomId: roomIdSelect,
                           });
                         }
+                        setTextContent("")
                       }}
                       style={{
                         position: "absolute",

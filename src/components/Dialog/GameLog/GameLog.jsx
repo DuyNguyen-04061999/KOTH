@@ -23,7 +23,7 @@ export default function GameLogDialog(props) {
   const { open, handleClose } = props;
   const { width, height } = useWindowDimensions();
   const { listGameLog } = useSelector((state) => state.gameReducer);
-  console.log(listGameLog);
+  
   const [detailGameLog, setDetailGameLog] = useState(null);
   const [isDetailDialog, setIsDetailDialog] = useState(false);
   const [wrapperWidth, setWrapperWidth] = useState(0);
