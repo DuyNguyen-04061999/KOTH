@@ -111,7 +111,7 @@ export const AvatarPicker = (props) => {
               sx={{
                 width: "100px",
                 height: "100px",
-                borderRadius: "10px",
+                borderRadius: "50%",
               }}
             />
           </Badge>

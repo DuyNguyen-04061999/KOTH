@@ -104,28 +104,44 @@ export const storeFavoriteGame = (data) => {
     payload: data,
   };
 };
+
 export const updateTypeLike = (data) => {
   return {
     type: "UPDATE_TYPE_LIKE",
     payload: data,
   };
 };
+
 export const updateListLikeGame = (data) => {
   return {
     type: "UPDATE_LIST_LIKE_GAME",
     payload: data,
   };
 };
+
 export const updateListDisLikeGame = (data) => {
   return {
     type: "UPDATE_LIST_DIS_LIKE_GAME",
     payload: data,
   };
 };
+
 export const updateLocationChanges = (data) => {
   return {
     type: "UPDATE_LOCATION_CHANGES",
     payload: data,
+  };
+};
+
+export const openInvitefriendPopup = (data) => {
+  return {
+    type: "OPEN_INVITE_GAME_POPUP",
+  };
+};
+
+export const closeInvitefriendPopup = (data) => {
+  return {
+    type: "CLOSE_INVITE_GAME_POPUP",
   };
 };
 
@@ -147,6 +163,7 @@ const gameReducer = (
     listDislikeGame: [],
     currentLoca: "",
     previousLoca: "",
+    inviteFriendDialog: false,
   },
   action
 ) => {
@@ -220,6 +237,18 @@ const gameReducer = (
         ...state,
         currentLoca: payload.currentLoca,
         previousLoca: payload.previousLoca,
+      };
+    }
+    case "OPEN_INVITE_GAME_POPUP": {
+      return {
+        ...state,
+        inviteFriendDialog: true,
+      };
+    }
+    case "CLOSE_INVITE_GAME_POPUP": {
+      return {
+        ...state,
+        inviteFriendDialog: false,
       };
     }
     default:

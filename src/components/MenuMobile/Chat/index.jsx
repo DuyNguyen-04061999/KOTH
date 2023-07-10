@@ -84,7 +84,7 @@ export default function DialogChat(props) {
     } else {
       if (renderTab === false) {
         if (chat) {
-          _socket.emit("chat", { type: "World", toId: 0, content: chat });
+          _socket.emit("chat", { type: "Privite", toId: 0, content: chat });
           setChat("");
         }
       }

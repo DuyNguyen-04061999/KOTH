@@ -38,6 +38,10 @@ import Checked from "../assets/images/Checked.png";
 import UnCheck from "../assets/images/UnCheck.png";
 import passiveUser from "../assets/images/passiveUser.png";
 import passiveCoin from "../assets/images/passiveCoin.png";
+import BackButtonLobby from "../assets/images/BackButtonLobby.png";
+import expandIcon from "../assets/images/expandIcon.png";
+import ZoomInIcon from "../assets/images/ZoomInIcon.png";
+import closeButtonInvite from "../assets/images/closeButton.png";
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -220,6 +224,10 @@ export const images = {
   UnCheck: UnCheck,
   passiveUser: passiveUser,
   passiveCoin: passiveCoin,
+  BackButtonLobby: BackButtonLobby,
+  expandIcon: expandIcon,
+  ZoomInIcon: ZoomInIcon,
+  closeButtonInvite: closeButtonInvite,
 };
 
 export const images2 = {
