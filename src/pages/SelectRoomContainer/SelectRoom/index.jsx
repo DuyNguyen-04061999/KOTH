@@ -1040,14 +1040,14 @@ export default function SelectRoom() {
                             }}
                           >
                             {!item?.membersInRoom ||
-                            JSON.parse(item?.membersInRoom)?.length <
-                              item?.roomCountMember ? (
+                            (item?.membersInRoom && JSON.parse(item?.membersInRoom)?.length <
+                            item?.roomCountMember) ? (
                               <button
                                 onClick={() => {
                                   if (
-                                    item?.roomStatus === 0 &&
-                                    JSON.parse(item?.membersInRoom)?.length <
-                                      item?.roomCountMember
+                                    (item?.roomStatus === 0 &&
+                                      item?.membersInRoom && JSON.parse(item?.membersInRoom)?.length <
+                                      item?.roomCountMember) || (item?.roomStatus === 0 && !item?.membersInRoom)
                                   ) {
                                     _socket.emit("joinRoomGame", {
                                       roomId: item?.id,
@@ -1250,14 +1250,14 @@ export default function SelectRoom() {
                             }}
                           >
                             {!item?.membersInRoom ||
-                            JSON.parse(item?.membersInRoom)?.length <
-                              item?.roomCountMember ? (
+                            (item?.membersInRoom && JSON.parse(item?.membersInRoom)?.length <
+                            item?.roomCountMember) ? (
                               <button
                                 onClick={() => {
                                   if (
-                                    item?.roomStatus === 0 &&
-                                    JSON.parse(item?.membersInRoom)?.length <
-                                      item?.roomCountMember
+                                    (item?.roomStatus === 0 &&
+                                      item?.membersInRoom && JSON.parse(item?.membersInRoom)?.length <
+                                      item?.roomCountMember) || (item?.roomStatus === 0 && !item?.membersInRoom)
                                   ) {
                                     _socket.emit("joinRoomGame", {
                                       roomId: item?.id,
