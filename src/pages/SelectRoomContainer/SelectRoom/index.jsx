@@ -39,6 +39,8 @@ import { updateUserGold } from "../../../redux-saga-middleware/reducers/authRedu
 import styled from "styled-components";
 import PopupInviteFriend from "./PopupInviteFriend";
 
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -80,7 +82,8 @@ export default function SelectRoom() {
   const [textContent, setTextContent] = useState("");
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
-  
+  const handle = useFullScreenHandle();
+  const [isFullScreen, setIsFullScreen] = useState(false)
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -492,149 +495,160 @@ export default function SelectRoom() {
   }, [state]);
   return (
     <div className="gameplay">
-      {detailGame &&
-        detailGame?.GameFiles &&
-        detailGame?.GameFiles?.length >= 4 && (
-          <Box
-            sx={{
-              width: startGame ? "100%" : "0px",
-              height: startGame ? "auto" : "0px",
-              display: "flex",
-              paddingTop: startGame ? "50px" : "0px",
-              justifyContent: "center",
-            }}
-          >
+      <FullScreen handle={handle}>
+        {detailGame &&
+          detailGame?.GameFiles &&
+          detailGame?.GameFiles?.length >= 4 && (
             <Box
               sx={{
-                width: "80%",
+                width: startGame ? "100%" : "0px",
+                height: startGame ? "auto" : "0px",
+                display: "flex",
+                paddingTop: startGame ? "50px" : "0px",
+                justifyContent: "center",
               }}
             >
               <Box
                 sx={{
-                  width: startGame ? "100%" : "0px",
-                  height: startGame ? "700px" : "0px",
-                  backgroundColor: "#423965",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  width: "80%",
                 }}
               >
-                <Fragment>
-                  <UnityGameComponent
-                    GameFiles={detailGame?.GameFiles}
-                    height={"700px"}
-                  />
-                </Fragment>
-              </Box>
-              {startGame && (
                 <Box
                   sx={{
-                    width: "100%",
-                    height: "auto",
-                    boxSizing: "border-box",
-                    padding: "10px 20px",
+                    width: startGame ? "100%" : "0px",
+                    height: startGame ? "700px" : "0px",
+                    backgroundColor: "#423965",
                     display: "flex",
-                    justifyContent: "flex-end",
-                    alignite: "center",
-                    backgroundColor: "#2e2844",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <Box sx={{ position: "relative" }}>
+                  <Fragment>
+                    <UnityGameComponent
+                      GameFiles={detailGame?.GameFiles}
+                      height={"700px"}
+                    />
+                  </Fragment>
+                </Box>
+                {startGame && (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "auto",
+                      boxSizing: "border-box",
+                      padding: "10px 20px",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignite: "center",
+                      backgroundColor: "#2e2844",
+                    }}
+                  >
+                    <Box sx={{ position: "relative" }}>
+                      <Box
+                        component={"img"}
+                        alt="..."
+                        sx={{
+                          width: width < 576 ? width / 20 : width / 68,
+                          height: width < 576 ? width / 20 : width / 68,
+                        }}
+                        onClick={handleOnClickLikeGame}
+                        src={
+                          likeGame === false
+                            ? imagesFavorite.passiveLike
+                            : imagesFavorite.activeLike
+                        }
+                      ></Box>
+                      <span
+                        style={{
+                          color: "#fff",
+                          position: "absolute",
+                          top: "6px",
+                          left: "35px",
+                          fontWeight: "bolder",
+                          fontSize: getFontSizeDependOnWidth(width),
+                        }}
+                      >
+                        {countLikeGame &&
+                          convertToInternationalCurrencySystem(countLikeGame)}
+                      </span>
+                    </Box>
+                    <Box sx={{ position: "relative" }}>
+                      {" "}
+                      <Box
+                        component={"img"}
+                        alt="..."
+                        sx={{
+                          width: width < 576 ? width / 20 : width / 68,
+                          height: width < 576 ? width / 20 : width / 68,
+                          marginLeft: "60px",
+                          marginTop: "7px",
+                        }}
+                        onClick={handleOnClickDisLikeGame}
+                        src={
+                          disLikeGame === false
+                            ? imagesFavorite.passiveDislike
+                            : imagesFavorite.activeDislike
+                        }
+                      ></Box>
+                      <span
+                        style={{
+                          color: "#fff",
+                          position: "absolute",
+                          top: "6px",
+                          right: "-25px",
+                          fontWeight: "bolder",
+                          fontSize: getFontSizeDependOnWidth(width),
+                        }}
+                      >
+                        {countDisLikeGame &&
+                          convertToInternationalCurrencySystem(countDisLikeGame)}
+                      </span>
+                    </Box>
                     <Box
                       component={"img"}
-                      alt="..."
-                      sx={{
-                        width: width < 576 ? width / 20 : width / 68,
-                        height: width < 576 ? width / 20 : width / 68,
+                      onClick={() => {
+                        if (fGame) {
+                          socket?.emit("deleteFavoriteGame", {
+                            id: detailGame?.id,
+                          });
+                          setFGame(false);
+                        } else {
+                          socket?.emit("addFavoriteGame", { id: detailGame?.id });
+                          setFGame(true);
+                        }
                       }}
-                      onClick={handleOnClickLikeGame}
-                      src={
-                        likeGame === false
-                          ? imagesFavorite.passiveLike
-                          : imagesFavorite.activeLike
-                      }
-                    ></Box>
-                    <span
-                      style={{
-                        color: "#fff",
-                        position: "absolute",
-                        top: "6px",
-                        left: "35px",
-                        fontWeight: "bolder",
-                        fontSize: getFontSizeDependOnWidth(width),
-                      }}
-                    >
-                      {countLikeGame &&
-                        convertToInternationalCurrencySystem(countLikeGame)}
-                    </span>
-                  </Box>
-                  <Box sx={{ position: "relative" }}>
-                    {" "}
-                    <Box
-                      component={"img"}
-                      alt="..."
                       sx={{
                         width: width < 576 ? width / 20 : width / 68,
                         height: width < 576 ? width / 20 : width / 68,
                         marginLeft: "60px",
-                        marginTop: "7px",
                       }}
-                      onClick={handleOnClickDisLikeGame}
-                      src={
-                        disLikeGame === false
-                          ? imagesFavorite.passiveDislike
-                          : imagesFavorite.activeDislike
-                      }
+                      className="cursor-pointer"
+                      src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
+                      alt="..."
                     ></Box>
-                    <span
+                    <i
                       style={{
-                        color: "#fff",
-                        position: "absolute",
-                        top: "6px",
-                        right: "-25px",
-                        fontWeight: "bolder",
-                        fontSize: getFontSizeDependOnWidth(width),
+                        fontSize: width < 576 ? width / 20 : width / 68,
+                        marginLeft: "60px",
+                        color: "white",
                       }}
-                    >
-                      {countDisLikeGame &&
-                        convertToInternationalCurrencySystem(countDisLikeGame)}
-                    </span>
+                      onClick={() => {
+                        if(isFullScreen) {
+                          handle.exit()
+                        } else {
+                          handle.enter()
+                        }
+                        setIsFullScreen(!isFullScreen)
+                      }}
+                      className="fa-solid fa-expand"
+                    ></i>
                   </Box>
-                  <Box
-                    component={"img"}
-                    onClick={() => {
-                      if (fGame) {
-                        socket?.emit("deleteFavoriteGame", {
-                          id: detailGame?.id,
-                        });
-                        setFGame(false);
-                      } else {
-                        socket?.emit("addFavoriteGame", { id: detailGame?.id });
-                        setFGame(true);
-                      }
-                    }}
-                    sx={{
-                      width: width < 576 ? width / 20 : width / 68,
-                      height: width < 576 ? width / 20 : width / 68,
-                      marginLeft: "60px",
-                    }}
-                    className="cursor-pointer"
-                    src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
-                    alt="..."
-                  ></Box>
-                  <i
-                    style={{
-                      fontSize: width < 576 ? width / 20 : width / 68,
-                      marginLeft: "60px",
-                      color: "white",
-                    }}
-                    className="fa-solid fa-expand"
-                  ></i>
-                </Box>
-              )}
+                )}
+              </Box>
             </Box>
-          </Box>
-        )}
+          )}
+      </FullScreen>
+      
       {/* <Box
         sx={{
           width: startGame ? "100%" : "0px",
