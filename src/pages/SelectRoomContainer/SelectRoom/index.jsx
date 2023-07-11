@@ -34,7 +34,7 @@ import {
 } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 import imagesFavorite from "../../../utils/imagesFavorite";
-import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
+// import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
 import { updateUserGold } from "../../../redux-saga-middleware/reducers/authReducer";
 import styled from "styled-components";
 import PopupInviteFriend from "./PopupInviteFriend";
@@ -529,12 +529,12 @@ export default function SelectRoom() {
                 alignItems: "center",
               }}
             >
-              <Fragment>
+              {/* <Fragment>
                 <UnityGameComponent
                   GameFiles={detailGame?.GameFiles}
                   height={"700px"}
                 />
-              </Fragment>
+              </Fragment> */}
             </Box>
             {startGame && (
               <Box
@@ -683,12 +683,12 @@ export default function SelectRoom() {
                   alignItems: "center",
                 }}
               >
-                <Fragment>
+                {/* <Fragment>
                   <UnityGameComponent
                     GameFiles={detailGame?.GameFiles}
                     height={"700px"}
                   />
-                </Fragment>
+                </Fragment> */}
               </Box>
             </Box>
             <Box

@@ -89,6 +89,14 @@ export default function UnityGameComponent(props) {
     };
   });
 
+  useEffect(() => {
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener("beforeunload", onBackButtonEvent);
+    return () => {
+      window.removeEventListener("beforeunload", onBackButtonEvent);
+    };
+  });
+
   const handleGameLoad = useCallback(() => {
       console.log("Ready from FE", true);
       sendMessage("OverTheBridgeHome", "SetToken", token);
