@@ -76,446 +76,440 @@ export default function Home() {
 
       {width > 576 ? (
         <Box>
-          <Container maxWidth={"lg"}>
-            <Container maxWidth={"md"}>
-              <Box className="video-desktop">
-                <video
-                  width={"100%"}
-                  height={"300px"}
-                  // className="img-fluid"
-                  autoPlay
-                  playsInline
-                  loop
-                  muted
-                >
-                  <source src={images280423_l.bannerVideo} type="video/webm" />
-                </video>
-              </Box>
-              <Box className="banner-top">
-                <Slider {...settings}>
-                  <div>
-                    <div style={{ marginRight: "10px"}}>
-                      <img
-                        src={imagesV2.bn2}
-                        alt="..."
-                        className="img-zoom cursor-pointer"
-                        style={{ height: "100%", width: "100%" }}
-                        onClick={() => {}}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ marginRight: "10px"}}>
-                      <img
-                        src={imagesV2.bn3}
-                        alt="..."
-                        className="img-zoom cursor-pointer me-2"
-                        style={{ height: "100%", width: "100%" }}
-                        onClick={() => {}}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div
-                      rel="noreferrer"
-                      style={{ marginRight: "10px"}}
-                    >
-                      <img
-                        src={imagesV2.bn4}
-                        alt="..."
-                        className="img-zoom"
-                        style={{ height: "100%", width: "100%" }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div
-                      rel="noreferrer"
-                      style={{ marginRight: "10px"}}
-                    >
-                      <img
-                        src={imagesV2.bn1}
-                        alt="..."
-                        className="img-zoom"
-                        style={{ height: "100%", width: "100%" }}
-                      />
-                    </div>
-                  </div>
-                </Slider>
-              </Box>
-              <Box className="top-rated-game mb-5">
-                <div className="group">
-                  <TitleHomeDesktopComponent
-                    type="ratedGame"
-                    title="PVP GAMES"
-                    icon={images2.iconbattlegame}
-                    overBg={images270423_l.overTop}
-                    noBg={true}
-                  />
-                  <SliderLayout
-                    cards={listGame?.filter((item) => item?.gameType === "PVP")}
-                  />
-                </div>
-                <div className="group" style={{marginTop:"2.5rem"}}>
-                  <TitleHomeDesktopComponent
-                    type="ratedGame"
-                    title="FREE TO PLAY"
-                    icon={images2.iconrecoment}
-                    overBg={images270423_l.overTop}
-                    noBg={true}
-                  />
-                  <div
-                    style={{
-                      paddingLeft: width > 576 ? 0 : 0,
-                    }}
-                  >
-                    <SliderFree
-                      cards={listGame?.filter((item) => item?.gameFree === 1)}
+          <Container
+            maxWidth={"lg"}
+            sx={{
+              paddingLeft: "100px !important",
+              paddingRight: "100px !important",
+            }}
+          >
+            <Box className="video-desktop">
+              <video
+                width={"100%"}
+                height={"300px"}
+                // className="img-fluid"
+                autoPlay
+                playsInline
+                loop
+                muted
+              >
+                <source src={images280423_l.bannerVideo} type="video/webm" />
+              </video>
+            </Box>
+            <Box className="banner-top">
+              <Slider {...settings}>
+                <div>
+                  <div style={{ marginRight: "10px" }}>
+                    <img
+                      src={imagesV2.bn2}
+                      alt="..."
+                      className="img-zoom cursor-pointer"
+                      style={{ height: "100%", width: "100%" }}
+                      onClick={() => {}}
                     />
                   </div>
                 </div>
-              </Box>
-
-              <Box className="crypto-info d-flex justify-content-center">
-                <Box
-                  className="crypto-left"
-                  sx={{
-                    // width: "600px",
-                    // height: "100px",
-                    backgroundColor: "#352658",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box className="DOGE-COIN">
-                    <button
-                      style={{
-                        borderBottomRightRadius: "50px",
-                        borderTopRightRadius: "50px",
-                        fontWeight: "700",
-                        backgroundColor: "#a58a1a",
-                        color: "white",
-                        border: "none",
-                        padding: "5px 15px",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <p style={{fontSize:"1.75em"}}>DOGE COIN</p>
-                      <img
-                        src={popup.Doge2}
-                        alt="..."
-                        width={42}
-                        height={42}
-                        style={{ marginLeft: "17px" }}
-                      />
-                    </button>
-                  </Box>
-                  <Box
-                    className="doge-number"
-                    sx={{ paddingLeft: "40px", paddingRight: "20px" }}
-                  >
-                    <Box className="number-top d-flex justify-content-between align-items-center">
-                      <Typography variant="h5" sx={{ color: "white" }}>
-                        $0.07142902
-                      </Typography>
-                      <Typography variant="body1" sx={{ color: "red" }}>
-                        -1.82%
-                      </Typography>
-                    </Box>
-                    <Box className="number-bot d-flex text-white">
-                      <Typography variant="body2">$0.071126060</Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          marginLeft: "20px !important",
-                          marginRight: "20px",
-                          color:"gray"
-                        }}
-                      >
-                        24H
-                      </Typography>
-                      <Typography variant="body2">$0.071126060</Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  className="crypto-right d-flex justify-content-center align-items-center"
-                  sx={{
-                    backgroundColor: "#2b2046",
-                    padding:"20px 30px"
-                  }}
-                >
-                  <button
-                    style={{
-                      padding: "10px 20px",
-                      border: "none",
-                      borderRadius: "4px",
-                      background:
-                        "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                      color: "white",
-                      fontWeight: "700",
-                    }}
-                  >
-                    <Typography variant="h6">Deposit</Typography>
-                  </button>
-                </Box>
-              </Box>
-              <Box className="leaderboard">
+                <div>
+                  <div style={{ marginRight: "10px" }}>
+                    <img
+                      src={imagesV2.bn3}
+                      alt="..."
+                      className="img-zoom cursor-pointer me-2"
+                      style={{ height: "100%", width: "100%" }}
+                      onClick={() => {}}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div rel="noreferrer" style={{ marginRight: "10px" }}>
+                    <img
+                      src={imagesV2.bn4}
+                      alt="..."
+                      className="img-zoom"
+                      style={{ height: "100%", width: "100%" }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div rel="noreferrer" style={{ marginRight: "10px" }}>
+                    <img
+                      src={imagesV2.bn1}
+                      alt="..."
+                      className="img-zoom"
+                      style={{ height: "100%", width: "100%" }}
+                    />
+                  </div>
+                </div>
+              </Slider>
+            </Box>
+            <Box className="top-rated-game mb-5">
+              <div className="group">
                 <TitleHomeDesktopComponent
                   type="ratedGame"
-                  title="LEADERBOARD"
-                  icon={images2.iconleaderboard}
+                  title="PVP GAMES"
+                  icon={images2.iconbattlegame}
                   overBg={images270423_l.overTop}
                   noBg={true}
                 />
-                <Box className="board">
-                  <Box
-                    className="board-top"
-                    sx={{
-                      width: "100%",
-                      height: "500px",
-                      backgroundImage: `url(${images2.brleaderboard})`,
-                      backgroundPosition: "center",
-                      backgroundRepeat: "no-repeat",
-                      backgroundSize: "cover",
+                <SliderLayout
+                  cards={listGame?.filter((item) => item?.gameType === "PVP")}
+                />
+              </div>
+              <div className="group" style={{ marginTop: "2.5rem" }}>
+                <TitleHomeDesktopComponent
+                  type="ratedGame"
+                  title="FREE TO PLAY"
+                  icon={images2.iconrecoment}
+                  overBg={images270423_l.overTop}
+                  noBg={true}
+                />
+                <div
+                  style={{
+                    paddingLeft: width > 576 ? 0 : 0,
+                  }}
+                >
+                  <SliderFree
+                    cards={listGame?.filter((item) => item?.gameFree === 1)}
+                  />
+                </div>
+              </div>
+            </Box>
+
+            <Box className="crypto-info d-flex justify-content-center">
+              <Box
+                className="crypto-left"
+                sx={{
+                  // width: "600px",
+                  // height: "100px",
+                  backgroundColor: "#352658",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Box className="DOGE-COIN">
+                  <button
+                    style={{
+                      borderBottomRightRadius: "50px",
+                      borderTopRightRadius: "50px",
+                      fontWeight: "700",
+                      backgroundColor: "#a58a1a",
+                      color: "white",
+                      border: "none",
+                      padding: "5px 15px",
                       display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-end",
+                      alignItems: "center",
                     }}
                   >
-                    <Box className="content-board">
-                      {leaderBoard &&
-                        leaderBoard?.length > 3 &&
-                        insertAndShift(leaderBoard?.slice(0, 3), 1, 0)?.map(
-                          (lb, i_lb) => (
+                    <p style={{ fontSize: "1.75em" }}>DOGE COIN</p>
+                    <img
+                      src={popup.Doge2}
+                      alt="..."
+                      width={42}
+                      height={42}
+                      style={{ marginLeft: "17px" }}
+                    />
+                  </button>
+                </Box>
+                <Box
+                  className="doge-number"
+                  sx={{ paddingLeft: "40px", paddingRight: "20px" }}
+                >
+                  <Box className="number-top d-flex justify-content-between align-items-center">
+                    <Typography variant="h5" sx={{ color: "white" }}>
+                      $0.07142902
+                    </Typography>
+                    <Typography variant="body1" sx={{ color: "red" }}>
+                      -1.82%
+                    </Typography>
+                  </Box>
+                  <Box className="number-bot d-flex text-white">
+                    <Typography variant="body2">$0.071126060</Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        marginLeft: "20px !important",
+                        marginRight: "20px",
+                        color: "gray",
+                      }}
+                    >
+                      24H
+                    </Typography>
+                    <Typography variant="body2">$0.071126060</Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                className="crypto-right d-flex justify-content-center align-items-center"
+                sx={{
+                  backgroundColor: "#2b2046",
+                  padding: "20px 30px",
+                }}
+              >
+                <button
+                  style={{
+                    padding: "10px 20px",
+                    border: "none",
+                    borderRadius: "4px",
+                    background:
+                      "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                    color: "white",
+                    fontWeight: "700",
+                  }}
+                >
+                  <Typography variant="h6">Deposit</Typography>
+                </button>
+              </Box>
+            </Box>
+            <Box className="leaderboard">
+              <TitleHomeDesktopComponent
+                type="ratedGame"
+                title="LEADERBOARD"
+                icon={images2.iconleaderboard}
+                overBg={images270423_l.overTop}
+                noBg={true}
+              />
+              <Box className="board">
+                <Box
+                  className="board-top"
+                  sx={{
+                    width: "100%",
+                    height: "500px",
+                    backgroundImage: `url(${images2.brleaderboard})`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Box className="content-board">
+                    {leaderBoard &&
+                      leaderBoard?.length > 3 &&
+                      insertAndShift(leaderBoard?.slice(0, 3), 1, 0)?.map(
+                        (lb, i_lb) => (
+                          <div
+                            className={
+                              i_lb === 0
+                                ? "two-st"
+                                : i_lb === 1
+                                ? "one-st"
+                                : "three-st"
+                            }
+                            key={i_lb}
+                          >
                             <div
                               className={
                                 i_lb === 0
-                                  ? "two-st"
+                                  ? "br-two-st"
                                   : i_lb === 1
-                                  ? "one-st"
-                                  : "three-st"
+                                  ? "br-one-st"
+                                  : "br-three-st"
                               }
-                              key={i_lb}
+                              style={{}}
                             >
-                              <div
-                                className={
+                              <img
+                                src={
                                   i_lb === 0
-                                    ? "br-two-st"
+                                    ? images2.top2
                                     : i_lb === 1
-                                    ? "br-one-st"
-                                    : "br-three-st"
+                                    ? images2.top1
+                                    : images2.top3
                                 }
-                                style={{}}
-                              >
-                                <img
-                                  src={
-                                    i_lb === 0
-                                      ? images2.top2
+                                alt="..."
+                                width={width < 1200 ? 150 : 200}
+                                height={
+                                  i_lb === 0 ? 250 : i_lb === 1 ? 350 : 180
+                                }
+                              />
+                              <div className="top-name">
+                                <div
+                                  className="text-st"
+                                  style={{
+                                    position: "absolute",
+                                    top: "-65px",
+                                    left: "83px",
+                                    display: "flex",
+                                    lineHeight: "1",
+                                  }}
+                                >
+                                  <h6>
+                                    {i_lb === 0 ? "2" : i_lb === 1 ? "1" : "3"}
+                                  </h6>
+                                  <p>
+                                    {i_lb === 0
+                                      ? "nd"
                                       : i_lb === 1
-                                      ? images2.top1
-                                      : images2.top3
+                                      ? "st"
+                                      : "rd"}
+                                  </p>
+                                </div>
+                                <img
+                                  className="name-win rounded-circle"
+                                  src={
+                                    lb?.userAccount?.accountAvatar
+                                      ? process.env.REACT_APP_SOCKET_SERVER +
+                                        "/" +
+                                        lb?.userAccount?.accountAvatar
+                                      : images2.ava1
                                   }
                                   alt="..."
-                                  width={width < 1200 ? 150 : 200}
-                                  height={
-                                    i_lb === 0 ? 250 : i_lb === 1 ? 350 : 180
-                                  }
+                                  width={70}
+                                  height={70}
+                                  style={{
+                                    position: "absolute",
+                                    top: "-20px",
+                                    left: "60px",
+                                  }}
                                 />
-                                <div className="top-name">
-                                  <div
-                                    className="text-st"
-                                    style={{
-                                      position: "absolute",
-                                      top: "-65px",
-                                      left: "83px",
-                                      display: "flex",
-                                      lineHeight: "1",
-                                    }}
-                                  >
-                                    <h6>
-                                      {i_lb === 0
-                                        ? "2"
-                                        : i_lb === 1
-                                        ? "1"
-                                        : "3"}
-                                    </h6>
-                                    <p>
-                                      {i_lb === 0
-                                        ? "nd"
-                                        : i_lb === 1
-                                        ? "st"
-                                        : "rd"}
-                                    </p>
-                                  </div>
-                                  <img
-                                    className="name-win rounded-circle"
-                                    src={
-                                      lb?.userAccount?.accountAvatar
-                                        ? process.env.REACT_APP_SOCKET_SERVER +
-                                          "/" +
-                                          lb?.userAccount?.accountAvatar
-                                        : images2.ava1
-                                    }
-                                    alt="..."
-                                    width={70}
-                                    height={70}
-                                    style={{
-                                      position: "absolute",
-                                      top: "-20px",
-                                      left: "60px",
-                                    }}
-                                  />
-                                  <div
-                                    className="desc"
-                                    style={{
-                                      position: "absolute",
-                                      top: "70px",
-                                      left: "9px",
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      width: "180px",
-                                    }}
-                                  >
-                                    <h6 className="user text-white">
-                                      {lb.userName || `Gad_Game_${i_lb}`}
-                                    </h6>
-                                    <div className="gold mt-2">
-                                      <img
-                                        src={images2.goldleaderboard}
-                                        alt="..."
-                                        width={25}
-                                        height={25}
-                                      />
-                                      <p>{formatMoney(lb?.userGold)}</p>
-                                    </div>
+                                <div
+                                  className="desc"
+                                  style={{
+                                    position: "absolute",
+                                    top: "70px",
+                                    left: "9px",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    width: "180px",
+                                  }}
+                                >
+                                  <h6 className="user text-white">
+                                    {lb.userName || `Gad_Game_${i_lb}`}
+                                  </h6>
+                                  <div className="gold mt-2">
+                                    <img
+                                      src={images2.goldleaderboard}
+                                      alt="..."
+                                      width={25}
+                                      height={25}
+                                    />
+                                    <p>{formatMoney(lb?.userGold)}</p>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          )
-                        )}
-                    </Box>
+                          </div>
+                        )
+                      )}
                   </Box>
-                  <Box className="board-bot" sx={{ width: "100%" }}>
-                    <TableContainer
-                      component={Paper}
-                      sx={{
-                        borderRadius: "0px",
-                        backgroundColor: "transparent",
-                      }}
+                </Box>
+                <Box className="board-bot" sx={{ width: "100%" }}>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      borderRadius: "0px",
+                      backgroundColor: "transparent",
+                    }}
+                  >
+                    <Table
+                      sx={{ width: "100%" }}
+                      size="medium"
+                      aria-label="a dense table"
                     >
-                      <Table
-                        sx={{ width: "100%" }}
-                        size="medium"
-                        aria-label="a dense table"
-                      >
-                        <TableHead sx={{ backgroundColor: "#331e55" }}>
-                          <TableRow>
+                      <TableHead sx={{ backgroundColor: "#331e55" }}>
+                        <TableRow>
+                          <TableCell
+                            align="center"
+                            sx={{
+                              borderBottom: "none",
+                              color: "#877aa8",
+                              fontSize: "20px",
+                            }}
+                          >
+                            Position
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            sx={{
+                              borderBottom: "none",
+                              color: "#877aa8",
+                              fontSize: "20px",
+                            }}
+                          >
+                            Participant
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            sx={{
+                              borderBottom: "none",
+                              color: "#877aa8",
+                              fontSize: "20px",
+                            }}
+                          >
+                            Doge Gold
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody sx={{ backgroundColor: "#2a1c39" }}>
+                        {leaderBoard?.map((row, index) => (
+                          <TableRow
+                            key={index}
+                            sx={{
+                              "&:last-child td, &:last-child th": {
+                                border: 0,
+                              },
+                            }}
+                          >
                             <TableCell
                               align="center"
                               sx={{
                                 borderBottom: "none",
-                                color: "#877aa8",
-                                fontSize: "20px",
+                                color: "white",
+                                fontSize: "18px",
                               }}
                             >
-                              Position
+                              {index === 0 ? 1 : index + 1}
                             </TableCell>
                             <TableCell
                               align="left"
                               sx={{
                                 borderBottom: "none",
-                                color: "#877aa8",
-                                fontSize: "20px",
+                                color: "white",
+                                fontSize: "18px",
                               }}
                             >
-                              Participant
+                              <img
+                                src={
+                                  row?.userAccount?.accountAvatar
+                                    ? process.env.REACT_APP_SOCKET_SERVER +
+                                      "/" +
+                                      row?.userAccount?.accountAvatar
+                                    : images2.ava1
+                                }
+                                alt="..."
+                                width={40}
+                                height={40}
+                                className="me-2 rounded-circle"
+                              />
+                              {row.userName ||
+                                `Gad_Game_${index === 0 ? 1 : index + 1}`}
                             </TableCell>
                             <TableCell
                               align="left"
                               sx={{
                                 borderBottom: "none",
-                                color: "#877aa8",
-                                fontSize: "20px",
+                                color: "yellow",
+                                fontSize: "18px",
                               }}
                             >
-                              Doge Gold
+                              <img
+                                src={images2.goldleaderboard}
+                                alt="..."
+                                width={25}
+                                height={25}
+                                className="me-1"
+                              />
+                              {formatMoney(row.userGold)}
                             </TableCell>
                           </TableRow>
-                        </TableHead>
-                        <TableBody sx={{ backgroundColor: "#2a1c39" }}>
-                          {leaderBoard?.map((row, index) => (
-                            <TableRow
-                              key={index}
-                              sx={{
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }}
-                            >
-                              <TableCell
-                                align="center"
-                                sx={{
-                                  borderBottom: "none",
-                                  color: "white",
-                                  fontSize: "18px",
-                                }}
-                              >
-                                {index === 0 ? 1 : index + 1}
-                              </TableCell>
-                              <TableCell
-                                align="left"
-                                sx={{
-                                  borderBottom: "none",
-                                  color: "white",
-                                  fontSize: "18px",
-                                }}
-                              >
-                                <img
-                                  src={
-                                    row?.userAccount?.accountAvatar
-                                      ? process.env.REACT_APP_SOCKET_SERVER +
-                                        "/" +
-                                        row?.userAccount?.accountAvatar
-                                      : images2.ava1
-                                  }
-                                  alt="..."
-                                  width={40}
-                                  height={40}
-                                  className="me-2 rounded-circle"
-                                />
-                                {row.userName ||
-                                  `Gad_Game_${index === 0 ? 1 : index + 1}`}
-                              </TableCell>
-                              <TableCell
-                                align="left"
-                                sx={{
-                                  borderBottom: "none",
-                                  color: "yellow",
-                                  fontSize: "18px",
-                                }}
-                              >
-                                <img
-                                  src={images2.goldleaderboard}
-                                  alt="..."
-                                  width={25}
-                                  height={25}
-                                  className="me-1"
-                                />
-                                {formatMoney(row.userGold)}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </Box>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 </Box>
               </Box>
-            </Container>
+            </Box>
           </Container>
           <Box className="footer p-5" sx={{ backgroundColor: "#2c2434" }}>
             <Box

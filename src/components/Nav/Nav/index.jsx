@@ -29,7 +29,7 @@ export default function Navbar() {
             paddingBottom: "9px",
             transitionDuration: "all 1s",
             paddingLeft:"20px",
-            transition:"visibility 0.5s,all 0.25s ease-in-out;"
+            transition:"visibility 0.5s,all 0.25s ease-in-out;",
           }}
           className="pe-2 pt-3 pb-3"
         >
