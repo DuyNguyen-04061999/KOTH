@@ -1,9 +1,11 @@
-import { Box, Button, Dialog, Typography } from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { images } from "../../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
 import { closeInvitefriendPopup } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import _socket from "../../../../redux-saga-middleware/config/socket";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import { getFontSizeDependOnWidth } from "../../../../utils/config";
 
 export default function PopupInviteFriend({ roomIdSelect }) {
   const { inviteFriendDialog, detailGame } = useSelector(
@@ -12,15 +14,14 @@ export default function PopupInviteFriend({ roomIdSelect }) {
   const { friendList } = useSelector((state) => state.chatReducer);
   const [userIds, setUserIds] = useState([]);
   const [socket, setSocket] = useState(null);
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, []);
   useEffect(() => {
-    socket?.on(`inviteGameInRoom${roomIdSelect}Success`, (data) => {
-      
-    });
+    socket?.on(`inviteGameInRoom${roomIdSelect}Success`, (data) => {});
   }, [socket, roomIdSelect]);
   const handleOnClickCheck = (id) => {
     if (!userIds?.includes(id)) {
@@ -33,48 +34,78 @@ export default function PopupInviteFriend({ roomIdSelect }) {
       );
     }
   };
-  
+
   return (
     <Dialog
       open={inviteFriendDialog}
+      fullScreen={width < 576 && true}
       onClose={() => dispatch(closeInvitefriendPopup())}
+      sx={{ zIndex: width < 576 ? "100000" : "none" }}
     >
       <Box
         sx={{
-          width: "400px",
+          width: width < 576 ? "100%" : "400px",
+          height: width < 576 ? "100%" : "none",
           display: "flex",
           flexDirection: "column",
           backgroundColor: "#3c2c64",
+          position: "relative",
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            padding: "15px 20px",
-            height: "auto",
-            backgroundColor: "#513c82",
-            color: "white",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography>Invite friends</Typography>
+        {width > 576 ? (
           <Box
-            sx={{ width: "20px", height: "20px", cursor: "pointer" }}
-            src={images.closeButtonInvite}
-            onClick={() => dispatch(closeInvitefriendPopup())}
-            component={"img"}
-          ></Box>
-        </Box>
+            sx={{
+              width: "100%",
+              padding: "15px 20px",
+              height: "auto",
+              backgroundColor: "#513c82",
+              color: "white",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography>Invite friends</Typography>
+
+            <Box
+              sx={{ width: "20px", height: "20px", cursor: "pointer" }}
+              src={images.closeButtonInvite}
+              onClick={() => dispatch(closeInvitefriendPopup())}
+              component={"img"}
+            ></Box>
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              width: "100%",
+              padding: "15px 20px",
+              height: "auto",
+              backgroundColor: "#513c82",
+              color: "white",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{ width: "20px", height: "20px", cursor: "pointer" }}
+              src={images.BackButtonLobby}
+              onClick={() => dispatch(closeInvitefriendPopup())}
+              component={"img"}
+            ></Box>
+            <Typography>Invite friends</Typography>
+          </Box>
+        )}
+
         <Box
           sx={{
             padding: "20px",
             backgroundColor: "#3c2c64",
             display: "flex",
+            alignItems: "flex-start",
             flexWrap: "wrap",
+            maxHeight: width < 576 ? "82%" : "600px",
+            overflowY: "auto",
           }}
         >
-          {/* Loop */}
           {friendList?.map((e, i_) => {
             return (
               <Box
@@ -89,7 +120,11 @@ export default function PopupInviteFriend({ roomIdSelect }) {
                 }}
               >
                 <Box
-                  sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                  sx={{
+                    width: width < 576 ? parseFloat(width / 11) : "50px",
+                    height: width < 576 ? parseFloat(width / 11) : "50px",
+                    borderRadius: "50%",
+                  }}
                   component={"img"}
                   src={
                     e?.userAccount && e?.userAccount?.accountAvatar
@@ -99,17 +134,31 @@ export default function PopupInviteFriend({ roomIdSelect }) {
                       : images.undefinedAvatar
                   }
                 ></Box>
-                <Box>{e?.userName}</Box>
+                <Box
+                  sx={{
+                    fontSize: getFontSizeDependOnWidth(width),
+                    textAlign: "start",
+                    width: "50%",
+                    paddingLeft: "4px",
+                  }}
+                >
+                  {/* {e?.userName} */}
+                  LeeSin
+                </Box>
                 <Box
                   onClick={() => handleOnClickCheck(e?.id)}
-                  sx={{ width: "25px", height: "25px", cursor: "pointer" }}
+                  sx={{
+                    width: width < 576 ? parseFloat(width / 20) : "25px",
+                    height: width < 576 ? parseFloat(width / 20) : "25px",
+                    cursor: "pointer",
+                  }}
                   component={"img"}
                   src={
                     userIds &&
                     userIds?.includes(e?.id) === true &&
                     userIds.length > 0
-                      ? images.Checked
-                      : images.UnCheck
+                      ? images.CheckedMobile
+                      : images.UnCheckMobile
                   }
                 ></Box>
               </Box>
@@ -122,9 +171,12 @@ export default function PopupInviteFriend({ roomIdSelect }) {
             padding: "20px",
             display: "flex",
             justifyContent: "center",
+            backgroundColor: "#3c2c64",
+            position: width < 576 ? "fixed" : "none",
+            bottom: "0px",
           }}
         >
-          <Button
+          <button
             onClick={() => {
               socket?.emit("inviteGameInRoom", {
                 type: "friend",
@@ -132,17 +184,21 @@ export default function PopupInviteFriend({ roomIdSelect }) {
                 roomId: roomIdSelect,
                 userIds: userIds,
               });
+              dispatch(closeInvitefriendPopup());
             }}
-            sx={{
+            style={{
               backgroundImage: "linear-gradient(#8c39f0,#7449ee)",
               color: "white",
               fontWeight: "bolder",
               padding: "10px 40px",
               cursor: "pointer",
+              outline: "none",
+              border: "none",
+              borderRadius: "5px",
             }}
           >
             Invite
-          </Button>
+          </button>
         </Box>
       </Box>
     </Dialog>

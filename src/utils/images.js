@@ -42,6 +42,12 @@ import BackButtonLobby from "../assets/images/BackButtonLobby.png";
 import expandIcon from "../assets/images/expandIcon.png";
 import ZoomInIcon from "../assets/images/ZoomInIcon.png";
 import closeButtonInvite from "../assets/images/closeButton.png";
+import UnCheckMobile from "../assets/images/UnCheckMobile.png";
+import CheckedMobile from "../assets/images/CheckedMobile.png";
+import inviteFriendMobile from "../assets/images/inviteFriendMobile.png";
+import RotateScreen from "../assets/images/RotateScreen.png";
+import ContinueGameButton from "../assets/images/ContinueGameButton.png";
+
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -228,6 +234,11 @@ export const images = {
   expandIcon: expandIcon,
   ZoomInIcon: ZoomInIcon,
   closeButtonInvite: closeButtonInvite,
+  UnCheckMobile: UnCheckMobile,
+  CheckedMobile: CheckedMobile,
+  inviteFriendMobile: inviteFriendMobile,
+  RotateScreen: RotateScreen,
+  ContinueGameButton: ContinueGameButton,
 };
 
 export const images2 = {
