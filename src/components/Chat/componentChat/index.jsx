@@ -15,7 +15,7 @@ export default function ComponentChat() {
   const { chatWorld, contacter, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
-  console.log(chatWorld);
+
   const { width, height } = useWindowDimensions();
   const { userName } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);

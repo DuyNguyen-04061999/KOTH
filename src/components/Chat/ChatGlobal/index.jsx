@@ -43,7 +43,6 @@ export default function ChatGlobal(props) {
   const dispatch = useDispatch();
   const [chatF, setChatF] = useState("");
   const { contacter } = useSelector((state) => state.chatReducer);
-  console.log(contacter);
   const { token } = useSelector((state) => state.authReducer);
 
   useEffect(() => {
