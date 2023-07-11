@@ -2686,6 +2686,15 @@ export default function SelectRoom() {
                     />
 
                     <img
+                      onClick={() => {
+                        if (textContent !== "") {
+                          socket?.emit("chatInRoom", {
+                            message: textContent,
+                            roomId: roomIdSelect,
+                          });
+                        }
+                        setTextContent("");
+                      }}
                       style={{
                         position: "absolute",
                         top: "22px",
