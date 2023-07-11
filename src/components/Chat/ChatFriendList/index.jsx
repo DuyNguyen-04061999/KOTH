@@ -95,7 +95,7 @@ export default function ChatFriendList() {
                     alt="..."
                     width={45}
                     height={45}
-                    style={{ borderRadius: "50%", backgroundColor:"#1a151e" }}
+                    style={{ borderRadius: "50%", backgroundColor: "#1a151e" }}
                     className="m-2"
                   />
                 </Box>
@@ -162,7 +162,7 @@ export default function ChatFriendList() {
                   {e?.userName}
                 </h5>
                 <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
-                  {e.receiveMessages.map((e_m) => e_m.messageContent)}
+                  {e?.receiveMessages?.map((e_m) => e_m?.messageContent)}
                 </span>
               </Box>
             </Box>

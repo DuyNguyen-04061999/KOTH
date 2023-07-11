@@ -53,87 +53,83 @@ export default function LuckySpinHistory(props) {
     },
   }));
   const { open, handleOnClose } = props;
-  const [tab, setTab] = useState(true); //true ---> allbest, false ---> mybest
+  const [tab, setTab] = useState(true);
   return (
-    <Dialog
-      sx={{
-        ".css-m9glnp-MuiPaper-root-MuiDialog-paper": {
-          backgroundColor: "#201724",
-        },
-      }}
-      open={open}
-      fullScreen
-    >
+    <Dialog open={open} fullScreen>
       <div className="SpinMobileHeader">
-        <img onClick={handleOnClose} src={images.backButton} alt="..."/>
+        <img onClick={handleOnClose} src={images.backButton} alt="..." />
         <span onClick={handleOnClose}>Spin Reward</span>
       </div>
-      <Box className="top-rated-game">
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            paddingTop: "10px",
-          }}
-          className="group mt-5"
-        >
-          <div className="allMyBestContainerMobile">
-            <div
-              onClick={() => setTab(true)}
-              className={
-                tab === true ? "activeButtonMobile" : "passiveButtonMobile"
-              }
-            >
-              <span>All Best</span>
-            </div>
-            <div
-              className={
-                tab === false ? "activeButtonMobile" : "passiveButtonMobile"
-              }
-            >
-              <span onClick={() => setTab(false)}>My Best</span>
+      <Box sx={{ width: "100%", height: "100%", backgroundColor: "#201724" }}>
+        <Box className="top-rated-game">
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "10px",
+            }}
+            className="group mt-5"
+          >
+            <div className="allMyBestContainerMobile">
+              <div
+                onClick={() => setTab(true)}
+                className={
+                  tab === true ? "activeButtonMobile" : "passiveButtonMobile"
+                }
+              >
+                <span>All Best</span>
+              </div>
+              <div
+                className={
+                  tab === false ? "activeButtonMobile" : "passiveButtonMobile"
+                }
+              >
+                <span onClick={() => setTab(false)}>My Best</span>
+              </div>
             </div>
           </div>
-        </div>
-      </Box>{" "}
-      <TableContainer
-        sx={{ width: width, marginTop: "20px", marginBottom: "20px" }}
-      >
-        <Table>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>User Name</StyledTableCell>
-              <StyledTableCell>Spin Level</StyledTableCell>
-              <StyledTableCell>Prize</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rewardHistory
-              .filter((n) => {
-                return tab === false ? n.rhUser.userName === userName : n;
-              })
-              ?.map((item, index) => {
-                return (
-                  <StyledTableRow key={index}>
-                    <StyledTableCell>{item?.rhUser?.userName}</StyledTableCell>
-                    <StyledTableCell>{item?.rhType}</StyledTableCell>
-                    <StyledTableCell>
-                      <img
-                        alt="BTD"
-                        style={{ width: "20px" }}
-                        src={images.gold}
-                      />
-                      <span style={{ marginLeft: "10px", color: "#f9c809" }}>
-                        {item?.rhValue}
-                      </span>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+        </Box>{" "}
+        <TableContainer
+          sx={{ width: width, marginTop: "20px", marginBottom: "20px" }}
+        >
+          <Table>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>User Name</StyledTableCell>
+                <StyledTableCell>Spin Level</StyledTableCell>
+                <StyledTableCell>Prize</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rewardHistory
+                .filter((n) => {
+                  return tab === false ? n.rhUser.userName === userName : n;
+                })
+                ?.map((item, index) => {
+                  return (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell>
+                        {item?.rhUser?.userName}
+                      </StyledTableCell>
+                      <StyledTableCell>{item?.rhType}</StyledTableCell>
+                      <StyledTableCell>
+                        <img
+                          alt="BTD"
+                          style={{ width: "20px" }}
+                          src={images.gold}
+                        />
+                        <span style={{ marginLeft: "10px", color: "#f9c809" }}>
+                          {item?.rhValue}
+                        </span>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Dialog>
   );
 }
