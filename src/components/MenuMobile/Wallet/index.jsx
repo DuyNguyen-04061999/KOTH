@@ -71,7 +71,7 @@ export default function DialogWallet(props) {
   const [withdrawCharge] = useState(5);
   const [willGet, setWillGet] = useState(0);
   const [willBe, setWillBe] = useState(0);
-  const [valueDepositAddress,setValueDepositAddress] = useState("")
+  const [valueDepositAddress, setValueDepositAddress] = useState("");
 
   const [tab, setTab] = useState(1);
 
@@ -221,7 +221,7 @@ export default function DialogWallet(props) {
                   marginLeft: "10px",
                 }}
                 onChange={(e) => {
-                  setValueDepositAddress(e.target.value)
+                  setValueDepositAddress(e.target.value);
                 }}
               />
               <Box className="cursor-pointer">
@@ -257,11 +257,13 @@ export default function DialogWallet(props) {
               <button
                 onClick={() => {
                   _socket.emit("deposit", { value: valueDepositAddress });
-                 if(valueDepositAddress === '') {
-                  dispatch(showAlert("error","not found"))
-                 } else {
-                  dispatch(showAlert("success", "Check Deposit Successfully!"));
-                 }
+                  if (valueDepositAddress === "") {
+                    dispatch(showAlert("error", "not found"));
+                  } else {
+                    dispatch(
+                      showAlert("success", "Check Deposit Successfully!")
+                    );
+                  }
                 }}
                 style={{
                   border: "none",
@@ -1194,7 +1196,7 @@ export default function DialogWallet(props) {
           zIndex: 1303,
           ".css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
             overflowY: "hidden",
-            backgroundColor: "#271c39",
+            backgroundColor: "white",
           },
           height: "100%",
           fontSize: getFontSizeDependOnWidth(width),
@@ -1299,7 +1301,7 @@ export default function DialogWallet(props) {
               maxHeight: width < 576 ? "unset" : height - 100,
               backgroundColor: "#271c39",
               paddingBottom: "100px",
-              overflowY:"auto"
+              overflowY: "auto",
             }}
           >
             {isTransactionDialog
