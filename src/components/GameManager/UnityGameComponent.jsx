@@ -103,9 +103,9 @@ export default function UnityGameComponent(props) {
       sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
       sendMessage("OverTheBridgeHome", "SetGameId", gameId);
       sendMessage("OverTheBridgeHome", "StartGame", "Start");
-      sendMessage("PlayerSpawner", "SetToken", token);
-      sendMessage("PlayerSpawner", "SetRoomName", roomName);
-      sendMessage("PlayerSpawner", "StartGame", "Start");
+      sendMessage("Player Spawner", "SetToken", token);
+      sendMessage("Player Spawner", "SetRoomName", roomName);
+      sendMessage("Player Spawner", "StartGame", "Start");
   }, [sendMessage, tournamentId, token, gameId, roomName]);
 
   const handleFinalGame = useCallback(() => {
