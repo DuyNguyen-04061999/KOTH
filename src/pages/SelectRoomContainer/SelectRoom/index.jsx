@@ -402,6 +402,7 @@ export default function SelectRoom() {
     });
 
     socket?.on(`startRoom${roomIdSelect}Game${detailGame?.id}Success`, () => {
+      console.log("Run");
       setStartGame(true);
     });
     socket?.on(`chatRoom${roomIdSelect}Success`, (data) => {
