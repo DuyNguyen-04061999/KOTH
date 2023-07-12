@@ -589,11 +589,12 @@ export default function SelectRoom() {
                 alignItems: "center",
               }}
             >
-              {detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && (
+              {startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && (
                 <Fragment>
                   <UnityGameComponent
                     GameFiles={detailGame?.GameFiles}
                     height={"700px"}
+                    roomName={roomDetailInfo?.roomName}
                   />
                 </Fragment>
               )}
