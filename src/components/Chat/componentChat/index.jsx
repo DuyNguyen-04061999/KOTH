@@ -15,6 +15,7 @@ export default function ComponentChat() {
   const { chatWorld, contacter, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
+
   const { width, height } = useWindowDimensions();
   const { userName } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);
@@ -34,12 +35,9 @@ export default function ComponentChat() {
     setFriendMess(
       chatWorld?.filter(
         (n) =>
-          (n.messageFromName === userName &&
-            n.messageToName === contacter.userName &&
-            n.messageType === "Private") ||
-          (n.messageFromName === contacter.userName &&
-            n.messageToName === userName &&
-            n.messageType === "Private")
+          n.messageFromName === userName &&
+          n.messageToName === contacter.userName &&
+          n.messageType === "Private" 
       )
     );
   }, [userName, contacter, chatWorld]);
@@ -104,7 +102,7 @@ export default function ComponentChat() {
                     <Box
                       sx={{
                         width: "40%",
-                        height:"50px"
+                        height: "50px",
                       }}
                     >
                       <img
@@ -131,11 +129,11 @@ export default function ComponentChat() {
                         sx={{
                           color: "white",
                           fontWeight: "bold",
-                          textAlign:"left",
-                          marginLeft:"0px !important"
+                          textAlign: "left",
+                          marginLeft: "0px !important",
                         }}
                       >
-                        {e?.messageGameName.slice(0,10) + `...`}
+                        {e?.messageGameName.slice(0, 10) + `...`}
                       </Typography>
                       <span className="text-white font-weight-bold">
                         Price: {e?.messageBetPrice}
@@ -153,7 +151,7 @@ export default function ComponentChat() {
                           borderRadius: 1,
                           backgroundColor: "#d610a5",
                           fontWeight: "bold",
-                          cursor:"pointer"
+                          cursor: "pointer",
                         }}
                       >
                         PLAY GAME
@@ -210,7 +208,7 @@ export default function ComponentChat() {
             )}
           </>
         ) : (
-          <Box className="d-flex justify-content-between" sx={{}}>
+          <Box className="d-flex justify-content-between">
             <Box className="pt-2">
               <Avatar
                 alt={e?.messageFromName}
@@ -278,7 +276,7 @@ export default function ComponentChat() {
                         }}
                       >
                         <Box
-                          className="p-2 d-flex"
+                          className="mt-2 p-2 d-flex"
                           sx={{
                             backgroundColor: "#2a1932",
                             borderRadius: 1,
@@ -286,7 +284,8 @@ export default function ComponentChat() {
                         >
                           <Box
                             sx={{
-                              width: "35%",
+                              width: "50%",
+                              height: "50px",
                             }}
                           >
                             <img
@@ -301,20 +300,23 @@ export default function ComponentChat() {
                               }
                               alt="..."
                               width={"100%"}
-                              className="img-fluid"
+                              // className="img-fluid"
+                              height={"75px"}
                             />
                           </Box>
                           <Box
                             className="ms-2 d-flex flex-column flex-end"
-                            sx={{ width: "65%" }}
+                            sx={{ width: "60%" }}
                           >
                             <Typography
                               sx={{
-                                color: "#01f7e3",
+                                color: "white",
                                 fontWeight: "bold",
+                                textAlign: "left", 
+                                marginLeft: "0px !important",
                               }}
                             >
-                              {}
+                              {e?.messageGameName.slice(0, 10) + `...`}
                             </Typography>
                             <span className="text-white font-weight-bold">
                               Price: {e?.betGameInvite}
@@ -332,7 +334,7 @@ export default function ComponentChat() {
                                 borderRadius: 1,
                                 backgroundColor: "#d610a5",
                                 fontWeight: "bold",
-                                cursor:"pointer"
+                                cursor: "pointer",
                               }}
                             >
                               PLAY GAME

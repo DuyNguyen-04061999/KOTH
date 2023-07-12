@@ -140,16 +140,16 @@ function SimpleDialog(props) {
                         marginBottom: "20px",
                       }}
                     >
-                       <img
-                          src={sign.up01}
-                          alt="..."
-                          width={17}
-                          height={"auto"}
-                          style={{
-                            position: "absolute",
-                            top: width > 576 ? "11px" : "10px",
-                          }}
-                        />
+                      <img
+                        src={sign.up01}
+                        alt="..."
+                        width={17}
+                        height={"auto"}
+                        style={{
+                          position: "absolute",
+                          top: width > 576 ? "11px" : "13px",
+                        }}
+                      />
                       <Input
                         id="login_username"
                         type="text"
@@ -170,11 +170,12 @@ function SimpleDialog(props) {
                           "&:hover": {
                             border: "none",
                           },
-                          color: "white",
-                          fontWeight: "500",
-                          "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                          "& .MuiInputBase-root": {
                             padding: "0px 0px 0px 25px !important",
                           },
+                          color: "white",
+                          fontWeight: "500",
+                          padding: "0px 0px 0px 25px !important",
                         }}
                       />
                     </FormControl>
@@ -188,19 +189,20 @@ function SimpleDialog(props) {
                       }}
                     >
                       <img
-                          src={sign.up02}
-                          alt="..."
-                          width={15}
-                          height={"auto"}
-                          style={{
-                            position: "absolute",
-                            top: width > 576 ? "10px" : "10px",
-                          }}
-                        />
+                        src={sign.up02}
+                        alt="..."
+                        width={15}
+                        height={"auto"}
+                        style={{
+                          position: "absolute",
+                          top: width > 576 ? "10px" : "15px",
+                        }}
+                      />
                       <Input
                         id="login_password"
                         placeholder="Password"
                         type="password"
+                        name="password"
                         value={password}
                         autoComplete="current-password"
                         onChange={handleChangePassword}
@@ -217,11 +219,12 @@ function SimpleDialog(props) {
                           "&:hover": {
                             border: "none",
                           },
-                          color: "white",
-                          fontWeight: "500",
-                          "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                          "& .MuiInputBase-root": {
                             padding: "0px 0px 0px 25px !important",
                           },
+                          color: "white",
+                          fontWeight: "500",
+                          padding: "0px 0px 0px 25px !important",
                         }}
                       />
                     </FormControl>
@@ -346,7 +349,7 @@ function SimpleDialog(props) {
                           height={"auto"}
                           style={{
                             position: "absolute",
-                            top: width > 576 ? "11px" : "10px",
+                            top: width > 576 ? "14px" : "10px",
                           }}
                         />
                         <Input
@@ -371,10 +374,7 @@ function SimpleDialog(props) {
                             },
                             color: "white",
                             fontWeight: "500",
-                            "& .css-1x51dt5-MuiInputBase-input-MuiInput-input":
-                              {
-                                padding: "0px 0px 0px 25px !important",
-                              },
+                            padding: "0px 0px 0px 25px !important",
                           }}
                         />
                       </FormControl>
@@ -394,7 +394,7 @@ function SimpleDialog(props) {
                           height={"auto"}
                           style={{
                             position: "absolute",
-                            top: width > 576 ? "10px" : "10px",
+                            top: width > 576 ? "14px" : "10px",
                           }}
                         />
                         <Input
@@ -419,10 +419,7 @@ function SimpleDialog(props) {
                             },
                             color: "white",
                             fontWeight: "500",
-                            "& .css-1x51dt5-MuiInputBase-input-MuiInput-input":
-                              {
-                                padding: "0px 0px 0px 25px !important",
-                              },
+                            padding: "0px 0px 0px 25px !important",
                           }}
                         />
                       </FormControl>
@@ -572,7 +569,10 @@ export default function Dialoglg() {
           />
         </Box>
       ) : (
-        <AvatarGroup className="d-flex align-items-center" sx={{borderRadius:"5px !important"}}>
+        <AvatarGroup
+          className="d-flex align-items-center"
+          sx={{ borderRadius: "5px !important" }}
+        >
           {width < 576 ? null : (
             <Box
               style={{
@@ -589,7 +589,7 @@ export default function Dialoglg() {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
-                  borderRadius:"5px !important"
+                  borderRadius: "5px !important",
                 }}
               >
                 <Box
@@ -603,9 +603,9 @@ export default function Dialoglg() {
                 >
                   <div
                     className="d-flex flex-column justify-content-between align-items-center"
-                    style={{ 
+                    style={{
                       padding: "0px 10px",
-                   }}
+                    }}
                   >
                     {width > 576 && (
                       <div

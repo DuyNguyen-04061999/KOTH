@@ -231,7 +231,7 @@ const FAQPageComponent = () => {
     },
   ]);
 
-  const [tabFaq, setTabFaq] = useState("Game");
+  const [tabFaq, setTabFaq] = useState("Global");
 
   useEffect(() => {
     setFaqTitle(listFaq);

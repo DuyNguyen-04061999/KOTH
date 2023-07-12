@@ -5,6 +5,7 @@ import { images } from "../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
+import _socket from "../../../redux-saga-middleware/config/socket";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -50,10 +51,11 @@ export default function Browser(props) {
             } else if (e?.name === "Free To Play") {
               navigate("/game-type/free");
             } else if (e?.name === "Game Log") {
-              if (token) {
-                dispatch(toggleGameLogDialog());
-              } else {
+              if (!token) {
                 dispatch(toggleLoginDialog());
+              } else {
+                _socket.emit("getGameLog");
+                dispatch(toggleGameLogDialog());
               }
             } else if (e?.name === "PVP Games") {
               navigate("/game-type/pvp");
