@@ -13,9 +13,9 @@ const _socket = io(process.env.REACT_APP_END_POINT, {
     rejectUnauthorized: false,
     forceNew: true,
     timeout: 60000,
-    // auth: {
-    //     token: localStorage?.getItem("token"), // Provide the authentication token here
-    // },
+    auth: {
+        token: localStorage?.getItem("token"), // Provide the authentication token here
+    },
 })
 
 export default _socket

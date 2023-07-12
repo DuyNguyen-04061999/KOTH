@@ -576,7 +576,7 @@ export default function Dialoglg() {
           {width < 576 ? null : (
             <Box
               style={{
-                backgroundColor: "#2c1943",
+                backgroundColor: "#170f1e",
                 borderRadius: "5px 5px 5px 5px",
               }}
               className="d-flex align-items-center"
@@ -611,7 +611,7 @@ export default function Dialoglg() {
                       <div
                         style={{
                           fontSize: "13px",
-                          color: "#7e5ead",
+                          color: "#857cab",
                           fontWeight: "700",
                           display: "flex",
                           justifyContent: "center",
@@ -623,6 +623,7 @@ export default function Dialoglg() {
                           alt="..."
                           width={10}
                           height={10}
+                          style={{marginRight:"5px"}}
                         />
                         <span>Doge Gold</span>
                       </div>
@@ -631,7 +632,7 @@ export default function Dialoglg() {
                       <p
                         style={{
                           color: color.textWhite,
-                          fontSize: "15px",
+                          fontSize: "13px",
                         }}
                       >
                         {userGold &&
@@ -651,11 +652,11 @@ export default function Dialoglg() {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    padding: "9px 13px",
+                    padding: "9px 22px",
                     borderRadius: "5px",
                     cursor: "pointer",
                     backgroundImage:
-                      "linear-gradient(to right, #7548ed , #893bf1)",
+                      "linear-gradient( #7548ed , #893bf1)",
                   }}
                   onClick={() => {
                     if (!token) {
@@ -666,10 +667,10 @@ export default function Dialoglg() {
                   }}
                 >
                   <i
-                    style={{ marginRight: "4px" }}
+                    style={{ marginRight: "6px" }}
                     className="fa-solid fa-wallet"
                   ></i>
-                  <span>Wallet</span>
+                  <span style={{fontSize:"13px"}}>Wallet</span>
                 </div>
               )}
               {width && width > 576 ? (

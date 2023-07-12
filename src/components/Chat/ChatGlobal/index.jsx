@@ -286,7 +286,7 @@ export default function ChatGlobal(props) {
                 src={images280423_l.send}
                 alt="Send"
                 width={"auto"}
-                height={28}
+                height={24}
               />
             </Box>
           </Box>
