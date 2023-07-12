@@ -21,7 +21,9 @@ export default function PopupInviteFriend({ roomIdSelect }) {
     setSocket(socket);
   }, []);
   useEffect(() => {
-    socket?.on(`inviteGameInRoom${roomIdSelect}Success`, (data) => {});
+    socket?.on(`inviteGameInRoom${roomIdSelect}Success`, (data) => {
+      console.log("Data: ", data);
+    });
   }, [socket, roomIdSelect]);
   const handleOnClickCheck = (id) => {
     if (!userIds?.includes(id)) {
@@ -142,8 +144,9 @@ export default function PopupInviteFriend({ roomIdSelect }) {
                     paddingLeft: "4px",
                   }}
                 >
-                  {/* {e?.userName} */}
-                  LeeSin
+                  {e?.userName && e?.userName?.length > 12
+                    ? e?.userName.slice(0, 11) + "..."
+                    : e?.userName}
                 </Box>
                 <Box
                   onClick={() => handleOnClickCheck(e?.id)}

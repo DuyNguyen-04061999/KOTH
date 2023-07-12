@@ -2,6 +2,7 @@ import {
   Box,
   Dialog,
   FormControl,
+  Menu,
   // Menu,
   MenuItem,
   Select,
@@ -20,8 +21,10 @@ import {
 import { useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import "./index.scss";
+import AddFriendIcon from "@mui/icons-material/Person";
 import {
   convertToInternationalCurrencySystem,
+  getFontSizeButtonDependOnWidth,
   getFontSizeDependOnWidth,
   getFontSizeTitleDependOnWidth,
   getIconSizeDependOnWith,
@@ -34,10 +37,12 @@ import {
 } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 import imagesFavorite from "../../../utils/imagesFavorite";
-// import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
+import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
 import { updateUserGold } from "../../../redux-saga-middleware/reducers/authReducer";
 import styled from "styled-components";
 import PopupInviteFriend from "./PopupInviteFriend";
+import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 
 // import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
@@ -69,9 +74,16 @@ export default function SelectRoom() {
   const [dogeGold, setDogeGold] = useState(0);
   const { token, userName, userId, userGold } = useSelector(
     (state) => state.authReducer
+  ); 
+  const { friendList} = useSelector(
+    (state) => state.chatReducer
   );
   const { state } = useLocation();
-  const [listRoom, setListRoom] = useState([]);
+  const [listRoom, setListRoom] = useState([]);  
+  const [anchorEl, setAnchorEl] = useState(null);  
+  const open = Boolean(anchorEl);
+  const [anchorEl1, setAnchorEl1] = useState(null);  
+  const open1 = Boolean(anchorEl1);
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
@@ -87,8 +99,10 @@ export default function SelectRoom() {
   const [check, setCheck] = useState(false);
   const [expand, setExpand] = useState(false);
   const [textContent, setTextContent] = useState("");
+  const [itemFilter,setItemFilter]=useState([""]);
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
+  const filterArray=[0,100,200,500];
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -167,6 +181,37 @@ export default function SelectRoom() {
 
     return index;
   }
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleOnclickItemFilter=(number)=>{
+    if (!itemFilter?.includes(JSON.stringify(number))) {
+      setItemFilter([...itemFilter, JSON.stringify(number)]);
+    } else {
+      setItemFilter(
+        itemFilter.filter((n) => {
+          return n !== JSON.stringify(number);
+        })
+      );
+    }
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  };  
+  const handleClose1 = () => {
+    setAnchorEl1(null);
+  };  
+  // const checkExistInFriendList = () => {
+  //   for (let i = 0; i < friendList.length; i++) {
+  //     if (friendList[i].userName === clickUserName) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // };
   const handleOnClickLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
       socket.emit("handleLikeGame", { gameId: detailGame?.id, type: true });
@@ -252,7 +297,14 @@ export default function SelectRoom() {
     }
     return {};
   }
-
+  const checkExistInFriendList = (username) => {
+    for (let i = 0; i < friendList.length; i++) {
+      if (friendList[i].userName === username) {
+        return true;
+      }
+    }
+    return false;
+  };
   useEffect(() => {
     socket?.on(
       `createRoomForGame${detailGame?.id}Success`,
@@ -403,8 +455,15 @@ export default function SelectRoom() {
     });
 
     socket?.on(`startRoom${roomIdSelect}Game${detailGame?.id}Success`, () => {
-      console.log("Run");
       setStartGame(true);
+    });
+    socket?.on(`kickOut${roomIdSelect}Success`, (data) => {
+      console.log(123)
+      console.log("RoomInfo: ",data)     
+    });
+    socket?.on(`kickOut${detailGame?.id}Success`, (room,roomId) => {
+      console.log(123)
+      console.log("RoomInfo: ",room,roomId)     
     });
     socket?.on(`chatRoom${roomIdSelect}Success`, (data) => {
       setChat((pre) => {
@@ -530,12 +589,14 @@ export default function SelectRoom() {
                 alignItems: "center",
               }}
             >
-              {/* <Fragment>
-                <UnityGameComponent
-                  GameFiles={detailGame?.GameFiles}
-                  height={"700px"}
-                />
-              </Fragment> */}
+              {detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && (
+                <Fragment>
+                  <UnityGameComponent
+                    GameFiles={detailGame?.GameFiles}
+                    height={"700px"}
+                  />
+                </Fragment>
+              )}
             </Box>
             {startGame && (
               <Box
@@ -870,7 +931,7 @@ export default function SelectRoom() {
                       onChange={(event) => {
                         setDogeGold(event.target.value);
                       }}
-                      defaultValue={dogeGold}
+                      value={dogeGold}
                     >
                       <MenuItem
                         sx={{
@@ -948,7 +1009,10 @@ export default function SelectRoom() {
                       borderRadius: "5px",
                       color: "#fff",
                       fontWeight: "640",
-                      backgroundImage: "linear-gradient(#893af1,#7548ed)",
+                      backgroundImage: "linear-gradient(#893af1,#7548ed)",    
+                      display:"flex",
+                      alignItems:"center",
+                      justifyContent:"center",
                     }}
                   >
                     <span style={{ fontSize: getFontSizeDependOnWidth(width) }}>
@@ -970,6 +1034,9 @@ export default function SelectRoom() {
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
+                      display:"flex",
+                      alignItems:"center",
+                      justifyContent:"center",
                       color: "#fff",
                       fontWeight: "640",
                       backgroundImage: "linear-gradient(#893af1,#7548ed)",
@@ -1000,26 +1067,86 @@ export default function SelectRoom() {
                   position: "relative",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                    justifyContent: "flex-end",
-                  }}
+                {width>576?<Box sx={{
+                  width:"50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  
+                }}
                 >
-                  <p
-                    style={{
-                      color: "#7c81f3",
-                      marginRight: "5px",
-                      fontSize: getFontSizeDependOnWidth(width),
-                    }}
+                    {filterArray?.map((item,index)=>{
+                      return <Box key={index} onClick={()=>handleOnclickItemFilter(item)} sx={{cursor:"pointer",display:"flex",alignItems:"center",width:"100px",height:"36px",backgroundColor:itemFilter?.includes(JSON.stringify(item))?"#a34dfe":"#7649cd",color:itemFilter?.includes(JSON.stringify(item))?"white":"#7a7fef",justifyContent:"center",borderRadius:"4px",marginRight:"10px"}}>
+                      <img src={images.goldIcon} alt="..." style={{width:"16px",marginRight:"7px"}}/>
+                      <span>{item===0?"Free":item}</span>
+                    </Box>
+                    })}
+                </Box>:
+                <Box sx={{
+                  width:"50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  
+                }}>
+                  <button
+                  onClick={(e)=>handleClick(e)} 
+                  style={{ 
+                      padding: width < 576 ? "0px 0px" : "10px 20px",
+                      width: width < 576 ? width / 4.5 : "none",
+                      height: width < 576 ? "30px" : "none",
+                      border: "none",
+                      outline: "none",
+                      borderRadius: "5px",
+                      color: "#fff",
+                      backgroundImage: "linear-gradient(#893af1,#7548ed)",    
+                      display:"flex",
+                      alignItems:"center",
+                      justifyContent:"center",
+                      fontSize:getFontSizeButtonDependOnWidth(width)}}>
+                        Filters
+                  </button>
+                  <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      disableScrollLock={true}          
+                      sx={{
+                        ".MuiMenu-paper": { backgroundColor: "#4e378a !important",marginTop:"4px !important",marginLeft:"-4px !important" },
+                      }}
                   >
-                    Only show the open rooms
-                  </p>
-                  {!check ? (
-                    <img
-                      onClick={() => setCheck(!check)}
+                  <MenuItem sx={{width:parseFloat(width/1.45),display:"flex",flexDirection:"column",alignItems:"flex-start"}}>
+                    <Typography sx={{fontSize:getFontSizeDependOnWidth(width),color:"white",marginLeft:"0px !important"}}>Bet Amount</Typography>
+                    <Box sx={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center"}}>{filterArray?.map((item,index)=>{
+                      return <Box  onClick={()=>handleOnclickItemFilter(item)} sx={{cursor:"pointer",backgroundColor:itemFilter?.includes(JSON.stringify(item))?"#a34dfe":"#7649cd",color:itemFilter?.includes(JSON.stringify(item))?"white":"#7a7fef",fontWeight:"bolder",fontSize:getFontSizeDependOnWidth(width),marginRight:"4px",borderRadius:"5px",padding:"4px 7px",display:"flex",alignItems:"center"}}><img alt="..." style={{width:"10px",marginRight:"3px"}} src={images.goldIcon}/>{item===0?"Free":item}</Box>
+                    })}</Box>
+                  </MenuItem>
+                  </Menu>  
+                
+
+                        </Box>
+                        }
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "50%",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <p
+                            style={{
+                              color: "#7c81f3",
+                              marginRight: "5px",
+                              fontSize: getFontSizeDependOnWidth(width),
+                            }}
+                          >
+                            Only show open rooms
+                          </p>
+                          {!check ? (
+                            <img
+                              onClick={() => setCheck(!check)}
                       alt="..."
                       height="22px"
                       width="22px"
@@ -1049,7 +1176,16 @@ export default function SelectRoom() {
                   boxSizing: "border-box",
                 }}
               >
-                {listRoom
+                {listRoom?.filter(n=>{
+                  if(itemFilter?.length>1)
+                  {
+                    return itemFilter?.includes(JSON.stringify(n?.roomBet));
+                  }
+                  else
+                  {
+                    return n;
+                  }
+                })
                   ?.filter((item) => {
                     if (betAmount) {
                       return Number(item?.roomBet) === Number(betAmount);
@@ -1516,7 +1652,7 @@ export default function SelectRoom() {
           ) : width > 576 ? (
             <div className="container">
               <PopupInviteFriend roomIdSelect={roomIdSelect} />
-
+    
               <Box
                 sx={{
                   width: "100%",
@@ -1607,6 +1743,7 @@ export default function SelectRoom() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      position:"relative"
                     }}
                   >
                     <Box
@@ -1617,7 +1754,7 @@ export default function SelectRoom() {
                       }}
                     >
                       <Typography
-                        sx={{ fontSize: getFontSizeDependOnWidth(width) }}
+                        sx={{ fontSize: getFontSizeButtonDependOnWidth(width) }}
                       >
                         <i
                           style={{ marginRight: "5px" }}
@@ -1654,24 +1791,24 @@ export default function SelectRoom() {
                         sx={{
                           color: "#757ae5",
                           fontWeight: "650",
-                          marginTop: "6px",
-                          position: "relative",
+                          marginTop: "9px",
+                          display:"flex",
+                          justifyContent:"center",
+                          alignItems:"center"
                         }}
                       >
                         <img
                           style={{
                             width: "20px",
-                            marginRight: "5px",
-                            position: "absolute",
-                            top: "10px",
-                            left: "-25px",
+                            marginRight: "3px",
+                          
                           }}
                           alt="..."
                           src={images.CupIcon}
                         />
                         <span
                           style={{
-                            fontSize: getFontSizeTitleDependOnWidth(width),
+                            fontSize: getFontSizeButtonDependOnWidth(width),
                           }}
                         >
                           {roomDetailInfo?.membersInRoom &&
@@ -1687,6 +1824,8 @@ export default function SelectRoom() {
                         textAlign: "center",
                         fontWeight: "bolder",
                         fontSize: "50px",
+                        marginLeft:"30px",
+                        marginRight:"30px"
                       }}
                     >
                       VS
@@ -1701,21 +1840,144 @@ export default function SelectRoom() {
                           position: "relative",
                           justifyContent: "center",
                         }}
+                      >          
+                      <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl1}
+                      open={open1}
+                      onClose={handleClose1}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                      disableScrollLock={true}
+                      sx={{
+                        ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
+                      }}
+                  >
+                    <MenuItem
+                      onClick={() => {
+                        dispatch(toggleProfileDialog(true));
+                      }}
+                      sx={{
+                        padding: "5px",
+                      }}
+                    >
+                    <Box 
+                      onClick={()=>{
+                        socket.emit("getDetailProfile", {
+                        username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
+                      });}}
+                      className="p-1 text-white"
+                      sx={{
+                        background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                        width: "100%",
+                        fontWeight: "bold",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      <AddFriendIcon className="me-1 pb-1" />
+                      <span>View Profile</span>
+                    </Box>
+                  </MenuItem>
+                    <MenuItem
+                      sx={{
+                        padding: "5px",
+                      }}
+                    >
+                    <Box 
+                      onClick={()=>{
+                        console.log(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,roomIdSelect,detailGame?.id)
+                        socket.emit("kickOutRoom", {
+                        username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
+                        roomId:roomIdSelect,
+                        gameId:detailGame?.id
+                      });
+                    }}
+                      className="p-1 text-white"
+                      sx={{
+                        background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                        width: "100%",
+                        fontWeight: "bold",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      <AddFriendIcon className="me-1 pb-1" />
+                      <span>Kick out</span>
+                    </Box>
+                  </MenuItem>
+                  {checkExistInFriendList(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name)===true?                      
+                  <MenuItem
+                        sx={{
+                          padding: "5px",
+                        }}
                       >
-                        <Typography>
-                          {/* {roomDetailInfo?.membersInRoom &&
+                        <Box
+
+                          onClick={()=>{
+                            socket.emit("deleteFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
+                          }}
+                          className="p-1 text-white"
+                          sx={{
+                            background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                            width: "100%",
+                            fontWeight: "bold",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <DeleteFriendIcon className=" pb-1" />
+                          <span> Delete Friend</span>
+                        </Box>
+                      </MenuItem>:
+                      <MenuItem
+                        sx={{
+                          padding: "5px",
+                        }}
+                      >
+                        <Box
+                          onClick={()=>{
+                            socket.emit("addFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
+                          }}
+                          className="p-1 text-white"
+                          sx={{
+                            background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                            width: "100%",
+                            fontWeight: "bold",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <AddFriendIcon className="me-2 pb-1" />
+                          Add Friend
+                        </Box>
+                      </MenuItem>}
+                      </Menu>
+                        <Typography
+                          sx={{
+                            fontSize: getFontSizeButtonDependOnWidth(width),
+                          }}
+                        >
+                          {roomDetailInfo?.membersInRoom &&
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1
                             ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
                                 ?.username
-                            : ""} */}
-                          You
+                            : ""}
                         </Typography>
                         <img
+                          onClick={(e)=>{
+                            if(getOwner(
+                              roomDetailInfo?.membersInRoom
+                                ? JSON?.parse(roomDetailInfo?.membersInRoom)
+                                : []
+                            ) === userName)
+                                  handleClick1(e);
+                            }
+                          }
                           alt="..."
                           style={{
                             width: "100px",
                             height: "100px",
                             borderRadius: "50%",
+                            marginTop:"6px",
+                            cursor:"pointer"
                           }}
                           src={
                             roomDetailInfo?.membersInRoom &&
@@ -1734,18 +1996,18 @@ export default function SelectRoom() {
                         <Box
                           sx={{
                             color: "#757ae5",
-                            fontWeight: "650",
-                            marginTop: "6px",
-                            position: "relative",
+                          fontWeight: "650",
+                          marginTop: "9px",
+                          display:"flex",
+                          justifyContent:"center",
+                          alignItems:"center"
                           }}
                         >
                           <img
                             style={{
                               width: "20px",
                               marginRight: "5px",
-                              position: "absolute",
-                              top: "10px",
-                              left: "-25px",
+                       
                             }}
                             alt="..."
                             src={images.CupIcon}
@@ -1824,7 +2086,7 @@ export default function SelectRoom() {
                           style={{
                             width: "22%",
                             backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
-                            fontSize: getFontSizeDependOnWidth(width),
+                            fontSize: getFontSizeButtonDependOnWidth(width),
                             color: "white",
                             fontWeight: "600",
                             border: "none",
@@ -1841,7 +2103,7 @@ export default function SelectRoom() {
                           style={{
                             width: "22%",
                             backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
-                            fontSize: getFontSizeDependOnWidth(width),
+                            fontSize: getFontSizeButtonDependOnWidth(width),
                             color: "white",
                             fontWeight: "600",
                             border: "none",
@@ -1890,6 +2152,7 @@ export default function SelectRoom() {
                               paddingLeft: "20px",
                               paddingRight: "20px",
                               fontWeight: "600",
+                              fontSize: getFontSizeButtonDependOnWidth(width),
                             }}
                           >
                             Invite
@@ -1978,7 +2241,7 @@ export default function SelectRoom() {
                   }}
                 >
                   <Box sx={{ color: "#9b9acf" }}>
-                    <h3 style={{ color: "white" }}>Control Buttons:</h3>
+                    <p style={{ color: "white",textAlign: "start",fontSize:getFontSizeButtonDependOnWidth(width) }}>Control Buttons:</p>
                     <p style={{ textAlign: "start" }}>
                       {" "}
                       <span style={{ color: "white" }}>W A D</span> keys to
@@ -2011,9 +2274,7 @@ export default function SelectRoom() {
                       <span style={{ color: "white" }}>/</span> key to initiate
                       a command
                     </p>
-                    <h3 style={{ color: "white", marginTop: "50px" }}>
-                      Commands:
-                    </h3>
+                    <p style={{ color: "white",textAlign: "start",fontSize:getFontSizeButtonDependOnWidth(width),marginTop:"70px" }}>Commands:</p>
                     <p style={{ textAlign: "start" }}>
                       <span style={{ color: "white" }}>/rtv - </span>Don't like
                       this map? vote to to skip it!
@@ -2072,16 +2333,22 @@ export default function SelectRoom() {
                           borderRadius: "5px",
                           border: "none",
                           outline: "none",
-                          backgroundImage: "linear-gradient(#9f3af1,#bf49ee)",
-                          fontSize: getFontSizeDependOnWidth(width),
-                          color: "white",
+                          background: roomDetailInfo?.membersInRoom &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?"linear-gradient(#9f3af1,#bf49ee)":"#6f6684",
+                          fontSize: getFontSizeButtonDependOnWidth(width),
+                          color: roomDetailInfo?.membersInRoom &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?"white":"#9d93a6",
                           fontWeight: "bolder",
                         }}
                         onClick={() => {
-                          socket?.emit("startRoomGame", {
-                            roomId: roomIdSelect,
-                            gameId: detailGame?.id,
-                          });
+                          if(roomDetailInfo?.membersInRoom &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)?.length>1)
+                            {
+                              socket?.emit("startRoomGame", {
+                                roomId: roomIdSelect,
+                                gameId: detailGame?.id,
+                              });
+                            }
                         }}
                       >
                         Start
@@ -2189,7 +2456,7 @@ export default function SelectRoom() {
                     width: "100%",
                     height: "100%",
                     boxSizing: "border-box",
-                    padding: "10px",
+                    padding: "20px",
                     color: "white",
                     display: "flex",
                     flexDirection: "column",
@@ -2208,7 +2475,7 @@ export default function SelectRoom() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginTop: "10px",
+                      marginTop: "20px",
                     }}
                   >
                     <Box
@@ -2219,7 +2486,7 @@ export default function SelectRoom() {
                       }}
                     >
                       <Typography
-                        sx={{ fontSize: getFontSizeDependOnWidth(width) }}
+                        sx={{ fontSize: getFontSizeButtonDependOnWidth(width) }}
                       >
                         <i
                           style={{ marginRight: "5px" }}
@@ -2304,13 +2571,12 @@ export default function SelectRoom() {
                           justifyContent: "center",
                         }}
                       >
-                        <Typography>
-                          {/* {roomDetailInfo?.membersInRoom &&
+                        <Typography  sx={{ fontSize: getFontSizeButtonDependOnWidth(width) }}>
+                          {roomDetailInfo?.membersInRoom &&
                         JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1
                           ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
                               ?.username
-                          : ""} */}
-                          You
+                          : ""}  
                         </Typography>
                         <img
                           alt="..."
@@ -2404,8 +2670,7 @@ export default function SelectRoom() {
                       sx={{
                         width: "100%",
                         display: "flex",
-
-                        marginTop: "20px",
+                        marginTop: "30px",
                       }}
                     >
                       <Box
@@ -2454,7 +2719,7 @@ export default function SelectRoom() {
                               paddingLeft: "20px",
                               paddingRight: "20px",
                               fontWeight: "600",
-                              fontSize: getFontSizeDependOnWidth(width),
+                              fontSize: getFontSizeButtonDependOnWidth(width),
                             }}
                           >
                             Invite
@@ -2479,7 +2744,7 @@ export default function SelectRoom() {
                               width: parseFloat(width / 2.8),
                               backgroundImage:
                                 "linear-gradient(#8a3af1,#7648ed)",
-                              fontSize: getFontSizeDependOnWidth(width),
+                              fontSize: getFontSizeButtonDependOnWidth(width),
                               color: "white",
                               fontWeight: "600",
                               border: "none",
@@ -2498,10 +2763,12 @@ export default function SelectRoom() {
                               borderRadius: "5px",
                               border: "none",
                               outline: "none",
-                              backgroundImage:
-                                "linear-gradient(#9f3af1,#bf49ee)",
-                              fontSize: getFontSizeDependOnWidth(width),
-                              color: "white",
+                              background:roomDetailInfo?.membersInRoom &&
+                              JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?
+                                "linear-gradient(#9f3af1,#bf49ee)":"#6f6684",
+                              fontSize: getFontSizeButtonDependOnWidth(width),
+                              color: roomDetailInfo?.membersInRoom &&
+                              JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?"white":"#9d93a6",
                               fontWeight: "bolder",
                             }}
                             // onClick={() => {
@@ -2510,8 +2777,17 @@ export default function SelectRoom() {
                             //     gameId: detailGame?.id,
                             //     gameHost: detailGame?.gameHost,
                             //   });
+                            // roomDetailInfo?.membersInRoom &&
+                            // JSON.parse(roomDetailInfo?.membersInRoom)?.length
                             // }}
-                            onClick={() => setStartGame(true)}
+                            onClick={() =>{
+                              if(roomDetailInfo?.membersInRoom &&
+                                JSON.parse(roomDetailInfo?.membersInRoom)?.length>1)
+                                {
+                                  setStartGame(true)
+                                }
+                              } 
+                            }
                           >
                             Start
                           </button>
