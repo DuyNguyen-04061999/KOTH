@@ -451,13 +451,13 @@ export default function ChatWorldList() {
           disableScrollLock={true}
           sx={{
             ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
-            "& .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
-              boxShadow: "unset",
-              background: "#2d224a",
-            },
-            "& .css-6hp17o-MuiList-root-MuiMenu-list": {
-              background: "#2d224a",
-            },
+            // "& .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
+            //   boxShadow: "unset",
+            //   background: "#2d224a",
+            // },
+            // "& .css-6hp17o-MuiList-root-MuiMenu-list": {
+            //   background: "#2d224a",
+            // },
           }}
         >
           <MenuItem

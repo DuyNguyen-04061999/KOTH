@@ -36,9 +36,12 @@ export default function ComponentChat() {
     setFriendMess(
       chatWorld?.filter(
         (n) =>
-          n.messageFromName === userName &&
-          n.messageToName === contacter.userName &&
-          n.messageType === "Private" 
+          (n.messageFromName === userName &&
+            n.messageToName === contacter.userName &&
+            n.messageType === "Private") ||
+          (n.messageFromName === contacter.userName &&
+            n.messageToName === userName &&
+            n.messageType === "Private")
       )
     );
   }, [userName, contacter, chatWorld]);
@@ -313,7 +316,7 @@ export default function ComponentChat() {
                               sx={{
                                 color: "white",
                                 fontWeight: "bold",
-                                textAlign: "left", 
+                                textAlign: "left",
                                 marginLeft: "0px !important",
                               }}
                             >
