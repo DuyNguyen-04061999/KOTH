@@ -5,7 +5,6 @@ import moment from "moment/moment";
 
 export default function TransactionDetailDialog(props) {
   const { trans, open, handleClose } = props;
-  console.log(trans);
   return (
     <Dialog
       open={open}

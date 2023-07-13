@@ -581,7 +581,7 @@ export default function SelectRoom() {
   }, [state]);
 
   return (
-    <div className="gameplay">
+    <div className="">
       {width > 576 ? (
         <Box
           sx={{

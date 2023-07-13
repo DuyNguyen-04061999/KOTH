@@ -23,7 +23,7 @@ export default function Signup(props) {
   const [phone, setPhone] = useState("");
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
-  const {width} = useWindowDimensions()
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     if (registerValue === "success") {
@@ -71,11 +71,13 @@ export default function Signup(props) {
     });
   };
   return (
-    <Box>
+    <Box className="signup">
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
         <Box>
-          <Typography variant="h5" className="text-center text-white"
-            sx={{marginBottom:width < 576 ? "30px" : "30px"}}
+          <Typography
+            variant="h5"
+            className="text-center text-white"
+            sx={{ marginBottom: width < 576 ? "30px" : "30px" }}
           >
             Sign Up
           </Typography>
@@ -85,9 +87,9 @@ export default function Signup(props) {
           sx={{
             width: "100%",
             backgroundColor: "#1a132d",
-            padding: width > 576 ? "5px 10px" :"5px",
+            padding: width > 576 ? "5px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "20px",
+            marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -95,7 +97,11 @@ export default function Signup(props) {
             alt="..."
             width={17}
             height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "11px" : "10px", left: width > 576  ? "12px" : "10px"}}
+            style={{
+              position: "absolute",
+              top: width > 576 ? "11px" : "10px",
+              left: width > 576 ? "12px" : "10px",
+            }}
           />
           <Input
             name="username"
@@ -123,13 +129,59 @@ export default function Signup(props) {
                 color: "white",
               },
               color: "white",
-              fontWeight:"500",
+              fontWeight: "500",
               padding: "0px 0px 0px 35px !important",
             }}
           />
         </FormControl>
         <Box className="position-relative">
-          <Box
+          <div className="d-flex justify-content-between align-items-center ps-2 pe-2 pb-2 radio-group">
+            <div
+              onClick={() => {
+                setGender(0);
+              }}
+            >
+              <input
+                className="me-2"
+                type="radio"
+                id="contactChoice1"
+                name="contact"
+                value="email"
+              />
+              <label for="contactChoice1" style={{color:"white"}}>Mr</label>
+            </div>
+
+            <div
+              onClick={() => {
+                setGender(1);
+              }}
+            >
+              <input
+                className="me-2"
+                type="radio"
+                id="contactChoice2"
+                name="contact"
+                value="phone"
+              />
+              <label for="contactChoice2" style={{color:"white"}}>Mrs</label>
+            </div>
+
+            <div
+              onClick={() => {
+                setGender(2);
+              }}
+            >
+              <input
+                className="me-2"
+                type="radio"
+                id="contactChoice3"
+                name="contact"
+                value="mail"
+              />
+              <label for="contactChoice3" style={{color:"white"}}>Other</label>
+            </div>
+          </div>
+          {/* <Box
             className="d-flex justify-content-between align-items-center"
             sx={{
               height: 56,
@@ -141,16 +193,14 @@ export default function Signup(props) {
                 setGender(0);
               }}
             >
-              <img
-                src={gender === 0 ? sign.chose1 : sign.chose2}
-                alt="..."
-                width={25}
-              />
+              <div class="checkbox-wrapper-13">
+                <input type="radio" id="c1-13" />
+              </div>
               <span
                 className="mx-2"
                 style={{
                   color: "#5654a0",
-                  fontWeight:"500"
+                  fontWeight: "500",
                 }}
               >
                 Mr
@@ -162,16 +212,14 @@ export default function Signup(props) {
                 setGender(1);
               }}
             >
-              <img
-                src={gender === 1 ? sign.chose1 : sign.chose2}
-                alt="..."
-                width={25}
-              />
+              <div class="checkbox-wrapper-13">
+                <input type="radio" id="c1-13" />
+              </div>
               <span
                 className="mx-2"
                 style={{
                   color: "#5654a0",
-                  fontWeight:"500"
+                  fontWeight: "500",
                 }}
               >
                 Mrs
@@ -183,31 +231,29 @@ export default function Signup(props) {
                 setGender(2);
               }}
             >
-              <img
-                src={gender === 2 ? sign.chose1 : sign.chose2}
-                alt="..."
-                width={25}
-              />
+              <div class="checkbox-wrapper-13">
+                <input type="radio" id="c1-13" />
+              </div>
               <span
                 className="mx-2"
                 style={{
                   color: "#5654a0",
-                  fontWeight:"500"
+                  fontWeight: "500",
                 }}
               >
                 Others
               </span>
             </Box>
-          </Box>
+          </Box> */}
         </Box>
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
             backgroundColor: "#1a132d",
-            padding: width > 576 ? "5px 10px" :"5px",
+            padding: width > 576 ? "5px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "20px",
+            marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -215,7 +261,11 @@ export default function Signup(props) {
             alt="..."
             width={15}
             height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "10px" : "10px", left: width > 576  ? "12px" : "10px"}}
+            style={{
+              position: "absolute",
+              top: width > 576 ? "10px" : "10px",
+              left: width > 576 ? "12px" : "10px",
+            }}
           />
           <Input
             type="password"
@@ -242,7 +292,7 @@ export default function Signup(props) {
                 border: "none",
               },
               color: "white",
-              fontWeight:"500",
+              fontWeight: "500",
               padding: "0px 0px 0px 35px !important",
             }}
           />
@@ -252,9 +302,9 @@ export default function Signup(props) {
           sx={{
             width: "100%",
             backgroundColor: "#1a132d",
-            padding: width > 576 ? "5px 10px" :"5px",
+            padding: width > 576 ? "5px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "20px",
+            marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -262,7 +312,11 @@ export default function Signup(props) {
             alt="..."
             width={15}
             height={"auto"}
-            style={{ position: "absolute", top: width > 576 ? "10px" : "10px", left: width > 576  ? "12px" : "10px" }}
+            style={{
+              position: "absolute",
+              top: width > 576 ? "10px" : "10px",
+              left: width > 576 ? "12px" : "10px",
+            }}
           />
           <Input
             type="password"
@@ -272,7 +326,7 @@ export default function Signup(props) {
               setC_password(e.target.value);
             }}
             value={c_password}
-            placeholder="Re-Enter Password"
+            placeholder="Confirm Password"
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
@@ -287,7 +341,7 @@ export default function Signup(props) {
                 border: "none",
               },
               color: "white",
-              fontWeight:"500",
+              fontWeight: "500",
               padding: "0px 0px 0px 35px !important",
             }}
           />
@@ -300,9 +354,9 @@ export default function Signup(props) {
           sx={{
             width: "100%",
             backgroundColor: "#1a132d",
-            padding: width > 576 ? "5px 10px" :"5px",
+            padding: width > 576 ? "5px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "20px",
+            marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -310,7 +364,11 @@ export default function Signup(props) {
             alt="..."
             width={18}
             height={"auto"}
-            style={{ position: "absolute", top: "13px",  left: width > 576  ? "10px" : "8px" }}
+            style={{
+              position: "absolute",
+              top: "13px",
+              left: width > 576 ? "10px" : "8px",
+            }}
           />
           <Input
             type="text"
@@ -334,7 +392,7 @@ export default function Signup(props) {
                 border: "none",
               },
               color: "white",
-              fontWeight:"500",
+              fontWeight: "500",
               padding: "0px 0px 0px 35px !important",
             }}
           />{" "}
@@ -347,16 +405,20 @@ export default function Signup(props) {
           sx={{
             width: "100%",
             backgroundColor: "#1a132d",
-            padding: width > 576 ? "5px 10px" :"5px",
+            padding: width > 576 ? "5px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "20px",
+            marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
           <img
             src={sign.up04}
             alt="..."
             width={13}
-            style={{ position: "absolute", top: "10px",  left: width > 576  ? "13px" : "10px" }}
+            style={{
+              position: "absolute",
+              top: "10px",
+              left: width > 576 ? "13px" : "10px",
+            }}
           />
           <Input
             type="number"
@@ -380,7 +442,7 @@ export default function Signup(props) {
                 border: "none",
               },
               color: "white",
-              fontWeight:"500",
+              fontWeight: "500",
               padding: "0px 0px 0px 35px !important",
             }}
           />
@@ -390,9 +452,9 @@ export default function Signup(props) {
           sx={{
             width: "100%",
             backgroundColor: "#1a132d",
-            padding: width > 576 ? "5px 10px" :"5px",
+            padding: width > 576 ? "5px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom:  width > 576 ? "10px" : "20px",
+            marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
           <img
@@ -400,7 +462,11 @@ export default function Signup(props) {
             alt="..."
             width={18}
             height={"auto"}
-            style={{ position: "absolute", top: "12px",  left: width > 576  ? "12px" : "8px" }}
+            style={{
+              position: "absolute",
+              top: "12px",
+              left: width > 576 ? "12px" : "8px",
+            }}
           />
           <Input
             id="input-with-icon-adornment"
@@ -424,12 +490,15 @@ export default function Signup(props) {
                 border: "none",
               },
               color: "white",
-              fontWeight:"500",
+              fontWeight: "500",
               padding: "0px 0px 0px 35px !important",
             }}
           />
         </FormControl>
-        <Box className="d-flex justify-content-center mb-3" sx={{paddingTop:width < 576 ? "30px" : "0"}}>
+        <Box
+          className="d-flex justify-content-center mb-3"
+          sx={{ paddingTop: width < 576 ? "30px" : "0" }}
+        >
           <Button
             type="submit"
             onClick={handleSubmitSignUp}
@@ -438,13 +507,16 @@ export default function Signup(props) {
             sx={{
               borderRadius: 1,
               padding: "8px 35px",
-              background: disabledBtn === true ? "#6f6683" : "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)"
+              background:
+                disabledBtn === true
+                  ? "#6f6683"
+                  : "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
             }}
           >
             <span
               style={{
                 color: "#faecf1",
-                fontWeight:"700"
+                fontWeight: "700",
               }}
             >
               SIGN UP
@@ -461,7 +533,7 @@ export default function Signup(props) {
               display: "flex",
               justifyContent: "center",
               color: "#7671ba",
-              fontWeight:"500"
+              fontWeight: "500",
             }}
           >
             Already Registered ?
