@@ -5,7 +5,7 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
-  const { GameFiles, width, height, tournamentId, gameId, roomName } = props;
+  const { GameFiles, width, height, tournamentId, gameId, roomName, type } = props;
   const { token } = useSelector(state => state.authReducer)
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
@@ -98,15 +98,18 @@ export default function UnityGameComponent(props) {
   });
 
   const handleGameLoad = useCallback(() => {
-      console.log("Ready from FE", true);
-      sendMessage("OverTheBridgeHome", "SetToken", token);
-      sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
-      sendMessage("OverTheBridgeHome", "SetGameId", gameId);
-      sendMessage("OverTheBridgeHome", "StartGame", "Start");
-      sendMessage("Player Spawner", "SetToken", token);
-      sendMessage("Player Spawner", "SetRoomName", roomName);
-      sendMessage("Player Spawner", "StartGame", "Start");
-  }, [sendMessage, tournamentId, token, gameId, roomName]);
+      if(type && type === "tournament") {
+        console.log("Ready from FE", true);
+        sendMessage("OverTheBridgeHome", "SetToken", token);
+        sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
+        sendMessage("OverTheBridgeHome", "SetGameId", gameId);
+        sendMessage("OverTheBridgeHome", "StartGame", "Start");
+      } else {
+        sendMessage("Player Spawner", "SetToken", token);
+        sendMessage("Player Spawner", "SetRoomName", roomName);
+        sendMessage("Player Spawner", "StartGame", "Start");
+      }
+  }, [sendMessage, tournamentId, token, gameId, roomName, type]);
 
   const handleFinalGame = useCallback(() => {
     window.location.reload()

@@ -457,13 +457,40 @@ export default function SelectRoom() {
     socket?.on(`startRoom${roomIdSelect}Game${detailGame?.id}Success`, () => {
       setStartGame(true);
     });
-    socket?.on(`kickOut${roomIdSelect}Success`, (data) => {
-      console.log(123)
-      console.log("RoomInfo: ",data)     
+    socket?.on(`kickOut${roomIdSelect}Success`, (data, room) => {
+      setListRoom((prevState) => {
+        let dt = [...prevState];
+        if (checkExistData(room?.id, prevState) !== -1) {
+          let item = { ...dt[checkExistData(room?.id, prevState)] };
+          item.membersInRoom = room?.membersInRoom;
+          dt[checkExistData(room?.id, prevState)] = item;
+          return dt;
+        } else {
+          return [...prevState];
+        }
+      });
+      if(userName === data) {
+        setroomDetailInfo("")
+        setRoomIdSelect(0)
+        dispatch(setSelectNav())
+      }
     });
     socket?.on(`kickOut${detailGame?.id}Success`, (room,roomId) => {
-      console.log(123)
-      console.log("RoomInfo: ",room,roomId)     
+      setListRoom((prevState) => {
+        let dt = [...prevState];
+        if (checkExistData(roomId, prevState) !== -1) {
+          let item = { ...dt[checkExistData(roomId, prevState)] };
+          item.membersInRoom = room?.membersInRoom;
+          dt[checkExistData(roomId, prevState)] = item;
+          return dt;
+        } else {
+          return [...prevState];
+        }
+      });
+      if(roomId===roomIdSelect)
+      {
+        setroomDetailInfo(room);
+      } 
     });
     socket?.on(`chatRoom${roomIdSelect}Success`, (data) => {
       setChat((pre) => {
@@ -482,7 +509,8 @@ export default function SelectRoom() {
         window?.location?.reload();
       }
     );
-  }, [socket, detailGame, roomIdSelect, dispatch, userId, userGold, listRoom]);
+  }, [socket, detailGame, roomIdSelect, dispatch, userId, userGold, listRoom, userName]);
+
   useEffect(() => {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
       setListRoom((prevState) => {
@@ -496,12 +524,9 @@ export default function SelectRoom() {
           return [...prevState];
         }
       });
-      // if (localStorage.getItem("IDRoom") && localStorage.getItem("IDRoom")) {
-      //   localStorage.removeItem("IDRoom");
-      //   localStorage.removeItem("GameID");
-      // }
     });
   });
+
   useEffect(() => {
     if (fetchListRoom && token) {
       socket?.emit("getListRoomGame", {
@@ -517,9 +542,11 @@ export default function SelectRoom() {
       ready: ready === 1 ? 0 : 1,
     });
   };
+
   const handleOnchangeText = (e) => {
     setTextContent(e.target.value);
   };
+
   const handleOnKeyDownText = (e) => {
     if (e.key === "Enter" && textContent !== "") {
       socket?.emit("chatInRoom", {
@@ -545,16 +572,6 @@ export default function SelectRoom() {
       gameId: detailGame?.id,
     });
   };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleOnClickBet = (betAmount) => {
-  //   setBetAmount(betAmount);
-  //   handleClose();
-  // };
 
   useEffect(() => {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
