@@ -89,7 +89,7 @@ export default function SelectRoom() {
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
-  const [startGame, setStartGame] = useState(false);
+  const [startGame, setStartGame] = useState(true);
   const [continueGame, setContinueGame] = useState(false);
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -460,15 +460,40 @@ export default function SelectRoom() {
     socket?.on(`startRoom${roomIdSelect}Game${detailGame?.id}Success`, () => {
       setStartGame(true);
     });
-    socket?.on(`kickOut${roomIdSelect}Success`, (data) => {
-      console.log(123)
-      console.log("RoomInfo1: ",data)     
+    socket?.on(`kickOut${roomIdSelect}Success`, (data, room) => {
+      setListRoom((prevState) => {
+        let dt = [...prevState];
+        if (checkExistData(room?.id, prevState) !== -1) {
+          let item = { ...dt[checkExistData(room?.id, prevState)] };
+          item.membersInRoom = room?.membersInRoom;
+          dt[checkExistData(room?.id, prevState)] = item;
+          return dt;
+        } else {
+          return [...prevState];
+        }
+      });
+      if(userName === data) {
+        setroomDetailInfo("")
+        setRoomIdSelect(0)
+        dispatch(setSelectNav())
+      }
     });
     socket?.on(`kickOut${detailGame?.id}Success`, (room,roomId) => {
+      setListRoom((prevState) => {
+        let dt = [...prevState];
+        if (checkExistData(roomId, prevState) !== -1) {
+          let item = { ...dt[checkExistData(roomId, prevState)] };
+          item.membersInRoom = room?.membersInRoom;
+          dt[checkExistData(roomId, prevState)] = item;
+          return dt;
+        } else {
+          return [...prevState];
+        }
+      });
       if(roomId===roomIdSelect)
       {
         setroomDetailInfo(room);
-      }     
+      } 
     });
     socket?.on(`chatRoom${roomIdSelect}Success`, (data) => {
       setChat((pre) => {
@@ -550,11 +575,11 @@ export default function SelectRoom() {
       gameId: detailGame?.id,
     });
   };
-  console.log(mouseEnter)
   useEffect(() => {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
   }, [state]);
+
   return (
     <div className="gameplay">
       {width > 576 ? (
@@ -728,7 +753,10 @@ export default function SelectRoom() {
                     )}
                  </Box>:
                      <Box
-                        onMouseEnter={()=>{setMouseEnter(true)}}
+                        onMouseEnter={()=>{
+                          console.log(true);
+                          setMouseEnter(true)
+                        }}
                         onMouseLeave={()=>{setMouseEnter(false)}}
                         sx={{
                           width: "100%",
