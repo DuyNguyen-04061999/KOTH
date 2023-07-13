@@ -68,3 +68,8 @@ input::-webkit-inner-spin-button {
   background: rgb(249, 208, 4);
   color: black;
 }
+
+.fullscreen {
+  width: 100%;
+  height: 100%;
+}
