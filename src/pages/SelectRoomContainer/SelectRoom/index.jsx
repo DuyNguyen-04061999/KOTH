@@ -89,7 +89,7 @@ export default function SelectRoom() {
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
-  const [startGame, setStartGame] = useState(false);
+  const [startGame, setStartGame] = useState(true);
   const [continueGame, setContinueGame] = useState(false);
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -601,7 +601,6 @@ export default function SelectRoom() {
                    {startGame && expand===true && (
                     mouseEnter===true?   
                     <Box
-                    onMouseLeave={()=>{setMouseEnter(false)}}
                     sx={{
                       width: "100%",
                       height: "auto",
@@ -614,6 +613,7 @@ export default function SelectRoom() {
                       alignItems: "center",
                       backgroundColor: "rgb(46, 40, 68)",
                     }}>
+                    <button onClick={()=>setMouseEnter(false)} style={{color:"red"}}>HideNav</button>
                     <Box sx={{ position: "relative" }}>
                     <Box
                       component={"img"}
@@ -728,8 +728,6 @@ export default function SelectRoom() {
                     )}
                  </Box>:
                      <Box
-                        onMouseEnter={()=>{setMouseEnter(true)}}
-                        onMouseLeave={()=>{setMouseEnter(false)}}
                         sx={{
                           width: "100%",
                           height: "60px",
@@ -739,6 +737,7 @@ export default function SelectRoom() {
                           bottom:"0px",
                           backgroundColor: "rgb(46, 40, 68,0.1)",
                         }}>
+                          <button onClick={()=>setMouseEnter(true)} style={{color:"red"}}>ShowNav</button>
                      </Box>
                    )}
                 </Fragment>
