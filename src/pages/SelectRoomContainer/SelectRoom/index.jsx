@@ -512,7 +512,7 @@ export default function SelectRoom() {
         window?.location?.reload();
       }
     );
-  }, [socket, detailGame, roomIdSelect, dispatch, userId, userGold, listRoom]);
+  }, [socket, detailGame, roomIdSelect, dispatch, userId, userGold, listRoom, userName]);
   useEffect(() => {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
       setListRoom((prevState) => {
@@ -753,6 +753,10 @@ export default function SelectRoom() {
                     )}
                  </Box>:
                      <Box
+                        onMouseEnter={()=>{
+                          setMouseEnter(true)
+                        }}
+                        onMouseLeave={()=>{setMouseEnter(false)}}
                         sx={{
                           width: "100%",
                           height: "60px",
@@ -2055,7 +2059,6 @@ export default function SelectRoom() {
                     >
                     <Box 
                       onClick={()=>{
-                        console.log(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,roomIdSelect,detailGame?.id)
                         socket.emit("kickOutRoom", {
                         username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
                         roomId:roomIdSelect,
@@ -2636,7 +2639,6 @@ export default function SelectRoom() {
                   >
                   <Box 
                     onClick={()=>{
-                      console.log(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,roomIdSelect,detailGame?.id)
                       socket.emit("kickOutRoom", {
                       username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
                       roomId:roomIdSelect,

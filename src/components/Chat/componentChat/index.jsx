@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 export default function ComponentChat() {
   const bottomRef = useRef(null);
   const [friendMessages, setFriendMess] = useState([]);
-  console.log(friendMessages);
+  
   const { chatWorld, contacter, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
