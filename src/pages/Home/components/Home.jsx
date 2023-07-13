@@ -79,19 +79,20 @@ export default function Home() {
           <Container
             maxWidth={"lg"}
             sx={{
-              paddingLeft: "100px !important",
-              paddingRight: "100px !important",
+              paddingLeft: "90px !important",
+              paddingRight: "90px !important",
             }}
           >
             <Box className="video-desktop">
               <video
                 width={"100%"}
-                height={"300px"}
+                // height={"300px"}
                 // className="img-fluid"
                 autoPlay
                 playsInline
                 loop
                 muted
+                style={{ paddingLeft: "15px", paddingRight: "15px",marginTop:"50px" }}
               >
                 <source src={images280423_l.bannerVideo} type="video/webm" />
               </video>
@@ -99,50 +100,61 @@ export default function Home() {
             <Box className="banner-top">
               <Slider {...settings}>
                 <div>
-                  <div style={{ marginRight: "10px" }}>
-                    <img
-                      src={imagesV2.bn2}
-                      alt="..."
-                      className="img-zoom cursor-pointer"
-                      style={{ height: "100%", width: "100%" }}
-                      onClick={() => {}}
-                    />
-                  </div>
+                  <img
+                    src={imagesV2.bn2}
+                    alt="..."
+                    className="cursor-pointer"
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      padding: "15px",
+                    }}
+                    onClick={() => {}}
+                  />
                 </div>
                 <div>
-                  <div style={{ marginRight: "10px" }}>
-                    <img
-                      src={imagesV2.bn3}
-                      alt="..."
-                      className="img-zoom cursor-pointer me-2"
-                      style={{ height: "100%", width: "100%" }}
-                      onClick={() => {}}
-                    />
-                  </div>
+                  <img
+                    src={imagesV2.bn3}
+                    alt="..."
+                    className="cursor-pointer"
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      padding: "15px",
+                    }}
+                    onClick={() => {}}
+                  />
                 </div>
                 <div>
-                  <div rel="noreferrer" style={{ marginRight: "10px" }}>
-                    <img
-                      src={imagesV2.bn4}
-                      alt="..."
-                      className="img-zoom"
-                      style={{ height: "100%", width: "100%" }}
-                    />
-                  </div>
+                  <img
+                    src={imagesV2.bn4}
+                    alt="..."
+                    className="cursor-pointer"
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      padding: "15px",
+                    }}
+                  />
                 </div>
                 <div>
-                  <div rel="noreferrer" style={{ marginRight: "10px" }}>
-                    <img
-                      src={imagesV2.bn1}
-                      alt="..."
-                      className="img-zoom"
-                      style={{ height: "100%", width: "100%" }}
-                    />
-                  </div>
+                  <img
+                    src={imagesV2.bn1}
+                    alt="..."
+                    className="cursor-pointer"
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      padding: "15px",
+                    }}
+                  />
                 </div>
               </Slider>
             </Box>
-            <Box className="top-rated-game mb-5">
+            <Box
+              className="top-rated-game mb-5"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+            >
               <div className="group">
                 <TitleHomeDesktopComponent
                   type="ratedGame"
@@ -155,7 +167,12 @@ export default function Home() {
                   cards={listGame?.filter((item) => item?.gameType === "PVP")}
                 />
               </div>
-              <div className="group" style={{ marginTop: "2.5rem" }}>
+              <div
+                className="group"
+                style={{
+                  marginTop: "2.5rem",
+                }}
+              >
                 <TitleHomeDesktopComponent
                   type="ratedGame"
                   title="FREE TO PLAY"
@@ -260,7 +277,7 @@ export default function Home() {
                 </button>
               </Box>
             </Box>
-            <Box className="leaderboard">
+            <Box className="leaderboard" style={{paddingLeft: "15px", paddingRight: "15px"}}>
               <TitleHomeDesktopComponent
                 type="ratedGame"
                 title="LEADERBOARD"

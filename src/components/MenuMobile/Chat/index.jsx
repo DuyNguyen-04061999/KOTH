@@ -263,7 +263,7 @@ export default function DialogChat(props) {
                   src={images280423_l.send}
                   alt="Send"
                   width={"auto"}
-                  height={28}
+                  height={24}
                 />
               </Box>
             </Box>

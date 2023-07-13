@@ -39,12 +39,19 @@ export default function UnityGameComponent(props) {
     }
   }
 
-  const { unityProvider, unload, UNSAFE__unityInstance, addEventListener, removeEventListener, sendMessage } = useUnityContext({
+  
+
+  const { unityProvider, unload, UNSAFE__unityInstance,  addEventListener, removeEventListener, sendMessage } = useUnityContext({
     loaderUrl: getLoaderJs(GameFiles),
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
     codeUrl: getWasmJs(GameFiles),
   });
+
+  // useEffect(() => {
+  //   requestFullscreen(fullScreen)
+  // }, [fullScreen, requestFullscreen])
+
   window.myGameInstance = UNSAFE__unityInstance;
 
   async function handleClickBack() {
@@ -134,7 +141,8 @@ export default function UnityGameComponent(props) {
     <Unity
       style={{
         width: width ? width : "100%",
-        height: height ? height : "100vhd",
+        minWidth:"100%",
+        height: height ? height : "100vh",
       }}
       unityProvider={unityProvider}
     />

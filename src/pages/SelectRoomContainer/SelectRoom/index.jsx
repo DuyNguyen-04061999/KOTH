@@ -36,6 +36,7 @@ import {
   setWaitingNav,
 } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import imagesFavorite from "../../../utils/imagesFavorite";
 import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
 import { updateUserGold } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -63,6 +64,7 @@ const Test = styled.input`
 export default function SelectRoom() {
   const { width } = useWindowDimensions();
   const { id } = useParams();
+  const handle = useFullScreenHandle();
   const {
     detailGame,
     listFavoriteGame,
@@ -87,7 +89,7 @@ export default function SelectRoom() {
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
-  const [startGame, setStartGame] = useState(false);
+  const [startGame, setStartGame] = useState(true);
   const [continueGame, setContinueGame] = useState(false);
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -100,6 +102,7 @@ export default function SelectRoom() {
   const [expand, setExpand] = useState(false);
   const [textContent, setTextContent] = useState("");
   const [itemFilter,setItemFilter]=useState([""]);
+  const [mouseEnter,setMouseEnter]=useState(false);
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
   const filterArray=[0,100,200,500];
@@ -577,6 +580,7 @@ export default function SelectRoom() {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
   }, [state]);
+
   return (
     <div className="gameplay">
       {width > 576 ? (
@@ -605,18 +609,173 @@ export default function SelectRoom() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-            >
+            >           
+              <div style={{
+                width: "100% !important",
+                height:"100%"
+              }}>
+              <FullScreen handle={handle}>
               {startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && (
                 <Fragment>
                   <UnityGameComponent
                     GameFiles={detailGame?.GameFiles}
-                    height={"700px"}
+                    height={expand===false?"100%":"100%"}
+                    width="100%"
                     roomName={roomDetailInfo?.roomName}
+                    fullScreen={expand}
                   />
+                   {startGame && expand===true && (
+                    mouseEnter===true?   
+                    <Box
+                    onMouseLeave={()=>{setMouseEnter(false)}}
+                    sx={{
+                      width: "100%",
+                      height: "auto",
+                      boxSizing: "border-box",
+                      padding: "10px 20px",
+                      position:"absolute",
+                      bottom:"0px",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      backgroundColor: "rgb(46, 40, 68)",
+                    }}>
+                    <Box sx={{ position: "relative" }}>
+                    <Box
+                      component={"img"}
+                      alt="..."
+                      sx={{
+                        width: width < 576 ? width / 20 : width / 68,
+                        height: width < 576 ? width / 20 : width / 68,
+                      }}
+                      onClick={handleOnClickLikeGame}
+                      src={
+                        likeGame === false
+                          ? imagesFavorite.passiveLike
+                          : imagesFavorite.activeLike
+                      }
+                    ></Box>
+                    <span
+                      style={{
+                        color: "#fff",
+                        position: "absolute",
+                        top: "6px",
+                        left: "35px",
+                        fontWeight: "bolder",
+                        fontSize: getFontSizeDependOnWidth(width),
+                      }}
+                    >
+                      {countLikeGame &&
+                        convertToInternationalCurrencySystem(countLikeGame)}
+                    </span>
+                          </Box>
+                          <Box sx={{ position: "relative" }}>
+                    {" "}
+                    <Box
+                      component={"img"}
+                      alt="..."
+                      sx={{
+                        width: width < 576 ? width / 20 : width / 68,
+                        height: width < 576 ? width / 20 : width / 68,
+                        marginLeft: width < 576 ? "30px" : "30px",
+                        marginTop: "7px",
+                      }}
+                      onClick={handleOnClickDisLikeGame}
+                      src={
+                        disLikeGame === false
+                          ? imagesFavorite.passiveDislike
+                          : imagesFavorite.activeDislike
+                      }
+                    ></Box>
+                    <span
+                      style={{
+                        color: "#fff",
+                        position: "absolute",
+                        top: "11px",
+                        right: "-16px",
+                        fontWeight: "bolder",
+                        fontSize: getFontSizeDependOnWidth(width),
+                      }}
+                    >
+                      {countDisLikeGame &&
+                        convertToInternationalCurrencySystem(countDisLikeGame)}
+                    </span>
+                          </Box>
+                          <Box
+                    component={"img"}
+                    onClick={() => {
+                      if (fGame) {
+                        socket?.emit("deleteFavoriteGame", {
+                          id: detailGame?.id,
+                        });
+                        setFGame(false);
+                      } else {
+                        socket?.emit("addFavoriteGame", { id: detailGame?.id });
+                        setFGame(true);
+                      }
+                    }}
+                    sx={{
+                      width: width < 576 ? width / 20 : width / 68,
+                      height: width < 576 ? width / 20 : width / 68,
+                      marginLeft: width < 576 ? "30px" : "30px",
+                    }}
+                    className="cursor-pointer"
+                    src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
+                    alt="..."
+                          ></Box>
+                          {expand === false ? (
+                    <img
+                      alt=".."
+                      width={width < 576 ? width / 20 : width / 68}
+                      style={{
+                        marginLeft: width < 576 ? "20px" : "30px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>{ 
+                        setExpand(true);
+                        handle.enter();
+                      }}
+                      src={images.expandIcon}
+                    />
+                          ) : (
+                    <img
+                      alt=".."
+                      width={width < 576 ? width / 20 : width / 68}
+                      style={{
+                        marginLeft: width < 576 ? "20px" : "30px",
+                        cursor: "pointer",
+                }}
+                onClick={() =>{ 
+                  setExpand(false);
+                  handle.exit();
+                }}
+                src={images.ZoomInIcon}
+              />
+                    )}
+                 </Box>:
+                     <Box
+                        onMouseEnter={()=>{
+                          console.log(true);
+                          setMouseEnter(true)
+                        }}
+                        onMouseLeave={()=>{setMouseEnter(false)}}
+                        sx={{
+                          width: "100%",
+                          height: "60px",
+                          boxSizing: "border-box",
+                          padding: "10px 20px",
+                          position:"absolute",
+                          bottom:"0px",
+                          backgroundColor: "rgb(46, 40, 68,0.1)",
+                        }}>
+                     </Box>
+                   )}
                 </Fragment>
-              )}
+              )} 
+              </FullScreen>
+              </div>
             </Box>
-            {startGame && (
+              {startGame && expand===false && (
               <Box
                 sx={{
                   width: "100%",
@@ -720,7 +879,10 @@ export default function SelectRoom() {
                       marginLeft: width < 576 ? "20px" : "30px",
                       cursor: "pointer",
                     }}
-                    onClick={() => setExpand(true)}
+                    onClick={() =>{ 
+                      setExpand(true);
+                      handle.enter();
+                    }}
                     src={images.expandIcon}
                   />
                 ) : (
@@ -763,12 +925,6 @@ export default function SelectRoom() {
                   alignItems: "center",
                 }}
               >
-                {/* <Fragment>
-                  <UnityGameComponent
-                    GameFiles={detailGame?.GameFiles}
-                    height={"700px"}
-                  />
-                </Fragment> */}
               </Box>
             </Box>
             <Box
@@ -2438,6 +2594,118 @@ export default function SelectRoom() {
                 }}
                 open={!roomNav && !inviteFriendDialog}
               >
+                  {roomDetailInfo?.membersInRoom &&
+                    JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1 &&<Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl1}
+                    open={open1}
+                    onClose={handleClose1}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                    disableScrollLock={true}
+                    sx={{
+                      ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
+                      zIndex:"1000001"
+                    }}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      dispatch(toggleProfileDialog(true));
+                    }}
+                    sx={{
+                      padding: "5px",
+                    }}
+                  >
+                  <Box 
+                    onClick={()=>{
+                      socket.emit("getDetailProfile", {
+                      username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
+                    });}}
+                    className="p-1 text-white"
+                    sx={{
+                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                      width: "100%",
+                      fontWeight: "bold",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <AddFriendIcon className="me-1 pb-1" />
+                    <span>View Profile</span>
+                  </Box>
+                </MenuItem>
+                  <MenuItem
+                    sx={{
+                      padding: "5px",
+                    }}
+                  >
+                  <Box 
+                    onClick={()=>{
+                      console.log(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,roomIdSelect,detailGame?.id)
+                      socket.emit("kickOutRoom", {
+                      username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
+                      roomId:roomIdSelect,
+                      gameId:detailGame?.id
+                    });
+                  }}
+                    className="p-1 text-white"
+                    sx={{
+                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                      width: "100%",
+                      fontWeight: "bold",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <AddFriendIcon className="me-1 pb-1" />
+                    <span>Kick out</span>
+                  </Box>
+                </MenuItem>
+                {checkExistInFriendList(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name)===true?                      
+                <MenuItem
+                      sx={{
+                        padding: "5px",
+                      }}
+                    >
+                      <Box
+
+                        onClick={()=>{
+                          socket.emit("deleteFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
+                        }}
+                        className="p-1 text-white"
+                        sx={{
+                          background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                          width: "100%",
+                          fontWeight: "bold",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        <DeleteFriendIcon className=" pb-1" />
+                        <span> Delete Friend</span>
+                      </Box>
+                    </MenuItem>:
+                    <MenuItem
+                      sx={{
+                        padding: "5px",
+                      }}
+                    >
+                      <Box
+                        onClick={()=>{
+                          socket.emit("addFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
+                        }}
+                        className="p-1 text-white"
+                        sx={{
+                          background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                          width: "100%",
+                          fontWeight: "bold",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        <AddFriendIcon className="me-2 pb-1" />
+                        Add Friend
+                      </Box>
+                    </MenuItem>}
+                  </Menu> }
+                    
                 <Box
                   sx={{
                     backgroundColor: "#37285c",
@@ -2457,7 +2725,7 @@ export default function SelectRoom() {
                       gameId: detailGame?.id,
                     });
                   }}
-                >
+                >  
                   <img
                     style={{
                       width: getFontSizeTitleDependOnWidth(width),
@@ -2578,6 +2846,7 @@ export default function SelectRoom() {
                     >
                       VS
                     </Box>
+                    
                     {roomDetailInfo?.membersInRoom &&
                     JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1 ? (
                       <Box
@@ -2597,6 +2866,9 @@ export default function SelectRoom() {
                           : ""}  
                         </Typography>
                         <img
+                          onClick={(e)=>{
+                                handleClick1(e);
+                              }}
                           alt="..."
                           style={{
                             width: parseFloat(width / 4.5),
@@ -2667,8 +2939,9 @@ export default function SelectRoom() {
                           )}
                       </Box>
                     ) : (
+                      <>          
                       <img
-                        onClick={() => dispatch(openInvitefriendPopup())}
+                        onClick={() => dispatch(openInvitefriendPopup())}                    
                         alt="..."
                         style={{
                           width: parseFloat(width / 4.5),
@@ -2677,6 +2950,7 @@ export default function SelectRoom() {
                         }}
                         src={images.inviteFriendMobile}
                       />
+                    </>
                     )}
                   </Box>
                   {getOwner(
@@ -2759,7 +3033,7 @@ export default function SelectRoom() {
                               });
                             }}
                             style={{
-                              width: parseFloat(width / 2.8),
+                              width: "40%",
                               backgroundImage:
                                 "linear-gradient(#8a3af1,#7648ed)",
                               fontSize: getFontSizeButtonDependOnWidth(width),
@@ -2776,7 +3050,7 @@ export default function SelectRoom() {
                           </button>
                           <button
                             style={{
-                              width: parseFloat(width / 1.88),
+                              width: "56%",
                               padding: "10px",
                               borderRadius: "5px",
                               border: "none",

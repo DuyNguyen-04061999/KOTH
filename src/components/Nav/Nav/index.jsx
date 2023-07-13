@@ -20,7 +20,7 @@ export default function Navbar() {
       {isNav === false ? (
         <Box
           sx={{
-            backgroundColor: "#271c37",
+            backgroundColor: "#2e233d",
             color: "#9485b8",
             height: "95vh",
             display: "flex",
@@ -28,10 +28,11 @@ export default function Navbar() {
             justifyContent: "space-between",
             paddingBottom: "9px",
             transitionDuration: "all 1s",
-            paddingLeft:"20px",
-            transition:"visibility 0.5s,all 0.25s ease-in-out;",
+            paddingLeft: "30px",
+            paddingRight: "30px",
+            transition: "visibility 0.5s,all 0.25s ease-in-out;",
           }}
-          className="pe-2 pt-3 pb-3"
+          className="pt-3 pb-3"
         >
           <Box>
             <Box
@@ -39,16 +40,24 @@ export default function Navbar() {
               onClick={() => {
                 navigate(`/home`);
               }}
-              className="nav-home d-flex align-items-center"
+              className="nav-home d-flex align-items-center pt-2 pb-2"
             >
               <img
                 src={images.homeicon}
                 alt="..."
                 className="p-1 me-1"
-                width={35}
+                width={28}
                 height="auto"
               />
-              <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>
+              <span
+                className="hover-nav"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  marginLeft:"5px"
+                }}
+              >
                 Home
               </span>
             </Box>
@@ -68,10 +77,20 @@ export default function Navbar() {
                 src={images.luckySpinIncon}
                 alt="..."
                 className="p-1 me-1"
-                width={35}
+                width={28}
                 height="auto"
               />
-              <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Lucky Spin</span>
+              <span
+                className="hover-nav"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  marginLeft:"5px"
+                }}
+              >
+                Lucky Spin
+              </span>
             </Box>
             <hr style={{ color: "white" }} />
             <Box className="nav-pages">
@@ -90,10 +109,20 @@ export default function Navbar() {
                   src={images.favoriteIcon}
                   alt="..."
                   className="p-1 me-1"
-                  width={35}
+                  width={28}
                   height="auto"
                 />
-                <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Favorites</span>
+                <span
+                  className="hover-nav"
+                  style={{
+                    cursor: "pointer",
+                    fontWeight: "700",
+                    fontSize: "15px",
+                    marginLeft:"5px"
+                  }}
+                >
+                  Favorites
+                </span>
               </Box>
               <Box
                 style={{ cursor: "pointer" }}
@@ -106,10 +135,20 @@ export default function Navbar() {
                   src={images.pvpicon}
                   alt="..."
                   className="p-1 me-1"
-                  width={35}
+                  width={28}
                   height="auto"
                 />
-                <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>PVP Games</span>
+                <span
+                  className="hover-nav"
+                  style={{
+                    cursor: "pointer",
+                    fontWeight: "700",
+                    fontSize: "15px",
+                    marginLeft:"5px"
+                  }}
+                >
+                  PVP Games
+                </span>
               </Box>
               <Box
                 style={{ cursor: "pointer" }}
@@ -122,16 +161,26 @@ export default function Navbar() {
                   src={images.playicon}
                   alt="..."
                   className="p-1 me-1"
-                  width={35}
+                  width={28}
                   height={"auto"}
                 />
-                <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Free To Play</span>
+                <span
+                  className="hover-nav"
+                  style={{
+                    cursor: "pointer",
+                    fontWeight: "700",
+                    fontSize: "15px",
+                    marginLeft:"5px"
+                  }}
+                >
+                  Free To Play
+                </span>
               </Box>
             </Box>
             <hr style={{ color: "white" }} />
             <Box
               style={{ cursor: "pointer" }}
-              className="nav-game-log d-flex align-items-center"
+              className="nav-game-log d-flex align-items-center pt-2 pb-2"
               onClick={() => {
                 if (!token) {
                   dispatch(toggleLoginDialog());
@@ -145,27 +194,38 @@ export default function Navbar() {
                 src={images.gamelogicon}
                 alt="..."
                 className="p-1 me-1"
-                width={30}
+                width={26}
                 height="auto"
               />
-              <span style={{ cursor: "pointer", fontWeight:"700",fontSize:"17px" }}>Game Log</span>
+              <span
+                className="hover-nav"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  marginLeft:"5px"
+                }}
+              >
+                Game Log
+              </span>
             </Box>
-            <Box className="d-flex align-items-center mt-1">
+            <Box className="d-flex align-items-center">
               <img
                 src={popup.faq}
                 alt="..."
                 className="p-1 me-1"
-                width={38}
+                width={28}
                 height={"auto"}
               />
-              <Typography
-                sx={{ cursor: "pointer" }}
+              <span
+                className="hover-nav"
+                style={{ cursor: "pointer", fontWeight: "700", fontSize: "15px",marginLeft:"5px" }}
                 onClick={() => {
                   navigate(`/FAQ`);
                 }}
               >
                 FAQ
-              </Typography>
+              </span>
             </Box>
           </Box>
           <Box>
@@ -175,11 +235,11 @@ export default function Navbar() {
                 <Typography>Currencies</Typography>
               </Box>
               <Box className="coin-total d-flex justify-content-evenly pt-3 pb-4">
-                <img src={popup.Doge2} alt="..." width={30} />
-                <img src={images.BNB} alt="..." width={30} />
-                <img src={images.BTC} alt="..." width={30} />
-                <img src={popup.LCoin} alt="..." width={30} />
-                <img src={popup.TCoin} alt="..." width={30} />
+                <img src={popup.Doge2} alt="..." width={25} height={25} />
+                <img src={images.BNB} alt="..." width={25} height={25} />
+                <img src={images.BTC} alt="..." width={25} height={25} />
+                <img src={popup.LCoin} alt="..." width={25} height={25} />
+                <img src={popup.TCoin} alt="..." width={25} height={25} />
               </Box>
             </Box>
           </Box>
@@ -196,9 +256,9 @@ export default function Navbar() {
             paddingBottom: "9px",
             alignItems: "center",
             transitionDuration: "all 1s",
-            paddingLeft:"1px",
-            width:"80px !important",
-            transition:"visibility 0.5s,all 0.25s ease-in-out;"
+            paddingLeft: "1px",
+            // width: "80px !important",
+            transition: "visibility 0.5s,all 0.25s ease-in-out;",
           }}
           className=" pe-2 pt-3"
         >
@@ -208,7 +268,7 @@ export default function Navbar() {
                 src={images.homeicon}
                 alt="..."
                 className="p-1"
-                width={35}
+                width={30}
                 height="auto"
                 onClick={() => {
                   navigate(`/home`);
@@ -231,7 +291,7 @@ export default function Navbar() {
                 src={images.luckySpinIncon}
                 alt="..."
                 className="p-1"
-                width={35}
+                width={30}
                 height="auto"
               />
             </Box>
@@ -245,7 +305,7 @@ export default function Navbar() {
                   src={images.favoriteIcon}
                   alt="..."
                   className="p-1"
-                  width={35}
+                  width={30}
                   height="auto"
                   onClick={() => {
                     if (!token) {
@@ -264,7 +324,7 @@ export default function Navbar() {
                   src={images.pvpicon}
                   alt="..."
                   className="p-1"
-                  width={35}
+                  width={30}
                   height="auto"
                   onClick={() => {
                     navigate("/game-type/pvp");
@@ -279,7 +339,7 @@ export default function Navbar() {
                   src={images.playicon}
                   alt="..."
                   className="p-1"
-                  width={35}
+                  width={30}
                   height={"auto"}
                   onClick={() => {
                     navigate("/game-type/free");
@@ -290,13 +350,13 @@ export default function Navbar() {
             <hr style={{ color: "white" }} />
             <Box
               style={{ cursor: "pointer" }}
-              className="nav-game-log d-flex align-items-center"
+              className="nav-game-log d-flex align-items-center pt-2 pb-2"
             >
               <img
                 src={images.gamelogicon}
                 alt="..."
                 className="p-1"
-                width={35}
+                width={25}
                 height="auto"
                 onClick={() => {
                   if (!token) {
@@ -313,7 +373,7 @@ export default function Navbar() {
                 src={popup.faq}
                 alt="..."
                 className="p-1"
-                width={40}
+                width={35}
                 height={"auto"}
                 style={{ cursor: "pointer" }}
                 onClick={() => {
@@ -328,5 +388,3 @@ export default function Navbar() {
     </Box>
   );
 }
-
-

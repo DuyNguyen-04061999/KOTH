@@ -291,7 +291,7 @@ export default function ChatWorldList() {
                 </Box>
                 <Box
                   sx={{
-                    background: "#39294f",
+                    background: "#443565",
                     // width: width < 576 ? width - 100 : 215,
                     width: "fit-content",
                     maxWidth: width < 576 ? width - 100 : 215,

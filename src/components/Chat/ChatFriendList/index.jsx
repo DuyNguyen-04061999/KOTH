@@ -76,9 +76,11 @@ export default function ChatFriendList() {
                 alignItems={"center"}
                 className=" pe-2"
                 onClick={() => {
+                  dispatch(updateContacterUsername(e?.userName, e?.id));
                   if (width < 576) {
                     setOpenMess(true);
                   } else {
+                    setOpenMess(true);
                   }
                 }}
               >
@@ -158,7 +160,7 @@ export default function ChatFriendList() {
                 className="ms-2 me-2"
               />
               <Box display={"flex"} flexDirection={"column"}>
-                <h5 style={{ color: "#535f92", fontWeight: "bolder" }}>
+                <h5 style={{ color: "#535f92", fontWeight: "bolder" , fontSize:"15px"}}>
                   {e?.userName}
                 </h5>
                 <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
@@ -169,7 +171,7 @@ export default function ChatFriendList() {
             <Box>
               <span
                 className="ms-2"
-                style={{ color: "#535f92", fontWeight: "500" }}
+                style={{ color: "#535f92", fontWeight: "500", fontSize:"12px" }}
               >
                 {moment(e?.createdAt).format("HH:mm")}
               </span>
@@ -199,12 +201,12 @@ export default function ChatFriendList() {
         backgroundColor: "#2e233d",
       }}
     >
-      <Box sx={{ padding: "10px" }}>
+      <Box>
         <Box
           component={"form"}
           position={"relative"}
           onSubmit={handleSubmitSearchChat}
-          className="ps-3 pe-3"
+          className="ps-3 pe-3 pb-3"
         >
           <Test
             type="text"

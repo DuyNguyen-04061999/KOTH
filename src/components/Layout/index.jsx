@@ -49,7 +49,7 @@ import {
   toggleLoginDialog,
 } from "../../redux-saga-middleware/reducers/authReducer";
 
-const drawerWidth = 300;
+const drawerWidth = 310;
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -321,7 +321,7 @@ export default function Layout(props) {
                       backgroundColor: "#1a151e",
                       border: "none",
                       padding: "7px 10px",
-                      color: "#9485b7",
+                      color: "#857cab",
                       fontWeight: "500",
                       borderRadius:5
                     }}
@@ -398,7 +398,7 @@ export default function Layout(props) {
       </AppBar>
       <Grid container>
         {width > 992 ? (
-          <Grid item md={isNav === false ? 1.8 : 0.8} position={"relative"}>
+          <Grid item md={isNav === false ? 1.6 : 0.6} position={"relative"}>
             <Navbar navIcon={isNav} />
           </Grid>
         ) : (
@@ -408,7 +408,7 @@ export default function Layout(props) {
           item
           xs={12}
           sm={12}
-          md={isNav === false ? 10.2 : 11.2}
+          md={isNav === false ? 10.4 : 11.4}
           sx={{ minHeight: "100vh" }}
         >
           <Main open={chatPopup}>{children}</Main>
@@ -538,7 +538,7 @@ export default function Layout(props) {
                       src={images280423_l.send}
                       alt="Send"
                       width={"auto"}
-                      height={28}
+                      height={24}
                     />
                   </Box>
                 </Box>
@@ -557,7 +557,7 @@ export default function Layout(props) {
                     width: "50%",
                     backgroundColor: backgroundGlobal,
                     cursor: "pointer",
-                    borderRadius: "5px 5px 5px 5px",
+                    borderRadius: "5px 0px 0px 5px",
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -565,19 +565,18 @@ export default function Layout(props) {
                     setBackgroundPrivate("#462a71");
                   }}
                 >
-                  <div>
                     {tabChat === false ? (
-                      <img src={imageChat.globalicon1} alt="Arrow" width={30} />
+                      <img src={imageChat.globalicon1} alt="Arrow" width={20} />
                     ) : (
-                      <img src={imageChat.globalicon2} alt="Arrow" width={30} />
+                      <img src={imageChat.globalicon2} alt="Arrow" width={20} />
                     )}
-                  </div>
                   <div className="d-flex align-items-center">
                     <span
                       className="fs-7 mx-2"
                       style={{
                         color: tabChat === true ? "white" : "#8a78b3",
-                        fontWeight:"700"
+                        fontWeight:"700",
+                        fontSize:"15px"
                       }}
                     >
                       Global
@@ -592,7 +591,7 @@ export default function Layout(props) {
                     cursor: "pointer",
                     display: "flex",
                     justifyContent: "start",
-                    borderRadius: "5px 5px 5px 5px",
+                    borderRadius: "0px 5px 5px 0px",
                   }}
                   onClick={() => {
                     if (token === null || token === "") {
@@ -604,29 +603,28 @@ export default function Layout(props) {
                     }
                   }}
                 >
-                  <div >
                     {tabChat === true ? (
                       <img
                         src={imageChat.privateicon1}
                         alt="Arrow"
-                        width={15}
+                        width={10}
                         className="img-fluid"
                       />
                     ) : (
                       <img
                         src={imageChat.privateicon2}
                         alt="Arrow"
-                        width={15}
+                        width={12}
                         className="img-fluid"
                       />
                     )}
-                  </div>
                   <div className="d-flex align-items-center">
                     <span
                       className="fs-7 mx-2"
                       style={{
                         color: tabChat === false ? "white" : "#8a78b3",
                         fontWeight:"700",
+                        fontSize:"15px"
                       }}
                     >
                       Private
@@ -699,7 +697,7 @@ export default function Layout(props) {
                     src={images280423_l.send}
                     alt="Send"
                     width={"auto"}
-                    height={28}
+                    height={24}
                     className="cursor-pointer"
                   />
                 </Box>

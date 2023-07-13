@@ -35,6 +35,7 @@ import {
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../utils/images";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
+import TransactionDetailDialog from "../../Dialog/TransactionDetail";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -714,7 +715,8 @@ export default function DialogWallet(props) {
 
   // const transactionsTab = ["Deposit", "Withdraw"];
   const [transactionTabSelected, setTransactionTabSelected] = useState(0);
-
+  const [detailTrans,setDetailTrans] = useState(null)
+  const [isDetailTransactionDialog,setIsDetailTransactionDialog] = useState(false)
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#251f41",
@@ -756,6 +758,15 @@ export default function DialogWallet(props) {
       setTransaction(withdrawData);
     }
   }, [transactionTabSelected, withdrawData, despositData]);
+
+  const handleTransactionDialog = (trans) => {
+    setDetailTrans(trans)
+    setIsDetailTransactionDialog(true);
+  };
+
+  const handleCloseTransactionDialog = () => {
+    setIsDetailTransactionDialog(false);
+  };
   const renderTransaction = () => {
     return (
       <Box
@@ -917,23 +928,23 @@ export default function DialogWallet(props) {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">Time</StyledTableCell>
+                  <StyledTableCell align="center">Transaction ID</StyledTableCell>
+                  <StyledTableCell align="center">Gateway</StyledTableCell>
                   <StyledTableCell align="center">Amount</StyledTableCell>
-                  <StyledTableCell align="center">Status</StyledTableCell>
-                  <StyledTableCell align="center">Fee</StyledTableCell>
-                  <StyledTableCell align="center">Transaction</StyledTableCell>
+                  <StyledTableCell align="center">Rate</StyledTableCell>
                   {width > 576 && (
                     <StyledTableCell align="center">
-                      Transaction
+                      Charge
                     </StyledTableCell>
                   )}
                   {width > 576 && (
                     <StyledTableCell align="center">
-                      Transaction
+                      Status
                     </StyledTableCell>
                   )}
                   {width > 576 && (
                     <StyledTableCell align="center">
-                      Transaction
+                      Receivable
                     </StyledTableCell>
                   )}
                 </TableRow>
@@ -941,7 +952,11 @@ export default function DialogWallet(props) {
               {transactions.length > 0 ? (
                 <TableBody>
                   {transactions?.map((transaction, i_t) => (
-                    <StyledTableRow key={i_t}>
+                    <StyledTableRow key={i_t}
+                      onClick={() => {
+                        handleTransactionDialog(transaction)
+                      }}
+                    >
                       <StyledTableCell
                         align="center"
                         component="td"
@@ -965,7 +980,7 @@ export default function DialogWallet(props) {
                             color: "#fff",
                           }}
                         >
-                          {transaction?.transactionValue} DOGEGOLD
+                          {transaction?.userId}
                         </Box>
                       </StyledTableCell>
                       <StyledTableCell align="center">
@@ -975,7 +990,7 @@ export default function DialogWallet(props) {
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         <Box component={"span"} className="text-danger">
-                          0
+                          1+1=2
                         </Box>
                       </StyledTableCell>
                       <StyledTableCell align="center">
@@ -987,7 +1002,7 @@ export default function DialogWallet(props) {
                           }}
                           className="d-flex align-items-center justify-content-center"
                         >
-                          Detail
+                          {transaction?.transactionRate}
                           <ArrowForwardIos
                             sx={{
                               color: "#51539c",
@@ -1007,14 +1022,7 @@ export default function DialogWallet(props) {
                             }}
                             className="d-flex align-items-center justify-content-center"
                           >
-                            Detail
-                            <ArrowForwardIos
-                              sx={{
-                                color: "#51539c",
-                                fontSize: 14,
-                                fontWeight: "bold",
-                              }}
-                            />
+                            {transaction?.transactionStatus}
                           </Box>
                         </StyledTableCell>
                       )}
@@ -1028,14 +1036,7 @@ export default function DialogWallet(props) {
                             }}
                             className="d-flex align-items-center justify-content-center"
                           >
-                            Detail
-                            <ArrowForwardIos
-                              sx={{
-                                color: "#51539c",
-                                fontSize: 14,
-                                fontWeight: "bold",
-                              }}
-                            />
+                            {transaction?.transactionType}
                           </Box>
                         </StyledTableCell>
                       )}
@@ -1049,14 +1050,7 @@ export default function DialogWallet(props) {
                             }}
                             className="d-flex align-items-center justify-content-center"
                           >
-                            Detail
-                            <ArrowForwardIos
-                              sx={{
-                                color: "#51539c",
-                                fontSize: 14,
-                                fontWeight: "bold",
-                              }}
-                            />
+                            {transaction?.transactionReceivable}
                           </Box>
                         </StyledTableCell>
                       )}
@@ -1181,6 +1175,11 @@ export default function DialogWallet(props) {
 
   return (
     <>
+      <TransactionDetailDialog 
+          trans={detailTrans}
+          open={isDetailTransactionDialog}
+          handleClose={handleCloseTransactionDialog}
+        />
       <Dialog
         fullScreen={width < 576}
         open={open || isTransactionDialog}
@@ -1296,11 +1295,11 @@ export default function DialogWallet(props) {
 
           <Box
             sx={{
-              paddingTop: "48px",
+              // paddingTop: "48px",
               minHeight: width < 576 ? height - 46 : "unset",
               maxHeight: width < 576 ? "unset" : height - 100,
               backgroundColor: "#271c39",
-              paddingBottom: "100px",
+              // paddingBottom: "100px",
               overflowY: "auto",
             }}
           >
