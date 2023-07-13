@@ -626,7 +626,6 @@ export default function SelectRoom() {
                    {startGame && expand===true && (
                     mouseEnter===true?   
                     <Box
-                    onMouseLeave={()=>{setMouseEnter(false)}}
                     sx={{
                       width: "100%",
                       height: "auto",
@@ -639,6 +638,7 @@ export default function SelectRoom() {
                       alignItems: "center",
                       backgroundColor: "rgb(46, 40, 68)",
                     }}>
+                    <button onClick={()=>setMouseEnter(false)} style={{color:"red"}}>HideNav</button>
                     <Box sx={{ position: "relative" }}>
                     <Box
                       component={"img"}
@@ -753,11 +753,6 @@ export default function SelectRoom() {
                     )}
                  </Box>:
                      <Box
-                        onMouseEnter={()=>{
-                          console.log(true);
-                          setMouseEnter(true)
-                        }}
-                        onMouseLeave={()=>{setMouseEnter(false)}}
                         sx={{
                           width: "100%",
                           height: "60px",
@@ -767,6 +762,7 @@ export default function SelectRoom() {
                           bottom:"0px",
                           backgroundColor: "rgb(46, 40, 68,0.1)",
                         }}>
+                          <button onClick={()=>setMouseEnter(true)} style={{color:"red"}}>ShowNav</button>
                      </Box>
                    )}
                 </Fragment>
