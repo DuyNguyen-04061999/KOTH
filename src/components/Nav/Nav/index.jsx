@@ -14,12 +14,13 @@ export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token, isNav } = useSelector((state) => state.authReducer);
+  
 
   return (
     <Box className="nav-section">
-      {isNav === false ? (
-        <Box
+          <Box
           sx={{
+            // width: isNav === true ? "300px" : "80px",
             backgroundColor: "#2e233d",
             color: "#9485b8",
             height: "95vh",
@@ -28,11 +29,11 @@ export default function Navbar() {
             justifyContent: "space-between",
             paddingBottom: "9px",
             transitionDuration: "all 1s",
-            paddingLeft: "30px",
-            paddingRight: "30px",
+            paddingLeft:  isNav === true ? "30px" : "10px",
+            paddingRight:  isNav === true ? "30px" : "10px",
             transition: "visibility 0.5s,all 0.25s ease-in-out;",
           }}
-          className="pt-3 pb-3"
+          className="pt-3 pb-3 nav-animate"
         >
           <Box>
             <Box
@@ -52,6 +53,7 @@ export default function Navbar() {
               <span
                 className="hover-nav"
                 style={{
+                  display:isNav === true ? "block" :"none",
                   cursor: "pointer",
                   fontWeight: "700",
                   fontSize: "15px",
@@ -83,13 +85,14 @@ export default function Navbar() {
               <span
                 className="hover-nav"
                 style={{
+                  display:isNav === true ? "block" :"none",
                   cursor: "pointer",
                   fontWeight: "700",
                   fontSize: "15px",
                   marginLeft:"5px"
                 }}
               >
-                Lucky Spin
+                Lucky
               </span>
             </Box>
             <hr style={{ color: "white" }} />
@@ -115,13 +118,14 @@ export default function Navbar() {
                 <span
                   className="hover-nav"
                   style={{
+                    display:isNav === true ? "block" :"none",
                     cursor: "pointer",
                     fontWeight: "700",
                     fontSize: "15px",
                     marginLeft:"5px"
                   }}
                 >
-                  Favorites
+                  Fav
                 </span>
               </Box>
               <Box
@@ -141,13 +145,14 @@ export default function Navbar() {
                 <span
                   className="hover-nav"
                   style={{
+                    display:isNav === true ? "block" :"none",
                     cursor: "pointer",
                     fontWeight: "700",
                     fontSize: "15px",
                     marginLeft:"5px"
                   }}
                 >
-                  PVP Games
+                  PVP
                 </span>
               </Box>
               <Box
@@ -167,13 +172,14 @@ export default function Navbar() {
                 <span
                   className="hover-nav"
                   style={{
+                    display:isNav === true ? "block" :"none",
                     cursor: "pointer",
                     fontWeight: "700",
                     fontSize: "15px",
                     marginLeft:"5px"
                   }}
                 >
-                  Free To Play
+                  Free
                 </span>
               </Box>
             </Box>
@@ -200,13 +206,14 @@ export default function Navbar() {
               <span
                 className="hover-nav"
                 style={{
+                  display:isNav === true ? "block" :"none",
                   cursor: "pointer",
                   fontWeight: "700",
                   fontSize: "15px",
                   marginLeft:"5px"
                 }}
               >
-                Game Log
+                Game
               </span>
             </Box>
             <Box className="d-flex align-items-center">
@@ -219,7 +226,7 @@ export default function Navbar() {
               />
               <span
                 className="hover-nav"
-                style={{ cursor: "pointer", fontWeight: "700", fontSize: "15px",marginLeft:"5px" }}
+                style={{ cursor: "pointer", fontWeight: "700", fontSize: "15px",marginLeft:"5px", display:isNav === true ? "block" :"none", }}
                 onClick={() => {
                   navigate(`/FAQ`);
                 }}
@@ -228,7 +235,9 @@ export default function Navbar() {
               </span>
             </Box>
           </Box>
-          <Box>
+          <Box sx={{
+            display:isNav === true ? "block" :"none",
+          }}>
             <hr style={{ color: "white" }} />
             <Box className="nav-currencies">
               <Box>
@@ -244,147 +253,6 @@ export default function Navbar() {
             </Box>
           </Box>
         </Box>
-      ) : (
-        <Box
-          sx={{
-            backgroundColor: "#271c37",
-            color: "#9485b8",
-            height: "95vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            paddingBottom: "9px",
-            alignItems: "center",
-            transitionDuration: "all 1s",
-            paddingLeft: "1px",
-            // width: "80px !important",
-            transition: "visibility 0.5s,all 0.25s ease-in-out;",
-          }}
-          className=" pe-2 pt-3"
-        >
-          <Box>
-            <Box style={{ cursor: "pointer" }} className="nav-home d-flex">
-              <img
-                src={images.homeicon}
-                alt="..."
-                className="p-1"
-                width={30}
-                height="auto"
-                onClick={() => {
-                  navigate(`/home`);
-                }}
-              />
-            </Box>
-            <hr style={{ color: "white" }} />
-            <Box
-              style={{ cursor: "pointer" }}
-              className="d-flex align-items-center pt-2 pb-2"
-              onClick={() => {
-                if (!token) {
-                  dispatch(toggleLoginDialog());
-                } else {
-                  navigate("/luckywheel");
-                }
-              }}
-            >
-              <img
-                src={images.luckySpinIncon}
-                alt="..."
-                className="p-1"
-                width={30}
-                height="auto"
-              />
-            </Box>
-            <hr style={{ color: "white" }} />
-            <Box className="nav-pages">
-              <Box
-                style={{ cursor: "pointer" }}
-                className="d-flex align-items-center pt-2 pb-2"
-              >
-                <img
-                  src={images.favoriteIcon}
-                  alt="..."
-                  className="p-1"
-                  width={30}
-                  height="auto"
-                  onClick={() => {
-                    if (!token) {
-                      dispatch(toggleLoginDialog());
-                    } else {
-                      navigate("/game-type/favorite");
-                    }
-                  }}
-                />
-              </Box>
-              <Box
-                style={{ cursor: "pointer" }}
-                className="d-flex align-items-center pt-2 pb-2"
-              >
-                <img
-                  src={images.pvpicon}
-                  alt="..."
-                  className="p-1"
-                  width={30}
-                  height="auto"
-                  onClick={() => {
-                    navigate("/game-type/pvp");
-                  }}
-                />
-              </Box>
-              <Box
-                style={{ cursor: "pointer" }}
-                className="d-flex align-items-center pt-2 pb-2"
-              >
-                <img
-                  src={images.playicon}
-                  alt="..."
-                  className="p-1"
-                  width={30}
-                  height={"auto"}
-                  onClick={() => {
-                    navigate("/game-type/free");
-                  }}
-                />
-              </Box>
-            </Box>
-            <hr style={{ color: "white" }} />
-            <Box
-              style={{ cursor: "pointer" }}
-              className="nav-game-log d-flex align-items-center pt-2 pb-2"
-            >
-              <img
-                src={images.gamelogicon}
-                alt="..."
-                className="p-1"
-                width={25}
-                height="auto"
-                onClick={() => {
-                  if (!token) {
-                    dispatch(toggleLoginDialog());
-                  } else {
-                    _socket.emit("getGameLog");
-                    dispatch(toggleGameLogDialog());
-                  }
-                }}
-              />
-            </Box>
-            <Box className="d-flex align-items-center mt-1">
-              <img
-                src={popup.faq}
-                alt="..."
-                className="p-1"
-                width={35}
-                height={"auto"}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate(`/FAQ`);
-                }}
-              />
-            </Box>
-            <hr style={{ color: "white" }} />
-          </Box>
-        </Box>
-      )}
     </Box>
   );
 }

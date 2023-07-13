@@ -96,7 +96,7 @@ const authReducer = (
     isTab: false,
     isUpdateProfile: false,
     userChangeAvatar: "",
-    isNav: false,
+    isNav: true,
     resetInputValue: "",
     leaderBoard: [],
     userId: "",

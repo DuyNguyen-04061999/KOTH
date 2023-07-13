@@ -122,6 +122,9 @@ export default function ComponentChat() {
                         alt="..."
                         width={"100%"}
                         height={"75px"}
+                        style={{
+                          objectFit:"cover"
+                        }}
                         // className="img-fluid"
                       />
                     </Box>
@@ -306,6 +309,9 @@ export default function ComponentChat() {
                               width={"100%"}
                               // className="img-fluid"
                               height={"75px"}
+                              style={{
+                                objectFit:"cover"
+                              }}
                             />
                           </Box>
                           <Box

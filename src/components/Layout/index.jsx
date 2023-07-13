@@ -398,7 +398,9 @@ export default function Layout(props) {
       </AppBar>
       <Grid container>
         {width > 992 ? (
-          <Grid item md={isNav === false ? 1.6 : 0.6} position={"relative"}>
+          <Grid item md={isNav === true ? 1.6 : 0.6} position={"relative"} sx={{
+            transition:"visibility 0s, all 0.2s ease-in-out"
+          }}>
             <Navbar navIcon={isNav} />
           </Grid>
         ) : (
@@ -408,8 +410,8 @@ export default function Layout(props) {
           item
           xs={12}
           sm={12}
-          md={isNav === false ? 10.4 : 11.4}
-          sx={{ minHeight: "100vh" }}
+          md={isNav === true ? 10.4 : 11.4}
+          sx={{ minHeight: "100vh", transition:"visibility 0s, all 0.2s ease-in-out" }}
         >
           <Main open={chatPopup}>{children}</Main>
         </Grid>

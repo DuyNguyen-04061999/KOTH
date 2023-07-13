@@ -162,6 +162,9 @@ export default function ChatWorldList() {
                           alt="..."
                           width={"100%"}
                           height={"75px"}
+                          style={{
+                            objectFit:"cover"
+                          }}
                         />
                       </Box>
                       <Box
@@ -350,6 +353,9 @@ export default function ChatWorldList() {
                                 alt="..."
                                 width={"100%"}
                                 height={"75px"}
+                                style={{
+                                  objectFit:"cover"
+                                }}
                               />
                             </Box>
                             <Box

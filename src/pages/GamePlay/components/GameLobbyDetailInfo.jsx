@@ -13,6 +13,7 @@ import {
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
 import { useNavigate } from "react-router-dom";
+import '../../GamePlay/scss/GameLobbyDetailInfi.scss'
 
 export default function GameLobbyDetailInfo() {
   const { detailGame, listFavoriteGame, listLikeGame, listDislikeGame } =
@@ -27,6 +28,7 @@ export default function GameLobbyDetailInfo() {
   const [showMore, setShowMore] = useState(false);
   const [socket, setSocket] = useState(null);
   const [fGame, setFGame] = useState(null);
+  const [animate,setAnimate] = useState("")
 
   useEffect(() => {
     const socket = _socket;
@@ -66,6 +68,7 @@ export default function GameLobbyDetailInfo() {
       setCountLikeGame(countLikeGame + 1);
       setCountDisLikeGame(countDisLikeGame - 1);
     }
+    setAnimate('animate')
   };
   const handleOnClickDisLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
@@ -235,7 +238,7 @@ export default function GameLobbyDetailInfo() {
                     ? imagesFavorite.passivePlayGameLike
                     : imagesFavorite.activeLike
                 }
-                className="cursor-pointer"
+                className={`cursor-pointer ${animate} `}
                 alt="..."
               ></Box>
               <span
