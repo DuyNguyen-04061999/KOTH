@@ -89,7 +89,7 @@ export default function SelectRoom() {
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
-  const [startGame, setStartGame] = useState(true);
+  const [startGame, setStartGame] = useState(false);
   const [continueGame, setContinueGame] = useState(false);
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
