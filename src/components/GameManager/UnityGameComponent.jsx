@@ -5,7 +5,11 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
-  const { GameFiles, width, height, tournamentId, gameId, roomName } = props;
+  const { 
+    GameFiles, width, height, tournamentId, gameId, 
+    // roomName, 
+    roomId 
+  } = props;
   const { token } = useSelector(state => state.authReducer)
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
@@ -110,9 +114,9 @@ export default function UnityGameComponent(props) {
       sendMessage("OverTheBridgeHome", "SetGameId", gameId);
       sendMessage("OverTheBridgeHome", "StartGame", "Start");
       sendMessage("Player Spawner", "SetToken", token);
-      sendMessage("Player Spawner", "SetRoomName", roomName);
+      sendMessage("Player Spawner", "SetRoomName", roomId);
       sendMessage("Player Spawner", "StartGame", "Start");
-  }, [sendMessage, tournamentId, token, gameId, roomName]);
+  }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(() => {
     window.location.reload()

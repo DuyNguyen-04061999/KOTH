@@ -622,6 +622,7 @@ export default function SelectRoom() {
                     width="100%"
                     roomName={roomDetailInfo?.roomName}
                     fullScreen={expand}
+                    roomId={roomDetailInfo?.id}
                   />
                    {startGame && expand===true && (
                     mouseEnter===true?   

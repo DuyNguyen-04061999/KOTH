@@ -92,7 +92,7 @@ export default function Navbar() {
                   marginLeft:"5px"
                 }}
               >
-                Lucky
+                Lucky Wheel
               </span>
             </Box>
             <hr style={{ color: "white" }} />
@@ -125,7 +125,7 @@ export default function Navbar() {
                     marginLeft:"5px"
                   }}
                 >
-                  Fav
+                  Favorite Games
                 </span>
               </Box>
               <Box
@@ -152,7 +152,7 @@ export default function Navbar() {
                     marginLeft:"5px"
                   }}
                 >
-                  PVP
+                  PVP Games
                 </span>
               </Box>
               <Box
@@ -179,7 +179,7 @@ export default function Navbar() {
                     marginLeft:"5px"
                   }}
                 >
-                  Free
+                  Free Games
                 </span>
               </Box>
             </Box>
@@ -213,7 +213,7 @@ export default function Navbar() {
                   marginLeft:"5px"
                 }}
               >
-                Game
+                Game Logs
               </span>
             </Box>
             <Box className="d-flex align-items-center">
@@ -231,7 +231,7 @@ export default function Navbar() {
                   navigate(`/FAQ`);
                 }}
               >
-                FAQ
+                FAQs
               </span>
             </Box>
           </Box>
