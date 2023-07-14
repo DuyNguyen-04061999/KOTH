@@ -87,7 +87,7 @@ export default function SelectRoom() {
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
-  const [startGame, setStartGame] = useState(true);
+  const [startGame, setStartGame] = useState(false);
   const [continueGame, setContinueGame] = useState(false);
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -118,7 +118,7 @@ export default function SelectRoom() {
     }
   }, [token, socket, detailGame, dispatch]);
 
-  console.log("Orientation: ",orientation);
+  console.log("Orientation: ", orientation);
 
   useEffect(() => {
     function checkIsFavorite() {
@@ -540,10 +540,6 @@ export default function SelectRoom() {
           return [...prevState];
         }
       });
-      // if (localStorage.getItem("IDRoom") && localStorage.getItem("IDRoom")) {
-      //   localStorage.removeItem("IDRoom");
-      //   localStorage.removeItem("GameID");
-      // }
     });
   });
 
@@ -654,8 +650,7 @@ export default function SelectRoom() {
                 height:"100%"
               }}>
               <FullScreen handle={screen} onChange={reportChange}>
-              {/* startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && */}
-              { (
+              { startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && (
                 <Fragment>
                   <UnityGameComponent
                     GameFiles={detailGame?.GameFiles}
@@ -773,55 +768,55 @@ export default function SelectRoom() {
                  </span>
                        </Box>
                        <Box
-                 component={"img"}
-                 onClick={() => {
-                   if (fGame) {
-                     socket?.emit("deleteFavoriteGame", {
-                       id: detailGame?.id,
-                     });
-                     setFGame(false);
-                   } else {
-                     socket?.emit("addFavoriteGame", { id: detailGame?.id });
-                     setFGame(true);
-                   }
-                 }}
-                 sx={{
-                   width: width < 576 ? width / 20 : width / 68,
-                   height: width < 576 ? width / 20 : width / 68,
-                   marginLeft: width < 576 ? "30px" : "30px",
-                 }}
-                 className="cursor-pointer"
-                 src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
-                 alt="..."
+                        component={"img"}
+                        onClick={() => {
+                          if (fGame) {
+                            socket?.emit("deleteFavoriteGame", {
+                              id: detailGame?.id,
+                            });
+                            setFGame(false);
+                          } else {
+                            socket?.emit("addFavoriteGame", { id: detailGame?.id });
+                            setFGame(true);
+                          }
+                        }}
+                        sx={{
+                          width: width < 576 ? width / 20 : width / 68,
+                          height: width < 576 ? width / 20 : width / 68,
+                          marginLeft: width < 576 ? "30px" : "30px",
+                        }}
+                        className="cursor-pointer"
+                        src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
+                        alt="..."
                        ></Box>
                        {expand === false ? (
-                 <img
-                   alt=".."
-                   width={width < 576 ? width / 20 : width / 68}
-                   style={{
-                     marginLeft: width < 576 ? "20px" : "30px",
-                     cursor: "pointer",
-                   }}
-                   onClick={() =>{ 
-                     setExpand(true);
-                     screen.enter();
-                   }}
-                   src={images.expandIcon}
-                 />
+                          <img
+                            alt=".."
+                            width={width < 576 ? width / 20 : width / 68}
+                            style={{
+                              marginLeft: width < 576 ? "20px" : "30px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>{ 
+                              setExpand(true);
+                              screen.enter();
+                            }}
+                            src={images.expandIcon}
+                          />
                        ) : (
-                 <img
-                   alt=".."
-                   width={width < 576 ? width / 20 : width / 68}
-                   style={{
-                     marginLeft: width < 576 ? "20px" : "30px",
-                     cursor: "pointer",
-             }}
-             onClick={() =>{ 
-               setExpand(false);
-               screen.exit();
-             }}
-             src={images.ZoomInIcon}
-           />
+                      <img
+                          alt=".."
+                          width={width < 576 ? width / 20 : width / 68}
+                          style={{
+                            marginLeft: width < 576 ? "20px" : "30px",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>{ 
+                            setExpand(false);
+                            screen.exit();
+                          }}
+                          src={images.ZoomInIcon}
+                        />
                  )}
                   </Box>
               </>
@@ -1349,7 +1344,7 @@ export default function SelectRoom() {
                   <MenuItem sx={{width:parseFloat(width/1.45),display:"flex",flexDirection:"column",alignItems:"flex-start"}}>
                     <Typography sx={{fontSize:getFontSizeDependOnWidth(width),color:"white",marginLeft:"0px !important"}}>Bet Amount</Typography>
                     <Box sx={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center"}}>{filterArray?.map((item,index)=>{
-                      return <Box  onClick={()=>handleOnclickItemFilter(item)} sx={{cursor:"pointer",backgroundColor:itemFilter?.includes(JSON.stringify(item))?"#a34dfe":"#7649cd",color:itemFilter?.includes(JSON.stringify(item))?"white":"#7a7fef",fontWeight:"bolder",fontSize:getFontSizeDependOnWidth(width),marginRight:"4px",borderRadius:"5px",padding:"4px 7px",display:"flex",alignItems:"center"}}><img alt="..." style={{width:"10px",marginRight:"3px"}} src={images.goldIcon}/>{item===0?"Free":item}</Box>
+                      return <Box key={index} onClick={()=>handleOnclickItemFilter(item)} sx={{cursor:"pointer",backgroundColor:itemFilter?.includes(JSON.stringify(item))?"#a34dfe":"#7649cd",color:itemFilter?.includes(JSON.stringify(item))?"white":"#7a7fef",fontWeight:"bolder",fontSize:getFontSizeDependOnWidth(width),marginRight:"4px",borderRadius:"5px",padding:"4px 7px",display:"flex",alignItems:"center"}}><img alt="..." style={{width:"10px",marginRight:"3px"}} src={images.goldIcon}/>{item===0?"Free":item}</Box>
                     })}</Box>
                   </MenuItem>
                   </Menu>  
@@ -1377,11 +1372,11 @@ export default function SelectRoom() {
                           {!check ? (
                             <img
                               onClick={() => setCheck(!check)}
-                      alt="..."
-                      height="22px"
-                      width="22px"
-                      style={{ cursor: "pointer" }}
-                      src={images.UnCheck}
+                              alt="..."
+                              height="22px"
+                              width="22px"
+                              style={{ cursor: "pointer" }}
+                              src={images.UnCheck}
                     />
                   ) : (
                     <img
