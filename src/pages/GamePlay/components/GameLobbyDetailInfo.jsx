@@ -310,6 +310,7 @@ export default function GameLobbyDetailInfo() {
             ></Box>
           </Box>
           <button
+            className="button"
             onClick={() => navigate("/selectroom/" + detailGame?.id)}
             style={{
               border: "none",
@@ -322,9 +323,13 @@ export default function GameLobbyDetailInfo() {
               fontSize: getFontSizeDependOnWidth(width),
               cursor: "pointer",
               fontWeight: "bolder",
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center"
             }}
           >
             PLAY NOW
+            <div className="arrow ms-2">››</div>
           </button>
         </div>
       </Box>

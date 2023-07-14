@@ -623,7 +623,7 @@ export default function Dialoglg() {
                           alt="..."
                           width={10}
                           height={10}
-                          style={{marginRight:"5px"}}
+                          style={{ marginRight: "5px" }}
                         />
                         <span>Doge Gold</span>
                       </div>
@@ -655,8 +655,7 @@ export default function Dialoglg() {
                     padding: "9px 22px",
                     borderRadius: "5px",
                     cursor: "pointer",
-                    backgroundImage:
-                      "linear-gradient( #7548ed , #893bf1)",
+                    backgroundImage: "linear-gradient( #7548ed , #893bf1)",
                   }}
                   onClick={() => {
                     if (!token) {
@@ -670,7 +669,7 @@ export default function Dialoglg() {
                     style={{ marginRight: "6px" }}
                     className="fa-solid fa-wallet"
                   ></i>
-                  <span style={{fontSize:"13px"}}>Wallet</span>
+                  <span style={{ fontSize: "13px" }}>Wallet</span>
                 </div>
               )}
               {width && width > 576 ? (
@@ -706,7 +705,7 @@ export default function Dialoglg() {
                     src={images.undefinedAvatar}
                     height={40}
                     width={40}
-                    className="ava-signin"
+                    className="ava-signin ms-2 me-2"
                   />
                 ) : (
                   <img
@@ -721,7 +720,7 @@ export default function Dialoglg() {
                     }
                     height={40}
                     width={40}
-                    className="ava-signin"
+                    className="ava-signin ms-2 me-2"
                   />
                 )}
               </Dropdown.Toggle>

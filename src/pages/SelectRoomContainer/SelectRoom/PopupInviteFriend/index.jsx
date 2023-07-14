@@ -16,15 +16,18 @@ export default function PopupInviteFriend({ roomIdSelect }) {
   const [socket, setSocket] = useState(null);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
   useEffect(() => {
     socket?.on(`inviteGameInRoom${roomIdSelect}Success`, (data) => {
-      console.log("Data: ", data);
+      
     });
   }, [socket, roomIdSelect]);
+  
   const handleOnClickCheck = (id) => {
     if (!userIds?.includes(id)) {
       setUserIds([...userIds, id]);

@@ -109,13 +109,22 @@ export default function DialogProfile(props) {
                 cursor: "pointer",
               }}
             >
-              <img
+              <button
+                className="edit-button"
+                onClick={() => {
+                  setTab(1);
+                }}
+              >
+                <i class="fa-sharp fa-solid fa-pen edit-svgIcon"></i>
+              </button>
+
+              {/* <img
                 src={images.editbutton}
                 alt=""
                 onClick={() => {
                   setTab(1);
                 }}
-              />
+              /> */}
             </Box>
           )}
         </Box>
@@ -124,7 +133,11 @@ export default function DialogProfile(props) {
             <Box className="Iduser d-flex flex-column align-items-start mb-3">
               <Typography
                 variant="inherit"
-                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
+                sx={{
+                  color: "#757ae5",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
               >
                 User ID
               </Typography>
@@ -164,7 +177,7 @@ export default function DialogProfile(props) {
                       color: "#fff",
                     },
                     color: "#fff",
-                    fontWeight:"700"
+                    fontWeight: "700",
                   }}
                 />
               </FormControl>
@@ -174,7 +187,11 @@ export default function DialogProfile(props) {
                 <Box className="Email d-flex flex-column align-items-start mb-3">
                   <Typography
                     variant="inherit"
-                    sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
+                    sx={{
+                      color: "#757ae5",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
                   >
                     Email Address
                   </Typography>
@@ -208,7 +225,7 @@ export default function DialogProfile(props) {
                           border: "none",
                         },
                         color: "white",
-                        fontWeight:"700"
+                        fontWeight: "700",
                       }}
                     />
                   </FormControl>
@@ -216,7 +233,11 @@ export default function DialogProfile(props) {
                 <Box className="mobile-number d-flex flex-column align-items-start mb-3">
                   <Typography
                     variant="inherit"
-                    sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
+                    sx={{
+                      color: "#757ae5",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
                   >
                     Mobile Number
                   </Typography>
@@ -252,7 +273,7 @@ export default function DialogProfile(props) {
                           border: "none",
                         },
                         color: "white",
-                        fontWeight:"700"
+                        fontWeight: "700",
                       }}
                     />
                   </FormControl>
@@ -263,7 +284,11 @@ export default function DialogProfile(props) {
                 >
                   <Typography
                     variant="inherit"
-                    sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
+                    sx={{
+                      color: "#757ae5",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
                   >
                     Ref Code
                   </Typography>
@@ -302,7 +327,7 @@ export default function DialogProfile(props) {
                         },
                         color: "#fff",
                         marginLeft: "10px",
-                        fontWeight:"700"
+                        fontWeight: "700",
                       }}
                     />
                     <Box>
