@@ -24,6 +24,8 @@ import Paper from "@mui/material/Paper";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { formatMoney } from "../../../utils/helper";
 import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 
 export default function Home() {
   const { width } = useWindowDimensions();
@@ -43,7 +45,7 @@ export default function Home() {
 
   const navigate = useNavigate();
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -83,7 +85,7 @@ export default function Home() {
               paddingRight: "90px !important",
             }}
           >
-            <Box className="video-desktop">
+            <Box sx={{ position: "relative" }} className="video-desktop">
               <video
                 width={"100%"}
                 // height={"300px"}
@@ -92,10 +94,36 @@ export default function Home() {
                 playsInline
                 loop
                 muted
-                style={{ paddingLeft: "15px", paddingRight: "15px",marginTop:"50px" }}
+                style={{
+                  paddingLeft: "15px",
+                  paddingRight: "15px",
+                  marginTop: "50px",
+                }}
               >
                 <source src={images280423_l.bannerVideo} type="video/webm" />
               </video>
+              <button
+                onClick={() => {
+                  if (!token) {
+                    dispatch(toggleLoginDialog());
+                  } else {
+                    dispatch(toggleWalletDialog());
+                  }
+                }}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  background: "linear-gradient(#6844de,#8c39ff)",
+                  color: "white",
+                  borderRadius: "5px",
+                  position: "absolute",
+                  left: "68px",
+                  bottom: "39px",
+                  padding: "15px 30px",
+                }}
+              >
+                Deposit & Play
+              </button>
             </Box>
             <Box className="banner-top">
               <Slider {...settings}>
@@ -277,7 +305,10 @@ export default function Home() {
                 </button>
               </Box>
             </Box>
-            <Box className="leaderboard" style={{paddingLeft: "15px", paddingRight: "15px"}}>
+            <Box
+              className="leaderboard"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+            >
               <TitleHomeDesktopComponent
                 type="ratedGame"
                 title="LEADERBOARD"
@@ -431,7 +462,7 @@ export default function Home() {
                             sx={{
                               borderBottom: "none",
                               color: "#877aa8",
-                              fontSize: "20px",
+                              fontSize: width / 128,
                             }}
                           >
                             Position
@@ -441,7 +472,7 @@ export default function Home() {
                             sx={{
                               borderBottom: "none",
                               color: "#877aa8",
-                              fontSize: "20px",
+                              fontSize: width / 128,
                             }}
                           >
                             Participant
@@ -451,7 +482,7 @@ export default function Home() {
                             sx={{
                               borderBottom: "none",
                               color: "#877aa8",
-                              fontSize: "20px",
+                              fontSize: width / 128,
                             }}
                           >
                             Doge Gold
@@ -472,7 +503,14 @@ export default function Home() {
                               align="center"
                               sx={{
                                 borderBottom: "none",
-                                color: "white",
+                                color:
+                                  index === 0
+                                    ? "#ffcd00"
+                                    : index === 1
+                                    ? "#d5f0ff"
+                                    : index === 2
+                                    ? "#cd986b"
+                                    : "#857cab",
                                 fontSize: "18px",
                               }}
                             >
