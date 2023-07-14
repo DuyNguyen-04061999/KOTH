@@ -49,6 +49,7 @@ import RotateScreen from "../assets/images/RotateScreen.png";
 import ContinueGameButton from "../assets/images/ContinueGameButton.png";
 import eyeIcon from "../assets/images/eyeIcon.png";
 import closeEyefullscreen from "../assets/images/closeEyefullscreen.png";
+import Logo_Text from "../assets/images/Logo_Text.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -242,7 +243,8 @@ export const images = {
   RotateScreen: RotateScreen,
   ContinueGameButton: ContinueGameButton,
   eyeIcon:eyeIcon,
-  closeEyefullscreen:closeEyefullscreen
+  closeEyefullscreen:closeEyefullscreen,
+  Logo_Text:Logo_Text
 };
 
 export const images2 = {

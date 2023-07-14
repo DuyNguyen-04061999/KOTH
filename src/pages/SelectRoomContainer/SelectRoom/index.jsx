@@ -68,21 +68,19 @@ export default function SelectRoom() {
     listLikeGame,
     listDislikeGame,
     inviteFriendDialog,
-    orientation
+    orientation,
   } = useSelector((state) => state.gameReducer);
   const { roomNav } = useSelector((state) => state.roomReducer);
   const [dogeGold, setDogeGold] = useState(0);
   const { token, userName, userId, userGold } = useSelector(
     (state) => state.authReducer
-  ); 
-  const { friendList} = useSelector(
-    (state) => state.chatReducer
   );
+  const { friendList } = useSelector((state) => state.chatReducer);
   const { state } = useLocation();
-  const [listRoom, setListRoom] = useState([]);  
-  const [anchorEl, setAnchorEl] = useState(null);  
+  const [listRoom, setListRoom] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [anchorEl1, setAnchorEl1] = useState(null);  
+  const [anchorEl1, setAnchorEl1] = useState(null);
   const open1 = Boolean(anchorEl1);
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
@@ -99,11 +97,11 @@ export default function SelectRoom() {
   const [check, setCheck] = useState(false);
   const [expand, setExpand] = useState(false);
   const [textContent, setTextContent] = useState("");
-  const [itemFilter,setItemFilter]=useState([""]);
-  const [mouseEnter,setMouseEnter]=useState(false);
+  const [itemFilter, setItemFilter] = useState([""]);
+  const [mouseEnter, setMouseEnter] = useState(false);
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
-  const filterArray=[0,100,200,500];
+  const filterArray = [0, 100, 200, 500];
 
   useEffect(() => {
     const socket = _socket;
@@ -118,7 +116,7 @@ export default function SelectRoom() {
     }
   }, [token, socket, detailGame, dispatch]);
 
-  console.log("Orientation: ",orientation);
+  console.log("Orientation: ", orientation);
 
   useEffect(() => {
     function checkIsFavorite() {
@@ -199,8 +197,8 @@ export default function SelectRoom() {
   const handleClick1 = (event) => {
     setAnchorEl1(event.currentTarget);
   };
-  
-  const handleOnclickItemFilter=(number)=>{
+
+  const handleOnclickItemFilter = (number) => {
     if (!itemFilter?.includes(JSON.stringify(number))) {
       setItemFilter([...itemFilter, JSON.stringify(number)]);
     } else {
@@ -210,15 +208,15 @@ export default function SelectRoom() {
         })
       );
     }
-  }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
-  };  
+  };
 
   const handleClose1 = () => {
     setAnchorEl1(null);
-  };  
+  };
 
   const handleOnClickLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
@@ -485,14 +483,14 @@ export default function SelectRoom() {
           return [...prevState];
         }
       });
-      if(userName === data) {
-        setroomDetailInfo("")
-        setRoomIdSelect(0)
-        dispatch(setSelectNav())
+      if (userName === data) {
+        setroomDetailInfo("");
+        setRoomIdSelect(0);
+        dispatch(setSelectNav());
       }
     });
 
-    socket?.on(`kickOut${detailGame?.id}Success`, (room,roomId) => {
+    socket?.on(`kickOut${detailGame?.id}Success`, (room, roomId) => {
       setListRoom((prevState) => {
         let dt = [...prevState];
         if (checkExistData(roomId, prevState) !== -1) {
@@ -504,10 +502,9 @@ export default function SelectRoom() {
           return [...prevState];
         }
       });
-      if(roomId===roomIdSelect)
-      {
+      if (roomId === roomIdSelect) {
         setroomDetailInfo(room);
-      } 
+      }
     });
     socket?.on(`chatRoom${roomIdSelect}Success`, (data) => {
       setChat((pre) => {
@@ -526,7 +523,16 @@ export default function SelectRoom() {
         window?.location?.reload();
       }
     );
-  }, [socket, detailGame, roomIdSelect, dispatch, userId, userGold, listRoom, userName]);
+  }, [
+    socket,
+    detailGame,
+    roomIdSelect,
+    dispatch,
+    userId,
+    userGold,
+    listRoom,
+    userName,
+  ]);
   useEffect(() => {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
       setListRoom((prevState) => {
@@ -593,7 +599,6 @@ export default function SelectRoom() {
     });
   };
 
-
   useEffect(() => {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
@@ -601,25 +606,26 @@ export default function SelectRoom() {
 
   useEffect(() => {
     const handleEsc = (event) => {
-       if (event.key === 'Escape') {
-        console.log('Close')
+      if (event.key === "Escape") {
+        console.log("Close");
       }
     };
-    window.addEventListener('keydown', handleEsc);
+    window.addEventListener("keydown", handleEsc);
 
     return () => {
-      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener("keydown", handleEsc);
     };
   }, []);
-  const reportChange = useCallback((state, handle) => {
-    if(handle===screen)
-    {
-      if(state===false&&expand===true)
-      {
-        setExpand(false);
+  const reportChange = useCallback(
+    (state, handle) => {
+      if (handle === screen) {
+        if (state === false && expand === true) {
+          setExpand(false);
+        }
       }
-    }
-  }, [screen,expand]);
+    },
+    [screen, expand]
+  );
   return (
     <div className="">
       {width > 576 ? (
@@ -648,190 +654,245 @@ export default function SelectRoom() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-            >           
-              <div style={{
-                width: "100% !important",
-                height:"100%"
-              }}>
-              <FullScreen handle={screen} onChange={reportChange}>
-              {/* startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && */}
-              { (
-                <Fragment>
-                  <UnityGameComponent
-                    GameFiles={detailGame?.GameFiles}
-                    height={expand===false?"100%":"100%"}
-                    width="100%"
-                    roomName={roomDetailInfo?.roomName}
-                    fullScreen={expand}
-                    roomId={roomDetailInfo?.id}
-                  />
-                   {startGame && expand===true && 
-                   <>                 
-                 
-                   <Box                      
-                   className={mouseEnter===false?"showButtonFullScreen":"showButtonFullScreenDis"} 
-                   sx={{
-                     width: "100%",
-                     height: "60px",
-                     boxSizing: "border-box",
-                     position:"absolute",
-                     display:"flex",
-                     backgroundColor: "rgb(46, 40, 68,0.1)",bottom:"0px",
-                     justifyContent:"center",
-                     alignItems:"flex-end"
-                   }}>
-                     <button
-                     style={{width:"70px",height:"50px",border:"none",outline:"none",borderRadius:"40px 40px 0px 0px",display:"flex",justifyContent:"center",alignItems:"center"}}
-                     onClick={()=>setMouseEnter(true)}>
-                      <img alt="..." width="30px" src={images.eyeIcon}/>
-                     </button>
-                </Box>
-                  <Box
-                 className={mouseEnter===true?"navBarFullScreen":"navBarFullScreenDis"}
-                 sx={{
-                   width: "100%",
-                   height: "auto",
-                   boxSizing: "border-box",
-                   padding: "10px 20px",
-                   display: "flex",
-                   justifyContent: "flex-end",
-                   alignItems: "center",
-                   backgroundColor: "rgb(46, 40, 68)",
-                 }}>
-                 <button onClick={()=>setMouseEnter(false)} style={{
-                  border:"none",
-                  outline:"none",
-                  position:"absolute",
-                  padding:"6px 100px",
-                  borderRadius:"10px",
-                  left:"40%",
-                  background:"linear-gradient(#873CF0,#7946EE)",
-                  color:"white",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center"
-                  }}><img width="25px" alt="..." src={images.closeEyefullscreen} style={{marginRight:"5px"}}/>Hide this bar</button>
-                 <Box sx={{ position: "relative" }}>
-                 <Box
-                   component={"img"}
-                   alt="..."
-                   sx={{
-                     width: width < 576 ? width / 20 : width / 68,
-                     height: width < 576 ? width / 20 : width / 68,
-                   }}
-                   onClick={handleOnClickLikeGame}
-                   src={
-                     likeGame === false
-                       ? imagesFavorite.passiveLike
-                       : imagesFavorite.activeLike
-                   }
-                 ></Box>
-                 <span
-                   style={{
-                     color: "#fff",
-                     position: "absolute",
-                     top: "6px",
-                     left: "35px",
-                     fontWeight: "bolder",
-                     fontSize: getFontSizeDependOnWidth(width),
-                   }}
-                 >
-                   {countLikeGame &&
-                     convertToInternationalCurrencySystem(countLikeGame)}
-                 </span>
-                       </Box>
-                       <Box sx={{ position: "relative" }}>
-                 {" "}
-                 <Box
-                   component={"img"}
-                   alt="..."
-                   sx={{
-                     width: width < 576 ? width / 20 : width / 68,
-                     height: width < 576 ? width / 20 : width / 68,
-                     marginLeft: width < 576 ? "30px" : "30px",
-                     marginTop: "7px",
-                   }}
-                   onClick={handleOnClickDisLikeGame}
-                   src={
-                     disLikeGame === false
-                       ? imagesFavorite.passiveDislike
-                       : imagesFavorite.activeDislike
-                   }
-                 ></Box>
-                 <span
-                   style={{
-                     color: "#fff",
-                     position: "absolute",
-                     top: "11px",
-                     right: "-16px",
-                     fontWeight: "bolder",
-                     fontSize: getFontSizeDependOnWidth(width),
-                   }}
-                 >
-                   {countDisLikeGame &&
-                     convertToInternationalCurrencySystem(countDisLikeGame)}
-                 </span>
-                       </Box>
-                       <Box
-                 component={"img"}
-                 onClick={() => {
-                   if (fGame) {
-                     socket?.emit("deleteFavoriteGame", {
-                       id: detailGame?.id,
-                     });
-                     setFGame(false);
-                   } else {
-                     socket?.emit("addFavoriteGame", { id: detailGame?.id });
-                     setFGame(true);
-                   }
-                 }}
-                 sx={{
-                   width: width < 576 ? width / 20 : width / 68,
-                   height: width < 576 ? width / 20 : width / 68,
-                   marginLeft: width < 576 ? "30px" : "30px",
-                 }}
-                 className="cursor-pointer"
-                 src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
-                 alt="..."
-                       ></Box>
-                       {expand === false ? (
-                 <img
-                   alt=".."
-                   width={width < 576 ? width / 20 : width / 68}
-                   style={{
-                     marginLeft: width < 576 ? "20px" : "30px",
-                     cursor: "pointer",
-                   }}
-                   onClick={() =>{ 
-                     setExpand(true);
-                     screen.enter();
-                   }}
-                   src={images.expandIcon}
-                 />
-                       ) : (
-                 <img
-                   alt=".."
-                   width={width < 576 ? width / 20 : width / 68}
-                   style={{
-                     marginLeft: width < 576 ? "20px" : "30px",
-                     cursor: "pointer",
-             }}
-             onClick={() =>{ 
-               setExpand(false);
-               screen.exit();
-             }}
-             src={images.ZoomInIcon}
-           />
-                 )}
-                  </Box>
-              </>
-    }
-                </Fragment>
-              )} 
-              </FullScreen>
+            >
+              <div
+                style={{
+                  width: "100% !important",
+                  height: "100%",
+                }}
+              >
+                <FullScreen handle={screen} onChange={reportChange}>
+                  {/* startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && */}
+                  {
+                    <Fragment>
+                      <UnityGameComponent
+                        GameFiles={detailGame?.GameFiles}
+                        height={expand === false ? "100%" : "100%"}
+                        width="100%"
+                        roomName={roomDetailInfo?.roomName}
+                        fullScreen={expand}
+                        roomId={roomDetailInfo?.id}
+                      />
+                      {startGame && expand === true && (
+                        <>
+                          <Box
+                            className={
+                              mouseEnter === false
+                                ? "showButtonFullScreen"
+                                : "showButtonFullScreenDis"
+                            }
+                            sx={{
+                              width: "100%",
+                              height: "60px",
+                              boxSizing: "border-box",
+                              position: "absolute",
+                              display: "flex",
+                              backgroundColor: "rgb(46, 40, 68,0.1)",
+                              bottom: "0px",
+                              justifyContent: "center",
+                              alignItems: "flex-end",
+                            }}
+                          >
+                            <button
+                              style={{
+                                width: "70px",
+                                height: "50px",
+                                border: "none",
+                                outline: "none",
+                                borderRadius: "40px 40px 0px 0px",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                              onClick={() => setMouseEnter(true)}
+                            >
+                              <img
+                                alt="..."
+                                width="30px"
+                                src={images.eyeIcon}
+                              />
+                            </button>
+                          </Box>
+                          <Box
+                            className={
+                              mouseEnter === true
+                                ? "navBarFullScreen"
+                                : "navBarFullScreenDis"
+                            }
+                            sx={{
+                              width: "100%",
+                              height: "auto",
+                              boxSizing: "border-box",
+                              padding: "10px 20px",
+                              display: "flex",
+                              justifyContent: "flex-end",
+                              alignItems: "center",
+                              backgroundColor: "rgb(46, 40, 68)",
+                            }}
+                          >
+                            <img
+                              style={{
+                                position: "absolute",
+                                left: "50px",
+                              }}
+                              width="150px"
+                              alt="..."
+                              src={images.Logo_Text}
+                            />
+                            <button
+                              onClick={() => setMouseEnter(false)}
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                position: "absolute",
+                                padding: "6px 50px",
+                                borderRadius: "10px",
+                                left: "45%",
+                                background: "linear-gradient(#873CF0,#7946EE)",
+                                color: "white",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <img
+                                width="25px"
+                                alt="..."
+                                src={images.closeEyefullscreen}
+                                style={{ marginRight: "5px" }}
+                              />
+                              Hide this bar
+                            </button>
+                            <Box sx={{ position: "relative" }}>
+                              <Box
+                                component={"img"}
+                                alt="..."
+                                sx={{
+                                  width: width < 576 ? width / 20 : width / 68,
+                                  height: width < 576 ? width / 20 : width / 68,
+                                }}
+                                onClick={handleOnClickLikeGame}
+                                src={
+                                  likeGame === false
+                                    ? imagesFavorite.passiveLike
+                                    : imagesFavorite.activeLike
+                                }
+                              ></Box>
+                              <span
+                                style={{
+                                  color: "#fff",
+                                  position: "absolute",
+                                  top: "6px",
+                                  left: "35px",
+                                  fontWeight: "bolder",
+                                  fontSize: getFontSizeDependOnWidth(width),
+                                }}
+                              >
+                                {countLikeGame &&
+                                  convertToInternationalCurrencySystem(
+                                    countLikeGame
+                                  )}
+                              </span>
+                            </Box>
+                            <Box sx={{ position: "relative" }}>
+                              <Box
+                                component={"img"}
+                                alt="..."
+                                sx={{
+                                  width: width < 576 ? width / 20 : width / 68,
+                                  height: width < 576 ? width / 20 : width / 68,
+                                  marginLeft: width < 576 ? "30px" : "30px",
+                                  marginTop: "7px",
+                                }}
+                                onClick={handleOnClickDisLikeGame}
+                                src={
+                                  disLikeGame === false
+                                    ? imagesFavorite.passiveDislike
+                                    : imagesFavorite.activeDislike
+                                }
+                              ></Box>
+                              <span
+                                style={{
+                                  color: "#fff",
+                                  position: "absolute",
+                                  top: "11px",
+                                  right: "-16px",
+                                  fontWeight: "bolder",
+                                  fontSize: getFontSizeDependOnWidth(width),
+                                }}
+                              >
+                                {countDisLikeGame &&
+                                  convertToInternationalCurrencySystem(
+                                    countDisLikeGame
+                                  )}
+                              </span>
+                            </Box>
+                            <Box
+                              component={"img"}
+                              onClick={() => {
+                                if (fGame) {
+                                  socket?.emit("deleteFavoriteGame", {
+                                    id: detailGame?.id,
+                                  });
+                                  setFGame(false);
+                                } else {
+                                  socket?.emit("addFavoriteGame", {
+                                    id: detailGame?.id,
+                                  });
+                                  setFGame(true);
+                                }
+                              }}
+                              sx={{
+                                width: width < 576 ? width / 20 : width / 68,
+                                height: width < 576 ? width / 20 : width / 68,
+                                marginLeft: width < 576 ? "30px" : "30px",
+                              }}
+                              className="cursor-pointer"
+                              src={
+                                fGame
+                                  ? imagesFavorite.like
+                                  : imagesFavorite.unlike
+                              }
+                              alt="..."
+                            ></Box>
+                            {expand === false ? (
+                              <img
+                                alt=".."
+                                width={width < 576 ? width / 20 : width / 68}
+                                style={{
+                                  marginLeft: width < 576 ? "20px" : "30px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  setExpand(true);
+                                  screen.enter();
+                                }}
+                                src={images.expandIcon}
+                              />
+                            ) : (
+                              <img
+                                alt="..."
+                                width={width < 576 ? width / 20 : width / 68}
+                                style={{
+                                  marginLeft: width < 576 ? "20px" : "30px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  setExpand(false);
+                                  screen.exit();
+                                }}
+                                src={images.ZoomInIcon}
+                              />
+                            )}
+                          </Box>
+                        </>
+                      )}
+                    </Fragment>
+                  }
+                </FullScreen>
               </div>
             </Box>
-              {startGame && expand===false && (
+            {startGame && expand === false && (
               <Box
                 sx={{
                   width: "100%",
@@ -842,8 +903,14 @@ export default function SelectRoom() {
                   justifyContent: "flex-end",
                   alignItems: "center",
                   backgroundColor: "#2e2844",
+                  position: "relative",
                 }}
               >
+                <img
+                  style={{ width: "120px", position: "absolute", left: "20px" }}
+                  alt="..."
+                  src={images.Logo_Text}
+                />
                 <Box sx={{ position: "relative" }}>
                   <Box
                     component={"img"}
@@ -935,7 +1002,7 @@ export default function SelectRoom() {
                       marginLeft: width < 576 ? "20px" : "30px",
                       cursor: "pointer",
                     }}
-                    onClick={() =>{ 
+                    onClick={() => {
                       setExpand(true);
                       screen.enter();
                     }}
@@ -980,8 +1047,7 @@ export default function SelectRoom() {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              >
-              </Box>
+              ></Box>
             </Box>
             <Box
               onClick={() => {
@@ -1239,10 +1305,10 @@ export default function SelectRoom() {
                       borderRadius: "5px",
                       color: "#fff",
                       fontWeight: "640",
-                      backgroundImage: "linear-gradient(#893af1,#7548ed)",    
-                      display:"flex",
-                      alignItems:"center",
-                      justifyContent:"center",
+                      backgroundImage: "linear-gradient(#893af1,#7548ed)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     <span style={{ fontSize: getFontSizeDependOnWidth(width) }}>
@@ -1264,9 +1330,9 @@ export default function SelectRoom() {
                       border: "none",
                       outline: "none",
                       borderRadius: "5px",
-                      display:"flex",
-                      alignItems:"center",
-                      justifyContent:"center",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                       color: "#fff",
                       fontWeight: "640",
                       backgroundImage: "linear-gradient(#893af1,#7548ed)",
@@ -1297,86 +1363,175 @@ export default function SelectRoom() {
                   position: "relative",
                 }}
               >
-                {width>576?<Box sx={{
-                  width:"50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  
-                }}
-                >
-                    {filterArray?.map((item,index)=>{
-                      return <Box key={index} onClick={()=>handleOnclickItemFilter(item)} sx={{cursor:"pointer",display:"flex",alignItems:"center",width:"100px",height:"36px",backgroundColor:itemFilter?.includes(JSON.stringify(item))?"#a34dfe":"#7649cd",color:itemFilter?.includes(JSON.stringify(item))?"white":"#7a7fef",justifyContent:"center",borderRadius:"4px",marginRight:"10px"}}>
-                      <img src={images.goldIcon} alt="..." style={{width:"16px",marginRight:"7px"}}/>
-                      <span>{item===0?"Free":item}</span>
-                    </Box>
+                {width > 576 ? (
+                  <Box
+                    sx={{
+                      width: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    {filterArray?.map((item, index) => {
+                      return (
+                        <Box
+                          key={index}
+                          onClick={() => handleOnclickItemFilter(item)}
+                          sx={{
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100px",
+                            height: "36px",
+                            backgroundColor: itemFilter?.includes(
+                              JSON.stringify(item)
+                            )
+                              ? "#a34dfe"
+                              : "#7649cd",
+                            color: itemFilter?.includes(JSON.stringify(item))
+                              ? "white"
+                              : "#7a7fef",
+                            justifyContent: "center",
+                            borderRadius: "4px",
+                            marginRight: "10px",
+                          }}
+                        >
+                          <img
+                            src={images.goldIcon}
+                            alt="..."
+                            style={{ width: "16px", marginRight: "7px" }}
+                          />
+                          <span>{item === 0 ? "Free" : item}</span>
+                        </Box>
+                      );
                     })}
-                </Box>:
-                <Box sx={{
-                  width:"50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  
-                }}>
-                  <button
-                  onClick={(e)=>handleClick(e)} 
-                  style={{ 
-                      padding: width < 576 ? "0px 0px" : "10px 20px",
-                      width: width < 576 ? width / 4.5 : "none",
-                      height: width < 576 ? "30px" : "none",
-                      border: "none",
-                      outline: "none",
-                      borderRadius: "5px",
-                      color: "#fff",
-                      backgroundImage: "linear-gradient(#893af1,#7548ed)",    
-                      display:"flex",
-                      alignItems:"center",
-                      justifyContent:"center",
-                      fontSize:getFontSizeButtonDependOnWidth(width)}}>
-                        Filters
-                  </button>
-                  <Menu
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      width: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <button
+                      onClick={(e) => handleClick(e)}
+                      style={{
+                        padding: width < 576 ? "0px 0px" : "10px 20px",
+                        width: width < 576 ? width / 4.5 : "none",
+                        height: width < 576 ? "30px" : "none",
+                        border: "none",
+                        outline: "none",
+                        borderRadius: "5px",
+                        color: "#fff",
+                        backgroundImage: "linear-gradient(#893af1,#7548ed)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: getFontSizeButtonDependOnWidth(width),
+                      }}
+                    >
+                      Filters
+                    </button>
+                    <Menu
                       id="basic-menu"
                       anchorEl={anchorEl}
                       open={open}
                       onClose={handleClose}
-                      disableScrollLock={true}          
+                      disableScrollLock={true}
                       sx={{
-                        ".MuiMenu-paper": { backgroundColor: "#4e378a !important",marginTop:"4px !important",marginLeft:"-4px !important" },
+                        ".MuiMenu-paper": {
+                          backgroundColor: "#4e378a !important",
+                          marginTop: "4px !important",
+                          marginLeft: "-4px !important",
+                        },
                       }}
-                  >
-                  <MenuItem sx={{width:parseFloat(width/1.45),display:"flex",flexDirection:"column",alignItems:"flex-start"}}>
-                    <Typography sx={{fontSize:getFontSizeDependOnWidth(width),color:"white",marginLeft:"0px !important"}}>Bet Amount</Typography>
-                    <Box sx={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center"}}>{filterArray?.map((item,index)=>{
-                      return <Box  onClick={()=>handleOnclickItemFilter(item)} sx={{cursor:"pointer",backgroundColor:itemFilter?.includes(JSON.stringify(item))?"#a34dfe":"#7649cd",color:itemFilter?.includes(JSON.stringify(item))?"white":"#7a7fef",fontWeight:"bolder",fontSize:getFontSizeDependOnWidth(width),marginRight:"4px",borderRadius:"5px",padding:"4px 7px",display:"flex",alignItems:"center"}}><img alt="..." style={{width:"10px",marginRight:"3px"}} src={images.goldIcon}/>{item===0?"Free":item}</Box>
-                    })}</Box>
-                  </MenuItem>
-                  </Menu>  
-                
-
-                        </Box>
-                        }
-                        <Box
+                    >
+                      <MenuItem
+                        sx={{
+                          width: parseFloat(width / 1.45),
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <Typography
                           sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "50%",
-                            justifyContent: "flex-end",
+                            fontSize: getFontSizeDependOnWidth(width),
+                            color: "white",
+                            marginLeft: "0px !important",
                           }}
                         >
-                          <p
-                            style={{
-                              color: "#7c81f3",
-                              marginRight: "5px",
-                              fontSize: getFontSizeDependOnWidth(width),
-                            }}
-                          >
-                            Only show open rooms
-                          </p>
-                          {!check ? (
-                            <img
-                              onClick={() => setCheck(!check)}
+                          Bet Amount
+                        </Typography>
+                        <Box
+                          sx={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          {filterArray?.map((item, index) => {
+                            return (
+                              <Box
+                                onClick={() => handleOnclickItemFilter(item)}
+                                sx={{
+                                  cursor: "pointer",
+                                  backgroundColor: itemFilter?.includes(
+                                    JSON.stringify(item)
+                                  )
+                                    ? "#a34dfe"
+                                    : "#7649cd",
+                                  color: itemFilter?.includes(
+                                    JSON.stringify(item)
+                                  )
+                                    ? "white"
+                                    : "#7a7fef",
+                                  fontWeight: "bolder",
+                                  fontSize: getFontSizeDependOnWidth(width),
+                                  marginRight: "4px",
+                                  borderRadius: "5px",
+                                  padding: "4px 7px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <img
+                                  alt="..."
+                                  style={{ width: "10px", marginRight: "3px" }}
+                                  src={images.goldIcon}
+                                />
+                                {item === 0 ? "Free" : item}
+                              </Box>
+                            );
+                          })}
+                        </Box>
+                      </MenuItem>
+                    </Menu>
+                  </Box>
+                )}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "50%",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <p
+                    style={{
+                      color: "#7c81f3",
+                      marginRight: "5px",
+                      fontSize: getFontSizeDependOnWidth(width),
+                    }}
+                  >
+                    Only show open rooms
+                  </p>
+                  {!check ? (
+                    <img
+                      onClick={() => setCheck(!check)}
                       alt="..."
                       height="22px"
                       width="22px"
@@ -1406,16 +1561,14 @@ export default function SelectRoom() {
                   boxSizing: "border-box",
                 }}
               >
-                {listRoom?.filter(n=>{
-                  if(itemFilter?.length>1)
-                  {
-                    return itemFilter?.includes(JSON.stringify(n?.roomBet));
-                  }
-                  else
-                  {
-                    return n;
-                  }
-                })
+                {listRoom
+                  ?.filter((n) => {
+                    if (itemFilter?.length > 1) {
+                      return itemFilter?.includes(JSON.stringify(n?.roomBet));
+                    } else {
+                      return n;
+                    }
+                  })
                   ?.filter((item) => {
                     if (betAmount) {
                       return Number(item?.roomBet) === Number(betAmount);
@@ -1882,7 +2035,7 @@ export default function SelectRoom() {
           ) : width > 576 ? (
             <div className="container">
               <PopupInviteFriend roomIdSelect={roomIdSelect} />
-    
+
               <Box
                 sx={{
                   width: "100%",
@@ -1973,7 +2126,7 @@ export default function SelectRoom() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      position:"relative"
+                      position: "relative",
                     }}
                   >
                     <Box
@@ -2022,16 +2175,15 @@ export default function SelectRoom() {
                           color: "#757ae5",
                           fontWeight: "650",
                           marginTop: "9px",
-                          display:"flex",
-                          justifyContent:"center",
-                          alignItems:"center"
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
                         <img
                           style={{
                             width: "20px",
                             marginRight: "3px",
-                          
                           }}
                           alt="..."
                           src={images.CupIcon}
@@ -2054,8 +2206,8 @@ export default function SelectRoom() {
                         textAlign: "center",
                         fontWeight: "bolder",
                         fontSize: "50px",
-                        marginLeft:"30px",
-                        marginRight:"30px"
+                        marginLeft: "30px",
+                        marginRight: "30px",
                       }}
                     >
                       VS
@@ -2070,115 +2222,139 @@ export default function SelectRoom() {
                           position: "relative",
                           justifyContent: "center",
                         }}
-                      >          
-                      <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl1}
-                      open={open1}
-                      onClose={handleClose1}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
-                      disableScrollLock={true}
-                      sx={{
-                        ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
-                      }}
-                  >
-                    <MenuItem
-                      onClick={() => {
-                        dispatch(toggleProfileDialog(true));
-                      }}
-                      sx={{
-                        padding: "5px",
-                      }}
-                    >
-                    <Box 
-                      onClick={()=>{
-                        socket.emit("getDetailProfile", {
-                        username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
-                      });}}
-                      className="p-1 text-white"
-                      sx={{
-                        background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                        width: "100%",
-                        fontWeight: "bold",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      <AddFriendIcon className="me-1 pb-1" />
-                      <span>View Profile</span>
-                    </Box>
-                  </MenuItem>
-                    <MenuItem
-                      sx={{
-                        padding: "5px",
-                      }}
-                    >
-                    <Box 
-                      onClick={()=>{
-                        socket.emit("kickOutRoom", {
-                        username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
-                        roomId:roomIdSelect,
-                        gameId:detailGame?.id
-                      });
-                    }}
-                      className="p-1 text-white"
-                      sx={{
-                        background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                        width: "100%",
-                        fontWeight: "bold",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      <AddFriendIcon className="me-1 pb-1" />
-                      <span>Kick out</span>
-                    </Box>
-                  </MenuItem>
-                  {checkExistInFriendList(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name)===true?                      
-                  <MenuItem
-                        sx={{
-                          padding: "5px",
-                        }}
                       >
-                        <Box
-
-                          onClick={()=>{
-                            socket.emit("deleteFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
+                        <Menu
+                          id="basic-menu"
+                          anchorEl={anchorEl1}
+                          open={open1}
+                          onClose={handleClose1}
+                          MenuListProps={{
+                            "aria-labelledby": "basic-button",
                           }}
-                          className="p-1 text-white"
+                          disableScrollLock={true}
                           sx={{
-                            background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                            width: "100%",
-                            fontWeight: "bold",
-                            borderRadius: "4px",
+                            ".MuiMenu-paper": {
+                              backgroundColor: "#2d224a !important",
+                            },
                           }}
                         >
-                          <DeleteFriendIcon className=" pb-1" />
-                          <span> Delete Friend</span>
-                        </Box>
-                      </MenuItem>:
-                      <MenuItem
-                        sx={{
-                          padding: "5px",
-                        }}
-                      >
-                        <Box
-                          onClick={()=>{
-                            socket.emit("addFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
-                          }}
-                          className="p-1 text-white"
-                          sx={{
-                            background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                            width: "100%",
-                            fontWeight: "bold",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          <AddFriendIcon className="me-2 pb-1" />
-                          Add Friend
-                        </Box>
-                      </MenuItem>}
-                      </Menu>
+                          <MenuItem
+                            onClick={() => {
+                              dispatch(toggleProfileDialog(true));
+                            }}
+                            sx={{
+                              padding: "5px",
+                            }}
+                          >
+                            <Box
+                              onClick={() => {
+                                socket.emit("getDetailProfile", {
+                                  username: getClient(
+                                    JSON?.parse(roomDetailInfo?.membersInRoom)
+                                  )?.name,
+                                });
+                              }}
+                              className="p-1 text-white"
+                              sx={{
+                                background:
+                                  "linear-gradient(180deg, #843ff0, #7748ed)",
+                                width: "100%",
+                                fontWeight: "bold",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              <AddFriendIcon className="me-1 pb-1" />
+                              <span>View Profile</span>
+                            </Box>
+                          </MenuItem>
+                          <MenuItem
+                            sx={{
+                              padding: "5px",
+                            }}
+                          >
+                            <Box
+                              onClick={() => {
+                                socket.emit("kickOutRoom", {
+                                  username: getClient(
+                                    JSON?.parse(roomDetailInfo?.membersInRoom)
+                                  )?.name,
+                                  roomId: roomIdSelect,
+                                  gameId: detailGame?.id,
+                                });
+                              }}
+                              className="p-1 text-white"
+                              sx={{
+                                background:
+                                  "linear-gradient(180deg, #843ff0, #7748ed)",
+                                width: "100%",
+                                fontWeight: "bold",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              <AddFriendIcon className="me-1 pb-1" />
+                              <span>Kick out</span>
+                            </Box>
+                          </MenuItem>
+                          {checkExistInFriendList(
+                            getClient(
+                              JSON?.parse(roomDetailInfo?.membersInRoom)
+                            )?.name
+                          ) === true ? (
+                            <MenuItem
+                              sx={{
+                                padding: "5px",
+                              }}
+                            >
+                              <Box
+                                onClick={() => {
+                                  socket.emit("deleteFriend", {
+                                    username: getClient(
+                                      JSON?.parse(roomDetailInfo?.membersInRoom)
+                                    )?.name,
+                                  });
+                                }}
+                                className="p-1 text-white"
+                                sx={{
+                                  background:
+                                    "linear-gradient(180deg, #843ff0, #7748ed)",
+                                  width: "100%",
+                                  fontWeight: "bold",
+                                  borderRadius: "4px",
+                                }}
+                              >
+                                <DeleteFriendIcon className=" pb-1" />
+                                <span> Delete Friend</span>
+                              </Box>
+                            </MenuItem>
+                          ) : (
+                            <MenuItem
+                              sx={{
+                                padding: "5px",
+                              }}
+                            >
+                              <Box
+                                onClick={() => {
+                                  socket.emit("addFriend", {
+                                    username: getClient(
+                                      JSON?.parse(roomDetailInfo?.membersInRoom)
+                                    )?.name,
+                                  });
+                                }}
+                                className="p-1 text-white"
+                                sx={{
+                                  background:
+                                    "linear-gradient(180deg, #843ff0, #7748ed)",
+                                  width: "100%",
+                                  fontWeight: "bold",
+                                  borderRadius: "4px",
+                                }}
+                              >
+                                <AddFriendIcon className="me-2 pb-1" />
+                                Add Friend
+                              </Box>
+                            </MenuItem>
+                          )}
+                        </Menu>
                         <Typography
                           sx={{
                             fontSize: getFontSizeButtonDependOnWidth(width),
@@ -2191,22 +2367,23 @@ export default function SelectRoom() {
                             : ""}
                         </Typography>
                         <img
-                          onClick={(e)=>{
-                            if(getOwner(
-                              roomDetailInfo?.membersInRoom
-                                ? JSON?.parse(roomDetailInfo?.membersInRoom)
-                                : []
-                            ) === userName)
-                                  handleClick1(e);
-                            }
-                          }
+                          onClick={(e) => {
+                            if (
+                              getOwner(
+                                roomDetailInfo?.membersInRoom
+                                  ? JSON?.parse(roomDetailInfo?.membersInRoom)
+                                  : []
+                              ) === userName
+                            )
+                              handleClick1(e);
+                          }}
                           alt="..."
                           style={{
                             width: "100px",
                             height: "100px",
                             borderRadius: "50%",
-                            marginTop:"6px",
-                            cursor:"pointer"
+                            marginTop: "6px",
+                            cursor: "pointer",
                           }}
                           src={
                             roomDetailInfo?.membersInRoom &&
@@ -2225,18 +2402,17 @@ export default function SelectRoom() {
                         <Box
                           sx={{
                             color: "#757ae5",
-                          fontWeight: "650",
-                          marginTop: "9px",
-                          display:"flex",
-                          justifyContent:"center",
-                          alignItems:"center"
+                            fontWeight: "650",
+                            marginTop: "9px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
                           }}
                         >
                           <img
                             style={{
                               width: "20px",
                               marginRight: "5px",
-                       
                             }}
                             alt="..."
                             src={images.CupIcon}
@@ -2470,7 +2646,15 @@ export default function SelectRoom() {
                   }}
                 >
                   <Box sx={{ color: "#9b9acf" }}>
-                    <p style={{ color: "white",textAlign: "start",fontSize:getFontSizeButtonDependOnWidth(width) }}>Control Buttons:</p>
+                    <p
+                      style={{
+                        color: "white",
+                        textAlign: "start",
+                        fontSize: getFontSizeButtonDependOnWidth(width),
+                      }}
+                    >
+                      Control Buttons:
+                    </p>
                     <p style={{ textAlign: "start" }}>
                       {" "}
                       <span style={{ color: "white" }}>W A D</span> keys to
@@ -2503,7 +2687,16 @@ export default function SelectRoom() {
                       <span style={{ color: "white" }}>/</span> key to initiate
                       a command
                     </p>
-                    <p style={{ color: "white",textAlign: "start",fontSize:getFontSizeButtonDependOnWidth(width),marginTop:"70px" }}>Commands:</p>
+                    <p
+                      style={{
+                        color: "white",
+                        textAlign: "start",
+                        fontSize: getFontSizeButtonDependOnWidth(width),
+                        marginTop: "70px",
+                      }}
+                    >
+                      Commands:
+                    </p>
                     <p style={{ textAlign: "start" }}>
                       <span style={{ color: "white" }}>/rtv - </span>Don't like
                       this map? vote to to skip it!
@@ -2562,22 +2755,32 @@ export default function SelectRoom() {
                           borderRadius: "5px",
                           border: "none",
                           outline: "none",
-                          background: roomDetailInfo?.membersInRoom &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?"linear-gradient(#9f3af1,#bf49ee)":"#6f6684",
+                          background:
+                            roomDetailInfo?.membersInRoom &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                              1
+                              ? "linear-gradient(#9f3af1,#bf49ee)"
+                              : "#6f6684",
                           fontSize: getFontSizeButtonDependOnWidth(width),
-                          color: roomDetailInfo?.membersInRoom &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?"white":"#9d93a6",
+                          color:
+                            roomDetailInfo?.membersInRoom &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                              1
+                              ? "white"
+                              : "#9d93a6",
                           fontWeight: "bolder",
                         }}
                         onClick={() => {
-                          if(roomDetailInfo?.membersInRoom &&
-                            JSON.parse(roomDetailInfo?.membersInRoom)?.length>1)
-                            {
-                              socket?.emit("startRoomGame", {
-                                roomId: roomIdSelect,
-                                gameId: detailGame?.id,
-                              });
-                            }
+                          if (
+                            roomDetailInfo?.membersInRoom &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                              1
+                          ) {
+                            socket?.emit("startRoomGame", {
+                              roomId: roomIdSelect,
+                              gameId: detailGame?.id,
+                            });
+                          }
                         }}
                       >
                         Start
@@ -2649,117 +2852,142 @@ export default function SelectRoom() {
                 }}
                 open={!roomNav && !inviteFriendDialog}
               >
-                  {roomDetailInfo?.membersInRoom &&
-                    JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1 &&<Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl1}
-                    open={open1}
-                    onClose={handleClose1}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                    disableScrollLock={true}
-                    sx={{
-                      ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
-                      zIndex:"1000001"
-                    }}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      dispatch(toggleProfileDialog(true));
-                    }}
-                    sx={{
-                      padding: "5px",
-                    }}
-                  >
-                  <Box 
-                    onClick={()=>{
-                      socket.emit("getDetailProfile", {
-                      username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
-                    });}}
-                    className="p-1 text-white"
-                    sx={{
-                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                      width: "100%",
-                      fontWeight: "bold",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    <AddFriendIcon className="me-1 pb-1" />
-                    <span>View Profile</span>
-                  </Box>
-                </MenuItem>
-                  <MenuItem
-                    sx={{
-                      padding: "5px",
-                    }}
-                  >
-                  <Box 
-                    onClick={()=>{
-                      socket.emit("kickOutRoom", {
-                      username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name,
-                      roomId:roomIdSelect,
-                      gameId:detailGame?.id
-                    });
-                  }}
-                    className="p-1 text-white"
-                    sx={{
-                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                      width: "100%",
-                      fontWeight: "bold",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    <AddFriendIcon className="me-1 pb-1" />
-                    <span>Kick out</span>
-                  </Box>
-                </MenuItem>
-                {checkExistInFriendList(getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name)===true?                      
-                <MenuItem
+                {roomDetailInfo?.membersInRoom &&
+                  JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1 && (
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl1}
+                      open={open1}
+                      onClose={handleClose1}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                      disableScrollLock={true}
                       sx={{
-                        padding: "5px",
+                        ".MuiMenu-paper": {
+                          backgroundColor: "#2d224a !important",
+                        },
+                        zIndex: "1000001",
                       }}
                     >
-                      <Box
+                      <MenuItem
+                        onClick={() => {
+                          dispatch(toggleProfileDialog(true));
+                        }}
+                        sx={{
+                          padding: "5px",
+                        }}
+                      >
+                        <Box
+                          onClick={() => {
+                            socket.emit("getDetailProfile", {
+                              username: getClient(
+                                JSON?.parse(roomDetailInfo?.membersInRoom)
+                              )?.name,
+                            });
+                          }}
+                          className="p-1 text-white"
+                          sx={{
+                            background:
+                              "linear-gradient(180deg, #843ff0, #7748ed)",
+                            width: "100%",
+                            fontWeight: "bold",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <AddFriendIcon className="me-1 pb-1" />
+                          <span>View Profile</span>
+                        </Box>
+                      </MenuItem>
+                      <MenuItem
+                        sx={{
+                          padding: "5px",
+                        }}
+                      >
+                        <Box
+                          onClick={() => {
+                            socket.emit("kickOutRoom", {
+                              username: getClient(
+                                JSON?.parse(roomDetailInfo?.membersInRoom)
+                              )?.name,
+                              roomId: roomIdSelect,
+                              gameId: detailGame?.id,
+                            });
+                          }}
+                          className="p-1 text-white"
+                          sx={{
+                            background:
+                              "linear-gradient(180deg, #843ff0, #7748ed)",
+                            width: "100%",
+                            fontWeight: "bold",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <AddFriendIcon className="me-1 pb-1" />
+                          <span>Kick out</span>
+                        </Box>
+                      </MenuItem>
+                      {checkExistInFriendList(
+                        getClient(JSON?.parse(roomDetailInfo?.membersInRoom))
+                          ?.name
+                      ) === true ? (
+                        <MenuItem
+                          sx={{
+                            padding: "5px",
+                          }}
+                        >
+                          <Box
+                            onClick={() => {
+                              socket.emit("deleteFriend", {
+                                username: getClient(
+                                  JSON?.parse(roomDetailInfo?.membersInRoom)
+                                )?.name,
+                              });
+                            }}
+                            className="p-1 text-white"
+                            sx={{
+                              background:
+                                "linear-gradient(180deg, #843ff0, #7748ed)",
+                              width: "100%",
+                              fontWeight: "bold",
+                              borderRadius: "4px",
+                            }}
+                          >
+                            <DeleteFriendIcon className=" pb-1" />
+                            <span> Delete Friend</span>
+                          </Box>
+                        </MenuItem>
+                      ) : (
+                        <MenuItem
+                          sx={{
+                            padding: "5px",
+                          }}
+                        >
+                          <Box
+                            onClick={() => {
+                              socket.emit("addFriend", {
+                                username: getClient(
+                                  JSON?.parse(roomDetailInfo?.membersInRoom)
+                                )?.name,
+                              });
+                            }}
+                            className="p-1 text-white"
+                            sx={{
+                              background:
+                                "linear-gradient(180deg, #843ff0, #7748ed)",
+                              width: "100%",
+                              fontWeight: "bold",
+                              borderRadius: "4px",
+                            }}
+                          >
+                            <AddFriendIcon className="me-2 pb-1" />
+                            Add Friend
+                          </Box>
+                        </MenuItem>
+                      )}
+                    </Menu>
+                  )}
 
-                        onClick={()=>{
-                          socket.emit("deleteFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
-                        }}
-                        className="p-1 text-white"
-                        sx={{
-                          background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                          width: "100%",
-                          fontWeight: "bold",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        <DeleteFriendIcon className=" pb-1" />
-                        <span> Delete Friend</span>
-                      </Box>
-                    </MenuItem>:
-                    <MenuItem
-                      sx={{
-                        padding: "5px",
-                      }}
-                    >
-                      <Box
-                        onClick={()=>{
-                          socket.emit("addFriend", { username: getClient(JSON?.parse(roomDetailInfo?.membersInRoom))?.name })
-                        }}
-                        className="p-1 text-white"
-                        sx={{
-                          background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                          width: "100%",
-                          fontWeight: "bold",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        <AddFriendIcon className="me-2 pb-1" />
-                        Add Friend
-                      </Box>
-                    </MenuItem>}
-                  </Menu> }
-                    
                 <Box
                   sx={{
                     backgroundColor: "#37285c",
@@ -2779,7 +3007,7 @@ export default function SelectRoom() {
                       gameId: detailGame?.id,
                     });
                   }}
-                >  
+                >
                   <img
                     style={{
                       width: getFontSizeTitleDependOnWidth(width),
@@ -2900,7 +3128,7 @@ export default function SelectRoom() {
                     >
                       VS
                     </Box>
-                    
+
                     {roomDetailInfo?.membersInRoom &&
                     JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1 ? (
                       <Box
@@ -2912,17 +3140,21 @@ export default function SelectRoom() {
                           justifyContent: "center",
                         }}
                       >
-                        <Typography  sx={{ fontSize: getFontSizeButtonDependOnWidth(width) }}>
+                        <Typography
+                          sx={{
+                            fontSize: getFontSizeButtonDependOnWidth(width),
+                          }}
+                        >
                           {roomDetailInfo?.membersInRoom &&
-                        JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1
-                          ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                              ?.username
-                          : ""}  
+                          JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1
+                            ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                ?.username
+                            : ""}
                         </Typography>
                         <img
-                          onClick={(e)=>{
-                                handleClick1(e);
-                              }}
+                          onClick={(e) => {
+                            handleClick1(e);
+                          }}
                           alt="..."
                           style={{
                             width: parseFloat(width / 4.5),
@@ -2993,18 +3225,18 @@ export default function SelectRoom() {
                           )}
                       </Box>
                     ) : (
-                      <>          
-                      <img
-                        onClick={() => dispatch(openInvitefriendPopup())}                    
-                        alt="..."
-                        style={{
-                          width: parseFloat(width / 4.5),
-                          height: "auto",
-                          borderRadius: "50%",
-                        }}
-                        src={images.inviteFriendMobile}
-                      />
-                    </>
+                      <>
+                        <img
+                          onClick={() => dispatch(openInvitefriendPopup())}
+                          alt="..."
+                          style={{
+                            width: parseFloat(width / 4.5),
+                            height: "auto",
+                            borderRadius: "50%",
+                          }}
+                          src={images.inviteFriendMobile}
+                        />
+                      </>
                     )}
                   </Box>
                   {getOwner(
@@ -3109,12 +3341,19 @@ export default function SelectRoom() {
                               borderRadius: "5px",
                               border: "none",
                               outline: "none",
-                              background:roomDetailInfo?.membersInRoom &&
-                              JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?
-                                "linear-gradient(#9f3af1,#bf49ee)":"#6f6684",
+                              background:
+                                roomDetailInfo?.membersInRoom &&
+                                JSON.parse(roomDetailInfo?.membersInRoom)
+                                  ?.length > 1
+                                  ? "linear-gradient(#9f3af1,#bf49ee)"
+                                  : "#6f6684",
                               fontSize: getFontSizeButtonDependOnWidth(width),
-                              color: roomDetailInfo?.membersInRoom &&
-                              JSON.parse(roomDetailInfo?.membersInRoom)?.length>1?"white":"#9d93a6",
+                              color:
+                                roomDetailInfo?.membersInRoom &&
+                                JSON.parse(roomDetailInfo?.membersInRoom)
+                                  ?.length > 1
+                                  ? "white"
+                                  : "#9d93a6",
                               fontWeight: "bolder",
                             }}
                             // onClick={() => {
@@ -3126,14 +3365,15 @@ export default function SelectRoom() {
                             // roomDetailInfo?.membersInRoom &&
                             // JSON.parse(roomDetailInfo?.membersInRoom)?.length
                             // }}
-                            onClick={() =>{
-                              if(roomDetailInfo?.membersInRoom &&
-                                JSON.parse(roomDetailInfo?.membersInRoom)?.length>1)
-                                {
-                                  setStartGame(true)
-                                }
-                              } 
-                            }
+                            onClick={() => {
+                              if (
+                                roomDetailInfo?.membersInRoom &&
+                                JSON.parse(roomDetailInfo?.membersInRoom)
+                                  ?.length > 1
+                              ) {
+                                setStartGame(true);
+                              }
+                            }}
                           >
                             Start
                           </button>

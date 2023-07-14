@@ -1191,3 +1191,22 @@ h1.title-text-desktop {
   margin-bottom: 0px;
 }
 
+.slick-dots li button:before{
+  font-family: 'slick';
+  font-size: 10px !important;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  content: '•';
+  text-align: center;
+  opacity: .25;
+  color: rgb(188, 188, 188) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}.slick-dots li.slick-active button:before {
+  opacity: .75;
+  color: rgb(255, 255, 255) !important;
+}
