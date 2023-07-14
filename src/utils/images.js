@@ -47,6 +47,8 @@ import CheckedMobile from "../assets/images/CheckedMobile.png";
 import inviteFriendMobile from "../assets/images/inviteFriendMobile.png";
 import RotateScreen from "../assets/images/RotateScreen.png";
 import ContinueGameButton from "../assets/images/ContinueGameButton.png";
+import eyeIcon from "../assets/images/eyeIcon.png";
+import closeEyefullscreen from "../assets/images/closeEyefullscreen.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -239,6 +241,8 @@ export const images = {
   inviteFriendMobile: inviteFriendMobile,
   RotateScreen: RotateScreen,
   ContinueGameButton: ContinueGameButton,
+  eyeIcon:eyeIcon,
+  closeEyefullscreen:closeEyefullscreen
 };
 
 export const images2 = {

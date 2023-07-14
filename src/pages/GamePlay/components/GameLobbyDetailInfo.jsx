@@ -190,9 +190,9 @@ export default function GameLobbyDetailInfo() {
             <h2
               style={{
                 color: "#ffffff",
-                fontSize: width < 576 ? "23px" : "35px",
+                fontSize: width < 576 ? parseFloat(width/26.67) : "35px",
                 textAlign: "left",
-                marginTop: "0px",
+                marginTop: "5px",
                 marginLeft: "0px",
                 fontWeight: "500",
               }}

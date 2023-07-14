@@ -22,3 +22,62 @@
   background: #000;
   width:"700px"
 }
+.navBarFullScreen{
+  animation: MoveUpDown 0.3s ease-in;
+  position: absolute;  
+  bottom: 0;
+}
+@keyframes MoveUpDown {
+  0% {
+    bottom: -55.23px;
+  }
+  100% {
+    bottom: 0px;
+  }
+}
+.showButtonFullScreen{
+  animation: MoveUp 0.3s ease-out;
+  position: absolute;  
+  button{
+    background:linear-gradient(#873CF0,#7946EE);
+  }
+}
+.showButtonFullScreenDis{
+  animation: MoveDown 0.3s ease-out;
+  position: absolute;  
+  button{
+    background:linear-gradient(#873CF0,#7946EE);
+  }
+}
+@keyframes MoveUp {
+  0% {
+    bottom: -50px;
+  }
+  
+  100% {
+    bottom: 0px;
+  }
+}
+@keyframes MoveDown {
+  0% {
+    bottom: 0px;
+  }
+  
+  100% {
+    bottom: -50px;
+    display: none;
+  }
+}
+.navBarFullScreenDis{
+  animation: MovecDown 0.3s linear;
+  position: absolute;  
+}
+@keyframes MovecDown {
+  0% {
+    bottom: 0px;
+  }
+  100% {
+    bottom: -55.23px;
+    display: none !important;
+  }
+}
