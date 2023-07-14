@@ -3,13 +3,12 @@ import {
   Dialog,
   FormControl,
   Menu,
-  // Menu,
   MenuItem,
   Select,
   Slide,
   Typography,
 } from "@mui/material";
-import React, { Fragment, forwardRef, useEffect } from "react";
+import React, { Fragment, forwardRef, useCallback, useEffect } from "react";
 import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,8 +44,6 @@ import PopupInviteFriend from "./PopupInviteFriend";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 
-// import { FullScreen, useFullScreenHandle } from "react-full-screen";
-
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -64,13 +61,14 @@ const Test = styled.input`
 export default function SelectRoom() {
   const { width } = useWindowDimensions();
   const { id } = useParams();
-  const handle = useFullScreenHandle();
+  const screen = useFullScreenHandle();
   const {
     detailGame,
     listFavoriteGame,
     listLikeGame,
     listDislikeGame,
     inviteFriendDialog,
+    orientation
   } = useSelector((state) => state.gameReducer);
   const { roomNav } = useSelector((state) => state.roomReducer);
   const [dogeGold, setDogeGold] = useState(0);
@@ -89,7 +87,7 @@ export default function SelectRoom() {
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
-  const [startGame, setStartGame] = useState(false);
+  const [startGame, setStartGame] = useState(true);
   const [continueGame, setContinueGame] = useState(false);
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -106,10 +104,12 @@ export default function SelectRoom() {
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
   const filterArray=[0,100,200,500];
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
@@ -117,6 +117,9 @@ export default function SelectRoom() {
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
+
+  console.log("Orientation: ",orientation);
+
   useEffect(() => {
     function checkIsFavorite() {
       let index = listFavoriteGame.findIndex((element) => {
@@ -138,10 +141,12 @@ export default function SelectRoom() {
       setFGame(false);
     }
   }, [detailGame, listFavoriteGame]);
+
   useEffect(() => {
     setCountLikeGame(detailGame?.countLike);
     setCountDisLikeGame(detailGame?.countUnlike);
   }, [detailGame]);
+
   useEffect(() => {
     const checkLikeExisted = () => {
       for (let i = 0; i < listLikeGame.length; i++) {
@@ -170,9 +175,11 @@ export default function SelectRoom() {
       setDisLikeGame(true);
     }
   }, [listLikeGame, listDislikeGame, detailGame]);
+
   useEffect(() => {
     dispatch(getDetailGame({ id }));
   }, [dispatch, id]);
+
   function checkExistData(id, data) {
     let index = data.findIndex((element) => {
       if (element?.id === id) {
@@ -184,12 +191,15 @@ export default function SelectRoom() {
 
     return index;
   }
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClick1 = (event) => {
     setAnchorEl1(event.currentTarget);
   };
+  
   const handleOnclickItemFilter=(number)=>{
     if (!itemFilter?.includes(JSON.stringify(number))) {
       setItemFilter([...itemFilter, JSON.stringify(number)]);
@@ -201,20 +211,15 @@ export default function SelectRoom() {
       );
     }
   }
+
   const handleClose = () => {
     setAnchorEl(null);
   };  
+
   const handleClose1 = () => {
     setAnchorEl1(null);
   };  
-  // const checkExistInFriendList = () => {
-  //   for (let i = 0; i < friendList.length; i++) {
-  //     if (friendList[i].userName === clickUserName) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // };
+
   const handleOnClickLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
       socket.emit("handleLikeGame", { gameId: detailGame?.id, type: true });
@@ -242,6 +247,7 @@ export default function SelectRoom() {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
@@ -249,10 +255,12 @@ export default function SelectRoom() {
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
+
   useEffect(() => {
     setCountLikeGame(detailGame?.countLike);
     setCountDisLikeGame(detailGame?.countUnlike);
   }, [detailGame]);
+
   const handleOnClickDisLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
       socket.emit("handleLikeGame", { gameId: detailGame?.id, type: false });
@@ -278,6 +286,7 @@ export default function SelectRoom() {
       setCountDisLikeGame(countDisLikeGame - 1);
     }
   };
+
   function getOwner(members) {
     for (let index = 0; index < members?.length; index++) {
       const element = members[index];
@@ -300,6 +309,7 @@ export default function SelectRoom() {
     }
     return {};
   }
+
   const checkExistInFriendList = (username) => {
     for (let i = 0; i < friendList.length; i++) {
       if (friendList[i].userName === username) {
@@ -403,12 +413,14 @@ export default function SelectRoom() {
         });
       }
     });
+
     socket?.on(
       `readyRoom${roomIdSelect}Game${detailGame?.id}Success`,
       (data, roomId) => {
         setroomDetailInfo(data);
       }
     );
+
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
       setChat([]);
       if (roomId === roomIdSelect) {
@@ -460,6 +472,7 @@ export default function SelectRoom() {
     socket?.on(`startRoom${roomIdSelect}Game${detailGame?.id}Success`, () => {
       setStartGame(true);
     });
+
     socket?.on(`kickOut${roomIdSelect}Success`, (data, room) => {
       setListRoom((prevState) => {
         let dt = [...prevState];
@@ -478,6 +491,7 @@ export default function SelectRoom() {
         dispatch(setSelectNav())
       }
     });
+
     socket?.on(`kickOut${detailGame?.id}Success`, (room,roomId) => {
       setListRoom((prevState) => {
         let dt = [...prevState];
@@ -532,6 +546,7 @@ export default function SelectRoom() {
       // }
     });
   });
+
   useEffect(() => {
     if (fetchListRoom && token) {
       socket?.emit("getListRoomGame", {
@@ -547,9 +562,11 @@ export default function SelectRoom() {
       ready: ready === 1 ? 0 : 1,
     });
   };
+
   const handleOnchangeText = (e) => {
     setTextContent(e.target.value);
   };
+
   const handleOnKeyDownText = (e) => {
     if (e.key === "Enter" && textContent !== "") {
       socket?.emit("chatInRoom", {
@@ -575,11 +592,34 @@ export default function SelectRoom() {
       gameId: detailGame?.id,
     });
   };
+
+
   useEffect(() => {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
   }, [state]);
 
+  useEffect(() => {
+    const handleEsc = (event) => {
+       if (event.key === 'Escape') {
+        console.log('Close')
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+  const reportChange = useCallback((state, handle) => {
+    if(handle===screen)
+    {
+      if(state===false&&expand===true)
+      {
+        setExpand(false);
+      }
+    }
+  }, [screen,expand]);
   return (
     <div className="">
       {width > 576 ? (
@@ -613,8 +653,9 @@ export default function SelectRoom() {
                 width: "100% !important",
                 height:"100%"
               }}>
-              <FullScreen handle={handle}>
-              {startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && (
+              <FullScreen handle={screen} onChange={reportChange}>
+              {/* startGame && detailGame?.GameFiles && detailGame?.GameFiles?.length >= 4 && */}
+              { (
                 <Fragment>
                   <UnityGameComponent
                     GameFiles={detailGame?.GameFiles}
@@ -624,152 +665,167 @@ export default function SelectRoom() {
                     fullScreen={expand}
                     roomId={roomDetailInfo?.id}
                   />
-                   {startGame && expand===true && (
-                    mouseEnter===true?   
-                    <Box
-                    sx={{
-                      width: "100%",
-                      height: "auto",
-                      boxSizing: "border-box",
-                      padding: "10px 20px",
-                      position:"absolute",
-                      bottom:"0px",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      alignItems: "center",
-                      backgroundColor: "rgb(46, 40, 68)",
-                    }}>
-                    <button onClick={()=>setMouseEnter(false)} style={{color:"red"}}>HideNav</button>
-                    <Box sx={{ position: "relative" }}>
-                    <Box
-                      component={"img"}
-                      alt="..."
-                      sx={{
-                        width: width < 576 ? width / 20 : width / 68,
-                        height: width < 576 ? width / 20 : width / 68,
-                      }}
-                      onClick={handleOnClickLikeGame}
-                      src={
-                        likeGame === false
-                          ? imagesFavorite.passiveLike
-                          : imagesFavorite.activeLike
-                      }
-                    ></Box>
-                    <span
-                      style={{
-                        color: "#fff",
-                        position: "absolute",
-                        top: "6px",
-                        left: "35px",
-                        fontWeight: "bolder",
-                        fontSize: getFontSizeDependOnWidth(width),
-                      }}
-                    >
-                      {countLikeGame &&
-                        convertToInternationalCurrencySystem(countLikeGame)}
-                    </span>
-                          </Box>
-                          <Box sx={{ position: "relative" }}>
-                    {" "}
-                    <Box
-                      component={"img"}
-                      alt="..."
-                      sx={{
-                        width: width < 576 ? width / 20 : width / 68,
-                        height: width < 576 ? width / 20 : width / 68,
-                        marginLeft: width < 576 ? "30px" : "30px",
-                        marginTop: "7px",
-                      }}
-                      onClick={handleOnClickDisLikeGame}
-                      src={
-                        disLikeGame === false
-                          ? imagesFavorite.passiveDislike
-                          : imagesFavorite.activeDislike
-                      }
-                    ></Box>
-                    <span
-                      style={{
-                        color: "#fff",
-                        position: "absolute",
-                        top: "11px",
-                        right: "-16px",
-                        fontWeight: "bolder",
-                        fontSize: getFontSizeDependOnWidth(width),
-                      }}
-                    >
-                      {countDisLikeGame &&
-                        convertToInternationalCurrencySystem(countDisLikeGame)}
-                    </span>
-                          </Box>
-                          <Box
-                    component={"img"}
-                    onClick={() => {
-                      if (fGame) {
-                        socket?.emit("deleteFavoriteGame", {
-                          id: detailGame?.id,
-                        });
-                        setFGame(false);
-                      } else {
-                        socket?.emit("addFavoriteGame", { id: detailGame?.id });
-                        setFGame(true);
-                      }
-                    }}
-                    sx={{
-                      width: width < 576 ? width / 20 : width / 68,
-                      height: width < 576 ? width / 20 : width / 68,
-                      marginLeft: width < 576 ? "30px" : "30px",
-                    }}
-                    className="cursor-pointer"
-                    src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
-                    alt="..."
-                          ></Box>
-                          {expand === false ? (
-                    <img
-                      alt=".."
-                      width={width < 576 ? width / 20 : width / 68}
-                      style={{
-                        marginLeft: width < 576 ? "20px" : "30px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() =>{ 
-                        setExpand(true);
-                        handle.enter();
-                      }}
-                      src={images.expandIcon}
-                    />
-                          ) : (
-                    <img
-                      alt=".."
-                      width={width < 576 ? width / 20 : width / 68}
-                      style={{
-                        marginLeft: width < 576 ? "20px" : "30px",
-                        cursor: "pointer",
-                }}
-                onClick={() =>{ 
-                  setExpand(false);
-                  handle.exit();
-                }}
-                src={images.ZoomInIcon}
-              />
-                    )}
-                 </Box>:
-                     <Box
-                        onMouseEnter={()=>{
-                          setMouseEnter(true)
-                        }}
-                        onMouseLeave={()=>{setMouseEnter(false)}}
-                        sx={{
-                          width: "100%",
-                          height: "60px",
-                          boxSizing: "border-box",
-                          padding: "10px 20px",
-                          position:"absolute",
-                          bottom:"0px",
-                          backgroundColor: "rgb(46, 40, 68,0.1)",
-                        }}>
-                          <button onClick={()=>setMouseEnter(true)} style={{color:"red"}}>ShowNav</button>
-                     </Box>
-                   )}
+                   {startGame && expand===true && 
+                   <>                 
+                 
+                   <Box                      
+                   className={mouseEnter===false?"showButtonFullScreen":"showButtonFullScreenDis"} 
+                   sx={{
+                     width: "100%",
+                     height: "60px",
+                     boxSizing: "border-box",
+                     position:"absolute",
+                     display:"flex",
+                     backgroundColor: "rgb(46, 40, 68,0.1)",bottom:"0px",
+                     justifyContent:"center",
+                     alignItems:"flex-end"
+                   }}>
+                     <button
+                     style={{width:"70px",height:"50px",border:"none",outline:"none",borderRadius:"40px 40px 0px 0px",display:"flex",justifyContent:"center",alignItems:"center"}}
+                     onClick={()=>setMouseEnter(true)}>
+                      <img alt="..." width="30px" src={images.eyeIcon}/>
+                     </button>
+                </Box>
+                  <Box
+                 className={mouseEnter===true?"navBarFullScreen":"navBarFullScreenDis"}
+                 sx={{
+                   width: "100%",
+                   height: "auto",
+                   boxSizing: "border-box",
+                   padding: "10px 20px",
+                   display: "flex",
+                   justifyContent: "flex-end",
+                   alignItems: "center",
+                   backgroundColor: "rgb(46, 40, 68)",
+                 }}>
+                 <button onClick={()=>setMouseEnter(false)} style={{
+                  border:"none",
+                  outline:"none",
+                  position:"absolute",
+                  padding:"6px 100px",
+                  borderRadius:"10px",
+                  left:"40%",
+                  background:"linear-gradient(#873CF0,#7946EE)",
+                  color:"white",
+                  display:"flex",
+                  justifyContent:"center",
+                  alignItems:"center"
+                  }}><img width="25px" alt="..." src={images.closeEyefullscreen} style={{marginRight:"5px"}}/>Hide this bar</button>
+                 <Box sx={{ position: "relative" }}>
+                 <Box
+                   component={"img"}
+                   alt="..."
+                   sx={{
+                     width: width < 576 ? width / 20 : width / 68,
+                     height: width < 576 ? width / 20 : width / 68,
+                   }}
+                   onClick={handleOnClickLikeGame}
+                   src={
+                     likeGame === false
+                       ? imagesFavorite.passiveLike
+                       : imagesFavorite.activeLike
+                   }
+                 ></Box>
+                 <span
+                   style={{
+                     color: "#fff",
+                     position: "absolute",
+                     top: "6px",
+                     left: "35px",
+                     fontWeight: "bolder",
+                     fontSize: getFontSizeDependOnWidth(width),
+                   }}
+                 >
+                   {countLikeGame &&
+                     convertToInternationalCurrencySystem(countLikeGame)}
+                 </span>
+                       </Box>
+                       <Box sx={{ position: "relative" }}>
+                 {" "}
+                 <Box
+                   component={"img"}
+                   alt="..."
+                   sx={{
+                     width: width < 576 ? width / 20 : width / 68,
+                     height: width < 576 ? width / 20 : width / 68,
+                     marginLeft: width < 576 ? "30px" : "30px",
+                     marginTop: "7px",
+                   }}
+                   onClick={handleOnClickDisLikeGame}
+                   src={
+                     disLikeGame === false
+                       ? imagesFavorite.passiveDislike
+                       : imagesFavorite.activeDislike
+                   }
+                 ></Box>
+                 <span
+                   style={{
+                     color: "#fff",
+                     position: "absolute",
+                     top: "11px",
+                     right: "-16px",
+                     fontWeight: "bolder",
+                     fontSize: getFontSizeDependOnWidth(width),
+                   }}
+                 >
+                   {countDisLikeGame &&
+                     convertToInternationalCurrencySystem(countDisLikeGame)}
+                 </span>
+                       </Box>
+                       <Box
+                 component={"img"}
+                 onClick={() => {
+                   if (fGame) {
+                     socket?.emit("deleteFavoriteGame", {
+                       id: detailGame?.id,
+                     });
+                     setFGame(false);
+                   } else {
+                     socket?.emit("addFavoriteGame", { id: detailGame?.id });
+                     setFGame(true);
+                   }
+                 }}
+                 sx={{
+                   width: width < 576 ? width / 20 : width / 68,
+                   height: width < 576 ? width / 20 : width / 68,
+                   marginLeft: width < 576 ? "30px" : "30px",
+                 }}
+                 className="cursor-pointer"
+                 src={fGame ? imagesFavorite.like : imagesFavorite.unlike}
+                 alt="..."
+                       ></Box>
+                       {expand === false ? (
+                 <img
+                   alt=".."
+                   width={width < 576 ? width / 20 : width / 68}
+                   style={{
+                     marginLeft: width < 576 ? "20px" : "30px",
+                     cursor: "pointer",
+                   }}
+                   onClick={() =>{ 
+                     setExpand(true);
+                     screen.enter();
+                   }}
+                   src={images.expandIcon}
+                 />
+                       ) : (
+                 <img
+                   alt=".."
+                   width={width < 576 ? width / 20 : width / 68}
+                   style={{
+                     marginLeft: width < 576 ? "20px" : "30px",
+                     cursor: "pointer",
+             }}
+             onClick={() =>{ 
+               setExpand(false);
+               screen.exit();
+             }}
+             src={images.ZoomInIcon}
+           />
+                 )}
+                  </Box>
+              </>
+    }
                 </Fragment>
               )} 
               </FullScreen>
@@ -881,7 +937,7 @@ export default function SelectRoom() {
                     }}
                     onClick={() =>{ 
                       setExpand(true);
-                      handle.enter();
+                      screen.enter();
                     }}
                     src={images.expandIcon}
                   />

@@ -49,6 +49,7 @@ import {
 } from "./redux-saga-middleware/reducers/paymentReducer";
 import {
   addGameLog,
+  changeOrientation,
   gameLogoutSuccessFully,
   getGameLog,
   getListGame,
@@ -71,7 +72,6 @@ import { useTracking } from "./utils/useTracking";
 import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
-
 function App() {
   useTracking("");
 
@@ -84,6 +84,20 @@ function App() {
     }
   });
 
+  const isLandscape = () => window.matchMedia('(orientation:landscape)').matches,
+  onWindowResize = () => {              
+    clearTimeout(window.resizeLag)
+    window.resizeLag = setTimeout(() => {
+      delete window.resizeLag                       
+      store.dispatch(changeOrientation(isLandscape() ? 'landscape' : 'portrait'))
+    }, 200)
+  }
+
+  useEffect(() => (
+  onWindowResize(),
+  window.addEventListener('resize', onWindowResize),
+  () => window.removeEventListener('resize', onWindowResize)
+  ),[])
   useEffect(() => {
     if (socket) {
       socket.once("connect", (data) => {});
