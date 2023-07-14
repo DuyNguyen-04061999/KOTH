@@ -227,7 +227,7 @@ export default function ChatWorldList() {
                         style={{
                           color: "#494a8b",
                           fontWeight: "500",
-                          fontSize: "12px",
+                          fontSize: "10px",
                         }}
                       >
                         {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -266,7 +266,7 @@ export default function ChatWorldList() {
                         e?.messageFromAvatar
                       : images.undefinedAvatar
                   }
-                  sx={{ borderRadius: "50%" }}
+                  sx={{ borderRadius: "50%", marginLeft:"5px"  }}
                 />
               </Box>
               <Box className="mx-2" sx={{ borderRadius: "5px" }}>
@@ -285,7 +285,7 @@ export default function ChatWorldList() {
                         color: "#494a8b",
                         fontWeight: "bold",
                         marginLeft: "15px",
-                        fontSize: "12px",
+                        fontSize: "10px",
                       }}
                     >
                       {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -295,7 +295,6 @@ export default function ChatWorldList() {
                 <Box
                   sx={{
                     background: "#443565",
-                    // width: width < 576 ? width - 100 : 215,
                     width: "fit-content",
                     maxWidth: width < 576 ? width - 100 : 215,
                     fontSize: "14px",
@@ -413,7 +412,7 @@ export default function ChatWorldList() {
     if (width < 576) {
       return height - 119;
     } else if (width > 1200) {
-      return height - 199;
+      return height - 186;
     } else if (width > 576 && width < 1199) {
       return height - 300;
     }

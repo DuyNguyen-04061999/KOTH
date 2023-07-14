@@ -86,7 +86,7 @@ const AppBar = muiStyled(MuiAppBar, {
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-start",
-  paddingTop: "67px",
+  paddingTop: "65px",
 }));
 
 const Test = styled.input`
@@ -282,7 +282,7 @@ export default function Layout(props) {
           {width > 900 ? (
             <div className="d-flex align-items-center">
               <Box sx={{ cursor: "pointer" }} onClick={clickNavIcon}>
-                <img src={images.btnnav} alt="..." width={40} height={40} />
+                <img src={images.btnnav} alt="..." width={36} height={36} />
               </Box>
               <div
                 className="inp-header mx-3"
@@ -364,15 +364,10 @@ export default function Layout(props) {
                 color="inherit"
                 aria-label="open drawer"
                 edge="end"
-                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px" }}
+                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px 10px 6px 10px" }}
                 className="cursor-pointer"
               >
-                <img
-                  src={images.chatbtn2}
-                  alt="Message"
-                  width={23}
-                  height={23}
-                />
+                <i class="fa-solid fa-message"></i>
               </Box>
             ) : (
               <Box
@@ -382,15 +377,10 @@ export default function Layout(props) {
                 color="inherit"
                 aria-label="open drawer"
                 edge="end"
-                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px" }}
+                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px 13px 6px 13px" }}
                 className="cursor-pointer"
               >
-                <img
-                  src={images.chatbtn2}
-                  alt="Message"
-                  width={23}
-                  height={23}
-                />
+                <i class="fa-solid fa-angle-right"></i>
               </Box>
             )}
           </div>
@@ -554,12 +544,13 @@ export default function Layout(props) {
             >
               <div className="d-flex justify-content-between align-items-center">
                 <div
-                  className="d-flex justify-content-center align-items-center p-2"
+                  className="d-flex justify-content-center align-items-center"
                   style={{
                     width: "50%",
                     backgroundColor: backgroundGlobal,
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
+                    padding:"3px"
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -586,7 +577,7 @@ export default function Layout(props) {
                   </div>
                 </div>
                 <div
-                  className="d-flex justify-content-center align-items-center p-2"
+                  className="d-flex justify-content-center align-items-center"
                   style={{
                     width: "50%",
                     backgroundColor: backgroundPrivate,
@@ -594,6 +585,7 @@ export default function Layout(props) {
                     display: "flex",
                     justifyContent: "start",
                     borderRadius: "0px 5px 5px 0px",
+                    padding:"3px"
                   }}
                   onClick={() => {
                     if (token === null || token === "") {

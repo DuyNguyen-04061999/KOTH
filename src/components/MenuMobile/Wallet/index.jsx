@@ -73,7 +73,7 @@ export default function DialogWallet(props) {
   const [willGet, setWillGet] = useState(0);
   const [willBe, setWillBe] = useState(0);
   const [valueDepositAddress, setValueDepositAddress] = useState("");
-
+  const [checkCopy,setCheckCopy] = useState(false)
   const [tab, setTab] = useState(1);
 
   const renderDeposit = () => {
@@ -188,7 +188,7 @@ export default function DialogWallet(props) {
             <FormControl
               variant="standard"
               sx={{
-                width: "100%",
+                width: "90%",
                 backgroundColor: "#181223",
                 borderRadius: "5px",
                 display: "flex",
@@ -197,6 +197,7 @@ export default function DialogWallet(props) {
                 alignItems: "center",
                 color: "white",
                 marginTop: "20px",
+                marginLeft: "20px",
               }}
             >
               <Input
@@ -225,15 +226,34 @@ export default function DialogWallet(props) {
                   setValueDepositAddress(e.target.value);
                 }}
               />
-              <Box className="cursor-pointer">
-                <img
-                  src={images.copybutton}
-                  alt=""
-                  onClick={() => {
-                    copy("y21weplzx75");
-                    dispatch(showAlert("success", "Copy successfully!"));
-                  }}
-                />
+              <Box className="cursor-pointer copy">
+                <span
+                  data-text-end="Copied!"
+                  data-text-initial="Copy to clipboard"
+                  className="tooltip"
+                ></span>
+               {checkCopy === false ? (
+                 <img
+                 src={images.copybutton}
+                 alt=""
+                 onClick={() => {
+                   copy("y21weplzx75");
+                   setCheckCopy(true)
+                   dispatch(showAlert("success", "Copy successfully!"));
+                 }}
+               />
+               ) : (
+                <Box sx={{
+                  background:"linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                  borderRadius:"4px",
+                  padding:"15px",
+                  display:"flex",
+                  justifyContent:"center",
+                  alignItems:"center"
+                }}>
+                  <i class="fa-solid fa-check"></i>
+                </Box>
+               )}
               </Box>
             </FormControl>
             <Box
@@ -715,8 +735,9 @@ export default function DialogWallet(props) {
 
   // const transactionsTab = ["Deposit", "Withdraw"];
   const [transactionTabSelected, setTransactionTabSelected] = useState(0);
-  const [detailTrans,setDetailTrans] = useState(null)
-  const [isDetailTransactionDialog,setIsDetailTransactionDialog] = useState(false)
+  const [detailTrans, setDetailTrans] = useState(null);
+  const [isDetailTransactionDialog, setIsDetailTransactionDialog] =
+    useState(false);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#251f41",
@@ -760,7 +781,7 @@ export default function DialogWallet(props) {
   }, [transactionTabSelected, withdrawData, despositData]);
 
   const handleTransactionDialog = (trans) => {
-    setDetailTrans(trans)
+    setDetailTrans(trans);
     setIsDetailTransactionDialog(true);
   };
 
@@ -928,33 +949,30 @@ export default function DialogWallet(props) {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">Time</StyledTableCell>
-                  <StyledTableCell align="center">Transaction ID</StyledTableCell>
+                  <StyledTableCell align="center">
+                    Transaction ID
+                  </StyledTableCell>
                   <StyledTableCell align="center">Gateway</StyledTableCell>
                   <StyledTableCell align="center">Amount</StyledTableCell>
                   <StyledTableCell align="center">Rate</StyledTableCell>
                   {width > 576 && (
-                    <StyledTableCell align="center">
-                      Charge
-                    </StyledTableCell>
+                    <StyledTableCell align="center">Charge</StyledTableCell>
                   )}
                   {width > 576 && (
-                    <StyledTableCell align="center">
-                      Status
-                    </StyledTableCell>
+                    <StyledTableCell align="center">Status</StyledTableCell>
                   )}
                   {width > 576 && (
-                    <StyledTableCell align="center">
-                      Receivable
-                    </StyledTableCell>
+                    <StyledTableCell align="center">Receivable</StyledTableCell>
                   )}
                 </TableRow>
               </TableHead>
               {transactions.length > 0 ? (
                 <TableBody>
                   {transactions?.map((transaction, i_t) => (
-                    <StyledTableRow key={i_t}
+                    <StyledTableRow
+                      key={i_t}
                       onClick={() => {
-                        handleTransactionDialog(transaction)
+                        handleTransactionDialog(transaction);
                       }}
                     >
                       <StyledTableCell
@@ -1175,11 +1193,11 @@ export default function DialogWallet(props) {
 
   return (
     <>
-      <TransactionDetailDialog 
-          trans={detailTrans}
-          open={isDetailTransactionDialog}
-          handleClose={handleCloseTransactionDialog}
-        />
+      <TransactionDetailDialog
+        trans={detailTrans}
+        open={isDetailTransactionDialog}
+        handleClose={handleCloseTransactionDialog}
+      />
       <Dialog
         fullScreen={width < 576}
         open={open || isTransactionDialog}
@@ -1295,11 +1313,11 @@ export default function DialogWallet(props) {
 
           <Box
             sx={{
-              // paddingTop: "48px",
+              paddingTop: isTransactionDialog === true ? "0px" : "48px",
               minHeight: width < 576 ? height - 46 : "unset",
               maxHeight: width < 576 ? "unset" : height - 100,
               backgroundColor: "#271c39",
-              // paddingBottom: "100px",
+              paddingBottom: isTransactionDialog === true ? "0px" : "100px",
               overflowY: "auto",
             }}
           >

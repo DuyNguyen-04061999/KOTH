@@ -706,7 +706,7 @@ export default function Dialoglg() {
                     src={images.undefinedAvatar}
                     height={40}
                     width={40}
-                    className="ava-signin"
+                    className="ava-signin ms-2 me-2"
                   />
                 ) : (
                   <img
@@ -721,7 +721,7 @@ export default function Dialoglg() {
                     }
                     height={40}
                     width={40}
-                    className="ava-signin"
+                    className="ava-signin ms-2 me-2"
                   />
                 )}
               </Dropdown.Toggle>
