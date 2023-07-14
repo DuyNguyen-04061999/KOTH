@@ -14,7 +14,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token, isNav } = useSelector((state) => state.authReducer);
-
   return (
     <Box className="nav-section">
       <Box
@@ -28,19 +27,24 @@ export default function Navbar() {
           justifyContent: "space-between",
           paddingBottom: "9px",
           transitionDuration: "all 1s",
-          paddingLeft: isNav === true ? "30px" : "10px",
-          paddingRight: isNav === true ? "30px" : "10px",
+          paddingLeft: isNav === true ? "30px" : "20px",
+          paddingRight: isNav === true ? "30px" : "20px",
           transition: "visibility 0.5s,all 0.25s ease-in-out;",
         }}
         className="pt-3 pb-3 nav-animate"
       >
         <Box>
           <Box
-            style={{ cursor: "pointer" }}
+            sx={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "",
+            }}
             onClick={() => {
               navigate(`/home`);
             }}
-            className="nav-home d-flex align-items-center pt-2 pb-2"
+            className="nav-home pt-2 pb-2"
           >
             <img
               src={images.homeicon}
@@ -57,6 +61,9 @@ export default function Navbar() {
                 fontWeight: "700",
                 fontSize: "15px",
                 marginLeft: "5px",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
               }}
             >
               Home
@@ -64,8 +71,13 @@ export default function Navbar() {
           </Box>
           <hr style={{ color: "white" }} />
           <Box
-            style={{ cursor: "pointer" }}
-            className="d-flex align-items-center pt-2 pb-2"
+            sx={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "",
+            }}
+            className=" pt-2 pb-2"
             onClick={() => {
               if (!token) {
                 dispatch(toggleLoginDialog());
@@ -77,7 +89,7 @@ export default function Navbar() {
             <img
               src={images.luckySpinIncon}
               alt="..."
-              className="p-1 me-1 luckySpinIncon"
+              className="p-1 me-1"
               width={28}
               height="auto"
             />
@@ -89,6 +101,9 @@ export default function Navbar() {
                 fontWeight: "700",
                 fontSize: "15px",
                 marginLeft: "5px",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
               }}
             >
               Lucky Wheel
@@ -97,8 +112,13 @@ export default function Navbar() {
           <hr style={{ color: "white" }} />
           <Box className="nav-pages">
             <Box
-              style={{ cursor: "pointer" }}
-              className="d-flex align-items-center pt-2 pb-2"
+              sx={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: isNav === true ? "flex-start" : "",
+              }}
+              className=" pt-2 pb-2"
               onClick={() => {
                 if (!token) {
                   dispatch(toggleLoginDialog());
@@ -122,14 +142,22 @@ export default function Navbar() {
                   fontWeight: "700",
                   fontSize: "15px",
                   marginLeft: "5px",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
                 }}
               >
                 Favorite Games
               </span>
             </Box>
             <Box
-              style={{ cursor: "pointer" }}
-              className="d-flex align-items-center pt-2 pb-2"
+              sx={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: isNav === true ? "flex-start" : "",
+              }}
+              className=" pt-2 pb-2"
               onClick={() => {
                 navigate("/game-type/pvp");
               }}
@@ -149,14 +177,22 @@ export default function Navbar() {
                   fontWeight: "700",
                   fontSize: "15px",
                   marginLeft: "5px",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
                 }}
               >
                 PVP Games
               </span>
             </Box>
             <Box
-              style={{ cursor: "pointer" }}
-              className="d-flex align-items-center pt-2 pb-2"
+              sx={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: isNav === true ? "flex-start" : "",
+              }}
+              className=" pt-2 pb-2"
               onClick={() => {
                 navigate("/game-type/free");
               }}
@@ -176,6 +212,9 @@ export default function Navbar() {
                   fontWeight: "700",
                   fontSize: "15px",
                   marginLeft: "5px",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
                 }}
               >
                 Free Games
@@ -184,8 +223,13 @@ export default function Navbar() {
           </Box>
           <hr style={{ color: "white" }} />
           <Box
-            style={{ cursor: "pointer" }}
-            className="nav-game-log d-flex align-items-center pt-2 pb-2"
+            sx={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "",
+            }}
+            className="nav-game-log pt-2 pb-2"
             onClick={() => {
               if (!token) {
                 dispatch(toggleLoginDialog());
@@ -210,12 +254,21 @@ export default function Navbar() {
                 fontWeight: "700",
                 fontSize: "15px",
                 marginLeft: "5px",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
               }}
             >
               Game Logs
             </span>
           </Box>
-          <Box className="d-flex align-items-center">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "",
+            }}
+          >
             <img
               src={popup.faq}
               alt="..."
@@ -231,6 +284,9 @@ export default function Navbar() {
                 fontSize: "15px",
                 marginLeft: "5px",
                 display: isNav === true ? "block" : "none",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
               }}
               onClick={() => {
                 navigate(`/FAQ`);
