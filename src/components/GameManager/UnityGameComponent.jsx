@@ -2,14 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
   const { 
-    GameFiles, width, height, tournamentId, gameId, 
-    // roomName, 
+    GameFiles, cwidth, cheight, tournamentId, gameId,
+    isFullScreen,
     roomId 
   } = props;
+  const { width, height } = useWindowDimensions()
   const { token } = useSelector(state => state.authReducer)
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
@@ -45,16 +47,12 @@ export default function UnityGameComponent(props) {
 
   
 
-  const { unityProvider, unload, UNSAFE__unityInstance,  addEventListener, removeEventListener, sendMessage } = useUnityContext({
+  const { unityProvider, unload, UNSAFE__unityInstance, addEventListener, removeEventListener, sendMessage } = useUnityContext({
     loaderUrl: getLoaderJs(GameFiles),
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
     codeUrl: getWasmJs(GameFiles),
   });
-
-  // useEffect(() => {
-  //   requestFullscreen(fullScreen)
-  // }, [fullScreen, requestFullscreen])
 
   window.myGameInstance = UNSAFE__unityInstance;
 
@@ -136,13 +134,16 @@ export default function UnityGameComponent(props) {
       removeEventListener("GameOver", handleFinalGame);
     };
   }, [addEventListener, removeEventListener, handleFinalGame]);
-
   return (
     <Unity
       style={{
-        width: width ? width : "100%",
-        minWidth:"100%",
-        height: height ? height : "100vh",
+        width: isFullScreen ? width : cwidth ? cwidth : "100%",
+        minWidth: "100%",
+        height: isFullScreen ? height : cheight ? cheight : "100%",
+        position: isFullScreen ? "absolute" : "none",
+        top: isFullScreen ? 0 : "none",
+        left: isFullScreen ? 0 : "none",
+        zIndex: isFullScreen ? 2000 : "none"
       }}
       unityProvider={unityProvider}
     />
