@@ -185,7 +185,7 @@ export default function ChatGlobal(props) {
             height: "100vh",
             overflow: "hidden",
             position: "absolute",
-            top: width < 576 ? "-49px" : "-74px",
+            top: width < 576 ? "-49px" : "-60px",
             right: "0px",
             width: "100%",
           }}

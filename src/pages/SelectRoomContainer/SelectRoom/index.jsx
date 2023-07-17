@@ -2180,8 +2180,8 @@ export default function SelectRoom() {
                           alt="..."
                           src={images.CupIcon}
                         />
-                        <span
-                          style={{
+                        <Typography
+                          sx={{
                             fontSize: getFontSizeButtonDependOnWidth(width),
                           }}
                         >
@@ -2189,7 +2189,7 @@ export default function SelectRoom() {
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length > 0
                             ? JSON.parse(roomDetailInfo?.membersInRoom)[0]?.win
                             : ""}
-                        </span>
+                        </Typography>
                       </Box>
                     </Box>
                     <Box
@@ -2409,8 +2409,8 @@ export default function SelectRoom() {
                             alt="..."
                             src={images.CupIcon}
                           />
-                          <span
-                            style={{
+                          <Typography
+                            sx={{
                               fontSize: getFontSizeTitleDependOnWidth(width),
                             }}
                           >
@@ -2420,7 +2420,7 @@ export default function SelectRoom() {
                               ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
                                   ?.win
                               : ""}
-                          </span>
+                          </Typography>
                         </Box>
                         {roomDetailInfo?.membersInRoom &&
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length >

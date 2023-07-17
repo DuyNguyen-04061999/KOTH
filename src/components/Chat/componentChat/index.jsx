@@ -367,7 +367,7 @@ export default function ComponentChat() {
 
   const checkHeightResponsive = () => {
     if (width < 576) {
-      return height - 120;
+      return height - 110;
     } else if (width > 1200) {
       return height - 170;
     } else if (width > 576 && width < 1199) {

@@ -78,13 +78,25 @@ export default function DialogChat(props) {
       }
     }
   };
-  const handleOnClickSendMessage = () => {
+  // const handleOnClickSendMessage = () => {
+  //   if (token === null || token === "") {
+  //     dispatch(toggleLoginDialog());
+  //   } else {
+  //     if (renderTab === false) {
+  //       if (chat) {
+  //         _socket.emit("chat", { type: "Privite", toId: 0, content: chat });
+  //         setChat("");
+  //       }
+  //     }
+  //   }
+  // };
+  const handleOnClickSendMessageWorld = () => {
     if (token === null || token === "") {
       dispatch(toggleLoginDialog());
     } else {
       if (renderTab === false) {
         if (chat) {
-          _socket.emit("chat", { type: "Privite", toId: 0, content: chat });
+          _socket.emit("chat", { type: "World", toId: 0, content: chat });
           setChat("");
         }
       }
@@ -208,7 +220,10 @@ export default function DialogChat(props) {
             </div>
           </Box>
           <Box component="div" hidden={!showChat}>
-            {renderTab === true ? <ChatFriendList /> : <ChatWorldList />}
+            {renderTab === true ? 
+            <ChatFriendList /> 
+            : 
+            <ChatWorldList />}
           </Box>
           {renderTab === false ? (
             <Box
@@ -258,7 +273,7 @@ export default function DialogChat(props) {
                   placeholder="Type your messages..."
                 />
               </Box>
-              <Box className="ms-2" onClick={handleOnClickSendMessage}>
+              <Box className="ms-2" onClick={handleOnClickSendMessageWorld}>
                 <img
                   src={images280423_l.send}
                   alt="Send"

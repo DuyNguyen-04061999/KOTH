@@ -1,6 +1,11 @@
 .home-page {
   .banner-top {
     padding-bottom: 7px;
+    .fa-div-focus{
+      &:focus-visible{
+        outline: none;
+      }
+    }
     .banner-top-item1 {
       max-width: 100%;
       img {
@@ -1210,3 +1215,4 @@ h1.title-text-desktop {
   opacity: .75;
   color: rgb(255, 255, 255) !important;
 }
+
