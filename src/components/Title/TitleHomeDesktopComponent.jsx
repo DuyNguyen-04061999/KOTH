@@ -7,10 +7,16 @@ export default function TitleHomeDesktopComponent(props) {
   const { width } = useWindowDimensions();
 
   return (
-    <div className="position-relative mb-4">
+    <div className="position-relative mb-4" style={{
+      width: '100%'
+    }}>
       <div></div>
-      <div className="positiion-absolute d-flex justify-content-between">
-        <div className="d-flex position-relative">
+      <div className="positiion-absolute d-flex justify-content-between" style={{
+        width: '100%'
+      }}>
+        <div className="d-flex position-relative" style={{
+          width: '100%'
+        }}>
           {!noBg && (
             <div
               className="position-absolute"

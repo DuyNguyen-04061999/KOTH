@@ -127,9 +127,7 @@ export default function Layout(props) {
   const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
   const [chatF, setChatF] = useState("");
   const dispatch = useDispatch();
-  
 
-  
   useEffect(() => {
     if (resetInputValue === "logoutSuccess") {
       setChatF("");
@@ -285,9 +283,17 @@ export default function Layout(props) {
                 <img src={images.btnnav} alt="..." width={36} height={36} />
               </Box>
               <div
-                className="inp-header mx-3"
+                className="inp-header mx-3 ps-4"
                 style={{ position: "relative" }}
-              ></div>
+              >
+                <img
+                  width="135px"
+                  height="auto"
+                  className="logocongty"
+                  src={images.Logo_Text}
+                  alt="logocty"
+                />
+              </div>
             </div>
           ) : (
             <NavLink to="/home">
@@ -323,7 +329,7 @@ export default function Layout(props) {
                       padding: "7px 10px",
                       color: "#857cab",
                       fontWeight: "500",
-                      borderRadius:5
+                      borderRadius: 5,
                     }}
                   />
                   <button
@@ -388,9 +394,14 @@ export default function Layout(props) {
       </AppBar>
       <Grid container>
         {width > 992 ? (
-          <Grid item md={isNav === true ? 1.6 : 0.6} position={"relative"} sx={{
-            transition:"visibility 0s, all 0.2s ease-in-out"
-          }}>
+          <Grid
+            item
+            md={isNav === true ? 1.6 : 0.6}
+            position={"relative"}
+            sx={{
+              transition: "visibility 0s, all 0.2s ease-in-out",
+            }}
+          >
             <Navbar navIcon={isNav} />
           </Grid>
         ) : (
@@ -401,7 +412,10 @@ export default function Layout(props) {
           xs={12}
           sm={12}
           md={isNav === true ? 10.4 : 11.4}
-          sx={{ minHeight: "100vh", transition:"visibility 0s, all 0.2s ease-in-out" }}
+          sx={{
+            minHeight: "100vh",
+            transition: "visibility 0s, all 0.2s ease-in-out",
+          }}
         >
           <Main open={chatPopup}>{children}</Main>
         </Grid>
@@ -558,18 +572,18 @@ export default function Layout(props) {
                     setBackgroundPrivate("#462a71");
                   }}
                 >
-                    {tabChat === false ? (
-                      <img src={imageChat.globalicon1} alt="Arrow" width={20} />
-                    ) : (
-                      <img src={imageChat.globalicon2} alt="Arrow" width={20} />
-                    )}
+                  {tabChat === false ? (
+                    <img src={imageChat.globalicon1} alt="Arrow" width={20} />
+                  ) : (
+                    <img src={imageChat.globalicon2} alt="Arrow" width={20} />
+                  )}
                   <div className="d-flex align-items-center">
                     <span
                       className="fs-7 mx-2"
                       style={{
                         color: tabChat === true ? "white" : "#8a78b3",
-                        fontWeight:"700",
-                        fontSize:"15px"
+                        fontWeight: "700",
+                        fontSize: "15px",
                       }}
                     >
                       Global
@@ -597,28 +611,28 @@ export default function Layout(props) {
                     }
                   }}
                 >
-                    {tabChat === true ? (
-                      <img
-                        src={imageChat.privateicon1}
-                        alt="Arrow"
-                        width={10}
-                        className="img-fluid"
-                      />
-                    ) : (
-                      <img
-                        src={imageChat.privateicon2}
-                        alt="Arrow"
-                        width={12}
-                        className="img-fluid"
-                      />
-                    )}
+                  {tabChat === true ? (
+                    <img
+                      src={imageChat.privateicon1}
+                      alt="Arrow"
+                      width={10}
+                      className="img-fluid"
+                    />
+                  ) : (
+                    <img
+                      src={imageChat.privateicon2}
+                      alt="Arrow"
+                      width={12}
+                      className="img-fluid"
+                    />
+                  )}
                   <div className="d-flex align-items-center">
                     <span
                       className="fs-7 mx-2"
                       style={{
                         color: tabChat === false ? "white" : "#8a78b3",
-                        fontWeight:"700",
-                        fontSize:"15px"
+                        fontWeight: "700",
+                        fontSize: "15px",
                       }}
                     >
                       Private

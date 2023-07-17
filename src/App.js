@@ -84,20 +84,25 @@ function App() {
     }
   });
 
-  const isLandscape = () => window.matchMedia('(orientation:landscape)').matches,
-  onWindowResize = () => {              
-    clearTimeout(window.resizeLag)
-    window.resizeLag = setTimeout(() => {
-      delete window.resizeLag                       
-      store.dispatch(changeOrientation(isLandscape() ? 'landscape' : 'portrait'))
-    }, 200)
-  }
+  const isLandscape = () => window.matchMedia('(orientation:landscape)').matches;
 
-  useEffect(() => (
-  onWindowResize(),
-  window.addEventListener('resize', onWindowResize),
-  () => window.removeEventListener('resize', onWindowResize)
-  ),[])
+  useEffect(() => {
+    const onWindowResize = () => {
+      clearTimeout(window.resizeLag);
+      window.resizeLag = setTimeout(() => {
+        delete window.resizeLag;
+        store.dispatch(changeOrientation(isLandscape() ? 'landscape' : 'portrait'));
+      }, 200);
+    };
+  
+    onWindowResize();
+    window.addEventListener('resize', onWindowResize);
+  
+    return () => {
+      window.removeEventListener('resize', onWindowResize);
+    };
+  }, []);
+
   useEffect(() => {
     if (socket) {
       socket.once("connect", (data) => {});
@@ -286,6 +291,15 @@ function App() {
         store.dispatch(getLeaderBoardSuccess(data));
       });
       _socket?.on("inviteGameSuccess", (data) => {});
+
+      _socket?.on("updateGoldBet", (data) => {
+        store.dispatch(updateUserGold(data))
+      });
+
+      _socket?.on("updateGoldEarn", (data) => {
+        store.dispatch(updateUserGold(data))
+      });
+
 
       socket.on("connected", (socketId) => {});
 
