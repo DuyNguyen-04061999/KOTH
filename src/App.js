@@ -96,8 +96,10 @@ function App() {
     };
   
     onWindowResize();
-    window.addEventListener('resize', onWindowResize);
-  
+    if(window)
+    {
+      window.addEventListener('resize', onWindowResize);
+    }
     return () => {
       window.removeEventListener('resize', onWindowResize);
     };

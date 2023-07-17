@@ -92,7 +92,7 @@ export default function Navbar() {
             <img
               src={images.luckySpinIncon}
               alt="..."
-              className="p-1 me-1"
+              className="p-1 me-1 luckySpinIncon"
               width={28}
               height="auto"
             />
