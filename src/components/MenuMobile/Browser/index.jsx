@@ -22,7 +22,7 @@ export default function Browser(props) {
     { name: "Favorite", img: `${images.favoriteIcon}`, link: "" },
     { name: "PVP Games", img: `${images.pvpicon}`, link: "" },
     { name: "Free To Play", img: `${images.playicon}`, link: "" },
-    { name: "Game Log", img: `${images.gamelogicon}`, link: "" },
+    { name: "Game Logs", img: `${images.gamelogicon}`, link: "" },
     { name: "FAQ", img: `${images.home2}`, link: "/FAQ" },
   ];
 
@@ -50,7 +50,7 @@ export default function Browser(props) {
               }
             } else if (e?.name === "Free To Play") {
               navigate("/game-type/free");
-            } else if (e?.name === "Game Log") {
+            } else if (e?.name === "Game Logs") {
               if (!token) {
                 dispatch(toggleLoginDialog());
               } else {

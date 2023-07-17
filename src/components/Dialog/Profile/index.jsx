@@ -364,7 +364,9 @@ export default function DialogProfile(props) {
           ".css-m9glnp-MuiPaper-root-MuiDialog-paper": {
             backgroundColor: "#291e3b",
           },
-          "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {},
+          "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
+            overflowY: "unset !important",
+          },
           "& .MuiDialog-container": {},
           height: "100%",
         }}
@@ -383,7 +385,7 @@ export default function DialogProfile(props) {
             sx={{
               backgroundColor: "#291e3a",
               width: width < 576 ? "100%" : "490px",
-              height: height
+              height: height > 800 ? 800 : "auto"
             }}
           >
             <Box

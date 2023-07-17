@@ -115,7 +115,7 @@ export default function Layout(props) {
   const { token, isNav, resetInputValue } = useSelector(
     (state) => state.authReducer
   );
-  console.log(isNav);
+  
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const [showChat] = useState(true);

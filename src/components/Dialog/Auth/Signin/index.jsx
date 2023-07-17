@@ -818,7 +818,7 @@ export default function Dialoglg() {
                           className="btn-logout"
                           style={{ paddingRight: "0px", fontWeight: "bold" }}
                         >
-                          Game Log
+                          Game Logs
                         </button>
                       </Dropdown.Item>
                     </Grid>

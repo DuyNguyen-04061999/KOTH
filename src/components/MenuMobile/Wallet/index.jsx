@@ -1252,7 +1252,7 @@ export default function DialogWallet(props) {
               padding: "5px 16px 5px 24px",
             }}
           >
-            <Box>
+            <Box className="pt-2">
               <img
                 src={images.BackButtonDesposit}
                 alt="..."

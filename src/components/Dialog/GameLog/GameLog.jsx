@@ -110,13 +110,13 @@ export default function GameLogDialog(props) {
           >
             <Box className="d-flex align-items-center">
               <span
-                className="mx-2"
+                className="mx-2 mt-1"
                 style={{
                   color: "white",
                   fontWeight: "700",
                 }}
               >
-                GAME LOG
+                GAME LOGS
               </span>
             </Box>
             <Box
@@ -290,7 +290,7 @@ export default function GameLogDialog(props) {
                   fontWeight: "700",
                 }}
               >
-                GAME LOG
+                GAME LOGS
               </span>
             </Box>
             <Box
