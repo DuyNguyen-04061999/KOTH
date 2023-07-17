@@ -14,6 +14,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function NavMobile() {
   const { token, isLoginDialog } = useSelector((state) => state.authReducer);
+  const {chatWorld} = useSelector((state) => state.chatReducer)
   const [openMess, setOpenMess] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -107,7 +108,7 @@ export default function NavMobile() {
                 >
                   <div>
                     <Badge
-                      badgeContent={99}
+                      badgeContent={`${chatWorld.length}`}
                       sx={{
                         ".css-106c1u2-MuiBadge-badge": {
                           fontSize: "10px",

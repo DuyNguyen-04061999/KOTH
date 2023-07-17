@@ -212,7 +212,7 @@ export default function GameLogDialog(props) {
                           component="td"
                           scope="row"
                         >
-                          {log?.id}
+                          {log?.gameLogId}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           {log?.gameParent?.gameName}

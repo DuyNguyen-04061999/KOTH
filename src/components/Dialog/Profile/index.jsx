@@ -24,7 +24,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 export default function DialogProfile(props) {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
   const { open, handleShowProfile } = props;
   const { userName, token } = useSelector((state) => state.authReducer);
@@ -115,7 +115,7 @@ export default function DialogProfile(props) {
                   setTab(1);
                 }}
               >
-                <i class="fa-sharp fa-solid fa-pen edit-svgIcon"></i>
+                <i className="fa-sharp fa-solid fa-pen edit-svgIcon"></i>
               </button>
 
               {/* <img
@@ -372,7 +372,7 @@ export default function DialogProfile(props) {
         <Box
           className="dialogProfile"
           sx={{
-            background: "#2e2248",
+            background: "#291e3a",
             width: "100%",
             height: "100%",
           }}
@@ -383,6 +383,7 @@ export default function DialogProfile(props) {
             sx={{
               backgroundColor: "#291e3a",
               width: width < 576 ? "100%" : "490px",
+              height: height
             }}
           >
             <Box
@@ -419,7 +420,7 @@ export default function DialogProfile(props) {
                 }}
               />
             </Box>
-            <Box className="box-body text-white">
+            <Box className="box-body text-white" sx={{height:"100vh"}}>
               {tab === 0 ? (
                 renderUserInfo()
               ) : (

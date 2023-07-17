@@ -115,6 +115,7 @@ export default function Layout(props) {
   const { token, isNav, resetInputValue } = useSelector(
     (state) => state.authReducer
   );
+  console.log(isNav);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const [showChat] = useState(true);
@@ -283,8 +284,11 @@ export default function Layout(props) {
                 <img src={images.btnnav} alt="..." width={36} height={36} />
               </Box>
               <div
-                className="inp-header mx-3 ps-4"
+                className="inp-header mx-3 ps-4 cursor-pointer"
                 style={{ position: "relative" }}
+                onClick={() => {
+                  navigate("/home");
+                }}
               >
                 <img
                   width="135px"
@@ -370,7 +374,11 @@ export default function Layout(props) {
                 color="inherit"
                 aria-label="open drawer"
                 edge="end"
-                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px 10px 6px 10px" }}
+                sx={{
+                  backgroundColor: "#aa73db",
+                  borderRadius: "4px",
+                  padding: "6px 10px 6px 10px",
+                }}
                 className="cursor-pointer"
               >
                 <i className="fa-solid fa-message"></i>
@@ -383,7 +391,11 @@ export default function Layout(props) {
                 color="inherit"
                 aria-label="open drawer"
                 edge="end"
-                sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px 13px 6px 13px" }}
+                sx={{
+                  backgroundColor: "#aa73db",
+                  borderRadius: "4px",
+                  padding: "6px 13px 6px 13px",
+                }}
                 className="cursor-pointer"
               >
                 <i className="fa-solid fa-angle-right"></i>
@@ -535,6 +547,7 @@ export default function Layout(props) {
                       value={chatF}
                       id="sendmessages"
                       onChange={handleChangeChat}
+                      onKeyDown={handleOnKeyDown}
                       style={inpChat()}
                       placeholder="Type your messages..."
                     />
@@ -564,7 +577,7 @@ export default function Layout(props) {
                     backgroundColor: backgroundGlobal,
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
-                    padding:"3px"
+                    padding: "3px",
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -599,7 +612,7 @@ export default function Layout(props) {
                     display: "flex",
                     justifyContent: "start",
                     borderRadius: "0px 5px 5px 0px",
-                    padding:"3px"
+                    padding: "3px",
                   }}
                   onClick={() => {
                     if (token === null || token === "") {
