@@ -102,32 +102,35 @@ export default function Home() {
               >
                 <source src={images280423_l.bannerVideo} type="video/webm" />
               </video>
-              <button
-                onClick={() => {
-                  if (!token) {
-                    dispatch(toggleLoginDialog());
-                  } else {
-                    dispatch(toggleWalletDialog());
-                  }
-                }}
-                style={{
-                  border: "none",
-                  outline: "none",
-                  background: "linear-gradient(#6844de,#8c39ff)",
-                  color: "white",
-                  borderRadius: "5px",
-                  position: "absolute",
-                  left: "68px",
-                  bottom: "39px",
-                  padding: "15px 30px",
-                }}
-              >
-                Deposit & Play
-              </button>
+              <div className="ad">
+                <button
+                  onClick={() => {
+                    if (!token) {
+                      dispatch(toggleLoginDialog());
+                    } else {
+                      dispatch(toggleWalletDialog());
+                    }
+                  }}
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    background: "linear-gradient(#6844de,#8c39ff)",
+                    color: "white",
+                    borderRadius: "5px",
+                    position: "absolute",
+                    left: "68px",
+                    bottom: "39px",
+                    padding: "15px 30px",
+                    display:width < 1455 ? "none" : "block"
+                  }}
+                >
+                  Deposit & Play
+                </button>
+              </div>
             </Box>
             <Box className="banner-top">
               <Slider {...settings}>
-                <div>
+                <div className="fa-div-focus">
                   <img
                     src={imagesV2.bn2}
                     alt="..."
@@ -140,7 +143,7 @@ export default function Home() {
                     onClick={() => {}}
                   />
                 </div>
-                <div>
+                <div className="fa-div-focus">
                   <img
                     src={imagesV2.bn3}
                     alt="..."
@@ -153,7 +156,7 @@ export default function Home() {
                     onClick={() => {}}
                   />
                 </div>
-                <div>
+                <div className="fa-div-focus">
                   <img
                     src={imagesV2.bn4}
                     alt="..."
@@ -165,7 +168,7 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <div>
+                <div className="fa-div-focus">
                   <img
                     src={imagesV2.bn1}
                     alt="..."
@@ -640,7 +643,7 @@ export default function Home() {
           <Box className="banner-top">
             <div className="card-banner">
               <div className="img">
-                <div className="bigbanner">
+                <div className="bigbanner" style={{ position: "relative" }}>
                   <video
                     width={"100%"}
                     className="img-fluid"
@@ -651,6 +654,29 @@ export default function Home() {
                   >
                     <source src={images280423_l.videoMobile} type="video/mp4" />
                   </video>
+                  <button
+                    onClick={() => {
+                      if (!token) {
+                        dispatch(toggleLoginDialog());
+                      } else {
+                        dispatch(toggleWalletDialog());
+                      }
+                    }}
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      background: "linear-gradient(#6844de,#8c39ff)",
+                      color: "white",
+                      borderRadius: "5px",
+                      position: "absolute",
+                      left: "20px",
+                      bottom: "50px",
+                      padding: "5px 15px",
+                      fontSize: "13px",
+                    }}
+                  >
+                    Deposit & Play
+                  </button>
                 </div>
               </div>
             </div>

@@ -148,7 +148,7 @@ export default function Signup(props) {
                 name="contact"
                 value="email"
               />
-              <label for="contactChoice1" style={{color:"white"}}>Mr</label>
+              <label style={{color:"white"}}>Mr</label>
             </div>
 
             <div
@@ -163,7 +163,7 @@ export default function Signup(props) {
                 name="contact"
                 value="phone"
               />
-              <label for="contactChoice2" style={{color:"white"}}>Mrs</label>
+              <label style={{color:"white"}}>Mrs</label>
             </div>
 
             <div
@@ -178,7 +178,7 @@ export default function Signup(props) {
                 name="contact"
                 value="mail"
               />
-              <label for="contactChoice3" style={{color:"white"}}>Other</label>
+              <label style={{color:"white"}}>Other</label>
             </div>
           </div>
           {/* <Box

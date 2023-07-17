@@ -295,10 +295,12 @@ function App() {
       _socket?.on("inviteGameSuccess", (data) => {});
 
       _socket?.on("updateGoldBet", (data) => {
+        store.dispatch(showAlert("success","Update gold success"))
         store.dispatch(updateUserGold(data))
       });
 
       _socket?.on("updateGoldEarn", (data) => {
+        store.dispatch(showAlert("success","Update gold success"))
         store.dispatch(updateUserGold(data))
       });
 
@@ -395,3 +397,4 @@ function App() {
 }
 
 export default App;
+

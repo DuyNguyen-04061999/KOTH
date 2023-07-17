@@ -184,7 +184,7 @@ export default function ChatFriendList() {
 
   const checkHeightResponsive = () => {
     if (width < 576) {
-      return height - 119;
+      return height - 50;
     } else if (width > 1200) {
       return height - 130;
     } else if (width > 576 && width < 1199) {
@@ -206,7 +206,7 @@ export default function ChatFriendList() {
           component={"form"}
           position={"relative"}
           onSubmit={handleSubmitSearchChat}
-          className="ps-3 pe-3 pb-3"
+          className="p-3"
         >
           <Test
             type="text"
@@ -222,7 +222,7 @@ export default function ChatFriendList() {
           <Search
             sx={{
               position: "absolute",
-              top: "4px",
+              top: "20px",
               right: "20px",
               color: "#8280f0",
             }}

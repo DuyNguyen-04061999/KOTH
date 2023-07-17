@@ -2147,8 +2147,8 @@ console.log(width,height)
                           alt="..."
                           src={images.CupIcon}
                         />
-                        <span
-                          style={{
+                        <Typography
+                          sx={{
                             fontSize: getFontSizeButtonDependOnWidth(width),
                           }}
                         >
@@ -2156,7 +2156,7 @@ console.log(width,height)
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length > 0
                             ? JSON.parse(roomDetailInfo?.membersInRoom)[0]?.win
                             : ""}
-                        </span>
+                        </Typography>
                       </Box>
                     </Box>
                     <Box
@@ -2376,8 +2376,8 @@ console.log(width,height)
                             alt="..."
                             src={images.CupIcon}
                           />
-                          <span
-                            style={{
+                          <Typography
+                            sx={{
                               fontSize: getFontSizeTitleDependOnWidth(width),
                             }}
                           >
@@ -2387,7 +2387,7 @@ console.log(width,height)
                               ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
                                   ?.win
                               : ""}
-                          </span>
+                          </Typography>
                         </Box>
                         {roomDetailInfo?.membersInRoom &&
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length >

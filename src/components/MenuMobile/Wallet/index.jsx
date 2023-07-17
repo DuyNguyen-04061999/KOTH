@@ -73,7 +73,7 @@ export default function DialogWallet(props) {
   const [willGet, setWillGet] = useState(0);
   const [willBe, setWillBe] = useState(0);
   const [valueDepositAddress, setValueDepositAddress] = useState("");
-  const [checkCopy,setCheckCopy] = useState(false)
+  const [checkCopy, setCheckCopy] = useState(false);
   const [tab, setTab] = useState(1);
 
   const renderDeposit = () => {
@@ -232,28 +232,31 @@ export default function DialogWallet(props) {
                   data-text-initial="Copy to clipboard"
                   className="tooltip"
                 ></span>
-               {checkCopy === false ? (
-                 <img
-                 src={images.copybutton}
-                 alt=""
-                 onClick={() => {
-                   copy("y21weplzx75");
-                   setCheckCopy(true)
-                   dispatch(showAlert("success", "Copy successfully!"));
-                 }}
-               />
-               ) : (
-                <Box sx={{
-                  background:"linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                  borderRadius:"4px",
-                  padding:"15px",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center"
-                }}>
-                  <i class="fa-solid fa-check"></i>
-                </Box>
-               )}
+                {checkCopy === false ? (
+                  <img
+                    src={images.copybutton}
+                    alt=""
+                    onClick={() => {
+                      copy("y21weplzx75");
+                      setCheckCopy(true);
+                      dispatch(showAlert("success", "Copy successfully!"));
+                    }}
+                  />
+                ) : (
+                  <Box
+                    sx={{
+                      background:
+                        "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                      borderRadius: "4px",
+                      padding: "15px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <i className="fa-solid fa-check"></i>
+                  </Box>
+                )}
               </Box>
             </FormControl>
             <Box
@@ -791,9 +794,9 @@ export default function DialogWallet(props) {
   const renderTransaction = () => {
     return (
       <Box
-        className="mt-5"
+        className="pt-5"
         sx={{
-          minHeight: width > 576 ? height - 103 : "unset",
+          minHeight: width > 576 ? height - 169 : "unset",
           width: width < 576 ? "none" : wrapperWidth,
           fontSize: getFontSizeDependOnWidth(width),
         }}
@@ -998,7 +1001,7 @@ export default function DialogWallet(props) {
                             color: "#fff",
                           }}
                         >
-                          {transaction?.userId}
+                          {transaction?.transactionId}
                         </Box>
                       </StyledTableCell>
                       <StyledTableCell align="center">
@@ -1211,7 +1214,7 @@ export default function DialogWallet(props) {
         TransitionComponent={Transition}
         sx={{
           zIndex: 1303,
-          ".css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
+          "& .MuiPaper-root-MuiDialog-paper": {
             overflowY: "hidden",
             backgroundColor: "white",
           },
@@ -1224,6 +1227,8 @@ export default function DialogWallet(props) {
                 width < 576 ? width : isTransactionDialog ? "900px" : "500px",
               height: "100%",
               maxHeight: width < 576 ? height : "800px",
+              overflowY: "hidden",
+              backgroundColor: "white",
             },
           },
         }}
@@ -1260,6 +1265,7 @@ export default function DialogWallet(props) {
                   } else {
                     dispatch(closeTransactionDialog());
                   }
+                  setCheckCopy(false);
                 }}
               />
               <span
@@ -1302,6 +1308,7 @@ export default function DialogWallet(props) {
                   onClick={() => {
                     dispatch(toggleWalletDialog());
                     dispatch(closeTransactionDialog());
+                    setCheckCopy(false);
                   }}
                   sx={{ width: "15px", marginLeft: "20px", cursor: "pointer" }}
                 >
@@ -1314,11 +1321,12 @@ export default function DialogWallet(props) {
           <Box
             sx={{
               paddingTop: isTransactionDialog === true ? "0px" : "48px",
-              minHeight: width < 576 ? height - 46 : "unset",
+              minHeight: width < 576 ? "1000px" : "unset",
               maxHeight: width < 576 ? "unset" : height - 100,
               backgroundColor: "#271c39",
               paddingBottom: isTransactionDialog === true ? "0px" : "100px",
               overflowY: "auto",
+              overflowX: "hidden",
             }}
           >
             {isTransactionDialog
