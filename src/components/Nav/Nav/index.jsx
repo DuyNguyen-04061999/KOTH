@@ -14,7 +14,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token, isNav } = useSelector((state) => state.authReducer);
-  console.log(isNav);
   return (
     <Box className="nav-section">
       <Box

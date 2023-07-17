@@ -367,7 +367,7 @@ export default function Layout(props) {
                 sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px 10px 6px 10px" }}
                 className="cursor-pointer"
               >
-                <i class="fa-solid fa-message"></i>
+                <i className="fa-solid fa-message"></i>
               </Box>
             ) : (
               <Box
@@ -380,7 +380,7 @@ export default function Layout(props) {
                 sx={{ backgroundColor: "#aa73db", borderRadius: "4px", padding:"6px 13px 6px 13px" }}
                 className="cursor-pointer"
               >
-                <i class="fa-solid fa-angle-right"></i>
+                <i className="fa-solid fa-angle-right"></i>
               </Box>
             )}
           </div>
