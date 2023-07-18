@@ -182,10 +182,10 @@ export default function DialogWallet(props) {
                   textAlign: "start",
                 }}
               >
-                Your Deposit Address
+                Number dogecoin
               </Typography>
             </Box>
-            <FormControl
+            {/* <FormControl
               variant="standard"
               sx={{
                 width: "90%",
@@ -201,30 +201,7 @@ export default function DialogWallet(props) {
               }}
             >
               <Input
-                id="input-with-icon-adornment"
-                value={"y21weplzx75"}
-                sx={{
-                  "& .MuiInputBase-input.Mui-disabled": {
-                    WebkitTextFillColor: "#fff",
-                  },
-                  "&:before": {
-                    borderBottom: "0px solid",
-                    "&:hover": {
-                      borderBottom: "0px solid",
-                    },
-                  },
-                  "&:after": {
-                    borderBottom: "0px solid",
-                  },
-                  "&:hover": {
-                    border: "none",
-                  },
-                  color: "#fff",
-                  marginLeft: "10px",
-                }}
-                onChange={(e) => {
-                  setValueDepositAddress(e.target.value);
-                }}
+                sx={{width:"590"}}
               />
               <Box className="cursor-pointer copy">
                 <span
@@ -258,7 +235,47 @@ export default function DialogWallet(props) {
                   </Box>
                 )}
               </Box>
-            </FormControl>
+            </FormControl> */}
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "10px",
+                flexDirection: "column",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "89%",
+                }}
+              >
+                <Input
+                  sx={{
+                    width: "60%",
+                    backgroundColor: "white",
+                    color: "black",
+                    boxSizing: "border-box",
+                    padding: "3px 10px",
+                  }}
+                />
+                <button
+                  style={{
+                    backgroundColor: "#8b39f0",
+                    color: "white",
+                    borderRadius: "5px",
+                    border: "none",
+                    outline: "none",
+                    padding: "10px 30px",
+                  }}
+                >
+                  Payment
+                </button>
+              </Box>
+            </Box>
             <Box
               sx={{
                 width: "100%",

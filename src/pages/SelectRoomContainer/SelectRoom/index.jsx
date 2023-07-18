@@ -1426,6 +1426,7 @@ export default function SelectRoom() {
                           {filterArray?.map((item, index) => {
                             return (
                               <Box
+                                key={index}
                                 onClick={() => handleOnclickItemFilter(item)}
                                 sx={{
                                   cursor: "pointer",
