@@ -24,7 +24,7 @@ export default function NavMobile() {
   const dispatch = useDispatch();
   useEffect(() => {}, []);
   const pathname = useParams();
-  console.log("Param: ", useParams());
+
   return (
     <>
       {isLoginDialog === false && width <= 576 ? (

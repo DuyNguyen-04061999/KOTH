@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Typography, FormControl, Input } from "@mui/material";
 import AvatarPicker from "../AvatarPicker";
 import _socket from "../../../../redux-saga-middleware/config/socket";

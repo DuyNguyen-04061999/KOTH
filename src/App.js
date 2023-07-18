@@ -134,7 +134,6 @@ function App() {
 
       socket?.on("chatSuccess", (data) => {
         store.dispatch(updateChatWorld(data));
-        console.log(data);
       });
 
       socket?.on("addFriendSuccess", (data) => {
