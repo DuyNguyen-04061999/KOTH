@@ -5,7 +5,7 @@ import "./index.scss";
 import MenuChat from "../../MenuMobile/Chat";
 import MenuBrowser from "../../MenuMobile/Browser";
 import MenuSearch from "../../MenuMobile/Search";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -14,16 +14,17 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function NavMobile() {
   const { token, isLoginDialog } = useSelector((state) => state.authReducer);
-  const {chatWorld} = useSelector((state) => state.chatReducer)
+  const { chatWorld } = useSelector((state) => state.chatReducer);
   const [openMess, setOpenMess] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const navigate = useNavigate();
   const [hideNavMobile] = useState("block");
-  const {width} = useWindowDimensions()
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {}, []);
-
+  const pathname = useParams();
+  console.log("Param: ", useParams());
   return (
     <>
       {isLoginDialog === false && width <= 576 ? (
@@ -44,8 +45,13 @@ export default function NavMobile() {
                   }}
                 >
                   <div>
-                    <img src={popup.brow} alt="..." />
-                    <p style={{fontSize:getFontSizeDependOnWidth(width)}}>Home</p>
+                    <img
+                      src={pathname.type ? popup.brow : popup.HomeActiveIcon}
+                      alt="..."
+                    />
+                    <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
+                      Home
+                    </p>
                   </div>
                 </div>
                 <div
@@ -59,8 +65,17 @@ export default function NavMobile() {
                       navigate("/game-type/favorite");
                     }}
                   >
-                    <img src={popup.mygame} alt="..." />
-                    <p style={{fontSize:getFontSizeDependOnWidth(width)}}>Favorite</p>
+                    <img
+                      src={
+                        pathname.type && pathname.type === "favorite"
+                          ? popup.FavoriteActiveIcon
+                          : popup.mygame
+                      }
+                      alt="..."
+                    />
+                    <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
+                      Favorite
+                    </p>
                   </div>
                 </div>
                 <div
@@ -81,7 +96,9 @@ export default function NavMobile() {
                       <img src={popup.wallet} alt="..." />
                     </div>
                   </div>
-                  <p style={{fontSize:getFontSizeDependOnWidth(width)}}>Wallet</p>
+                  <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
+                    Wallet
+                  </p>
                 </div>
                 <div
                   className="items"
@@ -93,8 +110,13 @@ export default function NavMobile() {
                   }}
                 >
                   <div>
-                    <img src={popup.search} alt="..." />
-                    <p style={{fontSize:getFontSizeDependOnWidth(width)}}>Search</p>
+                    <img
+                      src={openSearch ? popup.SearchActiveIcon : popup.search}
+                      alt="..."
+                    />
+                    <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
+                      Search
+                    </p>
                   </div>
                 </div>
                 <div
@@ -117,7 +139,11 @@ export default function NavMobile() {
                     >
                       <div>
                         <img src={popup.chat} alt="..." />
-                        <p style={{fontSize:getFontSizeDependOnWidth(width)}}>Chat</p>
+                        <p
+                          style={{ fontSize: getFontSizeDependOnWidth(width) }}
+                        >
+                          Chat
+                        </p>
                       </div>
                     </Badge>
                   </div>

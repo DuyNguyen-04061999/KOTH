@@ -14,8 +14,8 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function DialogSearch(props) {
   const { open, handleShowSearch, handleColor } = props;
-  const { listGameByType } = useSelector(state => state.gameReducer)
-  const dispatch = useDispatch()
+  const { listGameByType } = useSelector((state) => state.gameReducer);
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
@@ -24,7 +24,7 @@ export default function DialogSearch(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getSearchGame(search))
+    dispatch(getSearchGame(search));
   };
 
   function searchList() {
@@ -64,13 +64,16 @@ export default function DialogSearch(props) {
                   onChange={handleChange}
                   placeholder="Want to find something ?"
                 />
-                <button type="submit" style={{
-                      position: "absolute",
-                      left: "260px",
-                      top: "20px",
-                      border:"none",
-                      backgroundColor:"unset"
-                    }}>
+                <button
+                  type="submit"
+                  style={{
+                    position: "absolute",
+                    left: "260px",
+                    top: "20px",
+                    border: "none",
+                    backgroundColor: "unset",
+                  }}
+                >
                   <SearchIcon
                     onClick={handleSubmit}
                     sx={{
@@ -90,7 +93,7 @@ export default function DialogSearch(props) {
                 height={30}
                 onClick={() => {
                   handleShowSearch();
-                  handleColor()
+                  handleColor();
                 }}
               />
             </Box>
@@ -98,14 +101,11 @@ export default function DialogSearch(props) {
           <Box className="search-mobile">
             <Box className="recent-search">
               <Box className="inp">
-                <Grid container columnSpacing={2} rowSpacing={2}>
-                  
-                </Grid>
+                <Grid container columnSpacing={2} rowSpacing={2}></Grid>
               </Box>
             </Box>
             <Box className="Recommented">
-              <Box className="title">
-              </Box>
+              <Box className="title"></Box>
               <Box className="item">{searchList()}</Box>
             </Box>
           </Box>

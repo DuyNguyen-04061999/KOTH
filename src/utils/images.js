@@ -137,6 +137,9 @@ import Notification from "../assets/imagesDesktop/Notification.png";
 // import backgroundwallet from "../assets/imagesLayout/popup/01.png";
 import backgroundNavmobile from "../assets/imagesLayout/popup/02.png";
 import faq from "../assets/imagesLayout/faq.svg";
+import SearchActiveIcon from "../assets/imagesLayout/SearchActiveIcon.png";
+import FavoriteActiveIcon from "../assets/imagesLayout/FavoriteActiveIcon.png";
+import HomeActiveIcon from "../assets/imagesLayout/HomeActiveIcon.png";
 
 //---------------signin-signup-------------------
 import pic from "../assets/imagesLayout/Sign/pic.png";
@@ -242,9 +245,9 @@ export const images = {
   inviteFriendMobile: inviteFriendMobile,
   RotateScreen: RotateScreen,
   ContinueGameButton: ContinueGameButton,
-  eyeIcon:eyeIcon,
-  closeEyefullscreen:closeEyefullscreen,
-  Logo_Text:Logo_Text
+  eyeIcon: eyeIcon,
+  closeEyefullscreen: closeEyefullscreen,
+  Logo_Text: Logo_Text,
 };
 
 export const images2 = {
@@ -314,6 +317,9 @@ export const popup = {
   backgroundNavmobile: backgroundNavmobile,
   bg01: bg01,
   faq: faq,
+  SearchActiveIcon: SearchActiveIcon,
+  FavoriteActiveIcon: FavoriteActiveIcon,
+  HomeActiveIcon: HomeActiveIcon,
 };
 
 export const sign = {

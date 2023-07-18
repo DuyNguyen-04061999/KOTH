@@ -40,7 +40,7 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: isNav === true ? "flex-start" : "center",
-              transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
             }}
             onClick={() => {
               navigate(`/home`);
@@ -77,8 +77,7 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: isNav === true ? "flex-start" : "center",
-              transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
             }}
             className=" pt-2 pb-2"
             onClick={() => {
@@ -120,8 +119,7 @@ export default function Navbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
-              transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-
+                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
               }}
               className=" pt-2 pb-2"
               onClick={() => {
@@ -161,8 +159,7 @@ export default function Navbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
-              transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-
+                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
               }}
               className=" pt-2 pb-2"
               onClick={() => {
@@ -198,8 +195,7 @@ export default function Navbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
-              transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-
+                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
               }}
               className=" pt-2 pb-2"
               onClick={() => {
@@ -237,8 +233,7 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: isNav === true ? "flex-start" : "center",
-              transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
             }}
             className="nav-game-log pt-2 pb-2"
             onClick={() => {
@@ -279,7 +274,7 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: isNav === true ? "flex-start" : "center",
-              transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
             }}
             onClick={() => {
               navigate(`/FAQ`);

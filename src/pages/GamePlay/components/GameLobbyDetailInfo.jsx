@@ -13,7 +13,7 @@ import {
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
 import { useNavigate } from "react-router-dom";
-import '../../GamePlay/scss/GameLobbyDetailInfi.scss'
+import "../../GamePlay/scss/GameLobbyDetailInfi.scss";
 
 export default function GameLobbyDetailInfo() {
   const { detailGame, listFavoriteGame, listLikeGame, listDislikeGame } =
@@ -28,7 +28,7 @@ export default function GameLobbyDetailInfo() {
   const [showMore, setShowMore] = useState(false);
   const [socket, setSocket] = useState(null);
   const [fGame, setFGame] = useState(null);
-  const [animate,setAnimate] = useState("")
+  const [animate, setAnimate] = useState("");
 
   useEffect(() => {
     const socket = _socket;
@@ -68,7 +68,7 @@ export default function GameLobbyDetailInfo() {
       setCountLikeGame(countLikeGame + 1);
       setCountDisLikeGame(countDisLikeGame - 1);
     }
-    setAnimate('animate')
+    setAnimate("animate");
   };
   const handleOnClickDisLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
@@ -190,7 +190,7 @@ export default function GameLobbyDetailInfo() {
             <h2
               style={{
                 color: "#ffffff",
-                fontSize: width < 576 ? parseFloat(width/26.67) : "35px",
+                fontSize: width < 576 ? parseFloat(width / 26.67) : "35px",
                 textAlign: "left",
                 marginTop: "5px",
                 marginLeft: "0px",
@@ -323,9 +323,9 @@ export default function GameLobbyDetailInfo() {
               fontSize: getFontSizeDependOnWidth(width),
               cursor: "pointer",
               fontWeight: "bolder",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center"
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             PLAY NOW
@@ -395,7 +395,7 @@ export default function GameLobbyDetailInfo() {
           {showMore ? "Hidden" : "Show More"}
         </Typography>
         <Typography
-          className=" text-white mt-3"
+          className="text-white mt-3"
           sx={{
             fontWeight: "600",
             textAlign: "left",
@@ -407,12 +407,12 @@ export default function GameLobbyDetailInfo() {
         <Box className="d-flex mt-2">
           <Box
             component={"span"}
-            className="me-2 rounded cursor-pointer"
+            className="me-2 rounded cursor-pointer  featureTag"
             sx={{
               background: "#462a71",
               color: "#757ae5",
               fontWeight: "600",
-              padding: width < 576 ? "9px 14px" : "10px 30px",
+              padding: width < 576 ? "9px 14px" : "8px 20px",
               fontSize: getFontSizeDependOnWidth(width),
             }}
           >
@@ -420,12 +420,12 @@ export default function GameLobbyDetailInfo() {
           </Box>
           <Box
             component={"span"}
-            className="rounded cursor-pointer"
+            className="rounded cursor-pointer featureTag"
             sx={{
               background: "#462a71",
               color: "#757ae5",
               fontWeight: "600",
-              padding: width < 576 ? "9px 14px" : "10px 30px",
+              padding: width < 576 ? "9px 14px" : "8px 20px",
               fontSize: getFontSizeDependOnWidth(width),
             }}
           >
