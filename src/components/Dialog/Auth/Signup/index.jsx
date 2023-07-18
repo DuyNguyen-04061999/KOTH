@@ -40,6 +40,7 @@ export default function Signup(props) {
 
   useEffect(() => {
     if (
+      gender === "" ||
       username === "" ||
       password === "" ||
       c_password === "" ||
@@ -49,7 +50,7 @@ export default function Signup(props) {
     } else {
       setDisabledBtn(false);
     }
-  }, [username, password, c_password, email]);
+  }, [username, password, c_password, email, gender]);
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
@@ -146,9 +147,9 @@ export default function Signup(props) {
                 type="radio"
                 id="contactChoice1"
                 name="contact"
-                value="email"
+                defaultChecked
               />
-              <label style={{color:"white"}}>Mr</label>
+              <label style={{ color: "white" }}>Mr</label>
             </div>
 
             <div
@@ -163,7 +164,7 @@ export default function Signup(props) {
                 name="contact"
                 value="phone"
               />
-              <label style={{color:"white"}}>Mrs</label>
+              <label style={{ color: "white" }}>Mrs</label>
             </div>
 
             <div
@@ -178,7 +179,7 @@ export default function Signup(props) {
                 name="contact"
                 value="mail"
               />
-              <label style={{color:"white"}}>Other</label>
+              <label style={{ color: "white" }}>Other</label>
             </div>
           </div>
           {/* <Box
@@ -523,11 +524,7 @@ export default function Signup(props) {
             </span>
           </Button>
         </Box>
-        <Box
-          onClick={() => {
-            dispatch(clickTab(false));
-          }}
-        >
+        <Box>
           <Box
             sx={{
               display: "flex",
@@ -537,7 +534,12 @@ export default function Signup(props) {
             }}
           >
             Already Registered ?
-            <Typography sx={{ color: "#ffb600", cursor: "pointer" }}>
+            <Typography
+              onClick={() => {
+                dispatch(clickTab(false));
+              }}
+              sx={{ color: "#ffb600", cursor: "pointer" }}
+            >
               Sign In
             </Typography>
           </Box>

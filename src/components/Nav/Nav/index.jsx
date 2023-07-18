@@ -274,11 +274,15 @@ export default function Navbar() {
             </span>
           </Box>
           <Box
+            className="cursor-pointer"
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: isNav === true ? "flex-start" : "center",
               transition:"transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+            }}
+            onClick={() => {
+              navigate(`/FAQ`);
             }}
           >
             <img
@@ -299,9 +303,6 @@ export default function Navbar() {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
-              }}
-              onClick={() => {
-                navigate(`/FAQ`);
               }}
             >
               FAQs

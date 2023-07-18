@@ -46,7 +46,7 @@ function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isTab } = useSelector((state) => state.authReducer);
+  const { isTab, isLoginDialog } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
 
@@ -74,6 +74,7 @@ function SimpleDialog(props) {
       password: password,
     });
     // handleClose();
+    dispatch(toggleLoginDialog());
   };
   return (
     <>
@@ -264,9 +265,6 @@ function SimpleDialog(props) {
                     <Box className="d-flex justify-content-center mt-4">
                       <Box
                         className="d-flex"
-                        onClick={() => {
-                          dispatch(clickTab(true));
-                        }}
                         sx={{
                           color: "#7671ba",
                           fontWeight: "500",
@@ -274,6 +272,9 @@ function SimpleDialog(props) {
                       >
                         New User?
                         <Typography
+                          onClick={() => {
+                            dispatch(clickTab(true));
+                          }}
                           sx={{ color: "#ffb600", cursor: "pointer" }}
                         >
                           Create Account
@@ -694,7 +695,7 @@ export default function Dialoglg() {
                   padding: "0 10px",
                 }}
                 id="dropdown-basic"
-                className="dropdown-bs position-relative"
+                className="dropdown-bs position-relative btn-ava"
               >
                 {userAvatar === null ? (
                   <img

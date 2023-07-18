@@ -135,6 +135,7 @@ function App() {
 
       socket?.on("chatSuccess", (data) => {
         store.dispatch(updateChatWorld(data));
+        console.log(data);
       });
 
       socket?.on("addFriendSuccess", (data) => {
@@ -149,7 +150,7 @@ function App() {
       });
 
       socket?.on("registerSuccess", () => {
-        store.dispatch(showAlert("success", "register succes fully"));
+        store.dispatch(showAlert("success", "register succesfully"));
         store.dispatch(registerSuccesFully("success"));
         store.dispatch(toggleLoginDialog());
       });

@@ -264,7 +264,7 @@ const FAQPageComponent = () => {
                     tabFaq && e?.title && e?.title === tabFaq
                       ? "#5f3491"
                       : "unset",
-                  fontSize: width > 576 ? "20 px" : "16px",
+                  fontSize: width > 576 ? "20 px" : "13px",
                   marginLeft:"0px !important",
                   marginRight:"10px !important",
                   borderRadius:" 0px 7px 7px 0px",

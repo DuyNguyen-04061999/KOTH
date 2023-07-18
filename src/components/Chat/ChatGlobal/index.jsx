@@ -160,7 +160,7 @@ export default function ChatGlobal(props) {
           </MenuItem>
           <MenuItem onClick={handleOnClickDeleteFriend}>
             <Box
-              className="p-2 text-white"
+              className="p-2 text-white cursor-pointer"
               onClick={() => {
                 if (width < 576) {
                   handleShow();

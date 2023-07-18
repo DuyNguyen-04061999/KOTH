@@ -87,7 +87,7 @@ export default function DialogProfile(props) {
                     _socket.emit("deleteFriend", { username: userNameProfile });
                     handleShowProfile();
                   }}
-                  className="p-2 text-white"
+                  className="p-2 text-white cursor-pointer"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "40%",
@@ -429,7 +429,7 @@ export default function DialogProfile(props) {
                 <SettingProfile
                   closePopup={() => {
                     setTab(0);
-                    handleShowProfile();
+                    // handleShowProfile();
                   }}
                 />
               )}

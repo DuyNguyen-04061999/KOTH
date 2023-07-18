@@ -2263,7 +2263,7 @@ export default function SelectRoom() {
                                     )?.name,
                                   });
                                 }}
-                                className="p-1 text-white"
+                                className="p-1 text-white cursor-pointer"
                                 sx={{
                                   background:
                                     "linear-gradient(180deg, #843ff0, #7748ed)",

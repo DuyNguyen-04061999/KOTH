@@ -98,6 +98,12 @@
     .dropdown-menu-bs {
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
+    .btn-ava{
+      &:focus-visible{
+        outline: none;
+        box-shadow: none;
+      }
+    }
   }
   .doge-coin {
     height: 100%;

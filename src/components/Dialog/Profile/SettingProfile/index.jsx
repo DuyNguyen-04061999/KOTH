@@ -22,20 +22,20 @@ export default function SettingProfile({ closePopup }) {
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
   // const [mobilePhone, setMobilePhone] = useState(phone);
-  const [disabledBtn, setDisabledBtn] = useState(true);
+  // const [disabledBtn, setDisabledBtn] = useState(true);
 
-  useEffect(() => {
-    if (
-      fName === "" ||
-      lName === "" ||
-      emailAddress === ""
-      // mobilePhone === ""
-    ) {
-      setDisabledBtn(true);
-    } else {
-      setDisabledBtn(false);
-    }
-  }, [fName, lName, emailAddress]);
+  // useEffect(() => {
+  //   if (
+  //     fName === "" ||
+  //     lName === "" ||
+  //     emailAddress === ""
+  //     // mobilePhone === ""
+  //   ) {
+  //     setDisabledBtn(true);
+  //   } else {
+  //     setDisabledBtn(false);
+  //   }
+  // }, [fName, lName, emailAddress]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,38 +49,61 @@ export default function SettingProfile({ closePopup }) {
     const kb = Math.ceil(bits / 8 / 1000);
     return kb;
   }
+  // const sendUpdateProfile = () => {
+  //   if (
+  //     fName &&
+  //     lName &&
+  //     emailAddress
+  //   ) {
+  //     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
+  //       dispatch(showAlert("error", "Please attach image smaller 1MB"));
+  //     } else {
+  //       if (avatarImage === avatarUrl) {
+  //         _socket.emit("updateProfile", {
+  //           firstName: fName,
+  //           lastName: lName,
+  //           email: emailAddress,
+  //         });
+  //       } else {
+  //         _socket.emit("updateProfile", {
+  //           firstName: fName,
+  //           lastName: lName,
+  //           email: emailAddress,
+  //           // phone: mobilePhone,
+  //           avatar: avatarImage?.replace("data:image/png;base64,", ""),
+  //         });
+  //       }
+  //       dispatch(updateProfile());
+  //     }
+  //     closePopup();
+  //   }
+  //   else {
+  //     dispatch(showAlert("error", "Please fill all of textbox"));
+  //   }
+  // };
+
   const sendUpdateProfile = () => {
-    if (
-      fName &&
-      lName &&
-      emailAddress
-      // && mobilePhone
-    ) {
-      if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
-        dispatch(showAlert("error", "Please attach image smaller 1MB"));
-      } else {
-        if (avatarImage === avatarUrl) {
-          _socket.emit("updateProfile", {
-            firstName: fName,
-            lastName: lName,
-            email: emailAddress,
-            // phone: mobilePhone,
-          });
-        } else {
-          _socket.emit("updateProfile", {
-            firstName: fName,
-            lastName: lName,
-            email: emailAddress,
-            // phone: mobilePhone,
-            avatar: avatarImage?.replace("data:image/png;base64,", ""),
-          });
-        }
-        dispatch(updateProfile());
-      }
-      closePopup();
+    if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
+      dispatch(showAlert("error", "Please attach image smaller 1MB"));
     } else {
-      dispatch(showAlert("error", "Please fill all of textbox"));
+      if (avatarImage === avatarUrl) {
+        _socket.emit("updateProfile", {
+          firstName: fName,
+          lastName: lName,
+          email: emailAddress,
+        });
+      } else {
+        _socket.emit("updateProfile", {
+          firstName: fName,
+          lastName: lName,
+          email: emailAddress,
+          // phone: mobilePhone,
+          avatar: avatarImage?.replace("data:image/png;base64,", ""),
+        });
+      }
+      dispatch(updateProfile());
     }
+    closePopup();
   };
 
   const renderChangeUserName = () => {
@@ -97,7 +120,11 @@ export default function SettingProfile({ closePopup }) {
             <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
-                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
+                sx={{
+                  color: "#757ae5",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
               >
                 First Name
               </Typography>
@@ -142,7 +169,11 @@ export default function SettingProfile({ closePopup }) {
             <Box className="Last-Name mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
-                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
+                sx={{
+                  color: "#757ae5",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
               >
                 Last Name
               </Typography>
@@ -186,7 +217,11 @@ export default function SettingProfile({ closePopup }) {
             <Box className="Email mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
-                sx={{ color: "#757ae5", fontWeight: "500", marginBottom:"5px !important" }}
+                sx={{
+                  color: "#757ae5",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
               >
                 Email Address
               </Typography>
@@ -226,18 +261,18 @@ export default function SettingProfile({ closePopup }) {
                   }}
                 />
               </FormControl>
-              {emailAddress && !emailAddress.includes("@gmail.com") && (
+              {/* {emailAddress && !emailAddress.includes("@gmail.com") && (
                 <span className="text-danger">
                   Email must contain @gmail.com
                 </span>
-              )}
+              )} */}
             </Box>
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
             <button
               className="text-white p-2"
               type="submit"
-              disabled={disabledBtn}
+              // disabled={disabledBtn}
               style={{
                 width: "50%",
                 border: "none",
@@ -245,7 +280,7 @@ export default function SettingProfile({ closePopup }) {
                 fontWeight: "bold",
                 background:
                   "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                opacity: disabledBtn === true ? "0.1" : "",
+                // opacity: disabledBtn === true ? "0.1" : "",
               }}
               onClick={() => {
                 sendUpdateProfile();

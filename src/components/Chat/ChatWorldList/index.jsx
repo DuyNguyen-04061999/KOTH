@@ -504,7 +504,7 @@ export default function ChatWorldList() {
                 }}
               >
                 <Box
-                  className="p-1 text-white"
+                  className="p-1 text-white cursor-pointer"
                   onClick={handleDeleteFriend}
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
