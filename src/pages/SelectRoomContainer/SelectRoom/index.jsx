@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Dialog,
   FormControl,
   Menu,
@@ -36,7 +35,6 @@ import {
   setWaitingNav,
 } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
-import { usePrevious } from "@uidotdev/usehooks";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import imagesFavorite from "../../../utils/imagesFavorite";
 import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
@@ -45,7 +43,6 @@ import styled from "styled-components";
 import PopupInviteFriend from "./PopupInviteFriend";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
-import { useRef } from "react";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -61,7 +58,7 @@ const Test = styled.input`
 `;
 
 export default function SelectRoom() {
-  const { width,height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const { id } = useParams();
   const screen = useFullScreenHandle();
   const {
@@ -87,8 +84,8 @@ export default function SelectRoom() {
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState("");
-  const [startGame, setStartGame] = useState(true);
-  const [continueGame, setContinueGame] = useState(false);
+  const [startGame, setStartGame] = useState(false);
+  // const [continueGame, setContinueGame] = useState(false);
   const [previousOri, setPreviousOri]= useState("")
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -575,7 +572,7 @@ export default function SelectRoom() {
   const handleOnchangeText = (e) => {
     setTextContent(e.target.value);
   };
-console.log(width,height)
+
   const handleOnKeyDownText = (e) => {
     if (e.key === "Enter" && textContent !== "") {
       socket?.emit("chatInRoom", {
@@ -619,29 +616,23 @@ console.log(width,height)
     [screen, expand]
   );
 
-  const bRf = useRef(null)
-
   useEffect(() => {
     
-    if(orientation==="landscape" && width > 576)
+    if(orientation === "landscape" && width > 576 && width < 1200)
     {
-      console.log(123);
       setIsFullScreen(true)
     }
 
     
-    if(orientation==="portrait" || width > 576)
+    if(orientation === "portrait" || (width > 576 && orientation === "portrait"))
     {
       setIsFullScreen(false)
     }
    
   }, [orientation,previousOri, width])
-  console.log(width,previousOri,orientation)
+
   return (
     <div className="">
-        <button ref={bRf} onClick={() => screen.enter()}>
-            Click
-        </button>
        <Box
           sx={{
             width: startGame ? "100%" : "0px",
@@ -1070,7 +1061,7 @@ console.log(width,height)
           </Box>
           <Box
             onClick={() => {
-              setContinueGame(true);
+              // setContinueGame(true);
             }}
             sx={{
               position: "fixed",

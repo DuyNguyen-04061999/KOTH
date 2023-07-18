@@ -171,7 +171,7 @@ const gameReducer = (
     currentLoca: "",
     previousLoca: "",
     inviteFriendDialog: false,
-    orientation:"portrait"
+    orientation: "portrait"
   },
   action
 ) => {
