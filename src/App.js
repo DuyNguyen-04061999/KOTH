@@ -44,7 +44,6 @@ import {
   getDepostiData,
   getWithdrawData,
   paymentLogoutSuccessFully,
-  updateDeposit,
   updateWithDraw,
 } from "./redux-saga-middleware/reducers/paymentReducer";
 import {
@@ -230,7 +229,6 @@ function App() {
       socket?.on("getCryptoSuccess", (data) => {});
 
       socket?.on("depositSuccess", (data) => {
-        store.dispatch(updateDeposit(data));
         store.dispatch(showAlert("success", "Deposit successfully!"));
       });
 
@@ -304,6 +302,10 @@ function App() {
         store.dispatch(updateUserGold(data))
       });
 
+      _socket?.on("updateGold", (data) => {
+        store.dispatch(showAlert("success","Update gold success"))
+        store.dispatch(updateUserGold(data))
+      });
 
       socket.on("connected", (socketId) => {});
 

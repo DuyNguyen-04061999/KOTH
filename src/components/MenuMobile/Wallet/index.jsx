@@ -13,7 +13,6 @@ import {
   Table,
   TableHead,
   TableBody,
-  FormControl,
   Input,
 } from "@mui/material";
 import { forwardRef, useCallback, useEffect } from "react";
@@ -21,7 +20,6 @@ import "./index.scss";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { images280423_l } from "../../../utils/images280423_l";
 import { useState } from "react";
-import copy from "copy-to-clipboard";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import moment from "moment";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -36,6 +34,8 @@ import {
 import { images } from "../../../utils/images";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import TransactionDetailDialog from "../../Dialog/TransactionDetail";
+import { Web3 } from "web3"
+
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -52,16 +52,86 @@ export default function DialogWallet(props) {
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
   );
+  const [amountDeposit, setAmountDeposit] = useState(0)
 
   const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  const [socket, setSocket] = useState(null)
+
+  useEffect(() => {
+    setSocket(_socket)
+  }, [])
+
+  
+
+  useEffect(() => {
+    async function sendToken(data, transaction) {
+      try {
+        let web3 = new Web3(window.ethereum)
+        await window.ethereum.enable();
+        let accounts = await web3.eth.getAccounts()
+        let account = accounts[0]
+        
+        // if (web3.currentProvider.isConnected()) {
+        //   if(!account) {
+  
+        //   }
+        // } else {
+          
+        // }
+  
+        socket?.emit("updateDepositTransaction", {
+          type: "process",
+          transactionId: transaction?.id
+        })
+  
+        let contract = new web3.eth.Contract(data?.token_abi, data?.token_contract)
+        let depositAmount = (data?.token_quantity) + "000000000000000000";
+  
+        let result = await contract.methods.transfer(data?.target_wallet, depositAmount).send({ from: account })
+  
+        if(result) {
+          socket?.emit("updateDepositTransaction", {
+            type: "confirm",
+            transactionId: transaction?.id,
+            tid: data?.transaction_id,
+            txh: result?.transactionHash
+          })
+          return result;
+        }
+  
+      } catch (error) {
+        socket?.emit("updateDepositTransaction", {
+          type: "error",
+          transactionId: transaction?.id
+        })
+      }
+
+      return false
+    }
+
+    socket?.on("depositRequestSuccess", async (data, transaction) => {
+      setAmountDeposit(0)
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: data?.target_network_id || "0x1" }]
+      });
+      
+      await sendToken(data, transaction)
+    })
+
+    return () => {
+      socket?.off()
+      socket?.disconnect()
+    }
+  }, [socket]);
 
   const div = useCallback((node) => {
     if (node !== null) {
       setWrapperWidth(node.getBoundingClientRect().width);
     }
   }, []);
+
   useEffect(() => {
     if (isTransactionDialog) {
       setWrapperWidth("900px");
@@ -69,11 +139,11 @@ export default function DialogWallet(props) {
       setWrapperWidth("500px");
     }
   }, [isTransactionDialog]);
+
   const [withdrawCharge] = useState(5);
   const [willGet, setWillGet] = useState(0);
   const [willBe, setWillBe] = useState(0);
-  const [valueDepositAddress, setValueDepositAddress] = useState("");
-  const [checkCopy, setCheckCopy] = useState(false);
+  const [valueDepositAddress] = useState("");
   const [tab, setTab] = useState(1);
 
   const renderDeposit = () => {
@@ -185,57 +255,6 @@ export default function DialogWallet(props) {
                 Number dogecoin
               </Typography>
             </Box>
-            {/* <FormControl
-              variant="standard"
-              sx={{
-                width: "90%",
-                backgroundColor: "#181223",
-                borderRadius: "5px",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                color: "white",
-                marginTop: "20px",
-                marginLeft: "20px",
-              }}
-            >
-              <Input
-                sx={{width:"590"}}
-              />
-              <Box className="cursor-pointer copy">
-                <span
-                  data-text-end="Copied!"
-                  data-text-initial="Copy to clipboard"
-                  className="tooltip"
-                ></span>
-                {checkCopy === false ? (
-                  <img
-                    src={images.copybutton}
-                    alt=""
-                    onClick={() => {
-                      copy("y21weplzx75");
-                      setCheckCopy(true);
-                      dispatch(showAlert("success", "Copy successfully!"));
-                    }}
-                  />
-                ) : (
-                  <Box
-                    sx={{
-                      background:
-                        "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                      borderRadius: "4px",
-                      padding: "15px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <i className="fa-solid fa-check"></i>
-                  </Box>
-                )}
-              </Box>
-            </FormControl> */}
             <Box
               sx={{
                 width: "100%",
@@ -261,6 +280,11 @@ export default function DialogWallet(props) {
                     boxSizing: "border-box",
                     padding: "3px 10px",
                   }}
+                  placeholder="Enter Doge Coin Amount"
+                  type="number"
+                  value={amountDeposit}
+                  onChange={(e) => setAmountDeposit(e?.target?.value)}
+                  className="rounded"
                 />
                 <button
                   style={{
@@ -270,6 +294,13 @@ export default function DialogWallet(props) {
                     border: "none",
                     outline: "none",
                     padding: "10px 30px",
+                  }}
+                  onClick={() => {
+                    if(amountDeposit > 0) {
+                      socket?.emit("depositRequest", { amountDeposit });
+                    } else {
+                      dispatch(showAlert("error", "Please enter amount > 0"))
+                    }
                   }}
                 >
                   Payment
@@ -297,13 +328,10 @@ export default function DialogWallet(props) {
               <p style={{ color: "#7c81f3" }}>to require system to check</p>
               <button
                 onClick={() => {
-                  _socket.emit("deposit", { value: valueDepositAddress });
                   if (valueDepositAddress === "") {
-                    dispatch(showAlert("error", "not found"));
+                    dispatch(showAlert("error", "Not found address !"));
                   } else {
-                    dispatch(
-                      showAlert("success", "Check Deposit Successfully!")
-                    );
+                    _socket.emit("deposit", { value: valueDepositAddress });
                   }
                 }}
                 style={{
@@ -1282,7 +1310,6 @@ export default function DialogWallet(props) {
                   } else {
                     dispatch(closeTransactionDialog());
                   }
-                  setCheckCopy(false);
                 }}
               />
               <span
@@ -1325,7 +1352,6 @@ export default function DialogWallet(props) {
                   onClick={() => {
                     dispatch(toggleWalletDialog());
                     dispatch(closeTransactionDialog());
-                    setCheckCopy(false);
                   }}
                   sx={{ width: "15px", marginLeft: "20px", cursor: "pointer" }}
                 >
