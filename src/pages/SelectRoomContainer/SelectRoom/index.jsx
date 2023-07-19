@@ -67,7 +67,7 @@ export default function SelectRoom() {
     listLikeGame,
     listDislikeGame,
     inviteFriendDialog,
-    orientation
+    orientation,
   } = useSelector((state) => state.gameReducer);
   const { roomNav } = useSelector((state) => state.roomReducer);
   const [dogeGold, setDogeGold] = useState(0);
@@ -83,10 +83,10 @@ export default function SelectRoom() {
   const open1 = Boolean(anchorEl1);
   const [fetchListRoom, setFetchListRoom] = useState(true);
   const [roomIdSelect, setRoomIdSelect] = useState(0);
-  const [roomDetailInfo, setroomDetailInfo] = useState("");
+  const [roomDetailInfo, setroomDetailInfo] = useState(null);
   const [startGame, setStartGame] = useState(false);
   // const [continueGame, setContinueGame] = useState(false);
-  const [previousOri, setPreviousOri]= useState("")
+  const [previousOri, setPreviousOri] = useState("");
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
   const [disLikeGame, setDisLikeGame] = useState(false);
@@ -106,7 +106,8 @@ export default function SelectRoom() {
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
-  }, []);
+    dispatch(setSelectNav());
+  }, [dispatch]);
 
   useEffect(() => {
     if (token) {
@@ -115,13 +116,13 @@ export default function SelectRoom() {
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
-  useEffect(()=>{
-    if(orientation === "landscape") {
-      setPreviousOri(orientation)
+  useEffect(() => {
+    if (orientation === "landscape") {
+      setPreviousOri(orientation);
     } else {
-      setPreviousOri("")
+      setPreviousOri("");
     }
-  },[orientation])
+  }, [orientation]);
   useEffect(() => {
     function checkIsFavorite() {
       let index = listFavoriteGame.findIndex((element) => {
@@ -338,13 +339,11 @@ export default function SelectRoom() {
             }
             return [...prevState, data];
           });
-          if (userId === data?.userId) {
+          if (Number(userId) === Number(data?.userId)) {
             dispatch(setWaitingNav());
-          }
-          if (Number(data?.userId) === Number(userId)) {
+            setroomDetailInfo(data);
             setRoomIdSelect(data?.id);
           }
-          setroomDetailInfo(data);
         }
       }
     );
@@ -426,8 +425,12 @@ export default function SelectRoom() {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
       setChat([]);
       if (roomId === roomIdSelect) {
+        data?.membersInRoom&&data?.membersInRoom?.length>0&&console.log("Leaveroom Data: ",JSON.parse(data?.membersInRoom))
         setroomDetailInfo(data);
-        setRoomIdSelect(0);
+        if(!(data?.membersInRoom&&data?.membersInRoom?.length>0&&JSON.parse(data?.membersInRoom).filter(n=>n.username===userName).length>0))
+        {
+          setRoomIdSelect(0);
+        }
         setListRoom((prevState) => {
           let dt = [...prevState];
           if (checkExistData(data?.id, prevState) !== -1) {
@@ -604,7 +607,7 @@ export default function SelectRoom() {
     setRoomIdSelect(state?.roomInfo?.id);
   }, [state]);
 
-  const [isFullScreen ,setIsFullScreen] = useState(false)
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const reportChange = useCallback(
     (state, handle) => {
       if (handle === screen) {
@@ -617,69 +620,70 @@ export default function SelectRoom() {
   );
 
   useEffect(() => {
-    
-    if(orientation === "landscape" && width > 576 && width < 1200)
-    {
-      setIsFullScreen(true)
+    if (orientation === "landscape" && width > 576 && width < 1200) {
+      setIsFullScreen(true);
     }
 
-    
-    if(orientation === "portrait" || (width > 576 && orientation === "portrait"))
-    {
-      setIsFullScreen(false)
+    if (
+      orientation === "portrait" ||
+      (width > 576 && orientation === "portrait")
+    ) {
+      setIsFullScreen(false);
     }
-   
-  }, [orientation,previousOri, width])
+  }, [orientation, previousOri, width]);
 
   return (
     <div className="">
-       <Box
+      <Box
+        sx={{
+          width: startGame ? "100%" : "0px",
+          height: startGame ? "auto" : "0px",
+          display: "flex",
+          paddingTop: startGame ? "50px" : "0px",
+          justifyContent: "center",
+        }}
+      >
+        <Box
           sx={{
-            width: startGame ? "100%" : "0px",
-            height: startGame ? "auto" : "0px",
-            display: "flex",
-            paddingTop: startGame ? "50px" : "0px",
-            justifyContent: "center",
+            width: width < 576 ? "95%" : "80%",
+            height: "auto",
+            paddingBottom: width < 576 ? "60px" : "none",
           }}
         >
           <Box
             sx={{
-              width: width < 576 ? "95%" : "80%",
-              height: "auto",
-              paddingBottom: width < 576 ? "60px" : "none",
+              width: startGame ? "100%" : "0px",
+              height: startGame ? "700px" : "0px",
+              backgroundColor: "#423965",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Box
-              sx={{
-                width: startGame ? "100%" : "0px",
-                height: startGame ? "700px" : "0px",
-                backgroundColor: "#423965",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
               }}
             >
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <FullScreen handle={screen} onChange={reportChange}>
-                  {startGame &&
-                    detailGame?.GameFiles &&
-                    detailGame?.GameFiles?.length >= 4 && (
-                      <Fragment>
-                        <UnityGameComponent
-                          GameFiles={detailGame?.GameFiles}
-                          cheight={expand === false ? "100%" : "100%"}
-                          cwidth="100%"
-                          roomName={roomDetailInfo?.roomName}
-                          fullScreen={expand}
-                          roomId={roomDetailInfo?.id}
-                          isFullScreen={isFullScreen}
-                        />
-                        {startGame && expand === true && width>576 && orientation==="landscape"&&(
+              <FullScreen handle={screen} onChange={reportChange}>
+                {startGame &&
+                  detailGame?.GameFiles &&
+                  detailGame?.GameFiles?.length >= 4 && (
+                    <Fragment>
+                      <UnityGameComponent
+                        GameFiles={detailGame?.GameFiles}
+                        cheight={expand === false ? "100%" : "100%"}
+                        cwidth="100%"
+                        roomName={roomDetailInfo?.roomName}
+                        fullScreen={expand}
+                        roomId={roomDetailInfo?.id}
+                        isFullScreen={isFullScreen}
+                      />
+                      {startGame &&
+                        expand === true &&
+                        width > 576 &&
+                        orientation === "landscape" && (
                           <>
                             <Box
                               className={
@@ -897,12 +901,15 @@ export default function SelectRoom() {
                             </Box>
                           </>
                         )}
-                      </Fragment>
-                    )}
-                </FullScreen>
-              </div>
-            </Box>
-            {startGame && expand === false && width>576 && orientation==="landscape" && (
+                    </Fragment>
+                  )}
+              </FullScreen>
+            </div>
+          </Box>
+          {startGame &&
+            expand === false &&
+            width > 576 &&
+            orientation === "landscape" && (
               <Box
                 sx={{
                   width: "100%",
@@ -1032,66 +1039,67 @@ export default function SelectRoom() {
                 )}
               </Box>
             )}
-          </Box>
         </Box>
-      {(width < 576 || (!previousOri && orientation === "portrait")) && startGame && (
-        <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
-        <Box
-          sx={{
-            width: startGame ? "100%" : "0px",
-            height: startGame ? "100%" : "0px",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-            }}
-          >
+      </Box>
+      {(width < 576 || (!previousOri && orientation === "portrait")) &&
+        startGame && (
+          <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
             <Box
               sx={{
                 width: startGame ? "100%" : "0px",
                 height: startGame ? "100%" : "0px",
-                backgroundColor: "#423965",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
               }}
-            ></Box>
-          </Box>
-          <Box
-            onClick={() => {
-              // setContinueGame(true);
-            }}
-            sx={{
-              position: "fixed",
-              top: "40%",
-              display: "flex",
-              padding: "10px",
-              backgroundImage: "linear-gradient(#6844de,#8c39ff)",
-              borderRadius: "0px 50px 50px 0px",
-            }}
-          >
-            <Box
-              sx={{ width: "20px" }}
-              component={"img"}
-              src={images.BackButtonLobby}
-            ></Box>
-            <Typography sx={{ color: "white" }}>Lobby</Typography>
-          </Box>
-          <Box sx={{ position: "fixed", top: "40%", left: "33%" }}>
-            <Box
-              sx={{ width: width / 3, height: width / 3 }}
-              component={"img"}
-              src={images.RotateScreen}
-            ></Box>
-            <Typography sx={{ color: "white" }}>
-              Rotate Your Screen
-            </Typography>
-          </Box>
-        </Box>
-      </Dialog>
-      )}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: startGame ? "100%" : "0px",
+                    height: startGame ? "100%" : "0px",
+                    backgroundColor: "#423965",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></Box>
+              </Box>
+              <Box
+                onClick={() => {
+                  // setContinueGame(true);
+                }}
+                sx={{
+                  position: "fixed",
+                  top: "40%",
+                  display: "flex",
+                  padding: "10px",
+                  backgroundImage: "linear-gradient(#6844de,#8c39ff)",
+                  borderRadius: "0px 50px 50px 0px",
+                }}
+              >
+                <Box
+                  sx={{ width: "20px" }}
+                  component={"img"}
+                  src={images.BackButtonLobby}
+                ></Box>
+                <Typography sx={{ color: "white" }}>Lobby</Typography>
+              </Box>
+              <Box sx={{ position: "fixed", top: "40%", left: "33%" }}>
+                <Box
+                  sx={{ width: width / 3, height: width / 3 }}
+                  component={"img"}
+                  src={images.RotateScreen}
+                ></Box>
+                <Typography sx={{ color: "white" }}>
+                  Rotate Your Screen
+                </Typography>
+              </Box>
+            </Box>
+          </Dialog>
+        )}
       {!startGame && (
         <>
           {roomNav === true ? (
@@ -2192,6 +2200,7 @@ export default function SelectRoom() {
                           <MenuItem
                             onClick={() => {
                               dispatch(toggleProfileDialog(true));
+                              handleClose1();
                             }}
                             sx={{
                               padding: "5px",
@@ -2232,6 +2241,7 @@ export default function SelectRoom() {
                                   roomId: roomIdSelect,
                                   gameId: detailGame?.id,
                                 });
+                                handleClose1();
                               }}
                               className="p-1 text-white"
                               sx={{
@@ -2263,6 +2273,7 @@ export default function SelectRoom() {
                                       JSON?.parse(roomDetailInfo?.membersInRoom)
                                     )?.name,
                                   });
+                                  handleClose1();
                                 }}
                                 className="p-1 text-white cursor-pointer"
                                 sx={{
@@ -2290,6 +2301,7 @@ export default function SelectRoom() {
                                       JSON?.parse(roomDetailInfo?.membersInRoom)
                                     )?.name,
                                   });
+                                  handleClose1();
                                 }}
                                 className="p-1 text-white"
                                 sx={{
@@ -2317,8 +2329,7 @@ export default function SelectRoom() {
                                 ?.username
                             : ""}
                         </Typography>
-                        <img
-                          onClick={(e) => {
+                        <Box onClick={(e) => {
                             if (
                               getOwner(
                                 roomDetailInfo?.membersInRoom
@@ -2327,7 +2338,9 @@ export default function SelectRoom() {
                               ) === userName
                             )
                               handleClick1(e);
-                          }}
+                          }} sx={{position:"relative",cursor:"pointer"}}>                        
+                          <img
+                          
                           alt="..."
                           style={{
                             width: "100px",
@@ -2350,6 +2363,26 @@ export default function SelectRoom() {
                               : images.waitingClient
                           }
                         />
+                        {roomDetailInfo?.membersInRoom &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                            1 &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                            ?.ready === 1 && (
+                              <img
+                              style={{
+                                position: "absolute",
+                                top: "29%",
+                                left: "29px",
+                                color: "black",
+                                width: getIconSizeDependOnWith(width),
+                              }}
+                              alt="..."
+                              src={images.CheckIcon}
+                            />
+                          )}
+                          
+                          </Box>
+
                         <Box
                           sx={{
                             color: "#757ae5",
@@ -2370,7 +2403,7 @@ export default function SelectRoom() {
                           />
                           <Typography
                             sx={{
-                              fontSize: getFontSizeTitleDependOnWidth(width),
+                              fontSize: getFontSizeButtonDependOnWidth(width),
                             }}
                           >
                             {roomDetailInfo?.membersInRoom &&
@@ -2381,23 +2414,7 @@ export default function SelectRoom() {
                               : ""}
                           </Typography>
                         </Box>
-                        {roomDetailInfo?.membersInRoom &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                            1 &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                            ?.ready === 1 && (
-                            <img
-                              style={{
-                                position: "absolute",
-                                top: "30%",
-                                left: "18px",
-                                color: "black",
-                                width: getIconSizeDependOnWith(width),
-                              }}
-                              alt="..."
-                              src={images.CheckIcon}
-                            />
-                          )}
+                        
                       </Box>
                     ) : (
                       <img
@@ -2864,6 +2881,7 @@ export default function SelectRoom() {
                               roomId: roomIdSelect,
                               gameId: detailGame?.id,
                             });
+                            handleClose1();
                           }}
                           className="p-1 text-white"
                           sx={{
@@ -3058,7 +3076,7 @@ export default function SelectRoom() {
                         />
                         <span
                           style={{
-                            fontSize: getFontSizeTitleDependOnWidth(width),
+                            fontSize: getFontSizeButtonDependOnWidth(width),
                           }}
                         >
                           {roomDetailInfo?.membersInRoom &&
@@ -3102,10 +3120,18 @@ export default function SelectRoom() {
                                 ?.username
                             : ""}
                         </Typography>
-                        <img
-                          onClick={(e) => {
-                            handleClick1(e);
-                          }}
+                        <Box 
+                        onClick={(e) => {
+                            if (
+                              getOwner(
+                                roomDetailInfo?.membersInRoom
+                                  ? JSON?.parse(roomDetailInfo?.membersInRoom)
+                                  : []
+                              ) === userName
+                            )
+                              handleClick1(e);
+                          }} sx={{position:"relative"}}> 
+                          <img
                           alt="..."
                           style={{
                             width: parseFloat(width / 4.5),
@@ -3126,6 +3152,25 @@ export default function SelectRoom() {
                               : images.waitingClient
                           }
                         />
+                        {roomDetailInfo?.membersInRoom &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                            1 &&
+                          JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                            ?.ready === 1 && (
+                              <img
+                              style={{
+                                position: "absolute",
+                                top: "29%",
+                                left: "31%",
+                                color: "black",
+                                width: getIconSizeDependOnWith(width),
+                              }}
+                              alt="..."
+                              src={images.CheckIcon}
+                            />
+                          )}
+                          
+                        </Box>
                         <Box
                           sx={{
                             color: "#757ae5",
@@ -3146,7 +3191,7 @@ export default function SelectRoom() {
                           />
                           <span
                             style={{
-                              fontSize: getFontSizeTitleDependOnWidth(width),
+                              fontSize: getFontSizeButtonDependOnWidth(width),
                             }}
                           >
                             {roomDetailInfo?.membersInRoom &&
@@ -3157,23 +3202,7 @@ export default function SelectRoom() {
                               : ""}
                           </span>
                         </Box>
-                        {roomDetailInfo?.membersInRoom &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                            1 &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                            ?.ready === 1 && (
-                            <img
-                              style={{
-                                position: "absolute",
-                                top: "35%",
-                                left: "35%",
-                                color: "black",
-                                width: getIconSizeDependOnWith(width),
-                              }}
-                              alt="..."
-                              src={images.CheckIcon}
-                            />
-                          )}
+                        
                       </Box>
                     ) : (
                       <>

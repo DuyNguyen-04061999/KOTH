@@ -280,9 +280,6 @@ export default function Layout(props) {
         >
           {width > 900 ? (
             <div className="d-flex align-items-center">
-              {/* <Box sx={{ cursor: "pointer" }} onClick={clickNavIcon}>
-                <img src={images.btnnav} alt="..." width={36} height={36} />
-              </Box> */}
               <label className="containerHamburger">
                 <input onClick={clickNavIcon} type="checkbox" />
                 <div className="checkmark">
