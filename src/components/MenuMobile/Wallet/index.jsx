@@ -34,7 +34,7 @@ import {
 import { images } from "../../../utils/images";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import TransactionDetailDialog from "../../Dialog/TransactionDetail";
-// import { Web3 } from "web3"
+import { Web3 } from "web3"
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -64,67 +64,65 @@ export default function DialogWallet(props) {
 
   
 
-  // useEffect(() => {
-  //   async function sendToken(data, transaction) {
-  //     try {
-  //       let web3 = new Web3(window.ethereum)
-  //       await window.ethereum.enable();
-  //       let accounts = await web3.eth.getAccounts()
-  //       let account = accounts[0]
+  useEffect(() => {
+    async function sendToken(data, transaction) {
+      try {
+        let web3 = new Web3(window.ethereum)
+        await window.ethereum.enable();
+        let accounts = await web3.eth.getAccounts()
+        let account = accounts[0]
         
-  //       // if (web3.currentProvider.isConnected()) {
-  //       //   if(!account) {
+        if (web3.currentProvider.isConnected()) {
+          console.log("Metamask connected !");
+        } else {
+          console.log("Metamask disconnected !");
+        }
   
-  //       //   }
-  //       // } else {
-          
-  //       // }
+        socket?.emit("updateDepositTransaction", {
+          type: "process",
+          transactionId: transaction?.id
+        })
   
-  //       socket?.emit("updateDepositTransaction", {
-  //         type: "process",
-  //         transactionId: transaction?.id
-  //       })
+        let contract = new web3.eth.Contract(data?.token_abi, data?.token_contract)
+        let depositAmount = (data?.token_quantity) + "000000000000000000";
   
-  //       let contract = new web3.eth.Contract(data?.token_abi, data?.token_contract)
-  //       let depositAmount = (data?.token_quantity) + "000000000000000000";
+        let result = await contract.methods.transfer(data?.target_wallet, depositAmount).send({ from: account })
   
-  //       let result = await contract.methods.transfer(data?.target_wallet, depositAmount).send({ from: account })
+        if(result) {
+          socket?.emit("updateDepositTransaction", {
+            type: "confirm",
+            transactionId: transaction?.id,
+            tid: data?.transaction_id,
+            txh: result?.transactionHash
+          })
+          return result;
+        }
   
-  //       if(result) {
-  //         socket?.emit("updateDepositTransaction", {
-  //           type: "confirm",
-  //           transactionId: transaction?.id,
-  //           tid: data?.transaction_id,
-  //           txh: result?.transactionHash
-  //         })
-  //         return result;
-  //       }
-  
-  //     } catch (error) {
-  //       socket?.emit("updateDepositTransaction", {
-  //         type: "error",
-  //         transactionId: transaction?.id
-  //       })
-  //     }
+      } catch (error) {
+        socket?.emit("updateDepositTransaction", {
+          type: "error",
+          transactionId: transaction?.id
+        })
+      }
 
-  //     return false
-  //   }
+      return false
+    }
 
-  //   socket?.on("depositRequestSuccess", async (data, transaction) => {
-  //     setAmountDeposit(0)
-  //     await window.ethereum.request({
-  //       method: 'wallet_switchEthereumChain',
-  //       params: [{ chainId: data?.target_network_id || "0x1" }]
-  //     });
+    socket?.on("depositRequestSuccess", async (data, transaction) => {
+      setAmountDeposit(0)
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: data?.target_network_id || "0x1" }]
+      });
       
-  //     await sendToken(data, transaction)
-  //   })
+      await sendToken(data, transaction)
+    })
 
-  //   return () => {
-  //     socket?.off()
-  //     socket?.disconnect()
-  //   }
-  // }, [socket]);
+    return () => {
+      socket?.off()
+      socket?.disconnect()
+    }
+  }, [socket]);
 
   const div = useCallback((node) => {
     if (node !== null) {
