@@ -62,7 +62,9 @@ export default function DialogWallet(props) {
     setSocket(_socket)
   }, [])
 
-  
+  useEffect(() => {
+    socket?.emit("getListWithdraw")
+  })
 
   useEffect(() => {
     async function sendToken(data, transaction) {
@@ -118,9 +120,17 @@ export default function DialogWallet(props) {
       await sendToken(data, transaction)
     })
 
+    socket?.on("withRequestSuccess", async (data, transaction) => {
+      setAmount(0)
+      console.log(transaction);
+    })
+
+    socket?.on("getListWithdrawSuccess", async (data) => {
+      console.log(data);
+    })
+
     return () => {
       socket?.off()
-      socket?.disconnect()
     }
   }, [socket]);
 
@@ -760,7 +770,7 @@ export default function DialogWallet(props) {
                       showAlert("error", "Please enter Address Wallet")
                     );
                   } else {
-                    _socket.emit("withdraw", { value: amount });
+                    socket?.emit("withdrawRequest", { value: amount, address: withDrawAddress });
                     setIsLoading(true);
                     setWithDrawAddress("");
                     setAmount(0);
@@ -1049,12 +1059,12 @@ export default function DialogWallet(props) {
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         <Box component={"span"} style={{ color: "#33b91f" }}>
-                          {transaction?.transactionStatus}
+                          {transaction?.transactionCrypto?.cryptoName}
                         </Box>
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         <Box component={"span"} className="text-danger">
-                          1+1=2
+                          {transaction?.transactionValue}
                         </Box>
                       </StyledTableCell>
                       <StyledTableCell align="center">
@@ -1067,13 +1077,6 @@ export default function DialogWallet(props) {
                           className="d-flex align-items-center justify-content-center"
                         >
                           {transaction?.transactionRate}
-                          <ArrowForwardIos
-                            sx={{
-                              color: "#51539c",
-                              fontSize: 14,
-                              fontWeight: "bold",
-                            }}
-                          />
                         </Box>
                       </StyledTableCell>
                       {width > 576 && (
@@ -1086,7 +1089,7 @@ export default function DialogWallet(props) {
                             }}
                             className="d-flex align-items-center justify-content-center"
                           >
-                            {transaction?.transactionStatus}
+                            {transaction?.transactionCharge}
                           </Box>
                         </StyledTableCell>
                       )}
@@ -1100,7 +1103,7 @@ export default function DialogWallet(props) {
                             }}
                             className="d-flex align-items-center justify-content-center"
                           >
-                            {transaction?.transactionType}
+                            {transaction?.transactionStatus}
                           </Box>
                         </StyledTableCell>
                       )}
