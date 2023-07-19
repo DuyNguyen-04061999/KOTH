@@ -487,9 +487,6 @@ function SimpleDialog(props) {
                       <Box className="d-flex justify-content-center mt-4">
                         <Box
                           className="d-flex"
-                          onClick={() => {
-                            dispatch(clickTab(true));
-                          }}
                           sx={{
                             color: "#7671ba",
                             fontWeight: "500",
@@ -498,6 +495,9 @@ function SimpleDialog(props) {
                           New User?
                           <Typography
                             sx={{ color: "#ffb600", cursor: "pointer" }}
+                            onClick={() => {
+                              dispatch(clickTab(true));
+                            }}
                           >
                             Create Account
                           </Typography>

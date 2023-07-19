@@ -26,6 +26,7 @@ export default function CountDownMobile() {
       clearInterval(timeInterval);
     };
   }, [expiryTime]);
+
   useEffect(() => {
     if (hours === "00" && minutes === "00" && seconds === "00") {
       dispatch(

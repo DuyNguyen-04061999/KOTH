@@ -384,7 +384,7 @@ const FAQPageComponent = () => {
             item
             xs={9}
             md={10}
-            sx={{ color: "white", backgroundColor: "#282136" }}
+            sx={{ color: "white", backgroundColor: "#282136", paddingBottom:"50px" }}
           >
             {renderFaq()}
           </Grid>

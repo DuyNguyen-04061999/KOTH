@@ -15,16 +15,22 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function NavMobile() {
   const { token, isLoginDialog } = useSelector((state) => state.authReducer);
   const { chatWorld } = useSelector((state) => state.chatReducer);
+  const {isProfileDialog} = useSelector((state) => state.profileReducer)
   const [openMess, setOpenMess] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const navigate = useNavigate();
-  const [hideNavMobile] = useState("block");
+  const [hideNavMobile,setHideNavMobile] = useState("block");
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if(isProfileDialog === true) {
+      setHideNavMobile("none")
+    } else if (isProfileDialog === false) {
+      setHideNavMobile("block")
+    }
+  }, [isProfileDialog]);
   const pathname = useParams();
-
   return (
     <>
       {isLoginDialog === false && width <= 576 ? (

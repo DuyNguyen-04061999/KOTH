@@ -12,9 +12,8 @@ export default function LuckySpinMobile() {
   const { totalAmount } = useSelector((state) => state.luckyWheelReducer);
   return (
     <Box className="LuckySpinMobileContainer">
-      <div className="SpinMobileHeader">
+      <div className="SpinMobileHeader"  onClick={() => navigate("/home")}>
         <img
-          onClick={() => navigate("/home")}
           src={images.backButton}
           alt="..."
         />
