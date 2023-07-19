@@ -45,6 +45,7 @@ export default function DialogWallet(props) {
   const { width, height } = useWindowDimensions();
   const [isLoading, setIsLoading] = useState(false);
   const { isTransactionDialog } = useSelector((state) => state.walletReducer);
+  const { token } = useSelector((state) => state.authReducer);
   const [withDrawAddress, setWithDrawAddress] = useState("");
   const [transactions, setTransaction] = useState([]);
   const [wrapperWidth, setWrapperWidth] = useState();
@@ -63,7 +64,9 @@ export default function DialogWallet(props) {
   }, [])
 
   useEffect(() => {
-    socket?.emit("getListWithdraw")
+    if(token) {
+      socket?.emit("getListWithdraw")
+    }
   })
 
   useEffect(() => {
