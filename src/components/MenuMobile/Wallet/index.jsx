@@ -125,11 +125,10 @@ export default function DialogWallet(props) {
 
     socket?.on("withRequestSuccess", async (data, transaction) => {
       setAmount(0)
-      console.log(transaction);
     })
 
     socket?.on("getListWithdrawSuccess", async (data) => {
-      console.log(data);
+      
     })
 
     return () => {

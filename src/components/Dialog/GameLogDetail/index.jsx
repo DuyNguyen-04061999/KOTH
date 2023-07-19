@@ -94,7 +94,7 @@ export default function GameLogDetailDialog(props) {
                 fontSize: 12,
               }}
             >
-              {log?.transactionGameLog && log?.transactionGameLog?.id}
+              {log?.gameLogId}
             </Typography>
           </Box>
           <Box className="d-flex justify-content-between pb-2">
@@ -132,7 +132,7 @@ export default function GameLogDetailDialog(props) {
                 fontSize: 12,
               }}
             >
-              {}
+              {0}
             </Typography>
           </Box>
           <Box className="d-flex justify-content-between pb-2">
@@ -175,7 +175,9 @@ export default function GameLogDetailDialog(props) {
                 fontWeight: "bold",
                 fontSize: 12,
               }}
-            ></Typography>
+            >
+              {log?.gameLogDetail}
+            </Typography>
           </Box>
           <Box className="d-flex justify-content-between pb-2">
             <Typography

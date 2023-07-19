@@ -425,7 +425,6 @@ export default function SelectRoom() {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
       setChat([]);
       if (roomId === roomIdSelect) {
-        data?.membersInRoom&&data?.membersInRoom?.length>0&&console.log("Leaveroom Data: ",JSON.parse(data?.membersInRoom))
         setroomDetailInfo(data);
         if(!(data?.membersInRoom&&data?.membersInRoom?.length>0&&JSON.parse(data?.membersInRoom).filter(n=>n.username===userName).length>0))
         {

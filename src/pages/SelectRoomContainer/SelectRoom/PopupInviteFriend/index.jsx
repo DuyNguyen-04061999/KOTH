@@ -48,7 +48,7 @@ export default function PopupInviteFriend({ roomIdSelect }) {
         );
       }
   };
-  console.log("Length: ",userIds)
+  
   return (
     <Dialog
       open={inviteFriendDialog}

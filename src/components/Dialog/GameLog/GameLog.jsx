@@ -382,9 +382,6 @@ export default function GameLogDialog(props) {
                   <TableBody>
                     {listGameLog.map((log, i_log) => (
                       <StyledTableRow
-                        // onClick={() => {
-                        //   handleDetail(log);
-                        // }}
                         key={i_log}
                         sx={{
                           background: i_log % 2 === 0 ? "#1f1934" : "#231e3d",
@@ -395,7 +392,7 @@ export default function GameLogDialog(props) {
                           component="td"
                           scope="row"
                         >
-                          {log?.id}
+                          {log?.gameLogId}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           {log?.gameParent?.gameName}
@@ -416,10 +413,10 @@ export default function GameLogDialog(props) {
                           </span>
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                          <span>{log?.gameLogStatus}</span>
+                          <span>{log?.gameLogDetail}</span>
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                          <span>{log?.updatedAt}</span>
+                          <span>{log?.createdAt}</span>
                         </StyledTableCell>
                       </StyledTableRow>
                     ))}

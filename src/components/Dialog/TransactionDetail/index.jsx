@@ -100,7 +100,7 @@ export default function TransactionDetailDialog(props) {
                 fontSize: 12,
               }}
             >
-              {trans?.userId}
+              {trans?.transactionId}
             </Typography>
           </Box>
           <Box className="d-flex justify-content-between pb-2">
@@ -119,7 +119,7 @@ export default function TransactionDetailDialog(props) {
                 fontSize: 12,
               }}
             >
-              {"1+1=2"}
+              {trans?.transactionCrypto?.cryptoName}
             </Typography>
           </Box>
           <Box className="d-flex justify-content-between pb-2">
@@ -182,7 +182,7 @@ export default function TransactionDetailDialog(props) {
                 fontSize: 12,
               }}
             >
-                {"1"}
+                {trans?.transactionCharge}
             </Typography>
           </Box>
           <Box className="d-flex justify-content-between pb-2">
