@@ -220,10 +220,7 @@ export default function DialogChat(props) {
             </div>
           </Box>
           <Box component="div" hidden={!showChat}>
-            {renderTab === true ? 
-            <ChatFriendList /> 
-            : 
-            <ChatWorldList />}
+            {renderTab === true ? <ChatFriendList /> : <ChatWorldList />}
           </Box>
           {renderTab === false ? (
             <Box

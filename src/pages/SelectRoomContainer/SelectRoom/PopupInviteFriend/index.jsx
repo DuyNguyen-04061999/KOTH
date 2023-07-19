@@ -6,6 +6,7 @@ import { closeInvitefriendPopup } from "../../../../redux-saga-middleware/reduce
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { getFontSizeDependOnWidth } from "../../../../utils/config";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 
 export default function PopupInviteFriend({ roomIdSelect }) {
   const { inviteFriendDialog, detailGame } = useSelector(
@@ -16,7 +17,7 @@ export default function PopupInviteFriend({ roomIdSelect }) {
   const [socket, setSocket] = useState(null);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-
+  const numberInRoom=2;//Maximum number in rooms
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -29,17 +30,25 @@ export default function PopupInviteFriend({ roomIdSelect }) {
   }, [socket, roomIdSelect]);
   
   const handleOnClickCheck = (id) => {
-    if (!userIds?.includes(id)) {
-      setUserIds([...userIds, id]);
-    } else {
-      setUserIds(
-        userIds.filter((n) => {
-          return n !== id;
-        })
-      );
-    }
+      if (!userIds?.includes(id)) {
+        if([...userIds, id].length<=numberInRoom-1)
+        {
+          setUserIds([...userIds, id]);
+        }
+        else{
+          dispatch(showAlert("error","The numbers of member in room must be smaller than 2"))
+        }
+      } 
+      else if(userIds?.includes(id)) 
+      {
+        setUserIds(
+          userIds.filter((n) => {
+            return n !== id;
+          })
+        );
+      }
   };
-
+  console.log("Length: ",userIds)
   return (
     <Dialog
       open={inviteFriendDialog}
