@@ -16,6 +16,7 @@ import GamePage from "./pages/GameManager/GamePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
+import JoinTournamentComponent from "./pages/JoinTournamentComponent";
 import {
   getLeaderBoardSuccess,
   logoutSuccessFully,
@@ -85,24 +86,26 @@ function App() {
     }
   });
 
-  const isLandscape = () => window.matchMedia('(orientation:landscape)').matches;
+  const isLandscape = () =>
+    window.matchMedia("(orientation:landscape)").matches;
 
   useEffect(() => {
     const onWindowResize = () => {
       clearTimeout(window.resizeLag);
       window.resizeLag = setTimeout(() => {
         delete window.resizeLag;
-        store.dispatch(changeOrientation(isLandscape() ? 'landscape' : 'portrait'));
+        store.dispatch(
+          changeOrientation(isLandscape() ? "landscape" : "portrait")
+        );
       }, 200);
     };
-  
+
     onWindowResize();
-    if(window)
-    {
-      window.addEventListener('resize', onWindowResize);
+    if (window) {
+      window.addEventListener("resize", onWindowResize);
     }
     return () => {
-      window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener("resize", onWindowResize);
     };
   }, []);
 
@@ -296,18 +299,18 @@ function App() {
       socket?.on("inviteGameSuccess", (data) => {});
 
       socket?.on("updateGoldBet", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
       socket?.on("updateGoldEarn", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
       socket?.on("updateGold", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
       socket?.on("connected", (socketId) => {});
@@ -385,6 +388,11 @@ function App() {
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/countdowntimer" element={<CountDownTimer />} />
               <Route path="/tournamentDemo" element={<TournamentDemPage />} />
+              <Route
+                path="/join-tournament"
+                element={<JoinTournamentComponent />}
+              />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
               <Route path="game" element={<GamePage />} />
