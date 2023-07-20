@@ -37,7 +37,7 @@ export default function GameLobbyDetailInfo() {
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
-      _socket?.emit("getGameLike");
+      socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);

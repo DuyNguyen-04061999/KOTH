@@ -6,7 +6,7 @@ import {
   FormControl,
   Input,
 } from "@mui/material";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { images } from "../../../utils/images";
 import "./index.scss";
 import CloseIcon from "@mui/icons-material/Close";
@@ -32,6 +32,11 @@ export default function DialogProfile(props) {
   const { id, email, refCode, phone, userNameProfile, avatarUrl } = useSelector(
     (state) => state.profileReducer
   );
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const [tab, setTab] = useState(0);
   const checkExistInFriendList = () => {
     for (let i = 0; i < friendList.length; i++) {
@@ -65,7 +70,7 @@ export default function DialogProfile(props) {
               (checkExistInFriendList() === false ? (
                 <Box
                   onClick={() => {
-                    _socket.emit("addFriend", { username: userNameProfile });
+                    socket?.emit("addFriend", { username: userNameProfile });
                     handleShowProfile();
                   }}
                   className="p-2 text-white"
@@ -84,7 +89,7 @@ export default function DialogProfile(props) {
               ) : (
                 <Box
                   onClick={() => {
-                    _socket.emit("deleteFriend", { username: userNameProfile });
+                    socket?.emit("deleteFriend", { username: userNameProfile });
                     handleShowProfile();
                   }}
                   className="p-2 text-white cursor-pointer"

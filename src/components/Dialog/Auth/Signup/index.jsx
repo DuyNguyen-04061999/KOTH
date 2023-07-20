@@ -18,21 +18,22 @@ export default function Signup(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [c_password, setC_password] = useState("");
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
   const { width } = useWindowDimensions();
-
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
+  
   useEffect(() => {
     if (registerValue === "success") {
       setUsername("");
       setPassword("");
       setC_password("");
-      // setFirstName("");
-      // setLastName("");
       setEmail("");
       setPhone("");
       setRef("");
@@ -60,7 +61,7 @@ export default function Signup(props) {
 
   //------------------------------------------------------------------
   const sendRegister = () => {
-    _socket.emit("register", {
+    socket?.emit("register", {
       username: username,
       password: password,
       // firstName: firstName,

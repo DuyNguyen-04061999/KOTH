@@ -44,7 +44,11 @@ export default function ChatGlobal(props) {
   const [chatF, setChatF] = useState("");
   const { contacter } = useSelector((state) => state.chatReducer);
   const { token } = useSelector((state) => state.authReducer);
-
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   useEffect(() => {
     if (token === null || token === "") {
       setChatF("");
@@ -56,7 +60,7 @@ export default function ChatGlobal(props) {
   };
   const handleOnKeyDownEnter = (e) => {
     if (e.key === "Enter" && chatF) {
-      _socket.emit("chat", {
+      socket?.emit("chat", {
         type: "Private",
         toId: contacter.id,
         content: chatF,
@@ -66,7 +70,7 @@ export default function ChatGlobal(props) {
   };
   const handleSendMessage = () => {
     if (chatF) {
-      _socket.emit("chat", {
+      socket?.emit("chat", {
         type: "Private",
         toId: contacter.id,
         content: chatF,
@@ -94,20 +98,19 @@ export default function ChatGlobal(props) {
     setAnchorEl(null);
   };
   const handleOnClickDeleteFriend = () => {
-    _socket.emit("deleteFriend", { username: contacter.userName });
+    socket?.emit("deleteFriend", { username: contacter.userName });
   };
 
-  // useEffect(() => {
-  //   if (deleteFriendValue === "success") {
-  //     handleClose();
-  //     handleShow();
-  //   }
-  //   dispatch(resetDelteFriend());
-  // }, [deleteFriendValue]);
-  _socket?.on("deleteFriendSuccess", () => {
-    handleClose();
-    handleShow();
-  });
+  useEffect(() => {
+    socket?.on("deleteFriendSuccess", () => {
+      handleClose();
+      handleShow();
+    });
+    
+    return () => {
+      // socket?.off()
+    }
+  }, [socket, handleShow])
   return (
     <>
       <Box
@@ -143,7 +146,7 @@ export default function ChatGlobal(props) {
               className="p-2 text-white"
               onClick={() => {
                 dispatch(toggleProfileDialog(true));
-                _socket.emit("getDetailProfile", {
+                socket?.emit("getDetailProfile", {
                   username: contacter.userName,
                 });
               }}

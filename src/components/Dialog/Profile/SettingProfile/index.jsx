@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Typography, FormControl, Input } from "@mui/material";
 import AvatarPicker from "../AvatarPicker";
 import _socket from "../../../../redux-saga-middleware/config/socket";
@@ -13,29 +13,17 @@ export default function SettingProfile({ closePopup }) {
     firstName,
     lastName,
     email,
-    //  phone
   } = useSelector((state) => state.profileReducer);
-
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
-  // const [mobilePhone, setMobilePhone] = useState(phone);
-  // const [disabledBtn, setDisabledBtn] = useState(true);
-
-  // useEffect(() => {
-  //   if (
-  //     fName === "" ||
-  //     lName === "" ||
-  //     emailAddress === ""
-  //     // mobilePhone === ""
-  //   ) {
-  //     setDisabledBtn(true);
-  //   } else {
-  //     setDisabledBtn(false);
-  //   }
-  // }, [fName, lName, emailAddress]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,55 +37,22 @@ export default function SettingProfile({ closePopup }) {
     const kb = Math.ceil(bits / 8 / 1000);
     return kb;
   }
-  // const sendUpdateProfile = () => {
-  //   if (
-  //     fName &&
-  //     lName &&
-  //     emailAddress
-  //   ) {
-  //     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
-  //       dispatch(showAlert("error", "Please attach image smaller 1MB"));
-  //     } else {
-  //       if (avatarImage === avatarUrl) {
-  //         _socket.emit("updateProfile", {
-  //           firstName: fName,
-  //           lastName: lName,
-  //           email: emailAddress,
-  //         });
-  //       } else {
-  //         _socket.emit("updateProfile", {
-  //           firstName: fName,
-  //           lastName: lName,
-  //           email: emailAddress,
-  //           // phone: mobilePhone,
-  //           avatar: avatarImage?.replace("data:image/png;base64,", ""),
-  //         });
-  //       }
-  //       dispatch(updateProfile());
-  //     }
-  //     closePopup();
-  //   }
-  //   else {
-  //     dispatch(showAlert("error", "Please fill all of textbox"));
-  //   }
-  // };
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
       dispatch(showAlert("error", "Please attach image smaller 1MB"));
     } else {
       if (avatarImage === avatarUrl) {
-        _socket.emit("updateProfile", {
+        socket?.emit("updateProfile", {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
         });
       } else {
-        _socket.emit("updateProfile", {
+        socket?.emit("updateProfile", {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
-          // phone: mobilePhone,
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
         });
       }
@@ -261,18 +216,12 @@ export default function SettingProfile({ closePopup }) {
                   }}
                 />
               </FormControl>
-              {/* {emailAddress && !emailAddress.includes("@gmail.com") && (
-                <span className="text-danger">
-                  Email must contain @gmail.com
-                </span>
-              )} */}
             </Box>
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
             <button
               className="text-white p-2"
               type="submit"
-              // disabled={disabledBtn}
               style={{
                 width: "50%",
                 border: "none",
@@ -280,7 +229,6 @@ export default function SettingProfile({ closePopup }) {
                 fontWeight: "bold",
                 background:
                   "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                // opacity: disabledBtn === true ? "0.1" : "",
               }}
               onClick={() => {
                 sendUpdateProfile();

@@ -53,11 +53,11 @@ export default function ChatWorldList() {
     if (token === null || token === "") {
       dispatch(toggleLoginDialog());
     } else {
-      _socket.emit("addFriend", { username: messagefromName });
+      socket?.emit("addFriend", { username: messagefromName });
     }
   };
   const handleDeleteFriend = () => {
-    _socket.emit("deleteFriend", { username: messagefromName });
+    socket?.emit("deleteFriend", { username: messagefromName });
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -87,6 +87,10 @@ export default function ChatWorldList() {
       dispatch(setWaitingNav());
       navigate(`/selectroom/${gameId}`, { state: { roomInfo: room } });
     });
+
+    return () => {
+      // socket?.off()
+    }
   }, [socket, roomId, gameId, navigate, dispatch]);
   const handleOnClickInviteGameMess = (gameId, roomId) => {
     setGameId(gameId);
@@ -456,24 +460,17 @@ export default function ChatWorldList() {
           disableScrollLock={true}
           sx={{
             ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
-            // "& .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
-            //   boxShadow: "unset",
-            //   background: "#2d224a",
-            // },
-            // "& .css-6hp17o-MuiList-root-MuiMenu-list": {
-            //   background: "#2d224a",
-            // },
           }}
         >
           <MenuItem
             onClick={() => {
               dispatch(toggleProfileDialog(true));
               if (token === null || token === "") {
-                _socket.emit("getDetailProfileNoAuth", {
+                socket?.emit("getDetailProfileNoAuth", {
                   username: messagefromName,
                 });
               } else {
-                _socket.emit("getDetailProfile", {
+                socket?.emit("getDetailProfile", {
                   username: messagefromName,
                 });
               }
