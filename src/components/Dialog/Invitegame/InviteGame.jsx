@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleInviteGameDialog } from "../../../redux-saga-middleware/reducers/chatReducer";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
-import LoadingEffect from "../../LoadingComponent";
 
 export default function InviteGameDialog() {
   const { width } = useWindowDimensions();
@@ -29,7 +28,11 @@ export default function InviteGameDialog() {
   const { isInviteGameDialog, typeInvite, contacter } = useSelector(
     (state) => state.chatReducer
   );
-
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const { listGame } = useSelector((state) => state.gameReducer);
 
   const dispatch = useDispatch();
@@ -308,7 +311,7 @@ export default function InviteGameDialog() {
                     } else {
                       setIsLoading(true);
                       if (typeInvite === "world") {
-                        _socket.emit("inviteGame", {
+                        socket?.emit("inviteGame", {
                           type: "World",
                           toId: 0,
                           gameId: gameId || 0,
@@ -316,7 +319,7 @@ export default function InviteGameDialog() {
                           gameName: gameName || "",
                         });
                       } else if (typeInvite === "Private") {
-                        _socket.emit("inviteGame", {
+                        socket?.emit("inviteGame", {
                           type: "Private",
                           toId: contacter.id,
                           gameId: gameId || 0,

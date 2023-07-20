@@ -6,19 +6,24 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  // clickTab,
+  
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token, isNav } = useSelector((state) => state.authReducer);
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   return (
     <Box className="nav-section">
       <Box
         sx={{
-          // width: isNav === true ? "300px" : "80px",
           backgroundColor: "#2e233d",
           color: "#9485b8",
           height: "95vh",
@@ -240,7 +245,7 @@ export default function Navbar() {
               if (!token) {
                 dispatch(toggleLoginDialog());
               } else {
-                _socket.emit("getGameLog");
+                socket?.emit("getGameLog");
                 dispatch(toggleGameLogDialog());
               }
             }}

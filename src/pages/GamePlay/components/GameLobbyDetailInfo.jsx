@@ -37,7 +37,7 @@ export default function GameLobbyDetailInfo() {
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
-      _socket?.emit("getGameLike");
+      socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
@@ -257,7 +257,7 @@ export default function GameLobbyDetailInfo() {
               </span>
             </Box>
             <Box className="uiverseLike" sx={{ position: "relative" }}>
-            <span class="tooltipLike">Dislike</span>
+              <span class="tooltipLike">Dislike</span>
               <Box
                 component={"img"}
                 sx={{

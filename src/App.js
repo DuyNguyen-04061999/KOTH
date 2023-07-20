@@ -9,13 +9,13 @@ import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
 import FAQPage from "./pages/FAQpage";
-import CountDownTimer from "./components/CountDownTimer";
 import SearchPage from "./pages/SearchPage";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
+import JoinTournamentComponent from "./pages/JoinTournamentComponent";
 import {
   getLeaderBoardSuccess,
   logoutSuccessFully,
@@ -84,24 +84,26 @@ function App() {
     }
   });
 
-  const isLandscape = () => window.matchMedia('(orientation:landscape)').matches;
+  const isLandscape = () =>
+    window.matchMedia("(orientation:landscape)").matches;
 
   useEffect(() => {
     const onWindowResize = () => {
       clearTimeout(window.resizeLag);
       window.resizeLag = setTimeout(() => {
         delete window.resizeLag;
-        store.dispatch(changeOrientation(isLandscape() ? 'landscape' : 'portrait'));
+        store.dispatch(
+          changeOrientation(isLandscape() ? "landscape" : "portrait")
+        );
       }, 200);
     };
-  
+
     onWindowResize();
-    if(window)
-    {
-      window.addEventListener('resize', onWindowResize);
+    if (window) {
+      window.addEventListener("resize", onWindowResize);
     }
     return () => {
-      window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener("resize", onWindowResize);
     };
   }, []);
 
@@ -154,7 +156,7 @@ function App() {
         store.dispatch(toggleLoginDialog());
       });
 
-      _socket?.on("logoutSuccess", (data) => {
+      socket?.on("logoutSuccess", (data) => {
         const { type, message } = data;
         localStorage.removeItem("NAME");
         localStorage.removeItem("PASS");
@@ -289,38 +291,38 @@ function App() {
           })
         );
       });
-      _socket?.on("getLeaderBoardSuccess", (data) => {
+      socket?.on("getLeaderBoardSuccess", (data) => {
         store.dispatch(getLeaderBoardSuccess(data));
       });
-      _socket?.on("inviteGameSuccess", (data) => {});
+      socket?.on("inviteGameSuccess", (data) => {});
 
-      _socket?.on("updateGoldBet", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+      socket?.on("updateGoldBet", (data) => {
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
-      _socket?.on("updateGoldEarn", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+      socket?.on("updateGoldEarn", (data) => {
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
-      _socket?.on("updateGold", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+      socket?.on("updateGold", (data) => {
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
-      socket.on("connected", (socketId) => {});
+      socket?.on("connected", (socketId) => {});
 
-      socket.on("server", (socketId) => {});
+      socket?.on("server", (socketId) => {});
 
-      socket.on("serverGame", (socketId) => {});
+      socket?.on("serverGame", (socketId) => {});
 
       socket?.on("winGame", (data) => {
         store.dispatch(showAlert("success", "You are winner!"));
         store.dispatch(updateUserGold(data));
       });
 
-      socket.on("disconnect", (data) => {
+      socket?.on("disconnect", (data) => {
         if (localStorage.getItem("KE")) {
           socket.emit("login", {
             username: localStorage.getItem("NAME"),
@@ -334,15 +336,15 @@ function App() {
         }
       });
 
-      _socket?.on("heartbeat", (data) => {});
+      socket?.on("heartbeat", (data) => {});
 
-      _socket?.on("error", (data) => {
+      socket?.on("error", (data) => {
         store.dispatch(showAlert("error", data));
         store.dispatch(updateProfileFail());
       });
     }
     return () => {
-      socket?.off();
+      // socket?.off();
       socket?.disconnect();
     };
   }, [socket]);
@@ -382,7 +384,10 @@ function App() {
               <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
               <Route path="/tournaments" element={<Tournament />} />
               <Route path="/faq" element={<FAQPage />} />
-              <Route path="/countdowntimer" element={<CountDownTimer />} />
+              <Route
+                path="/join-tournament"
+                element={<JoinTournamentComponent />}
+              />
               <Route path="/search" element={<SearchPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
@@ -401,4 +406,3 @@ function App() {
 }
 
 export default App;
-

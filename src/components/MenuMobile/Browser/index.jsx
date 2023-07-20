@@ -1,5 +1,5 @@
 import { Dialog, Box, Slide } from "@mui/material";
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { images } from "../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,11 @@ export default function Browser(props) {
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const data = [
     { name: "Home", img: `${images.homeicon}`, link: "/home" },
     { name: "Spin", img: `${images.luckySpinIncon}`, link: "/luckywheel" },
@@ -54,7 +59,7 @@ export default function Browser(props) {
               if (!token) {
                 dispatch(toggleLoginDialog());
               } else {
-                _socket.emit("getGameLog");
+                socket?.emit("getGameLog");
                 dispatch(toggleGameLogDialog());
               }
             } else if (e?.name === "PVP Games") {

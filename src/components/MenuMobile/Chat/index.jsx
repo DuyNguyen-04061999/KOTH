@@ -45,6 +45,11 @@ export default function DialogChat(props) {
   const { token } = useSelector((state) => state.authReducer);
   const [renderTab, setRenderTab] = useState(false);
   const [colorTab, setColorTab] = useState(false);
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const clickRenderPerson = () => {
     if (!token) {
       dispatch(toggleLoginDialog());
@@ -72,31 +77,20 @@ export default function DialogChat(props) {
     } else {
       if (renderTab === false) {
         if (e.key === "Enter" && chat) {
-          _socket.emit("chat", { type: "World", toId: 0, content: chat });
+          socket?.emit("chat", { type: "World", toId: 0, content: chat });
           setChat("");
         }
       }
     }
   };
-  // const handleOnClickSendMessage = () => {
-  //   if (token === null || token === "") {
-  //     dispatch(toggleLoginDialog());
-  //   } else {
-  //     if (renderTab === false) {
-  //       if (chat) {
-  //         _socket.emit("chat", { type: "Privite", toId: 0, content: chat });
-  //         setChat("");
-  //       }
-  //     }
-  //   }
-  // };
+ 
   const handleOnClickSendMessageWorld = () => {
     if (token === null || token === "") {
       dispatch(toggleLoginDialog());
     } else {
       if (renderTab === false) {
         if (chat) {
-          _socket.emit("chat", { type: "World", toId: 0, content: chat });
+          socket?.emit("chat", { type: "World", toId: 0, content: chat });
           setChat("");
         }
       }

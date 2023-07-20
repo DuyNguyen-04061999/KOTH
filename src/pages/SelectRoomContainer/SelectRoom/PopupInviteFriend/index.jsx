@@ -27,6 +27,10 @@ export default function PopupInviteFriend({ roomIdSelect }) {
     socket?.on(`inviteGameInRoom${roomIdSelect}Success`, (data) => {
       
     });
+
+    return () => {
+      // socket?.off()
+    }
   }, [socket, roomIdSelect]);
   
   const handleOnClickCheck = (id) => {

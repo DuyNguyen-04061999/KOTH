@@ -16,28 +16,37 @@ export default function LuckyWheel(props) {
   const [config, setConfig] = useState(null);
   const [listReward, setListReward] = useState([]);
   const { width } = useWindowDimensions();
-  const [buttonState, SetButtonState] = useState(true); //true===>active || false====>passive
+  const [buttonState, SetButtonState] = useState(true); 
   const [isFetchReward, setIsFetchListReward] = useState(true);
   const [isFetchListRh, setIsFetchListRh] = useState(true);
   const { token } = useSelector((state) => state.authReducer);
   const { countEveryday } = useSelector((state) => state.luckyWheelReducer);
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchReward && token)
-      _socket.emit("getLuckySpinConfig", { type: "dogegold" });
+    socket?.emit("getLuckySpinConfig", { type: "dogegold" });
     if (isFetchListRh && token)
-      _socket.emit("getRewardHistory", { type: "luckyspin" });
-    _socket.on("getLuckySpinConfigSuccess", (data) => {
-      setConfig(data);
-      setListReward(data?.LuckySpinReward);
-      setIsFetchListReward(false);
-      dispatch(assigntotalAmount(data.total));
-    });
+      socket?.emit("getRewardHistory", { type: "luckyspin" });
+      socket?.on("getLuckySpinConfigSuccess", (data) => {
+        setConfig(data);
+        setListReward(data?.LuckySpinReward);
+        setIsFetchListReward(false);
+        dispatch(assigntotalAmount(data.total));
+      });
 
-    _socket.on("getRewardHistorySuccess", (data) => {
-      setIsFetchListRh(false);
-    });
-  });
+      socket?.on("getRewardHistorySuccess", (data) => {
+        setIsFetchListRh(false);
+      });
+
+      return () => {
+        // socket?.off()
+      }
+  }, [socket, dispatch, isFetchListRh, isFetchReward, token]);
   function getRandomValueByPercent(arr, random) {
     let cumulativePercentage = 0;
     const cumulativePercentages = arr.map((obj) => {
@@ -89,7 +98,7 @@ export default function LuckyWheel(props) {
         setDegreeforWheel(degree, randomNum, value);
         setTimeout(() => {
           dispatch(openLuckyWheelPopup(value));
-          _socket.emit("storeSpinHistory", {
+          socket?.emit("storeSpinHistory", {
             value,
             type: "dogegold",
             moneyId: config?.id,

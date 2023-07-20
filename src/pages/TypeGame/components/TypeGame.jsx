@@ -15,11 +15,16 @@ export default function TypeGame() {
   );
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   useEffect(() => {
     if (type === "favorite") {
       setTitle("Favorite Games");
       if (token) {
-        _socket.emit("listFavoriteGame");
+        socket?.emit("listFavoriteGame");
       }
     } else if (type === "pvp") {
       setTitle("PVP Games");
@@ -42,7 +47,7 @@ export default function TypeGame() {
     } else if (type === "search") {
       setTitle("Search");
     }
-  }, [type, listGame, dispatch, token]);
+  }, [type, listGame, dispatch, token, socket]);
 
   return (
     <>

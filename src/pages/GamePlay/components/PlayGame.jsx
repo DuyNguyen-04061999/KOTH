@@ -52,7 +52,7 @@ export default function PlayGame() {
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
-      _socket?.emit("getGameLike");
+      socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, dispatch]);
@@ -205,6 +205,10 @@ export default function PlayGame() {
         return list;
       });
     });
+
+    return () => {
+      // socket?.off()
+    }
   }, [socket, detailGame, roomIdSelect, dispatch]);
 
   useEffect(() => {
@@ -397,7 +401,7 @@ export default function PlayGame() {
                               className="bg-info rounded ps-2 pe-2 text-center mt-2"
                               onClick={() => {
                                 if (room?.roomStatus === 0) {
-                                  _socket.emit("joinRoomGame", {
+                                  socket?.emit("joinRoomGame", {
                                     roomId: room?.id,
                                     gameId: detailGame?.id,
                                   });

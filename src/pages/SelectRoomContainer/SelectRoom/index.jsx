@@ -86,7 +86,6 @@ export default function SelectRoom() {
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState(null);
   const [startGame, setStartGame] = useState(false);
-  // const [continueGame, setContinueGame] = useState(false);
   const [previousOri, setPreviousOri] = useState("");
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -114,7 +113,7 @@ export default function SelectRoom() {
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
-      _socket?.emit("getGameLike");
+      socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
@@ -256,7 +255,7 @@ export default function SelectRoom() {
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
-      _socket?.emit("getGameLike");
+      socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
@@ -539,6 +538,10 @@ export default function SelectRoom() {
         window?.location?.reload();
       }
     );
+
+    return () => {
+      // socket?.off()
+    };
   }, [
     socket,
     detailGame,
@@ -640,7 +643,31 @@ export default function SelectRoom() {
       setIsFullScreen(false);
     }
   }, [orientation, previousOri, width]);
-
+  roomDetailInfo &&
+    console.log(
+      "Memebers in room: ",
+      JSON.parse(roomDetailInfo?.membersInRoom),
+      roomDetailInfo
+    );
+  const checkReadyEnough = (membersInRoom, roomCountMember) => {
+    // console.log("Count:",membersInRoom?.map(n=>{return n?.ready}).reduce((partialSum, a) => partialSum + a, 0))
+    let count = 0;
+    for (let i = 0; i < membersInRoom.length; i++) {
+      count += membersInRoom[i]?.ready;
+    }
+    if (count === roomCountMember - 1) {
+      return true;
+    }
+    return false;
+  };
+  roomDetailInfo &&
+    roomDetailInfo.membersInRoom &&
+    console.log(
+      checkReadyEnough(
+        JSON.parse(roomDetailInfo?.membersInRoom),
+        roomDetailInfo?.roomCountMember
+      )
+    );
   return (
     <div className="">
       <Box
@@ -1716,7 +1743,7 @@ export default function SelectRoom() {
                                     (item?.roomStatus === 0 &&
                                       !item?.membersInRoom)
                                   ) {
-                                    _socket.emit("joinRoomGame", {
+                                    socket?.emit("joinRoomGame", {
                                       roomId: item?.id,
                                       gameId: detailGame?.id,
                                     });
@@ -1936,7 +1963,7 @@ export default function SelectRoom() {
                                     (item?.roomStatus === 0 &&
                                       !item?.membersInRoom)
                                   ) {
-                                    _socket.emit("joinRoomGame", {
+                                    socket?.emit("joinRoomGame", {
                                       roomId: item?.id,
                                       gameId: detailGame?.id,
                                     });
@@ -2003,7 +2030,6 @@ export default function SelectRoom() {
           ) : width > 576 ? (
             <div className="container">
               <PopupInviteFriend roomIdSelect={roomIdSelect} />
-
               <Box
                 sx={{
                   width: "100%",
@@ -2465,9 +2491,12 @@ export default function SelectRoom() {
                               roomId: roomIdSelect,
                             });
                           }}
+                          disabled={isLoading}
                           style={{
                             width: "22%",
-                            backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
+                            background: !isLoading
+                              ? "linear-gradient(#8a3af1,#7648ed)"
+                              : "#6f6684",
                             fontSize: getFontSizeButtonDependOnWidth(width),
                             color: "white",
                             fontWeight: "600",
@@ -2481,10 +2510,13 @@ export default function SelectRoom() {
                           Invite Global
                         </button>
                         <button
+                          disabled={isLoading}
                           onClick={() => dispatch(openInvitefriendPopup())}
                           style={{
                             width: "22%",
-                            backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
+                            background: !isLoading
+                              ? "linear-gradient(#8a3af1,#7648ed)"
+                              : "#6f6684",
                             fontSize: getFontSizeButtonDependOnWidth(width),
                             color: "white",
                             fontWeight: "600",
@@ -2699,13 +2731,31 @@ export default function SelectRoom() {
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <button
+                      disabled={
+                        (roomDetailInfo?.membersInRoom &&
+                          getClient(JSON?.parse(roomDetailInfo?.membersInRoom))
+                            .name === userName &&
+                          getClient(JSON?.parse(roomDetailInfo?.membersInRoom))
+                            ?.ready === 1) ||
+                        isLoading === true
+                      }
                       style={{
                         width: "45%",
                         padding: "15px",
                         borderRadius: "5px",
                         border: "none",
                         outline: "none",
-                        backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
+                        background:
+                          (roomDetailInfo?.membersInRoom &&
+                            getClient(
+                              JSON?.parse(roomDetailInfo?.membersInRoom)
+                            ).name === userName &&
+                            getClient(
+                              JSON?.parse(roomDetailInfo?.membersInRoom)
+                            )?.ready === 1) ||
+                          isLoading === true
+                            ? " rgb(111, 102, 132)"
+                            : "linear-gradient(#8a3af1,#7648ed)",
                         fontSize: getFontSizeDependOnWidth(width),
                         color: "white",
                         fontWeight: "bolder",
@@ -2737,7 +2787,11 @@ export default function SelectRoom() {
                             roomDetailInfo?.membersInRoom &&
                             JSON.parse(roomDetailInfo?.membersInRoom)?.length >
                               1 &&
-                            !isLoading
+                            !isLoading &&
+                            checkReadyEnough(
+                              JSON.parse(roomDetailInfo?.membersInRoom),
+                              roomDetailInfo?.roomCountMember
+                            )
                               ? "linear-gradient(#9f3af1,#bf49ee)"
                               : "#6f6684",
                           fontSize: getFontSizeButtonDependOnWidth(width),
@@ -2753,12 +2807,17 @@ export default function SelectRoom() {
                           if (
                             roomDetailInfo?.membersInRoom &&
                             JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                              1
+                              1 &&
+                            checkReadyEnough(
+                              JSON.parse(roomDetailInfo?.membersInRoom),
+                              roomDetailInfo?.roomCountMember
+                            )
                           ) {
                             setIsLoading(true);
                             socket?.emit("startRoomGame", {
                               roomId: roomIdSelect,
                               gameId: detailGame?.id,
+                              gameHost: detailGame?.gameHost,
                             });
                           }
                         }}
@@ -2994,11 +3053,22 @@ export default function SelectRoom() {
                     color: "white",
                   }}
                   onClick={() => {
-                    dispatch(setSelectNav());
-                    socket?.emit("leaveRoomGame", {
-                      roomId: roomDetailInfo?.id,
-                      gameId: detailGame?.id,
-                    });
+                    if (
+                      !(
+                        (roomDetailInfo?.membersInRoom &&
+                          getClient(JSON?.parse(roomDetailInfo?.membersInRoom))
+                            .name === userName &&
+                          getClient(JSON?.parse(roomDetailInfo?.membersInRoom))
+                            ?.ready === 1) ||
+                        isLoading === true
+                      )
+                    ) {
+                      dispatch(setSelectNav());
+                      socket?.emit("leaveRoomGame", {
+                        roomId: roomDetailInfo?.id,
+                        gameId: detailGame?.id,
+                      });
+                    }
                   }}
                 >
                   <img
@@ -3315,6 +3385,7 @@ export default function SelectRoom() {
                           }}
                         >
                           <button
+                            disabled={isLoading}
                             onClick={() => {
                               socket?.emit("inviteGameInRoom", {
                                 type: "global",
@@ -3324,8 +3395,9 @@ export default function SelectRoom() {
                             }}
                             style={{
                               width: "40%",
-                              backgroundImage:
-                                "linear-gradient(#8a3af1,#7648ed)",
+                              background: !isLoading
+                                ? "linear-gradient(#8a3af1,#7648ed)"
+                                : "#6f6684",
                               fontSize: getFontSizeButtonDependOnWidth(width),
                               color: "white",
                               fontWeight: "600",
@@ -3345,10 +3417,16 @@ export default function SelectRoom() {
                               borderRadius: "5px",
                               border: "none",
                               outline: "none",
+                              position: "relative",
                               background:
                                 roomDetailInfo?.membersInRoom &&
                                 JSON.parse(roomDetailInfo?.membersInRoom)
-                                  ?.length > 1
+                                  ?.length > 1 &&
+                                !isLoading &&
+                                checkReadyEnough(
+                                  JSON.parse(roomDetailInfo?.membersInRoom),
+                                  roomDetailInfo?.roomCountMember
+                                )
                                   ? "linear-gradient(#9f3af1,#bf49ee)"
                                   : "#6f6684",
                               fontSize: getFontSizeButtonDependOnWidth(width),
@@ -3373,13 +3451,34 @@ export default function SelectRoom() {
                               if (
                                 roomDetailInfo?.membersInRoom &&
                                 JSON.parse(roomDetailInfo?.membersInRoom)
-                                  ?.length > 1
+                                  ?.length > 1 &&
+                                checkReadyEnough(
+                                  JSON.parse(roomDetailInfo?.membersInRoom),
+                                  roomDetailInfo?.roomCountMember
+                                )
                               ) {
-                                setStartGame(true);
+                                setIsLoading(true);
+                                socket?.emit("startRoomGame", {
+                                  roomId: roomIdSelect,
+                                  gameId: detailGame?.id,
+                                  gameHost: detailGame?.gameHost,
+                                });
                               }
                             }}
                           >
-                            Start
+                            {isLoading ? (
+                              <CircularProgress
+                                sx={{
+                                  position: "absolute",
+                                  top: "24%",
+                                  left: "44%",
+                                }}
+                                color="secondary"
+                                size="1.4rem"
+                              />
+                            ) : (
+                              "Start"
+                            )}
                           </button>
                         </Box>
                       </Box>
@@ -3428,7 +3527,7 @@ export default function SelectRoom() {
                         </button>
                         <button
                           style={{
-                            width: parseFloat(width / 1.88),
+                            width: parseFloat(width / 2),
                             padding: "10px",
                             borderRadius: "5px",
                             border: "none",
@@ -3452,13 +3551,14 @@ export default function SelectRoom() {
                     ) : (
                       <>
                         <button
+                          disabled={true}
                           style={{
                             width: parseFloat(width / 2.83),
                             padding: "10px",
                             borderRadius: "5px",
                             border: "none",
                             outline: "none",
-                            backgroundImage: "linear-gradient(#8a3af1,#7648ed)",
+                            background: "rgb(111, 102, 132)",
                             fontSize: getFontSizeDependOnWidth(width),
                             color: "white",
                             fontWeight: "bolder",
@@ -3475,7 +3575,7 @@ export default function SelectRoom() {
                         </button>
                         <button
                           style={{
-                            width: parseFloat(width / 1.88),
+                            width: parseFloat(width / 2),
                             padding: "10px",
                             borderRadius: "5px",
                             border: "none",

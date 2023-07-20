@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Typography } from "@mui/material";
 import SliderLayout from "../../../components/Slider/index";
 import { images2, imagesV2, popup } from "../../../utils/images";
@@ -35,13 +35,18 @@ export default function Home() {
 
   const { listGame } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
 
   useEffect(() => {
     dispatch(getListGame());
-    _socket.emit("getLeaderBoard", {
+    socket?.emit("getLeaderBoard", {
       type: "gold",
     });
-  }, [dispatch]);
+  }, [dispatch, socket]);
 
   const navigate = useNavigate();
   const settings = {
@@ -121,7 +126,7 @@ export default function Home() {
                     left: "68px",
                     bottom: "39px",
                     padding: "15px 30px",
-                    display:width < 1455 ? "none" : "block"
+                    display: width < 1455 ? "none" : "block",
                   }}
                 >
                   Deposit & Play
