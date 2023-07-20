@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   Dialog,
   FormControl,
   Menu,
@@ -97,6 +98,7 @@ export default function SelectRoom() {
   const [check, setCheck] = useState(false);
   const [expand, setExpand] = useState(false);
   const [textContent, setTextContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [itemFilter, setItemFilter] = useState([""]);
   const [mouseEnter, setMouseEnter] = useState(false);
   const dispatch = useDispatch();
@@ -426,8 +428,15 @@ export default function SelectRoom() {
       setChat([]);
       if (roomId === roomIdSelect) {
         setroomDetailInfo(data);
-        if(!(data?.membersInRoom&&data?.membersInRoom?.length>0&&JSON.parse(data?.membersInRoom).filter(n=>n.username===userName).length>0))
-        {
+        if (
+          !(
+            data?.membersInRoom &&
+            data?.membersInRoom?.length > 0 &&
+            JSON.parse(data?.membersInRoom).filter(
+              (n) => n.username === userName
+            ).length > 0
+          )
+        ) {
           setRoomIdSelect(0);
         }
         setListRoom((prevState) => {
@@ -474,6 +483,7 @@ export default function SelectRoom() {
     });
 
     socket?.on(`startRoom${roomIdSelect}Game${detailGame?.id}Success`, () => {
+      setIsLoading(false);
       setStartGame(true);
     });
 
@@ -2328,7 +2338,8 @@ export default function SelectRoom() {
                                 ?.username
                             : ""}
                         </Typography>
-                        <Box onClick={(e) => {
+                        <Box
+                          onClick={(e) => {
                             if (
                               getOwner(
                                 roomDetailInfo?.membersInRoom
@@ -2337,50 +2348,50 @@ export default function SelectRoom() {
                               ) === userName
                             )
                               handleClick1(e);
-                          }} sx={{position:"relative",cursor:"pointer"}}>                        
-                          <img
-                          
-                          alt="..."
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "50%",
-                            marginTop: "6px",
-                            cursor: "pointer",
                           }}
-                          src={
-                            roomDetailInfo?.membersInRoom &&
-                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                              1
-                              ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                                  ?.avatar
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                          sx={{ position: "relative", cursor: "pointer" }}
+                        >
+                          <img
+                            alt="..."
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                              borderRadius: "50%",
+                              marginTop: "6px",
+                              cursor: "pointer",
+                            }}
+                            src={
+                              roomDetailInfo?.membersInRoom &&
+                              JSON.parse(roomDetailInfo?.membersInRoom)
+                                ?.length > 1
+                                ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
                                     ?.avatar
-                                : images.undefinedAvatar
-                              : images.waitingClient
-                          }
-                        />
-                        {roomDetailInfo?.membersInRoom &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                            1 &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                            ?.ready === 1 && (
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                      ?.avatar
+                                  : images.undefinedAvatar
+                                : images.waitingClient
+                            }
+                          />
+                          {roomDetailInfo?.membersInRoom &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                              1 &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                              ?.ready === 1 && (
                               <img
-                              style={{
-                                position: "absolute",
-                                top: "29%",
-                                left: "29px",
-                                color: "black",
-                                width: getIconSizeDependOnWith(width),
-                              }}
-                              alt="..."
-                              src={images.CheckIcon}
-                            />
-                          )}
-                          
-                          </Box>
+                                style={{
+                                  position: "absolute",
+                                  top: "29%",
+                                  left: "29px",
+                                  color: "black",
+                                  width: getIconSizeDependOnWith(width),
+                                }}
+                                alt="..."
+                                src={images.CheckIcon}
+                              />
+                            )}
+                        </Box>
 
                         <Box
                           sx={{
@@ -2413,7 +2424,6 @@ export default function SelectRoom() {
                               : ""}
                           </Typography>
                         </Box>
-                        
                       </Box>
                     ) : (
                       <img
@@ -2722,10 +2732,12 @@ export default function SelectRoom() {
                           borderRadius: "5px",
                           border: "none",
                           outline: "none",
+                          position: "relative",
                           background:
                             roomDetailInfo?.membersInRoom &&
                             JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                              1
+                              1 &&
+                            !isLoading
                               ? "linear-gradient(#9f3af1,#bf49ee)"
                               : "#6f6684",
                           fontSize: getFontSizeButtonDependOnWidth(width),
@@ -2743,6 +2755,7 @@ export default function SelectRoom() {
                             JSON.parse(roomDetailInfo?.membersInRoom)?.length >
                               1
                           ) {
+                            setIsLoading(true);
                             socket?.emit("startRoomGame", {
                               roomId: roomIdSelect,
                               gameId: detailGame?.id,
@@ -2750,7 +2763,19 @@ export default function SelectRoom() {
                           }
                         }}
                       >
-                        Start
+                        {isLoading ? (
+                          <CircularProgress
+                            sx={{
+                              position: "absolute",
+                              top: "32%",
+                              left: "44%",
+                            }}
+                            color="secondary"
+                            size="1.4rem"
+                          />
+                        ) : (
+                          "Start"
+                        )}
                       </button>
                     ) : roomDetailInfo?.membersInRoom &&
                       getClient(JSON?.parse(roomDetailInfo?.membersInRoom))
@@ -3119,8 +3144,8 @@ export default function SelectRoom() {
                                 ?.username
                             : ""}
                         </Typography>
-                        <Box 
-                        onClick={(e) => {
+                        <Box
+                          onClick={(e) => {
                             if (
                               getOwner(
                                 roomDetailInfo?.membersInRoom
@@ -3129,46 +3154,47 @@ export default function SelectRoom() {
                               ) === userName
                             )
                               handleClick1(e);
-                          }} sx={{position:"relative"}}> 
-                          <img
-                          alt="..."
-                          style={{
-                            width: parseFloat(width / 4.5),
-                            height: "auto",
-                            borderRadius: "50%",
                           }}
-                          src={
-                            roomDetailInfo?.membersInRoom &&
-                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                              1
-                              ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                                  ?.avatar
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                          sx={{ position: "relative" }}
+                        >
+                          <img
+                            alt="..."
+                            style={{
+                              width: parseFloat(width / 4.5),
+                              height: "auto",
+                              borderRadius: "50%",
+                            }}
+                            src={
+                              roomDetailInfo?.membersInRoom &&
+                              JSON.parse(roomDetailInfo?.membersInRoom)
+                                ?.length > 1
+                                ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
                                     ?.avatar
-                                : images.undefinedAvatar
-                              : images.waitingClient
-                          }
-                        />
-                        {roomDetailInfo?.membersInRoom &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)?.length >
-                            1 &&
-                          JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                            ?.ready === 1 && (
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                      ?.avatar
+                                  : images.undefinedAvatar
+                                : images.waitingClient
+                            }
+                          />
+                          {roomDetailInfo?.membersInRoom &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)?.length >
+                              1 &&
+                            JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                              ?.ready === 1 && (
                               <img
-                              style={{
-                                position: "absolute",
-                                top: "29%",
-                                left: "31%",
-                                color: "black",
-                                width: getIconSizeDependOnWith(width),
-                              }}
-                              alt="..."
-                              src={images.CheckIcon}
-                            />
-                          )}
-                          
+                                style={{
+                                  position: "absolute",
+                                  top: "29%",
+                                  left: "31%",
+                                  color: "black",
+                                  width: getIconSizeDependOnWith(width),
+                                }}
+                                alt="..."
+                                src={images.CheckIcon}
+                              />
+                            )}
                         </Box>
                         <Box
                           sx={{
@@ -3201,7 +3227,6 @@ export default function SelectRoom() {
                               : ""}
                           </span>
                         </Box>
-                        
                       </Box>
                     ) : (
                       <>

@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   Dialog,
   FormControl,
   Grid,
@@ -17,12 +18,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleInviteGameDialog } from "../../../redux-saga-middleware/reducers/chatReducer";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import LoadingEffect from "../../LoadingComponent";
 
 export default function InviteGameDialog() {
   const { width } = useWindowDimensions();
   const [price, setPrice] = useState(0);
   const [gameId, setGameId] = useState(0);
   const [gameName, setGameName] = useState("");
+  const [isloading, setIsLoading] = useState(false);
   const { isInviteGameDialog, typeInvite, contacter } = useSelector(
     (state) => state.chatReducer
   );
@@ -70,6 +73,7 @@ export default function InviteGameDialog() {
             color: "#fff",
           }}
         >
+          {/* LoadingEffect */}
           <Typography className="font-weight-bold">Invite Game</Typography>
           <CloseIcon
             onClick={() => {
@@ -287,44 +291,54 @@ export default function InviteGameDialog() {
                   </Select>
                 </FormControl>
               </Box>
-              <Box
-                sx={{
-                  width: "20%",
-                  borderRadius: 1,
-                  background: "linear-gradient(180deg, #853def, #7846ee)",
-                }}
-                onClick={() => {
-                  if (!gameId || !price) {
-                    if (!gameId) {
-                      dispatch(showAlert("error", "Please select game "));
-                    } else if (!price) {
-                      dispatch(showAlert("error", "Please select price"));
+              {!isloading ? (
+                <Box
+                  sx={{
+                    width: "20%",
+                    borderRadius: 1,
+                    background: "linear-gradient(180deg, #853def, #7846ee)",
+                  }}
+                  onClick={() => {
+                    if (!gameId || !price) {
+                      if (!gameId) {
+                        dispatch(showAlert("error", "Please select game "));
+                      } else if (!price) {
+                        dispatch(showAlert("error", "Please select price"));
+                      }
+                    } else {
+                      setIsLoading(true);
+                      if (typeInvite === "world") {
+                        _socket.emit("inviteGame", {
+                          type: "World",
+                          toId: 0,
+                          gameId: gameId || 0,
+                          betPrice: price,
+                          gameName: gameName || "",
+                        });
+                      } else if (typeInvite === "Private") {
+                        _socket.emit("inviteGame", {
+                          type: "Private",
+                          toId: contacter.id,
+                          gameId: gameId || 0,
+                          betPrice: price,
+                          gameName: gameName || "",
+                        });
+                      }
+                      setTimeout(() => {
+                        setIsLoading(false);
+                        dispatch(toggleInviteGameDialog());
+                      }, 2000);
                     }
-                  } else {
-                    if (typeInvite === "world") {
-                      _socket.emit("inviteGame", {
-                        type: "World",
-                        toId: 0,
-                        gameId: gameId || 0,
-                        betPrice: price,
-                        gameName: gameName || "",
-                      });
-                    } else if (typeInvite === "Private") {
-                      _socket.emit("inviteGame", {
-                        type: "Private",
-                        toId: contacter.id,
-                        gameId: gameId || 0,
-                        betPrice: price,
-                        gameName: gameName || "",
-                      });
-                    }
-                    dispatch(toggleInviteGameDialog());
-                  }
-                }}
-                className="text-center bg-info text-white d-flex justify-content-center align-items-center font-weight-bold"
-              >
-                Invite
-              </Box>
+                  }}
+                  className="text-center bg-info text-white d-flex justify-content-center align-items-center font-weight-bold"
+                >
+                  Invite
+                </Box>
+              ) : (
+                <Box sx={{ marginRight: width > 576 ? "45px" : "none" }}>
+                  <CircularProgress />
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>
