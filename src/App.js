@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import { AlertComponent } from "./components/Alert";
 import HomePage from "./pages/Home";
@@ -10,12 +10,13 @@ import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
 import FAQPage from "./pages/FAQpage";
 import CountDownTimer from "./components/CountDownTimer";
-import SearchPage from "./pages/SearchPage";
+import SearchPage from "./pages/TournamentDemo";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
+import JoinTournamentComponent from "./pages/JoinTournamentComponent";
 import {
   getLeaderBoardSuccess,
   logoutSuccessFully,
@@ -72,6 +73,7 @@ import { useTracking } from "./utils/useTracking";
 import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
+import TournamentDemPage from "./pages/TournamentDemo";
 function App() {
   useTracking("");
 
@@ -84,24 +86,26 @@ function App() {
     }
   });
 
-  const isLandscape = () => window.matchMedia('(orientation:landscape)').matches;
+  const isLandscape = () =>
+    window.matchMedia("(orientation:landscape)").matches;
 
   useEffect(() => {
     const onWindowResize = () => {
       clearTimeout(window.resizeLag);
       window.resizeLag = setTimeout(() => {
         delete window.resizeLag;
-        store.dispatch(changeOrientation(isLandscape() ? 'landscape' : 'portrait'));
+        store.dispatch(
+          changeOrientation(isLandscape() ? "landscape" : "portrait")
+        );
       }, 200);
     };
-  
+
     onWindowResize();
-    if(window)
-    {
-      window.addEventListener('resize', onWindowResize);
+    if (window) {
+      window.addEventListener("resize", onWindowResize);
     }
     return () => {
-      window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener("resize", onWindowResize);
     };
   }, []);
 
@@ -295,18 +299,18 @@ function App() {
       socket?.on("inviteGameSuccess", (data) => {});
 
       socket?.on("updateGoldBet", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
       socket?.on("updateGoldEarn", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
       socket?.on("updateGold", (data) => {
-        store.dispatch(showAlert("success","Update gold success"))
-        store.dispatch(updateUserGold(data))
+        store.dispatch(showAlert("success", "Update gold success"));
+        store.dispatch(updateUserGold(data));
       });
 
       socket?.on("connected", (socketId) => {});
@@ -383,6 +387,11 @@ function App() {
               <Route path="/tournaments" element={<Tournament />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/countdowntimer" element={<CountDownTimer />} />
+              <Route path="/tournamentDemo" element={<TournamentDemPage />} />
+              <Route
+                path="/join-tournament"
+                element={<JoinTournamentComponent />}
+              />
               <Route path="/search" element={<SearchPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
@@ -390,7 +399,8 @@ function App() {
               <Route path="game/:id" element={<GameDetailPage />} />
               <Route path="game-type/:type" element={<TypeGamePage />} />
               <Route path="game/edit/:id" element={<GameEditPage />} />
-              <Route path="*" element={<p className="p-2">404 Not Found</p>} />
+              <Route path="*" 
+                element={<Navigate to="/home" />} />
             </Routes>
           </CustomRouter>
           <AlertComponent />
@@ -401,4 +411,6 @@ function App() {
 }
 
 export default App;
+
+
 

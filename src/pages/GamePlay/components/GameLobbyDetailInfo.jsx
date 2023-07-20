@@ -224,7 +224,8 @@ export default function GameLobbyDetailInfo() {
               marginTop: width < 576 ? "-20px" : "-66px",
             }}
           >
-            <Box sx={{ position: "relative" }}>
+            <Box className="uiverseLike" sx={{ position: "relative" }}>
+              <span class="tooltipLike">Like</span>
               <Box
                 component={"img"}
                 sx={{
@@ -255,7 +256,8 @@ export default function GameLobbyDetailInfo() {
                   convertToInternationalCurrencySystem(countLikeGame)}
               </span>
             </Box>
-            <Box sx={{ position: "relative" }}>
+            <Box className="uiverseLike" sx={{ position: "relative" }}>
+              <span class="tooltipLike">Dislike</span>
               <Box
                 component={"img"}
                 sx={{
@@ -328,7 +330,7 @@ export default function GameLobbyDetailInfo() {
               alignItems: "center",
             }}
           >
-            PLAY NOW
+            <span>PLAY NOW</span>
             <div className="arrow ms-2">››</div>
           </button>
         </div>

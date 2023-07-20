@@ -1275,7 +1275,7 @@ export default function DialogWallet(props) {
             overflowY: "hidden",
             backgroundColor: "white",
           },
-          height: "100%",
+          height: "100%", 
           fontSize: getFontSizeDependOnWidth(width),
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {

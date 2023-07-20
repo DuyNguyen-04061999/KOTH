@@ -126,7 +126,7 @@ export default function Home() {
                     left: "68px",
                     bottom: "39px",
                     padding: "15px 30px",
-                    display:width < 1455 ? "none" : "block"
+                    display: width < 1455 ? "none" : "block",
                   }}
                 >
                   Deposit & Play

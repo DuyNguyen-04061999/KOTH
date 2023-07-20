@@ -153,3 +153,50 @@ $yellow: rgb(254, 225, 1);
 .featureTag:hover {
   transform: scale(1.05) translateY(-3px);
 }
+.uiverseLike {
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tooltipLike {
+  position: absolute;
+  top: 0;
+  left: -10px;
+  font-size: 14px;
+  background: #ff00aa;
+  color: #ffffff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  letter-spacing: 2px;
+}
+
+.tooltipLike::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #ff00aa;
+  bottom: -3px;
+  left: 45%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.uiverseLike:hover .tooltipLike {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+ 
+.uiverseLike:hover{
+  .tooltipLike,.tooltipLike::before{
+  background: #ff00aa;
+  color: #ffffff;
+}} 

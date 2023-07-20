@@ -26,6 +26,15 @@ export const getFontSizeTitleDependOnWidth = (width) => {
     return "17px";
   }
 };
+export const getFontSizeBigTitleDependOnWidth = (width) => {
+  if (width > 1200) {
+    return "30px";
+  } else if (width > 600 && width < 1200) {
+    return "25px";
+  } else if (width < 600) {
+    return "21px";
+  }
+};
 
 export const getPaddingDepenOnWidth = (width) => {
   if (width > 1200) {
