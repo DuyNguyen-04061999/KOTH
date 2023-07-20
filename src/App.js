@@ -10,7 +10,7 @@ import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
 import FAQPage from "./pages/FAQpage";
 import CountDownTimer from "./components/CountDownTimer";
-import SearchPage from "./pages/SearchPage";
+import SearchPage from "./pages/TournamentDemo";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
@@ -72,6 +72,7 @@ import { useTracking } from "./utils/useTracking";
 import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
+import TournamentDemPage from "./pages/TournamentDemo";
 function App() {
   useTracking("");
 
@@ -383,7 +384,7 @@ function App() {
               <Route path="/tournaments" element={<Tournament />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/countdowntimer" element={<CountDownTimer />} />
-              <Route path="/search" element={<SearchPage />} />
+              <Route path="/tournamentDemo" element={<TournamentDemPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
               <Route path="game" element={<GamePage />} />
