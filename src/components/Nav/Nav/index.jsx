@@ -308,6 +308,41 @@ export default function Navbar() {
               FAQs
             </span>
           </Box>
+          <Box
+            className="cursor-pointer"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "center",
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+            }}
+            onClick={() => {
+              navigate(`/tournamentDemo`);
+            }}
+          >
+            <img
+              src={popup.faq}
+              alt="..."
+              className="p-1 me-1"
+              width={28}
+              height={"auto"}
+            />
+            <span
+              className="hover-nav"
+              style={{
+                cursor: "pointer",
+                fontWeight: "700",
+                fontSize: "15px",
+                marginLeft: "5px",
+                display: isNav === true ? "block" : "none",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+              }}
+            >
+              TournementDemo
+            </span>
+          </Box>
         </Box>
         <Box
           sx={{

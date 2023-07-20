@@ -9,11 +9,9 @@ import LoadingEffect from "../../../LoadingComponent";
 
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
-  const {
-    firstName,
-    lastName,
-    email,
-  } = useSelector((state) => state.profileReducer);
+  const { firstName, lastName, email } = useSelector(
+    (state) => state.profileReducer
+  );
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -24,7 +22,7 @@ export default function SettingProfile({ closePopup }) {
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
-
+  const [disable,setDisable] = useState(true)
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -37,6 +35,18 @@ export default function SettingProfile({ closePopup }) {
     const kb = Math.ceil(bits / 8 / 1000);
     return kb;
   }
+
+  useEffect(() => {
+    if(
+      fName === "" ||
+      lName === "" ||
+      !emailAddress.includes("@gmail.com")
+    ) {
+      setDisable(true)
+    } else {
+      setDisable(false)
+    }
+  }, [fName,lName,emailAddress])
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
@@ -190,7 +200,9 @@ export default function SettingProfile({ closePopup }) {
                 }}
               >
                 <Input
-                  id="input-with-icon-adornment"
+                  // id="input-with-icon-adornment"
+                  type="text"
+                  name="emailAddress"
                   value={emailAddress}
                   onChange={(e) => {
                     setEmailAddress(e.target.value);
@@ -214,12 +226,33 @@ export default function SettingProfile({ closePopup }) {
                       padding: "0px !important",
                     },
                   }}
-                />
+                /> {""}
+                {emailAddress && !emailAddress.includes("@gmail.com") && (
+                  <span className="text-danger">
+                    Email must contain @gmail.com
+                  </span>
+                )}
               </FormControl>
             </Box>
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
-            <button
+            {disable === true ? (
+              <button
+              className="text-white p-2"
+              type="submit"
+              style={{
+                width: "50%",
+                border: "none",
+                borderRadius: "5px",
+                fontWeight: "bold",
+                background: "#6f6683",
+                cursor:"unset"
+              }}
+            >
+              Update Profile
+            </button>
+            ) : (
+              <button
               className="text-white p-2"
               type="submit"
               style={{
@@ -236,6 +269,7 @@ export default function SettingProfile({ closePopup }) {
             >
               Update Profile
             </button>
+            )}
           </Box>{" "}
         </Box>
       </>

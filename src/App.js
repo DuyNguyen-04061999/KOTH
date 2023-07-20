@@ -2,14 +2,15 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import { AlertComponent } from "./components/Alert";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
 import FAQPage from "./pages/FAQpage";
-import SearchPage from "./pages/SearchPage";
+import CountDownTimer from "./components/CountDownTimer";
+import SearchPage from "./pages/TournamentDemo";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
@@ -72,6 +73,7 @@ import { useTracking } from "./utils/useTracking";
 import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
+import TournamentDemPage from "./pages/TournamentDemo";
 function App() {
   useTracking("");
 
@@ -389,13 +391,15 @@ function App() {
                 element={<JoinTournamentComponent />}
               />
               <Route path="/search" element={<SearchPage />} />
+              <Route path="/countdowntimer" element={<CountDownTimer />} />
+              <Route path="/tournamentDemo" element={<TournamentDemPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
               <Route path="game" element={<GamePage />} />
               <Route path="game/:id" element={<GameDetailPage />} />
               <Route path="game-type/:type" element={<TypeGamePage />} />
               <Route path="game/edit/:id" element={<GameEditPage />} />
-              <Route path="*" element={<p className="p-2">404 Not Found</p>} />
+              <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </CustomRouter>
           <AlertComponent />
