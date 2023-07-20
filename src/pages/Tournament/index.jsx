@@ -56,6 +56,10 @@ export default function Tournament() {
     socket?.on("startGameInTournamentSuccess", (data) => {
       setStartGame(true)
     });
+
+    return () => {
+      // socket?.off()
+    }
   }, [socket]);
 
   const renderS = () => {

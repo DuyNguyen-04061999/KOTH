@@ -58,6 +58,10 @@ export default function ComponentChat() {
       dispatch(setWaitingNav());
       navigate(`/selectroom/${gameId}`, { state: { roomInfo: room } });
     });
+
+    return () => {
+      // socket?.off()
+    }
   }, [socket, roomId, gameId, navigate, dispatch]);
   const renderChat = friendMessages.map((e, index) => {
     return (

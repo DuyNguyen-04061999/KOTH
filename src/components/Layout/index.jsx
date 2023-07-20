@@ -129,6 +129,11 @@ export default function Layout(props) {
   const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
   const [chatF, setChatF] = useState("");
   const dispatch = useDispatch();
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
 
   useEffect(() => {
     if (resetInputValue === "logoutSuccess") {
@@ -155,13 +160,13 @@ export default function Layout(props) {
   };
   const handleOnKeyDown = (e) => {
     if (e.key === "Enter" && chatF) {
-      _socket.emit("chat", { type: "World", toId: 0, content: chatF });
+      socket?.emit("chat", { type: "World", toId: 0, content: chatF });
       setChatF("");
     }
   };
   const handleOnClickSendMessage = () => {
     if (chatF) {
-      _socket.emit("chat", { type: "World", toId: 0, content: chatF });
+      socket?.emit("chat", { type: "World", toId: 0, content: chatF });
       setChatF("");
     }
   };

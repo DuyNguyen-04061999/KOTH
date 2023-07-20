@@ -1,57 +1,66 @@
 import { Box, Dialog } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import _socket from "../../redux-saga-middleware/config/socket";
 
 export default function TestSocketFriendAPI() {
+  const [socket, setSocket] = useState(null);
   useEffect(() => {
-    _socket?.on("registerSuccess", (data) => {});
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
+  useEffect(() => {
+    socket?.on("registerSuccess", (data) => {});
 
-    _socket?.on("loginSuccess", (mess, token, key) => {});
+    socket?.on("loginSuccess", (mess, token, key) => {});
 
-    _socket?.on("logoutSuccess", (mess) => {});
+    socket?.on("logoutSuccess", (mess) => {});
 
-    _socket?.on("getListFriendSuccess", (data) => {});
+    socket?.on("getListFriendSuccess", (data) => {});
 
-    _socket?.on("addFriendSuccess", (data) => {});
+    socket?.on("addFriendSuccess", (data) => {});
 
-    _socket?.on("deleteFriendSuccess", (data) => {});
+    socket?.on("deleteFriendSuccess", (data) => {});
 
-    _socket?.on("getListMessageSuccess", (data) => {});
+    socket?.on("getListMessageSuccess", (data) => {});
 
-    _socket?.on("chatSuccess", (data) => {});
+    socket?.on("chatSuccess", (data) => {});
 
-    _socket?.on("inviteGameSuccess", (data) => {});
+    socket?.on("inviteGameSuccess", (data) => {});
 
-    _socket?.on("updateProfileSuccess", (data) => {});
+    socket?.on("updateProfileSuccess", (data) => {});
 
-    _socket?.on("getDetailProfileSuccess", (data) => {});
+    socket?.on("getDetailProfileSuccess", (data) => {});
 
-    _socket?.on("getDetailProfileNotAuthSuccess", () => {});
+    socket?.on("getDetailProfileNotAuthSuccess", () => {});
 
-    _socket?.on("updateGold", (data) => {});
+    socket?.on("updateGold", (data) => {});
 
-    _socket?.on("getCryptoSuccess", (data) => {});
+    socket?.on("getCryptoSuccess", (data) => {});
 
-    _socket?.on("depositSuccess", (data) => {});
+    socket?.on("depositSuccess", (data) => {});
 
-    _socket?.on("withdrawSuccess", (data) => {});
+    socket?.on("withdrawSuccess", (data) => {});
 
-    _socket?.on("getTransactionSuccess", (data) => {});
+    socket?.on("getTransactionSuccess", (data) => {});
 
-    _socket?.on("gameLogSuccess", (data) => {});
+    socket?.on("gameLogSuccess", (data) => {});
 
-    _socket?.on("addFavoriteGameSuccess", (data) => {});
+    socket?.on("addFavoriteGameSuccess", (data) => {});
 
-    _socket?.on("deleteFavoriteGameSuccess", (data) => {});
+    socket?.on("deleteFavoriteGameSuccess", (data) => {});
 
-    _socket?.on("listFavoriteGameSuccess", (data) => {});
+    socket?.on("listFavoriteGameSuccess", (data) => {});
 
-    _socket?.on("searchGameSuccess", (data) => {});
+    socket?.on("searchGameSuccess", (data) => {});
 
-    _socket?.on("notify", (data) => {});
+    socket?.on("notify", (data) => {});
 
-    _socket?.on("error", (data) => {});
-  });
+    socket?.on("error", (data) => {});
+
+    return () => {
+      // socket?.off()
+    }
+  }, [socket]);
 
   return (
     <Dialog open={true}>
@@ -59,7 +68,7 @@ export default function TestSocketFriendAPI() {
         TEST SOCKET SYSTEM
         <Box
           onClick={() =>
-            _socket.emit("register", {
+            socket?.emit("register", {
               username: "btduy12",
               password: "1234567",
               firstName: "Bui",
@@ -74,30 +83,30 @@ export default function TestSocketFriendAPI() {
         </Box>
         <Box
           onClick={() =>
-            _socket.emit("login", { username: "leesin", password: "123456" })
+            socket?.emit("login", { username: "leesin", password: "123456" })
           }
         >
           Login
         </Box>
-        <Box onClick={() => _socket.emit("logout")}>Logout</Box>
-        <Box onClick={() => _socket.emit("listFriend")}>List Friend</Box>
-        <Box onClick={() => _socket.emit("addFriend", { username: "Lam1" })}>
+        <Box onClick={() => socket?.emit("logout")}>Logout</Box>
+        <Box onClick={() => socket?.emit("listFriend")}>List Friend</Box>
+        <Box onClick={() => socket?.emit("addFriend", { username: "Lam1" })}>
           Add Friend
         </Box>
-        <Box onClick={() => _socket.emit("deleteFriend", { username: "Lam1" })}>
+        <Box onClick={() => socket?.emit("deleteFriend", { username: "Lam1" })}>
           Delete Friend
         </Box>
-        <Box onClick={() => _socket.emit("listMessage")}>Get List Message</Box>
+        <Box onClick={() => socket?.emit("listMessage")}>Get List Message</Box>
         <Box
           onClick={() =>
-            _socket.emit("chat", { type: "World", toId: 0, content: "World" })
+            socket?.emit("chat", { type: "World", toId: 0, content: "World" })
           }
         >
           Send World Message
         </Box>
         <Box
           onClick={() =>
-            _socket.emit("chat", {
+            socket?.emit("chat", {
               type: "Private",
               toId: 11,
               content: "Private",
@@ -108,7 +117,7 @@ export default function TestSocketFriendAPI() {
         </Box>
         <Box
           onClick={() =>
-            _socket.emit("inviteGame", {
+            socket?.emit("inviteGame", {
               type: "World",
               toId: 0,
               gameId: 1,
@@ -121,7 +130,7 @@ export default function TestSocketFriendAPI() {
         </Box>
         <Box
           onClick={() =>
-            _socket.emit("inviteGame", {
+            socket?.emit("inviteGame", {
               type: "Private",
               toId: 8,
               gameId: 1,
@@ -134,7 +143,7 @@ export default function TestSocketFriendAPI() {
         </Box>
         <Box
           onClick={() =>
-            _socket.emit("updateProfile", {
+            socket?.emit("updateProfile", {
               firstName: "super",
               lastName: "man",
               email: "dragolhuntor",
@@ -147,25 +156,25 @@ export default function TestSocketFriendAPI() {
         </Box>
         <Box
           onClick={() =>
-            _socket.emit("getDetailProfile", { username: "leesin" })
+            socket?.emit("getDetailProfile", { username: "leesin" })
           }
         >
           Get Detail Profile
         </Box>
         <Box
           onClick={() => {
-            _socket.emit("getDetailProfileNoAuth", { username: "darius" });
+            socket?.emit("getDetailProfileNoAuth", { username: "darius" });
           }}
         >
           Get Detail Profile without Token
         </Box>
-        <Box onClick={() => _socket.emit("getCrypto")}>Get List Crypto</Box>
-        <Box onClick={() => _socket.emit("getTransaction")}>
+        <Box onClick={() => socket?.emit("getCrypto")}>Get List Crypto</Box>
+        <Box onClick={() => socket?.emit("getTransaction")}>
           Get List Transaction
         </Box>
-        <Box onClick={() => _socket.emit("getGameLog")}>Get List GameLog</Box>
-        <Box onClick={() => _socket.emit("deposit", { value: 5 })}>Deposit</Box>
-        <Box onClick={() => _socket.emit("withdraw", { value: 5 })}>
+        <Box onClick={() => socket?.emit("getGameLog")}>Get List GameLog</Box>
+        <Box onClick={() => socket?.emit("deposit", { value: 5 })}>Deposit</Box>
+        <Box onClick={() => socket?.emit("withdraw", { value: 5 })}>
           Withdraw
         </Box>
         <Box
@@ -182,21 +191,21 @@ export default function TestSocketFriendAPI() {
         >
           GameLog
         </Box>
-        <Box onClick={() => _socket.emit("addFavoriteGame", { id: 1 })}>
+        <Box onClick={() => socket?.emit("addFavoriteGame", { id: 1 })}>
           Add Favorite Game
         </Box>
-        <Box onClick={() => _socket.emit("deleteFavoriteGame", { id: 1 })}>
+        <Box onClick={() => socket?.emit("deleteFavoriteGame", { id: 1 })}>
           Remove Favorite Game
         </Box>
-        <Box onClick={() => _socket.emit("listFavoriteGame")}>
+        <Box onClick={() => socket?.emit("listFavoriteGame")}>
           List Favorite Game
         </Box>
-        <Box onClick={() => _socket.emit("searchGame", { value: "D" })}>
+        <Box onClick={() => socket?.emit("searchGame", { value: "D" })}>
           Search Game
         </Box>
         <Box
           onClick={() =>
-            _socket.emit("handleLikeGame", { gameId: "", type: true })
+            socket?.emit("handleLikeGame", { gameId: "", type: true })
           }
         >
           Like Game

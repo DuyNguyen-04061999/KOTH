@@ -85,7 +85,6 @@ export default function SelectRoom() {
   const [roomIdSelect, setRoomIdSelect] = useState(0);
   const [roomDetailInfo, setroomDetailInfo] = useState(null);
   const [startGame, setStartGame] = useState(false);
-  // const [continueGame, setContinueGame] = useState(false);
   const [previousOri, setPreviousOri] = useState("");
   const [likeGame, setLikeGame] = useState(false);
   const [chat, setChat] = useState([]);
@@ -112,7 +111,7 @@ export default function SelectRoom() {
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
-      _socket?.emit("getGameLike");
+      socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
@@ -254,7 +253,7 @@ export default function SelectRoom() {
   useEffect(() => {
     if (token) {
       socket?.emit("listFavoriteGame");
-      _socket?.emit("getGameLike");
+      socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
   }, [token, socket, detailGame, dispatch]);
@@ -529,6 +528,10 @@ export default function SelectRoom() {
         window?.location?.reload();
       }
     );
+
+    return () => {
+      // socket?.off()
+    }
   }, [
     socket,
     detailGame,
@@ -1706,7 +1709,7 @@ export default function SelectRoom() {
                                     (item?.roomStatus === 0 &&
                                       !item?.membersInRoom)
                                   ) {
-                                    _socket.emit("joinRoomGame", {
+                                    socket?.emit("joinRoomGame", {
                                       roomId: item?.id,
                                       gameId: detailGame?.id,
                                     });
@@ -1926,7 +1929,7 @@ export default function SelectRoom() {
                                     (item?.roomStatus === 0 &&
                                       !item?.membersInRoom)
                                   ) {
-                                    _socket.emit("joinRoomGame", {
+                                    socket?.emit("joinRoomGame", {
                                       roomId: item?.id,
                                       gameId: detailGame?.id,
                                     });
@@ -3350,7 +3353,7 @@ export default function SelectRoom() {
                                 JSON.parse(roomDetailInfo?.membersInRoom)
                                   ?.length > 1
                               ) {
-                                setStartGame(true);
+                                
                               }
                             }}
                           >

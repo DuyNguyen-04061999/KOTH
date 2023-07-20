@@ -50,7 +50,11 @@ function SimpleDialog(props) {
   const { isTab } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const handleClose = () => {
     onClose(selectedValue);
     setUsername("");
@@ -70,11 +74,10 @@ function SimpleDialog(props) {
   };
 
   const sendLogin = () => {
-    _socket.emit("login", {
+    socket?.emit("login", {
       username: username?.toLowerCase(),
       password: password,
     });
-    // handleClose();
     dispatch(toggleLoginDialog());
   };
   return (
@@ -539,6 +542,11 @@ function SimpleDialog(props) {
 export default function Dialoglg() {
   const navigate = useNavigate();
   const [openMess, setOpenMess] = useState(false);
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const {
     isLoginDialog,
     token,
@@ -563,7 +571,7 @@ export default function Dialoglg() {
   const handleCloseProfile = () => {};
 
   const logout = () => {
-    _socket.emit("logout");
+    socket?.emit("logout");
     navigate("/home");
     dispatch(closeChatPopup());
     dispatch(removeToken());
@@ -812,7 +820,7 @@ export default function Dialoglg() {
                         style={{ paddingRight: "0px", paddingLeft: "5px" }}
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
-                          _socket.emit("getDetailProfile", {
+                          socket?.emit("getDetailProfile", {
                             username: userName,
                           });
                         }}

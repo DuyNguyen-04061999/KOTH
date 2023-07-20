@@ -69,7 +69,7 @@ import {
   updateRewardHistory,
 } from "./redux-saga-middleware/reducers/luckyWheelReducer";
 import { useTracking } from "./utils/useTracking";
-// import ErrorBoundary from "./components/CatchError";
+import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 function App() {
@@ -154,7 +154,7 @@ function App() {
         store.dispatch(toggleLoginDialog());
       });
 
-      _socket?.on("logoutSuccess", (data) => {
+      socket?.on("logoutSuccess", (data) => {
         const { type, message } = data;
         localStorage.removeItem("NAME");
         localStorage.removeItem("PASS");
@@ -289,38 +289,38 @@ function App() {
           })
         );
       });
-      _socket?.on("getLeaderBoardSuccess", (data) => {
+      socket?.on("getLeaderBoardSuccess", (data) => {
         store.dispatch(getLeaderBoardSuccess(data));
       });
-      _socket?.on("inviteGameSuccess", (data) => {});
+      socket?.on("inviteGameSuccess", (data) => {});
 
-      _socket?.on("updateGoldBet", (data) => {
+      socket?.on("updateGoldBet", (data) => {
         store.dispatch(showAlert("success","Update gold success"))
         store.dispatch(updateUserGold(data))
       });
 
-      _socket?.on("updateGoldEarn", (data) => {
+      socket?.on("updateGoldEarn", (data) => {
         store.dispatch(showAlert("success","Update gold success"))
         store.dispatch(updateUserGold(data))
       });
 
-      _socket?.on("updateGold", (data) => {
+      socket?.on("updateGold", (data) => {
         store.dispatch(showAlert("success","Update gold success"))
         store.dispatch(updateUserGold(data))
       });
 
-      socket.on("connected", (socketId) => {});
+      socket?.on("connected", (socketId) => {});
 
-      socket.on("server", (socketId) => {});
+      socket?.on("server", (socketId) => {});
 
-      socket.on("serverGame", (socketId) => {});
+      socket?.on("serverGame", (socketId) => {});
 
       socket?.on("winGame", (data) => {
         store.dispatch(showAlert("success", "You are winner!"));
         store.dispatch(updateUserGold(data));
       });
 
-      socket.on("disconnect", (data) => {
+      socket?.on("disconnect", (data) => {
         if (localStorage.getItem("KE")) {
           socket.emit("login", {
             username: localStorage.getItem("NAME"),
@@ -334,15 +334,15 @@ function App() {
         }
       });
 
-      _socket?.on("heartbeat", (data) => {});
+      socket?.on("heartbeat", (data) => {});
 
-      _socket?.on("error", (data) => {
+      socket?.on("error", (data) => {
         store.dispatch(showAlert("error", data));
         store.dispatch(updateProfileFail());
       });
     }
     return () => {
-      socket?.off();
+      // socket?.off();
       socket?.disconnect();
     };
   }, [socket]);
@@ -368,7 +368,7 @@ function App() {
     }
   }, [socket]);
   return (
-    // <ErrorBoundary>
+    <ErrorBoundary>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <CustomRouter history={history}>
@@ -396,7 +396,7 @@ function App() {
           <AlertComponent />
         </PersistGate>
       </Provider>
-    // </ErrorBoundary>
+    </ErrorBoundary>
   );
 }
 

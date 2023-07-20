@@ -132,7 +132,7 @@ export default function DialogWallet(props) {
     })
 
     return () => {
-      socket?.off()
+      // socket?.off()
     }
   }, [socket]);
 
@@ -341,7 +341,7 @@ export default function DialogWallet(props) {
                   if (valueDepositAddress === "") {
                     dispatch(showAlert("error", "Not found address !"));
                   } else {
-                    _socket.emit("deposit", { value: valueDepositAddress });
+                    socket.emit("deposit", { value: valueDepositAddress });
                   }
                 }}
                 style={{
