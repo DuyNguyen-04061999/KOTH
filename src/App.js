@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import { AlertComponent } from "./components/Alert";
 import HomePage from "./pages/Home";
@@ -390,7 +390,8 @@ function App() {
               <Route path="game/:id" element={<GameDetailPage />} />
               <Route path="game-type/:type" element={<TypeGamePage />} />
               <Route path="game/edit/:id" element={<GameEditPage />} />
-              <Route path="*" element={<p className="p-2">404 Not Found</p>} />
+              <Route path="*" 
+                element={<Navigate to="/home" />} />
             </Routes>
           </CustomRouter>
           <AlertComponent />
@@ -401,4 +402,6 @@ function App() {
 }
 
 export default App;
+
+
 
