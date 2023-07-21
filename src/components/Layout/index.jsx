@@ -48,7 +48,7 @@ import {
   clickTabNav,
   toggleLoginDialog,
 } from "../../redux-saga-middleware/reducers/authReducer";
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
 const drawerWidth = 310;
 
@@ -194,6 +194,14 @@ export default function Layout(props) {
     }
   };
 
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === "Enter" && searchValue) {
+      navigate("/game-type/search", { state: { value: searchValue } });
+      dispatch(getSearchGame(searchValue));
+      setChatF("");
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -336,6 +344,7 @@ export default function Layout(props) {
                     type="text"
                     value={searchValue}
                     onChange={handleInputChange}
+                    onKeyDown={handleOnKeyDownEnter}
                     placeholder="Want to find something"
                     style={{
                       width: "100%",

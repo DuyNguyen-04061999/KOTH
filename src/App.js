@@ -74,6 +74,7 @@ import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import TournamentDemPage from "./pages/TournamentDemo";
+import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
 function App() {
   useTracking("");
 
@@ -371,6 +372,12 @@ function App() {
       return () => window.removeEventListener("load", onPageLoad);
     }
   }, [socket]);
+
+  useEffect(() => {
+    store.dispatch(
+      getListBet()
+    )
+  })
   return (
     <ErrorBoundary>
       <Provider store={store}>

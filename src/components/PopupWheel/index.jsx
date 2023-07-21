@@ -5,6 +5,7 @@ import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 export default function PopupWheel(props) {
   const { collectedPoint } = useSelector((state) => state.luckyWheelReducer);
+  console.log(collectedPoint);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   return (
