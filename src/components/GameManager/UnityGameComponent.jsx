@@ -117,15 +117,18 @@ export default function UnityGameComponent(props) {
       sendMessage("Object Spawner", "SetToken", token);
       sendMessage("Object Spawner", "SetRoomName", roomId);
       sendMessage("Object Spawner", "StartGame", "Start");
-      console.log(roomId);
+      
       sendMessage("MenuManager", "SetToken", token);
       sendMessage("MenuManager", "SetRoom", roomId);
       sendMessage("MenuManager", "StartGame", "Start");
+      sendMessage("MenuManager", "SetSubmitScoreUrl", process.env.REACT_APP_END_POINT_PVP_BOT);
+      
+      sendMessage("OverTheBridgeHome", "SetSubmitScoreUrl", process.env.REACT_APP_END_POINT_TOURNAMENT);
       
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(() => {
-    window.location.reload()
+    
   }, []);
 
 

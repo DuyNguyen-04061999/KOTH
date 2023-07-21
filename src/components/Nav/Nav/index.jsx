@@ -125,7 +125,7 @@ export default function Navbar() {
               transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
             }}
             onClick={() => {
-              navigate(`/tournamentDemo`);
+              navigate(`/tournaments`);
             }}
           >
             <img
@@ -148,7 +148,7 @@ export default function Navbar() {
                 overflow: "hidden",
               }}
             >
-              TournementDemo
+              Tournaments
             </span>
           </Box>
           <hr style={{ color: "white" }} />

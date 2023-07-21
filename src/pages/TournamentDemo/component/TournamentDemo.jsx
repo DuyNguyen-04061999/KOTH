@@ -1,6 +1,6 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
-import { JoinLeft, Person, TurnLeft, TurnRight } from "@mui/icons-material";
+import { Person, TurnRight } from "@mui/icons-material";
 
 export default function TournamentDemo() {
   const data1 = [

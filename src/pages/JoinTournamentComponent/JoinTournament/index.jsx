@@ -55,9 +55,12 @@ export default function JoinTournament() {
     },
   }));
   const { width } = useWindowDimensions();
-  const numberofRoom = [1, 2, 3, 4, 5, 6];
   const [minLength, setMinLength] = useState(0);
+  const numberofRoom = [1, 2, 3, 4, 5, 6];
+
   useEffect(() => {
+    const numberofRoom = [1, 2, 3, 4, 5, 6];
+
     if (numberofRoom.length > 1 && numberofRoom.length < 3) {
       setMinLength(numberofRoom.length - 0.5);
     } else if (numberofRoom.length === 3) {
@@ -69,7 +72,7 @@ export default function JoinTournament() {
     } else {
       setMinLength(1);
     }
-  }, [numberofRoom]);
+  }, []);
   return (
     <Container maxWidth="lg" sx={{ paddingTop: "50px" }}>
       <Box
