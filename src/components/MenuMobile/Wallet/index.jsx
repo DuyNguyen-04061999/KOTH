@@ -101,6 +101,8 @@ export default function DialogWallet(props) {
             txh: result?.transactionHash
           })
           return result;
+        } else {
+          dispatch(showAlert("error", "Cannot deposit because contract fail!"))
         }
   
       } catch (error) {
@@ -115,12 +117,16 @@ export default function DialogWallet(props) {
 
     socket?.on("depositRequestSuccess", async (data, transaction) => {
       setAmountDeposit(0)
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: data?.target_network_id || "0x1" }]
-      });
-      
-      await sendToken(data, transaction)
+      if(window?.ethereum) {
+        await window?.ethereum?.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: data?.target_network_id || "0x1" }]
+        });
+        
+        await sendToken(data, transaction)
+      } else {
+        dispatch(showAlert("error", "Cannot deposit because not found metamask!"))
+      }
     })
 
     socket?.on("withRequestSuccess", async (data, transaction) => {
@@ -134,7 +140,7 @@ export default function DialogWallet(props) {
     return () => {
       // socket?.off()
     }
-  }, [socket]);
+  }, [socket, dispatch]);
 
   const div = useCallback((node) => {
     if (node !== null) {
@@ -653,8 +659,7 @@ export default function DialogWallet(props) {
             onChange={(e) => {
               setAmount(e.target.value);
               const data = e.target.value;
-              // const myUSD = 0 / 100; // User USD
-              const willGet = data * (1 - 5 / 100);
+              const willGet = data * (1);
               const leftGold = userGold - willGet;
               setWillGet(willGet);
               setWillBe(leftGold);
@@ -772,7 +777,11 @@ export default function DialogWallet(props) {
                       showAlert("error", "Please enter Address Wallet")
                     );
                   } else {
-                    socket?.emit("withdrawRequest", { value: amount, address: withDrawAddress });
+                    if(!window.ethereum) {
+                      dispatch(showAlert("error", "Cannot withdraw because not found metamask!"))
+                    } else {
+                      socket?.emit("withdrawRequest", { value: amount, address: withDrawAddress });
+                    }
                     setIsLoading(true);
                     setWithDrawAddress("");
                     setAmount(0);

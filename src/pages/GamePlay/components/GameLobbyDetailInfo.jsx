@@ -225,7 +225,7 @@ export default function GameLobbyDetailInfo() {
             }}
           >
             <Box className="uiverseLike" sx={{ position: "relative" }}>
-              <span class="tooltipLike">Like</span>
+              <span className="tooltipLike">Like</span>
               <Box
                 component={"img"}
                 sx={{
@@ -257,7 +257,7 @@ export default function GameLobbyDetailInfo() {
               </span>
             </Box>
             <Box className="uiverseLike" sx={{ position: "relative" }}>
-              <span class="tooltipLike">Dislike</span>
+              <span className="tooltipLike">Dislike</span>
               <Box
                 component={"img"}
                 sx={{

@@ -101,7 +101,7 @@
     .btn-ava{
       &:focus-visible{
         outline: none;
-        box-shadow: none;
+        box-shadow: none !important;
       }
     }
   }

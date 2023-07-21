@@ -74,6 +74,7 @@ import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import TournamentDemPage from "./pages/TournamentDemo";
+import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
 function App() {
   useTracking("");
 
@@ -371,6 +372,10 @@ function App() {
       return () => window.removeEventListener("load", onPageLoad);
     }
   }, [socket]);
+
+  useEffect(() => {
+    store.dispatch(getListBet());
+  });
   return (
     <ErrorBoundary>
       <Provider store={store}>
@@ -386,13 +391,13 @@ function App() {
               <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
               <Route path="/tournaments" element={<Tournament />} />
               <Route path="/faq" element={<FAQPage />} />
+              <Route path="/countdowntimer" element={<CountDownTimer />} />
+              <Route path="/tournamentDemo" element={<TournamentDemPage />} />
               <Route
                 path="/join-tournament"
                 element={<JoinTournamentComponent />}
               />
               <Route path="/search" element={<SearchPage />} />
-              <Route path="/countdowntimer" element={<CountDownTimer />} />
-              <Route path="/tournamentDemo" element={<TournamentDemPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
               <Route path="game" element={<GamePage />} />

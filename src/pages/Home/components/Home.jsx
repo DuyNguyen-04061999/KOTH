@@ -602,7 +602,7 @@ export default function Home() {
                 <div>
                   <img
                     width={40}
-                    className="img-fluid"
+                    className="img-fluid luckySpinIncon2"
                     src={popup.Doge2}
                     alt="..."
                   />
@@ -610,7 +610,7 @@ export default function Home() {
                 <div>
                   <img
                     width={40}
-                    className="img-fluid"
+                    className="img-fluid luckySpinIncon2"
                     src={popup.BNB}
                     alt="..."
                   />
@@ -618,7 +618,7 @@ export default function Home() {
                 <div>
                   <img
                     width={40}
-                    className="img-fluid"
+                    className="img-fluid luckySpinIncon2"
                     src={popup.BTC}
                     alt="..."
                   />
@@ -626,7 +626,7 @@ export default function Home() {
                 <div>
                   <img
                     width={40}
-                    className="img-fluid"
+                    className="img-fluid luckySpinIncon2"
                     src={popup.LCoin}
                     alt="..."
                   />
@@ -634,7 +634,7 @@ export default function Home() {
                 <div>
                   <img
                     width={40}
-                    className="img-fluid"
+                    className="img-fluid luckySpinIncon2"
                     src={popup.TCoin}
                     alt="..."
                   />

@@ -117,6 +117,11 @@ export default function UnityGameComponent(props) {
       sendMessage("Object Spawner", "SetToken", token);
       sendMessage("Object Spawner", "SetRoomName", roomId);
       sendMessage("Object Spawner", "StartGame", "Start");
+      console.log(roomId);
+      sendMessage("MenuManager", "SetToken", token);
+      sendMessage("MenuManager", "SetRoom", roomId);
+      sendMessage("MenuManager", "StartGame", "Start");
+      
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(() => {

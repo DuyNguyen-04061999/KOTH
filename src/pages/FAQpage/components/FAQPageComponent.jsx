@@ -9,6 +9,7 @@ const FAQPageComponent = () => {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const { listFaq } = useSelector((state) => state.appReducer);
+  console.log(listFaq);
 
   useEffect(() => {
     dispatch(getListFaq());
