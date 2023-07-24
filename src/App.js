@@ -73,7 +73,6 @@ import { useTracking } from "./utils/useTracking";
 import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
-import TournamentDemPage from "./pages/TournamentDemo";
 import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
 function App() {
   useTracking("");

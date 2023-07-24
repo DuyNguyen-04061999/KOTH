@@ -644,14 +644,7 @@ export default function SelectRoom() {
       setIsFullScreen(false);
     }
   }, [orientation, previousOri, width]);
-  roomDetailInfo &&
-    console.log(
-      "Memebers in room: ",
-      JSON.parse(roomDetailInfo?.membersInRoom),
-      roomDetailInfo
-    );
   const checkReadyEnough = (membersInRoom, roomCountMember) => {
-    // console.log("Count:",membersInRoom?.map(n=>{return n?.ready}).reduce((partialSum, a) => partialSum + a, 0))
     let count = 0;
     for (let i = 0; i < membersInRoom.length; i++) {
       count += membersInRoom[i]?.ready;
@@ -661,14 +654,7 @@ export default function SelectRoom() {
     }
     return false;
   };
-  roomDetailInfo &&
-    roomDetailInfo.membersInRoom &&
-    console.log(
-      checkReadyEnough(
-        JSON.parse(roomDetailInfo?.membersInRoom),
-        roomDetailInfo?.roomCountMember
-      )
-    );
+
   return (
     <div className="">
       <Box
@@ -1257,7 +1243,7 @@ export default function SelectRoom() {
                               <span>{bet?.betPrice}</span>{" "}
                             </Box>
                             <Box>
-                              <span>you win {bet?.betPricePercent}</span>
+                              <span className="ms-2">(You will got {bet?.betPricePercent}%)</span>
                             </Box>
                           </MenuItem>
                         ))}

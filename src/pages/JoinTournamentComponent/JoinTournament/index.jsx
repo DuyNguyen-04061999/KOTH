@@ -99,7 +99,6 @@ export default function JoinTournament() {
       setFetchT(false);
     });
     socket?.on("joinTournamentSuccess", (data) => {
-      console.log("data: ", data);
       socket?.emit("detailTournament", {
         tournamentId: data?.id,
       });
@@ -127,7 +126,7 @@ export default function JoinTournament() {
       setMinLength(1);
     }
   }, [detailTournament]);
-  console.log("detailTournament:", detailTournament);
+  
   return (
     <>
       {!startGame ? (

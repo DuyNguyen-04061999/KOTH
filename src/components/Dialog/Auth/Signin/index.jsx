@@ -43,7 +43,6 @@ import {
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import { formatMoney } from "../../../../utils/helper";
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
-import moment from "moment";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -545,7 +544,6 @@ export default function Dialoglg() {
   const navigate = useNavigate();
   const [openMess, setOpenMess] = useState(false);
   const [socket, setSocket] = useState(null);
-  const [createTime, setCreateTime] = useState(null);
   const [transData, setTransData] = useState([]);
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
@@ -556,15 +554,7 @@ export default function Dialoglg() {
     } else {
       setTransData(despositData);
     }
-    const objectWithMinCreatedAt = transData.reduce((minObj, currentObj) => {
-      if (!minObj || currentObj.createdAt < minObj.createdAt) {
-        return currentObj;
-      }
-      return minObj;
-    }, null);
-    setCreateTime(objectWithMinCreatedAt);
   }, [transData, withdrawData, despositData]);
-  console.log(createTime);
 
   useEffect(() => {
     const socket = _socket;
@@ -758,7 +748,6 @@ export default function Dialoglg() {
                   color="success"
                   overlap="circular"
                   badgeContent=""
-                  // invisible={badge}
                 >
                   {userAvatar === null ? (
                     <img
