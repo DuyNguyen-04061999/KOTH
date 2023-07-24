@@ -58,6 +58,7 @@ export default function DialogWallet(props) {
   const dispatch = useDispatch();
 
   const [socket, setSocket] = useState(null)
+  
 
   useEffect(() => {
     setSocket(_socket)
@@ -1041,7 +1042,7 @@ export default function DialogWallet(props) {
                       onClick={() => {
                         handleTransactionDialog(transaction);
                       }}
-                    >
+                    >    
                       <StyledTableCell
                         align="center"
                         component="td"

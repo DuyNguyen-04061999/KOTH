@@ -76,7 +76,6 @@ export default function SelectRoom() {
     (state) => state.authReducer
   );
   const { listBet } = useSelector((state) => state.appReducer);
-  console.log(listBet);
   const { friendList } = useSelector((state) => state.chatReducer);
   const { state } = useLocation();
   const [listRoom, setListRoom] = useState([]);
@@ -1234,8 +1233,9 @@ export default function SelectRoom() {
                       >
                         FREE
                       </MenuItem>
-                      {
-                        listBet && listBet?.length > 0 && listBet?.map((bet, index) => (
+                      {listBet &&
+                        listBet?.length > 0 &&
+                        listBet?.map((bet, index) => (
                           <MenuItem
                             key={index}
                             sx={{
@@ -1243,19 +1243,24 @@ export default function SelectRoom() {
                               minHeight: "20px !important",
                               display: "flex",
                               alignItems: "center",
+                              justifyContent:"space-between"
                             }}
                             value={bet?.betPrice}
                           >
-                            <img
-                              alt="..."
-                              style={{ marginRight: "5px" }}
-                              width={getFontSizeDependOnWidth(width)}
-                              src={images.goldIcon}
-                            />
-                            <span>{bet?.betPrice}</span>{" "}
+                            <Box>
+                              <img
+                                alt="..."
+                                style={{ marginRight: "5px" }}
+                                width={getFontSizeDependOnWidth(width)}
+                                src={images.goldIcon}
+                              />
+                              <span>{bet?.betPrice}</span>{" "}
+                            </Box>
+                            <Box>
+                              <span>you win {bet?.betPricePercent}</span>
+                            </Box>
                           </MenuItem>
-                        ))
-                      }
+                        ))}
                     </Select>
                   </FormControl>
                 </Box>

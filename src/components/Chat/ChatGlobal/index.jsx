@@ -132,13 +132,7 @@ export default function ChatGlobal(props) {
           }}
           disableScrollLock={true}
           sx={{
-            "& .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
-              boxShadow: "unset",
-              background: "#2d224a",
-            },
-            "& .css-6hp17o-MuiList-root-MuiMenu-list": {
-              background: "#2d224a",
-            },
+            ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
           }}
         >
           <MenuItem onClick={handleClose}>
