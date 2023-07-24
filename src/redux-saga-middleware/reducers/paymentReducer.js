@@ -32,10 +32,18 @@ export const paymentLogoutSuccessFully = (data) => {
   }
 }
 
+export const saveTime = (data) => {
+  return {
+    type:"SAVE_TIME",
+    payload:data
+  }
+}
+
 const paymentReducer = (
   state = {
     withdrawData: [],
     despositData: [],
+    timeTrans:[]
   },
   action
 ) => {
@@ -70,6 +78,12 @@ const paymentReducer = (
         ...state,
         withdrawData: [],
         despositData: [],
+      }
+    }
+    case "SAVE_TIME" : {
+      return {
+        ...state,
+        timeTrans:payload
       }
     }
     default:

@@ -28,6 +28,7 @@ export default function InviteGameDialog() {
   const { isInviteGameDialog, typeInvite, contacter } = useSelector(
     (state) => state.chatReducer
   );
+  const { listBet } = useSelector((state) => state.appReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -287,10 +288,17 @@ export default function InviteGameDialog() {
                     }}
                     IconComponent={DropDownIconF}
                   >
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={30}>30</MenuItem>
+                    <MenuItem value={0}>Free</MenuItem>
+                    {listBet &&
+                      listBet?.length > 0 &&
+                      listBet?.map((bet, index) => (
+                        <MenuItem
+                          key={index}
+                          value={bet?.betPrice}
+                        >
+                          {bet?.betPrice}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </Box>

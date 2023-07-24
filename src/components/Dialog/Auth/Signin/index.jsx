@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Dialog,
   FormControl,
@@ -42,6 +43,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import { formatMoney } from "../../../../utils/helper";
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
+import moment from "moment";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -543,6 +545,27 @@ export default function Dialoglg() {
   const navigate = useNavigate();
   const [openMess, setOpenMess] = useState(false);
   const [socket, setSocket] = useState(null);
+  const [createTime, setCreateTime] = useState(null);
+  const [transData, setTransData] = useState([]);
+  const { withdrawData, despositData } = useSelector(
+    (state) => state.paymentReducer
+  );
+  useEffect(() => {
+    if (transData === 0) {
+      setTransData(withdrawData);
+    } else {
+      setTransData(despositData);
+    }
+    const objectWithMinCreatedAt = transData.reduce((minObj, currentObj) => {
+      if (!minObj || currentObj.createdAt < minObj.createdAt) {
+        return currentObj;
+      }
+      return minObj;
+    }, null);
+    setCreateTime(objectWithMinCreatedAt);
+  }, [transData, withdrawData, despositData]);
+  console.log(createTime);
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -731,33 +754,42 @@ export default function Dialoglg() {
                 id="dropdown-basic"
                 className="dropdown-bs position-relative btn-ava"
               >
-                {userAvatar === null ? (
-                  <img
-                    style={{
-                      borderRadius: 50,
-                    }}
-                    alt="Remy"
-                    src={images.undefinedAvatar}
-                    height={40}
-                    width={40}
-                    className="ava-signin ms-2 me-2"
-                  />
-                ) : (
-                  <img
-                    style={{
-                      borderRadius: 50,
-                    }}
-                    alt="Remy Sharp"
-                    src={
-                      userAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
-                        : images.undefinedAvatar
-                    }
-                    height={40}
-                    width={40}
-                    className="ava-signin ms-2 me-2"
-                  />
-                )}
+                <Badge
+                  color="success"
+                  overlap="circular"
+                  badgeContent=""
+                  // invisible={badge}
+                >
+                  {userAvatar === null ? (
+                    <img
+                      style={{
+                        borderRadius: 50,
+                      }}
+                      alt="Remy"
+                      src={images.undefinedAvatar}
+                      height={40}
+                      width={40}
+                      className="ava-signin ms-2 me-2"
+                    />
+                  ) : (
+                    <img
+                      style={{
+                        borderRadius: 50,
+                      }}
+                      alt="Remy Sharp"
+                      src={
+                        userAvatar
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            userAvatar
+                          : images.undefinedAvatar
+                      }
+                      height={40}
+                      width={40}
+                      className="ava-signin ms-2 me-2"
+                    />
+                  )}
+                </Badge>
               </Dropdown.Toggle>
               <Dropdown.Menu
                 style={{
