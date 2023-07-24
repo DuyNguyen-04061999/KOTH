@@ -2,12 +2,7 @@ import "./index.scss";
 import Layout from "../../components/Layout";
 import { useEffect, useState } from "react";
 import _socket from "../../redux-saga-middleware/config/socket";
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Person } from "@mui/icons-material";
 import { images } from "../../utils/images";
@@ -42,23 +37,18 @@ export default function Tournament() {
         const dt = pre?.filter((i) => i?.id !== data?.id);
         return [...dt, data];
       });
-      
     });
 
-    socket?.on("joinTournamentSuccess", (data) => {
-      
-    });
+    socket?.on("joinTournamentSuccess", (data) => {});
 
     socket?.on("getListTournamentSuccess", (data) => {
       setTournaments(data);
       setFetchT(false);
     });
 
-    return () => {
-      
-    };
+    return () => {};
   }, [socket]);
-
+  console.log("Tournament: ", tournaments);
   const renderTournamentList = tournaments?.map((item, index) => {
     return (
       <Grid sx={{ padding: "10px" }} item md={6} key={index}>
@@ -81,7 +71,13 @@ export default function Tournament() {
           >
             <img
               style={{ borderRadius: "5px 0px 0px 5px" }}
-              src={images.pool}
+              src={
+                item?.games && item?.games[0]
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    item?.games[0]?.gameAvatar
+                  : images.undefinedAvatar
+              }
               alt="..."
               width={200}
               height="100%"

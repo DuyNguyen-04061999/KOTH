@@ -110,6 +110,7 @@ export default function JoinTournament() {
       socket?.off("detailTournamentSuccess");
     };
   }, [socket]);
+  console.log("Detail Tournament: ", detailTournament);
   useEffect(() => {
     if (
       detailTournament?.tournamentParticipants?.length > 1 &&
@@ -126,7 +127,7 @@ export default function JoinTournament() {
       setMinLength(1);
     }
   }, [detailTournament]);
-  
+
   return (
     <>
       {!startGame ? (
@@ -155,7 +156,14 @@ export default function JoinTournament() {
               <Box sx={{ position: "relative" }}>
                 <Box
                   component={"img"}
-                  src={images.pool}
+                  src={
+                    detailTournament?.tournamentInfors?.game &&
+                    detailTournament?.tournamentInfors?.game[0]
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        detailTournament?.tournamentInfors?.game[0].gameAvatar
+                      : images.undefinedAvatar
+                  }
                   sx={{
                     width: width / 7 - parseFloat(width / 51.9) * 2,
                     height: "100%",
