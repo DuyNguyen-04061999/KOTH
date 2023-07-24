@@ -36,7 +36,7 @@ export default function TournamentDemo() {
 
   const renderTournament = data1.map((e_t, index) => {
     return (
-      <Grid item md={6}key={index}>
+      <Grid item md={6} key={index}>
         <Box
           className="content"
           sx={{
@@ -88,7 +88,9 @@ export default function TournamentDemo() {
             color: "white",
           }}
         >
-          <Grid container rowSpacing={2} columnSpacing={2}>{renderTournament}</Grid>
+          <Grid container rowSpacing={2} columnSpacing={2}>
+            {renderTournament}
+          </Grid>
         </Container>
       </Box>
     </>

@@ -390,13 +390,12 @@ function App() {
               <Route path="/luckywheel" element={<LuckySpinComponent />} />
               <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
               <Route path="/tournaments" element={<Tournament />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="/countdowntimer" element={<CountDownTimer />} />
-              <Route path="/tournamentDemo" element={<TournamentDemPage />} />
               <Route
-                path="/join-tournament"
+                path="/tournamentDetail/:id"
                 element={<JoinTournamentComponent />}
               />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/countdowntimer" element={<CountDownTimer />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />

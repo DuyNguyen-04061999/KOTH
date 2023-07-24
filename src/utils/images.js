@@ -50,6 +50,10 @@ import ContinueGameButton from "../assets/images/ContinueGameButton.png";
 import eyeIcon from "../assets/images/eyeIcon.png";
 import closeEyefullscreen from "../assets/images/closeEyefullscreen.png";
 import Logo_Text from "../assets/images/Logo_Text.png";
+import TournamentBG from "../assets/images/TournamentBG.png";
+import IconRewardTour from "../assets/images/IconRewardTour.png";
+import calendarTour from "../assets/images/calendarTour.png";
+import endAtTour from "../assets/images/endAtTour.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -248,6 +252,10 @@ export const images = {
   eyeIcon: eyeIcon,
   closeEyefullscreen: closeEyefullscreen,
   Logo_Text: Logo_Text,
+  TournamentBG: TournamentBG,
+  IconRewardTour: IconRewardTour,
+  calendarTour: calendarTour,
+  endAtTour: endAtTour,
 };
 
 export const images2 = {
