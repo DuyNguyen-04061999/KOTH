@@ -185,7 +185,8 @@ export default function JoinTournament() {
                         color: "white",
                       }}
                     >
-                      {detailTournament?.tournamentInfors?.game[0]?.gameName}
+                      {detailTournament?.tournamentInfors?.game &&
+                        detailTournament?.tournamentInfors?.game[0]?.gameName}
                     </Typography>
                     <Box
                       sx={{
@@ -258,7 +259,8 @@ export default function JoinTournament() {
                             fontWeight: "200 !important",
                           }}
                         >
-                          {detailTournament?.tournamentResult[0].score}
+                          {detailTournament?.tournamentResult &&
+                            detailTournament?.tournamentResult[0].score}
                         </Typography>
                         <Typography
                           sx={{
@@ -410,7 +412,8 @@ export default function JoinTournament() {
                         marginTop: "4px",
                       }}
                     >
-                      {detailTournament?.tournamentResult[0]?.score}
+                      {detailTournament?.tournamentResult &&
+                        detailTournament?.tournamentResult[0]?.score}
                     </Typography>
                     <Typography
                       sx={{
@@ -1187,7 +1190,6 @@ export default function JoinTournament() {
                               boxSizing: "border-box",
                               position: "absolute",
                               display: "flex",
-                              backgroundColor: "rgb(46, 40, 68,0.1)",
                               bottom: "0px",
                               justifyContent: "center",
                               alignItems: "flex-end",
