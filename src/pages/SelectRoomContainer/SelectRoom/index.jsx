@@ -1234,8 +1234,9 @@ export default function SelectRoom() {
                       >
                         FREE
                       </MenuItem>
-                      {
-                        listBet && listBet?.length > 0 && listBet?.map((bet, index) => (
+                      {listBet &&
+                        listBet?.length > 0 &&
+                        listBet?.map((bet, index) => (
                           <MenuItem
                             key={index}
                             sx={{
@@ -1254,8 +1255,7 @@ export default function SelectRoom() {
                             />
                             <span>{bet?.betPrice}</span>{" "}
                           </MenuItem>
-                        ))
-                      }
+                        ))}
                     </Select>
                   </FormControl>
                 </Box>

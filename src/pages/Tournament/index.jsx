@@ -15,7 +15,7 @@ import {
 import { useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import UnityGameComponent from "../../components/GameManager/UnityGameComponent";
-import { Person, TurnRight } from "@mui/icons-material";
+import { Person } from "@mui/icons-material";
 import { images } from "../../utils/images";
 import { useNavigate } from "react-router-dom";
 import {
@@ -53,6 +53,7 @@ export default function Tournament() {
       socket?.emit("getListTournament");
     }
   });
+  console.log("tournaments: ", tournaments);
 
   useEffect(() => {
     socket?.on("createTournamentSuccess", (data) => {
@@ -342,8 +343,7 @@ export default function Tournament() {
                 <Typography
                   sx={{ fontWeight: "200 !important", textAlign: "start" }}
                 >
-                  {item?.tournamentQuantity}/
-                  {item?.tournamentMaxPlayer ? item?.tournamentMaxPlayer : 200}
+                  {item?.users?.length}/{item?.tournamentQuantity}
                 </Typography>
               </Box>
               <Typography
@@ -365,7 +365,7 @@ export default function Tournament() {
                   color: "#BFBEED",
                 }}
               >
-                Tournament By: Gad Game
+                Tournament By: {item?.tournamentUser?.userName}
               </Typography>
             </Box>
             <Box
@@ -395,7 +395,6 @@ export default function Tournament() {
       </Grid>
     );
   });
-  // return <Layout children={renderS()} />;
   return (
     <Layout
       children={
@@ -412,7 +411,7 @@ export default function Tournament() {
                 fontSize: getFontSizeTitleDependOnWidth(width),
               }}
             >
-              Tournament
+              Tournaments
             </Typography>
             <Box
               sx={{
