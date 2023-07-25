@@ -303,7 +303,7 @@ export default function JoinTournament() {
                           }}
                         >
                           {detailTournament?.tournamentResult &&
-                            detailTournament?.tournamentResult[0].score}
+                            detailTournament?.tournamentResult[0]?.score}
                         </Typography>
                         <Typography
                           sx={{
