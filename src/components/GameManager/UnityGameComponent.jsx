@@ -110,6 +110,7 @@ export default function UnityGameComponent(props) {
       sendMessage("OverTheBridgeHome", "SetToken", token);
       sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
       sendMessage("OverTheBridgeHome", "SetGameId", gameId);
+      sendMessage("OverTheBridgeHome", "SetSubmitScoreUrl", process.env.REACT_APP_END_POINT_TOURNAMENT);
       sendMessage("OverTheBridgeHome", "StartGame", "Start");
       sendMessage("Player Spawner", "SetToken", token);
       sendMessage("Player Spawner", "SetRoomName", roomId);
@@ -120,11 +121,8 @@ export default function UnityGameComponent(props) {
       
       sendMessage("MenuManager", "SetToken", token);
       sendMessage("MenuManager", "SetRoom", roomId);
-      sendMessage("MenuManager", "StartGame", "Start");
       sendMessage("MenuManager", "SetSubmitScoreUrl", process.env.REACT_APP_END_POINT_PVP_BOT);
-      
-      sendMessage("OverTheBridgeHome", "SetSubmitScoreUrl", process.env.REACT_APP_END_POINT_TOURNAMENT);
-      
+      sendMessage("MenuManager", "StartGame", "Start");
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(async () => {
