@@ -15,16 +15,16 @@
 }
 .my-component {
   background: #fff;
-  width:"700px"
+  width: "700px";
 }
 
 .fullscreen-enabled .my-component {
   background: #000;
-  width:"700px"
+  width: "700px";
 }
-.navBarFullScreen{
+.navBarFullScreen {
   animation: MoveUpDown 0.3s ease-in;
-  position: absolute;  
+  position: absolute;
   bottom: 0;
 }
 @keyframes MoveUpDown {
@@ -35,25 +35,25 @@
     bottom: 0px;
   }
 }
-.showButtonFullScreen{
+.showButtonFullScreen {
   animation: MoveUp 0.3s ease-out;
-  position: absolute;  
-  button{
-    background:linear-gradient(#873CF0,#7946EE);
+  position: absolute;
+  button {
+    background: linear-gradient(#873cf0, #7946ee);
   }
 }
-.showButtonFullScreenDis{
+.showButtonFullScreenDis {
   animation: MoveDown 0.3s ease-out;
-  position: absolute;  
-  button{
-    background:linear-gradient(#873CF0,#7946EE);
+  position: absolute;
+  button {
+    background: linear-gradient(#873cf0, #7946ee);
   }
 }
 @keyframes MoveUp {
   0% {
     bottom: -50px;
   }
-  
+
   100% {
     bottom: 0px;
   }
@@ -62,15 +62,15 @@
   0% {
     bottom: 0px;
   }
-  
+
   100% {
-    bottom: -50px;
-    display: none;
+    bottom: -60px;
+    display: none !important;
   }
 }
-.navBarFullScreenDis{
+.navBarFullScreenDis {
   animation: MovecDown 0.3s linear;
-  position: absolute;  
+  position: absolute;
 }
 @keyframes MovecDown {
   0% {
@@ -80,4 +80,12 @@
     bottom: -55.23px;
     display: none !important;
   }
+}
+.fullscreenVideo {
+  position: fixed;
+  right: 0;
+  top: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 100000;
 }

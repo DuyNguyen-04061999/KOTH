@@ -1,6 +1,7 @@
 import {
   Box,
   Container,
+  Dialog,
   Paper,
   Table,
   TableBody,
@@ -21,7 +22,7 @@ import {
 } from "../../../utils/config";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { images280423_l } from "../../../utils/images280423_l";
-import { images } from "../../../utils/images";
+import { images, video } from "../../../utils/images";
 import { useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -38,6 +39,13 @@ export default function JoinTournament() {
   const [expand, setExpand] = useState(false);
   const { id } = useParams();
   const { token } = useSelector((state) => state.authReducer);
+  const [continueGame, setContinueGame] = useState(false);
+  const [previousOri, setPreviousOri] = useState("");
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [videoGame, setVideoGame] = useState(false);
+  const [checkMobile,setCheckMobile]=useState(false);
+  const { width } = useWindowDimensions();
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
       backgroundColor: "#1f1933",
@@ -52,6 +60,24 @@ export default function JoinTournament() {
       border: "none",
     },
   }));
+  useEffect(() => {
+    if (orientation === "landscape" && width > 576 && width < 1200) {
+      setIsFullScreen(true);
+    }
+
+    if (
+      orientation === "portrait" ||
+      (width > 576 && orientation === "portrait")
+    ) {
+      setIsFullScreen(false);
+    }
+  }, [orientation, width, previousOri]);
+  useEffect(() => {
+    if (isFullScreen === true&&checkMobile===true) {
+       setVideoGame(true);
+       setCheckMobile(false);
+    }
+  }, [isFullScreen,checkMobile]);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#251f41",
@@ -70,7 +96,6 @@ export default function JoinTournament() {
       border: "none",
     },
   }));
-  const { width } = useWindowDimensions();
   const screen = useFullScreenHandle();
   const [minLength, setMinLength] = useState(0);
   const reportChange = useCallback(
@@ -94,6 +119,13 @@ export default function JoinTournament() {
     }
   });
   useEffect(() => {
+    if (orientation === "landscape") {
+      setPreviousOri(orientation);
+    } else {
+      setPreviousOri("");
+    }
+  }, [orientation]);
+  useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
       setFetchT(false);
@@ -105,11 +137,15 @@ export default function JoinTournament() {
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       setStartGame(true);
+      if (orientation === "landscape") {
+        setVideoGame(true);
+      }
+      setCheckMobile(true);
     });
     return () => {
       socket?.off("detailTournamentSuccess");
     };
-  }, [socket]);
+  }, [socket,orientation]);
   console.log("Detail Tournament: ", detailTournament);
   useEffect(() => {
     if (
@@ -1170,143 +1206,167 @@ export default function JoinTournament() {
                 detailTournament?.tournamentInfors?.game[0].GameFiles.length >=
                   4 && (
                   <FullScreen handle={screen} onChange={reportChange}>
-                    <Fragment>
-                      <UnityGameComponent
-                        GameFiles={
-                          detailTournament?.tournamentInfors?.game[0].GameFiles
-                        }
-                        width="100%"
-                        height="700px"
-                        tournamentId={id}
-                        gameId={
-                          detailTournament?.tournamentInfors?.game[0]
-                            ._gg_koth_game_tournaments?.gameId
-                        }
-                      />
-                      {startGame && expand === true && width > 576 && (
-                        <>
-                          <Box
-                            className={
-                              mouseEnter === false
-                                ? "showButtonFullScreen"
-                                : "showButtonFullScreenDis"
-                            }
-                            sx={{
-                              width: "100%",
-                              height: "60px",
-                              boxSizing: "border-box",
-                              position: "absolute",
-                              display: "flex",
-                              bottom: "0px",
-                              justifyContent: "center",
-                              alignItems: "flex-end",
-                            }}
-                          >
-                            <button
-                              style={{
-                                width: "70px",
-                                height: "50px",
-                                border: "none",
-                                outline: "none",
-                                borderRadius: "40px 40px 0px 0px",
+                    {!videoGame ? (
+                      <Fragment>
+                        <UnityGameComponent
+                          GameFiles={
+                            detailTournament?.tournamentInfors?.game[0]
+                              .GameFiles
+                          }
+                          width="100%"
+                          height="700px"
+                          cwidth="100%"
+                          cheight="100%"
+                          tournamentId={id}
+                          isFullScreen={isFullScreen}
+                          fullScreen={expand}
+                          gameId={
+                            detailTournament?.tournamentInfors?.game[0]
+                              ._gg_koth_game_tournaments?.gameId
+                          }
+                        />
+                        {startGame && expand === true && width > 576 && (
+                          <>
+                            <Box
+                              className={
+                                mouseEnter === false
+                                  ? "showButtonFullScreen"
+                                  : "showButtonFullScreenDis"
+                              }
+                              sx={{
+                                width: "100%",
+                                height: "60px",
+                                boxSizing: "border-box",
+                                position: "absolute",
                                 display: "flex",
+                                bottom: "0px",
                                 justifyContent: "center",
-                                alignItems: "center",
+                                alignItems: "flex-end",
                               }}
-                              onClick={() => setMouseEnter(true)}
                             >
-                              <img
-                                alt="..."
-                                width="30px"
-                                src={images.eyeIcon}
-                              />
-                            </button>
-                          </Box>
-                          <Box
-                            className={
-                              mouseEnter === true
-                                ? "navBarFullScreen"
-                                : "navBarFullScreenDis"
-                            }
-                            sx={{
-                              width: "100%",
-                              height: "auto",
-                              boxSizing: "border-box",
-                              padding: "10px 20px",
-                              display: "flex",
-                              justifyContent: "flex-end",
-                              alignItems: "center",
-                              backgroundColor: "rgb(46, 40, 68)",
-                            }}
-                          >
-                            <img
-                              style={{
-                                position: "absolute",
-                                left: "50px",
-                              }}
-                              width="150px"
-                              alt="..."
-                              src={images.Logo_Text}
-                            />
-                            <button
-                              onClick={() => setMouseEnter(false)}
-                              style={{
-                                border: "none",
-                                outline: "none",
-                                position: "absolute",
-                                padding: "6px 50px",
-                                borderRadius: "10px",
-                                left: "45%",
-                                background: "linear-gradient(#873CF0,#7946EE)",
-                                color: "white",
+                              <button
+                                style={{
+                                  width: "70px",
+                                  height: "50px",
+                                  border: "none",
+                                  outline: "none",
+                                  borderRadius: "40px 40px 0px 0px",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                                onClick={() => setMouseEnter(true)}
+                              >
+                                <img
+                                  alt="..."
+                                  width="30px"
+                                  src={images.eyeIcon}
+                                />
+                              </button>
+                            </Box>
+                            <Box
+                              className={
+                                mouseEnter === true
+                                  ? "navBarFullScreen"
+                                  : "navBarFullScreenDis"
+                              }
+                              sx={{
+                                width: "100%",
+                                height: "auto",
+                                boxSizing: "border-box",
+                                padding: "10px 20px",
                                 display: "flex",
-                                justifyContent: "center",
+                                justifyContent: "flex-end",
                                 alignItems: "center",
+                                backgroundColor: "rgb(46, 40, 68)",
                               }}
                             >
                               <img
-                                width="25px"
-                                alt="..."
-                                src={images.closeEyefullscreen}
-                                style={{ marginRight: "5px" }}
-                              />
-                              Hide this bar
-                            </button>
-                            {expand === false ? (
-                              <img
-                                alt=".."
-                                width={width < 576 ? width / 20 : width / 68}
                                 style={{
-                                  marginLeft: width < 576 ? "20px" : "30px",
-                                  cursor: "pointer",
+                                  position: "absolute",
+                                  left: "50px",
                                 }}
-                                onClick={() => {
-                                  setExpand(true);
-                                }}
-                                src={images.expandIcon}
-                              />
-                            ) : (
-                              <img
+                                width="150px"
                                 alt="..."
-                                width={width < 576 ? width / 20 : width / 68}
-                                style={{
-                                  marginLeft: width < 576 ? "20px" : "30px",
-                                  cursor: "pointer",
-                                }}
-                                onClick={() => {
-                                  setExpand(false);
-                                  screen.exit();
-                                }}
-                                src={images.ZoomInIcon}
+                                src={images.Logo_Text}
                               />
-                            )}
-                          </Box>
-                        </>
-                      )}
-                    </Fragment>
+                              <button
+                                onClick={() => setMouseEnter(false)}
+                                style={{
+                                  border: "none",
+                                  outline: "none",
+                                  position: "absolute",
+                                  padding: "6px 50px",
+                                  borderRadius: "10px",
+                                  left: "45%",
+                                  background:
+                                    "linear-gradient(#873CF0,#7946EE)",
+                                  color: "white",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <img
+                                  width="25px"
+                                  alt="..."
+                                  src={images.closeEyefullscreen}
+                                  style={{ marginRight: "5px" }}
+                                />
+                                Hide this bar
+                              </button>
+                              {expand === false ? (
+                                <img
+                                  alt=".."
+                                  width={width < 576 ? width / 20 : width / 68}
+                                  style={{
+                                    marginLeft: width < 576 ? "20px" : "30px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    setExpand(true);
+                                  }}
+                                  src={images.expandIcon}
+                                />
+                              ) : (
+                                <img
+                                  alt="..."
+                                  width={width < 576 ? width / 20 : width / 68}
+                                  style={{
+                                    marginLeft: width < 576 ? "20px" : "30px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    setExpand(false);
+                                    screen.exit();
+                                  }}
+                                  src={images.ZoomInIcon}
+                                />
+                              )}
+                            </Box>
+                          </>
+                        )}
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <video
+                          className={isFullScreen ? "fullscreenVideo" : ""}
+                          width={"100%"}
+                          style={{ height: "700px !important" }}
+                          playsInline
+                          muted
+                          autoPlay
+                          onEnded={() => {
+                            setVideoGame(false);
+                          }}
+                        >
+                          <source src={video.LogoAnim} type="video/mp4" />
+                        </video>
+                      </Fragment>
+                    )}
                   </FullScreen>
                 )}
-              {startGame && expand === false && width > 576 && (
+              {startGame && expand === false && width > 576 && !videoGame && (
                 <Box
                   sx={{
                     width: "100%",
@@ -1359,6 +1419,138 @@ export default function JoinTournament() {
               )}
             </Box>
           </Box>
+          {(width < 576 || (!previousOri && orientation === "portrait")) &&
+            startGame && (
+              <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
+                {continueGame === true ? (
+                  <Box
+                    sx={{
+                      backgroundColor: "#1c191e",
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: "#37285c",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "56px",
+                        width: "100%",
+                        boxSizing: "border-box",
+                        padding: "10px",
+                        color: "white",
+                      }}
+                    >
+                      <img
+                        style={{
+                          width: getFontSizeTitleDependOnWidth(width),
+                          height: getFontSizeTitleDependOnWidth(width),
+                        }}
+                        alt="..."
+                        src={images.BackButtonLobby}
+                      />
+                      <Typography>Tournament</Typography>
+                    </Box>
+                    <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
+                      <Box
+                        onClick={() => {
+                          setContinueGame(false);
+                        }}
+                        sx={{
+                          width: "100%",
+                          height: "280px",
+                          backgroundColor: "#423965",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: `${parseFloat(width / 2.6)}px`,
+                            height: "40px",
+                            background: "linear-gradient(#9c39f1,#c049ed)",
+                            borderRadius: "25px",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "0px 10px 0px 5px",
+                          }}
+                        >
+                          <Typography sx={{ color: "white" }}>
+                            Continue
+                          </Typography>
+                          <img
+                            width={width / 18}
+                            src={images.conitnuePlayButton}
+                            alt="..."
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      width: startGame ? "100%" : "0px",
+                      height: startGame ? "100%" : "0px",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: startGame ? "100%" : "0px",
+                          height: startGame ? "100%" : "0px",
+                          backgroundColor: "#423965",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      ></Box>
+                    </Box>
+                    <Box
+                      onClick={() => {
+                        setContinueGame(true);
+                      }}
+                      sx={{
+                        position: "fixed",
+                        top: "40%",
+                        display: "flex",
+                        padding: "10px",
+                        backgroundImage: "linear-gradient(#6844de,#8c39ff)",
+                        borderRadius: "0px 50px 50px 0px",
+                      }}
+                    >
+                      <Box
+                        sx={{ width: "20px" }}
+                        component={"img"}
+                        src={images.BackButtonLobby}
+                      ></Box>
+                      <Typography sx={{ color: "white" }}>Lobby</Typography>
+                    </Box>
+                    <Box sx={{ position: "fixed", top: "40%", left: "33%" }}>
+                      <Box
+                        sx={{ width: width / 3, height: width / 3 }}
+                        component={"img"}
+                        src={images.RotateScreen}
+                      ></Box>
+                      <Typography sx={{ color: "white" }}>
+                        Rotate Your Screen
+                      </Typography>
+                    </Box>
+                  </Box>
+                )}
+              </Dialog>
+            )}
         </>
       )}
     </>

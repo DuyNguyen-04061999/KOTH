@@ -11,7 +11,7 @@ export default function UnityGameComponent(props) {
     isFullScreen,
     roomId 
   } = props;
-  const { width, height } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   const { token } = useSelector(state => state.authReducer)
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
@@ -127,9 +127,12 @@ export default function UnityGameComponent(props) {
       
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
-  const handleFinalGame = useCallback(() => {
-    
-  }, []);
+  const handleFinalGame = useCallback(async () => {
+      await unload();
+      navigate({
+        pathname: "/",
+      });
+  }, [navigate, unload]);
 
 
   useEffect(() => {
@@ -150,8 +153,8 @@ export default function UnityGameComponent(props) {
       style={{
         width: isFullScreen ? width : cwidth ? cwidth : "100%",
         minWidth: "100%",
-        height: isFullScreen ? height : cheight ? cheight : "100%",
-        position: isFullScreen ? "absolute" : "none",
+        height: isFullScreen ? "100%" : cheight ? cheight : "100%",
+        position: isFullScreen ? "fixed" : "none",
         top: isFullScreen ? 0 : "none",
         left: isFullScreen ? 0 : "none",
         zIndex: isFullScreen ? 2000 : "none"

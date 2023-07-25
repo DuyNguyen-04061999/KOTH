@@ -54,6 +54,7 @@ import TournamentBG from "../assets/images/TournamentBG.png";
 import IconRewardTour from "../assets/images/IconRewardTour.png";
 import calendarTour from "../assets/images/calendarTour.png";
 import endAtTour from "../assets/images/endAtTour.png";
+import conitnuePlayButton from "../assets/images/conitnuePlayButton.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -166,6 +167,8 @@ import video1 from "../assets/videoHover/Bida1.mp4";
 import video2 from "../assets/videoHover/Domino1.mp4";
 import video3 from "../assets/videoHover/Shooter.mp4";
 
+import LogoAnim from "../assets/videoHover/logo-anim version2.mp4";
+
 import btnnav from "../assets/imagesDesktop/button.svg";
 import iconleaderboard from "../assets/imagesLayout/popup/icon.png.png";
 import brleaderboard from "../assets/imagesLayout/popup/br.png";
@@ -256,6 +259,7 @@ export const images = {
   IconRewardTour: IconRewardTour,
   calendarTour: calendarTour,
   endAtTour: endAtTour,
+  conitnuePlayButton: conitnuePlayButton,
 };
 
 export const images2 = {
@@ -347,6 +351,7 @@ export const video = {
   video1: video1,
   video2: video2,
   video3: video3,
+  LogoAnim: LogoAnim,
 };
 
 export const imageDesktop = {

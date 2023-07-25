@@ -29,7 +29,7 @@ import {
   getFontSizeTitleDependOnWidth,
   getIconSizeDependOnWith,
 } from "../../../utils/config";
-import { images } from "../../../utils/images";
+import { images, video } from "../../../utils/images";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   setSelectNav,
@@ -101,6 +101,9 @@ export default function SelectRoom() {
   const [isLoading, setIsLoading] = useState(false);
   const [itemFilter, setItemFilter] = useState([""]);
   const [mouseEnter, setMouseEnter] = useState(false);
+  const [continueGame, setContinueGame] = useState(false);
+  const [videoGame, setVideoGame] = useState(false);
+  const [checkMobile,setCheckMobile]=useState(false)
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
   const filterArray = [0, 100, 200, 500];
@@ -485,6 +488,10 @@ export default function SelectRoom() {
     socket?.on(`startRoom${roomIdSelect}Game${detailGame?.id}Success`, () => {
       setIsLoading(false);
       setStartGame(true);
+      if (orientation === "landscape") {
+        setVideoGame(true);
+      }
+      setCheckMobile(true);
     });
 
     socket?.on(`kickOut${roomIdSelect}Success`, (data, room) => {
@@ -552,6 +559,7 @@ export default function SelectRoom() {
     userGold,
     listRoom,
     userName,
+    orientation
   ]);
   useEffect(() => {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
@@ -568,7 +576,7 @@ export default function SelectRoom() {
       });
     });
   });
-
+  console.log("Parameter: ", width, orientation);
   useEffect(() => {
     if (fetchListRoom && token) {
       socket?.emit("getListRoomGame", {
@@ -654,7 +662,13 @@ export default function SelectRoom() {
     }
     return false;
   };
-
+  useEffect(() => {
+    if (isFullScreen === true&&checkMobile===true) {
+       setVideoGame(true);
+       setCheckMobile(false);
+    }
+  }, [isFullScreen,checkMobile]);
+  console.log("isFullScreen: ", videoGame);
   return (
     <div className="">
       <Box
@@ -677,7 +691,7 @@ export default function SelectRoom() {
             sx={{
               width: startGame ? "100%" : "0px",
               height: startGame ? "700px" : "0px",
-              backgroundColor: "#423965",
+              backgroundColor: !videoGame ? "#423965" : "none",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -690,7 +704,23 @@ export default function SelectRoom() {
               }}
             >
               <FullScreen handle={screen} onChange={reportChange}>
-                {startGame &&
+                {videoGame ? (
+                  <Fragment>
+                    <video
+                      className={isFullScreen ? "fullscreenVideo" : ""}
+                      width={"100%"}
+                      playsInline
+                      muted
+                      autoPlay
+                      onEnded={() => {
+                        setVideoGame(false);
+                      }}
+                    >
+                      <source src={video.LogoAnim} type="video/mp4" />
+                    </video>
+                  </Fragment>
+                ) : (
+                  startGame &&
                   detailGame?.GameFiles &&
                   detailGame?.GameFiles?.length >= 4 && (
                     <Fragment>
@@ -925,14 +955,16 @@ export default function SelectRoom() {
                           </>
                         )}
                     </Fragment>
-                  )}
+                  )
+                )}
               </FullScreen>
             </div>
           </Box>
           {startGame &&
             expand === false &&
             width > 576 &&
-            orientation === "landscape" && (
+            orientation === "landscape" &&
+            !videoGame && (
               <Box
                 sx={{
                   width: "100%",
@@ -1067,60 +1099,139 @@ export default function SelectRoom() {
       {(width < 576 || (!previousOri && orientation === "portrait")) &&
         startGame && (
           <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
-            <Box
-              sx={{
-                width: startGame ? "100%" : "0px",
-                height: startGame ? "100%" : "0px",
-              }}
-            >
+            {continueGame === true ? (
               <Box
                 sx={{
+                  backgroundColor: "#1c191e",
+                  display: "flex",
+                  flexDirection: "column",
                   width: "100%",
                   height: "100%",
                 }}
               >
                 <Box
-                  sx={{
-                    width: startGame ? "100%" : "0px",
-                    height: startGame ? "100%" : "0px",
-                    backgroundColor: "#423965",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                  onClick={() => {
+                    socket?.emit("leaveRoomGame", {
+                      roomId: roomDetailInfo?.id,
+                      gameId: detailGame?.id,
+                    });
+                    setContinueGame(false);
+                    setStartGame(false);
                   }}
-                ></Box>
+                  sx={{
+                    backgroundColor: "#37285c",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    height: "56px",
+                    width: "100%",
+                    boxSizing: "border-box",
+                    padding: "10px",
+                    color: "white",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: getFontSizeTitleDependOnWidth(width),
+                      height: getFontSizeTitleDependOnWidth(width),
+                    }}
+                    alt="..."
+                    src={images.BackButtonLobby}
+                  />
+                  <Typography>{roomDetailInfo?.roomName}</Typography>
+                </Box>
+                <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
+                  <Box
+                    onClick={() => {
+                      setContinueGame(false);
+                    }}
+                    sx={{
+                      width: "100%",
+                      height: "280px",
+                      backgroundColor: "#423965",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: `${parseFloat(width / 2.6)}px`,
+                        height: "40px",
+                        background: "linear-gradient(#9c39f1,#c049ed)",
+                        borderRadius: "25px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "0px 10px 0px 5px",
+                      }}
+                    >
+                      <Typography sx={{ color: "white" }}>Continue</Typography>
+                      <img
+                        width={width / 18}
+                        src={images.conitnuePlayButton}
+                        alt="..."
+                      />
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
+            ) : (
               <Box
-                onClick={() => {
-                  // setContinueGame(true);
-                }}
                 sx={{
-                  position: "fixed",
-                  top: "40%",
-                  display: "flex",
-                  padding: "10px",
-                  backgroundImage: "linear-gradient(#6844de,#8c39ff)",
-                  borderRadius: "0px 50px 50px 0px",
+                  width: startGame ? "100%" : "0px",
+                  height: startGame ? "100%" : "0px",
                 }}
               >
                 <Box
-                  sx={{ width: "20px" }}
-                  component={"img"}
-                  src={images.BackButtonLobby}
-                ></Box>
-                <Typography sx={{ color: "white" }}>Lobby</Typography>
-              </Box>
-              <Box sx={{ position: "fixed", top: "40%", left: "33%" }}>
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: startGame ? "100%" : "0px",
+                      height: startGame ? "100%" : "0px",
+                      backgroundColor: "#423965",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  ></Box>
+                </Box>
                 <Box
-                  sx={{ width: width / 3, height: width / 3 }}
-                  component={"img"}
-                  src={images.RotateScreen}
-                ></Box>
-                <Typography sx={{ color: "white" }}>
-                  Rotate Your Screen
-                </Typography>
+                  onClick={() => {
+                    setContinueGame(true);
+                  }}
+                  sx={{
+                    position: "fixed",
+                    top: "40%",
+                    display: "flex",
+                    padding: "10px",
+                    backgroundImage: "linear-gradient(#6844de,#8c39ff)",
+                    borderRadius: "0px 50px 50px 0px",
+                  }}
+                >
+                  <Box
+                    sx={{ width: "20px" }}
+                    component={"img"}
+                    src={images.BackButtonLobby}
+                  ></Box>
+                  <Typography sx={{ color: "white" }}>Lobby</Typography>
+                </Box>
+                <Box sx={{ position: "fixed", top: "40%", left: "33%" }}>
+                  <Box
+                    sx={{ width: width / 3, height: width / 3 }}
+                    component={"img"}
+                    src={images.RotateScreen}
+                  ></Box>
+                  <Typography sx={{ color: "white" }}>
+                    Rotate Your Screen
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
+            )}
           </Dialog>
         )}
       {!startGame && (
@@ -1229,7 +1340,7 @@ export default function SelectRoom() {
                               minHeight: "20px !important",
                               display: "flex",
                               alignItems: "center",
-                              justifyContent:"space-between"
+                              justifyContent: "space-between",
                             }}
                             value={bet?.betPrice}
                           >
@@ -1243,7 +1354,9 @@ export default function SelectRoom() {
                               <span>{bet?.betPrice}</span>{" "}
                             </Box>
                             <Box>
-                              <span className="ms-2">(You will got {bet?.betPricePercent}%)</span>
+                              <span className="ms-2">
+                                (You will got {bet?.betPricePercent}%)
+                              </span>
                             </Box>
                           </MenuItem>
                         ))}
@@ -3174,7 +3287,12 @@ export default function SelectRoom() {
                           {roomDetailInfo?.membersInRoom &&
                           JSON.parse(roomDetailInfo?.membersInRoom)?.length > 1
                             ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
-                                ?.username
+                                ?.username.length <= 12
+                              ? JSON.parse(roomDetailInfo?.membersInRoom)[1]
+                                  ?.username
+                              : JSON.parse(
+                                  roomDetailInfo?.membersInRoom
+                                )[1]?.username.slice(0, 12) + "..."
                             : ""}
                         </Typography>
                         <Box
