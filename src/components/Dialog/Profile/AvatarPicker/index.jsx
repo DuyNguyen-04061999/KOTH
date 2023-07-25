@@ -44,7 +44,7 @@ export const AvatarPicker = (props) => {
     dispatch(openLoading());
     let reader = new FileReader();
     const imageType = event?.target?.files[0]?.type?.replace("image/", "") || "";
-    if (imageType === "png" || imageType === "jpg" || imageType === "jpeg") {
+    if (imageType === "png" || imageType === "jpg" || imageType === "jpeg" || imageType === "svg") {
       reader.onload = function (e) {
         handleChangeImage(reader.result);
         setFile(reader.result);

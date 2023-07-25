@@ -11,7 +11,7 @@ import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
 
 export default function Signup(props) {
   const { handleTab } = props;
-  const [gender, setGender] = useState(0);
+  const [gender] = useState(0);
   const { registerValue } = useSelector((state) => state.authReducer);
   const [blur, setBlur] = useState(false);
   const dispatch = useDispatch();
@@ -136,8 +136,11 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
+           {username && username.includes(" ") && (
+            <span className="text-danger">The account must not have spaces</span>
+          )}
         </FormControl>
-        <Box className="position-relative">
+        {/* <Box className="position-relative">
           <div className="d-flex justify-content-between align-items-center ps-2 pe-2 pb-2 radio-group">
             <div
               onClick={() => {
@@ -184,7 +187,7 @@ export default function Signup(props) {
               <label style={{ color: "white" }}>Other</label>
             </div>
           </div>
-        </Box>
+        </Box> */}
         <FormControl
           variant="standard"
           sx={{
@@ -339,7 +342,7 @@ export default function Signup(props) {
             <span className="text-danger">Email must contain @gmail.com</span>
           )}
         </FormControl>
-        <FormControl
+        {/* <FormControl
           variant="standard"
           sx={{
             width: "100%",
@@ -385,7 +388,7 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
-        </FormControl>
+        </FormControl> */}
         <FormControl
           variant="standard"
           sx={{
@@ -410,7 +413,7 @@ export default function Signup(props) {
           <Input
             id="input-with-icon-adornment"
             type="text"
-            placeholder="Refcode"
+            placeholder="Refcode (optional)"
             onChange={(e) => {
               setRef(e.target.value);
             }}
