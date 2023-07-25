@@ -4,7 +4,7 @@ import "../Slider/index.scss";
 import { useDispatch, useSelector } from "react-redux";
 // import VideoThumb from "../VideoThumb";
 // import { useState } from "react";
-import { toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
+import { clickTab, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 import { getUniqueID } from "../../utils/helper";
 export default function GameThumb(props) {
   const { id, name, img, title } = props;
@@ -36,6 +36,7 @@ export default function GameThumb(props) {
                 });
               } else {
                 dispatch(toggleLoginDialog());
+                dispatch(clickTab(false))
               }
             }}
           >

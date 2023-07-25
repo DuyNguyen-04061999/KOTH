@@ -105,7 +105,7 @@ export default function Home() {
                   marginTop: "50px",
                 }}
               >
-                <source src={images280423_l.bannerVideo} type="video/webm" />
+                <source src={images280423_l.bannerVideo} type={width > 1024 ? "video/webm" :"video/mp4"} />
               </video>
               <div className="ad">
                 <button
@@ -948,7 +948,7 @@ export default function Home() {
                                       fontSize: 12,
                                     }}
                                   >
-                                    {formatMoney(lb?.userGold)}
+                                    {formatMoney(lb?.userGold).slice(0,7) + "..."}
                                   </p>
                                 </div>
                               </div>
@@ -1026,7 +1026,7 @@ export default function Home() {
                               className="me-2 rounded-circle"
                             />
                             {row.userName ||
-                              `Gad_Game_${index === 0 ? 1 : index + 1}`}
+                              `Gad_Game_${index === 0 ? 1 : index + 1}` }
                           </TableCell>
                           <TableCell
                             align="left"
@@ -1039,7 +1039,7 @@ export default function Home() {
                               height={15}
                               className="me-1"
                             />
-                            {formatMoney(row.userGold)}
+                            {formatMoney(row.userGold).slice(0,10)}
                           </TableCell>
                         </TableRow>
                       ))}

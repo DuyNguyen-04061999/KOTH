@@ -758,7 +758,7 @@ export default function Dialoglg() {
                       src={images.undefinedAvatar}
                       height={40}
                       width={40}
-                      className="ava-signin ms-2 me-2"
+                      className="ignin ms-2 me-2"
                     />
                   ) : (
                     <img
@@ -807,10 +807,10 @@ export default function Dialoglg() {
                     ) : (
                       <img
                         style={{
-                          border:
-                            width && width > 576
-                              ? "3px solid #9771df"
-                              : "2px solid rgb(189 124 223)",
+                          // border:
+                          //   width && width > 576
+                          //     ? "3px solid #9771df"
+                          //     : "2px solid rgb(189 124 223)",
                           borderRadius: 5,
                         }}
                         alt="Remy Sharp1"

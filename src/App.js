@@ -128,7 +128,7 @@ function App() {
         localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
         localStorage.setItem("token", token);
-        socket.emit("listMessage");
+        // socket.emit("listMessage");
         socket.emit("listFriend");
         socket.emit("getTransaction");
       });

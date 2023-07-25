@@ -1510,13 +1510,13 @@ export default function SelectRoom() {
                   )}
                 </Box>{" "}
               </Box>
-
               <Box
                 sx={{
                   width: "100%",
                   display: "flex",
                   flexWrap: "wrap",
                   boxSizing: "border-box",
+                  marginBottom:"100px !important"
                 }}
               >
                 {listRoom

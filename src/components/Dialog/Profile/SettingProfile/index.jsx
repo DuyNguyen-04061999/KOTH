@@ -49,7 +49,7 @@ export default function SettingProfile({ closePopup }) {
   }, [fName,lName,emailAddress])
 
   const sendUpdateProfile = () => {
-    if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000) {
+    if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
       dispatch(showAlert("error", "Please attach image smaller 1MB"));
     } else {
       if (avatarImage === avatarUrl) {
@@ -66,12 +66,12 @@ export default function SettingProfile({ closePopup }) {
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
         });
       }
-      dispatch(updateProfile());
     }
+    dispatch(updateProfile());
     closePopup();
   };
 
-  const renderChangeUserName = () => {
+  const renderChangeUserName = () => { 
     return (
       <>
         <Box>

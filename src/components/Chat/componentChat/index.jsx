@@ -392,7 +392,7 @@ export default function ComponentChat() {
   return (
     <Box
       sx={{
-        minHeight: checkHeightResponsive(),
+        // minHeight: checkHeightResponsive(),
         maxHeight: checkHeightResponsive(),
         // minWidth: checkWidthResponsive(),
         // maxWidth: checkWidthResponsive(),
