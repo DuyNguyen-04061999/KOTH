@@ -44,7 +44,7 @@ export default function JoinTournament() {
   const { orientation } = useSelector((state) => state.gameReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
-  const [checkMobile,setCheckMobile]=useState(false);
+  const [checkMobile, setCheckMobile] = useState(false);
   const { width } = useWindowDimensions();
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
@@ -73,11 +73,11 @@ export default function JoinTournament() {
     }
   }, [orientation, width, previousOri]);
   useEffect(() => {
-    if (isFullScreen === true&&checkMobile===true) {
-       setVideoGame(true);
-       setCheckMobile(false);
+    if (isFullScreen === true && checkMobile === true) {
+      setVideoGame(true);
+      setCheckMobile(false);
     }
-  }, [isFullScreen,checkMobile]);
+  }, [isFullScreen, checkMobile]);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#251f41",
@@ -145,7 +145,7 @@ export default function JoinTournament() {
     return () => {
       socket?.off("detailTournamentSuccess");
     };
-  }, [socket,orientation]);
+  }, [socket, orientation]);
   console.log("Detail Tournament: ", detailTournament);
   useEffect(() => {
     if (
@@ -824,7 +824,7 @@ export default function JoinTournament() {
                         Game
                       </span>
                       <span style={{ marginTop: "10px", color: "#5E78B5" }}>
-                        Even by
+                        Tournament
                       </span>
                       <span style={{ marginTop: "10px", color: "#5E78B5" }}>
                         Prize

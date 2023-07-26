@@ -55,6 +55,14 @@ import IconRewardTour from "../assets/images/IconRewardTour.png";
 import calendarTour from "../assets/images/calendarTour.png";
 import endAtTour from "../assets/images/endAtTour.png";
 import conitnuePlayButton from "../assets/images/conitnuePlayButton.png";
+import CupTournament from "../assets/images/CupTournament.png";
+import HouseIcon from "../assets/images/HouseIcon.png";
+import personTour from "../assets/images/personTour.png";
+import TimeTour from "../assets/images/TimeTour.png";
+import BannerTour from "../assets/images/Banner phu 1.png";
+import tour1 from "../assets/images/tour1.png";
+import tour2 from "../assets/images/tour2.png";
+import tour3 from "../assets/images/tour3.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -260,6 +268,14 @@ export const images = {
   calendarTour: calendarTour,
   endAtTour: endAtTour,
   conitnuePlayButton: conitnuePlayButton,
+  CupTournament: CupTournament,
+  HouseIcon: HouseIcon,
+  personTour: personTour,
+  TimeTour: TimeTour,
+  BannerTour: BannerTour,
+  tour1: tour1,
+  tour2: tour2,
+  tour3: tour3,
 };
 
 export const images2 = {
