@@ -10,7 +10,6 @@ import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
 import FAQPage from "./pages/FAQpage";
 import CountDownTimer from "./components/CountDownTimer";
-import SearchPage from "./pages/TournamentDemo";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
@@ -74,6 +73,7 @@ import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
+import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 function App() {
   useTracking("");
 
@@ -395,13 +395,13 @@ function App() {
               />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/countdowntimer" element={<CountDownTimer />} />
-              <Route path="/search" element={<SearchPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
               <Route path="game" element={<GamePage />} />
               <Route path="game/:id" element={<GameDetailPage />} />
               <Route path="game-type/:type" element={<TypeGamePage />} />
               <Route path="game/edit/:id" element={<GameEditPage />} />
+              <Route path="transactions/:id" element={<TransactionDetailPage />} />
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </CustomRouter>

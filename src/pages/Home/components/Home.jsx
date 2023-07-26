@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import SliderLayout from "../../../components/Slider/index";
-import { images2, imagesV2, popup } from "../../../utils/images";
+import { images, images2, imagesV2, popup } from "../../../utils/images";
 import "../scss/home.scss";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
@@ -23,9 +23,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { formatMoney } from "../../../utils/helper";
-import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
+import {
+  getFontSizeDependOnWidth,
+  getFontSizeTitleDependOnWidth,
+} from "../../../utils/config";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
+import moment from "moment";
 
 export default function Home() {
   const { width } = useWindowDimensions();
@@ -36,6 +40,8 @@ export default function Home() {
   const { listGame } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
+  const [fetchT, setFetchT] = useState(true);
+  const [tournaments, setTournaments] = useState([]);
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -65,7 +71,232 @@ export default function Home() {
     arr.splice(to, 0, cutOut);
     return arr; // insert it at index 'to'
   }
+  useEffect(() => {
+    if (token && fetchT) {
+      socket?.emit("getListTournament");
+    }
+  });
 
+  useEffect(() => {
+    socket?.on("getListTournamentSuccess", (data) => {
+      setTournaments(data);
+      setFetchT(false);
+    });
+    return () => {};
+  }, [socket]);
+  const renderTournamentList = tournaments?.map((item, index) => {
+    return (
+      index < 4 && (
+        <Grid
+          sx={{
+            padding:
+              index % 2 === 1 ? "20px 0px 20px 20px" : "20px 20px 20px 20px",
+          }}
+          item
+          md={6}
+          key={index}
+        >
+          <Box
+            className="content"
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: "#2E2151",
+              borderRadius: "5px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                position: "relative",
+              }}
+            >
+              <img
+                style={{ borderRadius: "5px 0px 0px 5px" }}
+                src={
+                  item?.games && item?.games[0]
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      item?.games[0]?.gameAvatar
+                    : images.undefinedAvatar
+                }
+                alt="..."
+                width={200}
+                height="100%"
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  backgroundColor: "#f7941c",
+                  cursor: "pointer",
+                  padding: "10px 10px",
+                  bottom: "15px",
+                  borderRadius: "0px 50px 50px 0px",
+                  display: "flex",
+                  alignItems: "center",
+                  boxShadow: "2px 8px 16px -8px rgba(0,0,0,0.71);",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "14px !important",
+                    color: "#fff",
+                    textAlign: "start",
+                  }}
+                >
+                  <span style={{ fontSize: "12px" }}>Prize Pool:</span>{" "}
+                  <span style={{ fontSize: "15px" }}>500</span>
+                </Typography>
+                <img
+                  style={{ width: "18px", height: "18px", marginLeft: "5px" }}
+                  alt="..."
+                  src={images.goldIcon}
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                flexGrow: "1",
+              }}
+            >
+              <Box
+                sx={{
+                  position: "relative",
+                  padding: "10px",
+                  boxSizing: "border-box",
+                }}
+              >
+                <Typography variant="h5" sx={{ color: "white" }}>
+                  {item?.tournamentName}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: "17px",
+                    color: "#BEBDEC",
+                  }}
+                >
+                  <Box
+                    component={"img"}
+                    sx={{ width: "15px", height: "15px" }}
+                    src={images.personTour}
+                  ></Box>
+                  <Typography
+                    style={{
+                      fontSize: "12px",
+                      marginLeft: "5px",
+                      display: "block",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    {item?.users?.length}/{item?.tournamentQuantity}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    color: "#BEBDEC",
+                    marginTop: "17px",
+                  }}
+                >
+                  <Box
+                    component={"img"}
+                    sx={{
+                      width: "15px",
+                      height: "15px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                    src={images.TimeTour}
+                  ></Box>
+                  <Typography
+                    style={{
+                      fontWeight: "700",
+                      fontSize: "12px",
+                      marginLeft: "5px",
+                      display: "block",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    {moment(item?.tournamentStartAt).format("DD/MM/YYYY")}-
+                    {moment(item?.tournamentEndAt).format("DD/MM/YYYY")}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    color: "#BEBDEC",
+                    marginTop: "10px",
+                  }}
+                >
+                  <Box
+                    component={"img"}
+                    sx={{
+                      width: "15px",
+                      height: "15px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                    src={images.HouseIcon}
+                  ></Box>{" "}
+                  <Typography
+                    style={{
+                      fontWeight: "700",
+                      fontSize: "12px",
+                      marginLeft: "5px",
+                      display: "block",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    Tournament By: {item?.tournamentUser?.userName}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                sx={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  background: "linear-gradient(#7648ED,#8A3AF1)",
+                  color: "white",
+                  fontSize: getFontSizeDependOnWidth(width),
+                  cursor: "pointer",
+                  position: "relative",
+                  borderRadius: "0px 0px 5px 0px",
+                }}
+              >
+                <span>View</span>
+                <i
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "32%",
+                    fontSize: "18px",
+                  }}
+                  className="fa-solid fa-angle-right"
+                ></i>
+              </Box>
+            </Box>
+          </Box>
+        </Grid>
+      )
+    );
+  });
   return (
     <div className="home-page">
       {userRole && userRole === "admin" && (
@@ -105,7 +336,10 @@ export default function Home() {
                   marginTop: "50px",
                 }}
               >
-                <source src={images280423_l.bannerVideo} type={width > 1024 ? "video/webm" :"video/mp4"} />
+                <source
+                  src={images280423_l.bannerVideo}
+                  type={width > 1024 ? "video/webm" : "video/mp4"}
+                />
               </video>
               <div className="ad">
                 <button
@@ -313,6 +547,32 @@ export default function Home() {
                 </button>
               </Box>
             </Box>
+            <div
+              className="group"
+              style={{
+                marginTop: "2.5rem",
+                paddingLeft: "15px",
+                paddingRight: "15px",
+              }}
+            >
+              <TitleHomeDesktopComponent
+                type="ratedGame"
+                title="TOURNAMENTS"
+                icon={images.CupTournament}
+                overBg={images270423_l.overTop}
+                noBg={true}
+              />
+              <div
+                style={{
+                  paddingLeft: width > 576 ? 0 : 0,
+                  marginTop: "56px",
+                }}
+              >
+                <Grid container rowSpacing={2} columnSpacing={2}>
+                  {renderTournamentList}
+                </Grid>
+              </div>
+            </div>
             <Box
               className="leaderboard"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
@@ -948,7 +1208,8 @@ export default function Home() {
                                       fontSize: 12,
                                     }}
                                   >
-                                    {formatMoney(lb?.userGold).slice(0,7) + "..."}
+                                    {formatMoney(lb?.userGold).slice(0, 7) +
+                                      "..."}
                                   </p>
                                 </div>
                               </div>

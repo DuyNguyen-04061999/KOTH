@@ -576,7 +576,7 @@ export default function SelectRoom() {
       });
     });
   });
-  console.log("Parameter: ", width, orientation);
+  
   useEffect(() => {
     if (fetchListRoom && token) {
       socket?.emit("getListRoomGame", {
@@ -668,7 +668,7 @@ export default function SelectRoom() {
        setCheckMobile(false);
     }
   }, [isFullScreen,checkMobile]);
-  console.log("isFullScreen: ", videoGame);
+  
   return (
     <div className="">
       <Box
