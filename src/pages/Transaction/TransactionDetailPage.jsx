@@ -80,6 +80,10 @@ export default function TransactionDetailPage() {
         await sendToken(transaction)
       })
 
+      socket?.on("updateDepositTransactionQrSuccess", async () => {
+        setProcess(false)
+      })
+
       socket?.on("error", async () => {
         setProcess(false)
       })
@@ -87,6 +91,7 @@ export default function TransactionDetailPage() {
       return () => {
         socket?.off("checkTransactionIdSuccess")
         socket?.off("error")
+        socket?.off("updateDepositTransactionQrSuccess")
       }
     }, [socket, query, id])
 
