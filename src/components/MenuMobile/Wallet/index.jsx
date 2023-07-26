@@ -1379,7 +1379,7 @@ export default function DialogWallet(props) {
                   }}
                   sx={{ width: "15px", marginLeft: "20px", cursor: "pointer" }}
                 >
-                  <img src={images.CloseButtonDeposit} alt="..." />
+                  <img style={{width:"20px",height:"20px"}} src={images.CloseButtonDeposit} alt="..." />
                 </Box>
               )}
             </Box>

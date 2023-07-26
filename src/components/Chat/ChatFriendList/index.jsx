@@ -10,7 +10,6 @@ import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { updateContacterUsername } from "../../../redux-saga-middleware/reducers/chatReducer";
-import _socket from "../../../redux-saga-middleware/config/socket";
 
 const Test = styled.input`
   display: flex;
@@ -38,15 +37,10 @@ export default function ChatFriendList() {
   const { friendList } = useSelector((state) => state.chatReducer);
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
-  const [socket, setSocket] = useState(null);
+  
   const handleChangeSearchChat = (e) => {
     setSearchFeild(e.target.value);
   };
-
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, []);
 
   const [listFriend, setListFriend] = useState([]);
 
