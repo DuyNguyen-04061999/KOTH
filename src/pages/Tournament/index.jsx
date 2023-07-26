@@ -4,15 +4,13 @@ import { useEffect, useState } from "react";
 import _socket from "../../redux-saga-middleware/config/socket";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { Person } from "@mui/icons-material";
 import { images } from "../../utils/images";
 import { useNavigate } from "react-router-dom";
-import {
-  getFontSizeDependOnWidth,
-  getFontSizeTitleDependOnWidth,
-} from "../../utils/config";
+import { getFontSizeDependOnWidth } from "../../utils/config";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import moment from "moment";
+import TitleHomeDesktopComponent from "../../components/Title/TitleHomeDesktopComponent";
+import CreateTournament from "./CreateTournament";
 export default function Tournament() {
   const [socket, setSocket] = useState(null);
   const [tournaments, setTournaments] = useState([]);
@@ -51,7 +49,15 @@ export default function Tournament() {
 
   const renderTournamentList = tournaments?.map((item, index) => {
     return (
-      <Grid sx={{ padding: "10px" }} item md={6} key={index}>
+      <Grid
+        sx={{
+          padding:
+            index % 2 === 1 ? "20px 0px 20px 20px" : "20px 20px 20px 20px",
+        }}
+        item
+        md={6}
+        key={index}
+      >
         <Box
           className="content"
           sx={{
@@ -85,21 +91,31 @@ export default function Tournament() {
             <Box
               sx={{
                 position: "absolute",
-                backgroundColor: "#2E2151",
-                padding: "15px 10px",
+                backgroundColor: "#f7941c",
+                cursor: "pointer",
+                padding: "10px 10px",
                 bottom: "15px",
-                borderRadius: "0px 7px 7px 0px",
+                borderRadius: "0px 50px 50px 0px",
+                display: "flex",
+                alignItems: "center",
+                boxShadow: "2px 8px 16px -8px rgba(0,0,0,0.71);",
               }}
             >
               <Typography
                 sx={{
                   fontSize: "14px !important",
-                  color: "#FFC107",
+                  color: "#fff",
                   textAlign: "start",
                 }}
               >
-                Prize Pool: 500 DOGE
+                <span style={{ fontSize: "12px" }}>Prize Pool:</span>{" "}
+                <span style={{ fontSize: "15px" }}>500</span>
               </Typography>
+              <img
+                style={{ width: "18px", height: "18px", marginLeft: "5px" }}
+                alt="..."
+                src={images.goldIcon}
+              />
             </Box>
           </Box>
           <Box
@@ -117,42 +133,98 @@ export default function Tournament() {
                 boxSizing: "border-box",
               }}
             >
-              <Typography variant="h5">{item?.tournamentName}</Typography>
+              <Typography variant="h5" sx={{ color: "white" }}>
+                {item?.tournamentName}
+              </Typography>
               <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  marginTop: "15px",
+                  marginTop: "17px",
+                  color: "#BEBDEC",
                 }}
               >
-                <Person />
+                <Box
+                  component={"img"}
+                  sx={{ width: "15px", height: "15px" }}
+                  src={images.personTour}
+                ></Box>
                 <Typography
-                  sx={{ fontWeight: "200 !important", textAlign: "start" }}
+                  style={{
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                    display: "block",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    letterSpacing: "1px",
+                  }}
                 >
                   {item?.users?.length}/{item?.tournamentQuantity}
                 </Typography>
               </Box>
-              <Typography
+              <Box
                 sx={{
-                  fontWeight: "200 !important",
-                  textAlign: "start",
-                  marginTop: "15px",
-                  color: "#BFBEED",
+                  display: "flex",
+                  color: "#BEBDEC",
+                  marginTop: "17px",
                 }}
               >
-                {moment(item?.tournamentStartAt).format("DD/MM/YYYY")} -
-                {moment(item?.tournamentEndAt).format("DD/MM/YYYY")}
-              </Typography>
-              <Typography
+                <Box
+                  component={"img"}
+                  sx={{
+                    width: "15px",
+                    height: "15px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  src={images.TimeTour}
+                ></Box>
+                <Typography
+                  style={{
+                    fontWeight: "700",
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                    display: "block",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  {moment(item?.tournamentStartAt).format("DD/MM/YYYY")}-
+                  {moment(item?.tournamentEndAt).format("DD/MM/YYYY")}
+                </Typography>
+              </Box>
+              <Box
                 sx={{
-                  fontWeight: "200 !important",
-                  textAlign: "start",
-                  marginTop: "0px",
-                  color: "#BFBEED",
+                  display: "flex",
+                  color: "#BEBDEC",
+                  marginTop: "10px",
                 }}
               >
-                Tournament By: {item?.tournamentUser?.userName}
-              </Typography>
+                <Box
+                  component={"img"}
+                  sx={{
+                    width: "15px",
+                    height: "15px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  src={images.HouseIcon}
+                ></Box>{" "}
+                <Typography
+                  style={{
+                    fontWeight: "700",
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                    display: "block",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  Tournament By: {item?.tournamentUser?.userName}
+                </Typography>
+              </Box>
             </Box>
             <Box
               onClick={() => navigate("/tournamentDetail/" + item?.id)}
@@ -162,7 +234,7 @@ export default function Tournament() {
                 padding: "10px",
                 display: "flex",
                 justifyContent: "center",
-                background: "linear-gradient(#7440E9,#A345FB)",
+                background: "linear-gradient(#7648ED,#8A3AF1)",
                 color: "white",
                 fontSize: getFontSizeDependOnWidth(width),
                 cursor: "pointer",
@@ -170,9 +242,14 @@ export default function Tournament() {
                 borderRadius: "0px 0px 5px 0px",
               }}
             >
-              <span>VIEW</span>
+              <span>View</span>
               <i
-                style={{ position: "absolute", right: "10px", top: "34%" }}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "32%",
+                  fontSize: "18px",
+                }}
                 className="fa-solid fa-angle-right"
               ></i>
             </Box>
@@ -186,46 +263,98 @@ export default function Tournament() {
       children={
         <Box className="tournamentDemo mt-5">
           <Container
+            maxWidth={"lg"}
             sx={{
+              paddingLeft: "90px !important",
+              paddingRight: "90px !important",
               color: "white",
-              maxWidth: "1150px !important",
             }}
           >
-            <Typography
-              sx={{
-                textAlign: "start",
-                fontSize: getFontSizeTitleDependOnWidth(width),
-              }}
-            >
-              Tournaments
-            </Typography>
+            <TitleHomeDesktopComponent
+              noicon={true}
+              title="TOURNAMENTS"
+              noSeeAll={true}
+            />
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                marginBottom: "30px",
+                marginTop: "36px",
               }}
             >
               <button
                 style={{
                   padding: `${parseFloat(width / 170)}px ${parseFloat(
-                    width / 60
+                    width / 80
                   )}px`,
                   borderRadius: "5px",
                   border: "none",
                   outline: "none",
-                  background: "linear-gradient(#7440E9,#A345FB)",
+                  background: "#5F3491",
                   color: "white",
                   fontSize: getFontSizeDependOnWidth(width),
                 }}
               >
-                Create A Tournament
+                <Typography
+                  sx={{
+                    fontSize: "15px",
+                    marginLeft: "5px",
+                    display: "block",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  {" "}
+                  Create A Tournament
+                </Typography>
               </button>
             </Box>
-            <Grid container rowSpacing={2} columnSpacing={2}>
+            <img
+              style={{ width: "100%", marginTop: "36px" }}
+              alt="..."
+              src={images.BannerTour}
+            />
+            <Box sx={{ marginTop: "36px", display: "flex" }}>
+              <Box
+                sx={{ width: "33.33%", height: "200px", paddingRight: "9px" }}
+              >
+                <img
+                  style={{ width: "100%", height: "100%" }}
+                  alt="..."
+                  src={images.tour1}
+                />
+              </Box>
+              <Box sx={{ width: "33.33%", height: "200px" }}>
+                <img
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    paddingLeft: "9px",
+                    paddingRight: "9px",
+                  }}
+                  alt="..."
+                  src={images.tour2}
+                />
+              </Box>
+              <Box sx={{ width: "33.33%", height: "200px" }}>
+                <img
+                  style={{ width: "100%", height: "100%", paddingLeft: "9px" }}
+                  alt="..."
+                  src={images.tour3}
+                />
+              </Box>
+            </Box>
+            <Grid
+              sx={{ marginTop: "20px" }}
+              container
+              rowSpacing={2}
+              columnSpacing={2}
+            >
               {renderTournamentList}
             </Grid>
           </Container>
+          <CreateTournament />
         </Box>
       }
     />

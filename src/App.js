@@ -10,7 +10,6 @@ import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
 import FAQPage from "./pages/FAQpage";
 import CountDownTimer from "./components/CountDownTimer";
-import SearchPage from "./pages/TournamentDemo";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
@@ -396,7 +395,6 @@ function App() {
               />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/countdowntimer" element={<CountDownTimer />} />
-              <Route path="/search" element={<SearchPage />} />
               <Route path="list-game-manager" element={<ListGamePage />} />
               <Route path="upload" element={<UploadPage />} />
               <Route path="game" element={<GamePage />} />
