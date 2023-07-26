@@ -188,6 +188,7 @@ export default function Layout(props) {
 
   const handleSearch = () => {
     if (!searchValue) {
+      
     } else {
       navigate("/game-type/search", { state: { value: searchValue } });
       dispatch(getSearchGame(searchValue));
@@ -342,6 +343,7 @@ export default function Layout(props) {
                   <input
                     className="inp-search"
                     type="text"
+                    name="search"
                     value={searchValue}
                     onChange={handleInputChange}
                     onKeyDown={handleOnKeyDownEnter}
@@ -357,6 +359,7 @@ export default function Layout(props) {
                     }}
                   />
                   <button
+                    type="submit"
                     style={{
                       position: "absolute",
                       left: "357px",
@@ -494,7 +497,7 @@ export default function Layout(props) {
           >
             {1 === false && (
               <Box
-                className="position-absolute"
+                className="position-absolute check-re"
                 sx={{
                   zIndex: 1,
                   top: 0,

@@ -288,7 +288,7 @@ export default function InviteGameDialog() {
                     }}
                     IconComponent={DropDownIconF}
                   >
-                    <MenuItem value={0}>Free</MenuItem>
+                    <MenuItem value={"0"}>Free</MenuItem>
                     {listBet &&
                       listBet?.length > 0 &&
                       listBet?.map((bet, index) => (

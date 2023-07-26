@@ -46,7 +46,8 @@ export default function Signup(props) {
       username === "" ||
       password === "" ||
       c_password === "" ||
-      !email.includes("@gmail.com")
+      !email.includes("@gmail.com") || 
+      username.includes(" ")
     ) {
       setDisabledBtn(true);
     } else {

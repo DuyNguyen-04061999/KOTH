@@ -1025,8 +1025,8 @@ export default function Home() {
                               height={18}
                               className="me-2 rounded-circle"
                             />
-                            {row.userName ||
-                              `Gad_Game_${index === 0 ? 1 : index + 1}` }
+                            {row.userName.slice(0,10) ||
+                              `GadGame${index === 0 ? 1 : index + 1}` }
                           </TableCell>
                           <TableCell
                             align="left"
@@ -1039,7 +1039,7 @@ export default function Home() {
                               height={15}
                               className="me-1"
                             />
-                            {formatMoney(row.userGold).slice(0,10)}
+                            {formatMoney(row.userGold).slice(0,8)}
                           </TableCell>
                         </TableRow>
                       ))}

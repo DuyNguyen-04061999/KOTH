@@ -24,7 +24,6 @@ export default function ChatWorldList() {
   const { chatWorld, friendList, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
-  console.log(chatWorld);
   const { userName, token } = useSelector((state) => state.authReducer);
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
@@ -104,7 +103,6 @@ export default function ChatWorldList() {
   const renderChat = worldMessage
     ?.filter((n) => n.messageType === "World")
     .map((e, index) => {
-      console.log(e);
       return (
         <Box
           key={index}

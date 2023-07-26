@@ -4,5 +4,7 @@ import { TypeGame } from "./components";
 import Navigation from "../../components/Navigation";
 
 export default function TypeGamePage() {
-  return <Layout children={<><Navigation/><TypeGame /></>} />;
+  return <Layout children={<>
+    {/* <Navigation/> */}
+  <TypeGame /></>} />;
 }

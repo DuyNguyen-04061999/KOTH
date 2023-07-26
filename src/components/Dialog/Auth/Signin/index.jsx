@@ -748,6 +748,7 @@ export default function Dialoglg() {
                   color="success"
                   overlap="circular"
                   badgeContent=""
+                  variant="dot"
                 >
                   {userAvatar === null ? (
                     <img
