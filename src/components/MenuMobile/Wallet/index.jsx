@@ -29,6 +29,8 @@ import { store } from "../../../redux-saga-middleware/config/configRedux";
 import {
   closeTransactionDialog,
   openTransactionDialog,
+  saveTransactionData,
+  toggleMetaMaskDialog,
   toggleWalletDialog,
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../utils/images";
@@ -104,6 +106,10 @@ export default function DialogWallet(props) {
           return result;
         } else {
           dispatch(showAlert("error", "Cannot deposit because contract fail!"))
+          socket?.emit("updateDepositTransaction", {
+            type: "error",
+            transactionId: transaction?.id
+          })
         }
   
       } catch (error) {
@@ -126,7 +132,12 @@ export default function DialogWallet(props) {
         
         await sendToken(data, transaction)
       } else {
-        dispatch(showAlert("error", "Cannot deposit because not found metamask!"))
+        dispatch(toggleMetaMaskDialog())
+        dispatch(toggleWalletDialog())
+        dispatch(saveTransactionData({
+          transactionData: transaction,
+          depositData: data
+        }))
       }
     })
 

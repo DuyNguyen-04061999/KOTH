@@ -24,16 +24,33 @@ export const walletLogoutSuccessFully = (data) => {
   }
 }
 
+export const toggleMetaMaskDialog = (data) => {
+  return {
+    type: "TOGGLE_METAMASK_DIALOG",
+    payload: data
+  }
+}
+
+export const saveTransactionData = (data) => {
+  return {
+    type: "SAVE_TRANSACTION_DATA",
+    payload: data
+  }
+}
+
 const walletReducer = (
   state = {
     isWalletDialog: false,
     isTransactionDialog: false,
+    isMetamaskDialog: false,
+    transactionData: null,
+    depositData: null
   },
   action
 ) => {
   let {
     type,
-    //  payload
+    payload
   } = action;
   switch (type) {
     case REHYDRATE:
@@ -51,6 +68,8 @@ const walletReducer = (
         isTransactionDialog: false,
       }
     }
+    case "TOGGLE_METAMASK_DIALOG": return {...state, isMetamaskDialog: !state.isMetamaskDialog}
+    case "SAVE_TRANSACTION_DATA": return {...state, transactionData: payload?.transactionData, depositData: payload?.depositData}
     default:
       return state;
   }

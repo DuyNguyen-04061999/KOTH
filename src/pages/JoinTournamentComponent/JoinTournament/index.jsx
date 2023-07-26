@@ -146,7 +146,7 @@ export default function JoinTournament() {
       socket?.off("detailTournamentSuccess");
     };
   }, [socket,orientation]);
-  console.log("Detail Tournament: ", detailTournament);
+  
   useEffect(() => {
     if (
       detailTournament?.tournamentParticipants?.length > 1 &&

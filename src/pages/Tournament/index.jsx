@@ -48,7 +48,7 @@ export default function Tournament() {
 
     return () => {};
   }, [socket]);
-  console.log("Tournament: ", tournaments);
+
   const renderTournamentList = tournaments?.map((item, index) => {
     return (
       <Grid sx={{ padding: "10px" }} item md={6} key={index}>

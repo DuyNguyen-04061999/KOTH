@@ -74,6 +74,7 @@ import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
+import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 function App() {
   useTracking("");
 
@@ -402,6 +403,7 @@ function App() {
               <Route path="game/:id" element={<GameDetailPage />} />
               <Route path="game-type/:type" element={<TypeGamePage />} />
               <Route path="game/edit/:id" element={<GameEditPage />} />
+              <Route path="transactions/:id" element={<TransactionDetailPage />} />
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </CustomRouter>
