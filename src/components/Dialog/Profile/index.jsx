@@ -29,7 +29,9 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { userName, token } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
-  const { id, email, refCode, phone, userNameProfile, avatarUrl } = useSelector(
+  const { id, email, refCode, 
+    // phone, 
+    userNameProfile, avatarUrl } = useSelector(
     (state) => state.profileReducer
   );
   const [socket, setSocket] = useState(null);
@@ -235,7 +237,7 @@ export default function DialogProfile(props) {
                     />
                   </FormControl>
                 </Box>
-                <Box className="mobile-number d-flex flex-column align-items-start mb-3">
+                {/* <Box className="mobile-number d-flex flex-column align-items-start mb-3">
                   <Typography
                     variant="inherit"
                     sx={{
@@ -282,7 +284,7 @@ export default function DialogProfile(props) {
                       }}
                     />
                   </FormControl>
-                </Box>
+                </Box> */}
                 <Box
                   className="ref-code d-flex flex-column align-items-start mb-3"
                   position={"relative"}
