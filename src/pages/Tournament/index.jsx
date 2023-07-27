@@ -2,7 +2,7 @@ import "./index.scss";
 import Layout from "../../components/Layout";
 import { useEffect, useState } from "react";
 import _socket from "../../redux-saga-middleware/config/socket";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Dialog, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { images } from "../../utils/images";
 import { useNavigate } from "react-router-dom";
@@ -10,14 +10,15 @@ import { getFontSizeDependOnWidth } from "../../utils/config";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import moment from "moment";
 import TitleHomeDesktopComponent from "../../components/Title/TitleHomeDesktopComponent";
-import CreateTournament from "./CreateTournament";
+// import CreateTournament from "./CreateTournament";
 export default function Tournament() {
+  const { width } = useWindowDimensions();
+  const MarginTop = parseFloat(width / 100);
   const [socket, setSocket] = useState(null);
   const [tournaments, setTournaments] = useState([]);
   const [fetchT, setFetchT] = useState(true);
   const { token } = useSelector((state) => state.authReducer);
   const navigate = useNavigate();
-  const { width } = useWindowDimensions();
 
   useEffect(() => {
     setSocket(_socket);
@@ -354,7 +355,257 @@ export default function Tournament() {
               {renderTournamentList}
             </Grid>
           </Container>
-          <CreateTournament />
+          {/* <CreateTournament /> */}
+          <Dialog open={true}>
+            <Box
+              sx={{
+                backgroundColor: "#37285C",
+                display: "flex",
+                flexDirection: "column",
+                width: "300px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "10px",
+                  backgroundColor: "#37285C",
+                }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "14px",
+                    fontWeight: "500 !important",
+                    marginLeft: "0px !important",
+                    color: "#fff",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Choose Tournament Type
+                </Typography>
+                <img
+                  src={images.closeButton}
+                  alt="..."
+                  style={{ width: "20px", height: "20px" }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  padding: `${MarginTop}px`,
+                  backgroundColor: "#2E233D",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <button
+                  style={{
+                    width: "79%",
+                    padding: "8px",
+                    border: "none",
+                    outline: "none",
+                    background: "linear-gradient(#8A3AF1,#7648ED)",
+                    color: "white",
+                    letterSpacing: "0.7px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  Personal Tournament
+                </button>
+                <Box sx={{ marginTop: `${MarginTop / 2}px`, display: "flex" }}>
+                  <button
+                    style={{
+                      width: "80%",
+                      padding: "8px",
+                      border: "none",
+                      outline: "none",
+                      background: "linear-gradient(#8A3AF1,#7648ED)",
+                      color: "white",
+                      letterSpacing: "0.7px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Brand Tournament
+                  </button>
+                  <button
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      padding: "5px 20px",
+                      marginLeft: `${MarginTop / 2}px`,
+                      borderRadius: "5px",
+                      fontSize: "20px",
+                      backgroundColor: "#68399E",
+                      color: "white",
+                    }}
+                  >
+                    i
+                  </button>
+                </Box>
+              </Box>
+            </Box>
+          </Dialog>
+          <Dialog open={true}>
+            <Box
+              sx={{
+                backgroundColor: "#37285C",
+                display: "flex",
+                flexDirection: "column",
+                width: "500px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "10px",
+                  backgroundColor: "#37285C",
+                }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "20px",
+                    fontWeight: "500 !important",
+                    color: "#fff",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Agreement
+                </Typography>
+                <img
+                  src={images.closeButton}
+                  alt="..."
+                  style={{ width: "20px", height: "20px" }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  padding: `${MarginTop}px`,
+                  backgroundColor: "#2E233D",
+                  maxHeight: "500px",
+                  overflowY: "auto",
+                }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "14px",
+                    fontWeight: "500 !important",
+                    marginLeft: "0px !important",
+                    color: "#566EE7",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  This Agreement ("Agreement") is made between Kingofthehill
+                  Website ("Platform") and the User ("User") who wishes to
+                  create and organize tournaments on the Platform. By using the
+                  Platform and creating tournaments, the User agrees to be bound
+                  by the terms and conditions set forth in this Agreement.
+                  <br />
+                  1. Tournament Creation
+                  <br />
+                  1.1 The User may create and organize tournaments on the
+                  Platform.
+                  <br />
+                  1.2 The User shall provide accurate and complete information
+                  during the tournament creation process, including but not
+                  limited to email address, phone number, and physical address.
+                  <br />
+                  1.3 The User shall comply with all applicable laws and
+                  regulations while creating and organizing tournaments on the
+                  Platform.
+                  <br />
+                  2. Tournament Guidelines and Rules
+                  <br />
+                  2.1 The User shall adhere to the tournament guidelines and
+                  rules set forth by the Platform.
+                  <br />
+                  2.2 The User shall ensure that the tournaments created do not
+                  violate any intellectual property rights or infringe upon the
+                  rights of any third party.
+                  <br />
+                  2.3 The User shall not create tournaments that promote or
+                  encourage any form of illegal activity, violence, hatred, or
+                  discrimination.
+                  <br />
+                  2.4 The User shall not create tournaments that involve
+                  gambling or any other activity that may be considered illegal
+                  or unethical.
+                  <br />
+                  3. Tournament Promotion and Marketing
+                  <br />
+                  3.1 The User may promote and market their tournaments within
+                  the guidelines and rules set forth by the Platform.
+                  <br />
+                  3.2 The User shall ensure that any promotional or marketing
+                  materials used for the tournaments comply with all applicable
+                  laws and regulations.
+                  <br />
+                  3.3 The User shall not engage in any deceptive, misleading, or
+                  fraudulent practices while promoting or marketing their
+                  tournaments.
+                  <br />
+                  4. Privacy and Data Protection
+                  <br />
+                  4.1 The User acknowledges that the Platform may collect and
+                  process personal information provided during the tournament
+                  creation process.
+                  <br />
+                  4.2 The User shall comply with all applicable data protection
+                  and privacy laws while collecting, using, and storing personal
+                  information of participants.
+                  <br />
+                  4.3 The User shall not misuse or disclose any personal
+                  information obtained from participants without their consent.
+                  <br />
+                  5. Liability and Indemnification
+                  <br />
+                  5.1 The User acknowledges that the Platform does not assume
+                  any responsibility or liability for the tournaments created by
+                  the User.
+                  <br />
+                  5.2 The User shall indemnify and hold the Platform harmless
+                  from any claims, damages, or liabilities arising out of the
+                  User's creation and organization of tournaments.
+                  <br />
+                  6. Termination
+                  <br />
+                  6.1 The Platform reserves the right to terminate or suspend
+                  the User's access to the Platform and their ability to create
+                  tournaments if the User breaches any terms or conditions of
+                  this Agreement.
+                  <br />
+                  7. Governing Law and Dispute Resolution
+                  <br />
+                  7.1 This Agreement shall be governed by and construed in
+                  accordance with the laws of the jurisdiction in which the
+                  Platform operates.
+                  <br />
+                  7.2 Any disputes arising out of or in connection with this
+                  Agreement shall be resolved through amicable negotiations. If
+                  no resolution can be reached, the parties agree to submit to
+                  the exclusive jurisdiction of the courts in the applicable
+                  jurisdiction.
+                  <br />
+                  By creating tournaments on the Platform, the User acknowledges
+                  that they have read, understood, and agreed to the terms and
+                  conditions of this Agreement.
+                  <br />
+                  This Agreement is effective as of the date of the User's
+                  acceptance and shall remain in effect until terminated by
+                  either party
+                </Typography>
+              </Box>
+              <Box sx={{ padding: `${MarginTop}px` }}>
+                <Box></Box>
+                <button></button>
+              </Box>
+            </Box>
+          </Dialog>
         </Box>
       }
     />
