@@ -103,7 +103,7 @@ export default function SelectRoom() {
   const [mouseEnter, setMouseEnter] = useState(false);
   const [continueGame, setContinueGame] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
-  const [checkMobile,setCheckMobile]=useState(false)
+  const [checkMobile, setCheckMobile] = useState(false);
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
   const filterArray = [0, 100, 200, 500];
@@ -559,7 +559,7 @@ export default function SelectRoom() {
     userGold,
     listRoom,
     userName,
-    orientation
+    orientation,
   ]);
   useEffect(() => {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
@@ -576,7 +576,7 @@ export default function SelectRoom() {
       });
     });
   });
-  
+
   useEffect(() => {
     if (fetchListRoom && token) {
       socket?.emit("getListRoomGame", {
@@ -663,12 +663,12 @@ export default function SelectRoom() {
     return false;
   };
   useEffect(() => {
-    if (isFullScreen === true&&checkMobile===true) {
-       setVideoGame(true);
-       setCheckMobile(false);
+    if (isFullScreen === true && checkMobile === true) {
+      setVideoGame(true);
+      setCheckMobile(false);
     }
-  }, [isFullScreen,checkMobile]);
-  
+  }, [isFullScreen, checkMobile]);
+
   return (
     <div className="">
       <Box
@@ -1629,7 +1629,7 @@ export default function SelectRoom() {
                   display: "flex",
                   flexWrap: "wrap",
                   boxSizing: "border-box",
-                  marginBottom:"100px !important"
+                  marginBottom: "100px !important",
                 }}
               >
                 {listRoom
