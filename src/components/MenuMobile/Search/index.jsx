@@ -14,21 +14,45 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function DialogSearch(props) {
   const { open, handleShowSearch, handleColor } = props;
-  const { listGameByType } = useSelector((state) => state.gameReducer);
+  const { listGame } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
-  const [search, setSearch] = useState("");
+  const [search, 
+    // setSearch
+  ] = useState("");
 
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   setSearch(e.target.value);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(getSearchGame(search));
   };
 
+  const [searchValue, setSearchValue] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === 'Enter' && searchValue) {
+      // Convert the searchValue to lowercase for case-insensitive search
+      const lowercaseSearchValue = searchValue.toLowerCase();
+
+      // Filter the gamesArray based on the lowercaseSearchValue and gameName
+      const filteredResults = listGame.filter((game) =>
+        game.gameName.toLowerCase().includes(lowercaseSearchValue)
+      );
+
+      setSearchResults(filteredResults);
+
+      // Perform your desired actions with the lowercaseSearchValue
+      // navigate('/game-type/search', { state: { value: lowercaseSearchValue } });
+      // dispatch(getSearchGame(lowercaseSearchValue));
+      // setChatF('');
+    }
+  };
+
   function searchList() {
-    return <SliderLayout cards={listGameByType} />;
+    return <SliderLayout cards={searchResults} />;
   }
 
   return (
@@ -60,8 +84,9 @@ export default function DialogSearch(props) {
                 <input
                   className="inp-search"
                   type="text"
-                  value={search}
-                  onChange={handleChange}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={handleOnKeyDownEnter}
                   placeholder="Want to find something ?"
                 />
                 <button

@@ -50,7 +50,6 @@ export default function ChatFriendList() {
 
   useEffect(() => {
     const list = friendList.map((item) => {
-      console.log(item);
       if (item?.userName.includes(searchFeild)) {
         return item;
       }

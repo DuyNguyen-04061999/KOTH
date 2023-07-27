@@ -21,7 +21,7 @@ import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer"
 
 export default function InviteGameDialog() {
   const { width } = useWindowDimensions();
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("0");
   const [gameId, setGameId] = useState(0);
   const [gameName, setGameName] = useState("");
   const [isloading, setIsLoading] = useState(false);

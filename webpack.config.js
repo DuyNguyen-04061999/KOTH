@@ -3,6 +3,9 @@ const webpack = require("webpack");
 
 module.exports = {
   entry: "./src/index.js",
+  devServer: {
+    historyApiFallback: true,    // <- inserting this resolved the issue.
+  },
   module: {
     rules: [
       //...

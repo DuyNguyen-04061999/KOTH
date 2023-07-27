@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import moment from "moment";
 import "./index.scss";
@@ -139,7 +139,7 @@ export default function ChatWorldList() {
                     }}
                     className="p-2"
                   >
-                    <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span>
+                    {/* <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span> */}
                     <Box
                       className="mt-2 p-2 d-flex"
                       sx={{
@@ -331,6 +331,7 @@ export default function ChatWorldList() {
                             fontSize: "14px",
                           }}
                         >
+                          <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span>
                           <Box
                             className="p-2 d-flex"
                             sx={{
@@ -365,16 +366,14 @@ export default function ChatWorldList() {
                               className="ms-2 d-flex flex-column flex-end"
                               sx={{ width: "60%" }}
                             >
-                              <Typography
-                                sx={{
+                              <span
+                                style={{
                                   color: "white",
                                   fontWeight: "bold",
-                                  textAlign:"left",
-                                  marginLeft:"0px !important"
                                 }}
                               >
                                 {e?.messageGameName.slice(0,10) + `...`}
-                              </Typography>
+                              </span>
                               <span className="text-white font-weight-bold">
                                 Price: {e?.messageBetPrice}
                               </span>

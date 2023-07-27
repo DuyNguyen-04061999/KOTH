@@ -47,7 +47,8 @@ export default function Signup(props) {
       password === "" ||
       c_password === "" ||
       !email.includes("@gmail.com") || 
-      username.includes(" ")
+      username.includes(" ") ||
+      username.length > 15
     ) {
       setDisabledBtn(true);
     } else {
@@ -139,6 +140,9 @@ export default function Signup(props) {
           />
            {username && username.includes(" ") && (
             <span className="text-danger">The account must not have spaces</span>
+          )}
+           {username && username.length > 15 && (
+            <span className="text-danger">no more than 15 characters</span>
           )}
         </FormControl>
         {/* <Box className="position-relative">

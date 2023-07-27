@@ -864,6 +864,7 @@ export default function Dialoglg() {
                         bsPrefix=""
                         style={{ paddingRight: "0px", paddingLeft: "0px" }}
                         onClick={() => {
+                          socket?.emit("getGameLog");
                           dispatch(toggleGameLogDialog());
                         }}
                       >

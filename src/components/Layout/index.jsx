@@ -118,13 +118,16 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
-  const { isGameLogDialog } = useSelector((state) => state.gameReducer);
+  const { isGameLogDialog, listGame } = useSelector(
+    (state) => state.gameReducer
+  );
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const [showChat] = useState(true);
   const { children } = props;
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const pathname = useLocation();
+
 
   const [backgroundGlobal, setBackgroundGlobal] = useState("#61388e");
   const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
@@ -183,23 +186,32 @@ export default function Layout(props) {
     }
   }, [token]);
   const [searchValue, setSearchValue] = useState("");
-  const handleInputChange = (e) => {
-    setSearchValue(e.target.value);
-  };
+  const [ setSearchResults] = useState([]);
+  // const handleInputChange = (e) => {
+  //   setSearchValue(e.target.value);
+  // };
 
   const handleSearch = () => {
     if (!searchValue) {
-      
     } else {
-      navigate("/game-type/search", { state: { value: searchValue } });
-      dispatch(getSearchGame(searchValue));
+      const lowercaseSearchValue = searchValue.toUpperCase();
+      // console.log(lowercaseSearchValue);
+      navigate("/game-type/search", { state: { value: lowercaseSearchValue } });
+      dispatch(getSearchGame(lowercaseSearchValue));
     }
   };
 
   const handleOnKeyDownEnter = (e) => {
     if (e.key === "Enter" && searchValue) {
-      navigate("/game-type/search", { state: { value: searchValue } });
-      dispatch(getSearchGame(searchValue));
+
+      const lowercaseSearchValue = searchValue.toLowerCase();
+
+      const filteredResults = listGame.filter((game) =>
+        game.gameName.toLowerCase().includes(lowercaseSearchValue)
+      );
+      setSearchResults(filteredResults);
+      navigate("/game-type/search", { state: { value: lowercaseSearchValue } });
+      dispatch(getSearchGame(lowercaseSearchValue));
       setChatF("");
     }
   };
@@ -217,7 +229,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      <MetaMaskDialog/>
+      <MetaMaskDialog />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {
@@ -298,7 +310,7 @@ export default function Layout(props) {
                     type="text"
                     name="search"
                     value={searchValue}
-                    onChange={handleInputChange}
+                    onChange={(e => setSearchValue(e.target.value))}
                     onKeyDown={handleOnKeyDownEnter}
                     placeholder="Want to find something"
                     style={{
@@ -568,7 +580,7 @@ export default function Layout(props) {
                   onClick={() => {
                     dispatch(clickTabChat(true));
                     setBackgroundGlobal("#61388e");
-                    setBackgroundPrivate("#462a71");
+                    setBackgroundPrivate("#261a35");
                   }}
                 >
                   {tabChat === false ? (
@@ -595,8 +607,6 @@ export default function Layout(props) {
                     width: "50%",
                     backgroundColor: backgroundPrivate,
                     cursor: "pointer",
-                    display: "flex",
-                    justifyContent: "start",
                     borderRadius: "0px 5px 5px 0px",
                     padding: "3px",
                   }}
@@ -606,7 +616,7 @@ export default function Layout(props) {
                     } else {
                       dispatch(clickTabChat(false));
                       setBackgroundPrivate("#62388f");
-                      setBackgroundGlobal("#462a71");
+                      setBackgroundGlobal("#261a35");
                     }
                   }}
                 >

@@ -46,6 +46,13 @@ export default function TypeGame() {
       );
     } else if (type === "search") {
       setTitle("Search");
+      // const data = listGame?.filter((item) => item.gameName === "")
+      // dispatch(
+      //   getListGameByType({
+      //     typeGame:"search",
+      //     listGame:data
+      //   })
+      // )
     }
   }, [type, listGame, dispatch, token, socket]);
 
