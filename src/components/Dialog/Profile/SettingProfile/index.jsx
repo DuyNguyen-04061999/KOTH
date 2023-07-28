@@ -22,7 +22,7 @@ export default function SettingProfile({ closePopup }) {
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
-  const [disable,setDisable] = useState(true)
+  const [disable, setDisable] = useState(true);
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -37,16 +37,12 @@ export default function SettingProfile({ closePopup }) {
   }
 
   useEffect(() => {
-    if(
-      fName === "" ||
-      lName === "" ||
-      !emailAddress.includes("@gmail.com")
-    ) {
-      setDisable(true)
+    if (fName === "" || lName === "" || !emailAddress.includes("@gmail.com")) {
+      setDisable(true);
     } else {
-      setDisable(false)
+      setDisable(false);
     }
-  }, [fName,lName,emailAddress])
+  }, [fName, lName, emailAddress]);
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
@@ -71,7 +67,7 @@ export default function SettingProfile({ closePopup }) {
     }
   };
 
-  const renderChangeUserName = () => { 
+  const renderChangeUserName = () => {
     return (
       <>
         <Box>
@@ -226,7 +222,8 @@ export default function SettingProfile({ closePopup }) {
                       padding: "0px !important",
                     },
                   }}
-                /> {""}
+                />{" "}
+                {""}
                 {emailAddress && !emailAddress.includes("@gmail.com") && (
                   <span className="text-danger">
                     Email must contain @gmail.com
@@ -238,37 +235,37 @@ export default function SettingProfile({ closePopup }) {
           <Box className="mt-5 d-flex justify-content-center">
             {disable === true ? (
               <button
-              className="text-white p-2"
-              type="submit"
-              style={{
-                width: "50%",
-                border: "none",
-                borderRadius: "5px",
-                fontWeight: "bold",
-                background: "#6f6683",
-                cursor:"unset"
-              }}
-            >
-              Update Profile
-            </button>
+                className="text-white p-2"
+                type="submit"
+                style={{
+                  width: "50%",
+                  border: "none",
+                  borderRadius: "5px",
+                  fontWeight: "bold",
+                  background: "#6f6683",
+                  cursor: "unset",
+                }}
+              >
+                Update Profile
+              </button>
             ) : (
               <button
-              className="text-white p-2"
-              type="submit"
-              style={{
-                width: "50%",
-                border: "none",
-                borderRadius: "5px",
-                fontWeight: "bold",
-                background:
-                  "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-              }}
-              onClick={() => {
-                sendUpdateProfile();
-              }}
-            >
-              Update Profile
-            </button>
+                className="text-white p-2"
+                type="submit"
+                style={{
+                  width: "50%",
+                  border: "none",
+                  borderRadius: "5px",
+                  fontWeight: "bold",
+                  background:
+                    "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                }}
+                onClick={() => {
+                  sendUpdateProfile();
+                }}
+              >
+                Update Profile
+              </button>
             )}
           </Box>{" "}
         </Box>

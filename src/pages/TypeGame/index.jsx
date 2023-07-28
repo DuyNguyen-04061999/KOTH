@@ -3,6 +3,13 @@ import Layout from "../../components/Layout";
 import { TypeGame } from "./components";
 
 export default function TypeGamePage() {
-  return <Layout children={<>
-  <TypeGame /></>} />;
+  return (
+    <Layout
+      children={
+        <>
+          <TypeGame />
+        </>
+      }
+    />
+  );
 }

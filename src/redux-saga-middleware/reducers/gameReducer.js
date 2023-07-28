@@ -148,7 +148,7 @@ export const closeInvitefriendPopup = (data) => {
 export const changeOrientation = (data) => {
   return {
     type: "CHANGE_ORIENTATION",
-    payload:data
+    payload: data,
   };
 };
 
@@ -259,11 +259,11 @@ const gameReducer = (
         inviteFriendDialog: false,
       };
     }
-    case "CHANGE_ORIENTATION":{
+    case "CHANGE_ORIENTATION": {
       return {
         ...state,
-        orientation:payload
-      }
+        orientation: payload,
+      };
     }
     default:
       return { ...state };
