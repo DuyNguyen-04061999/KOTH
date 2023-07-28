@@ -10,7 +10,7 @@ import { getFontSizeDependOnWidth } from "../../utils/config";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import moment from "moment";
 import TitleHomeDesktopComponent from "../../components/Title/TitleHomeDesktopComponent";
-// import CreateTournament from "./CreateTournament";
+import CreateTournament from "./CreateTournament";
 export default function Tournament() {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
@@ -19,7 +19,10 @@ export default function Tournament() {
   const [fetchT, setFetchT] = useState(true);
   const { token } = useSelector((state) => state.authReducer);
   const navigate = useNavigate();
-
+  const [createTour, setCreateTour] = useState(false);
+  const [tourType, setTourType] = useState(false);
+  const [agree, setAgree] = useState(false);
+  const [type, setType] = useState("");
   useEffect(() => {
     setSocket(_socket);
   }, []);
@@ -284,6 +287,9 @@ export default function Tournament() {
               }}
             >
               <button
+                onClick={() => {
+                  setTourType(true);
+                }}
                 style={{
                   padding: `${parseFloat(width / 170)}px ${parseFloat(
                     width / 80
@@ -306,7 +312,6 @@ export default function Tournament() {
                     letterSpacing: "0.5px",
                   }}
                 >
-                  {" "}
                   Create A Tournament
                 </Typography>
               </button>
@@ -355,8 +360,19 @@ export default function Tournament() {
               {renderTournamentList}
             </Grid>
           </Container>
-          {/* <CreateTournament /> */}
-          <Dialog open={true}>
+          <CreateTournament
+            handleOnClose={() => {
+              setCreateTour(false);
+            }}
+            createTour={createTour}
+            type={type}
+          />
+          <Dialog
+            onClose={() => {
+              setTourType(false);
+            }}
+            open={tourType}
+          >
             <Box
               sx={{
                 backgroundColor: "#37285C",
@@ -387,6 +403,9 @@ export default function Tournament() {
                   Choose Tournament Type
                 </Typography>
                 <img
+                  onClick={() => {
+                    setTourType(false);
+                  }}
                   src={images.closeButton}
                   alt="..."
                   style={{ width: "20px", height: "20px" }}
@@ -401,6 +420,11 @@ export default function Tournament() {
                 }}
               >
                 <button
+                  onClick={() => {
+                    setAgree(true);
+                    setTourType(false);
+                    setType("personal");
+                  }}
                   style={{
                     width: "79%",
                     padding: "8px",
@@ -416,6 +440,11 @@ export default function Tournament() {
                 </button>
                 <Box sx={{ marginTop: `${MarginTop / 2}px`, display: "flex" }}>
                   <button
+                    onClick={() => {
+                      setAgree(true);
+                      setTourType(false);
+                      setType("brand");
+                    }}
                     style={{
                       width: "80%",
                       padding: "8px",
@@ -447,13 +476,18 @@ export default function Tournament() {
               </Box>
             </Box>
           </Dialog>
-          <Dialog open={true}>
+          <Dialog
+            onClose={() => {
+              setAgree(false);
+            }}
+            open={agree}
+          >
             <Box
               sx={{
                 backgroundColor: "#37285C",
                 display: "flex",
                 flexDirection: "column",
-                width: "500px",
+                width: "600px",
               }}
             >
               <Box
@@ -477,6 +511,9 @@ export default function Tournament() {
                   Agreement
                 </Typography>
                 <img
+                  onClick={() => {
+                    setAgree(false);
+                  }}
                   src={images.closeButton}
                   alt="..."
                   style={{ width: "20px", height: "20px" }}
@@ -601,8 +638,52 @@ export default function Tournament() {
                 </Typography>
               </Box>
               <Box sx={{ padding: `${MarginTop}px` }}>
-                <Box></Box>
-                <button></button>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    style={{ width: "15px", height: "15px" }}
+                    alt="..."
+                    src={images.Checked}
+                  />
+                  <Typography
+                    sx={{
+                      textAlign: "start",
+                      fontSize: "14px",
+                      fontWeight: "500 !important",
+                      marginLeft: `${MarginTop / 2}px !important`,
+                      color: "#9484A9",
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    I have read and agree to the terms and conditions
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: `${MarginTop}px`,
+                  }}
+                >
+                  <button
+                    onClick={() => {
+                      setAgree(false);
+                      setCreateTour(true);
+                    }}
+                    style={{
+                      padding: "10px 30px",
+                      border: "none",
+                      outline: "none",
+                      background: "linear-gradient(#8A3AF1,#7648ED)",
+                      color: "white",
+                      letterSpacing: "0.7px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Continue
+                  </button>
+                </Box>
               </Box>
             </Box>
           </Dialog>

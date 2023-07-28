@@ -85,7 +85,7 @@ function App() {
       socket.emit("listMessageGlobal");
     }
   });
-
+  console.log(token);
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
 
@@ -377,37 +377,40 @@ function App() {
   });
   return (
     // <ErrorBoundary>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <CustomRouter history={history}>
-            <Routes>
-              <Route path="" element={<HomePage />}>
-                <Route path="/home" element={<HomePage />} />
-              </Route>
-              <Route path="/gamelobby/:id" element={<GameLobby />} />
-              <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
-              <Route path="/luckywheel" element={<LuckySpinComponent />} />
-              <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
-              <Route path="/tournaments" element={<Tournament />} />
-              <Route
-                path="/tournamentDetail/:id"
-                element={<JoinTournamentComponent />}
-              />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="/countdowntimer" element={<CountDownTimer />} />
-              <Route path="list-game-manager" element={<ListGamePage />} />
-              <Route path="upload" element={<UploadPage />} />
-              <Route path="game" element={<GamePage />} />
-              <Route path="game/:id" element={<GameDetailPage />} />
-              <Route path="game-type/:type" element={<TypeGamePage />} />
-              <Route path="game/edit/:id" element={<GameEditPage />} />
-              <Route path="transactions/:id" element={<TransactionDetailPage />} />
-              <Route path="*" element={<Navigate to="/home" />} />
-            </Routes>
-          </CustomRouter>
-          <AlertComponent />
-        </PersistGate>
-      </Provider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <CustomRouter history={history}>
+          <Routes>
+            <Route path="" element={<HomePage />}>
+              <Route path="/home" element={<HomePage />} />
+            </Route>
+            <Route path="/gamelobby/:id" element={<GameLobby />} />
+            <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
+            <Route path="/luckywheel" element={<LuckySpinComponent />} />
+            <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
+            <Route path="/tournaments" element={<Tournament />} />
+            <Route
+              path="/tournamentDetail/:id"
+              element={<JoinTournamentComponent />}
+            />
+            <Route path="/faq" element={<FAQPage />} />
+            <Route path="/countdowntimer" element={<CountDownTimer />} />
+            <Route path="list-game-manager" element={<ListGamePage />} />
+            <Route path="upload" element={<UploadPage />} />
+            <Route path="game" element={<GamePage />} />
+            <Route path="game/:id" element={<GameDetailPage />} />
+            <Route path="game-type/:type" element={<TypeGamePage />} />
+            <Route path="game/edit/:id" element={<GameEditPage />} />
+            <Route
+              path="transactions/:id"
+              element={<TransactionDetailPage />}
+            />
+            <Route path="*" element={<Navigate to="/home" />} />
+          </Routes>
+        </CustomRouter>
+        <AlertComponent />
+      </PersistGate>
+    </Provider>
     // </ErrorBoundary>
   );
 }

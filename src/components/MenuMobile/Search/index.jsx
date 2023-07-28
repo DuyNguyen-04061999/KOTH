@@ -16,7 +16,8 @@ export default function DialogSearch(props) {
   const { open, handleShowSearch, handleColor } = props;
   const { listGame } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
-  const [search, 
+  const [
+    search,
     // setSearch
   ] = useState("");
 
@@ -29,17 +30,17 @@ export default function DialogSearch(props) {
     dispatch(getSearchGame(search));
   };
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === 'Enter' && searchValue) {
+    if (e.key === "Enter" && searchValue) {
       // Convert the searchValue to lowercase for case-insensitive search
       const lowercaseSearchValue = searchValue.toLowerCase();
 
       // Filter the gamesArray based on the lowercaseSearchValue and gameName
-      const filteredResults = listGame.filter((game) =>
-        game.gameName.toLowerCase().includes(lowercaseSearchValue)
+      const filteredResults = listGame?.filter((game) =>
+        game?.gameName.toLowerCase()?.includes(lowercaseSearchValue)
       );
 
       setSearchResults(filteredResults);

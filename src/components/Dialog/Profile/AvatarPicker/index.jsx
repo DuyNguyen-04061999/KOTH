@@ -36,7 +36,6 @@ export const AvatarPicker = (props) => {
   const dispatch = useDispatch();
   const { handleChangeImage } = props;
 
-
   const showOpenFileDialog = (event) => {
     imageRef.current.click();
   };
@@ -44,8 +43,15 @@ export const AvatarPicker = (props) => {
   const handleChange = async (event) => {
     dispatch(openLoading());
     let reader = new FileReader();
-    const imageType = event?.target?.files[0]?.type?.replace("image/", "") || "";
-    if (imageType === "png" || imageType === "jpg" || imageType === "jpeg" || imageType === "svg" || imageType === "jfif") {
+    const imageType =
+      event?.target?.files[0]?.type?.replace("image/", "") || "";
+    if (
+      imageType === "png" ||
+      imageType === "jpg" ||
+      imageType === "jpeg" ||
+      imageType === "svg" ||
+      imageType === "jfif"
+    ) {
       reader.onload = function (e) {
         handleChangeImage(reader.result);
         setFile(reader.result);
@@ -67,14 +73,15 @@ export const AvatarPicker = (props) => {
 
     if (fileSizeInMB < 100) {
       // File size is less than 100MB
-      console.log('File Size:', fileSizeInMB, 'MB');
+      console.log("File Size:", fileSizeInMB, "MB");
       // You can perform further actions with the file, like uploading it, etc.
     } else {
       // File size exceeds 100MB
       console.log(456);
-      dispatch(showAlert("error", "The image size is too large, please choose again"))
+      dispatch(
+        showAlert("error", "The image size is too large, please choose again")
+      );
     }
-
   };
 
   return (

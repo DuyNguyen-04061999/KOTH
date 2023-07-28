@@ -128,7 +128,6 @@ export default function Layout(props) {
   const navigate = useNavigate();
   const pathname = useLocation();
 
-
   const [backgroundGlobal, setBackgroundGlobal] = useState("#61388e");
   const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
   const [chatF, setChatF] = useState("");
@@ -186,11 +185,10 @@ export default function Layout(props) {
     }
   }, [token]);
   const [searchValue, setSearchValue] = useState("");
-  const [ setSearchResults] = useState([]);
   // const handleInputChange = (e) => {
   //   setSearchValue(e.target.value);
   // };
-
+  const [searchResults, setSearchResults] = useState([]);
   const handleSearch = () => {
     if (!searchValue) {
     } else {
@@ -202,14 +200,13 @@ export default function Layout(props) {
   };
 
   const handleOnKeyDownEnter = (e) => {
+    console.log("Enter");
     if (e.key === "Enter" && searchValue) {
-
       const lowercaseSearchValue = searchValue.toLowerCase();
 
       const filteredResults = listGame.filter((game) =>
         game.gameName.toLowerCase().includes(lowercaseSearchValue)
       );
-      setSearchResults(filteredResults);
       navigate("/game-type/search", { state: { value: lowercaseSearchValue } });
       dispatch(getSearchGame(lowercaseSearchValue));
       setChatF("");
@@ -310,7 +307,7 @@ export default function Layout(props) {
                     type="text"
                     name="search"
                     value={searchValue}
-                    onChange={(e => setSearchValue(e.target.value))}
+                    onChange={(e) => setSearchValue(e.target.value)}
                     onKeyDown={handleOnKeyDownEnter}
                     placeholder="Want to find something"
                     style={{
