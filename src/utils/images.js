@@ -147,6 +147,8 @@ import homeicon from "../assets/imagesDesktop/home_icon.svg";
 import playicon from "../assets/imagesDesktop/play_icon.svg";
 import pvpicon from "../assets/imagesDesktop/pvp_icon.svg";
 import Notification from "../assets/imagesDesktop/Notification.png";
+import ticket from "../assets/imagesLayout/popup/ticket.svg"
+
 // import backgroundwallet from "../assets/imagesLayout/popup/01.png";
 import backgroundNavmobile from "../assets/imagesLayout/popup/02.png";
 import faq from "../assets/imagesLayout/faq.svg";
@@ -348,6 +350,7 @@ export const popup = {
   SearchActiveIcon: SearchActiveIcon,
   FavoriteActiveIcon: FavoriteActiveIcon,
   HomeActiveIcon: HomeActiveIcon,
+  ticket:ticket
 };
 
 export const sign = {

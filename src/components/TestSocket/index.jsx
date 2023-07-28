@@ -57,6 +57,8 @@ export default function TestSocketFriendAPI() {
 
     socket?.on("error", (data) => {});
 
+    socket?.on("")
+
     return () => {
       // socket?.off()
     }

@@ -62,9 +62,9 @@ export default function SettingProfile({ closePopup }) {
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
         });
       }
+      dispatch(updateProfile());
+      closePopup();
     }
-    dispatch(updateProfile());
-    closePopup();
   };
 
   const renderChangeUserName = () => {

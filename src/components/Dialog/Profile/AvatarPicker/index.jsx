@@ -77,7 +77,6 @@ export const AvatarPicker = (props) => {
       // You can perform further actions with the file, like uploading it, etc.
     } else {
       // File size exceeds 100MB
-      console.log(456);
       dispatch(
         showAlert("error", "The image size is too large, please choose again")
       );

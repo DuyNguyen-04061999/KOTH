@@ -34,7 +34,8 @@ export default function ChatFriendList() {
   const [openMess, setOpenMess] = useState(false);
   const { width, height } = useWindowDimensions();
   const [searchFeild, setSearchFeild] = useState("");
-  const { friendList } = useSelector((state) => state.chatReducer);
+  const { friendList, contacter } = useSelector((state) => state.chatReducer);
+  console.log(contacter);
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   
@@ -49,21 +50,15 @@ export default function ChatFriendList() {
   }, [friendList]);
 
   useEffect(() => {
-    const list = friendList.map((item) => {
-      if (item?.userName.includes(searchFeild)) {
-        return item;
-      }
-      if(item?.receiveMessages.map((e_mes) => e_mes.messageContent) !== friendList){
-        return item
-      }
-      return false;
-    });
+    const list = friendList?.filter(i => i?.userName.includes(searchFeild) || i?.userName.includes(searchFeild?.toLowerCase()))
     setListFriend(list);
     
   }, [searchFeild, friendList]);
 
   const handleSubmitSearchChat = (e) => {
     e.preventDefault();
+    // const list = friendList?.filter(i => i?.userName.includes(searchFeild) || i?.userName.includes(searchFeild?.toLowerCase()))
+    // setListFriend(list);
   };
   useEffect(() => {}, [token]);
 
@@ -168,7 +163,7 @@ export default function ChatFriendList() {
                   {e?.userName}
                 </h5>
                 <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
-                  {e?.receiveMessages?.map((e_m) => e_m?.messageContent)}
+                  {e?.receiveMessages?.map((e_m) => e_m?.messageContent.slice(0,15))}
                 </span>
               </Box>
             </Box>
@@ -223,14 +218,15 @@ export default function ChatFriendList() {
             onChange={handleChangeSearchChat}
             placeholder="Search"
           />
-          <Search
+          {/* <Search
+            onClick={handleSubmitSearchChat}
             sx={{
               position: "absolute",
               top: "20px",
               right: "20px",
               color: "#8280f0",
             }}
-          />
+          /> */}
         </Box>
       </Box>
       <Box className="ps-3 pe-3">
