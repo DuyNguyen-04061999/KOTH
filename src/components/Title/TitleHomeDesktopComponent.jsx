@@ -14,8 +14,9 @@ export default function TitleHomeDesktopComponent(props) {
       <div className="positiion-absolute d-flex justify-content-between" style={{
         width: '100%'
       }}>
-        <div className="d-flex position-relative" style={{
-          width: '100%'
+        <div className=" position-relative" style={{
+          width: '100%',
+          display:"flex"
         }}>
           {!noBg && (
             <div

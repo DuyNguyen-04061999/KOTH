@@ -19,11 +19,11 @@ import MenuWallet from "../MenuMobile/Wallet";
 import { images280423_l } from "../../utils/images280423_l";
 import ChatWorldList from "../Chat/ChatWorldList";
 import ChatFriendList from "../Chat/ChatFriendList";
-import ComponentChat from "../Chat/componentChat";
+// import ComponentChat from "../Chat/componentChat";
 import { imageChat } from "../../utils/imagesChat";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+// import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import { Search } from "@mui/icons-material";
@@ -352,7 +352,7 @@ export default function Layout(props) {
           </Box>
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
-          </AvatarGroup>
+          </AvatarGroup> 
           <div className="icon-toggle">
             {chatPopup === false ? (
               <Box
@@ -457,7 +457,7 @@ export default function Layout(props) {
               position: "relative",
             }}
           >
-            {1 === false && (
+            {/* {1 === false && (
               <Box
                 className="position-absolute check-re"
                 sx={{
@@ -560,7 +560,7 @@ export default function Layout(props) {
                   </Box>
                 </Box>
               </Box>
-            )}
+            )} */}
             <Box
               sx={{
                 backgroundColor: "#2e233d",
