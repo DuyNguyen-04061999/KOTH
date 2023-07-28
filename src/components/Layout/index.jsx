@@ -118,7 +118,10 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
-  const { isGameLogDialog, listGame } = useSelector(
+  const { 
+    isGameLogDialog, 
+    // listGame 
+  } = useSelector(
     (state) => state.gameReducer
   );
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
@@ -188,25 +191,23 @@ export default function Layout(props) {
   // const handleInputChange = (e) => {
   //   setSearchValue(e.target.value);
   // };
-  const [searchResults, setSearchResults] = useState([]);
+  // const [searchResults, setSearchResults] = useState([]);
   const handleSearch = () => {
     if (!searchValue) {
     } else {
       const lowercaseSearchValue = searchValue.toUpperCase();
-      // console.log(lowercaseSearchValue);
       navigate("/game-type/search", { state: { value: lowercaseSearchValue } });
       dispatch(getSearchGame(lowercaseSearchValue));
     }
   };
 
   const handleOnKeyDownEnter = (e) => {
-    console.log("Enter");
     if (e.key === "Enter" && searchValue) {
       const lowercaseSearchValue = searchValue.toLowerCase();
 
-      const filteredResults = listGame.filter((game) =>
-        game.gameName.toLowerCase().includes(lowercaseSearchValue)
-      );
+      // const filteredResults = listGame.filter((game) =>
+      //   game.gameName.toLowerCase().includes(lowercaseSearchValue)
+      // );
       navigate("/game-type/search", { state: { value: lowercaseSearchValue } });
       dispatch(getSearchGame(lowercaseSearchValue));
       setChatF("");

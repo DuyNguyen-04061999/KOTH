@@ -12,11 +12,10 @@ import { useNavigate } from "react-router-dom";
 export default function ComponentChat() {
   const bottomRef = useRef(null);
   const [friendMessages, setFriendMess] = useState([]);
-  console.log(friendMessages);
+  
   const { chatWorld, contacter, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
-  console.log(chatWorld);
 
   const { width, height } = useWindowDimensions();
   const { userName } = useSelector((state) => state.authReducer);
@@ -45,7 +44,7 @@ export default function ComponentChat() {
             n.messageType === "Private")
       )
     );
-    console.log(123);
+    
   }, [userName, contacter, chatWorld]);
   const handleOnClickInviteGameMess = (gameId, roomId) => {
     setGameId(gameId);

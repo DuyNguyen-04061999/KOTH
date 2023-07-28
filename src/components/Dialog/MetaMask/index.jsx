@@ -13,7 +13,7 @@ import useWindowDimensions from '../../../utils/useWindowDimensions.js'
 export default function MetaMaskDialog() {
     const { isMetamaskDialog, depositData } = useSelector(state => state.walletReducer)
     const { userId } = useSelector(state => state.authReducer)
-    // console.log(`${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`);
+    
     const { width } = useWindowDimensions()
     const dispatch = useDispatch()
     const [menuK, setMenuK] = useState(0)
@@ -34,7 +34,6 @@ export default function MetaMaskDialog() {
     ] 
 
     const handleInstall = () => {
-      // console.log(`${browserName} ${browserVersion}`);
       if(browserName?.includes("Edge")) {
         window.open("https://microsoftedge.microsoft.com/addons/detail/metamask/ejbalbakoplchlghecdalmeeeajnimhm?hl=en-US", "_blank")
       } else if (browserName?.includes("Chrome")) {

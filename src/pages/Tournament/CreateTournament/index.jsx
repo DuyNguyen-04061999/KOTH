@@ -37,12 +37,12 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
     date: "2023/07/23",
     time: "2022-04-17T15:30",
   });
-  const [quantity, setQuantityTime] = useState(10);
+  const [quantity] = useState(10);
   const [information, setInformation] = useState("");
   const [maxPlay, setMaxPlay] = useState(0);
   const [leaderBoard, setLeaderBoard] = useState(true);
   const [loop, setLoop] = useState("day");
-  const [coors, setCoors] = useState([1]);
+  const [coors] = useState([1]);
   const [prizeSetUp, setPrizeSetUp] = useState(1);
   const [prizeType, setPrizeType] = useState("Gadcoin");
   const [autoAmount, setautoAmount] = useState();
