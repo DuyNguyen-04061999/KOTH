@@ -17,17 +17,34 @@ import { MobileTimePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import _socket from "../../../redux-saga-middleware/config/socket";
-export default function CreateTournament() {
+import { useDispatch } from "react-redux";
+import { createTournament } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
-  const [loop, setLoop] = useState(0);
   const [listGame, setListGame] = useState([]);
   const [socket, setSocket] = useState(null);
   const [listGamePop, setListGamePop] = useState(false);
+  const [gameId, setGameId] = useState(0);
+  const [name, setName] = useState("");
+  const [startTime, setStartTime] = useState({
+    date: "2023/07/23",
+    time: "",
+  });
+  const [endTime, setEndTime] = useState({
+    date: "2023/07/23",
+    time: "",
+  });
+  const [quantity, setQuantityTime] = useState("");
+  const [information, setInformation] = useState("");
+  const [maxPlay, setMaxPlay] = useState("");
+  const [leaderBoard, setLeaderBoard] = useState(true);
+  const [loop, setLoop] = useState(0);
+  const [coors, setCoors] = useState("");
   const [prizeSetUp, setPrizeSetUp] = useState(false);
   const [prizeType, setPrizeType] = useState("Gadcoin");
+  const [autoAmount, setautoAmount] = useState();
   const [prizeDis, setPrizeDis] = useState("all"); //0 ---> manual setup
-  //1 ---> auto setup
   const [prizeRatio, setPrizeRatio] = useState(
     JSON.stringify({
       "Top 1": "60%",
@@ -35,9 +52,11 @@ export default function CreateTournament() {
       "Top 3": "10%",
     })
   );
-  // 1: Top 1: 60%, Top 2: 30%, Top 3:10%
-  // 2: Top 1: 50% Top 2: 22%, Top 3: 12%, Top4-10:2%
-  // 3: Top 1: 40%, Top 2: 20%, Top3: 10%, Top 4-10: 1%, Top 11-50:0.575%
+  const [manualDescription, setManualDescription] = useState("");
+  const [video, setVideo] = useState("");
+  //1 ---> auto setup
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const socket = _socket;
     setLoop(0);
@@ -51,7 +70,6 @@ export default function CreateTournament() {
       setListGame(data);
     });
   }, [socket]);
-  console.log(listGame);
   return (
     <Dialog
       sx={{
@@ -61,7 +79,8 @@ export default function CreateTournament() {
         },
         maxHeight: "1000px",
       }}
-      open={true}
+      open={createTour}
+      onClose={handleOnClose}
     >
       <Box
         sx={{
@@ -83,6 +102,7 @@ export default function CreateTournament() {
         >
           <Typography sx={{ color: "white" }}>Create Tournament</Typography>
           <Box
+            onClick={handleOnClose}
             sx={{ width: "20px", height: "20px", cursor: "pointer" }}
             component={"img"}
             src={images.CloseButtonDeposit}
@@ -116,6 +136,8 @@ export default function CreateTournament() {
               }}
             >
               <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 style={{
                   width: "68%",
                   borderRadius: "5px",
@@ -180,6 +202,8 @@ export default function CreateTournament() {
               }}
             >
               <TextareaAutosize
+                value={information}
+                onChange={(event) => setInformation(event.target.value)}
                 style={{
                   width: "100%",
                   outline: "none",
@@ -227,6 +251,10 @@ export default function CreateTournament() {
                   {" "}
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
+                      value={moment(startTime?.date, "DD/MM/YYYY")}
+                      onChange={(newValue) => {
+                        setStartTime({ ...startTime, date: newValue });
+                      }}
                       sx={{
                         "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
                           {
@@ -989,6 +1017,9 @@ export default function CreateTournament() {
             }}
           >
             <button
+              onClick={() => {
+                dispatch(createTournament("Hello payload"));
+              }}
               style={{
                 padding: "10px 50px",
                 border: "none",
@@ -1040,6 +1071,7 @@ export default function CreateTournament() {
             {listGame?.map((item, index) => {
               return (
                 <Box
+                  onClick={() => setGameId(item?.id)}
                   key={index}
                   sx={{
                     width: "25%",
