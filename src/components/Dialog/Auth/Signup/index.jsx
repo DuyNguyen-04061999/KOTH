@@ -78,7 +78,7 @@ export default function Signup(props) {
       gender: gender,
     });
     socket?.on("registerError", (data) => {
-      console.log(data);
+      
     })
   };
   return (

@@ -64,10 +64,7 @@ export default function ChatWorldList() {
   };
   const { height, width } = useWindowDimensions();
   const [worldMessage, setWorldMessage] = useState([]);
-  console.log(worldMessage);
-  // useEffect(() => {
-  //   scrollToBottom();
-  // });
+  
   useEffect(() => {
     scrollToBottom();
   }, [worldMessage]);

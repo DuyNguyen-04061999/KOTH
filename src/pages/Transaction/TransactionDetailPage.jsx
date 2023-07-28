@@ -76,7 +76,6 @@ export default function TransactionDetailPage() {
       }
       
       socket?.on("checkTransactionIdSuccess", async (transaction) => {
-        console.log(transaction);
         await sendToken(transaction)
       })
 

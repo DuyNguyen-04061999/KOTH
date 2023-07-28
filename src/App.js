@@ -85,7 +85,7 @@ function App() {
       socket.emit("listMessageGlobal");
     }
   });
-  console.log(token);
+  
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
 

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import "./index.scss";
 import styled from "styled-components";
-import { Search } from "@mui/icons-material";
+// import { Search } from "@mui/icons-material";
 import { images } from "../../../utils/images";
 import ChatGlobal from "../ChatGlobal";
 import { useEffect, useState } from "react";
@@ -34,8 +34,8 @@ export default function ChatFriendList() {
   const [openMess, setOpenMess] = useState(false);
   const { width, height } = useWindowDimensions();
   const [searchFeild, setSearchFeild] = useState("");
-  const { friendList, contacter } = useSelector((state) => state.chatReducer);
-  console.log(contacter);
+  const { friendList } = useSelector((state) => state.chatReducer);
+  
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   

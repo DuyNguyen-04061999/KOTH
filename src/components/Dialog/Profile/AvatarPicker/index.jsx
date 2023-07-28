@@ -73,7 +73,6 @@ export const AvatarPicker = (props) => {
 
     if (fileSizeInMB < 100) {
       // File size is less than 100MB
-      console.log("File Size:", fileSizeInMB, "MB");
       // You can perform further actions with the file, like uploading it, etc.
     } else {
       // File size exceeds 100MB

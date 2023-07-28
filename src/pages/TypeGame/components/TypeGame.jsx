@@ -14,7 +14,7 @@ export default function TypeGame() {
     (state) => state.gameReducer
   );
   const { state } = useLocation();
-  console.log(state.value);
+  
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -22,7 +22,7 @@ export default function TypeGame() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  console.log(listGame);
+  
   useEffect(() => {
     if (type === "favorite") {
       setTitle("Favorite Games");
@@ -55,12 +55,12 @@ export default function TypeGame() {
           listGame: listGame?.filter((item) => {
             return item.gameName
               .toLowerCase()
-              .includes(state.value.toLowerCase());
+              .includes(state?.value?.toLowerCase());
           }),
         })
       );
     }
-  }, [type, listGame, dispatch, token, socket, state.value]);
+  }, [type, listGame, dispatch, token, socket, state?.value]);
 
   return (
     <>
