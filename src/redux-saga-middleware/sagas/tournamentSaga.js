@@ -6,9 +6,8 @@ const tournamentService = new TournamentService();
 function* postTournamentCreate(dataRequest) {
   try {
     const { payload } = dataRequest;
-    // const res = yield call(tournamentService.callCreateTournament, payload);
-    // console.log("Res tournament: ", res);
-    console.log("Payload: ", payload);
+    const res = yield call(tournamentService.callCreateTournament, payload);
+    console.log("Res tournament: ", res);
   } catch (error) {
     yield put(createTournamentFail());
   }

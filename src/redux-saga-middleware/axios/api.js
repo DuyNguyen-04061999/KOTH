@@ -6,14 +6,14 @@ axios.defaults.xsrfHeaderName = "X-XSRF-TOKEN";
 export const API = axios.create({
   baseURL: process.env.REACT_APP_END_POINT,
   headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + localStorage.getItem("JWT"),
-    "x-access-token": localStorage.getItem("JWT"),
+    "Content-Type": "multipart/form-data",
+    Authorization: "Bearer " + localStorage.getItem("token"),
+    "x-access-token": localStorage.getItem("token"),
   },
 });
 
 (function () {
-  let authToken = localStorage.getItem("JWT");
+  let authToken = localStorage.getItem("token");
   if (authToken === "null" || authToken === null) {
     axios.defaults.headers.common.Authorization = null;
   } else {

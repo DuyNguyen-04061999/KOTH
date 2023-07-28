@@ -7,7 +7,7 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -19,9 +19,11 @@ import { getFontSizeDependOnWidth } from "../../../utils/config";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch } from "react-redux";
 import { createTournament } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
+  const imageRef = useRef(null);
   const [listGame, setListGame] = useState([]);
   const [socket, setSocket] = useState(null);
   const [listGamePop, setListGamePop] = useState(false);
@@ -29,19 +31,19 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [name, setName] = useState("");
   const [startTime, setStartTime] = useState({
     date: "2023/07/23",
-    time: "",
+    time: "2022-04-17T15:30",
   });
   const [endTime, setEndTime] = useState({
     date: "2023/07/23",
-    time: "",
+    time: "2022-04-17T15:30",
   });
-  const [quantity, setQuantityTime] = useState("");
+  const [quantity, setQuantityTime] = useState(10);
   const [information, setInformation] = useState("");
-  const [maxPlay, setMaxPlay] = useState("");
+  const [maxPlay, setMaxPlay] = useState(0);
   const [leaderBoard, setLeaderBoard] = useState(true);
-  const [loop, setLoop] = useState(0);
-  const [coors, setCoors] = useState("");
-  const [prizeSetUp, setPrizeSetUp] = useState(false);
+  const [loop, setLoop] = useState("day");
+  const [coors, setCoors] = useState([1]);
+  const [prizeSetUp, setPrizeSetUp] = useState(1);
   const [prizeType, setPrizeType] = useState("Gadcoin");
   const [autoAmount, setautoAmount] = useState();
   const [prizeDis, setPrizeDis] = useState("all"); //0 ---> manual setup
@@ -54,9 +56,46 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   );
   const [manualDescription, setManualDescription] = useState("");
   const [video, setVideo] = useState("");
-  //1 ---> auto setup
   const dispatch = useDispatch();
-
+  const showOpenFileDialog = (event) => {
+    imageRef.current.click();
+  };
+  const handleChange = async (event) => {
+    // let reader = new FileReader();
+    let sizeVideo = event.target.files[0].size / (1024 * 1024);
+    if (sizeVideo < 100) {
+      setVideo(event.target.files[0]);
+    } else {
+      dispatch(
+        showAlert("error", "The image size is too large, please choose again")
+      );
+    }
+  };
+  const handleOnClickCreate = () => {
+    dispatch(
+      createTournament({
+        gameId: gameId,
+        name: name,
+        start: `${startTime.date} ${startTime.time}`,
+        end: `${endTime.date} ${endTime.time}`,
+        quantity: quantity,
+        type: type,
+        information: information,
+        maxPlay: maxPlay,
+        leaderBoard: leaderBoard,
+        loop: loop,
+        coors: coors,
+        prize: prizeSetUp,
+        autoPrice: prizeType,
+        autoAmount: autoAmount,
+        autoDistribution: prizeDis,
+        autoRatio: prizeRatio,
+        manualDescription: manualDescription,
+        video: video,
+        token: localStorage.getItem("token"),
+      })
+    );
+  };
   useEffect(() => {
     const socket = _socket;
     setLoop(0);
@@ -251,9 +290,13 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   {" "}
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
-                      value={moment(startTime?.date, "DD/MM/YYYY")}
+                      format="YYYY/MM/DD"
+                      value={moment(startTime?.date, "YYYY/MM/DD")}
                       onChange={(newValue) => {
-                        setStartTime({ ...startTime, date: newValue });
+                        setStartTime({
+                          ...startTime,
+                          date: moment(newValue).format("YYYY/MM/DD"),
+                        });
                       }}
                       sx={{
                         "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
@@ -285,6 +328,13 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <MobileTimePicker
+                      value={moment(startTime?.time)}
+                      onChange={(newValue) => {
+                        setStartTime({
+                          ...startTime,
+                          time: moment(newValue).format("HH:mm"),
+                        });
+                      }}
                       sx={{
                         "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input":
                           {
@@ -329,6 +379,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   {" "}
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
+                      format="YYYY/MM/DD"
+                      value={moment(endTime?.date, "YYYY/MM/DD")}
+                      onChange={(newValue) => {
+                        setEndTime({
+                          ...endTime,
+                          date: moment(newValue).format("YYYY/MM/DD"),
+                        });
+                      }}
                       sx={{
                         "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
                           {
@@ -362,6 +420,13 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <MobileTimePicker
+                      value={moment(endTime?.time)}
+                      onChange={(newValue) => {
+                        setEndTime({
+                          ...endTime,
+                          time: moment(newValue).format("HH:mm"),
+                        });
+                      }}
                       sx={{
                         "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input":
                           {
@@ -415,6 +480,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     borderRadius: "5px 0px 0px 5px",
                     fontSize: "15px",
                   }}
+                  onClick={() => {
+                    setMaxPlay(maxPlay - 1);
+                  }}
                 >
                   -
                 </button>
@@ -431,9 +499,12 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     color: "#fff",
                   }}
                 >
-                  1
+                  {maxPlay}
                 </button>
                 <button
+                  onClick={() => {
+                    setMaxPlay(maxPlay + 1);
+                  }}
                   style={{
                     width: "40%",
                     border: "none",
@@ -490,9 +561,12 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   Show for every one
                 </Typography>
                 <img
+                  onClick={() => {
+                    setLeaderBoard(!leaderBoard);
+                  }}
                   style={{ width: "20px", height: "20px", cursor: "pointer" }}
                   alt="..."
-                  src={images.Checked}
+                  src={leaderBoard ? images.Checked : images.UnCheck}
                 />
               </Box>
             </Box>
@@ -518,6 +592,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   }}
                 >
                   <Select
+                    onChange={(e) => {
+                      setLoop(e.target.value);
+                    }}
                     value={loop}
                     sx={{ height: "39px", backgroundColor: "#3C2C64" }}
                   >
@@ -526,9 +603,18 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                         fontSize: getFontSizeDependOnWidth(width),
                         minHeight: "20px !important",
                       }}
-                      value={0}
+                      value={"day"}
                     >
-                      FREE
+                      Day
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={"week"}
+                    >
+                      Week
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -619,6 +705,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
               Update Advertising Video
             </Typography>
             <button
+              onClick={showOpenFileDialog}
               style={{
                 width: "100%",
                 padding: "8px 12px",
@@ -634,7 +721,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
               }}
             >
               Upload Video
-            </button>
+            </button>{" "}
+            <input
+              ref={imageRef}
+              type="file"
+              style={{ display: "none" }}
+              accept="video/mp4"
+              onChange={handleChange}
+            />
           </Box>
           <Box sx={{ width: "100%", marginTop: `${MarginTop}px` }}>
             <Typography
@@ -667,7 +761,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       fontSize: getFontSizeDependOnWidth(width),
                       minHeight: "20px !important",
                     }}
-                    value={false}
+                    value={2}
                   >
                     Manual Setup
                   </MenuItem>
@@ -676,7 +770,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       fontSize: getFontSizeDependOnWidth(width),
                       minHeight: "20px !important",
                     }}
-                    value={true}
+                    value={1}
                   >
                     Auto Setup
                   </MenuItem>
@@ -685,7 +779,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             </Box>
           </Box>
 
-          {!prizeSetUp ? (
+          {prizeSetUp === 2 ? (
             <Box
               sx={{
                 marginTop: `${parseFloat(MarginTop)}px`,
@@ -709,6 +803,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 }}
               >
                 <TextareaAutosize
+                  value={manualDescription}
+                  onChange={(e) => setManualDescription(e.target.value)}
                   style={{
                     width: "100%",
                     outline: "none",
@@ -789,6 +885,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     Amount of Gadcoin
                   </Typography>
                   <input
+                    value={autoAmount}
+                    onChange={(e) => setautoAmount(e.target.value)}
                     style={{
                       width: "100%",
                       borderRadius: "5px",
@@ -1017,9 +1115,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             }}
           >
             <button
-              onClick={() => {
-                dispatch(createTournament("Hello payload"));
-              }}
+              onClick={handleOnClickCreate}
               style={{
                 padding: "10px 50px",
                 border: "none",

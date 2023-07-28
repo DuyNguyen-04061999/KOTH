@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import SliderLayout from "../../../components/Slider";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,8 @@ export default function TypeGame() {
   const { listGameByType, listGame } = useSelector(
     (state) => state.gameReducer
   );
+  const { state } = useLocation();
+  console.log(state.value);
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -20,6 +22,7 @@ export default function TypeGame() {
     const socket = _socket;
     setSocket(socket);
   }, []);
+  console.log(listGame);
   useEffect(() => {
     if (type === "favorite") {
       setTitle("Favorite Games");
@@ -46,15 +49,18 @@ export default function TypeGame() {
       );
     } else if (type === "search") {
       setTitle("Search");
-      // const data = listGame?.filter((item) => item.gameName === "")
-      // dispatch(
-      //   getListGameByType({
-      //     typeGame:"search",
-      //     listGame:data
-      //   })
-      // )
+      dispatch(
+        getListGameByType({
+          typeGame: "search",
+          listGame: listGame?.filter((item) => {
+            return item.gameName
+              .toLowerCase()
+              .includes(state.value.toLowerCase());
+          }),
+        })
+      );
     }
-  }, [type, listGame, dispatch, token, socket]);
+  }, [type, listGame, dispatch, token, socket, state.value]);
 
   return (
     <>
