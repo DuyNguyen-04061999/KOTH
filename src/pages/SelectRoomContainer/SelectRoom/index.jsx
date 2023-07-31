@@ -705,6 +705,11 @@ export default function SelectRoom() {
               style={{
                 width: "100%",
                 height: "100%",
+                position:isFullScreen?"fixed":"none",
+                backgroundColor:isFullScreen?"black":"none",
+                top:isFullScreen?"0px":"none",
+                left:isFullScreen?"0px":"none",
+                zIndex:isFullScreen?"10005":"none"
               }}
             >
               <FullScreen handle={screen} onChange={reportChange}>

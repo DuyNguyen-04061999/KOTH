@@ -46,7 +46,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [prizeSetUp, setPrizeSetUp] = useState(1);
   const [prizeType, setPrizeType] = useState("Gadcoin");
   const [autoAmount, setautoAmount] = useState();
-  const [prizeDis, setPrizeDis] = useState("all"); //0 ---> manual setup
+  const [prizeDis, setPrizeDis] = useState("all");
   const [prizeRatio, setPrizeRatio] = useState(
     JSON.stringify({
       "Top 1": "60%",
@@ -113,7 +113,11 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
     <Dialog
       sx={{
         "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
-          maxWidth: "2000px !important",
+          maxWidth: "800px !important",
+          borderRadius: "0px",
+        },
+        "& .css-uhb5lp": {
+          maxWidth: "800px !important",
           borderRadius: "0px",
         },
         maxHeight: "1000px",
@@ -287,7 +291,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 }}
               >
                 <Box>
-                  {" "}
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
                       format="YYYY/MM/DD"
@@ -307,6 +310,13 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             outline: "none",
                             width: "200px",
                           },
+                        "& .css-1bn53lx": {
+                          color: "#fff",
+                          backgroundColor: "#68399E",
+                          border: "none",
+                          outline: "none",
+                          width: "200px",
+                        },
 
                         "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
                           {
@@ -317,7 +327,18 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             borderRadius: "10px",
                             padding: "10px 20px",
                           },
+                        "& .css-1uvydh2": {
+                          color: "#fff",
+                          backgroundColor: "#68399E",
+                          border: "none",
+                          outline: "none",
+                          borderRadius: "10px",
+                          padding: "10px 20px",
+                        },
                         "& .css-i4bv87-MuiSvgIcon-root": {
+                          color: "#fff",
+                        },
+                        "& .css-vubbuv": {
                           color: "#fff",
                         },
                       }}

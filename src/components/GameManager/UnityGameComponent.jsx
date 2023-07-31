@@ -1,20 +1,25 @@
-import React, { useCallback, useEffect } from "react";
+import React, { Fragment, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { LinearProgress } from "@mui/material";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
-  const { 
-    GameFiles, cwidth, cheight, tournamentId, gameId,
+  const {
+    GameFiles,
+    cwidth,
+    cheight,
+    tournamentId,
+    gameId,
     isFullScreen,
     roomId,
     handleEndGame,
     type 
   } = props;
-  const { width } = useWindowDimensions()
-  const { token } = useSelector(state => state.authReducer)
+  const { width } = useWindowDimensions();
+  const { token } = useSelector((state) => state.authReducer);
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
       if (data[index]?.link?.includes(".loader.js")) {
@@ -47,9 +52,16 @@ export default function UnityGameComponent(props) {
     }
   }
 
-  
-
-  const { unityProvider, unload, UNSAFE__unityInstance, addEventListener, removeEventListener, sendMessage } = useUnityContext({
+  const {
+    unityProvider,
+    unload,
+    UNSAFE__unityInstance,
+    addEventListener,
+    removeEventListener,
+    sendMessage,
+    loadingProgression,
+    isLoaded,
+  } = useUnityContext({
     loaderUrl: getLoaderJs(GameFiles),
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
@@ -63,22 +75,30 @@ export default function UnityGameComponent(props) {
   }, [GameFiles]);
 
   const handleGameLoad = useCallback(() => {
-      sendMessage("OverTheBridgeHome", "SetToken", token);
-      sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
-      sendMessage("OverTheBridgeHome", "SetGameId", gameId);
-      sendMessage("OverTheBridgeHome", "SetSubmitScoreUrl", process.env.REACT_APP_END_POINT_TOURNAMENT);
-      sendMessage("OverTheBridgeHome", "StartGame", "Start");
-      sendMessage("Player Spawner", "SetToken", token);
-      sendMessage("Player Spawner", "SetRoomName", roomId);
-      sendMessage("Player Spawner", "StartGame", "Start");
-      sendMessage("Object Spawner", "SetToken", token);
-      sendMessage("Object Spawner", "SetRoomName", roomId);
-      sendMessage("Object Spawner", "StartGame", "Start");
-      
-      sendMessage("MenuManager", "SetToken", token);
-      sendMessage("MenuManager", "SetRoom", roomId);
-      sendMessage("MenuManager", "SetSubmitScoreUrl", process.env.REACT_APP_END_POINT_PVP_BOT);
-      sendMessage("MenuManager", "StartGame", "Start");
+    sendMessage("OverTheBridgeHome", "SetToken", token);
+    sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
+    sendMessage("OverTheBridgeHome", "SetGameId", gameId);
+    sendMessage(
+      "OverTheBridgeHome",
+      "SetSubmitScoreUrl",
+      process.env.REACT_APP_END_POINT_TOURNAMENT
+    );
+    sendMessage("OverTheBridgeHome", "StartGame", "Start");
+    sendMessage("Player Spawner", "SetToken", token);
+    sendMessage("Player Spawner", "SetRoomName", roomId);
+    sendMessage("Player Spawner", "StartGame", "Start");
+    sendMessage("Object Spawner", "SetToken", token);
+    sendMessage("Object Spawner", "SetRoomName", roomId);
+    sendMessage("Object Spawner", "StartGame", "Start");
+
+    sendMessage("MenuManager", "SetToken", token);
+    sendMessage("MenuManager", "SetRoom", roomId);
+    sendMessage(
+      "MenuManager",
+      "SetSubmitScoreUrl",
+      process.env.REACT_APP_END_POINT_PVP_BOT
+    );
+    sendMessage("MenuManager", "StartGame", "Start");
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(async () => {
@@ -95,7 +115,6 @@ export default function UnityGameComponent(props) {
       handleEndGame()
   }, [navigate, unload, gameId, handleEndGame, type]);
 
-
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
     return () => {
@@ -110,17 +129,28 @@ export default function UnityGameComponent(props) {
     };
   }, [addEventListener, removeEventListener, handleFinalGame]);
   return (
-    <Unity
-      style={{
-        width: isFullScreen ? width : cwidth ? cwidth : "100%",
-        minWidth: "100%",
-        height: isFullScreen ? "100%" : cheight ? cheight : "100%",
-        position: isFullScreen ? "fixed" : "none",
-        top: isFullScreen ? 0 : "none",
-        left: isFullScreen ? 0 : "none",
-        zIndex: isFullScreen ? 2000 : "none"
-      }}
-      unityProvider={unityProvider}
-    />
+    <Fragment>
+      {" "}
+      {/* {!isLoaded && (
+        <p style={{ color: "#fff" }}>
+          Loading Application... {Math.round(loadingProgression * 100)}%
+        </p>
+      )} */}
+      {!isLoaded && (
+       <LinearProgress value={loadingProgression * 100} />
+      )}
+      <Unity
+        style={{
+          width: isFullScreen ? width : cwidth ? cwidth : "100%",
+          minWidth: "100%",
+          height: isFullScreen ? "100%" : cheight ? cheight : "100%",
+          position: isFullScreen ? "fixed" : "none",
+          top: isFullScreen ? 0 : "none",
+          left: isFullScreen ? 0 : "none",
+          zIndex: isFullScreen ? 2000 : "none",
+        }}
+        unityProvider={unityProvider}
+      />
+    </Fragment>
   );
 }

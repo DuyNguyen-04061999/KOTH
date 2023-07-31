@@ -55,7 +55,6 @@ export default function JoinTournament() {
       backgroundColor: "#291e42",
       width: width,
     },
-    // hide last border
     "&:last-child td, &:last-child th": {
       border: "none",
     },
@@ -145,8 +144,8 @@ export default function JoinTournament() {
     return () => {
       socket?.off("detailTournamentSuccess");
     };
-  }, [socket,orientation]);
-  
+  }, [socket, orientation]);
+
   useEffect(() => {
     if (
       detailTournament?.tournamentParticipants?.length > 1 &&
@@ -359,6 +358,7 @@ export default function JoinTournament() {
                         tournamentId: detailTournament?.id,
                       });
                     }}
+               
                     style={{
                       padding: `${parseFloat(width / 150)}px ${parseFloat(
                         width / 28
@@ -1201,16 +1201,38 @@ export default function JoinTournament() {
           >
             <Box
               sx={{
-                width: width < 576 ? "95%" : "80%",
-                height: "auto",
+                width: isFullScreen?"100%":width < 576 ? "95%" : "80%",
+                height: isFullScreen?"100%":"auto",
                 paddingBottom: width < 576 ? "60px" : "none",
+                position:isFullScreen?"fixed":"none",
+                backgroundColor:isFullScreen?"black":"none",
+                top:isFullScreen?"0px":"none",
+                left:isFullScreen?"0px":"none",
+                zIndex:isFullScreen?"10005":"none"
               }}
             >
               {detailTournament &&
                 detailTournament?.tournamentInfors?.game[0].GameFiles.length >=
                   4 && (
                   <FullScreen handle={screen} onChange={reportChange}>
-                    {!videoGame ? (
+                    {videoGame ? (
+                      <Fragment>
+                        (
+                        <video
+                          className={isFullScreen ? "fullscreenVideo" : ""}
+                          width={"100%"}
+                          playsInline
+                          muted
+                          autoPlay
+                          onEnded={() => {
+                            setVideoGame(false);
+                          }}
+                        >
+                          <source src={video.LogoAnim} type="video/mp4" />
+                        </video>
+                        )
+                      </Fragment>
+                    ) : (
                       <Fragment>
                         <UnityGameComponent
                           GameFiles={
@@ -1218,7 +1240,7 @@ export default function JoinTournament() {
                               .GameFiles
                           }
                           width="100%"
-                          height="700px"
+                          height="800px"
                           cwidth="100%"
                           cheight="100%"
                           tournamentId={id}
@@ -1352,22 +1374,6 @@ export default function JoinTournament() {
                             </Box>
                           </>
                         )}
-                      </Fragment>
-                    ) : (
-                      <Fragment>
-                        <video
-                          className={isFullScreen ? "fullscreenVideo" : ""}
-                          width={"100%"}
-                          style={{ height: "700px !important" }}
-                          playsInline
-                          muted
-                          autoPlay
-                          onEnded={() => {
-                            setVideoGame(false);
-                          }}
-                        >
-                          <source src={video.LogoAnim} type="video/mp4" />
-                        </video>
                       </Fragment>
                     )}
                   </FullScreen>

@@ -28,7 +28,6 @@ export default function Signup(props) {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  
 
   useEffect(() => {
     if (registerValue === "success") {
@@ -47,10 +46,10 @@ export default function Signup(props) {
       username === "" ||
       password === "" ||
       c_password === "" ||
-      !email.includes("@gmail.com") || 
+      !email.includes("@gmail.com") ||
       username.includes(" ") ||
       username.length > 15 ||
-      password.length > 15 || 
+      password.length > 15 ||
       c_password.length > 15
     ) {
       setDisabledBtn(true);
@@ -77,9 +76,7 @@ export default function Signup(props) {
       c_password: c_password,
       gender: gender,
     });
-    socket?.on("registerError", (data) => {
-      
-    })
+    socket?.on("registerError", (data) => {});
   };
   return (
     <Box className="signup">
@@ -144,10 +141,12 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
-           {username && username.includes(" ") && (
-            <span className="text-danger">The account must not have spaces</span>
+          {username && username.includes(" ") && (
+            <span className="text-danger">
+              The account must not have spaces
+            </span>
           )}
-           {username && username.length > 15 && (
+          {username && username.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
         </FormControl>
@@ -249,7 +248,7 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
-           {password && password.length > 15 && (
+          {password && password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
         </FormControl>
@@ -304,7 +303,7 @@ export default function Signup(props) {
           {c_password !== password && blur === true ? (
             <span className="text-danger">Password does not match</span>
           ) : null}
-           {c_password && c_password.length > 15 && (
+          {c_password && c_password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
         </FormControl>
@@ -358,7 +357,7 @@ export default function Signup(props) {
           {email && !email.includes("@gmail.com") && (
             <span className="text-danger">Email must contain @gmail.com</span>
           )}
-           {email && email.length > 30 && (
+          {email && email.length > 30 && (
             <span className="text-danger">no more than 30 characters</span>
           )}
         </FormControl>
