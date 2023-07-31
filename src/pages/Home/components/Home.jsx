@@ -96,6 +96,9 @@ export default function Home() {
           md={6}
           key={index}
         >
+          <p onClick={() => socket?.emit("buyPackage", { 
+            tournamentId: 1, packageId: 2, type: 'ticket'
+           })}>Buy Package</p>
           <Box
             className="content"
             sx={{

@@ -164,6 +164,10 @@ export default function JoinTournament() {
     }
   }, [detailTournament]);
 
+  const handleEndGame = () => {
+    window.location.reload()
+  }
+
   return (
     <>
       {!startGame ? (
@@ -1224,6 +1228,8 @@ export default function JoinTournament() {
                             detailTournament?.tournamentInfors?.game[0]
                               ._gg_koth_game_tournaments?.gameId
                           }
+                          type="tournament"
+                          handleEndGame={handleEndGame}
                         />
                         {startGame && expand === true && width > 576 && (
                           <>

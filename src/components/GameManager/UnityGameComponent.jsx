@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
@@ -9,7 +9,9 @@ export default function UnityGameComponent(props) {
   const { 
     GameFiles, cwidth, cheight, tournamentId, gameId,
     isFullScreen,
-    roomId 
+    roomId,
+    handleEndGame,
+    type 
   } = props;
   const { width } = useWindowDimensions()
   const { token } = useSelector(state => state.authReducer)
@@ -56,55 +58,9 @@ export default function UnityGameComponent(props) {
 
   window.myGameInstance = UNSAFE__unityInstance;
 
-  async function handleClickBack() {
-    await unload();
-  }
-
   useEffect(() => {
     localStorage.setItem("GameFiles", JSON.stringify(GameFiles));
   }, [GameFiles]);
-  const [finishStatus, setfinishStatus] = useState(false);
-
-  const onBackButtonEvent = async (e) => {
-    e.preventDefault();
-    if (!finishStatus) {
-      if (window.confirm("Do you want to go back ?")) {
-        setfinishStatus(true);
-        await handleClickBack();
-        setTimeout(() => {
-          navigate({
-            pathname: "/",
-          });
-        }, 5000);
-      } else {
-        window.history.pushState(null, null, window.location.href);
-        setfinishStatus(false);
-        navigate({
-          pathname: "/",
-        });
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (finishStatus) window.location.reload();
-  }, [finishStatus]);
-
-  useEffect(() => {
-    window.history.pushState(null, null, window.location.href);
-    window.addEventListener("popstate", onBackButtonEvent);
-    return () => {
-      window.removeEventListener("popstate", onBackButtonEvent);
-    };
-  });
-
-  useEffect(() => {
-    window.history.pushState(null, null, window.location.href);
-    window.addEventListener("beforeunload", onBackButtonEvent);
-    return () => {
-      window.removeEventListener("beforeunload", onBackButtonEvent);
-    };
-  });
 
   const handleGameLoad = useCallback(() => {
       sendMessage("OverTheBridgeHome", "SetToken", token);
@@ -127,10 +83,17 @@ export default function UnityGameComponent(props) {
 
   const handleFinalGame = useCallback(async () => {
       await unload();
-      navigate({
-        pathname: "/",
-      });
-  }, [navigate, unload]);
+      if(type && type === "pvp") {
+        navigate({
+          pathname: `/selectroom/${gameId}`,
+        });
+      } else if (type === "tournament") {
+        navigate({
+          pathname: `/tournaments`,
+        });
+      }
+      handleEndGame()
+  }, [navigate, unload, gameId, handleEndGame, type]);
 
 
   useEffect(() => {
