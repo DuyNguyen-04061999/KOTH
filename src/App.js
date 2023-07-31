@@ -152,7 +152,11 @@ function App() {
         store.dispatch(deleteFriendSuccesFully("success"));
       });
 
-      socket?.on("registerSuccess", () => {
+      socket?.on("registerSuccess", (data, user) => {
+        socket?.emit("login", {
+          username: user?.username?.toLowerCase(),
+          password: user?.password,
+        });
         store.dispatch(showAlert("success", "register succesfully"));
         store.dispatch(registerSuccesFully("success"));
         store.dispatch(toggleLoginDialog());
@@ -236,7 +240,6 @@ function App() {
 
       socket?.on("depositSuccess", (data) => {
         store.dispatch(updateDeposit(data));
-        store.dispatch(showAlert("success", "Deposit successfully!"));
       });
 
       socket?.on("withdrawSuccess", (data) => {
@@ -344,6 +347,12 @@ function App() {
       socket?.on("error", (data) => {
         store.dispatch(showAlert("error", data));
         store.dispatch(updateProfileFail());
+      });
+      socket?.on("warning", (data) => {
+        store.dispatch(showAlert("warning", data));
+      });
+      socket?.on("success", (data) => {
+        store.dispatch(showAlert("success", data));
       });
     }
     return () => {

@@ -1,4 +1,4 @@
-import { Box} from "@mui/material";
+import { Box } from "@mui/material";
 import "./index.scss";
 import { images } from "../../../../../utils/images";
 import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
@@ -6,17 +6,13 @@ import useWindowDimensions from "../../../../../utils/useWindowDimensions";
 import { useState } from "react";
 
 export default function Deposit() {
-  const {width, height} = useWindowDimensions();
-  const [copyQr] = useState('DPpV1618x8rENj7p5QwYLtgCp1qP7b8o25')
-  const copyToClipBoard = async copyMe => {
-     try {
-         await navigator.clipboard.writeText(copyMe);
-     } 
-     catch (err) {
-
-     }
+  const { width, height } = useWindowDimensions();
+  const [copyQr] = useState("DPpV1618x8rENj7p5QwYLtgCp1qP7b8o25");
+  const copyToClipBoard = async (copyMe) => {
+    try {
+      await navigator.clipboard.writeText(copyMe);
+    } catch (err) {}
   };
-
 
   const checkHeightResponsive = () => {
     if (width < 576) {

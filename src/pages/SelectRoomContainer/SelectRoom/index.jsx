@@ -108,6 +108,10 @@ export default function SelectRoom() {
   const [betAmount] = useState(null);
   const filterArray = [0, 100, 200, 500];
 
+  const handleEndGame = () => {
+    window.location.reload();
+  }
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -701,6 +705,11 @@ export default function SelectRoom() {
               style={{
                 width: "100%",
                 height: "100%",
+                position:isFullScreen?"fixed":"none",
+                backgroundColor:isFullScreen?"black":"none",
+                top:isFullScreen?"0px":"none",
+                left:isFullScreen?"0px":"none",
+                zIndex:isFullScreen?"10005":"none"
               }}
             >
               <FullScreen handle={screen} onChange={reportChange}>
@@ -731,7 +740,10 @@ export default function SelectRoom() {
                         roomName={roomDetailInfo?.roomName}
                         fullScreen={expand}
                         roomId={roomDetailInfo?.id}
+                        gameId={detailGame?.id}
                         isFullScreen={isFullScreen}
+                        handleEndGame={handleEndGame}
+                        type="pvp"
                       />
                       {startGame &&
                         expand === true &&
