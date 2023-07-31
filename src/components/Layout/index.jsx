@@ -50,8 +50,8 @@ import {
 } from "../../redux-saga-middleware/reducers/authReducer";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MetaMaskDialog from "../Dialog/MetaMask";
-import TouramentShow from "../Dialog/Tourament/showBuy";
-import BuyTicket from "../Dialog/Tourament/buyTicket";
+// import TouramentShow from "../Dialog/Tourament/showBuy";
+// import BuyTicket from "../Dialog/Tourament/buyTicket";
 
 const drawerWidth = 310;
 

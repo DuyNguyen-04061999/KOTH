@@ -176,7 +176,7 @@ export default function DialogWallet(props) {
   const [withdrawCharge] = useState(5);
   const [willGet, setWillGet] = useState(0);
   const [willBe, setWillBe] = useState(0);
-  const [valueDepositAddress] = useState("");
+  // const [valueDepositAddress] = useState("");
   const [tab, setTab] = useState(1);
 
   const renderDeposit = () => {

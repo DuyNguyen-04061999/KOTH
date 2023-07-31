@@ -1,6 +1,6 @@
 import { CloseOutlined } from "@mui/icons-material";
 import { Box, Dialog, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { popup } from "../../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleBuyTicket } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
