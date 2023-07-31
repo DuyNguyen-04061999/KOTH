@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { LinearProgress } from "@mui/material";
+// import { LinearProgress } from "@mui/material";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
@@ -130,9 +130,15 @@ export default function UnityGameComponent(props) {
   }, [addEventListener, removeEventListener, handleFinalGame]);
   return (
     <Fragment>
+      {" "}
       {!isLoaded && (
-       <LinearProgress value={loadingProgression * 100} />
+        <p style={{ color: "#fff" }}>
+          Loading Application... {Math.round(loadingProgression * 100)}%
+        </p>
       )}
+      {/* {!isLoaded && (
+       <LinearProgress value={loadingProgression * 100} />
+      )} */}
       <Unity
         style={{
           width: isFullScreen ? width : cwidth ? cwidth : "100%",

@@ -705,18 +705,18 @@ export default function SelectRoom() {
               style={{
                 width: "100%",
                 height: "100%",
-                position:isFullScreen?"fixed":"none",
-                backgroundColor:isFullScreen?"black":"none",
-                top:isFullScreen?"0px":"none",
-                left:isFullScreen?"0px":"none",
-                zIndex:isFullScreen?"10005":"none"
+                position:isFullScreen && startGame?"fixed":"none",
+                backgroundColor:isFullScreen && startGame?"black":"none",
+                top:isFullScreen && startGame?"0px":"none",
+                left:isFullScreen && startGame?"0px":"none",
+                zIndex:isFullScreen && startGame?"10005":"none"
               }}
             >
               <FullScreen handle={screen} onChange={reportChange}>
                 {videoGame ? (
                   <Fragment>
                     <video
-                      className={isFullScreen ? "fullscreenVideo" : ""}
+                      className={isFullScreen && startGame ? "fullscreenVideo" : ""}
                       width={"100%"}
                       playsInline
                       muted

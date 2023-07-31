@@ -1201,14 +1201,14 @@ export default function JoinTournament() {
           >
             <Box
               sx={{
-                width: isFullScreen?"100%":width < 576 ? "95%" : "80%",
-                height: isFullScreen?"100%":"auto",
+                width: isFullScreen && startGame?"100%":width < 576 ? "95%" : "80%",
+                height: isFullScreen && startGame?"100%":"auto",
                 paddingBottom: width < 576 ? "60px" : "none",
-                position:isFullScreen?"fixed":"none",
-                backgroundColor:isFullScreen?"black":"none",
-                top:isFullScreen?"0px":"none",
-                left:isFullScreen?"0px":"none",
-                zIndex:isFullScreen?"10005":"none"
+                position:isFullScreen && startGame?"fixed":"none",
+                backgroundColor:isFullScreen && startGame?"black":"none",
+                top:isFullScreen && startGame?"0px":"none",
+                left:isFullScreen && startGame?"0px":"none",
+                zIndex:isFullScreen && startGame?"10005":"none"
               }}
             >
               {detailTournament &&
@@ -1219,7 +1219,7 @@ export default function JoinTournament() {
                       <Fragment>
                         (
                         <video
-                          className={isFullScreen ? "fullscreenVideo" : ""}
+                          className={isFullScreen && startGame ? "fullscreenVideo" : ""}
                           width={"100%"}
                           playsInline
                           muted
