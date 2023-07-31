@@ -130,12 +130,6 @@ export default function UnityGameComponent(props) {
   }, [addEventListener, removeEventListener, handleFinalGame]);
   return (
     <Fragment>
-      {" "}
-      {/* {!isLoaded && (
-        <p style={{ color: "#fff" }}>
-          Loading Application... {Math.round(loadingProgression * 100)}%
-        </p>
-      )} */}
       {!isLoaded && (
        <LinearProgress value={loadingProgression * 100} />
       )}
