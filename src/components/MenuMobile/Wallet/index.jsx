@@ -36,7 +36,7 @@ import {
 import { images } from "../../../utils/images";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import TransactionDetailDialog from "../../Dialog/TransactionDetail";
-import { Web3 } from "web3"
+import { Web3 } from "web3";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -46,6 +46,7 @@ export default function DialogWallet(props) {
   const { open, handleClose } = props;
   const { width, height } = useWindowDimensions();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDeposit, setLoadingDeposit] = useState(false);
   const { isTransactionDialog } = useSelector((state) => state.walletReducer);
   const { token } = useSelector((state) => state.authReducer);
   const [withDrawAddress, setWithDrawAddress] = useState("");
@@ -55,103 +56,107 @@ export default function DialogWallet(props) {
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
   );
-  const [amountDeposit, setAmountDeposit] = useState(0)
+  const [amountDeposit, setAmountDeposit] = useState(0);
 
   const dispatch = useDispatch();
 
-  const [socket, setSocket] = useState(null)
-  
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    setSocket(_socket)
-  }, [])
+    setSocket(_socket);
+  }, []);
 
   useEffect(() => {
-    if(token) {
-      socket?.emit("getListWithdraw")
+    if (token) {
+      socket?.emit("getListWithdraw");
     }
-  })
+  });
 
   useEffect(() => {
     async function sendToken(data, transaction) {
       try {
-        let web3 = new Web3(window.ethereum)
+        let web3 = new Web3(window.ethereum);
         await window.ethereum.enable();
-        let accounts = await web3.eth.getAccounts()
-        let account = accounts[0]
-        
+        let accounts = await web3.eth.getAccounts();
+        let account = accounts[0];
+
         if (web3.currentProvider.isConnected()) {
           console.log("Metamask connected !");
         } else {
           console.log("Metamask disconnected !");
         }
-  
+
         socket?.emit("updateDepositTransaction", {
           type: "process",
-          transactionId: transaction?.id
-        })
-  
-        let contract = new web3.eth.Contract(data?.token_abi, data?.token_contract)
-        let depositAmount = (data?.token_quantity) + "000000000000000000";
-  
-        let result = await contract.methods.transfer(data?.target_wallet, depositAmount).send({ from: account })
-  
-        if(result) {
+          transactionId: transaction?.id,
+        });
+
+        let contract = new web3.eth.Contract(
+          data?.token_abi,
+          data?.token_contract
+        );
+        let depositAmount = data?.token_quantity + "000000000000000000";
+
+        let result = await contract.methods
+          .transfer(data?.target_wallet, depositAmount)
+          .send({ from: account });
+
+        if (result) {
           socket?.emit("updateDepositTransaction", {
             type: "confirm",
             transactionId: transaction?.id,
             tid: data?.transaction_id,
-            txh: result?.transactionHash
-          })
+            txh: result?.transactionHash,
+          });
           return result;
         } else {
-          dispatch(showAlert("error", "Cannot deposit because contract fail!"))
+          dispatch(showAlert("error", "Cannot deposit because contract fail!"));
           socket?.emit("updateDepositTransaction", {
             type: "error",
-            transactionId: transaction?.id
-          })
+            transactionId: transaction?.id,
+          });
         }
-  
       } catch (error) {
         socket?.emit("updateDepositTransaction", {
           type: "error",
-          transactionId: transaction?.id
-        })
+          transactionId: transaction?.id,
+        });
       }
 
-      return false
+      return false;
     }
 
     socket?.on("depositRequestSuccess", async (data, transaction) => {
-      setAmountDeposit(0)
-      if(window?.ethereum) {
+      setLoadingDeposit(false);
+      setAmountDeposit(0);
+      if (window?.ethereum) {
         await window?.ethereum?.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: data?.target_network_id || "0x1" }]
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: data?.target_network_id || "0x1" }],
         });
-        
-        await sendToken(data, transaction)
+
+        await sendToken(data, transaction);
       } else {
-        dispatch(toggleMetaMaskDialog())
-        dispatch(toggleWalletDialog())
-        dispatch(saveTransactionData({
-          transactionData: transaction,
-          depositData: data
-        }))
+        dispatch(toggleMetaMaskDialog());
+        dispatch(toggleWalletDialog());
+        dispatch(
+          saveTransactionData({
+            transactionData: transaction,
+            depositData: data,
+          })
+        );
       }
-    })
+    });
 
     socket?.on("withRequestSuccess", async (data, transaction) => {
-      setAmount(0)
-    })
+      setAmount(0);
+    });
 
-    socket?.on("getListWithdrawSuccess", async (data) => {
-      
-    })
+    socket?.on("getListWithdrawSuccess", async (data) => {});
 
     return () => {
       // socket?.off()
-    }
+    };
   }, [socket, dispatch]);
 
   const div = useCallback((node) => {
@@ -262,12 +267,62 @@ export default function DialogWallet(props) {
               textAlign: "start",
             }}
           >
-            Cryptocurrency
+            Deposit Amount
           </Typography>
         </Box>
         <Box className="p-3">
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <img style={{ width: "90%" }} src={images.dogcoin} alt="..." />
+          <Box
+            className="p-3"
+            sx={{ backgroundColor: "#7e680b", borderRadius: "5px" }}
+          >
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography
+                className=""
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: getFontSizeDependOnWidth(width),
+                  textAlign: "start",
+                }}
+              >
+                Limit
+              </Typography>{" "}
+              <Typography
+                className=""
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: getFontSizeDependOnWidth(width),
+                  textAlign: "start",
+                }}
+              >
+                50-5000 Doge
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography
+                className=""
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: getFontSizeDependOnWidth(width),
+                  textAlign: "start",
+                }}
+              >
+                Conversion Rate
+              </Typography>{" "}
+              <Typography
+                className=""
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: getFontSizeDependOnWidth(width),
+                  textAlign: "start",
+                }}
+              >
+                1 USD = 100 Doge Gold
+              </Typography>
+            </Box>
           </Box>
           <Box className="mt-2 d-flex flex-column justify-content-center  mt-4">
             <Box>
@@ -297,84 +352,67 @@ export default function DialogWallet(props) {
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
+                  flexDirection: "column",
                   width: "89%",
                 }}
               >
                 <Input
+                  type="Number"
                   sx={{
-                    width: "60%",
-                    backgroundColor: "white",
-                    color: "black",
+                    "& .MuiInput-root:hover": { bgcolor: "transparent" },
+                    "& .MuiInput-inputTypeSearch": {
+                      type: "number",
+                    },
+                  }}
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#181223",
                     boxSizing: "border-box",
-                    padding: "3px 10px",
+                    padding: "10px 20px",
+                    border: "none",
+                    outline: "none",
+                    color: "white",
+                    fontWeight: "200 !important",
                   }}
                   placeholder="Enter Doge Coin Amount"
-                  type="number"
                   value={amountDeposit}
                   onChange={(e) => setAmountDeposit(e?.target?.value)}
                   className="rounded"
                 />
                 <button
                   style={{
-                    backgroundColor: "#8b39f0",
+                    backgroundColor: isLoadingDeposit ? "#6f6684" : "#8b39f0",
                     color: "white",
                     borderRadius: "5px",
                     border: "none",
                     outline: "none",
                     padding: "10px 30px",
+                    marginTop: "40px",
+                    position: "relative",
+                    height: "44px",
                   }}
+                  disabled={isLoadingDeposit}
                   onClick={() => {
-                    if(amountDeposit > 0) {
-                      socket?.emit("depositRequest", { amountDeposit });
+                    setLoadingDeposit(true);
+                    if (amountDeposit > 0) {
+                      setTimeout(() => {
+                        socket?.emit("depositRequest", { amountDeposit });
+                      }, 2000);
                     } else {
-                      dispatch(showAlert("error", "Please enter amount > 0"))
+                      dispatch(showAlert("error", "Please enter amount > 0"));
                     }
                   }}
                 >
-                  Payment
+                  {isLoadingDeposit ? (
+                    <CircularProgress
+                      sx={{ position: "absolute", top: "24%", left: "48%" }}
+                      size="1.6rem"
+                    />
+                  ) : (
+                    "Payment"
+                  )}
                 </button>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                height: "160px",
-                position: "absolute",
-                bottom: "0px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                left: "0px",
-                backgroundColor: "#37285c",
-              }}
-            >
-              <p style={{ color: "#7c81f3" }}>
-                Click <span style={{ color: "#bbb7ec" }}>Check Deposit</span>{" "}
-                button after deposit
-              </p>
-              <p style={{ color: "#7c81f3" }}>to require system to check</p>
-              <button
-                onClick={() => {
-                  if (valueDepositAddress === "") {
-                    dispatch(showAlert("error", "Not found address !"));
-                  } else {
-                    socket.emit("deposit", { value: valueDepositAddress });
-                  }
-                }}
-                style={{
-                  border: "none",
-                  outline: "none",
-                  borderRadius: "4px",
-                  backgroundImage: "linear-gradient(#8b39f0,#7549ee)",
-                  color: "white",
-                  fontWeight: "800",
-                  padding: "10px 50px",
-                  marginTop: "10px",
-                }}
-              >
-                Check Deposit
-              </button>
             </Box>
           </Box>
         </Box>
@@ -671,7 +709,7 @@ export default function DialogWallet(props) {
             onChange={(e) => {
               setAmount(e.target.value);
               const data = e.target.value;
-              const willGet = data * (1);
+              const willGet = data * 1;
               const leftGold = userGold - willGet;
               setWillGet(willGet);
               setWillBe(leftGold);
@@ -789,10 +827,18 @@ export default function DialogWallet(props) {
                       showAlert("error", "Please enter Address Wallet")
                     );
                   } else {
-                    if(!window.ethereum) {
-                      dispatch(showAlert("error", "Cannot withdraw because not found metamask!"))
+                    if (!window.ethereum) {
+                      dispatch(
+                        showAlert(
+                          "error",
+                          "Cannot withdraw because not found metamask!"
+                        )
+                      );
                     } else {
-                      socket?.emit("withdrawRequest", { value: amount, address: withDrawAddress });
+                      socket?.emit("withdrawRequest", {
+                        value: amount,
+                        address: withDrawAddress,
+                      });
                     }
                     setIsLoading(true);
                     setWithDrawAddress("");
@@ -1053,7 +1099,7 @@ export default function DialogWallet(props) {
                       onClick={() => {
                         handleTransactionDialog(transaction);
                       }}
-                    >    
+                    >
                       <StyledTableCell
                         align="center"
                         component="td"
@@ -1287,15 +1333,15 @@ export default function DialogWallet(props) {
             overflowY: "hidden",
             backgroundColor: "white",
           },
-          height: "100%", 
+          height: "100%",
           fontSize: getFontSizeDependOnWidth(width),
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
               width: "100%",
               maxWidth:
                 width < 576 ? width : isTransactionDialog ? "900px" : "500px",
-              height: "100%",
-              maxHeight: width < 576 ? height : "800px",
+              height: "auto",
+              maxHeight: width < 576 ? height : "auto",
               overflowY: "hidden",
               backgroundColor: "white",
             },
@@ -1379,7 +1425,11 @@ export default function DialogWallet(props) {
                   }}
                   sx={{ width: "15px", marginLeft: "20px", cursor: "pointer" }}
                 >
-                  <img style={{width:"20px",height:"20px"}} src={images.CloseButtonDeposit} alt="..." />
+                  <img
+                    style={{ width: "20px", height: "20px" }}
+                    src={images.CloseButtonDeposit}
+                    alt="..."
+                  />
                 </Box>
               )}
             </Box>
@@ -1391,7 +1441,12 @@ export default function DialogWallet(props) {
               minHeight: width < 576 ? "1000px" : "unset",
               maxHeight: width < 576 ? "unset" : height - 100,
               backgroundColor: "#271c39",
-              paddingBottom: isTransactionDialog === true ? "0px" : "100px",
+              paddingBottom:
+                isTransactionDialog === true
+                  ? "0px"
+                  : tab && tab === 1
+                  ? "30px"
+                  : "100px",
               overflowY: "auto",
               overflowX: "hidden",
             }}
