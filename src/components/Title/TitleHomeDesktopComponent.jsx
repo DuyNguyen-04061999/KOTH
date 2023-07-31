@@ -16,7 +16,8 @@ export default function TitleHomeDesktopComponent(props) {
       }}>
         <div className=" position-relative" style={{
           width: '100%',
-          display:"flex"
+          display:"flex",
+          justifyContent:"flex-start"
         }}>
           {!noBg && (
             <div

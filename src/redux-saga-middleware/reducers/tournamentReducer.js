@@ -16,12 +16,29 @@ export const createTournamentFail = (data) => {
     payload: data,
   };
 };
+
+export const toggleTournamentShow = (data) => {
+  return {
+    type: "TOGGLE_TOURNAMENT_SHOW",
+    payload: data,
+  };
+};
+
+export const toggleBuyTicket = (data) => {
+  return {
+    type: "TOGGLE_BUYTICKET",
+    payload: data,
+  };
+};
+
 const tournamentReducer = (
   state = {
     //success=true&&fail=false --> success, fail=true&&success=false --> fail, success=false && fail=false --> Loading
     isCreateTournamentSuccess: true,
     isCreateTournamentFail: true,
     tournamentRes: [],
+    isTournamentShow: false,
+    isBuyTicket: false,
     //--------------------------------------
   },
   action
@@ -52,6 +69,10 @@ const tournamentReducer = (
         tournamentRes: payload,
       };
     }
+    case "TOGGLE_TOURNAMENT_SHOW":
+      return { ...state, isTournamentShow: !state.isTournamentShow };
+    case "TOGGLE_BUYTICKET":
+      return { ...state, isBuyTicket: !state.isBuyTicket };
     default:
       return state;
   }

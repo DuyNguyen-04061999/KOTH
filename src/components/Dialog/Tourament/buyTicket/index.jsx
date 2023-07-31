@@ -2,23 +2,27 @@ import { CloseOutlined } from "@mui/icons-material";
 import { Box, Dialog, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { popup } from "../../../../utils/images";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleBuyTicket } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 
 export default function BuyTicket() {
-  const [open, setOpen] = useState(false);
+
+  const { isBuyTicket } = useSelector((state) => state.tournamentReducer)
+  const dispatch = useDispatch()
 
   const handleClickOpen = () => {
-    setOpen(true);
+    dispatch(toggleBuyTicket(true))
   };
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(toggleBuyTicket(false))
   };
 
   return (
     <Box>
       <button onClick={handleClickOpen}>next</button>
       <Dialog
-        open={open}
+        open={isBuyTicket}
         onClose={handleClose}
         sx={{
           "& .css-hz1bth-MuiDialog-container": {

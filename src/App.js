@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import { AlertComponent } from "./components/Alert";
 import HomePage from "./pages/Home";
@@ -78,13 +78,13 @@ function App() {
   useTracking("");
 
   const [socket] = useState(_socket);
-
   const { token } = store.getState().authReducer;
   useEffect(() => {
     if (!token) {
       socket.emit("listMessageGlobal");
     }
   });
+
   
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
@@ -174,6 +174,7 @@ function App() {
           store.dispatch(showAlert("success", message));
         } else if (type === "sameAccount") {
           store.dispatch(showAlert("error", message));
+          
         }
       });
 

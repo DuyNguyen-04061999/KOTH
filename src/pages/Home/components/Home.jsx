@@ -1194,7 +1194,7 @@ export default function Home() {
                               />
                               <div className="desc">
                                 <h6 className="user text-white">
-                                  {lb.userName || `Gad_Game_${i_lb}`}
+                                  {lb.userName.slice(0,8) || `Gad_Game_${i_lb}`}
                                 </h6>
                                 <div className="gold mt-2">
                                   <img

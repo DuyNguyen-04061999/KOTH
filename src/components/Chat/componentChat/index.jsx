@@ -104,14 +104,14 @@ export default function ComponentChat() {
                   <Box
                     className="mt-2 p-2 d-flex"
                     sx={{
-                      backgroundColor: "#2a1932",
-                      borderRadius: 1,
+                      backgroundColor: "#3e2a52",
+                      borderRadius: "5px",
                     }}
                   >
                     <Box
                       sx={{
                         width: "40%",
-                        height: "50px",
+                        height: "55px",
                       }}
                     >
                       <img
@@ -137,8 +137,8 @@ export default function ComponentChat() {
                       className="ms-2 d-flex flex-column flex-end"
                       sx={{ width: "60%" }}
                     >
-                      <Typography
-                        sx={{
+                      <span
+                        style={{
                           color: "white",
                           fontWeight: "bold",
                           textAlign: "left",
@@ -146,7 +146,7 @@ export default function ComponentChat() {
                         }}
                       >
                         {e?.messageGameName.slice(0, 10) + `...`}
-                      </Typography>
+                      </span>
                       <span className="text-white font-weight-bold">
                         Price: {e?.messageBetPrice}
                       </span>
@@ -160,7 +160,7 @@ export default function ComponentChat() {
                         className="p-1 mt-1 text-center text-white cursor-pointer"
                         sx={{
                           width: "100%",
-                          borderRadius: 1,
+                          borderRadius: "4px",
                           backgroundColor: "#d610a5",
                           fontWeight: "bold",
                           cursor: "pointer",
@@ -205,8 +205,8 @@ export default function ComponentChat() {
                     className="p-2 mt-2"
                     sx={{
                       background: "#4d3565",
-                      color: "#7878a7",
-                      borderRadius: 1,
+                      color: "#9b9acf",
+                      borderRadius: "5px",
                       fontSize: "14px",
                       fontWeight: "500",
                       width: "100%",
@@ -239,6 +239,7 @@ export default function ComponentChat() {
                 <span
                   style={{
                     color: "#5e78b5",
+                    borderRadius:"5px",
                   }}
                 >
                   <b style={{}}>{e?.messageFromName}</b>
@@ -249,7 +250,7 @@ export default function ComponentChat() {
                       color: "#494a8b",
                       fontWeight: "500",
                       marginLeft: "15px",
-                      fontSize: "12px",
+                      fontSize: "10px",
                     }}
                   >
                     {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -258,16 +259,20 @@ export default function ComponentChat() {
               </Box>
               <Box
                 sx={{
-                  background: "#362a50",
-                  borderRadius: 1,
-                  width: width < 576 ? width - 100 : 250,
+                  background: "#443565",
+                  width: "fit-content",
+                  maxWidth: width < 576 ? width - 100 : 215,
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  wordWrap: "break-word",
+                  borderRadius: "5px",
                 }}
                 className="p-2 mt-2 d-flex"
               >
                 <div
                   style={{
-                    color: "rgb(194 191 245)",
-                    fontWeight: "500",
+                    color: "#9b9acf",
+                    fontWeight: "bold",
                     fontSize: "14px",
                     width: "100%",
                     wordWrap: "break-word" /* IE 5.5-7 */,
@@ -296,7 +301,7 @@ export default function ComponentChat() {
                         >
                           <Box
                             sx={{
-                              width: "50%",
+                              width: "40%",
                               height: "50px",
                             }}
                           >
@@ -327,8 +332,8 @@ export default function ComponentChat() {
                               sx={{
                                 color: "white",
                                 fontWeight: "bold",
-                                textAlign: "left",
-                                marginLeft: "0px !important",
+                                // textAlign: "left",
+                                // marginLeft: "0px !important",
                               }}
                             >
                               {e?.messageGameName.slice(0, 10) + `...`}
@@ -346,10 +351,10 @@ export default function ComponentChat() {
                               className="p-1 mt-1 text-center text-white cursor-pointer"
                               sx={{
                                 width: "100%",
-                                borderRadius: 1,
-                                backgroundColor: "#d610a5",
+                                background:
+                                  "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
                                 fontWeight: "bold",
-                                cursor: "pointer",
+                                borderRadius: "4px",
                               }}
                             >
                               PLAY GAME

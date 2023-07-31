@@ -1,22 +1,24 @@
 import { Box, Dialog } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTournamentShow } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 
 export default function TouramentShow() {
-  const [open, setOpen] = useState(false);
-
+  const { isTournamentShow } = useSelector((state) => state.tournamentReducer)
+  const dispatch = useDispatch();
   const handleClickOpen = () => {
-    setOpen(true);
+    dispatch(toggleTournamentShow(true));
   };
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(toggleTournamentShow(false));
   };
 
   return (
     <Box>
       <button onClick={handleClickOpen}>next</button>
       <Dialog
-        open={open}
+        open={isTournamentShow}
         onClose={handleClose}
         sx={{
           "& .css-hz1bth-MuiDialog-container": {
@@ -47,27 +49,37 @@ export default function TouramentShow() {
             congue eget, convallis vel velit. Nulla euismod vel ante eget
             varius.
           </Box>
-          <Box sx={{
-            display:"flex",
-            justifyContent:"center",
-            alignItems:"center",
-            paddingBottom:"50px"
-          }}>
-            <button style={{
-                padding:"5px 15px",
-                border:"none",
-                borderRadius:"5px",
-                backgroundColor:"#68399E",
-                color:"white"
-            }}>Cancel</button>
-            <button style={{
-                padding:"5px 25px",
-                border:"none",
-                borderRadius:"5px",
-                backgroundColor:"#843eed",
-                color:"white",
-                marginLeft:"30px"
-            }}>Buy</button>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingBottom: "50px",
+            }}
+          >
+            <button
+              style={{
+                padding: "5px 15px",
+                border: "none",
+                borderRadius: "5px",
+                backgroundColor: "#68399E",
+                color: "white",
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              style={{
+                padding: "5px 25px",
+                border: "none",
+                borderRadius: "5px",
+                backgroundColor: "#843eed",
+                color: "white",
+                marginLeft: "30px",
+              }}
+            >
+              Buy
+            </button>
           </Box>
         </Box>
       </Dialog>

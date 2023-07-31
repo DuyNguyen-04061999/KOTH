@@ -50,6 +50,8 @@ import {
 } from "../../redux-saga-middleware/reducers/authReducer";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MetaMaskDialog from "../Dialog/MetaMask";
+import TouramentShow from "../Dialog/Tourament/showBuy";
+import BuyTicket from "../Dialog/Tourament/buyTicket";
 
 const drawerWidth = 310;
 
@@ -165,13 +167,13 @@ export default function Layout(props) {
     setChatF(e.target.value);
   };
   const handleOnKeyDown = (e) => {
-    if (e.key === "Enter" && chatF) {
+    if (e.key === "Enter" && chatF.trim() !== "") {
       socket?.emit("chat", { type: "World", toId: 0, content: chatF });
       setChatF("");
     }
   };
   const handleOnClickSendMessage = () => {
-    if (chatF) {
+    if (chatF.trim() !== "") {
       socket?.emit("chat", { type: "World", toId: 0, content: chatF });
       setChatF("");
     }
