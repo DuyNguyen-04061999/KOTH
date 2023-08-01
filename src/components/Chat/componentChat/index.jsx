@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 export default function ComponentChat() {
   const bottomRef = useRef(null);
   const [friendMessages, setFriendMess] = useState([]);
-  
+
   const { chatWorld, contacter, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
@@ -44,11 +44,10 @@ export default function ComponentChat() {
             n.messageType === "Private")
       )
     );
-    
   }, [userName, contacter, chatWorld]);
   const handleOnClickInviteGameMess = (gameId, roomId) => {
-    setGameId(gameId);
-    setRoomId(roomId);
+    // setGameId(gameId);
+    // setRoomId(roomId);
     socket.emit("joinRoomGameFromMessage", {
       roomId: roomId,
       gameId: gameId,
@@ -62,7 +61,7 @@ export default function ComponentChat() {
 
     return () => {
       // socket?.off()
-    }
+    };
   }, [socket, roomId, gameId, navigate, dispatch]);
   const renderChat = friendMessages.map((e, index) => {
     return (
@@ -128,7 +127,7 @@ export default function ComponentChat() {
                         width={"100%"}
                         height={"75px"}
                         style={{
-                          objectFit:"cover"
+                          objectFit: "cover",
                         }}
                         // className="img-fluid"
                       />
@@ -239,7 +238,7 @@ export default function ComponentChat() {
                 <span
                   style={{
                     color: "#5e78b5",
-                    borderRadius:"5px",
+                    borderRadius: "5px",
                   }}
                 >
                   <b style={{}}>{e?.messageFromName}</b>
@@ -320,7 +319,7 @@ export default function ComponentChat() {
                               // className="img-fluid"
                               height={"75px"}
                               style={{
-                                objectFit:"cover"
+                                objectFit: "cover",
                               }}
                             />
                           </Box>

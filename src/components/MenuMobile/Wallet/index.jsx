@@ -393,8 +393,8 @@ export default function DialogWallet(props) {
                   }}
                   disabled={isLoadingDeposit}
                   onClick={() => {
-                    setLoadingDeposit(true);
                     if (amountDeposit > 0) {
+                      setLoadingDeposit(true);
                       setTimeout(() => {
                         socket?.emit("depositRequest", { amountDeposit });
                       }, 2000);

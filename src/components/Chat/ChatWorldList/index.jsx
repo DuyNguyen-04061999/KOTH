@@ -64,7 +64,7 @@ export default function ChatWorldList() {
   };
   const { height, width } = useWindowDimensions();
   const [worldMessage, setWorldMessage] = useState([]);
-  
+
   useEffect(() => {
     scrollToBottom();
   }, [worldMessage]);
@@ -80,16 +80,24 @@ export default function ChatWorldList() {
     if (endOfMessageRef.current !== null)
       endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  const checkExistInArray = (membersInRoom, userName) => {
+    return membersInRoom?.filter((n) => {
+      return n.username === userName && n.owner === 0;
+    }).length > 0
+      ? true
+      : false;
+  };
   useEffect(() => {
     socket?.on(`joinRoomGameFromMessageSuccess`, (room, roomId) => {
-      dispatch(setWaitingNav());
-      navigate(`/selectroom/${gameId}`, { state: { roomInfo: room } });
+      // console.log("joinRoomGameFromMessageSuccess: ",JSON.parse(room?.membersInRoom));
+        dispatch(setWaitingNav());
+        navigate(`/selectroom/${gameId}`, { state: { roomInfo: room } });
     });
 
     return () => {
       // socket?.off()
-    }
-  }, [socket, roomId, gameId, navigate, dispatch]);
+    };
+  }, [socket, roomId, gameId, navigate, dispatch, userName]);
   const handleOnClickInviteGameMess = (gameId, roomId) => {
     setGameId(gameId);
     setRoomId(roomId);
@@ -133,7 +141,7 @@ export default function ChatWorldList() {
                       background: "#4d3565",
                       color: "#7878a7",
                       fontSize: "14px",
-                      borderRadius:"5px"
+                      borderRadius: "5px",
                     }}
                     className="p-2"
                   >
@@ -142,7 +150,7 @@ export default function ChatWorldList() {
                       className="mt-2 p-2 d-flex"
                       sx={{
                         backgroundColor: "#3e2a52",
-                        borderRadius:"5px"
+                        borderRadius: "5px",
                       }}
                     >
                       <Box
@@ -165,7 +173,7 @@ export default function ChatWorldList() {
                           width={"100%"}
                           height={"75px"}
                           style={{
-                            objectFit:"cover"
+                            objectFit: "cover",
                           }}
                         />
                       </Box>
@@ -179,7 +187,7 @@ export default function ChatWorldList() {
                             fontWeight: "bold",
                           }}
                         >
-                          {e?.messageGameName.slice(0,10) + `...`}
+                          {e?.messageGameName.slice(0, 10) + `...`}
                         </span>
                         <span className="text-white font-weight-bold">
                           Price: {e?.messageBetPrice}
@@ -268,7 +276,7 @@ export default function ChatWorldList() {
                         e?.messageFromAvatar
                       : images.undefinedAvatar
                   }
-                  sx={{ borderRadius: "50%", marginLeft:"5px"  }}
+                  sx={{ borderRadius: "50%", marginLeft: "5px" }}
                 />
               </Box>
               <Box className="mx-2" sx={{ borderRadius: "5px" }}>
@@ -329,7 +337,11 @@ export default function ChatWorldList() {
                             fontSize: "14px",
                           }}
                         >
-                          <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span>
+                          <span
+                            style={{ fontWeight: "bold", color: "#9b9acf" }}
+                          >
+                            You're invited to play:
+                          </span>
                           <Box
                             className="p-2 d-flex"
                             sx={{
@@ -356,7 +368,7 @@ export default function ChatWorldList() {
                                 width={"100%"}
                                 height={"75px"}
                                 style={{
-                                  objectFit:"cover"
+                                  objectFit: "cover",
                                 }}
                               />
                             </Box>
@@ -370,7 +382,7 @@ export default function ChatWorldList() {
                                   fontWeight: "bold",
                                 }}
                               >
-                                {e?.messageGameName.slice(0,10) + `...`}
+                                {e?.messageGameName.slice(0, 10) + `...`}
                               </span>
                               <span className="text-white font-weight-bold">
                                 Price: {e?.messageBetPrice}
