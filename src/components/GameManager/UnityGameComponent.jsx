@@ -112,7 +112,9 @@ export default function UnityGameComponent(props) {
           pathname: `/tournaments`,
         });
       }
-      handleEndGame()
+      setTimeout(() => {
+        handleEndGame()
+      }, 3000)
   }, [navigate, unload, gameId, handleEndGame, type]);
 
   useEffect(() => {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom'
 import _socket from '../../redux-saga-middleware/config/socket';
 import { Web3 } from "web3"
+import { useDispatch } from 'react-redux';
+import { showAlert } from '../../redux-saga-middleware/reducers/alertReducer';
 
 export default function TransactionDetailPage() {
     const params = useParams()
@@ -13,6 +15,8 @@ export default function TransactionDetailPage() {
     
     const [socket, setSocket] = useState(null)
   
+    const dispatch = useDispatch();
+
     useEffect(() => {
       setSocket(_socket)
     }, [])
@@ -83,16 +87,23 @@ export default function TransactionDetailPage() {
         setProcess(false)
       })
 
-      socket?.on("error", async () => {
+      socket?.on("error", async (data) => {
         setProcess(false)
+        dispatch(showAlert("error", data))
+      })
+
+      socket?.on("warning", async (data) => {
+        setProcess(false)
+        dispatch(showAlert("warning", data))
       })
 
       return () => {
         socket?.off("checkTransactionIdSuccess")
         socket?.off("error")
+        socket?.off("warning")
         socket?.off("updateDepositTransactionQrSuccess")
       }
-    }, [socket, query, id])
+    }, [socket, query, id, dispatch])
 
     return (
       <div className='text-white p-2'>

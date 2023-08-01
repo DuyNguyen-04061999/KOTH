@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Dialog, Typography } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { toggleMetaMaskDialog } from '../../../redux-saga-middleware/reducers/walletReducer'
@@ -9,15 +9,42 @@ import { browserName,
   // browserVersion 
 } from "react-device-detect";
 import useWindowDimensions from '../../../utils/useWindowDimensions.js'
+import _socket from '../../../redux-saga-middleware/config/socket'
 
 export default function MetaMaskDialog() {
     const { isMetamaskDialog, depositData } = useSelector(state => state.walletReducer)
     const { userId } = useSelector(state => state.authReducer)
-    
+    const [count, setCount] = useState(60);
+
     const { width } = useWindowDimensions()
     const dispatch = useDispatch()
     const [menuK, setMenuK] = useState(0)
     const menus = ["Desktop", "Mobile"]
+
+    const [socket, setSocket] = useState(null)
+
+    useEffect(() => {
+      setSocket(_socket)
+    }, [])
+
+    useEffect(() => {
+      socket?.on("closeMetaMaskQr", async () => {
+        dispatch(toggleMetaMaskDialog())
+      })
+
+      return () => {
+        socket?.off('closeMetaMaskQr')
+      }
+    }, [socket, dispatch])
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        setCount(prevCount => prevCount - 1);
+      }, 1000);
+    
+      return () => clearInterval(intervalId);
+    }, []);
+
     const list = [
       {
         icon: imagesMetamask?.heart,
@@ -114,12 +141,15 @@ export default function MetaMaskDialog() {
             </Box>
           ) : (
             <Box component={"div"}>
+              <Box className="text-center text-white" component={"div"}>
+                  Qr code will be lost after <span className='text-info'> {count}s</span>
+              </Box>
               <Box component={"div"} className='d-flex justify-content-center' sx={{
                 color: '#857cab'
               }}>
                 If on mobile click <a className='ms-2' href={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`} rel='noreferrer' target='_blank'> here</a>
               </Box>
-              <Box component={"div"} className='d-flex justify-content-center'>
+              <Box hidden={count <= 1} component={"div"} className='d-flex justify-content-center'>
                 <QRCode
                   size={1000}
                   style={{ height: "auto", maxWidth: "50%", width: "100%", marginTop: "10px" }}

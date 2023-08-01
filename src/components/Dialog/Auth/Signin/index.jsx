@@ -10,7 +10,6 @@ import {
 import React, { useEffect } from "react";
 import { AvatarGroup } from "@mui/material";
 import { images, sign } from "../../../../utils/images";
-import { color } from "../../../../utils/colors";
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -19,7 +18,6 @@ import DialogProfile from "../../Profile";
 import Signup from "../Signup";
 import { images260423_l } from "../../../../utils/images260423_l";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { images280423_l } from "../../../../utils/images280423_l";
 import { useState } from "react";
 import MenuChat from "../../../MenuMobile/Chat";
 import GameLogIcon from "@mui/icons-material/List";
@@ -41,8 +39,8 @@ import {
   clickTabChat,
   closeChatPopup,
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
-import { formatMoney } from "../../../../utils/helper";
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
+import Gold from "../../../Gold/Gold";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -649,46 +647,7 @@ export default function Dialoglg() {
                   }}
                   className="cursor-pointer d-flex doge-coin "
                 >
-                  <div
-                    className="d-flex flex-column justify-content-between align-items-center"
-                    style={{
-                      padding: "0px 10px",
-                    }}
-                  >
-                    {width > 576 && (
-                      <div
-                        style={{
-                          fontSize: "13px",
-                          color: "#857cab",
-                          fontWeight: "700",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={images280423_l.gold}
-                          alt="..."
-                          width={10}
-                          height={10}
-                          style={{ marginRight: "5px" }}
-                        />
-                        <span>Doge Gold</span>
-                      </div>
-                    )}
-                    <div className="d-flex">
-                      <p
-                        style={{
-                          color: color.textWhite,
-                          fontSize: "13px",
-                        }}
-                      >
-                        {userGold &&
-                          Number.parseFloat(userGold) > 0 &&
-                          formatMoney(Number.parseFloat(userGold))}
-                      </p>
-                    </div>
-                  </div>
+                  <Gold value={userGold}/>
                 </Box>
               </Box>
 
