@@ -20,8 +20,8 @@ export default function ComponentChat() {
   const { width, height } = useWindowDimensions();
   const { userName } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);
-  const [gameId, setGameId] = useState(0);
-  const [roomId, setRoomId] = useState(0);
+  const [gameId] = useState(0);
+  const [roomId] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {

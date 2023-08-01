@@ -80,13 +80,13 @@ export default function ChatWorldList() {
     if (endOfMessageRef.current !== null)
       endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  const checkExistInArray = (membersInRoom, userName) => {
-    return membersInRoom?.filter((n) => {
-      return n.username === userName && n.owner === 0;
-    }).length > 0
-      ? true
-      : false;
-  };
+  // const checkExistInArray = (membersInRoom, userName) => {
+  //   return membersInRoom?.filter((n) => {
+  //     return n.username === userName && n.owner === 0;
+  //   }).length > 0
+  //     ? true
+  //     : false;
+  // };
   useEffect(() => {
     socket?.on(`joinRoomGameFromMessageSuccess`, (room, roomId) => {
       // console.log("joinRoomGameFromMessageSuccess: ",JSON.parse(room?.membersInRoom));
