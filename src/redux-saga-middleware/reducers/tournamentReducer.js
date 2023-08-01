@@ -4,6 +4,12 @@ export const createTournament = (data) => {
     payload: data,
   };
 };
+export const createTournamentReady = (data) => {
+  return {
+    type: "CREATE_TOURNAMENT_READY",
+    payload: data,
+  };
+};
 export const createTournamentSuccess = (data) => {
   return {
     type: "CREATE_TOURNAMENT_SUCESS",
@@ -46,7 +52,7 @@ const tournamentReducer = (
   const { type, payload } = action;
   switch (type) {
     //----------- Tournament -----------
-    case "CREATE_TOURNAMENT": {
+    case "CREATE_TOURNAMENT_READY": {
       return {
         ...state,
         isCreateTournamentSuccess: false,
