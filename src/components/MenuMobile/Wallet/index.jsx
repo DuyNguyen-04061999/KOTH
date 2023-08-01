@@ -273,7 +273,7 @@ export default function DialogWallet(props) {
         <Box className="p-3">
           <Box
             className="p-3"
-            sx={{ backgroundColor: "#7e680b", borderRadius: "5px" }}
+            sx={{ backgroundColor: "#3a2b61", borderRadius: "5px" }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
@@ -393,8 +393,8 @@ export default function DialogWallet(props) {
                   }}
                   disabled={isLoadingDeposit}
                   onClick={() => {
-                    setLoadingDeposit(true);
                     if (amountDeposit > 0) {
+                      setLoadingDeposit(true);
                       setTimeout(() => {
                         socket?.emit("depositRequest", { amountDeposit });
                       }, 2000);

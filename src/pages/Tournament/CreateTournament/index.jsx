@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   Dialog,
   FormControl,
   MenuItem,
@@ -17,10 +18,16 @@ import { MobileTimePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { useDispatch } from "react-redux";
-import { createTournament } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createTournament,
+  createTournamentReady,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 export default function CreateTournament({ createTour, handleOnClose, type }) {
+  const { isCreateTournamentSuccess, isCreateTournamentFail } = useSelector(
+    (state) => state.tournamentReducer
+  );
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
   const imageRef = useRef(null);
@@ -30,12 +37,12 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [gameId, setGameId] = useState(0);
   const [name, setName] = useState("");
   const [startTime, setStartTime] = useState({
-    date: "2023/07/23",
-    time: "2022-04-17T15:30",
+    date: moment().format("YYYY/MM/DD"),
+    time: moment("2022-04-17T15:30"),
   });
   const [endTime, setEndTime] = useState({
-    date: "2023/07/23",
-    time: "2022-04-17T15:30",
+    date: moment().format("YYYY/MM/DD"),
+    time: moment("2022-04-17T15:30"),
   });
   const [quantity] = useState(10);
   const [information, setInformation] = useState("");
@@ -72,29 +79,32 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
     }
   };
   const handleOnClickCreate = () => {
-    dispatch(
-      createTournament({
-        gameId: gameId,
-        name: name,
-        start: `${startTime.date} ${startTime.time}`,
-        end: `${endTime.date} ${endTime.time}`,
-        quantity: quantity,
-        type: type,
-        information: information,
-        maxPlay: maxPlay,
-        leaderBoard: leaderBoard,
-        loop: loop,
-        coors: coors,
-        prize: prizeSetUp,
-        autoPrice: prizeType,
-        autoAmount: autoAmount,
-        autoDistribution: prizeDis,
-        autoRatio: prizeRatio,
-        manualDescription: manualDescription,
-        video: video,
-        token: localStorage.getItem("token"),
-      })
-    );
+    dispatch(createTournamentReady());
+    setTimeout(() => {
+      dispatch(
+        createTournament({
+          gameId: gameId,
+          name: name,
+          start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
+          end: `${endTime.date} ${moment(endTime?.time).format("HH:mm")}`,
+          quantity: quantity,
+          type: type,
+          information: information,
+          maxPlay: maxPlay,
+          leaderBoard: leaderBoard,
+          loop: loop,
+          coors: coors,
+          prize: prizeSetUp,
+          autoPrice: prizeType,
+          autoAmount: autoAmount,
+          autoDistribution: prizeDis,
+          autoRatio: prizeRatio,
+          manualDescription: manualDescription,
+          video: video,
+          token: localStorage.getItem("token"),
+        })
+      );
+    }, 2000);
   };
   useEffect(() => {
     const socket = _socket;
@@ -349,11 +359,11 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <MobileTimePicker
-                      value={moment(startTime?.time)}
+                      value={startTime?.time}
                       onChange={(newValue) => {
                         setStartTime({
                           ...startTime,
-                          time: moment(newValue).format("HH:mm"),
+                          time: newValue,
                         });
                       }}
                       sx={{
@@ -367,9 +377,17 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             borderRadius: "5px",
                             width: "70px",
                           },
+                        "& .css-1x5jdmq": {
+                          color: "#fff",
+                          backgroundColor: "#68399E !important",
+                          border: "#68399E",
+                          outline: "none",
+                          padding: "10px 15px",
+                          borderRadius: "5px",
+                          width: "70px",
+                        },
                         cursor: "pointer",
                       }}
-                      defaultValue={moment("2022-04-17T15:30")}
                     />
                   </LocalizationProvider>
                 </Box>
@@ -417,10 +435,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             outline: "none",
                             width: "200px",
                           },
-
-                        "& .css-cwhad8-MuiDateCalendar-root": {
-                          backgroundColor: "#68399E !important",
+                        "& .css-1bn53lx": {
+                          color: "#fff",
+                          backgroundColor: "#68399E",
+                          border: "none",
+                          outline: "none",
+                          width: "200px",
                         },
+
                         "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
                           {
                             color: "#fff",
@@ -430,7 +452,18 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             borderRadius: "10px",
                             padding: "10px 20px",
                           },
+                        "& .css-1uvydh2": {
+                          color: "#fff",
+                          backgroundColor: "#68399E",
+                          border: "none",
+                          outline: "none",
+                          borderRadius: "10px",
+                          padding: "10px 20px",
+                        },
                         "& .css-i4bv87-MuiSvgIcon-root": {
+                          color: "#fff",
+                        },
+                        "& .css-vubbuv": {
                           color: "#fff",
                         },
                       }}
@@ -441,11 +474,11 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <MobileTimePicker
-                      value={moment(endTime?.time)}
+                      value={endTime?.time}
                       onChange={(newValue) => {
                         setEndTime({
                           ...endTime,
-                          time: moment(newValue).format("HH:mm"),
+                          time: newValue,
                         });
                       }}
                       sx={{
@@ -459,6 +492,16 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             borderRadius: "5px",
                             width: "70px",
                           },
+                        "& .css-1x5jdmq": {
+                          color: "#fff",
+                          backgroundColor: "#68399E !important",
+                          border: "#68399E",
+                          outline: "none",
+                          padding: "10px 15px",
+                          borderRadius: "5px",
+                          width: "70px",
+                        },
+                        cursor: "pointer",
                       }}
                       defaultValue={moment("2022-04-17T15:30")}
                     />
@@ -617,7 +660,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       setLoop(e.target.value);
                     }}
                     value={loop}
-                    sx={{ height: "39px", backgroundColor: "#3C2C64" }}
+                    sx={{
+                      height: "39px",
+                      backgroundColor: "#3C2C64",
+                    }}
                   >
                     <MenuItem
                       sx={{
@@ -1137,17 +1183,25 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           >
             <button
               onClick={handleOnClickCreate}
+              disabled={!isCreateTournamentSuccess && !isCreateTournamentFail}
               style={{
                 padding: "10px 50px",
                 border: "none",
                 outline: "none",
                 borderRadius: "5px",
-                background: "linear-gradient(#8A3AF1,#7648ED)",
+                background:
+                  !isCreateTournamentSuccess && !isCreateTournamentFail
+                    ? "#6f6684"
+                    : "linear-gradient(#8A3AF1,#7648ED)",
                 color: "#ffff",
                 fontSize: getFontSizeDependOnWidth(width),
               }}
             >
-              Create
+              {!isCreateTournamentSuccess && !isCreateTournamentFail ? (
+                <CircularProgress size="1.4rem" />
+              ) : (
+                "Create"
+              )}
             </button>
           </Box>
         </Box>

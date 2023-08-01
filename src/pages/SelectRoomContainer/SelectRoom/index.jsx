@@ -110,12 +110,11 @@ export default function SelectRoom() {
 
   const handleEndGame = () => {
     window.location.reload();
-  }
+  };
 
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
-    dispatch(setSelectNav());
   }, [dispatch]);
 
   useEffect(() => {
@@ -231,7 +230,9 @@ export default function SelectRoom() {
   const handleClose1 = () => {
     setAnchorEl1(null);
   };
-
+  console.log(roomDetailInfo?.membersInRoom &&
+    roomDetailInfo?.membersInRoom?.length > 0 &&
+    JSON.parse(roomDetailInfo?.membersInRoom))
   const handleOnClickLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
       socket.emit("handleLikeGame", { gameId: detailGame?.id, type: true });
@@ -350,6 +351,7 @@ export default function SelectRoom() {
           });
           if (Number(userId) === Number(data?.userId)) {
             dispatch(setWaitingNav());
+            console.log("1")
             setroomDetailInfo(data);
             setRoomIdSelect(data?.id);
           }
@@ -366,6 +368,7 @@ export default function SelectRoom() {
         if (username) {
           dispatch(setWaitingNav());
           setRoomIdSelect(data?.id);
+          console.log("2")
           setroomDetailInfo(data);
           setListRoom((prevState) => {
             let dt = [...prevState];
@@ -397,6 +400,7 @@ export default function SelectRoom() {
     socket?.on(`joinRoomGame${detailGame?.id}Success`, (data, roomId) => {
       if (roomId === roomIdSelect) {
         dispatch(setWaitingNav());
+        console.log("3")
         setroomDetailInfo(data);
         setListRoom((prevState) => {
           let dt = [...prevState];
@@ -427,6 +431,7 @@ export default function SelectRoom() {
     socket?.on(
       `readyRoom${roomIdSelect}Game${detailGame?.id}Success`,
       (data, roomId) => {
+        console.log("4")
         setroomDetailInfo(data);
       }
     );
@@ -434,6 +439,7 @@ export default function SelectRoom() {
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
       setChat([]);
       if (roomId === roomIdSelect) {
+        console.log("5")
         setroomDetailInfo(data);
         if (
           !(
@@ -530,6 +536,7 @@ export default function SelectRoom() {
         }
       });
       if (roomId === roomIdSelect) {
+        console.log("7")
         setroomDetailInfo(room);
       }
     });
@@ -628,10 +635,10 @@ export default function SelectRoom() {
   };
 
   useEffect(() => {
+    console.log("8")
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
   }, [state]);
-
   const [isFullScreen, setIsFullScreen] = useState(false);
   const reportChange = useCallback(
     (state, handle) => {
@@ -705,18 +712,20 @@ export default function SelectRoom() {
               style={{
                 width: "100%",
                 height: "100%",
-                position:isFullScreen && startGame?"fixed":"none",
-                backgroundColor:isFullScreen && startGame?"black":"none",
-                top:isFullScreen && startGame?"0px":"none",
-                left:isFullScreen && startGame?"0px":"none",
-                zIndex:isFullScreen && startGame?"10005":"none"
+                position: isFullScreen && startGame ? "fixed" : "none",
+                backgroundColor: isFullScreen && startGame ? "black" : "none",
+                top: isFullScreen && startGame ? "0px" : "none",
+                left: isFullScreen && startGame ? "0px" : "none",
+                zIndex: isFullScreen && startGame ? "10005" : "none",
               }}
             >
               <FullScreen handle={screen} onChange={reportChange}>
                 {videoGame ? (
                   <Fragment>
                     <video
-                      className={isFullScreen && startGame ? "fullscreenVideo" : ""}
+                      className={
+                        isFullScreen && startGame ? "fullscreenVideo" : ""
+                      }
                       width={"100%"}
                       playsInline
                       muted

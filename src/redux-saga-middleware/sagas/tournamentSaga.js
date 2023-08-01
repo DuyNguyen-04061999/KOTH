@@ -1,13 +1,19 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import TournamentService from "../services/tournamentService";
-import { createTournamentFail } from "../reducers/tournamentReducer";
+import {
+  createTournamentFail,
+  createTournamentSuccess,
+} from "../reducers/tournamentReducer";
 const tournamentService = new TournamentService();
 
 function* postTournamentCreate(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.callCreateTournament, payload);
-    console.log("Res tournament: ", res);
+    if (res.status === 200) {
+      console.log("Res: ", res);
+      yield put(createTournamentSuccess());
+    }
   } catch (error) {
     yield put(createTournamentFail());
   }
