@@ -55,6 +55,8 @@ export default function ChatGlobal(props) {
     }
   }, [token]);
 
+  
+
   const handleChangeChat = (e) => {
     setChatF(e.target.value);
   };
@@ -69,12 +71,13 @@ export default function ChatGlobal(props) {
     }
   };
   const handleSendMessage = () => {
-    if (chatF) {
+    if (chatF !== "") {
       socket?.emit("chat", {
         type: "Private",
         toId: contacter.id,
         content: chatF,
       });
+
       setChatF("");
     }
   };
@@ -106,7 +109,7 @@ export default function ChatGlobal(props) {
       handleClose();
       handleShow();
     });
-    
+   
     return () => {
       // socket?.off()
     }

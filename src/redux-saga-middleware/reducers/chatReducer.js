@@ -86,7 +86,7 @@ const chatReducer = (
       return {
         ...state,
         chatWorld: payload 
-        // && payload?.length > 0 ? payload?.reverse() : [],
+        && payload?.length > 0 ? payload?.reverse() : [],
       };
     }
     case "UPDATE_CONTACTER_USERNAME": {

@@ -50,7 +50,9 @@ export default function Signup(props) {
       username.includes(" ") ||
       username.length > 15 ||
       password.length > 15 ||
-      c_password.length > 15
+      c_password.length > 15 ||
+      password.length < 6 ||
+      c_password.length < 6
     ) {
       setDisabledBtn(true);
     } else {
@@ -251,6 +253,9 @@ export default function Signup(props) {
           {password && password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
+          {password && password.length < 6 && (
+            <span className="text-danger">Password must be 6 characters or more</span>
+          )}
         </FormControl>
         <FormControl
           variant="standard"
@@ -305,6 +310,9 @@ export default function Signup(props) {
           ) : null}
           {c_password && c_password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
+          )}
+          {c_password && c_password.length < 6 && (
+            <span className="text-danger">Password must be 6 characters or more</span>
           )}
         </FormControl>
         <FormControl

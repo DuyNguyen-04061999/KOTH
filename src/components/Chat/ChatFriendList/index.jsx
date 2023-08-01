@@ -35,38 +35,36 @@ export default function ChatFriendList() {
   const { width, height } = useWindowDimensions();
   const [searchFeild, setSearchFeild] = useState("");
   const { friendList } = useSelector((state) => state.chatReducer);
-  
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
-  
+
   const handleChangeSearchChat = (e) => {
     setSearchFeild(e.target.value);
   };
 
   const [listFriend, setListFriend] = useState([]);
-
   useEffect(() => {
-    setListFriend(friendList);
+      setListFriend(friendList);
   }, [friendList]);
 
   useEffect(() => {
-    const list = friendList?.filter(i => i?.userName.includes(searchFeild) || i?.userName.includes(searchFeild?.toLowerCase()))
+    const list = friendList?.filter(
+      (i) =>
+        i?.userName.includes(searchFeild) ||
+        i?.userName.includes(searchFeild?.toLowerCase())
+    );
     setListFriend(list);
-    
   }, [searchFeild, friendList]);
 
   const handleSubmitSearchChat = (e) => {
     e.preventDefault();
-    // const list = friendList?.filter(i => i?.userName.includes(searchFeild) || i?.userName.includes(searchFeild?.toLowerCase()))
-    // setListFriend(list);
   };
   useEffect(() => {}, [token]);
-
   const renderListFriend1 = () => {
     return (
       <>
-        {friendList && friendList?.length > 0 ? (
-          friendList.map((e, index) => {
+        {listFriend && listFriend?.length > 0 ? (
+          listFriend.map((e, index) => {
             return (
               <Box
                 key={index}
@@ -159,18 +157,30 @@ export default function ChatFriendList() {
                 className="ms-2 me-2"
               />
               <Box display={"flex"} flexDirection={"column"}>
-                <h5 style={{ color: "#535f92", fontWeight: "bolder" , fontSize:"15px"}}>
+                <h5
+                  style={{
+                    color: "#535f92",
+                    fontWeight: "bolder",
+                    fontSize: "15px",
+                  }}
+                >
                   {e?.userName}
                 </h5>
                 <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
-                  {e?.receiveMessages?.map((e_m) => e_m?.messageContent.slice(0,15))}
+                  {e?.receiveMessages?.map((e_m) =>
+                    e_m?.messageContent.slice(0, 15)
+                  )}
                 </span>
               </Box>
             </Box>
             <Box>
               <span
                 className="ms-2"
-                style={{ color: "#535f92", fontWeight: "500", fontSize:"12px" }}
+                style={{
+                  color: "#535f92",
+                  fontWeight: "500",
+                  fontSize: "12px",
+                }}
               >
                 {moment(e?.createdAt).format("HH:mm")}
               </span>
