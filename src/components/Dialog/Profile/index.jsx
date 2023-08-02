@@ -29,11 +29,14 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { userName, token } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
-  const { id, email, refCode, 
-    // phone, 
-    userNameProfile, avatarUrl } = useSelector(
-    (state) => state.profileReducer
-  );
+  const {
+    id,
+    email,
+    refCode,
+    // phone,
+    userNameProfile,
+    avatarUrl,
+  } = useSelector((state) => state.profileReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -83,6 +86,7 @@ export default function DialogProfile(props) {
                     fontWeight: "bold",
                     display: "flex",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
                 >
                   <AddFriendIcon className="me-1 pb-1" />
@@ -100,6 +104,7 @@ export default function DialogProfile(props) {
                     width: "40%",
                     borderRadius: 1,
                     fontWeight: "bold",
+                    cursor: "pointer",
                   }}
                 >
                   <AddFriendIcon className="me-1 pb-1" />
@@ -392,7 +397,7 @@ export default function DialogProfile(props) {
             sx={{
               backgroundColor: "#291e3a",
               width: width < 576 ? "100%" : "490px",
-              height: height > 800 ? 800 : "auto"
+              height: height > 800 ? 800 : "auto",
             }}
           >
             <Box
@@ -429,7 +434,7 @@ export default function DialogProfile(props) {
                 }}
               />
             </Box>
-            <Box className="box-body text-white" sx={{height:"100vh"}}>
+            <Box className="box-body text-white" sx={{ height: "100vh" }}>
               {tab === 0 ? (
                 renderUserInfo()
               ) : (

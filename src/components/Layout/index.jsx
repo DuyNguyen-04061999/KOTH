@@ -120,12 +120,10 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
-  const { 
-    isGameLogDialog, 
-    // listGame 
-  } = useSelector(
-    (state) => state.gameReducer
-  );
+  const {
+    isGameLogDialog,
+    // listGame
+  } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const [showChat] = useState(true);
   const { children } = props;
@@ -352,7 +350,7 @@ export default function Layout(props) {
           </Box>
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
-          </AvatarGroup> 
+          </AvatarGroup>
           <div className="icon-toggle">
             {chatPopup === false ? (
               <Box

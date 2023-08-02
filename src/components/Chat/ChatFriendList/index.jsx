@@ -45,7 +45,7 @@ export default function ChatFriendList() {
   const [listFriend, setListFriend] = useState([]);
   console.log(listFriend);
   useEffect(() => {
-      setListFriend(friendList);
+    setListFriend(friendList);
   }, [friendList]);
 
   useEffect(() => {
@@ -122,6 +122,7 @@ export default function ChatFriendList() {
       </>
     );
   };
+  console.log("listFriend: ", listFriend);
   const renderListFriend = listFriend?.map((e, index) => {
     return (
       <Box key={index}>
@@ -183,7 +184,11 @@ export default function ChatFriendList() {
                   fontSize: "12px",
                 }}
               >
-                {moment(e?.updatedAt).format("HH:mm")}
+                {e?.receiveMessages?.length > 0
+                  ? e?.receiveMessages?.map((e_m) =>
+                      moment(e_m?.updatedAt).format("HH:mm")
+                    )
+                  : moment(e?._gg_koth_user_friends?.createdAt).format("HH:mm")}
               </span>
             </Box>
           </Box>
