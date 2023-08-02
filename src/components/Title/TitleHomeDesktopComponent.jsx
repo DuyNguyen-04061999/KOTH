@@ -3,7 +3,13 @@ import { images2 } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function TitleHomeDesktopComponent(props) {
-  const { title, icon, noicon, overBg, noSeeAll, noBg } = props;
+  const { 
+    title, 
+    icon, 
+    noicon,
+    // overBg, 
+    noSeeAll, noBg 
+  } = props;
   const { width } = useWindowDimensions();
 
   return (
