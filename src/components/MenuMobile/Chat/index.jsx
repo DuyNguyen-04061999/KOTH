@@ -83,7 +83,7 @@ export default function DialogChat(props) {
       }
     }
   };
- 
+
   const handleOnClickSendMessageWorld = () => {
     if (token === null || token === "") {
       dispatch(toggleLoginDialog());
