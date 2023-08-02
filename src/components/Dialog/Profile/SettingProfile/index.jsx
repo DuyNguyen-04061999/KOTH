@@ -63,7 +63,7 @@ export default function SettingProfile({ closePopup }) {
         });
       }
       dispatch(updateProfile());
-      closePopup();
+      // closePopup();
     }
   };
 

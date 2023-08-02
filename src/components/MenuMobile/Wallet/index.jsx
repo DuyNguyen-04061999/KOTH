@@ -154,6 +154,14 @@ export default function DialogWallet(props) {
 
     socket?.on("getListWithdrawSuccess", async (data) => {});
 
+    socket?.on("warning", async (data) => {
+      setLoadingDeposit(false)
+    });
+
+    socket?.on("error", async (data) => {
+      setLoadingDeposit(false)
+    });
+
     return () => {
       // socket?.off()
     };
@@ -393,13 +401,13 @@ export default function DialogWallet(props) {
                   }}
                   disabled={isLoadingDeposit}
                   onClick={() => {
-                    if (amountDeposit > 0) {
+                    if (amountDeposit >= 50 && amountDeposit <= 5000) {
                       setLoadingDeposit(true);
                       setTimeout(() => {
                         socket?.emit("depositRequest", { amountDeposit });
                       }, 2000);
                     } else {
-                      dispatch(showAlert("error", "Please enter amount > 0"));
+                      dispatch(showAlert("error", "Please enter amount >= 50 and <= 5000"));
                     }
                   }}
                 >
@@ -795,7 +803,6 @@ export default function DialogWallet(props) {
           sx={{
             width: "100%",
             height: "100px",
-            position: "absolute",
             bottom: "0px",
             display: "flex",
             flexDirection: "column",

@@ -22,7 +22,9 @@ export default function TransactionDetailPage() {
     }, [])
     
     useEffect(() => {
-      socket?.emit("checkTransactionId", {  transactionId: id })
+      setTimeout(() => {
+        socket?.emit("checkTransactionId", {  transactionId: id })
+      }, 5000)
     }, [id, socket])
 
     useEffect(() => {
@@ -48,24 +50,26 @@ export default function TransactionDetailPage() {
             let contract = new web3.eth.Contract(JSON.parse(transaction?.transactionAbi), transaction?.transactionContract)
             let depositAmount = (transaction?.transactionQuantity) + "000000000000000000";
       
-            let result = await contract.methods.transfer(transaction?.transactionWallet, depositAmount).send({ from: account })
+            if(!transaction?.transactionScanQr) {
+              let result = await contract.methods.transfer(transaction?.transactionWallet, depositAmount).send({ from: account })
       
-            if(result) {
-                socket?.emit("updateDepositTransactionQr", {
-                  type: "confirm",
-                  transactionId: id,
-                  tid: id,
-                  txh: result?.transactionHash,
-                  userId: query?.get("token")
-                })
-                return result;
-              } else {
-                socket?.emit("updateDepositTransactionQr", {
-                  type: "error",
-                  transactionId: id,
-                  userId: query?.get("token")
-                })
-              }
+              if(result) {
+                  socket?.emit("updateDepositTransactionQr", {
+                    type: "confirm",
+                    transactionId: id,
+                    tid: id,
+                    txh: result?.transactionHash,
+                    userId: query?.get("token")
+                  })
+                  return result;
+                } else {
+                  socket?.emit("updateDepositTransactionQr", {
+                    type: "error",
+                    transactionId: id,
+                    userId: query?.get("token")
+                  })
+                }
+            }
               setProcess(false)
           } catch (error) {
             socket?.emit("updateDepositTransactionQr", {
@@ -80,7 +84,9 @@ export default function TransactionDetailPage() {
       }
       
       socket?.on("checkTransactionIdSuccess", async (transaction) => {
-        await sendToken(transaction)
+        if(!transaction?.transactionScanQr) {
+          await sendToken(transaction)
+        }
       })
 
       socket?.on("updateDepositTransactionQrSuccess", async () => {

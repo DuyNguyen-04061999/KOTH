@@ -28,6 +28,12 @@ export default function MetaMaskDialog() {
     }, [])
 
     useEffect(() => {
+        if(isMetamaskDialog) {
+          setCount(60)
+        }
+    }, [isMetamaskDialog])
+
+    useEffect(() => {
       socket?.on("closeMetaMaskQr", async () => {
         dispatch(toggleMetaMaskDialog())
       })
@@ -38,12 +44,20 @@ export default function MetaMaskDialog() {
     }, [socket, dispatch])
 
     useEffect(() => {
-      const intervalId = setInterval(() => {
-        setCount(prevCount => prevCount - 1);
-      }, 1000);
-    
-      return () => clearInterval(intervalId);
-    }, []);
+      if(menuK && menuK === 1) {
+        const intervalId = setInterval(() => {
+          setCount(prevCount => {
+            if(prevCount > 0) {
+              return prevCount - 1
+            } else {
+              return 0
+            }
+          });
+        }, 1000);
+      
+        return () => clearInterval(intervalId);
+      }
+    }, [menuK]);
 
     const list = [
       {
@@ -139,24 +153,29 @@ export default function MetaMaskDialog() {
                   </Box>
               </Box>
             </Box>
-          ) : (
+          ) : count >= 1 ? (
             <Box component={"div"}>
               <Box className="text-center text-white" component={"div"}>
                   Qr code will be lost after <span className='text-info'> {count}s</span>
               </Box>
-              <Box component={"div"} className='d-flex justify-content-center' sx={{
-                color: '#857cab'
-              }}>
-                If on mobile click <a className='ms-2' href={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`} rel='noreferrer' target='_blank'> here</a>
-              </Box>
-              <Box hidden={count <= 1} component={"div"} className='d-flex justify-content-center'>
-                <QRCode
-                  size={1000}
-                  style={{ height: "auto", maxWidth: "50%", width: "100%", marginTop: "10px" }}
-                  value={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`}
-                  viewBox={`0 0 256 256`}
-                />
-              </Box>
+              {width < 576 && (
+                <Box component={"div"} className='d-flex justify-content-center' sx={{
+                  color: '#857cab'
+                }}>
+                  If on mobile click <a className='ms-2' href={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`} rel='noreferrer' target='_blank'> here</a>
+                </Box>
+              )}
+              {count >= 1 && (
+                <Box hidden={count < 1} component={"div"} className={count >= 1 ? 'd-flex justify-content-center' : "d-none"}>
+                  <QRCode
+                    size={1000}
+                    style={{ height: "auto", maxWidth: "50%", width: "100%", marginTop: "10px" }}
+                    value={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`}
+                    viewBox={`0 0 256 256`}
+                  />
+                </Box>
+              )}
+              
               <Box component={"div"} className='mt-3 mb-5 pt-1'>
                 <Box className="mt-2" component={"div"}>
                     <Typography className='' sx={{ color: '#857cab', fontSize: '12px' }}>Scan to connect and sign with</Typography>
@@ -164,7 +183,7 @@ export default function MetaMaskDialog() {
                 </Box>
               </Box>
             </Box>
-          )}
+          ) : <Box className="text-white text-center mb-4">Qr Code Expired !</Box>}
         </Box>
       </Dialog>
     )
