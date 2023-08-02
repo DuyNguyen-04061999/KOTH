@@ -71,11 +71,10 @@ export default function DialogSearch(props) {
       >
         <Box
           sx={{
-            backgroundImage: `url(${images.BG})`,
-            backgroundSize: "cover",
             padding: 1.5,
             width: "100%",
             height: "100%",
+            backgroundColor:"#1c191e"
           }}
         >
           {/* ------------------------ */}
@@ -88,7 +87,7 @@ export default function DialogSearch(props) {
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   onKeyDown={handleOnKeyDownEnter}
-                  placeholder="Want to find something ?"
+                  placeholder="Search"
                 />
                 <button
                   type="submit"

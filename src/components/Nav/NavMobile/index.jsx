@@ -15,19 +15,19 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function NavMobile() {
   const { token, isLoginDialog } = useSelector((state) => state.authReducer);
   const { chatWorld } = useSelector((state) => state.chatReducer);
-  const {isProfileDialog} = useSelector((state) => state.profileReducer)
+  const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const [openMess, setOpenMess] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const navigate = useNavigate();
-  const [hideNavMobile,setHideNavMobile] = useState("block");
+  const [hideNavMobile, setHideNavMobile] = useState("block");
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
-    if(isProfileDialog === true) {
-      setHideNavMobile("none")
+    if (isProfileDialog === true) {
+      setHideNavMobile("none");
     } else if (isProfileDialog === false) {
-      setHideNavMobile("block")
+      setHideNavMobile("block");
     }
   }, [isProfileDialog]);
   const pathname = useParams();
@@ -73,7 +73,9 @@ export default function NavMobile() {
                   >
                     <img
                       src={
-                        pathname.type && pathname.type === "favorite"
+                        pathname.type &&
+                        pathname.type === "favorite" &&
+                        !openSearch
                           ? popup.FavoriteActiveIcon
                           : popup.mygame
                       }
@@ -173,6 +175,7 @@ export default function NavMobile() {
             <MenuSearch
               open={openSearch}
               handleShowSearch={() => {
+                navigate("/home")
                 setOpenSearch(false);
               }}
               handleColor={() => {}}

@@ -22,15 +22,15 @@ export default function TitleHomeDesktopComponent(props) {
           {!noBg && (
             <div
               className="position-absolute"
-              style={{
-                backgroundImage: overBg ? `url(${overBg})` : "",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
-                backgroundPosition: "left top",
-                width: "100%",
-                height: "100%",
-                bottom: width > 576 ? 28 : 15,
-              }}
+              // style={{
+              //   backgroundImage: overBg ? `url(${overBg})` : "",
+              //   backgroundRepeat: "no-repeat",
+              //   backgroundSize: "contain",
+              //   backgroundPosition: "left top",
+              //   width: "100%",
+              //   height: "100%",
+              //   bottom: width > 576 ? 28 : 15,
+              // }}
             ></div>
           )}
           {!noicon && (
@@ -39,13 +39,13 @@ export default function TitleHomeDesktopComponent(props) {
                 hidden={noicon ? noicon : false}
                 src={icon ? icon : ""}
                 alt="Battle Icon"
-                className="icon-animate img-fluid"
+                className="icon-animate img-fluid me-2"
                 height={width > 576 ? 28 : 20}
                 width={width > 576 ? 28 : 20}
               />
             </div>
           )}
-          <div className="mx-3">
+          <div className="">
             <div className="position-relative">
               <img
                 src={images2.popuptext}
@@ -55,7 +55,7 @@ export default function TitleHomeDesktopComponent(props) {
               />
             </div>
             <div
-              className="position-absolute mx-2"
+              className="position-absolute"
               style={{
                 top: 0,
               }}

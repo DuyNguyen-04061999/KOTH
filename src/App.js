@@ -85,7 +85,6 @@ function App() {
     }
   });
 
-  
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
 
@@ -138,6 +137,7 @@ function App() {
       });
 
       socket?.on("chatSuccess", (data) => {
+        socket.emit("listFriend");
         store.dispatch(updateChatWorld(data));
       });
 
@@ -178,7 +178,6 @@ function App() {
           store.dispatch(showAlert("success", message));
         } else if (type === "sameAccount") {
           store.dispatch(showAlert("error", message));
-          
         }
       });
 

@@ -230,9 +230,6 @@ export default function SelectRoom() {
   const handleClose1 = () => {
     setAnchorEl1(null);
   };
-  console.log(roomDetailInfo?.membersInRoom &&
-    roomDetailInfo?.membersInRoom?.length > 0 &&
-    JSON.parse(roomDetailInfo?.membersInRoom))
   const handleOnClickLikeGame = () => {
     if (likeGame === false && disLikeGame === false) {
       socket.emit("handleLikeGame", { gameId: detailGame?.id, type: true });
@@ -351,7 +348,6 @@ export default function SelectRoom() {
           });
           if (Number(userId) === Number(data?.userId)) {
             dispatch(setWaitingNav());
-            console.log("1")
             setroomDetailInfo(data);
             setRoomIdSelect(data?.id);
           }
@@ -368,7 +364,6 @@ export default function SelectRoom() {
         if (username) {
           dispatch(setWaitingNav());
           setRoomIdSelect(data?.id);
-          console.log("2")
           setroomDetailInfo(data);
           setListRoom((prevState) => {
             let dt = [...prevState];
@@ -396,11 +391,9 @@ export default function SelectRoom() {
         }
       }
     );
-
     socket?.on(`joinRoomGame${detailGame?.id}Success`, (data, roomId) => {
       if (roomId === roomIdSelect) {
         dispatch(setWaitingNav());
-        console.log("3")
         setroomDetailInfo(data);
         setListRoom((prevState) => {
           let dt = [...prevState];
@@ -431,15 +424,14 @@ export default function SelectRoom() {
     socket?.on(
       `readyRoom${roomIdSelect}Game${detailGame?.id}Success`,
       (data, roomId) => {
-        console.log("4")
         setroomDetailInfo(data);
       }
     );
 
-    socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
+    socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId,id) => {
       setChat([]);
+      console.log("userId: ",id)
       if (roomId === roomIdSelect) {
-        console.log("5")
         setroomDetailInfo(data);
         if (
           !(
@@ -450,7 +442,9 @@ export default function SelectRoom() {
             ).length > 0
           )
         ) {
-          setRoomIdSelect(0);
+          if(id===userId){         
+             setRoomIdSelect(0);
+          }
         }
         setListRoom((prevState) => {
           let dt = [...prevState];
@@ -522,7 +516,6 @@ export default function SelectRoom() {
         dispatch(setSelectNav());
       }
     });
-
     socket?.on(`kickOut${detailGame?.id}Success`, (room, roomId) => {
       setListRoom((prevState) => {
         let dt = [...prevState];
@@ -536,7 +529,6 @@ export default function SelectRoom() {
         }
       });
       if (roomId === roomIdSelect) {
-        console.log("7")
         setroomDetailInfo(room);
       }
     });
@@ -635,9 +627,19 @@ export default function SelectRoom() {
   };
 
   useEffect(() => {
-    console.log("8")
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
+            setListRoom((prevState) => {
+          let dt = [...prevState];
+          if (checkExistData(state?.roomInfo?.id, prevState) !== -1) {
+            let item = { ...dt[checkExistData(state?.roomInfo?.id, prevState)] };
+            item.membersInRoom = state?.roomInfo?.membersInRoom;
+            dt[checkExistData(state?.roomInfo?.id, prevState)] = item;
+            return dt;
+          } else {
+            return [...prevState];
+          }
+        });
   }, [state]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const reportChange = useCallback(
@@ -2246,7 +2248,7 @@ export default function SelectRoom() {
                           width: "100px",
                           height: "100px",
                           borderRadius: "50%",
-                          marginTop: "6px",
+                          // marginTop: "6px",
                         }}
                         src={
                           roomDetailInfo?.membersInRoom &&
@@ -3190,14 +3192,19 @@ export default function SelectRoom() {
                     flexDirection: "column",
                   }}
                 >
-                  <p
-                    style={{
-                      color: "#8985b1",
-                      fontSize: getFontSizeDependOnWidth(width),
-                    }}
-                  >
-                    Waiting for people to join...
-                  </p>
+                  {roomDetailInfo?.membersInRoom &&
+                    roomDetailInfo?.membersInRoom?.length > 0 &&
+                    JSON.parse(roomDetailInfo?.membersInRoom).length <
+                      roomDetailInfo?.roomCountMember && (
+                      <p
+                        style={{
+                          color: "#8985b1",
+                          fontSize: getFontSizeDependOnWidth(width),
+                        }}
+                      >
+                        Waiting for people to join...
+                      </p>
+                    )}
                   <Box
                     sx={{
                       display: "flex",

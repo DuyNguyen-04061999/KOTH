@@ -68,18 +68,21 @@ export const AvatarPicker = (props) => {
       dispatch(showAlert("error", "Please attach correct format of file"));
     }
 
-    const fileSizeInBytes = imageType.size;
-    const fileSizeInMB = fileSizeInBytes / (1024 * 1024); // Convert bytes to MB
+    // const fileSizeInBytes = imageType.size;
+    // const fileSizeInMB = fileSizeInBytes / (1024 * 1024); // Convert bytes to MB
 
-    if (fileSizeInMB < 100) {
-      // File size is less than 100MB
-      // You can perform further actions with the file, like uploading it, etc.
-    } else {
-      // File size exceeds 100MB
-      dispatch(
-        showAlert("error", "The image size is too large, please choose again")
-      );
-    }
+    // if (fileSizeInMB < 100) {
+    //   // File size is less than 100MB
+    //   // You can perform further actions with the file, like uploading it, etc.
+    //   dispatch(
+    //     showAlert("success", "good")
+    //   );
+    // } else {
+    //   // File size exceeds 100MB
+    //   dispatch(
+    //     showAlert("error", "The image size is too large, please choose again")
+    //   );
+    // }
   };
 
   return (

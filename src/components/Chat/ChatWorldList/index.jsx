@@ -90,8 +90,8 @@ export default function ChatWorldList() {
   useEffect(() => {
     socket?.on(`joinRoomGameFromMessageSuccess`, (room, roomId) => {
       // console.log("joinRoomGameFromMessageSuccess: ",JSON.parse(room?.membersInRoom));
-        dispatch(setWaitingNav());
-        navigate(`/selectroom/${gameId}`, { state: { roomInfo: room } });
+      dispatch(setWaitingNav());
+      navigate(`/selectroom/${gameId}`, { state: { roomInfo: room } });
     });
 
     return () => {
