@@ -43,6 +43,7 @@ export default function ChatFriendList() {
   };
 
   const [listFriend, setListFriend] = useState([]);
+  console.log(listFriend);
   useEffect(() => {
       setListFriend(friendList);
   }, [friendList]);
@@ -182,7 +183,7 @@ export default function ChatFriendList() {
                   fontSize: "12px",
                 }}
               >
-                {moment(e?.createdAt).format("HH:mm")}
+                {moment(e?.updatedAt).format("HH:mm")}
               </span>
             </Box>
           </Box>

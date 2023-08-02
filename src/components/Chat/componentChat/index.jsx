@@ -197,7 +197,7 @@ export default function ComponentChat() {
                         fontSize: "12px",
                       }}
                     >
-                      {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
+                      {e?.createdAt && moment(e?.createdAt).format("H:mm a")}
                     </span>
                   </Box>
                   <Box

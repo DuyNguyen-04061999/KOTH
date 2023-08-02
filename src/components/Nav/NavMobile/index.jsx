@@ -173,6 +173,7 @@ export default function NavMobile() {
             <MenuSearch
               open={openSearch}
               handleShowSearch={() => {
+                navigate("/home")
                 setOpenSearch(false);
               }}
               handleColor={() => {}}

@@ -330,7 +330,7 @@ export default function GameLobbyDetailInfo() {
               alignItems: "center",
             }}
           >
-            <span>PLAY NOW</span>
+            PLAY NOW
             <div className="arrow ms-2">››</div>
           </button>
         </div>
