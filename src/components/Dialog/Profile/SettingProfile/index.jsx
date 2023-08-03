@@ -54,16 +54,19 @@ export default function SettingProfile({ closePopup }) {
           lastName: lName,
           email: emailAddress,
         });
+        dispatch(updateProfile());
+        closePopup();
       } else {
         socket?.emit("updateProfile", {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
+          
         });
+        dispatch(updateProfile());
+        closePopup();
       }
-      dispatch(updateProfile());
-      // closePopup();
     }
   };
 

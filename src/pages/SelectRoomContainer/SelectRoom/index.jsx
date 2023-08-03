@@ -44,6 +44,7 @@ import styled from "styled-components";
 import PopupInviteFriend from "./PopupInviteFriend";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
+import PopUpReward from "../PopUpReward";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -104,6 +105,7 @@ export default function SelectRoom() {
   const [continueGame, setContinueGame] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
+  const [showReward, setShowReward] = useState(false);
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
   const filterArray = [0, 100, 200, 500];
@@ -432,9 +434,9 @@ export default function SelectRoom() {
       }
     );
 
-    socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId,id) => {
+    socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId, id) => {
       setChat([]);
-      console.log("userId: ",id)
+      console.log("userId: ", id);
       if (roomId === roomIdSelect) {
         setroomDetailInfo(data);
         if (
@@ -446,8 +448,8 @@ export default function SelectRoom() {
             ).length > 0
           )
         ) {
-          if(id===userId){         
-             setRoomIdSelect(0);
+          if (id === userId) {
+            setRoomIdSelect(0);
           }
         }
         setListRoom((prevState) => {
@@ -633,17 +635,17 @@ export default function SelectRoom() {
   useEffect(() => {
     state?.roomInfo && setroomDetailInfo(state?.roomInfo);
     setRoomIdSelect(state?.roomInfo?.id);
-            setListRoom((prevState) => {
-          let dt = [...prevState];
-          if (checkExistData(state?.roomInfo?.id, prevState) !== -1) {
-            let item = { ...dt[checkExistData(state?.roomInfo?.id, prevState)] };
-            item.membersInRoom = state?.roomInfo?.membersInRoom;
-            dt[checkExistData(state?.roomInfo?.id, prevState)] = item;
-            return dt;
-          } else {
-            return [...prevState];
-          }
-        });
+    setListRoom((prevState) => {
+      let dt = [...prevState];
+      if (checkExistData(state?.roomInfo?.id, prevState) !== -1) {
+        let item = { ...dt[checkExistData(state?.roomInfo?.id, prevState)] };
+        item.membersInRoom = state?.roomInfo?.membersInRoom;
+        dt[checkExistData(state?.roomInfo?.id, prevState)] = item;
+        return dt;
+      } else {
+        return [...prevState];
+      }
+    });
   }, [state]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const reportChange = useCallback(
@@ -2249,8 +2251,8 @@ export default function SelectRoom() {
                       <img
                         alt="..."
                         style={{
-                          width: "100px",
-                          height: "100px",
+                          width: width> 576 ? "100px" : "50px",
+                              height:  width> 576 ? "100px" : "50px" ,
                           borderRadius: "50%",
                           // marginTop: "6px",
                         }}
@@ -2483,10 +2485,10 @@ export default function SelectRoom() {
                           <img
                             alt="..."
                             style={{
-                              width: "100px",
-                              height: "100px",
+                              width: width> 576 ? "100px" : "50px",
+                              height:  width> 576 ? "100px" : "50px" ,
                               borderRadius: "50%",
-                              marginTop: "6px",
+                              // marginTop: "6px",
                               cursor: "pointer",
                             }}
                             src={
@@ -3241,7 +3243,7 @@ export default function SelectRoom() {
                         alt="..."
                         style={{
                           width: parseFloat(width / 4.5),
-                          height: "auto",
+                          height: "80px",
                           borderRadius: "50%",
                           marginTop: "6px",
                         }}
@@ -3344,7 +3346,7 @@ export default function SelectRoom() {
                             alt="..."
                             style={{
                               width: parseFloat(width / 4.5),
-                              height: "auto",
+                              height: "80px",
                               borderRadius: "50%",
                             }}
                             src={
@@ -3418,7 +3420,7 @@ export default function SelectRoom() {
                           alt="..."
                           style={{
                             width: parseFloat(width / 4.5),
-                            height: "auto",
+                            height: "80px",
                             borderRadius: "50%",
                           }}
                           src={images.inviteFriendMobile}
@@ -3794,6 +3796,12 @@ export default function SelectRoom() {
           )}
         </>
       )}
+      <PopUpReward
+        open={showReward}
+        handleOnCloseReward={() => {
+          setShowReward(false);
+        }}
+      />
     </div>
   );
 }

@@ -14,7 +14,8 @@ import paymentReducer from "../reducers/paymentReducer";
 import loadingReducer from "../reducers/loadingReducer";
 import luckyWheelReducer from "../reducers/luckyWheelReducer";
 import roomReducer from "../reducers/roomReducer";
-import tournamentReducer from "../reducers/tournamentReducer"
+import tournamentReducer from "../reducers/tournamentReducer";
+import toastReducer from "../reducers/toastReducer";
 let rootReducer = combineReducers({
   alertReducer,
   authReducer,
@@ -27,7 +28,8 @@ let rootReducer = combineReducers({
   loadingReducer,
   luckyWheelReducer,
   roomReducer,
-  tournamentReducer
+  tournamentReducer,
+  toastReducer,
 });
 
 const persistConfig = {

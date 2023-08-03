@@ -31,7 +31,6 @@ export default function ComponentChat() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-
   useEffect(() => {
     setFriendMess(
       chatWorld?.filter(
