@@ -716,7 +716,7 @@ export default function Dialoglg() {
                   badgeContent=""
                   variant="dot"
                 >
-                  {userAvatar === null ? (
+                  {/* {userAvatar === null ? (
                     <img
                       style={{
                         borderRadius: 50,
@@ -727,7 +727,7 @@ export default function Dialoglg() {
                       width={40}
                       className="ignin ms-2 me-2"
                     />
-                  ) : (
+                  ) : ( */}
                     <img
                       style={{
                         borderRadius: 50,
@@ -744,7 +744,7 @@ export default function Dialoglg() {
                       width={40}
                       className="ava-signin ms-2 me-2"
                     />
-                  )}
+                  {/* )} */}
                 </Badge>
               </Dropdown.Toggle>
               <Dropdown.Menu

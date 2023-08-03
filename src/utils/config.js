@@ -4,7 +4,7 @@ export const getFontSizeDependOnWidth = (width) => {
   } else if (width > 600 && width < 1200) {
     return "16px";
   } else if (width < 600) {
-    return "12px";
+    return "10px";
   }
 };
 export const getFontSizeButtonDependOnWidth = (width) => {

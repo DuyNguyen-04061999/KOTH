@@ -43,7 +43,6 @@ export default function ChatFriendList() {
   };
 
   const [listFriend, setListFriend] = useState([]);
-  console.log(listFriend);
   useEffect(() => {
     setListFriend(friendList);
   }, [friendList]);
@@ -122,7 +121,6 @@ export default function ChatFriendList() {
       </>
     );
   };
-  console.log("listFriend: ", listFriend);
   const renderListFriend = listFriend?.map((e, index) => {
     return (
       <Box key={index}>
@@ -170,7 +168,7 @@ export default function ChatFriendList() {
                 </h5>
                 <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
                   {e?.receiveMessages?.map((e_m) =>
-                    e_m?.messageContent.slice(0, 15)
+                    <span>{e_m?.messageContent.slice(0,15)}</span>
                   )}
                 </span>
               </Box>

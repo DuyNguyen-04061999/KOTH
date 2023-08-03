@@ -5,8 +5,8 @@ import { images } from "../../../utils/images";
 import SliderLayout from "../../Slider";
 import "./index.scss";
 import SearchIcon from "@mui/icons-material/Search";
-import { useDispatch, useSelector } from "react-redux";
-import { getSearchGame } from "../../../redux-saga-middleware/reducers/gameReducer";
+import {  useSelector } from "react-redux";
+// import { getSearchGame } from "../../../redux-saga-middleware/reducers/gameReducer";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -15,11 +15,11 @@ const Transition = forwardRef(function Transition(props, ref) {
 export default function DialogSearch(props) {
   const { open, handleShowSearch, handleColor } = props;
   const { listGame } = useSelector((state) => state.gameReducer);
-  const dispatch = useDispatch();
-  const [
-    search,
-    // setSearch
-  ] = useState("");
+  // const dispatch = useDispatch();
+  // const [
+  //   search,
+  //   // setSearch
+  // ] = useState("");
 
   // const handleChange = (e) => {
   //   setSearch(e.target.value);
@@ -27,7 +27,14 @@ export default function DialogSearch(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getSearchGame(search));
+    const lowercaseSearchValue = searchValue.toLowerCase();
+
+    // Filter the gamesArray based on the lowercaseSearchValue and gameName
+    const filteredResults = listGame?.filter((game) =>
+      game?.gameName.toLowerCase()?.includes(lowercaseSearchValue)
+    );
+
+    setSearchResults(filteredResults);
   };
 
   const [searchValue, setSearchValue] = useState("");

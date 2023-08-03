@@ -2247,8 +2247,8 @@ export default function SelectRoom() {
                       <img
                         alt="..."
                         style={{
-                          width: "100px",
-                          height: "100px",
+                          width: width> 576 ? "100px" : "50px",
+                              height:  width> 576 ? "100px" : "50px" ,
                           borderRadius: "50%",
                           // marginTop: "6px",
                         }}
@@ -2481,10 +2481,10 @@ export default function SelectRoom() {
                           <img
                             alt="..."
                             style={{
-                              width: "100px",
-                              height: "100px",
+                              width: width> 576 ? "100px" : "50px",
+                              height:  width> 576 ? "100px" : "50px" ,
                               borderRadius: "50%",
-                              marginTop: "6px",
+                              // marginTop: "6px",
                               cursor: "pointer",
                             }}
                             src={
@@ -3239,7 +3239,7 @@ export default function SelectRoom() {
                         alt="..."
                         style={{
                           width: parseFloat(width / 4.5),
-                          height: "auto",
+                          height: "80px",
                           borderRadius: "50%",
                           marginTop: "6px",
                         }}
@@ -3342,7 +3342,7 @@ export default function SelectRoom() {
                             alt="..."
                             style={{
                               width: parseFloat(width / 4.5),
-                              height: "auto",
+                              height: "80px",
                               borderRadius: "50%",
                             }}
                             src={
@@ -3416,7 +3416,7 @@ export default function SelectRoom() {
                           alt="..."
                           style={{
                             width: parseFloat(width / 4.5),
-                            height: "auto",
+                            height: "80px",
                             borderRadius: "50%",
                           }}
                           src={images.inviteFriendMobile}

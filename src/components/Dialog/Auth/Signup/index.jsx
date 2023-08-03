@@ -23,6 +23,7 @@ export default function Signup(props) {
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
   const { width } = useWindowDimensions();
+  const [passSai,setPassSai] = useState(false)
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -67,18 +68,23 @@ export default function Signup(props) {
 
   //------------------------------------------------------------------
   const sendRegister = () => {
-    socket?.emit("register", {
-      username: username,
-      password: password,
-      // firstName: firstName,
-      // lastName: lastName,
-      email: email,
-      phone: phone,
-      ref: ref,
-      c_password: c_password,
-      gender: gender,
-    });
-    socket?.on("registerError", (data) => {});
+    if(c_password !== password) {
+      setPassSai(true)
+    } else {
+      setPassSai(false)
+      socket?.emit("register", {
+        username: username,
+        password: password,
+        // firstName: firstName,
+        // lastName: lastName,
+        email: email,
+        phone: phone,
+        ref: ref,
+        c_password: c_password,
+        gender: gender,
+      });
+    }
+    // socket?.on("registerError", (data) => {});
   };
   return (
     <Box className="signup">
@@ -305,14 +311,16 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
-          {c_password !== password && blur === true ? (
-            <span className="text-danger">Password does not match</span>
-          ) : null}
           {c_password && c_password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
           {c_password && c_password.length < 6 && (
             <span className="text-danger">Password must be 6 characters or more</span>
+          )}
+           {passSai === true ? (
+            <span className="text-danger">pass not march</span>
+          ) : (
+            ""
           )}
         </FormControl>
         <FormControl
