@@ -41,6 +41,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
 import Gold from "../../../Gold/Gold";
+import { showToast } from "../../../../redux-saga-middleware/reducers/toastReducer";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -59,7 +60,12 @@ function SimpleDialog(props) {
     setUsername("");
     setPassword("");
   };
-
+  useEffect(() => {
+    socket?.on("loginError", (data) => {
+      dispatch(showToast("error", data));
+      console.log("Login Error: ", data);
+    });
+  }, [socket, dispatch]);
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -77,7 +83,7 @@ function SimpleDialog(props) {
       username: username?.toLowerCase(),
       password: password,
     });
-    dispatch(toggleLoginDialog());
+    // dispatch(toggleLoginDialog());
   };
   return (
     <>
@@ -305,6 +311,7 @@ function SimpleDialog(props) {
               display: "flex",
               flexDirection: "row",
               maxWidth: "820px !important",
+              position: "relative",
             },
           }}
         >
@@ -647,7 +654,7 @@ export default function Dialoglg() {
                   }}
                   className="cursor-pointer d-flex doge-coin "
                 >
-                  <Gold value={userGold}/>
+                  <Gold value={userGold} />
                 </Box>
               </Box>
 

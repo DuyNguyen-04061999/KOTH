@@ -4,7 +4,6 @@ import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
-import { AlertComponent } from "./components/Alert";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
@@ -74,6 +73,8 @@ import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
+import ToastComponent from "./components/ToastComponent";
+import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 function App() {
   useTracking("");
 
@@ -112,6 +113,8 @@ function App() {
     if (socket) {
       socket.once("connect", (data) => {});
       socket?.on("loginSuccess", (mess, token, key, user, password) => {
+        console.log("Success");
+        store.dispatch(showToast("success", "Login Successfully!"));
         store.dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
         store.dispatch(
           saveDataLogin({
@@ -143,12 +146,12 @@ function App() {
 
       socket?.on("addFriendSuccess", (data) => {
         store.dispatch(updateFriendList(data));
-        store.dispatch(showAlert("success", "Add friend successfully!"));
+        store.dispatch(showToast("success", "Add friend successfully!"));
       });
 
       socket?.on("deleteFriendSuccess", (data) => {
         socket.emit("listFriend");
-        store.dispatch(showAlert("success", "Delete friend successfully!"));
+        store.dispatch(showToast("success", "Delete friend successfully!"));
         store.dispatch(deleteFriendSuccesFully("success"));
       });
 
@@ -344,10 +347,12 @@ function App() {
       socket?.on("heartbeat", (data) => {});
 
       socket?.on("error", (data) => {
+        console.log("Error: ", data);
         store.dispatch(showAlert("error", data));
         store.dispatch(updateProfileFail());
       });
       socket?.on("warning", (data) => {
+        console.log("Warning: ", data);
         store.dispatch(showAlert("warning", data));
       });
       socket?.on("success", (data) => {
@@ -417,7 +422,7 @@ function App() {
             <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
         </CustomRouter>
-        <AlertComponent />
+        <ToastComponent />
       </PersistGate>
     </Provider>
     // </ErrorBoundary>

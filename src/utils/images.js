@@ -63,6 +63,19 @@ import BannerTour from "../assets/images/Banner phu 1.png";
 import tour1 from "../assets/images/tour1.png";
 import tour2 from "../assets/images/tour2.png";
 import tour3 from "../assets/images/tour3.png";
+import backGroundWiningReward from "../assets/images/backGroundWiningReward.png";
+import winingMedal from "../assets/images/winingMedal.png";
+import coinIcon from "../assets/images/coinIcon.png";
+import WINNER from "../assets/images/WINNER.png";
+import defeat from "../assets/images/defeat.png";
+import loseMedal from "../assets/images/loseMedal.png";
+import loseWardBG from "../assets/images/loseWardBG.png";
+import closeButtonToast from "../assets/images/closeButtonToast.png";
+import closeIconToast from "../assets/images/closeIconToast.png";
+import WarningIcon from "../assets/images/WarningIcon.png";
+import closeWarningButton from "../assets/images/closeWarningButton.png";
+import successIcon from "../assets/images/successIcon.png";
+import successCloseButton from "../assets/images/successCloseButton.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -147,7 +160,7 @@ import homeicon from "../assets/imagesDesktop/home_icon.svg";
 import playicon from "../assets/imagesDesktop/play_icon.svg";
 import pvpicon from "../assets/imagesDesktop/pvp_icon.svg";
 import Notification from "../assets/imagesDesktop/Notification.png";
-import ticket from "../assets/imagesLayout/popup/ticket.svg"
+import ticket from "../assets/imagesLayout/popup/ticket.svg";
 
 // import backgroundwallet from "../assets/imagesLayout/popup/01.png";
 import backgroundNavmobile from "../assets/imagesLayout/popup/02.png";
@@ -278,6 +291,19 @@ export const images = {
   tour1: tour1,
   tour2: tour2,
   tour3: tour3,
+  backGroundWiningReward: backGroundWiningReward,
+  winingMedal: winingMedal,
+  WINNER: WINNER,
+  defeat: defeat,
+  coinIcon: coinIcon,
+  loseMedal: loseMedal,
+  loseWardBG: loseWardBG,
+  closeButtonToast: closeButtonToast,
+  closeIconToast: closeIconToast,
+  WarningIcon: WarningIcon,
+  closeWarningButton: closeWarningButton,
+  successIcon: successIcon,
+  successCloseButton: successCloseButton,
 };
 
 export const images2 = {
@@ -350,7 +376,7 @@ export const popup = {
   SearchActiveIcon: SearchActiveIcon,
   FavoriteActiveIcon: FavoriteActiveIcon,
   HomeActiveIcon: HomeActiveIcon,
-  ticket:ticket
+  ticket: ticket,
 };
 
 export const sign = {
