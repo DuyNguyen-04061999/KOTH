@@ -22,9 +22,7 @@ export default function TransactionDetailPage() {
     }, [])
     
     useEffect(() => {
-      setTimeout(() => {
-        socket?.emit("checkTransactionId", {  transactionId: id })
-      }, 5000)
+      socket?.emit("checkTransactionId", {  transactionId: id })
     }, [id, socket])
 
     useEffect(() => {
@@ -50,7 +48,7 @@ export default function TransactionDetailPage() {
             let contract = new web3.eth.Contract(JSON.parse(transaction?.transactionAbi), transaction?.transactionContract)
             let depositAmount = (transaction?.transactionQuantity) + "000000000000000000";
       
-            if(!transaction?.transactionScanQr) {
+            if(!transaction?.transactionScanQr || transaction?.transactionScanQr) {
               let result = await contract.methods.transfer(transaction?.transactionWallet, depositAmount).send({ from: account })
       
               if(result) {
@@ -84,9 +82,7 @@ export default function TransactionDetailPage() {
       }
       
       socket?.on("checkTransactionIdSuccess", async (transaction) => {
-        if(!transaction?.transactionScanQr) {
-          await sendToken(transaction)
-        }
+        await sendToken(transaction)
       })
 
       socket?.on("updateDepositTransactionQrSuccess", async () => {

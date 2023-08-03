@@ -41,12 +41,20 @@ export const getListBetFail = (data) => {
     }
 }
 
+export const changeRouter = (data) => {
+    return {
+        type : "CHANGE_ROUTER",
+        payload: data
+    }
+}
+
 const appReducer = (
     state = {
         isFetchListFaq: false,
         listFaq: [],
         isFetchListBet: false,
         listBet: [],
+        router: ""
     },
     action
 ) => {
@@ -59,6 +67,7 @@ const appReducer = (
         case "GET_LIST_BET" : return {...state, isFetchListBet: true}
         case "GET_LIST_BET_SUCCESS" : return {...state, isFetchListBet: false, listBet:payload.data}
         case "GET_LIST_BET_FAIL" : return {...state, isFetchListBet: true}
+        case "CHANGE_ROUTER" : return {...state, router: payload}
         default: return {...state}
     }
 }

@@ -124,12 +124,13 @@ function App() {
           })
         );
         localStorage.setItem("NAME", user.userName);
-        localStorage.setItem("PASS", password);
+        // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
         localStorage.setItem("token", token);
         // socket.emit("listMessage");
         socket.emit("listFriend");
         socket.emit("getTransaction");
+        socket.emit("leaveAllRoom")
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -380,6 +381,10 @@ function App() {
       return () => window.removeEventListener("load", onPageLoad);
     }
   }, [socket]);
+
+  useEffect(() => {
+    
+  })
 
   useEffect(() => {
     store.dispatch(getListBet());

@@ -163,7 +163,7 @@ export default function DialogWallet(props) {
     });
 
     return () => {
-      // socket?.off()
+      socket?.off("depositRequestSuccess")
     };
   }, [socket, dispatch]);
 

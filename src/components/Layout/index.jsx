@@ -50,6 +50,7 @@ import {
 } from "../../redux-saga-middleware/reducers/authReducer";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MetaMaskDialog from "../Dialog/MetaMask";
+import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 // import TouramentShow from "../Dialog/Tourament/showBuy";
 // import BuyTicket from "../Dialog/Tourament/buyTicket";
 
@@ -125,6 +126,7 @@ export default function Layout(props) {
     // listGame
   } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
+  const { router } = useSelector((state) => state.appReducer);
   const [showChat] = useState(true);
   const { children } = props;
   const { width } = useWindowDimensions();
@@ -137,9 +139,16 @@ export default function Layout(props) {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
+    dispatch(changeRouter(window.location.pathname))
     const socket = _socket;
     setSocket(socket);
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if(token && !router?.includes(`selectroom`)) {
+      socket?.emit("leaveAllRoom")
+    }
+  }, [router, socket, token])
 
   useEffect(() => {
     if (resetInputValue === "logoutSuccess") {

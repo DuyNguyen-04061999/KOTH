@@ -5,7 +5,7 @@ ENV REACT_APP_SOCKET_SERVER=https://web-system-files.s3.ap-northeast-1.amazonaws
 ENV REACT_APP_END_POINT=https://api.play4promote.com
 ENV REACT_APP_END_POINT_TOURNAMENT=https://api.play4promote.com/api/games/store-score-tournament
 ENV REACT_APP_END_POINT_PVP_BOT=https://api.play4promote.com/api/games/store-score-pvp-bot
-ENV REACT_APP_URL_DOMAIN=play4promote.com
+ENV REACT_APP_URL_DOMAIN=api.play4promote.com
 
 WORKDIR /app
 COPY package.json ./

@@ -162,7 +162,7 @@ export default function MetaMaskDialog() {
                 <Box component={"div"} className='d-flex justify-content-center' sx={{
                   color: '#857cab'
                 }}>
-                  If on mobile click <a className='ms-2' href={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`} rel='noreferrer' target='_blank'> here</a>
+                  If on mobile click <a className='ms-2' href={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/api/payments/deposit/check-qr/${depositData?.transaction_id}?token=${userId}`} rel='noreferrer' target='_blank'> here</a>
                 </Box>
               )}
               {count >= 1 && (
@@ -170,7 +170,7 @@ export default function MetaMaskDialog() {
                   <QRCode
                     size={1000}
                     style={{ height: "auto", maxWidth: "50%", width: "100%", marginTop: "10px" }}
-                    value={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/transactions/${depositData?.transaction_id}?token=${userId}`}
+                    value={`https://metamask.app.link/dapp/${process.env.REACT_APP_URL_DOMAIN}/api/payments/deposit/check-qr/${depositData?.transaction_id}?token=${userId}`}
                     viewBox={`0 0 256 256`}
                   />
                 </Box>

@@ -75,7 +75,7 @@ export default function SelectRoom() {
   const { token, userName, userId, userGold } = useSelector(
     (state) => state.authReducer
   );
-  const { listBet } = useSelector((state) => state.appReducer);
+  const { listBet, router } = useSelector((state) => state.appReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
   const { state } = useLocation();
   const [listRoom, setListRoom] = useState([]);
@@ -118,12 +118,16 @@ export default function SelectRoom() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (token) {
+    setroomDetailInfo(null)
+  }, [router])
+
+  useEffect(() => {
+    if (token && router?.includes(`/selectroom/${detailGame?.id}`)) {
       socket?.emit("listFavoriteGame");
       socket?.emit("getGameLike");
       dispatch(updateTypeLike(""));
     }
-  }, [token, socket, detailGame, dispatch]);
+  }, [token, socket, detailGame, dispatch, router]);
   useEffect(() => {
     if (orientation === "landscape") {
       setPreviousOri(orientation);
