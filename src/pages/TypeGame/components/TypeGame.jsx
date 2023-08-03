@@ -82,7 +82,7 @@ export default function TypeGame() {
             <Grid container>
               {listGameByType.map((item, index) => {
                 return (
-                  <Grid item md={4} key={index}>
+                  <Grid item md={3} key={index}>
                     <div className="new">
                       <div>
                         <div

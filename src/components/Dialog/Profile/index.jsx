@@ -440,7 +440,7 @@ export default function DialogProfile(props) {
               ) : (
                 <SettingProfile
                   closePopup={() => {
-                    // setTab(0);
+                    setTab(0);
                     // handleShowProfile();
                   }}
                 />

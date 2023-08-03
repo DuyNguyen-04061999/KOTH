@@ -1453,7 +1453,7 @@ export default function DialogWallet(props) {
                   ? "0px"
                   : tab && tab === 1
                   ? "30px"
-                  : "100px",
+                  : "20px",
               overflowY: "auto",
               overflowX: "hidden",
             }}
