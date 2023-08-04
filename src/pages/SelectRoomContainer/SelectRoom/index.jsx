@@ -435,8 +435,6 @@ export default function SelectRoom() {
     );
 
     socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId, id) => {
-      setChat([]);
-      console.log("userId: ", id);
       if (roomId === roomIdSelect) {
         setroomDetailInfo(data);
         if (
@@ -450,6 +448,7 @@ export default function SelectRoom() {
         ) {
           if (id === userId) {
             setRoomIdSelect(0);
+            setChat([]);
           }
         }
         setListRoom((prevState) => {
@@ -571,7 +570,11 @@ export default function SelectRoom() {
     orientation,
   ]);
   useEffect(() => {
-    socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId) => {
+    socket?.on(`leaveRoomGame${detailGame?.id}Success`, (data, roomId, id) => {
+      if (id === userId) {
+        setRoomIdSelect(0);
+        setChat([]);
+      }
       setListRoom((prevState) => {
         let dt = [...prevState];
         if (checkExistData(data?.id, prevState) !== -1) {

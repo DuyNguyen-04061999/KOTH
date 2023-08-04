@@ -34,7 +34,7 @@ export default function ChatFriendList() {
   const [openMess, setOpenMess] = useState(false);
   const { width, height } = useWindowDimensions();
   const [searchFeild, setSearchFeild] = useState("");
-  const { friendList } = useSelector((state) => state.chatReducer);
+  const { friendList, chatWorld } = useSelector((state) => state.chatReducer);
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
 
@@ -121,7 +121,29 @@ export default function ChatFriendList() {
       </>
     );
   };
-  const renderListFriend = listFriend?.map((e, index) => {
+
+  useEffect(() => {
+    if(chatWorld) {
+      
+    }
+  }, [chatWorld, listFriend])
+
+  const [listFriendSort, setListFriendSort] = useState([]);
+
+  useEffect(() => {
+    const list = listFriend?.sort(function(x, y){
+      if(x?.receiveMessages && x?.receiveMessages?.length > 0 && x?.receiveMessages[0] && y?.receiveMessages && y?.receiveMessages?.length > 0 && y?.receiveMessages[0]) {
+        return new Date(y?.receiveMessages[0]?.createdAt).getTime() - new Date(x?.receiveMessages[0]?.createdAt).getTime();
+      } else if (x?._gg_koth_user_friends?.createdAt && y?._gg_koth_user_friends?.createdAt) {
+        return new Date(y?._gg_koth_user_friends?.createdAt).getTime() - new Date(x?._gg_koth_user_friends?.createdAt).getTime()
+      } else return x || y
+    })
+
+    console.log(list);
+    setListFriendSort(list)
+  }, [listFriend])
+
+  const renderListFriend = listFriendSort?.map((e, index) => {
     return (
       <Box key={index}>
         {e?.id && (

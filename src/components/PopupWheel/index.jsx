@@ -38,7 +38,7 @@ export default function PopupWheel(props) {
           <img className="LuckyBonus" alt="BTD" src={images.LuckyBonus} />
           <button className="CollectedDogeGold">
             <img alt="BTD" src={images.gold} />
-            <span> + {collectedPoint}</span>
+            {collectedPoint && collectedPoint > 0 ? <span> + {collectedPoint}</span> : <span> One More Spin !</span>}
           </button>
           <button
             onClick={() => {

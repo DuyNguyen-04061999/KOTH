@@ -56,7 +56,10 @@ export default function TitleHomeDesktopComponent(props) {
               <img
                 src={images2.popuptext}
                 alt="Battle Title"
-                width={"100%"}
+                width={width < 576 ? "50%" : "100%"}
+                style={{
+                  width: width < 576 ? '50% !important' : '100% !important'
+                }}
                 height={width > 576 ? 28 : 20}
               />
             </div>
