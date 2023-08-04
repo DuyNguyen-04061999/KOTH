@@ -139,16 +139,16 @@ export default function Layout(props) {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
-    dispatch(changeRouter(window.location.pathname))
+    dispatch(changeRouter(window.location.pathname));
     const socket = _socket;
     setSocket(socket);
   }, [dispatch]);
 
   useEffect(() => {
-    if(token && !router?.includes(`selectroom`)) {
-      socket?.emit("leaveAllRoom")
+    if (token && !router?.includes(`selectroom`)) {
+      socket?.emit("leaveAllRoom");
     }
-  }, [router, socket, token])
+  }, [router, socket, token]);
 
   useEffect(() => {
     if (resetInputValue === "logoutSuccess") {
@@ -732,7 +732,6 @@ export default function Layout(props) {
           </Box>
         </DrawerHeader>
       </Drawer>
-      {/* <Notification /> */}
     </Box>
   );
 }

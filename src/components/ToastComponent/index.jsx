@@ -2,28 +2,26 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { images } from "../../utils/images";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { hideToast } from "../../redux-saga-middleware/reducers/toastReducer";
 
-export default function ToastComponent() {
+export default function ToastComponent({ onclose, showAlert, content, type }) {
   const [show, setShow] = useState("");
   const dispatch = useDispatch();
-  const { isShowToast, messageToast, typeToast } = useSelector(
-    (state) => state.toastReducer
-  );
+
   useEffect(() => {
     if (show === "showToast") {
       setTimeout(() => {
         setShow("closeToast");
       }, 3000);
-      dispatch(hideToast());
+      onclose();
     }
-  }, [show, dispatch]);
+  }, [show, dispatch, onclose]);
   useEffect(() => {
-    if (isShowToast === true) {
+    if (showAlert === true) {
       setShow("showToast");
     }
-  }, [isShowToast]);
+  }, [showAlert]);
   return (
     <Box
       className={`${show} snackbar`}
@@ -36,9 +34,9 @@ export default function ToastComponent() {
         padding: "10px 20px",
         borderRadius: "5px",
         background:
-          typeToast === "error"
+          type === "error"
             ? "#F05153"
-            : typeToast === "warning"
+            : type === "warning"
             ? "#F3D886"
             : "#9ED458",
         display: "flex",
@@ -52,9 +50,9 @@ export default function ToastComponent() {
       <Box
         component={"img"}
         src={
-          typeToast === "error"
+          type === "error"
             ? images.closeButtonToast
-            : typeToast === "warning"
+            : type === "warning"
             ? images.WarningIcon
             : images.successIcon
         }
@@ -69,7 +67,7 @@ export default function ToastComponent() {
             letterSpacing: "0.6px",
           }}
         >
-          {messageToast}
+          {content}
         </Typography>
       </Box>
       <Box
@@ -80,9 +78,9 @@ export default function ToastComponent() {
         sx={{ width: "16px", height: "16px", cursor: "pointer" }}
         component={"img"}
         src={
-          typeToast === "error"
+          type === "error"
             ? images.closeIconToast
-            : typeToast === "warning"
+            : type === "warning"
             ? images.closeWarningButton
             : images.successCloseButton
         }

@@ -53,6 +53,7 @@ export default function DialogWallet(props) {
   const [transactions, setTransaction] = useState([]);
   const [wrapperWidth, setWrapperWidth] = useState();
   const { userGold } = useSelector((state) => state.authReducer);
+  const [recovery, setRecovery] = useState(false);
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
   );
@@ -155,15 +156,15 @@ export default function DialogWallet(props) {
     socket?.on("getListWithdrawSuccess", async (data) => {});
 
     socket?.on("warning", async (data) => {
-      setLoadingDeposit(false)
+      setLoadingDeposit(false);
     });
 
     socket?.on("error", async (data) => {
-      setLoadingDeposit(false)
+      setLoadingDeposit(false);
     });
 
     return () => {
-      socket?.off("depositRequestSuccess")
+      socket?.off("depositRequestSuccess");
     };
   }, [socket, dispatch]);
 
@@ -407,7 +408,12 @@ export default function DialogWallet(props) {
                         socket?.emit("depositRequest", { amountDeposit });
                       }, 2000);
                     } else {
-                      dispatch(showAlert("error", "Please enter amount >= 50 and <= 5000"));
+                      dispatch(
+                        showAlert(
+                          "error",
+                          "Please enter amount >= 50 and <= 5000"
+                        )
+                      );
                     }
                   }}
                 >
@@ -922,332 +928,353 @@ export default function DialogWallet(props) {
   };
   const renderTransaction = () => {
     return (
-      <Box
-        className="pt-5"
-        sx={{
-          minHeight: width > 576 ? height - 169 : "unset",
-          width: width < 576 ? "none" : wrapperWidth,
-          fontSize: getFontSizeDependOnWidth(width),
-        }}
-      >
+      <>
         <Box
+          className="pt-5"
           sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            height: "100px",
-            marginTop: "-51px",
-            cursor: "pointer",
+            minHeight: width > 576 ? height - 169 : "unset",
+            width: width < 576 ? "none" : wrapperWidth,
+            fontSize: getFontSizeDependOnWidth(width),
           }}
         >
           <Box
             sx={{
-              width: width < 576 ? "100%" : "50%",
-              padding: "0px 16px",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              height: "100px",
+              marginTop: "-51px",
+              cursor: "pointer",
             }}
-            className="mt-5 mb-3"
           >
-            {transactionTabSelected === 0 ? (
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "38px",
-                  backgroundColor: "#462a71",
-                  borderRadius: "4px",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <Box
-                  onClick={() => {
-                    setTransactionTabSelected(0);
-                  }}
-                  sx={{
-                    width: "50%",
-                    backgroundColor: "#68399e",
-                    borderRadius: "4px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                    fontWeight: "bolder",
-                  }}
-                >
-                  <img
-                    style={{ marginRight: "4px" }}
-                    src={images.depositActive}
-                    alt="..."
-                  />
-                  Deposit
-                </Box>
-                <Box
-                  onClick={() => {
-                    setTransactionTabSelected(1);
-                  }}
-                  sx={{
-                    width: "50%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "#8a78b3",
-                    fontWeight: "bolder",
-                  }}
-                >
-                  <img
-                    style={{ marginRight: "4px" }}
-                    src={images.withdrawPassive}
-                    alt="..."
-                  />
-                  Withdraw
-                </Box>
-              </Box>
-            ) : (
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "38px",
-                  backgroundColor: "#462a71",
-                  borderRadius: "4px",
-                  display: "flex",
-                }}
-              >
-                <Box
-                  onClick={() => {
-                    setTransactionTabSelected(0);
-                  }}
-                  sx={{
-                    width: "50%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "#8a78b3",
-                    fontWeight: "bolder",
-                  }}
-                >
-                  <img
-                    style={{ marginRight: "4px" }}
-                    src={images.depositPassive}
-                    alt="..."
-                  />
-                  Deposit
-                </Box>
-                <Box
-                  onClick={() => {
-                    setTransactionTabSelected(1);
-                  }}
-                  sx={{
-                    width: "50%",
-                    display: "flex",
-                    backgroundColor: "#68399e",
-                    borderRadius: "4px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                    fontWeight: "bolder",
-                  }}
-                >
-                  <img
-                    style={{ marginRight: "4px" }}
-                    src={images.withdrawActive}
-                    alt="..."
-                  />
-                  Withdraw
-                </Box>
-              </Box>
-            )}
-          </Box>
-        </Box>
-
-        {transactions && transactions?.length > 0 ? (
-          <TableContainer
-            sx={{
-              borderRadius: 0,
-              boxShadow: "unset",
-              border: "none",
-            }}
-            component={Paper}
-            className="mt-3"
-          >
-            <Table
+            <Box
               sx={{
-                width: width < 576 ? width : wrapperWidth,
-                borderRadius: 0,
-                "& .MuiTableCell-root": {
-                  borderWidth: "none",
-                },
+                width: width < 576 ? "100%" : "50%",
+                padding: "0px 16px",
               }}
-              aria-label="customized table"
+              className="mt-5 mb-3"
             >
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">Time</StyledTableCell>
-                  <StyledTableCell align="center">
-                    Transaction ID
-                  </StyledTableCell>
-                  <StyledTableCell align="center">Gateway</StyledTableCell>
-                  <StyledTableCell align="center">Amount</StyledTableCell>
-                  <StyledTableCell align="center">Rate</StyledTableCell>
-                  {width > 576 && (
-                    <StyledTableCell align="center">Charge</StyledTableCell>
-                  )}
-                  {width > 576 && (
-                    <StyledTableCell align="center">Status</StyledTableCell>
-                  )}
-                  {width > 576 && (
-                    <StyledTableCell align="center">Receivable</StyledTableCell>
-                  )}
-                </TableRow>
-              </TableHead>
-              {transactions.length > 0 ? (
-                <TableBody>
-                  {transactions?.map((transaction, i_t) => (
-                    <StyledTableRow
-                      key={i_t}
-                      onClick={() => {
-                        handleTransactionDialog(transaction);
-                      }}
-                    >
-                      <StyledTableCell
-                        align="center"
-                        component="td"
-                        scope="row"
-                      >
-                        <Box
-                          component={"span"}
-                          sx={{
-                            color: "#7a7fee",
-                          }}
-                        >
-                          {moment(transaction?.updatedAt).format("DD/MM/YY")}
-                          <br />
-                          {moment(transaction?.updatedAt).format("HH:mm:ss")}
-                        </Box>
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        <Box
-                          component={"span"}
-                          sx={{
-                            color: "#fff",
-                          }}
-                        >
-                          {transaction?.transactionId}
-                        </Box>
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        <Box component={"span"} style={{ color: "#33b91f" }}>
-                          {transaction?.transactionCrypto?.cryptoName}
-                        </Box>
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        <Box component={"span"} className="text-danger">
-                          {transaction?.transactionValue}
-                        </Box>
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        <Box
-                          component={"span"}
-                          sx={{
-                            color: "#51539c",
-                            fontWeight: "bold",
-                          }}
-                          className="d-flex align-items-center justify-content-center"
-                        >
-                          {transaction?.transactionRate}
-                        </Box>
-                      </StyledTableCell>
-                      {width > 576 && (
-                        <StyledTableCell align="center">
-                          <Box
-                            component={"span"}
-                            sx={{
-                              color: "#51539c",
-                              fontWeight: "bold",
-                            }}
-                            className="d-flex align-items-center justify-content-center"
-                          >
-                            {transaction?.transactionCharge}
-                          </Box>
-                        </StyledTableCell>
-                      )}
-                      {width > 576 && (
-                        <StyledTableCell align="center">
-                          <Box
-                            component={"span"}
-                            sx={{
-                              color: "#51539c",
-                              fontWeight: "bold",
-                            }}
-                            className="d-flex align-items-center justify-content-center"
-                          >
-                            {transaction?.transactionStatus}
-                          </Box>
-                        </StyledTableCell>
-                      )}
-                      {width > 576 && (
-                        <StyledTableCell align="center">
-                          <Box
-                            component={"span"}
-                            sx={{
-                              color: "#51539c",
-                              fontWeight: "bold",
-                            }}
-                            className="d-flex align-items-center justify-content-center"
-                          >
-                            {transaction?.transactionReceivable}
-                          </Box>
-                        </StyledTableCell>
-                      )}
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
+              {transactionTabSelected === 0 ? (
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "38px",
+                    backgroundColor: "#462a71",
+                    borderRadius: "4px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    onClick={() => {
+                      setTransactionTabSelected(0);
+                    }}
+                    sx={{
+                      width: "50%",
+                      backgroundColor: "#68399e",
+                      borderRadius: "4px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "white",
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    <img
+                      style={{ marginRight: "4px" }}
+                      src={images.depositActive}
+                      alt="..."
+                    />
+                    Deposit
+                  </Box>
+                  <Box
+                    onClick={() => {
+                      setTransactionTabSelected(1);
+                    }}
+                    sx={{
+                      width: "50%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "#8a78b3",
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    <img
+                      style={{ marginRight: "4px" }}
+                      src={images.withdrawPassive}
+                      alt="..."
+                    />
+                    Withdraw
+                  </Box>
+                </Box>
               ) : (
-                <></>
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "38px",
+                    backgroundColor: "#462a71",
+                    borderRadius: "4px",
+                    display: "flex",
+                  }}
+                >
+                  <Box
+                    onClick={() => {
+                      setTransactionTabSelected(0);
+                    }}
+                    sx={{
+                      width: "50%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "#8a78b3",
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    <img
+                      style={{ marginRight: "4px" }}
+                      src={images.depositPassive}
+                      alt="..."
+                    />
+                    Deposit
+                  </Box>
+                  <Box
+                    onClick={() => {
+                      setTransactionTabSelected(1);
+                    }}
+                    sx={{
+                      width: "50%",
+                      display: "flex",
+                      backgroundColor: "#68399e",
+                      borderRadius: "4px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "white",
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    <img
+                      style={{ marginRight: "4px" }}
+                      src={images.withdrawActive}
+                      alt="..."
+                    />
+                    Withdraw
+                  </Box>
+                </Box>
               )}
-            </Table>
-          </TableContainer>
-        ) : (
-          <Box className="text-white p-2">Not Data Yet!</Box>
-        )}
-        <Box
-          className="position-absolute d-flex justify-content-between p-2"
-          sx={{
-            bottom: 0,
-            width: width < 576 ? width : wrapperWidth,
-            zIndex: 1305,
-            background: "#2f2851",
-          }}
-        >
+            </Box>
+          </Box>
+
+          {transactions && transactions?.length > 0 ? (
+            <TableContainer
+              sx={{
+                borderRadius: 0,
+                boxShadow: "unset",
+                border: "none",
+              }}
+              component={Paper}
+              className="mt-3"
+            >
+              <Table
+                sx={{
+                  width: width < 576 ? width : wrapperWidth,
+                  borderRadius: 0,
+                  "& .MuiTableCell-root": {
+                    borderWidth: "none",
+                  },
+                }}
+                aria-label="customized table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="center">Time</StyledTableCell>
+                    <StyledTableCell align="center">
+                      Transaction ID
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Gateway</StyledTableCell>
+                    <StyledTableCell align="center">Amount</StyledTableCell>
+                    <StyledTableCell align="center">Rate</StyledTableCell>
+                    {width > 576 && (
+                      <StyledTableCell align="center">Charge</StyledTableCell>
+                    )}
+                    {width > 576 && (
+                      <StyledTableCell align="center">Status</StyledTableCell>
+                    )}
+                    {width > 576 && (
+                      <StyledTableCell align="center">
+                        Receivable
+                      </StyledTableCell>
+                    )}
+                    {width > 576 && (
+                      <StyledTableCell align="center">Actions</StyledTableCell>
+                    )}
+                  </TableRow>
+                </TableHead>
+                {transactions.length > 0 ? (
+                  <TableBody>
+                    {transactions?.map((transaction, i_t) => (
+                      <StyledTableRow key={i_t}>
+                        <StyledTableCell
+                          align="center"
+                          component="td"
+                          scope="row"
+                        >
+                          <Box
+                            component={"span"}
+                            sx={{
+                              color: "#7a7fee",
+                            }}
+                          >
+                            {moment(transaction?.updatedAt).format("DD/MM/YY")}
+                            <br />
+                            {moment(transaction?.updatedAt).format("HH:mm:ss")}
+                          </Box>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <Box
+                            component={"span"}
+                            sx={{
+                              color: "#fff",
+                            }}
+                          >
+                            {transaction?.transactionId}
+                          </Box>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <Box component={"span"} style={{ color: "#33b91f" }}>
+                            {transaction?.transactionCrypto?.cryptoName}
+                          </Box>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <Box component={"span"} className="text-danger">
+                            {transaction?.transactionValue}
+                          </Box>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <Box
+                            component={"span"}
+                            sx={{
+                              color: "#51539c",
+                              fontWeight: "bold",
+                            }}
+                            className="d-flex align-items-center justify-content-center"
+                          >
+                            {transaction?.transactionRate}
+                          </Box>
+                        </StyledTableCell>
+                        {width > 576 && (
+                          <StyledTableCell align="center">
+                            <Box
+                              component={"span"}
+                              sx={{
+                                color: "#51539c",
+                                fontWeight: "bold",
+                              }}
+                              className="d-flex align-items-center justify-content-center"
+                            >
+                              {transaction?.transactionCharge}
+                            </Box>
+                          </StyledTableCell>
+                        )}
+                        {width > 576 && (
+                          <StyledTableCell align="center">
+                            <Box
+                              component={"span"}
+                              sx={{
+                                color: "#51539c",
+                                fontWeight: "bold",
+                              }}
+                              className="d-flex align-items-center justify-content-center"
+                            >
+                              {transaction?.transactionStatus}
+                            </Box>
+                          </StyledTableCell>
+                        )}
+                        {width > 576 && (
+                          <StyledTableCell align="center">
+                            <Box
+                              component={"span"}
+                              sx={{
+                                color: "#51539c",
+                                fontWeight: "bold",
+                              }}
+                              className="d-flex align-items-center justify-content-center"
+                            >
+                              {transaction?.transactionReceivable}
+                            </Box>
+                          </StyledTableCell>
+                        )}
+                        {width > 576 && (
+                          <StyledTableCell align="center">
+                            <Box
+                              component={"span"}
+                              sx={{
+                                color: "#51539c",
+                                fontWeight: "bold",
+                              }}
+                              className="d-flex align-items-center justify-content-center"
+                            >
+                              <button
+                                onClick={() => {
+                                  handleTransactionDialog(transaction);
+                                }}
+                              >
+                                Detail
+                              </button>
+                              {transaction?.transactionStatus === "pending" && (
+                                <button
+                                  onClick={() => {
+                                    setRecovery(true);
+                                  }}
+                                >
+                                  Recover
+                                </button>
+                              )}
+                            </Box>
+                          </StyledTableCell>
+                        )}
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                ) : (
+                  <></>
+                )}
+              </Table>
+              <Dialog
+                maxWidth="2000px !important"
+                sx={{ zIndex: "100005" }}
+                open={recovery}
+                onClose={() => {
+                  setRecovery(false);
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "500px",
+                    heigth: "30px",
+                    justifyContent: "space-between",
+                    padding: "50px",
+                  }}
+                >
+                  {" "}
+                  <Input sx={{ width: "90%" }} />
+                  <button>Send</button>
+                </Box>
+              </Dialog>
+            </TableContainer>
+          ) : (
+            <Box className="text-white p-2">Not Data Yet!</Box>
+          )}
           <Box
-            className="text-white p-2 d-flex align-items-center"
+            className="position-absolute d-flex justify-content-between p-2"
             sx={{
-              background: "#1f1933",
-              borderRadius: 1,
+              bottom: 0,
+              width: width < 576 ? width : wrapperWidth,
+              zIndex: 1305,
+              background: "#2f2851",
             }}
           >
-            <img
-              src={images280423_l.coin}
-              alt="..."
-              width={25}
-              className="img-fluid"
-            />
-            <span
-              className="ms-2"
-              style={{
-                color: "white",
-              }}
-            >
-              Dogegold
-            </span>
-            <ArrowForwardIos
-              sx={{
-                color: "#676ac7",
-                fontSize: 14,
-                fontWeight: "bold",
-              }}
-              className="ms-1"
-            />
-          </Box>
-          <Box className="d-flex align-items-center">
             <Box
               className="text-white p-2 d-flex align-items-center"
               sx={{
@@ -1255,64 +1282,96 @@ export default function DialogWallet(props) {
                 borderRadius: 1,
               }}
             >
+              <img
+                src={images280423_l.coin}
+                alt="..."
+                width={25}
+                className="img-fluid"
+              />
               <span
-                className=""
+                className="ms-2"
                 style={{
                   color: "white",
                 }}
               >
-                20
+                Dogegold
               </span>
               <ArrowForwardIos
                 sx={{
                   color: "#676ac7",
                   fontSize: 14,
+                  fontWeight: "bold",
                 }}
                 className="ms-1"
               />
             </Box>
-            <Box
-              sx={{
-                color: "#676ac7",
-              }}
-              className="mx-2"
-            >
-              Total: 1
-            </Box>
-            <Box
-              className="text-white mx-1 p-2 d-flex align-items-content"
-              sx={{
-                background: "#1f1933",
-                borderRadius: 1,
-              }}
-            >
-              <span
-                className=""
-                style={{
-                  color: "white",
+            <Box className="d-flex align-items-center">
+              <Box
+                className="text-white p-2 d-flex align-items-center"
+                sx={{
+                  background: "#1f1933",
+                  borderRadius: 1,
                 }}
               >
-                1
-              </span>
-            </Box>
-            <Box className="ms-2">
-              <ArrowBackIos
+                <span
+                  className=""
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  20
+                </span>
+                <ArrowForwardIos
+                  sx={{
+                    color: "#676ac7",
+                    fontSize: 14,
+                  }}
+                  className="ms-1"
+                />
+              </Box>
+              <Box
                 sx={{
                   color: "#676ac7",
-                  fontSize: 14,
                 }}
-              />
-              <ArrowForwardIos
+                className="mx-2"
+              >
+                Total: 1
+              </Box>
+              <Box
+                className="text-white mx-1 p-2 d-flex align-items-content"
                 sx={{
-                  color: "#676ac7",
-                  fontSize: 14,
+                  background: "#1f1933",
+                  borderRadius: 1,
                 }}
-                className="ms-1"
-              />
+              >
+                <span
+                  className=""
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  1
+                </span>
+              </Box>
+              <Box className="ms-2">
+                <ArrowBackIos
+                  sx={{
+                    color: "#676ac7",
+                    fontSize: 14,
+                  }}
+                />
+                <ArrowForwardIos
+                  sx={{
+                    color: "#676ac7",
+                    fontSize: 14,
+                  }}
+                  className="ms-1"
+                />
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      </>
     );
   };
 

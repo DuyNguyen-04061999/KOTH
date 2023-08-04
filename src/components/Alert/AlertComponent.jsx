@@ -19,8 +19,8 @@ export default function AlertComponent() {
     <div
       className="position-fixed"
       style={{
-        top: 70,
-        right: 10,
+        top: 80,
+        right: "45%",
         zIndex: 1310,
         boxShadow:
           "rgba(0,0,0,0.25) 5px 19px 33px, rgba(0,0,0,0.22) 5px 15px 15px",
