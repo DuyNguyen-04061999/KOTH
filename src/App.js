@@ -75,6 +75,7 @@ import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import ToastComponent from "./components/ToastComponent";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
+import PackagePage from "./pages/PackagePage";
 function App() {
   useTracking("");
 
@@ -423,6 +424,7 @@ function App() {
             <Route path="game/:id" element={<GameDetailPage />} />
             <Route path="game-type/:type" element={<TypeGamePage />} />
             <Route path="game/edit/:id" element={<GameEditPage />} />
+            <Route path="package" element={<PackagePage />}></Route>
             <Route
               path="transactions/:id"
               element={<TransactionDetailPage />}
