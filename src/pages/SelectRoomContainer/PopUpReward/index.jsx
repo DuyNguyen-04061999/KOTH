@@ -2,11 +2,33 @@ import React from "react";
 import "./index.scss";
 import { Box, Dialog, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
+import { useEffect } from "react";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 export default function PopUpReward({ open, handleOnCloseReward }) {
+  const [socket, setSocket] = useState(null);
+  const [type, setType] = useState("");
+  const [reward, setReward] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, [dispatch]);
+  useEffect(() => {
+    socket?.on("gameWin", ({ type, value }) => {
+      setType(type);
+      setReward(value);
+    });
+    socket?.on("gameDefeated", (data) => {
+      setType(data.type);
+      setReward(data.value);
+    });
+  }, [socket]);
+  console.log(type);
   return (
     <>
-      {" "}
-      <Dialog
+      {/* <Dialog
         sx={{
           "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
             borderRadius: "11px !important",
@@ -14,7 +36,7 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
         }}
         maxWidth="2000px !important"
         onClose={handleOnCloseReward}
-        open={open}
+        open={false}
       >
         <Box
           sx={{
@@ -52,7 +74,7 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
             </Typography>
           </Box>
         </Box>
-      </Dialog>
+      </Dialog> */}
       <Dialog
         sx={{
           "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
@@ -95,7 +117,7 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
               component={"img"}
             ></Box>
             <Typography sx={{ color: "#fff", fontSize: "50px" }}>
-              5000
+              {reward}
             </Typography>
           </Box>
         </Box>

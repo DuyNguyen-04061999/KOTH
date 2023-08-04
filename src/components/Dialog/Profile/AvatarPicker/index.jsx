@@ -4,12 +4,12 @@ import t from "prop-types";
 import { makeStyles } from "@mui/styles";
 import { Avatar, Badge } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   closeLoading,
   openLoading,
 } from "../../../../redux-saga-middleware/reducers/loadingReducer";
 import { images } from "../../../../utils/images";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,10 +48,7 @@ export const AvatarPicker = (props) => {
     if (
       imageType === "png" ||
       imageType === "jpg" ||
-      imageType === "jpeg" ||
-      imageType === "svg" ||
-      imageType === "jfif"
-    ) {
+      imageType === "jpeg" ) {
       reader.onload = function (e) {
         handleChangeImage(reader.result);
         setFile(reader.result);
@@ -65,7 +62,7 @@ export const AvatarPicker = (props) => {
         dispatch(closeLoading());
       }, 2000);
       handleChangeImage(avatarUrl);
-      dispatch(showAlert("error", "Please attach correct format of file"));
+      dispatch(showAlert("error","Please attach correct format of file"))
     }
 
     // const fileSizeInBytes = imageType.size;

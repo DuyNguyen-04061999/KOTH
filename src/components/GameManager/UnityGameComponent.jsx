@@ -16,7 +16,7 @@ export default function UnityGameComponent(props) {
     isFullScreen,
     roomId,
     handleEndGame,
-    type 
+    type,
   } = props;
   const { width } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
@@ -102,20 +102,18 @@ export default function UnityGameComponent(props) {
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(async () => {
-      await unload();
-      if(type && type === "pvp") {
-        navigate({
-          pathname: `/selectroom/${gameId}`,
-        });
-      } else if (type === "tournament") {
-        navigate({
-          pathname: `/tournaments`,
-        });
-      }
-      setTimeout(() => {
-        handleEndGame()
-      }, 3000)
-  }, [navigate, unload, gameId, handleEndGame, type]);
+    await unload();
+    if (type && type === "pvp") {
+      navigate({
+        pathname: `/selectroom/${gameId}`,
+      });
+    } else if (type === "tournament") {
+      navigate({
+        pathname: `/tournaments`,
+      });
+    }
+    handleEndGame();
+  }, [navigate, unload, handleEndGame, gameId, type]);
 
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
@@ -132,15 +130,11 @@ export default function UnityGameComponent(props) {
   }, [addEventListener, removeEventListener, handleFinalGame]);
   return (
     <Fragment>
-      {" "}
       {!isLoaded && (
         <p style={{ color: "#fff" }}>
           Loading Application... {Math.round(loadingProgression * 100)}%
         </p>
       )}
-      {/* {!isLoaded && (
-       <LinearProgress value={loadingProgression * 100} />
-      )} */}
       <Unity
         style={{
           width: isFullScreen ? width : cwidth ? cwidth : "100%",

@@ -106,12 +106,17 @@ export default function SelectRoom() {
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
   const [showReward, setShowReward] = useState(false);
+
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
   const filterArray = [0, 100, 200, 500];
 
   const handleEndGame = () => {
-    window.location.reload();
+    setShowReward(true);
+    dispatch(setSelectNav());
+    setStartGame(false);
+    setRoomIdSelect(0);
+    setroomDetailInfo("");
   };
 
   useEffect(() => {
@@ -120,8 +125,8 @@ export default function SelectRoom() {
   }, [dispatch]);
 
   useEffect(() => {
-    setroomDetailInfo(null)
-  }, [router])
+    setroomDetailInfo(null);
+  }, [router]);
 
   useEffect(() => {
     if (token && router?.includes(`/selectroom/${detailGame?.id}`)) {
@@ -542,16 +547,18 @@ export default function SelectRoom() {
         return [...pre.filter((n) => n?.id !== data?.id), data];
       });
     });
+
     socket?.on(
       `endRoom${roomIdSelect}Game${detailGame?.id}Success`,
       (room, player, earn) => {
         dispatch(
           updateUserGold(Number.parseFloat(userGold) + Number.parseFloat(earn))
         );
-        dispatch(showAlert("success", "You are winner!"));
+        console.log("Ern: ", earn);
+        // dispatch(showAlert("success", "You are winner!"));
         dispatch(setSelectNav());
         setStartGame(false);
-        window?.location?.reload();
+        // window?.location?.reload();
       }
     );
 
@@ -2254,8 +2261,8 @@ export default function SelectRoom() {
                       <img
                         alt="..."
                         style={{
-                          width: width> 576 ? "100px" : "50px",
-                              height:  width> 576 ? "100px" : "50px" ,
+                          width: width > 576 ? "100px" : "50px",
+                          height: width > 576 ? "100px" : "50px",
                           borderRadius: "50%",
                           // marginTop: "6px",
                         }}
@@ -2488,8 +2495,8 @@ export default function SelectRoom() {
                           <img
                             alt="..."
                             style={{
-                              width: width> 576 ? "100px" : "50px",
-                              height:  width> 576 ? "100px" : "50px" ,
+                              width: width > 576 ? "100px" : "50px",
+                              height: width > 576 ? "100px" : "50px",
                               borderRadius: "50%",
                               // marginTop: "6px",
                               cursor: "pointer",

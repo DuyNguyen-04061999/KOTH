@@ -73,8 +73,7 @@ import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
-import ToastComponent from "./components/ToastComponent";
-import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
+import AlertComponent from "./components/Alert/AlertComponent";
 import PackagePage from "./pages/PackagePage";
 function App() {
   useTracking("");
@@ -115,7 +114,6 @@ function App() {
       socket.once("connect", (data) => {});
       socket?.on("loginSuccess", (mess, token, key, user, password) => {
         console.log("Success");
-        store.dispatch(showToast("success", "Login Successfully!"));
         store.dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
         store.dispatch(
           saveDataLogin({
@@ -134,7 +132,7 @@ function App() {
         // socket.emit("listMessage");
         socket.emit("listFriend");
         socket.emit("getTransaction");
-        socket.emit("leaveAllRoom")
+        socket.emit("leaveAllRoom");
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -147,13 +145,13 @@ function App() {
       });
 
       socket?.on("addFriendSuccess", (data) => {
+        store.dispatch(showAlert("success", "Add Friend Successfully"));
         store.dispatch(updateFriendList(data));
-        store.dispatch(showToast("success", "Add friend successfully!"));
       });
 
       socket?.on("deleteFriendSuccess", (data) => {
         socket.emit("listFriend");
-        store.dispatch(showToast("success", "Delete friend successfully!"));
+        store.dispatch(showAlert("success", "Delete Friend Successfully"));
         store.dispatch(deleteFriendSuccesFully("success"));
       });
 
@@ -391,9 +389,7 @@ function App() {
     }
   }, [socket]);
 
-  useEffect(() => {
-    
-  })
+  useEffect(() => {});
 
   useEffect(() => {
     store.dispatch(getListBet());
@@ -431,8 +427,8 @@ function App() {
             />
             <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
+          <AlertComponent />
         </CustomRouter>
-        <ToastComponent />
       </PersistGate>
     </Provider>
     // </ErrorBoundary>
