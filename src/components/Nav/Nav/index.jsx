@@ -7,6 +7,7 @@ import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gam
 import { useDispatch, useSelector } from "react-redux";
 import {
   
+  clickTab,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
@@ -88,6 +89,7 @@ export default function Navbar() {
             onClick={() => {
               if (!token) {
                 dispatch(toggleLoginDialog());
+                dispatch(clickTab(false))
               } else {
                 navigate("/luckywheel");
               }
@@ -117,7 +119,7 @@ export default function Navbar() {
             </span>
           </Box>
           <Box
-            className="cursor-pointer"
+            className="cursor-pointer pt-2 pb-2"
             sx={{
               display: "flex",
               alignItems: "center",
@@ -151,6 +153,41 @@ export default function Navbar() {
               Tournaments
             </span>
           </Box>
+          <Box
+            className="cursor-pointer pt-2 pb-2"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "center",
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+            }}
+            onClick={() => {
+              navigate(`/package`);
+            }}
+          >
+            <img
+              src={popup.packageicon}
+              alt="..."
+              className="p-1 me-1 luckySpinIncon2"
+              width={28}
+              height={"auto"}
+            />
+            <span
+              className="hover-nav"
+              style={{
+                cursor: "pointer",
+                fontWeight: "700",
+                fontSize: "15px",
+                marginLeft: "5px",
+                display: isNav === true ? "block" : "none",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+              }}
+            >
+              Package
+            </span>
+          </Box>
           <hr style={{ color: "white" }} />
           <Box className="nav-pages">
             <Box
@@ -164,7 +201,10 @@ export default function Navbar() {
               className=" pt-2 pb-2"
               onClick={() => {
                 if (!token) {
+                dispatch(clickTab(false))
+
                   dispatch(toggleLoginDialog());
+
                 } else {
                   navigate("/game-type/favorite");
                 }
@@ -278,6 +318,8 @@ export default function Navbar() {
             className="nav-game-log pt-2 pb-2"
             onClick={() => {
               if (!token) {
+                dispatch(clickTab(false))
+
                 dispatch(toggleLoginDialog());
               } else {
                 socket?.emit("getGameLog");
