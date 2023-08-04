@@ -203,6 +203,7 @@ import top2 from "../assets/imagesLayout/popup/top2.png";
 import top3 from "../assets/imagesLayout/popup/top3.png";
 import goldleaderboard from "../assets/imagesLayout/popup/Gold.png";
 import bg01 from "../assets/imagesLayout/popup/bg01.png";
+import packageicon from '../assets/imagesLayout/popup/Group.svg'
 
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 
@@ -377,6 +378,7 @@ export const popup = {
   FavoriteActiveIcon: FavoriteActiveIcon,
   HomeActiveIcon: HomeActiveIcon,
   ticket: ticket,
+  packageicon:packageicon
 };
 
 export const sign = {
