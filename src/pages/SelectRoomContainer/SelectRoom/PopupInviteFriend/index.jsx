@@ -161,7 +161,7 @@ export default function PopupInviteFriend({ roomIdSelect }) {
                   }}
                 >
                   {e?.userName && e?.userName?.length > 12
-                    ? e?.userName.slice(0, 11) + "..."
+                    ? e?.userName?.slice(0, 11) + "..."
                     : e?.userName}
                 </Box>
                 <Box

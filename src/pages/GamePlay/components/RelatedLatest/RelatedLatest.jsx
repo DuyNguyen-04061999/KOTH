@@ -135,11 +135,11 @@ export default function RelatedLatest() {
                   </TableHead>
                   <TableBody>
                     {rows
-                      .slice(
+                      ?.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
-                      .map((row, i_) => {
+                      ?.map((row, i_) => {
                         return (
                           <TableRow role="checkbox" tabIndex={-1} key={i_}>
                             {columns.map((column, i) => {

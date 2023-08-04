@@ -143,7 +143,7 @@ export default function ComponentChat() {
                           marginLeft: "0px !important",
                         }}
                       >
-                        {e?.messageGameName.slice(0, 10) + `...`}
+                        {e?.messageGameName?.slice(0, 10) + `...`}
                       </span>
                       <span className="text-white font-weight-bold">
                         Price: {e?.messageBetPrice}
@@ -330,11 +330,9 @@ export default function ComponentChat() {
                               sx={{
                                 color: "white",
                                 fontWeight: "bold",
-                                // textAlign: "left",
-                                // marginLeft: "0px !important",
                               }}
                             >
-                              {e?.messageGameName.slice(0, 10) + `...`}
+                              {e?.messageGameName?.slice(0, 10) + `...`}
                             </Typography>
                             <span className="text-white font-weight-bold">
                               Price: {e?.betGameInvite}

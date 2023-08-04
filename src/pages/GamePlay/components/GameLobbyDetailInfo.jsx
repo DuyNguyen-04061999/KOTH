@@ -14,6 +14,7 @@ import {
 } from "../../../utils/config";
 import { useNavigate } from "react-router-dom";
 import "../../GamePlay/scss/GameLobbyDetailInfi.scss";
+import { images2 } from "../../../utils/images";
 
 export default function GameLobbyDetailInfo() {
   const { detailGame, listFavoriteGame, listLikeGame, listDislikeGame } =
@@ -155,6 +156,7 @@ export default function GameLobbyDetailInfo() {
         <TitleHomeDesktopComponent
           noicon={true}
           title={detailGame?.gameName?.toUpperCase()}
+          overBg={images2.popuptext}
           noSeeAll={true}
         />
       </Box>

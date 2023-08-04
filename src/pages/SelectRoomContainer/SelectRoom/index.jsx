@@ -3326,7 +3326,7 @@ export default function SelectRoom() {
                                   ?.username
                               : JSON.parse(
                                   roomDetailInfo?.membersInRoom
-                                )[1]?.username.slice(0, 12) + "..."
+                                )[1]?.username?.slice(0, 12) + "..."
                             : ""}
                         </Typography>
                         <Box

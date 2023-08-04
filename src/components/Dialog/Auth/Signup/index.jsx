@@ -13,7 +13,7 @@ export default function Signup(props) {
   const { handleTab } = props;
   const [gender] = useState(0);
   const { registerValue } = useSelector((state) => state.authReducer);
-  const [blur, setBlur] = useState(false);
+  // const [blur, setBlur] = useState(false);
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -233,10 +233,10 @@ export default function Signup(props) {
             placeholder="Password"
             autoComplete="new-password"
             onChange={(e) => {
-              setBlur(false);
+              // setBlur(false);
               setPassword(e.target.value);
             }}
-            onBlur={() => setBlur(true)}
+            // onBlur={() => setBlur(true)}
             value={password}
             sx={{
               "&:before": {
@@ -315,7 +315,7 @@ export default function Signup(props) {
             <span className="text-danger">no more than 15 characters</span>
           )}
           {c_password && c_password.length < 6 && (
-            <span className="text-danger">Password must be 6 characters or more</span>
+            <span className="text-danger">Password does not match</span>
           )}
            {passSai === true ? (
             <span className="text-danger">pass not march</span>

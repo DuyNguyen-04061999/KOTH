@@ -167,8 +167,8 @@ export default function ChatFriendList() {
                   {e?.userName}
                 </h5>
                 <span style={{ color: "#9b9acf", fontWeight: "bold" }}>
-                  {e?.receiveMessages?.map((e_m) =>
-                    <span>{e_m?.messageContent.slice(0,15)}</span>
+                  {e?.receiveMessages?.map((e_m, i_e_m) =>
+                    <span key={i_e_m}>{e_m?.messageContent?.slice(0,15)}</span>
                   )}
                 </span>
               </Box>
@@ -183,10 +183,12 @@ export default function ChatFriendList() {
                 }}
               >
                 {e?.receiveMessages?.length > 0
-                  ? e?.receiveMessages?.map((e_m) =>
-                      moment(e_m?.updatedAt).format("HH:mm")
+                  ? e?.receiveMessages?.map((e_m, i_e_m) =>
+                      <span key={i_e_m}>{moment(e_m?.updatedAt).format("HH:mm")}</span>
                     )
-                  : moment(e?._gg_koth_user_friends?.createdAt).format("HH:mm")}
+                  : <span>
+                      {moment(e?._gg_koth_user_friends?.createdAt).format("HH:mm")}
+                    </span>}
               </span>
             </Box>
           </Box>

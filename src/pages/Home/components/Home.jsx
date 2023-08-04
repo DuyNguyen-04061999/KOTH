@@ -1194,7 +1194,7 @@ export default function Home() {
                               />
                               <div className="desc">
                                 <h6 className="user text-white">
-                                  {lb.userName.slice(0,8) || `Gad_Game_${i_lb}`}
+                                  {lb?.userName?.slice(0,8) || `Gad_Game_${i_lb}`}
                                 </h6>
                                 <div className="gold mt-2">
                                   <img
@@ -1208,7 +1208,7 @@ export default function Home() {
                                       fontSize: 12,
                                     }}
                                   >
-                                    {formatMoney(lb?.userGold).slice(0, 7) +
+                                    {formatMoney(lb?.userGold)?.slice(0, 7) +
                                       "..."}
                                   </p>
                                 </div>
@@ -1286,7 +1286,7 @@ export default function Home() {
                               height={18}
                               className="me-2 rounded-circle"
                             />
-                            {row.userName.slice(0,10) ||
+                            {row?.userName?.slice(0,10) ||
                               `GadGame${index === 0 ? 1 : index + 1}` }
                           </TableCell>
                           <TableCell
@@ -1300,7 +1300,7 @@ export default function Home() {
                               height={15}
                               className="me-1"
                             />
-                            {formatMoney(row.userGold).slice(0,8)}
+                            {formatMoney(row.userGold)?.slice(0,8)}
                           </TableCell>
                         </TableRow>
                       ))}

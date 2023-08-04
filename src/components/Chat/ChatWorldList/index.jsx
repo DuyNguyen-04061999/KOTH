@@ -187,7 +187,7 @@ export default function ChatWorldList() {
                             fontWeight: "bold",
                           }}
                         >
-                          {e?.messageGameName.slice(0, 10) + `...`}
+                          {e?.messageGameName?.slice(0, 10) + `...`}
                         </span>
                         <span className="text-white font-weight-bold">
                           Price: {e?.messageBetPrice}
@@ -382,7 +382,7 @@ export default function ChatWorldList() {
                                   fontWeight: "bold",
                                 }}
                               >
-                                {e?.messageGameName.slice(0, 10) + `...`}
+                                {e?.messageGameName?.slice(0, 10) + `...`}
                               </span>
                               <span className="text-white font-weight-bold">
                                 Price: {e?.messageBetPrice}

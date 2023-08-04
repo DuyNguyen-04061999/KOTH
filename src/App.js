@@ -228,7 +228,10 @@ function App() {
             lastName: data?.userLastName,
           })
         );
-        store.dispatch(showAlert("success", "Update profile successfully!"));
+        window.location.reload()
+        setTimeout(() => {
+          store.dispatch(showAlert("success", "Update profile successfully!"));
+        }, 3000)
       });
 
       socket?.on("getListMessageSuccess", (data) => {
