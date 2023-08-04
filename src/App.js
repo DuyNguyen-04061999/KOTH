@@ -113,7 +113,6 @@ function App() {
     if (socket) {
       socket.once("connect", (data) => {});
       socket?.on("loginSuccess", (mess, token, key, user, password) => {
-        console.log("Success");
         store.dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
         store.dispatch(
           saveDataLogin({
@@ -350,14 +349,14 @@ function App() {
       socket?.on("heartbeat", (data) => {});
 
       socket?.on("error", (data) => {
-        console.log("Error: ", data);
         store.dispatch(showAlert("error", data));
         store.dispatch(updateProfileFail());
       });
+
       socket?.on("warning", (data) => {
-        console.log("Warning: ", data);
         store.dispatch(showAlert("warning", data));
       });
+      
       socket?.on("success", (data) => {
         store.dispatch(showAlert("success", data));
       });

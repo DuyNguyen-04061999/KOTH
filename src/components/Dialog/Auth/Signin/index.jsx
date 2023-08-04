@@ -61,7 +61,7 @@ function SimpleDialog(props) {
   };
   useEffect(() => {
     socket?.on("loginError", (data) => {
-      console.log("Login Error: ", data);
+      
     });
   }, [socket, dispatch]);
   const handleChangeUsername = (e) => {

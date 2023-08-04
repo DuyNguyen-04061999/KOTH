@@ -139,7 +139,6 @@ export default function ChatFriendList() {
       } else return x || y
     })
 
-    console.log(list);
     setListFriendSort(list)
   }, [listFriend])
 

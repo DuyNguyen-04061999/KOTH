@@ -54,6 +54,9 @@ export default function DialogWallet(props) {
   const [wrapperWidth, setWrapperWidth] = useState();
   const { userGold } = useSelector((state) => state.authReducer);
   const [recovery, setRecovery] = useState(false);
+  const [transactionRecoverId, setTransactionRecoverId] = useState(0);
+  const [Txh, setTxh] = useState("")
+
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
   );
@@ -1105,9 +1108,10 @@ export default function DialogWallet(props) {
                         Receivable
                       </StyledTableCell>
                     )}
-                    {width > 576 && (
+                    {/* {width > 576 && (
                       <StyledTableCell align="center">Actions</StyledTableCell>
-                    )}
+                    )} */}
+                    <StyledTableCell align="center">Actions</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 {transactions.length > 0 ? (
@@ -1204,7 +1208,7 @@ export default function DialogWallet(props) {
                             </Box>
                           </StyledTableCell>
                         )}
-                        {width > 576 && (
+                        {/* {width > 576 && (
                           <StyledTableCell align="center">
                             <Box
                               component={"span"}
@@ -1221,7 +1225,7 @@ export default function DialogWallet(props) {
                               >
                                 Detail
                               </button>
-                              {transaction?.transactionStatus === "pending" && (
+                              {transaction?.transactionStatus === "process" && (
                                 <button
                                   onClick={() => {
                                     setRecovery(true);
@@ -1232,7 +1236,36 @@ export default function DialogWallet(props) {
                               )}
                             </Box>
                           </StyledTableCell>
-                        )}
+                        )} */}
+                        <StyledTableCell align="center">
+                          <Box
+                            component={"span"}
+                            sx={{
+                              color: "#51539c",
+                              fontWeight: "bold",
+                            }}
+                            className="d-flex align-items-center justify-content-center"
+                          >
+                            <span
+                              onClick={() => {
+                                handleTransactionDialog(transaction);
+                              }}
+                            >
+                              Detail
+                            </span>
+                            {transaction?.transactionStatus === "process" && transaction?.transactionType === "deposit" && (
+                              <span
+                                className="ms-2"
+                                onClick={() => {
+                                  setRecovery(true);
+                                  setTransactionRecoverId(transaction?.id)
+                                }}
+                              >
+                                Recover
+                              </span>
+                            )}
+                          </Box>
+                        </StyledTableCell>
                       </StyledTableRow>
                     ))}
                   </TableBody>
@@ -1246,6 +1279,8 @@ export default function DialogWallet(props) {
                 open={recovery}
                 onClose={() => {
                   setRecovery(false);
+                  setTransactionRecoverId(0)
+                  setTxh("")
                 }}
               >
                 <Box
@@ -1258,8 +1293,8 @@ export default function DialogWallet(props) {
                   }}
                 >
                   {" "}
-                  <Input sx={{ width: "90%" }} />
-                  <button>Send</button>
+                  <Input sx={{ width: "90%" }} placeholder="Txh" value={Txh} onChange={(e) => setTxh(e?.target?.value)}/>
+                  <span onClick={() => socket?.emit("recoverTransaction", { transactionId: transactionRecoverId, Txh: Txh })}>Send</span>
                 </Box>
               </Dialog>
             </TableContainer>

@@ -68,6 +68,8 @@ export default function NavMobile() {
                 >
                   <div
                     onClick={() => {
+                      setOpenSearch(false);
+                      setOpenMenu(false)
                       navigate("/game-type/favorite");
                     }}
                   >
@@ -115,6 +117,7 @@ export default function NavMobile() {
                   }}
                   onClick={() => {
                     setOpenSearch(true);
+                    setOpenMenu(false)
                   }}
                 >
                   <div>
@@ -134,6 +137,8 @@ export default function NavMobile() {
                   }}
                   onClick={() => {
                     setOpenMess(true);
+                    setOpenSearch(false);
+                    setOpenMenu(false)
                   }}
                 >
                   <div>

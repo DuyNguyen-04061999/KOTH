@@ -25,7 +25,7 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
       setReward(data.value);
     });
   }, [socket]);
-  console.log(type);
+  
   return (
     <>
       {/* <Dialog

@@ -288,19 +288,38 @@ const FAQPageComponent = () => {
     );
   };
 
+  function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
   const renderFaq = () => {
     if (tabFaq === "Global") {
       return (
         <>
           {dataGlobal.map((e, index) => {
+            const as = isJson(e?.faqAnswer) ? JSON.parse(e?.faqAnswer) : []
             return (
               <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
+                {e?.faqAnswer && isJson(e?.faqAnswer) && as?.length > 0 ? (
+                  <>
+                    { as?.map((a, i_a) => (
+                      <Typography key={i_a} variant="subtitle1" sx={{ color: "#9287c4" }}>
+                        {a}
+                      </Typography>
+                    )) }
+                  </>
+                ) : 
                 <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
                   - {e.answer || e?.faqAnswer}
-                </Typography>
+                </Typography>}
               </div>
             );
           })}
@@ -310,14 +329,24 @@ const FAQPageComponent = () => {
       return (
         <>
           {dataAccount.map((e, index) => {
+            const as = isJson(e?.faqAnswer) ? JSON.parse(e?.faqAnswer) : []
             return (
               <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
+                {e?.faqAnswer && isJson(e?.faqAnswer) && as?.length > 0 ? (
+                  <>
+                    { as?.map((a, i_a) => (
+                      <Typography key={i_a} variant="subtitle1" sx={{ color: "#9287c4" }}>
+                        {a}
+                      </Typography>
+                    )) }
+                  </>
+                ) : 
                 <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
                   - {e.answer || e?.faqAnswer}
-                </Typography>
+                </Typography>}
               </div>
             );
           })}
@@ -327,14 +356,24 @@ const FAQPageComponent = () => {
       return (
         <>
           {dataWallet.map((e, index) => {
+            const as = isJson(e?.faqAnswer) ? JSON.parse(e?.faqAnswer) : []
             return (
               <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
+                {e?.faqAnswer && isJson(e?.faqAnswer) && as?.length > 0 ? (
+                  <>
+                    { as?.map((a, i_a) => (
+                      <Typography key={i_a} variant="subtitle1" sx={{ color: "#9287c4" }}>
+                        {a}
+                      </Typography>
+                    )) }
+                  </>
+                ) : 
                 <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
-                  {e.answer || e?.faqAnswer}
-                </Typography>
+                  - {e.answer || e?.faqAnswer}
+                </Typography>}
               </div>
             );
           })}
@@ -344,14 +383,24 @@ const FAQPageComponent = () => {
       return (
         <>
           {dataGames.map((e, index) => {
+            const as = isJson(e?.faqAnswer) ? JSON.parse(e?.faqAnswer) : []
             return (
               <div key={index} style={{ padding: "5px 15px" }}>
                 <Typography variant="h6">
                   {e.question || e?.faqQuestion}
                 </Typography>
+                {e?.faqAnswer && isJson(e?.faqAnswer) && as?.length > 0 ? (
+                  <>
+                    { as?.map((a, i_a) => (
+                      <Typography key={i_a} variant="subtitle1" sx={{ color: "#9287c4" }}>
+                        {a}
+                      </Typography>
+                    )) }
+                  </>
+                ) : 
                 <Typography variant="subtitle1" sx={{ color: "#9287c4" }}>
-                  {e.answer || e?.faqAnswer}
-                </Typography>
+                  - {e.answer || e?.faqAnswer}
+                </Typography>}
               </div>
             );
           })}
@@ -375,7 +424,6 @@ const FAQPageComponent = () => {
             sx={{
               color: "#9485b7",
               backgroundColor: "#302642",
-              // borderRight: "5px solid #1a151e",
             }}
           >
             {renderTitle()}

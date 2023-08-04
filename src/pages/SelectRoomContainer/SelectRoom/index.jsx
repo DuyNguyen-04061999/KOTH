@@ -554,7 +554,7 @@ export default function SelectRoom() {
         dispatch(
           updateUserGold(Number.parseFloat(userGold) + Number.parseFloat(earn))
         );
-        console.log("Ern: ", earn);
+        
         // dispatch(showAlert("success", "You are winner!"));
         dispatch(setSelectNav());
         setStartGame(false);
