@@ -90,6 +90,9 @@ export default function UnityGameComponent(props) {
     sendMessage("Object Spawner", "SetToken", token);
     sendMessage("Object Spawner", "SetRoomName", roomId);
     sendMessage("Object Spawner", "StartGame", "Start");
+    sendMessage("GameplayScene", "SetToken", token);
+    sendMessage("GameplayScene", "SetRoomName", roomId);
+    sendMessage("GameplayScene", "StartGame", "Start");
 
     sendMessage("MenuManager", "SetToken", token);
     sendMessage("MenuManager", "SetRoom", roomId);
