@@ -49,7 +49,7 @@ export default function JoinTournament() {
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
   const { width } = useWindowDimensions();
-  const { isBuyTicket } = useSelector((state) => state.tournamentReducer)
+  
   const dispatch = useDispatch()
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true))
@@ -143,7 +143,6 @@ export default function JoinTournament() {
       });
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
-      console.log("startgame");
       setStartGame(true);
       if (orientation === "landscape") {
         setVideoGame(true);
@@ -1207,8 +1206,6 @@ export default function JoinTournament() {
         ) : (
           <JoinTournamentMobile
             handleOnClickStartGame={() => {
-              console.log(123);
-              console.log(id);
               socket?.emit("startGameInTournament", {
                 tournamentId: id,
               });

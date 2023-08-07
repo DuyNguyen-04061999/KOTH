@@ -403,7 +403,7 @@ function App() {
     if (token) {
       socket.emit("listPackage");
     }
-  }, []);
+  }, [socket, token]);
 
   useEffect(() => {
     store.dispatch(getListBet());

@@ -17,10 +17,6 @@ export default function BuyTicket(props) {
   const [ticketBuy, setTicketBuy] = useState([]);
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
-  console.log(listPackage);
-  const handleClickOpen = () => {
-    dispatch(toggleBuyTicket(true));
-  };
 
   const handleClose = () => {
     dispatch(toggleBuyTicket(false));
@@ -29,16 +25,12 @@ export default function BuyTicket(props) {
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
-    listPackage.map((i) => {
-      if (i.packageName === "Ticket Play") {
-        setTicketBuy(i);
-      }
-    });
-  });
+    const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
+    setTicketBuy(tP && tP?.length > 0 ? tP[0] : null)
+  }, [listPackage]);
 
   return (
     <Box>
-      {/* <button onClick={handleClickOpen}>next</button> */}
       <Dialog
         open={isBuyTicket}
         onClose={handleClose}

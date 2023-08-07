@@ -7,14 +7,12 @@ import { useEffect, useState } from "react";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { images280423_l } from "../../../utils/images280423_l";
 import { useSelector } from "react-redux";
-import _ from "lodash"
 
 export default function Package() {
   const { width } = useWindowDimensions();
   const {listPackage} = useSelector((state) => state.appReducer)
   const { token } = useSelector((state) => state.authReducer)
   
-  const [dataPackage,setPackage] = useState([])
   const [socket,setSocket] = useState(null)
   useEffect(() => {
     const socket = _socket;
@@ -25,20 +23,7 @@ export default function Package() {
     if(token) {
       socket?.emit("listPackage")
     }
-  }, [token])
-
-  // useEffect(() => {
-  //   socket?.on("getListPackageSuccess", (data) => {
-  //     const newArr = data.slice(0, -1)
-  //     setPackage(newArr)
-  //   })
-  //   socket?.emit("listPackage")
-  //   socket?.on("buyPackageSuccess", (data) => {
-  //     console.log(data);
-  //   })
-  // },[socket])
-
-  
+  }, [token, socket])
 
   return (
     <>
