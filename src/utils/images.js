@@ -76,6 +76,8 @@ import WarningIcon from "../assets/images/WarningIcon.png";
 import closeWarningButton from "../assets/images/closeWarningButton.png";
 import successIcon from "../assets/images/successIcon.png";
 import successCloseButton from "../assets/images/successCloseButton.png";
+import DoubleDragonMobile from "../assets/images/DoubleDragonMobile.png";
+import viewAllButton from "../assets/images/viewAllButton.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -203,7 +205,7 @@ import top2 from "../assets/imagesLayout/popup/top2.png";
 import top3 from "../assets/imagesLayout/popup/top3.png";
 import goldleaderboard from "../assets/imagesLayout/popup/Gold.png";
 import bg01 from "../assets/imagesLayout/popup/bg01.png";
-import packageicon from '../assets/imagesLayout/popup/Group.svg'
+import packageicon from "../assets/imagesLayout/popup/Group.svg";
 
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 
@@ -305,6 +307,8 @@ export const images = {
   closeWarningButton: closeWarningButton,
   successIcon: successIcon,
   successCloseButton: successCloseButton,
+  DoubleDragonMobile: DoubleDragonMobile,
+  viewAllButton: viewAllButton,
 };
 
 export const images2 = {
@@ -378,7 +382,7 @@ export const popup = {
   FavoriteActiveIcon: FavoriteActiveIcon,
   HomeActiveIcon: HomeActiveIcon,
   ticket: ticket,
-  packageicon:packageicon
+  packageicon: packageicon,
 };
 
 export const sign = {
