@@ -37,6 +37,7 @@ import { images } from "../../../utils/images";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import TransactionDetailDialog from "../../Dialog/TransactionDetail";
 import { Web3 } from "web3";
+import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -405,19 +406,25 @@ export default function DialogWallet(props) {
                   }}
                   disabled={isLoadingDeposit}
                   onClick={() => {
-                    if (amountDeposit >= 50 && amountDeposit <= 5000) {
-                      setLoadingDeposit(true);
-                      setTimeout(() => {
-                        socket?.emit("depositRequest", { amountDeposit });
-                      }, 2000);
+                    const type = process.env.REACT_APP_TYPE_APP
+                    if(type && type === "promote") {
+                      dispatch(getStripe())
                     } else {
-                      dispatch(
-                        showAlert(
-                          "error",
-                          "Please enter amount >= 50 and <= 5000"
-                        )
-                      );
+                      if (amountDeposit >= 50 && amountDeposit <= 5000) {
+                        setLoadingDeposit(true);
+                        setTimeout(() => {
+                          socket?.emit("depositRequest", { amountDeposit });
+                        }, 2000);
+                      } else {
+                        dispatch(
+                          showAlert(
+                            "error",
+                            "Please enter amount >= 50 and <= 5000"
+                          )
+                        );
+                      }
                     }
+                    
                   }}
                 >
                   {isLoadingDeposit ? (

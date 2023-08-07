@@ -71,7 +71,10 @@ import { useTracking } from "./utils/useTracking";
 // import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
-import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
+import {
+  getListBet,
+  getListPackage,
+} from "./redux-saga-middleware/reducers/appReducer";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import AlertComponent from "./components/Alert/AlertComponent";
 import PackagePage from "./pages/PackagePage";
@@ -132,6 +135,7 @@ function App() {
         socket.emit("listFriend");
         socket.emit("getTransaction");
         socket.emit("leaveAllRoom");
+        socket.emit("listPackage");
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -226,10 +230,10 @@ function App() {
             lastName: data?.userLastName,
           })
         );
-        window.location.reload()
+        window.location.reload();
         setTimeout(() => {
           store.dispatch(showAlert("success", "Update profile successfully!"));
-        }, 3000)
+        }, 3000);
       });
 
       socket?.on("getListMessageSuccess", (data) => {
@@ -301,6 +305,12 @@ function App() {
           })
         );
       });
+      socket?.on("getListPackageSuccess", (data) => {
+        store.dispatch(getListPackage(data));
+      });
+
+      socket?.on("buyPackageSuccess", (data) => {});
+
       socket?.on("getLeaderBoardSuccess", (data) => {
         store.dispatch(getLeaderBoardSuccess(data));
       });
@@ -356,9 +366,10 @@ function App() {
       socket?.on("warning", (data) => {
         store.dispatch(showAlert("warning", data));
       });
-      
+
       socket?.on("success", (data) => {
         store.dispatch(showAlert("success", data));
+        
       });
     }
     return () => {
@@ -388,7 +399,11 @@ function App() {
     }
   }, [socket]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (token) {
+      socket.emit("listPackage");
+    }
+  }, []);
 
   useEffect(() => {
     store.dispatch(getListBet());

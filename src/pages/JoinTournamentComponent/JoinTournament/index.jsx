@@ -26,10 +26,12 @@ import { images, video } from "../../../utils/images";
 import { useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
 import { Fragment } from "react";
 import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
+import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
+import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
@@ -46,6 +48,11 @@ export default function JoinTournament() {
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
   const { width } = useWindowDimensions();
+  const { isBuyTicket } = useSelector((state) => state.tournamentReducer)
+  const dispatch = useDispatch()
+  const handleClickOpen = () => {
+    dispatch(toggleBuyTicket(true))
+  };
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
       backgroundColor: "#1f1933",
@@ -395,6 +402,7 @@ export default function JoinTournament() {
                       Play
                     </button>
                     <button
+                      onClick={handleClickOpen}
                       style={{
                         padding: `${parseFloat(width / 150)}px ${parseFloat(
                           width / 45
@@ -1187,6 +1195,7 @@ export default function JoinTournament() {
               </Box>
             </Box>
           </Box>
+          <BuyTicket id={id} />
         </Container>
       ) : (
         <>

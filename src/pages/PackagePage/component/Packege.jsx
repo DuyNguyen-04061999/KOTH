@@ -3,26 +3,43 @@ import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDeskto
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ListPackage from "./ListPackage";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
+import { useEffect, useState } from "react";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { images280423_l } from "../../../utils/images280423_l";
+import { useSelector } from "react-redux";
+import _ from "lodash"
 
 export default function Package() {
   const { width } = useWindowDimensions();
-  const data = [
-    {
-      title: "GOLD",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet nunc et consequat congue. Mauris faucibus dolor sit amet ipsum egestas, viverra euismod orci fringilla. Nulla sollicitudin venenatis eros, et porta dolor luctus sit amet",
-      total: "9$",
-    },
-    {
-      title: "DIAMOND",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet nunc et consequat congue. Mauris faucibus dolor sit amet ipsum egestas, viverra euismod orci fringilla. Nulla sollicitudin venenatis eros, et porta dolor luctus sit amet",
-      total: "15$",
-    },
-    {
-      title: "MERCHANT",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet nunc et consequat congue. Mauris faucibus dolor sit amet ipsum egestas, viverra euismod orci fringilla. Nulla sollicitudin venenatis eros, et porta dolor luctus sit amet",
-      total: "33$",
-    },
-  ];
+  const {listPackage} = useSelector((state) => state.appReducer)
+  const { token } = useSelector((state) => state.authReducer)
+  
+  const [dataPackage,setPackage] = useState([])
+  const [socket,setSocket] = useState(null)
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  },[socket])
+
+  useEffect(() => {
+    if(token) {
+      socket?.emit("listPackage")
+    }
+  }, [token])
+
+  // useEffect(() => {
+  //   socket?.on("getListPackageSuccess", (data) => {
+  //     const newArr = data.slice(0, -1)
+  //     setPackage(newArr)
+  //   })
+  //   socket?.emit("listPackage")
+  //   socket?.on("buyPackageSuccess", (data) => {
+  //     console.log(data);
+  //   })
+  // },[socket])
+
+  
+
   return (
     <>
       <div className="Package-home pb-5 mb-5">
@@ -43,11 +60,11 @@ export default function Package() {
           </Box>
           <Box>
             {width > 576 ? (
-              <ListPackage data={data} />
+              <ListPackage data={listPackage?.filter(item => item?.packageName !== "Ticket Play")} />
             ) : (
               <Box>
                 <ScrollingCarousel>
-                  {data.map((i, index) => {
+                  {listPackage?.filter(item => item?.packageName !== "Ticket Play")?.map((i, index) => {
                     return (
                       <Box key={index} className="ms-2 me-2"
                         sx={{
@@ -79,7 +96,7 @@ export default function Package() {
                               marginTop:"40px"
                             }}
                           >
-                            {i.title}
+                            {i.packageName}
                           </Typography>
                           <hr
                             style={{
@@ -88,7 +105,7 @@ export default function Package() {
                               margin: "2px",
                             }}
                           />
-                          <span className="text-white" style={{marginBottom:"40px"}}>user Pack</span>
+                          <span className="text-white" style={{marginBottom:"40px"}}>{i.packageDescription}</span>
                         </Box>
                         <Box
                           className="bot-desc"
@@ -114,11 +131,16 @@ export default function Package() {
                                 fontSize: "14px",
                               }}
                             >
-                              {i.desc}
+                              {i?.packageDescription}
                             </Typography>
                           </Box>
                           <Box>
                             <button
+                              onClick={() => {
+                                socket.emit("buyPackage", {
+                                  packageId:i?.id,
+                                })
+                              }}
                               style={{
                                 background:
                                   "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
@@ -128,7 +150,8 @@ export default function Package() {
                                 color: "white",
                               }}
                             >
-                              {i.total}
+                              {i.packagePrice}
+                              <img src={images280423_l.gold} alt="..." width={10} height={10} />
                             </button>
                           </Box>
                         </Box>
