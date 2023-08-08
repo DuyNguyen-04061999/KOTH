@@ -32,16 +32,16 @@ const stripeReducer = (
     state = {
         isStripe : [],
         isFetchStripe: false,
-        stripeURL:""
+        stripeURL: ""
     }, action 
 ) => {
     const { type, payload } = action;
     switch (type) {
         case REHYDRATE : return {...state}
         case "GET_STRIPE" : return {...state, isFetchStripe: true}
-        case "GET_STRIPE_SUCCESS" : return {...state, isFetchStripe: false, isStripe: payload}
+        case "GET_STRIPE_SUCCESS" : return {...state, isFetchStripe: false, stripeURL: payload?.paymentLink}
         case "GET_STRIPE_FAIL" : return {...state, isFetchStripe: false}
-        case "GET_STRIPE_URL" : return {...state, stripeURL: payload}
+        case "GET_STRIPE_URL" : return {...state}
         default: return {...state}
     }
 }

@@ -3,15 +3,22 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { popup } from "../../../../utils/images";
 import "./index.scss"
 import FullScreenDialog from "../../../FullScreenDialog";
-import { useDispatch,
-  //  useSelector 
+import { useDispatch, useSelector,
   } from "react-redux";
 import { toggleDialogPromote } from "../../../../redux-saga-middleware/reducers/paymentReducer";
+import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
+import { formatMoney } from "../../../../utils/helper";
+import { useState } from "react";
 
 export default function WalletTypePromote() {
   const { width, height } = useWindowDimensions();
-  // const {isDialogPromote} = useSelector((state) => state.paymentReducer)
   const dispatch = useDispatch()
+  const { userGold } = useSelector(
+    (state) => state.authReducer
+  );
+
+  const [amount, setAmount] = useState(0)
+
   return (
     <>
       <Box
@@ -31,8 +38,6 @@ export default function WalletTypePromote() {
             backgroundRepeat:"no-repeat",
             backgroundSize:"cover",
             backgroundPosition:"center",
-            // backgroundImage:
-            //   "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
             padding: "25px",
           }}
         >
@@ -55,7 +60,9 @@ export default function WalletTypePromote() {
                   position: "relative",
                 }}
               >
-                <input type="text" className="w-100" style={{
+                <input type="text" className="w-100"  defaultValue={userGold &&
+                    Number.parseFloat(userGold) > 0 &&
+                    formatMoney(Number.parseFloat(userGold))} style={{
                     borderRadius:"10px",
                     border:"1px solid gray",
                     height:"40px",
@@ -82,7 +89,7 @@ export default function WalletTypePromote() {
                   <label htmlFor="" className="text-white pb-2" style={{fontSize:"13px",fontWeight:"lighter !important"}}>
                     Currency
                   </label>
-                  <input type="text" placeholder="USD" style={{
+                  <input type="number" placeholder="Enter amount" value={amount} onChange={(e) => setAmount(e?.target?.value)} style={{
                      borderRadius:"10px",
                      border:"1px solid gray",
                      height:"40px",
@@ -98,7 +105,7 @@ export default function WalletTypePromote() {
                   <label htmlFor="" className="text-white pb-2" style={{fontSize:"13px",fontWeight:"lighter !important"}}>
                     Amount
                   </label>
-                  <input type="text" placeholder="USD" style={{
+                  <input type="text" placeholder="USD" disabled style={{
                      borderRadius:"10px",
                      border:"1px solid gray",
                      height:"40px",
@@ -117,15 +124,15 @@ export default function WalletTypePromote() {
           }}>
             <Box className="text-white d-flex justify-content-between">
               <Typography variant="body1" sx={{fontSize:"15px", fontWeight:"lighter !important"}}>Amount</Typography>
-              <Typography variant="body2" sx={{fontSize:"15px", fontWeight:"lighter !important"}}>10 USD</Typography>
+              <Typography variant="body2" sx={{fontSize:"15px", fontWeight:"lighter !important"}}>{userGold && userGold > 0 && formatMoney(Number.parseFloat(userGold + Number.parseFloat(amount)))} USD</Typography>
             </Box>
             <Box className="text-white d-flex justify-content-between" sx={{marginBottom:"20px"}}>
               <Typography variant="body1" sx={{fontSize:"12px", color:"gray",fontWeight:"lighter !important"}}>Amount</Typography>
-              <Typography variant="body2" sx={{fontSize:"12px", color:"gray",fontWeight:"lighter !important"}}>10 USD</Typography>
+              <Typography variant="body2" sx={{fontSize:"12px", color:"gray",fontWeight:"lighter !important"}}>{userGold && userGold > 0 && formatMoney(Number.parseFloat(userGold + Number.parseFloat(amount)))} USD</Typography>
             </Box>
             <Box className="text-white d-flex justify-content-between">
               <Typography variant="body1" sx={{fontWeight:"lighter !important"}}>Amount</Typography>
-              <Typography variant="body2" sx={{fontWeight:"lighter !important"}}>10 USD</Typography>
+              <Typography variant="body2" sx={{fontWeight:"lighter !important"}}>{userGold && userGold > 0 && formatMoney(Number.parseFloat(userGold + Number.parseFloat(amount)))} USD</Typography>
             </Box>
           </Box>
           <Box sx={{
@@ -137,7 +144,7 @@ export default function WalletTypePromote() {
               <label htmlFor="" className="text-white mb-2" style={{fontSize:"13px",fontWeight:"lighter !important"}}>
                 Payment method
               </label>
-              <input type="text" className="w-100" style={{
+              <input type="text" className="w-100" defaultValue="Stripe" disabled style={{
                  borderRadius:"10px",
                  border:"1px solid gray",
                  height:"40px",
@@ -161,7 +168,7 @@ export default function WalletTypePromote() {
             paddingTop:"10px",
             paddingBottom:"30px"
           }}>
-            <input type="checkbox" className="me-2 mt-1" style={{borderRadius:"50px"}}/>
+            <input type="checkbox" className="me-2 mt-1" style={{borderRadius:"50px"}} checked readOnly/>
             <Box className="text-white" sx={{fontSize:"14px",fontWeight:"lighter !important"}}>
               I agree with Interchain{" "}
               <span style={{ color: "#A57FF6", fontSize:"14px",fontWeight:"lighter !important" }}>Terms & Agreement</span>{" "}
@@ -180,6 +187,9 @@ export default function WalletTypePromote() {
                 fontWeight: "bolder",
                 backgroundImage: "linear-gradient(#893aef,#7547ee)",
                 fontSize:"15px"
+              }}
+              onClick={() => {
+                dispatch(getStripe(Number.parseFloat(amount)))
               }}
             >
               Continue

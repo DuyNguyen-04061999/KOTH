@@ -17,15 +17,16 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
     const socket = _socket;
     setSocket(socket);
   }, [dispatch]);
+
   console.log("type: ", type);
+
   useEffect(() => {
     socket?.on("gameWin", ({ type, value }) => {
-      console.log("Win: ", type, value);
       setType(type);
       setReward(value);
     });
     socket?.on("gameDefeated", (data) => {
-      console.log("Defeated: ", data);
+      
       setType(data.type);
       setReward(data.value);
     });
