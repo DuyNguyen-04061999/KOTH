@@ -10,10 +10,10 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import { images280423_l } from "../../../../utils/images280423_l";
 
 export default function BuyTicket(props) {
-  const { id } = props
+  const { id } = props;
   const { isBuyTicket } = useSelector((state) => state.tournamentReducer);
   const { listPackage } = useSelector((state) => state.appReducer);
-  const { type } = useSelector((state) => state.alertReducer)
+  const { type } = useSelector((state) => state.alertReducer);
   const [ticketBuy, setTicketBuy] = useState([]);
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function BuyTicket(props) {
     const socket = _socket;
     setSocket(socket);
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
-    setTicketBuy(tP && tP?.length > 0 ? tP[0] : null)
+    setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage]);
 
   return (
@@ -97,12 +97,12 @@ export default function BuyTicket(props) {
                 onClick={() => {
                   socket.emit("buyPackage", {
                     packageId: ticketBuy.id,
-                    tournamentId: id
+                    tournamentId: id,
                   });
-                  if(type === "errors") {
-                    dispatch(toggleBuyTicket(true))
+                  if (type === "errors") {
+                    dispatch(toggleBuyTicket(true));
                   } else {
-                    dispatch(toggleBuyTicket(false))
+                    dispatch(toggleBuyTicket(false));
                   }
                 }}
                 style={{

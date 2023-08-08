@@ -110,10 +110,6 @@ export default function UnityGameComponent(props) {
       navigate({
         pathname: `/selectroom/${gameId}`,
       });
-    } else if (type === "tournament") {
-      navigate({
-        pathname: `/tournaments`,
-      });
     }
     handleEndGame();
   }, [navigate, unload, handleEndGame, gameId, type]);

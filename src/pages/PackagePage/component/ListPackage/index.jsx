@@ -3,14 +3,14 @@ import { images280423_l } from "../../../../utils/images280423_l";
 import { useEffect, useState } from "react";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 
-export default function ListPackage(props) {    
-  const {data} = props
-  const [socket,setSocket] = useState(null)
+export default function ListPackage(props) {
+  const { data } = props;
+  const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
-  },[socket])
-  
+  }, [socket]);
+
   const renderItem = data.map((i, index) => {
     return (
       <Grid className="item-1" item lg={4} md={6} xs={12} key={index}>
@@ -62,14 +62,19 @@ export default function ListPackage(props) {
               marginBottom: "35px",
             }}
           >
-            <Typography variant="body1" sx={{ color: "#838383", fontWeight:"600", fontSize:"14px" }}>{i.packageDescription}</Typography>
+            <Typography
+              variant="body1"
+              sx={{ color: "#838383", fontWeight: "600", fontSize: "14px" }}
+            >
+              {i.packageDescription}
+            </Typography>
           </Box>
           <Box>
             <button
               onClick={() => {
                 socket.emit("buyPackage", {
-                  packageId:i?.id
-                })
+                  packageId: i?.id,
+                });
               }}
               style={{
                 background:
@@ -78,8 +83,8 @@ export default function ListPackage(props) {
                 padding: "7px 55px",
                 borderRadius: "5px",
                 color: "white",
-                display:"flex",
-                alignItems:"center"
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <span>{i?.packagePrice}</span>

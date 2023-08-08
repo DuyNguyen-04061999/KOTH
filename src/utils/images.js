@@ -78,6 +78,8 @@ import successIcon from "../assets/images/successIcon.png";
 import successCloseButton from "../assets/images/successCloseButton.png";
 import DoubleDragonMobile from "../assets/images/DoubleDragonMobile.png";
 import viewAllButton from "../assets/images/viewAllButton.png";
+import NextButton from "../assets/images/NextButton.png";
+import NextButtonPagination from "../assets/images/NextButtonPagination.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -310,6 +312,8 @@ export const images = {
   successCloseButton: successCloseButton,
   DoubleDragonMobile: DoubleDragonMobile,
   viewAllButton: viewAllButton,
+  NextButton: NextButton,
+  NextButtonPagination: NextButtonPagination,
 };
 
 export const images2 = {
