@@ -49,10 +49,10 @@ export default function JoinTournament() {
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
   const { width } = useWindowDimensions();
-  
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
   const handleClickOpen = () => {
-    dispatch(toggleBuyTicket(true))
+    dispatch(toggleBuyTicket(true));
   };
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
@@ -172,6 +172,7 @@ export default function JoinTournament() {
   }, [detailTournament]);
 
   const handleEndGame = () => {
+    setStartGame(false);
     window.location.reload();
   };
 
@@ -1201,7 +1202,7 @@ export default function JoinTournament() {
                 </Box>
               </Box>
             </Box>
-          <BuyTicket id={id} />
+            <BuyTicket id={id} />
           </Container>
         ) : (
           <JoinTournamentMobile
