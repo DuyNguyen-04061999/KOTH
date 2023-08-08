@@ -21,63 +21,9 @@ export default function Browser(props) {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  const data = [
-    { name: "Home", img: `${images.homeicon}`, link: "/home" },
-    { name: "Spin", img: `${images.luckySpinIncon}`, link: "/luckywheel" },
-    { name: "Favorite", img: `${images.favoriteIcon}`, link: "" },
-    { name: "PVP Games", img: `${images.pvpicon}`, link: "" },
-    { name: "Free To Play", img: `${images.playicon}`, link: "" },
-    { name: "Game Logs", img: `${images.gamelogicon}`, link: "" },
-    { name: "FAQ", img: `${images.home2}`, link: "/FAQ" },
-  ];
 
-  const renderMenu = data.map((e, index) => {
-    return (
-      <li key={index} className="mb-1 p-2 d-flex align-items-center ">
-        <div
-          onClick={() => {
-            handleShowMenu();
-            if (e?.name === "Home") {
-              navigate("/");
-            } else if (e?.name === "FAQ") {
-              navigate("/FAQ");
-            } else if (e?.name === "Favorite") {
-              if (token) {
-                navigate("/game-type/favorite");
-              } else {
-                dispatch(toggleLoginDialog());
-              }
-            } else if (e?.name === "Spin") {
-              if (token) {
-                navigate("/luckywheel");
-              } else {
-                dispatch(toggleLoginDialog());
-              }
-            } else if (e?.name === "Free To Play") {
-              navigate("/game-type/free");
-            } else if (e?.name === "Game Logs") {
-              if (!token) {
-                dispatch(toggleLoginDialog());
-              } else {
-                socket?.emit("getGameLog");
-                dispatch(toggleGameLogDialog());
-              }
-            } else if (e?.name === "PVP Games") {
-              navigate("/game-type/pvp");
-            }
-          }}
-          className="text-white"
-          style={{
-            fontSize: "16px",
-            fontWeight: "700",
-            textDecoration: "none",
-          }}
-        >
-          {e.name}
-        </div>
-      </li>
-    );
-  });
+  const mobileType = process.env.REACT_APP_TYPE_APP || ""
+
 
   return (
     <>
@@ -106,7 +52,134 @@ export default function Browser(props) {
           {/* ------------------------ */}
           <Box className="d-flex justify-content-between pb-5">
             <Box>
-              <ul style={{ paddingLeft: "0px" }}>{renderMenu}</ul>
+              <ul style={{ paddingLeft: "0px" }}>
+                {/* {renderMenu} */}
+                <li className="mb-1 p-2 d-flex align-items-center ">
+                  <div
+                    onClick={() => {
+                      handleShowMenu();
+                      navigate("/home");
+                    }}
+                    className="text-white"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Home
+                  </div>
+                </li>
+                <li className="mb-1 p-2 d-flex align-items-center ">
+                  <div
+                    onClick={() => {
+                      handleShowMenu();
+                      if (token) {
+                        navigate("/luckywheel");
+                      } else {
+                        dispatch(toggleLoginDialog());
+                      }
+                    }}
+                    className="text-white"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Spin
+                  </div>
+                </li>
+                    {mobileType && mobileType === "promote" ? ("") : (
+                      <>
+                        <li className="mb-1 p-2 d-flex align-items-center ">
+                  <div
+                    onClick={() => {
+                      handleShowMenu();
+                      navigate("/game-type/favorite");
+                    }}
+                    className="text-white"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Favorite
+                  </div>
+                </li>
+                <li className="mb-1 p-2 d-flex align-items-center ">
+                  <div
+                    onClick={() => {
+                      handleShowMenu();
+                      navigate("/game-type/pvp");
+                    }}
+                    className="text-white"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      textDecoration: "none",
+                    }}
+                  >
+                    PVP
+                  </div>
+                </li>
+                <li className="mb-1 p-2 d-flex align-items-center ">
+                  <div
+                    onClick={() => {
+                      handleShowMenu();
+                      navigate("/game-type/free");
+                    }}
+                    className="text-white"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Free To Play
+                  </div>
+                </li>
+                <li className="mb-1 p-2 d-flex align-items-center ">
+                  <div
+                    onClick={() => {
+                      handleShowMenu();
+                      if (!token) {
+                        dispatch(toggleLoginDialog());
+                      } else {
+                        socket?.emit("getGameLog");
+                        dispatch(toggleGameLogDialog());
+                      }
+                    }}
+                    className="text-white"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Game Log
+                  </div>
+                </li>
+                      </>
+                    )}
+                <li className="mb-1 p-2 d-flex align-items-center ">
+                  <div
+                    onClick={() => {
+                      handleShowMenu();
+                      navigate("/FAQ");
+                    }}
+                    className="text-white"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      textDecoration: "none",
+                    }}
+                  >
+                    FAQ
+                  </div>
+                </li>
+              </ul>
             </Box>
             <Box>
               <img

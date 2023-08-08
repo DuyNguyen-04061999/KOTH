@@ -135,7 +135,7 @@ export default function Package() {
                                 color: "white",
                               }}
                             >
-                              {i.packagePrice}
+                              {i?.packagePrice}
                               <img src={images280423_l.gold} alt="..." width={10} height={10} />
                             </button>
                           </Box>

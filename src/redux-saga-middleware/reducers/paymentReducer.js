@@ -39,11 +39,19 @@ export const saveTime = (data) => {
   }
 }
 
+export const toggleDialogPromote = (data) => {
+  return {
+    type : "TOGGLE_DIALOG_PROMOTE",
+    payload: data 
+  }
+}
+
 const paymentReducer = (
   state = {
     withdrawData: [],
     despositData: [],
-    timeTrans:[]
+    timeTrans:[],
+    isDialogPromote:false
   },
   action
 ) => {
@@ -84,6 +92,12 @@ const paymentReducer = (
       return {
         ...state,
         timeTrans:payload
+      }
+    }
+    case "TOGGLE_DIALOG_PROMOTE" : {
+      return {
+        ...state,
+        isDialogPromote: !state.isDialogPromote
       }
     }
     default:

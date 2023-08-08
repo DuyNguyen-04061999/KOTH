@@ -2,7 +2,14 @@ import { API } from "../axios/api";
 
 class StripeService {
     async getStripe(dataRequest) {
-        const res = await API.get("/api/payments/stripe")
+        console.log("data", dataRequest);
+        const res = await API.post("/api/payments/stripe", {
+            quantity: dataRequest
+        } , {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
         return res
     }
 }

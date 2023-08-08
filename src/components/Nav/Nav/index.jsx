@@ -21,6 +21,9 @@ export default function Navbar() {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
+  const appType = process.env.REACT_APP_TYPE_APP || ""
+
   return (
     <Box className="nav-section">
       <Box
@@ -188,126 +191,129 @@ export default function Navbar() {
               Package
             </span>
           </Box>
+          {appType && appType === "promote" ? ("") : (
+             <Box className="nav-pages">
+             <hr style={{ color: "white" }} />
+               <Box
+                 sx={{
+                   cursor: "pointer",
+                   display: "flex",
+                   alignItems: "center",
+                   justifyContent: isNav === true ? "flex-start" : "center",
+                   transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                 }}
+                 className=" pt-2 pb-2"
+                 onClick={() => {
+                   if (!token) {
+                   dispatch(clickTab(false))
+   
+                     dispatch(toggleLoginDialog());
+   
+                   } else {
+                     navigate("/game-type/favorite");
+                   }
+                 }}
+               >
+                 <img
+                   src={images.favoriteIcon}
+                   alt="..."
+                   className="p-1 me-1"
+                   width={28}
+                   height="auto"
+                 />
+                 <span
+                   className="hover-nav"
+                   style={{
+                     display: isNav === true ? "block" : "none",
+                     cursor: "pointer",
+                     fontWeight: "700",
+                     fontSize: "15px",
+                     marginLeft: "5px",
+                     textOverflow: "ellipsis",
+                     whiteSpace: "nowrap",
+                     overflow: "hidden",
+                   }}
+                 >
+                   Favorite Games
+                 </span>
+               </Box>
+               <Box
+                 sx={{
+                   cursor: "pointer",
+                   display: "flex",
+                   alignItems: "center",
+                   justifyContent: isNav === true ? "flex-start" : "center",
+                   transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                 }}
+                 className=" pt-2 pb-2"
+                 onClick={() => {
+                   navigate("/game-type/pvp");
+                 }}
+               >
+                 <img
+                   src={images.pvpicon}
+                   alt="..."
+                   className="p-1 me-1"
+                   width={28}
+                   height="auto"
+                 />
+                 <span
+                   className="hover-nav"
+                   style={{
+                     display: isNav === true ? "block" : "none",
+                     cursor: "pointer",
+                     fontWeight: "700",
+                     fontSize: "15px",
+                     marginLeft: "5px",
+                     textOverflow: "ellipsis",
+                     whiteSpace: "nowrap",
+                     overflow: "hidden",
+                   }}
+                 >
+                   PVP Games
+                 </span>
+               </Box>
+               <Box
+                 sx={{
+                   cursor: "pointer",
+                   display: "flex",
+                   alignItems: "center",
+                   justifyContent: isNav === true ? "flex-start" : "center",
+                   transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                 }}
+                 className=" pt-2 pb-2"
+                 onClick={() => {
+                   navigate("/game-type/free");
+                 }}
+               >
+                 <img
+                   src={images.playicon}
+                   alt="..."
+                   className="p-1 me-1"
+                   width={28}
+                   height={"auto"}
+                 />
+                 <span
+                   className="hover-nav"
+                   style={{
+                     display: isNav === true ? "block" : "none",
+                     cursor: "pointer",
+                     fontWeight: "700",
+                     fontSize: "15px",
+                     marginLeft: "5px",
+                     textOverflow: "ellipsis",
+                     whiteSpace: "nowrap",
+                     overflow: "hidden",
+                   }}
+                 >
+                   Free Games
+                 </span>
+               </Box>
+             </Box>
+          )}
           <hr style={{ color: "white" }} />
-          <Box className="nav-pages">
+          {appType && appType === "promote" ? ("") : (
             <Box
-              sx={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: isNav === true ? "flex-start" : "center",
-                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-              }}
-              className=" pt-2 pb-2"
-              onClick={() => {
-                if (!token) {
-                dispatch(clickTab(false))
-
-                  dispatch(toggleLoginDialog());
-
-                } else {
-                  navigate("/game-type/favorite");
-                }
-              }}
-            >
-              <img
-                src={images.favoriteIcon}
-                alt="..."
-                className="p-1 me-1"
-                width={28}
-                height="auto"
-              />
-              <span
-                className="hover-nav"
-                style={{
-                  display: isNav === true ? "block" : "none",
-                  cursor: "pointer",
-                  fontWeight: "700",
-                  fontSize: "15px",
-                  marginLeft: "5px",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                }}
-              >
-                Favorite Games
-              </span>
-            </Box>
-            <Box
-              sx={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: isNav === true ? "flex-start" : "center",
-                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-              }}
-              className=" pt-2 pb-2"
-              onClick={() => {
-                navigate("/game-type/pvp");
-              }}
-            >
-              <img
-                src={images.pvpicon}
-                alt="..."
-                className="p-1 me-1"
-                width={28}
-                height="auto"
-              />
-              <span
-                className="hover-nav"
-                style={{
-                  display: isNav === true ? "block" : "none",
-                  cursor: "pointer",
-                  fontWeight: "700",
-                  fontSize: "15px",
-                  marginLeft: "5px",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                }}
-              >
-                PVP Games
-              </span>
-            </Box>
-            <Box
-              sx={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: isNav === true ? "flex-start" : "center",
-                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-              }}
-              className=" pt-2 pb-2"
-              onClick={() => {
-                navigate("/game-type/free");
-              }}
-            >
-              <img
-                src={images.playicon}
-                alt="..."
-                className="p-1 me-1"
-                width={28}
-                height={"auto"}
-              />
-              <span
-                className="hover-nav"
-                style={{
-                  display: isNav === true ? "block" : "none",
-                  cursor: "pointer",
-                  fontWeight: "700",
-                  fontSize: "15px",
-                  marginLeft: "5px",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                }}
-              >
-                Free Games
-              </span>
-            </Box>
-          </Box>
-          <hr style={{ color: "white" }} />
-          <Box
             sx={{
               cursor: "pointer",
               display: "flex",
@@ -350,6 +356,7 @@ export default function Navbar() {
               Game Logs
             </span>
           </Box>
+          )}
           <Box
             className="cursor-pointer"
             sx={{

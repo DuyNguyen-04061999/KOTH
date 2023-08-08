@@ -5,11 +5,11 @@ import StripeService from "../services/stripeService";
 const stripeService = new StripeService();
 
 function* getStripeSaga (dataRequest) {
+    console.log(dataRequest);
     try {
         const { payload } = dataRequest
         const res = yield call(stripeService.getStripe, payload)
         const {status, data} = res;
-        console.log(status);
         console.log(data);
         if(status === 200 || status === 201) {
             yield put(getStripeSuccess(data))

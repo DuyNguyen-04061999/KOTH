@@ -38,6 +38,7 @@ import { getFontSizeDependOnWidth } from "../../../utils/config";
 import TransactionDetailDialog from "../../Dialog/TransactionDetail";
 import { Web3 } from "web3";
 import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer";
+import WalletTypePromote from "./WalletTypePromote";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -408,7 +409,7 @@ export default function DialogWallet(props) {
                   onClick={() => {
                     const type = process.env.REACT_APP_TYPE_APP
                     if(type && type === "promote") {
-                      dispatch(getStripe())
+                      dispatch(getStripe(amountDeposit))
                     } else {
                       if (amountDeposit >= 50 && amountDeposit <= 5000) {
                         setLoadingDeposit(true);
@@ -1417,6 +1418,8 @@ export default function DialogWallet(props) {
     );
   };
 
+  const appTypeWallet = process.env.REACT_APP_TYPE_APP
+
   return (
     <>
       <TransactionDetailDialog
@@ -1456,7 +1459,10 @@ export default function DialogWallet(props) {
           },
         }}
       >
-        <Box
+        {appTypeWallet && appTypeWallet === "promote" ? (
+          <WalletTypePromote />
+          ) : (
+          <Box
           className="position-relative"
           ref={div}
           sx={{
@@ -1566,6 +1572,7 @@ export default function DialogWallet(props) {
               : renderWithdraw()}
           </Box>
         </Box>
+        )}
       </Dialog>
     </>
   );

@@ -82,7 +82,7 @@ export default function ListPackage(props) {
                 alignItems:"center"
               }}
             >
-              <span>{i.packagePrice}</span>
+              <span>{i?.packagePrice}</span>
               <img src={images280423_l.gold} alt="..." width={14} height={14} className="ms-1" />
             </button>
           </Box>

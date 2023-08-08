@@ -21,10 +21,18 @@ export const getStripeFail = (data) => {
     }
 }
 
+export const getStripeURL = (data) => {
+    return {
+        type : "GET_STRIPE_URL",
+        payload: data
+    }
+}
+
 const stripeReducer = (
     state = {
         isStripe : [],
-        isFetchStripe: false
+        isFetchStripe: false,
+        stripeURL:""
     }, action 
 ) => {
     const { type, payload } = action;
@@ -33,6 +41,7 @@ const stripeReducer = (
         case "GET_STRIPE" : return {...state, isFetchStripe: true}
         case "GET_STRIPE_SUCCESS" : return {...state, isFetchStripe: false, isStripe: payload}
         case "GET_STRIPE_FAIL" : return {...state, isFetchStripe: false}
+        case "GET_STRIPE_URL" : return {...state, stripeURL: payload}
         default: return {...state}
     }
 }

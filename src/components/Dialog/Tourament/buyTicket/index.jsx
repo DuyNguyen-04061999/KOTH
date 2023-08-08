@@ -114,7 +114,7 @@ export default function BuyTicket(props) {
                   color: "white",
                 }}
               >
-                {ticketBuy.packagePrice}
+                {ticketBuy?.packagePrice}
                 <img
                   src={images280423_l.gold}
                   alt="..."
