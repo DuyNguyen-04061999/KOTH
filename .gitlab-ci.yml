@@ -21,8 +21,8 @@ build:
 deploy:
   stage: deploy
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
-    only:
-      - staging
+  only:
+    - staging
   script:
     - echo "$SERVICE_ACCOUNT" | tr -d '\r' > service-account.json
     - gcloud components update kubectl
