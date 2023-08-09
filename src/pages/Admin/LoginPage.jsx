@@ -9,6 +9,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux'
+import { adminLogin } from '../../redux-saga-middleware_admin/reducers/adminAuthReducer';
+import { CircularProgress } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -25,13 +28,18 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
+  const dispatch = useDispatch()
+  const { isLogin } = useSelector(state => state.adminAuthReducer)
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    if(!isLogin) {
+      dispatch(adminLogin({
+        username: data.get('username'),
+        password: data.get('password'),
+      }))
+    }
   };
 
   return (
@@ -65,18 +73,22 @@ export default function LoginPage() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Log in
-            </Typography>
+            {!isLogin ? (
+              <Typography component="h1" variant="h5">
+                Log in
+              </Typography>
+            ) : (
+              <CircularProgress/>
+            )}
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete='username'
                 autoFocus
               />
               <TextField
