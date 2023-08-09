@@ -1,4 +1,4 @@
-input:focus { 
+.walletPromote:focus { 
     outline: none !important;
     border: 1px solid #853eed !important;
  }
@@ -8,6 +8,83 @@ input:focus {
  }
 
  .radio-check:checked{
-    background-color: green;
-    border-color: green;
+   background-color: green;
+   border-radius: 50%;
+   border: 2px solid green;
+   width:15px;
+   height: 15px;
  }
+
+ .custom-select {
+   appearance: none; /* Remove default appearance */
+   -webkit-appearance: none; /* Remove default appearance for Safari */
+   -moz-appearance: none; /* Remove default appearance for Firefox */
+   // background: url('path-to-your-custom-arrow.png') no-repeat right center; /* Add your custom arrow */
+   padding-right: 20px; /* Adjust padding to make space for the custom arrow */
+ }
+
+ .custom-select:focus{
+   outline: none !important;
+    border: 1px solid #853eed !important;
+ }
+ .input-method:focus{
+   outline: none !important;
+    border: 1px solid #853eed !important;
+    background-color:#371E72 !important;
+    backdrop-filter: blur(2px);
+ }
+
+ .activewl{
+   border: 1px solid #853eed !important;
+   outline: none !important;
+   background-color:#371E72 !important;
+   backdrop-filter: blur(2px);
+ }
+
+
+//  input[type=radio]:checked  {
+//    border: 5px solid #0DFF92;
+//  }
+ 
+//  input[type=radio]:checked  {
+//    background: #0DFF92;
+//  }
+ 
+//  input[type=radio]:checked {
+//    color: #0DFF92;
+//  }
+
+.radio-input {
+   appearance: none;
+   background-color: #ffffff;
+   width: 16px;
+   height: 16px;
+   border: 1px solid #cccfdb;
+   margin: 0;
+   border-radius: 50%;
+   display: grid;
+   align-items: center;
+   justify-content: center;
+   transition: all 0.3s ease;
+ }
+ 
+ .radio-input::before {
+   content: "";
+   width: 6px;
+   height: 6px;
+   border-radius: 50%;
+   transform: scale(0);
+   transition: 0.3s transform ease-in-out;
+   box-shadow: inset 6px 6px #ffffff;
+ }
+ 
+ .radio-input:checked {
+   background: green;
+   border-color: green;
+ }
+ 
+ .radio-input:checked::before {
+   transform: scale(1);
+ }
+ 
+
