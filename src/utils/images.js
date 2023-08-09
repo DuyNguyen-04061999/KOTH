@@ -218,6 +218,8 @@ import packageicon from "../assets/imagesLayout/popup/Group.svg";
 import walletopen from "../assets/imagesLayout/popup/walletopen.png";
 import coin2 from "../assets/imagesLayout/popup/coin2.png";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
+import crown from "../assets/imagesLayout/popup/crown.svg";
+import heart from "../assets/imagesLayout/popup/heart.svg";
 
 export const images = {
   pool: pool,
@@ -405,6 +407,8 @@ export const popup = {
   walletopen: walletopen,
   coin2: coin2,
   proWallet: proWallet,
+  crown: crown,
+  heart: heart,
 };
 
 export const sign = {

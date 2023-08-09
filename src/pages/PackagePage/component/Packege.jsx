@@ -7,23 +7,24 @@ import { useEffect, useState } from "react";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { images280423_l } from "../../../utils/images280423_l";
 import { useSelector } from "react-redux";
+import { popup } from "../../../utils/images";
 
 export default function Package() {
   const { width } = useWindowDimensions();
-  const {listPackage} = useSelector((state) => state.appReducer)
-  const { token } = useSelector((state) => state.authReducer)
-  
-  const [socket,setSocket] = useState(null)
+  const { listPackage } = useSelector((state) => state.appReducer);
+  const { token } = useSelector((state) => state.authReducer);
+
+  const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
-  },[socket])
+  }, [socket]);
 
   useEffect(() => {
-    if(token) {
-      socket?.emit("listPackage")
+    if (token) {
+      socket?.emit("listPackage");
     }
-  }, [token, socket])
+  }, [token, socket]);
 
   return (
     <>
@@ -45,43 +46,116 @@ export default function Package() {
           </Box>
           <Box>
             {width > 576 ? (
-              <ListPackage data={listPackage?.filter(item => item?.packageName !== "Ticket Play")} />
+              <ListPackage
+                data={listPackage?.filter(
+                  (item) => item?.packageName !== "Ticket Play"
+                )}
+              />
             ) : (
-              <Box>
-                <ScrollingCarousel>
-                  {listPackage?.filter(item => item?.packageName !== "Ticket Play")?.map((i, index) => {
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+
+                }}
+              >
+                {/* <ScrollingCarousel> */}
+                {listPackage
+                  ?.filter(
+                    (item) =>
+                      item?.packageName !== "Ticket Play" &&
+                      item?.packageName !== "Merchant"
+                  )
+                  ?.map((i, index) => {
                     return (
-                      <Box key={index} className="ms-2 me-2"
+                      <Box
+                        key={index}
+                        className="ms-2 me-2 p-3"
                         sx={{
-                            width:"300px"
+                          marginBottom: "30px",
+                          backgroundColor:"#0F041D",
+                          backgroundImage:
+                            index === 1
+                              ? "linear-gradient(67deg, #AF30EB 0%, #6438D7 48.02%, #48A8ED 98.14%)"
+                              : "linear-gradient(0deg, rgba(218,163,61,1) 0%, rgba(199,42,89,1) 100%)" &&
+                                index === 2
+                              ? "linear-gradient(67deg, #AF30EB 0%, #6438D7 48.02%, #48A8ED 98.14%)"
+                              : "linear-gradient(67deg, #AF30EB 0%, #6438D7 48.02%, #48A8ED 98.14%)",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "start",
+                          // padding: "50px",
+                          borderRadius: "25px",
+                          width: "300px",
                         }}
                       >
                         <Box
                           className="title"
                           sx={{
-                            background:
-                              index === 1
-                                ? "linear-gradient(0deg, rgba(180,74,226,1) 0%, rgba(112,72,232,1) 100%)"
-                                : "linear-gradient(0deg, rgba(218,163,61,1) 0%, rgba(199,42,89,1) 100%)" &&
-                                  index === 2
-                                ? "linear-gradient(0deg,  rgba(112,143,194,1) 0%, rgba(190,40,109,1) 100%)"
-                                : "linear-gradient(0deg, rgba(218,163,61,1) 0%, rgba(199,42,89,1) 100%)",
                             display: "flex",
                             flexDirection: "column",
-                            alignItems: "center",
-                            // padding: "50px",
-                            borderRadius: "5px 5px 0px 0px",
                           }}
                         >
-                          <Typography
-                            variant="h4"
-                            sx={{
-                              marginBottom: "0px !important",
+                          {index === 0 ? (
+                            <img
+                              src={popup.heart}
+                              alt="..."
+                              width={25}
+                              height={25}
+                              className="mt-1 mb-1"
+                            />
+                          ) : (
+                            <img
+                              src={popup.crown}
+                              alt="..."
+                              width={25}
+                              height={25}
+                              className="mt-1 mb-1"
+                            />
+                          )}
+                          <button
+                            className="mt-1 mb-1"
+                            style={{
+                              border: "none",
+                              borderRadius: "10px",
+                              background: "rgba(182, 153, 255, 0.32)",
+                              backdropFilter: " blur(4px)",
                               color: "white",
-                              marginTop:"40px"
+                              padding: "5px 15px",
+                              fontSize: "14px",
                             }}
                           >
-                            {i.packageName}
+                            BEST SELLER
+                          </button>
+                          <Box
+                            className="mt-1 mb-1"
+                            sx={{
+                              display: "flex",
+                            }}
+                          >
+                            <Typography variant="h5">
+                              ${i?.packagePrice}
+                            </Typography>
+                            <Typography
+                              variant="body1"
+                              sx={{
+                                marginTop: "7px",
+                                fontFamily: "Cyntho",
+                                fontSize: "12px",
+                              }}
+                            >
+                              /month
+                            </Typography>
+                          </Box>
+                          <Typography
+                            className="mt-1 mb-1"
+                            variant="h4"
+                            sx={{
+                              color: "white",
+                            }}
+                          >
+                            {i.packageName} Pack
                           </Typography>
                           <hr
                             style={{
@@ -90,13 +164,17 @@ export default function Package() {
                               margin: "2px",
                             }}
                           />
-                          <span className="text-white" style={{marginBottom:"40px"}}>{i.packageDescription}</span>
+                          <span
+                            className="text-white"
+                            style={{ marginBottom: "40px" }}
+                          >
+                            {i.packageDescription}
+                          </span>
                         </Box>
                         <Box
                           className="bot-desc"
                           sx={{
-                            backgroundColor: "#4a235e",
-                            padding: "40px",
+                            padding: "20px",
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
@@ -123,27 +201,33 @@ export default function Package() {
                             <button
                               onClick={() => {
                                 socket.emit("buyPackage", {
-                                  packageId:i?.id,
-                                })
+                                  packageId: i?.id,
+                                });
                               }}
                               style={{
-                                background:
-                                  "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
                                 border: "none",
-                                padding: "7px 55px",
-                                borderRadius: "5px",
+                                padding: "7px 35px",
+                                borderRadius: "24px",
                                 color: "white",
+                                background: "rgba(182, 153, 255, 0.32)",
+                                backdropFilter: " blur(4px)",
                               }}
                             >
-                              {i?.packagePrice}
-                              <img src={images280423_l.gold} alt="..." width={10} height={10} />
+                              {/* {i?.packagePrice}
+                              <img
+                                src={images280423_l.gold}
+                                alt="..."
+                                width={10}
+                                height={10}
+                              /> */}
+                              Choose plan
                             </button>
                           </Box>
                         </Box>
                       </Box>
                     );
                   })}
-                </ScrollingCarousel>
+                {/* </ScrollingCarousel> */}
               </Box>
             )}
           </Box>

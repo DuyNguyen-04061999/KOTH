@@ -69,7 +69,6 @@ import {
   updateRewardHistory,
 } from "./redux-saga-middleware/reducers/luckyWheelReducer";
 import { useTracking } from "./utils/useTracking";
-// import ErrorBoundary from "./components/CatchError";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import {
@@ -415,7 +414,6 @@ function App() {
     store.dispatch(getListBet());
   });
   return (
-    // <ErrorBoundary>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <CustomRouter history={history}>
@@ -451,7 +449,6 @@ function App() {
         </CustomRouter>
       </PersistGate>
     </Provider>
-    // </ErrorBoundary>
   );
 }
 
