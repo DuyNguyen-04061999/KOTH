@@ -13,8 +13,8 @@ function* login(dataRequest) {
     }
 }
 
-function* appSaga() {
+function* adminAuthSaga() {
     yield takeEvery("ADMIN_LOGIN", login)
 }
 
-export default appSaga
+export default adminAuthSaga

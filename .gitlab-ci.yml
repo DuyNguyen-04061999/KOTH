@@ -20,15 +20,15 @@ build:
     - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} and ${CI_REGISTRY_IMAGE}:latest"
 deploy:
   stage: deploy
-    image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+  image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
     only:
-        - staging
-    script:
-        - echo "$SERVICE_ACCOUNT" | tr -d '\r' > service-account.json
-        - gcloud components update kubectl
-        - gcloud auth activate-service-account --key-file service-account.json
-        - gcloud config set project $GOOGLE_PROJECT_NAME
-        - gcloud config set compute/zone $CLUSTER_LOCATION
-        - gcloud container clusters get-credentials $CLUSTER_NAME
-        - kubectl set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      - staging
+  script:
+    - echo "$SERVICE_ACCOUNT" | tr -d '\r' > service-account.json
+    - gcloud components update kubectl
+    - gcloud auth activate-service-account --key-file service-account.json
+    - gcloud config set project $GOOGLE_PROJECT_NAME
+    - gcloud config set compute/zone $CLUSTER_LOCATION
+    - gcloud container clusters get-credentials $CLUSTER_NAME
+    - kubectl set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
