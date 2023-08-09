@@ -2,9 +2,11 @@ import React from "react";
 import "./index.scss";
 import { Box, Dialog, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import _socket from "../../../redux-saga-middleware/config/socket";
+// import { useState } from "react";
+import { 
+  // useDispatch, 
+  useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function PopUpReward({ open, handleOnCloseReward }) {
   const { width } = useWindowDimensions();
