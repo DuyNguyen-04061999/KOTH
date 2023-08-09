@@ -67,6 +67,7 @@ export default function FullScreenDialog() {
           color="inherit"
           onClick={handleClose}
           aria-label="close"
+          className="justify-content-end"
         >
           <CloseIcon />
         </IconButton>
