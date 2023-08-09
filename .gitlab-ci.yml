@@ -20,21 +20,15 @@ build:
     - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} and ${CI_REGISTRY_IMAGE}:latest"
 deploy:
   stage: deploy
-  image:
-    name: python:3.6
-    entrypoint: ['']
-  only:
-    - staging
-  before_script:
-    - apt-get update
-    - apt-get install -y ca-certificates curl
-    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - chmod +x ./kubectl
-  script:
-    - pip install awscli
-    - aws --version
-    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-    - aws configure set region $AWS_DEFAULT_REGION
-    - ./kubectl --kubeconfig=$KUBE_CONFIG set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    only:
+        - staging
+    script:
+        - echo "$SERVICE_ACCOUNT" | tr -d '\r' > service-account.json
+        - gcloud components update kubectl
+        - gcloud auth activate-service-account --key-file service-account.json
+        - gcloud config set project $GOOGLE_PROJECT_NAME
+        - gcloud config set compute/zone $CLUSTER_LOCATION
+        - gcloud container clusters get-credentials $CLUSTER_NAME
+        - kubectl set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
