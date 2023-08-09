@@ -6,6 +6,7 @@ ENV REACT_APP_END_POINT=https://api.play4promote.com
 ENV REACT_APP_END_POINT_TOURNAMENT=https://api.play4promote.com/api/games/store-score-tournament
 ENV REACT_APP_END_POINT_PVP_BOT=https://api.play4promote.com/api/games/store-score-pvp-bot
 ENV REACT_APP_URL_DOMAIN=api.play4promote.com
+ENV REACT_APP_TYPE_APP=promote
 
 WORKDIR /app
 COPY package.json ./
