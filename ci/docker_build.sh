@@ -1,2 +1,1 @@
-/kaniko/executor --cache=true --snapshotMode=redo --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${CI_REGISTRY_IMAGE}:${IMAGE_PREFIX}${CI_COMMIT_SHA} --destination ${CI_REGISTRY_IMAGE}:${IMAGE_PREFIX}latest
 docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
