@@ -27,6 +27,8 @@ import withdrawPassive from "../assets/images/withdrawPassive.png";
 import withdrawActive from "../assets/images/withdrawActive.png";
 import dogcoin from "../assets/images/dogcoin.png";
 import Doge from "../assets/images/Doge.png";
+import bannerbuyticket from "../assets/images/bannerbuyticket.png";
+import Rectangle from "../assets/images/Rectangle.png";
 import CloseButtonDeposit from "../assets/images/CloseButtonDeposit.png";
 import numberClient from "../assets/images/numberClient.png";
 import goldIcon from "../assets/images/GoldIcon.png";
@@ -80,6 +82,9 @@ import DoubleDragonMobile from "../assets/images/DoubleDragonMobile.png";
 import viewAllButton from "../assets/images/viewAllButton.png";
 import NextButton from "../assets/images/NextButton.png";
 import NextButtonPagination from "../assets/images/NextButtonPagination.png";
+import ticketIcon from "../assets/images/ticketIcon.png";
+import bannerTournament from "../assets/images/bannerTournament.png";
+import GameTournament from "../assets/images/GameTournament.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -128,6 +133,8 @@ import backButton from "../assets/LuckySpin/backbutton.png";
 import BackButtonDesposit from "../assets/images/BackButtonDeposit.png";
 import sendIcon from "../assets/images/sendIcon.png";
 import CheckIcon from "../assets/images/CheckIcon.png";
+import backgroundPrize from "../assets/images/backgroundPrize.png";
+import QRCodeTicket from "../assets/images/QRCodeTicket.png";
 //------------popup---------------
 
 import bookmark1 from "../assets/imagesLayout/popup/bookmark1.png";
@@ -195,7 +202,7 @@ import video2 from "../assets/videoHover/Domino1.mp4";
 import video3 from "../assets/videoHover/Shooter.mp4";
 
 import LogoAnim from "../assets/videoHover/logo-anim version2.mp4";
-import proWallet from "../assets/imagesLayout/popup/13pro.png"
+import proWallet from "../assets/imagesLayout/popup/13pro.png";
 import btnnav from "../assets/imagesDesktop/button.svg";
 import iconleaderboard from "../assets/imagesLayout/popup/icon.png.png";
 import brleaderboard from "../assets/imagesLayout/popup/br.png";
@@ -208,8 +215,8 @@ import top3 from "../assets/imagesLayout/popup/top3.png";
 import goldleaderboard from "../assets/imagesLayout/popup/Gold.png";
 import bg01 from "../assets/imagesLayout/popup/bg01.png";
 import packageicon from "../assets/imagesLayout/popup/Group.svg";
-import walletopen from '../assets/imagesLayout/popup/walletopen.png'
-import coin2 from '../assets/imagesLayout/popup/coin2.png'
+import walletopen from "../assets/imagesLayout/popup/walletopen.png";
+import coin2 from "../assets/imagesLayout/popup/coin2.png";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 
 export const images = {
@@ -314,6 +321,13 @@ export const images = {
   viewAllButton: viewAllButton,
   NextButton: NextButton,
   NextButtonPagination: NextButtonPagination,
+  ticketIcon: ticketIcon,
+  bannerbuyticket: bannerbuyticket,
+  Rectangle: Rectangle,
+  backgroundPrize: backgroundPrize,
+  QRCodeTicket: QRCodeTicket,
+  bannerTournament: bannerTournament,
+  GameTournament: GameTournament,
 };
 
 export const images2 = {
@@ -388,9 +402,9 @@ export const popup = {
   HomeActiveIcon: HomeActiveIcon,
   ticket: ticket,
   packageicon: packageicon,
-  walletopen:walletopen,
-  coin2:coin2,
-  proWallet:proWallet
+  walletopen: walletopen,
+  coin2: coin2,
+  proWallet: proWallet,
 };
 
 export const sign = {
