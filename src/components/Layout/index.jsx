@@ -36,7 +36,10 @@ import {
   closeTransactionDialog,
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
-import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
+import {
+  closeRewardPopup,
+  toggleGameLogDialog,
+} from "../../redux-saga-middleware/reducers/gameReducer";
 import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
 import {
   clickTabChat,
@@ -51,6 +54,7 @@ import {
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
+import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 // import TouramentShow from "../Dialog/Tourament/showBuy";
 // import BuyTicket from "../Dialog/Tourament/buyTicket";
 
@@ -121,10 +125,9 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
-  const {
-    isGameLogDialog,
-    // listGame
-  } = useSelector((state) => state.gameReducer);
+  const { isGameLogDialog, popupReward } = useSelector(
+    (state) => state.gameReducer
+  );
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router } = useSelector((state) => state.appReducer);
   const [showChat] = useState(true);
@@ -243,6 +246,12 @@ export default function Layout(props) {
       }}
     >
       <MetaMaskDialog />
+      <PopUpReward
+        open={popupReward}
+        handleOnCloseReward={() => {
+          dispatch(closeRewardPopup());
+        }}
+      />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {
