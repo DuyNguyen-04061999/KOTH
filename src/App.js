@@ -78,6 +78,7 @@ import {
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import AlertComponent from "./components/Alert/AlertComponent";
 import PackagePage from "./pages/PackagePage";
+import NewHomePageComponent from "./pages/NewHomePageComponent";
 function App() {
   useTracking("");
 
@@ -431,6 +432,7 @@ function App() {
               element={<JoinTournamentComponent />}
             />
             <Route path="/faq" element={<FAQPage />} />
+            <Route path="/new-home" element={<NewHomePageComponent />} />
             <Route path="/countdowntimer" element={<CountDownTimer />} />
             <Route path="list-game-manager" element={<ListGamePage />} />
             <Route path="upload" element={<UploadPage />} />
