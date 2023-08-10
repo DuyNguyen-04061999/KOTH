@@ -134,6 +134,7 @@ export default function TournamentMobile() {
                   </Box>
                 ) : (
                   <Box
+                    key={index}
                     sx={{
                       width: "50%",
                       boxSizing: "border-box",
@@ -240,6 +241,7 @@ export default function TournamentMobile() {
                 {[1, 2, 3, 2, 3, 4, 5].map((item, index) => {
                   return index % 2 === 0 ? (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -287,6 +289,7 @@ export default function TournamentMobile() {
                     </Box>
                   ) : (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",

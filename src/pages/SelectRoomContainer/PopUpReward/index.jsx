@@ -11,7 +11,6 @@ export default function PopUpReward() {
   const { width } = useWindowDimensions();
   const { reward, typeReward, popupReward } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch()
-  console.log(reward, typeReward);
   
   return (
     <>
