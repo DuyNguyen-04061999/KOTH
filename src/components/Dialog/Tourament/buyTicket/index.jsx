@@ -174,7 +174,7 @@ export default function BuyTicket(props) {
                     <Typography
                       sx={{
                         fontSize: "19px",
-                        fontFamily: "Cyntho Next Bold",
+                        fontFamily: "",
                       }}
                     >
                       0.99$

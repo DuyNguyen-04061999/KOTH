@@ -30,6 +30,7 @@ import {
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import moment from "moment";
+import Package from "../../PackagePage/component/Packege";
 
 export default function Home() {
   const { width } = useWindowDimensions();
@@ -1194,7 +1195,8 @@ export default function Home() {
                               />
                               <div className="desc">
                                 <h6 className="user text-white">
-                                  {lb?.userName?.slice(0,8) || `Gad_Game_${i_lb}`}
+                                  {lb?.userName?.slice(0, 8) ||
+                                    `Gad_Game_${i_lb}`}
                                 </h6>
                                 <div className="gold mt-2">
                                   <img
@@ -1286,8 +1288,8 @@ export default function Home() {
                               height={18}
                               className="me-2 rounded-circle"
                             />
-                            {row?.userName?.slice(0,10) ||
-                              `GadGame${index === 0 ? 1 : index + 1}` }
+                            {row?.userName?.slice(0, 10) ||
+                              `GadGame${index === 0 ? 1 : index + 1}`}
                           </TableCell>
                           <TableCell
                             align="left"
@@ -1300,7 +1302,7 @@ export default function Home() {
                               height={15}
                               className="me-1"
                             />
-                            {formatMoney(row.userGold)?.slice(0,8)}
+                            {formatMoney(row.userGold)?.slice(0, 8)}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -1313,7 +1315,8 @@ export default function Home() {
           <div className="container">
             <hr style={{ border: "1px solid #462556" }} />
           </div>
-          <Box className="footer mb-5">
+          <Package />
+          {/* <Box className="footer mb-5">
             <Box className="footer-content" sx={{ marginBottom: "100px" }}>
               <img className="logo-footer" src={images2.logo_text} alt="..." />
               <div className="text-footer">
@@ -1337,7 +1340,7 @@ export default function Home() {
                 </div>
               </Box>
             </Box>
-          </Box>
+          </Box> */}
         </div>
       )}
     </div>

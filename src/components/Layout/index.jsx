@@ -314,8 +314,9 @@ export default function Layout(props) {
           ) : (
             <NavLink to="/home">
               <img
+                style={{ width: "50px", height: "50px" }}
                 className="logocongty"
-                src={imageDesktop.logoCT}
+                src={imageDesktop.LogoCongTy}
                 alt="logocty"
               />
             </NavLink>

@@ -84,6 +84,8 @@ import NextButton from "../assets/images/NextButton.png";
 import NextButtonPagination from "../assets/images/NextButtonPagination.png";
 import ticketIcon from "../assets/images/ticketIcon.png";
 import bannerTournament from "../assets/images/bannerTournament.png";
+import bannerTournament1 from "../assets/images/bannerTournament1.png";
+import bannerTournament2 from "../assets/images/bannerTournament2.png";
 import GameTournament from "../assets/images/GameTournament.png";
 
 //------------image2---------------------
@@ -171,6 +173,7 @@ import homeicon from "../assets/imagesDesktop/home_icon.svg";
 import playicon from "../assets/imagesDesktop/play_icon.svg";
 import pvpicon from "../assets/imagesDesktop/pvp_icon.svg";
 import Notification from "../assets/imagesDesktop/Notification.png";
+import LogoCongTy from "../assets/imagesDesktop/LogoCongTy.png";
 import ticket from "../assets/imagesLayout/popup/ticket.svg";
 
 // import backgroundwallet from "../assets/imagesLayout/popup/01.png";
@@ -220,6 +223,8 @@ import coin2 from "../assets/imagesLayout/popup/coin2.png";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 import crown from "../assets/imagesLayout/popup/crown.svg";
 import heart from "../assets/imagesLayout/popup/heart.svg";
+import checkCircle from "../assets/imagesLayout/popup/check-circle.svg"
+import vecter from '../assets/imagesLayout/popup/Vector.svg'
 
 export const images = {
   pool: pool,
@@ -329,6 +334,8 @@ export const images = {
   backgroundPrize: backgroundPrize,
   QRCodeTicket: QRCodeTicket,
   bannerTournament: bannerTournament,
+  bannerTournament1: bannerTournament1,
+  bannerTournament2: bannerTournament2,
   GameTournament: GameTournament,
 };
 
@@ -409,6 +416,8 @@ export const popup = {
   proWallet: proWallet,
   crown: crown,
   heart: heart,
+  checkCircle:checkCircle,
+  vecter:vecter
 };
 
 export const sign = {
@@ -434,6 +443,7 @@ export const video = {
 export const imageDesktop = {
   SmallBanner2: SmallBanner2,
   logoCT: logoCT,
+  LogoCongTy: LogoCongTy,
 };
 
 export const imagesV2 = {

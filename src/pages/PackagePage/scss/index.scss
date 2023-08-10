@@ -1,0 +1,111 @@
+
+.card {
+    position: relative;
+    width: 270px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    z-index: 1;
+    border-radius: 21px;
+    overflow: hidden;
+  }
+
+  .card__content {
+    // background: linear-gradient(rgba(255, 255, 255, 0.15), rgba(150, 150, 150, 0.1));
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 21px;
+    backdrop-filter: blur(35px);
+    padding: 20px;
+  }
+  
+  .card .blob {
+    position: absolute;
+    z-index: -1;
+    border-radius: 5em;
+    width: 200px;
+    height: 200px;
+    animation-name: blob-animation;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  
+  .card .blob:nth-child(1) {
+    left: -50px;
+    top: -90px;
+    background: #c52791;
+  }
+  
+  .card .blob:nth-child(2) {
+    left: 110px;
+    top: -20px;
+    z-index: -1;
+    background: #f5530d;
+  }
+  
+  .card .blob:nth-child(3) {
+    left: -40px;
+    top: 100px;
+    background: #FF6711;
+  }
+  
+  .card .blob:nth-child(4) {
+    left: 100px;
+    top: 180px;
+    background: #E7A252;
+  }
+  
+  @keyframes blob-animation {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+  
+    50% {
+      transform: translate(10%, 10%) scale(1.1);
+    }
+  
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+  }
+
+  .card .bold {
+    position: absolute;
+    z-index: -1;
+    border-radius: 5em;
+    width: 200px;
+    height: 200px;
+    animation-name: blob-animation;
+    animation-duration: 1.7s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  
+  .card .bold:nth-child(1) {
+    left: -50px;
+    top: -90px;
+    background: #AF30EB;
+  }
+  
+  .card .bold:nth-child(2) {
+    left: 110px;
+    top: -20px;
+    z-index: -1;
+    background: #7224D7 ;
+  }
+  
+  .card .bold:nth-child(3) {
+    left: -40px;
+    top: 100px;
+    background: #AF30EB;
+  }
+  
+  .card .bold:nth-child(4) {
+    left: 100px;
+    top: 180px;
+    background: #53CBFF;
+    filter: blur(60px);
+  }
