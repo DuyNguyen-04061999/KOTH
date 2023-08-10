@@ -55,6 +55,7 @@ import {
   storeFavoriteGame,
   updateListDisLikeGame,
   updateListLikeGame,
+  updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import TypeGamePage from "./pages/TypeGame";
 import { getListGameByType } from "./redux-saga-middleware/reducers/gameReducer";
@@ -368,7 +369,12 @@ function App() {
 
       socket?.on("success", (data) => {
         store.dispatch(showAlert("success", data));
-        
+      });
+      socket?.on("gameWin", ({ type, value }) => {
+        store.dispatch(updateReward({ type, value }));
+      });
+      socket?.on("gameDefeated", ({ type, value }) => {
+        store.dispatch(updateReward({ type, value }));
       });
     }
     return () => {

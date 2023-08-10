@@ -11,6 +11,7 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 import moment from "moment";
 import TitleHomeDesktopComponent from "../../components/Title/TitleHomeDesktopComponent";
 import CreateTournament from "./CreateTournament";
+import TournamentMobile from "./TournamentMobile";
 export default function Tournament() {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
@@ -269,8 +270,8 @@ export default function Tournament() {
           <Container
             maxWidth={"lg"}
             sx={{
-              paddingLeft: "90px !important",
-              paddingRight: "90px !important",
+              paddingLeft: width < 576 ? "24px !important" : "90px !important",
+              paddingRight: width < 576 ? "24px !important" : "90px !important",
               color: "white",
             }}
           >
@@ -279,7 +280,7 @@ export default function Tournament() {
               title="TOURNAMENTS"
               noSeeAll={true}
             />
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
@@ -315,13 +316,13 @@ export default function Tournament() {
                   Create A Tournament
                 </Typography>
               </button>
-            </Box>
-            <img
+            </Box> */}
+            {/* <img
               style={{ width: "100%", marginTop: "36px" }}
               alt="..."
               src={images.BannerTour}
-            />
-            <Box sx={{ marginTop: "36px", display: "flex" }}>
+            /> */}
+            {/* <Box sx={{ marginTop: "36px", display: "flex" }}>
               <Box
                 sx={{ width: "33.33%", height: "200px", paddingRight: "9px" }}
               >
@@ -350,15 +351,19 @@ export default function Tournament() {
                   src={images.tour3}
                 />
               </Box>
-            </Box>
-            <Grid
-              sx={{ marginTop: "20px" }}
-              container
-              rowSpacing={2}
-              columnSpacing={2}
-            >
-              {renderTournamentList}
-            </Grid>
+            </Box> */}
+            {width < 576 ? (
+              <TournamentMobile />
+            ) : (
+              <Grid
+                sx={{ marginTop: "20px" }}
+                container
+                rowSpacing={2}
+                columnSpacing={2}
+              >
+                {renderTournamentList}
+              </Grid>
+            )}
           </Container>
           <CreateTournament
             handleOnClose={() => {

@@ -2,36 +2,16 @@ import React from "react";
 import "./index.scss";
 import { Box, Dialog, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
-import { useEffect } from "react";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import _socket from "../../../redux-saga-middleware/config/socket";
+// import { useState } from "react";
+import { 
+  // useDispatch, 
+  useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function PopUpReward({ open, handleOnCloseReward }) {
-  const [socket, setSocket] = useState(null);
-  const [type, setType] = useState("");
-  const [reward, setReward] = useState(0);
-  const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, [dispatch]);
-
-  console.log("type: ", type);
-
-  useEffect(() => {
-    socket?.on("gameWin", ({ type, value }) => {
-      setType(type);
-      setReward(value);
-    });
-    socket?.on("gameDefeated", (data) => {
-      
-      setType(data.type);
-      setReward(data.value);
-    });
-  }, [socket]);
-
+  const { reward, typeReward } = useSelector((state) => state.gameReducer);
+  console.log("Reward: ", reward, typeReward);
   return (
     <>
       {/* <Dialog
@@ -96,7 +76,11 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
           sx={{
             width: width < 576 ? "259px" : "824px",
             height: width < 576 ? "350px" : "469px",
-            backgroundImage: `url(${images.loseWardBG})`,
+            backgroundImage: `url(${
+              typeReward === "defeated"
+                ? images.loseWardBG
+                : images.backGroundWiningReward
+            })`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             boxSizing: "border-box",
@@ -114,7 +98,9 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
           ></Box>
           <Box
             sx={{ width: width < 576 ? "100px" : "143px" }}
-            src={images.loseMedal}
+            src={
+              typeReward === "defeated" ? images.loseMedal : images.winingMedal
+            }
             component={"img"}
           ></Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -129,7 +115,7 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
             <Typography
               sx={{ color: "#fff", fontSize: width < 576 ? "20px" : "50px" }}
             >
-              {reward}
+              {reward ? reward : "0"}
             </Typography>
           </Box>
         </Box>

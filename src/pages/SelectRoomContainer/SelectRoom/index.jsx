@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getDetailGame,
   openInvitefriendPopup,
+  openRewardPopup,
   updateTypeLike,
 } from "../../../redux-saga-middleware/reducers/gameReducer";
 import { useLocation, useParams } from "react-router-dom";
@@ -44,7 +45,6 @@ import styled from "styled-components";
 import PopupInviteFriend from "./PopupInviteFriend";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
-import PopUpReward from "../PopUpReward";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -105,14 +105,13 @@ export default function SelectRoom() {
   const [continueGame, setContinueGame] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
-  const [showReward, setShowReward] = useState(false);
 
   const dispatch = useDispatch();
   const [betAmount] = useState(null);
   const filterArray = [0, 100, 200, 500];
 
   const handleEndGame = () => {
-    setShowReward(true);
+    dispatch(openRewardPopup());
     dispatch(setSelectNav());
     setStartGame(false);
     setRoomIdSelect(0);
@@ -554,7 +553,7 @@ export default function SelectRoom() {
         dispatch(
           updateUserGold(Number.parseFloat(userGold) + Number.parseFloat(earn))
         );
-        
+
         // dispatch(showAlert("success", "You are winner!"));
         dispatch(setSelectNav());
         setStartGame(false);
@@ -3806,12 +3805,6 @@ export default function SelectRoom() {
           )}
         </>
       )}
-      <PopUpReward
-        open={showReward}
-        handleOnCloseReward={() => {
-          setShowReward(false);
-        }}
-      />
     </div>
   );
 }

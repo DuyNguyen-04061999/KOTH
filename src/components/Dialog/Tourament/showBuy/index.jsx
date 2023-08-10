@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleTournamentShow } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 
 export default function TouramentShow() {
-  const { isTournamentShow } = useSelector((state) => state.tournamentReducer)
+  const { isTournamentShow } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     dispatch(toggleTournamentShow(true));

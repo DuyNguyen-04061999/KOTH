@@ -151,6 +151,22 @@ export const changeOrientation = (data) => {
     payload: data,
   };
 };
+export const updateReward = (data) => {
+  return {
+    type: "UPDATE_END_GAME",
+    payload: data,
+  };
+};
+export const openRewardPopup = (data) => {
+  return {
+    type: "OPEN_REWARD_POPUP",
+  };
+};
+export const closeRewardPopup = (data) => {
+  return {
+    type: "CLOSE_REWARD_POPUP",
+  };
+};
 
 const gameReducer = (
   state = {
@@ -172,6 +188,9 @@ const gameReducer = (
     previousLoca: "",
     inviteFriendDialog: false,
     orientation: "portrait",
+    typeReward: null,
+    reward: 0,
+    popupReward: false,
   },
   action
 ) => {
@@ -263,6 +282,25 @@ const gameReducer = (
       return {
         ...state,
         orientation: payload,
+      };
+    }
+    case "UPDATE_END_GAME": {
+      return {
+        ...state,
+        typeReward: payload.type,
+        reward: payload.reward,
+      };
+    }
+    case "OPEN_REWARD_POPUP": {
+      return {
+        ...state,
+        popupReward: true,
+      };
+    }
+    case "CLOSE_REWARD_POPUP": {
+      return {
+        ...state,
+        popupReward: false,
       };
     }
     default:
