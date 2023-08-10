@@ -598,7 +598,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             >
               View all
               <Box
-                sx={{ marginLeft: "4px" }}
+                sx={{ marginLeft: "4px", width: "12px", heigth: "12px" }}
                 component={"img"}
                 src={images.viewAllButton}
               ></Box>
@@ -798,7 +798,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               >
                 View all
                 <Box
-                  sx={{ marginLeft: "4px" }}
+                  sx={{ marginLeft: "4px", width: "12px", heigth: "12px" }}
                   component={"img"}
                   src={images.viewAllButton}
                 ></Box>
