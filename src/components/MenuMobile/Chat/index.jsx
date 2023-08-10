@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleInviteGameDialog } from "../../../redux-saga-middleware/reducers/chatReducer";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { popup } from "../../../utils/images";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -124,20 +125,20 @@ export default function DialogChat(props) {
                   }}
                 >
                   <img
-                    src={images280423_l.back}
+                    src={popup.vecter}
                     alt="Arrow"
-                    width={25}
-                    height={25}
+                    width={22}
+                    height={22}
                   />
                 </div>
                 <div className="d-flex align-items-center">
                   <span
                     className="fs-5 mx-3"
                     style={{
-                      color: "#b16bd6",
+                      color: "white",
                     }}
                   >
-                    <b>CHAT ROOM</b>
+                    <b>Chat room</b>
                   </span>
                 </div>
               </div>
@@ -149,6 +150,7 @@ export default function DialogChat(props) {
                     backgroundColor: colorTab === false ? "#61388e" : "#261a35",
                     width: "75px",
                     height: "32px",
+                    borderRadius:"5px 0px 0px 5px"
                   }}
                 >
                   {renderTab === false ? (
@@ -173,7 +175,7 @@ export default function DialogChat(props) {
                       marginLeft: "5px",
                     }}
                   >
-                    <b>GLOBAL</b>
+                    <b>Global</b>
                   </span>
                 </div>
                 <div
@@ -183,6 +185,7 @@ export default function DialogChat(props) {
                     backgroundColor: colorTab === true ? "#61388e" : "#261a35",
                     width: "75px",
                     height: "32px",
+                    borderRadius:"0px 5px 5px 0px"
                   }}
                 >
                   {renderTab === true ? (
@@ -207,7 +210,7 @@ export default function DialogChat(props) {
                       marginLeft: "5px",
                     }}
                   >
-                    <b>PRIVATE</b>
+                    <b>Private</b>
                   </span>
                 </div>
               </div>

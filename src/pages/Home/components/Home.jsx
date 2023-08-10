@@ -30,6 +30,7 @@ import {
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import moment from "moment";
+import Package from "../../PackagePage/component/Packege";
 
 export default function Home() {
   const { width } = useWindowDimensions();
@@ -1314,7 +1315,8 @@ export default function Home() {
           <div className="container">
             <hr style={{ border: "1px solid #462556" }} />
           </div>
-          <Box className="footer mb-5">
+          <Package />
+          {/* <Box className="footer mb-5">
             <Box className="footer-content" sx={{ marginBottom: "100px" }}>
               <img className="logo-footer" src={images2.logo_text} alt="..." />
               <div className="text-footer">
@@ -1338,7 +1340,7 @@ export default function Home() {
                 </div>
               </Box>
             </Box>
-          </Box>
+          </Box> */}
         </div>
       )}
     </div>

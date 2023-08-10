@@ -135,7 +135,7 @@ function App() {
         // socket.emit("listMessage");
         socket.emit("listFriend");
         socket.emit("getTransaction");
-        socket.emit("leaveAllRoom");
+        // socket.emit("leaveAllRoom");
         socket.emit("listPackage");
       });
 
@@ -372,9 +372,16 @@ function App() {
         store.dispatch(showAlert("success", data));
       });
       socket?.on("gameWin", ({ type, value }) => {
+        console.log("win");
         store.dispatch(updateReward({ type, value }));
       });
+
       socket?.on("gameDefeated", ({ type, value }) => {
+        console.log("defeated");
+        store.dispatch(updateReward({ type, value }));
+      });
+
+      socket?.on("gameDraw", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
     }

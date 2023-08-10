@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect } from "react";
+import React, { Fragment, useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
@@ -53,10 +53,9 @@ export default function UnityGameComponent(props) {
     }
   }
 
-  console.log(process.env.REACT_APP_STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "");
   const {
     unityProvider,
-    unload,
+    // unload,
     UNSAFE__unityInstance,
     addEventListener,
     removeEventListener,
@@ -108,14 +107,14 @@ export default function UnityGameComponent(props) {
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(async () => {
-    await unload();
+    // await unload();
     if (type && type === "pvp") {
       navigate({
         pathname: `/selectroom/${gameId}`,
       });
     }
     handleEndGame();
-  }, [navigate, unload, handleEndGame, gameId, type]);
+  }, [navigate, handleEndGame, gameId, type]);
 
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
@@ -130,6 +129,16 @@ export default function UnityGameComponent(props) {
       removeEventListener("GameOver", handleFinalGame);
     };
   }, [addEventListener, removeEventListener, handleFinalGame]);
+
+  const unityRef = useRef()
+
+  useEffect(() => {
+    const uRef = unityRef?.current
+    return () => {
+        if (unityRef && uRef) window.document.body.removeChild((uRef));
+    };
+  }, []);
+
   return (
     <Fragment>
       {!isLoaded && (
@@ -148,6 +157,7 @@ export default function UnityGameComponent(props) {
           zIndex: isFullScreen ? 2000 : "none",
         }}
         unityProvider={unityProvider}
+        ref={unityRef}
       />
     </Fragment>
   );

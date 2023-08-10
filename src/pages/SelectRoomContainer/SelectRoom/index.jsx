@@ -110,7 +110,7 @@ export default function SelectRoom() {
   const filterArray = [0, 100, 200, 500];
 
   const handleEndGame = () => {
-    // dispatch(setSelectNav());
+    dispatch(setSelectNav());
     setStartGame(false);
     setRoomIdSelect(0);
     setroomDetailInfo("");
