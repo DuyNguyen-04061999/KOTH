@@ -2,10 +2,10 @@ import { Box, Grid, Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { popup } from "../../../../utils/images";
 import "./index.scss";
-import FullScreenDialog from "../../../FullScreenDialog";
+// import FullScreenDialog from "../../../FullScreenDialog";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleDialogPromote } from "../../../../redux-saga-middleware/reducers/paymentReducer";
 import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { formatMoney } from "../../../../utils/helper";
 import { useState } from "react";
 
@@ -15,6 +15,9 @@ export default function WalletTypePromote() {
   const { userGold } = useSelector((state) => state.authReducer);
   const [activeColor, setActveColor] = useState("");
   const [amount, setAmount] = useState(0);
+  const [typePayment, setTypePayment] = useState("stripe")
+  const [currency, setCurrency] = useState("USD")
+  const [agree, setAgree] = useState(false)
 
   return (
     <>
@@ -26,7 +29,7 @@ export default function WalletTypePromote() {
           height: "100%",
         }}
       >
-        <FullScreenDialog />
+        {/* <FullScreenDialog /> */}
         <Box
           sx={{
             minHeight: width < 576 ? "1000px" : "unset",
@@ -126,24 +129,12 @@ export default function WalletTypePromote() {
                   >
                     Currency
                   </Typography>
-                  {/* <input
-                    type="number"
-                    placeholder="Enter amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e?.target?.value)}
-                    style={{
-                      borderRadius: "10px",
-                      border: "1px solid gray",
-                      height: "40px",
-                      fontSize: "15px",
-                      background: "transparent",
-                      paddingLeft: "10px",
-                      color: "white",
-                    }}
-                  /> */}
                   <select
                     defaultValue="stripe"
                     className="custom-select"
+                    onChange={(e) => {
+                      setCurrency(e.target.value)
+                    }}
                     style={{
                       borderRadius: "7px",
                       border: "1px solid gray",
@@ -151,7 +142,6 @@ export default function WalletTypePromote() {
                       fontSize: "15px",
                       background: "transparent",
                       paddingLeft: "10px",
-                      // color: "#642CDA",
                       color: "white",
                       fontWeight: "bold",
                       fontFamily: "Cyntho",
@@ -340,28 +330,10 @@ export default function WalletTypePromote() {
                   right: 20,
                 }}
                 onClick={() => {
-                  // dispatch(toggleDialogPromote(true));
                   setActveColor("activewl");
+                  setTypePayment("stripe")
                 }}
               />
-              {/* <select
-                defaultValue="stripe"
-                className="custom-select"
-                style={{
-                  borderRadius: "10px",
-                  border: "1px solid gray",
-                  height: "40px",
-                  fontSize: "15px",
-                  background: "transparent",
-                  paddingLeft: "10px",
-                  color: "#642CDA",
-                }}
-              >
-                <option value="stripe" >stripe</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-              </select> */}
             </form>
           </Box>
           <Box
@@ -376,6 +348,10 @@ export default function WalletTypePromote() {
               className="me-2 custom-checkbox-input"
               style={{ borderRadius: "50px", marginTop: "6px" }}
               readOnly
+              onClick={() => {
+                setAgree(!agree)
+              }}
+              checked={agree}
             />
             <Box
               className="text-white"
@@ -418,7 +394,17 @@ export default function WalletTypePromote() {
                 fontSize: "15px",
               }}
               onClick={() => {
-                dispatch(getStripe(Number.parseFloat(amount)));
+                if(!agree) {
+                  dispatch(showAlert("warning", "Please agree policy!"))
+                  return;
+                }
+                if(!amount || amount < 0) {
+                  dispatch(showAlert("warning", "Please enter amount"))
+                } else if(typePayment === "stripe" && currency === "USD")  {
+                  dispatch(getStripe(Number.parseFloat(amount)));
+                } else {
+                  dispatch(showAlert("warning", "Updating...!"))
+                }
               }}
             >
               <Typography

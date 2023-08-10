@@ -288,7 +288,8 @@ const gameReducer = (
       return {
         ...state,
         typeReward: payload.type,
-        reward: payload.reward,
+        reward: payload.value,
+        popupReward: true
       };
     }
     case "OPEN_REWARD_POPUP": {

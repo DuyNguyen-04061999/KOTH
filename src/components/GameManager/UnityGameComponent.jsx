@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-// import { LinearProgress } from "@mui/material";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
@@ -17,7 +16,9 @@ export default function UnityGameComponent(props) {
     roomId,
     handleEndGame,
     type,
+    gameName
   } = props;
+
   const { width } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   function getLoaderJs(data) {
@@ -52,6 +53,7 @@ export default function UnityGameComponent(props) {
     }
   }
 
+  console.log(process.env.REACT_APP_STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "");
   const {
     unityProvider,
     unload,
@@ -66,6 +68,7 @@ export default function UnityGameComponent(props) {
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
     codeUrl: getWasmJs(GameFiles),
+    streamingAssetsUrl: process.env.REACT_APP_STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "",
   });
 
   window.myGameInstance = UNSAFE__unityInstance;
@@ -91,7 +94,7 @@ export default function UnityGameComponent(props) {
     sendMessage("Object Spawner", "SetRoomName", roomId);
     sendMessage("Object Spawner", "StartGame", "Start");
     sendMessage("GameplayScene", "SetToken", token);
-    sendMessage("GameplayScene", "SetRoomName", roomId);
+    sendMessage("GameplayScene", "SetRoomName", process.env.REACT_APP_ENV && process.env.REACT_APP_ENV === "development" ? "test" : roomId);
     sendMessage("GameplayScene", "StartGame", "Start");
 
     sendMessage("MenuManager", "SetToken", token);

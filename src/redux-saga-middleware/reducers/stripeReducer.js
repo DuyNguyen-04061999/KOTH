@@ -28,11 +28,21 @@ export const getStripeURL = (data) => {
     }
 }
 
+
+export const toggleAlertStripeProcess = (data) => {
+    return {
+        type : "TOGGLE_ALERT_STRIPE_PROCESS",
+        payload: data
+    }
+}
+
 const stripeReducer = (
     state = {
         isStripe : [],
         isFetchStripe: false,
-        stripeURL: ""
+        stripeURL: "",
+        isAlertDialog: false,
+        typeAlert: "success"
     }, action 
 ) => {
     const { type, payload } = action;
@@ -42,6 +52,7 @@ const stripeReducer = (
         case "GET_STRIPE_SUCCESS" : return {...state, isFetchStripe: false, stripeURL: payload?.paymentLink}
         case "GET_STRIPE_FAIL" : return {...state, isFetchStripe: false}
         case "GET_STRIPE_URL" : return {...state}
+        case "TOGGLE_ALERT_STRIPE_PROCESS": return {...state, typeAlert: payload?.type, isAlertDialog: !state.isAlertDialog}
         default: return {...state}
     }
 }

@@ -1284,6 +1284,8 @@ export default function JoinTournament() {
                           }
                           type="tournament"
                           handleEndGame={handleEndGame}
+                          gameName={detailTournament?.tournamentInfors?.game[0]
+                            ?.gameName}
                         />
                         {startGame && expand === true && width > 576 && (
                           <>
