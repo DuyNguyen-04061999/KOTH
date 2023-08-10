@@ -53,6 +53,7 @@ export default function UnityGameComponent(props) {
     }
   }
 
+  console.log(process.env.REACT_APP_STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "");
   const {
     unityProvider,
     unload,
@@ -67,7 +68,7 @@ export default function UnityGameComponent(props) {
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
     codeUrl: getWasmJs(GameFiles),
-    streamingAssetsUrl: process.env.STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "",
+    streamingAssetsUrl: process.env.REACT_APP_STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "",
   });
 
   window.myGameInstance = UNSAFE__unityInstance;

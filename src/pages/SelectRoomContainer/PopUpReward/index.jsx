@@ -2,65 +2,16 @@ import React from "react";
 import "./index.scss";
 import { Box, Dialog, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
-// import _socket from "../../../redux-saga-middleware/config/socket";
-// import { useState } from "react";
 import { 
-  // useDispatch, 
   useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function PopUpReward({ open, handleOnCloseReward }) {
   const { width } = useWindowDimensions();
   const { reward, typeReward } = useSelector((state) => state.gameReducer);
-  console.log("Reward: ", reward, typeReward);
+  console.log(reward, typeReward);
+  
   return (
     <>
-      {/* <Dialog
-        sx={{
-          "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
-            borderRadius: "11px !important",
-          },
-        }}
-        maxWidth="2000px !important"
-        onClose={handleOnCloseReward}
-        open={false}
-      >
-        <Box
-          sx={{
-            width: "825px",
-            height: "470px",
-            backgroundSize: "cover",
-            backgroundImage: `url(${images.backGroundWiningReward})`,
-            backgroundRepeat: "no-repeat",
-            boxSizing: "border-box",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "50px",
-          }}
-        >
-          <Box
-            sx={{ width: "129px" }}
-            src={images.WINNER}
-            component={"img"}
-          ></Box>
-          <Box
-            sx={{ width: "283px" }}
-            src={images.winingMedal}
-            component={"img"}
-          ></Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box
-              sx={{ width: "42px", height: "42px" }}
-              src={images.coinIcon}
-              component={"img"}
-            ></Box>
-            <Typography sx={{ color: "#fff", fontSize: "50px" }}>
-              5000
-            </Typography>
-          </Box>
-        </Box>
-      </Dialog> */}
       <Dialog
         sx={{
           "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
