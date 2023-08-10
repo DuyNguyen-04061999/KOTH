@@ -53,10 +53,9 @@ export default function UnityGameComponent(props) {
     }
   }
 
-  console.log(process.env.REACT_APP_STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "");
   const {
     unityProvider,
-    unload,
+    // unload,
     UNSAFE__unityInstance,
     addEventListener,
     removeEventListener,
@@ -134,8 +133,9 @@ export default function UnityGameComponent(props) {
   const unityRef = useRef()
 
   useEffect(() => {
+    const uRef = unityRef?.current
     return () => {
-        if (unityRef !== null && unityRef.current) window.document.body.removeChild((unityRef.current));
+        if (unityRef && uRef) window.document.body.removeChild((uRef));
     };
   }, []);
 

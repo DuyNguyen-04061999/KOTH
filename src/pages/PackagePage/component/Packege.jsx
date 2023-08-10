@@ -2,10 +2,8 @@ import { Container, Box, Typography } from "@mui/material";
 import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ListPackage from "./ListPackage";
-import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { images280423_l } from "../../../utils/images280423_l";
 import { useSelector } from "react-redux";
 import { popup } from "../../../utils/images";
 import '../scss/index.scss'
