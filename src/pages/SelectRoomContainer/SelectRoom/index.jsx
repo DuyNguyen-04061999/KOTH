@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getDetailGame,
   openInvitefriendPopup,
-  openRewardPopup,
   updateTypeLike,
 } from "../../../redux-saga-middleware/reducers/gameReducer";
 import { useLocation, useParams } from "react-router-dom";
@@ -111,8 +110,7 @@ export default function SelectRoom() {
   const filterArray = [0, 100, 200, 500];
 
   const handleEndGame = () => {
-    dispatch(openRewardPopup());
-    dispatch(setSelectNav());
+    // dispatch(setSelectNav());
     setStartGame(false);
     setRoomIdSelect(0);
     setroomDetailInfo("");

@@ -37,7 +37,6 @@ import {
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import {
-  closeRewardPopup,
   toggleGameLogDialog,
 } from "../../redux-saga-middleware/reducers/gameReducer";
 import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
@@ -127,7 +126,7 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
-  const { isGameLogDialog, popupReward } = useSelector(
+  const { isGameLogDialog } = useSelector(
     (state) => state.gameReducer
   );
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
@@ -257,12 +256,7 @@ export default function Layout(props) {
     >
       <StripeAlertComponent/>
       <MetaMaskDialog />
-      <PopUpReward
-        open={popupReward}
-        handleOnCloseReward={() => {
-          dispatch(closeRewardPopup());
-        }}
-      />
+      <PopUpReward />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {

@@ -3,11 +3,14 @@ import "./index.scss";
 import { Box, Dialog, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
 import { 
+  useDispatch,
   useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-export default function PopUpReward({ open, handleOnCloseReward }) {
+import { closeRewardPopup } from "../../../redux-saga-middleware/reducers/gameReducer";
+export default function PopUpReward() {
   const { width } = useWindowDimensions();
-  const { reward, typeReward } = useSelector((state) => state.gameReducer);
+  const { reward, typeReward, popupReward } = useSelector((state) => state.gameReducer);
+  const dispatch = useDispatch()
   console.log(reward, typeReward);
   
   return (
@@ -20,8 +23,8 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
           zIndex: "1320",
         }}
         maxWidth="2000px !important"
-        onClose={handleOnCloseReward}
-        open={open}
+        onClose={() => dispatch(closeRewardPopup())}
+        open={popupReward}
       >
         <Box
           sx={{
@@ -42,11 +45,9 @@ export default function PopUpReward({ open, handleOnCloseReward }) {
             padding: "30px",
           }}
         >
-          <Box
-            sx={{ width: width < 576 ? "100px" : "129px" }}
-            src={images.defeat}
-            component={"img"}
-          ></Box>
+          <Box component={"div"} className="text-center">
+            {typeReward === "defeated" ? "DEFEATED" : "WINNER"}
+          </Box>
           <Box
             sx={{ width: width < 576 ? "100px" : "143px" }}
             src={
