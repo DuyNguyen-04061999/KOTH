@@ -223,6 +223,8 @@ import coin2 from "../assets/imagesLayout/popup/coin2.png";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 import crown from "../assets/imagesLayout/popup/crown.svg";
 import heart from "../assets/imagesLayout/popup/heart.svg";
+import checkCircle from "../assets/imagesLayout/popup/check-circle.svg"
+import vecter from '../assets/imagesLayout/popup/Vector.svg'
 
 export const images = {
   pool: pool,
@@ -414,6 +416,8 @@ export const popup = {
   proWallet: proWallet,
   crown: crown,
   heart: heart,
+  checkCircle:checkCircle,
+  vecter:vecter
 };
 
 export const sign = {
