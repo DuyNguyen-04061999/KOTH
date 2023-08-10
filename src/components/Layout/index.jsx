@@ -55,6 +55,8 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
+import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
+import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 // import TouramentShow from "../Dialog/Tourament/showBuy";
 // import BuyTicket from "../Dialog/Tourament/buyTicket";
 
@@ -206,10 +208,7 @@ export default function Layout(props) {
     }
   }, [token]);
   const [searchValue, setSearchValue] = useState("");
-  // const handleInputChange = (e) => {
-  //   setSearchValue(e.target.value);
-  // };
-  // const [searchResults, setSearchResults] = useState([]);
+
   const handleSearch = () => {
     if (!searchValue) {
     } else {
@@ -222,10 +221,6 @@ export default function Layout(props) {
   const handleOnKeyDownEnter = (e) => {
     if (e.key === "Enter" && searchValue) {
       const lowercaseSearchValue = searchValue.toLowerCase();
-
-      // const filteredResults = listGame.filter((game) =>
-      //   game.gameName.toLowerCase().includes(lowercaseSearchValue)
-      // );
       navigate("/game-type/search", { state: { value: lowercaseSearchValue } });
       dispatch(getSearchGame(lowercaseSearchValue));
       setChatF("");
@@ -236,6 +231,21 @@ export default function Layout(props) {
     e.preventDefault();
   };
 
+  const location = useLocation()
+  const useQuery = () => new URLSearchParams(location.search);
+  const query = useQuery();
+  const { isAlertDialog } = useSelector(state => state.stripeReducer)
+
+  useEffect(() => {
+    if(query?.get("type") === "stripe") {
+      if(!isAlertDialog) {
+        dispatch(toggleAlertStripeProcess({
+          type: "success"
+        }))
+      }
+    }
+  }, [query, dispatch, isAlertDialog])
+
   return (
     <Box
       className="tong"
@@ -245,6 +255,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      <StripeAlertComponent/>
       <MetaMaskDialog />
       <PopUpReward
         open={popupReward}

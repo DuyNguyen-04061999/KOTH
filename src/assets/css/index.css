@@ -27,7 +27,13 @@ code {
 @font-face {
   font-family: "Cyntho";
   src: url(../font/CynthoNextRegular.otf);
-  font-weight:bold;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Cyntho Bold";
+  src: url(../font/CynthoNextBold.otf);
+  font-weight: bold;
 }
 
 #root {

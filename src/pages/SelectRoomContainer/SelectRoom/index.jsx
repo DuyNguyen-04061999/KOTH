@@ -770,6 +770,7 @@ export default function SelectRoom() {
                         isFullScreen={isFullScreen}
                         handleEndGame={handleEndGame}
                         type="pvp"
+                        gameName={detailGame?.gameName}
                       />
                       {startGame &&
                         expand === true &&

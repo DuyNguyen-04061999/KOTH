@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-// import { LinearProgress } from "@mui/material";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
@@ -17,7 +16,9 @@ export default function UnityGameComponent(props) {
     roomId,
     handleEndGame,
     type,
+    gameName
   } = props;
+
   const { width } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   function getLoaderJs(data) {
@@ -66,6 +67,7 @@ export default function UnityGameComponent(props) {
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
     codeUrl: getWasmJs(GameFiles),
+    streamingAssetsUrl: process.env.STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "",
   });
 
   window.myGameInstance = UNSAFE__unityInstance;
