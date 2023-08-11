@@ -150,13 +150,13 @@ export default function Layout(props) {
 
   useEffect(() => {
     if(router && router !== window.location.pathname) {
-      // window.location.reload()
+      
     }
   }, [router])
 
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
-      // socket?.emit("leaveAllRoom");
+      
     }
   }, [router, socket, token]);
 
