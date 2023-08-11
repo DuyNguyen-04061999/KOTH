@@ -47,13 +47,17 @@ export default function BuyTicket(props) {
   };
 
   useEffect(() => {
+    if(socket && ticketBuy) {
+
+    }
+  }, [socket, ticketBuy])
+
+  useEffect(() => {
     const socket = _socket;
     setSocket(socket);
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
-
-  console.log(socket, ticketBuy);
 
   return (
     <ThemeProvider theme={theme}>

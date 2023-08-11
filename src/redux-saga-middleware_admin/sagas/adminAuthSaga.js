@@ -14,7 +14,6 @@ function* login(dataRequest) {
         }
         
     } catch (error) {
-        console.log("loginSaga: " + error?.message);
         yield put(adminLoginFail())
     }
 }
