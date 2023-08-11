@@ -172,7 +172,7 @@ import menulight from "../assets/imagesLayout/menulight.png";
 import searchlight from "../assets/imagesLayout/searchlight.png";
 import WL from "../assets/imagesLayout/popup/wl.png";
 import PlayButtonV2 from "../assets/imagesLayout/PlayButtonV2.png";
-import I from "../assets/imagesChat/i.png";
+import I from "../assets/imagesChat/ichat.png";
 import favoriteIcon from "../assets/imagesDesktop/favorite_icon.svg";
 import gamelogicon from "../assets/imagesDesktop/game_log_icon.svg";
 import homeicon from "../assets/imagesDesktop/home_icon.svg";

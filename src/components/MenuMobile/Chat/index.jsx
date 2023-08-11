@@ -9,7 +9,6 @@ import { imageChat } from "../../../utils/imagesChat";
 import ChatWorldList from "../../Chat/ChatWorldList";
 import ChatFriendList from "../../Chat/ChatFriendList";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleInviteGameDialog } from "../../../redux-saga-middleware/reducers/chatReducer";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { popup } from "../../../utils/images";
@@ -21,18 +20,18 @@ const Test = styled.input`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 2px;
+  border-radius: 7px;
   width: 100% !important;
   line-height: 25px !important;
   height: 100%;
   background: #27182e !important;
   padding: 10px !important;
-  color: #7c5ead !important;
+  color: #9d9ace !important;
   &:focus {
     outline: none;
   }
   &::placeholder {
-    color: #7c5ead;
+    color: #9d9ace;
     text-vertical: center;
   }
 `;
@@ -119,6 +118,8 @@ export default function DialogChat(props) {
           <Box className="p-2" sx={{ backgroundColor: "#42285b" }}>
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center">
+               
+                <div className="d-flex align-items-center">
                 <div
                   onClick={() => {
                     handleShow();
@@ -127,18 +128,20 @@ export default function DialogChat(props) {
                   <img
                     src={popup.vecter}
                     alt="Arrow"
-                    width={22}
-                    height={22}
+                    width={20}
+                    height={20}
                   />
                 </div>
-                <div className="d-flex align-items-center">
                   <span
-                    className="fs-5 mx-3"
                     style={{
                       color: "white",
+                      marginLeft:"10px",
+                      fontFamily:"Cyntho",
+                      fontSize:"14px",
+                      marginTop:"2px"
                     }}
                   >
-                    <b>Chat room</b>
+                    Chat room
                   </span>
                 </div>
               </div>
@@ -228,10 +231,10 @@ export default function DialogChat(props) {
               className="d-flex justify-content-between align-items-center"
               sx={{
                 background: "#2e1e38",
-                padding: "22px 20px",
+                padding: "18px 15px",
               }}
             >
-              <Box
+              {/* <Box
                 onClick={() => {
                   dispatch(
                     toggleInviteGameDialog({
@@ -247,7 +250,7 @@ export default function DialogChat(props) {
                   height={30}
                   className="me-2"
                 />
-              </Box>
+              </Box> */}
               <Box
                 component={"form"}
                 sx={{
