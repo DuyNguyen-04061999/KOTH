@@ -60,9 +60,7 @@ function SimpleDialog(props) {
     setPassword("");
   };
   useEffect(() => {
-    socket?.on("loginError", (data) => {
-      
-    });
+    socket?.on("loginError", (data) => {});
   }, [socket, dispatch]);
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -96,6 +94,7 @@ function SimpleDialog(props) {
             display: "flex",
             flexDirection: "row",
             maxWidth: "820px !important",
+            zIndex: "1320",
           }}
         >
           <Box sx={{ height: "100vh" }}>
