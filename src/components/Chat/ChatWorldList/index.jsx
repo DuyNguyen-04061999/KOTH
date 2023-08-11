@@ -231,10 +231,10 @@ export default function ChatWorldList() {
                       maxWidth: "80%",
                     }}
                   >
-                    <Box>
+                    <Box className="d-flex justify-content-end">
                       <span
                         style={{
-                          color: "#494a8b",
+                          color: "white",
                           fontWeight: "500",
                           fontSize: "10px",
                         }}
@@ -243,10 +243,10 @@ export default function ChatWorldList() {
                       </span>
                     </Box>
                     <Box
-                      className="p-2 mt-2"
+                      className="p-1 mt-2 ps-2 pe-2"
                       sx={{
-                        background: "#4d3565",
-                        color: "#9b9acf",
+                        background: "#443565",
+                        color: "white",
                         fontSize: "14px",
                         fontWeight: "bold",
                         width: "100%",
@@ -279,10 +279,10 @@ export default function ChatWorldList() {
                 />
               </Box>
               <Box className="mx-2" sx={{ borderRadius: "5px" }}>
-                <Box className="d-flex justify-content-between align-items-center">
+                <Box className="d-flex justify-content-start align-items-center">
                   <span
                     style={{
-                      color: "#5e78b5",
+                      color: "#7C81F2",
                       borderRadius: "5px",
                     }}
                   >
@@ -291,7 +291,7 @@ export default function ChatWorldList() {
                   <Box>
                     <span
                       style={{
-                        color: "#494a8b",
+                        color: "white",
                         fontWeight: "bold",
                         marginLeft: "15px",
                         fontSize: "10px",
@@ -311,11 +311,11 @@ export default function ChatWorldList() {
                     wordWrap: "break-word",
                     borderRadius: "5px",
                   }}
-                  className="p-2 mt-2 d-flex"
+                  className="p-1 mt-2 d-flex ps-2 pe-2"
                 >
                   <div
                     style={{
-                      color: "#9b9acf",
+                      color: "white",
                       fontWeight: "bold",
                       fontSize: "14px",
                       width: "100%",

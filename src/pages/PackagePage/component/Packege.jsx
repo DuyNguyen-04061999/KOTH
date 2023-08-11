@@ -4,14 +4,17 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ListPackage from "./ListPackage";
 import { useEffect, useState } from "react";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { popup } from "../../../utils/images";
 import '../scss/index.scss'
+import DialogConfirm from "./DialogConfirm";
+import { toggleDialogConfirm } from "../../../redux-saga-middleware/reducers/authReducer";
 
 export default function Package() {
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.appReducer);
   const { token } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch()
 
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -27,6 +30,7 @@ export default function Package() {
 
   return (
     <>
+      <DialogConfirm />
       {width > 576 ? (
         <div className="Package-home pb-5 mb-5">
           <Container
@@ -231,9 +235,10 @@ export default function Package() {
                           </Box>
                           <button
                             onClick={() => {
-                              socket.emit("buyPackage", {
-                                packageId: i?.id,
-                              });
+                              dispatch(toggleDialogConfirm({packageId: i?.id}))
+                              // socket.emit("buyPackage", {
+                              //   packageId: i?.id,
+                              // });
                             }}
                             style={{
                               border: "none",

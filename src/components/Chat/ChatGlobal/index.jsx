@@ -9,11 +9,10 @@ import ComponentChat from "../componentChat";
 import InviteGameDialog from "../../Dialog/Invitegame/InviteGame";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
-import { images, images2 } from "../../../utils/images";
+import { images, popup } from "../../../utils/images";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
-import { toggleInviteGameDialog } from "../../../redux-saga-middleware/reducers/chatReducer";
 
 const Test = styled.input`
   display: flex;
@@ -25,12 +24,12 @@ const Test = styled.input`
   height: 100%;
   background: #27182e !important;
   padding: 10px !important;
-  color: #7c5ead !important;
+  color: #9d9ace !important;
   &:focus {
     outline: none;
   }
   &::placeholder {
-    color: #7c5ead;
+    color: #9d9ace;
     text-vertical: center;
   }
 `;
@@ -182,7 +181,7 @@ export default function ChatGlobal(props) {
           </Menu>
           <Box
             sx={{
-              background: "#292033",
+              background: "#2e233d",
               height: "100vh",
               overflow: "hidden",
               position: "absolute",
@@ -194,7 +193,7 @@ export default function ChatGlobal(props) {
             <Box
               className="p-2 d-flex align-items-center justify-content-between"
               sx={{
-                backgroundColor: "#462a71",
+                backgroundColor: "#42285a",
                 width: "100%",
               }}
             >
@@ -205,15 +204,17 @@ export default function ChatGlobal(props) {
                     onClick={handleShow}
                   >
                     <img
-                      src={images280423_l.back}
+                      src={popup.vecter}
                       alt="Arrow"
-                      width={25}
-                      height={25}
+                      width={20}
+                      height={20}
                     />
                     <span
-                      className="fs-5 mx-3"
                       style={{
-                        color: "#b16bd6",
+                        color: "white",
+                        fontFamily:"Cyntho",
+                        fontSize:"15px",
+                        marginLeft:"10px"
                       }}
                     >
                       <b>Back</b>
@@ -234,7 +235,6 @@ export default function ChatGlobal(props) {
             <Box
               component="div"
               hidden={!showChat}
-              // sx={{ backgroundColor: "#2e233d" }}
             >
               <ComponentChat />
             </Box>
@@ -249,23 +249,6 @@ export default function ChatGlobal(props) {
                 zIndex: "20",
               }}
             >
-              <Box>
-                <img
-                  src={images2.inviteG}
-                  alt="..."
-                  width={30}
-                  height={30}
-                  className="me-2"
-                  style={{ zIndex: 9999 }}
-                  onClick={() => {
-                    dispatch(
-                      toggleInviteGameDialog({
-                        type: "Private",
-                      })
-                    );
-                  }}
-                />
-              </Box>
               <Box
                 component={"form"}
                 sx={{
@@ -360,7 +343,7 @@ export default function ChatGlobal(props) {
           </Menu>
           <Box
             sx={{
-              background: "#292033",
+              background: "#2e233d",
               height: "100%",
               overflow: "hidden",
               // position: "absolute",
@@ -370,9 +353,9 @@ export default function ChatGlobal(props) {
             }}
           >
             <Box
-              className="p-2 d-flex align-items-center justify-content-between"
+              className="p-2 px-3 d-flex align-items-center justify-content-between"
               sx={{
-                backgroundColor: "#462a71",
+                backgroundColor: "#42285a",
                 width: "100%",
               }}
             >
@@ -383,15 +366,17 @@ export default function ChatGlobal(props) {
                     onClick={handleShow}
                   >
                     <img
-                      src={images280423_l.back}
+                      src={popup.vecter}
                       alt="Arrow"
-                      width={25}
-                      height={25}
+                      width={20}
+                      height={20}
                     />
                     <span
-                      className="fs-5 mx-3"
                       style={{
-                        color: "#b16bd6",
+                        color: "white",
+                        fontFamily:"Cyntho",
+                        fontSize:"15px",
+                        marginLeft:"10px"
                       }}
                     >
                       <b>Back</b>
@@ -422,28 +407,11 @@ export default function ChatGlobal(props) {
               sx={{
                 position: "absolute",
                 bottom: width < 576 ? "0px" : "64px",
-                background: "#4a3763",
+                background: "#2e1e38",
                 padding: "15px 20px ",
                 zIndex: "20",
               }}
             >
-              <Box>
-                <img
-                  src={images2.inviteG}
-                  alt="..."
-                  width={30}
-                  height={30}
-                  className="me-2"
-                  style={{ zIndex: 9999 }}
-                  onClick={() => {
-                    dispatch(
-                      toggleInviteGameDialog({
-                        type: "Private",
-                      })
-                    );
-                  }}
-                />
-              </Box>
               <Box
                 component={"form"}
                 sx={{
