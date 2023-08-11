@@ -12,6 +12,7 @@ export default function SlickSlider(props) {
     autoplay: true,
     autoplaySpeed: 2000,
     speed: 1000,
+    adaptiveHeight: true,
     beforeChange: (prev, next) => {
       setIndex(next);
     },
@@ -24,7 +25,7 @@ export default function SlickSlider(props) {
           alignItems: "center",
           bottom: "0px",
           position: "absolute",
-          padding: "10px",
+          padding: "5px",
           backgroundColor: "rgba(0, 0, 0, 0.24)",
           backdropFilter: "blur(2px)",
           marginBottom: "0px",
@@ -50,7 +51,7 @@ export default function SlickSlider(props) {
   return (
     <Slider {...settings}>
       {[...images].map((item) => {
-        return <Box component={"img"} src={item}></Box>;
+        return <Box sx={{ width: "100%" }} component={"img"} src={item}></Box>;
       })}
     </Slider>
   );
