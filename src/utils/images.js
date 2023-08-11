@@ -87,6 +87,11 @@ import bannerTournament from "../assets/images/bannerTournament.png";
 import bannerTournament1 from "../assets/images/bannerTournament1.png";
 import bannerTournament2 from "../assets/images/bannerTournament2.png";
 import GameTournament from "../assets/images/GameTournament.png";
+import Discount25 from "../assets/images/Discount25.png";
+import Discount12 from "../assets/images/Discount12.png";
+import Discount10 from "../assets/images/Discount10.png";
+import giveAway from "../assets/images/giveAway.png";
+import closePromo from "../assets/images/closePromo.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -137,6 +142,7 @@ import sendIcon from "../assets/images/sendIcon.png";
 import CheckIcon from "../assets/images/CheckIcon.png";
 import backgroundPrize from "../assets/images/backgroundPrize.png";
 import QRCodeTicket from "../assets/images/QRCodeTicket.png";
+import SpinIconHomePage from "../assets/images/SpinIconHomePage.png";
 //------------popup---------------
 
 import bookmark1 from "../assets/imagesLayout/popup/bookmark1.png";
@@ -223,8 +229,8 @@ import coin2 from "../assets/imagesLayout/popup/coin2.png";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 import crown from "../assets/imagesLayout/popup/crown.svg";
 import heart from "../assets/imagesLayout/popup/heart.svg";
-import checkCircle from "../assets/imagesLayout/popup/check-circle.svg"
-import vecter from '../assets/imagesLayout/popup/Vector.svg'
+import checkCircle from "../assets/imagesLayout/popup/check-circle.svg";
+import vecter from "../assets/imagesLayout/popup/Vector.svg";
 
 export const images = {
   pool: pool,
@@ -337,6 +343,12 @@ export const images = {
   bannerTournament1: bannerTournament1,
   bannerTournament2: bannerTournament2,
   GameTournament: GameTournament,
+  Discount25: Discount25,
+  Discount12: Discount12,
+  Discount10: Discount10,
+  giveAway: giveAway,
+  SpinIconHomePage: SpinIconHomePage,
+  closePromo: closePromo,
 };
 
 export const images2 = {
@@ -416,8 +428,8 @@ export const popup = {
   proWallet: proWallet,
   crown: crown,
   heart: heart,
-  checkCircle:checkCircle,
-  vecter:vecter
+  checkCircle: checkCircle,
+  vecter: vecter,
 };
 
 export const sign = {

@@ -5,7 +5,7 @@ import "./index.scss";
 import MenuChat from "../../MenuMobile/Chat";
 import MenuBrowser from "../../MenuMobile/Browser";
 import MenuSearch from "../../MenuMobile/Search";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -30,7 +30,8 @@ export default function NavMobile() {
       setHideNavMobile("block");
     }
   }, [isProfileDialog]);
-  const pathname = useParams();
+  const { pathname } = useLocation();
+  console.log(pathname);
   return (
     <>
       {isLoginDialog === false && width <= 576 ? (
@@ -52,7 +53,12 @@ export default function NavMobile() {
                 >
                   <div>
                     <img
-                      src={pathname.type ? popup.brow : popup.HomeActiveIcon}
+                      src={
+                        pathname &&
+                        (pathname === "/home" || pathname === "/new-home")
+                          ? popup.HomeActiveIcon
+                          : popup.brow
+                      }
                       alt="..."
                     />
                     <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
@@ -68,28 +74,24 @@ export default function NavMobile() {
                 >
                   <div
                     onClick={() => {
-                      setOpenSearch(false);
-                      setOpenMenu(false)
-                      navigate("/game-type/favorite");
+                      navigate("/tournaments");
                     }}
                   >
                     <img
                       src={
-                        pathname.type &&
-                        pathname.type === "favorite" &&
-                        !openSearch
+                        pathname && pathname === "/tournaments"
                           ? popup.FavoriteActiveIcon
                           : popup.mygame
                       }
                       alt="..."
                     />
                     <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
-                      Favorite
+                      Tournament
                     </p>
                   </div>
                 </div>
                 <div
-                  className="items1"
+                  className="items"
                   style={{
                     backgroundColor: "unset",
                   }}
@@ -107,28 +109,8 @@ export default function NavMobile() {
                     </div>
                   </div>
                   <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
-                    Wallet
+                    Credit
                   </p>
-                </div>
-                <div
-                  className="items"
-                  style={{
-                    backgroundColor: "unset",
-                  }}
-                  onClick={() => {
-                    setOpenSearch(true);
-                    setOpenMenu(false)
-                  }}
-                >
-                  <div>
-                    <img
-                      src={openSearch ? popup.SearchActiveIcon : popup.search}
-                      alt="..."
-                    />
-                    <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
-                      Search
-                    </p>
-                  </div>
                 </div>
                 <div
                   className="items"
@@ -138,7 +120,7 @@ export default function NavMobile() {
                   onClick={() => {
                     setOpenMess(true);
                     setOpenSearch(false);
-                    setOpenMenu(false)
+                    setOpenMenu(false);
                   }}
                 >
                   <div>
@@ -161,6 +143,26 @@ export default function NavMobile() {
                     </Badge>
                   </div>
                 </div>
+                <div
+                  className="items"
+                  style={{
+                    backgroundColor: "unset",
+                  }}
+                  onClick={() => {
+                    setOpenSearch(true);
+                    setOpenMenu(false);
+                  }}
+                >
+                  <div>
+                    <img
+                      src={openSearch ? popup.SearchActiveIcon : popup.search}
+                      alt="..."
+                    />
+                    <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
+                      Menu
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
             <MenuChat
@@ -180,7 +182,7 @@ export default function NavMobile() {
             <MenuSearch
               open={openSearch}
               handleShowSearch={() => {
-                navigate("/home")
+                navigate("/home");
                 setOpenSearch(false);
               }}
               handleColor={() => {}}

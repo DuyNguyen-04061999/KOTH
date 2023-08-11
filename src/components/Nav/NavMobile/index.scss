@@ -39,13 +39,12 @@
 @media screen and (max-width: 576px) {
   .mobile {
     width: 100%;
-    // height: max-content;
     position: fixed;
     bottom: 0px;
     right: 0px;
     z-index: 1302;
     .content {
-      background-image: url(../../../assets//imagesLayout//popup/02.png);
+      background-color: #723d9f;
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
