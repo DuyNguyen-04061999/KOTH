@@ -55,7 +55,7 @@ export default function UnityGameComponent(props) {
 
   const {
     unityProvider,
-    // unload,
+    unload,
     UNSAFE__unityInstance,
     addEventListener,
     removeEventListener,
@@ -107,14 +107,14 @@ export default function UnityGameComponent(props) {
   }, [sendMessage, tournamentId, token, gameId, roomId]);
 
   const handleFinalGame = useCallback(async () => {
-    // await unload();
+    await unload();
     if (type && type === "pvp") {
       navigate({
         pathname: `/selectroom/${gameId}`,
       });
     }
     handleEndGame();
-  }, [navigate, handleEndGame, gameId, type]);
+  }, [navigate, unload, handleEndGame, gameId, type]);
 
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
@@ -132,12 +132,12 @@ export default function UnityGameComponent(props) {
 
   const unityRef = useRef()
 
-  useEffect(() => {
-    const uRef = unityRef?.current
-    return () => {
-        if (unityRef && uRef) window.document.body.removeChild((uRef));
-    };
-  }, []);
+  // useEffect(() => {
+  //   const uRef = unityRef?.current
+  //   return () => {
+  //       if (unityRef && uRef) window.document.body.removeChild((uRef));
+  //   };
+  // }, []);
 
   return (
     <Fragment>
