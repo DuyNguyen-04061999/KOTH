@@ -132,12 +132,12 @@ export default function UnityGameComponent(props) {
 
   const unityRef = useRef()
 
-  useEffect(() => {
-    const uRef = unityRef?.current
-    return () => {
-        if (unityRef && uRef) window.document.body.removeChild((uRef));
-    };
-  }, []);
+  // useEffect(() => {
+  //   const uRef = unityRef?.current
+  //   return () => {
+  //       if (unityRef && uRef) window.document.body.removeChild((uRef));
+  //   };
+  // }, []);
 
   return (
     <Fragment>
