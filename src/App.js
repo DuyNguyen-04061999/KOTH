@@ -372,12 +372,10 @@ function App() {
         store.dispatch(showAlert("success", data));
       });
       socket?.on("gameWin", ({ type, value }) => {
-        console.log("win");
         store.dispatch(updateReward({ type, value }));
       });
 
       socket?.on("gameDefeated", ({ type, value }) => {
-        console.log("defeated");
         store.dispatch(updateReward({ type, value }));
       });
 
