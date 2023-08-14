@@ -15,6 +15,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
 import Draggable from "react-draggable";
 import { useNavigate } from "react-router-dom";
+import SliderTime from "../../../components/SliderTime";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -30,19 +31,47 @@ const theme = createTheme({
     },
   },
 });
-const typographyStyle = {
-  textAlign: "start",
-  fontSize: "14px",
-  fontWeight: "200 !important",
-  marginLeft: "0px !important",
-  color: "#fff",
-};
-
 export default function NewHomePage() {
   const [open, setOpen] = useState(false);
   const [promotion, setPromotion] = useState(true);
-  const { width } = useWindowDimensions();
   const [startPoint, setstartPoint] = useState(null);
+  const { width } = useWindowDimensions();
+  const typographyStyle = {
+    textAlign: "start",
+    fontSize: width < 576 ? "12px" : "14px",
+    fontWeight: "200 !important",
+    marginLeft: "0px !important",
+    color: "#fff",
+  };
+
+  // HourList
+  const [hourList, setHourList] = useState([
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
+    "24:00",
+    "25:00",
+    "00:00",
+  ]);
+  const [selectedHour, setSeHour] = useState(0);
+  const [dayList, setDayList] = useState([
+    "Mon",
+    "Tus",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun",
+  ]);
+  const [selectedDay, setSeDay] = useState(0);
   const navigate = useNavigate();
   const calculateDistance = (x, y, x1, y1) => {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
@@ -67,6 +96,7 @@ export default function NewHomePage() {
           }}
         >
           <SlickSlider
+            appendDot={true}
             images={[
               images.bannerTournament,
               images.bannerTournament1,
@@ -93,73 +123,8 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Flash Tournaments
+                  HOT TOURNAMENTS{" "}
                 </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginLeft: "10px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "2px 4px",
-                      backgroundColor: "#68399E",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    <Typography sx={{ ...typographyStyle }}>0</Typography>
-                    <Typography sx={{ ...typographyStyle }}>9</Typography>
-                  </Box>
-                  <Typography
-                    sx={{
-                      ...typographyStyle,
-                      marginLeft: "6px",
-                      marginRight: "6px",
-                    }}
-                  >
-                    :
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "2px 4px",
-                      backgroundColor: "#68399E",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {" "}
-                    <Typography sx={{ ...typographyStyle }}>0</Typography>
-                    <Typography sx={{ ...typographyStyle }}>9</Typography>
-                  </Box>
-                  <Typography
-                    sx={{
-                      ...typographyStyle,
-                      margin: "2px",
-                      marginLeft: "6px",
-                      marginRight: "6px",
-                    }}
-                  >
-                    :
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "2px 4px",
-                      backgroundColor: "#68399E",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {" "}
-                    <Typography sx={{ ...typographyStyle }}>0</Typography>
-                    <Typography sx={{ ...typographyStyle }}>9</Typography>
-                  </Box>
-                </Box>
               </Box>
               <Box
                 onClick={() => {
@@ -287,10 +252,12 @@ export default function NewHomePage() {
               })}
             </Box>
           </Box>{" "}
-          {/* ---------------------------- */}
-          <SlickSlider
-            images={[images.Discount25, images.Discount12, images.Discount10]}
-          />{" "}
+          {/* Banner winner ---> dynamically render */}
+          <Box
+            sx={{ width: "100%" }}
+            component={"img"}
+            src={images.bannerwin}
+          ></Box>{" "}
           {/* Brief List Tournament */}
           <Box
             sx={{
@@ -311,73 +278,8 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Hot Tournaments
+                  Hourly tournament{" "}
                 </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginLeft: "10px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "2px 4px",
-                      backgroundColor: "#68399E",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    <Typography sx={{ ...typographyStyle }}>0</Typography>
-                    <Typography sx={{ ...typographyStyle }}>9</Typography>
-                  </Box>
-                  <Typography
-                    sx={{
-                      ...typographyStyle,
-                      marginLeft: "6px",
-                      marginRight: "6px",
-                    }}
-                  >
-                    :
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "2px 4px",
-                      backgroundColor: "#68399E",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {" "}
-                    <Typography sx={{ ...typographyStyle }}>0</Typography>
-                    <Typography sx={{ ...typographyStyle }}>9</Typography>
-                  </Box>
-                  <Typography
-                    sx={{
-                      ...typographyStyle,
-                      margin: "2px",
-                      marginLeft: "6px",
-                      marginRight: "6px",
-                    }}
-                  >
-                    :
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "2px 4px",
-                      backgroundColor: "#68399E",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {" "}
-                    <Typography sx={{ ...typographyStyle }}>0</Typography>
-                    <Typography sx={{ ...typographyStyle }}>9</Typography>
-                  </Box>
-                </Box>
               </Box>
               <Box
                 onClick={() => {
@@ -402,6 +304,98 @@ export default function NewHomePage() {
                 ></Box>
               </Box>
             </Box>
+            <Box>
+              <SliderTime
+                updateSelectedIndex={(index) => {
+                  setSeHour(index);
+                }}
+                selectedItem={selectedHour}
+                list={hourList}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "12px",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Typography
+                sx={{
+                  ...typographyStyle,
+                  color: "rgba(255, 255, 255, 0.50)",
+                }}
+              >
+                End time
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: "8px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "2px 4px",
+                    backgroundColor: "#68399E",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <Typography sx={{ ...typographyStyle }}>0</Typography>
+                  <Typography sx={{ ...typographyStyle }}>9</Typography>
+                </Box>
+                <Typography
+                  sx={{
+                    ...typographyStyle,
+                    marginLeft: "6px",
+                    marginRight: "6px",
+                  }}
+                >
+                  :
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "2px 4px",
+                    backgroundColor: "#68399E",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {" "}
+                  <Typography sx={{ ...typographyStyle }}>0</Typography>
+                  <Typography sx={{ ...typographyStyle }}>9</Typography>
+                </Box>
+                <Typography
+                  sx={{
+                    ...typographyStyle,
+                    margin: "2px",
+                    marginLeft: "6px",
+                    marginRight: "6px",
+                  }}
+                >
+                  :
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "2px 4px",
+                    backgroundColor: "#68399E",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {" "}
+                  <Typography sx={{ ...typographyStyle }}>0</Typography>
+                  <Typography sx={{ ...typographyStyle }}>9</Typography>
+                </Box>
+              </Box>
+            </Box>
+
             <Box sx={{ display: "flex", flexWrap: "wrap" }}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                 return (
@@ -531,7 +525,252 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Tournament of the week
+                  Daily Tournaments
+                </Typography>
+              </Box>
+              <Box
+                onClick={() => {
+                  setOpen(true);
+                }}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "12px",
+                    fontWeight: "200 !important",
+                    color: "#BE48ED",
+                  }}
+                >
+                  View All
+                </Typography>
+                <Box
+                  sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
+                  component={"img"}
+                  src={images.viewAllButton}
+                ></Box>
+              </Box>
+            </Box>
+            <Box>
+              <SliderTime
+                updateSelectedIndex={(index) => {
+                  setSeDay(index);
+                }}
+                selectedItem={selectedDay}
+                list={dayList}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "12px",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Typography
+                sx={{
+                  ...typographyStyle,
+                  color: "rgba(255, 255, 255, 0.50)",
+                }}
+              >
+                End time
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: "8px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "2px 4px",
+                    backgroundColor: "#68399E",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <Typography sx={{ ...typographyStyle }}>0</Typography>
+                  <Typography sx={{ ...typographyStyle }}>9</Typography>
+                </Box>
+                <Typography
+                  sx={{
+                    ...typographyStyle,
+                    marginLeft: "6px",
+                    marginRight: "6px",
+                  }}
+                >
+                  :
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "2px 4px",
+                    backgroundColor: "#68399E",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {" "}
+                  <Typography sx={{ ...typographyStyle }}>0</Typography>
+                  <Typography sx={{ ...typographyStyle }}>9</Typography>
+                </Box>
+                <Typography
+                  sx={{
+                    ...typographyStyle,
+                    margin: "2px",
+                    marginLeft: "6px",
+                    marginRight: "6px",
+                  }}
+                >
+                  :
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "2px 4px",
+                    backgroundColor: "#68399E",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {" "}
+                  <Typography sx={{ ...typographyStyle }}>0</Typography>
+                  <Typography sx={{ ...typographyStyle }}>9</Typography>
+                </Box>
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
+                return (
+                  index < 4 &&
+                  (index % 2 === 0 ? (
+                    <Box
+                      sx={{
+                        width: "50%",
+                        boxSizing: "border-box",
+                        marginTop: "20px",
+                        paddingRight: "10px",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          backgroundColor: "#37285C",
+                          borderRadius: "10px",
+                          padding: "8px",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Box
+                          sx={{ borderRadius: "10px" }}
+                          component={"img"}
+                          src={images.GameTournament}
+                        ></Box>
+                        <Typography
+                          sx={{
+                            color: "#FFDC62",
+                            fontSize: "14px",
+                            fontWeight: "200 !important",
+                            textAlign: "start",
+                            marginTop: "5px",
+                          }}
+                        >
+                          Get $100 gift
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "#ffff",
+                            fontSize: "12px",
+                            fontWeight: "200 !important",
+                            textAlign: "start",
+                            marginTop: "-3px",
+                          }}
+                        >
+                          By Mcdonald’s
+                        </Typography>
+                      </Box>
+                    </Box>
+                  ) : (
+                    <Box
+                      sx={{
+                        width: "50%",
+                        boxSizing: "border-box",
+                        marginTop: "20px",
+                        paddingLeft: "10px",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          backgroundColor: "#37285C",
+                          borderRadius: "10px",
+                          padding: "8px",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Box
+                          sx={{ borderRadius: "10px" }}
+                          component={"img"}
+                          src={images.GameTournament}
+                        ></Box>
+                        <Typography
+                          sx={{
+                            color: "#FFDC62",
+                            fontSize: "14px",
+                            fontWeight: "200 !important",
+                            textAlign: "start",
+                            marginTop: "5px",
+                          }}
+                        >
+                          Get $100 gift
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "#ffff",
+                            fontSize: "12px",
+                            fontWeight: "200 !important",
+                            textAlign: "start",
+                            marginTop: "-3px",
+                          }}
+                        >
+                          By Mcdonald’s
+                        </Typography>
+                      </Box>
+                    </Box>
+                  ))
+                );
+              })}
+            </Box>
+          </Box>{" "}
+          {/* Brief information */}
+          <SlickSlider
+            appendDot={false}
+            images={[images.banner_5, images.banner_6, images.banner_7]}
+          />
+          {/* ------------------------ */}
+          <Box
+            sx={{
+              marginTop: "20px",
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "24px",
+            }}
+          >
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "14px",
+                    fontWeight: "200 !important",
+                    marginLeft: "0px !important",
+                    color: "#fff",
+                  }}
+                >
+                  Week-long tournament{" "}
                 </Typography>
               </Box>
               <Box
@@ -860,6 +1099,8 @@ export default function NewHomePage() {
                 component={"img"}
                 sx={{
                   width: "120px",
+                  height: "44px",
+                  marginTop: "30px",
                 }}
                 src={imageDesktop.LogoCongTy}
               ></Box>
@@ -870,6 +1111,7 @@ export default function NewHomePage() {
                 fontWeight: "200 !important",
                 fontSize: "12px",
                 lineHeight: "normal",
+                marginTop: "30px",
               }}
             >
               "Experience the thrill of gaming at Play4Promo, where tournaments,
@@ -878,7 +1120,7 @@ export default function NewHomePage() {
               process for an enhanced gaming journey."
             </Typography>
           </Box>
-          {promotion && (
+          {promotion && width < 576 && (
             <Draggable
               onStart={(e, data) => {
                 setstartPoint({ startX: data.x, startY: data.y });

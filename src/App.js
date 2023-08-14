@@ -11,6 +11,7 @@ import FAQPage from "./pages/FAQpage";
 import CountDownTimer from "./components/CountDownTimer";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
+import "react-toastify/dist/ReactToastify.css";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
@@ -76,20 +77,25 @@ import {
   getListPackage,
 } from "./redux-saga-middleware/reducers/appReducer";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
-import AlertComponent from "./components/Alert/AlertComponent";
+// import AlertComponent from "./components/Alert/AlertComponent";
 import PackagePage from "./pages/PackagePage";
 import NewHomePageComponent from "./pages/NewHomePageComponent";
+import { ToastContainer, toast } from "react-toastify";
+import { images } from "./utils/images";
+import useWindowDimensions from "./utils/useWindowDimensions";
 function App() {
   useTracking("");
 
   const [socket] = useState(_socket);
   const { token } = store.getState().authReducer;
+  const { width } = useWindowDimensions();
+
   useEffect(() => {
     if (!token) {
       socket.emit("listMessageGlobal");
     }
   });
-
+  useEffect(() => {});
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
 
@@ -128,6 +134,7 @@ function App() {
             id: user?.id,
           })
         );
+        console.log("MESSAGE: ", mess);
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -149,13 +156,33 @@ function App() {
       });
 
       socket?.on("addFriendSuccess", (data) => {
-        store.dispatch(showAlert("success", "Add Friend Successfully"));
+        toast.success("Add Friend Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
         store.dispatch(updateFriendList(data));
       });
 
       socket?.on("deleteFriendSuccess", (data) => {
+        toast.success("Delete Friend Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
         socket.emit("listFriend");
-        store.dispatch(showAlert("success", "Delete Friend Successfully"));
         store.dispatch(deleteFriendSuccesFully("success"));
       });
 
@@ -182,7 +209,18 @@ function App() {
         store.dispatch(paymentLogoutSuccessFully());
         store.dispatch(walletLogoutSuccessFully());
         if (type === "logout") {
-          store.dispatch(showAlert("success", message));
+          console.log("Message: ", message);
+          // toast.success(message, {
+          //   icon: ({ theme, type }) => (
+          //     <img
+          //       style={{ width: "20px", marginRight: "10px" }}
+          //       alt="..."
+          //       src={images.successIcon}
+          //     />
+          //   ),
+          //   position: "top-center",
+          //   className: "success-background",
+          // });
         } else if (type === "sameAccount") {
           store.dispatch(showAlert("error", message));
         }
@@ -360,16 +398,52 @@ function App() {
       socket?.on("heartbeat", (data) => {});
 
       socket?.on("error", (data) => {
-        store.dispatch(showAlert("error", data));
+        toast.error(
+          "Even a function, given you return something that can be rendered",
+          {
+            icon: ({ theme, type }) => (
+              <img
+                style={{ width: "20px", marginRight: "10px" }}
+                alt="..."
+                src={images.closeButtonToast}
+              />
+            ),
+            position: "top-center",
+            className:
+              width < 576 ? "error-background-small" : "error-background",
+          }
+        );
         store.dispatch(updateProfileFail());
       });
 
       socket?.on("warning", (data) => {
-        store.dispatch(showAlert("warning", data));
+        toast.warning(data, {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.WarningIcon}
+            />
+          ),
+          position: "top-center",
+          className:
+            width < 576 ? "warning-background-small" : "warning-background",
+        });
       });
 
       socket?.on("success", (data) => {
-        store.dispatch(showAlert("success", data));
+        toast.success(data, {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className:
+            width < 576 ? "success-background-small" : "success-background",
+        });
       });
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
@@ -424,7 +498,16 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <CustomRouter history={history}>
           <Routes>
-            <Route path="" element={<HomePage />}>
+            <Route
+              path=""
+              element={
+                process.env.REACT_APP_TYPE_APP === "promote" ? (
+                  <NewHomePageComponent />
+                ) : (
+                  <HomePage />
+                )
+              }
+            >
               <Route path="/home" element={<HomePage />} />
             </Route>
             <Route path="/gamelobby/:id" element={<GameLobby />} />
@@ -452,7 +535,11 @@ function App() {
             />
             <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
-          <AlertComponent />
+          <ToastContainer
+            hideProgressBar={true}
+            autoClose={1000}
+            position="top-center"
+          />
         </CustomRouter>
       </PersistGate>
     </Provider>

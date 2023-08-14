@@ -694,9 +694,9 @@ export default function SelectRoom() {
     setRoomIdSelect(0);
     setroomDetailInfo("");
     setContinueGame(false);
-    setIsLoading(false)
+    setIsLoading(false);
   };
-  
+  console.log("Startgame: ", startGame);
   return (
     <div className="">
       <Box
@@ -727,13 +727,13 @@ export default function SelectRoom() {
           >
             <div
               style={{
-                width: "100%",
-                height: "100%",
+                width: isFullScreen && startGame ? "100%" : "0%",
+                height: isFullScreen && startGame ? "100%" : "0%",
                 position: isFullScreen && startGame ? "fixed" : "none",
                 backgroundColor: isFullScreen && startGame ? "black" : "none",
                 top: isFullScreen && startGame ? "0px" : "none",
                 left: isFullScreen && startGame ? "0px" : "none",
-                zIndex: isFullScreen && startGame ? "10005" : "none",
+                zIndex: isFullScreen && startGame ? "5005" : "none",
               }}
             >
               <FullScreen handle={screen} onChange={reportChange}>
