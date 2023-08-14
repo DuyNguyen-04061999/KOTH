@@ -43,7 +43,7 @@ build-promote:
     - gcloud config set project $GOOGLE_PROJECT_NAME
     - gcloud config set compute/zone $CLUSTER_LOCATION
     - gcloud container clusters get-credentials $CLUSTER_NAME
-    - kubectl set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - kubectl set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:${IMAGE_PREFIX}$CI_COMMIT_SHA
 
 deploy-crypto:
   <<: *deploy
