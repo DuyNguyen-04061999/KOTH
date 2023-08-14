@@ -20,6 +20,7 @@ export const deleteFriendSuccesFully = (data) => {
     payload: data,
   };
 };
+
 export const resetDelteFriend = () => {
   return {
     type: "RESET_DELETE_FRIEND",

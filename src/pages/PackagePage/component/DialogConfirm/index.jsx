@@ -4,7 +4,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleDialogConfirm } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { useState } from "react";
@@ -13,7 +12,7 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import { Box } from "@mui/material";
 
 export default function DialogConfirm() {
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const { isDialogConfirm, idPackage } = useSelector(
     (state) => state.authReducer
   );

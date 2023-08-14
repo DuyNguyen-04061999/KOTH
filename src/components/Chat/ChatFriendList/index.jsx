@@ -18,15 +18,15 @@ const Test = styled.input`
   border-radius: 10px;
   width: 100% !important;
   height: 100%;
-  background: #170f1e !important;
-  padding: 5px !important;
+  background: #261A35 !important;
+  padding: 10px 20px !important;
   color: #fff !important;
   font-weight: bold !important;
   &:focus {
     outline: none;
   }
   &::placeholder {
-    color: #3f3970;
+    color: white;
   }
 `;
 
@@ -123,24 +123,39 @@ export default function ChatFriendList() {
   };
 
   useEffect(() => {
-    if(chatWorld) {
-      
+    if (chatWorld) {
     }
-  }, [chatWorld, listFriend])
+  }, [chatWorld, listFriend]);
 
   const [listFriendSort, setListFriendSort] = useState([]);
 
   useEffect(() => {
-    const list = listFriend?.sort(function(x, y){
-      if(x?.receiveMessages && x?.receiveMessages?.length > 0 && x?.receiveMessages[0] && y?.receiveMessages && y?.receiveMessages?.length > 0 && y?.receiveMessages[0]) {
-        return new Date(y?.receiveMessages[0]?.createdAt).getTime() - new Date(x?.receiveMessages[0]?.createdAt).getTime();
-      } else if (x?._gg_koth_user_friends?.createdAt && y?._gg_koth_user_friends?.createdAt) {
-        return new Date(y?._gg_koth_user_friends?.createdAt).getTime() - new Date(x?._gg_koth_user_friends?.createdAt).getTime()
-      } else return x || y
-    })
+    const list = listFriend?.sort(function (x, y) {
+      if (
+        x?.receiveMessages &&
+        x?.receiveMessages?.length > 0 &&
+        x?.receiveMessages[0] &&
+        y?.receiveMessages &&
+        y?.receiveMessages?.length > 0 &&
+        y?.receiveMessages[0]
+      ) {
+        return (
+          new Date(y?.receiveMessages[0]?.createdAt).getTime() -
+          new Date(x?.receiveMessages[0]?.createdAt).getTime()
+        );
+      } else if (
+        x?._gg_koth_user_friends?.createdAt &&
+        y?._gg_koth_user_friends?.createdAt
+      ) {
+        return (
+          new Date(y?._gg_koth_user_friends?.createdAt).getTime() -
+          new Date(x?._gg_koth_user_friends?.createdAt).getTime()
+        );
+      } else return x || y;
+    });
 
-    setListFriendSort(list)
-  }, [listFriend])
+    setListFriendSort(list);
+  }, [listFriend]);
 
   const renderListFriend = listFriendSort?.map((e, index) => {
     return (
@@ -188,9 +203,9 @@ export default function ChatFriendList() {
                   {e?.userName}
                 </h5>
                 <span style={{ color: "white", fontWeight: "bold" }}>
-                  {e?.receiveMessages?.map((e_m, i_e_m) =>
-                    <span key={i_e_m}>{e_m?.messageContent?.slice(0,15)}</span>
-                  )}
+                  {e?.receiveMessages?.map((e_m, i_e_m) => (
+                    <span key={i_e_m}>{e_m?.messageContent?.slice(0, 15)}</span>
+                  ))}
                 </span>
               </Box>
             </Box>
@@ -203,13 +218,19 @@ export default function ChatFriendList() {
                   fontSize: "12px",
                 }}
               >
-                {e?.receiveMessages?.length > 0
-                  ? e?.receiveMessages?.map((e_m, i_e_m) =>
-                      <span key={i_e_m}>{moment(e_m?.updatedAt).format("HH:mm")}</span>
-                    )
-                  : <span>
-                      {moment(e?._gg_koth_user_friends?.createdAt).format("HH:mm")}
-                    </span>}
+                {e?.receiveMessages?.length > 0 ? (
+                  e?.receiveMessages?.map((e_m, i_e_m) => (
+                    <span key={i_e_m}>
+                      {moment(e_m?.updatedAt).format("HH:mm")}
+                    </span>
+                  ))
+                ) : (
+                  <span>
+                    {moment(e?._gg_koth_user_friends?.createdAt).format(
+                      "HH:mm"
+                    )}
+                  </span>
+                )}
               </span>
             </Box>
           </Box>
@@ -255,6 +276,33 @@ export default function ChatFriendList() {
             onChange={handleChangeSearchChat}
             placeholder="Search"
           />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill="none"
+            viewBox="0 0 18 18"
+            onClick={handleSubmitSearchChat}
+            style={{
+              position: "absolute",
+              top: "26px",
+              right: "31px",
+            }}
+          >
+            <g>
+              <g
+                fillRule="evenodd"
+                stroke="#fff"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+                clipRule="evenodd"
+              >
+                <path d="M8.396 1.262a7.134 7.134 0 110 14.268 7.134 7.134 0 010-14.268z"></path>
+                <path d="M15.582 14.406a1.176 1.176 0 110 2.352 1.176 1.176 0 010-2.352z"></path>
+              </g>
+            </g>
+          </svg>
           {/* <Search
             onClick={handleSubmitSearchChat}
             sx={{
