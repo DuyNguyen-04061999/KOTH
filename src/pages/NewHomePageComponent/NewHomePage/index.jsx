@@ -155,6 +155,7 @@ export default function NewHomePage() {
                   index < 4 &&
                   (index % 2 === 0 ? (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -202,6 +203,7 @@ export default function NewHomePage() {
                     </Box>
                   ) : (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -402,6 +404,7 @@ export default function NewHomePage() {
                   index < 4 &&
                   (index % 2 === 0 ? (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -449,6 +452,7 @@ export default function NewHomePage() {
                     </Box>
                   ) : (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -648,6 +652,7 @@ export default function NewHomePage() {
                   index < 4 &&
                   (index % 2 === 0 ? (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -695,6 +700,7 @@ export default function NewHomePage() {
                     </Box>
                   ) : (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -802,6 +808,7 @@ export default function NewHomePage() {
                   index < 4 &&
                   (index % 2 === 0 ? (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -849,6 +856,7 @@ export default function NewHomePage() {
                     </Box>
                   ) : (
                     <Box
+                      key={index}
                       sx={{
                         width: "50%",
                         boxSizing: "border-box",
@@ -956,6 +964,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 2, 3, 4, 5].map((item, index) => {
                     return index % 2 === 0 ? (
                       <Box
+                        key={index}
                         sx={{
                           width: "50%",
                           boxSizing: "border-box",
@@ -1003,6 +1012,7 @@ export default function NewHomePage() {
                       </Box>
                     ) : (
                       <Box
+                        key={index}
                         sx={{
                           width: "50%",
                           boxSizing: "border-box",

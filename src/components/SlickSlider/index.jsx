@@ -50,8 +50,8 @@ export default function SlickSlider(props) {
   };
   return (
     <Slider {...settings}>
-      {[...images].map((item) => {
-        return <Box sx={{ width: "100%" }} component={"img"} src={item}></Box>;
+      {[...images].map((item, index) => {
+        return <Box key={index} sx={{ width: "100%" }} component={"img"} src={item}></Box>;
       })}
     </Slider>
   );

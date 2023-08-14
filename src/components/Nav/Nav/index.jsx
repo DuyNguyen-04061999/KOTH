@@ -60,7 +60,7 @@ export default function Navbar() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
-              height="auto"
+              height="28"
               fill="none"
               viewBox="0 0 18 18"
               className="p-1 me-1"
@@ -111,7 +111,7 @@ export default function Navbar() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
-              height="auto"
+              height="28"
               fill="none"
               viewBox="0 0 16 18"
               className="p-1 me-1"
@@ -165,7 +165,7 @@ export default function Navbar() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
-              height="auto"
+              height="28"
               fill="none"
               viewBox="0 0 18 18"
               className="p-1 me-1"
@@ -241,7 +241,7 @@ export default function Navbar() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
-              height="auto"
+              height="28"
               fill="none"
               viewBox="0 0 18 18"
               className="p-1 me-1"
@@ -472,7 +472,7 @@ export default function Navbar() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
-              height="auto"
+              height="28"
               fill="none"
               viewBox="0 0 18 18"
               className="p-1 me-1"
