@@ -11,7 +11,6 @@ function* postTournamentCreate(dataRequest) {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.callCreateTournament, payload);
     if (res.status === 200) {
-      console.log("Res: ", res);
       yield put(createTournamentSuccess());
     }
   } catch (error) {
