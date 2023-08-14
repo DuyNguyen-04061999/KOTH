@@ -7,8 +7,10 @@ function* login(dataRequest) {
     try {
         const { payload } = dataRequest;
         const res = yield call(adminAuthService.login, payload)
+        const { token, roles, permissions } = res?.data?.data
         if(res && res.status === 200) {
-            yield put(adminLoginSuccess())
+            localStorage.setItem("token_admin", token)
+            yield put(adminLoginSuccess({ roles, permissions }))
         } else {
             yield put(adminLoginFail())
         }
