@@ -1,14 +1,11 @@
 stages:
   - build
   - deploy
-build:
+.build: &build
   stage: build
   image: docker:24.0.2
-  # Pinning the right Docker version for the service also
   services:
     - docker:24.0.2-dind
-  only:
-    - staging
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
@@ -17,16 +14,29 @@ build:
     - chmod +x ci/docker_build.sh
     - ./ci/docker_build.sh
     # - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:${IMAGE_PREFIX}$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:${IMAGE_PREFIX}latest
 #    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
 #    - /kaniko/executor --cache=true --snapshotMode=redo --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --destination ${CI_REGISTRY_IMAGE}:latest
-    - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} and ${CI_REGISTRY_IMAGE}:latest"
-deploy:
+    - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}:${IMAGE_PREFIX}${CI_COMMIT_SHA} and ${CI_REGISTRY_IMAGE}:${IMAGE_PREFIX}latest"
+
+build-crypto:
+  <<: *build
+  only:
+    - staging/crypto
+  environment:
+    name: crypto
+
+build-promote:
+  <<: *build
+  only:
+    - staging/promote
+  environment:
+    name: promote
+
+.deploy: &deploy
   stage: deploy
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
-  only:
-    - staging
   script:
     - gcloud components update kubectl
     - gcloud auth activate-service-account --key-file $SERVICE_ACCOUNT
@@ -35,3 +45,16 @@ deploy:
     - gcloud container clusters get-credentials $CLUSTER_NAME
     - kubectl set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
+deploy-crypto:
+  <<: *deploy
+  only:
+    - staging/crypto
+  environment:
+    name: crypto
+
+deploy-promote:
+  <<: *deploy
+  only:
+    - staging/promote
+  environment:
+    name: promote
