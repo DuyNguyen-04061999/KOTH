@@ -9,7 +9,7 @@ import LoadingEffect from "../../../LoadingComponent";
 
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
-  const { firstName, lastName, email } = useSelector(
+  const { firstName, lastName, email, phone } = useSelector(
     (state) => state.profileReducer
   );
   const [socket, setSocket] = useState(null);
@@ -22,6 +22,7 @@ export default function SettingProfile({ closePopup }) {
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
+  const [phoneNumber,setPhoneNumber] = useState(phone)
   const [disable, setDisable] = useState(true);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +54,7 @@ export default function SettingProfile({ closePopup }) {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
+          phone:phoneNumber,
         });
         dispatch(updateProfile());
         closePopup();
@@ -61,8 +63,8 @@ export default function SettingProfile({ closePopup }) {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
+          phone:phoneNumber,
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
-          
         });
         dispatch(updateProfile());
         closePopup();
@@ -232,6 +234,56 @@ export default function SettingProfile({ closePopup }) {
                     Email must contain @gmail.com
                   </span>
                 )}
+              </FormControl>
+            </Box>
+            <Box className="Email mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#757ae5",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Phone
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#181223",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  type="text"
+                  name="phone"
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                  }}
+                  placeholder="Enter Your Phone"
+                  sx={{
+                    "&:before": {
+                      borderBottom: "0px solid !important",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    color: "white",
+                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                      padding: "0px !important",
+                    },
+                  }}
+                />{" "}
+                {""}
               </FormControl>
             </Box>
           </Box>

@@ -5,10 +5,12 @@ import sagaMiddleware from "./configSaga";
 import rootSaga from "../sagas";
 import adminReducer_ from "../reducers/adminReducer";
 import adminAuthReducer from "../reducers/adminAuthReducer";
+import adminConfigReducer from "../reducers/adminConfigReducer";
 
 let adminReducer = combineReducers({
   adminReducer_,
-  adminAuthReducer
+  adminAuthReducer,
+  adminConfigReducer
 });
 
 const persistConfig = {

@@ -2,16 +2,16 @@ import React from "react";
 import "./index.scss";
 import { Box, Dialog, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
-import { 
-  useDispatch,
-  useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { closeRewardPopup } from "../../../redux-saga-middleware/reducers/gameReducer";
 export default function PopUpReward() {
   const { width } = useWindowDimensions();
-  const { reward, typeReward, popupReward } = useSelector((state) => state.gameReducer);
-  const dispatch = useDispatch()
-  
+  const { reward, typeReward, popupReward } = useSelector(
+    (state) => state.gameReducer
+  );
+  const dispatch = useDispatch();
+
   return (
     <>
       <Dialog
@@ -45,7 +45,10 @@ export default function PopUpReward() {
           }}
         >
           <Box component={"div"} className="text-center">
-            {typeReward === "defeated" ? "DEFEATED" : "WINNER"}
+            <Box
+              component={"img"}
+              src={typeReward === "defeated" ? images.defeat : images.WINNER}
+            ></Box>
           </Box>
           <Box
             sx={{ width: width < 576 ? "100px" : "143px" }}

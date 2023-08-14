@@ -834,75 +834,8 @@ export default function Home() {
                 </Box>
               </Box>
             </Box>
+            <Package />
           </Container>
-          <Box className="footer p-5" sx={{ backgroundColor: "#2c2434" }}>
-            <Box
-              className="d-flex justify-content-center"
-              sx={{
-                width: "100%",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "30%",
-                }}
-              >
-                <img
-                  width={width < 1260 ? "auto" : "200px"}
-                  className="img-fluid"
-                  src={images2.logo_text}
-                  alt="..."
-                />
-              </Box>
-              <Box
-                className="d-flex ps-5 pe-5 justify-content-between align-items-center"
-                sx={{
-                  width: "50%",
-                }}
-              >
-                <div>
-                  <img
-                    width={40}
-                    className="img-fluid luckySpinIncon2"
-                    src={popup.Doge2}
-                    alt="..."
-                  />
-                </div>
-                <div>
-                  <img
-                    width={40}
-                    className="img-fluid luckySpinIncon2"
-                    src={popup.BNB}
-                    alt="..."
-                  />
-                </div>
-                <div>
-                  <img
-                    width={40}
-                    className="img-fluid luckySpinIncon2"
-                    src={popup.BTC}
-                    alt="..."
-                  />
-                </div>
-                <div>
-                  <img
-                    width={40}
-                    className="img-fluid luckySpinIncon2"
-                    src={popup.LCoin}
-                    alt="..."
-                  />
-                </div>
-                <div>
-                  <img
-                    width={40}
-                    className="img-fluid luckySpinIncon2"
-                    src={popup.TCoin}
-                    alt="..."
-                  />
-                </div>
-              </Box>
-            </Box>
-          </Box>
         </Box>
       ) : (
         <div>

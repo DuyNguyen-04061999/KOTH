@@ -92,6 +92,10 @@ import Discount12 from "../assets/images/Discount12.png";
 import Discount10 from "../assets/images/Discount10.png";
 import giveAway from "../assets/images/giveAway.png";
 import closePromo from "../assets/images/closePromo.png";
+import bannerwin from "../assets/images/bannerwin.png";
+import banner_5 from "../assets/images/banner_5.png";
+import banner_6 from "../assets/images/banner_6.png";
+import banner_7 from "../assets/images/banner_7.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -349,6 +353,10 @@ export const images = {
   giveAway: giveAway,
   SpinIconHomePage: SpinIconHomePage,
   closePromo: closePromo,
+  bannerwin: bannerwin,
+  banner_5: banner_5,
+  banner_6: banner_6,
+  banner_7: banner_7,
 };
 
 export const images2 = {

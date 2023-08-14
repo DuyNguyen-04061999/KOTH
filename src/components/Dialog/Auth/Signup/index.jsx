@@ -23,7 +23,7 @@ export default function Signup(props) {
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
   const { width } = useWindowDimensions();
-  const [passSai,setPassSai] = useState(false)
+  const [passSai, setPassSai] = useState(false);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -68,10 +68,10 @@ export default function Signup(props) {
 
   //------------------------------------------------------------------
   const sendRegister = () => {
-    if(c_password !== password) {
-      setPassSai(true)
+    if (c_password !== password) {
+      setPassSai(true);
     } else {
-      setPassSai(false)
+      setPassSai(false);
       socket?.emit("register", {
         username: username,
         password: password,
@@ -260,7 +260,9 @@ export default function Signup(props) {
             <span className="text-danger">no more than 15 characters</span>
           )}
           {password && password.length < 6 && (
-            <span className="text-danger">Password must be 6 characters or more</span>
+            <span className="text-danger">
+              Password must be 6 characters or more
+            </span>
           )}
         </FormControl>
         <FormControl
@@ -317,7 +319,7 @@ export default function Signup(props) {
           {c_password && c_password.length < 6 && (
             <span className="text-danger">Password does not match</span>
           )}
-           {passSai === true ? (
+          {passSai === true ? (
             <span className="text-danger">pass not march</span>
           ) : (
             ""
@@ -377,7 +379,7 @@ export default function Signup(props) {
             <span className="text-danger">no more than 30 characters</span>
           )}
         </FormControl>
-        {/* <FormControl
+        <FormControl
           variant="standard"
           sx={{
             width: "100%",
@@ -387,7 +389,7 @@ export default function Signup(props) {
             marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
-          <img
+          {/* <img
             src={sign.up04}
             alt="..."
             width={13}
@@ -396,7 +398,26 @@ export default function Signup(props) {
               top: "10px",
               left: width > 576 ? "13px" : "10px",
             }}
-          />
+          /> */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            style={{
+              position: "absolute",
+              top: "10px",
+              left: width > 576 ? "8px" : "6px",
+            }}
+          >
+            <g>
+              <path
+                fill="#7C81F2"
+                d="M14.979 23H7.99a2.236 2.236 0 01-2.233-2.234V4.234A2.236 2.236 0 017.99 2h6.988c1.233.001 2.232 1 2.233 2.234v16.532A2.236 2.236 0 0114.98 23zM11.485 3.909a.955.955 0 100 1.91.955.955 0 000-1.91zm1.432 16.227h-2.864a.477.477 0 100 .955h2.864a.477.477 0 100-.955z"
+              ></path>
+            </g>
+          </svg>
           <Input
             type="number"
             name="phone"
@@ -423,7 +444,7 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
-        </FormControl> */}
+        </FormControl>
         <FormControl
           variant="standard"
           sx={{

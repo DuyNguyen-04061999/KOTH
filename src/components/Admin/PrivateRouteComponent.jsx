@@ -3,7 +3,8 @@ import { Navigate } from 'react-router-dom';
 export { PrivateRouteComponent };
 
 function PrivateRouteComponent(props) {
-    const auth = false;
+    const tokenAdmin = localStorage.getItem("token_admin")
+    const auth = tokenAdmin ? true : false;
     const { children } = props
     return (
         <>
