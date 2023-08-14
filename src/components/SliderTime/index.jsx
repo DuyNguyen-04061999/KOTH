@@ -20,6 +20,7 @@ export default function SliderTime({
       {list?.map((item, index) => {
         return (
           <Box
+            key={index}
             onClick={() => {
               updateSelectedIndex(index);
             }}
