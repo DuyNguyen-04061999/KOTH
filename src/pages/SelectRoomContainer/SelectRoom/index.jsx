@@ -109,13 +109,6 @@ export default function SelectRoom() {
   const [betAmount] = useState(null);
   const filterArray = [0, 100, 200, 500];
 
-  const handleEndGame = () => {
-    dispatch(setSelectNav());
-    setStartGame(false);
-    setRoomIdSelect(0);
-    setroomDetailInfo("");
-  };
-
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -695,6 +688,15 @@ export default function SelectRoom() {
     }
   }, [isFullScreen, checkMobile]);
 
+  const handleEndGame = () => {
+    dispatch(setSelectNav());
+    setStartGame(false);
+    setRoomIdSelect(0);
+    setroomDetailInfo("");
+    setContinueGame(false);
+    setIsLoading(false)
+  };
+  
   return (
     <div className="">
       <Box
