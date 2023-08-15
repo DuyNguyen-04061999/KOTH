@@ -96,6 +96,17 @@ import bannerwin from "../assets/images/bannerwin.png";
 import banner_5 from "../assets/images/banner_5.png";
 import banner_6 from "../assets/images/banner_6.png";
 import banner_7 from "../assets/images/banner_7.png";
+import banner_5_dk from "../assets/images/banner_5_dk.png";
+import banner_6_dk from "../assets/images/banner_6_dk.png";
+import banner_7_dk from "../assets/images/banner_7_dk.png";
+import BannerHomePageDesktop from "../assets/images/BannerHomePageDesktop.png";
+import gameHotTournament from "../assets/images/gameHotTournament.png";
+import gameHotTournament_1 from "../assets/images/gameHotTournament_1.png";
+import giveAwayDesktop from "../assets/images/giveAwayDesktop.png";
+import bannerWin_Desktop from "../assets/images/bannerWin_Desktop.png";
+import banner_win_BG from "../assets/images/banner_win_BG.png";
+import winnerBG from "../assets/images/winnerBG.png";
+import hatWinner from "../assets/images/hatWinner.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -213,6 +224,8 @@ import up05 from "../assets/imagesLayout/05.svg";
 import video1 from "../assets/videoHover/Bida1.mp4";
 import video2 from "../assets/videoHover/Domino1.mp4";
 import video3 from "../assets/videoHover/Shooter.mp4";
+import Promo_Sale_Video_Desktop from "../assets/videoHover/Promo_Sale_Video_Desktop.mp4";
+import Promo_Sale_Video_Mobile from "../assets/videoHover/Promo_Sale_Video_Mobile.mp4";
 
 import LogoAnim from "../assets/videoHover/logo-anim version2.mp4";
 import proWallet from "../assets/imagesLayout/popup/13pro.png";
@@ -357,6 +370,17 @@ export const images = {
   banner_5: banner_5,
   banner_6: banner_6,
   banner_7: banner_7,
+  banner_5_dk: banner_5_dk,
+  banner_6_dk: banner_6_dk,
+  banner_7_dk: banner_7_dk,
+  BannerHomePageDesktop: BannerHomePageDesktop,
+  gameHotTournament: gameHotTournament,
+  gameHotTournament_1: gameHotTournament_1,
+  giveAwayDesktop: giveAwayDesktop,
+  bannerWin_Desktop: bannerWin_Desktop,
+  banner_win_BG: banner_win_BG,
+  winnerBG: winnerBG,
+  hatWinner: hatWinner,
 };
 
 export const images2 = {
@@ -458,6 +482,8 @@ export const video = {
   video2: video2,
   video3: video3,
   LogoAnim: LogoAnim,
+  Promo_Sale_Video_Desktop: Promo_Sale_Video_Desktop,
+  Promo_Sale_Video_Mobile: Promo_Sale_Video_Mobile,
 };
 
 export const imageDesktop = {
