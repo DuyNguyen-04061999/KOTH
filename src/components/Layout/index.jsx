@@ -103,13 +103,13 @@ const Test = styled.input`
   height: 100%;
   background: #27182e !important;
   padding: 7px !important;
-  color: #BFBEED !important;
+  color: #bfbeed !important;
   &:focus {
     outline: none;
   }
   &::placeholder {
-    color: #BFBEED;
-  } 
+    color: #bfbeed;
+  }
 `;
 
 export default function Layout(props) {
@@ -307,7 +307,7 @@ export default function Layout(props) {
           ) : (
             <NavLink to="/home">
               <img
-                style={{ width: "60px", height: "22px" }}
+                style={{ width: "90px", height: "auto" }}
                 className="logocongty"
                 src={imageDesktop.LogoCongTy}
                 alt="logocty"
