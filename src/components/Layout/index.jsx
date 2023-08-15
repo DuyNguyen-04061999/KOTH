@@ -1,4 +1,4 @@
-import { Box, Drawer, Grid, Typography } from "@mui/material";
+import { Box, Drawer, Grid } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
@@ -47,7 +47,6 @@ import {
   clickTabNav,
   toggleLoginDialog,
 } from "../../redux-saga-middleware/reducers/authReducer";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
