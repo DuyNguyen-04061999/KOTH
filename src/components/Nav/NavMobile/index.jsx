@@ -33,8 +33,6 @@ export default function NavMobile() {
   }, [isProfileDialog]);
   const { pathname } = useLocation();
 
-  console.log(getAppType());
-
   return (
     <>
       {isLoginDialog === false && width <= 576 ? (

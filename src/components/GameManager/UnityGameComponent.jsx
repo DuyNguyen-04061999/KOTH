@@ -86,6 +86,17 @@ export default function UnityGameComponent(props) {
       process.env.REACT_APP_END_POINT_TOURNAMENT
     );
     sendMessage("OverTheBridgeHome", "StartGame", "Start");
+
+    sendMessage("TournamentGameEntry", "SetToken", token);
+    sendMessage("TournamentGameEntry", "SetTournamentId", tournamentId);
+    sendMessage("TournamentGameEntry", "SetGameId", gameId);
+    sendMessage(
+      "TournamentGameEntry",
+      "SetSubmitScoreUrl",
+      process.env.REACT_APP_END_POINT_TOURNAMENT
+    );
+    sendMessage("TournamentGameEntry", "StartGame", "Start");
+
     sendMessage("Player Spawner", "SetToken", token);
     sendMessage("Player Spawner", "SetRoomName", roomId);
     sendMessage("Player Spawner", "StartGame", "Start");

@@ -14,7 +14,7 @@ export default function CountDownTimer() {
   const { totalAmount, countEveryday, expiryTime } = useSelector(
     (state) => state.luckyWheelReducer
   );
-  console.log(expiryTime);
+  
   const dispatch = useDispatch();
   useEffect(() => {
     let timeInterval = setInterval(() => {
