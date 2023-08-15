@@ -135,7 +135,7 @@ function App() {
             id: user?.id,
           })
         );
-        console.log("MESSAGE: ", mess);
+        
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -210,7 +210,7 @@ function App() {
         store.dispatch(paymentLogoutSuccessFully());
         store.dispatch(walletLogoutSuccessFully());
         if (type === "logout") {
-          console.log("Message: ", message);
+          // console.log("Message: ", message);
           // toast.success(message, {
           //   icon: ({ theme, type }) => (
           //     <img

@@ -1,12 +1,11 @@
 import React from "react";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import { images280423_l } from "../../utils/images280423_l";
-// import { color } from "../../utils/colors";
 import { formatMoney } from "../../utils/helper";
 
 export default function Gold(props) {
   const { value } = props;
-  console.log(value);
+  
   const { width } = useWindowDimensions();
   return (
     <div

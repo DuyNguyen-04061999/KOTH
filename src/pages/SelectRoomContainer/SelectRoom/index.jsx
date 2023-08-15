@@ -697,7 +697,7 @@ export default function SelectRoom() {
     setIsLoading(false);
     setIsFullScreen(false)
   };
-  console.log("Startgame: ", startGame);
+  
   return (
     <div className="">
       <Box
