@@ -109,7 +109,7 @@ const authReducer = (
     userId: "",
     mess: "",
     isDialogConfirm:false,
-    idPackage:{}
+    idPackage:{},
   },
   action
 ) => {
