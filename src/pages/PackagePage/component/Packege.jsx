@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
+// import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useEffect, useState } from "react";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -309,13 +309,16 @@ export default function Package() {
         </div>
       ) : (
         <div className="Package-home" style={{ padding: "10px" }}>
-          <Box className="pt-1 pb-4">
+          {/* <Box className="pt-1 pb-4">
             <TitleHomeDesktopComponent
               title="Package"
               noicon={true}
               noSeeAll={width && width < 576}
             />
-          </Box>
+          </Box> */}
+           <Box className="pt-5 pb-4">
+              <Typography variant="h6" className="text-white">Package</Typography>
+            </Box>
           <Box sx={{ paddingBottom: "50px" }}>
             <Box
               sx={{
@@ -349,7 +352,6 @@ export default function Package() {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "start",
-                        // padding: "50px",
                         borderRadius: "25px",
                         width: "270px",
                         height: "332px",
@@ -387,7 +389,7 @@ export default function Package() {
                               style={{
                                 border: "none",
                                 borderRadius: "10px",
-                                background: "rgba(182, 153, 255, 0.32)",
+                                background: "rgba(234, 226, 255, 32%)",
                                 backdropFilter: " blur(4px)",
                                 color: "white",
                                 padding: "5px 15px",
@@ -452,7 +454,8 @@ export default function Package() {
                                 sx={{
                                   fontSize: "13px",
                                   color: "white",
-                                  fontFamily: "Cyntho",
+                                  fontFamily: "Cyntho ",
+                                  fontWeight:"500 !important"
                                 }}
                               >
                                 2 Free voucher/tournament
@@ -477,6 +480,7 @@ export default function Package() {
                                   fontSize: "13px",
                                   color: "white",
                                   fontFamily: "Cyntho",
+                                  fontWeight:"500 !important"
                                 }}
                               >
                                 Reduce the time watching ads
@@ -501,13 +505,6 @@ export default function Package() {
                               backdropFilter: " blur(4px)",
                             }}
                           >
-                            {/* {i?.packagePrice}
-                              <img
-                                src={images280423_l.gold}
-                                alt="..."
-                                width={10}
-                                height={10}
-                              /> */}
                             Choose plan
                           </button>
                         </Box>

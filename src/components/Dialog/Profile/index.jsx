@@ -33,7 +33,7 @@ export default function DialogProfile(props) {
     id,
     email,
     refCode,
-    // phone,
+    phone,
     userNameProfile,
     avatarUrl,
   } = useSelector((state) => state.profileReducer);
@@ -242,7 +242,7 @@ export default function DialogProfile(props) {
                     />
                   </FormControl>
                 </Box>
-                {/* <Box className="mobile-number d-flex flex-column align-items-start mb-3">
+                <Box className="mobile-number d-flex flex-column align-items-start mb-3">
                   <Typography
                     variant="inherit"
                     sx={{
@@ -289,7 +289,7 @@ export default function DialogProfile(props) {
                       }}
                     />
                   </FormControl>
-                </Box> */}
+                </Box>
                 <Box
                   className="ref-code d-flex flex-column align-items-start mb-3"
                   position={"relative"}
