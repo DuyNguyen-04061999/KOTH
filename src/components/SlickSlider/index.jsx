@@ -26,6 +26,7 @@ export default function SlickSlider(props) {
           bottom: appendDot ? "0px" : "-15px",
           position: "absolute",
           padding: "5px",
+          height: "26px",
           backgroundColor: appendDot ? "rgba(0, 0, 0, 0.24)" : "none",
           backdropFilter: appendDot ? "blur(2px)" : "none",
           marginBottom: "0px",
@@ -51,7 +52,14 @@ export default function SlickSlider(props) {
   return (
     <Slider {...settings}>
       {[...images].map((item, index) => {
-        return <Box key={index} sx={{ width: "100%" }} component={"img"} src={item}></Box>;
+        return (
+          <Box
+            key={index}
+            sx={{ width: "100%", cursor: "pointer" }}
+            component={"img"}
+            src={item}
+          ></Box>
+        );
       })}
     </Slider>
   );

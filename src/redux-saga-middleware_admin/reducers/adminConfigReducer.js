@@ -24,15 +24,19 @@ export const getConfigsFail = (data) => {
 const adminConfigReducer = (
   state = {
     isFetchConfig: false,
-    listRole: []
+    listRole: [],
+    listPermission: []
   },
   action
 ) => {
   const { type, payload } = action;
   switch (type) {
-      case REHYDRATE: return { ...state }
+      case REHYDRATE: 
+        const { adminConfigReducer } = payload || {}
+        const { listRole } = adminConfigReducer || {}
+        return { ...state, listRole: listRole || [] };
       case "GET_CONFIG": return {...state, isFetchConfig: true}
-      case "GET_CONFIG_SUCCESS": return {...state, isFetchConfig: false, listRole: payload}
+      case "GET_CONFIG_SUCCESS": return {...state, isFetchConfig: false, listRole: payload?.roles, listPermission: payload?.pers}
       case "GET_CONFIG_FAIL": return {...state, isFetchConfig: false}
       default:
         return { ...state };
