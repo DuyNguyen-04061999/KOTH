@@ -1238,7 +1238,7 @@ export default function JoinTournament() {
                 backgroundColor: isFullScreen && startGame ? "black" : "none",
                 top: isFullScreen && startGame ? "0px" : "none",
                 left: isFullScreen && startGame ? "0px" : "none",
-                zIndex: isFullScreen && startGame ? "10005" : "none",
+                zIndex: isFullScreen && startGame ? "5005" : "none",
               }}
             >
               {detailTournament &&

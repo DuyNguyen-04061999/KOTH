@@ -695,6 +695,7 @@ export default function SelectRoom() {
     setroomDetailInfo("");
     setContinueGame(false);
     setIsLoading(false);
+    setIsFullScreen(false)
   };
   console.log("Startgame: ", startGame);
   return (
@@ -727,8 +728,8 @@ export default function SelectRoom() {
           >
             <div
               style={{
-                width: isFullScreen && startGame ? "100%" : "0%",
-                height: isFullScreen && startGame ? "100%" : "0%",
+                width: startGame ? "100%" : "0%",
+                height: startGame ? "100%" : "0%",
                 position: isFullScreen && startGame ? "fixed" : "none",
                 backgroundColor: isFullScreen && startGame ? "black" : "none",
                 top: isFullScreen && startGame ? "0px" : "none",

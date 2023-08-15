@@ -6,11 +6,17 @@ import rootSaga from "../sagas";
 import adminReducer_ from "../reducers/adminReducer";
 import adminAuthReducer from "../reducers/adminAuthReducer";
 import adminConfigReducer from "../reducers/adminConfigReducer";
+import adminMasterReducer from "../reducers/adminMasterReducer";
+import adminDistributorReducer from "../reducers/adminDistributorReducer";
+import adminSubDistributorReducer from "../reducers/adminSubDistributorReducer";
 
 let adminReducer = combineReducers({
   adminReducer_,
   adminAuthReducer,
-  adminConfigReducer
+  adminConfigReducer,
+  adminMasterReducer,
+  adminDistributorReducer,
+  adminSubDistributorReducer
 });
 
 const persistConfig = {
