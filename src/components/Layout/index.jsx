@@ -36,9 +36,7 @@ import {
   closeTransactionDialog,
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
-import {
-  toggleGameLogDialog,
-} from "../../redux-saga-middleware/reducers/gameReducer";
+import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
 import {
   clickTabChat,
@@ -126,9 +124,7 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
-  const { isGameLogDialog } = useSelector(
-    (state) => state.gameReducer
-  );
+  const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router } = useSelector((state) => state.appReducer);
   const [showChat] = useState(true);
@@ -149,14 +145,12 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if(router && router !== window.location.pathname) {
-      
+    if (router && router !== window.location.pathname) {
     }
-  }, [router])
+  }, [router]);
 
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
-      
     }
   }, [router, socket, token]);
 
@@ -230,20 +224,22 @@ export default function Layout(props) {
     e.preventDefault();
   };
 
-  const location = useLocation()
+  const location = useLocation();
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
-  const { isAlertDialog } = useSelector(state => state.stripeReducer)
+  const { isAlertDialog } = useSelector((state) => state.stripeReducer);
 
   useEffect(() => {
-    if(query?.get("type") === "stripe") {
-      if(!isAlertDialog) {
-        dispatch(toggleAlertStripeProcess({
-          type: "success"
-        }))
+    if (query?.get("type") === "stripe") {
+      if (!isAlertDialog) {
+        dispatch(
+          toggleAlertStripeProcess({
+            type: "success",
+          })
+        );
       }
     }
-  }, [query, dispatch, isAlertDialog])
+  }, [query, dispatch, isAlertDialog]);
 
   return (
     <Box
@@ -254,7 +250,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      <StripeAlertComponent/>
+      <StripeAlertComponent />
       <MetaMaskDialog />
       <PopUpReward />
       <DialogProfile
