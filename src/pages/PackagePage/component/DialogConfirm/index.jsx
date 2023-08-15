@@ -11,7 +11,8 @@ import { useEffect } from "react";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import { Box } from "@mui/material";
 
-export default function DialogConfirm() {
+export default function DialogConfirm() { 
+  // const [open, setOpen] = React.useState(false);
   const { isDialogConfirm, idPackage } = useSelector(
     (state) => state.authReducer
   );

@@ -23,16 +23,20 @@ export const adminLoginFail = (data) => {
 
 const adminAuthReducer = (
   state = {
-    isLogin: false
+    isLogin: false,
+    roles: [],
+    permissions: []
   },
   action
 ) => {
-  const { type } = action;
+  const { type, payload } = action;
   switch (type) {
       case REHYDRATE:
-        return { ...state };
+        const { adminAuthReducer } = payload || {}
+        const { permissions, roles } = adminAuthReducer || {}
+        return { ...state, permissions: permissions || [], roles: roles || [] };
       case "ADMIN_LOGIN": return {...state, isLogin: true}
-      case "ADMIN_LOGIN_SUCCESS": return {...state, isLogin: false}
+      case "ADMIN_LOGIN_SUCCESS": return {...state, isLogin: false, roles: payload?.roles || [], permissions: payload?.permissions || []}
       case "ADMIN_LOGIN_FAIL": return {...state, isLogin: false}
       default:
         return { ...state };

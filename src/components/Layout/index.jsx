@@ -1,4 +1,4 @@
-import { Box, Drawer, Grid } from "@mui/material";
+import { Box, Drawer, Grid, Typography } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { imageDesktop, images, images2 } from "../../utils/images";
+import { imageDesktop, images } from "../../utils/images";
 import { inpChat } from "../../utils/cssFrom";
 import styled from "styled-components";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -42,7 +42,6 @@ import {
   clickTabChat,
   closeChatPopup,
   openChatPopup,
-  toggleInviteGameDialog,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import {
   clickTabNav,
@@ -54,8 +53,6 @@ import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
-// import TouramentShow from "../Dialog/Tourament/showBuy";
-// import BuyTicket from "../Dialog/Tourament/buyTicket";
 
 const drawerWidth = 310;
 
@@ -106,13 +103,13 @@ const Test = styled.input`
   height: 100%;
   background: #27182e !important;
   padding: 7px !important;
-  color: #7c5ead !important;
+  color: #BFBEED !important;
   &:focus {
     outline: none;
   }
   &::placeholder {
-    color: #7c5ead;
-  }
+    color: #BFBEED;
+  } 
 `;
 
 export default function Layout(props) {
@@ -133,7 +130,7 @@ export default function Layout(props) {
   const navigate = useNavigate();
   const pathname = useLocation();
 
-  const [backgroundGlobal, setBackgroundGlobal] = useState("#61388e");
+  const [backgroundGlobal, setBackgroundGlobal] = useState("#883AF0");
   const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
   const [chatF, setChatF] = useState("");
   const dispatch = useDispatch();
@@ -310,13 +307,14 @@ export default function Layout(props) {
           ) : (
             <NavLink to="/home">
               <img
-                style={{ width: "50px", height: "50px" }}
+                style={{ width: "60px", height: "22px" }}
                 className="logocongty"
                 src={imageDesktop.LogoCongTy}
                 alt="logocty"
               />
             </NavLink>
           )}
+
           <Box sx={{ flexGrow: 1 }}>
             {width > 1024 ? (
               <Box>
@@ -374,6 +372,7 @@ export default function Layout(props) {
               ""
             )}
           </Box>
+
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
           </AvatarGroup>
@@ -414,16 +413,6 @@ export default function Layout(props) {
               </Box>
             )}
           </div>
-          <button
-            style={{
-              width: "36px",
-              height: "36px",
-              marginLeft: width > 576 ? "15px" : "none",
-            }}
-            className="buttonBell"
-          >
-            <NotificationsNoneIcon className="bell"></NotificationsNoneIcon>
-          </button>
         </Toolbar>
       </AppBar>
       <Grid container>
@@ -587,7 +576,7 @@ export default function Layout(props) {
             )} */}
             <Box
               sx={{
-                backgroundColor: "#2e233d",
+                backgroundColor: "#42285B",
                 padding: "15px",
               }}
             >
@@ -603,7 +592,7 @@ export default function Layout(props) {
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
-                    setBackgroundGlobal("#61388e");
+                    setBackgroundGlobal("#883AF0");
                     setBackgroundPrivate("#261a35");
                   }}
                 >
@@ -639,7 +628,7 @@ export default function Layout(props) {
                       dispatch(toggleLoginDialog());
                     } else {
                       dispatch(clickTabChat(false));
-                      setBackgroundPrivate("#62388f");
+                      setBackgroundPrivate("#883AF0");
                       setBackgroundGlobal("#261a35");
                     }
                   }}
@@ -683,32 +672,10 @@ export default function Layout(props) {
               <Box
                 className="d-flex justify-content-between align-items-center "
                 sx={{
-                  background: "#4a3763",
+                  background: "#2E1E38",
                   padding: "15px 20px",
                 }}
               >
-                <Box
-                  sx={{ marginRight: "10px" }}
-                  onClick={() => {
-                    if (!token) {
-                      dispatch(toggleLoginDialog());
-                    } else {
-                      dispatch(
-                        toggleInviteGameDialog({
-                          type: "world",
-                        })
-                      );
-                    }
-                  }}
-                >
-                  <img
-                    src={images2.inviteG}
-                    alt="..."
-                    width={30}
-                    height={30}
-                    className="cursor-pointer"
-                  />
-                </Box>
                 <Box
                   component={"form"}
                   onSubmit={(e) => {

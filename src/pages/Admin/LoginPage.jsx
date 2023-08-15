@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux'
 import { adminLogin } from '../../redux-saga-middleware_admin/reducers/adminAuthReducer';
 import { CircularProgress } from '@mui/material';
+import { Navigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -42,8 +43,11 @@ export default function LoginPage() {
     }
   };
 
+  const tokenAdmin = localStorage.getItem("token_admin")
+
   return (
     <ThemeProvider theme={defaultTheme}>
+      {tokenAdmin ? <Navigate to={"/"}/> : ""}
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
