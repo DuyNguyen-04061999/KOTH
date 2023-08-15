@@ -1,13 +1,13 @@
 import { Box, Button, FormControl, MenuItem, OutlinedInput, Select, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createDistributor } from "./../../../redux-saga-middleware_admin/reducers/adminMasterReducer"
+import { createSubDistributor } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer"
 import { Navigate } from 'react-router-dom'
 
-export default function CreateDistributorPage() {
+export default function CreateSubDistributorPage() {
     const { listRole, listPermission } = useSelector(state => state.adminConfigReducer)
-    
     const { roles, permissions } = useSelector(state => state.adminAuthReducer)
+
     const [roleId, setRoleId] = useState(0)
     const dispatch = useDispatch()
     const [pIds, setPIds] = useState([]);
@@ -16,7 +16,7 @@ export default function CreateDistributorPage() {
       e.preventDefault()
       const data = new FormData(e.currentTarget);
       if(data.get('username') && data.get('password') && roleId && pIds && pIds?.length > 0) {
-        dispatch(createDistributor({
+        dispatch(createSubDistributor({
           username: data.get('username'),
           password: data.get('password'),
           roleId: roleId,
@@ -33,14 +33,14 @@ export default function CreateDistributorPage() {
 
     return (
       <>
-        {permissions && permissions?.length > 0 && permissions?.includes("create_distributor")
-        && roles && roles?.length > 0 && roles?.includes("master")
+        {permissions && permissions?.length > 0 && permissions?.includes("create_sub_distributor")
+        && roles && roles?.length > 0 && roles?.includes("distributor")
         ? (
           <Box component={"div"} className='text-dark p-2 bg-white' sx={{
             height: '100%'
           }}>
             <Box component={"div"} className='d-flex'>
-              {listRole && listRole?.length > 0 && listRole?.filter(it => it?.roleName === "Distributor")?.map((role, i_role) => {
+              {listRole && listRole?.length > 0 && listRole?.filter(it => it?.roleName === "Sub Distributor")?.map((role, i_role) => {
                 return (
                   <Box component={"div"} key={i_role} onClick={() => setRoleId(role?.id)}>
                     <Box component={"span"} sx={{
@@ -102,7 +102,7 @@ export default function CreateDistributorPage() {
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  Create Distributor
+                  Create Sub Distributor
                 </Button>
               </Box>
         </Box>

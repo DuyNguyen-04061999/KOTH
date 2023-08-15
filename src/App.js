@@ -399,7 +399,7 @@ function App() {
 
       socket?.on("error", (data) => {
         toast.error(
-          "Even a function, given you return something that can be rendered",
+          data || "Even a function, given you return something that can be rendered",
           {
             icon: ({ theme, type }) => (
               <img

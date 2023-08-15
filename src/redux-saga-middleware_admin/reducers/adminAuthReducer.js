@@ -25,7 +25,8 @@ const adminAuthReducer = (
   state = {
     isLogin: false,
     roles: [],
-    permissions: []
+    permissions: [],
+    ref: ""
   },
   action
 ) => {
@@ -36,7 +37,7 @@ const adminAuthReducer = (
         const { permissions, roles } = adminAuthReducer || {}
         return { ...state, permissions: permissions || [], roles: roles || [] };
       case "ADMIN_LOGIN": return {...state, isLogin: true}
-      case "ADMIN_LOGIN_SUCCESS": return {...state, isLogin: false, roles: payload?.roles || [], permissions: payload?.permissions || []}
+      case "ADMIN_LOGIN_SUCCESS": return {...state, isLogin: false, roles: payload?.roles || [], permissions: payload?.permissions || [], ref: payload?.ref || ""}
       case "ADMIN_LOGIN_FAIL": return {...state, isLogin: false}
       default:
         return { ...state };
