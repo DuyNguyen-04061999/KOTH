@@ -34,7 +34,7 @@ build-promote:
   environment:
     name: promote
 
-build-promote:
+build-play4promo-prod:
   <<: *build
   only:
     - main
@@ -69,7 +69,7 @@ deploy-promote:
 deploy-promote_production:
   stage: deploy 
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
-   environment:
+  environment:
     name: play4promo-prod
   only:
     - main
