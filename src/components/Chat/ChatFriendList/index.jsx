@@ -243,7 +243,7 @@ export default function ChatFriendList() {
     if (width < 576) {
       return height - 50;
     } else if (width > 1200) {
-      return height - 120;
+      return height - 107;
     } else if (width > 576 && width < 1199) {
       return height - 300;
     }

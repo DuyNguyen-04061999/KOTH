@@ -12,4 +12,16 @@ export class ADMIN_DISTRIBUTOR_SERVICE {
         })
         return res
     }
+
+    async getListSubDistributor (dataRequest) {
+        const res = ADMIN_API.get(`/api/admin/distributor/list-sub-distributor`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+                "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+            }
+        })
+
+        return res
+    }
 }
