@@ -34,8 +34,8 @@ const adminAuthReducer = (
   switch (type) {
       case REHYDRATE:
         const { adminAuthReducer } = payload || {}
-        const { permissions, roles } = adminAuthReducer || {}
-        return { ...state, permissions: permissions || [], roles: roles || [] };
+        const { permissions, roles, ref } = adminAuthReducer || {}
+        return { ...state, permissions: permissions || [], roles: roles || [], ref: ref || "" };
       case "ADMIN_LOGIN": return {...state, isLogin: true}
       case "ADMIN_LOGIN_SUCCESS": return {...state, isLogin: false, roles: payload?.roles || [], permissions: payload?.permissions || [], ref: payload?.ref || ""}
       case "ADMIN_LOGIN_FAIL": return {...state, isLogin: false}
