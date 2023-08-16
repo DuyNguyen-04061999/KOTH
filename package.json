@@ -65,15 +65,16 @@
     "styled-components": "^5.3.11",
     "web-vitals": "^2.1.4",
     "web3": "^4.1.0",
+    "webpack": "^5.88.2",
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "set PORT=3005 && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "build:staging": "dotenv -e .env.staging react-scripts build",
-    "build:dev": "dotenv -e .env react-scripts build"
+    "start": "set PORT=3005 && craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "build:staging": "dotenv -e .env.staging craco build",
+    "build:dev": "dotenv -e .env craco build"
   },
   "eslintConfig": {
     "extends": [
@@ -96,6 +97,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "@types/socket.io-client": "^3.0.0",
     "dotenv-cli": "^7.2.1",
     "file-loader": "^6.2.0"
