@@ -91,7 +91,6 @@ export const toggleDialogConfirm = (data) => {
   };
 };
 
-
 const authReducer = (
   state = {
     isLoginDialog: false,
