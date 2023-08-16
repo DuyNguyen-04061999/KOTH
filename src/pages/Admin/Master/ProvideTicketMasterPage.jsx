@@ -1,49 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getListRef } from '../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer'
+import { getListDistributor } from '../../../redux-saga-middleware_admin/reducers/adminMasterReducer'
 import { Navigate } from 'react-router-dom'
 import { Box, Button, FormControl, MenuItem, OutlinedInput, Select, TextField } from '@mui/material'
 import useWindowDimensions from './../../../utils/useWindowDimensions'
 import { getListTicket, provideTicket } from '../../../redux-saga-middleware_admin/reducers/adminConfigReducer'
 
-export default function ProvideTicketPage() {
+export default function ProvideTicketMasterPage() {
     const { roles, permissions } = useSelector(state => state.adminAuthReducer)
-    const { listRefs } = useSelector(state => state.adminSubDistributorReducer)
-    const { listTicket } = useSelector(state => state.adminConfigReducer)
+    const { listDistributor } = useSelector(state => state.adminMasterReducer)
+    // const { listTicket } = useSelector(state => state.adminConfigReducer)
     
     const [disId, setDisId] = useState("")
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getListRef())
+        dispatch(getListDistributor())
         dispatch(getListTicket())
     }, [dispatch])
     
     const { height } = useWindowDimensions()
 
-    const [listUserRef, setListUserRef] = useState([])
-
-    useEffect(() => {
-      let list = []
-      for (let index = 0; index < listRefs.length; index++) {
-        const element = listRefs[index];
-        list?.push(element)
-        if(element?.receivers && element?.receivers?.length > 0) {
-          for (let ii = 0; ii < element?.receivers?.length; ii++) {
-            const element_ = element?.receivers[ii];
-            list?.push(element_)
-            
-          }
-        }
-      }
-      setListUserRef(list)
-    }, [listRefs])
-
     const getUsername = (se) => {
         let username;
-        for (let index = 0; index < listUserRef.length; index++) {
-            const element = listUserRef[index];
+        for (let index = 0; index < listDistributor.length; index++) {
+            const element = listDistributor[index];
             if(se === element?.id) {
                 username = element?.userName
             }
@@ -54,27 +36,28 @@ export default function ProvideTicketPage() {
     const handleSubmit = (e) => {
         e.preventDefault()
         const data = new FormData(e.currentTarget);
-        if(!data?.get("quantity") || !disId) {
+        if(!data?.get("quantity") || !disId || !data?.get("date")) {
             alert("Quantity incorrect!")
         } else {
             dispatch(provideTicket({
                 disId: disId,
-                quantity: Number.parseInt(data?.get("quantity"))
+                quantity: Number.parseInt(data?.get("quantity")),
+                date: data?.get("date"),
             }))
         }
     }
 
     return (
-        <>
+        <> 
             {permissions && permissions?.length > 0 && permissions?.includes("provide_ticket")
-            && roles && roles?.length > 0 && roles?.includes("sub_distributor")
+            && roles && roles?.length > 0 && roles?.includes("master")
             ? (
                 <Box component={"div"} className='bg-white text-dark p-2' sx={{
                     height
                 }}>
-                    <Box component={"div"}>
+                    {/* <Box component={"div"}>
                         Tickets available: {listTicket && listTicket?.length > 0 ? listTicket?.length : 0} 
-                    </Box>
+                    </Box> */}
                     <Box component={"div"} className='mt-2'>
                         <FormControl sx={{ width: 300 }}>
                             <Select
@@ -101,7 +84,7 @@ export default function ProvideTicketPage() {
                                     return getUsername(se)
                                 }}
                             >
-                                {listUserRef.map((option) => (
+                                {listDistributor.map((option) => (
                                 <MenuItem key={option.id} value={option.id}>
                                     {option.userName}
                                 </MenuItem>
@@ -119,6 +102,17 @@ export default function ProvideTicketPage() {
                             label="Quantity"
                             name="quantity"
                             autoFocus
+                        />
+                        <TextField
+                            sx={{
+                                width: "300px"
+                            }}
+                            margin="normal"
+                            required
+                            fullWidth
+                            type='date'
+                            id="date"
+                            name="date"
                         />
                         <Button
                             type="submit"

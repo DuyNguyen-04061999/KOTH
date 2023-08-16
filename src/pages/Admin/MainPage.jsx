@@ -98,6 +98,12 @@ export default function MainPage() {
       {roles && roles?.length > 0 && roles?.includes("master") && RenderActions(masterActions)}
       {roles && roles?.length > 0 && roles?.includes("distributor") && !roles?.includes("Sub") && RenderActions(distributorActions)}
       {roles && roles?.length > 0 && roles?.includes("sub_distributor") && RenderActions(subDistributorActions)}
+      <Box component={"div"} onClick={() => {
+        localStorage.removeItem("token_admin")
+        window.open("/", "_self")
+      }} className='ms-2 text-danger'>
+        Logout
+      </Box>
     </div>
   )
 }
