@@ -31,9 +31,9 @@ export default function SliderTime({
             sx={{
               borderBottom: `1px solid ${
                 index === selectedItem ? "#50A0FC" : "#39353E"
-              }`,
-              padding: "8px 0px",
+              } !important`,
               marginTop: "16px",
+              paddingBottom: "8px",
               display: "flex",
               justifyContent: "center",
               transition: "0.3s",

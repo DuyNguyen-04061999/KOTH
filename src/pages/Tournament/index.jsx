@@ -18,7 +18,7 @@ export default function Tournament() {
   const [socket, setSocket] = useState(null);
   const [tournaments, setTournaments] = useState([]);
   const [fetchT, setFetchT] = useState(true);
-  const { token } = useSelector((state) => state.authReducer);
+  const { token, userRole } = useSelector((state) => state.authReducer);
   const navigate = useNavigate();
   const [createTour, setCreateTour] = useState(false);
   const [tourType, setTourType] = useState(false);
@@ -280,43 +280,46 @@ export default function Tournament() {
               title="TOURNAMENTS"
               noSeeAll={true}
             />
-            {/* <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                marginTop: "36px",
-              }}
-            >
-              <button
-                onClick={() => {
-                  setTourType(true);
-                }}
-                style={{
-                  padding: `${parseFloat(width / 170)}px ${parseFloat(
-                    width / 80
-                  )}px`,
-                  borderRadius: "5px",
-                  border: "none",
-                  outline: "none",
-                  background: "#5F3491",
-                  color: "white",
-                  fontSize: getFontSizeDependOnWidth(width),
+            {userRole === "Merchant" && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginTop: "36px",
                 }}
               >
-                <Typography
-                  sx={{
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    display: "block",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    letterSpacing: "0.5px",
+                <button
+                  onClick={() => {
+                    setTourType(true);
+                  }}
+                  style={{
+                    padding: `${parseFloat(width / 170)}px ${parseFloat(
+                      width / 80
+                    )}px`,
+                    borderRadius: "5px",
+                    border: "none",
+                    outline: "none",
+                    background: "#5F3491",
+                    color: "white",
+                    fontSize: getFontSizeDependOnWidth(width),
                   }}
                 >
-                  Create A Tournament
-                </Typography>
-              </button>
-            </Box> */}
+                  <Typography
+                    sx={{
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      display: "block",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    Create A Tournament
+                  </Typography>
+                </button>
+              </Box>
+            )}
+
             {/* <img
               style={{ width: "100%", marginTop: "36px" }}
               alt="..."
