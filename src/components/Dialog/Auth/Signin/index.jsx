@@ -620,13 +620,16 @@ export default function Dialoglg() {
       ) : (
         <AvatarGroup
           className="d-flex align-items-center"
-          sx={{ borderRadius: width > 576 ? "5px !important" : "20px !important" }}
+          sx={{
+            borderRadius: width > 576 ? "5px !important" : "20px !important",
+          }}
         >
-          {width < 576 ? ( <Box
+          {width < 576 ? (
+            <Box
               sx={{
                 backgroundColor: width > 576 ? "#170f1e" : "#68399E",
-                borderRadius:  width > 576 ? "5px !important" : "20px !important",
-                
+                borderRadius:
+                  width > 576 ? "5px !important" : "20px !important",
               }}
               className="d-flex align-items-center"
             >
@@ -638,7 +641,8 @@ export default function Dialoglg() {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
-                  borderRadius:  width > 576 ? "5px !important" : "20px !important",
+                  borderRadius:
+                    width > 576 ? "5px !important" : "20px !important",
                 }}
               >
                 <Box
@@ -682,72 +686,70 @@ export default function Dialoglg() {
                   <span style={{ fontSize: "13px" }}>Wallet</span>
                 </div>
               )} */}
-            </Box>) : (
+            </Box>
+          ) : (
             <Box
-              style={{
-                backgroundColor: "#170f1e",
-                borderRadius: "5px 5px 5px 5px",
+            sx={{
+              backgroundColor: width > 576 ? "#68399E" : "#68399E",
+              borderRadius:
+                width > 576 ? "20px !important" : "20px !important",
+            }}
+            className="d-flex align-items-center"
+          >
+            <Box
+              variant="standard"
+              sx={{
+                minWidth: "auto",
+                position: "relative",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                borderRadius:
+                  width > 576 ? "5px !important" : "20px !important",
               }}
-              className="d-flex align-items-center"
             >
               <Box
-                variant="standard"
                 sx={{
-                  minWidth: 110,
-                  position: "relative",
+                  marginRight: width < 576 ? "5px" : 0,
+
+                  borderRightWidth: width > 576 ? 0 : "unset",
+                  height: "100%",
+                }}
+                className="cursor-pointer d-flex doge-coin "
+              >
+                <Gold value={userGold} />
+              </Box>
+            </Box>
+
+            {/* {token && (
+              <div
+                className="btn-wallet"
+                style={{
+                  height: "100%",
                   display: "flex",
-                  flexDirection: "row",
                   justifyContent: "center",
-                  borderRadius: "5px !important",
+                  alignItems: "center",
+                  padding: "9px 22px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  backgroundImage: "linear-gradient( #7548ed , #893bf1)",
+                }}
+                onClick={() => {
+                  if (!token) {
+                    dispatch(toggleLoginDialog());
+                  } else {
+                    dispatch(toggleWalletDialog());
+                  }
                 }}
               >
-                <Box
-                  sx={{
-                    marginRight: width < 576 ? "5px" : 0,
-
-                    borderRightWidth: width > 576 ? 0 : "unset",
-                    height: "100%",
-                  }}
-                  className="cursor-pointer d-flex doge-coin "
-                >
-                  <Gold value={userGold} />
-                </Box>
-              </Box>
-
-              {token && (
-                <div
-                  className="btn-wallet"
-                  style={{
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "9px 22px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    backgroundImage: "linear-gradient( #7548ed , #893bf1)",
-                  }}
-                  onClick={() => {
-                    if (!token) {
-                      dispatch(toggleLoginDialog());
-                    } else {
-                      dispatch(toggleWalletDialog());
-                    }
-                  }}
-                >
-                  <i
-                    style={{ marginRight: "6px" }}
-                    className="fa-solid fa-wallet"
-                  ></i>
-                  <span style={{ fontSize: "13px" }}>Wallet</span>
-                </div>
-              )}
-              {width && width > 576 ? (
-                <Box className="cursor-pointer" onClick={() => {}}></Box>
-              ) : (
-                <></>
-              )}
-            </Box>
+                <i
+                  style={{ marginRight: "6px" }}
+                  className="fa-solid fa-wallet"
+                ></i>
+                <span style={{ fontSize: "13px" }}>Wallet</span>
+              </div>
+            )} */}
+          </Box>
           )}
           <Box
             className={
@@ -772,21 +774,10 @@ export default function Dialoglg() {
                   badgeContent=""
                   variant="dot"
                 >
-                  {/* {userAvatar === null ? (
-                    <img
-                      style={{
-                        borderRadius: 50,
-                      }}
-                      alt="Remy"
-                      src={images.undefinedAvatar}
-                      height={40}
-                      width={40}
-                      className="ignin ms-2 me-2"
-                    />
-                  ) : ( */}
                   <img
                     style={{
                       borderRadius: 50,
+                      border:"2px solid #68399E"
                     }}
                     alt="Remy Sharp"
                     src={
@@ -794,8 +785,8 @@ export default function Dialoglg() {
                         ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
                         : images.undefinedAvatar
                     }
-                    height={40}
-                    width={40}
+                    height={34}
+                    width={34}
                     className="ava-signin ms-2 me-2"
                   />
                   {/* )} */}
