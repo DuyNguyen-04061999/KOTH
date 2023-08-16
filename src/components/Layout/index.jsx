@@ -148,6 +148,7 @@ export default function Layout(props) {
 
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
+      socket?.emit("leaveAllRoom")
     }
   }, [router, socket, token]);
 

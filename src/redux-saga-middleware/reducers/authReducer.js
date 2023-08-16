@@ -86,11 +86,10 @@ export const getLeaderBoardSuccess = (data) => {
 
 export const toggleDialogConfirm = (data) => {
   return {
-    type : "TOGGLE_DIALOG_CONFIRM",
-    payload:data
-  }
-}
-
+    type: "TOGGLE_DIALOG_CONFIRM",
+    payload: data,
+  };
+};
 
 const authReducer = (
   state = {
@@ -109,8 +108,8 @@ const authReducer = (
     leaderBoard: [],
     userId: "",
     mess: "",
-    isDialogConfirm:false,
-    idPackage:{},
+    isDialogConfirm: false,
+    idPackage: {},
   },
   action
 ) => {
@@ -170,8 +169,12 @@ const authReducer = (
       };
     case "GET_LEADERBOARD_SUCCESS":
       return { ...state, leaderBoard: payload };
-    case "TOGGLE_DIALOG_CONFIRM" : 
-      return {...state, isDialogConfirm: !state.isDialogConfirm, idPackage : payload}
+    case "TOGGLE_DIALOG_CONFIRM":
+      return {
+        ...state,
+        isDialogConfirm: !state.isDialogConfirm,
+        idPackage: payload,
+      };
     default:
       return state;
   }

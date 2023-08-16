@@ -366,6 +366,7 @@ function App() {
       });
 
       socket?.on("updateGold", (data) => {
+        console.log("123L ", data);
         store.dispatch(showAlert("success", "Update gold success"));
         store.dispatch(updateUserGold(data));
       });

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getListRef } from '../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer'
 import { Navigate } from 'react-router-dom'
 import { Box, Button, FormControl, MenuItem, OutlinedInput, Select, TextField } from '@mui/material'
 import useWindowDimensions from './../../../utils/useWindowDimensions'
 import { getListTicket, provideTicket } from '../../../redux-saga-middleware_admin/reducers/adminConfigReducer'
+import { getListSub } from '../../../redux-saga-middleware_admin/reducers/adminDistributorReducer'
 
-export default function ProvideTicketPage() {
+export default function ProvideTicketDistributorPage() {
     const { roles, permissions } = useSelector(state => state.adminAuthReducer)
-    const { listRefs } = useSelector(state => state.adminSubDistributorReducer)
+    const { listSub } = useSelector(state => state.adminDistributorReducer)
     const { listTicket } = useSelector(state => state.adminConfigReducer)
     
     const [disId, setDisId] = useState("")
@@ -16,34 +16,16 @@ export default function ProvideTicketPage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getListRef())
+        dispatch(getListSub())
         dispatch(getListTicket())
     }, [dispatch])
     
     const { height } = useWindowDimensions()
 
-    const [listUserRef, setListUserRef] = useState([])
-
-    useEffect(() => {
-      let list = []
-      for (let index = 0; index < listRefs.length; index++) {
-        const element = listRefs[index];
-        list?.push(element)
-        if(element?.receivers && element?.receivers?.length > 0) {
-          for (let ii = 0; ii < element?.receivers?.length; ii++) {
-            const element_ = element?.receivers[ii];
-            list?.push(element_)
-            
-          }
-        }
-      }
-      setListUserRef(list)
-    }, [listRefs])
-
     const getUsername = (se) => {
         let username;
-        for (let index = 0; index < listUserRef.length; index++) {
-            const element = listUserRef[index];
+        for (let index = 0; index < listSub.length; index++) {
+            const element = listSub[index];
             if(se === element?.id) {
                 username = element?.userName
             }
@@ -67,7 +49,7 @@ export default function ProvideTicketPage() {
     return (
         <>
             {permissions && permissions?.length > 0 && permissions?.includes("provide_ticket")
-            && roles && roles?.length > 0 && roles?.includes("sub_distributor")
+            && roles && roles?.length > 0 && roles?.includes("distributor")
             ? (
                 <Box component={"div"} className='bg-white text-dark p-2' sx={{
                     height
@@ -101,7 +83,7 @@ export default function ProvideTicketPage() {
                                     return getUsername(se)
                                 }}
                             >
-                                {listUserRef.map((option) => (
+                                {listSub.map((option) => (
                                 <MenuItem key={option.id} value={option.id}>
                                     {option.userName}
                                 </MenuItem>
