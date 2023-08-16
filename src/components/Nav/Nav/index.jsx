@@ -10,6 +10,7 @@ import {
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
+import { getAppType } from "../../../utils/helper";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ export default function Navbar() {
     setSocket(socket);
   }, []);
 
-  const appType = process.env.REACT_APP_TYPE_APP || "";
 
   return (
     <Box className="nav-section">
@@ -280,7 +280,7 @@ export default function Navbar() {
               Package
             </span>
           </Box>
-          {appType && appType === "promote" ? (
+          {getAppType() && getAppType() === "promote" ? (
             ""
           ) : (
             <Box className="nav-pages">
@@ -410,7 +410,7 @@ export default function Navbar() {
               height: "3px",
             }}
           />
-          {appType && appType === "promote" ? (
+          {getAppType() && getAppType() === "promote" ? (
             ""
           ) : (
             <Box

@@ -2,12 +2,14 @@ import React, { useEffect } from 'react'
 import { Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { getConfigs } from '../../redux-saga-middleware_admin/reducers/adminConfigReducer'
+import { useNavigate } from 'react-router-dom'
 
-const renderActions = (data) => {
+const RenderActions = (data) => {
+  const navigate = useNavigate()
   return (
     <>
       {data && data?.length > 0 && data?.map((action, i_action) => (
-        <Box component={"div"} className='p-2' key={i_action}>
+        <Box component={"div"} onClick={() => navigate(action?.link)} className='p-2' key={i_action}>
             {action?.name}
         </Box>
       ))}
@@ -16,11 +18,11 @@ const renderActions = (data) => {
 }
 
 export default function MainPage() {
-  const { roles } = useSelector(state => state.adminAuthReducer)
+  const { roles, ref } = useSelector(state => state.adminAuthReducer)
   const masterActions = [
     {
       name: "Create Distributor",
-      link: ""
+      link: "/master/create-distributor"
     },
     {
       name: "Edit Distributor",
@@ -44,13 +46,13 @@ export default function MainPage() {
     },
     {
       name: "Ticket Provider",
-      link: ""
+      link: "/master/provide-ticket"
     },
   ]
   const distributorActions = [
     {
       name: "Create Sub Distributor",
-      link: ""
+      link: "/distributor/create-sub-distributor"
     },
     {
       name: "Edit Sub Distributor",
@@ -66,7 +68,7 @@ export default function MainPage() {
     },
     {
       name: "Ticket Provider",
-      link: ""
+      link: "/distributor/provide-ticket"
     },
   ]
   const subDistributorActions = [
@@ -76,27 +78,26 @@ export default function MainPage() {
     },
     {
       name: "View Ref User",
-      link: ""
+      link: "/sub-distributor/refs"
     },
     {
       name: "Ticket Provider",
-      link: ""
+      link: "/sub-distributor/provide-ticket"
     }
   ]
   
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(getConfigs())
-    }, 3000)
+    dispatch(getConfigs())
   }, [dispatch])
 
   return (
     <div className='text-white p-2'>
-      {roles && roles?.length > 0 && roles?.includes("master") && renderActions(masterActions)}
-      {roles && roles?.length > 0 && roles?.includes("distributor") && !roles?.includes("Sub") && renderActions(distributorActions)}
-      {roles && roles?.length > 0 && roles?.includes("sub_distributor") && renderActions(subDistributorActions)}
+      <span className='ms-2'>Welcome {ref}</span>
+      {roles && roles?.length > 0 && roles?.includes("master") && RenderActions(masterActions)}
+      {roles && roles?.length > 0 && roles?.includes("distributor") && !roles?.includes("Sub") && RenderActions(distributorActions)}
+      {roles && roles?.length > 0 && roles?.includes("sub_distributor") && RenderActions(subDistributorActions)}
     </div>
   )
 }

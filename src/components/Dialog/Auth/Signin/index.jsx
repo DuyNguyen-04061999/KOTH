@@ -620,9 +620,69 @@ export default function Dialoglg() {
       ) : (
         <AvatarGroup
           className="d-flex align-items-center"
-          sx={{ borderRadius: "5px !important" }}
+          sx={{ borderRadius: width > 576 ? "5px !important" : "20px !important" }}
         >
-          {width < 576 ? null : (
+          {width < 576 ? ( <Box
+              sx={{
+                backgroundColor: width > 576 ? "#170f1e" : "#68399E",
+                borderRadius:  width > 576 ? "5px !important" : "20px !important",
+                
+              }}
+              className="d-flex align-items-center"
+            >
+              <Box
+                variant="standard"
+                sx={{
+                  minWidth: "auto",
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  borderRadius:  width > 576 ? "5px !important" : "20px !important",
+                }}
+              >
+                <Box
+                  sx={{
+                    marginRight: width < 576 ? "5px" : 0,
+
+                    borderRightWidth: width > 576 ? 0 : "unset",
+                    height: "100%",
+                  }}
+                  className="cursor-pointer d-flex doge-coin "
+                >
+                  <Gold value={userGold} />
+                </Box>
+              </Box>
+
+              {/* {token && (
+                <div
+                  className="btn-wallet"
+                  style={{
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "9px 22px",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    backgroundImage: "linear-gradient( #7548ed , #893bf1)",
+                  }}
+                  onClick={() => {
+                    if (!token) {
+                      dispatch(toggleLoginDialog());
+                    } else {
+                      dispatch(toggleWalletDialog());
+                    }
+                  }}
+                >
+                  <i
+                    style={{ marginRight: "6px" }}
+                    className="fa-solid fa-wallet"
+                  ></i>
+                  <span style={{ fontSize: "13px" }}>Wallet</span>
+                </div>
+              )} */}
+            </Box>) : (
             <Box
               style={{
                 backgroundColor: "#170f1e",

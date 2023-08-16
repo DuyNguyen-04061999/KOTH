@@ -35,9 +35,17 @@ function formatMoney(number) {
   return Number(number).toLocaleString('en-US', { style: 'currency', currency: 'USD' }).replace("$", "");
 }
 
+function getAppType () {
+  return process.env.REACT_APP_TYPE_APP || "";
+}
+
+
+
 export {
     convertToVietnameseWithAccent,
     getUniqueID,
-    formatMoney
+    formatMoney,
+    getAppType
 }
+
 

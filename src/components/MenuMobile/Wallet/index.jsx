@@ -39,6 +39,7 @@ import TransactionDetailDialog from "../../Dialog/TransactionDetail";
 import { Web3 } from "web3";
 import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer";
 import WalletTypePromote from "./WalletTypePromote";
+import { getAppType } from "../../../utils/helper";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -407,8 +408,7 @@ export default function DialogWallet(props) {
                   }}
                   disabled={isLoadingDeposit}
                   onClick={() => {
-                    const type = process.env.REACT_APP_TYPE_APP
-                    if(type && type === "promote") {
+                    if(getAppType() && getAppType() === "promote") {
                       dispatch(getStripe(amountDeposit))
                     } else {
                       if (amountDeposit >= 50 && amountDeposit <= 5000) {
@@ -1418,7 +1418,6 @@ export default function DialogWallet(props) {
     );
   };
 
-  const appTypeWallet = process.env.REACT_APP_TYPE_APP
 
   return (
     <>
@@ -1459,8 +1458,8 @@ export default function DialogWallet(props) {
           },
         }}
       >
-        {appTypeWallet && appTypeWallet === "promote" ? (
-          <WalletTypePromote />
+        {getAppType() && getAppType() === "promote" ? (
+          <WalletTypePromote handleClose={handleClose}/>
           ) : (
           <Box
           className="position-relative"

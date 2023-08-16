@@ -83,6 +83,7 @@ import NewHomePageComponent from "./pages/NewHomePageComponent";
 import { ToastContainer, toast } from "react-toastify";
 import { images } from "./utils/images";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import { getAppType } from "./utils/helper";
 function App() {
   useTracking("");
 
@@ -134,7 +135,7 @@ function App() {
             id: user?.id,
           })
         );
-        console.log("MESSAGE: ", mess);
+        
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -209,7 +210,7 @@ function App() {
         store.dispatch(paymentLogoutSuccessFully());
         store.dispatch(walletLogoutSuccessFully());
         if (type === "logout") {
-          console.log("Message: ", message);
+          // console.log("Message: ", message);
           // toast.success(message, {
           //   icon: ({ theme, type }) => (
           //     <img
@@ -399,7 +400,7 @@ function App() {
 
       socket?.on("error", (data) => {
         toast.error(
-          "Even a function, given you return something that can be rendered",
+          data || "Even a function, given you return something that can be rendered",
           {
             icon: ({ theme, type }) => (
               <img
@@ -501,7 +502,7 @@ function App() {
             <Route
               path=""
               element={
-                process.env.REACT_APP_TYPE_APP === "promote" ? (
+                getAppType() === "promote" ? (
                   <NewHomePageComponent />
                 ) : (
                   <HomePage />
@@ -514,7 +515,6 @@ function App() {
             <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
             <Route path="/luckywheel" element={<LuckySpinComponent />} />
             <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
-            <Route path="/tournaments" element={<Tournament />} />
             <Route
               path="/tournamentDetail/:id"
               element={<JoinTournamentComponent />}
@@ -526,9 +526,16 @@ function App() {
             <Route path="upload" element={<UploadPage />} />
             <Route path="game" element={<GamePage />} />
             <Route path="game/:id" element={<GameDetailPage />} />
-            <Route path="game-type/:type" element={<TypeGamePage />} />
+            {getAppType() === "promote" && (
+              <Route path="/tournaments" element={<Tournament />} />
+            )}
+            {getAppType() === "promote" && (
+              <Route path="game-type/:type" element={<TypeGamePage />} />
+            )}
             <Route path="game/edit/:id" element={<GameEditPage />} />
-            <Route path="package" element={<PackagePage />}></Route>
+            {getAppType() === "promote" && (
+              <Route path="package" element={<PackagePage />}></Route>
+            )}
             <Route
               path="transactions/:id"
               element={<TransactionDetailPage />}
