@@ -24,7 +24,6 @@ build-crypto:
   <<: *build
   only:
     - staging/crypto
-    - main
   environment:
     name: crypto
 
@@ -32,9 +31,15 @@ build-promote:
   <<: *build
   only:
     - staging/promote
-    - main
   environment:
     name: promote
+
+build-promote:
+  <<: *build
+  only:
+    - main
+  environment:
+    name: play4promo-prod
 
 .deploy: &deploy
   stage: deploy
@@ -64,6 +69,8 @@ deploy-promote:
 deploy-promote_production:
   stage: deploy 
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+   environment:
+    name: play4promo-prod
   only:
     - main
   script:
