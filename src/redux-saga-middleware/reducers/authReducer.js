@@ -91,6 +91,7 @@ export const toggleDialogConfirm = (data) => {
   }
 }
 
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -170,7 +171,6 @@ const authReducer = (
     case "GET_LEADERBOARD_SUCCESS":
       return { ...state, leaderBoard: payload };
     case "TOGGLE_DIALOG_CONFIRM" : 
-      console.log(payload);
       return {...state, isDialogConfirm: !state.isDialogConfirm, idPackage : payload}
     default:
       return state;
