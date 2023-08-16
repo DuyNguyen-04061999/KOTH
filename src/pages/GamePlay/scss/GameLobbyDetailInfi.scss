@@ -1,0 +1,63 @@
+.animate {
+  animation: like_401 400ms ease;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.animate {
+  animation: like_401 400ms ease;
+}
+
+@keyframes like_401 {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dislike_401 {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.button:active {
+  transform: translate(1px, 1px);
+  transition-duration: 0.2s;
+}
+.button:hover,
+.button:focus {
+  background-color: black;
+  transition-duration: 0.2s;
+}
+.button:hover .arrow {
+  animation: slide-right 0.6s ease-out both;
+}

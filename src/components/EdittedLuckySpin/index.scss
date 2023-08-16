@@ -1,0 +1,54 @@
+.LuckySpinBanner {
+  background-image: url("../../assets/LuckySpin/LuckySpinBanner.png");
+  width: 1152.01px;
+  height: 479px;
+  background-repeat: no-repeat;
+}
+.LuckySpinBanner {
+  display: flex;
+}
+.countDownTimerContainer {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.SpinContainer {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+  margin-top: 1.5rem;
+}
+.allMyBestContainer {
+  width: 373px;
+  height: 36px;
+  background-color: #201836;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  div {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}
+.activeButton {
+  background-color: #69389e;
+  color: white;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.passiveButton {
+  color: #857eae;
+  font-weight: 400;
+  cursor: pointer;
+}

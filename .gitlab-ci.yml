@@ -1,0 +1,83 @@
+stages:
+  - build
+  - deploy
+.build: &build
+  stage: build
+  image: docker:24.0.2
+  services:
+    - docker:24.0.2-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "$(env | grep "REACT_APP_")" > env.text
+    - cat env.text | while read line; do echo -n " --build-arg $line" >> ci/docker_build.sh; done
+    - chmod +x ci/docker_build.sh
+    - ./ci/docker_build.sh
+    # - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:${IMAGE_PREFIX}$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:${IMAGE_PREFIX}latest
+#    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+#    - /kaniko/executor --cache=true --snapshotMode=redo --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --destination ${CI_REGISTRY_IMAGE}:latest
+    - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}:${IMAGE_PREFIX}${CI_COMMIT_SHA} and ${CI_REGISTRY_IMAGE}:${IMAGE_PREFIX}latest"
+
+build-crypto:
+  <<: *build
+  only:
+    - staging/crypto
+    - main
+  environment:
+    name: crypto
+
+build-promote:
+  <<: *build
+  only:
+    - staging/promote
+    - main
+  environment:
+    name: promote
+
+.deploy: &deploy
+  stage: deploy
+  image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+  script:
+    - gcloud components update kubectl
+    - gcloud auth activate-service-account --key-file $SERVICE_ACCOUNT
+    - gcloud config set project $GOOGLE_PROJECT_NAME
+    - gcloud config set compute/zone $CLUSTER_LOCATION
+    - gcloud container clusters get-credentials $CLUSTER_NAME
+    - kubectl set image deployments/$DEPLOYMENT_NAME $CONTAINER_NAME=$CI_REGISTRY_IMAGE:${IMAGE_PREFIX}$CI_COMMIT_SHA
+
+deploy-crypto:
+  <<: *deploy
+  only:
+    - staging/crypto
+  environment:
+    name: crypto
+
+deploy-promote:
+  <<: *deploy
+  only:
+    - staging/promote
+  environment:
+    name: promote
+
+deploy-promote_production:
+  stage: deploy 
+  image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+  only:
+    - main
+  script:
+    - gcloud components update kubectl
+    - gcloud auth activate-service-account --key-file $PROD_SERVICE_ACCOUNT
+    - gcloud config set project $PROD_GOOGLE_PROJECT_NAME
+    - gcloud config set compute/zone $PROD_CLUSTER_LOCATION
+    - gcloud container clusters get-credentials $PROD_CLUSTER_NAME
+    # Install OpenSSL to verify Helm install
+    - apk add --no-cache openssl
+    # Install Helm
+    - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    - chmod 700 get_helm.sh
+    - ./get_helm.sh
+    - 'helm repo add --username gitlab-ci-token --password $CI_JOB_TOKEN play4promo-repo "$CI_API_V4_URL/projects/47543693/packages/helm/stable"'
+    - helm repo update
+    - helm upgrade --install first-release play4promo-repo/play4promo-chart --set webClientImage.repo=$CI_REGISTRY_IMAGE,webClientImage.tag=$CI_COMMIT_SHA

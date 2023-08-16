@@ -1,0 +1,127 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.menu-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  z-index: 1;
+  background: rgb(233, 233, 231);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-block {
+  z-index: 10;
+  position: fixed;
+  background: rgb(93, 11, 235);
+}
+
+.elOption {
+  cursor: pointer;
+  padding: 16px 35px;
+  color: white;
+}
+
+.elOption:hover {
+  background: rgb(249, 208, 4);
+  color: black;
+}
+
+.fullscreen {
+  width: 100%;
+  height: 100%;
+}
+/* .Toastify__toast {
+  width: 465px !important;
+} */
+.success-background {
+  color: #466717 !important;
+  font-size: 14px !important;
+  background-color: #9ed458 !important;
+  width: 465px !important;
+}
+.success-background-small {
+  color: #466717 !important;
+  font-size: 12px !important;
+  background-color: #9ed458 !important;
+  width: 240px !important;
+  height: 20px !important;
+  border-radius: 5px !important;
+  left: 20%;
+  margin-top: 20px;
+}
+
+.error-background {
+  color: #fff !important;
+  font-size: 14px !important;
+  background-color: #f05153 !important;
+  width: 465px !important;
+}
+.error-background-small {
+  color: #fff !important;
+  font-size: 12px !important;
+  background-color: #f05153 !important;
+  width: 240px !important;
+  height: 20px !important;
+  border-radius: 5px !important;
+  left: 20%;
+  margin-top: 20px;
+}
+.warning-background {
+  color: #997d24 !important;
+  font-size: 14px !important;
+  background-color: #f3d886 !important;
+  width: 465px !important;
+}
+.warning-background-small {
+  color: #997d24 !important;
+  font-size: 12px !important;
+  background-color: #f3d886 !important;
+  width: 240px !important;
+  height: 20px !important;
+  border-radius: 5px !important;
+  left: 20%;
+  margin-top: 20px;
+}

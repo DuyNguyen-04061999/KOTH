@@ -1,0 +1,28 @@
+.tableinfo{
+    .box-container{
+        .box-left{
+
+        }
+        .box-right{
+
+        }
+    }
+}
+
+@media screen and (max-width:576px) {
+    .tableinfo{
+        .box-container{
+            padding: 0;
+            .box-title{
+                margin-bottom: 8px;
+                h4{
+                    font-weight: 700;
+                }
+            }
+            .box-table{
+                h6{
+                }
+            }
+        }
+    }
+}

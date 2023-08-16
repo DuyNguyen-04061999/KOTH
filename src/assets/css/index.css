@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  padding: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'NextBold',
+    sans-serif; */
+  font-family: "Cyntho";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+html,
+body {
+  background-color: #221527;
+  overscroll-behavior-y: contain;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    "NextBold", monospace;
+}
+
+@font-face {
+  font-family: "Cyntho";
+  src: url(../font/CynthoNextRegular.otf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Cyntho Bold";
+  src: url(../font/CynthoNextBold.otf);
+  font-weight: bold;
+}
+
+#root {
+  transition: all 0.2s linear 0s;
+  width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.font-weight-bold {
+  font-weight: bold !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+  transition: background-color 5000s ease-in-out 0s;
+}

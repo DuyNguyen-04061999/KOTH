@@ -1,0 +1,44 @@
+.top-search-mobile{
+    .form{
+      input{
+        padding: 5px 70px 5px 10px;
+        background-color: #462a71;
+        border: 1px solid gray;
+        border-radius: 10px;
+        line-height: 2;
+        color: #FFF;
+        position: relative;
+        width: 300px;
+      }
+    }
+  }
+  
+  .search-mobile {
+    .recent-search {
+      .title {
+          h3{
+              font-weight: 600;
+              color: white;
+              opacity: 0.5;
+          }
+      }
+      .inp {
+          margin-bottom: 10px;
+        .inp-recent {
+          border: none;
+          display: flex;
+          border-radius: 10px;
+          opacity: 0.5;
+          color: white;
+          padding: 5px;
+          p {
+            margin: 0px;
+          }
+          span {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+  

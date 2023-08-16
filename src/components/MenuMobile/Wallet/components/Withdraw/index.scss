@@ -1,0 +1,20 @@
+.Withdraw{
+    .Withdraw-container{
+        .Withdraw-top{
+            display: flex;
+            justify-content: center;
+            .btn-crypto{
+                border: none;
+                padding: 10px 30px;
+                background-color: gray;
+            }
+            .btn-fiat{
+                border: none;
+                padding: 10px 40px;
+            }
+        }
+        .Withdraw-bottom{
+            
+        }
+    }
+}
