@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 // import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useEffect, useState } from "react";
@@ -22,24 +22,29 @@ export default function Package() {
   }, [socket]);
 
   useEffect(() => {
-    if (token) {
-      socket?.emit("listPackage");
-    }
-  }, [token, socket]);
+   if(token === null || token === "") {
+    socket?.emit("listPackage");
+   } else {
+    socket?.emit("listPackage", {
+      type: true
+    });
+   }
+  }, [socket,token]);
 
   return (
     <>
       <DialogConfirm />
       {width > 576 ? (
         <div className="Package-home pb-5 mb-5">
-          <Box
+          <Box className="pt-5 pb-4 text-white">
+            <Typography variant="h5">Package</Typography>
+          </Box>
+          <Container
+            maxWidth={"lg"}
             sx={{
               color: "white",
             }}
           >
-            <Box className="pt-5 pb-4">
-              <Typography variant="h5">Package</Typography>
-            </Box>
             <Box>
               {/* <ListPackage
                 data={listPackage?.filter(
@@ -305,7 +310,7 @@ export default function Package() {
                 </Box>
               </Box>
             </Box>
-          </Box>
+          </Container>
         </div>
       ) : (
         <div className="Package-home" style={{ padding: "10px" }}>
@@ -316,9 +321,11 @@ export default function Package() {
               noSeeAll={width && width < 576}
             />
           </Box> */}
-           <Box className="pt-5 pb-4">
-              <Typography variant="h6" className="text-white">Package</Typography>
-            </Box>
+          <Box className="pt-5 pb-4">
+            <Typography variant="h6" className="text-white">
+              Package
+            </Typography>
+          </Box>
           <Box sx={{ paddingBottom: "50px" }}>
             <Box
               sx={{
@@ -455,7 +462,7 @@ export default function Package() {
                                   fontSize: "13px",
                                   color: "white",
                                   fontFamily: "Cyntho ",
-                                  fontWeight:"500 !important"
+                                  fontWeight: "500 !important",
                                 }}
                               >
                                 2 Free voucher/tournament
@@ -480,7 +487,7 @@ export default function Package() {
                                   fontSize: "13px",
                                   color: "white",
                                   fontFamily: "Cyntho",
-                                  fontWeight:"500 !important"
+                                  fontWeight: "500 !important",
                                 }}
                               >
                                 Reduce the time watching ads

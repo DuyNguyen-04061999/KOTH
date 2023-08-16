@@ -243,7 +243,7 @@ export default function ChatGlobal(props) {
               className="d-flex justify-content-between align-items-center"
               sx={{
                 position: "absolute",
-                bottom: width < 576 ? "0px" : "64px",
+                bottom: width < 576 ? "0px" : "46px",
                 background: "#4a3763",
                 padding: "15px 20px ",
                 zIndex: "20",

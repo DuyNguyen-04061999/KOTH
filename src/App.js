@@ -135,7 +135,7 @@ function App() {
             id: user?.id,
           })
         );
-        
+
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -144,7 +144,9 @@ function App() {
         socket.emit("listFriend");
         socket.emit("getTransaction");
         // socket.emit("leaveAllRoom");
-        socket.emit("listPackage");
+        socket.emit("listPackage", {
+          type: true
+        });
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -345,9 +347,6 @@ function App() {
           })
         );
       });
-      socket?.on("getListPackageSuccess", (data) => {
-        store.dispatch(getListPackage(data));
-      });
 
       socket?.on("buyPackageSuccess", (data) => {});
 
@@ -367,10 +366,14 @@ function App() {
       });
 
       socket?.on("updateGold", (data) => {
+        console.log("123L ", data);
         store.dispatch(showAlert("success", "Update gold success"));
         store.dispatch(updateUserGold(data));
       });
 
+      socket?.on("getListPackageSuccess", (data) => {
+        store.dispatch(getListPackage(data));
+      });
       socket?.on("connected", (socketId) => {});
 
       socket?.on("server", (socketId) => {});
@@ -400,7 +403,8 @@ function App() {
 
       socket?.on("error", (data) => {
         toast.error(
-          data || "Even a function, given you return something that can be rendered",
+          data ||
+            "Even a function, given you return something that can be rendered",
           {
             icon: ({ theme, type }) => (
               <img
@@ -486,10 +490,15 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    if (token) {
-      socket.emit("listPackage");
+    if(token === null || token === "") {
+     socket?.emit("listPackage");
+    } else {
+     socket?.emit("listPackage", {
+       type: true
+     });
     }
-  }, [socket, token]);
+   }, [socket,token]);
+ 
 
   useEffect(() => {
     store.dispatch(getListBet());
@@ -529,9 +538,8 @@ function App() {
             {getAppType() === "promote" && (
               <Route path="/tournaments" element={<Tournament />} />
             )}
-            {getAppType() === "promote" && (
-              <Route path="game-type/:type" element={<TypeGamePage />} />
-            )}
+            <Route path="game-type/:type" element={<TypeGamePage />} />
+
             <Route path="game/edit/:id" element={<GameEditPage />} />
             {getAppType() === "promote" && (
               <Route path="package" element={<PackagePage />}></Route>
