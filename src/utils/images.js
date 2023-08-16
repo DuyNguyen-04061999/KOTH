@@ -107,6 +107,8 @@ import bannerWin_Desktop from "../assets/images/bannerWin_Desktop.png";
 import banner_win_BG from "../assets/images/banner_win_BG.png";
 import winnerBG from "../assets/images/winnerBG.png";
 import hatWinner from "../assets/images/hatWinner.png";
+import ticketIconTournament from "../assets/images/ticketIconTournament.png";
+import voucher_tour from "../assets/images/voucher_tour.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -249,6 +251,32 @@ import heart from "../assets/imagesLayout/popup/heart.svg";
 import checkCircle from "../assets/imagesLayout/popup/check-circle.svg";
 import vecter from "../assets/imagesLayout/popup/Vector.svg";
 
+import top1Icon from "../assets/imagesHome/top1Icon.png";
+import titleImage from "../assets/imagesHome/titleImage.png";
+import brandAvatar from "../assets/imagesHome/brandAvatar.png";
+import bannerTop1 from "../assets/imagesHome/bannerTop1.png";
+import hatMobile from "../assets/imagesHome/hatMobile.png";
+import banner_win_Mobile from "../assets/imagesHome/banner_win_Mobile.png";
+import megaholicMobile from "../assets/imagesHome/megaholicMobile.png";
+import ringMobile from "../assets/imagesHome/ringMobile.png";
+import bannerTop1Mobile from "../assets/imagesHome/bannerTop1Mobile.png";
+import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
+import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
+
+export const imageHome = {
+  top1Icon: top1Icon,
+  titleImage: titleImage,
+  brandAvatar: brandAvatar,
+  bannerTop1: bannerTop1,
+  hatMobile: hatMobile,
+  banner_win_Mobile: banner_win_Mobile,
+  megaholicMobile: megaholicMobile,
+  ringMobile: ringMobile,
+  bannerTop1Mobile: bannerTop1Mobile,
+  top1IconMobile: top1IconMobile,
+  titleImageMobile: titleImageMobile,
+};
+
 export const images = {
   pool: pool,
   domino: domino,
@@ -381,6 +409,8 @@ export const images = {
   banner_win_BG: banner_win_BG,
   winnerBG: winnerBG,
   hatWinner: hatWinner,
+  ticketIconTournament: ticketIconTournament,
+  voucher_tour: voucher_tour,
 };
 
 export const images2 = {
