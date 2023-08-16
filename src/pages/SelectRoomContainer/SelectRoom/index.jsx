@@ -695,9 +695,9 @@ export default function SelectRoom() {
     setroomDetailInfo("");
     setContinueGame(false);
     setIsLoading(false);
-    setIsFullScreen(false)
+    setIsFullScreen(false);
   };
-  
+
   return (
     <div className="">
       <Box

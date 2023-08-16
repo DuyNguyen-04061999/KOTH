@@ -135,7 +135,7 @@ function App() {
             id: user?.id,
           })
         );
-        
+
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -367,6 +367,7 @@ function App() {
       });
 
       socket?.on("updateGold", (data) => {
+        console.log("123L ", data);
         store.dispatch(showAlert("success", "Update gold success"));
         store.dispatch(updateUserGold(data));
       });
@@ -400,7 +401,8 @@ function App() {
 
       socket?.on("error", (data) => {
         toast.error(
-          data || "Even a function, given you return something that can be rendered",
+          data ||
+            "Even a function, given you return something that can be rendered",
           {
             icon: ({ theme, type }) => (
               <img
