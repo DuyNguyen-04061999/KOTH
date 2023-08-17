@@ -2,10 +2,16 @@ import { Box, Button, FormLabel } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { envs } from '../../utils/envs';
+import _ from 'lodash'
+import JSZip from "jszip";
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export default function UploadPage() {
   const [uploadItem, setUploadItem] = useState([]);
-  
+  const [uploadAsset, setUploadAsset] = useState([]);
+  const [contentZip, setContentZip] = useState("");
+  const [listSkin, setListSkin] = useState([])
+
   function checkExtension(exts, files) {
       for (let index = 0; index < files.length; index++) {
         if(!exts?.includes(files[index]?.type)) {
@@ -18,12 +24,29 @@ export default function UploadPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    for (let index = 0; index < listSkin.length; index++) {
+      // const element = listSkin[index];
+      console.log(data.get(`skinName${index}`));
+      console.log(data.get(`skinAvatar${index}`));
+    }
+
+    _.each(contentZip,(v,k)=>{
+      data.append('zips', contentZip[k], `assets_${k}.zip`); // Encrypt path
+    });
+
+    _.each(uploadAsset,(v,k)=>{
+      data.append('paths', uploadAsset[k].webkitRelativePath); // Encrypt path
+    });
+    console.log(data.getAll("zips"));
     const dataRequest = {
       name: data.get('name'),
       avatar: data.get('avatar'),
       type: data.get('type'),
       host: data.get('host'),
+      paths: data.getAll("paths"),
+      zips: data.getAll("zips"),
       files: uploadItem,
+      assets: uploadAsset,
     };
 
     const fileExtension = ["text/javascript", "application/wasm", ""];
@@ -51,6 +74,24 @@ export default function UploadPage() {
     const files = Array.from(e.target.files);
     setUploadItem(files)
   }
+
+  const handleSelectedAsset = (e) => {
+      const files = Array.from(e.target.files);
+      setUploadAsset(files)
+      const zip = new JSZip();
+
+      files.forEach((file) => {
+        zip.file(file.webkitRelativePath, file);
+      });
+      zip
+        .generateAsync({ type: "blob" })
+        .then(function (content) {
+          setContentZip([...contentZip, content])
+        })
+        .catch((e) => console.log(e));
+  };
+
+  console.log(listSkin);
 
   return (
     <Box
@@ -101,6 +142,56 @@ export default function UploadPage() {
         className='form-control'
         onChange={handleSelectedFile}
       />
+
+      <Box component={"div"} className='mt-2 mb-2 text-white' onClick={() => {
+        setListSkin([...listSkin, 1])
+      }}>
+        Add Skin
+      </Box>
+
+      <Box component={"div"} className='text-white d-flex'>
+        {listSkin && listSkin?.length > 0 ? listSkin?.map((skin, i_skin) => {
+          return (
+            <Box component={"div"} key={i_skin} className='card me-2 mb-2 p-2'> 
+                <Box component={"div"} className='position-absolute' sx={{ right: 10, zIndex: 1 }}>
+                    <DeleteIcon color="error" onClick={() => {
+                      delete listSkin[i_skin]
+                      const arr = listSkin?.filter(it => it)
+                      setListSkin(arr);
+                    }}/>
+                </Box>
+                <FormLabel className='mt-2 mb-2 text-dark'>
+                  Name
+                </FormLabel>
+                <input
+                  type='text'
+                  name={`skinName${i_skin}`}
+                  className='form-control'
+                />
+                <FormLabel className='mt-2 mb-2 text-dark'>
+                  Avatar
+                </FormLabel>
+                <input
+                  type='file'
+                  name={`skinAvatar${i_skin}`}
+                  className='form-control'
+                />
+
+                <FormLabel className='mt-2 mb-2 text-dark'>
+                  Assets
+                </FormLabel>
+                <input
+                  type="file"
+                  name={`skinAsset${i_skin}`}
+                  multiple
+                  className='form-control'
+                  onChange={handleSelectedAsset}
+                  webkitdirectory="true"
+                />
+            </Box>
+          )
+        }) : (<>No Skin !</>)}
+      </Box>
       <Button type='submit' className='bg-info text-white rounded mt-2'>
         Upload Game
       </Button>
