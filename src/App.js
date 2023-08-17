@@ -84,6 +84,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { images } from "./utils/images";
 import useWindowDimensions from "./utils/useWindowDimensions";
 import { getAppType } from "./utils/helper";
+import HotTournament from "./pages/HotTournament";
+import HourlyTournament from "./pages/HourlyTournament";
+import DailyTournament from "./pages/DailyTournament";
+import WeekLongTour from "./pages/WeekLongTour";
 function App() {
   useTracking("");
 
@@ -135,7 +139,7 @@ function App() {
             id: user?.id,
           })
         );
-        
+
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -144,7 +148,9 @@ function App() {
         socket.emit("listFriend");
         socket.emit("getTransaction");
         // socket.emit("leaveAllRoom");
-        socket.emit("listPackage");
+        socket.emit("listPackage", {
+          type: true,
+        });
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -345,9 +351,6 @@ function App() {
           })
         );
       });
-      socket?.on("getListPackageSuccess", (data) => {
-        store.dispatch(getListPackage(data));
-      });
 
       socket?.on("buyPackageSuccess", (data) => {});
 
@@ -367,10 +370,13 @@ function App() {
       });
 
       socket?.on("updateGold", (data) => {
-        store.dispatch(showAlert("success", "Update gold success"));
+        console.log("123L ", data);
         store.dispatch(updateUserGold(data));
       });
 
+      socket?.on("getListPackageSuccess", (data) => {
+        store.dispatch(getListPackage(data));
+      });
       socket?.on("connected", (socketId) => {});
 
       socket?.on("server", (socketId) => {});
@@ -400,7 +406,8 @@ function App() {
 
       socket?.on("error", (data) => {
         toast.error(
-          data || "Even a function, given you return something that can be rendered",
+          data ||
+            "Even a function, given you return something that can be rendered",
           {
             icon: ({ theme, type }) => (
               <img
@@ -486,8 +493,12 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    if (token) {
-      socket.emit("listPackage");
+    if (token === null || token === "") {
+      socket?.emit("listPackage");
+    } else {
+      socket?.emit("listPackage", {
+        type: true,
+      });
     }
   }, [socket, token]);
 
@@ -519,6 +530,11 @@ function App() {
               path="/tournamentDetail/:id"
               element={<JoinTournamentComponent />}
             />
+            <Route path="/hot-tournament" element={<HotTournament />} />
+            <Route path="/hourly-tournament" element={<HourlyTournament />} />
+            <Route path="/daily-tournament" element={<DailyTournament />} />
+            <Route path="/week-long-tournament" element={<WeekLongTour />} />
+
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/new-home" element={<NewHomePageComponent />} />
             <Route path="/countdowntimer" element={<CountDownTimer />} />
@@ -529,9 +545,10 @@ function App() {
             {getAppType() === "promote" && (
               <Route path="/tournaments" element={<Tournament />} />
             )}
-            {getAppType() === "promote" && (
+            {getAppType() !== "promote" && (
               <Route path="game-type/:type" element={<TypeGamePage />} />
             )}
+
             <Route path="game/edit/:id" element={<GameEditPage />} />
             {getAppType() === "promote" && (
               <Route path="package" element={<PackagePage />}></Route>

@@ -2,9 +2,11 @@ import { Box } from "@mui/material";
 import React from "react";
 import Slider from "react-slick";
 import { useState } from "react";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
+  const { width } = useWindowDimensions();
   const { images, appendDot } = props;
   const settings = {
     dots: true,
@@ -23,10 +25,10 @@ export default function SlickSlider(props) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          bottom: appendDot ? "0px" : "-15px",
+          bottom: appendDot ? "0px" : "-20px",
           position: "absolute",
           padding: "5px",
-          height: "26px",
+          height: width > 576 ? "26px" : "15px",
           backgroundColor: appendDot ? "rgba(0, 0, 0, 0.24)" : "none",
           backdropFilter: appendDot ? "blur(2px)" : "none",
           marginBottom: "0px",

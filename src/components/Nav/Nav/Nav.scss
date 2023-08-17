@@ -1,11 +1,11 @@
 .nav-section {
   // position: fixed;
   position: sticky;
-  top: 65px;
+  top: 48px;
   // top: 97.95px;
   transform: none;
   // transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-  transition: visibility 0s, all 0.2s ease-in-out;
+  // transition: visibility 0s, all 0.2s ease-in-out;
 }
 
 .nav-animate {
@@ -87,15 +87,15 @@ p {
   }
 }
 
-.hover-nav {
-  transition: visibility 0s, opacity 0.3s, all 0.2s ease-in-out;
-  // visibility: hidden;
-  &:hover {
-    // transition: all 0.3s;
-    transform: translate(8px, 0);
-    color: white;
-  }
-}
+// .hover-nav {
+//   transition: visibility 0s, opacity 0.3s, all 0.2s ease-in-out;
+//   // visibility: hidden;
+//   &:hover {
+//     // transition: all 0.3s;
+//     transform: translate(8px, 0);
+//     color: white;
+//   }
+// }
 
 .luckySpinIncon {
   animation: spin 2s linear infinite;

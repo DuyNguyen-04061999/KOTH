@@ -33,24 +33,19 @@ export default function BuyTicket(props) {
   const { isBuyTicket } = useSelector((state) => state.tournamentReducer);
   const { listPackage } = useSelector((state) => state.appReducer);
   // const { type } = useSelector((state) => state.alertReducer);
-  const [
-    ticketBuy, 
-    setTicketBuy] = useState([]);
-  const [
-    socket, 
-    setSocket] = useState(null);
+  const [ticketBuy, setTicketBuy] = useState([]);
+  const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-
+  const { bought, tournamentId } = props;
   const handleClose = () => {
     dispatch(toggleBuyTicket(false));
   };
 
   useEffect(() => {
-    if(socket && ticketBuy) {
-
+    if (socket && ticketBuy) {
     }
-  }, [socket, ticketBuy])
+  }, [socket, ticketBuy]);
 
   useEffect(() => {
     const socket = _socket;
@@ -58,7 +53,6 @@ export default function BuyTicket(props) {
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -83,7 +77,7 @@ export default function BuyTicket(props) {
               height: "44px",
               width: "100%",
               boxSizing: "border-box",
-              padding: "0px 20px",
+              padding: "5px 20px",
               display: "flex",
               alignItems: "center",
               justifyContent: width > 576 ? "space-between" : "none",
@@ -91,12 +85,21 @@ export default function BuyTicket(props) {
           >
             {width < 576 && (
               <Box
+                onClick={() => {
+                  dispatch(toggleBuyTicket(false));
+                }}
                 sx={{ width: "14px" }}
                 component={"img"}
                 src={images.BackButtonLobby}
               ></Box>
             )}
-            <Typography sx={{ color: "#ffff", textAlign: "start" }}>
+            <Typography
+              sx={{
+                color: "#ffff",
+                textAlign: "start",
+                fontWeight: "lighter !important",
+              }}
+            >
               Buy Ticket
             </Typography>
             {width > 576 && (
@@ -182,7 +185,7 @@ export default function BuyTicket(props) {
                         fontFamily: "",
                       }}
                     >
-                      0.99$
+                      {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"}
                     </Typography>
                   </Box>
                   <Box sx={{ marginTop: "20px" }}>
@@ -308,6 +311,20 @@ export default function BuyTicket(props) {
               </Box>
             </Box>
             <button
+              onClick={() => {
+                if (!bought) {
+                  socket?.emit("buyPackage", {
+                    tournamentId: tournamentId,
+                    packageId: ticketBuy?.id,
+                  });
+                } else {
+                  socket?.emit("buyPackage", {
+                    price: 2.99,
+                    tournamentId: tournamentId,
+                    packageId: ticketBuy?.id,
+                  });
+                }
+              }}
               style={{
                 border: "none",
                 outline: "none",

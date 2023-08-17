@@ -7,7 +7,7 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { imageDesktop, images, video } from "../../../utils/images";
+import { imageDesktop, imageHome, images, video } from "../../../utils/images";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -18,6 +18,7 @@ import SliderTime from "../../../components/SliderTime";
 import Slider from "react-slick";
 import FullListTournament from "./FullListTournament";
 import CountDownTournament from "../CountDownTournament";
+import { getAppType } from "../../../utils/helper";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -38,6 +39,7 @@ export default function NewHomePage() {
   const [promotion, setPromotion] = useState(true);
   const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
+  const [type, setType] = useState("");
   const typographyStyle = {
     textAlign: "start",
     fontSize: width < 576 ? "12px" : "14px",
@@ -142,7 +144,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/hot-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("hot");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -179,6 +186,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 10px 0px 10px",
@@ -248,6 +256,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 16px 0px 16px",
@@ -347,58 +356,168 @@ export default function NewHomePage() {
           {/* ------------------------------------------- */}
           {/* Hourly tournament */}
           {/* Banner winner ---> dynamically render */}
-          <Box
-            sx={{
-              width: "100%",
-              marginTop: width < 576 ? "24px" : "32px",
-              marginBottom: width < 576 ? "24px" : "32px",
-              backgroundImage: `url(${images.banner_win_BG})`,
-              height: "348.909px",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-            }}
-          >
+          {width < 576 ? (
             <Box
               sx={{
-                background: `url(${images.winnerBG})`,
-                height: "400px",
-                width: "568px",
-                marginLeft: "0px",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
+                width: "100%",
+                marginTop: width < 576 ? "24px" : "32px",
+                marginBottom: width < 576 ? "24px" : "32px",
+                backgroundImage: `url(${imageHome.banner_win_Mobile})`,
+                height: "208.612px",
+                backgroundSize: "cover",
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 alignItems: "center",
-                position: "relative",
+                overflow: "hidden",
               }}
             >
               <Box
-                component={"img"}
-                src={images.pool}
                 sx={{
-                  borderRadius: "50%",
-                  width: "168px",
-                  position: "absolute",
-                  left: "215px",
-                  top: "119px",
+                  width: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "relative",
                 }}
-              ></Box>
+              >
+                <Box sx={{ position: "absolute", top: "-35px" }}>
+                  {" "}
+                  <Box
+                    sx={{
+                      backgroundImage: `url(${imageHome.ringMobile})`,
+                      width: "81px",
+                      height: "81px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "75px",
+                        height: "75px",
+                        borderRadius: "50%",
+                      }}
+                      src={images.gameHotTournament}
+                      component={"img"}
+                    ></Box>
+                    <Box
+                      sx={{ position: "absolute", top: "-17px", left: "5px" }}
+                      component={"img"}
+                      src={imageHome.hatMobile}
+                    ></Box>
+                  </Box>
+                  <Typography
+                    sx={{
+                      color: "#fff",
+                      fontSize: "12.035px",
+                      fontWeight: "lighter !important",
+                      paddingTop: "10px",
+                    }}
+                  >
+                    Leesin
+                  </Typography>
+                </Box>
+              </Box>
               <Box
-                component={"img"}
-                src={images.hatWinner}
                 sx={{
-                  width: "81.119px",
-                  height: "auto",
-                  position: "absolute",
-                  left: "223px",
-                  top: "77px",
+                  width: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  boxSizing: "border-box",
+                  padding: "50px 0px 0px 0px",
+                  position: "relative",
+                  justifyContent: "flex-start",
+                  height: "100%",
                 }}
-              ></Box>
+              >
+                <Typography
+                  sx={{
+                    color: "#FFDC62",
+                    fontSize: "20px",
+                    marginLeft: "0px !important",
+                  }}
+                >
+                  MEGA HOLIC
+                </Typography>
+                <Box
+                  sx={{
+                    backgroundImage: `url(${imageHome.megaholicMobile})`,
+                    width: `${width / 1.6}px`,
+                    height: "113px",
+                    marginTop: "10px",
+                    position: "absolute",
+                    top: "89px",
+                    left: "-23px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    padding: "10px 40px",
+                  }}
+                >
+                  <Typography sx={{ color: "#fff", fontSize: "40px" }}>
+                    1000 $
+                  </Typography>
+                  <Typography sx={{ color: "#fff", fontSize: "9px" }}>
+                    GRAND TOURNAMENT WINNER
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
-          </Box>{" "}
+          ) : (
+            <Box
+              sx={{
+                width: "100%",
+                marginTop: width < 576 ? "24px" : "32px",
+                marginBottom: width < 576 ? "24px" : "32px",
+                backgroundImage: `url(${images.banner_win_BG})`,
+                height: "348.909px",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  background: `url(${images.winnerBG})`,
+                  height: "400px",
+                  width: "568px",
+                  marginLeft: "0px",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "relative",
+                }}
+              >
+                <Box
+                  component={"img"}
+                  src={images.pool}
+                  sx={{
+                    borderRadius: "50%",
+                    width: "168px",
+                    position: "absolute",
+                    left: "215px",
+                    top: "119px",
+                  }}
+                ></Box>
+                <Box
+                  component={"img"}
+                  src={images.hatWinner}
+                  sx={{
+                    width: "81.119px",
+                    height: "auto",
+                    position: "absolute",
+                    left: "223px",
+                    top: "77px",
+                  }}
+                ></Box>
+              </Box>
+            </Box>
+          )}
           {/* Brief List Tournament */}
           <Box
             sx={{
@@ -424,7 +543,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/hourly-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("hourly");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -478,6 +602,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 10px 0px 10px",
@@ -547,6 +672,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 16px 0px 16px",
@@ -651,7 +777,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/daily-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("daily");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -695,6 +826,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 10px 0px 10px",
@@ -764,6 +896,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 16px 0px 16px",
@@ -852,9 +985,8 @@ export default function NewHomePage() {
                   images.banner_7_dk,
                 ].map((item, index) => {
                   return (
-                    <Box sx={{ padding: "0px 16px" }}>
+                    <Box sx={{ padding: "0px 16px" }} key={index}>
                       <Box
-                        key={index}
                         sx={{ width: "100%" }}
                         component={"img"}
                         src={item}
@@ -868,10 +1000,10 @@ export default function NewHomePage() {
           {/* ------------------------ */}
           <Box
             sx={{
-              marginTop: "24px",
+              marginTop: width < 576 ? "24px" : "32px",
+              marginBottom: width < 576 ? "24px" : "32px",
               display: "flex",
               flexDirection: "column",
-              marginBottom: "24px",
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -890,7 +1022,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/week-long-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("week-long");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -923,6 +1060,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 10px 0px 10px",
@@ -992,6 +1130,7 @@ export default function NewHomePage() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
                     return (
                       <Box
+                        key={index}
                         sx={{
                           width: "100% !important",
                           padding: "0px 16px 0px 16px",
@@ -1053,15 +1192,470 @@ export default function NewHomePage() {
               )}
             </Box>
           </Box>{" "}
+          {/* Banner Top1 */}
+          {width < 576 ? (
+            <Box
+              sx={{
+                marginTop: width < 576 ? "24px" : "32px",
+                marginBottom: width < 576 ? "24px" : "32px",
+                backgroundImage: `url(${imageHome.bannerTop1Mobile})`,
+                width: "100%",
+                height: "210px",
+                backgroundSize: "cover",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxSizing: "border-box",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "80px",
+                  height: "80px",
+                  borderRadius: "50%",
+                  backgroundColor: "#0687C9",
+                  position: "relative",
+                }}
+              >
+                <Box
+                  sx={{
+                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    position: "absolute",
+                    top: "-3px",
+                    left: "-2px",
+                  }}
+                  src={images.pool}
+                  component={"img"}
+                ></Box>{" "}
+                <Box
+                  sx={{
+                    width: "60px",
+                    height: "auto",
+                    position: "absolute",
+                    top: "-40px",
+                    left: "-19px",
+                  }}
+                  component={"img"}
+                  src={imageHome.top1Icon}
+                ></Box>
+              </Box>
+              <Box sx={{ paddingLeft: "20px" }}>
+                <Typography
+                  sx={{
+                    color: "#FFDC62",
+                    textAlign: "start",
+                    fontSize: "10px",
+                    marginLeft: "0px !important",
+                  }}
+                >
+                  TOURNAMENT OF THE WEEK
+                </Typography>
+                <Box
+                  component={"img"}
+                  src={imageHome.titleImage}
+                  sx={{ width: "197.541px", margin: "10px 0px 10px 0px" }}
+                ></Box>
+                <Box sx={{ display: "flex" }}>
+                  <Box
+                    sx={{ width: "23px", height: "auto" }}
+                    component={"img"}
+                    src={imageHome.brandAvatar}
+                  ></Box>
+                  <Box
+                    sx={{
+                      width: "0.729px",
+                      backgroundColor: "#371972",
+                      margin: "0px 12px 0px 12px",
+                    }}
+                  ></Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "rgba(139, 31, 207, 0.3)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "10px",
+                          color: "#00CBEF",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        2d
+                      </Typography>
+                    </Box>
+                    <Typography
+                      sx={{
+                        fontSize: "4.695px",
+                        color: "#00CBEF",
+                        margin: "0px 6px !important",
+                      }}
+                    >
+                      :
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "rgba(139, 31, 207, 0.3)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "10px",
+                          color: "#00CBEF",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        1h
+                      </Typography>{" "}
+                    </Box>{" "}
+                    <Typography
+                      sx={{
+                        fontSize: "4.695px",
+                        color: "#00CBEF",
+                        margin: "0px 6px !important",
+                      }}
+                    >
+                      :
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: "30px",
+                        height: "20px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "rgba(139, 31, 207, 0.3)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "10px",
+                          color: "#00CBEF",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        35m
+                      </Typography>{" "}
+                    </Box>{" "}
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    backgroundColor: "rgba(139, 31, 207, 0.30)",
+                    borderRadius: "5px",
+                    marginTop: "15px",
+                    padding: "4px 5px",
+                    width: `${width / 2.1}px`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      sx={{
+                        color: "#00CBEF",
+                        textAlign: "start",
+                        fontSize: "8px",
+                        marginLeft: "0px !important",
+                        marginRight: "5px",
+                      }}
+                    >
+                      Get
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#FAA515",
+                        textAlign: "start",
+                        fontSize: "10.062px",
+                        marginLeft: "0px !important",
+                        marginRight: "5px",
+                      }}
+                    >
+                      $100
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#00CBEF",
+                        textAlign: "start",
+                        fontSize: "8px",
+                        marginLeft: "0px !important",
+                      }}
+                    >
+                      gift
+                    </Typography>
+                  </Box>
+                  <button
+                    style={{
+                      background:
+                        "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                      outline: "none",
+                      border: "none",
+                      borderRadius: "5px",
+                      color: "#fff",
+                      padding: `2.683px ${width / 16}px`,
+                      fontSize: "10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Play now
+                  </button>
+                </Box>
+              </Box>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                marginTop: width < 576 ? "24px" : "32px",
+                marginBottom: width < 576 ? "24px" : "32px",
+                backgroundImage: `url(${
+                  width < 576
+                    ? imageHome.bannerTop1Mobile
+                    : imageHome.bannerTop1
+                })`,
+                width: "100%",
+                height: "348.909px",
+                backgroundSize: "cover",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxSizing: "border-box",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "210px",
+                  height: "210px",
+                  borderRadius: "50%",
+                  backgroundColor: "#0687C9",
+                  position: "relative",
+                }}
+              >
+                <Box
+                  sx={{
+                    borderRadius: "50%",
+                    width: "210px",
+                    height: "210px",
+                    position: "absolute",
+                    top: "-6px",
+                    left: "-4px",
+                  }}
+                  src={images.pool}
+                  component={"img"}
+                ></Box>
+                <Box
+                  sx={{
+                    width: "140px",
+                    height: "auto",
+                    position: "absolute",
+                    top: "-50px",
+                    left: "-76px",
+                  }}
+                  component={"img"}
+                  src={imageHome.top1Icon}
+                ></Box>
+              </Box>
+              <Box sx={{ paddingLeft: "50px" }}>
+                <Typography
+                  sx={{
+                    color: "#FFDC62",
+                    textAlign: "start",
+                    fontSize: "16.042px",
+                    marginLeft: "0px !important",
+                  }}
+                >
+                  TOURNAMENT OF THE WEEK
+                </Typography>
+                <Box
+                  component={"img"}
+                  src={imageHome.titleImage}
+                  sx={{ width: "590.538px", margin: "10px 0px 20px 0px" }}
+                ></Box>
+                <Box sx={{ display: "flex" }}>
+                  <Box
+                    sx={{ width: "60px", height: "auto" }}
+                    component={"img"}
+                    src={imageHome.brandAvatar}
+                  ></Box>
+                  <Box
+                    sx={{
+                      width: "2.027px",
+                      backgroundColor: "#371972",
+                      margin: "0px 12px 0px 12px",
+                    }}
+                  ></Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "rgba(139, 31, 207, 0.3)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "20.052px",
+                          color: "#00CBEF",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        2d
+                      </Typography>
+                    </Box>
+                    <Typography
+                      sx={{
+                        fontSize: "14.037px",
+                        color: "#00CBEF",
+                        margin: "0px 20px !important",
+                      }}
+                    >
+                      :
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "rgba(139, 31, 207, 0.3)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "20.052px",
+                          color: "#00CBEF",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        1h
+                      </Typography>{" "}
+                    </Box>{" "}
+                    <Typography
+                      sx={{
+                        fontSize: "14.037px",
+                        color: "#00CBEF",
+                        margin: "0px 20px !important",
+                      }}
+                    >
+                      :
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: "50px",
+                        height: "44px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "rgba(139, 31, 207, 0.3)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "20.052px",
+                          color: "#00CBEF",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        35m
+                      </Typography>{" "}
+                    </Box>{" "}
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    backgroundColor: "rgba(139, 31, 207, 0.30)",
+                    borderRadius: "5px",
+                    marginTop: "35px",
+                    padding: "10.026px 14.037px",
+                    width: "420px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      sx={{
+                        color: "#00CBEF",
+                        textAlign: "start",
+                        fontSize: "20px",
+                        marginLeft: "0px !important",
+                        marginRight: "5px",
+                      }}
+                    >
+                      Get
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#FAA515",
+                        textAlign: "start",
+                        fontSize: "30.078px",
+                        marginLeft: "0px !important",
+                        marginRight: "5px",
+                      }}
+                    >
+                      $100
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#00CBEF",
+                        textAlign: "start",
+                        fontSize: "20px",
+                        marginLeft: "0px !important",
+                      }}
+                    >
+                      gift
+                    </Typography>
+                  </Box>
+                  <button
+                    style={{
+                      background:
+                        "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                      outline: "none",
+                      border: "none",
+                      borderRadius: "5px",
+                      color: "#fff",
+                      padding: "0px 60px",
+                      fontSize: "16px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Play now
+                  </button>
+                </Box>
+              </Box>
+            </Box>
+          )}
           {/* ---------------------------- */}
           {/* Sẽ được tách component */}
           <FullListTournament
+            type={type}
             open={open}
             handleOnClose={() => {
               setOpen(false);
             }}
           />
-          <Package />
+          {getAppType() === "promote" ? <Package /> : <></>}
           {/* Footer */}
           <Box>
             <Box

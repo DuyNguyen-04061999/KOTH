@@ -18,7 +18,7 @@ const Test = styled.input`
   border-radius: 10px;
   width: 100% !important;
   height: 100%;
-  background: #261A35 !important;
+  background: #261a35 !important;
   padding: 10px 20px !important;
   color: #fff !important;
   font-weight: bold !important;
@@ -105,7 +105,9 @@ export default function ChatFriendList() {
                         color: "white",
                         marginBottom: "0px !important",
                         fontSize: "12px",
-                        fontWeight: "bolder",
+                        fontWeight: "500 !important",
+                        fontFamily: "Cyntho !important",
+                        letterSpacing:"1px"
                       }}
                     >
                       {e.userName}
@@ -166,7 +168,7 @@ export default function ChatFriendList() {
             alignItems={"flex-start"}
             justifyContent={"space-between"}
             sx={{
-              marginBottom: "10px",
+              marginBottom: "20px",
             }}
             onClick={() => {
               dispatch(updateContacterUsername(e?.userName, e?.id));
@@ -196,13 +198,22 @@ export default function ChatFriendList() {
                 <h5
                   style={{
                     color: "#7C81F2",
-                    fontWeight: "bolder",
                     fontSize: "15px",
+                    fontWeight: "500 !important",
+                    fontFamily: "Cyntho !important",
+                    letterSpacing:"1px"
                   }}
                 >
                   {e?.userName}
                 </h5>
-                <span style={{ color: "white", fontWeight: "bold" }}>
+                <span
+                  style={{
+                    color: "white",
+                    fontWeight: "500 !important",
+                    fontFamily: "Cyntho !important",
+                    letterSpacing:"1px"
+                  }}
+                >
                   {e?.receiveMessages?.map((e_m, i_e_m) => (
                     <span key={i_e_m}>{e_m?.messageContent?.slice(0, 15)}</span>
                   ))}
@@ -210,28 +221,29 @@ export default function ChatFriendList() {
               </Box>
             </Box>
             <Box>
-              <span
+              <p
                 className="ms-2"
                 style={{
                   color: "white",
                   fontWeight: "500",
-                  fontSize: "12px",
+                  fontSize: "11px",
+                  fontFamily:"Cyntho !important"
                 }}
               >
                 {e?.receiveMessages?.length > 0 ? (
                   e?.receiveMessages?.map((e_m, i_e_m) => (
-                    <span key={i_e_m}>
+                    <p key={i_e_m}>
                       {moment(e_m?.updatedAt).format("HH:mm")}
-                    </span>
+                    </p>
                   ))
                 ) : (
-                  <span>
+                  <p>
                     {moment(e?._gg_koth_user_friends?.createdAt).format(
                       "HH:mm"
                     )}
-                  </span>
+                  </p>
                 )}
-              </span>
+              </p>
             </Box>
           </Box>
         )}
@@ -243,7 +255,7 @@ export default function ChatFriendList() {
     if (width < 576) {
       return height - 50;
     } else if (width > 1200) {
-      return height - 120;
+      return height - 107;
     } else if (width > 576 && width < 1199) {
       return height - 300;
     }
