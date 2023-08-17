@@ -538,7 +538,10 @@ function App() {
             {getAppType() === "promote" && (
               <Route path="/tournaments" element={<Tournament />} />
             )}
-            <Route path="game-type/:type" element={<TypeGamePage />} />
+            {getAppType() !== "promote" && (
+              <Route path="game-type/:type" element={<TypeGamePage />} />
+              
+            )}
 
             <Route path="game/edit/:id" element={<GameEditPage />} />
             {getAppType() === "promote" && (
