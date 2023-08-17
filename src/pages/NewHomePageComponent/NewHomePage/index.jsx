@@ -39,6 +39,7 @@ export default function NewHomePage() {
   const [promotion, setPromotion] = useState(true);
   const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
+  const [type, setType] = useState("");
   const typographyStyle = {
     textAlign: "start",
     fontSize: width < 576 ? "12px" : "14px",
@@ -143,7 +144,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/hot-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("hot");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -537,7 +543,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/hourly-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("hourly");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -766,7 +777,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/daily-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("daily");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -1006,7 +1022,12 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  setOpen(true);
+                  if (width > 576) {
+                    navigate("/week-long-tournament");
+                  } else {
+                    setOpen(true);
+                    setType("week-long");
+                  }
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -1628,12 +1649,13 @@ export default function NewHomePage() {
           {/* ---------------------------- */}
           {/* Sẽ được tách component */}
           <FullListTournament
+            type={type}
             open={open}
             handleOnClose={() => {
               setOpen(false);
             }}
           />
-          {getAppType() === "promote" ? (<Package />) : (<></>)}
+          {getAppType() === "promote" ? <Package /> : <></>}
           {/* Footer */}
           <Box>
             <Box

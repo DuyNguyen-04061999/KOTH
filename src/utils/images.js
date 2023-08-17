@@ -109,6 +109,10 @@ import winnerBG from "../assets/images/winnerBG.png";
 import hatWinner from "../assets/images/hatWinner.png";
 import ticketIconTournament from "../assets/images/ticketIconTournament.png";
 import voucher_tour from "../assets/images/voucher_tour.png";
+import Voucher_Brand from "../assets/images/Voucher_Brand.png";
+import samsungBrand from "../assets/images/samsungBrand.png";
+import closeVoucher from "../assets/images/closeVoucher.png";
+import PurpleBanner from "../assets/images/PurpleBanner.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -411,6 +415,10 @@ export const images = {
   hatWinner: hatWinner,
   ticketIconTournament: ticketIconTournament,
   voucher_tour: voucher_tour,
+  Voucher_Brand: Voucher_Brand,
+  samsungBrand: samsungBrand,
+  closeVoucher: closeVoucher,
+  PurpleBanner: PurpleBanner,
 };
 
 export const images2 = {
