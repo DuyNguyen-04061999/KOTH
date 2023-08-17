@@ -22,7 +22,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { formatMoney } from "../../../utils/helper";
+import { formatMoney, getAppType } from "../../../utils/helper";
 import {
   getFontSizeDependOnWidth,
   getFontSizeTitleDependOnWidth,
@@ -548,32 +548,34 @@ export default function Home() {
                 </button>
               </Box>
             </Box>
-            <div
-              className="group"
-              style={{
-                marginTop: "2.5rem",
-                paddingLeft: "15px",
-                paddingRight: "15px",
-              }}
-            >
-              <TitleHomeDesktopComponent
-                type="ratedGame"
-                title="TOURNAMENTS"
-                icon={images.CupTournament}
-                overBg={images270423_l.overTop}
-                noBg={true}
-              />
+            {getAppType() === "promote" ? (
               <div
+                className="group"
                 style={{
-                  paddingLeft: width > 576 ? 0 : 0,
-                  marginTop: "56px",
+                  marginTop: "2.5rem",
+                  paddingLeft: "15px",
+                  paddingRight: "15px",
                 }}
               >
-                <Grid container rowSpacing={2} columnSpacing={2}>
-                  {renderTournamentList}
-                </Grid>
+                <TitleHomeDesktopComponent
+                  type="ratedGame"
+                  title="TOURNAMENTS"
+                  icon={images.CupTournament}
+                  overBg={images270423_l.overTop}
+                  noBg={true}
+                />
+                <div
+                  style={{
+                    paddingLeft: width > 576 ? 0 : 0,
+                    marginTop: "56px",
+                  }}
+                >
+                  <Grid container rowSpacing={2} columnSpacing={2}>
+                    {renderTournamentList}
+                  </Grid>
+                </div>
               </div>
-            </div>
+            ) : (<></>)}
             <Box
               className="leaderboard"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
@@ -834,7 +836,7 @@ export default function Home() {
                 </Box>
               </Box>
             </Box>
-            <Package />
+            {getAppType() === "promote" ? (<Package />) : (<></>)}
           </Container>
         </Box>
       ) : (
@@ -1248,7 +1250,7 @@ export default function Home() {
           <div className="container">
             <hr style={{ border: "1px solid #462556" }} />
           </div>
-          <Package />
+          {getAppType() === "promote" ? (<Package />) : (<></>)}
           {/* <Box className="footer mb-5">
             <Box className="footer-content" sx={{ marginBottom: "100px" }}>
               <img className="logo-footer" src={images2.logo_text} alt="..." />
