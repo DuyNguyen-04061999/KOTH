@@ -18,6 +18,7 @@ import SliderTime from "../../../components/SliderTime";
 import Slider from "react-slick";
 import FullListTournament from "./FullListTournament";
 import CountDownTournament from "../CountDownTournament";
+import { getAppType } from "../../../utils/helper";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -1632,7 +1633,7 @@ export default function NewHomePage() {
               setOpen(false);
             }}
           />
-          <Package />
+          {getAppType() === "promote" ? (<Package />) : (<></>)}
           {/* Footer */}
           <Box>
             <Box
