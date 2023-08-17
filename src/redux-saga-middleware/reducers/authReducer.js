@@ -91,6 +91,14 @@ export const toggleDialogConfirm = (data) => {
   };
 };
 
+export const getIdPackage = (data) => {
+  console.log(data);
+  return {
+    type: "GET_ID_PACKAGE",
+    payload: data
+  }
+}
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -109,7 +117,7 @@ const authReducer = (
     userId: "",
     mess: "",
     isDialogConfirm: false,
-    idPackage: {},
+    idPackage: "",
   },
   action
 ) => {
@@ -173,8 +181,9 @@ const authReducer = (
       return {
         ...state,
         isDialogConfirm: !state.isDialogConfirm,
-        idPackage: payload,
       };
+    case "GET_ID_PACKAGE" : 
+    return { ...state, idPackage: payload}
     default:
       return state;
   }

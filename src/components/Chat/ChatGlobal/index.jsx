@@ -23,8 +23,10 @@ const Test = styled.input`
   line-height: 25px !important;
   height: 100%;
   background: #27182e !important;
-  padding: 10px !important;
+  padding: 7px !important;
   color: #9d9ace !important;
+  font-weight: 500 !important;
+  font-family: Cyntho !important;
   &:focus {
     outline: none;
   }
@@ -212,9 +214,9 @@ export default function ChatGlobal(props) {
                     <span
                       style={{
                         color: "white",
-                        fontFamily:"Cyntho",
-                        fontSize:"15px",
-                        marginLeft:"10px"
+                        fontFamily: "Cyntho",
+                        fontSize: "15px",
+                        marginLeft: "10px",
                       }}
                     >
                       <b>Back</b>
@@ -232,10 +234,7 @@ export default function ChatGlobal(props) {
                 <img src={images.I} width={25} alt="" onClick={handleClick} />
               </Box>
             </Box>
-            <Box
-              component="div"
-              hidden={!showChat}
-            >
+            <Box component="div" hidden={!showChat}>
               <ComponentChat />
             </Box>
             <Box
@@ -244,8 +243,8 @@ export default function ChatGlobal(props) {
               sx={{
                 position: "absolute",
                 bottom: width < 576 ? "0px" : "46px",
-                background: "#4a3763",
-                padding: "15px 20px ",
+                background: "#2E1E38",
+                padding: "12px 20px ",
                 zIndex: "20",
               }}
             >
@@ -374,9 +373,9 @@ export default function ChatGlobal(props) {
                     <span
                       style={{
                         color: "white",
-                        fontFamily:"Cyntho",
-                        fontSize:"15px",
-                        marginLeft:"10px"
+                        fontFamily: "Cyntho",
+                        fontSize: "15px",
+                        marginLeft: "10px",
                       }}
                     >
                       <b>Back</b>

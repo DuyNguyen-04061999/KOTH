@@ -104,6 +104,8 @@ const Test = styled.input`
   background: #27182e !important;
   padding: 7px !important;
   color: #bfbeed !important;
+  letter-spacing: 0.5px;
+  font-weight: Cyntho !important ;
   &:focus {
     outline: none;
   }
@@ -148,7 +150,7 @@ export default function Layout(props) {
 
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
-      socket?.emit("leaveAllRoom")
+      socket?.emit("leaveAllRoom");
     }
   }, [router, socket, token]);
 
@@ -296,6 +298,8 @@ export default function Layout(props) {
                 height="23"
                 viewBox="0 0 30 23"
                 fill="none"
+                onClick={clickNavIcon}
+                className="cursor-pointer"
               >
                 <rect width="30" height="5" rx="2" fill="#A968E2" />
                 <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
@@ -541,110 +545,6 @@ export default function Layout(props) {
               position: "relative",
             }}
           >
-            {/* {1 === false && (
-              <Box
-                className="position-absolute check-re"
-                sx={{
-                  zIndex: 1,
-                  top: 0,
-                  height: "100%",
-                  width: "100%",
-                }}
-              >
-                <Box
-                  className="p-2 d-flex justify-content-between"
-                  sx={{ backgroundColor: "#482555", width: "100%" }}
-                >
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className="d-flex align-items-center">
-                      <div onClick={() => {}}>
-                        <img
-                          src={images280423_l.back}
-                          alt="Arrow"
-                          width={25}
-                          height={25}
-                        />
-                      </div>
-                      <div className="d-flex align-items-center">
-                        <span
-                          className="fs-5 mx-3"
-                          style={{
-                            color: "#b16bd6",
-                          }}
-                        >
-                          <b>{}</b>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <Box
-                    className="d-flex align-items-center"
-                    sx={{
-                      backgroundColor: "rgb(113 45 154)",
-                      color: "rgb(160 88 199)",
-                    }}
-                  >
-                    <PriorityHighIcon />
-                  </Box>
-                </Box>
-                <Box
-                  component="div"
-                  hidden={!showChat}
-                  sx={{
-                    backgroundColor: "#292033",
-                  }}
-                >
-                  <ComponentChat />
-                </Box>
-                <Box
-                  width={"100%"}
-                  className="d-flex justify-content-between align-items-center"
-                  sx={{
-                    background: "#482555",
-                    padding: "22px 20px",
-                  }}
-                >
-                  <Box>
-                    <img
-                      src={imageChat.invitegame}
-                      alt="..."
-                      width={45}
-                      height={30}
-                      className="me-2"
-                      style={{ zIndex: 9999 }}
-                      onClick={() => {}}
-                    />
-                  </Box>
-                  <Box
-                    component={"form"}
-                    sx={{
-                      width: "100%",
-                    }}
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                    }}
-                  >
-                    <Test
-                      type="text"
-                      value={chatF}
-                      id="sendmessages"
-                      onChange={handleChangeChat}
-                      onKeyDown={handleOnKeyDown}
-                      style={inpChat()}
-                      placeholder="Type your messages..."
-                    />
-                  </Box>
-                  <Box className="ms-2" onClick={() => {}}>
-                    <img
-                      src={images280423_l.send}
-                      alt="Send"
-                      width={"auto"}
-                      height={24}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            )} */}
             <Box
               sx={{
                 backgroundColor: "#42285B",
@@ -668,9 +568,39 @@ export default function Layout(props) {
                   }}
                 >
                   {tabChat === false ? (
-                    <img src={imageChat.globalicon1} alt="Arrow" width={20} />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="16"
+                      fill="none"
+                      viewBox="0 0 16 12"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            fill="#895DBF"
+                            d="M7.966 7.693c2.288 0 4.24.363 4.24 1.814 0 1.45-1.94 1.827-4.24 1.827-2.287 0-4.24-.363-4.24-1.814 0-1.45 1.94-1.827 4.24-1.827zm3.657-.873c.875-.017 1.815.103 2.163.189.736.144 1.22.44 1.42.87.17.352.17.76 0 1.112-.307.666-1.296.88-1.68.935-.08.012-.143-.057-.135-.137.196-1.845-1.366-2.72-1.77-2.92-.017-.01-.02-.024-.02-.032.002-.006.01-.016.022-.017zm-7.246 0c.013.002.02.011.021.017.002.009-.002.022-.019.031-.404.202-1.966 1.076-1.77 2.92.008.081-.055.15-.134.138-.385-.055-1.374-.269-1.68-.935-.17-.352-.17-.76 0-1.113.2-.429.683-.724 1.42-.87.347-.084 1.287-.204 2.162-.188zM7.966.667a2.804 2.804 0 012.806 2.822A2.805 2.805 0 017.966 6.31 2.805 2.805 0 015.16 3.49 2.804 2.804 0 017.966.667zm3.81.47c1.504 0 2.685 1.424 2.283 3.01-.272 1.067-1.255 1.776-2.35 1.748a2.265 2.265 0 01-.323-.032.106.106 0 01-.07-.162 3.844 3.844 0 00.655-2.161c0-.834-.26-1.61-.712-2.248-.014-.02-.025-.05-.01-.073.011-.018.034-.028.054-.033.153-.031.309-.048.473-.048zm-7.552 0c.164 0 .32.018.473.05.02.004.043.014.055.032.013.023.003.054-.011.073a3.871 3.871 0 00-.712 2.248c0 .798.238 1.542.656 2.16a.106.106 0 01-.071.163 2.187 2.187 0 01-.323.032c-1.095.028-2.078-.68-2.35-1.748-.403-1.586.779-3.01 2.283-3.01z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
                   ) : (
-                    <img src={imageChat.globalicon2} alt="Arrow" width={20} />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="16"
+                      fill="none"
+                      viewBox="0 0 16 12"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            fill="#fff"
+                            d="M7.966 7.693c2.288 0 4.24.363 4.24 1.814 0 1.45-1.94 1.827-4.24 1.827-2.287 0-4.24-.363-4.24-1.814 0-1.45 1.94-1.827 4.24-1.827zm3.657-.873c.875-.017 1.815.103 2.163.189.736.144 1.22.44 1.42.87.17.352.17.76 0 1.112-.307.666-1.296.88-1.68.935-.08.012-.143-.057-.135-.137.196-1.845-1.366-2.72-1.77-2.92-.017-.01-.02-.024-.019-.032.001-.006.008-.016.021-.017zm-7.246 0c.013.002.02.011.021.017.002.009-.002.022-.018.031-.405.202-1.967 1.076-1.771 2.92.008.081-.055.15-.134.138-.385-.055-1.374-.269-1.68-.935-.17-.352-.17-.76 0-1.113.2-.429.683-.724 1.42-.87.347-.084 1.287-.204 2.162-.188zM7.967.667a2.804 2.804 0 012.805 2.822A2.805 2.805 0 017.966 6.31 2.805 2.805 0 015.16 3.49 2.804 2.804 0 017.966.667zm3.809.47c1.504 0 2.685 1.424 2.283 3.01-.272 1.067-1.255 1.776-2.35 1.748a2.263 2.263 0 01-.322-.032.106.106 0 01-.072-.162 3.843 3.843 0 00.657-2.161c0-.834-.26-1.61-.713-2.248-.014-.02-.025-.05-.01-.073.011-.018.034-.028.054-.033.153-.031.31-.048.473-.048zm-7.552 0c.164 0 .32.018.473.05.02.004.043.014.055.032.013.023.003.054-.011.073a3.871 3.871 0 00-.712 2.248c0 .798.238 1.542.656 2.16a.106.106 0 01-.071.163 2.187 2.187 0 01-.323.032c-1.095.028-2.078-.68-2.35-1.748-.403-1.586.779-3.01 2.283-3.01z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
                   )}
                   <div className="d-flex align-items-center">
                     <span
@@ -705,19 +635,39 @@ export default function Layout(props) {
                   }}
                 >
                   {tabChat === true ? (
-                    <img
-                      src={imageChat.privateicon1}
-                      alt="Arrow"
-                      width={10}
-                      className="img-fluid"
-                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="16"
+                      fill="none"
+                      viewBox="0 0 11 14"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            fill="#895DBF"
+                            d="M5.5 9.116c2.893 0 5.333.47 5.333 2.283 0 1.814-2.457 2.267-5.333 2.267-2.892 0-5.333-.47-5.333-2.283 0-1.814 2.457-2.267 5.333-2.267zm0-8.783c1.96 0 3.53 1.57 3.53 3.527A3.516 3.516 0 015.5 7.388 3.517 3.517 0 011.97 3.86 3.516 3.516 0 015.5.333z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
                   ) : (
-                    <img
-                      src={imageChat.privateicon2}
-                      alt="Arrow"
-                      width={12}
-                      className="img-fluid"
-                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="16"
+                      fill="none"
+                      viewBox="0 0 11 14"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            fill="#fff"
+                            d="M5.5 9.116c2.892 0 5.333.47 5.333 2.283 0 1.814-2.457 2.267-5.333 2.267-2.892 0-5.333-.47-5.333-2.283 0-1.814 2.457-2.267 5.333-2.267zm0-8.783c1.96 0 3.53 1.57 3.53 3.527A3.516 3.516 0 015.5 7.388 3.517 3.517 0 011.97 3.86 3.516 3.516 0 015.5.333z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
                   )}
                   <div className="d-flex align-items-center">
                     <span
@@ -744,7 +694,7 @@ export default function Layout(props) {
                 className="d-flex justify-content-between align-items-center "
                 sx={{
                   background: "#2E1E38",
-                  padding: "15px 20px",
+                  padding: "12px 20px",
                 }}
               >
                 <Box
