@@ -183,7 +183,8 @@ export default function ChatWorldList() {
                         <span
                           style={{
                             color: "white",
-                            fontWeight: "bold",
+                            fontWeight: "500 !important",
+                            fontFamily: "Cyntho !important",
                           }}
                         >
                           {e?.messageGameName?.slice(0, 10) + `...`}
@@ -235,8 +236,10 @@ export default function ChatWorldList() {
                       <span
                         style={{
                           color: "white",
-                          fontWeight: "500",
                           fontSize: "10px",
+                          fontWeight: "500 !important",
+                          fontFamily: "Cyntho !important",
+                          letterSpacing: "0.5px",
                         }}
                       >
                         {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -248,10 +251,12 @@ export default function ChatWorldList() {
                         background: "#443565",
                         color: "white",
                         fontSize: "14px",
-                        fontWeight: "bold",
                         width: "100%",
                         wordWrap: "break-word",
                         borderRadius: "5px",
+                        fontWeight: "500 !important",
+                        fontFamily: "Cyntho !important",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       {e?.messageContent}
@@ -284,17 +289,30 @@ export default function ChatWorldList() {
                     style={{
                       color: "#7C81F2",
                       borderRadius: "5px",
+                      fontWeight: "500 !important",
+                      fontFamily: "Cyntho !important",
+                      letterSpacing: "0.5px",
                     }}
                   >
-                    <b style={{}}>{e?.messageFromName}</b>
+                    <span
+                      style={{
+                        fontWeight: "500 !important",
+                        fontFamily: "Cyntho !important",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      {e?.messageFromName}
+                    </span>
                   </span>
                   <Box>
                     <span
                       style={{
                         color: "white",
-                        fontWeight: "bold",
                         marginLeft: "15px",
                         fontSize: "10px",
+                        fontWeight: "500 !important",
+                        fontFamily: "Cyntho !important",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -310,16 +328,20 @@ export default function ChatWorldList() {
                     fontWeight: "500",
                     wordWrap: "break-word",
                     borderRadius: "5px",
+                    fontFamily: "Cyntho !important",
+                    letterSpacing: "0.5px",
                   }}
                   className="p-1 mt-2 d-flex ps-2 pe-2"
                 >
                   <div
                     style={{
                       color: "white",
-                      fontWeight: "bold",
+                      fontWeight: "500 !important",
                       fontSize: "14px",
                       width: "100%",
                       wordWrap: "break-word" /* IE 5.5-7 */,
+                      fontFamily: "Cyntho !important",
+                      letterSpacing: "0.5px",
                     }}
                   >
                     {e?.messageGameId > 0 && e?.messageRoomName ? (
@@ -409,7 +431,15 @@ export default function ChatWorldList() {
                         </Box>
                       </Box>
                     ) : (
-                      <span>{e?.messageContent}</span>
+                      <span
+                        style={{
+                          fontWeight: "500 !important",
+                          fontFamily: "Cyntho !important",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        {e?.messageContent}
+                      </span>
                     )}
                   </div>
                 </Box>
@@ -424,7 +454,7 @@ export default function ChatWorldList() {
     if (width < 576) {
       return height - 119;
     } else if (width > 1200) {
-      return height - 169;
+      return height - 163;
     } else if (width > 576 && width < 1199) {
       return height - 300;
     }

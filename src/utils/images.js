@@ -266,6 +266,9 @@ import ringMobile from "../assets/imagesHome/ringMobile.png";
 import bannerTop1Mobile from "../assets/imagesHome/bannerTop1Mobile.png";
 import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
 import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
+import diamon from "../assets/imagesDesktop/diamon.png";
+import free from "../assets/imagesDesktop/free.png";
+import gold1 from "../assets/imagesDesktop/gold.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -419,6 +422,9 @@ export const images = {
   samsungBrand: samsungBrand,
   closeVoucher: closeVoucher,
   PurpleBanner: PurpleBanner,
+  diamon: diamon,
+  free: free,
+  gold1: gold1,
 };
 
 export const images2 = {
