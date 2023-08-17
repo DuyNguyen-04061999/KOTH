@@ -84,6 +84,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { images } from "./utils/images";
 import useWindowDimensions from "./utils/useWindowDimensions";
 import { getAppType } from "./utils/helper";
+import HotTournament from "./pages/HotTournament";
+import HourlyTournament from "./pages/HourlyTournament";
+import DailyTournament from "./pages/DailyTournament";
+import WeekLongTour from "./pages/WeekLongTour";
 function App() {
   useTracking("");
 
@@ -145,7 +149,7 @@ function App() {
         socket.emit("getTransaction");
         // socket.emit("leaveAllRoom");
         socket.emit("listPackage", {
-          type: true
+          type: true,
         });
       });
 
@@ -367,7 +371,6 @@ function App() {
 
       socket?.on("updateGold", (data) => {
         console.log("123L ", data);
-        store.dispatch(showAlert("success", "Update gold success"));
         store.dispatch(updateUserGold(data));
       });
 
@@ -490,15 +493,14 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    if(token === null || token === "") {
-     socket?.emit("listPackage");
+    if (token === null || token === "") {
+      socket?.emit("listPackage");
     } else {
-     socket?.emit("listPackage", {
-       type: true
-     });
+      socket?.emit("listPackage", {
+        type: true,
+      });
     }
-   }, [socket,token]);
- 
+  }, [socket, token]);
 
   useEffect(() => {
     store.dispatch(getListBet());
@@ -528,6 +530,11 @@ function App() {
               path="/tournamentDetail/:id"
               element={<JoinTournamentComponent />}
             />
+            <Route path="/hot-tournament" element={<HotTournament />} />
+            <Route path="/hourly-tournament" element={<HourlyTournament />} />
+            <Route path="/daily-tournament" element={<DailyTournament />} />
+            <Route path="/week-long-tournament" element={<WeekLongTour />} />
+
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/new-home" element={<NewHomePageComponent />} />
             <Route path="/countdowntimer" element={<CountDownTimer />} />
@@ -540,7 +547,6 @@ function App() {
             )}
             {getAppType() !== "promote" && (
               <Route path="game-type/:type" element={<TypeGamePage />} />
-              
             )}
 
             <Route path="game/edit/:id" element={<GameEditPage />} />
