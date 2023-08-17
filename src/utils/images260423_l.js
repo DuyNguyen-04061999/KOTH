@@ -13,7 +13,6 @@ import SendIcon from '../assets/images260423_l/send message.png';
 import ArrowIcon from '../assets/images260423_l/arrow button.png';
 
 export const images260423_l = {
-
     gt02: GameTypeTwo,
     topBar: TopBar,
     search: SearchIcon,

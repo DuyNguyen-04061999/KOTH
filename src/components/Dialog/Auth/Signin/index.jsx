@@ -94,7 +94,7 @@ function SimpleDialog(props) {
             display: "flex",
             flexDirection: "row",
             maxWidth: "820px !important",
-            zIndex: "1320",
+            zIndex: "1320"
           }}
         >
           <Box sx={{ height: "100vh" }}>
