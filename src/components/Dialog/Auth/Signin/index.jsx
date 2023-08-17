@@ -41,6 +41,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
 import Gold from "../../../Gold/Gold";
+import { getAppType } from "../../../../utils/helper";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -94,7 +95,7 @@ function SimpleDialog(props) {
             display: "flex",
             flexDirection: "row",
             maxWidth: "820px !important",
-            zIndex: "1320"
+            zIndex: "1320",
           }}
         >
           <Box sx={{ height: "100vh" }}>
@@ -689,39 +690,39 @@ export default function Dialoglg() {
             </Box>
           ) : (
             <Box
-            sx={{
-              backgroundColor: width > 576 ? "#68399E" : "#68399E",
-              borderRadius:
-                width > 576 ? "20px !important" : "20px !important",
-            }}
-            className="d-flex align-items-center"
-          >
-            <Box
-              variant="standard"
               sx={{
-                minWidth: "auto",
-                position: "relative",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
+                backgroundColor: width > 576 ? "#68399E" : "#68399E",
                 borderRadius:
-                  width > 576 ? "5px !important" : "20px !important",
+                  width > 576 ? "20px !important" : "20px !important",
               }}
+              className="d-flex align-items-center"
             >
               <Box
+                variant="standard"
                 sx={{
-                  marginRight: width < 576 ? "5px" : 0,
-
-                  borderRightWidth: width > 576 ? 0 : "unset",
-                  height: "100%",
+                  minWidth: "auto",
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  borderRadius:
+                    width > 576 ? "5px !important" : "20px !important",
                 }}
-                className="cursor-pointer d-flex doge-coin "
               >
-                <Gold value={userGold} />
-              </Box>
-            </Box>
+                <Box
+                  sx={{
+                    marginRight: width < 576 ? "5px" : 0,
 
-            {/* {token && (
+                    borderRightWidth: width > 576 ? 0 : "unset",
+                    height: "100%",
+                  }}
+                  className="cursor-pointer d-flex doge-coin "
+                >
+                  <Gold value={userGold} />
+                </Box>
+              </Box>
+
+              {/* {token && (
               <div
                 className="btn-wallet"
                 style={{
@@ -749,7 +750,7 @@ export default function Dialoglg() {
                 <span style={{ fontSize: "13px" }}>Wallet</span>
               </div>
             )} */}
-          </Box>
+            </Box>
           )}
           <Box
             className={
@@ -777,7 +778,7 @@ export default function Dialoglg() {
                   <img
                     style={{
                       borderRadius: 50,
-                      border:"2px solid #68399E"
+                      border: "2px solid #68399E",
                     }}
                     alt="Remy Sharp"
                     src={
@@ -808,7 +809,7 @@ export default function Dialoglg() {
                     {userAvatar === null ? (
                       <img
                         style={{
-                          borderRadius: 5,
+                          borderRadius: 50,
                         }}
                         alt="Remy Sharp"
                         src={images.undefinedAvatar}
@@ -819,11 +820,11 @@ export default function Dialoglg() {
                     ) : (
                       <img
                         style={{
-                          // border:
-                          //   width && width > 576
-                          //     ? "3px solid #9771df"
-                          //     : "2px solid rgb(189 124 223)",
-                          borderRadius: 5,
+                          border:
+                            width && width > 576
+                              ? "3px solid #9771df"
+                              : "2px solid rgb(189 124 223)",
+                          borderRadius: 50,
                         }}
                         alt="Remy Sharp1"
                         src={
@@ -838,7 +839,7 @@ export default function Dialoglg() {
                         className="ava-signin"
                       />
                     )}
-                    <Typography variant="h6" className="text-white ps-2">
+                    <Typography variant="h4" className="text-white ps-2">
                       {userName}
                     </Typography>
                   </Box>
@@ -850,50 +851,12 @@ export default function Dialoglg() {
                   >
                     <Grid item xs={6}>
                       <Dropdown.Item
-                        style={{ paddingRight: "0px", paddingLeft: "5px" }}
-                        onClick={() => {
-                          dispatch(toggleProfileDialog(true));
-                          socket?.emit("getDetailProfile", {
-                            username: userName,
-                          });
+                        style={{
+                          paddingRight: "0px",
+                          paddingLeft: "5px",
+                          display: "flex",
+                          alignItems: "center",
                         }}
-                      >
-                        <AccountBox
-                          className="icon-dropdown"
-                          sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
-                        />
-                        <button
-                          className="btn-logout"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          User Info
-                        </button>
-                      </Dropdown.Item>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Dropdown.Item
-                        bsPrefix=""
-                        style={{ paddingRight: "0px", paddingLeft: "0px" }}
-                        onClick={() => {
-                          socket?.emit("getGameLog");
-                          dispatch(toggleGameLogDialog());
-                        }}
-                      >
-                        <GameLogIcon
-                          className="icon-dropdown"
-                          sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
-                        />
-                        <button
-                          className="btn-logout"
-                          style={{ paddingRight: "0px", fontWeight: "bold" }}
-                        >
-                          Game Logs
-                        </button>
-                      </Dropdown.Item>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Dropdown.Item
-                        style={{ paddingRight: "0px", paddingLeft: "5px" }}
                         onClick={() => {
                           if (!token) {
                             dispatch(toggleLoginDialog());
@@ -902,13 +865,37 @@ export default function Dialoglg() {
                           }
                         }}
                       >
-                        <Wallet
-                          className="icon-dropdown"
-                          sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
-                        />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="22"
+                          height="22"
+                          fill="none"
+                          viewBox="0 0 16 16"
+                          className="me-1"
+                        >
+                          <g
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.5"
+                            clipPath="url(#clip0_2061_6420)"
+                          >
+                            <path d="M12.027 9.034c-.28.273-.44.666-.4 1.086.06.72.72 1.247 1.44 1.247h1.266v.793a2.512 2.512 0 01-2.506 2.507H4.173a2.512 2.512 0 01-2.506-2.507V7.674a2.512 2.512 0 012.506-2.507h7.654a2.512 2.512 0 012.506 2.507v.96h-1.346c-.374 0-.714.146-.96.4z"></path>
+                            <path d="M1.667 8.273V5.227c0-.794.486-1.5 1.226-1.78l5.294-2A1.267 1.267 0 019.9 2.633v2.534M4.667 8h4.666m5.706 1.313v1.374a.684.684 0 01-.666.68h-1.307c-.72 0-1.38-.527-1.44-1.247-.04-.42.12-.813.4-1.087.247-.253.587-.4.96-.4h1.387a.684.684 0 01.666.68z"></path>
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_2061_6420">
+                              <path fill="#fff" d="M0 0H16V16H0z"></path>
+                            </clipPath>
+                          </defs>
+                        </svg>
                         <button
                           className="btn-logout"
-                          style={{ fontWeight: "bold" }}
+                          style={{
+                            fontWeight: "500",
+                            marginRight: "20px",
+                            color: "white",
+                          }}
                         >
                           Wallet
                         </button>
@@ -916,27 +903,100 @@ export default function Dialoglg() {
                     </Grid>
                     <Grid item xs={6}>
                       <Dropdown.Item
-                        style={{ paddingRight: "0px", paddingLeft: "0px" }}
+                        style={{
+                          paddingRight: "0px",
+                          paddingLeft: "1px",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
                         onClick={() => {
-                          if (!token) {
-                            dispatch(toggleLoginDialog());
-                          } else {
-                            dispatch(openTransactionDialog());
-                            dispatch(toggleWalletDialog());
-                          }
+                          dispatch(toggleProfileDialog(true));
+                          socket?.emit("getDetailProfile", {
+                            username: userName,
+                          });
                         }}
                       >
-                        <SyncAlt
-                          className="icon-dropdown"
-                          sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
-                        />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          fill="none"
+                          viewBox="0 0 16 16"
+                        >
+                          <g>
+                            <path
+                              stroke="#fff"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="1.5"
+                              d="M8.107 7.247a1.213 1.213 0 00-.22 0A2.947 2.947 0 015.04 4.293c0-1.633 1.32-2.96 2.96-2.96a2.957 2.957 0 11.107 5.914zm-3.334 2.46c-1.613 1.08-1.613 2.84 0 3.913 1.834 1.227 4.84 1.227 6.674 0 1.613-1.08 1.613-2.84 0-3.913-1.827-1.22-4.834-1.22-6.674 0z"
+                            ></path>
+                          </g>
+                        </svg>
                         <button
                           className="btn-logout"
-                          style={{ paddingRight: "0px", fontWeight: "bold" }}
+                          style={{
+                            fontWeight: "500",
+                            marginRight: "20px",
+                            color: "white",
+                          }}
                         >
-                          Transaction
+                          User Info
                         </button>
                       </Dropdown.Item>
+                    </Grid>
+                    <Grid item xs={6}>
+                      {getAppType() === "promote" ? (
+                        ""
+                      ) : (
+                        <Dropdown.Item
+                          bsPrefix=""
+                          style={{ paddingRight: "0px", paddingLeft: "0px" }}
+                          onClick={() => {
+                            socket?.emit("getGameLog");
+                            dispatch(toggleGameLogDialog());
+                          }}
+                        >
+                          <GameLogIcon
+                            className="icon-dropdown"
+                            sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
+                          />
+                          <button
+                            className="btn-logout"
+                            style={{ paddingRight: "0px", fontWeight: "bold" }}
+                          >
+                            Game Logs
+                          </button>
+                        </Dropdown.Item>
+                      )}
+                    </Grid>
+                    <Grid item xs={6}>
+                      {getAppType() === "promote" ? (
+                        ""
+                      ) : (
+                        <Dropdown.Item
+                          style={{ paddingRight: "0px", paddingLeft: "0px" }}
+                          onClick={() => {
+                            if (!token) {
+                              dispatch(toggleLoginDialog());
+                            } else {
+                              // dispatch(openTransactionDialog());
+                              dispatch(toggleWalletDialog());
+                            }
+                          }}
+                        >
+                          <SyncAlt
+                            className="icon-dropdown"
+                            sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
+                          />
+                          <button
+                            className="btn-logout"
+                            style={{ paddingRight: "0px", fontWeight: "bold" }}
+                          >
+                            Transaction
+                          </button>
+                        </Dropdown.Item>
+                      )}
                     </Grid>
                   </Grid>
                 </Box>
@@ -949,14 +1009,30 @@ export default function Dialoglg() {
                   sx={{ padding: "5px 15px" }}
                 >
                   <Dropdown.Item style={{ paddingLeft: "5px" }}>
-                    <ExitToAppIcon
-                      className="icon-dropdown"
-                      sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
-                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="22"
+                      height="22"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            fill="#fff"
+                            fillRule="evenodd"
+                            d="M8.424.667a3.7 3.7 0 013.696 3.697v.776a.625.625 0 01-1.25 0v-.776a2.449 2.449 0 00-2.446-2.447H4.36a2.448 2.448 0 00-2.444 2.447v9.274a2.448 2.448 0 002.444 2.446h4.072a2.44 2.44 0 002.437-2.437v-.786a.625.625 0 011.25 0v.786a3.691 3.691 0 01-3.687 3.687H4.36a3.7 3.7 0 01-3.694-3.696V4.364A3.7 3.7 0 014.361.667h4.063zm6.733 5.462l2.44 2.429a.63.63 0 01.06.068l-.06-.068a.61.61 0 01.181.386.56.56 0 01.003.056l-.004.052-.002.033v.004L17.78 9a.63.63 0 01-.19.448l-2.434 2.425a.622.622 0 01-.883-.002.625.625 0 01.001-.883l1.367-1.363h-8.52a.625.625 0 010-1.25h8.522l-1.369-1.361a.624.624 0 11.882-.885z"
+                            clipRule="evenodd"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
                     <button
                       className="btn-logout"
                       style={{
-                        fontWeight: "bolder",
+                        fontWeight: "500",
+                        color: "white",
+                        marginBottom: "10px",
                       }}
                     >
                       Logout
@@ -980,3 +1056,5 @@ export default function Dialoglg() {
     </div>
   );
 }
+
+

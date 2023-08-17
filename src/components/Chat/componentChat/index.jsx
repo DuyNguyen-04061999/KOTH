@@ -206,9 +206,10 @@ export default function ComponentChat() {
                       color: "white",
                       borderRadius: "5px",
                       fontSize: "14px",
-                      fontWeight: "500",
                       width: "100%",
                       wordWrap: "break-word",
+                      fontWeight: "500 !important",
+                      fontFamily: "Cyntho !important",
                     }}
                   >
                     {e?.messageContent}
@@ -238,6 +239,8 @@ export default function ComponentChat() {
                   style={{
                     color: "#7C81F2",
                     borderRadius: "5px",
+                    fontWeight: "500 !important",
+                    fontFamily: "Cyntho !important",
                   }}
                 >
                   <b style={{}}>{e?.messageFromName}</b>
@@ -246,9 +249,10 @@ export default function ComponentChat() {
                   <span
                     style={{
                       color: "white",
-                      fontWeight: "500",
                       marginLeft: "15px",
                       fontSize: "10px",
+                      fontWeight: "500 !important",
+                      fontFamily: "Cyntho !important",
                     }}
                   >
                     {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -360,7 +364,14 @@ export default function ComponentChat() {
                       </Box>
                     </Box>
                   ) : (
-                    <span>{e?.messageContent}</span>
+                    <span
+                      style={{
+                        fontWeight: "500 !important",
+                        fontFamily: "Cyntho !important",
+                      }}
+                    >
+                      {e?.messageContent}
+                    </span>
                   )}
                 </div>
               </Box>

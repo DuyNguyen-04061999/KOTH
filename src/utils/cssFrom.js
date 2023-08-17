@@ -26,8 +26,9 @@ export const inpChat = () => {
         backgroundColor:"#26182e",
         border:"none",
         color:"#4c5191", 
-        fontWeight:"600",
+        fontWeight:"500",
         padding:"3px 10px",
+        fontWeight:"Cyntho !important",
         '&:focusVisible' : {
             outLine:"none"
         }, 

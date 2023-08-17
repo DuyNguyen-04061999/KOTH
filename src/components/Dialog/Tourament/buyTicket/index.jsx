@@ -53,7 +53,7 @@ export default function BuyTicket(props) {
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
-  console.log("Ticket Play: ", ticketBuy);
+  // console.log("Ticket Play: ", ticketBuy);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
