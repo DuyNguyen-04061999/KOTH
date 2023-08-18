@@ -322,7 +322,7 @@ export default function Navbar() {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate("/home");
+                    navigate("/hot-tournament");
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3"
                 >
@@ -399,7 +399,7 @@ export default function Navbar() {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate("/home");
+                    navigate("/hourly-tournament");
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3"
                 >
@@ -465,7 +465,7 @@ export default function Navbar() {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate("/dalytour");
+                    navigate("/daily-tournament");
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3"
                 >
@@ -533,7 +533,7 @@ export default function Navbar() {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate("/home");
+                    navigate("/week-long-tournament");
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3"
                 >
