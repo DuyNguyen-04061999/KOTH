@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Box, Typography } from "@mui/material";
 import { CalculateDistance } from "../../../components/CountDownTimer/utils/CalculateDistance";
+import moment from "moment";
 export default function CountDownTournament({
   expiryTime = "8/16/2023 07:00:00",
 }) {
@@ -11,11 +12,21 @@ export default function CountDownTournament({
   const [seconds, setSecond] = useState(null);
   useEffect(() => {
     let timeInterval = setInterval(() => {
-      let countdownDate = new Date(expiryTime).getTime();
-      let timeNow = new Date().getTime();
-      setHour(CalculateDistance(countdownDate, timeNow).hours);
-      setMinute(CalculateDistance(countdownDate, timeNow).minutes);
-      setSecond(CalculateDistance(countdownDate, timeNow).seconds);
+      if (new Date(expiryTime) - new Date() < 0) {
+        let countdownDate = new Date(
+          moment(expiryTime).add(1, "hour")
+        ).getTime();
+        let timeNow = new Date().getTime();
+        setHour(CalculateDistance(countdownDate, timeNow).hours);
+        setMinute(CalculateDistance(countdownDate, timeNow).minutes);
+        setSecond(CalculateDistance(countdownDate, timeNow).seconds);
+      } else {
+        let countdownDate = new Date(expiryTime).getTime();
+        let timeNow = new Date().getTime();
+        setHour(CalculateDistance(countdownDate, timeNow).hours);
+        setMinute(CalculateDistance(countdownDate, timeNow).minutes);
+        setSecond(CalculateDistance(countdownDate, timeNow).seconds);
+      }
     }, 1000);
     return () => {
       clearInterval(timeInterval);
@@ -42,7 +53,7 @@ export default function CountDownTournament({
           color: "rgba(255, 255, 255, 0.50)",
         }}
       >
-        End time
+        {new Date(expiryTime) - new Date() < 0 ? "End on" : "Start on"}
       </Typography>
       <Box
         sx={{

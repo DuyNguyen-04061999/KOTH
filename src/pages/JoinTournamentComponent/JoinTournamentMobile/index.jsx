@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { images } from "../../../utils/images";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import "./index.scss";
@@ -77,6 +77,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
+  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -93,6 +94,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           }}
         >
           <Box
+            onClick={() => navigate("/home")}
             sx={{
               height: "40px",
               backgroundColor: "#42285B",

@@ -12,6 +12,8 @@ import {
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import SlickSlider from "../../components/SlickSlider";
 import { imageDesktop, images, video } from "../../utils/images";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -35,6 +37,8 @@ export default function HotTournament() {
     marginLeft: "0px !important",
     color: "#fff",
   };
+  const { hotTournament } = useSelector((state) => state.tournamentReducer);
+  const navigate = useNavigate();
   return (
     <Layout
       children={
@@ -87,10 +91,13 @@ export default function HotTournament() {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+                  {hotTournament?.map((item, index) => {
                     return (
                       index < 10 && (
                         <Box
+                          onClick={() =>
+                            navigate("/tournamentDetail/" + item?.id)
+                          }
                           key={index}
                           sx={{
                             width: "20%",
@@ -132,7 +139,7 @@ export default function HotTournament() {
                                 width: "100%",
                               }}
                             >
-                              Get $100 gift
+                              {item?.tournamentName}
                             </Typography>
                             <Typography
                               sx={{
@@ -176,10 +183,13 @@ export default function HotTournament() {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+                  {hotTournament?.map((item, index) => {
                     return (
-                      index < 10 && (
+                      index >= 10 && (
                         <Box
+                          onClick={() =>
+                            navigate("/tournamentDetail/" + item?.id)
+                          }
                           key={index}
                           sx={{
                             width: "20%",
@@ -221,7 +231,7 @@ export default function HotTournament() {
                                 width: "100%",
                               }}
                             >
-                              Get $100 gift
+                              {item?.tournamentName}
                             </Typography>
                             <Typography
                               sx={{
