@@ -13,7 +13,6 @@ import { images, sign } from "../../../../utils/images";
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import DialogProfile from "../../Profile";
 import Signup from "../Signup";
 import { images260423_l } from "../../../../utils/images260423_l";
@@ -21,7 +20,7 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { useState } from "react";
 import MenuChat from "../../../MenuMobile/Chat";
 import GameLogIcon from "@mui/icons-material/List";
-import { AccountBox, Close, SyncAlt, Wallet } from "@mui/icons-material";
+import { Close, SyncAlt } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clickTab,
@@ -30,10 +29,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
-import {
-  openTransactionDialog,
-  toggleWalletDialog,
-} from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import {
   clickTabChat,
@@ -1056,5 +1052,3 @@ export default function Dialoglg() {
     </div>
   );
 }
-
-

@@ -28,6 +28,13 @@ export default function Navbar() {
   const location = useLocation();
   const { pathname } = location;
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const [showDrop, setShowDrop] = useState("");
+
   return (
     <Box className="nav-section">
       <Box
@@ -62,6 +69,10 @@ export default function Navbar() {
                       : "#462A71",
 
                   borderRadius: "5px",
+                  color:
+                    pathname && pathname?.includes("home")
+                      ? "white"
+                      : "#A89CD7",
                 }}
                 onClick={() => {
                   navigate("/home");
@@ -135,7 +146,7 @@ export default function Navbar() {
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: isNav === true ? "flex-start" : "center",
+                  justifyContent: isNav === true ? "space-between" : "center",
                   transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                   backgroundColor:
                     pathname && pathname?.includes("week")
@@ -144,393 +155,452 @@ export default function Navbar() {
 
                   borderRadius: "5px",
                 }}
-                onClick={() => {
-                  navigate("/home");
-                }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
+                // onClick={() => {
+                //   // navigate("/home");
+                // }}
+                className="nav-home pt-2 pb-2 ps-2"
               >
-                {pathname && pathname?.includes("week") ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="p-1 me-1"
-                  >
-                    <path
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M12.15 16.5v2.1"
-                    ></path>
-                    <path
-                      stroke="#A89CD7"
-                      strokeMiterlimit="10"
-                      strokeWidth="1.5"
-                      d="M7.15 22h10v-1c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v1z"
-                    ></path>
-                    <path
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M6.15 22h12M12 16c-3.87 0-7-3.13-7-7V6c0-2.21 1.79-4 4-4h6c2.21 0 4 1.79 4 4v3c0 3.87-3.13 7-7 7z"
-                    ></path>
-                    <path
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M5.47 11.65c-.75-.24-1.41-.68-1.93-1.2-.9-1-1.5-2.2-1.5-3.6s1.1-2.5 2.5-2.5h.65c-.2.46-.3.97-.3 1.5v3c0 1 .21 1.94.58 2.8zm13.06 0c.75-.24 1.41-.68 1.93-1.2.9-1 1.5-2.2 1.5-3.6s-1.1-2.5-2.5-2.5h-.65c.2.46.3.97.3 1.5v3c0 1-.21 1.94-.58 2.8z"
-                    ></path>
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="p-1 me-1"
-                  >
-                    <path
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M12.15 16.5v2.1"
-                    ></path>
-                    <path
-                      stroke="#A89CD7"
-                      strokeMiterlimit="10"
-                      strokeWidth="1.5"
-                      d="M7.15 22h10v-1c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v1z"
-                    ></path>
-                    <path
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M6.15 22h12M12 16c-3.87 0-7-3.13-7-7V6c0-2.21 1.79-4 4-4h6c2.21 0 4 1.79 4 4v3c0 3.87-3.13 7-7 7z"
-                    ></path>
-                    <path
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M5.47 11.65c-.75-.24-1.41-.68-1.93-1.2-.9-1-1.5-2.2-1.5-3.6s1.1-2.5 2.5-2.5h.65c-.2.46-.3.97-.3 1.5v3c0 1 .21 1.94.58 2.8zm13.06 0c.75-.24 1.41-.68 1.93-1.2.9-1 1.5-2.2 1.5-3.6s-1.1-2.5-2.5-2.5h-.65c.2.46.3.97.3 1.5v3c0 1-.21 1.94-.58 2.8z"
-                    ></path>
-                  </svg>
-                )}
-
-                <span
-                  className="hover-nav"
-                  style={{
-                    display: isNav === true ? "block" : "none",
-                    cursor: "pointer",
-                    fontWeight: "700",
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  Tournament
-                </span>
-              </Box>
-              <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    pathname && pathname?.includes("hottour")
-                      ? "#7648ED"
-                      : "#462A71",
-
-                  borderRadius: "5px",
-                }}
-                onClick={() => {
-                  navigate("/home");
-                }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
-              >
-                {pathname && pathname?.includes("hottour") ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g clipPath="url(#clip0_2061_8161)">
+                  {pathname && pathname?.includes("week") ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      className="p-1 me-1"
+                    >
                       <path
-                        fill="#fff"
-                        d="M13.967 5.763a.527.527 0 00-.836.136c-.263.512-.597.981-.99 1.397.039-.3.058-.602.058-.905 0-.58-.077-1.178-.23-1.776A7.135 7.135 0 008.336.06a.527.527 0 00-.768.427 6.055 6.055 0 01-2.524 4.456l-.058.042c-.04.029-.077.057-.112.08a7.185 7.185 0 00-2.213 2.552 7.052 7.052 0 00-.56 5.03A7.122 7.122 0 009 18c3.931 0 7.13-3.198 7.13-7.13a7.07 7.07 0 00-2.162-5.107z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_2061_8161">
-                        <path fill="#fff" d="M0 0H18V18H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g>
-                      <path
-                        fill="#9B8DCA"
-                        stroke="#9B8DCA"
-                        strokeWidth="0.5"
-                        d="M7.546 1.413c-.113 1.518-.853 2.894-2.025 3.78h0l-.042.032a10.28 10.28 0 01-.009.007h0a2.22 2.22 0 01-.085.064h0a.787.787 0 00-.02.015h-.001a6.55 6.55 0 00-1.923 2.35h0a6.804 6.804 0 00-.49 4.64h0c.707 2.905 3.189 4.949 6.05 4.949 3.458 0 6.249-2.968 6.249-6.587 0-1.787-.67-3.462-1.89-4.715h0l-.603-.198s0 0 0 0a.696.696 0 00-.505.384h0c-.093.19-.196.373-.31.548 0 0 0 0 0 0 0-.538-.068-1.089-.201-1.638h0C11.3 3.233 10.143 1.697 8.56.833m-1.015.58l.25.019m-.25-.019l.25.019m-.25-.019a.721.721 0 01.35-.57h0a.673.673 0 01.666-.01m-.767.599c-.118 1.586-.892 3.03-2.123 3.96l2.35-4.333m-.227.373a.471.471 0 01.227-.373m.54-.226l-.12.22m.12-.22s0 0 0 0l-.12.22m0 0a.423.423 0 00-.42.006m.42-.007c1.517.829 2.631 2.305 3.056 4.05L8.022 1.06M6.301 6.384h0l-.003.002A5.122 5.122 0 004.68 8.308a5.333 5.333 0 00-.383 3.641l2.004-5.565zm0 0l.039-.03m-.04.03l-.152-.198.041-.032.151.2m0 0s0 0 0 0m0 0h0m0 0a6.588 6.588 0 002.405-3.676 5.191 5.191 0 011.65 2.717c.107.437.16.87.16 1.286a5.39 5.39 0 01-.316 1.81M6.34 6.354l3.899 2.139m0 0s0 0 0 0l.236.083-.236-.083zm0 0a.736.736 0 00.208.801h0m-.208-.801l.208.801m0 0c.232.2.563.222.819.052h0m-.82-.052l.82.052m0 0a6.425 6.425 0 001.696-1.664 5.3 5.3 0 01.9 2.982c0 2.852-2.194 5.15-4.862 5.15-2.207 0-4.147-1.58-4.703-3.864l6.969-2.604z"
-                      ></path>
-                    </g>
-                  </svg>
-                )}
-
-                <span
-                  className="hover-nav"
-                  style={{
-                    display: isNav === true ? "block" : "none",
-                    cursor: "pointer",
-                    fontWeight: "700",
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                  }}
-                >
-                  Hot tour
-                </span>
-              </Box>
-              <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    pathname && pathname?.includes("Hourlytour")
-                      ? "#7648ED"
-                      : "#462A71",
-
-                  borderRadius: "5px",
-                }}
-                onClick={() => {
-                  navigate("/home");
-                }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
-              >
-                {pathname && pathname?.includes("Hourlytour") ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    viewBox="0 0 16 18"
-                    className="p-1 me-1"
-                  >
-                    <g fill="#fff">
-                      <path d="M13.453 5.358L14.53 4.28l-1.06-1.06-1.153 1.152A7.452 7.452 0 008.75 3.038V1.5h1.5V0h-4.5v1.5h1.5v1.538a7.453 7.453 0 00-3.567 1.334L2.53 3.22 1.47 4.28l1.077 1.078a7.5 7.5 0 1010.905 0zM8 16.5a6 6 0 116-6 6.007 6.007 0 01-6 6z"></path>
-                      <path d="M8 6v4.5H3.5A4.5 4.5 0 108 6z"></path>
-                    </g>
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 16 18"
-                    className="p-1 me-1"
-                  >
-                    <g fill="#A89CD7">
-                      <path d="M13.453 5.358L14.53 4.28l-1.06-1.06-1.153 1.152A7.452 7.452 0 008.75 3.038V1.5h1.5V0h-4.5v1.5h1.5v1.538a7.453 7.453 0 00-3.567 1.334L2.53 3.22 1.47 4.28l1.077 1.078a7.5 7.5 0 1010.905 0zM8 16.5a6 6 0 116-6 6.007 6.007 0 01-6 6z"></path>
-                      <path d="M8 5.25a.75.75 0 00-.75.75v3.75H3.5a.75.75 0 00-.75.75A5.25 5.25 0 108 5.25zm0 9a3.757 3.757 0 01-3.675-3H8a.75.75 0 00.75-.75V6.825A3.75 3.75 0 018 14.25z"></path>
-                    </g>
-                  </svg>
-                )}
-
-                <span
-                  className="hover-nav"
-                  style={{
-                    display: isNav === true ? "block" : "none",
-                    cursor: "pointer",
-                    fontWeight: "700",
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                  }}
-                >
-                  Hourly tour
-                </span>
-              </Box>
-              <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    pathname && pathname?.includes("dalytour")
-                      ? "#7648ED"
-                      : "#462A71",
-
-                  borderRadius: "5px",
-                }}
-                onClick={() => {
-                  navigate("/dalytour");
-                }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
-              >
-                {pathname && pathname?.includes("dalytour") ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g fill="#fff">
-                      <path d="M13.5 2.715V1.8a.9.9 0 10-1.8 0v.9H9.9v-.9a.9.9 0 00-1.8 0v.9H6.3v-.9a.9.9 0 00-1.8 0v.915A3.731 3.731 0 00.916 6.3h16.171a3.731 3.731 0 00-3.585-3.585z"></path>
-                      <path d="M.9 8.1v5.26a3.746 3.746 0 003.742 3.74h8.717a3.746 3.746 0 003.741-3.74V8.1H.9z"></path>
-                    </g>
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    className="p-1 me-1"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <g>
-                      <path
-                        fill="#A89CD7"
-                        d="M13.5 1.815V1.8a.9.9 0 10-1.8 0H9.9a.9.9 0 00-1.8 0H6.3a.9.9 0 00-1.8 0v.015A3.738 3.738 0 00.9 5.54v7.818A3.746 3.746 0 004.642 17.1h8.717a3.746 3.746 0 003.741-3.74V5.54a3.738 3.738 0 00-3.6-3.725zM2.7 5.54a1.936 1.936 0 011.8-1.926.9.9 0 101.8-.015h1.8a.9.9 0 101.8 0h1.8a.9.9 0 001.8.015 1.936 1.936 0 011.8 1.926v.76H2.7v-.76zm10.66 9.76H4.641A1.943 1.943 0 012.7 13.358V8.1h12.6v5.26a1.944 1.944 0 01-1.94 1.94z"
-                      ></path>
-                    </g>
-                  </svg>
-                )}
-
-                <span
-                  className="hover-nav"
-                  style={{
-                    display: isNav === true ? "block" : "none",
-                    cursor: "pointer",
-                    fontWeight: "700",
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                  }}
-                >
-                  Daily tour
-                </span>
-              </Box>
-              <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    pathname && pathname?.includes("week")
-                      ? "#7648ED"
-                      : "#462A71",
-
-                  borderRadius: "5px",
-                }}
-                onClick={() => {
-                  navigate("/home");
-                }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
-              >
-                {pathname && pathname?.includes("week") ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g clipPath="url(#clip0_2059_14836)">
-                      <path
-                        fill="#A89CD7"
                         stroke="#A89CD7"
-                        strokeWidth="0.5"
-                        d="M3.933 17.03h0c-.358-.27-.52-.73-.425-1.168h0l.999-4.591-3.384-3.097s0 0 0 0C.792 7.872.67 7.4.802 6.971h0c.134-.43.501-.742.946-.785h0l4.469-.423 1.769-4.32h0A1.1 1.1 0 019 .75a1.1 1.1 0 011.013.693h0l1.77 4.32 4.467.424s0 0 0 0 0 0 0 0c.446.042.813.356.947.785.133.428.011.9-.319 1.202 0 0 0 0 0 0l-3.385 3.096 1 4.59v.001c.095.44-.068.9-.425 1.169a1.07 1.07 0 01-1.218.055h0l.133-.212-.133.211-8.917-.054zm0 0a1.075 1.075 0 001.216.056h0L9 14.684 3.933 17.03zm5.635-3.798h0l3.257 2.033-.846-3.886a1.16 1.16 0 01.345-1.103s0 0 0 0 0 0 0 0l2.88-2.636-3.8-.36h0a1.103 1.103 0 01-.914-.693s0 0 0 0L9 2.945 7.508 6.588s0 0 0 0a1.1 1.1 0 01-.912.69h0l-3.801.36 2.88 2.637 3.893 2.957zm0 0a1.075 1.075 0 00-1.136 0h0l-3.257 2.033m4.393-2.033l-4.393 2.033m0 0l.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-.5 4.99z"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M12.15 16.5v2.1"
                       ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_2059_14836">
-                        <path fill="#fff" d="M0 0H18V18H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                ) : (
+                      <path
+                        stroke="#A89CD7"
+                        strokeMiterlimit="10"
+                        strokeWidth="1.5"
+                        d="M7.15 22h10v-1c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v1z"
+                      ></path>
+                      <path
+                        stroke="#A89CD7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M6.15 22h12M12 16c-3.87 0-7-3.13-7-7V6c0-2.21 1.79-4 4-4h6c2.21 0 4 1.79 4 4v3c0 3.87-3.13 7-7 7z"
+                      ></path>
+                      <path
+                        stroke="#A89CD7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M5.47 11.65c-.75-.24-1.41-.68-1.93-1.2-.9-1-1.5-2.2-1.5-3.6s1.1-2.5 2.5-2.5h.65c-.2.46-.3.97-.3 1.5v3c0 1 .21 1.94.58 2.8zm13.06 0c.75-.24 1.41-.68 1.93-1.2.9-1 1.5-2.2 1.5-3.6s-1.1-2.5-2.5-2.5h-.65c.2.46.3.97.3 1.5v3c0 1-.21 1.94-.58 2.8z"
+                      ></path>
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      className="p-1 me-1"
+                    >
+                      <path
+                        stroke="#A89CD7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M12.15 16.5v2.1"
+                      ></path>
+                      <path
+                        stroke="#A89CD7"
+                        strokeMiterlimit="10"
+                        strokeWidth="1.5"
+                        d="M7.15 22h10v-1c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v1z"
+                      ></path>
+                      <path
+                        stroke="#A89CD7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M6.15 22h12M12 16c-3.87 0-7-3.13-7-7V6c0-2.21 1.79-4 4-4h6c2.21 0 4 1.79 4 4v3c0 3.87-3.13 7-7 7z"
+                      ></path>
+                      <path
+                        stroke="#A89CD7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M5.47 11.65c-.75-.24-1.41-.68-1.93-1.2-.9-1-1.5-2.2-1.5-3.6s1.1-2.5 2.5-2.5h.65c-.2.46-.3.97-.3 1.5v3c0 1 .21 1.94.58 2.8zm13.06 0c.75-.24 1.41-.68 1.93-1.2.9-1 1.5-2.2 1.5-3.6s-1.1-2.5-2.5-2.5h-.65c.2.46.3.97.3 1.5v3c0 1-.21 1.94-.58 2.8z"
+                      ></path>
+                    </svg>
+                  )}
+                  <span
+                    className="hover-nav"
+                    style={{
+                      display: isNav === true ? "block" : "none",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    Tournament
+                  </span>
+                </Box>
+                <Box onClick={toggleDropdown}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
+                    width="14"
+                    height="14"
                     fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
+                    viewBox="0 0 14 14"
+                    className="me-2"
+                    style={{
+                      transform:
+                        isDropdownOpen === true
+                          ? "rotate(0deg)"
+                          : "rotate(-88deg)",
+                      transition: "all 0.3s",
+                    }}
                   >
-                    <g clipPath="url(#clip0_2059_14836)">
-                      <path
-                        fill="#A89CD7"
-                        stroke="#A89CD7"
-                        strokeWidth="0.5"
-                        d="M3.933 17.03h0c-.358-.27-.52-.73-.425-1.168h0l.999-4.591-3.384-3.097s0 0 0 0C.792 7.872.67 7.4.802 6.971h0c.134-.43.501-.742.946-.785h0l4.469-.423 1.769-4.32h0A1.1 1.1 0 019 .75a1.1 1.1 0 011.013.693h0l1.77 4.32 4.467.424s0 0 0 0 0 0 0 0c.446.042.813.356.947.785.133.428.011.9-.319 1.202 0 0 0 0 0 0l-3.385 3.096 1 4.59v.001c.095.44-.068.9-.425 1.169a1.07 1.07 0 01-1.218.055h0l.133-.212-.133.211-8.917-.054zm0 0a1.075 1.075 0 001.216.056h0L9 14.684 3.933 17.03zm5.635-3.798h0l3.257 2.033-.846-3.886a1.16 1.16 0 01.345-1.103s0 0 0 0 0 0 0 0l2.88-2.636-3.8-.36h0a1.103 1.103 0 01-.914-.693s0 0 0 0L9 2.945 7.508 6.588s0 0 0 0a1.1 1.1 0 01-.912.69h0l-3.801.36 2.88 2.637 3.893 2.957zm0 0a1.075 1.075 0 00-1.136 0h0l-3.257 2.033m4.393-2.033l-4.393 2.033m0 0l.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-.5 4.99z"
-                      ></path>
+                    <g clipPath="url(#clip0_2059_14801)">
+                      <g>
+                        <g>
+                          <path
+                            fill="#A89CD7"
+                            d="M6.997 8.348l5.238-5.237a.76.76 0 01.541-.223.76.76 0 01.542.223l.458.46a.76.76 0 01.224.54.76.76 0 01-.224.542L7.54 10.89a.76.76 0 01-.543.223.76.76 0 01-.543-.223l-6.23-6.23A.76.76 0 010 4.117a.76.76 0 01.224-.541l.458-.46a.767.767 0 011.083 0l5.232 5.232z"
+                          ></path>
+                        </g>
+                      </g>
                     </g>
                     <defs>
-                      <clipPath id="clip0_2059_14836">
-                        <path fill="#fff" d="M0 0H18V18H0z"></path>
+                      <clipPath id="clip0_2059_14801">
+                        <path
+                          fill="#fff"
+                          d="M0 0H14V14H0z"
+                          transform="matrix(0 -1 -1 0 14 14)"
+                        ></path>
                       </clipPath>
                     </defs>
                   </svg>
-                )}
-
-                <span
-                  className="hover-nav"
-                  style={{
-                    display: isNav === true ? "block" : "none",
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display:isDropdownOpen === true ? "block" : "none",
+                  height: isDropdownOpen === true ? "220px" : "0px",
+                  transition: "all 0.5s",
+                }}
+                className={`dropdown-content ${
+                  isDropdownOpen === true ? "show" : ""
+                }`}
+              >
+                <Box
+                  sx={{
                     cursor: "pointer",
-                    fontWeight: "700",
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: isNav === true ? "flex-start" : "center",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    backgroundColor:
+                      pathname && pathname?.includes("hottour")
+                        ? "transparent"
+                        : "#transparent",
+
+                    borderRadius: "5px",
                   }}
+                  onClick={() => {
+                    navigate("/hot-tournament");
+                  }}
+                  className="nav-home pt-2 pb-2 ps-2 mb-3"
                 >
-                  Week-long tour
-                </span>
+                  {pathname && pathname?.includes("hottour") ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                      className="p-1 me-1"
+                    >
+                      <g clipPath="url(#clip0_2061_8161)">
+                        <path
+                          fill="#fff"
+                          d="M13.967 5.763a.527.527 0 00-.836.136c-.263.512-.597.981-.99 1.397.039-.3.058-.602.058-.905 0-.58-.077-1.178-.23-1.776A7.135 7.135 0 008.336.06a.527.527 0 00-.768.427 6.055 6.055 0 01-2.524 4.456l-.058.042c-.04.029-.077.057-.112.08a7.185 7.185 0 00-2.213 2.552 7.052 7.052 0 00-.56 5.03A7.122 7.122 0 009 18c3.931 0 7.13-3.198 7.13-7.13a7.07 7.07 0 00-2.162-5.107z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2061_8161">
+                          <path fill="#fff" d="M0 0H18V18H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                      className="p-1 me-1"
+                    >
+                      <g>
+                        <path
+                          fill="#9B8DCA"
+                          stroke="#9B8DCA"
+                          strokeWidth="0.5"
+                          d="M7.546 1.413c-.113 1.518-.853 2.894-2.025 3.78h0l-.042.032a10.28 10.28 0 01-.009.007h0a2.22 2.22 0 01-.085.064h0a.787.787 0 00-.02.015h-.001a6.55 6.55 0 00-1.923 2.35h0a6.804 6.804 0 00-.49 4.64h0c.707 2.905 3.189 4.949 6.05 4.949 3.458 0 6.249-2.968 6.249-6.587 0-1.787-.67-3.462-1.89-4.715h0l-.603-.198s0 0 0 0a.696.696 0 00-.505.384h0c-.093.19-.196.373-.31.548 0 0 0 0 0 0 0-.538-.068-1.089-.201-1.638h0C11.3 3.233 10.143 1.697 8.56.833m-1.015.58l.25.019m-.25-.019l.25.019m-.25-.019a.721.721 0 01.35-.57h0a.673.673 0 01.666-.01m-.767.599c-.118 1.586-.892 3.03-2.123 3.96l2.35-4.333m-.227.373a.471.471 0 01.227-.373m.54-.226l-.12.22m.12-.22s0 0 0 0l-.12.22m0 0a.423.423 0 00-.42.006m.42-.007c1.517.829 2.631 2.305 3.056 4.05L8.022 1.06M6.301 6.384h0l-.003.002A5.122 5.122 0 004.68 8.308a5.333 5.333 0 00-.383 3.641l2.004-5.565zm0 0l.039-.03m-.04.03l-.152-.198.041-.032.151.2m0 0s0 0 0 0m0 0h0m0 0a6.588 6.588 0 002.405-3.676 5.191 5.191 0 011.65 2.717c.107.437.16.87.16 1.286a5.39 5.39 0 01-.316 1.81M6.34 6.354l3.899 2.139m0 0s0 0 0 0l.236.083-.236-.083zm0 0a.736.736 0 00.208.801h0m-.208-.801l.208.801m0 0c.232.2.563.222.819.052h0m-.82-.052l.82.052m0 0a6.425 6.425 0 001.696-1.664 5.3 5.3 0 01.9 2.982c0 2.852-2.194 5.15-4.862 5.15-2.207 0-4.147-1.58-4.703-3.864l6.969-2.604z"
+                        ></path>
+                      </g>
+                    </svg>
+                  )}
+
+                  <span
+                    className="hover-nav"
+                    style={{
+                      display: isNav === true ? "block" : "none",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    Hot tour
+                  </span>
+                </Box>
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: isNav === true ? "flex-start" : "center",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    backgroundColor:
+                      pathname && pathname?.includes("Hourlytour")
+                        ? "transparent"
+                        : "transparent",
+
+                    borderRadius: "5px",
+                  }}
+                  onClick={() => {
+                    navigate("/hourly-tournament");
+                  }}
+                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                >
+                  {pathname && pathname?.includes("Hourlytour") ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      viewBox="0 0 16 18"
+                      className="p-1 me-1"
+                    >
+                      <g fill="#fff">
+                        <path d="M13.453 5.358L14.53 4.28l-1.06-1.06-1.153 1.152A7.452 7.452 0 008.75 3.038V1.5h1.5V0h-4.5v1.5h1.5v1.538a7.453 7.453 0 00-3.567 1.334L2.53 3.22 1.47 4.28l1.077 1.078a7.5 7.5 0 1010.905 0zM8 16.5a6 6 0 116-6 6.007 6.007 0 01-6 6z"></path>
+                        <path d="M8 6v4.5H3.5A4.5 4.5 0 108 6z"></path>
+                      </g>
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 16 18"
+                      className="p-1 me-1"
+                    >
+                      <g fill="#A89CD7">
+                        <path d="M13.453 5.358L14.53 4.28l-1.06-1.06-1.153 1.152A7.452 7.452 0 008.75 3.038V1.5h1.5V0h-4.5v1.5h1.5v1.538a7.453 7.453 0 00-3.567 1.334L2.53 3.22 1.47 4.28l1.077 1.078a7.5 7.5 0 1010.905 0zM8 16.5a6 6 0 116-6 6.007 6.007 0 01-6 6z"></path>
+                        <path d="M8 5.25a.75.75 0 00-.75.75v3.75H3.5a.75.75 0 00-.75.75A5.25 5.25 0 108 5.25zm0 9a3.757 3.757 0 01-3.675-3H8a.75.75 0 00.75-.75V6.825A3.75 3.75 0 018 14.25z"></path>
+                      </g>
+                    </svg>
+                  )}
+
+                  <span
+                    className="hover-nav"
+                    style={{
+                      display: isNav === true ? "block" : "none",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    Hourly tour
+                  </span>
+                </Box>
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: isNav === true ? "flex-start" : "center",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    backgroundColor:
+                      pathname && pathname?.includes("dalytour")
+                        ? "transparent"
+                        : "transparent",
+
+                    borderRadius: "5px",
+                  }}
+                  onClick={() => {
+                    navigate("/daily-tournament");
+                  }}
+                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                >
+                  {pathname && pathname?.includes("dalytour") ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                      className="p-1 me-1"
+                    >
+                      <g fill="#fff">
+                        <path d="M13.5 2.715V1.8a.9.9 0 10-1.8 0v.9H9.9v-.9a.9.9 0 00-1.8 0v.9H6.3v-.9a.9.9 0 00-1.8 0v.915A3.731 3.731 0 00.916 6.3h16.171a3.731 3.731 0 00-3.585-3.585z"></path>
+                        <path d="M.9 8.1v5.26a3.746 3.746 0 003.742 3.74h8.717a3.746 3.746 0 003.741-3.74V8.1H.9z"></path>
+                      </g>
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      className="p-1 me-1"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                    >
+                      <g>
+                        <path
+                          fill="#A89CD7"
+                          d="M13.5 1.815V1.8a.9.9 0 10-1.8 0H9.9a.9.9 0 00-1.8 0H6.3a.9.9 0 00-1.8 0v.015A3.738 3.738 0 00.9 5.54v7.818A3.746 3.746 0 004.642 17.1h8.717a3.746 3.746 0 003.741-3.74V5.54a3.738 3.738 0 00-3.6-3.725zM2.7 5.54a1.936 1.936 0 011.8-1.926.9.9 0 101.8-.015h1.8a.9.9 0 101.8 0h1.8a.9.9 0 001.8.015 1.936 1.936 0 011.8 1.926v.76H2.7v-.76zm10.66 9.76H4.641A1.943 1.943 0 012.7 13.358V8.1h12.6v5.26a1.944 1.944 0 01-1.94 1.94z"
+                        ></path>
+                      </g>
+                    </svg>
+                  )}
+
+                  <span
+                    className="hover-nav"
+                    style={{
+                      display: isNav === true ? "block" : "none",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    Daily tour
+                  </span>
+                </Box>
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: isNav === true ? "flex-start" : "center",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    backgroundColor:
+                      pathname && pathname?.includes("week")
+                        ? "transparent"
+                        : "transparent",
+
+                    borderRadius: "5px",
+                  }}
+                  onClick={() => {
+                    navigate("/week-long-tournament");
+                  }}
+                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                >
+                  {pathname && pathname?.includes("week") ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                      className="p-1 me-1"
+                    >
+                      <g clipPath="url(#clip0_2059_14836)">
+                        <path
+                          fill="#A89CD7"
+                          stroke="#A89CD7"
+                          strokeWidth="0.5"
+                          d="M3.933 17.03h0c-.358-.27-.52-.73-.425-1.168h0l.999-4.591-3.384-3.097s0 0 0 0C.792 7.872.67 7.4.802 6.971h0c.134-.43.501-.742.946-.785h0l4.469-.423 1.769-4.32h0A1.1 1.1 0 019 .75a1.1 1.1 0 011.013.693h0l1.77 4.32 4.467.424s0 0 0 0 0 0 0 0c.446.042.813.356.947.785.133.428.011.9-.319 1.202 0 0 0 0 0 0l-3.385 3.096 1 4.59v.001c.095.44-.068.9-.425 1.169a1.07 1.07 0 01-1.218.055h0l.133-.212-.133.211-8.917-.054zm0 0a1.075 1.075 0 001.216.056h0L9 14.684 3.933 17.03zm5.635-3.798h0l3.257 2.033-.846-3.886a1.16 1.16 0 01.345-1.103s0 0 0 0 0 0 0 0l2.88-2.636-3.8-.36h0a1.103 1.103 0 01-.914-.693s0 0 0 0L9 2.945 7.508 6.588s0 0 0 0a1.1 1.1 0 01-.912.69h0l-3.801.36 2.88 2.637 3.893 2.957zm0 0a1.075 1.075 0 00-1.136 0h0l-3.257 2.033m4.393-2.033l-4.393 2.033m0 0l.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-.5 4.99z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2059_14836">
+                          <path fill="#fff" d="M0 0H18V18H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                      className="p-1 me-1"
+                    >
+                      <g clipPath="url(#clip0_2059_14836)">
+                        <path
+                          fill="#A89CD7"
+                          stroke="#A89CD7"
+                          strokeWidth="0.5"
+                          d="M3.933 17.03h0c-.358-.27-.52-.73-.425-1.168h0l.999-4.591-3.384-3.097s0 0 0 0C.792 7.872.67 7.4.802 6.971h0c.134-.43.501-.742.946-.785h0l4.469-.423 1.769-4.32h0A1.1 1.1 0 019 .75a1.1 1.1 0 011.013.693h0l1.77 4.32 4.467.424s0 0 0 0 0 0 0 0c.446.042.813.356.947.785.133.428.011.9-.319 1.202 0 0 0 0 0 0l-3.385 3.096 1 4.59v.001c.095.44-.068.9-.425 1.169a1.07 1.07 0 01-1.218.055h0l.133-.212-.133.211-8.917-.054zm0 0a1.075 1.075 0 001.216.056h0L9 14.684 3.933 17.03zm5.635-3.798h0l3.257 2.033-.846-3.886a1.16 1.16 0 01.345-1.103s0 0 0 0 0 0 0 0l2.88-2.636-3.8-.36h0a1.103 1.103 0 01-.914-.693s0 0 0 0L9 2.945 7.508 6.588s0 0 0 0a1.1 1.1 0 01-.912.69h0l-3.801.36 2.88 2.637 3.893 2.957zm0 0a1.075 1.075 0 00-1.136 0h0l-3.257 2.033m4.393-2.033l-4.393 2.033m0 0l.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-.5 4.99z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2059_14836">
+                          <path fill="#fff" d="M0 0H18V18H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  )}
+
+                  <span
+                    className="hover-nav"
+                    style={{
+                      display: isNav === true ? "block" : "none",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    Week-long tour
+                  </span>
+                </Box>
               </Box>
               <hr
                 style={{

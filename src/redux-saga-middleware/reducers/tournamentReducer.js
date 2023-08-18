@@ -36,6 +36,30 @@ export const toggleBuyTicket = (data) => {
     payload: data,
   };
 };
+export const getDailyTour = (data) => {
+  return {
+    type: "GET_LIST_DAILY_TOURNAMENT",
+    payload: data,
+  };
+};
+export const getHourlyTour = (data) => {
+  return {
+    type: "GET_LIST_HOURLY_TOURNAMENT",
+    payload: data,
+  };
+};
+export const getHotTour = (data) => {
+  return {
+    type: "GET_LIST_HOT_TOURNAMENT",
+    payload: data,
+  };
+};
+export const getWeeklyTour = (data) => {
+  return {
+    type: "GET_LIST_WEEKLY_TOURNAMENT",
+    payload: data,
+  };
+};
 
 const tournamentReducer = (
   state = {
@@ -45,6 +69,10 @@ const tournamentReducer = (
     tournamentRes: [],
     isTournamentShow: false,
     isBuyTicket: false,
+    dailyTournament: [],
+    weeklyTournament: [],
+    hourlyTournament: [],
+    hotTournament: [],
     //--------------------------------------
   },
   action
@@ -79,6 +107,26 @@ const tournamentReducer = (
       return { ...state, isTournamentShow: !state.isTournamentShow };
     case "TOGGLE_BUYTICKET":
       return { ...state, isBuyTicket: !state.isBuyTicket };
+    case "GET_LIST_HOT_TOURNAMENT":
+      return {
+        ...state,
+        hotTournament: payload,
+      };
+    case "GET_LIST_DAILY_TOURNAMENT":
+      return {
+        ...state,
+        dailyTournament: payload,
+      };
+    case "GET_LIST_HOURLY_TOURNAMENT":
+      return {
+        ...state,
+        hourlyTournament: payload,
+      };
+    case "GET_LIST_WEEKLY_TOURNAMENT":
+      return {
+        ...state,
+        weeklyTournament: payload,
+      };
     default:
       return state;
   }

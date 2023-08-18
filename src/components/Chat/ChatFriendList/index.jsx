@@ -232,16 +232,16 @@ export default function ChatFriendList() {
               >
                 {e?.receiveMessages?.length > 0 ? (
                   e?.receiveMessages?.map((e_m, i_e_m) => (
-                    <p key={i_e_m}>
+                    <span key={i_e_m}>
                       {moment(e_m?.updatedAt).format("HH:mm")}
-                    </p>
+                    </span>
                   ))
                 ) : (
-                  <p>
+                  <span>
                     {moment(e?._gg_koth_user_friends?.createdAt).format(
                       "HH:mm"
                     )}
-                  </p>
+                  </span>
                 )}
               </p>
             </Box>

@@ -6,36 +6,80 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { useState } from "react";
 import SliderTime from "../../../../components/SliderTime";
 import CountDownTournament from "../../CountDownTournament";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 export default function FullListTournament({ handleOnClose, open, type }) {
-  const [hourList, setHourList] = useState([
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "24:00",
-    "25:00",
-    "00:00",
-  ]);
+  const { dailyTournament, weeklyTournament, hourlyTournament, hotTournament } =
+    useSelector((state) => state.tournamentReducer);
+  const [isFetchList, setIsFetchList] = useState(true);
+  const [hourList, setHourList] = useState([]);
   const [selectedHour, setSeHour] = useState(0);
-  const [dayList, setDayList] = useState([
-    "Mon",
-    "Tus",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-    "Sun",
-  ]);
+  const [dayList, setDayList] = useState([]);
   const [selectedDay, setSeDay] = useState(0);
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
+  const [tourList, setTourList] = useState([]);
+  useEffect(() => {
+    if (isFetchList) {
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "week",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "hot",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "hour",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "day",
+      });
+      setIsFetchList(false);
+    }
+  }, [dispatch, isFetchList]);
+
+  useEffect(() => {
+    if (type === "hot") {
+      setTourList(hotTournament);
+    } else if (type === "daily") {
+      setTourList(
+        dailyTournament?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+          ?.listTournament
+      );
+    } else if (type === "hourly") {
+      setTourList(
+        hourlyTournament?.filter(
+          (n) =>
+            moment(n.timeStart).format("HH:mm") ===
+            hourList[selectedHour]?.format("HH:mm")
+        )[0]?.listTournament
+      );
+    } else if (type === "week-long") {
+      setTourList(weeklyTournament);
+    }
+  }, [
+    type,
+    hotTournament,
+    dailyTournament,
+    hourlyTournament,
+    weeklyTournament,
+    dayList,
+    selectedDay,
+    hourList,
+    selectedHour,
+  ]);
+
+  useEffect(() => {
+    setHourList(hourlyTournament.map((item) => moment(item?.timeStart)));
+    setDayList(dailyTournament.map((item) => item?.timeStart));
+  }, [hourlyTournament, dailyTournament]);
+  const navigate = useNavigate();
   return (
     <Dialog sx={{ zIndex: "1320" }} fullScreen={true} open={open}>
       <Box
@@ -343,7 +387,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                     setSeHour(index);
                   }}
                   selectedItem={selectedHour}
-                  list={hourList}
+                  list={hourList?.map((item) => moment(item)?.format("HH:mm"))}
                 />
               </Box>
               <Box
@@ -352,7 +396,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                   marginBottom: width < 576 ? "12px" : "16px",
                 }}
               >
-                <CountDownTournament />
+                <CountDownTournament expiryTime={hourList[selectedHour]} />
               </Box>
             </>
           )}
@@ -369,9 +413,10 @@ export default function FullListTournament({ handleOnClose, open, type }) {
             </Box>
           )}
           <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-            {[1, 2, 3, 2, 3, 4, 5].map((item, index) => {
+            {tourList?.map((item, index) => {
               return index % 2 === 0 ? (
                 <Box
+                  onClick={() => navigate("/tournamentDetail/" + item?.id)}
                   key={index}
                   sx={{
                     width: "50%",
@@ -403,7 +448,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                         marginTop: "5px",
                       }}
                     >
-                      Get $100 gift
+                      {item?.tournamentName}
                     </Typography>
                     <Typography
                       sx={{
@@ -420,6 +465,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                 </Box>
               ) : (
                 <Box
+                  onClick={() => navigate("/tournamentDetail/" + item?.id)}
                   key={index}
                   sx={{
                     width: "50%",
@@ -451,7 +497,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                         marginTop: "5px",
                       }}
                     >
-                      Get $100 gift
+                      {item?.tournamentName}
                     </Typography>
                     <Typography
                       sx={{
