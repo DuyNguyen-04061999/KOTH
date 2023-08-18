@@ -84,6 +84,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { images } from "./utils/images";
 import useWindowDimensions from "./utils/useWindowDimensions";
 import { getAppType } from "./utils/helper";
+import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
 function App() {
   useTracking("");
 
@@ -544,6 +545,7 @@ function App() {
             )}
 
             <Route path="game/edit/:id" element={<GameEditPage />} />
+            <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
             {getAppType() === "promote" && (
               <Route path="package" element={<PackagePage />}></Route>
             )}

@@ -16,7 +16,8 @@ export default function UnityGameComponent(props) {
     roomId,
     handleEndGame,
     type,
-    gameName
+    // gameName,
+    skinName
   } = props;
 
   const { width } = useWindowDimensions();
@@ -54,7 +55,7 @@ export default function UnityGameComponent(props) {
   }
 
   const {
-    unityProvider,
+    unityProvider, 
     unload,
     UNSAFE__unityInstance,
     addEventListener,
@@ -67,7 +68,7 @@ export default function UnityGameComponent(props) {
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
     codeUrl: getWasmJs(GameFiles),
-    streamingAssetsUrl: process.env.REACT_APP_STREAMING_ASSET_URL + `/${String(gameName)?.replace(" ", "_")?.toLowerCase()}` || "",
+    streamingAssetsUrl: process.env.REACT_APP_GAME_STREAMING_ASSET_URL + `/${String(gameId)}/${String(skinName)?.replaceAll(" ", "_")?.toLowerCase()}/` || "",
   });
 
   window.myGameInstance = UNSAFE__unityInstance;
