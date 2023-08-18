@@ -48,7 +48,7 @@ export default function SliderTime({
                 marginLeft: "0px !important",
               }}
             >
-              {type === "day" ? item.slice(0, 3) : item}
+              {type === "day" ? item?.slice(0, 3) : item}
             </Typography>
           </Box>
         );
