@@ -12,7 +12,7 @@ export default function SliderTime({
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: type === "day" ? 7 : 6.5,
+    slidesToShow: type === "day" ? 7 : 5.5,
     slidesToScroll: 6,
     arrows: false,
     focusOnSelect: true,
@@ -48,7 +48,7 @@ export default function SliderTime({
                 marginLeft: "0px !important",
               }}
             >
-              {item}
+              {type === "day" ? item.slice(0, 3) : item}
             </Typography>
           </Box>
         );

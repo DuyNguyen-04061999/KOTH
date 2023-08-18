@@ -57,41 +57,46 @@ export default function GameEditPage() {
 
     return (
         <Box
-        component={"form"}
-        className='p-2 d-flex flex-column'
-        onSubmit={handleSubmit}
-        encType='multipart/form-data'
-        >
-        <FormLabel className='mt-2 mb-2'>
-            Name
-        </FormLabel>
-        <input
-            type='text'
-            name='name'
-            defaultValue={location?.state?.gameName}
-            className='form-control'
-        />
-        <FormLabel className='mt-2 mb-2'>
-            Avatar
-        </FormLabel>
-        <input
-            type='file'
-            name='avatar'
-            className='form-control'
-        />
-        <FormLabel className='mt-2 mb-2'>
-            Files
-        </FormLabel>
-        <input
-            type="file"
-            name='files'
-            multiple
-            className='form-control'
-            onChange={handleSelectedFile}
-        />
-        <Button type='submit' className='bg-info text-white rounded mt-2'>
-            Edit Game
-        </Button>
+            component={"form"}
+            className='p-2 d-flex flex-column'
+            onSubmit={handleSubmit}
+            encType='multipart/form-data'
+            >
+            <FormLabel className='mt-2 mb-2 text-white'>
+                Name
+            </FormLabel>
+            <input
+                type='text'
+                name='name'
+                defaultValue={location?.state?.gameName}
+                className='form-control'
+            />
+            <FormLabel className='mt-2 mb-2 text-white'>
+                Avatar
+            </FormLabel>
+            <input
+                type='file'
+                name='avatar'
+                className='form-control'
+            />
+            <FormLabel className='mt-2 mb-2 text-white'>
+                Files
+            </FormLabel>
+            <input
+                type="file"
+                name='files'
+                multiple
+                className='form-control'
+                onChange={handleSelectedFile}
+            />
+
+            <Box component={"div"} className='text-white mt-3 mb-3' onClick={() => navigate(`/game/${location?.state?.id}/upload-skins`)}>
+                Add Skin Games
+            </Box>
+
+            <Button type='submit' className='bg-info text-white rounded mt-2'>
+                Edit Game
+            </Button>
         </Box>
     )
 }

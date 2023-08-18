@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../components/Layout";
 import InspirationTTF from "../../assets/font/CynthoNextMedium.otf";
 import {
@@ -14,6 +14,9 @@ import { imageDesktop, images, video } from "../../utils/images";
 import SliderTime from "../../components/SliderTime";
 import { useState } from "react";
 import CountDownTournament from "../NewHomePageComponent/CountDownTournament";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -31,30 +34,31 @@ const theme = createTheme({
 });
 export default function HourlyTournament() {
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
+  const [isFetchList, setIsFetchList] = useState(true);
+  const { hourlyTournament } = useSelector((state) => state.tournamentReducer);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
     marginLeft: "0px !important",
     color: "#fff",
   };
-  const [hourList, setHourList] = useState([
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "24:00",
-    "25:00",
-    "00:00",
-  ]);
-  const [selectedHour, setSeHour] = useState(0);
+  useEffect(() => {
+    if (isFetchList) {
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "hour",
+      });
+      setIsFetchList(false);
+    }
+  }, [dispatch, isFetchList]);
 
+  useEffect(() => {
+    setHourList(hourlyTournament.map((item) => moment(item?.timeStart)));
+  }, [hourlyTournament]);
+  const [hourList, setHourList] = useState([]);
+  const [selectedHour, setSeHour] = useState(0);
+  const navigate = useNavigate();
   return (
     <Layout
       children={
@@ -96,7 +100,7 @@ export default function HourlyTournament() {
                     setSeHour(index);
                   }}
                   selectedItem={selectedHour}
-                  list={hourList}
+                  list={hourList?.map((item) => moment(item)?.format("HH:mm"))}
                 />
               </Box>{" "}
               <Box
@@ -105,7 +109,7 @@ export default function HourlyTournament() {
                   marginBottom: width < 576 ? "12px" : "16px",
                 }}
               >
-                <CountDownTournament />
+                <CountDownTournament expiryTime={hourList[selectedHour]} />
               </Box>
               <Box
                 sx={{
@@ -113,70 +117,79 @@ export default function HourlyTournament() {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
-                    return (
-                      index < 10 && (
-                        <Box
-                          key={index}
-                          sx={{
-                            width: "20%",
-                            padding: "0px 16px 0px 16px",
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: width < 576 ? "24px" : "32px",
-                          }}
-                        >
-                          {" "}
+                  {hourlyTournament
+                    ?.filter(
+                      (n) =>
+                        moment(n.timeStart).format("HH:mm") ===
+                        hourList[selectedHour]?.format("HH:mm")
+                    )[0]
+                    ?.listTournament?.map((item, index) => {
+                      return (
+                        index < 10 && (
                           <Box
+                            onClick={() =>
+                              navigate("/tournamentDetail/" + item?.id)
+                            }
+                            key={index}
                             sx={{
-                              height: "auto",
-                              width: "100% !important",
-                              backgroundColor: "#37285C",
-                              borderRadius: "8px",
-                              padding: "8px ",
+                              width: "20%",
+                              padding: "0px 16px 0px 16px",
                               display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
+                              justifyContent: "center",
+                              marginTop: width < 576 ? "24px" : "32px",
                             }}
                           >
+                            {" "}
                             <Box
                               sx={{
-                                borderRadius: "5px",
-                                width: "100%",
                                 height: "auto",
-                              }}
-                              component={"img"}
-                              src={images.GameTournament}
-                            ></Box>
-                            <Typography
-                              sx={{
-                                color: "#FFDC62",
-                                fontSize: "14px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "5px",
-                                width: "100%",
+                                width: "100% !important",
+                                backgroundColor: "#37285C",
+                                borderRadius: "8px",
+                                padding: "8px ",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
                               }}
                             >
-                              Get $100 gift
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: "#ffff",
-                                fontSize: "12px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "-3px",
-                                width: "100%",
-                              }}
-                            >
-                              By Mcdonald’s
-                            </Typography>
+                              <Box
+                                sx={{
+                                  borderRadius: "5px",
+                                  width: "100%",
+                                  height: "auto",
+                                }}
+                                component={"img"}
+                                src={images.GameTournament}
+                              ></Box>
+                              <Typography
+                                sx={{
+                                  color: "#FFDC62",
+                                  fontSize: "14px",
+                                  fontWeight: "200 !important",
+                                  textAlign: "start",
+                                  marginTop: "5px",
+                                  width: "100%",
+                                }}
+                              >
+                                {item?.tournamentName}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  color: "#ffff",
+                                  fontSize: "12px",
+                                  fontWeight: "200 !important",
+                                  textAlign: "start",
+                                  marginTop: "-3px",
+                                  width: "100%",
+                                }}
+                              >
+                                By Mcdonald’s
+                              </Typography>
+                            </Box>
                           </Box>
-                        </Box>
-                      )
-                    );
-                  })}
+                        )
+                      );
+                    })}
                 </Box>
               </Box>
               <Box
@@ -202,70 +215,79 @@ export default function HourlyTournament() {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
-                    return (
-                      index < 10 && (
-                        <Box
-                          key={index}
-                          sx={{
-                            width: "20%",
-                            padding: "0px 16px 0px 16px",
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: width < 576 ? "24px" : "32px",
-                          }}
-                        >
-                          {" "}
+                  {hourlyTournament
+                    ?.filter(
+                      (n) =>
+                        moment(n.timeStart).format("HH:mm") ===
+                        hourList[selectedHour]
+                    )[0]
+                    ?.listTournament?.map((item, index) => {
+                      return (
+                        index >= 10 && (
                           <Box
+                            onClick={() =>
+                              navigate("/tournamentDetail/" + item?.id)
+                            }
+                            key={index}
                             sx={{
-                              height: "auto",
-                              width: "100% !important",
-                              backgroundColor: "#37285C",
-                              borderRadius: "8px",
-                              padding: "8px ",
+                              width: "20%",
+                              padding: "0px 16px 0px 16px",
                               display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
+                              justifyContent: "center",
+                              marginTop: width < 576 ? "24px" : "32px",
                             }}
                           >
+                            {" "}
                             <Box
                               sx={{
-                                borderRadius: "5px",
-                                width: "100%",
                                 height: "auto",
-                              }}
-                              component={"img"}
-                              src={images.GameTournament}
-                            ></Box>
-                            <Typography
-                              sx={{
-                                color: "#FFDC62",
-                                fontSize: "14px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "5px",
-                                width: "100%",
+                                width: "100% !important",
+                                backgroundColor: "#37285C",
+                                borderRadius: "8px",
+                                padding: "8px ",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
                               }}
                             >
-                              Get $100 gift
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: "#ffff",
-                                fontSize: "12px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "-3px",
-                                width: "100%",
-                              }}
-                            >
-                              By Mcdonald’s
-                            </Typography>
+                              <Box
+                                sx={{
+                                  borderRadius: "5px",
+                                  width: "100%",
+                                  height: "auto",
+                                }}
+                                component={"img"}
+                                src={images.GameTournament}
+                              ></Box>
+                              <Typography
+                                sx={{
+                                  color: "#FFDC62",
+                                  fontSize: "14px",
+                                  fontWeight: "200 !important",
+                                  textAlign: "start",
+                                  marginTop: "5px",
+                                  width: "100%",
+                                }}
+                              >
+                                {item?.tournamentName}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  color: "#ffff",
+                                  fontSize: "12px",
+                                  fontWeight: "200 !important",
+                                  textAlign: "start",
+                                  marginTop: "-3px",
+                                  width: "100%",
+                                }}
+                              >
+                                By Mcdonald’s
+                              </Typography>
+                            </Box>
                           </Box>
-                        </Box>
-                      )
-                    );
-                  })}
+                        )
+                      );
+                    })}
                 </Box>
               </Box>
               <Box sx={{ marginBottom: "32px", marginTop: "64px" }}>

@@ -87,7 +87,9 @@ export default function DialogWallet(props) {
         let accounts = await web3.eth.getAccounts();
         let account = accounts[0];
 
-        console.log(data?.token_contract, data?.target_wallet);
+        console.log("Token contract: " , data?.token_contract);
+        console.log("Target Wallet: ", data?.target_wallet);
+
         if (web3.currentProvider.isConnected()) {
           console.log("Metamask connected !");
         } else {

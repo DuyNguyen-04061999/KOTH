@@ -11,6 +11,10 @@ import {
 } from "@mui/material";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import { imageDesktop, images } from "../../utils/images";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -28,12 +32,26 @@ const theme = createTheme({
 });
 export default function WeekLongTour() {
   const { width } = useWindowDimensions();
+  const [isFetchList, setIsFetchList] = useState(true);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
     marginLeft: "0px !important",
     color: "#fff",
   };
+  const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isFetchList) {
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "week",
+      });
+      setIsFetchList(false);
+    }
+  }, [dispatch, isFetchList]);
+  const navigate = useNavigate();
   return (
     <Layout
       children={
@@ -75,10 +93,13 @@ export default function WeekLongTour() {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+                  {weeklyTournament?.map((item, index) => {
                     return (
                       index < 10 && (
                         <Box
+                          onClick={() =>
+                            navigate("/tournamentDetail/" + item?.id)
+                          }
                           key={index}
                           sx={{
                             width: "20%",
@@ -120,7 +141,7 @@ export default function WeekLongTour() {
                                 width: "100%",
                               }}
                             >
-                              Get $100 gift
+                              {item?.tournamentName}
                             </Typography>
                             <Typography
                               sx={{
@@ -147,10 +168,13 @@ export default function WeekLongTour() {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+                  {weeklyTournament.map((item, index) => {
                     return (
-                      index < 10 && (
+                      index >= 10 && (
                         <Box
+                          onClick={() =>
+                            navigate("/tournamentDetail/" + item?.id)
+                          }
                           key={index}
                           sx={{
                             width: "20%",
@@ -192,7 +216,7 @@ export default function WeekLongTour() {
                                 width: "100%",
                               }}
                             >
-                              Get $100 gift
+                              {item?.tournamentName}
                             </Typography>
                             <Typography
                               sx={{

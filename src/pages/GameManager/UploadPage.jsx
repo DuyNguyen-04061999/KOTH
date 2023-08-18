@@ -25,9 +25,7 @@ export default function UploadPage() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     for (let index = 0; index < listSkin.length; index++) {
-      // const element = listSkin[index];
-      console.log(data.get(`skinName${index}`));
-      console.log(data.get(`skinAvatar${index}`));
+
     }
 
     _.each(contentZip,(v,k)=>{
@@ -37,15 +35,15 @@ export default function UploadPage() {
     _.each(uploadAsset,(v,k)=>{
       data.append('paths', uploadAsset[k].webkitRelativePath); // Encrypt path
     });
-    console.log(data.getAll("zips"));
+    
     const dataRequest = {
       name: data.get('name'),
       avatar: data.get('avatar'),
       type: data.get('type'),
       host: data.get('host'),
+      files: uploadItem,
       paths: data.getAll("paths"),
       zips: data.getAll("zips"),
-      files: uploadItem,
       assets: uploadAsset,
     };
 
@@ -90,8 +88,6 @@ export default function UploadPage() {
         })
         .catch((e) => console.log(e));
   };
-
-  console.log(listSkin);
 
   return (
     <Box
@@ -144,7 +140,7 @@ export default function UploadPage() {
       />
 
       <Box component={"div"} className='mt-2 mb-2 text-white' onClick={() => {
-        setListSkin([...listSkin, 1])
+        setListSkin([] || [...listSkin, 1])
       }}>
         Add Skin
       </Box>

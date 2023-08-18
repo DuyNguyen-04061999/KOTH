@@ -19,6 +19,9 @@ import Slider from "react-slick";
 import FullListTournament from "./FullListTournament";
 import CountDownTournament from "../CountDownTournament";
 import { getAppType } from "../../../utils/helper";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment/moment";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -39,32 +42,9 @@ export default function NewHomePage() {
   const [promotion, setPromotion] = useState(true);
   const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
+  const [isFetchList, setIsFetchList] = useState(true);
   const [type, setType] = useState("");
-  const typographyStyle = {
-    textAlign: "start",
-    fontSize: width < 576 ? "12px" : "14px",
-    fontWeight: "200 !important",
-    marginLeft: "0px !important",
-    color: "#fff",
-  };
-
-  // HourList
-  const [hourList, setHourList] = useState([
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "24:00",
-    "25:00",
-    "00:00",
-  ]);
+  const [hourList, setHourList] = useState([]);
   const [selectedHour, setSeHour] = useState(0);
   const [dayList, setDayList] = useState([
     "Mon",
@@ -76,11 +56,50 @@ export default function NewHomePage() {
     "Sun",
   ]);
   const [selectedDay, setSeDay] = useState(0);
+  const { dailyTournament, weeklyTournament, hourlyTournament, hotTournament } =
+    useSelector((state) => state.tournamentReducer);
+  const typographyStyle = {
+    textAlign: "start",
+    fontSize: width < 576 ? "12px" : "14px",
+    fontWeight: "200 !important",
+    marginLeft: "0px !important",
+    color: "#fff",
+  };
+  const dispatch = useDispatch();
+  console.log("hot tournament: ", hotTournament);
+  useEffect(() => {
+    if (isFetchList) {
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "week",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "hot",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "hour",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "day",
+      });
+      setIsFetchList(false);
+    }
+  }, [dispatch, isFetchList]);
+
+  useEffect(() => {
+    setHourList(hourlyTournament.map((item) => moment(item?.timeStart)));
+    setDayList(dailyTournament.map((item) => item?.timeStart));
+  }, [hourlyTournament, dailyTournament]);
+
   const navigate = useNavigate();
   const calculateDistance = (x, y, x1, y1) => {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
+  console.log(hourlyTournament);
   return (
     <Container
       maxWidth="lg"
@@ -159,6 +178,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    cursor: "pointer",
                   }}
                 >
                   View All
@@ -183,10 +203,13 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
+                  {hotTournament?.map((item, index) => {
                     return (
                       <Box
                         key={index}
+                        onClick={() =>
+                          navigate("/tournamentDetail/" + item?.id)
+                        }
                         sx={{
                           width: "100% !important",
                           padding: "0px 10px 0px 10px",
@@ -226,7 +249,7 @@ export default function NewHomePage() {
                               width: "100%",
                             }}
                           >
-                            Get $100 gift
+                            {item?.tournamentName}
                           </Typography>
                           <Typography
                             sx={{
@@ -253,10 +276,13 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
+                  {hotTournament?.map((item, index) => {
                     return (
                       <Box
                         key={index}
+                        onClick={() =>
+                          navigate("/tournamentDetail/" + item?.id)
+                        }
                         sx={{
                           width: "100% !important",
                           padding: "0px 16px 0px 16px",
@@ -296,7 +322,7 @@ export default function NewHomePage() {
                               width: "100%",
                             }}
                           >
-                            Name tournament
+                            {item?.tournamentName}
                           </Typography>
                           <Box
                             sx={{
@@ -315,7 +341,7 @@ export default function NewHomePage() {
                                 width: "100%",
                               }}
                             >
-                              Get $100 gift
+                              {item?.tournamentName}
                             </Typography>
                             <Typography
                               sx={{
@@ -558,6 +584,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    cursor: "pointer",
                   }}
                 >
                   View All
@@ -579,7 +606,7 @@ export default function NewHomePage() {
                   setSeHour(index);
                 }}
                 selectedItem={selectedHour}
-                list={hourList}
+                list={hourList?.map((item) => moment(item)?.format("HH:mm"))}
               />
             </Box>
             <Box
@@ -588,7 +615,7 @@ export default function NewHomePage() {
                 marginBottom: width < 576 ? "12px" : "16px",
               }}
             >
-              <CountDownTournament />
+              <CountDownTournament expiryTime={hourList[selectedHour]} />
             </Box>
             <Box>
               {width < 576 ? (
@@ -599,67 +626,76 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 10px 0px 10px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
+                  {hourlyTournament
+                    ?.filter(
+                      (n) =>
+                        moment(n.timeStart).format("HH:mm") ===
+                        hourList[selectedHour]?.format("HH:mm")
+                    )[0]
+                    ?.listTournament?.map((item, index) => {
+                      return (
                         <Box
+                          onClick={() =>
+                            navigate("/tournamentDetail/" + item?.id)
+                          }
+                          key={index}
                           sx={{
-                            height: "auto",
                             width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "8px ",
+                            padding: "0px 10px 0px 10px",
                             display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
+                            justifyContent: "center",
                           }}
                         >
+                          {" "}
                           <Box
                             sx={{
-                              borderRadius: "5px",
-                              width: "100%",
                               height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.GameTournament}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
+                              width: "100% !important",
+                              backgroundColor: "#37285C",
+                              borderRadius: "8px",
+                              padding: "8px ",
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
                             }}
                           >
-                            Get $100 gift
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "12px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Mcdonald’s
-                          </Typography>
+                            <Box
+                              sx={{
+                                borderRadius: "5px",
+                                width: "100%",
+                                height: "auto",
+                              }}
+                              component={"img"}
+                              src={images.GameTournament}
+                            ></Box>
+                            <Typography
+                              sx={{
+                                color: "#FFDC62",
+                                fontSize: "14px",
+                                fontWeight: "200 !important",
+                                textAlign: "start",
+                                marginTop: "5px",
+                                width: "100%",
+                              }}
+                            >
+                              {item?.tournamentName}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "#ffff",
+                                fontSize: "12px",
+                                fontWeight: "200 !important",
+                                textAlign: "start",
+                                marginTop: "-3px",
+                                width: "100%",
+                              }}
+                            >
+                              By Mcdonald’s
+                            </Typography>
+                          </Box>
                         </Box>
-                      </Box>
-                    );
-                  })}
+                      );
+                    })}
                 </Slider>
               ) : (
                 <Slider
@@ -669,67 +705,78 @@ export default function NewHomePage() {
                   slidesToScroll={5}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 16px 0px 16px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        <Box
-                          sx={{
-                            height: "auto",
-                            width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "12px ",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
+                  {hourlyTournament
+                    ?.filter(
+                      (n) =>
+                        moment(n.timeStart).format("HH:mm") ===
+                        hourList[selectedHour]?.format("HH:mm")
+                    )[0]
+                    ?.listTournament?.map((item, index) => {
+                      return (
+                        index < 10 && (
                           <Box
+                            onClick={() =>
+                              navigate("/tournamentDetail/" + item?.id)
+                            }
+                            key={index}
                             sx={{
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.gameHotTournament_1}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "16px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
+                              width: "100% !important",
+                              padding: "0px 16px 0px 16px",
+                              display: "flex",
+                              justifyContent: "center",
                             }}
                           >
-                            Get $100 gift
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Samsung
-                          </Typography>
-                        </Box>
-                      </Box>
-                    );
-                  })}
+                            {" "}
+                            <Box
+                              sx={{
+                                height: "auto",
+                                width: "100% !important",
+                                backgroundColor: "#37285C",
+                                borderRadius: "8px",
+                                padding: "12px ",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  borderRadius: "5px",
+                                  width: "100%",
+                                  height: "auto",
+                                }}
+                                component={"img"}
+                                src={images.gameHotTournament_1}
+                              ></Box>
+                              <Typography
+                                sx={{
+                                  color: "#FFDC62",
+                                  fontSize: "16px",
+                                  fontWeight: "200 !important",
+                                  textAlign: "start",
+                                  marginTop: "5px",
+                                  width: "100%",
+                                }}
+                              >
+                                {item?.tournamentName}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  color: "#ffff",
+                                  fontSize: "14px",
+                                  fontWeight: "200 !important",
+                                  textAlign: "start",
+                                  marginTop: "-3px",
+                                  width: "100%",
+                                }}
+                              >
+                                By Samsung
+                              </Typography>
+                            </Box>
+                          </Box>
+                        )
+                      );
+                    })}
                 </Slider>
               )}
             </Box>
@@ -792,6 +839,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    cursor: "pointer",
                   }}
                 >
                   View All
@@ -823,67 +871,72 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 10px 0px 10px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
+                  {dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+                    ?.listTournament?.map((item, index) => {
+                      return (
                         <Box
+                          onClick={() =>
+                            navigate("/tournamentDetail/" + item?.id)
+                          }
+                          key={index}
                           sx={{
-                            height: "auto",
                             width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "8px ",
+                            padding: "0px 10px 0px 10px",
                             display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
+                            justifyContent: "center",
                           }}
                         >
+                          {" "}
                           <Box
                             sx={{
-                              borderRadius: "5px",
-                              width: "100%",
                               height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.GameTournament}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
+                              width: "100% !important",
+                              backgroundColor: "#37285C",
+                              borderRadius: "8px",
+                              padding: "8px ",
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
                             }}
                           >
-                            Get $100 gift
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "12px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Mcdonald’s
-                          </Typography>
+                            <Box
+                              sx={{
+                                borderRadius: "5px",
+                                width: "100%",
+                                height: "auto",
+                              }}
+                              component={"img"}
+                              src={images.GameTournament}
+                            ></Box>
+                            <Typography
+                              sx={{
+                                color: "#FFDC62",
+                                fontSize: "14px",
+                                fontWeight: "200 !important",
+                                textAlign: "start",
+                                marginTop: "5px",
+                                width: "100%",
+                              }}
+                            >
+                              {item?.tournamentName}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "#ffff",
+                                fontSize: "12px",
+                                fontWeight: "200 !important",
+                                textAlign: "start",
+                                marginTop: "-3px",
+                                width: "100%",
+                              }}
+                            >
+                              By Mcdonald’s
+                            </Typography>
+                          </Box>
                         </Box>
-                      </Box>
-                    );
-                  })}
+                      );
+                    })}
                 </Slider>
               ) : (
                 <Slider
@@ -893,67 +946,72 @@ export default function NewHomePage() {
                   slidesToScroll={5}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 16px 0px 16px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
+                  {dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+                    ?.listTournament?.map((item, index) => {
+                      return (
                         <Box
+                          onClick={() =>
+                            navigate("/tournamentDetail/" + item?.id)
+                          }
+                          key={index}
                           sx={{
-                            height: "auto",
                             width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "12px ",
+                            padding: "0px 16px 0px 16px",
                             display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
+                            justifyContent: "center",
                           }}
                         >
+                          {" "}
                           <Box
                             sx={{
-                              borderRadius: "5px",
-                              width: "100%",
                               height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.gameHotTournament_1}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "16px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
+                              width: "100% !important",
+                              backgroundColor: "#37285C",
+                              borderRadius: "8px",
+                              padding: "12px ",
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
                             }}
                           >
-                            Get $100 gift
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Samsung
-                          </Typography>
+                            <Box
+                              sx={{
+                                borderRadius: "5px",
+                                width: "100%",
+                                height: "auto",
+                              }}
+                              component={"img"}
+                              src={images.gameHotTournament_1}
+                            ></Box>
+                            <Typography
+                              sx={{
+                                color: "#FFDC62",
+                                fontSize: "16px",
+                                fontWeight: "200 !important",
+                                textAlign: "start",
+                                marginTop: "5px",
+                                width: "100%",
+                              }}
+                            >
+                              {item?.tournamentName}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "#ffff",
+                                fontSize: "14px",
+                                fontWeight: "200 !important",
+                                textAlign: "start",
+                                marginTop: "-3px",
+                                width: "100%",
+                              }}
+                            >
+                              By Samsung
+                            </Typography>
+                          </Box>
                         </Box>
-                      </Box>
-                    );
-                  })}
+                      );
+                    })}
                 </Slider>
               )}
             </Box>
@@ -1037,6 +1095,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    cursor: "pointer",
                   }}
                 >
                   View All
@@ -1057,9 +1116,12 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
+                  {weeklyTournament?.map((item, index) => {
                     return (
                       <Box
+                        onClick={() =>
+                          navigate("/tournamentDetail/" + item?.id)
+                        }
                         key={index}
                         sx={{
                           width: "100% !important",
@@ -1100,7 +1162,7 @@ export default function NewHomePage() {
                               width: "100%",
                             }}
                           >
-                            Get $100 gift
+                            {item?.tournamentName}
                           </Typography>
                           <Typography
                             sx={{
@@ -1127,9 +1189,12 @@ export default function NewHomePage() {
                   slidesToScroll={5}
                   infinite={false}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 10].map((item, index) => {
+                  {weeklyTournament?.map((item, index) => {
                     return (
                       <Box
+                        onClick={() =>
+                          navigate("/tournamentDetail/" + item?.id)
+                        }
                         key={index}
                         sx={{
                           width: "100% !important",
@@ -1170,7 +1235,7 @@ export default function NewHomePage() {
                               width: "100%",
                             }}
                           >
-                            Get $100 gift
+                            {item?.tournamentName}
                           </Typography>
                           <Typography
                             sx={{
@@ -1646,8 +1711,6 @@ export default function NewHomePage() {
               </Box>
             </Box>
           )}
-          {/* ---------------------------- */}
-          {/* Sẽ được tách component */}
           <FullListTournament
             type={type}
             open={open}
