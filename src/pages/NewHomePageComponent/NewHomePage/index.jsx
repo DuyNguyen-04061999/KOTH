@@ -66,7 +66,6 @@ export default function NewHomePage() {
     color: "#fff",
   };
   const dispatch = useDispatch();
-  console.log("hot tournament: ", hotTournament);
   useEffect(() => {
     if (isFetchList) {
       dispatch({
@@ -99,7 +98,6 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-  console.log(hourlyTournament);
   return (
     <Container
       maxWidth="lg"
@@ -126,14 +124,14 @@ export default function NewHomePage() {
               images={
                 width < 576
                   ? [
+                      images.bannerTournamentMobile,
+                      images.bannerTournamentMobile_1,
+                      images.bannerTournamentMobile_2,
+                    ]
+                  : [
                       images.bannerTournament,
                       images.bannerTournament1,
                       images.bannerTournament2,
-                    ]
-                  : [
-                      images.BannerHomePageDesktop,
-                      images.BannerHomePageDesktop,
-                      images.BannerHomePageDesktop,
                     ]
               }
             />

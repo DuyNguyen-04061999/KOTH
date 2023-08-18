@@ -113,6 +113,9 @@ import Voucher_Brand from "../assets/images/Voucher_Brand.png";
 import samsungBrand from "../assets/images/samsungBrand.png";
 import closeVoucher from "../assets/images/closeVoucher.png";
 import PurpleBanner from "../assets/images/PurpleBanner.png";
+import bannerTournamentMobile from "../assets/images/bannerTournamentMobile.png";
+import bannerTournamentMobile_2 from "../assets/images/bannerTournamentMobile_1.png";
+import bannerTournamentMobile_1 from "../assets/images/bannerTournamentMobile_2.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -425,6 +428,9 @@ export const images = {
   diamon: diamon,
   free: free,
   gold1: gold1,
+  bannerTournamentMobile: bannerTournamentMobile,
+  bannerTournamentMobile_1: bannerTournamentMobile_1,
+  bannerTournamentMobile_2: bannerTournamentMobile_2,
 };
 
 export const images2 = {
