@@ -3,12 +3,7 @@ import {
   Container,
   CssBaseline,
   Dialog,
-  Paper,
-  Table,
-  TableBody,
   TableCell,
-  TableContainer,
-  TableHead,
   TableRow,
   ThemeProvider,
   Typography,
@@ -38,6 +33,7 @@ import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournam
 import JoinTournamentMobile from "../JoinTournamentMobile";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import LeaderBoard from "../LeaderBoard";
+import DetailVoucher from "../DetailVoucher";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -69,6 +65,8 @@ export default function JoinTournament() {
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
   const { width } = useWindowDimensions();
+  const [openVoucher, setOpenVoucher] = useState(true);
+  const [currentResult, setCurrentResult] = useState(false);
 
   const dispatch = useDispatch();
   const handleClickOpen = () => {
@@ -195,7 +193,6 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
-  console.log("Detail Tournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -783,6 +780,9 @@ export default function JoinTournament() {
                     sx={{
                       marginBottom: `${parseFloat(width / 70)}px`,
                       color: "white",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
                     }}
                   >
                     <Typography
@@ -794,229 +794,41 @@ export default function JoinTournament() {
                     >
                       Current Result
                     </Typography>
+                    <Typography
+                      onClick={() => {
+                        setCurrentResult(true);
+                      }}
+                      sx={{
+                        textAlign: "start",
+                        fontWeight: "lighter !important",
+                        fontSize: "14px",
+                        color: "#BE48ED",
+                        cursor: "pointer",
+                      }}
+                    >
+                      View All
+                    </Typography>
                   </Box>
-                  <LeaderBoard detailTournament={detailTournament} />
+                  <LeaderBoard
+                    open={currentResult}
+                    handleOnClose={() => {
+                      setCurrentResult(false);
+                    }}
+                    detailTournament={detailTournament}
+                  />
                 </Box>
               </Box>
-              {/* Current Result */}
-              {/* <Box
-                sx={{
-                  width: "100%",
-                  height: "auto",
-                  padding: `${parseFloat(width / 66)}px 0px  ${parseFloat(
-                    width / 43.6
-                  )}px 0px`,
-                  backgroundColor: "#1A151E",
-                }}
-              >
-                <Typography
-                  sx={{
-                    textAlign: "start",
-                    fontWeight: "bolder !important",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  <b>CURRENT RESULT</b>
-                </Typography>
-                <TableContainer
-                  sx={{
-                    borderRadius: "5px 5px 0px 0px",
-                    boxShadow: "unset",
-                    border: "none",
-                  }}
-                  component={Paper}
-                  className="mt-3"
-                >
-                  <Table aria-label="customized table">
-                    <TableHead sx={{ borderRadius: "5px" }}>
-                      <TableRow>
-                        <StyledTableCell
-                          style={{ borderRadius: "5px 0px 0px 0px" }}
-                          align="center"
-                        >
-                          Ranking
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          Player{" "}
-                        </StyledTableCell>
-                        <StyledTableCell align="center">Time</StyledTableCell>
-                        <StyledTableCell
-                          style={{ borderRadius: "0px 5px 0px 0px" }}
-                          align="center"
-                        >
-                          Point
-                        </StyledTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {detailTournament?.tournamentResult?.map(
-                        (item, index) => {
-                          return (
-                            <StyledTableRow key={index} onClick={() => {}}>
-                              <StyledTableCell
-                                align="center"
-                                component="td"
-                                scope="row"
-                              >
-                                <Box
-                                  component={"span"}
-                                  sx={{
-                                    color: "#7a7fee",
-                                  }}
-                                >
-                                  {index + 1}
-                                </Box>
-                              </StyledTableCell>
-                              <StyledTableCell align="center">
-                                <Box
-                                  component={"span"}
-                                  sx={{
-                                    color: "#fff",
-                                    fontSize: getFontSizeDependOnWidth(width),
-                                  }}
-                                >
-                                  {item?.userNickName}
-                                </Box>
-                              </StyledTableCell>
-                              <StyledTableCell align="center">
-                                <Box
-                                  component={"span"}
-                                  sx={{
-                                    color: "#fff",
-                                    fontSize: getFontSizeDependOnWidth(width),
-                                  }}
-                                >
-                                  {moment(item?.updatedAt).format("DD/MM/YYYY")}
-                                </Box>
-                              </StyledTableCell>
-                              <StyledTableCell align="center">
-                                <Box
-                                  component={"span"}
-                                  sx={{
-                                    color: "#fff",
-                                    fontSize: getFontSizeDependOnWidth(width),
-                                  }}
-                                >
-                                  {item?.score}
-                                </Box>
-                              </StyledTableCell>
-                            </StyledTableRow>
-                          );
-                        }
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <Box
-                  className=" d-flex justify-content-between p-2"
-                  sx={{
-                    bottom: 0,
-                    width: "100%",
-                    background: "#2f2851",
-                    borderRadius: "0px 0px 5px 5px",
-                  }}
-                >
-                  <Box
-                    className="text-white p-2 d-flex align-items-center"
-                    sx={{
-                      background: "#1f1933",
-                      borderRadius: 1,
-                    }}
-                  >
-                    <img
-                      src={images280423_l.coin}
-                      alt="..."
-                      width={25}
-                      className="img-fluid"
-                    />
-                    <span
-                      className="ms-2"
-                      style={{
-                        color: "white",
-                      }}
-                    >
-                      Dogegold
-                    </span>
-                    <ArrowForwardIos
-                      sx={{
-                        color: "#676ac7",
-                        fontSize: 14,
-                        fontWeight: "bold",
-                      }}
-                      className="ms-1"
-                    />
-                  </Box>
-                  <Box className="d-flex align-items-center">
-                    <Box
-                      className="text-white p-2 d-flex align-items-center"
-                      sx={{
-                        background: "#1f1933",
-                        borderRadius: 1,
-                      }}
-                    >
-                      <span
-                        className=""
-                        style={{
-                          color: "white",
-                        }}
-                      >
-                        20
-                      </span>
-                      <ArrowForwardIos
-                        sx={{
-                          color: "#676ac7",
-                          fontSize: 14,
-                        }}
-                        className="ms-1"
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        color: "#676ac7",
-                      }}
-                      className="mx-2"
-                    >
-                      Total: 1
-                    </Box>
-                    <Box
-                      className="text-white mx-1 p-2 d-flex align-items-content"
-                      sx={{
-                        background: "#1f1933",
-                        borderRadius: 1,
-                      }}
-                    >
-                      <span
-                        className=""
-                        style={{
-                          color: "white",
-                        }}
-                      >
-                        1
-                      </span>
-                    </Box>
-                    <Box className="ms-2">
-                      <ArrowBackIos
-                        sx={{
-                          color: "#676ac7",
-                          fontSize: 14,
-                        }}
-                      />
-                      <ArrowForwardIos
-                        sx={{
-                          color: "#676ac7",
-                          fontSize: 14,
-                        }}
-                        className="ms-1"
-                      />
-                    </Box>
-                  </Box>
-                </Box>
-              </Box> */}
             </Box>
             <BuyTicket
               tournamentId={detailTournament?.id}
               bought={detailTournament?.bought}
               id={id}
+            />
+            <DetailVoucher
+              open={openVoucher}
+              handleOnClose={() => {
+                setOpenVoucher(false);
+              }}
             />
           </Container>
         ) : (

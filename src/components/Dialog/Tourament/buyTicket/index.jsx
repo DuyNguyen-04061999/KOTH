@@ -53,7 +53,6 @@ export default function BuyTicket(props) {
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
-  // console.log("Ticket Play: ", ticketBuy);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -78,7 +77,7 @@ export default function BuyTicket(props) {
               height: "44px",
               width: "100%",
               boxSizing: "border-box",
-              padding: "0px 20px",
+              padding: "5px 20px",
               display: "flex",
               alignItems: "center",
               justifyContent: width > 576 ? "space-between" : "none",
@@ -86,12 +85,21 @@ export default function BuyTicket(props) {
           >
             {width < 576 && (
               <Box
+                onClick={() => {
+                  dispatch(toggleBuyTicket(false));
+                }}
                 sx={{ width: "14px" }}
                 component={"img"}
                 src={images.BackButtonLobby}
               ></Box>
             )}
-            <Typography sx={{ color: "#ffff", textAlign: "start" }}>
+            <Typography
+              sx={{
+                color: "#ffff",
+                textAlign: "start",
+                fontWeight: "lighter !important",
+              }}
+            >
               Buy Ticket
             </Typography>
             {width > 576 && (

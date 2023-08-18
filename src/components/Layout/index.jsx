@@ -106,6 +106,7 @@ const Test = styled.input`
   color: #bfbeed !important;
   letter-spacing: 0.5px;
   font-weight: Cyntho !important ;
+  border: none;
   &:focus {
     outline: none;
   }
@@ -712,7 +713,6 @@ export default function Layout(props) {
                     id="sendmessages"
                     onChange={handleChangeChat}
                     onKeyDown={handleOnKeyDown}
-                    style={inpChat()}
                     placeholder="Type your message "
                   />
                 </Box>

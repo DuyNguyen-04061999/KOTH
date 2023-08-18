@@ -3,6 +3,7 @@ import {
   CircularProgress,
   Dialog,
   FormControl,
+  Input,
   MenuItem,
   Select,
   TextareaAutosize,
@@ -53,6 +54,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [prizeSetUp, setPrizeSetUp] = useState(1);
   const [prizeType, setPrizeType] = useState("Gadcoin");
   const [autoAmount, setautoAmount] = useState();
+  const [valueTest, setValueTest] = useState("");
   const [prizeDis, setPrizeDis] = useState("all");
   const [prizeRatio, setPrizeRatio] = useState(
     JSON.stringify({
@@ -102,6 +104,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           manualDescription: manualDescription,
           video: video,
           token: localStorage.getItem("token"),
+          hot: valueTest
         })
       );
     }, 2000);
@@ -810,7 +813,13 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             >
               Prize Setup
             </Typography>
-            <Box sx={{ marginTop: `${MarginTop / 4}px` }}>
+            <Box
+              sx={{
+                marginTop: `${MarginTop / 4}px`,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <FormControl
                 sx={{
                   width: "200px",
@@ -843,6 +852,26 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   </MenuItem>
                 </Select>
               </FormControl>
+              <Box sx={{ width: "65.3%" }}>
+                <input
+                  type="number"
+                  value={valueTest}
+                  onChange={(e) => setValueTest(e.target.value)}
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    border: "none",
+                    outline: "none",
+                    boxSizing: "border-box",
+                    padding: "8px 10px",
+                    color: "#5C4599",
+                    fontSize: "14px",
+                    backgroundColor: "#181223",
+                    marginTop: `${MarginTop / 4}px`,
+                    letterSpacing: "1px",
+                  }}
+                />
+              </Box>
             </Box>
           </Box>
 

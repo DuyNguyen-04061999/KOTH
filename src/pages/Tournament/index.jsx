@@ -427,7 +427,7 @@ export default function Tournament() {
                   flexDirection: "column",
                 }}
               >
-                <button
+                {/* <button
                   onClick={() => {
                     setAgree(true);
                     setTourType(false);
@@ -445,7 +445,7 @@ export default function Tournament() {
                   }}
                 >
                   Personal Tournament
-                </button>
+                </button> */}
                 <Box sx={{ marginTop: `${MarginTop / 2}px`, display: "flex" }}>
                   <button
                     onClick={() => {

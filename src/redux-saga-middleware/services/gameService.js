@@ -12,13 +12,17 @@ class GameService {
   }
 
   async getSearchGame(dataRequest) {
-    const res = await API.post(`/api/games/search`, {
-      value: dataRequest,
-    }, {
-      headers: {
-        "Content-Type": "application/json"
+    const res = await API.post(
+      `/api/games/search`,
+      {
+        value: dataRequest,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
     return res;
   }
 }

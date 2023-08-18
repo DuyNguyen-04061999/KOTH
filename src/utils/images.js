@@ -109,6 +109,10 @@ import winnerBG from "../assets/images/winnerBG.png";
 import hatWinner from "../assets/images/hatWinner.png";
 import ticketIconTournament from "../assets/images/ticketIconTournament.png";
 import voucher_tour from "../assets/images/voucher_tour.png";
+import Voucher_Brand from "../assets/images/Voucher_Brand.png";
+import samsungBrand from "../assets/images/samsungBrand.png";
+import closeVoucher from "../assets/images/closeVoucher.png";
+import PurpleBanner from "../assets/images/PurpleBanner.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -262,9 +266,9 @@ import ringMobile from "../assets/imagesHome/ringMobile.png";
 import bannerTop1Mobile from "../assets/imagesHome/bannerTop1Mobile.png";
 import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
 import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
-import diamon from "../assets/imagesDesktop/diamon.png"
-import free from "../assets/imagesDesktop/free.png"
-import gold1 from "../assets/imagesDesktop/gold.png"
+import diamon from "../assets/imagesDesktop/diamon.png";
+import free from "../assets/imagesDesktop/free.png";
+import gold1 from "../assets/imagesDesktop/gold.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -414,9 +418,13 @@ export const images = {
   hatWinner: hatWinner,
   ticketIconTournament: ticketIconTournament,
   voucher_tour: voucher_tour,
-  diamon:diamon,
-  free:free,
-  gold1:gold1
+  Voucher_Brand: Voucher_Brand,
+  samsungBrand: samsungBrand,
+  closeVoucher: closeVoucher,
+  PurpleBanner: PurpleBanner,
+  diamon: diamon,
+  free: free,
+  gold1: gold1,
 };
 
 export const images2 = {
