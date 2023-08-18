@@ -192,3 +192,18 @@ p {
 //     }
 //   }
 // }
+
+
+
+.dropdown-content {
+  /* ... Other styles ... */
+  opacity: 0;
+  transform: translateY(-10px);
+  // transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: all 0.5s;
+}
+
+.dropdown-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
