@@ -7,7 +7,7 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { width } = useWindowDimensions();
-  const { images, appendDot } = props;
+  const { images, appendDot, htmlCode, isHtmlCode } = props;
   const settings = {
     dots: true,
     arrows: false,
@@ -53,16 +53,18 @@ export default function SlickSlider(props) {
   };
   return (
     <Slider {...settings}>
-      {[...images].map((item, index) => {
-        return (
-          <Box
-            key={index}
-            sx={{ width: "100%", cursor: "pointer" }}
-            component={"img"}
-            src={item}
-          ></Box>
-        );
-      })}
+      {!isHtmlCode
+        ? [...images].map((item, index) => {
+            return (
+              <Box
+                key={index}
+                sx={{ width: "100%", cursor: "pointer" }}
+                component={"img"}
+                src={item}
+              ></Box>
+            );
+          })
+        : htmlCode}
     </Slider>
   );
 }

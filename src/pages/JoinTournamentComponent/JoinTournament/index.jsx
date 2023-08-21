@@ -195,7 +195,6 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -303,7 +302,7 @@ export default function JoinTournament() {
                         color: "#9384B7",
                       }}
                     >
-                      LEADER CUP #8
+                      {detailTournament?.tournamentName}
                     </Typography>
                   </Box>
                 )}
