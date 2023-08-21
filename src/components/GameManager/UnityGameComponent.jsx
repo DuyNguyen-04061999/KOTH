@@ -16,11 +16,10 @@ export default function UnityGameComponent(props) {
     roomId,
     handleEndGame,
     type,
-    // gameName,
     skinName
   } = props;
 
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
@@ -144,13 +143,6 @@ export default function UnityGameComponent(props) {
 
   const unityRef = useRef()
 
-  // useEffect(() => {
-  //   const uRef = unityRef?.current
-  //   return () => {
-  //       if (unityRef && uRef) window.document.body.removeChild((uRef));
-  //   };
-  // }, []);
-
   return (
     <Fragment>
       {!isLoaded && (
@@ -159,7 +151,9 @@ export default function UnityGameComponent(props) {
         </p>
       )}
       <Unity
-        style={{
+        style={type && type === "test" ? {
+          width, height
+        } : {
           width: isFullScreen ? width : cwidth ? cwidth : "100%",
           minWidth: "100%",
           height: isFullScreen ? "100%" : cheight ? cheight : "100%",

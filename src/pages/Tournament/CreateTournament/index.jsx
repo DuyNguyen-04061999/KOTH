@@ -60,7 +60,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [information, setInformation] = useState("");
   const [maxPlay, setMaxPlay] = useState(0);
   const [leaderBoard, setLeaderBoard] = useState(true);
-  const [loop, setLoop] = useState("");
+  const [loop, setLoop] = useState("hour");
   const [coors] = useState([1]);
   const [prizeSetUp, setPrizeSetUp] = useState(1);
   const [prizeType, setPrizeType] = useState("Gadcoin");
@@ -165,12 +165,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   
   useEffect(() => {
     const socket = _socket;
-    setLoop(0);
+    setLoop("hour");
     setSocket(socket);
   }, []);
+  
   useEffect(() => {
     socket?.emit("getListGameTournament");
   }, [socket]);
+
   useEffect(() => {
     socket?.on("getListGameTournamentSuccess", (data) => {
       setListGame(data);
@@ -180,9 +182,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   useEffect(() => {
     dispatch(getBrandTournament())
     dispatch(getSkinForTournament())
-  },[])
-
-  
+  },[dispatch])
 
   return (
     <Dialog
@@ -875,7 +875,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     width: "200px",
                   }}
                 >
-                  <Select sx={{ height: "39px", backgroundColor: "#3C2C64" }}>
+                  <Select sx={{ height: "39px", backgroundColor: "#3C2C64" }} value={""}>
                     <MenuItem
                       sx={{
                         fontSize: getFontSizeDependOnWidth(width),

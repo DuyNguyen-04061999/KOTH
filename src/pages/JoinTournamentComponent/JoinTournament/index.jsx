@@ -274,7 +274,8 @@ export default function JoinTournament() {
                           fontWeight: "lighter !important",
                         }}
                       >
-                        Tournament of hourly
+                       {detailTournament?.tournamentInfors?.game &&
+                          detailTournament?.tournamentInfors?.game[0]?.gameName}
                       </Typography>
                     </Box>
                   )}

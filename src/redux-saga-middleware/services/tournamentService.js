@@ -33,7 +33,7 @@ class TournamentService {
     return res;
   }
   async callBrandTour() {
-    const res = await API.get("/api/tournaments/brand-tour");
+    const res = await API.get("/api/tournaments/hot-brand-tour");
     return res;
   }
 }
