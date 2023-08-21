@@ -16,6 +16,18 @@ class TournamentService {
     );
     return res;
   }
+  async listGameForTournament(dataRequest) {
+    const res = await API.get("/api/games/list-game-tournament", dataRequest)
+    return res
+  }
+  async listSkinForTournament(dataRequest) {
+    const res = await API.get("/api/games/list-skin-tournament", dataRequest)
+    return res
+  }
+  async listBrandForTournament(dataRequest) {
+    const res = await API.get("/api/list-brand-tournament", dataRequest)
+    return res
+  }
 }
 
 export default TournamentService;

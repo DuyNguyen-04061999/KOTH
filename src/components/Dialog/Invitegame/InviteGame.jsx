@@ -35,7 +35,6 @@ export default function InviteGameDialog() {
     setSocket(socket);
   }, []);
   const { listGame } = useSelector((state) => state.gameReducer);
-
   const dispatch = useDispatch();
 
   const DropDownIconF = () => {
