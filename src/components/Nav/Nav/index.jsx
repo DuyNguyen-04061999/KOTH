@@ -1,24 +1,21 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import "../Nav/Nav.scss";
-import { images, popup } from "../../../utils/images";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { images } from "../../../utils/images";
+import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clickNavTab,
   clickTab,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
 import { getAppType } from "../../../utils/helper";
-import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token, isNav } = useSelector((state) => state.authReducer);
-  const { isWalletDialog } = useSelector((state) => state.walletReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -33,7 +30,7 @@ export default function Navbar() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const [showDrop, setShowDrop] = useState("");
+  // const [showDrop, setShowDrop] = useState("");
 
   return (
     <Box className="nav-section">
@@ -298,7 +295,7 @@ export default function Navbar() {
               </Box>
               <Box
                 sx={{
-                  display:isDropdownOpen === true ? "block" : "none",
+                  display: isDropdownOpen === true ? "block" : "none",
                   height: isDropdownOpen === true ? "220px" : "0px",
                   transition: "all 0.5s",
                 }}
@@ -619,86 +616,6 @@ export default function Navbar() {
                   justifyContent: isNav === true ? "flex-start" : "center",
                   transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                   backgroundColor:
-                    pathname && pathname?.includes("luckywheel")
-                      ? "#7648ED"
-                      : "#462A71",
-
-                  borderRadius: "5px",
-                }}
-                onClick={() => {
-                  if (token === null || token === "") {
-                    dispatch(toggleLoginDialog());
-                  } else {
-                    navigate("/luckywheel");
-                  }
-                }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
-              >
-                {pathname && pathname?.includes("luckywheel") ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 22 24"
-                    className="p-1 me-1"
-                  >
-                    <g fill="#fff">
-                      <path d="M8.183 11.636l-5.59-5.59A10.851 10.851 0 000 12.297h7.91c.065-.233.158-.454.273-.66z"></path>
-                      <path d="M8.183 14.63a3.056 3.056 0 01-.273-.658H0a10.851 10.851 0 002.594 6.248l5.59-5.59z"></path>
-                      <path d="M3.78 21.406A10.851 10.851 0 0010.027 24v-7.91a3.055 3.055 0 01-.66-.274l-5.589 5.59z"></path>
-                      <path d="M13.822 12.295h7.91a10.852 10.852 0 00-2.594-6.248l-5.59 5.59c.116.205.209.426.274.658z"></path>
-                      <path d="M13.549 14.63l5.59 5.59a10.851 10.851 0 002.593-6.248h-7.91a3.055 3.055 0 01-.273.659z"></path>
-                      <path d="M10.866 14.53a1.397 1.397 0 100-2.794 1.397 1.397 0 000 2.795z"></path>
-                      <path d="M12.364 15.816a3.055 3.055 0 01-.659.274V24a10.852 10.852 0 006.248-2.594l-5.589-5.59z"></path>
-                      <path d="M10.028 10.177V6.215a2.515 2.515 0 01-1.466-1.363l-.93-2.126A10.895 10.895 0 003.779 4.86l5.59 5.59a3.06 3.06 0 01.659-.274z"></path>
-                      <path d="M11.705 6.215v3.962c.232.066.453.158.66.273l5.589-5.589A10.895 10.895 0 0014.1 2.726l-.93 2.126a2.515 2.515 0 01-1.466 1.363z"></path>
-                      <path d="M10.098 4.18a.838.838 0 001.536 0l1.316-3.006A.838.838 0 0012.182 0h-2.63a.838.838 0 00-.769 1.174l1.315 3.006z"></path>
-                    </g>
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 16 18"
-                    className="p-1 me-1"
-                  >
-                    <g>
-                      <g>
-                        <path
-                          fill="#A89CD7"
-                          d="M10.313 17.652C14.107 16.36 16 13.073 16 9.837a8.266 8.266 0 00-1.807-5.167A7.974 7.974 0 009.59 1.837L10 .879a.64.64 0 00-.048-.595A.62.62 0 009.436 0H6.564a.606.606 0 00-.515.284A.636.636 0 006 .88l.41.957A7.974 7.974 0 001.807 4.67 8.266 8.266 0 000 9.837c0 3.236 1.713 6.72 5.687 7.815m2.928-.937v-4.663a2.21 2.21 0 00.484-.205l3.23 3.295a6.67 6.67 0 01-3.714 1.573zM8 10.884c-.203 0-.401-.062-.57-.177a1.043 1.043 0 01-.378-.47 1.066 1.066 0 01.223-1.14 1.007 1.007 0 011.118-.227c.187.08.347.214.46.386a1.062 1.062 0 01-.128 1.321 1.024 1.024 0 01-.725.307zm5.2 3.37L9.97 10.96c.085-.156.152-.322.2-.494h4.57a6.952 6.952 0 01-1.54 3.79zm1.542-5.045H10.17a2.291 2.291 0 00-.2-.493l3.24-3.307a6.953 6.953 0 011.532 3.8zm-6.127-5.1l.468-1.09a6.671 6.671 0 013.257 1.502L9.099 7.828a2.235 2.235 0 00-.484-.205V4.108zm-.12-2.853L8 2.41l-.495-1.154h.99zM6.917 3.019l.468 1.088v3.516c-.169.049-.331.118-.484.205L3.66 4.52a6.671 6.671 0 013.257-1.503zM2.79 5.409l3.24 3.307a2.332 2.332 0 00-.2.493H1.258a6.953 6.953 0 011.532-3.8zm-1.53 5.056h4.57c.048.172.115.338.2.494L2.8 14.255a6.952 6.952 0 01-1.54-3.79zm2.41 4.678l3.23-3.296c.154.087.316.156.485.205v4.663a6.67 6.67 0 01-3.714-1.572zm2.017 2.509a7.852 7.852 0 004.626 0H5.687z"
-                        ></path>
-                      </g>
-                    </g>
-                  </svg>
-                )}
-                <span
-                  className="hover-nav"
-                  style={{
-                    display: isNav === true ? "block" : "none",
-                    cursor: "pointer",
-                    fontWeight: "700",
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                  }}
-                >
-                  Lucky Wheel
-                </span>
-              </Box>
-              <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
                     pathname && pathname?.includes("package")
                       ? "#7648ED"
                       : "#462A71",
@@ -763,79 +680,90 @@ export default function Navbar() {
                   Package
                 </span>
               </Box>
-              {/* <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    isWalletDialog && isWalletDialog === true
-                      ? "#7648ED"
-                      : "#462A71",
-
-                  borderRadius: "5px",
-                }}
-                onClick={() => {
-                  dispatch(toggleWalletDialog());
-                }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
-              >
-                {isWalletDialog && isWalletDialog === true ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="p-1 me-1"
-                  >
-                    <g fill="#fff">
-                      <path d="M22 10.97v2.06c0 .55-.44 1-1 1.02h-1.96c-1.08 0-2.07-.79-2.16-1.87-.06-.63.18-1.22.6-1.63.37-.38.88-.6 1.44-.6H21c.56.02 1 .47 1 1.02z"></path>
-                      <path d="M20.47 15.55h-1.43c-1.9 0-3.5-1.43-3.66-3.25-.09-1.04.29-2.08 1.05-2.82.64-.66 1.53-1.03 2.49-1.03h1.55c.29 0 .53-.24.5-.53-.22-2.43-1.83-4.09-4.22-4.37-.24-.04-.49-.05-.75-.05H7c-.28 0-.55.02-.81.06C3.64 3.88 2 5.78 2 8.5v7c0 2.76 2.24 5 5 5h9c2.8 0 4.73-1.75 4.97-4.42a.49.49 0 00-.5-.53zM13 9.75H7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h6c.41 0 .75.34.75.75s-.34.75-.75.75z"></path>
-                    </g>
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                    >
-                      <path d="M9.75 6.75h-4.5M16.5 8.227v1.546a.77.77 0 01-.75.764h-1.47c-.81 0-1.553-.592-1.62-1.402a1.506 1.506 0 01.45-1.223c.277-.284.66-.45 1.08-.45h1.56a.77.77 0 01.75.765z"></path>
-                      <path d="M13.11 7.912c-.315.308-.495.75-.45 1.223.067.81.81 1.402 1.62 1.402h1.47v1.088c0 2.25-1.5 3.75-3.75 3.75H5.25c-2.25 0-3.75-1.5-3.75-3.75v-5.25c0-2.04 1.23-3.465 3.143-3.705.195-.03.397-.045.607-.045H12c.195 0 .383.007.563.038 1.934.225 3.187 1.657 3.187 3.712v1.088h-1.56c-.42 0-.803.165-1.08.45z"></path>
-                    </g>
-                  </svg>
-                )}
-                <span
-                  className="hover-nav"
-                  style={{
-                    display: isNav === true ? "block" : "none",
-                    cursor: "pointer",
-                    fontWeight: "700",
-                    fontSize: "15px",
-                    marginLeft: "5px",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                  }}
-                >
-                  Credit
-                </span>
-              </Box> */}
             </Box>
           ) : (
             ""
           )}
+          <Box
+            sx={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "center",
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+              backgroundColor:
+                pathname && pathname?.includes("luckywheel")
+                  ? "#7648ED"
+                  : "#462A71",
+
+              borderRadius: "5px",
+            }}
+            onClick={() => {
+              if (token === null || token === "") {
+                dispatch(toggleLoginDialog());
+              } else {
+                navigate("/luckywheel");
+              }
+            }}
+            className="nav-home pt-2 pb-2 ps-2 mb-3"
+          >
+            {pathname && pathname?.includes("luckywheel") ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                fill="none"
+                viewBox="0 0 22 24"
+                className="p-1 me-1"
+              >
+                <g fill="#fff">
+                  <path d="M8.183 11.636l-5.59-5.59A10.851 10.851 0 000 12.297h7.91c.065-.233.158-.454.273-.66z"></path>
+                  <path d="M8.183 14.63a3.056 3.056 0 01-.273-.658H0a10.851 10.851 0 002.594 6.248l5.59-5.59z"></path>
+                  <path d="M3.78 21.406A10.851 10.851 0 0010.027 24v-7.91a3.055 3.055 0 01-.66-.274l-5.589 5.59z"></path>
+                  <path d="M13.822 12.295h7.91a10.852 10.852 0 00-2.594-6.248l-5.59 5.59c.116.205.209.426.274.658z"></path>
+                  <path d="M13.549 14.63l5.59 5.59a10.851 10.851 0 002.593-6.248h-7.91a3.055 3.055 0 01-.273.659z"></path>
+                  <path d="M10.866 14.53a1.397 1.397 0 100-2.794 1.397 1.397 0 000 2.795z"></path>
+                  <path d="M12.364 15.816a3.055 3.055 0 01-.659.274V24a10.852 10.852 0 006.248-2.594l-5.589-5.59z"></path>
+                  <path d="M10.028 10.177V6.215a2.515 2.515 0 01-1.466-1.363l-.93-2.126A10.895 10.895 0 003.779 4.86l5.59 5.59a3.06 3.06 0 01.659-.274z"></path>
+                  <path d="M11.705 6.215v3.962c.232.066.453.158.66.273l5.589-5.589A10.895 10.895 0 0014.1 2.726l-.93 2.126a2.515 2.515 0 01-1.466 1.363z"></path>
+                  <path d="M10.098 4.18a.838.838 0 001.536 0l1.316-3.006A.838.838 0 0012.182 0h-2.63a.838.838 0 00-.769 1.174l1.315 3.006z"></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                fill="none"
+                viewBox="0 0 16 18"
+                className="p-1 me-1"
+              >
+                <g>
+                  <g>
+                    <path
+                      fill="#A89CD7"
+                      d="M10.313 17.652C14.107 16.36 16 13.073 16 9.837a8.266 8.266 0 00-1.807-5.167A7.974 7.974 0 009.59 1.837L10 .879a.64.64 0 00-.048-.595A.62.62 0 009.436 0H6.564a.606.606 0 00-.515.284A.636.636 0 006 .88l.41.957A7.974 7.974 0 001.807 4.67 8.266 8.266 0 000 9.837c0 3.236 1.713 6.72 5.687 7.815m2.928-.937v-4.663a2.21 2.21 0 00.484-.205l3.23 3.295a6.67 6.67 0 01-3.714 1.573zM8 10.884c-.203 0-.401-.062-.57-.177a1.043 1.043 0 01-.378-.47 1.066 1.066 0 01.223-1.14 1.007 1.007 0 011.118-.227c.187.08.347.214.46.386a1.062 1.062 0 01-.128 1.321 1.024 1.024 0 01-.725.307zm5.2 3.37L9.97 10.96c.085-.156.152-.322.2-.494h4.57a6.952 6.952 0 01-1.54 3.79zm1.542-5.045H10.17a2.291 2.291 0 00-.2-.493l3.24-3.307a6.953 6.953 0 011.532 3.8zm-6.127-5.1l.468-1.09a6.671 6.671 0 013.257 1.502L9.099 7.828a2.235 2.235 0 00-.484-.205V4.108zm-.12-2.853L8 2.41l-.495-1.154h.99zM6.917 3.019l.468 1.088v3.516c-.169.049-.331.118-.484.205L3.66 4.52a6.671 6.671 0 013.257-1.503zM2.79 5.409l3.24 3.307a2.332 2.332 0 00-.2.493H1.258a6.953 6.953 0 011.532-3.8zm-1.53 5.056h4.57c.048.172.115.338.2.494L2.8 14.255a6.952 6.952 0 01-1.54-3.79zm2.41 4.678l3.23-3.296c.154.087.316.156.485.205v4.663a6.67 6.67 0 01-3.714-1.572zm2.017 2.509a7.852 7.852 0 004.626 0H5.687z"
+                    ></path>
+                  </g>
+                </g>
+              </svg>
+            )}
+            <span
+              className="hover-nav"
+              style={{
+                display: isNav === true ? "block" : "none",
+                cursor: "pointer",
+                fontWeight: "700",
+                fontSize: "15px",
+                marginLeft: "5px",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+              }}
+            >
+              Lucky Wheel
+            </span>
+          </Box>
           {getAppType() && getAppType() === "promote" ? (
             ""
           ) : (

@@ -88,15 +88,15 @@ const luckyWheelReducer = (
         ...state,
         rewardHistory: [
           {
-            createdAt: payload.createdAt,
-            rhDescription: payload.rhDescription,
+            createdAt: payload?.createdAt,
+            rhDescription: payload?.rhDescription,
             rhLsp: {
-              lspName: payload.rhLsp.lspName,
+              lspName: payload?.rhLsp?.lspName,
             },
-            rhType: payload.rhType,
-            rhUser: { userName: payload.rhUser.userName },
-            rhValue: payload.rhValue,
-            rhtypeMoney: payload.rhtypeMoney,
+            rhType: payload?.rhType,
+            rhUser: { userName: payload?.rhUser?.userName },
+            rhValue: payload?.rhValue,
+            rhtypeMoney: payload?.rhtypeMoney,
           },
           ...state.rewardHistory,
         ],

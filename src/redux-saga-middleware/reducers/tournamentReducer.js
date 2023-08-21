@@ -60,6 +60,81 @@ export const getWeeklyTour = (data) => {
     payload: data,
   };
 };
+export const getBiggestEndTourRedux = (data) => {
+  return {
+    type: "GET_BIGGEST_SUCCESS",
+    payload: data,
+  };
+};
+export const getBrandTourSuccess = (data) => {
+  return {
+    type: "GET_BRAND_TOUR_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getListGameForTournament = (data) => {
+  return {
+    type: "GET_LIST_GAME_FOR_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getListGameForTournamentSuccess = (data) => {
+  return {
+    type: "GET_LIST_GAME_FOR_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getListGameForTournamentFail = (data) => {
+  return {
+    type: "GET_LIST_GAME_FOR_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
+
+export const getSkinForTournament = (data) => {
+  return {
+    type: "GET_SKIN_FOR_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getSkinForTournamentSuccess = (data) => {
+  return {
+    type: "GET_SKIN_FOR_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getSkinForTournamentFail = (data) => {
+  return {
+    type: "GET_SKIN_FOR_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
+
+export const getBrandTournament = (data) => {
+  return {
+    type: "GET_BRAND_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getBrandTournamentSuccess = (data) => {
+  return {
+    type: "GET_BRAND_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getBrandTournamentFail = (data) => {
+  return {
+    type: "GET_BRAND_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
 
 const tournamentReducer = (
   state = {
@@ -73,6 +148,14 @@ const tournamentReducer = (
     weeklyTournament: [],
     hourlyTournament: [],
     hotTournament: [],
+    gameForTournament: [],
+    isFecthGameForTournament: false,
+    skinTournament: [],
+    isFecthSkinTournament: false,
+    listBrand: [],
+    isFecthBrand: false,
+    biggestEndTour: [],
+    brandTour: [],
     //--------------------------------------
   },
   action
@@ -126,6 +209,64 @@ const tournamentReducer = (
       return {
         ...state,
         weeklyTournament: payload,
+      };
+    case "GET_LIST_GAME_FOR_TOURNAMENT":
+      return {
+        ...state,
+        isFecthGameForTournament: true,
+      };
+    case "GET_LIST_GAME_FOR_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        isFecthGameForTournament: false,
+        gameForTournament: payload,
+      };
+    case "GET_LIST_GAME_FOR_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFecthGameForTournament: false,
+      };
+    case "GET_SKIN_FOR_TOURNAMENT":
+      return {
+        ...state,
+        isFecthSkinTournament: true,
+      };
+    case "GET_SKIN_FOR_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        isFecthSkinTournament: false,
+        skinTournament: payload.list,
+      };
+    case "GET_SKIN_FOR_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFecthSkinTournament: false,
+      };
+    case "GET_BRAND_TOURNAMENT":
+      return {
+        ...state,
+        isFecthBrand: true,
+      };
+    case "GET_BRAND_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        isFecthBrand: false,
+        listBrand: payload.list,
+      };
+    case "GET_BRAND_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFecthBrand: false,
+      }
+    case "GET_BIGGEST_SUCCESS":
+      return {
+        ...state,
+        biggestEndTour: payload,
+      };
+    case "GET_BRAND_TOUR_SUCCESS":
+      return {
+        ...state,
+        brandTour: payload,
       };
     default:
       return state;

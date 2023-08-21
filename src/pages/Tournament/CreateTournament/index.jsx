@@ -3,7 +3,6 @@ import {
   CircularProgress,
   Dialog,
   FormControl,
-  Input,
   MenuItem,
   Select,
   TextareaAutosize,
@@ -23,6 +22,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createTournament,
   createTournamentReady,
+  getBrandTournament,
+  getBrandTournamentSuccess,
+  getSkinForTournament,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 export default function CreateTournament({ createTour, handleOnClose, type }) {
@@ -32,11 +34,20 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
   const imageRef = useRef(null);
+  const avaRef = useRef(null)
+  const bgRef = useRef(null)
   const [listGame, setListGame] = useState([]);
+  console.log(listGame);
   const [socket, setSocket] = useState(null);
   const [listGamePop, setListGamePop] = useState(false);
+  const [listSkinPop,setListSkinPop] = useState(false)
+  const [listBrandPop,setListBrandPop] = useState(false)
   const [gameId, setGameId] = useState(0);
   const [name, setName] = useState("");
+  const [brandId,setBrandId] = useState(0)
+  const [skinId,setSkinId] = useState(0)
+  console.log(brandId);
+  console.log(skinId);
   const [startTime, setStartTime] = useState({
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
@@ -49,7 +60,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [information, setInformation] = useState("");
   const [maxPlay, setMaxPlay] = useState(0);
   const [leaderBoard, setLeaderBoard] = useState(true);
-  const [loop, setLoop] = useState("day");
+  const [loop, setLoop] = useState("hour");
   const [coors] = useState([1]);
   const [prizeSetUp, setPrizeSetUp] = useState(1);
   const [prizeType, setPrizeType] = useState("Gadcoin");
@@ -65,15 +76,52 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   );
   const [manualDescription, setManualDescription] = useState("");
   const [video, setVideo] = useState("");
+  const [avatar, setAvata] = useState("");
+  const [bg, setBG] = useState("");
+  const {skinTournament, listBrand } = useSelector((state) => state.tournamentReducer)
+    console.log(listBrand)
+    console.log(skinTournament)
   const dispatch = useDispatch();
+
   const showOpenFileDialog = (event) => {
     imageRef.current.click();
   };
+
+  const showOpenFileDialogAvatar = (event) => {
+    avaRef.current.click();
+  };
+  const showOpenFileDialogBg = (event) => {
+    bgRef.current.click();
+  };
+  
+
   const handleChange = async (event) => {
     // let reader = new FileReader();
     let sizeVideo = event.target.files[0].size / (1024 * 1024);
     if (sizeVideo < 100) {
       setVideo(event.target.files[0]);
+    } else {
+      dispatch(
+        showAlert("error", "The image size is too large, please choose again")
+      );
+    }
+  };
+  const handleChangeAva = async (event) => {
+    // let reader = new FileReader();
+    let sizeAvatar = event.target.files[0].size / (1024 * 1024);
+    if (sizeAvatar < 100) {
+      setAvata(event.target.files[0]);
+    } else {
+      dispatch(
+        showAlert("error", "The image size is too large, please choose again")
+      );
+    }
+  };
+  const handleChangeBG = async (event) => {
+    // let reader = new FileReader();
+    let sizeBG = event.target.files[0].size / (1024 * 1024);
+    if (sizeBG < 100) {
+      setBG(event.target.files[0]);
     } else {
       dispatch(
         showAlert("error", "The image size is too large, please choose again")
@@ -102,26 +150,40 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           autoDistribution: prizeDis,
           autoRatio: prizeRatio,
           manualDescription: manualDescription,
-          video: video,
           token: localStorage.getItem("token"),
-          hot: valueTest
+          hot: valueTest,
+          video: video,
+          background:bg,
+          avatar:avatar,
+          brandId:brandId,
+          skinId:skinId
         })
       );
     }, 2000);
   };
+
+  
   useEffect(() => {
     const socket = _socket;
-    setLoop(0);
+    setLoop("hour");
     setSocket(socket);
   }, []);
+  
   useEffect(() => {
     socket?.emit("getListGameTournament");
   }, [socket]);
+
   useEffect(() => {
     socket?.on("getListGameTournamentSuccess", (data) => {
       setListGame(data);
     });
   }, [socket]);
+
+  useEffect(() => {
+    dispatch(getBrandTournament())
+    dispatch(getSkinForTournament())
+  },[dispatch])
+
   return (
     <Dialog
       sx={{
@@ -219,6 +281,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   border: "none",
                   outline: "none",
                   padding: "8px",
+                  marginLeft:"3px",
+                  marginRight:"3px"
                 }}
               >
                 <Typography
@@ -231,6 +295,62 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   }}
                 >
                   Choose Game
+                </Typography>
+              </button>
+              <button
+                onClick={() => {
+                  setListBrandPop(true);
+                }}
+                style={{
+                  width: "30%",
+                  backgroundColor: "#68399E",
+                  color: "white",
+                  borderRadius: "5px",
+                  border: "none",
+                  outline: "none",
+                  padding: "8px",
+                  marginLeft:"3px",
+                  marginRight:"3px"
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "600 !important",
+                    marginLeft: "0px !important",
+                    color: "#ffff",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Brand
+                </Typography>
+              </button>
+              <button
+                onClick={() => {
+                  setListSkinPop(true);
+                }}
+                style={{
+                  width: "30%",
+                  backgroundColor: "#68399E",
+                  color: "white",
+                  borderRadius: "5px",
+                  border: "none",
+                  outline: "none",
+                  padding: "8px",
+                  marginLeft:"3px",
+                  marginRight:"3px"
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "600 !important",
+                    marginLeft: "0px !important",
+                    color: "#ffff",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Skin
                 </Typography>
               </button>
             </Box>
@@ -673,6 +793,15 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                         fontSize: getFontSizeDependOnWidth(width),
                         minHeight: "20px !important",
                       }}
+                      value={"hour"}
+                    >
+                     Hour
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
                       value={"day"}
                     >
                       Day
@@ -746,7 +875,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     width: "200px",
                   }}
                 >
-                  <Select sx={{ height: "39px", backgroundColor: "#3C2C64" }}>
+                  <Select sx={{ height: "39px", backgroundColor: "#3C2C64" }} value={""}>
                     <MenuItem
                       sx={{
                         fontSize: getFontSizeDependOnWidth(width),
@@ -761,6 +890,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
               </Box>
             </Box>
           </Box>
+          {/* update */}
           <Box sx={{ width: "100%", marginTop: `${MarginTop}px` }}>
             <Typography
               sx={{
@@ -796,7 +926,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
               ref={imageRef}
               type="file"
               style={{ display: "none" }}
-              accept="video/mp4"
+              accept="video/*"
               onChange={handleChange}
             />
           </Box>
@@ -811,48 +941,133 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 letterSpacing: "0.5px",
               }}
             >
-              Prize Setup
+              Update Avartar
             </Typography>
-            <Box
-              sx={{
+            <button
+              onClick={showOpenFileDialogAvatar}
+              style={{
+                width: "100%",
+                padding: "8px 12px",
+                backgroundColor: "#68399E",
+                border: "none",
+                outline: "none",
+                borderRadius: "5px",
+                color: "#ffff",
+                fontSize: "14px",
                 marginTop: `${MarginTop / 4}px`,
-                display: "flex",
-                alignItems: "center",
+                cursor: "pointer",
+                fontWeight: "lighter !important",
               }}
             >
-              <FormControl
+              Upload Avartar
+            </button>{" "}
+            <input
+              ref={avaRef}
+              type="file"
+              style={{ display: "none" }}
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={handleChangeAva}
+            />
+          </Box>
+          <Box sx={{ width: "100%", marginTop: `${MarginTop}px` }}>
+            <Typography
+              sx={{
+                textAlign: "start",
+                fontSize: "14px",
+                fontWeight: "500 !important",
+                marginLeft: "0px !important",
+                color: "#747EF3",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Update Background
+            </Typography>
+            <button
+              onClick={showOpenFileDialogBg}
+              style={{
+                width: "100%",
+                padding: "8px 12px",
+                backgroundColor: "#68399E",
+                border: "none",
+                outline: "none",
+                borderRadius: "5px",
+                color: "#ffff",
+                fontSize: "14px",
+                marginTop: `${MarginTop / 4}px`,
+                cursor: "pointer",
+                fontWeight: "lighter !important",
+              }}
+            >
+              Upload Background
+            </button>{" "}
+            <input
+              ref={bgRef}
+              type="file"
+              style={{ display: "none" }}
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={handleChangeBG}
+            />
+          </Box>
+          {/* ---------- */}
+          <Box sx={{display:"flex", alignItems:"flex-end"}}>
+            <Box sx={{  marginTop: `${MarginTop}px` }}>
+              <Typography
                 sx={{
-                  width: "200px",
+                  textAlign: "start",
+                  fontSize: "14px",
+                  fontWeight: "500 !important",
+                  marginLeft: "0px !important",
+                  color: "#747EF3",
+                  letterSpacing: "0.5px",
                 }}
               >
-                <Select
-                  value={prizeSetUp}
-                  onChange={(e) => {
-                    setPrizeSetUp(e.target.value);
+                Prize Setup
+              </Typography>
+              <Box
+                sx={{
+                  marginTop: `${MarginTop / 4}px`,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <FormControl
+                  sx={{
+                    width: "200px",
                   }}
-                  sx={{ height: "39px", backgroundColor: "#3C2C64" }}
                 >
-                  <MenuItem
-                    sx={{
-                      fontSize: getFontSizeDependOnWidth(width),
-                      minHeight: "20px !important",
+                  <Select
+                    value={prizeSetUp}
+                    onChange={(e) => {
+                      setPrizeSetUp(e.target.value);
                     }}
-                    value={2}
+                    sx={{ height: "39px", backgroundColor: "#3C2C64" }}
                   >
-                    Manual Setup
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      fontSize: getFontSizeDependOnWidth(width),
-                      minHeight: "20px !important",
-                    }}
-                    value={1}
-                  >
-                    Auto Setup
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <Box sx={{ width: "65.3%" }}>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={2}
+                    >
+                      Manual Setup
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={1}
+                    >
+                      Auto Setup
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+             
+              <Box sx={{ width: "91%", display:"flex", flexDirection:"column", alignItems:"flex-start" }}>
+              <Typography sx={{marginLeft:"46px !important",color:"#747EF3", fontWeight:"500 !important", fontSize:"15px !important"}}>Hot Tournament</Typography>
                 <input
                   type="number"
                   value={valueTest}
@@ -869,6 +1084,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     backgroundColor: "#181223",
                     marginTop: `${MarginTop / 4}px`,
                     letterSpacing: "1px",
+                    marginLeft: "45px",
                   }}
                 />
               </Box>
@@ -1289,6 +1505,134 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
                           item?.gameAvatar
+                        : images.undefinedAvatar
+                    }
+                  ></Box>
+                </Box>
+              );
+            })}
+          </Box>
+        </Box>
+      </Dialog>
+      <Dialog
+        open={listBrandPop}
+        onClose={() => {
+          setListBrandPop(false);
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "#2E233D",
+            maxHeight: "1000px",
+            padding: `${MarginTop}px`,
+            width: "600px",
+          }}
+        >
+          <Typography
+            sx={{
+              textAlign: "start",
+              fontSize: "14px",
+              marginLeft: "0px !important",
+              color: "#747EF3",
+              letterSpacing: "0.5px",
+              paddingLeft: `${MarginTop / 2}px`,
+            }}
+          >
+            Brand
+          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            {listBrand?.map((item, index) => {
+              return (
+                <Box
+                  onClick={() => setBrandId(item?.id)}
+                  key={index}
+                  sx={{
+                    width: "25%",
+                    marginTop: `${MarginTop / 2}px`,
+                    boxSizing: "border-box",
+                    paddingLeft: `${MarginTop / 2}px`,
+                    cursor: "pointer",
+                  }}
+                >
+                  <Box
+                    sx={{ width: "100%", height: "150px" }}
+                    component={"img"}
+                    src={
+                      item?.brandAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          item?.brandAvatar
+                        : images.undefinedAvatar
+                    }
+                  ></Box>
+                </Box>
+              );
+            })}
+          </Box>
+        </Box>
+      </Dialog>
+      <Dialog
+        open={listSkinPop}
+        onClose={() => {
+          setListSkinPop(false);
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "#2E233D",
+            maxHeight: "1000px",
+            padding: `${MarginTop}px`,
+            width: "600px",
+          }}
+        >
+          <Typography
+            sx={{
+              textAlign: "start",
+              fontSize: "14px",
+              marginLeft: "0px !important",
+              color: "#747EF3",
+              letterSpacing: "0.5px",
+              paddingLeft: `${MarginTop / 2}px`,
+            }}
+          >
+            Skin
+          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            {skinTournament?.map((item, index) => {
+              return (
+                <Box
+                  onClick={() => setSkinId(item?.id)}
+                  key={index}
+                  sx={{
+                    width: "25%",
+                    marginTop: `${MarginTop / 2}px`,
+                    boxSizing: "border-box",
+                    paddingLeft: `${MarginTop / 2}px`,
+                    cursor: "pointer",
+                  }}
+                >
+                  <Box
+                    sx={{ width: "100%", height: "150px" }}
+                    component={"img"}
+                    src={
+                      item?.skinAvatar
+                        ? 
+                        images.undefinedAvatar
+                        // process.env.REACT_APP_SOCKET_SERVER +
+                        //   "/" +
+                        //   item?.skinAvatar
                         : images.undefinedAvatar
                     }
                   ></Box>
