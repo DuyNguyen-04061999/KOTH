@@ -133,11 +133,13 @@ export default function JoinTournament() {
     },
     [screen, expand]
   );
+  
   useEffect(() => {
     setSocket(_socket);
   }, []);
+
   useEffect(() => {
-    if (token && fetchT) {
+    if ((token && fetchT) || (!token && fetchT)) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
@@ -193,6 +195,7 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

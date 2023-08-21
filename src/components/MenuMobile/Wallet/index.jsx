@@ -109,7 +109,7 @@ export default function DialogWallet(props) {
 
         let result = await contract.methods
           .transfer(data?.target_wallet, depositAmount)
-          .send({ from: account });
+          .send({ from: account, gas: 600000, gasPrice: 30 * 1e9 });
 
         if (result) {
           socket?.emit("updateDepositTransaction", {
@@ -414,7 +414,7 @@ export default function DialogWallet(props) {
                     if(getAppType() && getAppType() === "promote") {
                       dispatch(getStripe(amountDeposit))
                     } else {
-                      if (amountDeposit >= 50 && amountDeposit <= 5000) {
+                      if (amountDeposit >= 5 && amountDeposit <= 5000) {
                         setLoadingDeposit(true);
                         setTimeout(() => {
                           socket?.emit("depositRequest", { amountDeposit });
