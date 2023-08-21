@@ -28,6 +28,14 @@ class TournamentService {
     const res = await API.get("/api/list-brand-tournament", dataRequest)
     return res
   }
+  async callBiggestEndTour() {
+    const res = await API.get("/api/tournaments/biggest-prize-end-tour");
+    return res;
+  }
+  async callBrandTour() {
+    const res = await API.get("/api/tournaments/brand-tour");
+    return res;
+  }
 }
 
 export default TournamentService;

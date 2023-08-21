@@ -5,6 +5,8 @@ import {
   createTournamentSuccess,
   getBrandTournamentFail,
   getBrandTournamentSuccess,
+  getBiggestEndTourRedux,
+  getBrandTourSuccess,
   getDailyTour,
   getHotTour,
   getHourlyTour,
@@ -92,7 +94,31 @@ function* getListBrandForTournamentSaga(dataRequest) {
   }
 }
 
+
+
+function* getBiggesstEndTour() {
+  try {
+    const res = yield call(tournamentService.callBiggestEndTour);
+    if (res.status === 200) {
+      yield put(getBiggestEndTourRedux(res.data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* getBrandTour() {
+  try {
+    const res = yield call(tournamentService.callBrandTour);
+    if (res.status === 200) {
+      yield put(getBrandTourSuccess(res.data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 function* tournamentSaga() {
+  yield takeEvery("CALL_BIGGEST_END_TOUR", getBiggesstEndTour);
+  yield takeEvery("CALL_BRAND_TOUR", getBrandTour);  
   yield takeEvery("CREATE_TOURNAMENT", postTournamentCreate);
   yield takeEvery("CALL_LIST_TOURNAMENT", getListTour);
   yield takeEvery("GET_LIST_GAME_FOR_TOURNAMENT", getListGameForTournamentSaga);

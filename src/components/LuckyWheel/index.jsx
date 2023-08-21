@@ -16,7 +16,7 @@ export default function LuckyWheel(props) {
   const [config, setConfig] = useState(null);
   const [listReward, setListReward] = useState([]);
   const { width } = useWindowDimensions();
-  const [buttonState, SetButtonState] = useState(true); 
+  const [buttonState, SetButtonState] = useState(true);
   const [isFetchReward, setIsFetchListReward] = useState(true);
   const [isFetchListRh, setIsFetchListRh] = useState(true);
   const { token } = useSelector((state) => state.authReducer);
@@ -29,23 +29,23 @@ export default function LuckyWheel(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchReward && token)
-    socket?.emit("getLuckySpinConfig", { type: "dogegold" });
+      socket?.emit("getLuckySpinConfig", { type: "dogegold" });
     if (isFetchListRh && token)
       socket?.emit("getRewardHistory", { type: "luckyspin" });
-      socket?.on("getLuckySpinConfigSuccess", (data) => {
-        setConfig(data);
-        setListReward(data?.LuckySpinReward);
-        setIsFetchListReward(false);
-        dispatch(assigntotalAmount(data.total));
-      });
+    socket?.on("getLuckySpinConfigSuccess", (data) => {
+      setConfig(data);
+      setListReward(data?.LuckySpinReward);
+      setIsFetchListReward(false);
+      dispatch(assigntotalAmount(data.total));
+    });
 
-      socket?.on("getRewardHistorySuccess", (data) => {
-        setIsFetchListRh(false);
-      });
+    socket?.on("getRewardHistorySuccess", (data) => {
+      setIsFetchListRh(false);
+    });
 
-      return () => {
-        // socket?.off()
-      }
+    return () => {
+      // socket?.off()
+    };
   }, [socket, dispatch, isFetchListRh, isFetchReward, token]);
   function getRandomValueByPercent(arr, random) {
     let cumulativePercentage = 0;
@@ -160,9 +160,14 @@ export default function LuckyWheel(props) {
         <span className="spinButton" onClick={startRotation}>
           <img alt="" src={images.SpinButton} />{" "}
         </span>
-        <img className="LuckySpinSlogan" alt="BTD" src={images.LuckySlogan} style={{
-          width: "100%"
-        }}/>
+        <img
+          className="LuckySpinSlogan"
+          alt="BTD"
+          src={images.LuckySlogan}
+          style={{
+            width: "100%",
+          }}
+        />
         <div className="spinBorder"></div>
         <img alt="BTD" className="spinBorderBG" src={images.Ellipse} />
       </div>{" "}

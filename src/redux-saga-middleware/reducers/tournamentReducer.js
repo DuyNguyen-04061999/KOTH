@@ -60,6 +60,18 @@ export const getWeeklyTour = (data) => {
     payload: data,
   };
 };
+export const getBiggestEndTourRedux = (data) => {
+  return {
+    type: "GET_BIGGEST_SUCCESS",
+    payload: data,
+  };
+};
+export const getBrandTourSuccess = (data) => {
+  return {
+    type: "GET_BRAND_TOUR_SUCCESS",
+    payload: data,
+  };
+};
 
 export const getListGameForTournament = (data) => {
   return {
@@ -142,6 +154,8 @@ const tournamentReducer = (
     isFecthSkinTournament: false,
     listBrand: [],
     isFecthBrand: false,
+    biggestEndTour: [],
+    brandTour: [],
     //--------------------------------------
   },
   action
@@ -243,6 +257,16 @@ const tournamentReducer = (
       return {
         ...state,
         isFecthBrand: false,
+      }
+    case "GET_BIGGEST_SUCCESS":
+      return {
+        ...state,
+        biggestEndTour: payload,
+      };
+    case "GET_BRAND_TOUR_SUCCESS":
+      return {
+        ...state,
+        brandTour: payload,
       };
     default:
       return state;
