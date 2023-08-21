@@ -60,6 +60,18 @@ export const getWeeklyTour = (data) => {
     payload: data,
   };
 };
+export const getBiggestEndTourRedux = (data) => {
+  return {
+    type: "GET_BIGGEST_SUCCESS",
+    payload: data,
+  };
+};
+export const getBrandTourSuccess = (data) => {
+  return {
+    type: "GET_BRAND_TOUR_SUCCESS",
+    payload: data,
+  };
+};
 
 const tournamentReducer = (
   state = {
@@ -73,6 +85,8 @@ const tournamentReducer = (
     weeklyTournament: [],
     hourlyTournament: [],
     hotTournament: [],
+    biggestEndTour: [],
+    brandTour: [],
     //--------------------------------------
   },
   action
@@ -126,6 +140,16 @@ const tournamentReducer = (
       return {
         ...state,
         weeklyTournament: payload,
+      };
+    case "GET_BIGGEST_SUCCESS":
+      return {
+        ...state,
+        biggestEndTour: payload,
+      };
+    case "GET_BRAND_TOUR_SUCCESS":
+      return {
+        ...state,
+        brandTour: payload,
       };
     default:
       return state;

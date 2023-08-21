@@ -138,6 +138,7 @@ export default function JoinTournament() {
   }, []);
   useEffect(() => {
     if (token && fetchT) {
+      console.log(123);
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
@@ -193,6 +194,7 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
+  console.log("detailTournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -300,7 +302,7 @@ export default function JoinTournament() {
                         color: "#9384B7",
                       }}
                     >
-                      LEADER CUP #8
+                      {detailTournament?.tournamentName}
                     </Typography>
                   </Box>
                 )}

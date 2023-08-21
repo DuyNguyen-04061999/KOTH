@@ -56,8 +56,14 @@ export default function NewHomePage() {
     "Sun",
   ]);
   const [selectedDay, setSeDay] = useState(0);
-  const { dailyTournament, weeklyTournament, hourlyTournament, hotTournament } =
-    useSelector((state) => state.tournamentReducer);
+  const {
+    dailyTournament,
+    weeklyTournament,
+    hourlyTournament,
+    hotTournament,
+    biggestEndTour,
+    brandTour,
+  } = useSelector((state) => state.tournamentReducer);
   const typographyStyle = {
     textAlign: "start",
     fontSize: width < 576 ? "12px" : "14px",
@@ -84,10 +90,16 @@ export default function NewHomePage() {
         type: "CALL_LIST_TOURNAMENT",
         payload: "day",
       });
+      dispatch({
+        type: "CALL_BIGGEST_END_TOUR",
+      });
+      dispatch({
+        type: "CALL_BRAND_TOUR",
+      });
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
-
+  console.log("brandTour: ", brandTour);
   useEffect(() => {
     setHourList(hourlyTournament.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament.map((item) => item?.timeStart));
@@ -439,7 +451,7 @@ export default function NewHomePage() {
                       paddingTop: "10px",
                     }}
                   >
-                    Leesin
+                    {biggestEndTour?.bestUser?.userNickName}
                   </Typography>
                 </Box>
               </Box>
@@ -480,7 +492,9 @@ export default function NewHomePage() {
                   }}
                 >
                   <Typography sx={{ color: "#fff", fontSize: "40px" }}>
-                    1000 $
+                    {biggestEndTour?.endTour?.tournamentPrize
+                      ? biggestEndTour?.endTour?.tournamentPrize + " $"
+                      : ""}
                   </Typography>
                   <Typography sx={{ color: "#fff", fontSize: "9px" }}>
                     GRAND TOURNAMENT WINNER
@@ -505,7 +519,7 @@ export default function NewHomePage() {
             >
               <Box
                 sx={{
-                  background: `url(${images.winnerBG})`,
+                  backgroundImage: `url(${images.winnerBG})`,
                   height: "400px",
                   width: "568px",
                   marginLeft: "0px",
@@ -515,6 +529,8 @@ export default function NewHomePage() {
                   justifyContent: "center",
                   alignItems: "center",
                   position: "relative",
+                  boxSizing: "border-box",
+                  paddingLeft: "10px",
                 }}
               >
                 <Box
@@ -524,8 +540,8 @@ export default function NewHomePage() {
                     borderRadius: "50%",
                     width: "168px",
                     position: "absolute",
-                    left: "215px",
-                    top: "119px",
+                    left: "200px",
+                    top: "116px",
                   }}
                 ></Box>
                 <Box
@@ -535,10 +551,71 @@ export default function NewHomePage() {
                     width: "81.119px",
                     height: "auto",
                     position: "absolute",
-                    left: "223px",
-                    top: "77px",
+                    left: "210px",
+                    top: "71px",
                   }}
                 ></Box>
+                <Typography
+                  sx={{
+                    position: "absolute",
+                    left: "271px",
+                    bottom: "50px",
+                    color: "#ffff",
+                    fontSize: "33px",
+                    marginLeft: "0px !important",
+                  }}
+                >
+                  {biggestEndTour?.bestUser?.userNickName}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  backgroundImage: `url(${imageHome.megaHolicBanner})`,
+                  backgroundSize: "cover",
+                  width: "503px",
+                  height: "278px",
+                  position: "relative",
+                }}
+              >
+                <Typography
+                  sx={{
+                    marginLeft: "0px !important",
+                    color: "#FFDC62",
+                    fontSize: "38px",
+                    position: "absolute",
+                    top: "38px",
+                    left: "90px",
+                  }}
+                >
+                  MEGA HOLIC
+                </Typography>
+                <Typography
+                  sx={{
+                    marginLeft: "0px !important",
+                    color: "#fff",
+                    fontSize: "88px",
+                    position: "absolute",
+                    top: "85px",
+                    left: "140px",
+                  }}
+                >
+                  {biggestEndTour?.endTour?.tournamentPrize
+                    ? biggestEndTour?.endTour?.tournamentPrize + "$"
+                    : ""}
+                </Typography>
+                <Typography
+                  sx={{
+                    marginLeft: "0px !important",
+                    fontSize: "15px",
+                    color: "#ffff",
+                    position: "absolute",
+                    top: "214px",
+                    left: "212px",
+                    height: "20px",
+                  }}
+                >
+                  GRAND TOURNAMENT WINNER
+                </Typography>
               </Box>
             </Box>
           )}
@@ -1025,7 +1102,116 @@ export default function NewHomePage() {
             {width < 576 ? (
               <SlickSlider
                 appendDot={false}
-                images={[images.banner_5, images.banner_6, images.banner_7]}
+                isHtmlCode={true}
+                htmlCode={brandTour?.map((item, index) => {
+                  return (
+                    <Box key={index}>
+                      <Box
+                        sx={{
+                          backgroundImage: `url(${imageHome.voucherBanner})`,
+                          backgroundRepeat: "no-repeat",
+                          width: "100%",
+                          height: "121.44px",
+                          display: "flex",
+                          alignItems: "center",
+                          padding: "10px 10px 10px 25px",
+                          boxSizing: "border-box",
+                          justifyContent: "space-between",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Box
+                            sx={{ width: "48px", height: "auto" }}
+                            component={"img"}
+                            src={imageHome.MCDonalIcon}
+                          ></Box>
+                          <Typography
+                            sx={{
+                              color: "#ffff",
+                              fontSize: "14px",
+                              fontWeight: "lighter !important",
+                              marginTop: "5px",
+                            }}
+                          >
+                            Mcdonald
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 255, 255, 0.1)",
+                            backgroundBlendMode: "overlay",
+                            height: "100%",
+                            width: "217.76px",
+                            borderRadius: "3px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            padding: "15px 10px",
+                            boxSizing: "border-box",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <Box>
+                              <Typography
+                                sx={{
+                                  color: "#fff",
+                                  fontSize: "12px",
+                                  fontWeight: "lighter !important",
+                                  textAlign: "end",
+                                }}
+                              >
+                                BIG EARN UP TO
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  color: "#fff",
+                                  fontSize: "10px",
+                                  fontWeight: "lighter !important",
+                                  textAlign: "end",
+                                  marginTop: "-4px",
+                                }}
+                              >
+                                For top 10
+                              </Typography>
+                            </Box>
+                            <Typography
+                              sx={{
+                                color: "#FFC107",
+                                fontSize: "25px",
+                              }}
+                            >
+                              {item?.tournamentPrize}$
+                            </Typography>
+                          </Box>
+                          <button
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              width: "100%",
+                              borderRadius: "5px",
+                              background:
+                                "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                              color: "#ffff",
+                              fontSize: "14px",
+                              padding: "4px 0px",
+                            }}
+                          >
+                            Play now
+                          </button>
+                        </Box>
+                      </Box>
+                    </Box>
+                  );
+                })}
               />
             ) : (
               <Slider
@@ -1035,18 +1221,117 @@ export default function NewHomePage() {
                 slidesToScroll={2}
                 infinite={false}
               >
-                {[
-                  images.banner_5_dk,
-                  images.banner_6_dk,
-                  images.banner_7_dk,
-                ].map((item, index) => {
+                {brandTour?.map((item, index) => {
                   return (
                     <Box sx={{ padding: "0px 16px" }} key={index}>
                       <Box
-                        sx={{ width: "100%" }}
-                        component={"img"}
-                        src={item}
-                      ></Box>
+                        sx={{
+                          backgroundImage: `url(${imageHome.voucherBanner})`,
+                          backgroundRepeat: "no-repeat",
+                          width: "100%",
+                          height: "121.44px",
+                          display: "flex",
+                          alignItems: "center",
+                          padding: "10px 23px 10px 23px",
+                          boxSizing: "border-box",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Box
+                            sx={{ width: "48px", height: "auto" }}
+                            component={"img"}
+                            src={imageHome.MCDonalIcon}
+                          ></Box>
+                          <Typography
+                            sx={{
+                              color: "#ffff",
+                              fontSize: "14px",
+                              fontWeight: "lighter !important",
+                              marginTop: "5px",
+                            }}
+                          >
+                            Mcdonald
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 255, 255, 0.1)",
+                            backgroundBlendMode: "overlay",
+                            height: "100%",
+                            width: "217.76px",
+                            borderRadius: "3px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            padding: "15px 10px",
+                            boxSizing: "border-box",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Box>
+                              <Typography
+                                sx={{
+                                  color: "#fff",
+                                  fontSize: "12px",
+                                  fontWeight: "lighter !important",
+                                  textAlign: "end",
+                                }}
+                              >
+                                BIG EARN UP TO
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  color: "#fff",
+                                  fontSize: "10px",
+                                  fontWeight: "lighter !important",
+                                  textAlign: "end",
+                                  marginTop: "-4px",
+                                }}
+                              >
+                                For top 10
+                              </Typography>
+                            </Box>
+                            <Typography
+                              sx={{
+                                color: "#FFC107",
+                                fontSize: "25px",
+                              }}
+                            >
+                              {item?.tournamentPrize}$
+                            </Typography>
+                          </Box>
+                          <button
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              width: "100%",
+                              borderRadius: "5px",
+                              background:
+                                "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                              color: "#ffff",
+                              fontSize: "14px",
+                              padding: "4px 0px",
+                            }}
+                          >
+                            Play now
+                          </button>
+                        </Box>
+                      </Box>
                     </Box>
                   );
                 })}
