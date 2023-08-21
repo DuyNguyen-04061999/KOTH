@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -237,6 +238,7 @@ export default function WeekLongTour() {
                   })}
                 </Box>
               </Box>
+              <PaginatedItems />
               <Box sx={{ marginBottom: "32px", marginTop: "64px" }}>
                 <Box
                   sx={{

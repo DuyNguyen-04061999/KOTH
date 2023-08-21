@@ -116,6 +116,9 @@ import PurpleBanner from "../assets/images/PurpleBanner.png";
 import bannerTournamentMobile from "../assets/images/bannerTournamentMobile.png";
 import bannerTournamentMobile_2 from "../assets/images/bannerTournamentMobile_1.png";
 import bannerTournamentMobile_1 from "../assets/images/bannerTournamentMobile_2.png";
+import megaHolicBanner from "../assets/images/megaHolicBanner.png";
+import voucherBanner from "../assets/imagesHome/voucherBanner.png";
+import MCDonalIcon from "../assets/imagesHome/MCDonalIcon.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -285,6 +288,9 @@ export const imageHome = {
   bannerTop1Mobile: bannerTop1Mobile,
   top1IconMobile: top1IconMobile,
   titleImageMobile: titleImageMobile,
+  megaHolicBanner: megaHolicBanner,
+  voucherBanner: voucherBanner,
+  MCDonalIcon: MCDonalIcon,
 };
 
 export const images = {

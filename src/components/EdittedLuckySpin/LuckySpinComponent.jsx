@@ -12,7 +12,7 @@ export default function LuckySpinComponent() {
   const { width } = useWindowDimensions();
   return (
     <div>
-      <Navigation/>
+      <Navigation />
       {popupLuckyWheel && <PopupWheel />}
       {width > 900 ? (
         <Layout children={<EdittedLuckySpin />} />

@@ -167,7 +167,8 @@ export default function Package() {
                                     marginBottom:
                                       i?.packageName === "Free" ? "15px" : "",
                                     marginTop:
-                                      i?.packageName === "Gold" ? "15px" : "",
+                                      i?.packageName === "Gold" ? "15px" : "" ||
+                                      i?.packageName === "Diamond" ? "15px" : "",
                                   }}
                                 />
                                 <Box

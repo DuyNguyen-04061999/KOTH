@@ -133,11 +133,13 @@ export default function JoinTournament() {
     },
     [screen, expand]
   );
+  
   useEffect(() => {
     setSocket(_socket);
   }, []);
+
   useEffect(() => {
-    if (token && fetchT) {
+    if ((token && fetchT) || (!token && fetchT)) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
@@ -300,7 +302,7 @@ export default function JoinTournament() {
                         color: "#9384B7",
                       }}
                     >
-                      LEADER CUP #8
+                      {detailTournament?.tournamentName}
                     </Typography>
                   </Box>
                 )}
