@@ -1,6 +1,5 @@
 import {
   Box,
-  CircularProgress,
   Dialog,
   FormControl,
   MenuItem,
@@ -23,10 +22,11 @@ import {
   createTournament,
   createTournamentReady,
   getBrandTournament,
-  getBrandTournamentSuccess,
+  // getBrandTournamentSuccess,
   getSkinForTournament,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { LoadingButton } from "@mui/lab";
 export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { isCreateTournamentSuccess, isCreateTournamentFail } = useSelector(
     (state) => state.tournamentReducer
@@ -34,18 +34,18 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
   const imageRef = useRef(null);
-  const avaRef = useRef(null)
-  const bgRef = useRef(null)
+  const avaRef = useRef(null);
+  const bgRef = useRef(null);
   const [listGame, setListGame] = useState([]);
   console.log(listGame);
   const [socket, setSocket] = useState(null);
   const [listGamePop, setListGamePop] = useState(false);
-  const [listSkinPop,setListSkinPop] = useState(false)
-  const [listBrandPop,setListBrandPop] = useState(false)
+  const [listSkinPop, setListSkinPop] = useState(false);
+  const [listBrandPop, setListBrandPop] = useState(false);
   const [gameId, setGameId] = useState(0);
   const [name, setName] = useState("");
-  const [brandId,setBrandId] = useState(0)
-  const [skinId,setSkinId] = useState(0)
+  const [brandId, setBrandId] = useState(0);
+  const [skinId, setSkinId] = useState(0);
   console.log(brandId);
   console.log(skinId);
   const [startTime, setStartTime] = useState({
@@ -53,6 +53,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
     time: moment("2022-04-17T15:30"),
   });
   const [endTime, setEndTime] = useState({
+    date: moment().format("YYYY/MM/DD"),
+    time: moment("2022-04-17T15:30"),
+  });
+  const [validityDateReward, setValidityDateReward] = useState({
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
   });
@@ -67,6 +71,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [autoAmount, setautoAmount] = useState();
   const [valueTest, setValueTest] = useState("");
   const [prizeDis, setPrizeDis] = useState("all");
+  const [titleReward, setTitleReward] = useState("");
+  const [recipientReward, setRecipientReward] = useState("");
+  const [termsAndConditions, setTermsAndConditions] = useState("");
+  const [ticketName, setTicketName] = useState("");
   const [prizeRatio, setPrizeRatio] = useState(
     JSON.stringify({
       "Top 1": "60%",
@@ -78,9 +86,11 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [video, setVideo] = useState("");
   const [avatar, setAvata] = useState("");
   const [bg, setBG] = useState("");
-  const {skinTournament, listBrand } = useSelector((state) => state.tournamentReducer)
-    console.log(listBrand)
-    console.log(skinTournament)
+  const { skinTournament, listBrand } = useSelector(
+    (state) => state.tournamentReducer
+  );
+  console.log(listBrand);
+  console.log(skinTournament);
   const dispatch = useDispatch();
 
   const showOpenFileDialog = (event) => {
@@ -93,7 +103,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const showOpenFileDialogBg = (event) => {
     bgRef.current.click();
   };
-  
 
   const handleChange = async (event) => {
     // let reader = new FileReader();
@@ -153,22 +162,61 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           token: localStorage.getItem("token"),
           hot: valueTest,
           video: video,
-          background:bg,
-          avatar:avatar,
-          brandId:brandId,
-          skinId:skinId
+          background: bg,
+          avatar: avatar,
+          brandId: brandId,
+          skinId: skinId,
+          titleReward: null,
+          recipientReward: null,
+          validityDateReward: validityDateReward,
+          termsAndConditions: null,
+          ticketName: null,
         })
       );
     }, 2000);
+    console.log(
+      createTournament({
+        gameId: gameId,
+        name: name,
+        start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
+        end: `${endTime.date} ${moment(endTime?.time).format("HH:mm")}`,
+        quantity: quantity,
+        type: type,
+        information: information,
+        maxPlay: maxPlay,
+        leaderBoard: leaderBoard,
+        loop: loop,
+        coors: coors,
+        prize: prizeSetUp,
+        autoPrice: prizeType,
+        autoAmount: autoAmount,
+        autoDistribution: prizeDis,
+        autoRatio: prizeRatio,
+        manualDescription: manualDescription,
+        token: localStorage.getItem("token"),
+        hot: valueTest,
+        video: video,
+        background: bg,
+        avatar: avatar,
+        brandId: brandId,
+        skinId: skinId,
+        titleReward: titleReward,
+        recipientReward: recipientReward,
+        validityDateReward: `${validityDateReward.date} ${moment(
+          validityDateReward?.time
+        ).format("HH:mm")}`,
+        termsAndConditions: termsAndConditions,
+        ticketName: ticketName,
+      })
+    );
   };
 
-  
   useEffect(() => {
     const socket = _socket;
     setLoop("hour");
     setSocket(socket);
   }, []);
-  
+
   useEffect(() => {
     socket?.emit("getListGameTournament");
   }, [socket]);
@@ -180,9 +228,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   }, [socket]);
 
   useEffect(() => {
-    dispatch(getBrandTournament())
-    dispatch(getSkinForTournament())
-  },[dispatch])
+    dispatch(getBrandTournament());
+    dispatch(getSkinForTournament());
+  }, [dispatch]);
 
   return (
     <Dialog
@@ -263,7 +311,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   outline: "none",
                   boxSizing: "border-box",
                   padding: "0px 10px",
-                  color: "#5C4599",
+                  color: "white",
                   backgroundColor: "#181223",
                   fontSize: "14px",
                   letterSpacing: "1px",
@@ -281,8 +329,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   border: "none",
                   outline: "none",
                   padding: "8px",
-                  marginLeft:"3px",
-                  marginRight:"3px"
+                  marginLeft: "3px",
+                  marginRight: "3px",
                 }}
               >
                 <Typography
@@ -309,8 +357,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   border: "none",
                   outline: "none",
                   padding: "8px",
-                  marginLeft:"3px",
-                  marginRight:"3px"
+                  marginLeft: "3px",
+                  marginRight: "3px",
                 }}
               >
                 <Typography
@@ -337,8 +385,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   border: "none",
                   outline: "none",
                   padding: "8px",
-                  marginLeft:"3px",
-                  marginRight:"3px"
+                  marginLeft: "3px",
+                  marginRight: "3px",
                 }}
               >
                 <Typography
@@ -391,6 +439,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   fontSize: "14px",
                   backgroundColor: "#181223",
                   color: "white",
+                  minHeight: "5rem",
                 }}
               ></TextareaAutosize>
             </Box>
@@ -795,7 +844,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       }}
                       value={"hour"}
                     >
-                     Hour
+                      Hour
                     </MenuItem>
                     <MenuItem
                       sx={{
@@ -848,7 +897,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   outline: "none",
                   boxSizing: "border-box",
                   padding: "8px 10px",
-                  color: "#5C4599",
+                  color: "white",
                   fontSize: "14px",
                   backgroundColor: "#181223",
                   marginTop: `${MarginTop / 4}px`,
@@ -875,7 +924,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     width: "200px",
                   }}
                 >
-                  <Select sx={{ height: "39px", backgroundColor: "#3C2C64" }} value={""}>
+                  <Select
+                    sx={{ height: "39px", backgroundColor: "#3C2C64" }}
+                    value={""}
+                  >
                     <MenuItem
                       sx={{
                         fontSize: getFontSizeDependOnWidth(width),
@@ -1009,8 +1061,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             />
           </Box>
           {/* ---------- */}
-          <Box sx={{display:"flex", alignItems:"flex-end"}}>
-            <Box sx={{  marginTop: `${MarginTop}px` }}>
+          <hr style={{ color: "white" }} />
+          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+            <Box sx={{ marginTop: `${MarginTop}px` }}>
               <Typography
                 sx={{
                   textAlign: "start",
@@ -1064,10 +1117,27 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 </FormControl>
               </Box>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
-             
-              <Box sx={{ width: "91%", display:"flex", flexDirection:"column", alignItems:"flex-start" }}>
-              <Typography sx={{marginLeft:"46px !important",color:"#747EF3", fontWeight:"500 !important", fontSize:"15px !important"}}>Hot Tournament</Typography>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", width: "100%" }}
+            >
+              <Box
+                sx={{
+                  width: "91%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <Typography
+                  sx={{
+                    marginLeft: "46px !important",
+                    color: "#747EF3",
+                    fontWeight: "500 !important",
+                    fontSize: "15px !important",
+                  }}
+                >
+                  Hot Tournament
+                </Typography>
                 <input
                   type="number"
                   value={valueTest}
@@ -1079,7 +1149,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     outline: "none",
                     boxSizing: "border-box",
                     padding: "8px 10px",
-                    color: "#5C4599",
+                    color: "white",
                     fontSize: "14px",
                     backgroundColor: "#181223",
                     marginTop: `${MarginTop / 4}px`,
@@ -1128,7 +1198,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     fontSize: "14px",
                     backgroundColor: "#181223",
                     color: "white",
-                    minHeight: "100px",
+                    minHeight: "5rem",
                   }}
                 ></TextareaAutosize>
               </Box>
@@ -1197,6 +1267,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     Amount of Gadcoin
                   </Typography>
                   <input
+                    type="number"
                     value={autoAmount}
                     onChange={(e) => setautoAmount(e.target.value)}
                     style={{
@@ -1206,7 +1277,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       outline: "none",
                       boxSizing: "border-box",
                       padding: "8px 10px",
-                      color: "#5C4599",
+                      color: "white",
                       fontSize: "14px",
                       backgroundColor: "#181223",
                       marginTop: `${MarginTop / 4}px`,
@@ -1303,7 +1374,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                         outline: "none",
                         boxSizing: "border-box",
                         padding: "8px 10px",
-                        color: "#5C4599",
+                        color: "white",
                         fontSize: "14px",
                         backgroundColor: "#181223",
                         marginTop: `${MarginTop / 4}px`,
@@ -1333,7 +1404,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                           fontSize: "14px",
                           fontWeight: "500 !important",
                           marginLeft: "0px !important",
-                          color: "#747EF3",
+                          color: "white",
                           letterSpacing: "0.5px",
                         }}
                       >
@@ -1415,9 +1486,295 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   )}
                 </Box>
               </Box>
+              <hr style={{ color: "white" }} />
+              <Box
+                sx={{
+                  marginTop: `${parseFloat(MarginTop)}px`,
+                }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "14px",
+                    fontWeight: "500 !important",
+                    marginLeft: "0px !important",
+                    color: "#747EF3",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Reward Title
+                </Typography>
+                <Box
+                  sx={{
+                    marginTop: `${parseFloat(MarginTop / 4)}px`,
+                  }}
+                >
+                  <input
+                    value={titleReward}
+                    onChange={(event) => setTitleReward(event.target.value)}
+                    style={{
+                      width: "100%",
+                      outline: "none",
+                      border: "none",
+                      padding: "8px 10px",
+                      borderRadius: "5px",
+                      fontWeight: "100 !important",
+                      letterSpacing: "1.5px",
+                      fontSize: "14px",
+                      backgroundColor: "#181223",
+                      color: "white",
+                    }}
+                  ></input>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  marginTop: `${parseFloat(MarginTop)}px`,
+                }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "14px",
+                    fontWeight: "500 !important",
+                    marginLeft: "0px !important",
+                    color: "#747EF3",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Reward's Recipient
+                </Typography>
+                <Box
+                  sx={{
+                    marginTop: `${parseFloat(MarginTop / 4)}px`,
+                  }}
+                >
+                  <input
+                    value={recipientReward}
+                    onChange={(event) => setRecipientReward(event.target.value)}
+                    style={{
+                      width: "100%",
+                      outline: "none",
+                      border: "none",
+                      padding: "8px 10px",
+                      borderRadius: "5px",
+                      fontWeight: "100 !important",
+                      letterSpacing: "1.5px",
+                      fontSize: "14px",
+                      backgroundColor: "#181223",
+                      color: "white",
+                    }}
+                  ></input>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: `${parseFloat(MarginTop)}px`,
+                }}
+              >
+                <Box sx={{ width: "100%" }}>
+                  <Typography
+                    sx={{
+                      textAlign: "start",
+                      fontSize: "14px",
+                      fontWeight: "500 !important",
+                      marginLeft: "0px !important",
+                      color: "#747EF3",
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    Validity Start
+                  </Typography>
+                  <Box
+                    sx={{
+                      width: "45%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginTop: `${MarginTop / 4}px`,
+                    }}
+                  >
+                    <Box>
+                      <LocalizationProvider dateAdapter={AdapterMoment}>
+                        <DatePicker
+                          format="YYYY/MM/DD"
+                          value={moment(validityDateReward?.date, "YYYY/MM/DD")}
+                          onChange={(newValue) => {
+                            setValidityDateReward({
+                              ...validityDateReward,
+                              date: moment(newValue).format("YYYY/MM/DD"),
+                            });
+                          }}
+                          sx={{
+                            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
+                              {
+                                color: "#fff",
+                                backgroundColor: "#68399E",
+                                border: "none",
+                                outline: "none",
+                                width: "200px",
+                              },
+                            "& .css-1bn53lx": {
+                              color: "#fff",
+                              backgroundColor: "#68399E",
+                              border: "none",
+                              outline: "none",
+                              width: "200px",
+                            },
+
+                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
+                              {
+                                color: "#fff",
+                                backgroundColor: "#68399E",
+                                border: "none",
+                                outline: "none",
+                                borderRadius: "10px",
+                                padding: "10px 20px",
+                              },
+                            "& .css-1uvydh2": {
+                              color: "#fff",
+                              backgroundColor: "#68399E",
+                              border: "none",
+                              outline: "none",
+                              borderRadius: "10px",
+                              padding: "10px 20px",
+                            },
+                            "& .css-i4bv87-MuiSvgIcon-root": {
+                              color: "#fff",
+                            },
+                            "& .css-vubbuv": {
+                              color: "#fff",
+                            },
+                          }}
+                        />
+                      </LocalizationProvider>
+                    </Box>
+                    <Box>
+                      <LocalizationProvider dateAdapter={AdapterMoment}>
+                        <MobileTimePicker
+                          value={validityDateReward?.time}
+                          onChange={(newValue) => {
+                            setValidityDateReward({
+                              ...validityDateReward,
+                              time: newValue,
+                            });
+                          }}
+                          sx={{
+                            "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input":
+                              {
+                                color: "#fff",
+                                backgroundColor: "#68399E !important",
+                                border: "#68399E",
+                                outline: "none",
+                                padding: "10px 15px",
+                                borderRadius: "5px",
+                                width: "70px",
+                              },
+                            "& .css-1x5jdmq": {
+                              color: "#fff",
+                              backgroundColor: "#68399E !important",
+                              border: "#68399E",
+                              outline: "none",
+                              padding: "10px 15px",
+                              borderRadius: "5px",
+                              width: "70px",
+                            },
+                            cursor: "pointer",
+                          }}
+                        />
+                      </LocalizationProvider>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      marginTop: `${parseFloat(MarginTop)}px`,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        textAlign: "start",
+                        fontSize: "14px",
+                        fontWeight: "500 !important",
+                        marginLeft: "0px !important",
+                        color: "#747EF3",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      Terms and Conditions
+                    </Typography>
+                    <Box
+                      sx={{
+                        marginTop: `${parseFloat(MarginTop / 4)}px`,
+                      }}
+                    >
+                      <TextareaAutosize
+                        value={termsAndConditions}
+                        onChange={(event) =>
+                          setTermsAndConditions(event.target.value)
+                        }
+                        style={{
+                          width: "100%",
+                          outline: "none",
+                          border: "none",
+                          padding: "8px 10px",
+                          borderRadius: "5px",
+                          fontWeight: "100 !important",
+                          letterSpacing: "1.5px",
+                          fontSize: "14px",
+                          backgroundColor: "#181223",
+                          color: "white",
+                          minHeight: "5rem",
+                        }}
+                      ></TextareaAutosize>
+                    </Box>
+                    <Box
+                      sx={{
+                        marginTop: `${parseFloat(MarginTop)}px`,
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          textAlign: "start",
+                          fontSize: "14px",
+                          fontWeight: "500 !important",
+                          marginLeft: "0px !important",
+                          color: "#747EF3",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        Ticket Name
+                      </Typography>
+                      <Box
+                        sx={{
+                          marginTop: `${parseFloat(MarginTop / 4)}px`,
+                        }}
+                      >
+                        <input
+                          value={ticketName}
+                          onChange={(event) =>
+                            setTicketName(event.target.value)
+                          }
+                          style={{
+                            width: "100%",
+                            outline: "none",
+                            border: "none",
+                            padding: "8px 10px",
+                            borderRadius: "5px",
+                            fontWeight: "100 !important",
+                            letterSpacing: "1.5px",
+                            fontSize: "14px",
+                            backgroundColor: "#181223",
+                            color: "white",
+                          }}
+                        ></input>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
             </>
           )}
-
           <Box
             sx={{
               marginTop: `${MarginTop}px`,
@@ -1426,11 +1783,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
               justifyContent: "center",
             }}
           >
-            <button
+            <LoadingButton
+              loading={!isCreateTournamentSuccess && !isCreateTournamentFail}
+              loadingPosition="end"
+              variant="contained"
               onClick={handleOnClickCreate}
-              disabled={!isCreateTournamentSuccess && !isCreateTournamentFail}
               style={{
-                padding: "10px 50px",
+                fontWeight: "700",
+                padding: "12px 72px",
                 border: "none",
                 outline: "none",
                 borderRadius: "5px",
@@ -1442,12 +1802,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 fontSize: getFontSizeDependOnWidth(width),
               }}
             >
-              {!isCreateTournamentSuccess && !isCreateTournamentFail ? (
-                <CircularProgress size="1.4rem" />
-              ) : (
-                "Create"
-              )}
-            </button>
+              Create
+            </LoadingButton>
           </Box>
         </Box>
       </Box>
@@ -1499,6 +1855,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 >
                   <Box
                     sx={{ width: "100%", height: "150px" }}
+                    style={{ objectFit: "cover" }}
                     component={"img"}
                     src={
                       item?.gameAvatar
@@ -1563,6 +1920,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   <Box
                     sx={{ width: "100%", height: "150px" }}
                     component={"img"}
+                    style={{ objectFit: "cover" }}
                     src={
                       item?.brandAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
@@ -1625,15 +1983,15 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 >
                   <Box
                     sx={{ width: "100%", height: "150px" }}
+                    style={{ objectFit: "cover" }}
                     component={"img"}
                     src={
                       item?.skinAvatar
-                        ? 
-                        images.undefinedAvatar
-                        // process.env.REACT_APP_SOCKET_SERVER +
-                        //   "/" +
-                        //   item?.skinAvatar
-                        : images.undefinedAvatar
+                        ? images.undefinedAvatar
+                        : // process.env.REACT_APP_SOCKET_SERVER +
+                          //   "/" +
+                          //   item?.skinAvatar
+                          images.undefinedAvatar
                     }
                   ></Box>
                 </Box>
