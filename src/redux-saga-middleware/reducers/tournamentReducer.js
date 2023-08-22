@@ -196,7 +196,7 @@ const tournamentReducer = (
         hotTournament: payload,
       };
     case "GET_LIST_DAILY_TOURNAMENT":
-      return {
+      return { 
         ...state,
         dailyTournament: payload,
       };
