@@ -22,6 +22,8 @@ import { getAppType } from "../../../utils/helper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
+import CountDownBannerHot from "../CountDownBannerHot";
+import NewFooter from "../../NewFooter";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -63,14 +65,9 @@ export default function NewHomePage() {
     hotTournament,
     biggestEndTour,
     brandTour,
+    hotWeekTour,
   } = useSelector((state) => state.tournamentReducer);
-  const typographyStyle = {
-    textAlign: "start",
-    fontSize: width < 576 ? "12px" : "14px",
-    fontWeight: "200 !important",
-    marginLeft: "0px !important",
-    color: "#fff",
-  };
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {
@@ -96,15 +93,16 @@ export default function NewHomePage() {
       dispatch({
         type: "CALL_BRAND_TOUR",
       });
+      dispatch({
+        type: "GET_HOTTEST_WEEK_TOUR",
+      });
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
-  console.log("brandTour: ", brandTour);
   useEffect(() => {
     setHourList(hourlyTournament.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
-
   const navigate = useNavigate();
   const calculateDistance = (x, y, x1, y1) => {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
@@ -1108,7 +1106,9 @@ export default function NewHomePage() {
                     <Box key={index}>
                       <Box
                         sx={{
-                          backgroundImage: `url(${imageHome.voucherBanner})`,
+                          backgroundColor: "#0F041D",
+                          backgroundImage:
+                            "linear-gradient(to right bottom, #0F041D, #300755, #4e087b, #5a0681, #730c93, #6e2099, #692d9e, #6437a2, #4f48a6, #3e55a5, #355ea0, #386699)",
                           backgroundRepeat: "no-repeat",
                           width: "100%",
                           height: "121.44px",
@@ -1618,89 +1618,9 @@ export default function NewHomePage() {
                       margin: "0px 12px 0px 12px",
                     }}
                   ></Box>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "10px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        2d
-                      </Typography>
-                    </Box>
-                    <Typography
-                      sx={{
-                        fontSize: "4.695px",
-                        color: "#00CBEF",
-                        margin: "0px 6px !important",
-                      }}
-                    >
-                      :
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "10px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        1h
-                      </Typography>{" "}
-                    </Box>{" "}
-                    <Typography
-                      sx={{
-                        fontSize: "4.695px",
-                        color: "#00CBEF",
-                        margin: "0px 6px !important",
-                      }}
-                    >
-                      :
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: "30px",
-                        height: "20px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "10px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        35m
-                      </Typography>{" "}
-                    </Box>{" "}
-                  </Box>
+                  <CountDownBannerHot
+                    expiryTime={moment(hotWeekTour?.tournamentEndAt)}
+                  />
                 </Box>
                 <Box
                   sx={{
@@ -1748,6 +1668,9 @@ export default function NewHomePage() {
                     </Typography>
                   </Box>
                   <button
+                    onClick={() => {
+                      navigate("/tournamentDetail/" + hotWeekTour?.id);
+                    }}
                     style={{
                       background:
                         "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
@@ -1846,89 +1769,9 @@ export default function NewHomePage() {
                       margin: "0px 12px 0px 12px",
                     }}
                   ></Box>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "44px",
-                        height: "44px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "20.052px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        2d
-                      </Typography>
-                    </Box>
-                    <Typography
-                      sx={{
-                        fontSize: "14.037px",
-                        color: "#00CBEF",
-                        margin: "0px 20px !important",
-                      }}
-                    >
-                      :
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: "44px",
-                        height: "44px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "20.052px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        1h
-                      </Typography>{" "}
-                    </Box>{" "}
-                    <Typography
-                      sx={{
-                        fontSize: "14.037px",
-                        color: "#00CBEF",
-                        margin: "0px 20px !important",
-                      }}
-                    >
-                      :
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: "50px",
-                        height: "44px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "20.052px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        35m
-                      </Typography>{" "}
-                    </Box>{" "}
-                  </Box>
+                  <CountDownBannerHot
+                    expiryTime={moment(hotWeekTour?.tournamentEndAt)}
+                  />
                 </Box>
                 <Box
                   sx={{
@@ -1962,7 +1805,7 @@ export default function NewHomePage() {
                         marginRight: "5px",
                       }}
                     >
-                      $100
+                      ${hotWeekTour?.tournamentPrize}
                     </Typography>
                     <Typography
                       sx={{
@@ -1976,6 +1819,9 @@ export default function NewHomePage() {
                     </Typography>
                   </Box>
                   <button
+                    onClick={() => {
+                      navigate("/tournamentDetail/" + hotWeekTour?.id);
+                    }}
                     style={{
                       background:
                         "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
@@ -2002,86 +1848,7 @@ export default function NewHomePage() {
             }}
           />
           {getAppType() === "promote" ? <Package /> : <></>}
-          {/* Footer */}
-          <Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: width < 576 ? "none" : "center",
-              }}
-            >
-              <Typography
-                sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px" }}
-              >
-                Support
-              </Typography>
-              <Box sx={{ width: width > 576 ? "38%" : "none" }}>
-                {" "}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "20px 10px 0px",
-                  }}
-                >
-                  <Typography sx={{ ...typographyStyle }}>
-                    Help center
-                  </Typography>
-                  <Typography sx={{ ...typographyStyle }}>Fairness</Typography>
-                  <Typography sx={{ ...typographyStyle }}>FAG</Typography>
-                  <Typography sx={{ ...typographyStyle }}>
-                    Privacy Policy
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "10px 40px",
-                  }}
-                >
-                  <Typography sx={{ ...typographyStyle }}>
-                    Term of service
-                  </Typography>
-                  <Typography sx={{ ...typographyStyle }}>
-                    Design resources
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              {" "}
-              <Box
-                component={"img"}
-                sx={{
-                  width: width < 576 ? "120px" : "200px",
-                  height: width < 576 ? "44px" : "73.333px",
-                  marginTop: "30px",
-                }}
-                src={imageDesktop.LogoCongTy}
-              ></Box>
-            </Box>
-            <Typography
-              sx={{
-                color: "#fff",
-                fontWeight: "200 !important",
-                fontSize: width < 576 ? "12px" : "16px",
-                lineHeight: "normal",
-                marginTop: "30px",
-              }}
-            >
-              "Experience the thrill of gaming at Play4Promo, where tournaments,
-              gameplay, and your dedication unlock exciting voucher rewards. Our
-              policies guarantee a seamless and rewarding voucher redemption
-              process for an enhanced gaming journey."
-            </Typography>
-          </Box>
+          <NewFooter />
           {promotion && width < 576 && (
             <Draggable
               onStart={(e, data) => {

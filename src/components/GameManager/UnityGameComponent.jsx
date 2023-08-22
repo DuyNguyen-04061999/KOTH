@@ -16,7 +16,7 @@ export default function UnityGameComponent(props) {
     roomId,
     handleEndGame,
     type,
-    skinName
+    skinName,
   } = props;
 
   const { width, height } = useWindowDimensions();
@@ -54,7 +54,7 @@ export default function UnityGameComponent(props) {
   }
 
   const {
-    unityProvider, 
+    unityProvider,
     unload,
     UNSAFE__unityInstance,
     addEventListener,
@@ -67,7 +67,11 @@ export default function UnityGameComponent(props) {
     dataUrl: getDataJs(GameFiles),
     frameworkUrl: getFrameworkJs(GameFiles),
     codeUrl: getWasmJs(GameFiles),
-    streamingAssetsUrl: process.env.REACT_APP_GAME_STREAMING_ASSET_URL + `/${String(gameId)}/${String(skinName)?.replaceAll(" ", "_")?.toLowerCase()}/` || "",
+    streamingAssetsUrl:
+      process.env.REACT_APP_GAME_STREAMING_ASSET_URL +
+        `/${String(gameId)}/${String(skinName)
+          ?.replaceAll(" ", "_")
+          ?.toLowerCase()}/` || "",
   });
 
   window.myGameInstance = UNSAFE__unityInstance;
@@ -104,7 +108,13 @@ export default function UnityGameComponent(props) {
     sendMessage("Object Spawner", "SetRoomName", roomId);
     sendMessage("Object Spawner", "StartGame", "Start");
     sendMessage("GameplayScene", "SetToken", token);
-    sendMessage("GameplayScene", "SetRoomName", process.env.REACT_APP_ENV && process.env.REACT_APP_ENV === "development" ? "test" : roomId);
+    sendMessage(
+      "GameplayScene",
+      "SetRoomName",
+      process.env.REACT_APP_ENV && process.env.REACT_APP_ENV === "development"
+        ? "test"
+        : roomId
+    );
     sendMessage("GameplayScene", "StartGame", "Start");
 
     sendMessage("MenuManager", "SetToken", token);
@@ -141,7 +151,7 @@ export default function UnityGameComponent(props) {
     };
   }, [addEventListener, removeEventListener, handleFinalGame]);
 
-  const unityRef = useRef()
+  const unityRef = useRef();
 
   return (
     <Fragment>
@@ -151,17 +161,22 @@ export default function UnityGameComponent(props) {
         </p>
       )}
       <Unity
-        style={type && type === "test" ? {
-          width, height
-        } : {
-          width: isFullScreen ? width : cwidth ? cwidth : "100%",
-          minWidth: "100%",
-          height: isFullScreen ? "100%" : cheight ? cheight : "100%",
-          position: isFullScreen ? "fixed" : "none",
-          top: isFullScreen ? 0 : "none",
-          left: isFullScreen ? 0 : "none",
-          zIndex: isFullScreen ? 2000 : "none",
-        }}
+        style={
+          type && type === "test"
+            ? {
+                width,
+                height,
+              }
+            : {
+                width: isFullScreen ? width : cwidth ? cwidth : "100%",
+                minWidth: "100%",
+                height: isFullScreen ? "100%" : cheight ? cheight : "100%",
+                position: isFullScreen ? "fixed" : "none",
+                top: isFullScreen ? 0 : "none",
+                left: isFullScreen ? 0 : "none",
+                zIndex: isFullScreen ? 2000 : "none",
+              }
+        }
         unityProvider={unityProvider}
         ref={unityRef}
       />

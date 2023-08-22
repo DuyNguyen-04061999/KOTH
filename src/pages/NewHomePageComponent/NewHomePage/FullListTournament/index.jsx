@@ -21,6 +21,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
   const [selectedDay, setSeDay] = useState(0);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
+  const [itemOffset, setItemOffSet] = useState(1);
   const [tourList, setTourList] = useState([]);
   useEffect(() => {
     if (isFetchList) {
@@ -90,6 +91,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
           display: "flex",
           flexDirection: "column",
           overflowY: "auto",
+          paddingBottom: "78px",
         }}
       >
         <Box
@@ -413,107 +415,109 @@ export default function FullListTournament({ handleOnClose, open, type }) {
             </Box>
           )}
           <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-            {tourList?.map((item, index) => {
-              return index % 2 === 0 ? (
-                <Box
-                  onClick={() => navigate("/tournamentDetail/" + item?.id)}
-                  key={index}
-                  sx={{
-                    width: "50%",
-                    boxSizing: "border-box",
-                    marginTop: "24px",
-                    paddingRight: "10px",
-                  }}
-                >
+            {tourList
+              ?.slice(itemOffset, itemOffset + 10)
+              ?.map((item, index) => {
+                return index % 2 === 0 ? (
                   <Box
+                    onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                    key={index}
                     sx={{
-                      backgroundColor: "#37285C",
-                      borderRadius: "10px",
-                      padding: "8px",
-                      display: "flex",
-                      flexDirection: "column",
+                      width: "50%",
+                      boxSizing: "border-box",
+                      marginTop: "24px",
+                      paddingRight: "10px",
                     }}
                   >
                     <Box
-                      sx={{ borderRadius: "10px" }}
-                      component={"img"}
-                      src={images.GameTournament}
-                    ></Box>
-                    <Typography
                       sx={{
-                        color: "#FFDC62",
-                        fontSize: "14px",
-                        fontWeight: "200 !important",
-                        textAlign: "start",
-                        marginTop: "5px",
+                        backgroundColor: "#37285C",
+                        borderRadius: "10px",
+                        padding: "8px",
+                        display: "flex",
+                        flexDirection: "column",
                       }}
                     >
-                      {item?.tournamentName}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#ffff",
-                        fontSize: "12px",
-                        fontWeight: "200 !important",
-                        textAlign: "start",
-                        marginTop: "-3px",
-                      }}
-                    >
-                      By Mcdonald’s
-                    </Typography>
+                      <Box
+                        sx={{ borderRadius: "10px" }}
+                        component={"img"}
+                        src={images.GameTournament}
+                      ></Box>
+                      <Typography
+                        sx={{
+                          color: "#FFDC62",
+                          fontSize: "14px",
+                          fontWeight: "200 !important",
+                          textAlign: "start",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {item?.tournamentName}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#ffff",
+                          fontSize: "12px",
+                          fontWeight: "200 !important",
+                          textAlign: "start",
+                          marginTop: "-3px",
+                        }}
+                      >
+                        By Mcdonald’s
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              ) : (
-                <Box
-                  onClick={() => navigate("/tournamentDetail/" + item?.id)}
-                  key={index}
-                  sx={{
-                    width: "50%",
-                    boxSizing: "border-box",
-                    marginTop: "24px",
-                    paddingLeft: "10px",
-                  }}
-                >
+                ) : (
                   <Box
+                    onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                    key={index}
                     sx={{
-                      backgroundColor: "#37285C",
-                      borderRadius: "10px",
-                      padding: "8px",
-                      display: "flex",
-                      flexDirection: "column",
+                      width: "50%",
+                      boxSizing: "border-box",
+                      marginTop: "24px",
+                      paddingLeft: "10px",
                     }}
                   >
                     <Box
-                      sx={{ borderRadius: "10px" }}
-                      component={"img"}
-                      src={images.GameTournament}
-                    ></Box>
-                    <Typography
                       sx={{
-                        color: "#FFDC62",
-                        fontSize: "14px",
-                        fontWeight: "200 !important",
-                        textAlign: "start",
-                        marginTop: "5px",
+                        backgroundColor: "#37285C",
+                        borderRadius: "10px",
+                        padding: "8px",
+                        display: "flex",
+                        flexDirection: "column",
                       }}
                     >
-                      {item?.tournamentName}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#ffff",
-                        fontSize: "12px",
-                        fontWeight: "200 !important",
-                        textAlign: "start",
-                        marginTop: "-3px",
-                      }}
-                    >
-                      By Mcdonald’s
-                    </Typography>
+                      <Box
+                        sx={{ borderRadius: "10px" }}
+                        component={"img"}
+                        src={images.GameTournament}
+                      ></Box>
+                      <Typography
+                        sx={{
+                          color: "#FFDC62",
+                          fontSize: "14px",
+                          fontWeight: "200 !important",
+                          textAlign: "start",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {item?.tournamentName}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#ffff",
+                          fontSize: "12px",
+                          fontWeight: "200 !important",
+                          textAlign: "start",
+                          marginTop: "-3px",
+                        }}
+                      >
+                        By Mcdonald’s
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              );
-            })}
+                );
+              })}
           </Box>
         </Box>
       </Box>

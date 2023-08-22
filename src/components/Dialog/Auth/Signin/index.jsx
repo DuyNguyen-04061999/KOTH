@@ -232,14 +232,14 @@ function SimpleDialog(props) {
                       />
                     </FormControl>
                     <Box className="d-flex justify-content-end mt-4">
-                      <Box
+                      {/* <Box
                         sx={{
                           color: "#7671ba",
                           fontWeight: "500",
                         }}
                       >
                         Forgot Password ?
-                      </Box>
+                      </Box> */}
                     </Box>
                     <Box className="d-flex justify-content-center">
                       <button
@@ -428,7 +428,7 @@ function SimpleDialog(props) {
                         />
                       </FormControl>
                       <Box className="d-flex justify-content-end">
-                        <Box
+                        {/* <Box
                           sx={{
                             color: "#7671ba",
                             fontWeight: "500",
@@ -436,7 +436,7 @@ function SimpleDialog(props) {
                           }}
                         >
                           Forgot Password ?
-                        </Box>
+                        </Box> */}
                       </Box>
                       <Box className="d-flex justify-content-center">
                         <div className="btn-conteiner">
@@ -526,7 +526,7 @@ function SimpleDialog(props) {
                     alt="..."
                     width={"100%"}
                     height={"100%"}
-                    style={{ paddingTop: "45px", backgroundColor: "#3a2b6d" }}
+                    style={{ backgroundColor: "#3a2b6d" }}
                   />
                 </Box>
               ) : null}

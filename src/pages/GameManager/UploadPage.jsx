@@ -11,6 +11,7 @@ export default function UploadPage() {
   const [uploadAsset, setUploadAsset] = useState([]);
   const [contentZip, setContentZip] = useState("");
   const [listSkin, setListSkin] = useState([])
+  const [screen, setScreen] = useState(false);
 
   function checkExtension(exts, files) {
       for (let index = 0; index < files.length; index++) {
@@ -41,6 +42,7 @@ export default function UploadPage() {
       avatar: data.get('avatar'),
       type: data.get('type'),
       host: data.get('host'),
+      screen: screen ? 1 : 0,
       files: uploadItem,
       paths: data.getAll("paths"),
       zips: data.getAll("zips"),
@@ -138,7 +140,19 @@ export default function UploadPage() {
         className='form-control'
         onChange={handleSelectedFile}
       />
-
+      <FormLabel className='mt-2 mb-2 text-white'>
+        Game Screen
+      </FormLabel>
+      <input
+        type='checkbox'
+        name="screen"
+        style={{
+          width: '1%'
+        }}
+        readOnly
+        onChange={() => setScreen(!screen)}
+        checked={screen}
+      />
       <Box component={"div"} className='mt-2 mb-2 text-white' onClick={() => {
         setListSkin([] || [...listSkin, 1])
       }}>

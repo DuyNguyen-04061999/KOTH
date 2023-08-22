@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
   - deploy
 .build: &build
   stage: build
@@ -14,7 +15,7 @@ stages:
     - cat env.text
     - chmod +x ci/docker_build.sh
     - ./ci/docker_build.sh
-    # - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
+      #- docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:${IMAGE_PREFIX}$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_IMAGE:${IMAGE_PREFIX}latest
 #    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
@@ -34,6 +35,13 @@ build-promote:
     - staging/promote
   environment:
     name: promote
+
+build-play4promo-prod:
+  <<: *build
+  only:
+    - main
+  environment:
+    name: play4promo-prod
 
 .deploy: &deploy
   stage: deploy
@@ -59,3 +67,39 @@ deploy-promote:
     - staging/promote
   environment:
     name: promote
+
+test:
+  image: node:latest
+  stage: test
+  only:
+    - main
+  script:
+    - apt-get update
+    - apt-get install -yq gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+    - git clone "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/king-of-the-hill/koth_e2e_tests"
+    - cd koth_e2e_tests
+    - npm install
+    - npm run e2e
+
+deploy-promote_production:
+  stage: deploy 
+  image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+  environment:
+    name: play4promo-prod
+  only:
+    - main
+  script:
+    - gcloud components update kubectl
+    - gcloud auth activate-service-account --key-file $PROD_SERVICE_ACCOUNT
+    - gcloud config set project $PROD_GOOGLE_PROJECT_NAME
+    - gcloud config set compute/zone $PROD_CLUSTER_LOCATION
+    - gcloud container clusters get-credentials $PROD_CLUSTER_NAME
+    # Install OpenSSL to verify Helm install
+    - apk add --no-cache openssl
+    # Install Helm
+    - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    - chmod 700 get_helm.sh
+    - ./get_helm.sh
+    - 'helm repo add --username gitlab-ci-token --password $CI_JOB_TOKEN play4promo-repo "$CI_API_V4_URL/projects/47543693/packages/helm/stable"'
+    - helm repo update
+    - helm upgrade --install first-release play4promo-repo/play4promo-chart --set webClientImage.repo=$CI_REGISTRY_IMAGE,webClientImage.tag=promote-$CI_COMMIT_SHA

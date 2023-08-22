@@ -128,7 +128,7 @@ function App() {
   useEffect(() => {
     if (socket) {
       socket.once("connect", (data) => {});
-      socket?.on("loginSuccess", (mess, token, key, user, password) => {
+      socket?.on("loginSuccess", (mess, token, key, user, userPackageId) => {
         store.dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
         store.dispatch(
           saveDataLogin({
@@ -138,6 +138,7 @@ function App() {
             avatar: user?.userAccount?.accountAvatar,
             role: user?.userRole,
             id: user?.id,
+            userPackageId:userPackageId
           })
         );
 
@@ -506,6 +507,7 @@ function App() {
   useEffect(() => {
     store.dispatch(getListBet());
   });
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
