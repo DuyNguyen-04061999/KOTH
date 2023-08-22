@@ -3,13 +3,9 @@ import {
   Container,
   CssBaseline,
   Dialog,
-  TableCell,
-  TableRow,
   ThemeProvider,
   Typography,
   createTheme,
-  styled,
-  tableCellClasses,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -18,8 +14,6 @@ import {
   getFontSizeDependOnWidth,
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { images280423_l } from "../../../utils/images280423_l";
 import { images, video } from "../../../utils/images";
 import { useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -72,19 +66,7 @@ export default function JoinTournament() {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: "#1f1933",
-      width: width,
-    },
-    "&:nth-of-type(even)": {
-      backgroundColor: "#291e42",
-      width: width,
-    },
-    "&:last-child td, &:last-child th": {
-      border: "none",
-    },
-  }));
+
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
       setIsFullScreen(true);
@@ -103,24 +85,6 @@ export default function JoinTournament() {
       setCheckMobile(false);
     }
   }, [isFullScreen, checkMobile]);
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#251f41",
-      color: "#7c81f3",
-      fontWeight: "bolder",
-      fontSize: 13,
-      width: width / 5,
-      maxWidth: width / 5,
-      border: "none",
-      padding: "10px 0px",
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 12,
-      width: width / 5,
-      maxWidth: width / 5,
-      border: "none",
-    },
-  }));
   const screen = useFullScreenHandle();
   const [minLength, setMinLength] = useState(0);
   const reportChange = useCallback(
@@ -275,7 +239,8 @@ export default function JoinTournament() {
                           fontWeight: "lighter !important",
                         }}
                       >
-                        Tournament of hourly
+                        {detailTournament?.tournamentInfors?.game &&
+                          detailTournament?.tournamentInfors?.game[0]?.gameName}
                       </Typography>
                     </Box>
                   )}

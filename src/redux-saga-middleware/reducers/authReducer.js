@@ -95,9 +95,9 @@ export const getIdPackage = (data) => {
   console.log(data);
   return {
     type: "GET_ID_PACKAGE",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 const authReducer = (
   state = {
@@ -118,6 +118,7 @@ const authReducer = (
     mess: "",
     isDialogConfirm: false,
     idPackage: "",
+    userPackageId: "",
   },
   action
 ) => {
@@ -136,6 +137,7 @@ const authReducer = (
         token: payload.token,
         userRole: payload?.role,
         userId: payload?.id,
+        userPackageId: payload.userPackageId,
       };
     }
     case "REMOVE_TOKEN":
@@ -182,8 +184,8 @@ const authReducer = (
         ...state,
         isDialogConfirm: !state.isDialogConfirm,
       };
-    case "GET_ID_PACKAGE" : 
-    return { ...state, idPackage: payload}
+    case "GET_ID_PACKAGE":
+      return { ...state, idPackage: payload };
     default:
       return state;
   }

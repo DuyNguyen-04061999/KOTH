@@ -65,9 +65,9 @@ export default function ListGamePage() {
                         params.append('token', token);
 
                         navigate({
-                          pathname: '/game',
-                          search: `?${params.toString()}`,
-                          state: game?.GameFiles
+                          pathname: `/game/${game?.id}`,
+                          // search: `?${params.toString()}`,
+                          // state: game?.GameFiles
                         });
                       }
                     }}
