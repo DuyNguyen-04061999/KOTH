@@ -222,7 +222,7 @@ import signintopbar from "../assets/imagesLayout/Sign/signin topbar button.png";
 import commingsoon2 from "../assets/imagesLayout/ComingSoon.png";
 import editbutton from "../assets/imagesDesktop/editbutton.png";
 import copybutton from "../assets/imagesDesktop/copybutton.png";
-import bannersignin from "../assets/imagesLayout/Sign/bannerLogin.png";
+import bannersignin from "../assets/imagesLayout/Sign/bannerSignin.png";
 import chose1 from "../assets/imagesLayout/Sign/chose_button.png";
 import chose2 from "../assets/imagesLayout/Sign/chose.png";
 
