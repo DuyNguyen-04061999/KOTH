@@ -8,7 +8,7 @@ function GamePage() {
 
     return (
         <Fragment>
-            <UnityGameComponent GameFiles={game?.GameFiles || location?.state?.GameFiles}/>
+            <UnityGameComponent GameFiles={game?.GameFiles || location?.state?.GameFiles} type={"test"}/>
         </Fragment>
     )
     

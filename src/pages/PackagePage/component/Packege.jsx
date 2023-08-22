@@ -12,6 +12,8 @@ import {
   toggleDialogConfirm,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 
+import { useLocation } from 'react-router-dom'
+
 export default function Package() {
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.appReducer);
@@ -34,13 +36,15 @@ export default function Package() {
     }
   }, [socket, token]);
 
+  const location = useLocation()
+
   return (
     <>
       <DialogConfirm />
       {width > 576 ? (
         <div className="Package-home pb-5 mb-5">
           <Box className="pt-5 pb-4 text-white">
-            <Typography variant="h5">Package</Typography>
+            {location && location?.pathname?.includes("home") && <Typography variant="h5">Package</Typography>}
           </Box>
           <Container
             maxWidth={"lg"}
