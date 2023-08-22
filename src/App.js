@@ -507,6 +507,7 @@ function App() {
   useEffect(() => {
     store.dispatch(getListBet());
   });
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
