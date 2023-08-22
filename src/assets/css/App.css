@@ -114,6 +114,8 @@ input::-webkit-inner-spin-button {
   font-size: 14px !important;
   background-color: #f3d886 !important;
   width: 465px !important;
+  padding: 6px !important;
+  height: 100% !important;
 }
 .warning-background-small {
   color: #997d24 !important;
@@ -124,4 +126,6 @@ input::-webkit-inner-spin-button {
   border-radius: 5px !important;
   left: 20%;
   margin-top: 20px;
+  /* padding: 6px !important; */
+  height: 100% !important;
 }

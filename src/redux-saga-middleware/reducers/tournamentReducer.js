@@ -135,6 +135,12 @@ export const getBrandTournamentFail = (data) => {
     payload: data,
   };
 };
+export const getHottestWeekTourSuccess = (data) => {
+  return {
+    type: "GET_HOTTEST_WEEK_TOUR_SUCCESS",
+    payload: data,
+  };
+};
 
 const tournamentReducer = (
   state = {
@@ -156,6 +162,7 @@ const tournamentReducer = (
     isFecthBrand: false,
     biggestEndTour: [],
     brandTour: [],
+    hotWeekTour: [],
     //--------------------------------------
   },
   action
@@ -196,7 +203,7 @@ const tournamentReducer = (
         hotTournament: payload,
       };
     case "GET_LIST_DAILY_TOURNAMENT":
-      return {
+      return { 
         ...state,
         dailyTournament: payload,
       };
@@ -257,7 +264,7 @@ const tournamentReducer = (
       return {
         ...state,
         isFecthBrand: false,
-      }
+      };
     case "GET_BIGGEST_SUCCESS":
       return {
         ...state,
@@ -267,6 +274,11 @@ const tournamentReducer = (
       return {
         ...state,
         brandTour: payload,
+      };
+    case "GET_HOTTEST_WEEK_TOUR_SUCCESS":
+      return {
+        ...state,
+        hotWeekTour: payload,
       };
     default:
       return state;
