@@ -871,7 +871,7 @@ export default function JoinTournament() {
                 zIndex: isFullScreen && startGame ? "5005" : "none",
               }}
             >
-              {detailTournament &&
+              {detailTournament && detailTournament?.tournamentInfors?.game && detailTournament?.tournamentInfors?.game?.length > 0 &&
                 detailTournament?.tournamentInfors?.game[0].GameFiles.length >=
                   4 && (
                   <FullScreen handle={screen} onChange={reportChange}>
