@@ -17,23 +17,27 @@ class TournamentService {
     return res;
   }
   async listGameForTournament(dataRequest) {
-    const res = await API.get("/api/games/list-game-tournament", dataRequest)
-    return res
+    const res = await API.get("/api/games/list-game-tournament", dataRequest);
+    return res;
   }
   async listSkinForTournament(dataRequest) {
-    const res = await API.get("/api/games/list-skin-tournament", dataRequest)
-    return res
+    const res = await API.get("/api/games/list-skin-tournament", dataRequest);
+    return res;
   }
   async listBrandForTournament(dataRequest) {
-    const res = await API.get("/api/list-brand-tournament", dataRequest)
-    return res
+    const res = await API.get("/api/list-brand-tournament", dataRequest);
+    return res;
   }
   async callBiggestEndTour() {
     const res = await API.get("/api/tournaments/biggest-prize-end-tour");
     return res;
   }
   async callBrandTour() {
-    const res = await API.get("/api/tournaments/brand-tour");
+    const res = await API.get("/api/tournaments/hot-brand-tour");
+    return res;
+  }
+  async callHottestWeekTour() {
+    const res = await API.get("/api/tournaments/hottest-week-tour");
     return res;
   }
 }
