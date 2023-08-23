@@ -15,7 +15,7 @@ import {
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
 import { images, video } from "../../../utils/images";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -102,8 +102,10 @@ export default function JoinTournament() {
     setSocket(_socket);
   }, []);
 
+  const navigate = useNavigate()
+
   useEffect(() => {
-    if ((token && fetchT) || (!token && fetchT)) {
+    if (((token && fetchT) || (!token && fetchT)) && id && id !== undefined && id !== "undefined" && (typeof id === "string" || typeof id === "number")) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
@@ -836,8 +838,8 @@ export default function JoinTournament() {
                 zIndex: isFullScreen && startGame ? "5005" : "none",
               }}
             >
-              {detailTournament && detailTournament?.tournamentInfors?.game && detailTournament?.tournamentInfors?.game?.length > 0 &&
-                detailTournament?.tournamentInfors?.game[0].GameFiles.length >=
+              {detailTournament && detailTournament?.tournamentInfors?.game && detailTournament?.tournamentInfors?.game?.GameFiles &&
+                detailTournament?.tournamentInfors?.game?.GameFiles.length >=
                   4 && (
                   <FullScreen handle={screen} onChange={reportChange}>
                     {videoGame ? (
@@ -863,8 +865,7 @@ export default function JoinTournament() {
                       <Fragment>
                         <UnityGameComponent
                           GameFiles={
-                            detailTournament?.tournamentInfors?.game[0]
-                              .GameFiles
+                            detailTournament?.tournamentInfors?.game?.GameFiles
                           }
                           width="100%"
                           height="800px"
@@ -874,14 +875,13 @@ export default function JoinTournament() {
                           isFullScreen={isFullScreen}
                           fullScreen={expand}
                           gameId={
-                            detailTournament?.tournamentInfors?.game[0]
-                              ._gg_koth_game_tournaments?.gameId
+                            detailTournament?.tournamentInfors?.game?.gameId || ""
                           }
+                          skinName={detailTournament?.tournamentInfors?.skin?.skinName || ""}
                           type="tournament"
                           handleEndGame={handleEndGame}
                           gameName={
-                            detailTournament?.tournamentInfors?.game[0]
-                              ?.gameName
+                            detailTournament?.tournamentInfors?.game?.gameName || ""
                           }
                         />
                         {startGame && expand === true && width > 576 && (
