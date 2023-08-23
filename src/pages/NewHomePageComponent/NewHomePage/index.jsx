@@ -114,6 +114,8 @@ export default function NewHomePage() {
     dailyTournament?.filter((n) => n.timeStart === dayList[selectedDay])[0]
       ?.listTournament
   );
+
+  console.log("Biggesr", biggestEndTour?.bestUser?.tUser?.userAccount);
   return (
     <Container
       maxWidth="lg"
@@ -228,7 +230,7 @@ export default function NewHomePage() {
                   infinite={false}
                 >
                   {hotTournament?.map((item, index) => {
-                    return <ItemComponent tourInfo={item} countdown={true} />;
+                    return <ItemComponent key={index} tourInfo={item} countdown={true} />;
                   })}
                 </Slider>
               ) : (
@@ -241,9 +243,7 @@ export default function NewHomePage() {
                 >
                   {hotTournament?.map((item, index) => {
                     return (
-                      <>
-                        <ItemComponent countdown={true} tourInfo={item} />
-                      </>
+                      <ItemComponent key={index} countdown={true} tourInfo={item} />
                     );
                   })}
                 </Slider>
@@ -395,7 +395,7 @@ export default function NewHomePage() {
               >
                 <Box
                   component={"img"}
-                  src={images.pool}
+                  src={biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar ? process.env.REACT_APP_SOCKET_SERVER + "/" + biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar : images.pool }
                   sx={{
                     borderRadius: "50%",
                     width: "168px",
@@ -418,7 +418,7 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     position: "absolute",
-                    left: "271px",
+                    // left: "271px",
                     bottom: "50px",
                     color: "#ffff",
                     fontSize: "33px",
@@ -450,13 +450,14 @@ export default function NewHomePage() {
                   MEGA HOLIC
                 </Typography>
                 <Typography
+
                   sx={{
                     marginLeft: "0px !important",
                     color: "#fff",
                     fontSize: "88px",
                     position: "absolute",
                     top: "85px",
-                    left: "140px",
+                    left: "45%",
                   }}
                 >
                   {biggestEndTour?.endTour?.tournamentPrize
@@ -569,7 +570,7 @@ export default function NewHomePage() {
                     )[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <ItemComponent countdown={false} tourInfo={item} />
+                        <ItemComponent key={index} countdown={false} tourInfo={item} />
                       );
                     })}
                 </Slider>
@@ -579,7 +580,7 @@ export default function NewHomePage() {
                   slidesToShow={5}
                   arrows={false}
                   slidesToScroll={5}
-                  infinite={true}
+                  infinite={false}
                 >
                   {hourlyTournament
                     ?.filter(
@@ -589,9 +590,8 @@ export default function NewHomePage() {
                     )[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <>
-                          <ItemComponent countdown={true} tourInfo={item} />
-                        </>
+                        <ItemComponent key={index} countdown={true} tourInfo={item} />
+
                       );
                     })}
                 </Slider>
@@ -690,9 +690,7 @@ export default function NewHomePage() {
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <>
-                          <ItemComponent countdown={true} tourInfo={item} />
-                        </>
+                        <ItemComponent key={index} countdown={true} tourInfo={item} />
                       );
                     })}
                 </Slider>
@@ -708,9 +706,7 @@ export default function NewHomePage() {
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <>
-                          <ItemComponent countdown={true} tourInfo={item} />
-                        </>
+                        <ItemComponent key={index} countdown={true} tourInfo={item} />
                       );
                     })}
                 </Slider>
@@ -1028,7 +1024,7 @@ export default function NewHomePage() {
                   infinite={false}
                 >
                   {weeklyTournament?.map((item, index) => {
-                    return <ItemComponent countdown={true} tourInfo={item} />;
+                    return <ItemComponent key={index} countdown={true} tourInfo={item} />;
                   })}
                 </Slider>
               ) : (
@@ -1041,9 +1037,7 @@ export default function NewHomePage() {
                 >
                   {weeklyTournament?.map((item, index) => {
                     return (
-                      <>
-                        <ItemComponent countdown={true} tourInfo={item} />
-                      </>
+                      <ItemComponent key={index} countdown={true} tourInfo={item} />
                     );
                   })}
                 </Slider>
