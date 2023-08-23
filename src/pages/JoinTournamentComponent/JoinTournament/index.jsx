@@ -15,7 +15,7 @@ import {
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
 import { images, video } from "../../../utils/images";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,7 +66,7 @@ export default function JoinTournament() {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
-
+  console.log(videoGame);
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
       setIsFullScreen(true);
@@ -81,7 +81,7 @@ export default function JoinTournament() {
   }, [orientation, width, previousOri]);
   useEffect(() => {
     if (isFullScreen === true && checkMobile === true) {
-      setVideoGame(true);
+      // setVideoGame(true);
       setCheckMobile(false);
     }
   }, [isFullScreen, checkMobile]);
@@ -102,8 +102,16 @@ export default function JoinTournament() {
     setSocket(_socket);
   }, []);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if ((token && fetchT) || (!token && fetchT)) {
+    if (
+      ((token && fetchT) || (!token && fetchT)) &&
+      id &&
+      id !== undefined &&
+      id !== "undefined" &&
+      (typeof id === "string" || typeof id === "number")
+    ) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
@@ -128,9 +136,7 @@ export default function JoinTournament() {
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       setStartGame(true);
-      if (orientation === "landscape") {
-        setVideoGame(true);
-      }
+      setVideoGame(true);
       setCheckMobile(true);
     });
     return () => {
@@ -159,7 +165,6 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
-  console.log("detail Tournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -838,13 +843,12 @@ export default function JoinTournament() {
             >
               {detailTournament &&
                 detailTournament?.tournamentInfors?.game &&
-                detailTournament?.tournamentInfors?.game?.length > 0 &&
-                detailTournament?.tournamentInfors?.game[0].GameFiles.length >=
+                detailTournament?.tournamentInfors?.game?.GameFiles &&
+                detailTournament?.tournamentInfors?.game?.GameFiles.length >=
                   4 && (
                   <FullScreen handle={screen} onChange={reportChange}>
                     {videoGame ? (
                       <Fragment>
-                        (
                         <video
                           className={
                             isFullScreen && startGame ? "fullscreenVideo" : ""
@@ -859,14 +863,12 @@ export default function JoinTournament() {
                         >
                           <source src={video.LogoAnim} type="video/mp4" />
                         </video>
-                        )
                       </Fragment>
                     ) : (
                       <Fragment>
                         <UnityGameComponent
                           GameFiles={
-                            detailTournament?.tournamentInfors?.game[0]
-                              .GameFiles
+                            detailTournament?.tournamentInfors?.game?.GameFiles
                           }
                           width="100%"
                           height="800px"
@@ -876,14 +878,17 @@ export default function JoinTournament() {
                           isFullScreen={isFullScreen}
                           fullScreen={expand}
                           gameId={
-                            detailTournament?.tournamentInfors?.game[0]
-                              ._gg_koth_game_tournaments?.gameId
+                            detailTournament?.tournamentInfors?.game?.id || ""
+                          }
+                          skinName={
+                            detailTournament?.tournamentInfors?.skin
+                              ?.skinName || ""
                           }
                           type="tournament"
                           handleEndGame={handleEndGame}
                           gameName={
-                            detailTournament?.tournamentInfors?.game[0]
-                              ?.gameName
+                            detailTournament?.tournamentInfors?.game
+                              ?.gameName || ""
                           }
                         />
                         {startGame && expand === true && width > 576 && (

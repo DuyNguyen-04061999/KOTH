@@ -92,8 +92,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
           }}
         >
           <Typography sx={{ ...styleTypography }}>
-            {/* {tourInfo?.tournamentName} */}Galaxy Quest: Win a Z Flip 5
-            Galaxy
+            {tourInfo?.tournamentName}
           </Typography>
           <Box
             sx={{

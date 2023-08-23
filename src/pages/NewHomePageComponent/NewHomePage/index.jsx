@@ -68,7 +68,7 @@ export default function NewHomePage() {
     brandTour,
     hotWeekTour,
   } = useSelector((state) => state.tournamentReducer);
-
+  console.log("dayList: ", dailyTournament);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {
@@ -101,14 +101,19 @@ export default function NewHomePage() {
     }
   }, [dispatch, isFetchList]);
   useEffect(() => {
-    setHourList(hourlyTournament.map((item) => moment(item?.timeStart)));
-    setDayList(dailyTournament.map((item) => item?.timeStart));
+    setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
+    setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
   const calculateDistance = (x, y, x1, y1) => {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
+  console.log(
+    "daily: ",
+    dailyTournament?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+      ?.listTournament
+  );
   return (
     <Container
       maxWidth="lg"
@@ -128,7 +133,17 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
-          <Box sx={{ marginBottom: width < 576 ? "24px" : "32px" }}>
+          <Box
+            onClick={() => {
+              if (width > 576) {
+                navigate("/week-long-tournament");
+              } else {
+                setOpen(true);
+                setType("week-long");
+              }
+            }}
+            sx={{ marginBottom: width < 576 ? "24px" : "32px" }}
+          >
             {" "}
             <SlickSlider
               appendDot={true}
@@ -219,7 +234,7 @@ export default function NewHomePage() {
               ) : (
                 <Slider
                   dots={false}
-                  slidesToShow={6}
+                  slidesToShow={5}
                   arrows={false}
                   slidesToScroll={5}
                   infinite={false}
@@ -662,19 +677,23 @@ export default function NewHomePage() {
               />
             </Box>
 
-            <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
+            <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               {width < 576 ? (
                 <Slider
                   dots={false}
                   slidesToShow={2}
                   arrows={false}
                   slidesToScroll={2}
-                  infinite={true}
+                  infinite={false}
                 >
                   {dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
-                      return <ItemComponent countdown={true} tourInfo={item} />;
+                      return (
+                        <>
+                          <ItemComponent countdown={true} tourInfo={item} />
+                        </>
+                      );
                     })}
                 </Slider>
               ) : (
@@ -683,7 +702,7 @@ export default function NewHomePage() {
                   slidesToShow={5}
                   arrows={false}
                   slidesToScroll={5}
-                  infinite={true}
+                  infinite={false}
                 >
                   {dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]

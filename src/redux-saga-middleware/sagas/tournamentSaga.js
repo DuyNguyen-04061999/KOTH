@@ -17,6 +17,7 @@ import {
   getWeeklyTour,
   getHottestWeekTourSuccess,
 } from "../reducers/tournamentReducer";
+import { showAlert } from "../reducers/alertReducer";
 const tournamentService = new TournamentService();
 
 function* postTournamentCreate(dataRequest) {
@@ -25,20 +26,25 @@ function* postTournamentCreate(dataRequest) {
     const res = yield call(tournamentService.callCreateTournament, payload);
     if (res.status === 200) {
       yield put(createTournamentSuccess());
+      window.location.reload();
+    } else {
+      yield put(createTournamentFail());
     }
   } catch (error) {
+    console.log(error);
     yield put(createTournamentFail());
+    alert(error?.message || error);
   }
 }
 function* getListTour(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.callListTournament, payload);
-    if (payload === "day") {
+    if (payload === "daily") {
       yield put(getDailyTour(res.data));
-    } else if (payload === "week") {
+    } else if (payload === "weekly") {
       yield put(getWeeklyTour(res.data));
-    } else if (payload === "hour") {
+    } else if (payload === "hourly") {
       yield put(getHourlyTour(res.data));
     } else if (payload === "hot") {
       yield put(getHotTour(res.data));

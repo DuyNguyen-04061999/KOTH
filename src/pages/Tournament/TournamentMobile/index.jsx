@@ -87,6 +87,7 @@ export default function TournamentMobile() {
                 index < 4 &&
                 (index % 2 === 0 ? (
                   <Box
+                    key={index}
                     sx={{
                       width: "50%",
                       boxSizing: "border-box",
