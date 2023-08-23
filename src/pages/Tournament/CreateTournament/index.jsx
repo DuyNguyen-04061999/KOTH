@@ -37,7 +37,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const avaRef = useRef(null);
   const bgRef = useRef(null);
   const [listGame, setListGame] = useState([]);
-  console.log(listGame);
   const [socket, setSocket] = useState(null);
   const [listGamePop, setListGamePop] = useState(false);
   const [listSkinPop, setListSkinPop] = useState(false);
@@ -46,8 +45,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [name, setName] = useState("");
   const [brandId, setBrandId] = useState(0);
   const [skinId, setSkinId] = useState(0);
-  console.log(brandId);
-  console.log(skinId);
+
   const [startTime, setStartTime] = useState({
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
@@ -89,8 +87,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { skinTournament, listBrand } = useSelector(
     (state) => state.tournamentReducer
   );
-  console.log(listBrand);
-  console.log(skinTournament);
+
   const dispatch = useDispatch();
 
   const showOpenFileDialog = (event) => {
@@ -138,44 +135,44 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
     }
   };
   const handleOnClickCreate = () => {
-    dispatch(createTournamentReady());
-    setTimeout(() => {
-      dispatch(
-        createTournament({
-          gameId: gameId,
-          name: name,
-          start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
-          end: `${endTime.date} ${moment(endTime?.time).format("HH:mm")}`,
-          quantity: quantity,
-          type: type,
-          information: information,
-          maxPlay: maxPlay,
-          leaderBoard: leaderBoard,
-          loop: loop,
-          coors: coors,
-          prize: prizeSetUp,
-          autoPrice: prizeType,
-          autoAmount: autoAmount,
-          autoDistribution: prizeDis,
-          autoRatio: prizeRatio,
-          manualDescription: manualDescription,
-          token: localStorage.getItem("token"),
-          hot: valueTest,
-          video: video,
-          background: bg,
-          avatar: avatar,
-          brandId: brandId,
-          skinId: skinId,
-          titleReward: null,
-          recipientReward: null,
-          validityDateReward: validityDateReward,
-          termsAndConditions: null,
-          ticketName: null,
-        })
-      );
-    }, 2000);
+    // dispatch(createTournamentReady());
+    // setTimeout(() => {
+    //   dispatch(
+    //     createTournament({
+    //       gameId: gameId,
+    //       name: name,
+    //       start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
+    //       end: `${endTime.date} ${moment(endTime?.time).format("HH:mm")}`,
+    //       quantity: quantity,
+    //       type: type,
+    //       information: information,
+    //       maxPlay: maxPlay,
+    //       leaderBoard: leaderBoard,
+    //       loop: loop,
+    //       coors: coors,
+    //       prize: prizeSetUp,
+    //       autoPrice: prizeType,
+    //       autoAmount: autoAmount,
+    //       autoDistribution: prizeDis,
+    //       autoRatio: prizeRatio,
+    //       manualDescription: manualDescription,
+    //       token: localStorage.getItem("token"),
+    //       hot: valueTest,
+    //       video: video,
+    //       background: bg,
+    //       avatar: avatar,
+    //       brandId: brandId,
+    //       skinId: skinId,
+    //       titleReward: null,
+    //       recipientReward: null,
+    //       validityDateReward: validityDateReward,
+    //       termsAndConditions: null,
+    //       ticketName: null,
+    //     })
+    //   );
+    // }, 2000);
     console.log(
-      createTournament({
+      {
         gameId: gameId,
         name: name,
         start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
@@ -207,7 +204,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
         ).format("HH:mm")}`,
         termsAndConditions: termsAndConditions,
         ticketName: ticketName,
-      })
+      }
     );
   };
 
@@ -993,7 +990,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 letterSpacing: "0.5px",
               }}
             >
-              Update Avartar
+              Update Avatar
             </Typography>
             <button
               onClick={showOpenFileDialogAvatar}
@@ -1011,7 +1008,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 fontWeight: "lighter !important",
               }}
             >
-              Upload Avartar
+              Upload Avatar
             </button>{" "}
             <input
               ref={avaRef}
@@ -1486,7 +1483,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   )}
                 </Box>
               </Box>
-              <hr style={{ color: "white" }} />
+              
+            </>
+          )}
+          <hr style={{ color: "white" }} />
               <Box
                 sx={{
                   marginTop: `${parseFloat(MarginTop)}px`,
@@ -1773,8 +1773,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   </Box>
                 </Box>
               </Box>
-            </>
-          )}
           <Box
             sx={{
               marginTop: `${MarginTop}px`,
@@ -1785,7 +1783,8 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           >
             <LoadingButton
               loading={!isCreateTournamentSuccess && !isCreateTournamentFail}
-              loadingPosition="end"
+              // loadingPosition="end"
+              // endIcon={""}
               variant="contained"
               onClick={handleOnClickCreate}
               style={{
