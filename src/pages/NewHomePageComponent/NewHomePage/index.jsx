@@ -7,7 +7,7 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { imageDesktop, imageHome, images, video } from "../../../utils/images";
+import { imageHome, images, video } from "../../../utils/images";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
 import CountDownBannerHot from "../CountDownBannerHot";
 import NewFooter from "../../NewFooter";
+import ItemComponent from "./ItemComponent";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -73,7 +74,7 @@ export default function NewHomePage() {
     if (isFetchList) {
       dispatch({
         type: "CALL_LIST_TOURNAMENT",
-        payload: "week",
+        payload: "weekly",
       });
       dispatch({
         type: "CALL_LIST_TOURNAMENT",
@@ -81,11 +82,11 @@ export default function NewHomePage() {
       });
       dispatch({
         type: "CALL_LIST_TOURNAMENT",
-        payload: "hour",
+        payload: "hourly",
       });
       dispatch({
         type: "CALL_LIST_TOURNAMENT",
-        payload: "day",
+        payload: "daily",
       });
       dispatch({
         type: "CALL_BIGGEST_END_TOUR",
@@ -212,175 +213,22 @@ export default function NewHomePage() {
                   infinite={false}
                 >
                   {hotTournament?.map((item, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        onClick={() =>
-                          navigate("/tournamentDetail/" + item?.id)
-                        }
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 10px 0px 10px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        <Box
-                          sx={{
-                            height: "auto",
-                            width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "8px ",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.GameTournament}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
-                            }}
-                          >
-                            {item?.tournamentName}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "12px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Mcdonald’s
-                          </Typography>
-                        </Box>
-                      </Box>
-                    );
+                    return <ItemComponent tourInfo={item} countdown={true} />;
                   })}
                 </Slider>
               ) : (
                 <Slider
                   dots={false}
-                  slidesToShow={3.5}
+                  slidesToShow={6}
                   arrows={false}
-                  slidesToScroll={2}
+                  slidesToScroll={5}
                   infinite={false}
                 >
                   {hotTournament?.map((item, index) => {
                     return (
-                      <Box
-                        key={index}
-                        onClick={() =>
-                          navigate("/tournamentDetail/" + item?.id)
-                        }
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 16px 0px 16px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        <Box
-                          sx={{
-                            height: "auto",
-                            width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "5px",
-                            padding: "10px ",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              borderRadius: "3px",
-                              width: "100%",
-                              height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.gameHotTournament}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#fff",
-                              fontSize: "18px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
-                            }}
-                          >
-                            {item?.tournamentName}
-                          </Typography>
-                          <Box
-                            sx={{
-                              width: "100%",
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                color: "#FFDC62",
-                                fontSize: "16px",
-                                fontWeight: "lighter !important",
-                                textAlign: "start",
-                                marginTop: "-3px",
-                                width: "100%",
-                              }}
-                            >
-                              {item?.tournamentName}
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: "#ffff",
-                                fontSize: "14px",
-                                fontWeight: "lighter !important",
-                                textAlign: "end",
-                                marginTop: "-3px",
-                                width: "100%",
-                              }}
-                            >
-                              By Samsung
-                            </Typography>
-                          </Box>
-                          <button
-                            style={{
-                              width: "100%",
-                              border: "none",
-                              background:
-                                "linear-gradient(270deg, #EB00FF 0%, #7224D7 76.56%)",
-                              outline: "none",
-                              color: "#fff",
-                              borderRadius: "5px",
-                              marginTop: "5px",
-                              padding: "5px 0px",
-                            }}
-                          >
-                            Play now
-                          </button>
-                        </Box>
-                      </Box>
+                      <>
+                        <ItemComponent countdown={true} tourInfo={item} />
+                      </>
                     );
                   })}
                 </Slider>
@@ -388,7 +236,6 @@ export default function NewHomePage() {
             </Box>
           </Box>{" "}
           {/* ------------------------------------------- */}
-          {/* Hourly tournament */}
           {/* Banner winner ---> dynamically render */}
           {width < 576 ? (
             <Box
@@ -697,7 +544,7 @@ export default function NewHomePage() {
                   slidesToShow={2}
                   arrows={false}
                   slidesToScroll={2}
-                  infinite={false}
+                  infinite={true}
                 >
                   {hourlyTournament
                     ?.filter(
@@ -707,66 +554,7 @@ export default function NewHomePage() {
                     )[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <Box
-                          onClick={() =>
-                            navigate("/tournamentDetail/" + item?.id)
-                          }
-                          key={index}
-                          sx={{
-                            width: "100% !important",
-                            padding: "0px 10px 0px 10px",
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {" "}
-                          <Box
-                            sx={{
-                              height: "auto",
-                              width: "100% !important",
-                              backgroundColor: "#37285C",
-                              borderRadius: "8px",
-                              padding: "8px ",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                borderRadius: "5px",
-                                width: "100%",
-                                height: "auto",
-                              }}
-                              component={"img"}
-                              src={images.GameTournament}
-                            ></Box>
-                            <Typography
-                              sx={{
-                                color: "#FFDC62",
-                                fontSize: "14px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "5px",
-                                width: "100%",
-                              }}
-                            >
-                              {item?.tournamentName}
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: "#ffff",
-                                fontSize: "12px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "-3px",
-                                width: "100%",
-                              }}
-                            >
-                              By Mcdonald’s
-                            </Typography>
-                          </Box>
-                        </Box>
+                        <ItemComponent countdown={false} tourInfo={item} />
                       );
                     })}
                 </Slider>
@@ -776,7 +564,7 @@ export default function NewHomePage() {
                   slidesToShow={5}
                   arrows={false}
                   slidesToScroll={5}
-                  infinite={false}
+                  infinite={true}
                 >
                   {hourlyTournament
                     ?.filter(
@@ -786,75 +574,15 @@ export default function NewHomePage() {
                     )[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        index < 10 && (
-                          <Box
-                            onClick={() =>
-                              navigate("/tournamentDetail/" + item?.id)
-                            }
-                            key={index}
-                            sx={{
-                              width: "100% !important",
-                              padding: "0px 16px 0px 16px",
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            {" "}
-                            <Box
-                              sx={{
-                                height: "auto",
-                                width: "100% !important",
-                                backgroundColor: "#37285C",
-                                borderRadius: "8px",
-                                padding: "12px ",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                              }}
-                            >
-                              <Box
-                                sx={{
-                                  borderRadius: "5px",
-                                  width: "100%",
-                                  height: "auto",
-                                }}
-                                component={"img"}
-                                src={images.gameHotTournament_1}
-                              ></Box>
-                              <Typography
-                                sx={{
-                                  color: "#FFDC62",
-                                  fontSize: "16px",
-                                  fontWeight: "200 !important",
-                                  textAlign: "start",
-                                  marginTop: "5px",
-                                  width: "100%",
-                                }}
-                              >
-                                {item?.tournamentName}
-                              </Typography>
-                              <Typography
-                                sx={{
-                                  color: "#ffff",
-                                  fontSize: "14px",
-                                  fontWeight: "200 !important",
-                                  textAlign: "start",
-                                  marginTop: "-3px",
-                                  width: "100%",
-                                }}
-                              >
-                                By Samsung
-                              </Typography>
-                            </Box>
-                          </Box>
-                        )
+                        <>
+                          <ItemComponent countdown={true} tourInfo={item} />
+                        </>
                       );
                     })}
                 </Slider>
               )}
             </Box>
           </Box>{" "}
-          {/* ---------------------------- */}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
@@ -872,7 +600,6 @@ export default function NewHomePage() {
               />
             </video>
           </Box>
-          {/* Brief List Tournament */}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
@@ -942,73 +669,12 @@ export default function NewHomePage() {
                   slidesToShow={2}
                   arrows={false}
                   slidesToScroll={2}
-                  infinite={false}
+                  infinite={true}
                 >
                   {dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
-                      return (
-                        <Box
-                          onClick={() =>
-                            navigate("/tournamentDetail/" + item?.id)
-                          }
-                          key={index}
-                          sx={{
-                            width: "100% !important",
-                            padding: "0px 10px 0px 10px",
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {" "}
-                          <Box
-                            sx={{
-                              height: "auto",
-                              width: "100% !important",
-                              backgroundColor: "#37285C",
-                              borderRadius: "8px",
-                              padding: "8px ",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                borderRadius: "5px",
-                                width: "100%",
-                                height: "auto",
-                              }}
-                              component={"img"}
-                              src={images.GameTournament}
-                            ></Box>
-                            <Typography
-                              sx={{
-                                color: "#FFDC62",
-                                fontSize: "14px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "5px",
-                                width: "100%",
-                              }}
-                            >
-                              {item?.tournamentName}
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: "#ffff",
-                                fontSize: "12px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "-3px",
-                                width: "100%",
-                              }}
-                            >
-                              By Mcdonald’s
-                            </Typography>
-                          </Box>
-                        </Box>
-                      );
+                      return <ItemComponent countdown={true} tourInfo={item} />;
                     })}
                 </Slider>
               ) : (
@@ -1017,72 +683,15 @@ export default function NewHomePage() {
                   slidesToShow={5}
                   arrows={false}
                   slidesToScroll={5}
-                  infinite={false}
+                  infinite={true}
                 >
                   {dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <Box
-                          onClick={() =>
-                            navigate("/tournamentDetail/" + item?.id)
-                          }
-                          key={index}
-                          sx={{
-                            width: "100% !important",
-                            padding: "0px 16px 0px 16px",
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {" "}
-                          <Box
-                            sx={{
-                              height: "auto",
-                              width: "100% !important",
-                              backgroundColor: "#37285C",
-                              borderRadius: "8px",
-                              padding: "12px ",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                borderRadius: "5px",
-                                width: "100%",
-                                height: "auto",
-                              }}
-                              component={"img"}
-                              src={images.gameHotTournament_1}
-                            ></Box>
-                            <Typography
-                              sx={{
-                                color: "#FFDC62",
-                                fontSize: "16px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "5px",
-                                width: "100%",
-                              }}
-                            >
-                              {item?.tournamentName}
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: "#ffff",
-                                fontSize: "14px",
-                                fontWeight: "200 !important",
-                                textAlign: "start",
-                                marginTop: "-3px",
-                                width: "100%",
-                              }}
-                            >
-                              By Samsung
-                            </Typography>
-                          </Box>
-                        </Box>
+                        <>
+                          <ItemComponent countdown={true} tourInfo={item} />
+                        </>
                       );
                     })}
                 </Slider>
@@ -1400,68 +1009,7 @@ export default function NewHomePage() {
                   infinite={false}
                 >
                   {weeklyTournament?.map((item, index) => {
-                    return (
-                      <Box
-                        onClick={() =>
-                          navigate("/tournamentDetail/" + item?.id)
-                        }
-                        key={index}
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 10px 0px 10px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        <Box
-                          sx={{
-                            height: "auto",
-                            width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "8px ",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.GameTournament}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
-                            }}
-                          >
-                            {item?.tournamentName}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "12px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Mcdonald’s
-                          </Typography>
-                        </Box>
-                      </Box>
-                    );
+                    return <ItemComponent countdown={true} tourInfo={item} />;
                   })}
                 </Slider>
               ) : (
@@ -1474,66 +1022,9 @@ export default function NewHomePage() {
                 >
                   {weeklyTournament?.map((item, index) => {
                     return (
-                      <Box
-                        onClick={() =>
-                          navigate("/tournamentDetail/" + item?.id)
-                        }
-                        key={index}
-                        sx={{
-                          width: "100% !important",
-                          padding: "0px 16px 0px 16px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        <Box
-                          sx={{
-                            height: "auto",
-                            width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "12px ",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.gameHotTournament_1}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "16px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
-                            }}
-                          >
-                            {item?.tournamentName}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Samsung
-                          </Typography>
-                        </Box>
-                      </Box>
+                      <>
+                        <ItemComponent countdown={true} tourInfo={item} />
+                      </>
                     );
                   })}
                 </Slider>

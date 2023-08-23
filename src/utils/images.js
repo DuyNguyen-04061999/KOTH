@@ -119,6 +119,9 @@ import bannerTournamentMobile_1 from "../assets/images/bannerTournamentMobile_2.
 import megaHolicBanner from "../assets/images/megaHolicBanner.png";
 import voucherBanner from "../assets/imagesHome/voucherBanner.png";
 import MCDonalIcon from "../assets/imagesHome/MCDonalIcon.png";
+import Voucher_tournament_mobile from "../assets/imagesHome/Voucher_tournament_mobile.png";
+import brandImage from "../assets/imagesHome/brandImage.png";
+import iconMember from "../assets/imagesHome/iconMember.png";
 
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
@@ -291,6 +294,9 @@ export const imageHome = {
   megaHolicBanner: megaHolicBanner,
   voucherBanner: voucherBanner,
   MCDonalIcon: MCDonalIcon,
+  Voucher_tournament_mobile: Voucher_tournament_mobile,
+  brandImage: brandImage,
+  iconMember: iconMember,
 };
 
 export const images = {
