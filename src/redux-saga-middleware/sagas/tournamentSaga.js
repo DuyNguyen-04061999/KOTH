@@ -17,6 +17,7 @@ import {
   getWeeklyTour,
   getHottestWeekTourSuccess,
 } from "../reducers/tournamentReducer";
+import { showAlert } from "../reducers/alertReducer";
 const tournamentService = new TournamentService();
 
 function* postTournamentCreate(dataRequest) {
@@ -25,9 +26,14 @@ function* postTournamentCreate(dataRequest) {
     const res = yield call(tournamentService.callCreateTournament, payload);
     if (res.status === 200) {
       yield put(createTournamentSuccess());
+      window.location.reload()
+    } else {
+      yield put(createTournamentFail());
     }
   } catch (error) {
+    console.log(error);
     yield put(createTournamentFail());
+    alert(error?.message || error);
   }
 }
 function* getListTour(dataRequest) {

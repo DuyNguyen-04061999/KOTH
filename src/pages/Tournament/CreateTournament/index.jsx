@@ -1,8 +1,11 @@
 import {
   Box,
+  Chip,
   Dialog,
   FormControl,
+  InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   TextareaAutosize,
   Typography,
@@ -27,15 +30,17 @@ import {
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { LoadingButton } from "@mui/lab";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { isCreateTournamentSuccess, isCreateTournamentFail } = useSelector(
     (state) => state.tournamentReducer
   );
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
-  const imageRef = useRef(null);
+  const videoRef = useRef(null);
   const avaRef = useRef(null);
   const bgRef = useRef(null);
+  const rewardLogoRef = useRef(null);
   const [listGame, setListGame] = useState([]);
   const [socket, setSocket] = useState(null);
   const [listGamePop, setListGamePop] = useState(false);
@@ -45,7 +50,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [name, setName] = useState("");
   const [brandId, setBrandId] = useState(0);
   const [skinId, setSkinId] = useState(0);
-
+  const [timeType, setTimeType] = useState("");
   const [startTime, setStartTime] = useState({
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
@@ -58,21 +63,21 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
   });
-  const [quantity] = useState(10);
+  const [participants, setParticipants] = useState(30);
   const [information, setInformation] = useState("");
   const [maxPlay, setMaxPlay] = useState(0);
   const [leaderBoard, setLeaderBoard] = useState(true);
   const [loop, setLoop] = useState("hour");
-  const [coors] = useState([1]);
+  const [coors, setCoors] = useState([]);
   const [prizeSetUp, setPrizeSetUp] = useState(1);
   const [prizeType, setPrizeType] = useState("Gadcoin");
-  const [autoAmount, setautoAmount] = useState();
+  const [autoAmount, setAutoAmount] = useState("");
   const [valueTest, setValueTest] = useState("");
   const [prizeDis, setPrizeDis] = useState("all");
   const [titleReward, setTitleReward] = useState("");
   const [recipientReward, setRecipientReward] = useState("");
   const [termsAndConditions, setTermsAndConditions] = useState("");
-  const [ticketName, setTicketName] = useState("");
+  const [ticketName, setTicketName] = useState("Daily Tour");
   const [prizeRatio, setPrizeRatio] = useState(
     JSON.stringify({
       "Top 1": "60%",
@@ -84,21 +89,28 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [video, setVideo] = useState("");
   const [avatar, setAvata] = useState("");
   const [bg, setBG] = useState("");
+  const [rewardLogo, setRewardLogo] = useState("");
   const { skinTournament, listBrand } = useSelector(
     (state) => state.tournamentReducer
   );
 
   const dispatch = useDispatch();
+  const coorBrand = listBrand?.filter((item) => brandId !== item.id);
 
   const showOpenFileDialog = (event) => {
-    imageRef.current.click();
+    videoRef.current.click();
   };
 
   const showOpenFileDialogAvatar = (event) => {
     avaRef.current.click();
   };
+
   const showOpenFileDialogBg = (event) => {
     bgRef.current.click();
+  };
+
+  const showOpenFileDialogReward = (event) => {
+    rewardLogoRef.current.click();
   };
 
   const handleChange = async (event) => {
@@ -134,77 +146,69 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
       );
     }
   };
+
+  const handleChangeRewardLogo = async (event) => {
+    // let reader = new FileReader();
+    let sizeRewardLogo = event.target.files[0].size / (1024 * 1024);
+    if (sizeRewardLogo < 100) {
+      setRewardLogo(event.target.files[0]);
+    } else {
+      dispatch(
+        showAlert("error", "The image size is too large, please choose again")
+      );
+    }
+  };
+
   const handleOnClickCreate = () => {
-    // dispatch(createTournamentReady());
-    // setTimeout(() => {
-    //   dispatch(
-    //     createTournament({
-    //       gameId: gameId,
-    //       name: name,
-    //       start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
-    //       end: `${endTime.date} ${moment(endTime?.time).format("HH:mm")}`,
-    //       quantity: quantity,
-    //       type: type,
-    //       information: information,
-    //       maxPlay: maxPlay,
-    //       leaderBoard: leaderBoard,
-    //       loop: loop,
-    //       coors: coors,
-    //       prize: prizeSetUp,
-    //       autoPrice: prizeType,
-    //       autoAmount: autoAmount,
-    //       autoDistribution: prizeDis,
-    //       autoRatio: prizeRatio,
-    //       manualDescription: manualDescription,
-    //       token: localStorage.getItem("token"),
-    //       hot: valueTest,
-    //       video: video,
-    //       background: bg,
-    //       avatar: avatar,
-    //       brandId: brandId,
-    //       skinId: skinId,
-    //       titleReward: null,
-    //       recipientReward: null,
-    //       validityDateReward: validityDateReward,
-    //       termsAndConditions: null,
-    //       ticketName: null,
-    //     })
-    //   );
-    // }, 2000);
-    console.log(
-      {
-        gameId: gameId,
-        name: name,
-        start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
-        end: `${endTime.date} ${moment(endTime?.time).format("HH:mm")}`,
-        quantity: quantity,
-        type: type,
-        information: information,
-        maxPlay: maxPlay,
-        leaderBoard: leaderBoard,
-        loop: loop,
-        coors: coors,
-        prize: prizeSetUp,
-        autoPrice: prizeType,
-        autoAmount: autoAmount,
-        autoDistribution: prizeDis,
-        autoRatio: prizeRatio,
-        manualDescription: manualDescription,
-        token: localStorage.getItem("token"),
-        hot: valueTest,
-        video: video,
-        background: bg,
-        avatar: avatar,
-        brandId: brandId,
-        skinId: skinId,
-        titleReward: titleReward,
-        recipientReward: recipientReward,
-        validityDateReward: `${validityDateReward.date} ${moment(
-          validityDateReward?.time
-        ).format("HH:mm")}`,
-        termsAndConditions: termsAndConditions,
-        ticketName: ticketName,
-      }
+    dispatch(createTournamentReady());
+    setTimeout(() => {
+      dispatch(
+        createTournament({
+          gameId: gameId,
+          name: name,
+          start: `${startTime.date} ${moment(startTime?.time).format("HH:mm")}`,
+          end: `${endTime.date} ${moment(endTime?.time).format("HH:mm")}`,
+          participants: participants,
+          type: type,
+          information: information,
+          maxPlay: maxPlay,
+          leaderBoard: leaderBoard,
+          loop: loop,
+          coors: coors,
+          prize: prizeSetUp,
+          autoPrice: prizeType,
+          autoAmount: autoAmount,
+          autoDistribution: prizeDis,
+          autoRatio: prizeRatio,
+          manualDescription: manualDescription,
+          token: localStorage.getItem("token"),
+          hot: valueTest,
+          video: video,
+          background: bg,
+          avatar: avatar,
+          brandId: brandId,
+          skinId: skinId,
+          titleReward: titleReward,
+          recipientReward: recipientReward,
+          validityDateReward: `${validityDateReward.date} ${moment(
+            validityDateReward?.time
+          ).format("HH:mm")}`,
+          termsAndConditions: termsAndConditions,
+          ticketName: ticketName,
+          rewardLogo: rewardLogo,
+          timeType: timeType,
+        })
+      );
+    }, 2000);
+  };
+
+  const handleSelectChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCoors(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
     );
   };
 
@@ -314,7 +318,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   letterSpacing: "1px",
                 }}
               />
-              <button
+              {/* <button
                 onClick={() => {
                   setListGamePop(true);
                 }}
@@ -341,7 +345,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 >
                   Choose Game
                 </Typography>
-              </button>
+              </button> */}
               <button
                 onClick={() => {
                   setListBrandPop(true);
@@ -886,21 +890,36 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
               >
                 Co-organization (Option)
               </Typography>
-              <input
-                style={{
-                  width: "100%",
-                  borderRadius: "5px",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  padding: "8px 10px",
-                  color: "white",
-                  fontSize: "14px",
-                  backgroundColor: "#181223",
-                  marginTop: `${MarginTop / 4}px`,
-                  letterSpacing: "1px",
-                }}
-              />
+              <FormControl sx={{ m: 1, width: "100%" }}>
+                <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+                {coorBrand ? (
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    multiple
+                    value={coors}
+                    onChange={handleSelectChange}
+                    input={
+                      <OutlinedInput id="select-multiple-chip" label="Co-organization" />
+                    }
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                  >
+                    {coorBrand?.map((element) => (
+                      <MenuItem key={element.id} value={element.id}>
+                        {element.brandName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                ) : (
+                  <></>
+                )}
+              </FormControl>
             </Box>
             <Box sx={{ width: "29.7%" }}>
               <Typography
@@ -923,7 +942,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 >
                   <Select
                     sx={{ height: "39px", backgroundColor: "#3C2C64" }}
-                    value={""}
+                    onChange={(e) => {
+                      setParticipants(e.target.value);
+                    }}
+                    value={participants}
                   >
                     <MenuItem
                       sx={{
@@ -933,6 +955,42 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       value={30}
                     >
                       30
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={50}
+                    >
+                      50
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={100}
+                    >
+                      100
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={200}
+                    >
+                      200
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={500}
+                    >
+                      500
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -969,10 +1027,12 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 fontWeight: "lighter !important",
               }}
             >
-              Upload Video
+              {videoRef?.current?.value
+                ? videoRef?.current?.value
+                : "Upload Video"}
             </button>{" "}
             <input
-              ref={imageRef}
+              ref={videoRef}
               type="file"
               style={{ display: "none" }}
               accept="video/*"
@@ -1008,7 +1068,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 fontWeight: "lighter !important",
               }}
             >
-              Upload Avatar
+              {avaRef?.current?.value
+                ? avaRef?.current?.value
+                : "Upload Avatar"}
             </button>{" "}
             <input
               ref={avaRef}
@@ -1047,7 +1109,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 fontWeight: "lighter !important",
               }}
             >
-              Upload Background
+              {bgRef?.current?.value
+                ? bgRef?.current?.value
+                : "Upload Background"}
             </button>{" "}
             <input
               ref={bgRef}
@@ -1057,9 +1121,56 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
               onChange={handleChangeBG}
             />
           </Box>
+          <Box sx={{ width: "100%", marginTop: `${MarginTop}px` }}>
+            <Typography
+              sx={{
+                textAlign: "start",
+                fontSize: "14px",
+                fontWeight: "500 !important",
+                marginLeft: "0px !important",
+                color: "#747EF3",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Update Reward Logo
+            </Typography>
+            <button
+              onClick={showOpenFileDialogReward}
+              style={{
+                width: "100%",
+                padding: "8px 12px",
+                backgroundColor: "#68399E",
+                border: "none",
+                outline: "none",
+                borderRadius: "5px",
+                color: "#ffff",
+                fontSize: "14px",
+                marginTop: `${MarginTop / 4}px`,
+                cursor: "pointer",
+                fontWeight: "lighter !important",
+              }}
+            >
+              {rewardLogoRef?.current?.value
+                ? rewardLogoRef?.current?.value
+                : "Upload Reward Logo"}
+            </button>{" "}
+            <input
+              ref={rewardLogoRef}
+              type="file"
+              style={{ display: "none" }}
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={handleChangeRewardLogo}
+            />
+          </Box>
           {/* ---------- */}
           <hr style={{ color: "white" }} />
-          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+            }}
+          >
             <Box sx={{ marginTop: `${MarginTop}px` }}>
               <Typography
                 sx={{
@@ -1116,45 +1227,36 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             </Box>
             <Box
               sx={{ display: "flex", flexDirection: "column", width: "100%" }}
+              style={{ marginLeft: "2rem" }}
             >
-              <Box
+              <Typography
                 sx={{
-                  width: "91%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
+                  textAlign: "start",
+                  color: "#747EF3",
+                  fontWeight: "500 !important",
+                  fontSize: "15px !important",
                 }}
               >
-                <Typography
-                  sx={{
-                    marginLeft: "46px !important",
-                    color: "#747EF3",
-                    fontWeight: "500 !important",
-                    fontSize: "15px !important",
-                  }}
-                >
-                  Hot Tournament
-                </Typography>
-                <input
-                  type="number"
-                  value={valueTest}
-                  onChange={(e) => setValueTest(e.target.value)}
-                  style={{
-                    width: "100%",
-                    borderRadius: "5px",
-                    border: "none",
-                    outline: "none",
-                    boxSizing: "border-box",
-                    padding: "8px 10px",
-                    color: "white",
-                    fontSize: "14px",
-                    backgroundColor: "#181223",
-                    marginTop: `${MarginTop / 4}px`,
-                    letterSpacing: "1px",
-                    marginLeft: "45px",
-                  }}
-                />
-              </Box>
+                Hot Tournament
+              </Typography>
+              <input
+                type="number"
+                value={valueTest}
+                onChange={(e) => setValueTest(e.target.value)}
+                style={{
+                  width: "100%",
+                  borderRadius: "5px",
+                  border: "none",
+                  outline: "none",
+                  boxSizing: "border-box",
+                  padding: "8px 10px",
+                  color: "white",
+                  fontSize: "14px",
+                  backgroundColor: "#181223",
+                  marginTop: `${MarginTop / 4}px`,
+                  letterSpacing: "1px",
+                }}
+              />
             </Box>
           </Box>
 
@@ -1250,7 +1352,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     </FormControl>
                   </Box>
                 </Box>
-                <Box sx={{ width: "65.3%" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                  }}
+                  style={{ marginLeft: "2rem" }}
+                >
                   <Typography
                     sx={{
                       textAlign: "start",
@@ -1266,7 +1375,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   <input
                     type="number"
                     value={autoAmount}
-                    onChange={(e) => setautoAmount(e.target.value)}
+                    onChange={(e) => setAutoAmount(e.target.value)}
                     style={{
                       width: "100%",
                       borderRadius: "5px",
@@ -1348,7 +1457,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     </FormControl>
                   </Box>
                 </Box>
-                <Box sx={{ width: "65.3%" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                  }}
+                  style={{ marginLeft: "2rem" }}
+                >
                   <Typography
                     sx={{
                       textAlign: "start",
@@ -1483,98 +1599,255 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                   )}
                 </Box>
               </Box>
-              
             </>
           )}
           <hr style={{ color: "white" }} />
-              <Box
+          <Box
+            sx={{
+              marginTop: `${parseFloat(MarginTop)}px`,
+            }}
+          >
+            <Typography
+              sx={{
+                textAlign: "start",
+                fontSize: "14px",
+                fontWeight: "500 !important",
+                marginLeft: "0px !important",
+                color: "#747EF3",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Reward Title
+            </Typography>
+            <Box
+              sx={{
+                marginTop: `${parseFloat(MarginTop / 4)}px`,
+              }}
+            >
+              <input
+                value={titleReward}
+                onChange={(event) => setTitleReward(event.target.value)}
+                style={{
+                  width: "100%",
+                  outline: "none",
+                  border: "none",
+                  padding: "8px 10px",
+                  borderRadius: "5px",
+                  fontWeight: "100 !important",
+                  letterSpacing: "1.5px",
+                  fontSize: "14px",
+                  backgroundColor: "#181223",
+                  color: "white",
+                }}
+              ></input>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              marginTop: `${parseFloat(MarginTop)}px`,
+            }}
+          >
+            <Typography
+              sx={{
+                textAlign: "start",
+                fontSize: "14px",
+                fontWeight: "500 !important",
+                marginLeft: "0px !important",
+                color: "#747EF3",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Reward's Recipient
+            </Typography>
+            <Box
+              sx={{
+                marginTop: `${parseFloat(MarginTop / 4)}px`,
+              }}
+            >
+              <input
+                value={recipientReward}
+                onChange={(event) => setRecipientReward(event.target.value)}
+                style={{
+                  width: "100%",
+                  outline: "none",
+                  border: "none",
+                  padding: "8px 10px",
+                  borderRadius: "5px",
+                  fontWeight: "100 !important",
+                  letterSpacing: "1.5px",
+                  fontSize: "14px",
+                  backgroundColor: "#181223",
+                  color: "white",
+                }}
+              ></input>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: `${parseFloat(MarginTop)}px`,
+            }}
+          >
+            <Box sx={{ width: "100%" }}>
+              <Typography
                 sx={{
-                  marginTop: `${parseFloat(MarginTop)}px`,
+                  textAlign: "start",
+                  fontSize: "14px",
+                  fontWeight: "500 !important",
+                  marginLeft: "0px !important",
+                  color: "#747EF3",
+                  letterSpacing: "0.5px",
                 }}
               >
-                <Typography
-                  sx={{
-                    textAlign: "start",
-                    fontSize: "14px",
-                    fontWeight: "500 !important",
-                    marginLeft: "0px !important",
-                    color: "#747EF3",
-                    letterSpacing: "0.5px",
-                  }}
-                >
-                  Reward Title
-                </Typography>
-                <Box
-                  sx={{
-                    marginTop: `${parseFloat(MarginTop / 4)}px`,
-                  }}
-                >
-                  <input
-                    value={titleReward}
-                    onChange={(event) => setTitleReward(event.target.value)}
-                    style={{
-                      width: "100%",
-                      outline: "none",
-                      border: "none",
-                      padding: "8px 10px",
-                      borderRadius: "5px",
-                      fontWeight: "100 !important",
-                      letterSpacing: "1.5px",
-                      fontSize: "14px",
-                      backgroundColor: "#181223",
-                      color: "white",
-                    }}
-                  ></input>
-                </Box>
-              </Box>
+                Validity Start
+              </Typography>
               <Box
                 sx={{
-                  marginTop: `${parseFloat(MarginTop)}px`,
-                }}
-              >
-                <Typography
-                  sx={{
-                    textAlign: "start",
-                    fontSize: "14px",
-                    fontWeight: "500 !important",
-                    marginLeft: "0px !important",
-                    color: "#747EF3",
-                    letterSpacing: "0.5px",
-                  }}
-                >
-                  Reward's Recipient
-                </Typography>
-                <Box
-                  sx={{
-                    marginTop: `${parseFloat(MarginTop / 4)}px`,
-                  }}
-                >
-                  <input
-                    value={recipientReward}
-                    onChange={(event) => setRecipientReward(event.target.value)}
-                    style={{
-                      width: "100%",
-                      outline: "none",
-                      border: "none",
-                      padding: "8px 10px",
-                      borderRadius: "5px",
-                      fontWeight: "100 !important",
-                      letterSpacing: "1.5px",
-                      fontSize: "14px",
-                      backgroundColor: "#181223",
-                      color: "white",
-                    }}
-                  ></input>
-                </Box>
-              </Box>
-              <Box
-                sx={{
+                  width: "45%",
                   display: "flex",
                   justifyContent: "space-between",
+                  marginTop: `${MarginTop / 4}px`,
+                }}
+              >
+                <Box>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      format="YYYY/MM/DD"
+                      value={moment(validityDateReward?.date, "YYYY/MM/DD")}
+                      onChange={(newValue) => {
+                        setValidityDateReward({
+                          ...validityDateReward,
+                          date: moment(newValue).format("YYYY/MM/DD"),
+                        });
+                      }}
+                      sx={{
+                        "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
+                          {
+                            color: "#fff",
+                            backgroundColor: "#68399E",
+                            border: "none",
+                            outline: "none",
+                            width: "200px",
+                          },
+                        "& .css-1bn53lx": {
+                          color: "#fff",
+                          backgroundColor: "#68399E",
+                          border: "none",
+                          outline: "none",
+                          width: "200px",
+                        },
+
+                        "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
+                          {
+                            color: "#fff",
+                            backgroundColor: "#68399E",
+                            border: "none",
+                            outline: "none",
+                            borderRadius: "10px",
+                            padding: "10px 20px",
+                          },
+                        "& .css-1uvydh2": {
+                          color: "#fff",
+                          backgroundColor: "#68399E",
+                          border: "none",
+                          outline: "none",
+                          borderRadius: "10px",
+                          padding: "10px 20px",
+                        },
+                        "& .css-i4bv87-MuiSvgIcon-root": {
+                          color: "#fff",
+                        },
+                        "& .css-vubbuv": {
+                          color: "#fff",
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                </Box>
+                <Box>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <MobileTimePicker
+                      value={validityDateReward?.time}
+                      onChange={(newValue) => {
+                        setValidityDateReward({
+                          ...validityDateReward,
+                          time: newValue,
+                        });
+                      }}
+                      sx={{
+                        "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input":
+                          {
+                            color: "#fff",
+                            backgroundColor: "#68399E !important",
+                            border: "#68399E",
+                            outline: "none",
+                            padding: "10px 15px",
+                            borderRadius: "5px",
+                            width: "70px",
+                          },
+                        "& .css-1x5jdmq": {
+                          color: "#fff",
+                          backgroundColor: "#68399E !important",
+                          border: "#68399E",
+                          outline: "none",
+                          padding: "10px 15px",
+                          borderRadius: "5px",
+                          width: "70px",
+                        },
+                        cursor: "pointer",
+                      }}
+                    />
+                  </LocalizationProvider>
+                </Box>
+              </Box>
+              <Box
+                sx={{
                   marginTop: `${parseFloat(MarginTop)}px`,
                 }}
               >
-                <Box sx={{ width: "100%" }}>
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "14px",
+                    fontWeight: "500 !important",
+                    marginLeft: "0px !important",
+                    color: "#747EF3",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Terms and Conditions
+                </Typography>
+                <Box
+                  sx={{
+                    marginTop: `${parseFloat(MarginTop / 4)}px`,
+                  }}
+                >
+                  <TextareaAutosize
+                    value={termsAndConditions}
+                    onChange={(event) =>
+                      setTermsAndConditions(event.target.value)
+                    }
+                    style={{
+                      width: "100%",
+                      outline: "none",
+                      border: "none",
+                      padding: "8px 10px",
+                      borderRadius: "5px",
+                      fontWeight: "100 !important",
+                      letterSpacing: "1.5px",
+                      fontSize: "14px",
+                      backgroundColor: "#181223",
+                      color: "white",
+                      minHeight: "5rem",
+                    }}
+                  ></TextareaAutosize>
+                </Box>
+                <Box
+                  sx={{
+                    marginTop: `${parseFloat(MarginTop)}px`,
+                  }}
+                >
                   <Typography
                     sx={{
                       textAlign: "start",
@@ -1585,194 +1858,99 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       letterSpacing: "0.5px",
                     }}
                   >
-                    Validity Start
+                    Ticket Name
                   </Typography>
                   <Box
                     sx={{
-                      width: "45%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginTop: `${MarginTop / 4}px`,
+                      marginTop: `${parseFloat(MarginTop / 4)}px`,
                     }}
                   >
-                    <Box>
-                      <LocalizationProvider dateAdapter={AdapterMoment}>
-                        <DatePicker
-                          format="YYYY/MM/DD"
-                          value={moment(validityDateReward?.date, "YYYY/MM/DD")}
-                          onChange={(newValue) => {
-                            setValidityDateReward({
-                              ...validityDateReward,
-                              date: moment(newValue).format("YYYY/MM/DD"),
-                            });
-                          }}
-                          sx={{
-                            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
-                              {
-                                color: "#fff",
-                                backgroundColor: "#68399E",
-                                border: "none",
-                                outline: "none",
-                                width: "200px",
-                              },
-                            "& .css-1bn53lx": {
-                              color: "#fff",
-                              backgroundColor: "#68399E",
-                              border: "none",
-                              outline: "none",
-                              width: "200px",
-                            },
-
-                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
-                              {
-                                color: "#fff",
-                                backgroundColor: "#68399E",
-                                border: "none",
-                                outline: "none",
-                                borderRadius: "10px",
-                                padding: "10px 20px",
-                              },
-                            "& .css-1uvydh2": {
-                              color: "#fff",
-                              backgroundColor: "#68399E",
-                              border: "none",
-                              outline: "none",
-                              borderRadius: "10px",
-                              padding: "10px 20px",
-                            },
-                            "& .css-i4bv87-MuiSvgIcon-root": {
-                              color: "#fff",
-                            },
-                            "& .css-vubbuv": {
-                              color: "#fff",
-                            },
-                          }}
-                        />
-                      </LocalizationProvider>
-                    </Box>
-                    <Box>
-                      <LocalizationProvider dateAdapter={AdapterMoment}>
-                        <MobileTimePicker
-                          value={validityDateReward?.time}
-                          onChange={(newValue) => {
-                            setValidityDateReward({
-                              ...validityDateReward,
-                              time: newValue,
-                            });
-                          }}
-                          sx={{
-                            "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input":
-                              {
-                                color: "#fff",
-                                backgroundColor: "#68399E !important",
-                                border: "#68399E",
-                                outline: "none",
-                                padding: "10px 15px",
-                                borderRadius: "5px",
-                                width: "70px",
-                              },
-                            "& .css-1x5jdmq": {
-                              color: "#fff",
-                              backgroundColor: "#68399E !important",
-                              border: "#68399E",
-                              outline: "none",
-                              padding: "10px 15px",
-                              borderRadius: "5px",
-                              width: "70px",
-                            },
-                            cursor: "pointer",
-                          }}
-                        />
-                      </LocalizationProvider>
-                    </Box>
+                <FormControl
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <Select
+                    sx={{ height: "39px", backgroundColor: "#3C2C64" }}
+                    onChange={(e) => {
+                      setTicketName(e.target.value);
+                    }}
+                    value={ticketName}
+                  >
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={"Hourly Tour"}
+                    >
+                      Hourly Tour
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={"Week-long Tour"}
+                    >
+                      Week-long Tour
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={"Daily Tour"}
+                    >
+                      Daily Tour
+                    </MenuItem>
+                  </Select>
+                </FormControl>
                   </Box>
+                </Box>
+                <Box
+                  sx={{
+                    marginTop: `${parseFloat(MarginTop)}px`,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textAlign: "start",
+                      fontSize: "14px",
+                      fontWeight: "500 !important",
+                      marginLeft: "0px !important",
+                      color: "#747EF3",
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    Time Type
+                  </Typography>
                   <Box
                     sx={{
-                      marginTop: `${parseFloat(MarginTop)}px`,
+                      marginTop: `${parseFloat(MarginTop / 4)}px`,
                     }}
                   >
-                    <Typography
-                      sx={{
-                        textAlign: "start",
+                    <input
+                      value={timeType}
+                      onChange={(event) => setTimeType(event.target.value)}
+                      style={{
+                        width: "100%",
+                        outline: "none",
+                        border: "none",
+                        padding: "8px 10px",
+                        borderRadius: "5px",
+                        fontWeight: "100 !important",
+                        letterSpacing: "1.5px",
                         fontSize: "14px",
-                        fontWeight: "500 !important",
-                        marginLeft: "0px !important",
-                        color: "#747EF3",
-                        letterSpacing: "0.5px",
+                        backgroundColor: "#181223",
+                        color: "white",
                       }}
-                    >
-                      Terms and Conditions
-                    </Typography>
-                    <Box
-                      sx={{
-                        marginTop: `${parseFloat(MarginTop / 4)}px`,
-                      }}
-                    >
-                      <TextareaAutosize
-                        value={termsAndConditions}
-                        onChange={(event) =>
-                          setTermsAndConditions(event.target.value)
-                        }
-                        style={{
-                          width: "100%",
-                          outline: "none",
-                          border: "none",
-                          padding: "8px 10px",
-                          borderRadius: "5px",
-                          fontWeight: "100 !important",
-                          letterSpacing: "1.5px",
-                          fontSize: "14px",
-                          backgroundColor: "#181223",
-                          color: "white",
-                          minHeight: "5rem",
-                        }}
-                      ></TextareaAutosize>
-                    </Box>
-                    <Box
-                      sx={{
-                        marginTop: `${parseFloat(MarginTop)}px`,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          textAlign: "start",
-                          fontSize: "14px",
-                          fontWeight: "500 !important",
-                          marginLeft: "0px !important",
-                          color: "#747EF3",
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        Ticket Name
-                      </Typography>
-                      <Box
-                        sx={{
-                          marginTop: `${parseFloat(MarginTop / 4)}px`,
-                        }}
-                      >
-                        <input
-                          value={ticketName}
-                          onChange={(event) =>
-                            setTicketName(event.target.value)
-                          }
-                          style={{
-                            width: "100%",
-                            outline: "none",
-                            border: "none",
-                            padding: "8px 10px",
-                            borderRadius: "5px",
-                            fontWeight: "100 !important",
-                            letterSpacing: "1.5px",
-                            fontSize: "14px",
-                            backgroundColor: "#181223",
-                            color: "white",
-                          }}
-                        ></input>
-                      </Box>
-                    </Box>
+                    ></input>
                   </Box>
                 </Box>
               </Box>
+            </Box>
+          </Box>
           <Box
             sx={{
               marginTop: `${MarginTop}px`,
@@ -1783,8 +1961,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           >
             <LoadingButton
               loading={!isCreateTournamentSuccess && !isCreateTournamentFail}
-              // loadingPosition="end"
-              // endIcon={""}
               variant="contained"
               onClick={handleOnClickCreate}
               style={{
@@ -1842,7 +2018,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             {listGame?.map((item, index) => {
               return (
                 <Box
-                  onClick={() => setGameId(item?.id)}
+                  onClick={() => setGameId(gameId !== item?.id ? item?.id : "")}
                   key={index}
                   sx={{
                     width: "25%",
@@ -1850,11 +2026,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     boxSizing: "border-box",
                     paddingLeft: `${MarginTop / 2}px`,
                     cursor: "pointer",
+                    position: "relative",
                   }}
                 >
                   <Box
                     sx={{ width: "100%", height: "150px" }}
-                    style={{ objectFit: "cover" }}
+                    style={{
+                      objectFit: "cover",
+                    }}
                     component={"img"}
                     src={
                       item?.gameAvatar
@@ -1864,6 +2043,15 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                         : images.undefinedAvatar
                     }
                   ></Box>
+                  <CheckCircleIcon
+                    style={{
+                      display: gameId === item?.id ? "block" : "none",
+                      color: "green",
+                      position: "absolute",
+                      top: "-10px",
+                      right: "-10px",
+                    }}
+                  />
                 </Box>
               );
             })}
@@ -1906,7 +2094,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             {listBrand?.map((item, index) => {
               return (
                 <Box
-                  onClick={() => setBrandId(item?.id)}
+                  onClick={() =>
+                    setBrandId(brandId !== item?.id ? item?.id : "")
+                  }
                   key={index}
                   sx={{
                     width: "25%",
@@ -1915,11 +2105,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     paddingLeft: `${MarginTop / 2}px`,
                     cursor: "pointer",
                   }}
+                  style={{ position: "relative" }}
                 >
                   <Box
                     sx={{ width: "100%", height: "150px" }}
                     component={"img"}
-                    style={{ objectFit: "cover" }}
+                    style={{
+                      objectFit: "cover",
+                    }}
                     src={
                       item?.brandAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
@@ -1928,6 +2121,15 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                         : images.undefinedAvatar
                     }
                   ></Box>
+                  <CheckCircleIcon
+                    style={{
+                      display: brandId === item?.id ? "block" : "none",
+                      color: "green",
+                      position: "absolute",
+                      top: "-10px",
+                      right: "-10px",
+                    }}
+                  />
                 </Box>
               );
             })}
@@ -1968,9 +2170,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             }}
           >
             {skinTournament?.map((item, index) => {
+              console.log(item);
               return (
                 <Box
-                  onClick={() => setSkinId(item?.id)}
+                  onClick={() => setSkinId(skinId !== item?.id ? item?.id : "")}
                   key={index}
                   sx={{
                     width: "25%",
@@ -1978,11 +2181,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     boxSizing: "border-box",
                     paddingLeft: `${MarginTop / 2}px`,
                     cursor: "pointer",
+                    position: "relative",
                   }}
                 >
                   <Box
                     sx={{ width: "100%", height: "150px" }}
-                    style={{ objectFit: "cover" }}
+                    style={{
+                      objectFit: "cover",
+                    }}
                     component={"img"}
                     src={
                       item?.skinAvatar
@@ -1993,6 +2199,27 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                           images.undefinedAvatar
                     }
                   ></Box>
+                  <CheckCircleIcon
+                    style={{
+                      display: skinId === item?.id ? "block" : "none",
+                      color: "green",
+                      position: "absolute",
+                      top: "-10px",
+                      right: "-10px",
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      marginTop: `${MarginTop / 2}px`,
+                    }}
+                    style={{
+                      color:"white"
+                    }}
+                  >
+                    {
+                      item?.skinGame?.gameName
+                    }
+                  </Typography>
                 </Box>
               );
             })}
