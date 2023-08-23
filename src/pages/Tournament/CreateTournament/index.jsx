@@ -50,7 +50,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [name, setName] = useState("");
   const [brandId, setBrandId] = useState(0);
   const [skinId, setSkinId] = useState(0);
-  const [timeType, setTimeType] = useState("");
+  const [timeType, setTimeType] = useState("Daily Tour");
   const [startTime, setStartTime] = useState({
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
@@ -77,7 +77,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [titleReward, setTitleReward] = useState("");
   const [recipientReward, setRecipientReward] = useState("");
   const [termsAndConditions, setTermsAndConditions] = useState("");
-  const [ticketName, setTicketName] = useState("Daily Tour");
+  const [ticketName, setTicketName] = useState("");
   const [prizeRatio, setPrizeRatio] = useState(
     JSON.stringify({
       "Top 1": "60%",
@@ -900,7 +900,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     value={coors}
                     onChange={handleSelectChange}
                     input={
-                      <OutlinedInput id="select-multiple-chip" label="Co-organization" />
+                      <OutlinedInput id="select-multiple-chip" label="Chip" />
                     }
                     renderValue={(selected) => (
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -1865,47 +1865,22 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       marginTop: `${parseFloat(MarginTop / 4)}px`,
                     }}
                   >
-                <FormControl
-                  sx={{
-                    width: "100%",
-                  }}
-                >
-                  <Select
-                    sx={{ height: "39px", backgroundColor: "#3C2C64" }}
-                    onChange={(e) => {
-                      setTicketName(e.target.value);
-                    }}
-                    value={ticketName}
-                  >
-                    <MenuItem
-                      sx={{
-                        fontSize: getFontSizeDependOnWidth(width),
-                        minHeight: "20px !important",
+                    <input
+                      value={ticketName}
+                      onChange={(event) => setTicketName(event.target.value)}
+                      style={{
+                        width: "100%",
+                        outline: "none",
+                        border: "none",
+                        padding: "8px 10px",
+                        borderRadius: "5px",
+                        fontWeight: "100 !important",
+                        letterSpacing: "1.5px",
+                        fontSize: "14px",
+                        backgroundColor: "#181223",
+                        color: "white",
                       }}
-                      value={"Hourly Tour"}
-                    >
-                      Hourly Tour
-                    </MenuItem>
-                    <MenuItem
-                      sx={{
-                        fontSize: getFontSizeDependOnWidth(width),
-                        minHeight: "20px !important",
-                      }}
-                      value={"Week-long Tour"}
-                    >
-                      Week-long Tour
-                    </MenuItem>
-                    <MenuItem
-                      sx={{
-                        fontSize: getFontSizeDependOnWidth(width),
-                        minHeight: "20px !important",
-                      }}
-                      value={"Daily Tour"}
-                    >
-                      Daily Tour
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+                    ></input>
                   </Box>
                 </Box>
                 <Box
@@ -1930,22 +1905,47 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       marginTop: `${parseFloat(MarginTop / 4)}px`,
                     }}
                   >
-                    <input
-                      value={timeType}
-                      onChange={(event) => setTimeType(event.target.value)}
-                      style={{
+                    <FormControl
+                      sx={{
                         width: "100%",
-                        outline: "none",
-                        border: "none",
-                        padding: "8px 10px",
-                        borderRadius: "5px",
-                        fontWeight: "100 !important",
-                        letterSpacing: "1.5px",
-                        fontSize: "14px",
-                        backgroundColor: "#181223",
-                        color: "white",
                       }}
-                    ></input>
+                    >
+                      <Select
+                        sx={{ height: "39px", backgroundColor: "#3C2C64" }}
+                        onChange={(e) => {
+                          setTimeType(e.target.value);
+                        }}
+                        value={timeType}
+                      >
+                        <MenuItem
+                          sx={{
+                            fontSize: getFontSizeDependOnWidth(width),
+                            minHeight: "20px !important",
+                          }}
+                          value={"Hourly Tour"}
+                        >
+                          Hourly Tour
+                        </MenuItem>
+                        <MenuItem
+                          sx={{
+                            fontSize: getFontSizeDependOnWidth(width),
+                            minHeight: "20px !important",
+                          }}
+                          value={"Week-long Tour"}
+                        >
+                          Week-long Tour
+                        </MenuItem>
+                        <MenuItem
+                          sx={{
+                            fontSize: getFontSizeDependOnWidth(width),
+                            minHeight: "20px !important",
+                          }}
+                          value={"Daily Tour"}
+                        >
+                          Daily Tour
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Box>
                 </Box>
               </Box>
@@ -1960,8 +1960,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             }}
           >
             <LoadingButton
-              loading={!isCreateTournamentSuccess && !isCreateTournamentFail}
-              variant="contained"
               onClick={handleOnClickCreate}
               style={{
                 fontWeight: "700",
@@ -1969,10 +1967,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 border: "none",
                 outline: "none",
                 borderRadius: "5px",
-                background:
-                  !isCreateTournamentSuccess && !isCreateTournamentFail
-                    ? "#6f6684"
-                    : "linear-gradient(#8A3AF1,#7648ED)",
+                background: "linear-gradient(#8A3AF1,#7648ED)",
                 color: "#ffff",
                 fontSize: getFontSizeDependOnWidth(width),
               }}
@@ -2213,12 +2208,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       marginTop: `${MarginTop / 2}px`,
                     }}
                     style={{
-                      color:"white"
+                      color: "white",
                     }}
                   >
-                    {
-                      item?.skinGame?.gameName
-                    }
+                    {item?.skinGame?.gameName}
                   </Typography>
                 </Box>
               );
