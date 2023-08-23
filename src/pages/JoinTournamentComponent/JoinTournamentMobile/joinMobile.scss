@@ -1,3 +1,10 @@
+.textReward {
+  background: linear-gradient(180deg, #9d39f1 29.17%, #bf48ed 42.19%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 $red: #e84c3d;
 $grey: #ecedef;
 $black: #343434;
@@ -8,6 +15,7 @@ $black: #343434;
   color: #fff;
   font-family: sans-serif;
   display: flex;
+  align-items: center;
 }
 
 .card {
@@ -15,7 +23,7 @@ $black: #343434;
   height: 11em;
   float: left;
   position: relative;
-  padding: 1em;
+  // padding: 1em;
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: transparent !important;
@@ -33,16 +41,17 @@ $black: #343434;
 .cardLeft {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
-  width: 262px;
+  width: 216px !important;
 }
 
 .cardRight {
-  width:146px;
+  width:116px !important;
   background-image: url(../../../assets//imagesDesktop//tikright.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   border-radius: 0px 10px 10px 0px !important;
+  height: 116px !important;
   &:before,
   &:after {
     content: "";
@@ -168,4 +177,12 @@ h6{
     51px 0 0 1px $black, 56px 0 0 1px $black, 59px 0 0 1px $black,
     64px 0 0 1px $black, 68px 0 0 1px $black, 72px 0 0 1px $black,
     74px 0 0 1px $black, 77px 0 0 1px $black, 81px 0 0 1px $black;
+}
+
+h5{
+  font-size: 16px !important;
+}
+
+span{
+  font-size: 14px !important;
 }
