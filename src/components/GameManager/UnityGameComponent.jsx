@@ -52,6 +52,7 @@ export default function UnityGameComponent(props) {
       }
     }
   }
+  console.log(gameId);
 
   const {
     unityProvider,
@@ -71,7 +72,7 @@ export default function UnityGameComponent(props) {
       process.env.REACT_APP_GAME_STREAMING_ASSET_URL +
         `/${String(gameId)}/${String(skinName)
           ?.replaceAll(" ", "_")
-          ?.toLowerCase()}/` || "",
+          ?.toLowerCase()}` || "",
   });
 
   window.myGameInstance = UNSAFE__unityInstance;

@@ -68,7 +68,7 @@ export default function JoinTournament() {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
-
+  console.log(videoGame);
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
       setIsFullScreen(true);
@@ -83,7 +83,7 @@ export default function JoinTournament() {
   }, [orientation, width, previousOri]);
   useEffect(() => {
     if (isFullScreen === true && checkMobile === true) {
-      setVideoGame(true);
+      // setVideoGame(true);
       setCheckMobile(false);
     }
   }, [isFullScreen, checkMobile]);
@@ -138,9 +138,7 @@ export default function JoinTournament() {
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       setStartGame(true);
-      if (orientation === "landscape") {
-        setVideoGame(true);
-      }
+      setVideoGame(true);
       setCheckMobile(true);
     });
     return () => {
@@ -169,7 +167,6 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
-  console.log("detail Tournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -893,7 +890,6 @@ export default function JoinTournament() {
                   <FullScreen handle={screen} onChange={reportChange}>
                     {videoGame ? (
                       <Fragment>
-                        (
                         <video
                           className={
                             isFullScreen && startGame ? "fullscreenVideo" : ""
@@ -908,7 +904,6 @@ export default function JoinTournament() {
                         >
                           <source src={video.LogoAnim} type="video/mp4" />
                         </video>
-                        )
                       </Fragment>
                     ) : (
                       <Fragment>
@@ -924,8 +919,7 @@ export default function JoinTournament() {
                           isFullScreen={isFullScreen}
                           fullScreen={expand}
                           gameId={
-                            detailTournament?.tournamentInfors?.game?.gameId ||
-                            ""
+                            detailTournament?.tournamentInfors?.game?.id || ""
                           }
                           skinName={
                             detailTournament?.tournamentInfors?.skin

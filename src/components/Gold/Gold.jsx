@@ -70,7 +70,7 @@ export default function Gold(props) {
             marginLeft: "5px",
             fontFamily: "Cyntho !important",
             fontWeight: "500 !important",
-            marginRight:"2px"
+            marginRight: "2px",
           }}
         >
           {value &&

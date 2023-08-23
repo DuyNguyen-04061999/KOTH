@@ -12,10 +12,9 @@ export default function SliderTime({
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: type === "day" ? 7 : 5.5,
-    slidesToScroll: 6,
+    slidesToShow: type === "day" ? 7 : 5,
+    slidesToScroll: 5,
     arrows: false,
-    focusOnSelect: true,
   };
   const { width } = useWindowDimensions();
 

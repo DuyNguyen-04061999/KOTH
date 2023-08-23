@@ -623,6 +623,9 @@ export default function Dialoglg() {
         >
           {width < 576 ? (
             <Box
+              onClick={() => {
+                dispatch(toggleWalletDialog());
+              }}
               sx={{
                 backgroundColor: width > 576 ? "#170f1e" : "#68399E",
                 borderRadius:
@@ -686,6 +689,9 @@ export default function Dialoglg() {
             </Box>
           ) : (
             <Box
+              onClick={() => {
+                dispatch(toggleWalletDialog());
+              }}
               sx={{
                 backgroundColor: width > 576 ? "#68399E" : "#68399E",
                 borderRadius:

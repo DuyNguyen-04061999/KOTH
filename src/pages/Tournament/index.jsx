@@ -34,6 +34,8 @@ export default function Tournament() {
     }
   });
 
+  console.log(tournaments);
+
   useEffect(() => {
     socket?.on("createTournamentSuccess", (data) => {
       setTournaments((pre) => {
@@ -51,7 +53,7 @@ export default function Tournament() {
 
     return () => {};
   }, [socket]);
-
+  console.log(tournaments);
   const renderTournamentList = tournaments?.map((item, index) => {
     return (
       <Grid
