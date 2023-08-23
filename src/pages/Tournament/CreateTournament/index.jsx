@@ -50,7 +50,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [name, setName] = useState("");
   const [brandId, setBrandId] = useState(0);
   const [skinId, setSkinId] = useState(0);
-  const [timeType, setTimeType] = useState("Daily Tour");
+  const [timeType, setTimeType] = useState("day");
   const [startTime, setStartTime] = useState({
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
@@ -93,13 +93,14 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { skinTournament, listBrand } = useSelector(
     (state) => state.tournamentReducer
   );
-
   const dispatch = useDispatch();
   const coorBrand = listBrand?.filter((item) => brandId !== item.id);
 
   const showOpenFileDialog = (event) => {
     videoRef.current.click();
   };
+
+
 
   const showOpenFileDialogAvatar = (event) => {
     avaRef.current.click();
@@ -199,7 +200,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           timeType: timeType,
         })
       );
-    }, 2000);
+    }, 1000);
   };
 
   const handleSelectChange = (event) => {
@@ -991,6 +992,15 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       value={500}
                     >
                       500
+                    </MenuItem>
+                    <MenuItem
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        minHeight: "20px !important",
+                      }}
+                      value={0}
+                    >
+                      Unlimited
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -1922,7 +1932,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             fontSize: getFontSizeDependOnWidth(width),
                             minHeight: "20px !important",
                           }}
-                          value={"Hourly Tour"}
+                          value={"hourly"}
                         >
                           Hourly Tour
                         </MenuItem>
@@ -1931,7 +1941,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             fontSize: getFontSizeDependOnWidth(width),
                             minHeight: "20px !important",
                           }}
-                          value={"Week-long Tour"}
+                          value={"weekly"}
                         >
                           Week-long Tour
                         </MenuItem>
@@ -1940,7 +1950,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                             fontSize: getFontSizeDependOnWidth(width),
                             minHeight: "20px !important",
                           }}
-                          value={"Daily Tour"}
+                          value={"daily"}
                         >
                           Daily Tour
                         </MenuItem>
