@@ -159,6 +159,7 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
+  console.log("detail Tournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -835,7 +836,7 @@ export default function JoinTournament() {
                 zIndex: isFullScreen && startGame ? "5005" : "none",
               }}
             >
-              {detailTournament &&
+              {detailTournament && detailTournament?.tournamentInfors?.game && detailTournament?.tournamentInfors?.game?.length > 0 &&
                 detailTournament?.tournamentInfors?.game[0].GameFiles.length >=
                   4 && (
                   <FullScreen handle={screen} onChange={reportChange}>
@@ -1061,8 +1062,150 @@ export default function JoinTournament() {
               )}
             </Box>
           </Box>
+          {/* Landscape  */}
           {(width < 576 || (!previousOri && orientation === "portrait")) &&
-            startGame && (
+            startGame &&
+            detailTournament?.tournamentInfors?.game[0]?.gameScreenType ===
+              1 && (
+              <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
+                {continueGame === true ? (
+                  <Box
+                    sx={{
+                      backgroundColor: "#1c191e",
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: "#37285c",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "56px",
+                        width: "100%",
+                        boxSizing: "border-box",
+                        padding: "10px",
+                        color: "white",
+                      }}
+                    >
+                      <img
+                        style={{
+                          width: getFontSizeTitleDependOnWidth(width),
+                          height: getFontSizeTitleDependOnWidth(width),
+                        }}
+                        alt="..."
+                        src={images.BackButtonLobby}
+                      />
+                      <Typography>Tournament</Typography>
+                    </Box>
+                    <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
+                      <Box
+                        onClick={() => {
+                          setContinueGame(false);
+                        }}
+                        sx={{
+                          width: "100%",
+                          height: "280px",
+                          backgroundColor: "#423965",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: `${parseFloat(width / 2.6)}px`,
+                            height: "40px",
+                            background: "linear-gradient(#9c39f1,#c049ed)",
+                            borderRadius: "25px",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "0px 10px 0px 5px",
+                          }}
+                        >
+                          <Typography sx={{ color: "white" }}>
+                            Continue
+                          </Typography>
+                          <img
+                            width={width / 18}
+                            src={images.conitnuePlayButton}
+                            alt="..."
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      width: startGame ? "100%" : "0px",
+                      height: startGame ? "100%" : "0px",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: startGame ? "100%" : "0px",
+                          height: startGame ? "100%" : "0px",
+                          backgroundColor: "#423965",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      ></Box>
+                    </Box>
+                    <Box
+                      onClick={() => {
+                        setContinueGame(true);
+                      }}
+                      sx={{
+                        position: "fixed",
+                        top: "40%",
+                        display: "flex",
+                        padding: "10px",
+                        backgroundImage: "linear-gradient(#6844de,#8c39ff)",
+                        borderRadius: "0px 50px 50px 0px",
+                      }}
+                    >
+                      <Box
+                        sx={{ width: "20px" }}
+                        component={"img"}
+                        src={images.BackButtonLobby}
+                      ></Box>
+                      <Typography sx={{ color: "white" }}>Lobby</Typography>
+                    </Box>
+                    <Box sx={{ position: "fixed", top: "40%", left: "33%" }}>
+                      <Box
+                        sx={{ width: width / 3, height: width / 3 }}
+                        component={"img"}
+                        src={images.RotateScreen}
+                      ></Box>
+                      <Typography sx={{ color: "white" }}>
+                        Rotate Your Screen
+                      </Typography>
+                    </Box>
+                  </Box>
+                )}
+              </Dialog>
+            )}
+          {/* Portrait */}
+          {width > 576 &&
+            width < 1024 &&
+            previousOri === "landscape" &&
+            orientation === "landscape" &&
+            startGame &&
+            (detailTournament?.tournamentInfors?.game[0]?.gameScreenType ===
+              0 ||
+              !detailTournament?.tournamentInfors?.game[0]?.gameScreenType) && (
               <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
                 {continueGame === true ? (
                   <Box

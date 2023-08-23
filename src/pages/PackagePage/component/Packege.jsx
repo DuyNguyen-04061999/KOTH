@@ -399,8 +399,12 @@ export default function Package() {
                                 )}
                                 <button
                                   onClick={() => {
-                                    dispatch(toggleDialogConfirm());
-                                    dispatch(getIdPackage(i?.id));
+                                    if(i?.packageName !== "Free") {
+                                      dispatch(toggleDialogConfirm());
+                                      dispatch(getIdPackage(i?.id));
+                                    } else {
+                                      console.log("Cannot buy free pack!");
+                                    }
                                   }}
                                   style={{
                                     border: "none",
@@ -415,7 +419,7 @@ export default function Package() {
                                     marginTop: "5px",
                                   }}
                                 >
-                                  Buy Now
+                                  {i?.id === userPackageId || (i?.packageName === "Free" && !userPackageId) ? "Current pack" : "Buy Now"}
                                 </button>
                               </Box>
                             </Box>
@@ -889,8 +893,12 @@ export default function Package() {
                         )}
                         <button
                           onClick={() => {
-                            dispatch(toggleDialogConfirm());
-                            dispatch(getIdPackage(i?.id));
+                            if(i?.packageName !== "Free") {
+                              dispatch(toggleDialogConfirm());
+                              dispatch(getIdPackage(i?.id));
+                            } else {
+                              console.log("Cannot buy free pack!");
+                            }
                           }}
                           style={{
                             border: "none",
@@ -907,7 +915,7 @@ export default function Package() {
                             marginTop: "5px",
                           }}
                         >
-                          {i?.id === userPackageId ? "Current pack" : "Buy Now"}
+                          {i?.id === userPackageId || (i?.packageName === "Free" && !userPackageId) ? "Current pack" : "Buy Now"}
                         </button>
                       </Box>
                     </Box>
