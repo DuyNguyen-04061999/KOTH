@@ -34,6 +34,8 @@ export default function Tournament() {
     }
   });
 
+  console.log(tournaments);
+
   useEffect(() => {
     socket?.on("createTournamentSuccess", (data) => {
       setTournaments((pre) => {
