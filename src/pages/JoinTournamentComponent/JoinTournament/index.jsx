@@ -700,7 +700,7 @@ export default function JoinTournament() {
                     ></Box> */}
                     {/* ----------------------- */}
                     <div className="cardWrap">
-                      <div className="card cardLeft">
+                      <div className="cardT cardLeft">
                         <h5 style={{color:"#BE48ED"}}>SS Z-Flip 5 free voucher</h5>
                         <Grid container>
                           <Grid item md={5}>

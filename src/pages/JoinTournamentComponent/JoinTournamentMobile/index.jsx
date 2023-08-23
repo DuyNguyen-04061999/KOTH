@@ -166,7 +166,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             {/* ----------------------- */}
             <div className="cardWrap">
-              <div className="card cardLeft">
+              <div className="cardMB cardLeft">
                 <h5 style={{ color: "#BE48ED" }}>SS Z-Flip 5 free voucher</h5>
                 <Grid container>
                   <Grid item xs={6}>
