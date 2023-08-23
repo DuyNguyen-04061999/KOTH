@@ -26,7 +26,7 @@ function* postTournamentCreate(dataRequest) {
     const res = yield call(tournamentService.callCreateTournament, payload);
     if (res.status === 200) {
       yield put(createTournamentSuccess());
-      window.location.reload()
+      window.location.reload();
     } else {
       yield put(createTournamentFail());
     }
@@ -40,11 +40,11 @@ function* getListTour(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.callListTournament, payload);
-    if (payload === "day") {
+    if (payload === "daily") {
       yield put(getDailyTour(res.data));
-    } else if (payload === "week") {
+    } else if (payload === "weekly") {
       yield put(getWeeklyTour(res.data));
-    } else if (payload === "hour") {
+    } else if (payload === "hourly") {
       yield put(getHourlyTour(res.data));
     } else if (payload === "hot") {
       yield put(getHotTour(res.data));

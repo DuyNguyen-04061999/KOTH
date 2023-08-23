@@ -17,6 +17,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PaginatedItems from "../PaginatedItems";
 import NewFooter from "../NewFooter";
+import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -104,67 +105,8 @@ export default function WeekLongTour() {
                   ?.slice(itemOffset, itemOffset + 10)
                   .map((item, index) => {
                     return (
-                      <Box
-                        onClick={() =>
-                          navigate("/tournamentDetail/" + item?.id)
-                        }
-                        key={index}
-                        sx={{
-                          width: "20%",
-                          padding: "0px 16px 0px 16px",
-                          display: "flex",
-                          height: "256.94px",
-                          justifyContent: "center",
-                          marginTop: width < 576 ? "24px" : "32px",
-                        }}
-                      >
-                        {" "}
-                        <Box
-                          sx={{
-                            height: "auto",
-                            width: "100% !important",
-                            backgroundColor: "#37285C",
-                            borderRadius: "8px",
-                            padding: "8px ",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "auto",
-                            }}
-                            component={"img"}
-                            src={images.GameTournament}
-                          ></Box>
-                          <Typography
-                            sx={{
-                              color: "#FFDC62",
-                              fontSize: "14px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "5px",
-                              width: "100%",
-                            }}
-                          >
-                            {item?.tournamentName}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              fontSize: "12px",
-                              fontWeight: "200 !important",
-                              textAlign: "start",
-                              marginTop: "-3px",
-                              width: "100%",
-                            }}
-                          >
-                            By Mcdonald’s
-                          </Typography>
-                        </Box>
+                      <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
+                        <ItemComponent tourInfo={item} countdown={true} />
                       </Box>
                     );
                   })}

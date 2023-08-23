@@ -53,6 +53,7 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { getAppType } from "../../utils/helper";
+import ResultEndGame from "../Dialog/ResultEndGame";
 
 const drawerWidth = 310;
 

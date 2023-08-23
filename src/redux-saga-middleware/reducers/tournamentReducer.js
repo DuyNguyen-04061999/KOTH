@@ -142,6 +142,13 @@ export const getHottestWeekTourSuccess = (data) => {
   };
 };
 
+export const toggleOpenResultEndGame = (data) => {
+  return {
+    type: "TOGGLE_OPEN_RESULT_END_GAME",
+    payload: data,
+  };
+};
+
 const tournamentReducer = (
   state = {
     //success=true&&fail=false --> success, fail=true&&success=false --> fail, success=false && fail=false --> Loading
@@ -163,6 +170,7 @@ const tournamentReducer = (
     biggestEndTour: [],
     brandTour: [],
     hotWeekTour: [],
+    isResultEndGame: false,
     //--------------------------------------
   },
   action
@@ -203,7 +211,7 @@ const tournamentReducer = (
         hotTournament: payload,
       };
     case "GET_LIST_DAILY_TOURNAMENT":
-      return { 
+      return {
         ...state,
         dailyTournament: payload,
       };
@@ -280,6 +288,11 @@ const tournamentReducer = (
         ...state,
         hotWeekTour: payload,
       };
+      case "TOGGLE_OPEN_RESULT_END_GAME" :
+        return {
+          ...state, 
+          isResultEndGame: !state.isResultEndGame
+        }
     default:
       return state;
   }

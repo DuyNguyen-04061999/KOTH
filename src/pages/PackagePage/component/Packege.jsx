@@ -20,10 +20,10 @@ export default function Package() {
   const { token, userPackageId } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  const [bgFree, setBgFree] = useState("#A361EE");
-  const [bgDiamond, setBgDiamond] = useState("transparent");
+  // const [bgFree, setBgFree] = useState("#A361EE");
+  const [bgDiamond, setBgDiamond] = useState("#A361EE");
   const [bgGold, setBgGold] = useState("transparent");
-  const [activePop, setAcivePop] = useState(0);
+  const [activePop, setAcivePop] = useState(1);
   const [item, setItem] = useState([]);
   useEffect(() => {
     const socket = _socket;
@@ -40,20 +40,20 @@ export default function Package() {
     }
   }, [socket, token]);
 
-  const handleClickFree = () => {
-    setBgFree("#A361EE");
-    setBgDiamond("transparent");
-    setBgGold("transparent");
-    setAcivePop(0);
-  };
+  // const handleClickFree = () => {
+  //   setBgFree("#A361EE");
+  //   setBgDiamond("transparent");
+  //   setBgGold("transparent");
+  //   setAcivePop(0);
+  // };
   const handleClickDiamond = () => {
-    setBgFree("transparent");
+    // setBgFree("transparent");
     setBgDiamond("#A361EE");
     setBgGold("transparent");
     setAcivePop(1);
   };
   const handleClickGold = () => {
-    setBgFree("transparent");
+    // setBgFree("transparent");
     setBgDiamond("transparent");
     setBgGold("#A361EE");
     setAcivePop(2);
@@ -61,18 +61,19 @@ export default function Package() {
 
   useEffect(() => {
     if (listPackage && listPackage?.length > 0) {
-      const list = listPackage?.filter((item) => item?.packageName == "Free");
+      const list = listPackage?.filter((item) => item?.packageName == "Diamond");
       setItem(list);
     }
   }, [listPackage]);
 
   useEffect(() => {
-    if (activePop === 0) {
-      const itemPackage = listPackage?.filter(
-        (item) => item?.packageName === "Free"
-      );
-      setItem(itemPackage);
-    } else if (activePop === 1) {
+    // if (activePop === 0) {
+    //   const itemPackage = listPackage?.filter(
+    //     (item) => item?.packageName === "Free"
+    //   );
+    //   setItem(itemPackage);
+    // } else 
+    if (activePop === 1) {
       const itemPackage = listPackage?.filter(
         (item) => item?.packageName === "Diamond"
       );
@@ -104,11 +105,6 @@ export default function Package() {
             }}
           >
             <Box>
-              {/* <ListPackage
-                data={listPackage?.filter(
-                  (item) => item?.packageName !== "Ticket Play"
-                )}
-              /> */}
               <Box sx={{ paddingBottom: "50px" }}>
                 <Box
                   sx={{
@@ -118,12 +114,12 @@ export default function Package() {
                     justifyContent: "space-around",
                   }}
                 >
-                  {/* <ScrollingCarousel> */}
                   {listPackage
                     ?.filter(
                       (item) =>
                         item?.packageName !== "Ticket Play" &&
-                        item?.packageName !== "Merchant"
+                        item?.packageName !== "Merchant" &&
+                        item?.packageName !== "Free"
                     )
                     ?.map((i, index) => {
                       return (
@@ -186,7 +182,7 @@ export default function Package() {
                               alignItems: "start",
                               borderRadius: "15px",
                               width: "100%",
-                              height: "550px",
+                              height: "525px",
                               border: "none",
                               padding: "25px",
                             }}
@@ -242,24 +238,45 @@ export default function Package() {
                                       marginBottom: "15px",
                                     }}
                                   >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      fill="none"
-                                      viewBox="0 0 18 18"
-                                    >
-                                      <g>
-                                        <path
-                                          fill="#14C58A"
-                                          d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                        ></path>
-                                        <path
-                                          fill="#fff"
-                                          d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                        ></path>
-                                      </g>
-                                    </svg>
+                                    {i?.packageFreeTicketTournament === 0 ? (
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="none"
+                                        viewBox="0 0 16 16"
+                                      >
+                                        <g>
+                                          <path
+                                            fill="#F05153"
+                                            d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
+                                          ></path>
+                                          <g fill="#fff">
+                                            <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
+                                            <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
+                                          </g>
+                                        </g>
+                                      </svg>
+                                    ) : (
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="none"
+                                        viewBox="0 0 18 18"
+                                      >
+                                        <g>
+                                          <path
+                                            fill="#14C58A"
+                                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
+                                          ></path>
+                                          <path
+                                            fill="#fff"
+                                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
+                                          ></path>
+                                        </g>
+                                      </svg>
+                                    )}
                                     <Typography
                                       variant="body1"
                                       sx={{
@@ -269,7 +286,8 @@ export default function Package() {
                                         fontWeight: "500 !important",
                                       }}
                                     >
-                                      2 Free voucher/tournament
+                                      {i?.packageFreeTicketTournament} Free
+                                      voucher/tournament
                                     </Typography>
                                   </Box>
                                   <Box
@@ -307,7 +325,9 @@ export default function Package() {
                                         fontWeight: "500 !important",
                                       }}
                                     >
-                                      No watching ads
+                                      {i?.packageReduceWatchAds === 0
+                                        ? "No watching ads"
+                                        : "Reducing 50% time of ads"}
                                     </Typography>
                                   </Box>
                                   <Box
@@ -317,24 +337,45 @@ export default function Package() {
                                       alignItems: "center",
                                     }}
                                   >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      fill="none"
-                                      viewBox="0 0 18 18"
-                                    >
-                                      <g>
-                                        <path
-                                          fill="#14C58A"
-                                          d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                        ></path>
-                                        <path
-                                          fill="#fff"
-                                          d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                        ></path>
-                                      </g>
-                                    </svg>
+                                    {i?.packageCountLuckySpin === 0 ? (
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="none"
+                                        viewBox="0 0 16 16"
+                                      >
+                                        <g>
+                                          <path
+                                            fill="#F05153"
+                                            d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
+                                          ></path>
+                                          <g fill="#fff">
+                                            <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
+                                            <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
+                                          </g>
+                                        </g>
+                                      </svg>
+                                    ) : (
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="none"
+                                        viewBox="0 0 18 18"
+                                      >
+                                        <g>
+                                          <path
+                                            fill="#14C58A"
+                                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
+                                          ></path>
+                                          <path
+                                            fill="#fff"
+                                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
+                                          ></path>
+                                        </g>
+                                      </svg>
+                                    )}
                                     <Typography
                                       variant="body1"
                                       sx={{
@@ -344,7 +385,8 @@ export default function Package() {
                                         fontWeight: "500 !important",
                                       }}
                                     >
-                                      4 Times for lucky spin
+                                      {i?.packageCountLuckySpin}Times for lucky
+                                      spin
                                     </Typography>
                                   </Box>
                                 </Box>
@@ -399,7 +441,7 @@ export default function Package() {
                                 )}
                                 <button
                                   onClick={() => {
-                                    if(i?.packageName !== "Free") {
+                                    if (i?.packageName !== "Free") {
                                       dispatch(toggleDialogConfirm());
                                       dispatch(getIdPackage(i?.id));
                                     } else {
@@ -419,7 +461,10 @@ export default function Package() {
                                     marginTop: "5px",
                                   }}
                                 >
-                                  {i?.id === userPackageId || (i?.packageName === "Free" && !userPackageId) ? "Current pack" : "Buy Now"}
+                                  {i?.id === userPackageId ||
+                                  (i?.packageName === "Free" && !userPackageId)
+                                    ? "Current pack"
+                                    : "Buy Now"}
                                 </button>
                               </Box>
                             </Box>
@@ -523,7 +568,7 @@ export default function Package() {
                     justifyContent: "space-around",
                   }}
                 >
-                  <Box
+                  {/* <Box
                     onClick={handleClickFree}
                     sx={{
                       padding: "0px 35px",
@@ -534,7 +579,7 @@ export default function Package() {
                     }}
                   >
                     Free
-                  </Box>
+                  </Box> */}
                   <Box
                     onClick={handleClickDiamond}
                     sx={{
@@ -582,9 +627,16 @@ export default function Package() {
                     flexDirection: "column",
                     position: "relative",
                     marginTop: "20px",
-                    marginLeft: "20px",
-                    marginRight: "20px",
                   }}
+                  className={
+                    i?.packageName === "Free"
+                      ? "gradient-border-rounded"
+                      : "" || i?.packageName === "Diamond"
+                      ? "gradient-border-rounded1"
+                      : "" || i?.packageName === "Gold"
+                      ? "gradient-border-rounded2"
+                      : ""
+                  }
                 >
                   <Typography
                     variant="h5"
@@ -613,7 +665,7 @@ export default function Package() {
                       alignItems: "center",
                       borderRadius: "15px",
                       width: "100%",
-                      height: "550px",
+                      height: "518px",
                       border: "none",
                       padding: "5px",
                     }}
@@ -708,7 +760,6 @@ export default function Package() {
                                 </g>
                               </svg>
                             )}
-
                             <Typography
                               variant="body1"
                               sx={{
@@ -730,46 +781,24 @@ export default function Package() {
                               marginBottom: "15px",
                             }}
                           >
-                            {i?.packageReduceWatchAds === 0 ? (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                fill="none"
-                                viewBox="0 0 16 16"
-                              >
-                                <g>
-                                  <path
-                                    fill="#F05153"
-                                    d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
-                                  ></path>
-                                  <g fill="#fff">
-                                    <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
-                                    <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
-                                  </g>
-                                </g>
-                              </svg>
-                            ) : (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                fill="none"
-                                viewBox="0 0 18 18"
-                              >
-                                <g>
-                                  <path
-                                    fill="#14C58A"
-                                    d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                  ></path>
-                                  <path
-                                    fill="#fff"
-                                    d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                  ></path>
-                                </g>
-                              </svg>
-                            )}
-
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              fill="none"
+                              viewBox="0 0 18 18"
+                            >
+                              <g>
+                                <path
+                                  fill="#14C58A"
+                                  d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
+                                ></path>
+                                <path
+                                  fill="#fff"
+                                  d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
+                                ></path>
+                              </g>
+                            </svg>
                             <Typography
                               variant="body1"
                               sx={{
@@ -779,7 +808,9 @@ export default function Package() {
                                 fontWeight: "500 !important",
                               }}
                             >
-                              {i?.packageReduceWatchAds} No watching ads
+                              {i?.packageReduceWatchAds === 0
+                                ? "No watching ads"
+                                : "Reducing 50% time of ads"}
                             </Typography>
                           </Box>
                           <Box
@@ -893,7 +924,7 @@ export default function Package() {
                         )}
                         <button
                           onClick={() => {
-                            if(i?.packageName !== "Free") {
+                            if (i?.packageName !== "Free") {
                               dispatch(toggleDialogConfirm());
                               dispatch(getIdPackage(i?.id));
                             } else {
@@ -915,7 +946,10 @@ export default function Package() {
                             marginTop: "5px",
                           }}
                         >
-                          {i?.id === userPackageId || (i?.packageName === "Free" && !userPackageId) ? "Current pack" : "Buy Now"}
+                          {i?.id === userPackageId ||
+                          (i?.packageName === "Free" && !userPackageId)
+                            ? "Current pack"
+                            : "Buy Now"}
                         </button>
                       </Box>
                     </Box>

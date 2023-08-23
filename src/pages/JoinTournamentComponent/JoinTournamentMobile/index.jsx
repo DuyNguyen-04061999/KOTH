@@ -2,6 +2,7 @@ import {
   Box,
   CssBaseline,
   Dialog,
+  Grid,
   ThemeProvider,
   Typography,
   createTheme,
@@ -11,7 +12,7 @@ import { images } from "../../../utils/images";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import "./index.scss";
+import "./joinMobile.scss";
 import moment from "moment";
 import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
@@ -163,11 +164,78 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             </Box>
           </Box>
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
-            <Box
-              onClick={() => setOpenVoucher(true)}
-              component={"img"}
-              src={images.Discount10}
-            ></Box>
+            {/* ----------------------- */}
+            <div className="cardWrap">
+              <div className="cardMB cardLeft">
+                <h5 style={{ color: "#BE48ED" }}>SS Z-Flip 5 free voucher</h5>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <div className="title d-flex flex-column mb-2">
+                      <h6
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                        }}
+                      >
+                        Recipient
+                      </h6>
+                      <span style={{fontSize:"14px !important"}}>Top 1 Winner</span>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <div className="name d-flex flex-column mb-2">
+                      <h6
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                        }}
+                      >
+                        Validity date
+                      </h6>
+                      <span>Nov-10-2023</span>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <div className="seat d-flex flex-column">
+                      <h2
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                        }}
+                      >
+                        Sponsor by
+                      </h2>
+                      <span>Samsung</span>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <div className="time d-flex flex-column">
+                      <h2
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                        }}
+                      >
+                        Conditions
+                      </h2>
+                      <span style={{ color: "#0096FF" }}>See more</span>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+              <div className="card cardRight">
+                <div className="eye"></div>
+                <div className="number">
+                  <img
+                    src={images.GameTournament}
+                    alt="..."
+                    width={80}
+                    height={85}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* --------------------------  */}
           </Box>
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>

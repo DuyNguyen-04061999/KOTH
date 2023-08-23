@@ -3,6 +3,7 @@ import {
   Container,
   CssBaseline,
   Dialog,
+  Grid,
   ThemeProvider,
   Typography,
   createTheme,
@@ -28,6 +29,7 @@ import JoinTournamentMobile from "../JoinTournamentMobile";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import LeaderBoard from "../LeaderBoard";
 import DetailVoucher from "../DetailVoucher";
+import "./index.scss";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -66,7 +68,7 @@ export default function JoinTournament() {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
-
+  console.log(videoGame);
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
       setIsFullScreen(true);
@@ -81,7 +83,7 @@ export default function JoinTournament() {
   }, [orientation, width, previousOri]);
   useEffect(() => {
     if (isFullScreen === true && checkMobile === true) {
-      setVideoGame(true);
+      // setVideoGame(true);
       setCheckMobile(false);
     }
   }, [isFullScreen, checkMobile]);
@@ -102,10 +104,16 @@ export default function JoinTournament() {
     setSocket(_socket);
   }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (((token && fetchT) || (!token && fetchT)) && id && id !== undefined && id !== "undefined" && (typeof id === "string" || typeof id === "number")) {
+    if (
+      ((token && fetchT) || (!token && fetchT)) &&
+      id &&
+      id !== undefined &&
+      id !== "undefined" &&
+      (typeof id === "string" || typeof id === "number")
+    ) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
@@ -130,9 +138,7 @@ export default function JoinTournament() {
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       setStartGame(true);
-      if (orientation === "landscape") {
-        setVideoGame(true);
-      }
+      setVideoGame(true);
       setCheckMobile(true);
     });
     return () => {
@@ -161,7 +167,6 @@ export default function JoinTournament() {
     setStartGame(false);
     window.location.reload();
   };
-  console.log("detail Tournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -688,11 +693,50 @@ export default function JoinTournament() {
                     >
                       REWARD
                     </Box>
-                    <Box
+                    {/* <Box
                       component={"img"}
                       sx={{ width: "100%", height: "auto" }}
                       src={images.voucher_tour}
-                    ></Box>
+                    ></Box> */}
+                    {/* ----------------------- */}
+                    <div className="cardWrap">
+                      <div className="cardT cardLeft">
+                        <h5 style={{color:"#BE48ED"}}>SS Z-Flip 5 free voucher</h5>
+                        <Grid container>
+                          <Grid item md={5}>
+                            <div className="title d-flex flex-column mb-2">
+                              <h6 style={{fontSize:"10px", marginBottom:"0px !important"}}>Recipient</h6>
+                              <span>Top 1 Winner</span>
+                            </div>
+                          </Grid>
+                          <Grid item md={6}>
+                            <div className="name d-flex flex-column mb-2">
+                              <h6 style={{fontSize:"10px", marginBottom:"0px !important"}}>Validity date</h6>
+                              <span>Nov-10-2023</span>
+                            </div>
+                          </Grid>
+                          <Grid item md={5}>
+                            <div className="seat d-flex flex-column">
+                              <h2 style={{fontSize:"10px", marginBottom:"0px !important"}}>Sponsor by</h2>
+                              <span>Samsung</span>
+                            </div>
+                          </Grid>
+                          <Grid item md={6}>
+                            <div className="time d-flex flex-column">
+                              <h2 style={{fontSize:"10px", marginBottom:"0px !important"}}>Conditions</h2>
+                              <span style={{color:"#0096FF"}}>See more</span>
+                            </div>
+                          </Grid>
+                        </Grid>
+                      </div>
+                      <div className="card cardRight">
+                        <div className="eye"></div>
+                        <div className="number">
+                          <img src={images.GameTournament} alt="..." width={100} height={105}  />
+                        </div>
+                      </div>
+                    </div>
+                    {/* --------------------------  */}
                   </Box>
                   <Box>
                     <Box
@@ -838,13 +882,14 @@ export default function JoinTournament() {
                 zIndex: isFullScreen && startGame ? "5005" : "none",
               }}
             >
-              {detailTournament && detailTournament?.tournamentInfors?.game && detailTournament?.tournamentInfors?.game?.GameFiles &&
+              {detailTournament &&
+                detailTournament?.tournamentInfors?.game &&
+                detailTournament?.tournamentInfors?.game?.GameFiles &&
                 detailTournament?.tournamentInfors?.game?.GameFiles.length >=
                   4 && (
                   <FullScreen handle={screen} onChange={reportChange}>
                     {videoGame ? (
                       <Fragment>
-                        (
                         <video
                           className={
                             isFullScreen && startGame ? "fullscreenVideo" : ""
@@ -859,7 +904,6 @@ export default function JoinTournament() {
                         >
                           <source src={video.LogoAnim} type="video/mp4" />
                         </video>
-                        )
                       </Fragment>
                     ) : (
                       <Fragment>
@@ -877,11 +921,15 @@ export default function JoinTournament() {
                           gameId={
                             detailTournament?.tournamentInfors?.game?.id || ""
                           }
-                          skinName={detailTournament?.tournamentInfors?.skin?.skinName || ""}
+                          skinName={
+                            detailTournament?.tournamentInfors?.skin
+                              ?.skinName || ""
+                          }
                           type="tournament"
                           handleEndGame={handleEndGame}
                           gameName={
-                            detailTournament?.tournamentInfors?.game?.gameName || ""
+                            detailTournament?.tournamentInfors?.game
+                              ?.gameName || ""
                           }
                         />
                         {startGame && expand === true && width > 576 && (
