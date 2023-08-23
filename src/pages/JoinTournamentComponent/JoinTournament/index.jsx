@@ -875,7 +875,7 @@ export default function JoinTournament() {
                           isFullScreen={isFullScreen}
                           fullScreen={expand}
                           gameId={
-                            detailTournament?.tournamentInfors?.game?.gameId || ""
+                            detailTournament?.tournamentInfors?.game?.id || ""
                           }
                           skinName={detailTournament?.tournamentInfors?.skin?.skinName || ""}
                           type="tournament"
