@@ -7,6 +7,7 @@ import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gam
 import { useDispatch, useSelector } from "react-redux";
 import {
   clickTab,
+  showDropdown,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
@@ -15,7 +16,7 @@ import { getAppType } from "../../../utils/helper";
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { token, isNav } = useSelector((state) => state.authReducer);
+  const { token, isNav, isDropdownNav } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -25,12 +26,10 @@ export default function Navbar() {
   const location = useLocation();
   const { pathname } = location;
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    dispatch(showDropdown(true))
   };
-
-  // const [showDrop, setShowDrop] = useState("");
 
   return (
     <Box className="nav-section">
@@ -152,9 +151,7 @@ export default function Navbar() {
 
                   borderRadius: "5px",
                 }}
-                // onClick={() => {
-                //   // navigate("/home");
-                // }}
+                onClick={toggleDropdown}
                 className="nav-home pt-2 pb-2 ps-2"
               >
                 <Box
@@ -255,7 +252,7 @@ export default function Navbar() {
                     Tournament
                   </span>
                 </Box>
-                <Box onClick={toggleDropdown}>
+                <Box>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="14"
@@ -265,7 +262,7 @@ export default function Navbar() {
                     className="me-2"
                     style={{
                       transform:
-                        isDropdownOpen === true
+                      isDropdownNav === true
                           ? "rotate(0deg)"
                           : "rotate(-88deg)",
                       transition: "all 0.3s",
@@ -295,12 +292,12 @@ export default function Navbar() {
               </Box>
               <Box
                 sx={{
-                  display: isDropdownOpen === true ? "block" : "none",
-                  height: isDropdownOpen === true ? "220px" : "0px",
+                  display: isDropdownNav === true ? "block" : "none",
+                  height: isDropdownNav === true ? "220px" : "0px",
                   transition: "all 0.5s",
                 }}
                 className={`dropdown-content ${
-                  isDropdownOpen === true ? "show" : ""
+                  isDropdownNav === true ? "show" : ""
                 }`}
               >
                 <Box
@@ -312,18 +309,18 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("hottour")
-                        ? "transparent"
-                        : "#transparent",
+                      pathname && pathname?.includes("hot-tournament")
+                        ? "#7648ED"
+                        : "transparent",
 
                     borderRadius: "5px",
                   }}
                   onClick={() => {
                     navigate("/hot-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("hottour") ? (
+                  {pathname && pathname?.includes("hot-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -389,8 +386,8 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("Hourlytour")
-                        ? "transparent"
+                      pathname && pathname?.includes("hourly-tournament")
+                        ? "#7648ED"
                         : "transparent",
 
                     borderRadius: "5px",
@@ -398,9 +395,9 @@ export default function Navbar() {
                   onClick={() => {
                     navigate("/hourly-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("Hourlytour") ? (
+                  {pathname && pathname?.includes("hourly-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -455,8 +452,8 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("dalytour")
-                        ? "transparent"
+                      pathname && pathname?.includes("daily-tournament")
+                        ? "#7648ED"
                         : "transparent",
 
                     borderRadius: "5px",
@@ -464,9 +461,9 @@ export default function Navbar() {
                   onClick={() => {
                     navigate("/daily-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                 >
-                  {pathname && pathname?.includes("dalytour") ? (
+                  {pathname && pathname?.includes("daily-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -523,8 +520,8 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("week")
-                        ? "transparent"
+                      pathname && pathname?.includes("week-long-tournament")
+                        ? "#7648ED"
                         : "transparent",
 
                     borderRadius: "5px",
@@ -532,9 +529,9 @@ export default function Navbar() {
                   onClick={() => {
                     navigate("/week-long-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("week") ? (
+                  {pathname && pathname?.includes("week-long-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"

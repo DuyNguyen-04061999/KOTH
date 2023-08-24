@@ -24,7 +24,20 @@ export default function BgEndGame() {
           zIndex: 2,
         }}
       >
-        <Typography variant="h4" sx={{ color: "#fff", textAlign:"center" }}>End Game</Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            color: "#fff",
+            textAlign: "center",
+            fontFamily: "Cyntho Next",
+            fontStyle: "normal",
+            fontWeight: "700",
+            lineHeight: "normal",
+            textTransform: "uppercase",
+          }}
+        >
+          End Game
+        </Typography>
       </Box>
     </>
   );
