@@ -537,7 +537,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    FAQs
+                    Help Center
                   </span>
                 </Box>
               </Box>
