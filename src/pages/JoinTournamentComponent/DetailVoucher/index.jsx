@@ -37,7 +37,6 @@ function isJson(str) {
 }
 
 export default function DetailVoucher({ open, handleOnClose, detail }) {
-  console.log(detail);
   const { width } = useWindowDimensions();
   const typographyStyle = {
     textAlign: "start",

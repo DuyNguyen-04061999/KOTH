@@ -52,7 +52,6 @@ export default function UnityGameComponent(props) {
       }
     }
   }
-  console.log(gameId);
 
   const {
     unityProvider,

@@ -44,7 +44,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
       clearInterval(timeInterval);
     };
   }, [tourInfo]);
-  console.log(tourInfo);
+  
   const styleTypography = {
     textAlign: "start",
     fontSize: width < 576 ? "14px" : "16px",

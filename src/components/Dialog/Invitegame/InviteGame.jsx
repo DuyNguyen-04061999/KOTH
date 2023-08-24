@@ -210,7 +210,7 @@ export default function InviteGameDialog() {
                       >
                         <img
                           src={
-                            e.gameAvatar
+                            e?.gameAvatar
                               ? process.env.REACT_APP_SOCKET_SERVER +
                                 "/" +
                                 e?.gameAvatar

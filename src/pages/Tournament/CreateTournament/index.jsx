@@ -2175,7 +2175,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
             }}
           >
             {skinTournament?.map((item, index) => {
-              console.log(item);
               return (
                 <Box
                   onClick={() => setSkinId(skinId !== item?.id ? item?.id : "")}

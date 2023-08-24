@@ -45,7 +45,7 @@ export default function DailyTournament() {
     color: "#fff",
   };
   const dispatch = useDispatch();
-  console.log(dailyTournament);
+  
   useEffect(() => {
     if (isFetchList) {
       dispatch({

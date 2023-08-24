@@ -70,7 +70,6 @@ export default function JoinTournament() {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
-  console.log(detailTournament);
 
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
@@ -144,8 +143,6 @@ export default function JoinTournament() {
       setVideoGame(true);
       setCheckMobile(true);
       setExpand(true);
-      console.log(123);
-      console.log(detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType);
       if(width < 576 && !detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType && startGame) {
         setExpand(true);
         screen.enter();

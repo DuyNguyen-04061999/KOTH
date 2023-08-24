@@ -7,6 +7,7 @@ import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gam
 import { useDispatch, useSelector } from "react-redux";
 import {
   clickTab,
+  showDropdown,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
@@ -15,7 +16,7 @@ import { getAppType } from "../../../utils/helper";
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { token, isNav } = useSelector((state) => state.authReducer);
+  const { token, isNav, isDropdownNav } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -25,12 +26,10 @@ export default function Navbar() {
   const location = useLocation();
   const { pathname } = location;
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    dispatch(showDropdown(true))
   };
-
-  // const [showDrop, setShowDrop] = useState("");
 
   return (
     <Box className="nav-section">
@@ -152,9 +151,7 @@ export default function Navbar() {
 
                   borderRadius: "5px",
                 }}
-                // onClick={() => {
-                //   // navigate("/home");
-                // }}
+                onClick={toggleDropdown}
                 className="nav-home pt-2 pb-2 ps-2"
               >
                 <Box
@@ -255,7 +252,7 @@ export default function Navbar() {
                     Tournament
                   </span>
                 </Box>
-                <Box onClick={toggleDropdown}>
+                <Box>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="14"
@@ -265,7 +262,7 @@ export default function Navbar() {
                     className="me-2"
                     style={{
                       transform:
-                        isDropdownOpen === true
+                      isDropdownNav === true
                           ? "rotate(0deg)"
                           : "rotate(-88deg)",
                       transition: "all 0.3s",
@@ -295,12 +292,12 @@ export default function Navbar() {
               </Box>
               <Box
                 sx={{
-                  display: isDropdownOpen === true ? "block" : "none",
-                  height: isDropdownOpen === true ? "220px" : "0px",
+                  display: isDropdownNav === true ? "block" : "none",
+                  height: isDropdownNav === true ? "220px" : "0px",
                   transition: "all 0.5s",
                 }}
                 className={`dropdown-content ${
-                  isDropdownOpen === true ? "show" : ""
+                  isDropdownNav === true ? "show" : ""
                 }`}
               >
                 <Box
@@ -312,18 +309,18 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("hottour")
-                        ? "transparent"
-                        : "#transparent",
+                      pathname && pathname?.includes("hot-tournament")
+                        ? "#7648ED"
+                        : "transparent",
 
                     borderRadius: "5px",
                   }}
                   onClick={() => {
                     navigate("/hot-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("hottour") ? (
+                  {pathname && pathname?.includes("hot-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -389,8 +386,8 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("Hourlytour")
-                        ? "transparent"
+                      pathname && pathname?.includes("hourly-tournament")
+                        ? "#7648ED"
                         : "transparent",
 
                     borderRadius: "5px",
@@ -398,9 +395,9 @@ export default function Navbar() {
                   onClick={() => {
                     navigate("/hourly-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("Hourlytour") ? (
+                  {pathname && pathname?.includes("hourly-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -455,8 +452,8 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("dalytour")
-                        ? "transparent"
+                      pathname && pathname?.includes("daily-tournament")
+                        ? "#7648ED"
                         : "transparent",
 
                     borderRadius: "5px",
@@ -464,9 +461,9 @@ export default function Navbar() {
                   onClick={() => {
                     navigate("/daily-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                 >
-                  {pathname && pathname?.includes("dalytour") ? (
+                  {pathname && pathname?.includes("daily-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -523,8 +520,8 @@ export default function Navbar() {
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("week")
-                        ? "transparent"
+                      pathname && pathname?.includes("week-long-tournament")
+                        ? "#7648ED"
                         : "transparent",
 
                     borderRadius: "5px",
@@ -532,9 +529,9 @@ export default function Navbar() {
                   onClick={() => {
                     navigate("/week-long-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("week") ? (
+                  {pathname && pathname?.includes("week-long-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -941,7 +938,8 @@ export default function Navbar() {
               </span>
             </Box>
           )}
-          <Box
+         {getAppType() === "promote" ? (
+           <Box
             className="cursor-pointer"
             sx={{
               display: "flex",
@@ -974,13 +972,6 @@ export default function Navbar() {
                 <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
               </g>
             </svg>
-            {/* <img
-              src={popup.faq}
-              alt="..."
-              className="p-1 me-1"
-              width={28}
-              height={"auto"}
-            /> */}
             <span
               className="hover-nav"
               style={{
@@ -997,6 +988,57 @@ export default function Navbar() {
               Help Center
             </span>
           </Box>
+         ) : (
+          <Box
+            className="cursor-pointer"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isNav === true ? "flex-start" : "center",
+              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+            }}
+            onClick={() => {
+              
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              fill="none"
+              viewBox="0 0 18 18"
+              className="p-1 me-1"
+            >
+              <g
+                stroke="#A89CD7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+              >
+                <path
+                  strokeMiterlimit="10"
+                  d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
+                ></path>
+                <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
+              </g>
+            </svg>
+            <span
+              className="hover-nav"
+              style={{
+                cursor: "pointer",
+                fontWeight: "700",
+                fontSize: "15px",
+                marginLeft: "5px",
+                display: isNav === true ? "block" : "none",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+              }}
+            >
+              FAQs
+            </span>
+          </Box>
+         )}
         </Box>
         {/* <Box
           sx={{

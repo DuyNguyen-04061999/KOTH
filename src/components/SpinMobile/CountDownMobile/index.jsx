@@ -44,7 +44,6 @@ export default function CountDownMobile() {
 
   useEffect(() => {
     socket?.on("storeSpinHistorySuccess", (data) => {
-      console.log(123);
       if (hours === "00" && minutes === "00" && seconds === "00") {
         dispatch(
           updateExpiryTime(getTommorowInfo().toLocaleDateString() + " 07:00:00")

@@ -68,7 +68,6 @@ export default function NewHomePage() {
     brandTour,
     hotWeekTour,
   } = useSelector((state) => state.tournamentReducer);
-  console.log("dayList: ", dailyTournament);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {
@@ -109,14 +108,6 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-  console.log(
-    "daily: ",
-    dailyTournament?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-      ?.listTournament
-  );
-
-  console.log("Biggesr", biggestEndTour?.bestUser?.tUser?.userAccount);
-  console.log("hotWeekTour: ", hotWeekTour);
   return (
     <Container
       maxWidth="lg"

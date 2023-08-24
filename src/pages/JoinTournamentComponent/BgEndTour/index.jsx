@@ -26,7 +26,13 @@ export default function BgEndGame() {
           zIndex: 2,
         }}
       >
-        <Typography variant="h4" sx={{ color: "#fff", textAlign:"center" }}>This tournament has ended</Typography>
+        <Typography variant="h4" sx={{  color: "#fff",
+            textAlign: "center",
+            fontFamily: "Cyntho Next",
+            fontStyle: "normal",
+            fontWeight: "700",
+            lineHeight: "normal",
+            textTransform: "uppercase", }}>This tournament has ended</Typography>
       </Box>
     </>
   );
