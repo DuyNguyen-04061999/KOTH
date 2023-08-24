@@ -701,30 +701,60 @@ export default function JoinTournament() {
                     {/* ----------------------- */}
                     <div className="cardWrap">
                       <div className="card cardLeft">
-                        <h5 style={{color:"#BE48ED"}}>SS Z-Flip 5 free voucher</h5>
+                        <h5 style={{ color: "#BE48ED" }}>
+                          SS Z-Flip 5 free voucher
+                        </h5>
                         <Grid container>
                           <Grid item md={5}>
                             <div className="title d-flex flex-column mb-2">
-                              <h6 style={{fontSize:"10px", marginBottom:"0px !important"}}>Recipient</h6>
+                              <h6
+                                style={{
+                                  fontSize: "10px",
+                                  marginBottom: "0px !important",
+                                }}
+                              >
+                                Recipient
+                              </h6>
                               <span>Top 1 Winner</span>
                             </div>
                           </Grid>
                           <Grid item md={6}>
                             <div className="name d-flex flex-column mb-2">
-                              <h6 style={{fontSize:"10px", marginBottom:"0px !important"}}>Validity date</h6>
+                              <h6
+                                style={{
+                                  fontSize: "10px",
+                                  marginBottom: "0px !important",
+                                }}
+                              >
+                                Validity date
+                              </h6>
                               <span>Nov-10-2023</span>
                             </div>
                           </Grid>
                           <Grid item md={5}>
                             <div className="seat d-flex flex-column">
-                              <h2 style={{fontSize:"10px", marginBottom:"0px !important"}}>Sponsor by</h2>
+                              <h2
+                                style={{
+                                  fontSize: "10px",
+                                  marginBottom: "0px !important",
+                                }}
+                              >
+                                Sponsor by
+                              </h2>
                               <span>Samsung</span>
                             </div>
                           </Grid>
                           <Grid item md={6}>
                             <div className="time d-flex flex-column">
-                              <h2 style={{fontSize:"10px", marginBottom:"0px !important"}}>Conditions</h2>
-                              <span style={{color:"#0096FF"}}>See more</span>
+                              <h2
+                                style={{
+                                  fontSize: "10px",
+                                  marginBottom: "0px !important",
+                                }}
+                              >
+                                Conditions
+                              </h2>
+                              <span style={{ color: "#0096FF" }}>See more</span>
                             </div>
                           </Grid>
                         </Grid>
@@ -732,7 +762,12 @@ export default function JoinTournament() {
                       <div className="card cardRight">
                         <div className="eye"></div>
                         <div className="number">
-                          <img src={images.GameTournament} alt="..." width={100} height={105}  />
+                          <img
+                            src={images.GameTournament}
+                            alt="..."
+                            width={100}
+                            height={105}
+                          />
                         </div>
                       </div>
                     </div>
@@ -846,13 +881,21 @@ export default function JoinTournament() {
             />
           </Container>
         ) : (
-          <JoinTournamentMobile
-            handleOnClickStartGame={() => {
-              socket?.emit("startGameInTournament", {
-                tournamentId: id,
-              });
-            }}
-          />
+          <Box>
+            {" "}
+            <JoinTournamentMobile
+              handleOnClickStartGame={() => {
+                socket?.emit("startGameInTournament", {
+                  tournamentId: id,
+                });
+              }}
+            />
+            <BuyTicket
+              tournamentId={detailTournament?.id}
+              bought={detailTournament?.bought}
+              id={id}
+            />
+          </Box>
         )
       ) : (
         <>
