@@ -101,15 +101,52 @@ export default function DialogWallet(props) {
           transactionId: transaction?.id,
         });
 
-        let contract = new web3.eth.Contract(
-          data?.token_abi,
-          data?.token_contract
-        );
-        let depositAmount = data?.token_quantity + "000000000000000000";
-
+        // let contract = new web3.eth.Contract(
+        //   data?.token_abi,
+        //   data?.token_contract
+        // );
+        const contract = new web3.eth.Contract(
+          [
+            // transfer
+            {
+              "constant": false,
+              "inputs": [
+                {
+                  "name": "_to",
+                  "type": "address"
+                },
+                {
+                  "name": "_value",
+                  "type": "uint256"
+                }
+              ],
+              "name": "transfer",
+              "outputs": [
+                {
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "type": "function"
+            }
+          ],
+          "0xbA2aE424d960c26247Dd6c32edC70B295c744C43")
+        
+        
+          let depositAmount =  "500000000"; 
+        console.log(contract,"Debug contract info");
+ 
         let result = await contract.methods
-          .transfer(data?.target_wallet, depositAmount)
-          .send({ from: account, gas: 600000, gasPrice: 30 * 1e9 });
+        .transfer("0x0626cBA4A7680C86C2e48204f0DC1EC42E60234e", depositAmount)
+        .send({ from: account });
+
+        /*
+        let result = await contract.methods
+          .transfer("0x0626cBA4A7680C86C2e48204f0DC1EC42E60234e", depositAmount)
+          .send({ from: account });
+
+          console.log(result,'result info');
+          */
 
         if (result) {
           socket?.emit("updateDepositTransaction", {
@@ -131,6 +168,8 @@ export default function DialogWallet(props) {
           type: "error",
           transactionId: transaction?.id,
         });
+
+        console.log(error);
       }
 
       return false;
@@ -140,6 +179,24 @@ export default function DialogWallet(props) {
       setLoadingDeposit(false);
       setAmountDeposit(0);
       if (window?.ethereum) {
+        await window.ethereum.request({
+          jsonrpc: '2.0',
+          method: 'wallet_addEthereumChain',
+          params: [
+              {
+                  chainId: data?.target_network_id,
+                  chainName: 'Binance Smart Chain Mainnet',
+                  rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                  nativeCurrency: {
+                      name: 'BNB',
+                      symbol: 'BNB',
+                      decimals: 18
+                  },
+                  blockExplorerUrls: ['https://bscscan.com']
+              }
+          ],
+          id: 0
+      })
         await window?.ethereum?.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: data?.target_network_id || "0x1" }],
@@ -414,7 +471,7 @@ export default function DialogWallet(props) {
                     if(getAppType() && getAppType() === "promote") {
                       dispatch(getStripe(amountDeposit))
                     } else {
-                      if (amountDeposit >= 5 && amountDeposit <= 5000) {
+                      if (amountDeposit >= 50 && amountDeposit <= 5000) {
                         setLoadingDeposit(true);
                         setTimeout(() => {
                           socket?.emit("depositRequest", { amountDeposit });

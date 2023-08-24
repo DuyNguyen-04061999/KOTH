@@ -278,6 +278,7 @@ import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
 import diamon from "../assets/imagesDesktop/diamon.png";
 import free from "../assets/imagesDesktop/free.png";
 import gold1 from "../assets/imagesDesktop/gold.png";
+import signInCrypto from "../assets/images/signin_crypto.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -300,6 +301,7 @@ export const imageHome = {
 };
 
 export const images = {
+  signInCrypto: signInCrypto,
   pool: pool,
   domino: domino,
   Domino: domino,
