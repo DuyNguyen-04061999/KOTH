@@ -881,21 +881,13 @@ export default function JoinTournament() {
             />
           </Container>
         ) : (
-          <Box>
-            {" "}
-            <JoinTournamentMobile
-              handleOnClickStartGame={() => {
-                socket?.emit("startGameInTournament", {
-                  tournamentId: id,
-                });
-              }}
-            />
-            <BuyTicket
-              tournamentId={detailTournament?.id}
-              bought={detailTournament?.bought}
-              id={id}
-            />
-          </Box>
+          <JoinTournamentMobile
+            handleOnClickStartGame={() => {
+              socket?.emit("startGameInTournament", {
+                tournamentId: id,
+              });
+            }}
+          />
         )
       ) : (
         <>
