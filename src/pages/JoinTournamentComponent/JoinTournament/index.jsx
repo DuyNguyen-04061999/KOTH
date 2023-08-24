@@ -30,6 +30,7 @@ import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import LeaderBoard from "../LeaderBoard";
 import DetailVoucher from "../DetailVoucher";
 import "./index.scss";
+import GameInTournament from "../GameInTournament";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -702,7 +703,7 @@ export default function JoinTournament() {
                     {/* ----------------------- */}
                     <div className="cardWrap">
                       <div className="cardT cardLeft">
-                        <h5 style={{color:"#BE48ED"}}>SS Z-Flip 5 free voucher</h5>
+                        <h5 style={{color:"#BE48ED", marginTop:"15px"}}>SS Z-Flip 5 free voucher</h5>
                         <Grid container>
                           <Grid item md={5}>
                             <div className="title d-flex flex-column mb-2">
@@ -730,7 +731,7 @@ export default function JoinTournament() {
                           </Grid>
                         </Grid>
                       </div>
-                      <div className="card cardRight">
+                      <div className="cardT cardRight">
                         <div className="eye"></div>
                         <div className="number">
                           <img src={images.GameTournament} alt="..." width={100} height={105}  />
@@ -738,6 +739,12 @@ export default function JoinTournament() {
                       </div>
                     </div>
                     {/* --------------------------  */}
+                  </Box>
+                  <Box sx={{
+                    display:"flex",
+                    alignItems:"flex-start"
+                  }}>
+                  <GameInTournament />
                   </Box>
                   <Box>
                     <Box

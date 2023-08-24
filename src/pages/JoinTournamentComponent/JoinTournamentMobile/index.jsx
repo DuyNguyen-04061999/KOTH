@@ -12,13 +12,14 @@ import { images } from "../../../utils/images";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import "./joinMobile.scss";
+import "./index.scss";
 import moment from "moment";
 import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import LeaderBoard from "../LeaderBoard/index";
 import DetailVoucher from "../DetailVoucher";
+import GameInTournament from "../GameInTournament";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -165,12 +166,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           </Box>
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             {/* ----------------------- */}
-            <div className="cardWrap">
-              <div className="cardMB cardLeft">
-                <h5 style={{ color: "#BE48ED" }}>SS Z-Flip 5 free voucher</h5>
+            <div className="cardWrapMB">
+              <div className="cardMB cardLeftMB">
+                <h5 style={{ color: "#BE48ED", fontSize:"15px", paddingTop:"5px", paddingBottom:"5px" }}>
+                  SS Z-Flip 5 free voucher
+                </h5>
                 <Grid container>
                   <Grid item xs={6}>
-                    <div className="title d-flex flex-column mb-2">
+                    <div className="titleMB d-flex flex-column mb-2">
                       <h6
                         style={{
                           fontSize: "10px",
@@ -179,11 +182,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       >
                         Recipient
                       </h6>
-                      <span style={{fontSize:"14px !important"}}>Top 1 Winner</span>
+                      <span>Top 1 Winner</span>
                     </div>
                   </Grid>
                   <Grid item xs={6}>
-                    <div className="name d-flex flex-column mb-2">
+                    <div className="nameMB d-flex flex-column mb-2">
                       <h6
                         style={{
                           fontSize: "10px",
@@ -196,7 +199,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     </div>
                   </Grid>
                   <Grid item xs={6}>
-                    <div className="seat d-flex flex-column">
+                    <div className="seatMB d-flex flex-column">
                       <h2
                         style={{
                           fontSize: "10px",
@@ -209,7 +212,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     </div>
                   </Grid>
                   <Grid item xs={6}>
-                    <div className="time d-flex flex-column">
+                    <div className="timeMB d-flex flex-column">
                       <h2
                         style={{
                           fontSize: "10px",
@@ -223,20 +226,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   </Grid>
                 </Grid>
               </div>
-              <div className="card cardRight">
-                <div className="eye"></div>
-                <div className="number">
+              <div className="cardMB cardRightMB">
+                <div className="eyeMB"></div>
+                <div className="numberMB">
                   <img
                     src={images.GameTournament}
                     alt="..."
-                    width={80}
-                    height={85}
+                    width={100}
+                    height={105}
                   />
                 </div>
               </div>
             </div>
             {/* --------------------------  */}
           </Box>
+          <GameInTournament />
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
