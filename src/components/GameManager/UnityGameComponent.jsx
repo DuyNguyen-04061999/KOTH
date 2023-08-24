@@ -13,7 +13,7 @@ export default function UnityGameComponent(props) {
     tournamentId,
     gameId,
     isFullScreen,
-    roomId,
+    skinId,
     handleEndGame,
     type,
     skinName,
@@ -52,7 +52,6 @@ export default function UnityGameComponent(props) {
       }
     }
   }
-  console.log(gameId);
 
   const {
     unityProvider,
@@ -82,51 +81,16 @@ export default function UnityGameComponent(props) {
   }, [GameFiles]);
 
   const handleGameLoad = useCallback(() => {
-    sendMessage("OverTheBridgeHome", "SetToken", token);
-    sendMessage("OverTheBridgeHome", "SetTournamentId", tournamentId);
-    sendMessage("OverTheBridgeHome", "SetGameId", gameId);
-    sendMessage(
-      "OverTheBridgeHome",
-      "SetSubmitScoreUrl",
-      process.env.REACT_APP_END_POINT_TOURNAMENT
-    );
-    sendMessage("OverTheBridgeHome", "StartGame", "Start");
-
     sendMessage("TournamentGameEntry", "SetToken", token);
     sendMessage("TournamentGameEntry", "SetTournamentId", tournamentId);
-    sendMessage("TournamentGameEntry", "SetGameId", gameId);
+    sendMessage("TournamentGameEntry", "SetSkinId", skinId);
     sendMessage(
       "TournamentGameEntry",
       "SetSubmitScoreUrl",
       process.env.REACT_APP_END_POINT_TOURNAMENT
     );
     sendMessage("TournamentGameEntry", "StartGame", "Start");
-
-    sendMessage("Player Spawner", "SetToken", token);
-    sendMessage("Player Spawner", "SetRoomName", roomId);
-    sendMessage("Player Spawner", "StartGame", "Start");
-    sendMessage("Object Spawner", "SetToken", token);
-    sendMessage("Object Spawner", "SetRoomName", roomId);
-    sendMessage("Object Spawner", "StartGame", "Start");
-    sendMessage("GameplayScene", "SetToken", token);
-    sendMessage(
-      "GameplayScene",
-      "SetRoomName",
-      process.env.REACT_APP_ENV && process.env.REACT_APP_ENV === "development"
-        ? "test"
-        : roomId
-    );
-    sendMessage("GameplayScene", "StartGame", "Start");
-
-    sendMessage("MenuManager", "SetToken", token);
-    sendMessage("MenuManager", "SetRoom", roomId);
-    sendMessage(
-      "MenuManager",
-      "SetSubmitScoreUrl",
-      process.env.REACT_APP_END_POINT_PVP_BOT
-    );
-    sendMessage("MenuManager", "StartGame", "Start");
-  }, [sendMessage, tournamentId, token, gameId, roomId]);
+  }, [sendMessage, tournamentId, token, skinId]);
 
   const handleFinalGame = useCallback(async () => {
     await unload();

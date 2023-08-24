@@ -84,7 +84,7 @@ export default function ChatFriendList() {
                 <Box>
                   <img
                     src={
-                      e.userAccount.accountAvatar &&
+                      e?.userAccount?.accountAvatar &&
                       e?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +

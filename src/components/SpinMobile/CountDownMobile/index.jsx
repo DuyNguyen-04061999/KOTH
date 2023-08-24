@@ -8,12 +8,19 @@ import {
   getTommorowInfo,
 } from "../../CountDownTimer/utils/CalculateDistance";
 import { updateExpiryTime } from "../../../redux-saga-middleware/reducers/luckyWheelReducer";
+import _socket from "../../../redux-saga-middleware/config/socket";
 export default function CountDownMobile() {
   const [hours, setHour] = useState("00");
   const [minutes, setMinute] = useState("00");
   const [seconds, setSecond] = useState("00");
+  const [socket, setSocket] = useState(null);
   const { expiryTime } = useSelector((state) => state.luckyWheelReducer);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
+
   useEffect(() => {
     let timeInterval = setInterval(() => {
       let countdownDate = new Date(expiryTime).getTime();
@@ -34,6 +41,20 @@ export default function CountDownMobile() {
       );
     }
   }, [seconds, hours, minutes, dispatch]);
+
+  useEffect(() => {
+    socket?.on("storeSpinHistorySuccess", (data) => {
+      if (hours === "00" && minutes === "00" && seconds === "00") {
+        dispatch(
+          updateExpiryTime(getTommorowInfo().toLocaleDateString() + " 07:00:00")
+        );
+      }
+    });
+
+    return () => {
+      // socket?.off()
+    };
+  }, [socket, seconds, hours, minutes, dispatch])
   return (
     <div className="timeleftButton">
       <p>Time Left</p>
