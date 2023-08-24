@@ -20,6 +20,7 @@ import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import LeaderBoard from "../LeaderBoard/index";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
+import BgEndGame from "../BgEndTour";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -136,6 +137,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               padding: "0px 28px",
             }}
           >
+            <BgEndGame />
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
                 Start
@@ -232,8 +234,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   <img
                     src={images.GameTournament}
                     alt="..."
-                    width={100}
-                    height={105}
+                    width={90}
+                    height={95}
                   />
                 </div>
               </div>
@@ -289,9 +291,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       position: "absolute",
                       top: "0px",
                       left: `${index * 25}px`,
-                      zIndex: `${
-                        detailTournament?.tournamentParticipants?.length - index
-                      }`,
+                      // zIndex: `${
+                      //   detailTournament?.tournamentParticipants?.length - index
+                      // }`,
+                      zIndex:0
                     }}
                   >
                     <Box

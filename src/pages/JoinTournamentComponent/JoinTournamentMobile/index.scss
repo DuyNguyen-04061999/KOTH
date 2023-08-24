@@ -34,7 +34,7 @@ $black: #343434;
 }
 
 .cardLeftMB {
-  width: 200px;
+  width: 194px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   // width: 262px;
@@ -45,8 +45,8 @@ $black: #343434;
 }
 
 .cardRightMB {
-  // width:167px;
-  // background-image: url(../../../assets//imagesDesktop//tikright.png);
+  width:105px;
+  background-image: url(../../../assets//imagesDesktop//tikright.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -159,9 +159,9 @@ h5{
 .numberMB {
   text-align: center;
   text-transform: uppercase;
-  // position: absolute;
-  // top: 22px;
-  // left: 11px;
+  position: absolute;
+  top: 4px;
+  left: 10px;
   h3 {
     color: $red;
     margin: 0.9em 0 0 0;
