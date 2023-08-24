@@ -3,9 +3,9 @@ import { Typography, Grid, Box, Container } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useDispatch, useSelector } from "react-redux";
 import { getListFaq } from "../../../redux-saga-middleware/reducers/appReducer";
-import "../components/FAQPageComponent.scss";
+import "./FAQPageComponent.scss";
 
-const FAQPageComponent = () => {
+const HelpCenterComponent = () => {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const { listFaq } = useSelector((state) => state.appReducer);
@@ -442,4 +442,4 @@ const FAQPageComponent = () => {
   );
 };
 
-export default FAQPageComponent;
+export default HelpCenterComponent;
