@@ -99,6 +99,13 @@ export const getIdPackage = (data) => {
   };
 };
 
+export const showDropdown = (data) => {
+  return {
+    type: "SHOW_DROPDOWN",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -119,6 +126,7 @@ const authReducer = (
     isDialogConfirm: false,
     idPackage: "",
     userPackageId: "",
+    isDropdownNav: false,
   },
   action
 ) => {
@@ -186,6 +194,8 @@ const authReducer = (
       };
     case "GET_ID_PACKAGE":
       return { ...state, idPackage: payload };
+    case "SHOW_DROPDOWN":
+      return { ...state, isDropdownNav: !state.isDropdownNav };
     default:
       return state;
   }

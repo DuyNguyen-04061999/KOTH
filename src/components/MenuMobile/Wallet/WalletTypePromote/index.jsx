@@ -67,7 +67,7 @@ export default function WalletTypePromote(props) {
               <Box className="text-white d-flex justify-content-center align-items-center">
                 <Typography
                   variant="h6"
-                  className="me-2 ms-4"
+                  className="me-2 ms-4 text-white"
                   sx={{
                     fontWeight: "lighter !important",
                     fontFamily: "Cyntho",
@@ -392,6 +392,7 @@ export default function WalletTypePromote(props) {
                     marginLeft: "0px !important",
                     fontFamily: "Cyntho",
                   }}
+                  className="text-white"
                 >
                   I agree with Interchain{" "}
                   <span

@@ -7,7 +7,7 @@ import { CustomRouter, history } from "./components/Router";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
 import { useEffect, useState } from "react";
-import FAQPage from "./pages/FAQpage";
+import FAQPage from "./pages/HelpCenter";
 import CountDownTimer from "./components/CountDownTimer";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
@@ -372,7 +372,6 @@ function App() {
       });
 
       socket?.on("updateGold", (data) => {
-        console.log("123L ", data);
         store.dispatch(updateUserGold(data));
       });
 
@@ -538,7 +537,7 @@ function App() {
             <Route path="/daily-tournament" element={<DailyTournament />} />
             <Route path="/week-long-tournament" element={<WeekLongTour />} />
 
-            <Route path="/faq" element={<FAQPage />} />
+            <Route path="/help-center" element={<FAQPage />} />
             <Route path="/new-home" element={<NewHomePageComponent />} />
             <Route path="/countdowntimer" element={<CountDownTimer />} />
             <Route path="list-game-manager" element={<ListGamePage />} />

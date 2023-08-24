@@ -188,7 +188,7 @@ export default function Browser(props) {
                     Lucky Wheel
                   </span>
                 </Box>
-                <Box
+                {/* <Box
                   className="cursor-pointer pt-2 pb-2 ps-2 mb-3"
                   sx={{
                     display: "flex",
@@ -241,13 +241,6 @@ export default function Browser(props) {
                       </clipPath>
                     </defs>
                   </svg>
-                  {/* <img
-              src={popup.Doge2}
-              alt="..."
-              className="p-1 me-1 luckySpinIncon2"
-              width={28}
-              height={"auto"}
-            /> */}
                   <span
                     className="hover-nav"
                     style={{
@@ -262,7 +255,7 @@ export default function Browser(props) {
                   >
                     Tournaments
                   </span>
-                </Box>
+                </Box> */}
                 <Box
                   className="cursor-pointer pt-2 pb-2 ps-2 mb-3"
                   sx={{
@@ -544,7 +537,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    FAQs
+                    Help Center
                   </span>
                 </Box>
               </Box>

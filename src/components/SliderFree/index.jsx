@@ -30,7 +30,7 @@ export default function SliderFree({ cards }) {
             {width > 576 ? (
               <img
                 src={
-                  e.gameAvatar
+                  e?.gameAvatar
                     ? process.env.REACT_APP_SOCKET_SERVER + "/" + e.gameAvatar
                     : ""
                 }
@@ -40,7 +40,7 @@ export default function SliderFree({ cards }) {
             ) : (
               <img
                 src={
-                  e.gameAvatar
+                  e?.gameAvatar
                     ? process.env.REACT_APP_SOCKET_SERVER + "/" + e.gameAvatar
                     : ""
                 }

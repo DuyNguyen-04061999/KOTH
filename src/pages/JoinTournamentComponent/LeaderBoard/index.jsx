@@ -319,11 +319,11 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       paddingBottom:
                         index !== detailTournament?.tournamentResult?.length - 1
                           ? "15px"
-                          : "none",
+                          : "16px",
                       paddingTop:
                         index !== detailTournament?.tournamentResult?.length - 1
                           ? "15px"
-                          : "none",
+                          : "16px",
                       backgroundColor: "#2E233D",
                       borderRadius: "5px",
                     }}
@@ -1305,6 +1305,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           ? "15px"
                           : "none",
                     }}
+                    
                   >
                     <Box sx={{ color: "#BFBEED", width: "10%" }}>
                       {index + 1}

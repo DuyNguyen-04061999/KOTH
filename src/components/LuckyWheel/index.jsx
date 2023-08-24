@@ -29,7 +29,7 @@ export default function LuckyWheel(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchReward && token)
-      socket?.emit("getLuckySpinConfig", { type: "dogegold" });
+      socket?.emit("getLuckySpinConfig", { type: process.env.REACT_APP_TYPE_APP && process.env.REACT_APP_TYPE_APP === "promote" ? "promote" : "dogegold" });
     if (isFetchListRh && token)
       socket?.emit("getRewardHistory", { type: "luckyspin" });
     socket?.on("getLuckySpinConfigSuccess", (data) => {

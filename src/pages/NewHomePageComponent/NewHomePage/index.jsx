@@ -68,7 +68,6 @@ export default function NewHomePage() {
     brandTour,
     hotWeekTour,
   } = useSelector((state) => state.tournamentReducer);
-  console.log("dayList: ", dailyTournament);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {
@@ -109,11 +108,6 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-  console.log(
-    "daily: ",
-    dailyTournament?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-      ?.listTournament
-  );
   return (
     <Container
       maxWidth="lg"
@@ -228,7 +222,7 @@ export default function NewHomePage() {
                   infinite={false}
                 >
                   {hotTournament?.map((item, index) => {
-                    return <ItemComponent tourInfo={item} countdown={true} />;
+                    return <ItemComponent key={index} tourInfo={item} countdown={true} />;
                   })}
                 </Slider>
               ) : (
@@ -241,9 +235,7 @@ export default function NewHomePage() {
                 >
                   {hotTournament?.map((item, index) => {
                     return (
-                      <>
-                        <ItemComponent countdown={true} tourInfo={item} />
-                      </>
+                      <ItemComponent key={index} countdown={true} tourInfo={item} />
                     );
                   })}
                 </Slider>
@@ -294,7 +286,7 @@ export default function NewHomePage() {
                         height: "75px",
                         borderRadius: "50%",
                       }}
-                      src={images.gameHotTournament}
+                      src={biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar ? process.env.REACT_APP_SOCKET_SERVER + "/" + biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar : images.gameHotTournament}
                       component={"img"}
                     ></Box>
                     <Box
@@ -330,11 +322,11 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     color: "#FFDC62",
-                    fontSize: "20px",
+                    fontSize: "18px",
                     marginLeft: "0px !important",
                   }}
                 >
-                  MEGA HOLIC
+                  {String(biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC")?.toUpperCase() || "MEGA HOLIC"}
                 </Typography>
                 <Box
                   sx={{
@@ -347,7 +339,7 @@ export default function NewHomePage() {
                     left: "-23px",
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "flex-start",
+                    alignItems: "center",
                     padding: "10px 40px",
                   }}
                 >
@@ -395,7 +387,7 @@ export default function NewHomePage() {
               >
                 <Box
                   component={"img"}
-                  src={images.pool}
+                  src={biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar ? process.env.REACT_APP_SOCKET_SERVER + "/" + biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar : images.pool }
                   sx={{
                     borderRadius: "50%",
                     width: "168px",
@@ -418,7 +410,7 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     position: "absolute",
-                    left: "271px",
+                    // left: "271px",
                     bottom: "50px",
                     color: "#ffff",
                     fontSize: "33px",
@@ -441,22 +433,23 @@ export default function NewHomePage() {
                   sx={{
                     marginLeft: "0px !important",
                     color: "#FFDC62",
-                    fontSize: "38px",
+                    fontSize: "30px",
                     position: "absolute",
                     top: "38px",
                     left: "90px",
                   }}
                 >
-                  MEGA HOLIC
+                  {String(biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC")?.toUpperCase() || "MEGA HOLIC"}
                 </Typography>
                 <Typography
+
                   sx={{
                     marginLeft: "0px !important",
                     color: "#fff",
                     fontSize: "88px",
                     position: "absolute",
                     top: "85px",
-                    left: "140px",
+                    left: "45%",
                   }}
                 >
                   {biggestEndTour?.endTour?.tournamentPrize
@@ -569,7 +562,7 @@ export default function NewHomePage() {
                     )[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <ItemComponent countdown={false} tourInfo={item} />
+                        <ItemComponent key={index} countdown={false} tourInfo={item} />
                       );
                     })}
                 </Slider>
@@ -579,7 +572,7 @@ export default function NewHomePage() {
                   slidesToShow={5}
                   arrows={false}
                   slidesToScroll={5}
-                  infinite={true}
+                  infinite={false}
                 >
                   {hourlyTournament
                     ?.filter(
@@ -589,9 +582,8 @@ export default function NewHomePage() {
                     )[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <>
-                          <ItemComponent countdown={true} tourInfo={item} />
-                        </>
+                        <ItemComponent key={index} countdown={true} tourInfo={item} />
+
                       );
                     })}
                 </Slider>
@@ -599,6 +591,9 @@ export default function NewHomePage() {
             </Box>
           </Box>{" "}
           <Box
+            component={"div"}
+            className="cursor-pointer"
+            onClick={() => navigate("/week-long-tournament")}
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
               marginBottom: width < 576 ? "24px" : "32px",
@@ -690,9 +685,7 @@ export default function NewHomePage() {
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <>
-                          <ItemComponent countdown={true} tourInfo={item} />
-                        </>
+                        <ItemComponent key={index} countdown={true} tourInfo={item} />
                       );
                     })}
                 </Slider>
@@ -708,9 +701,7 @@ export default function NewHomePage() {
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <>
-                          <ItemComponent countdown={true} tourInfo={item} />
-                        </>
+                        <ItemComponent key={index} countdown={true} tourInfo={item} />
                       );
                     })}
                 </Slider>
@@ -759,7 +750,9 @@ export default function NewHomePage() {
                           <Box
                             sx={{ width: "48px", height: "auto" }}
                             component={"img"}
-                            src={imageHome.MCDonalIcon}
+                            src={item && item?.tournamentBrand && item?.tournamentBrand?.brandAvatar 
+                              ?  process.env.REACT_APP_SOCKET_SERVER + "/" + item?.tournamentBrand?.brandAvatar
+                              : imageHome.MCDonalIcon}
                           ></Box>
                           <Typography
                             sx={{
@@ -769,7 +762,7 @@ export default function NewHomePage() {
                               marginTop: "5px",
                             }}
                           >
-                            Mcdonald
+                            {item && item?.tournamentBrand && item?.tournamentBrand?.brandName}
                           </Typography>
                         </Box>
                         <Box
@@ -821,6 +814,9 @@ export default function NewHomePage() {
                             </Typography>
                           </Box>
                           <button
+                            onClick={() => {
+                              navigate(`/tournamentDetail/${item?.id}`)
+                            }}
                             style={{
                               border: "none",
                               outline: "none",
@@ -876,7 +872,9 @@ export default function NewHomePage() {
                           <Box
                             sx={{ width: "48px", height: "auto" }}
                             component={"img"}
-                            src={imageHome.MCDonalIcon}
+                            src={item && item?.tournamentBrand && item?.tournamentBrand?.brandAvatar 
+                              ?  process.env.REACT_APP_SOCKET_SERVER + "/" + item?.tournamentBrand?.brandAvatar
+                              : imageHome.MCDonalIcon}
                           ></Box>
                           <Typography
                             sx={{
@@ -886,7 +884,7 @@ export default function NewHomePage() {
                               marginTop: "5px",
                             }}
                           >
-                            Mcdonald
+                            {item && item?.tournamentBrand && item?.tournamentBrand?.brandName}
                           </Typography>
                         </Box>
                         <Box
@@ -940,10 +938,13 @@ export default function NewHomePage() {
                                 fontSize: "25px",
                               }}
                             >
-                              {item?.tournamentPrize}$
+                              {item?.tournamentPrize || 0}$
                             </Typography>
                           </Box>
                           <button
+                            onClick={() => {
+                              navigate(`/tournamentDetail/${item?.id}`)
+                            }}
                             style={{
                               border: "none",
                               outline: "none",
@@ -1028,7 +1029,7 @@ export default function NewHomePage() {
                   infinite={false}
                 >
                   {weeklyTournament?.map((item, index) => {
-                    return <ItemComponent countdown={true} tourInfo={item} />;
+                    return <ItemComponent key={index} countdown={true} tourInfo={item} />;
                   })}
                 </Slider>
               ) : (
@@ -1041,9 +1042,7 @@ export default function NewHomePage() {
                 >
                   {weeklyTournament?.map((item, index) => {
                     return (
-                      <>
-                        <ItemComponent countdown={true} tourInfo={item} />
-                      </>
+                      <ItemComponent key={index} countdown={true} tourInfo={item} />
                     );
                   })}
                 </Slider>
@@ -1084,7 +1083,9 @@ export default function NewHomePage() {
                     top: "-3px",
                     left: "-2px",
                   }}
-                  src={images.pool}
+                  src={hotWeekTour && hotWeekTour?.bestUser && hotWeekTour?.bestUser?.tUser && 
+                    hotWeekTour?.bestUser?.tUser?.userAccount && hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar 
+                    ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar : images.pool}
                   component={"img"}
                 ></Box>{" "}
                 <Box
@@ -1119,7 +1120,8 @@ export default function NewHomePage() {
                   <Box
                     sx={{ width: "23px", height: "auto" }}
                     component={"img"}
-                    src={imageHome.brandAvatar}
+                    src={hotWeekTour && hotWeekTour?.tournamentBrand && hotWeekTour?.tournamentBrand?.brandAvatar
+                      ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.tournamentBrand?.brandAvatar : imageHome.brandAvatar}
                   ></Box>
                   <Box
                     sx={{
@@ -1164,7 +1166,7 @@ export default function NewHomePage() {
                         marginRight: "5px",
                       }}
                     >
-                      $100
+                      ${hotWeekTour?.tournamentPrize}
                     </Typography>
                     <Typography
                       sx={{
@@ -1235,7 +1237,9 @@ export default function NewHomePage() {
                     top: "-6px",
                     left: "-4px",
                   }}
-                  src={images.pool}
+                  src={hotWeekTour && hotWeekTour?.bestUser && hotWeekTour?.bestUser?.tUser && 
+                    hotWeekTour?.bestUser?.tUser?.userAccount && hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar 
+                    ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar : images.pool}
                   component={"img"}
                 ></Box>
                 <Box
@@ -1270,7 +1274,8 @@ export default function NewHomePage() {
                   <Box
                     sx={{ width: "60px", height: "auto" }}
                     component={"img"}
-                    src={imageHome.brandAvatar}
+                    src={hotWeekTour && hotWeekTour?.tournamentBrand && hotWeekTour?.tournamentBrand?.brandAvatar
+                      ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.tournamentBrand?.brandAvatar : imageHome.brandAvatar}
                   ></Box>
                   <Box
                     sx={{
@@ -1330,7 +1335,9 @@ export default function NewHomePage() {
                   </Box>
                   <button
                     onClick={() => {
-                      navigate("/tournamentDetail/" + hotWeekTour?.id);
+                      if(hotWeekTour?.id) {
+                        navigate("/tournamentDetail/" + hotWeekTour?.id);
+                      }
                     }}
                     style={{
                       background:

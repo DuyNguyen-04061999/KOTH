@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import moment from "moment";
+import InfinityIcon from "@mui/icons-material/AllInclusive"
+
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -42,6 +44,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
       clearInterval(timeInterval);
     };
   }, [tourInfo]);
+  
   const styleTypography = {
     textAlign: "start",
     fontSize: width < 576 ? "14px" : "16px",
@@ -81,7 +84,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
         <Box
           sx={{ width: "100%", borderRadius: "8px 8px 0px 0px" }}
           component={"img"}
-          src={imageHome.brandImage}
+          src={tourInfo?.tournamentBackground ? process.env.REACT_APP_SOCKET_SERVER + "/" + tourInfo?.tournamentBackground : imageHome.brandImage}
         ></Box>
         <Box
           sx={{
@@ -128,7 +131,10 @@ export default function ItemComponent({ countdown, tourInfo }) {
                   fontSize: width < 576 ? "12px" : "16px",
                 }}
               >
-                {tourInfo?.tournamentQuantity}
+                {tourInfo?.tournamentQuantity !== 0 ? tourInfo?.tournamentQuantity : <InfinityIcon sx={{
+                  width: 15,
+                  height: 15
+                }}/>}
               </Typography>
             </Box>
           </Box>
@@ -148,7 +154,10 @@ export default function ItemComponent({ countdown, tourInfo }) {
               borderRadius: "4px",
             }}
             component={"img"}
-            src={imageHome.brandImage}
+            src={
+              tourInfo && tourInfo?.tourSkins && tourInfo?.tourSkins?.length > 0 
+              && tourInfo?.tourSkins[0]?.skinGame && tourInfo?.tourSkins[0]?.skinGame?.gameAvatar 
+              ? (process.env.REACT_APP_SOCKET_SERVER + "/" + tourInfo?.tourSkins[0]?.skinGame?.gameAvatar) : imageHome.brandImage}
           ></Box>
           <Box>
             <Typography
@@ -157,7 +166,10 @@ export default function ItemComponent({ countdown, tourInfo }) {
                 fontSize: width < 576 ? "12px" : "14px",
               }}
             >
-              Ping Pong
+              {
+              tourInfo && tourInfo?.tourSkins && tourInfo?.tourSkins?.length > 0 
+              && tourInfo?.tourSkins[0]?.skinGame && tourInfo?.tourSkins[0]?.skinGame?.gameName 
+              ? (tourInfo?.tourSkins[0]?.skinGame?.gameName) : "game Name"}
             </Typography>
             <button
               onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)}
@@ -171,7 +183,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
                 fontSize: "12px",
               }}
             >
-              See more
+              {tourInfo && tourInfo?.tournamentStatus === 0 ? "See More" : tourInfo?.tournamentStatus === 1 ? "Play Now" : ""}
             </button>
           </Box>
         </Box>
