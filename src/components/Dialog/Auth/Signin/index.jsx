@@ -522,7 +522,7 @@ function SimpleDialog(props) {
                   }}
                 >
                   <img
-                    src={sign.bannersignin}
+                    src={getAppType() === "promote" ? sign.bannersignin : ""}
                     alt="..."
                     width={"100%"}
                     height={"100%"}

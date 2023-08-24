@@ -68,7 +68,8 @@ export default function JoinTournament() {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
-  console.log(videoGame);
+  console.log(detailTournament);
+
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
       setIsFullScreen(true);
@@ -362,7 +363,7 @@ export default function JoinTournament() {
                       marginTop: "5px",
                     }}
                   >
-                    10
+                    {detailTournament?.turnCountLeft || 0}
                   </Typography>
                   <Box
                     component={"img"}
