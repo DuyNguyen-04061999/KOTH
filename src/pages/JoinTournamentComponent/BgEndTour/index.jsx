@@ -1,15 +1,17 @@
 import { Box, Typography } from "@mui/material";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function BgEndGame() {
+  const { width } = useWindowDimensions()
   return (
     <>
       <Box
         sx={{
           position: "absolute",
-          top: 40,
+          top: width < 576 ? 40 : 0,
           left: 0,
           width: "100%",
-          height: "315px",
+          height: width < 576 ? "315px" : "100%",
           backgroundColor: "#000000",
           zIndex: 1,
           opacity: 0.5,
@@ -24,7 +26,7 @@ export default function BgEndGame() {
           zIndex: 2,
         }}
       >
-        <Typography variant="h4" sx={{ color: "#fff", textAlign:"center" }}>End Game</Typography>
+        <Typography variant="h4" sx={{ color: "#fff", textAlign:"center" }}>This tournament has ended</Typography>
       </Box>
     </>
   );
