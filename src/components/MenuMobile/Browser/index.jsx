@@ -494,7 +494,7 @@ export default function Browser(props) {
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                   }}
                   onClick={() => {
-                    navigate(`/FAQ`);
+                    navigate(`/help-center`);
                   }}
                 >
                   <svg
