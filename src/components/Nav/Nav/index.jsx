@@ -145,7 +145,7 @@ export default function Navbar() {
                   justifyContent: isNav === true ? "space-between" : "center",
                   transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                   backgroundColor:
-                    pathname && pathname?.includes("week")
+                    pathname && pathname?.includes("asdasfsd")
                       ? "#7648ED"
                       : "#462A71",
 

@@ -89,7 +89,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Dialog
-        sx={{ zIndex: "1310", fontFamily: "Cyntho !important" }}
+        sx={{ zIndex: "1310", fontFamily: "Cyntho Next !important" }}
         open={true}
         fullScreen={true}
       >
@@ -152,13 +152,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           <Box component={"div"} className="mb-2 text-center text-white">
             <Typography
               className="fs-4"
-              sx={{ fontFamily: "Cyntho", fontWeight: "500 !important" }}
+              sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important" }}
             >
               {detailTournament?.tournamentInfors?.game &&
                 detailTournament?.tournamentInfors?.game?.gameName}
             </Typography>
             <Typography
-              sx={{ fontFamily: "Cyntho", fontWeight: "500 !important" }}
+              sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important" }}
             >
               {detailTournament?.tournamentTimeType === "hourly"
                 ? "Hourly Tournament"
@@ -208,14 +208,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               <Typography
                 variant="h6"
                 className="text-white"
-                sx={{ marginLeft: "0px !important", fontFamily: "Cyntho" }}
+                sx={{ marginLeft: "0px !important", fontFamily: "Cyntho Next !important", fontWeight:"500 !important" }}
               >
                 Reward
               </Typography>
               <p
                 className="text-white text-start f-500"
                 style={{
-                  fontFamily: "Cyntho !important",
+                  fontFamily: "Cyntho Next !important",
                   fontWeight: "500 !improtant",
                   fontSize: "14px",
                 }}
@@ -232,6 +232,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     fontSize: "18px",
                     paddingTop: "5px",
                     paddingBottom: "12px",
+                    fontFamily:"Cyntho Next !important",
+                    fontWeight:"500 !important"
                   }}
                 >
                   {detailTournament?.tournamentInfors?.rewardInfors
@@ -254,7 +256,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       <h6
                         style={{
                           fontWeight: "100",
-                          fontFamily: "Cyntho",
+                          fontFamily: "Cyntho Next",
                           fontSize: "14px",
                         }}
                       >
@@ -276,7 +278,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       <h6
                         style={{
                           fontWeight: "100",
-                          fontFamily: "Cyntho",
+                          fontFamily: "Cyntho Next",
                           fontSize: "14px",
                         }}
                       >
@@ -300,7 +302,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       <h6
                         style={{
                           fontWeight: "100",
-                          fontFamily: "Cyntho",
+                          fontFamily: "Cyntho Next",
                           fontSize: "14px",
                         }}
                       >
@@ -363,7 +365,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   color: "#fff",
                   fontSize: "14px",
                   fontWeight: "500 !important",
-                  fontFamily: "Cyntho !important",
+                  fontFamily: "Cyntho Next !important",
                 }}
               >
                 Participants
@@ -623,7 +625,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           textAlign: "start",
                           fontWeight: "500 !important",
                           fontSize: "13px",
-                          fontFamily: "Cyntho !important",
+                          fontFamily: "Cyntho Next !important",
                         }}
                       >
                         {item?.length > 200 ? item.slice(0, 200) + "..." : item}

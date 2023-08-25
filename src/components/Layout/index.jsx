@@ -105,7 +105,7 @@ const Test = styled.input`
   padding: 7px !important;
   color: #bfbeed !important;
   letter-spacing: 0.5px;
-  font-weight: Cyntho !important ;
+  font-weight: Cyntho Next !important ;
   border: none;
   &:focus {
     outline: none;
