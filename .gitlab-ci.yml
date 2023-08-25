@@ -101,4 +101,4 @@ deploy-promote_production:
     - ./get_helm.sh
     - 'helm repo add --username gitlab-ci-token --password $CI_JOB_TOKEN play4promo-repo "$CI_API_V4_URL/projects/47543693/packages/helm/stable"'
     - helm repo update
-    - helm upgrade --install first-release play4promo-repo/play4promo-chart --set webClientImage.repo=$CI_REGISTRY_IMAGE,webClientImage.tag=promote-$CI_COMMIT_SHA
+    - helm upgrade --install first-release play4promo-repo/play4promo-chart --set webClientImage.repo=$CI_REGISTRY_IMAGE,webClientImage.tag=${IMAGE_PREFIX}$CI_COMMIT_SHA
