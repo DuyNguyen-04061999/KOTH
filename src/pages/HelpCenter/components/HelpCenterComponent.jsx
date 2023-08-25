@@ -67,12 +67,12 @@ const HelpCenterComponent = () => {
       >
         {value === index && (
           <Box sx={{ overflowY: "auto" }}>
-            <Typography
+            <Box
               sx={{ fontWeight: "lighter !important" }}
               style={{ textAlign: "start" }}
             >
               {children}
-            </Typography>
+            </Box>
           </Box>
         )}
       </div>
@@ -95,7 +95,7 @@ const HelpCenterComponent = () => {
               />
             </Box>
             <Box sx={{ width: "100%", typography: "body1" }}>
-              <TabContext value={tabHelpCenter}>
+              <TabContext value={tabHelpCenter.toString()}>
                 <Box
                   sx={{
                     borderBottom: 1,
@@ -151,6 +151,12 @@ const HelpCenterComponent = () => {
                     overflowY: "auto",
                   }}
                 >
+                  <h4 style={{ fontSize: "16px" }}>
+                    {listFAQ[tabHelpCenter]?.faqTitle}
+                  </h4>
+                  <p style={{ fontSize: "14px", textAlign: "start" }}>
+                    {listFAQ[tabHelpCenter]?.faqDesc}
+                  </p>
                   {listFAQ?.map((item, index) => (
                     <TabPanel value={tabHelpCenter} key={index} index={index}>
                       {item?.FAQPromoteData?.map((item, index) => (
@@ -159,17 +165,17 @@ const HelpCenterComponent = () => {
                             style={{
                               margin: "20px 0px",
                               fontWeight: "bold",
-                              fontSize: "16px",
-                              textAlign: "start",
+                              fontSize: "12px",
                             }}
                           >
                             {item?.faqQuestion}
                           </h6>
                           <p
                             style={{
-                              fontSize: "10px",
-                              textAlign: "start",
+                              fontSize: "12px",
+                              fontWeight: "700",
                               margin: "10px 0px",
+                              textAlign: "start",
                             }}
                           >
                             {item?.faqAnswer}
@@ -180,9 +186,10 @@ const HelpCenterComponent = () => {
                         style={{
                           margin: "20px 0px",
                           fontSize: "10px",
-                          textAlign: "start",
                         }}
-                      >{`Last Updated: [${moment(item?.updatedAt)}]`}</p>
+                      >{`Last Updated: [${moment(item?.updatedAt).format(
+                        "MMM Do YY"
+                      )}]`}</p>
                     </TabPanel>
                   ))}
                 </Box>
@@ -266,6 +273,12 @@ const HelpCenterComponent = () => {
                     padding: "13px 24px",
                   }}
                 >
+                  <h4 style={{ fontSize: "20px" }}>
+                    {listFAQ[tabHelpCenter]?.faqTitle}
+                  </h4>
+                  <p style={{ fontSize: "14px", textAlign: "start" }}>
+                    {listFAQ[tabHelpCenter]?.faqDesc}
+                  </p>
                   {listFAQ?.map((item, index) => (
                     <TabPanel key={index} value={tabHelpCenter} index={index}>
                       {item?.FAQPromoteData?.map((item, index) => (
@@ -293,11 +306,13 @@ const HelpCenterComponent = () => {
                       ))}
                       <p
                         style={{
+                          margin: "36px 0px",
                           fontSize: "14px",
-                          margin: "36px 0",
                           textAlign: "start",
                         }}
-                      >{`Last Updated: [${moment(item?.updatedAt)}]`}</p>
+                      >{`Last Updated: [${moment(item?.updatedAt).format(
+                        "MMM Do YY"
+                      )}]`}</p>
                     </TabPanel>
                   ))}
                 </Box>
