@@ -103,7 +103,7 @@ const HelpCenterComponent = () => {
                     width: "100%",
                   }}
                 >
-                  <TabList
+                  {/* <TabList
                     onChange={handleChange}
                     aria-label="lab API tabs example"
                     style={{
@@ -140,7 +140,7 @@ const HelpCenterComponent = () => {
                         />
                       );
                     })}
-                  </TabList>
+                  </TabList> */}
                 </Box>
                 <Box
                   sx={{
@@ -167,6 +167,8 @@ const HelpCenterComponent = () => {
                               fontWeight: "bold",
                               fontSize: "12px",
                             }}
+                            className="text-white"
+
                           >
                             {item?.faqQuestion}
                           </h6>
@@ -229,7 +231,7 @@ const HelpCenterComponent = () => {
                 <Tabs
                   orientation="vertical"
                   variant="scrollable"
-                  value={tabHelpCenter}
+                  value={Number.parseInt(tabHelpCenter)}
                   onChange={handleChange}
                   sx={{
                     bgcolor: "#302642",
@@ -290,6 +292,7 @@ const HelpCenterComponent = () => {
                               margin: "24px 0px",
                               fontWeight: "bold",
                             }}
+                            className="text-white"
                           >
                             {item?.faqQuestion}
                           </h6>

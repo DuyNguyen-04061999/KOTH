@@ -117,6 +117,9 @@ export default function NewFooter() {
           policies guarantee a seamless and rewarding voucher redemption process
           for an enhanced gaming journey."
         </Typography>
+        <Typography className="text-center text-white">
+                  v0.8
+        </Typography>
       </Box>
     </Box>
   );

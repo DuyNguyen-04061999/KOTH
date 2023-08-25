@@ -11,6 +11,7 @@ import { images } from "../../../utils/images";
 import InspirationTTF from "../../../assets/font/CynthoNextSemiBold.otf";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import moment from "moment";
+import { sliceString } from "../../../utils/helper";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -109,7 +110,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "space-between",
+                  justifyContent: "start",
                   height: "90px",
                   boxSizing: "border-box",
                 }}
@@ -117,9 +118,9 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 <Box
                   sx={{ width: "90px", height: "90px", borderRadius: "8px" }}
                   component={"img"}
-                  src={images.bannerwin}
+                  src={detail?.tournamentInfors?.rewardInfors?.rewardAvatar ? process.env.REACT_APP_SOCKET_SERVER + "/" + detail?.tournamentInfors?.rewardInfors?.rewardAvatar : images.bannerwin}
                 ></Box>
-                <Box>
+                <Box className="ms-2">
                   <Typography
                     sx={{
                       fontSize: "12px",
@@ -127,13 +128,13 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       textAlign: "start",
                     }}
                   >
-                    Sponsor by
+                    Sponsor by {detail?.tournamentInfors?.owner?.brandName || ""}
                   </Typography>
-                  <Box
+                  {/* <Box
                     sx={{ width: "100px", height: "25px" }}
                     component={"img"}
                     src={images.samsungBrand}
-                  ></Box>
+                  ></Box> */}
                   <Typography
                     sx={{
                       fontSize: "26px",
@@ -142,7 +143,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       color: "#BE48ED",
                     }}
                   >
-                    Discount 10%
+                    {sliceString(detail?.tournamentInfors?.rewardInfors?.rewardTicketName) || "Discount 10%"}
                   </Typography>
                 </Box>
               </Box>
@@ -154,31 +155,28 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                   padding: "0px 20px",
                 }}
               >
-                50% Discount Voucher from Samsung : Valid for purchases of
-                Samsung
+                {detail?.tournamentInfors?.rewardInfors?.rewardTicketName} Discount Voucher from {detail?.tournamentInfors?.owner?.brandName} : Valid for purchases of {detail?.tournamentInfors?.owner?.brandName}
               </Typography>
               <Box sx={{ marginTop: "20px" }}>
                 <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-                  Expiry Date:
+                  Validity Date:
                 </Typography>
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                  01-08-2023 - 29-08-2023
+                {moment(detail?.tournamentInfors?.rewardInfors?.rewardValidityDate)?.format("DD-MM-YYYY") || "01-08-2023 - 29-08-2023"}
                 </Typography>
               </Box>
               <Box sx={{ marginTop: "12px" }}>
                 <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-                  Application
+                  Terms and Conditions
                 </Typography>
                 <ul>
-                  <li style={{ listStyleType: "disc", fontSize: "14px" }}>
-                    Redeemable at participating stores or online.
-                  </li>
-                  <li style={{ listStyleType: "disc", fontSize: "14px" }}>
-                    Enter the voucher code during checkout for the discount.
-                  </li>
-                  <li style={{ listStyleType: "disc", fontSize: "14px" }}>
-                    Applicable to a wide range of Samsung beverages.
-                  </li>
+                  {
+                    detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions && isJson(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions) && JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.length > 0 ? JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.map((term, index) => (
+                    <li key={index} style={{ listStyleType: "disc", fontSize: "14px" }}>
+                      {term}
+                  </li>)) : (<>No Infors</>)   
+                  }
+                  
                 </ul>
               </Box>
             </Box>
@@ -232,7 +230,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                     color: "#BE48ED",
                   }}
                 >
-                  {detail?.tournamentInfors?.rewardInfors?.rewardTicketName || "Discount 10%"}
+                  {sliceString(detail?.tournamentInfors?.rewardInfors?.rewardTicketName) || "Discount 10%"}
                 </Typography>
               </Box>
             </Box>

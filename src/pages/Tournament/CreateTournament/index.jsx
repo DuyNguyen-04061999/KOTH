@@ -2196,11 +2196,9 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                     component={"img"}
                     src={
                       item?.skinAvatar
-                        ? images.undefinedAvatar
-                        : // process.env.REACT_APP_SOCKET_SERVER +
-                          //   "/" +
-                          //   item?.skinAvatar
-                          images.undefinedAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" + item?.skinAvatar
+                        : images.undefinedAvatar
                     }
                   ></Box>
                   <CheckCircleIcon
@@ -2220,7 +2218,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                       color: "white",
                     }}
                   >
-                    {item?.skinGame?.gameName}
+                    {item?.skinGame?.gameName} - {item?.skinName}
                   </Typography>
                 </Box>
               );

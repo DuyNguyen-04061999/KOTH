@@ -39,13 +39,29 @@ function getAppType () {
   return process.env.REACT_APP_TYPE_APP || "";
 }
 
+function isJson(str) {
+  try {
+      JSON.parse(str);
+  } catch (e) {
+      return false;
+  }
+  return true;
+}
 
+function sliceString(str) {
+  if(str && String(str)?.length > 10) {
+    return String(str)?.slice(0, 10)
+  }
+  return str
+}
 
 export {
     convertToVietnameseWithAccent,
     getUniqueID,
     formatMoney,
-    getAppType
+    getAppType,
+    isJson,
+    sliceString
 }
 
 

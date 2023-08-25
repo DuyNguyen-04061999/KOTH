@@ -33,6 +33,8 @@ import "./index.scss";
 import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import ResultEndGame from '../../../components/Dialog/ResultEndGame'
+import InfinityIcon from "@mui/icons-material/AllInclusive"
+import { isJson, sliceString } from "../../../utils/helper";
 
 const theme = createTheme({
   typography: {
@@ -228,7 +230,13 @@ export default function JoinTournament() {
                   height: width / 7,
                   boxSizing: "border-box",
                   padding: `${parseFloat(width / 51.9)}px`,
-                  backgroundImage: `url(${images.TournamentBG})`,
+                  backgroundImage: `url("${
+                    detailTournament?.tournamentBackground
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        detailTournament?.tournamentBackground
+                      : images.TournamentBG
+                  }")`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
@@ -512,7 +520,10 @@ export default function JoinTournament() {
                     </Typography>
                     <Typography sx={{ color: "#FFFFFF" }}>
                       {detailTournament?.tournamentParticipants?.length}/
-                      {detailTournament?.tournamentQuantity}
+                      {detailTournament?.tournamentQuantity > 0 ? detailTournament?.tournamentQuantity : <InfinityIcon sx={{
+                        width: 15,
+                        height: 15
+                      }}/>}
                     </Typography>
                   </Box>
                   <Box
@@ -745,8 +756,8 @@ export default function JoinTournament() {
                                   Recipient
                                 </h6>
                                 <span>
-                                  {detailTournament?.tournamentInfors
-                                    ?.rewardInfors?.rewardRecipient ||
+                                  {sliceString(detailTournament?.tournamentInfors
+                                    ?.rewardInfors?.rewardRecipient) ||
                                     "Recipient"}
                                 </span>
                               </div>
@@ -847,58 +858,61 @@ export default function JoinTournament() {
                     />
                   </Box>
                 </Box>
-                <Box
-                  sx={{
-                    flexGrow: "1",
-                    padding: `${parseFloat(width / 66)}px 0px ${parseFloat(
-                      width / 43.6
-                    )}px 0px`,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
+                {detailTournament?.tournamentResult && detailTournament?.tournamentResult?.length > 0 && (
                   <Box
                     sx={{
-                      marginBottom: `${parseFloat(width / 70)}px`,
-                      color: "white",
+                      flexGrow: "1",
+                      padding: `${parseFloat(width / 66)}px 0px ${parseFloat(
+                        width / 43.6
+                      )}px 0px`,
                       display: "flex",
+                      flexDirection: "column",
                       justifyContent: "space-between",
-                      alignItems: "center",
                     }}
                   >
-                    <Typography
+                    <Box
                       sx={{
-                        textAlign: "start",
-                        fontWeight: "lighter !important",
-                        fontSize: "20px",
+                        marginBottom: `${parseFloat(width / 70)}px`,
+                        color: "white",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
                       }}
                     >
-                      Current Result
-                    </Typography>
-                    <Typography
-                      onClick={() => {
-                        setCurrentResult(true);
+                      <Typography
+                        sx={{
+                          textAlign: "start",
+                          fontWeight: "lighter !important",
+                          fontSize: "20px",
+                        }}
+                      >
+                        Current Result
+                      </Typography>
+                      <Typography
+                        onClick={() => {
+                          setCurrentResult(true);
+                        }}
+                        sx={{
+                          textAlign: "start",
+                          fontWeight: "lighter !important",
+                          fontSize: "14px",
+                          color: "#BE48ED",
+                          cursor: "pointer",
+                        }}
+                      >
+                        View All
+                      </Typography>
+                    </Box>
+                    <LeaderBoard
+                      open={currentResult}
+                      handleOnClose={() => {
+                        setCurrentResult(false);
                       }}
-                      sx={{
-                        textAlign: "start",
-                        fontWeight: "lighter !important",
-                        fontSize: "14px",
-                        color: "#BE48ED",
-                        cursor: "pointer",
-                      }}
-                    >
-                      View All
-                    </Typography>
+                      detailTournament={detailTournament}
+                    />
                   </Box>
-                  <LeaderBoard
-                    open={currentResult}
-                    handleOnClose={() => {
-                      setCurrentResult(false);
-                    }}
-                    detailTournament={detailTournament}
-                  />
-                </Box>
+                )}
+                
               </Box>
             </Box>
             <BuyTicket
@@ -929,9 +943,10 @@ export default function JoinTournament() {
                   color: "white",
                 }}
               >
-                Information
+                Informations
               </Box>
-              {detailTournament?.tournamentInfors?.descriptions?.map(
+              {detailTournament && detailTournament?.tournamentInformations && isJson(detailTournament?.tournamentInformations) && JSON.parse(detailTournament?.tournamentInformations)
+              && JSON.parse(detailTournament?.tournamentInformations)?.length > 0 && JSON.parse(detailTournament?.tournamentInformations)?.map(
                 (item, index) => {
                   return (
                     <Box
