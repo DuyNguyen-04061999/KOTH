@@ -430,15 +430,6 @@ export default function JoinTournament() {
               >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "22px",
-                        height: "22px",
-                        marginRight: "5px",
-                      }}
-                      component={"img"}
-                      src={images.calendarTour}
-                    ></Box>
                     <Box>
                       <Typography
                         sx={{
@@ -448,14 +439,15 @@ export default function JoinTournament() {
                           letterSpacing: "0.7px",
                         }}
                       >
-                        Tournament Start
+                        Start
                       </Typography>
                       <Typography
                         sx={{
-                          color: "#7C81F2",
+                          color: "#fff",
                           textAlign: "start",
                           fontSize: "15px",
-                          fontWeight: "lighter !important",
+                          fontWeight: "500 !important",
+                          fontFamily: "Cyntho",
                         }}
                       >
                         {moment(detailTournament?.tournamentStartAt).format(
@@ -470,22 +462,13 @@ export default function JoinTournament() {
                   </Box>
                   <Box
                     sx={{
-                      width: "3px",
+                      width: "1px",
                       height: "100%",
                       background: "rgba(151, 151, 151, 0.40)",
                       margin: "0px 30px",
                     }}
                   ></Box>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "22px",
-                        height: "22px",
-                        marginRight: "5px",
-                      }}
-                      component={"img"}
-                      src={images.calendarTour}
-                    ></Box>
                     <Box>
                       <Typography
                         sx={{
@@ -495,14 +478,15 @@ export default function JoinTournament() {
                           letterSpacing: "0.7px",
                         }}
                       >
-                        Tournament End
+                        Finish
                       </Typography>
                       <Typography
                         sx={{
-                          color: "#7C81F2",
+                          color: "#fff",
                           textAlign: "start",
                           fontSize: "15px",
-                          fontWeight: "lighter !important",
+                          fontWeight: "500 !important",
+                          fontFamily: "Cyntho",
                         }}
                       >
                         {moment(detailTournament?.tournamentEndAt).format(
@@ -523,7 +507,7 @@ export default function JoinTournament() {
                   }}
                 >
                   <Box sx={{ marginRight: `${parseFloat(width / 75)}px` }}>
-                    <Typography sx={{ color: "#AA73DB" }}>
+                    <Typography sx={{ color: "#fff" }}>
                       Participants
                     </Typography>
                     <Typography sx={{ color: "#FFFFFF" }}>
@@ -933,7 +917,7 @@ export default function JoinTournament() {
               component={"div"}
               className="mb-4"
               sx={{
-                backgroundColor: "#1A151E",
+                backgroundColor: "#1d1329",
               }}
             >
               <Box
@@ -945,7 +929,7 @@ export default function JoinTournament() {
                   color: "white",
                 }}
               >
-                INFORMATIONS
+                Information
               </Box>
               {detailTournament?.tournamentInfors?.descriptions?.map(
                 (item, index) => {
@@ -962,8 +946,9 @@ export default function JoinTournament() {
                       <Typography
                         sx={{
                           textAlign: "start",
-                          fontWeight: "200 !important",
+                          fontWeight: "500 !important",
                           marginLeft: "0px !important",
+                          fontFamily:"Cyntho"
                         }}
                       >
                         {item
