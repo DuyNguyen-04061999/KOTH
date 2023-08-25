@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import LoadingScreen from "../LoadingScreen";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
@@ -135,9 +136,9 @@ export default function UnityGameComponent(props) {
   return (
     <Fragment>
       {!isLoaded && (
-        <p style={{ color: "#fff" }}>
-          Loading Application... {Math.round(loadingProgression * 100)}%
-        </p>
+        <LoadingScreen
+          loadingProgression={Math.round(loadingProgression * 100)}
+        />
       )}
       <Unity
         style={
