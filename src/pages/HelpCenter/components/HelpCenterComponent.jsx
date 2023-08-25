@@ -83,7 +83,7 @@ const HelpCenterComponent = () => {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Container style={{ padding: "16px 24px 61px 24px" }}>
+          <Container style={{ padding: "16px 24px 24px 24px" }}>
             <Box sx={{ margin: "16px 0px 32px 0px" }}>
               <Typography
                 sx={{
@@ -95,105 +95,85 @@ const HelpCenterComponent = () => {
               />
             </Box>
             <Box sx={{ width: "100%", typography: "body1" }}>
-              <TabContext value={tabHelpCenter.toString()}>
-                <Box
-                  sx={{
-                    borderBottom: 1,
-                    borderColor: "divider",
-                    width: "100%",
-                  }}
-                >
-                  <TabList
-                    onChange={handleChange}
-                    aria-label="lab API tabs example"
-                    style={{
-                      backgroundColor: "#302642",
-                    }}
-                    indicatorColor="unset"
-                    variant="scrollable"
-                    scrollButtons="auto"
-                  >
-                    {listFAQ?.map((item, index) => {
-                      return (
-                        <Tab
-                          key={index}
-                          label={item?.faqTitle}
+              <Tabs  value={tabHelpCenter} onChange={handleChange} indicatorColor="unset" style={{backgroundColor: "#302642"}}>
+                {listFAQ?.map((item, index) => {
+                  return (
+                    <Tab
+                      key={index}
+                      label={item?.faqTitle}
+                      style={{
+                        color: tabHelpCenter === index ? "white" : "#9B9ACF",
+                        backgroundColor:
+                          tabHelpCenter === index ? "#5F3491" : "unset",
+                        fontSize: "10px",
+                        fontStyle: "normal",
+                        lineHeight: "normal",
+                        transition:
+                          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                        textTransform: "capitalize !important",
+                      }}
+                      sx={{
+                        minWidth: "43px",
+                        textTransform: "unset",
+                        padding: "6px 12px",
+                        maxHeight: "36px",
+                        flexShrink: 1,
+                      }}
+                    />
+                  );
+                })}
+              </Tabs>
+              <Box
+                sx={{
+                  padding: "27px 8px",
+                  backgroundColor: "#282136",
+                  color: "white",
+                  maxHeight: "600px",
+                  overflowY: "auto",
+                }}
+              >
+                <h4 style={{ fontSize: "16px" }}>
+                  {listFAQ[tabHelpCenter]?.faqTitle}
+                </h4>
+                <p style={{ fontSize: "14px", textAlign: "start" }}>
+                  {listFAQ[tabHelpCenter]?.faqDesc}
+                </p>
+                {listFAQ?.map((item, index) => (
+                  <TabPanel value={tabHelpCenter} key={index} index={index}>
+                    {item?.FAQPromoteData?.map((item, index) => (
+                      <Box key={index}>
+                        <h6
                           style={{
-                            color:
-                              tabHelpCenter === index ? "white" : "#9B9ACF",
-                            backgroundColor:
-                              tabHelpCenter === index ? "#5F3491" : "unset",
-                            fontSize: "10px",
-                            fontStyle: "normal",
-                            lineHeight: "normal",
-                            transition:
-                              "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-                            textTransform: "capitalize !important",
+                            margin: "20px 0px",
+                            fontWeight: "bold",
+                            fontSize: "12px",
                           }}
-                          sx={{
-                            minWidth: "43px",
-                            textTransform: "unset",
-                            padding: "6px 12px",
-                            maxHeight: "36px",
-                            flexShrink: 1,
+                        >
+                          {item?.faqQuestion}
+                        </h6>
+                        <p
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: "700",
+                            margin: "10px 0px",
+                            textAlign: "start",
                           }}
-                        />
-                      );
-                    })}
-                  </TabList>
-                </Box>
-                <Box
-                  sx={{
-                    padding: "27px 8px",
-                    backgroundColor: "#282136",
-                    color: "white",
-                    maxHeight: "618px",
-                    overflowY: "auto",
-                  }}
-                >
-                  <h4 style={{ fontSize: "16px" }}>
-                    {listFAQ[tabHelpCenter]?.faqTitle}
-                  </h4>
-                  <p style={{ fontSize: "14px", textAlign: "start" }}>
-                    {listFAQ[tabHelpCenter]?.faqDesc}
-                  </p>
-                  {listFAQ?.map((item, index) => (
-                    <TabPanel value={tabHelpCenter} key={index} index={index}>
-                      {item?.FAQPromoteData?.map((item, index) => (
-                        <Box key={index}>
-                          <h6
-                            style={{
-                              margin: "20px 0px",
-                              fontWeight: "bold",
-                              fontSize: "12px",
-                            }}
-                          >
-                            {item?.faqQuestion}
-                          </h6>
-                          <p
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "700",
-                              margin: "10px 0px",
-                              textAlign: "start",
-                            }}
-                          >
-                            {item?.faqAnswer}
-                          </p>
-                        </Box>
-                      ))}
-                      <p
-                        style={{
-                          margin: "20px 0px",
-                          fontSize: "10px",
-                        }}
-                      >{`Last Updated: [${moment(item?.updatedAt).format(
-                        "MMM Do YY"
-                      )}]`}</p>
-                    </TabPanel>
-                  ))}
-                </Box>
-              </TabContext>
+                        >
+                          {item?.faqAnswer}
+                        </p>
+                      </Box>
+                    ))}
+                    <p
+                      style={{
+                        margin: "20px 0px",
+                        fontSize: "10px",
+                      }}
+                    >{`Last Updated: [${moment(item?.updatedAt).format(
+                      "MMM Do YY"
+                    )}]`}</p>
+                  </TabPanel>
+                ))}
+              </Box>
             </Box>
           </Container>
         </CssBaseline>
@@ -238,30 +218,32 @@ const HelpCenterComponent = () => {
                   }}
                   indicatorColor="unset"
                 >
-                  {listFAQ?.map((item, index) => {
-                    return (
-                      <Tab
-                        key={index}
-                        sx={{ textTransform: "none" }}
-                        label={item?.faqTitle}
-                        style={{
-                          marginBottom: "16px",
-                          color: tabHelpCenter === index ? "white" : "#9B9ACF",
-                          padding: "7px 10px",
-                          backgroundColor:
-                            tabHelpCenter === index ? "#5F3491" : "unset",
-                          borderTopRightRadius: "8px",
-                          borderBottomRightRadius: "8px",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: "600",
-                          lineHeight: "normal",
-                          transition:
-                            "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-                        }}
-                      />
-                    );
-                  })}
+                  {listFAQ?.length &&
+                    listFAQ?.map((item, index) => {
+                      return (
+                        <Tab
+                          key={index}
+                          sx={{ textTransform: "none" }}
+                          label={item?.faqTitle}
+                          style={{
+                            marginBottom: "16px",
+                            color:
+                              tabHelpCenter === index ? "white" : "#9B9ACF",
+                            padding: "7px 10px",
+                            backgroundColor:
+                              tabHelpCenter === index ? "#5F3491" : "unset",
+                            borderTopRightRadius: "8px",
+                            borderBottomRightRadius: "8px",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: "600",
+                            lineHeight: "normal",
+                            transition:
+                              "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                          }}
+                        />
+                      );
+                    })}
                 </Tabs>
                 <Box
                   sx={{
@@ -274,47 +256,48 @@ const HelpCenterComponent = () => {
                   }}
                 >
                   <h4 style={{ fontSize: "20px" }}>
-                    {listFAQ[tabHelpCenter]?.faqTitle}
+                    {listFAQ?.length && listFAQ[tabHelpCenter]?.faqTitle}
                   </h4>
                   <p style={{ fontSize: "14px", textAlign: "start" }}>
-                    {listFAQ[tabHelpCenter]?.faqDesc}
+                    {listFAQ?.length && listFAQ[tabHelpCenter]?.faqDesc}
                   </p>
-                  {listFAQ?.map((item, index) => (
-                    <TabPanel key={index} value={tabHelpCenter} index={index}>
-                      {item?.FAQPromoteData?.map((item, index) => (
-                        <Box key={index}>
-                          <h6
-                            style={{
-                              fontSize: "20px",
-                              textAlign: "start",
-                              margin: "24px 0px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {item?.faqQuestion}
-                          </h6>
-                          <p
-                            style={{
-                              fontSize: "14px",
-                              textAlign: "start",
-                              marginTop: "12px",
-                            }}
-                          >
-                            {item?.faqAnswer}
-                          </p>
-                        </Box>
-                      ))}
-                      <p
-                        style={{
-                          margin: "36px 0px",
-                          fontSize: "14px",
-                          textAlign: "start",
-                        }}
-                      >{`Last Updated: [${moment(item?.updatedAt).format(
-                        "MMM Do YY"
-                      )}]`}</p>
-                    </TabPanel>
-                  ))}
+                  {listFAQ?.length &&
+                    listFAQ?.map((item, index) => (
+                      <TabPanel key={index} value={tabHelpCenter} index={index}>
+                        {item?.FAQPromoteData?.map((item, index) => (
+                          <Box key={index}>
+                            <h6
+                              style={{
+                                fontSize: "20px",
+                                textAlign: "start",
+                                margin: "24px 0px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {item?.faqQuestion}
+                            </h6>
+                            <p
+                              style={{
+                                fontSize: "14px",
+                                textAlign: "start",
+                                marginTop: "12px",
+                              }}
+                            >
+                              {item?.faqAnswer}
+                            </p>
+                          </Box>
+                        ))}
+                        <p
+                          style={{
+                            margin: "36px 0px",
+                            fontSize: "14px",
+                            textAlign: "start",
+                          }}
+                        >{`Last Updated: [${moment(item?.updatedAt).format(
+                          "MMM Do YY"
+                        )}]`}</p>
+                      </TabPanel>
+                    ))}
                 </Box>
               </Box>
             </Box>
