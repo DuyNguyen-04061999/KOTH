@@ -66,7 +66,7 @@ export default function JoinTournament() {
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
   const { width } = useWindowDimensions();
-  const [openVoucher, setOpenVoucher] = useState(true);
+  const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
 
   const dispatch = useDispatch();
