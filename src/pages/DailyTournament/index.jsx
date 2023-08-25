@@ -191,7 +191,7 @@ export default function DailyTournament() {
                       <Typography sx={{ ...typographyStyle }}>
                         Fairness
                       </Typography>
-                      <Typography sx={{ ...typographyStyle }}>FAG</Typography>
+                      <Typography sx={{ ...typographyStyle }}>FAQ</Typography>
                       <Typography sx={{ ...typographyStyle }}>
                         Privacy Policy
                       </Typography>
