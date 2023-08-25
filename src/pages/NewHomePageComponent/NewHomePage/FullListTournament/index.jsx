@@ -11,9 +11,10 @@ import { useEffect } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import ItemComponent from "../ItemComponent";
+import CountDownBannerHot from "../../CountDownBannerHot";
 
 export default function FullListTournament({ handleOnClose, open, type }) {
-  const { dailyTournament, weeklyTournament, hourlyTournament, hotTournament } =
+  const { dailyTournament, weeklyTournament, hourlyTournament, hotTournament, hotWeekTour } =
     useSelector((state) => state.tournamentReducer);
   const [isFetchList, setIsFetchList] = useState(true);
   const [hourList, setHourList] = useState([]);
@@ -189,7 +190,9 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                     top: "-3px",
                     left: "-2px",
                   }}
-                  src={images.pool}
+                  src={hotWeekTour && hotWeekTour?.bestUser && hotWeekTour?.bestUser?.tUser && 
+                    hotWeekTour?.bestUser?.tUser?.userAccount && hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar 
+                    ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar : images.pool}
                   component={"img"}
                 ></Box>{" "}
                 <Box
@@ -224,7 +227,8 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                   <Box
                     sx={{ width: "23px", height: "auto" }}
                     component={"img"}
-                    src={imageHome.brandAvatar}
+                    src={hotWeekTour && hotWeekTour?.tournamentBrand && hotWeekTour?.tournamentBrand?.brandAvatar
+                      ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.tournamentBrand?.brandAvatar : imageHome.brandAvatar}
                   ></Box>
                   <Box
                     sx={{
@@ -233,89 +237,9 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                       margin: "0px 12px 0px 12px",
                     }}
                   ></Box>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "10px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        2d
-                      </Typography>
-                    </Box>
-                    <Typography
-                      sx={{
-                        fontSize: "4.695px",
-                        color: "#00CBEF",
-                        margin: "0px 6px !important",
-                      }}
-                    >
-                      :
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "10px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        1h
-                      </Typography>{" "}
-                    </Box>{" "}
-                    <Typography
-                      sx={{
-                        fontSize: "4.695px",
-                        color: "#00CBEF",
-                        margin: "0px 6px !important",
-                      }}
-                    >
-                      :
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: "30px",
-                        height: "20px",
-                        borderRadius: "5px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        background: "rgba(139, 31, 207, 0.3)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "10px",
-                          color: "#00CBEF",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        35m
-                      </Typography>{" "}
-                    </Box>{" "}
-                  </Box>
+                   <CountDownBannerHot
+                    expiryTime={moment(hotWeekTour?.tournamentEndAt)}
+                  />
                 </Box>
                 <Box
                   sx={{
@@ -349,7 +273,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                         marginRight: "5px",
                       }}
                     >
-                      $100
+                      ${hotWeekTour?.tournamentPrize}
                     </Typography>
                     <Typography
                       sx={{
@@ -363,6 +287,9 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                     </Typography>
                   </Box>
                   <button
+                    onClick={() => {
+                      navigate("/tournamentDetail/" + hotWeekTour?.id);
+                    }}
                     style={{
                       background:
                         "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",

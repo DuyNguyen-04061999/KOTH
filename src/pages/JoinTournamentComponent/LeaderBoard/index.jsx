@@ -73,10 +73,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       borderRadius: "50%",
                     }}
                     src={
-                      top3[1]?.tUser?.userAccount.accountAvatar
+                      top3 && top3?.length >= 3 && top3[1]?.tUser?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          top3[1]?.tUser?.userAccount.accountAvatar
+                          top3[1]?.tUser?.userAccount?.accountAvatar
                         : images.undefinedAvatar
                     }
                   ></Box>
@@ -165,10 +165,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       borderRadius: "50%",
                     }}
                     src={
-                      top3[0]?.tUser?.userAccount.accountAvatar
+                      top3 && top3?.length >= 3 && top3[0]?.tUser?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          top3[0]?.tUser?.userAccount.accountAvatar
+                          top3[0]?.tUser?.userAccount?.accountAvatar
                         : images.undefinedAvatar
                     }
                   ></Box>
@@ -255,10 +255,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       borderRadius: "50%",
                     }}
                     src={
-                      top3[2]?.tUser?.userAccount.accountAvatar
+                      top3 && top3?.length >= 3 && top3[2]?.tUser?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          top3[2]?.tUser?.userAccount.accountAvatar
+                          top3[2]?.tUser?.userAccount?.accountAvatar
                         : images.undefinedAvatar
                     }
                   ></Box>
@@ -342,10 +342,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       <Box
                         component={"img"}
                         src={
-                          item?.tUser?.userAccount.accountAvatar
+                          item?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              item?.tUser?.userAccount.accountAvatar
+                              item?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                         sx={{
@@ -482,10 +482,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           borderRadius: "50%",
                         }}
                         src={
-                          top3[1]?.tUser?.userAccount.accountAvatar
+                          top3 && top3?.length >= 3 && top3[1]?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              top3[1]?.tUser?.userAccount.accountAvatar
+                              top3[1]?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                       ></Box>
@@ -575,10 +575,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           borderRadius: "50%",
                         }}
                         src={
-                          top3[0]?.tUser?.userAccount.accountAvatar
+                          top3 && top3?.length >= 3 && top3[0]?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              top3[0]?.tUser?.userAccount.accountAvatar
+                              top3[0]?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                       ></Box>
@@ -666,10 +666,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           borderRadius: "50%",
                         }}
                         src={
-                          top3[2]?.tUser?.userAccount.accountAvatar
+                          top3 && top3?.length >= 3 && top3[2]?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              top3[2]?.tUser?.userAccount.accountAvatar
+                              top3[2]?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                       ></Box>
@@ -757,10 +757,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           <Box
                             component={"img"}
                             src={
-                              item?.tUser?.userAccount.accountAvatar
+                              item?.tUser?.userAccount?.accountAvatar
                                 ? process.env.REACT_APP_SOCKET_SERVER +
                                   "/" +
-                                  item?.tUser?.userAccount.accountAvatar
+                                  item?.tUser?.userAccount?.accountAvatar
                                 : images.undefinedAvatar
                             }
                             sx={{
@@ -846,10 +846,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             <Box
                               component={"img"}
                               src={
-                                item?.tUser?.userAccount.accountAvatar
+                                item?.tUser?.userAccount?.accountAvatar
                                   ? process.env.REACT_APP_SOCKET_SERVER +
                                     "/" +
-                                    item?.tUser?.userAccount.accountAvatar
+                                    item?.tUser?.userAccount?.accountAvatar
                                   : images.undefinedAvatar
                               }
                               sx={{
@@ -1051,10 +1051,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       borderRadius: "50%",
                     }}
                     src={
-                      top3[1]?.tUser?.userAccount.accountAvatar
+                      top3 && top3?.length >= 3 && top3[1]?.tUser?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          top3[1]?.tUser?.userAccount.accountAvatar
+                          top3[1]?.tUser?.userAccount?.accountAvatar
                         : images.undefinedAvatar
                     }
                   ></Box>
@@ -1144,10 +1144,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       borderRadius: "50%",
                     }}
                     src={
-                      top3[0]?.tUser?.userAccount.accountAvatar
+                      top3 && top3?.length >= 3 && top3[0]?.tUser?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          top3[0]?.tUser?.userAccount.accountAvatar
+                          top3[0]?.tUser?.userAccount?.accountAvatar
                         : images.undefinedAvatar
                     }
                   ></Box>
@@ -1235,10 +1235,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       borderRadius: "50%",
                     }}
                     src={
-                      top3[2]?.tUser?.userAccount.accountAvatar
+                      top3 && top3?.length >= 3 && top3[2]?.tUser?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          top3[2]?.tUser?.userAccount.accountAvatar
+                          top3[2]?.tUser?.userAccount?.accountAvatar
                         : images.undefinedAvatar
                     }
                   ></Box>
@@ -1314,10 +1314,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       <Box
                         component={"img"}
                         src={
-                          item?.tUser?.userAccount.accountAvatar
+                          item?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              item?.tUser?.userAccount.accountAvatar
+                              item?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                         sx={{
@@ -1447,10 +1447,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           borderRadius: "50%",
                         }}
                         src={
-                          top3[1]?.tUser?.userAccount.accountAvatar
+                          top3 && top3?.length >= 3 && top3[1]?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              top3[1]?.tUser?.userAccount.accountAvatar
+                              top3[1]?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                       ></Box>
@@ -1540,10 +1540,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           borderRadius: "50%",
                         }}
                         src={
-                          top3[0]?.tUser?.userAccount.accountAvatar
+                          top3 && top3?.length >= 3 && top3[0]?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              top3[0]?.tUser?.userAccount.accountAvatar
+                              top3[0]?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                       ></Box>
@@ -1631,10 +1631,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           borderRadius: "50%",
                         }}
                         src={
-                          top3[2]?.tUser?.userAccount.accountAvatar
+                          top3 && top3?.length >= 3 && top3[2]?.tUser?.userAccount?.accountAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              top3[2]?.tUser?.userAccount.accountAvatar
+                              top3[2]?.tUser?.userAccount?.accountAvatar
                             : images.undefinedAvatar
                         }
                       ></Box>
@@ -1717,10 +1717,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           <Box
                             component={"img"}
                             src={
-                              item?.tUser?.userAccount.accountAvatar
+                              item?.tUser?.userAccount?.accountAvatar
                                 ? process.env.REACT_APP_SOCKET_SERVER +
                                   "/" +
-                                  item?.tUser?.userAccount.accountAvatar
+                                  item?.tUser?.userAccount?.accountAvatar
                                 : images.undefinedAvatar
                             }
                             sx={{
@@ -1805,10 +1805,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           <Box
                             component={"img"}
                             src={
-                              item?.tUser?.userAccount.accountAvatar
+                              item?.tUser?.userAccount?.accountAvatar
                                 ? process.env.REACT_APP_SOCKET_SERVER +
                                   "/" +
-                                  item?.tUser?.userAccount.accountAvatar
+                                  item?.tUser?.userAccount?.accountAvatar
                                 : images.undefinedAvatar
                             }
                             sx={{
