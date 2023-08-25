@@ -18,7 +18,6 @@ export default function SlickSlider(props) {
     beforeChange: (prev, next) => {
       setIndex(next);
     },
-    dotsClass: "dotClass",
     appendDots: (dots) => (
       <Box
         style={{
@@ -28,7 +27,7 @@ export default function SlickSlider(props) {
           bottom: appendDot ? "0px" : "-20px",
           position: "absolute",
           padding: "5px",
-          height: width > 576 ? "26px" : "15px",
+          height: width > 576 ? "20px" : "15px",
           backgroundColor: appendDot ? "rgba(0, 0, 0, 0.24)" : "none",
           backdropFilter: appendDot ? "blur(2px)" : "none",
           marginBottom: "0px",
@@ -41,12 +40,12 @@ export default function SlickSlider(props) {
     customPaging: (i) => (
       <div
         style={{
-          width: i === selectedIndex ? "20px" : "9px",
+          width: i === selectedIndex ? "20px" : "10px",
           height: "4px",
           background: i === selectedIndex ? "#ffff" : "#989898",
           borderRadius: "5px",
-          marginLeft: "10px",
           transition: "0.4s",
+          marginTop: width > 576 ? "10px" : "8px",
         }}
       ></div>
     ),

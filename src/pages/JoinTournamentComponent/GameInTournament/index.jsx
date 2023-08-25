@@ -39,7 +39,7 @@ export default function GameInTournament(props) {
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ fontFamily: "Cyntho", fontWeight: "500 !important", fontSize:"14px" }}
+                sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important", fontSize:"14px" }}
               >
                 Game for tournament
               </Typography>
@@ -61,8 +61,8 @@ export default function GameInTournament(props) {
                   : images.gameHotTournament
               }
               alt="..."
-              width={150}
-              height={150}
+              width={120}
+              height={120}
               style={{ borderRadius: "10px" }}
               className="mt-2"
             />

@@ -455,7 +455,7 @@ export default function JoinTournament() {
                           textAlign: "start",
                           fontSize: "15px",
                           fontWeight: "500 !important",
-                          fontFamily: "Cyntho",
+                          fontFamily: "Cyntho Next",
                         }}
                       >
                         {moment(detailTournament?.tournamentStartAt).format(
@@ -494,7 +494,7 @@ export default function JoinTournament() {
                           textAlign: "start",
                           fontSize: "15px",
                           fontWeight: "500 !important",
-                          fontFamily: "Cyntho",
+                          fontFamily: "Cyntho Next",
                         }}
                       >
                         {moment(detailTournament?.tournamentEndAt).format(
@@ -963,7 +963,7 @@ export default function JoinTournament() {
                           textAlign: "start",
                           fontWeight: "500 !important",
                           marginLeft: "0px !important",
-                          fontFamily:"Cyntho"
+                          fontFamily:"Cyntho Next"
                         }}
                       >
                         {item
@@ -1009,7 +1009,7 @@ export default function JoinTournament() {
                   isFullScreen && startGame
                     ? "100%"
                     : width < 576
-                    ? "100%"
+                    ? "95%"
                     : "80%",
                 height: isFullScreen && startGame ? "100%" : "auto",
                 paddingBottom: width < 576 ? "60px" : "none",

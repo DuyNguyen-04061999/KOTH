@@ -68,7 +68,7 @@ export default function Gold(props) {
             color: width > 576 ? "#FB3" : "#FB3",
             fontSize: "15px",
             marginLeft: "5px",
-            fontFamily: "Cyntho !important",
+            fontFamily: "Cyntho Next !important",
             fontWeight: "500 !important",
             marginRight: "2px",
           }}
