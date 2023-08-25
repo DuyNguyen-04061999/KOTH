@@ -1009,7 +1009,7 @@ export default function JoinTournament() {
                   isFullScreen && startGame
                     ? "100%"
                     : width < 576
-                    ? "95%"
+                    ? "100%"
                     : "80%",
                 height: isFullScreen && startGame ? "100%" : "auto",
                 paddingBottom: width < 576 ? "60px" : "none",
@@ -1037,6 +1037,7 @@ export default function JoinTournament() {
                           muted
                           autoPlay
                           onEnded={() => {
+                            setVideoGame(false);
                             if (
                               width < 576 &&
                               !detailTournament?.tournamentInfors?.skin
@@ -1047,7 +1048,7 @@ export default function JoinTournament() {
                               screen.enter();
                               setIsFullScreen(true);
                             }
-                            setVideoGame(false);
+                            
                           }}
                         >
                           <source src={video.LogoAnim} type="video/mp4" />
