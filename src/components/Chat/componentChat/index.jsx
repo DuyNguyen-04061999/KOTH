@@ -209,7 +209,7 @@ export default function ComponentChat() {
                       width: "100%",
                       wordWrap: "break-word",
                       fontWeight: "500 !important",
-                      fontFamily: "Cyntho !important",
+                      fontFamily: "Cyntho Next !important",
                     }}
                   >
                     {e?.messageContent}
@@ -240,7 +240,7 @@ export default function ComponentChat() {
                     color: "#7C81F2",
                     borderRadius: "5px",
                     fontWeight: "500 !important",
-                    fontFamily: "Cyntho !important",
+                    fontFamily: "Cyntho Next !important",
                   }}
                 >
                   <b style={{}}>{e?.messageFromName}</b>
@@ -252,7 +252,7 @@ export default function ComponentChat() {
                       marginLeft: "15px",
                       fontSize: "10px",
                       fontWeight: "500 !important",
-                      fontFamily: "Cyntho !important",
+                      fontFamily: "Cyntho Next !important",
                     }}
                   >
                     {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -367,7 +367,7 @@ export default function ComponentChat() {
                     <span
                       style={{
                         fontWeight: "500 !important",
-                        fontFamily: "Cyntho !important",
+                        fontFamily: "Cyntho Next !important",
                       }}
                     >
                       {e?.messageContent}

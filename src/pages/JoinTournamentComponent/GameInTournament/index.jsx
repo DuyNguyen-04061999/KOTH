@@ -39,7 +39,7 @@ export default function GameInTournament(props) {
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ fontFamily: "Cyntho", fontWeight: "500 !important", fontSize:"14px" }}
+                sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important", fontSize:"14px" }}
               >
                 Game for tournament
               </Typography>

@@ -76,7 +76,7 @@ export default function Browser(props) {
                 ></path>
               </svg>
               <Typography variant="h5" sx={{
-                fontFamily:"Cyntho !important",
+                fontFamily:"Cyntho Next !important",
                 fontWeight:"500 !important"
               }}>Menu</Typography>
             </Box>

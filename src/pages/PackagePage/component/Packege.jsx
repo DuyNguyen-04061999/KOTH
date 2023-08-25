@@ -282,7 +282,7 @@ export default function Package() {
                                       sx={{
                                         fontSize: "17px",
                                         color: "white",
-                                        fontFamily: "Cyntho !important",
+                                        fontFamily: "Cyntho Next !important",
                                         fontWeight: "500 !important",
                                       }}
                                     >
@@ -321,7 +321,7 @@ export default function Package() {
                                       sx={{
                                         fontSize: "17px",
                                         color: "white",
-                                        fontFamily: "Cyntho !important",
+                                        fontFamily: "Cyntho Next !important",
                                         fontWeight: "500 !important",
                                       }}
                                     >
@@ -381,7 +381,7 @@ export default function Package() {
                                       sx={{
                                         fontSize: "17px",
                                         color: "white",
-                                        fontFamily: "Cyntho !important",
+                                        fontFamily: "Cyntho Next !important",
                                         fontWeight: "500 !important",
                                       }}
                                     >
@@ -402,7 +402,7 @@ export default function Package() {
                                     <Typography
                                       variant="h4"
                                       sx={{
-                                        fontFamily: "Cyntho !important",
+                                        fontFamily: "Cyntho Next !important",
                                         fontWeight: "500 !important",
                                       }}
                                     >
@@ -421,7 +421,7 @@ export default function Package() {
                                     <Typography
                                       variant="h4"
                                       sx={{
-                                        fontFamily: "Cyntho !important",
+                                        fontFamily: "Cyntho Next !important",
                                         fontWeight: "500 !important",
                                       }}
                                     >
@@ -431,7 +431,7 @@ export default function Package() {
                                       variant="body1"
                                       sx={{
                                         marginTop: "7px",
-                                        fontFamily: "Cyntho",
+                                        fontFamily: "Cyntho Next",
                                         fontSize: "12px",
                                       }}
                                     >
@@ -588,6 +588,8 @@ export default function Package() {
                       background: bgDiamond,
                       borderRadius: "20px",
                       color: "white",
+                      width:"50%",
+                      textAlign:"center"
                     }}
                   >
                     Diamond
@@ -600,6 +602,9 @@ export default function Package() {
                       background: bgGold,
                       borderRadius: "20px",
                       color: "white",
+                      width:"50%",
+                      textAlign:"center"
+
                     }}
                   >
                     Gold
@@ -643,7 +648,7 @@ export default function Package() {
                     sx={{
                       fontSize: "27px",
                       marginTop: "5px",
-                      marginBottom: "15px",
+                      marginBottom: "15px !important",
                       color:
                         i?.packageName === "Free"
                           ? "#383B80"
@@ -765,7 +770,7 @@ export default function Package() {
                               sx={{
                                 fontSize: "17px",
                                 color: "white",
-                                fontFamily: "Cyntho !important",
+                                fontFamily: "Cyntho Next !important",
                                 fontWeight: "500 !important",
                               }}
                             >
@@ -804,7 +809,7 @@ export default function Package() {
                               sx={{
                                 fontSize: "17px",
                                 color: "white",
-                                fontFamily: "Cyntho !important",
+                                fontFamily: "Cyntho Next !important",
                                 fontWeight: "500 !important",
                               }}
                             >
@@ -865,7 +870,7 @@ export default function Package() {
                               sx={{
                                 fontSize: "17px",
                                 color: "white",
-                                fontFamily: "Cyntho !important",
+                                fontFamily: "Cyntho Next !important",
                                 fontWeight: "500 !important",
                               }}
                             >
@@ -885,7 +890,7 @@ export default function Package() {
                             <Typography
                               variant="h4"
                               sx={{
-                                fontFamily: "Cyntho !important",
+                                fontFamily: "Cyntho Next !important",
                                 fontWeight: "500 !important",
                               }}
                             >
@@ -904,7 +909,7 @@ export default function Package() {
                             <Typography
                               variant="h4"
                               sx={{
-                                fontFamily: "Cyntho !important",
+                                fontFamily: "Cyntho Next !important",
                                 fontWeight: "500 !important",
                               }}
                             >
@@ -914,7 +919,7 @@ export default function Package() {
                               variant="body1"
                               sx={{
                                 marginTop: "7px",
-                                fontFamily: "Cyntho",
+                                fontFamily: "Cyntho Next",
                                 fontSize: "12px",
                               }}
                             >
