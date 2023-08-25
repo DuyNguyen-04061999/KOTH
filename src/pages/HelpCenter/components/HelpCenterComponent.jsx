@@ -11,7 +11,6 @@ import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 
 const theme = createTheme({
@@ -36,8 +35,6 @@ const HelpCenterComponent = () => {
   const dispatch = useDispatch();
   const [listFAQ, setListFAQ] = useState([]);
 
-  const navigate = useNavigate();
-
   const handleChange = (event, newValue) => {
     dispatch({
       type: "SET_TAB_HELPCENTER",
@@ -56,9 +53,6 @@ const HelpCenterComponent = () => {
   useEffect(() => {
     setListFAQ(listFAQPromote);
   }, [listFAQPromote]);
-
-  console.log(listFAQ);
-
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -84,15 +78,6 @@ const HelpCenterComponent = () => {
       </div>
     );
   }
-
-  const labelTab = [
-    "Privacy And Policy",
-    "Term of Service",
-    "Fairness",
-    "Design Resources",
-    "FAQ",
-  ];
-  
 
   if (width < 576) {
     return (
@@ -166,21 +151,40 @@ const HelpCenterComponent = () => {
                     overflowY: "auto",
                   }}
                 >
-                  {
-                    listFAQ?.map((item,index)=> (
-                      <TabPanel value={tabHelpCenter} key={index} index={index}>
-                        {
-                          item?.FAQPromoteData?.map((item,index)=> (
-                            <Box key={index} >
-                              <h6 style={{margin:"20px 0px", fontWeight: "bold", fontSize: "16px", textAlign: "start"}}>{item?.faqQuestion}</h6>
-                              <p style={{fontSize: "10px", textAlign: "start", margin:"10px 0px"}}>{item?.faqAnswer}</p>
-                            </Box>
-                          ))
-                        }
-                        <p style={{margin:"20px 0px", fontSize: "10px", textAlign: "start"}}>{ `Last Updated: [${moment(item?.updatedAt)}]`}</p>
-                      </TabPanel>
-                    ))
-                  }
+                  {listFAQ?.map((item, index) => (
+                    <TabPanel value={tabHelpCenter} key={index} index={index}>
+                      {item?.FAQPromoteData?.map((item, index) => (
+                        <Box key={index}>
+                          <h6
+                            style={{
+                              margin: "20px 0px",
+                              fontWeight: "bold",
+                              fontSize: "16px",
+                              textAlign: "start",
+                            }}
+                          >
+                            {item?.faqQuestion}
+                          </h6>
+                          <p
+                            style={{
+                              fontSize: "10px",
+                              textAlign: "start",
+                              margin: "10px 0px",
+                            }}
+                          >
+                            {item?.faqAnswer}
+                          </p>
+                        </Box>
+                      ))}
+                      <p
+                        style={{
+                          margin: "20px 0px",
+                          fontSize: "10px",
+                          textAlign: "start",
+                        }}
+                      >{`Last Updated: [${moment(item?.updatedAt)}]`}</p>
+                    </TabPanel>
+                  ))}
                 </Box>
               </TabContext>
             </Box>
@@ -262,21 +266,40 @@ const HelpCenterComponent = () => {
                     padding: "13px 24px",
                   }}
                 >
-                  {
-                    listFAQ?.map((item,index)=> (
-                      <TabPanel key={index}  value={tabHelpCenter} index={index}>
-                        {
-                          item?.FAQPromoteData?.map((item,index)=> (
-                            <Box key={index} >
-                              <h6 style={{fontSize: "20px", textAlign: "start", margin: "24px 0px", fontWeight: "bold"}}>{item?.faqQuestion}</h6>
-                              <p style={{fontSize: "14px", textAlign: "start", marginTop:"12px"}}>{item?.faqAnswer}</p>
-                            </Box>
-                          ))
-                        }
-                        <p style={{fontSize: "14px", margin: "36px 0", textAlign: "start"}}>{ `Last Updated: [${moment(item?.updatedAt)}]`}</p>
-                      </TabPanel>
-                    ))
-                  }
+                  {listFAQ?.map((item, index) => (
+                    <TabPanel key={index} value={tabHelpCenter} index={index}>
+                      {item?.FAQPromoteData?.map((item, index) => (
+                        <Box key={index}>
+                          <h6
+                            style={{
+                              fontSize: "20px",
+                              textAlign: "start",
+                              margin: "24px 0px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {item?.faqQuestion}
+                          </h6>
+                          <p
+                            style={{
+                              fontSize: "14px",
+                              textAlign: "start",
+                              marginTop: "12px",
+                            }}
+                          >
+                            {item?.faqAnswer}
+                          </p>
+                        </Box>
+                      ))}
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          margin: "36px 0",
+                          textAlign: "start",
+                        }}
+                      >{`Last Updated: [${moment(item?.updatedAt)}]`}</p>
+                    </TabPanel>
+                  ))}
                 </Box>
               </Box>
             </Box>
