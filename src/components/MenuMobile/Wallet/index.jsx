@@ -58,7 +58,7 @@ export default function DialogWallet(props) {
   const { userGold } = useSelector((state) => state.authReducer);
   const [recovery, setRecovery] = useState(false);
   const [transactionRecoverId, setTransactionRecoverId] = useState(0);
-  const [Txh, setTxh] = useState("")
+  const [Txh, setTxh] = useState("");
 
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
@@ -87,7 +87,7 @@ export default function DialogWallet(props) {
         let accounts = await web3.eth.getAccounts();
         let account = accounts[0];
 
-        console.log("Token contract: " , data?.token_contract);
+        console.log("Token contract: ", data?.token_contract);
         console.log("Target Wallet: ", data?.target_wallet);
 
         if (web3.currentProvider.isConnected()) {
@@ -411,8 +411,8 @@ export default function DialogWallet(props) {
                   }}
                   disabled={isLoadingDeposit}
                   onClick={() => {
-                    if(getAppType() && getAppType() === "promote") {
-                      dispatch(getStripe(amountDeposit))
+                    if (getAppType() && getAppType() === "promote") {
+                      dispatch(getStripe(amountDeposit));
                     } else {
                       if (amountDeposit >= 5 && amountDeposit <= 5000) {
                         setLoadingDeposit(true);
@@ -428,7 +428,6 @@ export default function DialogWallet(props) {
                         );
                       }
                     }
-                    
                   }}
                 >
                   {isLoadingDeposit ? (
@@ -1264,17 +1263,18 @@ export default function DialogWallet(props) {
                             >
                               Detail
                             </span>
-                            {transaction?.transactionStatus === "process" && transaction?.transactionType === "deposit" && (
-                              <span
-                                className="ms-2"
-                                onClick={() => {
-                                  setRecovery(true);
-                                  setTransactionRecoverId(transaction?.id)
-                                }}
-                              >
-                                Recover
-                              </span>
-                            )}
+                            {transaction?.transactionStatus === "process" &&
+                              transaction?.transactionType === "deposit" && (
+                                <span
+                                  className="ms-2"
+                                  onClick={() => {
+                                    setRecovery(true);
+                                    setTransactionRecoverId(transaction?.id);
+                                  }}
+                                >
+                                  Recover
+                                </span>
+                              )}
                           </Box>
                         </StyledTableCell>
                       </StyledTableRow>
@@ -1290,8 +1290,8 @@ export default function DialogWallet(props) {
                 open={recovery}
                 onClose={() => {
                   setRecovery(false);
-                  setTransactionRecoverId(0)
-                  setTxh("")
+                  setTransactionRecoverId(0);
+                  setTxh("");
                 }}
               >
                 <Box
@@ -1304,8 +1304,22 @@ export default function DialogWallet(props) {
                   }}
                 >
                   {" "}
-                  <Input sx={{ width: "90%" }} placeholder="Txh" value={Txh} onChange={(e) => setTxh(e?.target?.value)}/>
-                  <span onClick={() => socket?.emit("recoverTransaction", { transactionId: transactionRecoverId, Txh: Txh })}>Send</span>
+                  <Input
+                    sx={{ width: "90%" }}
+                    placeholder="Txh"
+                    value={Txh}
+                    onChange={(e) => setTxh(e?.target?.value)}
+                  />
+                  <span
+                    onClick={() =>
+                      socket?.emit("recoverTransaction", {
+                        transactionId: transactionRecoverId,
+                        Txh: Txh,
+                      })
+                    }
+                  >
+                    Send
+                  </span>
                 </Box>
               </Dialog>
             </TableContainer>
@@ -1421,7 +1435,6 @@ export default function DialogWallet(props) {
     );
   };
 
-
   return (
     <>
       <TransactionDetailDialog
@@ -1462,118 +1475,122 @@ export default function DialogWallet(props) {
         }}
       >
         {getAppType() && getAppType() === "promote" ? (
-          <WalletTypePromote handleClose={handleClose}/>
-          ) : (
+          <WalletTypePromote handleClose={handleClose} />
+        ) : (
           <Box
-          className="position-relative"
-          ref={div}
-          sx={{
-            background: "transparent",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <Box
-            className="position-fixed d-flex justify-content-between align-items-center"
+            className="position-relative"
+            ref={div}
             sx={{
-              width: width < 576 ? "100%" : wrapperWidth,
-              background: "#37285c",
-              zIndex: 1305,
-              height: "auto",
-              padding: "5px 16px 5px 24px",
+              background: "transparent",
+              width: "100%",
+              height: "100%",
             }}
           >
-            <Box className="pt-2">
-              <img
-                src={images.BackButtonDesposit}
-                alt="..."
-                width={11}
-                className="img-fluid cursor-pointer"
-                onClick={() => {
-                  if (!isTransactionDialog) {
-                    setTab(1);
-                    dispatch(toggleWalletDialog());
-                  } else {
-                    dispatch(closeTransactionDialog());
-                  }
-                }}
-              />
-              <span
-                className="mx-2"
-                style={{
-                  fontWeight: "bold",
-                  color: "white",
-                }}
-              >
-                {!isTransactionDialog ? "WALLET" : "TRANSACTIONS"}
-              </span>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              {!isTransactionDialog && (
-                <Box
-                  sx={{
+            <Box
+              className="position-fixed d-flex justify-content-between align-items-center"
+              sx={{
+                width: width < 576 ? "100%" : wrapperWidth,
+                background: "#37285c",
+                zIndex: 1305,
+                height: "auto",
+                padding: "5px 16px 5px 24px",
+              }}
+            >
+              <Box className="pt-2">
+                <img
+                  src={images.BackButtonDesposit}
+                  alt="..."
+                  width={11}
+                  className="img-fluid cursor-pointer"
+                  onClick={() => {
+                    if (!isTransactionDialog) {
+                      setTab(1);
+                      dispatch(toggleWalletDialog());
+                    } else {
+                      dispatch(closeTransactionDialog());
+                    }
+                  }}
+                />
+                <span
+                  className="mx-2"
+                  style={{
+                    fontWeight: "bold",
                     color: "white",
-                    borderRadius: 1,
-                    backgroundColor: "#4a539a",
-                    marginRight: "8px",
-                    overflow: "hidden",
-                    fontWeight: "bolder",
-                    height: "35px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: `${width < 576 ? width / 3.2 : 130}px`,
-                    backgroundImage: "linear-gradient(#8a3af0,#7548ee)",
-                  }}
-                  className="cursor-pointer position-relative"
-                  onClick={() => {
-                    dispatch(openTransactionDialog());
                   }}
                 >
-                  Transactions
-                </Box>
-              )}
-              {width > 576 && (
-                <Box
-                  onClick={() => {
-                    dispatch(toggleWalletDialog());
-                    dispatch(closeTransactionDialog());
-                  }}
-                  sx={{ width: "15px", marginLeft: "20px", cursor: "pointer" }}
-                >
-                  <img
-                    style={{ width: "20px", height: "20px" }}
-                    src={images.CloseButtonDeposit}
-                    alt="..."
-                  />
-                </Box>
-              )}
+                  {!isTransactionDialog ? "WALLET" : "TRANSACTIONS"}
+                </span>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                {!isTransactionDialog && (
+                  <Box
+                    sx={{
+                      color: "white",
+                      borderRadius: 1,
+                      backgroundColor: "#4a539a",
+                      marginRight: "8px",
+                      overflow: "hidden",
+                      fontWeight: "bolder",
+                      height: "35px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: `${width < 576 ? width / 3.2 : 130}px`,
+                      backgroundImage: "linear-gradient(#8a3af0,#7548ee)",
+                    }}
+                    className="cursor-pointer position-relative"
+                    onClick={() => {
+                      dispatch(openTransactionDialog());
+                    }}
+                  >
+                    Transactions
+                  </Box>
+                )}
+                {width > 576 && (
+                  <Box
+                    onClick={() => {
+                      dispatch(toggleWalletDialog());
+                      dispatch(closeTransactionDialog());
+                    }}
+                    sx={{
+                      width: "15px",
+                      marginLeft: "20px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <img
+                      style={{ width: "20px", height: "20px" }}
+                      src={images.CloseButtonDeposit}
+                      alt="..."
+                    />
+                  </Box>
+                )}
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                paddingTop: isTransactionDialog === true ? "0px" : "48px",
+                minHeight: width < 576 ? "1000px" : "unset",
+                maxHeight: width < 576 ? "unset" : height - 100,
+                backgroundColor: "#271c39",
+                paddingBottom:
+                  isTransactionDialog === true
+                    ? "0px"
+                    : tab && tab === 1
+                    ? "30px"
+                    : "20px",
+                overflowY: "auto",
+                overflowX: "hidden",
+              }}
+            >
+              {isTransactionDialog
+                ? renderTransaction()
+                : tab && tab === 1
+                ? renderDeposit()
+                : renderWithdraw()}
             </Box>
           </Box>
-
-          <Box
-            sx={{
-              paddingTop: isTransactionDialog === true ? "0px" : "48px",
-              minHeight: width < 576 ? "1000px" : "unset",
-              maxHeight: width < 576 ? "unset" : height - 100,
-              backgroundColor: "#271c39",
-              paddingBottom:
-                isTransactionDialog === true
-                  ? "0px"
-                  : tab && tab === 1
-                  ? "30px"
-                  : "20px",
-              overflowY: "auto",
-              overflowX: "hidden",
-            }}
-          >
-            {isTransactionDialog
-              ? renderTransaction()
-              : tab && tab === 1
-              ? renderDeposit()
-              : renderWithdraw()}
-          </Box>
-        </Box>
         )}
       </Dialog>
     </>

@@ -143,7 +143,11 @@ export default function JoinTournament() {
       setVideoGame(true);
       setCheckMobile(true);
       setExpand(true);
-      if(width < 576 && !detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType && startGame) {
+      if (
+        width < 576 &&
+        !detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType &&
+        startGame
+      ) {
         setExpand(true);
         screen.enter();
         setIsFullScreen(true);
@@ -152,7 +156,14 @@ export default function JoinTournament() {
     return () => {
       socket?.off("detailTournamentSuccess");
     };
-  }, [socket, orientation,detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType, width, screen, startGame]);
+  }, [
+    socket,
+    orientation,
+    detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType,
+    width,
+    screen,
+    startGame,
+  ]);
 
   useEffect(() => {
     if (
@@ -181,7 +192,6 @@ export default function JoinTournament() {
       {!startGame ? (
         width > 576 ? (
           <Container maxWidth="lg" sx={{ paddingTop: "50px" }}>
-            
             <Box
               sx={{
                 backgroundColor: "white",
@@ -189,7 +199,6 @@ export default function JoinTournament() {
                 height: "auto",
               }}
             >
-              
               <Box
                 sx={{
                   width: "100%",
@@ -205,10 +214,8 @@ export default function JoinTournament() {
                   position: "relative",
                 }}
               >
-                
                 {detailTournament?.tournamentStatus === 2 && <BgEndGame />}
                 <Box sx={{ position: "relative" }}>
-                  
                   <Box
                     component={"img"}
                     src={
@@ -713,56 +720,125 @@ export default function JoinTournament() {
                     ></Box> */}
                     {/* ----------------------- */}
                     <Box className="d-flex">
-                    <div className="cardWrap">
-                      <div className="cardT cardLeft">
-                        <h5 style={{color:"#BE48ED", marginTop:"15px"}}>{detailTournament?.tournamentInfors?.rewardInfors?.rewardTitle || "SS Z-Flip 5 free voucher"}</h5>
-                        <Grid container>
-                          <Grid item md={5}>
-                            <div className="title d-flex flex-column mb-2">
-                              <h6 style={{fontSize:"10px", marginBottom:"0px !important"}}>Recipient</h6>
-                              <span>{detailTournament?.tournamentInfors?.rewardInfors?.rewardRecipient || "Recipient"}</span>
-                            </div>
+                      <div className="cardWrap">
+                        <div className="cardT cardLeft">
+                          <h5 style={{ color: "#BE48ED", marginTop: "15px" }}>
+                            {detailTournament?.tournamentInfors?.rewardInfors
+                              ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                          </h5>
+                          <Grid container>
+                            <Grid item md={5}>
+                              <div className="title d-flex flex-column mb-2">
+                                <h6
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                  }}
+                                >
+                                  Recipient
+                                </h6>
+                                <span>
+                                  {detailTournament?.tournamentInfors
+                                    ?.rewardInfors?.rewardRecipient ||
+                                    "Recipient"}
+                                </span>
+                              </div>
+                            </Grid>
+                            <Grid item md={6}>
+                              <div className="name d-flex flex-column mb-2">
+                                <h6
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                  }}
+                                >
+                                  Validity date
+                                </h6>
+                                <span>
+                                  {moment(
+                                    detailTournament?.tournamentInfors
+                                      ?.rewardInfors?.rewardValidityDate
+                                  )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
+                                </span>
+                              </div>
+                            </Grid>
+                            <Grid item md={5}>
+                              <div className="seat d-flex flex-column">
+                                <h2
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                  }}
+                                >
+                                  Sponsor by
+                                </h2>
+                                <span>
+                                  {detailTournament?.tournamentInfors?.owner
+                                    ?.brandName || "Samsung"}
+                                </span>
+                              </div>
+                            </Grid>
+                            <Grid item md={6}>
+                              <div className="time d-flex flex-column">
+                                <h2
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                  }}
+                                >
+                                  Conditions
+                                </h2>
+                                <span
+                                  onClick={() => setOpenVoucher(true)}
+                                  style={{ color: "#0096FF" }}
+                                >
+                                  See more
+                                </span>
+                              </div>
+                            </Grid>
                           </Grid>
-                          <Grid item md={6}>
-                            <div className="name d-flex flex-column mb-2">
-                              <h6 style={{fontSize:"10px", marginBottom:"0px !important"}}>Validity date</h6>
-                              <span>{moment(detailTournament?.tournamentInfors?.rewardInfors?.rewardValidityDate)?.format("MMM-DD-YYYY") || "Nov-10-2023"}</span>
-                            </div>
-                          </Grid>
-                          <Grid item md={5}>
-                            <div className="seat d-flex flex-column">
-                              <h2 style={{fontSize:"10px", marginBottom:"0px !important"}}>Sponsor by</h2>
-                              <span>{detailTournament?.tournamentInfors?.owner?.brandName || "Samsung"}</span>
-                            </div>
-                          </Grid>
-                          <Grid item md={6}>
-                            <div className="time d-flex flex-column">
-                              <h2 style={{fontSize:"10px", marginBottom:"0px !important"}}>Conditions</h2>
-                              <span onClick={() => setOpenVoucher(true)} style={{color:"#0096FF"}}>See more</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </div>
-                      <div className="cardT cardRight">
-                        <div className="eye"></div>
-                        <div className="number">
-                          <img src={detailTournament?.tournamentInfors?.rewardInfors?.rewardAvatar ? process.env.REACT_APP_SOCKET_SERVER + "/" + detailTournament?.tournamentInfors?.rewardInfors?.rewardAvatar : images.GameTournament} alt="..." width={100} height={105}  />
+                        </div>
+                        <div className="cardT cardRight">
+                          <div className="eye"></div>
+                          <div className="number">
+                            <img
+                              src={
+                                detailTournament?.tournamentInfors?.rewardInfors
+                                  ?.rewardAvatar
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    detailTournament?.tournamentInfors
+                                      ?.rewardInfors?.rewardAvatar
+                                  : images.GameTournament
+                              }
+                              alt="..."
+                              width={100}
+                              height={105}
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
                     </Box>
-                    
+
                     {/* --------------------------  */}
                   </Box>
-                  <Box className="fs-4 text-white mb-2">Game for tournament</Box>
-
-                  <Box sx={{
-                    display:"flex",
-                    alignItems:"flex-start"
-                  }}>
-                  <GameInTournament game={detailTournament?.tournamentInfors?.skin?.skinGame || null}/>
+                  <Box className="fs-4 text-white mb-2">
+                    Game for tournament
                   </Box>
-                  
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <GameInTournament
+                      game={
+                        detailTournament?.tournamentInfors?.skin?.skinGame ||
+                        null
+                      }
+                    />
+                  </Box>
                 </Box>
                 <Box
                   sx={{
@@ -816,9 +892,7 @@ export default function JoinTournament() {
                     detailTournament={detailTournament}
                   />
                 </Box>
-                
               </Box>
-              
             </Box>
             <BuyTicket
               tournamentId={detailTournament?.id}
@@ -832,48 +906,52 @@ export default function JoinTournament() {
               }}
               detail={detailTournament}
             />
-            <Box component={"div"} className="mb-4" sx={{
+            <Box
+              component={"div"}
+              className="mb-4"
+              sx={{
                 backgroundColor: "#1A151E",
-              }}>
-                <Box
-                  sx={{
-                    textAlign: "start",
-                    fontWeight: "lighter",
-                    marginTop: `${parseFloat(width / 74)}px`,
-                    marginBottom: `${parseFloat(width / 74)}px`,
-                    color: "white",
-                  }}
-                >
-                  INFORMATIONS
-                </Box>
-                {detailTournament?.tournamentInfors?.descriptions?.map(
-                  (item, index) => {
-                    return (
-                      <Box
-                        key={index}
+              }}
+            >
+              <Box
+                sx={{
+                  textAlign: "start",
+                  fontWeight: "lighter",
+                  marginTop: `${parseFloat(width / 74)}px`,
+                  marginBottom: `${parseFloat(width / 74)}px`,
+                  color: "white",
+                }}
+              >
+                INFORMATIONS
+              </Box>
+              {detailTournament?.tournamentInfors?.descriptions?.map(
+                (item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        fontSize: getFontSizeDependOnWidth(width),
+                        textAlign: "start",
+                        color: "#9384B7",
+                        marginTop: "10px",
+                      }}
+                    >
+                      <Typography
                         sx={{
-                          fontSize: getFontSizeDependOnWidth(width),
                           textAlign: "start",
-                          color: "#9384B7",
-                          marginTop: "10px",
+                          fontWeight: "200 !important",
+                          marginLeft: "0px !important",
                         }}
                       >
-                        <Typography
-                          sx={{
-                            textAlign: "start",
-                            fontWeight: "200 !important",
-                            marginLeft: "0px !important",
-                          }}
-                        >
-                          {item
-                            ? item
-                            : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper dolor nunc, quis eleifend erat accumsan id. Nulla cursus urna urna, aliquam congue justo luctus vel. Praesent convallis facilisis mauris, id interdum diam condimentum ut. Ut vitae magna fringilla, fringilla diam at, consectetur risus. Nullam ex est, aliquet eu consequat in, laoreet non tellus. Vestibulum eget rutrum mi. Etiam placerat lectus eu finibus sagittis."}
-                        </Typography>
-                      </Box>
-                    );
-                  }
-                )}
-              </Box>
+                        {item
+                          ? item
+                          : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper dolor nunc, quis eleifend erat accumsan id. Nulla cursus urna urna, aliquam congue justo luctus vel. Praesent convallis facilisis mauris, id interdum diam condimentum ut. Ut vitae magna fringilla, fringilla diam at, consectetur risus. Nullam ex est, aliquet eu consequat in, laoreet non tellus. Vestibulum eget rutrum mi. Etiam placerat lectus eu finibus sagittis."}
+                      </Typography>
+                    </Box>
+                  );
+                }
+              )}
+            </Box>
           </Container>
         ) : (
           <>
@@ -936,7 +1014,12 @@ export default function JoinTournament() {
                           muted
                           autoPlay
                           onEnded={() => {
-                            if(width < 576 && !detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType && startGame) {
+                            if (
+                              width < 576 &&
+                              !detailTournament?.tournamentInfors?.skin
+                                ?.skinGame?.gameScreenType &&
+                              startGame
+                            ) {
                               setExpand(true);
                               screen.enter();
                               setIsFullScreen(true);
@@ -968,8 +1051,7 @@ export default function JoinTournament() {
                               ?.skinName || ""
                           }
                           skinId={
-                            detailTournament?.tournamentInfors?.skin
-                              ?.id || ""
+                            detailTournament?.tournamentInfors?.skin?.id || ""
                           }
                           type="tournament"
                           handleEndGame={handleEndGame}
@@ -1159,8 +1241,7 @@ export default function JoinTournament() {
           {/* Landscape  */}
           {(width < 576 || (!previousOri && orientation === "portrait")) &&
             startGame &&
-            detailTournament?.tournamentInfors?.game?.gameScreenType ===
-              1 && (
+            detailTournament?.tournamentInfors?.game?.gameScreenType === 1 && (
               <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
                 {continueGame === true ? (
                   <Box
@@ -1297,8 +1378,7 @@ export default function JoinTournament() {
             previousOri === "landscape" &&
             orientation === "landscape" &&
             startGame &&
-            (detailTournament?.tournamentInfors?.game?.gameScreenType ===
-              0 ||
+            (detailTournament?.tournamentInfors?.game?.gameScreenType === 0 ||
               !detailTournament?.tournamentInfors?.game?.gameScreenType) && (
               <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
                 {continueGame === true ? (
