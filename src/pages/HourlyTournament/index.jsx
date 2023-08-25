@@ -260,7 +260,7 @@ export default function HourlyTournament() {
                   journey."
                 </Typography>
                 <Typography className="text-center text-white">
-                  v0.8
+                  Copyright © 2023 Play4Promo. All rights reserved. | Version 0.8
                 </Typography>
               </Box>
             </ThemeProvider>
