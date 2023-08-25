@@ -95,7 +95,6 @@ export default function UnityGameComponent(props) {
   }, [sendMessage, tournamentId, token, skinId]);
 
   const handleFinalGame = useCallback(async (score) => {
-    console.log(score);
     await unload();
     if (type && type === "pvp") {
       navigate({
@@ -123,13 +122,13 @@ export default function UnityGameComponent(props) {
 
   useEffect(() => {
     if(pauseGame) {
-      sendMessage("TournamentGameEntry", "PauseGame", pauseGame);
+      sendMessage("TournamentGameEntry", "PauseGame", "");
     }
   }, [pauseGame, sendMessage])
 
   useEffect(() => {
     if(unPauseGame) {
-      sendMessage("TournamentGameEntry", "UnPauseGame", unPauseGame);
+      sendMessage("TournamentGameEntry", "UnpauseGame", "");
     }
   }, [unPauseGame, sendMessage])
 

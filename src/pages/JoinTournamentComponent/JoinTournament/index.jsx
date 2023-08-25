@@ -32,6 +32,8 @@ import DetailVoucher from "../DetailVoucher";
 import "./index.scss";
 import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
+import ResultEndGame from '../../../components/Dialog/ResultEndGame'
+
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -47,6 +49,7 @@ const theme = createTheme({
     },
   },
 });
+
 export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
@@ -183,10 +186,12 @@ export default function JoinTournament() {
   }, [detailTournament]);
 
   const handleEndGame = (score) => {
-    setStartGame(false);
-    if(score) {
+    setTimeout(() => {
+      setStartGame(false);
+    }, 1000)
+    setTimeout(() => {
       dispatch(toggleOpenResultEndGame(score || 0))
-    }
+    }, 1500)
   };
 
   const [pauseGame, setPauseGame] = useState(false)
@@ -206,6 +211,7 @@ export default function JoinTournament() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ResultEndGame/>
       {!startGame ? (
         width > 576 ? (
           <Container maxWidth="lg" sx={{ paddingTop: "50px" }}>

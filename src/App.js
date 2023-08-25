@@ -566,6 +566,7 @@ function App() {
             hideProgressBar={true}
             autoClose={1000}
             position="top-center"
+            draggable={false}
           />
         </CustomRouter>
       </PersistGate>

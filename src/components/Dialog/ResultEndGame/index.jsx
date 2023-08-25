@@ -8,7 +8,6 @@ import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(state => state.tournamentReducer);
-  console.log(isResultEndGame, endGameScore);
   const dispatch = useDispatch()
   const handleClose = () => {
     dispatch(toggleOpenResultEndGame())
@@ -23,6 +22,7 @@ export default function ResultEndGame() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         sx={{
+          zIndex: 2000,
             "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
                 borderRadius: 0,
                 backgroundColor:"transparent",
