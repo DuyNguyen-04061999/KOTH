@@ -61,8 +61,8 @@ export default function GameInTournament(props) {
                   : images.gameHotTournament
               }
               alt="..."
-              width={150}
-              height={150}
+              width={120}
+              height={120}
               style={{ borderRadius: "10px" }}
               className="mt-2"
             />

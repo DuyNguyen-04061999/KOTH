@@ -208,7 +208,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               <Typography
                 variant="h6"
                 className="text-white"
-                sx={{ marginLeft: "0px !important", fontFamily: "Cyntho Next" }}
+                sx={{ marginLeft: "0px !important", fontFamily: "Cyntho Next !important", fontWeight:"500 !important" }}
               >
                 Reward
               </Typography>
@@ -232,6 +232,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     fontSize: "18px",
                     paddingTop: "5px",
                     paddingBottom: "12px",
+                    fontFamily:"Cyntho Next !important",
+                    fontWeight:"500 !important"
                   }}
                 >
                   {detailTournament?.tournamentInfors?.rewardInfors
