@@ -17,6 +17,7 @@ import roomReducer from "../reducers/roomReducer";
 import tournamentReducer from "../reducers/tournamentReducer";
 import toastReducer from "../reducers/toastReducer";
 import stripeReducer from "../reducers/stripeReducer";
+import helpcenterReducer from "../reducers/helpcenterReducer";
 let rootReducer = combineReducers({
   alertReducer,
   authReducer,
@@ -31,7 +32,8 @@ let rootReducer = combineReducers({
   roomReducer,
   tournamentReducer,
   toastReducer,
-  stripeReducer
+  stripeReducer,
+  helpcenterReducer
 });
 
 const persistConfig = {

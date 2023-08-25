@@ -75,7 +75,7 @@ export default function Gold(props) {
         >
           {value &&
             Number.parseFloat(value) > 0 &&
-            formatMoney(Number.parseFloat(value).toString().slice(0, 3))}
+            formatMoney(Number.parseFloat(value).toString().slice(0, 9))}
         </p>
       </div>
     </div>

@@ -53,7 +53,6 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { getAppType } from "../../utils/helper";
-import ResultEndGame from "../Dialog/ResultEndGame";
 
 const drawerWidth = 310;
 
@@ -260,7 +259,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      <ResultEndGame/>
+      
       <StripeAlertComponent />
       <MetaMaskDialog />
       <PopUpReward />

@@ -21,6 +21,9 @@ import LeaderBoard from "../LeaderBoard/index";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
+import InfinityIcon from "@mui/icons-material/AllInclusive"
+import { isJson, sliceString } from "../../../utils/helper";
+
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -81,6 +84,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     dispatch(toggleBuyTicket(true));
   };
   const navigate = useNavigate();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -125,14 +129,15 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           </Box>
           <Box
             sx={{
-              backgroundImage: `url(${
+              backgroundImage: `url("${
                 detailTournament?.tournamentBackground
                   ? process.env.REACT_APP_SOCKET_SERVER +
                     "/" +
                     detailTournament?.tournamentBackground
                   : images.DoubleDragonMobile
-              })`,
-              backgroundSize: "contain",
+              }")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               width: "100%",
               height: "250px",
@@ -230,7 +235,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   }}
                 >
                   {detailTournament?.tournamentInfors?.rewardInfors
-                    ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                    ?.rewardTitle && detailTournament?.tournamentInfors?.rewardInfors
+                    ?.rewardTitle?.length > 10 ? String(detailTournament?.tournamentInfors?.rewardInfors
+                      ?.rewardTitle)?.slice(0,10) : detailTournament?.tournamentInfors?.rewardInfors
+                      ?.rewardTitle}
                 </h5>
                 <Grid container>
                   <Grid item xs={6}>
@@ -250,8 +258,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           fontSize: "14px",
                         }}
                       >
-                        {detailTournament?.tournamentInfors?.rewardInfors
-                          ?.rewardRecipient || "Recipient"}
+                        {sliceString(detailTournament?.tournamentInfors?.rewardInfors
+                          ?.rewardRecipient) || "Recipient"}
                       </h6>
                     </div>
                   </Grid>
@@ -374,7 +382,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 }}
               >
                 {detailTournament?.tournamentParticipants?.length}/
-                {detailTournament?.tournamentQuantity}
+                {detailTournament?.tournamentQuantity > 0 ? detailTournament?.tournamentQuantity : <InfinityIcon sx={{
+                        width: 12,
+                        height: 12
+                      }}/>}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -579,7 +590,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 fontSize: "14px",
               }}
             >
-              Information
+              Informations
             </Typography>
           </Box>
           <Box
@@ -595,7 +606,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 fontSize: "11px",
               }}
             >
-              {detailTournament?.tournamentInfors?.descriptions?.map(
+              {detailTournament && detailTournament?.tournamentInformations && isJson(detailTournament?.tournamentInformations) && JSON.parse(detailTournament?.tournamentInformations)
+              && JSON.parse(detailTournament?.tournamentInformations)?.length > 0 && JSON.parse(detailTournament?.tournamentInformations)?.map(
                 (item, index) => {
                   return (
                     <Box

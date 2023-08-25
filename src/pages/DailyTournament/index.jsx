@@ -191,7 +191,7 @@ export default function DailyTournament() {
                       <Typography sx={{ ...typographyStyle }}>
                         Fairness
                       </Typography>
-                      <Typography sx={{ ...typographyStyle }}>FAG</Typography>
+                      <Typography sx={{ ...typographyStyle }}>FAQ</Typography>
                       <Typography sx={{ ...typographyStyle }}>
                         Privacy Policy
                       </Typography>
@@ -243,6 +243,9 @@ export default function DailyTournament() {
                   voucher rewards. Our policies guarantee a seamless and
                   rewarding voucher redemption process for an enhanced gaming
                   journey."
+                </Typography>
+                <Typography className="text-center text-white">
+                  v0.8
                 </Typography>
               </Box>
             </ThemeProvider>
