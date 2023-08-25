@@ -260,6 +260,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      <ResultEndGame/>
       <StripeAlertComponent />
       <MetaMaskDialog />
       <PopUpReward />

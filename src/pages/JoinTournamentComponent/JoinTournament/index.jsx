@@ -24,7 +24,7 @@ import moment from "moment/moment";
 import { Fragment } from "react";
 import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { toggleBuyTicket, toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import JoinTournamentMobile from "../JoinTournamentMobile";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import LeaderBoard from "../LeaderBoard";
@@ -182,10 +182,27 @@ export default function JoinTournament() {
     }
   }, [detailTournament]);
 
-  const handleEndGame = () => {
+  const handleEndGame = (score) => {
     setStartGame(false);
-    window.location.reload();
+    if(score) {
+      dispatch(toggleOpenResultEndGame(score || 0))
+    }
   };
+
+  const [pauseGame, setPauseGame] = useState(false)
+  const [unPauseGame, setUnPauseGame] = useState(false)
+
+  useEffect(() => {
+    if(startGame && ((width < 576 && detailTournament?.tournamentInfors?.game?.gameScreenType === 1 && orientation === "portrait")
+    || (width < 576 && !detailTournament?.tournamentInfors?.game?.gameScreenType && orientation === "landscape"))) {
+      setPauseGame(true)
+      setUnPauseGame(false)
+    } else {
+      setPauseGame(false)
+      setUnPauseGame(true)
+    }
+  }, [orientation, width, detailTournament, startGame]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -1059,6 +1076,8 @@ export default function JoinTournament() {
                             detailTournament?.tournamentInfors?.game
                               ?.gameName || ""
                           }
+                          pauseGame={pauseGame}
+                          unPauseGame={unPauseGame}
                         />
                         {startGame && expand === true && width > 576 && (
                           <>
