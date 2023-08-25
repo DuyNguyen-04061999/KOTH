@@ -171,6 +171,7 @@ const tournamentReducer = (
     brandTour: [],
     hotWeekTour: [],
     isResultEndGame: false,
+    endGameScore: 0
     //--------------------------------------
   },
   action
@@ -291,10 +292,11 @@ const tournamentReducer = (
       case "TOGGLE_OPEN_RESULT_END_GAME" :
         return {
           ...state, 
-          isResultEndGame: !state.isResultEndGame
+          isResultEndGame: !state.isResultEndGame,
+          endGameScore: payload || 0
         }
     default:
-      return state;
+      return {...state};
   }
 };
 export default tournamentReducer;

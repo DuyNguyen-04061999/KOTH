@@ -18,6 +18,8 @@ export default function UnityGameComponent(props) {
     handleEndGame,
     type,
     skinName,
+    pauseGame, 
+    unPauseGame
   } = props;
 
   const { width, height } = useWindowDimensions();
@@ -93,14 +95,15 @@ export default function UnityGameComponent(props) {
     sendMessage("TournamentGameEntry", "StartGame", "Start");
   }, [sendMessage, tournamentId, token, skinId]);
 
-  const handleFinalGame = useCallback(async () => {
+  const handleFinalGame = useCallback(async (score) => {
+    console.log(score);
     await unload();
     if (type && type === "pvp") {
       navigate({
         pathname: `/selectroom/${gameId}`,
       });
     }
-    handleEndGame();
+    handleEndGame(score || 0);
   }, [navigate, unload, handleEndGame, gameId, type]);
 
   useEffect(() => {
@@ -118,6 +121,18 @@ export default function UnityGameComponent(props) {
   }, [addEventListener, removeEventListener, handleFinalGame]);
 
   const unityRef = useRef();
+
+  useEffect(() => {
+    if(pauseGame) {
+      sendMessage("TournamentGameEntry", "PauseGame", pauseGame);
+    }
+  }, [pauseGame, sendMessage])
+
+  useEffect(() => {
+    if(unPauseGame) {
+      sendMessage("TournamentGameEntry", "UnPauseGame", unPauseGame);
+    }
+  }, [unPauseGame, sendMessage])
 
   return (
     <Fragment>
