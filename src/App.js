@@ -61,7 +61,7 @@ import {
 import TypeGamePage from "./pages/TypeGame";
 import { getListGameByType } from "./redux-saga-middleware/reducers/gameReducer";
 import _socket from "./redux-saga-middleware/config/socket";
-import LuckySpinComponent from "./components/EdittedLuckySpin/LuckySpinComponent";
+// import LuckySpinComponent from "./components/EdittedLuckySpin/LuckySpinComponent";
 import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
 import {
   addMoreSpinHistory,
@@ -526,7 +526,7 @@ function App() {
             </Route>
             <Route path="/gamelobby/:id" element={<GameLobby />} />
             <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
-            <Route path="/luckywheel" element={<LuckySpinComponent />} />
+            {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
             <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
             <Route
               path="/tournamentDetail/:id"

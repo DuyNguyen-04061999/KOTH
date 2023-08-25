@@ -681,7 +681,7 @@ export default function Navbar() {
           ) : (
             ""
           )}
-          <Box
+          {/* <Box
             sx={{
               cursor: "pointer",
               display: "flex",
@@ -760,7 +760,7 @@ export default function Navbar() {
             >
               Lucky Wheel
             </span>
-          </Box>
+          </Box> */}
           {getAppType() && getAppType() === "promote" ? (
             ""
           ) : (
