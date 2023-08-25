@@ -9,6 +9,9 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { TabContext, TabList } from "@mui/lab";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import moment from "moment/moment";
 
 const theme = createTheme({
   typography: {
@@ -26,13 +29,30 @@ const theme = createTheme({
   },
 });
 const HelpCenterComponent = () => {
-  const [value, setValue] = useState(0);
+  const { tabHelpCenter, listFAQPromote } = useSelector(
+    (state) => state.helpcenterReducer
+  );
+  const dispatch = useDispatch();
+  const [listFAQ, setListFAQ] = useState([]);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    dispatch({
+      type: "SET_TAB_HELPCENTER",
+      payload: newValue,
+    });
   };
 
   const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    dispatch({
+      type: "GET_LIST_FAQ_PROMOTE",
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    setListFAQ(listFAQPromote);
+  }, [listFAQPromote]);
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -59,14 +79,6 @@ const HelpCenterComponent = () => {
     );
   }
 
-  const labelTab = [
-    "Privacy And Policy",
-    "Term of Service",
-    "Fairness",
-    "Design Resources",
-    "FAQ",
-  ];
-
   if (width < 576) {
     return (
       <ThemeProvider theme={theme}>
@@ -83,7 +95,7 @@ const HelpCenterComponent = () => {
               />
             </Box>
             <Box sx={{ width: "100%", typography: "body1" }}>
-              <TabContext value={value}>
+              <TabContext value={tabHelpCenter}>
                 <Box
                   sx={{
                     borderBottom: 1,
@@ -101,15 +113,16 @@ const HelpCenterComponent = () => {
                     variant="scrollable"
                     scrollButtons="auto"
                   >
-                    {labelTab?.map((item, index) => {
+                    {listFAQ?.map((item, index) => {
                       return (
                         <Tab
                           key={index}
-                          label={item}
+                          label={item?.faqTitle}
                           style={{
-                            color: value === index ? "white" : "#9B9ACF",
+                            color:
+                              tabHelpCenter === index ? "white" : "#9B9ACF",
                             backgroundColor:
-                              value === index ? "#5F3491" : "unset",
+                              tabHelpCenter === index ? "#5F3491" : "unset",
                             fontSize: "10px",
                             fontStyle: "normal",
                             lineHeight: "normal",
@@ -138,65 +151,40 @@ const HelpCenterComponent = () => {
                     overflowY: "auto",
                   }}
                 >
-                  <TabPanel value={value} index={0}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Porro sapiente aspernatur accusantium, consectetur earum
-                    ipsam! Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hic consequatur atque! Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Porro sapiente aspernatur
-                    accusantium, consectetur earum ipsam! Consequuntur soluta
-                    suscipit id! Dolorum recusandae exercitationem fuga officia.
-                    Laboriosam rerum quisquam hic consequatur atque! Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Porro sapiente
-                    aspernatur accusantium, consectetur earum ipsam!
-                    Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hic consequatur atque! Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Porro sapiente aspernatur
-                    accusantium, consectetur earum ipsam! Consequuntur soluta
-                    suscipit id! Dolorum recusandae exercitationem fuga officia.
-                    Laboriosam rerum quisquam hic consequatur atque! Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Porro sapiente
-                    aspernatur accusantium, consectetur earum ipsam!
-                    Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hic consequatur atque! Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Porro sapiente aspernatur
-                    accusantium, consectetur earum ipsam! Consequuntur soluta
-                    suscipit id! Dolorum recusandae exercitationem fuga officia.
-                    Laboriosam rerum quisquam hic consequatur atque! Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Porro sapiente
-                    aspernatur accusantium, consectetur earum ipsam!
-                    Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hi
-                  </TabPanel>
-                  <TabPanel value={value} index={1}>
-                    Item Two
-                  </TabPanel>
-                  <TabPanel value={value} index={2}>
-                    Item Three
-                  </TabPanel>
-                  <TabPanel value={value} index={3}>
-                    Item Two
-                  </TabPanel>
+                  {listFAQ?.map((item, index) => (
+                    <TabPanel value={tabHelpCenter} key={index} index={index}>
+                      {item?.FAQPromoteData?.map((item, index) => (
+                        <Box key={index}>
+                          <h6
+                            style={{
+                              margin: "20px 0px",
+                              fontWeight: "bold",
+                              fontSize: "16px",
+                              textAlign: "start",
+                            }}
+                          >
+                            {item?.faqQuestion}
+                          </h6>
+                          <p
+                            style={{
+                              fontSize: "10px",
+                              textAlign: "start",
+                              margin: "10px 0px",
+                            }}
+                          >
+                            {item?.faqAnswer}
+                          </p>
+                        </Box>
+                      ))}
+                      <p
+                        style={{
+                          margin: "20px 0px",
+                          fontSize: "10px",
+                          textAlign: "start",
+                        }}
+                      >{`Last Updated: [${moment(item?.updatedAt)}]`}</p>
+                    </TabPanel>
+                  ))}
                 </Box>
               </TabContext>
             </Box>
@@ -234,7 +222,7 @@ const HelpCenterComponent = () => {
                 <Tabs
                   orientation="vertical"
                   variant="scrollable"
-                  value={value}
+                  value={tabHelpCenter}
                   onChange={handleChange}
                   sx={{
                     bgcolor: "#302642",
@@ -243,18 +231,18 @@ const HelpCenterComponent = () => {
                   }}
                   indicatorColor="unset"
                 >
-                  {labelTab?.map((item, index) => {
+                  {listFAQ?.map((item, index) => {
                     return (
                       <Tab
                         key={index}
                         sx={{ textTransform: "none" }}
-                        label={item}
+                        label={item?.faqTitle}
                         style={{
                           marginBottom: "16px",
-                          color: value === index ? "white" : "#9B9ACF",
+                          color: tabHelpCenter === index ? "white" : "#9B9ACF",
                           padding: "7px 10px",
                           backgroundColor:
-                            value === index ? "#5F3491" : "unset",
+                            tabHelpCenter === index ? "#5F3491" : "unset",
                           borderTopRightRadius: "8px",
                           borderBottomRightRadius: "8px",
                           fontSize: "16px",
@@ -278,74 +266,40 @@ const HelpCenterComponent = () => {
                     padding: "13px 24px",
                   }}
                 >
-                  <TabPanel value={value} index={0}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Porro sapiente aspernatur accusantium, consectetur earum
-                    ipsam! Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hic consequatur atque! Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Porro sapiente aspernatur
-                    accusantium, consectetur earum ipsam! Consequuntur soluta
-                    suscipit id! Dolorum recusandae exercitationem fuga officia.
-                    Laboriosam rerum quisquam hic consequatur atque! Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Porro sapiente
-                    aspernatur accusantium, consectetur earum ipsam!
-                    Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hic consequatur atque! Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Porro sapiente aspernatur
-                    accusantium, consectetur earum ipsam! Consequuntur soluta
-                    suscipit id! Dolorum recusandae exercitationem fuga officia.
-                    Laboriosam rerum quisquam hic consequatur atque! Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Porro sapiente
-                    aspernatur accusantium, consectetur earum ipsam!
-                    Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hic consequatur atque! Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Porro sapiente aspernatur
-                    accusantium, consectetur earum ipsam! Consequuntur soluta
-                    suscipit id! Dolorum recusandae exercitationem fuga officia.
-                    Laboriosam rerum quisquam hic consequatur atque! Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Porro sapiente
-                    aspernatur accusantium, consectetur earum ipsam!
-                    Consequuntur soluta suscipit id! Dolorum recusandae
-                    exercitationem fuga officia. Laboriosam rerum quisquam hic
-                    consequatur atque! Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Porro sapiente aspernatur accusantium,
-                    consectetur earum ipsam! Consequuntur soluta suscipit id!
-                    Dolorum recusandae exercitationem fuga officia. Laboriosam
-                    rerum quisquam hi
-                  </TabPanel>
-                  <TabPanel value={value} index={1}>
-                    Item Two
-                  </TabPanel>
-                  <TabPanel value={value} index={2}>
-                    Item Three
-                  </TabPanel>
-                  <TabPanel value={value} index={3}>
-                    Item Four
-                  </TabPanel>
-                  <TabPanel value={value} index={4}>
-                    Item Five
-                  </TabPanel>
-                  <TabPanel value={value} index={5}>
-                    Item Six
-                  </TabPanel>
-                  <TabPanel value={value} index={6}>
-                    Item Seven
-                  </TabPanel>
+                  {listFAQ?.map((item, index) => (
+                    <TabPanel key={index} value={tabHelpCenter} index={index}>
+                      {item?.FAQPromoteData?.map((item, index) => (
+                        <Box key={index}>
+                          <h6
+                            style={{
+                              fontSize: "20px",
+                              textAlign: "start",
+                              margin: "24px 0px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {item?.faqQuestion}
+                          </h6>
+                          <p
+                            style={{
+                              fontSize: "14px",
+                              textAlign: "start",
+                              marginTop: "12px",
+                            }}
+                          >
+                            {item?.faqAnswer}
+                          </p>
+                        </Box>
+                      ))}
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          margin: "36px 0",
+                          textAlign: "start",
+                        }}
+                      >{`Last Updated: [${moment(item?.updatedAt)}]`}</p>
+                    </TabPanel>
+                  ))}
                 </Box>
               </Box>
             </Box>
