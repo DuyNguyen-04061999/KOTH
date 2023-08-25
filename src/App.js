@@ -89,6 +89,7 @@ import HotTournament from "./pages/HotTournament";
 import HourlyTournament from "./pages/HourlyTournament";
 import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
+import LoadingScreen from "./components/LoadingScreen";
 function App() {
   useTracking("");
 
@@ -138,7 +139,7 @@ function App() {
             avatar: user?.userAccount?.accountAvatar,
             role: user?.userRole,
             id: user?.id,
-            userPackageId:userPackageId
+            userPackageId: userPackageId,
           })
         );
 
@@ -538,6 +539,7 @@ function App() {
             <Route path="/week-long-tournament" element={<WeekLongTour />} />
 
             <Route path="/help-center" element={<FAQPage />} />
+            <Route path="/loadingscreen" element={<LoadingScreen />} />
             <Route path="/new-home" element={<NewHomePageComponent />} />
             <Route path="/countdowntimer" element={<CountDownTimer />} />
             <Route path="list-game-manager" element={<ListGamePage />} />
@@ -566,6 +568,7 @@ function App() {
             hideProgressBar={true}
             autoClose={1000}
             position="top-center"
+            draggable={false}
           />
         </CustomRouter>
       </PersistGate>

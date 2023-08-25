@@ -2,6 +2,8 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { imageDesktop } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function NewFooter() {
   const { width } = useWindowDimensions();
@@ -12,6 +14,20 @@ export default function NewFooter() {
     marginLeft: "0px !important",
     color: "#fff",
   };
+  
+  const { tabHelpCenter } = useSelector((state) => state.helpcenterReducer);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const navigateFooter = (value) => {
+    dispatch({
+      type: "SET_TAB_HELPCENTER",
+      payload: value,
+    });
+    navigate("/help-center")
+  }
+
   return (
     <Box>
       {" "}
@@ -38,10 +54,19 @@ export default function NewFooter() {
                 padding: "20px 10px 0px",
               }}
             >
-              <Typography sx={{ ...typographyStyle }}>Help center</Typography>
-              <Typography sx={{ ...typographyStyle }}>Fairness</Typography>
-              <Typography sx={{ ...typographyStyle }}>FAG</Typography>
-              <Typography sx={{ ...typographyStyle }}>
+              <Typography
+                onClick={() =>navigateFooter(0)}
+                sx={{ ...typographyStyle, cursor: "pointer" }}
+              >
+                Help center
+              </Typography>
+              <Typography onClick={() =>navigateFooter(2)} sx={{ ...typographyStyle, cursor: "pointer" }}>
+                Fairness
+              </Typography>
+              <Typography onClick={() =>navigateFooter(4)} sx={{ ...typographyStyle, cursor: "pointer" }}>
+                FAQ
+              </Typography>
+              <Typography onClick={() =>navigateFooter(0)} sx={{ ...typographyStyle, cursor: "pointer" }}>
                 Privacy Policy
               </Typography>
             </Box>
@@ -52,10 +77,10 @@ export default function NewFooter() {
                 padding: "10px 40px",
               }}
             >
-              <Typography sx={{ ...typographyStyle }}>
+              <Typography onClick={() => navigateFooter(1)} sx={{ ...typographyStyle, cursor: "pointer" }}>
                 Term of service
               </Typography>
-              <Typography sx={{ ...typographyStyle }}>
+              <Typography onClick={() => navigateFooter(3)} sx={{ ...typographyStyle, cursor: "pointer" }}>
                 Design resources
               </Typography>
             </Box>
@@ -91,6 +116,9 @@ export default function NewFooter() {
           gameplay, and your dedication unlock exciting voucher rewards. Our
           policies guarantee a seamless and rewarding voucher redemption process
           for an enhanced gaming journey."
+        </Typography>
+        <Typography className="text-center text-white">
+                  v0.8
         </Typography>
       </Box>
     </Box>
