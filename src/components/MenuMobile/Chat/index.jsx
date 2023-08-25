@@ -136,7 +136,7 @@ export default function DialogChat(props) {
                     style={{
                       color: "white",
                       marginLeft:"10px",
-                      fontFamily:"Cyntho",
+                      fontFamily:"Cyntho Next",
                       fontSize:"14px",
                       marginTop:"2px"
                     }}

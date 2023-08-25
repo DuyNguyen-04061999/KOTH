@@ -76,7 +76,7 @@ export default function Browser(props) {
                 ></path>
               </svg>
               <Typography variant="h5" sx={{
-                fontFamily:"Cyntho !important",
+                fontFamily:"Cyntho Next !important",
                 fontWeight:"500 !important"
               }}>Menu</Typography>
             </Box>
@@ -129,7 +129,7 @@ export default function Browser(props) {
                     Home
                   </span>
                 </Box>
-                <Box
+                {/* <Box
                   sx={{
                     cursor: "pointer",
                     display: "flex",
@@ -166,13 +166,6 @@ export default function Browser(props) {
                       </g>
                     </g>
                   </svg>
-                  {/* <img
-              src={images.luckySpinIncon}
-              alt="..."
-              className="p-1 me-1 luckySpinIncon"
-              width={28}
-              height="auto"
-            /> */}
                   <span
                     className="hover-nav"
                     style={{
@@ -187,7 +180,7 @@ export default function Browser(props) {
                   >
                     Lucky Wheel
                   </span>
-                </Box>
+                </Box> */}
                 {/* <Box
                   className="cursor-pointer pt-2 pb-2 ps-2 mb-3"
                   sx={{

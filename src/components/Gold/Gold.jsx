@@ -68,14 +68,14 @@ export default function Gold(props) {
             color: width > 576 ? "#FB3" : "#FB3",
             fontSize: "15px",
             marginLeft: "5px",
-            fontFamily: "Cyntho !important",
+            fontFamily: "Cyntho Next !important",
             fontWeight: "500 !important",
             marginRight: "2px",
           }}
         >
           {value &&
             Number.parseFloat(value) > 0 &&
-            formatMoney(Number.parseFloat(value).toString().slice(0, 3))}
+            formatMoney(Number.parseFloat(value).toString().slice(0, 9))}
         </p>
       </div>
     </div>

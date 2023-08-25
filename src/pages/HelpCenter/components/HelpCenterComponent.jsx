@@ -209,7 +209,7 @@ const HelpCenterComponent = () => {
                 <Tabs
                   orientation="vertical"
                   variant="scrollable"
-                  value={tabHelpCenter}
+                  value={Number.parseInt(tabHelpCenter)}
                   onChange={handleChange}
                   sx={{
                     bgcolor: "#302642",

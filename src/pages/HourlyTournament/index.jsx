@@ -259,6 +259,9 @@ export default function HourlyTournament() {
                   rewarding voucher redemption process for an enhanced gaming
                   journey."
                 </Typography>
+                <Typography className="text-center text-white">
+                  Copyright © 2023 Play4Promo. All rights reserved. | Version 0.8
+                </Typography>
               </Box>
             </ThemeProvider>
           </Container>

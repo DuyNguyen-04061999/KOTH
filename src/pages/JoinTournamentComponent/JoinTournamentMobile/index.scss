@@ -34,7 +34,8 @@ $black: #343434;
 }
 
 .cardLeftMB {
-  width: 194px;
+  width: 215px;
+  height: 116px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   // width: 262px;
@@ -45,7 +46,8 @@ $black: #343434;
 }
 
 .cardRightMB {
-  width:105px;
+  width:118px;
+  height: 112px;
   background-image: url(../../../assets//imagesDesktop//tikright.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -85,6 +87,7 @@ h6{
 }
 h5{
   margin-bottom: 0px !important;
+  font-family: "Cyntho Next";
 }
 
 .titleMB,
@@ -101,8 +104,8 @@ h5{
   span {
     font-size: 14px;
     color: #000000;
-    font-weight: 700;
-    font-family: 'Cyntho';
+    font-weight: 500;
+    font-family: 'Cyntho Next';
   }
 }
 
@@ -160,8 +163,8 @@ h5{
   text-align: center;
   text-transform: uppercase;
   position: absolute;
-  top: 4px;
-  left: 10px;
+  top: 9px;
+  left: 16px;
   h3 {
     color: $red;
     margin: 0.9em 0 0 0;

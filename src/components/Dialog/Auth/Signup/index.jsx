@@ -93,7 +93,7 @@ export default function Signup(props) {
           <Typography
             variant="h5"
             className="text-center text-white"
-            sx={{ marginBottom: width < 576 ? "30px" : "30px" }}
+            sx={{ marginBottom: width < 576 ? "30px !important" : "30px !important" }}
           >
             Sign Up
           </Typography>

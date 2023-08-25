@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import LoadingScreen from "../LoadingScreen";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ export default function UnityGameComponent(props) {
     handleEndGame,
     type,
     skinName,
+    pauseGame, 
+    unPauseGame
   } = props;
 
   const { width, height } = useWindowDimensions();
@@ -92,14 +95,14 @@ export default function UnityGameComponent(props) {
     sendMessage("TournamentGameEntry", "StartGame", "Start");
   }, [sendMessage, tournamentId, token, skinId]);
 
-  const handleFinalGame = useCallback(async () => {
+  const handleFinalGame = useCallback(async (score) => {
     await unload();
     if (type && type === "pvp") {
       navigate({
         pathname: `/selectroom/${gameId}`,
       });
     }
-    handleEndGame();
+    handleEndGame(score || 0);
   }, [navigate, unload, handleEndGame, gameId, type]);
 
   useEffect(() => {
@@ -118,12 +121,24 @@ export default function UnityGameComponent(props) {
 
   const unityRef = useRef();
 
+  useEffect(() => {
+    if(pauseGame) {
+      sendMessage("TournamentGameEntry", "PauseGame", "");
+    }
+  }, [pauseGame, sendMessage])
+
+  useEffect(() => {
+    if(unPauseGame) {
+      sendMessage("TournamentGameEntry", "UnpauseGame", "");
+    }
+  }, [unPauseGame, sendMessage])
+
   return (
     <Fragment>
       {!isLoaded && (
-        <p style={{ color: "#fff" }}>
-          Loading Application... {Math.round(loadingProgression * 100)}%
-        </p>
+        <LoadingScreen
+          loadingProgression={Math.round(loadingProgression * 100)}
+        />
       )}
       <Unity
         style={

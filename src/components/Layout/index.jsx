@@ -53,7 +53,6 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { getAppType } from "../../utils/helper";
-import ResultEndGame from "../Dialog/ResultEndGame";
 
 const drawerWidth = 310;
 
@@ -106,7 +105,7 @@ const Test = styled.input`
   padding: 7px !important;
   color: #bfbeed !important;
   letter-spacing: 0.5px;
-  font-weight: Cyntho !important ;
+  font-weight: Cyntho Next !important ;
   border: none;
   &:focus {
     outline: none;
@@ -260,6 +259,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      
       <StripeAlertComponent />
       <MetaMaskDialog />
       <PopUpReward />
