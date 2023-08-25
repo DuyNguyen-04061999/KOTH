@@ -3,6 +3,7 @@ import React from "react";
 import Slider from "react-slick";
 import { useState } from "react";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { useNavigate } from "react-router-dom";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
@@ -50,12 +51,18 @@ export default function SlickSlider(props) {
       ></div>
     ),
   };
+
+  const navigate = useNavigate()
+
   return (
     <Slider {...settings}>
       {!isHtmlCode
         ? [...images].map((item, index) => {
             return (
               <Box
+                onClick={() => {
+                  navigate("/tournamentDetail/1")
+                }}
                 key={index}
                 sx={{ width: "100%", cursor: "pointer" }}
                 component={"img"}

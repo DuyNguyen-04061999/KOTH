@@ -146,14 +146,14 @@ export default function NewHomePage() {
               images={
                 width < 576
                   ? [
-                      images.bannerTournamentMobile,
-                      images.bannerTournamentMobile_1,
-                      images.bannerTournamentMobile_2,
+                      images.pepperBannerMobile,
+                      // images.bannerTournamentMobile_1,
+                      // images.bannerTournamentMobile_2,
                     ]
                   : [
-                      images.bannerTournament,
-                      images.bannerTournament1,
-                      images.bannerTournament2,
+                      images.pepperBanner,
+                      // images.bannerTournament1,
+                      // images.bannerTournament2,
                     ]
               }
             />

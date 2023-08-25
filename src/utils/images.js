@@ -123,7 +123,8 @@ import MCDonalIcon from "../assets/imagesHome/MCDonalIcon.png";
 import Voucher_tournament_mobile from "../assets/imagesHome/Voucher_tournament_mobile.png";
 import brandImage from "../assets/imagesHome/brandImage.png";
 import iconMember from "../assets/imagesHome/iconMember.png";
-
+import PepperBanner from "../assets/images/banner 01 1.png";
+import PepperBannerMobile from "../assets/images/banner 01 2.png";
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -302,6 +303,8 @@ export const imageHome = {
 };
 
 export const images = {
+  pepperBanner: PepperBanner,
+  pepperBannerMobile: PepperBannerMobile,
   signInCrypto: signInCrypto,
   pool: pool,
   domino: domino,
