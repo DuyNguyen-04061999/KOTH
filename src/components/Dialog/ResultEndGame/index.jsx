@@ -3,25 +3,22 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import { Box, Typography } from "@mui/material";
 import './index.scss'
+import { useDispatch, useSelector } from "react-redux";
+import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 
 export default function ResultEndGame() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+  const { endGameScore, isResultEndGame } = useSelector(state => state.tournamentReducer);
+  console.log(isResultEndGame, endGameScore);
+  const dispatch = useDispatch()
   const handleClose = () => {
-    setOpen(false);
+    dispatch(toggleOpenResultEndGame())
+    window.location.reload()
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
       <Dialog
-        open={open}
+        open={isResultEndGame}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -64,7 +61,7 @@ export default function ResultEndGame() {
             <div className="results-summary-container__result">
               <div className="heading-tertiary">Your Result</div>
               <div className="result-box">
-                <div className="heading-primary">78</div>
+                <div className="heading-primary">{endGameScore || 0}</div>
                 {/* <p className="result">of 100</p> */}
               </div>
               <div className="result-text-box">
@@ -75,7 +72,9 @@ export default function ResultEndGame() {
                 </p> */}
               </div>
               <div className="summary__cta">
-                <button className="btnResult btn__continue">Continue</button>
+                <button onClick={() => {
+                  window.location.reload()
+                }} className="btnResult btn__continue">Continue</button>
               </div>
             </div>
           </div>

@@ -10,11 +10,10 @@ import {
   createTheme,
 } from "@mui/material";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { imageDesktop, images } from "../../utils/images";
+import { images } from "../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PaginatedItems from "../PaginatedItems";
 import NewFooter from "../NewFooter";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
@@ -54,7 +53,6 @@ export default function WeekLongTour() {
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
-  const navigate = useNavigate();
   return (
     <Layout
       children={

@@ -105,6 +105,7 @@ import gameHotTournament_1 from "../assets/images/gameHotTournament_1.png";
 import giveAwayDesktop from "../assets/images/giveAwayDesktop.png";
 import bannerWin_Desktop from "../assets/images/bannerWin_Desktop.png";
 import banner_win_BG from "../assets/images/banner_win_BG.png";
+import bannerLoading from "../assets/images/bannerLoading.png";
 import winnerBG from "../assets/images/winnerBG.png";
 import hatWinner from "../assets/images/hatWinner.png";
 import ticketIconTournament from "../assets/images/ticketIconTournament.png";
@@ -445,6 +446,7 @@ export const images = {
   bannerTournamentMobile: bannerTournamentMobile,
   bannerTournamentMobile_1: bannerTournamentMobile_1,
   bannerTournamentMobile_2: bannerTournamentMobile_2,
+  bannerLoading: bannerLoading,
 };
 
 export const images2 = {

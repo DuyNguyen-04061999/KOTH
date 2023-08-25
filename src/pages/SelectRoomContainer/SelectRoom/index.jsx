@@ -688,7 +688,7 @@ export default function SelectRoom() {
     }
   }, [isFullScreen, checkMobile]);
 
-  const handleEndGame = () => {
+  const handleEndGame = (score) => {
     dispatch(setSelectNav());
     setStartGame(false);
     setRoomIdSelect(0);

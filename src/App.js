@@ -61,7 +61,7 @@ import {
 import TypeGamePage from "./pages/TypeGame";
 import { getListGameByType } from "./redux-saga-middleware/reducers/gameReducer";
 import _socket from "./redux-saga-middleware/config/socket";
-import LuckySpinComponent from "./components/EdittedLuckySpin/LuckySpinComponent";
+// import LuckySpinComponent from "./components/EdittedLuckySpin/LuckySpinComponent";
 import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
 import {
   addMoreSpinHistory,
@@ -89,6 +89,7 @@ import HotTournament from "./pages/HotTournament";
 import HourlyTournament from "./pages/HourlyTournament";
 import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
+import LoadingScreen from "./components/LoadingScreen";
 function App() {
   useTracking("");
 
@@ -138,7 +139,7 @@ function App() {
             avatar: user?.userAccount?.accountAvatar,
             role: user?.userRole,
             id: user?.id,
-            userPackageId:userPackageId
+            userPackageId: userPackageId,
           })
         );
 
@@ -526,7 +527,7 @@ function App() {
             </Route>
             <Route path="/gamelobby/:id" element={<GameLobby />} />
             <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
-            <Route path="/luckywheel" element={<LuckySpinComponent />} />
+            {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
             <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
             <Route
               path="/tournamentDetail/:id"
@@ -538,6 +539,7 @@ function App() {
             <Route path="/week-long-tournament" element={<WeekLongTour />} />
 
             <Route path="/help-center" element={<FAQPage />} />
+            <Route path="/loadingscreen" element={<LoadingScreen />} />
             <Route path="/new-home" element={<NewHomePageComponent />} />
             <Route path="/countdowntimer" element={<CountDownTimer />} />
             <Route path="list-game-manager" element={<ListGamePage />} />
