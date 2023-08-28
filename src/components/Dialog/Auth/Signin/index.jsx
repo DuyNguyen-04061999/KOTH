@@ -38,6 +38,8 @@ import {
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
 import Gold from "../../../Gold/Gold";
 import { getAppType } from "../../../../utils/helper";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+import { toast } from "react-toastify";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -72,10 +74,26 @@ function SimpleDialog(props) {
   };
 
   const sendLogin = () => {
-    socket?.emit("login", {
-      username: username?.toLowerCase(),
-      password: password,
-    });
+    if(!username || !password) {
+      toast.error("Login Failed! Enter username and password!", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.closeButtonToast}
+          />
+        ),
+        position: "top-center",
+        className:
+          width < 576 ? "error-background-small" : "error-background",
+      });
+    } else if(username && password)  {
+      socket?.emit("login", {
+        username: username?.toLowerCase(),
+        password: password,
+      });
+    }
+    
   };
   return (
     <>

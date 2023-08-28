@@ -40,6 +40,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const videoRef = useRef(null);
   const avaRef = useRef(null);
   const bgRef = useRef(null);
+  const bgMobileRef = useRef(null);
   const rewardLogoRef = useRef(null);
   const [listGame, setListGame] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -89,6 +90,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   const [video, setVideo] = useState("");
   const [avatar, setAvata] = useState("");
   const [bg, setBG] = useState("");
+  const [bgMobile, setBGMobile] = useState("");
   const [rewardLogo, setRewardLogo] = useState("");
   const { skinTournament, listBrand } = useSelector(
     (state) => state.tournamentReducer
@@ -108,6 +110,10 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
 
   const showOpenFileDialogBg = (event) => {
     bgRef.current.click();
+  };
+
+  const showOpenFileDialogBgMobile = (event) => {
+    bgMobileRef.current.click();
   };
 
   const showOpenFileDialogReward = (event) => {
@@ -136,11 +142,24 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
       );
     }
   };
+
   const handleChangeBG = async (event) => {
     // let reader = new FileReader();
     let sizeBG = event.target.files[0].size / (1024 * 1024);
     if (sizeBG < 100) {
       setBG(event.target.files[0]);
+    } else {
+      dispatch(
+        showAlert("error", "The image size is too large, please choose again")
+      );
+    }
+  };
+
+  const handleChangeBGMobile = async (event) => {
+    // let reader = new FileReader();
+    let sizeBG = event.target.files[0].size / (1024 * 1024);
+    if (sizeBG < 100) {
+      setBGMobile(event.target.files[0]);
     } else {
       dispatch(
         showAlert("error", "The image size is too large, please choose again")
@@ -186,6 +205,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
           hot: valueTest,
           video: video,
           background: bg,
+          backgroundMobile: bgMobile,
           avatar: avatar,
           brandId: brandId,
           skinId: skinId,
@@ -1019,7 +1039,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 letterSpacing: "0.5px",
               }}
             >
-              Update Advertising Video
+              Upload Advertising Video
             </Typography>
             <button
               onClick={showOpenFileDialog}
@@ -1060,7 +1080,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 letterSpacing: "0.5px",
               }}
             >
-              Update Avatar
+              Upload Avatar
             </Typography>
             <button
               onClick={showOpenFileDialogAvatar}
@@ -1101,7 +1121,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 letterSpacing: "0.5px",
               }}
             >
-              Update Background
+              Upload Background
             </Typography>
             <button
               onClick={showOpenFileDialogBg}
@@ -1142,7 +1162,48 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                 letterSpacing: "0.5px",
               }}
             >
-              Update Reward Logo
+              Upload Background Mobile
+            </Typography>
+            <button
+              onClick={showOpenFileDialogBgMobile}
+              style={{
+                width: "100%",
+                padding: "8px 12px",
+                backgroundColor: "#68399E",
+                border: "none",
+                outline: "none",
+                borderRadius: "5px",
+                color: "#ffff",
+                fontSize: "14px",
+                marginTop: `${MarginTop / 4}px`,
+                cursor: "pointer",
+                fontWeight: "lighter !important",
+              }}
+            >
+              {bgMobileRef?.current?.value
+                ? bgMobileRef?.current?.value
+                : "Upload Background Mobile"}
+            </button>{" "}
+            <input
+              ref={bgMobileRef}
+              type="file"
+              style={{ display: "none" }}
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={handleChangeBGMobile}
+            />
+          </Box>
+          <Box sx={{ width: "100%", marginTop: `${MarginTop}px` }}>
+            <Typography
+              sx={{
+                textAlign: "start",
+                fontSize: "14px",
+                fontWeight: "500 !important",
+                marginLeft: "0px !important",
+                color: "#747EF3",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Upload Reward Logo
             </Typography>
             <button
               onClick={showOpenFileDialogReward}

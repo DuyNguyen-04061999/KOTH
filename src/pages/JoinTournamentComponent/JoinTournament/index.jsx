@@ -1057,6 +1057,7 @@ export default function JoinTournament() {
                     ) : (
                       <Fragment>
                         <UnityGameComponent
+                          fmod={detailTournament?.tournamentInfors?.game?.gameFmod}
                           GameFiles={
                             detailTournament?.tournamentInfors?.game?.GameFiles
                           }

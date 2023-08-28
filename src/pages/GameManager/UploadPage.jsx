@@ -1,4 +1,4 @@
-import { Box, Button, FormLabel } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { envs } from '../../utils/envs';
@@ -12,6 +12,7 @@ export default function UploadPage() {
   const [contentZip, setContentZip] = useState("");
   const [listSkin, setListSkin] = useState([])
   const [screen, setScreen] = useState(false);
+  const [fmod, setFmod] = useState(false);
 
   function checkExtension(exts, files) {
       for (let index = 0; index < files.length; index++) {
@@ -43,6 +44,7 @@ export default function UploadPage() {
       type: data.get('type'),
       host: data.get('host'),
       screen: screen ? 1 : 0,
+      fmod: fmod ? 1 : 0,
       files: uploadItem,
       paths: data.getAll("paths"),
       zips: data.getAll("zips"),
@@ -89,6 +91,14 @@ export default function UploadPage() {
           setContentZip([...contentZip, content])
         })
         .catch((e) => console.log(e));
+  };
+
+  const handleChangeScreen = (event) => {
+    setScreen(event.target.value);
+  };
+
+  const handleChangeFmod = (event) => {
+    setFmod(event.target.value);
   };
 
   return (
@@ -140,20 +150,65 @@ export default function UploadPage() {
         className='form-control'
         onChange={handleSelectedFile}
       />
-      <FormLabel className='mt-2 mb-2 text-white'>
-        Game Screen
-      </FormLabel>
-      <input
-        type='checkbox'
-        name="screen"
-        style={{
-          width: '1%'
-        }}
-        readOnly
-        onChange={() => setScreen(!screen)}
-        checked={screen}
-      />
-      <Box component={"div"} className='mt-2 mb-2 text-white' onClick={() => {
+
+      <FormControl>
+        <FormLabel id="demo-controlled-radio-buttons-group" className='text-white mt-2'>Game Screen</FormLabel>
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+          value={screen}
+          onChange={handleChangeScreen}
+        >
+          <FormControlLabel value={false} control={<Radio sx={{
+              '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
+                {
+                  color: '#fff',
+                },
+                  '& .MuiSvgIcon-root + .MuiSvgIcon-root': {
+                  color: '#fff',
+                  },
+        }} />} className='text-white' label="Portrait" />
+          <FormControlLabel value={true} control={<Radio sx={{
+              '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
+                {
+                  color: '#fff',
+                },
+                  '& .MuiSvgIcon-root + .MuiSvgIcon-root': {
+                  color: '#fff',
+                  },
+        }}/>} className='text-white' label="Landscape" />
+        </RadioGroup>
+      </FormControl>
+
+      <FormControl>
+        <FormLabel id="demo-controlled-radio-buttons-group" className='text-white mt-2'>Game FMOD</FormLabel>
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+          value={fmod}
+          onChange={handleChangeFmod}
+        >
+          <FormControlLabel value={false} control={<Radio sx={{
+              '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
+                {
+                  color: '#fff',
+                },
+                  '& .MuiSvgIcon-root + .MuiSvgIcon-root': {
+                  color: '#fff',
+                  },
+        }} />} className='text-white' label="Not" />
+          <FormControlLabel value={true} control={<Radio sx={{
+              '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
+                {
+                  color: '#fff',
+                },
+                  '& .MuiSvgIcon-root + .MuiSvgIcon-root': {
+                  color: '#fff',
+                  },
+        }}/>} className='text-white' label="Yes" />
+        </RadioGroup>
+      </FormControl>
+      {/* <Box component={"div"} className='mt-2 mb-2 text-white' onClick={() => {
         setListSkin([] || [...listSkin, 1])
       }}>
         Add Skin
@@ -201,7 +256,7 @@ export default function UploadPage() {
             </Box>
           )
         }) : (<>No Skin !</>)}
-      </Box>
+      </Box> */}
       <Button type='submit' className='bg-info text-white rounded mt-2'>
         Upload Game
       </Button>
