@@ -28,7 +28,7 @@ export default function Navbar() {
 
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
-    dispatch(showDropdown(true))
+    dispatch(showDropdown(false))
   };
 
   return (

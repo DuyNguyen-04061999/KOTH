@@ -12,8 +12,8 @@ export default function SliderTime({
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: type === "day" ? 7 : 5,
-    slidesToScroll: 5,
+    slidesToShow: type === "day" ? 7 : 2,
+    slidesToScroll: 2,
     arrows: false,
   };
   const { width } = useWindowDimensions();

@@ -558,7 +558,7 @@ export default function Package() {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "column",   
                   alignItems: "center",
                   justifyContent: "space-around",
                 }}

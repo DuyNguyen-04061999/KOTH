@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
@@ -90,6 +90,7 @@ import HourlyTournament from "./pages/HourlyTournament";
 import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
 import LoadingScreen from "./components/LoadingScreen";
+import { updateDeviceType } from "./redux-saga-middleware/reducers/deviceReducer";
 function App() {
   useTracking("");
 
@@ -126,6 +127,17 @@ function App() {
     };
   }, []);
 
+ 
+  const checkPreAuthRouter = () => {
+    const params = window.location.pathname
+    const newArr = params.split("/")
+    if(params.includes('tournamentDetail')) {
+      socket?.emit("detailTournament", {
+        tournamentId: newArr.pop()
+      });
+    }
+  };
+
   useEffect(() => {
     if (socket) {
       socket.once("connect", (data) => {});
@@ -154,6 +166,7 @@ function App() {
         socket.emit("listPackage", {
           type: true,
         });
+        checkPreAuthRouter()
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -507,7 +520,23 @@ function App() {
   useEffect(() => {
     store.dispatch(getListBet());
   });
-
+  //Detect device
+  const getMobileOS = () => {
+    const ua = navigator.userAgent;
+    if (/android/i.test(ua)) {
+      return "Android";
+    } else if (
+      /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    ) {
+      return "iOS";
+    }
+    return "Window";
+  };
+  const os = getMobileOS();
+  useEffect(() => {
+    store.dispatch(updateDeviceType(os));
+  }, [os]);
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -537,7 +566,6 @@ function App() {
             <Route path="/hourly-tournament" element={<HourlyTournament />} />
             <Route path="/daily-tournament" element={<DailyTournament />} />
             <Route path="/week-long-tournament" element={<WeekLongTour />} />
-
             <Route path="/help-center" element={<FAQPage />} />
             <Route path="/loadingscreen" element={<LoadingScreen />} />
             <Route path="/new-home" element={<NewHomePageComponent />} />

@@ -38,7 +38,7 @@ export default function NavMobile() {
       {isLoginDialog === false && width <= 576 ? (
         <div className="mobile" style={{ display: `${hideNavMobile}` }}>
           {getAppType() === "promote" ? (
-            <div className="content">
+            <div className="content_nav">
               {openMess === true ? (
                 ""
               ) : (
@@ -232,7 +232,7 @@ export default function NavMobile() {
               />
             </div>
           ) : (
-            <div className="content">
+            <div className="content_nav">
               {openMess === true ? (
                 ""
               ) : (

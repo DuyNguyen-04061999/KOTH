@@ -11,7 +11,7 @@ export default function ResultEndGame() {
   const dispatch = useDispatch()
   const handleClose = () => {
     dispatch(toggleOpenResultEndGame())
-    window.location.reload()
+    // window.location.reload()
   };
 
   return (
@@ -23,7 +23,7 @@ export default function ResultEndGame() {
         aria-describedby="alert-dialog-description"
         sx={{
           zIndex: 2000,
-            "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
+            "& .MuiPaper-root-MuiDialog-paper": {
                 borderRadius: 0,
                 backgroundColor:"transparent",
                 boxShadow:"none"
@@ -73,7 +73,7 @@ export default function ResultEndGame() {
               </div>
               <div className="summary__cta">
                 <button onClick={() => {
-                  window.location.reload()
+                  // window.location.reload()
                 }} className="btnResult btn__continue">Continue</button>
               </div>
             </div>

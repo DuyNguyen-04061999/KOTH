@@ -109,7 +109,7 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-  console.log("hotWeekTour: ", hotWeekTour);
+  
   return (
     <Container
       maxWidth="lg"
@@ -1477,7 +1477,7 @@ export default function NewHomePage() {
           />
           {getAppType() === "promote" ? <Package /> : <></>}
           <NewFooter />
-          {promotion && width < 576 && (
+          {/* {promotion && width < 576 && (
             <Draggable
               onStart={(e, data) => {
                 setstartPoint({ startX: data.x, startY: data.y });
@@ -1520,7 +1520,7 @@ export default function NewHomePage() {
                 </Box>
               </Box>
             </Draggable>
-          )}
+          )} */}
         </Box>
       </ThemeProvider>
     </Container>

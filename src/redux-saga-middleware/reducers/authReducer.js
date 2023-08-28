@@ -126,7 +126,7 @@ const authReducer = (
     isDialogConfirm: false,
     idPackage: "",
     userPackageId: "",
-    isDropdownNav: false,
+    isDropdownNav: true,
   },
   action
 ) => {

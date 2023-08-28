@@ -72,9 +72,11 @@ input::-webkit-inner-spin-button {
 .fullscreen {
   width: 100%;
   height: 100%;
-  /* position: fixed;
+}
+.fullscreen_IOS {
+  position: fixed;
   z-index: 2000 !important;
-  top: 0; */
+  top: 0;
 }
 /* .Toastify__toast {
   width: 465px !important;
