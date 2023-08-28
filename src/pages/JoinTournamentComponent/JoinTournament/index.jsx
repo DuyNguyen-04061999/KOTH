@@ -1009,7 +1009,7 @@ export default function JoinTournament() {
                   isFullScreen && startGame
                     ? "100%"
                     : width < 576
-                    ? "100%"
+                    ? "95%"
                     : "80%",
                 height: isFullScreen && startGame ? "100%" : "auto",
                 paddingBottom: width < 576 ? "60px" : "none",
