@@ -90,6 +90,7 @@ import HourlyTournament from "./pages/HourlyTournament";
 import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
 import LoadingScreen from "./components/LoadingScreen";
+import { updateDeviceType } from "./redux-saga-middleware/reducers/deviceReducer";
 function App() {
   useTracking("");
 
@@ -526,7 +527,23 @@ function App() {
   useEffect(() => {
     store.dispatch(getListBet());
   });
-
+  //Detect device
+  const getMobileOS = () => {
+    const ua = navigator.userAgent;
+    if (/android/i.test(ua)) {
+      return "Android";
+    } else if (
+      /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    ) {
+      return "iOS";
+    }
+    return "Window";
+  };
+  const os = getMobileOS();
+  useEffect(() => {
+    store.dispatch(updateDeviceType(os));
+  }, [os]);
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
