@@ -60,6 +60,7 @@ export default function JoinTournament() {
   const [mouseEnter, setMouseEnter] = useState(false);
   const [expand, setExpand] = useState(false);
   const { id } = useParams();
+  console.log(id);
   const { token } = useSelector((state) => state.authReducer);
   const [continueGame, setContinueGame] = useState(false);
   const [previousOri, setPreviousOri] = useState("");
@@ -311,7 +312,7 @@ export default function JoinTournament() {
                       justifyContent: "center",
                     }}
                   >
-                    <Typography
+                    {/* <Typography
                       sx={{
                         fontSize: getFontSizeTitleDependOnWidth(width),
                         color: "#9384B7",
@@ -327,7 +328,7 @@ export default function JoinTournament() {
                       }}
                     >
                       {detailTournament?.tournamentName}
-                    </Typography>
+                    </Typography> */}
                   </Box>
                 )}
                 <Box sx={{ display: "flex", alignItems: "flex-end" }}>
@@ -721,11 +722,20 @@ export default function JoinTournament() {
                   }}
                 >
                   <Box>
+                    <Box sx={{
+                      display:"flex",
+                      flexDirection:"column",
+                      alignItems:"start",
+                       color:"white",
+                       marginBottom:"30px"
+                    }}>
+                        <Typography sx={{margin:"0px !important"}} variant="h5">Galaxy Quest : SS Z-Flip 5 free voucher</Typography>
+                        <Typography sx={{margin:"0px !important"}} variant="body1">Tournament of Holdy</Typography>
+                    </Box>  
                     <Box
                       sx={{
                         textAlign: "start",
                         fontWeight: "lighter",
-                        marginBottom: `${parseFloat(width / 74)}px`,
                         color: "white",
                       }}
                     >

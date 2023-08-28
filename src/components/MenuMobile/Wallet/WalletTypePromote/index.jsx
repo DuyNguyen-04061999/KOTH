@@ -105,6 +105,7 @@ export default function WalletTypePromote(props) {
                   <input
                     type="text"
                     className="w-100 walletPromote"
+                    disabled
                     defaultValue={
                       userGold &&
                       Number.parseFloat(userGold) > 0 &&
@@ -204,7 +205,7 @@ export default function WalletTypePromote(props) {
                       type="number"
                       placeholder="Enter amount"
                       className="walletPromote"
-                      value={amount}
+                      // value={amount}
                       onChange={(e) => setAmount(e?.target?.value)}
                       style={{
                         borderRadius: "7px",

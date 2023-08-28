@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
@@ -126,6 +126,24 @@ function App() {
     };
   }, []);
 
+ 
+  const checkPreAuthRouter = () => {
+    // Check router
+    // Get id tournamnet
+    // get detail tournametn
+    const params = window.location.pathname
+    console.log(params);
+    const newArr = params.split("/")
+    console.log("number",newArr.pop());
+    if(params.includes('/tournamentDetail/1')) {
+      setTimeout(() => {
+        socket?.emit("detailTournament", {
+          tournamentId: newArr.pop()
+        });
+      },[3000])
+    }
+  };
+
   useEffect(() => {
     if (socket) {
       socket.once("connect", (data) => {});
@@ -143,6 +161,7 @@ function App() {
           })
         );
 
+        checkPreAuthRouter()
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -537,7 +556,6 @@ function App() {
             <Route path="/hourly-tournament" element={<HourlyTournament />} />
             <Route path="/daily-tournament" element={<DailyTournament />} />
             <Route path="/week-long-tournament" element={<WeekLongTour />} />
-
             <Route path="/help-center" element={<FAQPage />} />
             <Route path="/loadingscreen" element={<LoadingScreen />} />
             <Route path="/new-home" element={<NewHomePageComponent />} />

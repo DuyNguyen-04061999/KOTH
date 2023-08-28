@@ -23,7 +23,7 @@ export default function ResultEndGame() {
         aria-describedby="alert-dialog-description"
         sx={{
           zIndex: 2000,
-            "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
+            "& .MuiPaper-root-MuiDialog-paper": {
                 borderRadius: 0,
                 backgroundColor:"transparent",
                 boxShadow:"none"
