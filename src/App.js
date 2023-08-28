@@ -129,19 +129,12 @@ function App() {
 
  
   const checkPreAuthRouter = () => {
-    // Check router
-    // Get id tournamnet
-    // get detail tournametn
     const params = window.location.pathname
-    console.log(params);
     const newArr = params.split("/")
-    console.log("number",newArr.pop());
-    if(params.includes('/tournamentDetail/1')) {
-      setTimeout(() => {
-        socket?.emit("detailTournament", {
-          tournamentId: newArr.pop()
-        });
-      },[3000])
+    if(params.includes('tournamentDetail')) {
+      socket?.emit("detailTournament", {
+        tournamentId: newArr.pop()
+      });
     }
   };
 
@@ -162,7 +155,6 @@ function App() {
           })
         );
 
-        checkPreAuthRouter()
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
@@ -174,6 +166,7 @@ function App() {
         socket.emit("listPackage", {
           type: true,
         });
+        checkPreAuthRouter()
       });
 
       socket?.on("getListFriendSuccess", (data) => {

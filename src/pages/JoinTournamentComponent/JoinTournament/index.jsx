@@ -38,6 +38,7 @@ import BgEndGame from "../BgEndTour";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { isJson, sliceString } from "../../../utils/helper";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 
 const theme = createTheme({
   typography: {
@@ -63,7 +64,7 @@ export default function JoinTournament() {
   const [mouseEnter, setMouseEnter] = useState(false);
   const [expand, setExpand] = useState(false);
   const { id } = useParams();
-  console.log(id);
+  
   const { token } = useSelector((state) => state.authReducer);
   const [continueGame, setContinueGame] = useState(false);
   const [previousOri, setPreviousOri] = useState("");
@@ -343,9 +344,13 @@ export default function JoinTournament() {
                   {!detailTournament?.checkInTournament ? (
                     <button
                       onClick={() => {
-                        socket?.emit("joinTournament", {
-                          tournamentId: detailTournament?.id,
-                        });
+                        if(token) {
+                          socket?.emit("joinTournament", {
+                            tournamentId: detailTournament?.id,
+                          });
+                        } else {
+                          dispatch(toggleLoginDialog())
+                        }
                       }}
                       style={{
                         padding: `${parseFloat(width / 150)}px ${parseFloat(

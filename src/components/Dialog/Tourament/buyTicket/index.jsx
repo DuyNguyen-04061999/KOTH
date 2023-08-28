@@ -53,7 +53,7 @@ export default function BuyTicket(props) {
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
-  console.log("Params: ", tournamentId, bought, ticketBuy);
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

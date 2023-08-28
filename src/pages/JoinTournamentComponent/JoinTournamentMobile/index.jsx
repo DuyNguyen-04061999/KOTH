@@ -23,6 +23,7 @@ import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import InfinityIcon from "@mui/icons-material/AllInclusive"
 import { isJson, sliceString } from "../../../utils/helper";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 
 const theme = createTheme({
   typography: {
@@ -719,9 +720,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             {!detailTournament?.checkInTournament ? (
               <button
                 onClick={() => {
-                  socket?.emit("joinTournament", {
-                    tournamentId: detailTournament?.id,
-                  });
+                  if(token) {
+                    socket?.emit("joinTournament", {
+                      tournamentId: detailTournament?.id,
+                    });
+                  } else {
+                    dispatch(toggleLoginDialog())
+                  }
                 }}
                 style={{
                   padding: "8px 0px",
