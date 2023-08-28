@@ -24,7 +24,10 @@ import moment from "moment/moment";
 import { Fragment } from "react";
 import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
-import { toggleBuyTicket, toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  toggleBuyTicket,
+  toggleOpenResultEndGame,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import JoinTournamentMobile from "../JoinTournamentMobile";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import LeaderBoard from "../LeaderBoard";
@@ -32,8 +35,8 @@ import DetailVoucher from "../DetailVoucher";
 import "./index.scss";
 import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
-import ResultEndGame from '../../../components/Dialog/ResultEndGame'
-import InfinityIcon from "@mui/icons-material/AllInclusive"
+import ResultEndGame from "../../../components/Dialog/ResultEndGame";
+import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { isJson, sliceString } from "../../../utils/helper";
 
 const theme = createTheme({
@@ -64,6 +67,7 @@ export default function JoinTournament() {
   const [continueGame, setContinueGame] = useState(false);
   const [previousOri, setPreviousOri] = useState("");
   const { orientation } = useSelector((state) => state.gameReducer);
+  const { deviceType } = useSelector((state) => state.deviceReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
@@ -75,7 +79,6 @@ export default function JoinTournament() {
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
-
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
       setIsFullScreen(true);
@@ -110,8 +113,6 @@ export default function JoinTournament() {
   useEffect(() => {
     setSocket(_socket);
   }, []);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -190,30 +191,37 @@ export default function JoinTournament() {
   const handleEndGame = (score) => {
     setTimeout(() => {
       setStartGame(false);
-    }, 1000)
+    }, 1000);
     setTimeout(() => {
-      dispatch(toggleOpenResultEndGame(score || 0))
-    }, 1500)
+      dispatch(toggleOpenResultEndGame(score || 0));
+    }, 1500);
   };
 
-  const [pauseGame, setPauseGame] = useState(false)
-  const [unPauseGame, setUnPauseGame] = useState(false)
+  const [pauseGame, setPauseGame] = useState(false);
+  const [unPauseGame, setUnPauseGame] = useState(false);
 
   useEffect(() => {
-    if(startGame && ((width < 576 && detailTournament?.tournamentInfors?.game?.gameScreenType === 1 && orientation === "portrait")
-    || (width < 576 && !detailTournament?.tournamentInfors?.game?.gameScreenType && orientation === "landscape"))) {
-      setPauseGame(true)
-      setUnPauseGame(false)
+    if (
+      startGame &&
+      ((width < 576 &&
+        detailTournament?.tournamentInfors?.game?.gameScreenType === 1 &&
+        orientation === "portrait") ||
+        (width < 576 &&
+          !detailTournament?.tournamentInfors?.game?.gameScreenType &&
+          orientation === "landscape"))
+    ) {
+      setPauseGame(true);
+      setUnPauseGame(false);
     } else {
-      setPauseGame(false)
-      setUnPauseGame(true)
+      setPauseGame(false);
+      setUnPauseGame(true);
     }
   }, [orientation, width, detailTournament, startGame]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ResultEndGame/>
+      <ResultEndGame />
       {!startGame ? (
         width > 576 ? (
           <Container maxWidth="lg" sx={{ paddingTop: "50px" }}>
@@ -515,15 +523,19 @@ export default function JoinTournament() {
                   }}
                 >
                   <Box sx={{ marginRight: `${parseFloat(width / 75)}px` }}>
-                    <Typography sx={{ color: "#fff" }}>
-                      Participants
-                    </Typography>
+                    <Typography sx={{ color: "#fff" }}>Participants</Typography>
                     <Typography sx={{ color: "#FFFFFF" }}>
                       {detailTournament?.tournamentParticipants?.length}/
-                      {detailTournament?.tournamentQuantity > 0 ? detailTournament?.tournamentQuantity : <InfinityIcon sx={{
-                        width: 15,
-                        height: 15
-                      }}/>}
+                      {detailTournament?.tournamentQuantity > 0 ? (
+                        detailTournament?.tournamentQuantity
+                      ) : (
+                        <InfinityIcon
+                          sx={{
+                            width: 15,
+                            height: 15,
+                          }}
+                        />
+                      )}
                     </Typography>
                   </Box>
                   <Box
@@ -756,9 +768,10 @@ export default function JoinTournament() {
                                   Recipient
                                 </h6>
                                 <span>
-                                  {sliceString(detailTournament?.tournamentInfors
-                                    ?.rewardInfors?.rewardRecipient) ||
-                                    "Recipient"}
+                                  {sliceString(
+                                    detailTournament?.tournamentInfors
+                                      ?.rewardInfors?.rewardRecipient
+                                  ) || "Recipient"}
                                 </span>
                               </div>
                             </Grid>
@@ -858,61 +871,61 @@ export default function JoinTournament() {
                     />
                   </Box>
                 </Box>
-                {detailTournament?.tournamentResult && detailTournament?.tournamentResult?.length > 0 && (
-                  <Box
-                    sx={{
-                      flexGrow: "1",
-                      padding: `${parseFloat(width / 66)}px 0px ${parseFloat(
-                        width / 43.6
-                      )}px 0px`,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                {detailTournament?.tournamentResult &&
+                  detailTournament?.tournamentResult?.length > 0 && (
                     <Box
                       sx={{
-                        marginBottom: `${parseFloat(width / 70)}px`,
-                        color: "white",
+                        flexGrow: "1",
+                        padding: `${parseFloat(width / 66)}px 0px ${parseFloat(
+                          width / 43.6
+                        )}px 0px`,
                         display: "flex",
+                        flexDirection: "column",
                         justifyContent: "space-between",
-                        alignItems: "center",
                       }}
                     >
-                      <Typography
+                      <Box
                         sx={{
-                          textAlign: "start",
-                          fontWeight: "lighter !important",
-                          fontSize: "20px",
+                          marginBottom: `${parseFloat(width / 70)}px`,
+                          color: "white",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
                         }}
                       >
-                        Current Result
-                      </Typography>
-                      <Typography
-                        onClick={() => {
-                          setCurrentResult(true);
+                        <Typography
+                          sx={{
+                            textAlign: "start",
+                            fontWeight: "lighter !important",
+                            fontSize: "20px",
+                          }}
+                        >
+                          Current Result
+                        </Typography>
+                        <Typography
+                          onClick={() => {
+                            setCurrentResult(true);
+                          }}
+                          sx={{
+                            textAlign: "start",
+                            fontWeight: "lighter !important",
+                            fontSize: "14px",
+                            color: "#BE48ED",
+                            cursor: "pointer",
+                          }}
+                        >
+                          View All
+                        </Typography>
+                      </Box>
+                      <LeaderBoard
+                        open={currentResult}
+                        handleOnClose={() => {
+                          setCurrentResult(false);
                         }}
-                        sx={{
-                          textAlign: "start",
-                          fontWeight: "lighter !important",
-                          fontSize: "14px",
-                          color: "#BE48ED",
-                          cursor: "pointer",
-                        }}
-                      >
-                        View All
-                      </Typography>
+                        detailTournament={detailTournament}
+                      />
                     </Box>
-                    <LeaderBoard
-                      open={currentResult}
-                      handleOnClose={() => {
-                        setCurrentResult(false);
-                      }}
-                      detailTournament={detailTournament}
-                    />
-                  </Box>
-                )}
-                
+                  )}
               </Box>
             </Box>
             <BuyTicket
@@ -945,35 +958,40 @@ export default function JoinTournament() {
               >
                 Informations
               </Box>
-              {detailTournament && detailTournament?.tournamentInformations && isJson(detailTournament?.tournamentInformations) && JSON.parse(detailTournament?.tournamentInformations)
-              && JSON.parse(detailTournament?.tournamentInformations)?.length > 0 && JSON.parse(detailTournament?.tournamentInformations)?.map(
-                (item, index) => {
-                  return (
-                    <Box
-                      key={index}
-                      sx={{
-                        fontSize: getFontSizeDependOnWidth(width),
-                        textAlign: "start",
-                        color: "#9384B7",
-                        marginTop: "10px",
-                      }}
-                    >
-                      <Typography
+              {detailTournament &&
+                detailTournament?.tournamentInformations &&
+                isJson(detailTournament?.tournamentInformations) &&
+                JSON.parse(detailTournament?.tournamentInformations) &&
+                JSON.parse(detailTournament?.tournamentInformations)?.length >
+                  0 &&
+                JSON.parse(detailTournament?.tournamentInformations)?.map(
+                  (item, index) => {
+                    return (
+                      <Box
+                        key={index}
                         sx={{
+                          fontSize: getFontSizeDependOnWidth(width),
                           textAlign: "start",
-                          fontWeight: "500 !important",
-                          marginLeft: "0px !important",
-                          fontFamily:"Cyntho Next"
+                          color: "#9384B7",
+                          marginTop: "10px",
                         }}
                       >
-                        {item
-                          ? item
-                          : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper dolor nunc, quis eleifend erat accumsan id. Nulla cursus urna urna, aliquam congue justo luctus vel. Praesent convallis facilisis mauris, id interdum diam condimentum ut. Ut vitae magna fringilla, fringilla diam at, consectetur risus. Nullam ex est, aliquet eu consequat in, laoreet non tellus. Vestibulum eget rutrum mi. Etiam placerat lectus eu finibus sagittis."}
-                      </Typography>
-                    </Box>
-                  );
-                }
-              )}
+                        <Typography
+                          sx={{
+                            textAlign: "start",
+                            fontWeight: "500 !important",
+                            marginLeft: "0px !important",
+                            fontFamily: "Cyntho Next",
+                          }}
+                        >
+                          {item
+                            ? item
+                            : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper dolor nunc, quis eleifend erat accumsan id. Nulla cursus urna urna, aliquam congue justo luctus vel. Praesent convallis facilisis mauris, id interdum diam condimentum ut. Ut vitae magna fringilla, fringilla diam at, consectetur risus. Nullam ex est, aliquet eu consequat in, laoreet non tellus. Vestibulum eget rutrum mi. Etiam placerat lectus eu finibus sagittis."}
+                        </Typography>
+                      </Box>
+                    );
+                  }
+                )}
             </Box>
           </Container>
         ) : (
@@ -1009,7 +1027,7 @@ export default function JoinTournament() {
                   isFullScreen && startGame
                     ? "100%"
                     : width < 576
-                    ? "95%"
+                    ? "100%"
                     : "80%",
                 height: isFullScreen && startGame ? "100%" : "auto",
                 paddingBottom: width < 576 ? "60px" : "none",
@@ -1025,7 +1043,13 @@ export default function JoinTournament() {
                 detailTournament?.tournamentInfors?.game?.GameFiles &&
                 detailTournament?.tournamentInfors?.game?.GameFiles.length >=
                   4 && (
-                  <FullScreen handle={screen} onChange={reportChange}>
+                  <FullScreen
+                    className={`fullscreen ${
+                      deviceType === "iOS" ? "fullscreen_IOS" : ""
+                    }`}
+                    handle={screen}
+                    onChange={reportChange}
+                  >
                     {videoGame ? (
                       <Fragment>
                         <video
@@ -1048,7 +1072,6 @@ export default function JoinTournament() {
                               screen.enter();
                               setIsFullScreen(true);
                             }
-                            
                           }}
                         >
                           <source src={video.LogoAnim} type="video/mp4" />
