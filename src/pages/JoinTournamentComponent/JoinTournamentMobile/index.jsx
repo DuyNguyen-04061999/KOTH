@@ -24,6 +24,7 @@ import BgEndGame from "../BgEndTour";
 import InfinityIcon from "@mui/icons-material/AllInclusive"
 import { isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { toast } from "react-toastify";
 
 const theme = createTheme({
   typography: {
@@ -71,12 +72,28 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       setFetchT(false);
     });
     socket?.on("joinTournamentSuccess", (data) => {
-      socket?.emit("detailTournament", {
-        tournamentId: data?.id,
+      // socket?.emit("detailTournament", {
+      //   tournamentId: data?.id,
+      // });
+      toast.success("Join Tournament Successfully", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.successIcon}
+          />
+        ),
+        position: "top-center",
+        className: "success-background",
       });
+      setTimeout(() => {
+        socket?.emit("detailTournament", {
+          tournamentId: data?.id,
+        });
+      }, 1000)
     });
     return () => {
-      socket?.off("detailTournamentSuccess");
+      socket?.off("joinTournamentSuccess");
     };
   }, [socket]);
 

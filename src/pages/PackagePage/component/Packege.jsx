@@ -184,7 +184,7 @@ export default function Package() {
                               alignItems: "start",
                               borderRadius: "15px",
                               width: "100%",
-                              height: "525px",
+                              height: "auto",
                               border: "none",
                               padding: "25px",
                             }}
@@ -204,15 +204,16 @@ export default function Package() {
                                 }}
                               >
                                 <img
-                                  src={
-                                    i?.packageName === "Free"
-                                      ? images.free
-                                      : "" || i?.packageName === "Diamond"
-                                      ? images.diamon
-                                      : "" || i?.packageName === "Gold"
-                                      ? images.gold1
-                                      : ""
-                                  }
+                                  // src={
+                                  //   i?.packageName === "Free"
+                                  //     ? images.free
+                                  //     : "" || i?.packageName === "Diamond"
+                                  //     ? images.diamon
+                                  //     : "" || i?.packageName === "Gold"
+                                  //     ? images.gold1
+                                  //     : ""
+                                  // }
+                                  src={i?.packageAvatar ? process.env.REACT_APP_END_POINT + "/" + i?.packageAvatar : images.free}
                                   width={200}
                                   height={200}
                                   alt=""
@@ -292,7 +293,7 @@ export default function Package() {
                                       voucher/tournament
                                     </Typography>
                                   </Box>
-                                  <Box
+                                  {/* <Box
                                     sx={{
                                       display: "flex",
                                       justifyContent: "flex-start",
@@ -390,7 +391,7 @@ export default function Package() {
                                       {i?.packageCountLuckySpin}Times for lucky
                                       spin
                                     </Typography>
-                                  </Box>
+                                  </Box> */}
                                 </Box>
                                 {i?.packagePrice === 0 ? (
                                   <Box
@@ -672,7 +673,7 @@ export default function Package() {
                         alignItems: "center",
                         borderRadius: "15px",
                         width: "100%",
-                        height: "480px",
+                        height: "auto",
                         border: "none",
                         padding: "5px",
                       }}
@@ -692,15 +693,16 @@ export default function Package() {
                           }}
                         >
                           <img
-                            src={
-                              i?.packageName === "Free"
-                                ? images.free
-                                : "" || i?.packageName === "Diamond"
-                                ? images.diamon
-                                : "" || i?.packageName === "Gold"
-                                ? images.gold1
-                                : ""
-                            }
+                            // src={
+                            //   i?.packageName === "Free"
+                            //     ? images.free
+                            //     : "" || i?.packageName === "Diamond"
+                            //     ? images.diamon
+                            //     : "" || i?.packageName === "Gold"
+                            //     ? images.gold1
+                            //     : ""
+                            // }
+                            src={i?.packageAvatar ? process.env.REACT_APP_END_POINT + "/" + i?.packageAvatar : images.free}
                             width={167}
                             height={167}
                             alt=""
@@ -780,7 +782,7 @@ export default function Package() {
                                 voucher/tournament
                               </Typography>
                             </Box>
-                            <Box
+                            {/* <Box
                               sx={{
                                 display: "flex",
                                 justifyContent: "flex-start",
@@ -878,7 +880,7 @@ export default function Package() {
                               >
                                 {i?.packageCountLuckySpin}Times for lucky spin
                               </Typography>
-                            </Box>
+                            </Box> */}
                           </Box>
                           {i?.packagePrice === 0 ? (
                             <Box
@@ -952,6 +954,7 @@ export default function Package() {
                               fontSize: "18px",
                               marginTop: "5px",
                             }}
+                            className="mb-3"
                           >
                             {i?.id === userPackageId ||
                             (i?.packageName === "Free" && !userPackageId)

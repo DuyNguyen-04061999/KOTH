@@ -281,6 +281,8 @@ import diamon from "../assets/imagesDesktop/diamon.png";
 import free from "../assets/imagesDesktop/free.png";
 import gold1 from "../assets/imagesDesktop/gold.png";
 import signInCrypto from "../assets/images/signin_crypto.png";
+import EndTourAvatar from "../assets/images/Feedback_Play4promo (1).png"
+import BigTourAvatar from "../assets/images/Feedback_Play4promo.png"
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -303,6 +305,8 @@ export const imageHome = {
 };
 
 export const images = {
+  endTourAvatar: EndTourAvatar,
+  bigTourAvatar: BigTourAvatar,
   pepperBanner: PepperBanner,
   pepperBannerMobile: PepperBannerMobile,
   signInCrypto: signInCrypto,

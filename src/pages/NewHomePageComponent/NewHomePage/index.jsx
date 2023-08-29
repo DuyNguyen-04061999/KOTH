@@ -323,7 +323,7 @@ export default function NewHomePage() {
                       paddingTop: "10px",
                     }}
                   >
-                    {biggestEndTour?.bestUser?.userNickName}
+                    {biggestEndTour?.bestUser?.userNickName || "super_"}
                   </Typography>
                 </Box>
               </Box>
@@ -366,9 +366,9 @@ export default function NewHomePage() {
                   }}
                 >
                   <Typography sx={{ color: "#fff", fontSize: "40px" }}>
-                    {biggestEndTour?.endTour?.tournamentPrize
-                      ? biggestEndTour?.endTour?.tournamentPrize + " $"
-                      : ""}
+                    {biggestEndTour?.endTour?.tournamentAutoAmount
+                      ? biggestEndTour?.endTour?.tournamentAutoAmount + " $"
+                      : "5000$"}
                   </Typography>
                   <Typography sx={{ color: "#fff", fontSize: "9px" }}>
                     GRAND TOURNAMENT WINNER
@@ -446,7 +446,7 @@ export default function NewHomePage() {
                     marginLeft: "0px !important",
                   }}
                 >
-                  {biggestEndTour?.bestUser?.userNickName}
+                  {biggestEndTour?.bestUser?.userNickName || "super_"}
                 </Typography>
               </Box>
               <Box
@@ -479,12 +479,13 @@ export default function NewHomePage() {
                     fontSize: "88px",
                     position: "absolute",
                     top: "85px",
-                    left: "45%",
+                    width: "100%"
                   }}
+                  className="text-center"
                 >
-                  {biggestEndTour?.endTour?.tournamentPrize
-                    ? biggestEndTour?.endTour?.tournamentPrize + "$"
-                    : ""}
+                  {biggestEndTour?.endTour?.tournamentAutoAmount
+                    ? biggestEndTour?.endTour?.tournamentAutoAmount + "$"
+                    : "5000$"}
                 </Typography>
                 <Typography
                   sx={{
@@ -863,7 +864,7 @@ export default function NewHomePage() {
                                 fontSize: "25px",
                               }}
                             >
-                              {item?.tournamentPrize}$
+                              {item?.tournamentAutoAmount}$
                             </Typography>
                           </Box>
                           <button
@@ -999,7 +1000,7 @@ export default function NewHomePage() {
                                 fontSize: "25px",
                               }}
                             >
-                              {item?.tournamentPrize || 0}$
+                              {item?.tournamentAutoAmount || 0}$
                             </Typography>
                           </Box>
                           <button
@@ -1257,7 +1258,7 @@ export default function NewHomePage() {
                         marginRight: "5px",
                       }}
                     >
-                      ${hotWeekTour?.tournamentPrize}
+                      ${hotWeekTour?.tournamentAutoAmount}
                     </Typography>
                     <Typography
                       sx={{
@@ -1431,7 +1432,7 @@ export default function NewHomePage() {
                         marginRight: "5px",
                       }}
                     >
-                      ${hotWeekTour?.tournamentPrize}
+                      ${hotWeekTour?.tournamentAutoAmount}
                     </Typography>
                     <Typography
                       sx={{
