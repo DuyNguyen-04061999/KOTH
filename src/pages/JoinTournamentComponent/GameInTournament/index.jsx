@@ -11,11 +11,10 @@ export default function GameInTournament(props) {
       <Box
         sx={{
           backgroundColor: width > 576 ? "#1D1329" : "none",
-          width: width < 576 ? "100%" : "85%",
+          width: "100%",
+          borderRadius: "12px",
         }}
-        className={
-          width < 576 ? "rounded d-flex justify-content-center" : "rounded"
-        }
+        className={width < 576 ? "" : "rounded"}
       >
         <Box
           sx={{
@@ -34,12 +33,22 @@ export default function GameInTournament(props) {
                 color: "white",
               }}
             >
-              <Typography variant="h5" sx={{fontFamily:"Cyntho !important", fontWeight:" 500 !important"}}>
+              <Typography
+                sx={{
+                  fontFamily: "Cyntho !important",
+                  fontWeight: " 500 !important",
+                  fontSize: "20px",
+                }}
+              >
                 {game?.gameName || "Game Name"}
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important", fontSize:"14px" }}
+                sx={{
+                  fontFamily: "Cyntho Next",
+                  fontWeight: "500 !important",
+                  fontSize: "12px",
+                }}
               >
                 Game for tournament
               </Typography>
@@ -64,17 +73,13 @@ export default function GameInTournament(props) {
               width={120}
               height={120}
               style={{ borderRadius: "10px" }}
-              className="mt-2"
             />
-            {width > 576 ? (
+            {width > 576 && (
               <Typography
-                className={width > 576 ? "ms-2" : "ms-0"}
-                variant="h5"
+                sx={{ fontSize: "30px", marginLeft: "32px !important" }}
               >
                 {game?.gameName || "Game Name"}
               </Typography>
-            ) : (
-              ""
             )}
           </Box>
         </Box>

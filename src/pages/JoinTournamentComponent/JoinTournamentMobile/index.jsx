@@ -21,7 +21,7 @@ import LeaderBoard from "../LeaderBoard/index";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
-import InfinityIcon from "@mui/icons-material/AllInclusive"
+import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
@@ -52,7 +52,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const { token } = useSelector((state) => state.authReducer);
   const typographyStyle = {
     textAlign: "start",
-    fontWeight: "200 !important",
+    fontWeight: "lighter !important",
     marginLeft: "0px !important",
     color: "#fff",
   };
@@ -145,6 +145,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               Tournament
             </Typography>
           </Box>
+          {/* BackgroundMobile */}
           <Box
             sx={{
               backgroundImage: `url("${
@@ -167,7 +168,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           >
             {detailTournament?.tournamentStatus === 2 && <BgEndGame />}
           </Box>
-          <Box component={"div"} className="mb-2 text-center text-white">
+          <Box
+            component={"div"}
+            className="mb-2 text-center text-white"
+            sx={{ marginTop: "20px" }}
+          >
             <Typography
               className="fs-4"
               sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important" }}
@@ -176,13 +181,17 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 detailTournament?.tournamentInfors?.game?.gameName}
             </Typography>
             <Typography
-              sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important" }}
+              sx={{
+                fontFamily: "Cyntho Next",
+                fontWeight: "500 !important",
+                fontSize: "12px",
+              }}
             >
               {detailTournament?.tournamentTimeType === "hourly"
                 ? "Hourly Tournament"
                 : detailTournament?.tournamentTimeType === "daily"
                 ? "Daily Tournament"
-                : "Weekly Tournament"}
+                : "Weeklong Tournament"}
             </Typography>
           </Box>
           <Box
@@ -191,13 +200,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             sx={{
               paddingLeft: "30px",
               paddingRight: "30px",
+              marginTop: "20px",
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
                 Start
               </Typography>
-              <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+              <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
                 {moment(detailTournament?.tournamentStartAt).format(
                   "DD/MM/YYYY"
                 )}
@@ -215,7 +225,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
                 Finish
               </Typography>
-              <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+              <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
                 {moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY")}
                 -{moment(detailTournament?.tournamentEndAt).format("hh:mm a")}
               </Typography>
@@ -224,9 +234,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           <Box sx={{ padding: "28px 27px 0px 27px" }}>
             <Box>
               <Typography
-                variant="h6"
                 className="text-white"
-                sx={{ marginLeft: "0px !important", fontFamily: "Cyntho Next !important", fontWeight:"500 !important" }}
+                sx={{
+                  marginLeft: "0px !important",
+                  fontFamily: "Cyntho Next !important",
+                  fontWeight: "500 !important",
+                  fontSize: "14px",
+                  ...typographyStyle,
+                }}
               >
                 Reward
               </Typography>
@@ -235,7 +250,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 style={{
                   fontFamily: "Cyntho Next !important",
                   fontWeight: "500 !improtant",
-                  fontSize: "14px",
+                  fontSize: "12px",
                 }}
               >
                 Play game to get this voucher
@@ -247,18 +262,23 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 <h5
                   style={{
                     color: "#BE48ED",
-                    fontSize: "18px",
-                    paddingTop: "5px",
+                    fontSize: "16px",
+                    paddingTop: "10px",
                     paddingBottom: "12px",
-                    fontFamily:"Cyntho Next !important",
-                    fontWeight:"500 !important"
+                    fontFamily: "Cyntho Next !important",
+                    fontWeight: "500 !important",
                   }}
                 >
                   {detailTournament?.tournamentInfors?.rewardInfors
-                    ?.rewardTitle && detailTournament?.tournamentInfors?.rewardInfors
-                    ?.rewardTitle?.length > 10 ? String(detailTournament?.tournamentInfors?.rewardInfors
-                      ?.rewardTitle)?.slice(0,10) : detailTournament?.tournamentInfors?.rewardInfors
-                      ?.rewardTitle}
+                    ?.rewardTitle &&
+                  detailTournament?.tournamentInfors?.rewardInfors?.rewardTitle
+                    ?.length > 10
+                    ? String(
+                        detailTournament?.tournamentInfors?.rewardInfors
+                          ?.rewardTitle
+                      )?.slice(0, 10)
+                    : detailTournament?.tournamentInfors?.rewardInfors
+                        ?.rewardTitle}
                 </h5>
                 <Grid container>
                   <Grid item xs={6}>
@@ -267,20 +287,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         style={{
                           fontSize: "10px",
                           marginBottom: "0px !important",
+                          color: "#525252",
                         }}
                       >
                         Recipient
                       </h6>
-                      <h6
-                        style={{
+                      <Typography
+                        sx={{
                           fontWeight: "100",
                           fontFamily: "Cyntho Next",
-                          fontSize: "14px",
+                          fontSize: "12px",
+                          ...typographyStyle,
+                          color: "#000",
+                          marginLeft: "0px !important",
                         }}
                       >
-                        {sliceString(detailTournament?.tournamentInfors?.rewardInfors
-                          ?.rewardRecipient) || "Recipient"}
-                      </h6>
+                        {sliceString(
+                          detailTournament?.tournamentInfors?.rewardInfors
+                            ?.rewardRecipient
+                        ) || "Recipient"}
+                      </Typography>
                     </div>
                   </Grid>
                   <Grid item xs={6}>
@@ -289,22 +315,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         style={{
                           fontSize: "10px",
                           marginBottom: "0px !important",
+                          color: "#525252",
                         }}
                       >
                         Validity date
                       </h6>
-                      <h6
-                        style={{
+                      <Typography
+                        sx={{
                           fontWeight: "100",
                           fontFamily: "Cyntho Next",
-                          fontSize: "14px",
+                          fontSize: "12px",
+                          ...typographyStyle,
+                          color: "#000",
+                          marginLeft: "0px !important",
                         }}
                       >
                         {moment(
                           detailTournament?.tournamentInfors?.rewardInfors
                             ?.rewardValidityDate
                         )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                      </h6>
+                      </Typography>
                     </div>
                   </Grid>
                   <Grid item xs={6}>
@@ -321,7 +351,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         style={{
                           fontWeight: "100",
                           fontFamily: "Cyntho Next",
-                          fontSize: "14px",
+                          fontSize: "12px",
                         }}
                       >
                         {detailTournament?.tournamentInfors?.owner?.brandName ||
@@ -341,7 +371,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       </h2>
                       <h6
                         onClick={() => setOpenVoucher(true)}
-                        style={{ color: "#0096FF", fontSize: "14px" }}
+                        style={{ color: "#0096FF", fontSize: "12px" }}
                       >
                         See more
                       </h6>
@@ -350,7 +380,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 </Grid>
               </div>
               <div className="cardMB cardRightMB">
-                <div className="eyeMB"></div>
                 <div className="numberMB">
                   <img
                     src={
@@ -363,8 +392,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         : images.GameTournament
                     }
                     alt="..."
-                    width={90}
-                    height={95}
+                    width={"100%"}
+                    height={"100% "}
                     style={{ borderRadius: "8px" }}
                   />
                 </div>
@@ -402,10 +431,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 }}
               >
                 {detailTournament?.tournamentParticipants?.length}/
-                {detailTournament?.tournamentQuantity > 0 ? detailTournament?.tournamentQuantity : <InfinityIcon sx={{
-                        width: 12,
-                        height: 12
-                      }}/>}
+                {detailTournament?.tournamentQuantity > 0 ? (
+                  detailTournament?.tournamentQuantity
+                ) : (
+                  <InfinityIcon
+                    sx={{
+                      width: 12,
+                      height: 12,
+                    }}
+                  />
+                )}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -626,38 +661,47 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 fontSize: "11px",
               }}
             >
-              {detailTournament && detailTournament?.tournamentInformations && isJson(detailTournament?.tournamentInformations) && JSON.parse(detailTournament?.tournamentInformations)
-              && JSON.parse(detailTournament?.tournamentInformations)?.length > 0 && JSON.parse(detailTournament?.tournamentInformations)?.map(
-                (item, index) => {
-                  return (
-                    <Box
-                      key={index}
-                      sx={{
-                        textAlign: "start",
-                        color: "#9384B7",
-                        marginTop: "10px",
-                      }}
-                    >
-                      <Typography
+              {detailTournament &&
+                detailTournament?.tournamentInformations &&
+                isJson(detailTournament?.tournamentInformations) &&
+                JSON.parse(detailTournament?.tournamentInformations) &&
+                JSON.parse(detailTournament?.tournamentInformations)?.length >
+                  0 &&
+                JSON.parse(detailTournament?.tournamentInformations)?.map(
+                  (item, index) => {
+                    return (
+                      <Box
+                        key={index}
                         sx={{
                           textAlign: "start",
-                          fontWeight: "500 !important",
-                          fontSize: "13px",
-                          fontFamily: "Cyntho Next !important",
+                          color: "#9384B7",
+                          marginTop: "10px",
                         }}
                       >
-                        {item?.length > 200 ? item.slice(0, 200) + "..." : item}
-                      </Typography>
-                    </Box>
-                  );
-                }
-              )}
+                        <Typography
+                          sx={{
+                            textAlign: "start",
+                            fontWeight: "500 !important",
+                            fontSize: "13px",
+                            fontFamily: "Cyntho Next !important",
+                          }}
+                        >
+                          {item?.length > 200
+                            ? item.slice(0, 200) + "..."
+                            : item}
+                        </Typography>
+                      </Box>
+                    );
+                  }
+                )}
             </Box>
           </Box>
-          <Box sx={{
-            display:"flex",
-            justifyContent:"flex-end"
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <Typography
               sx={{
                 color: "#fff",
@@ -665,8 +709,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 fontSize: "12px",
                 display: "flex",
                 alignItems: "center",
-                marginRight:"28px",
-                marginTop:"10px"
+                marginRight: "28px",
+                marginTop: "10px",
               }}
             >
               Read more
@@ -737,12 +781,12 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             {!detailTournament?.checkInTournament ? (
               <button
                 onClick={() => {
-                  if(token) {
+                  if (token) {
                     socket?.emit("joinTournament", {
                       tournamentId: detailTournament?.id,
                     });
                   } else {
-                    dispatch(toggleLoginDialog())
+                    dispatch(toggleLoginDialog());
                   }
                 }}
                 style={{

@@ -68,6 +68,7 @@ export default function NewHomePage() {
     biggestEndTour,
     brandTour,
     hotWeekTour,
+    threeBrandTour,
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -96,6 +97,9 @@ export default function NewHomePage() {
       });
       dispatch({
         type: "GET_HOTTEST_WEEK_TOUR",
+      });
+      dispatch({
+        type: "GET_THREE_BRAND_TOUR",
       });
       setIsFetchList(false);
     }
