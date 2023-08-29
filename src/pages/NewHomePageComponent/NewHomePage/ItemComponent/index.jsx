@@ -53,7 +53,9 @@ export default function ItemComponent({ countdown, tourInfo }) {
   };
   const navigate = useNavigate();
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", width: width < 576 ? "155px" : "184px" }}>
+    <Box onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)} sx={{ position: "relative",display: "flex", flexDirection: "column", width: width < 576 ? "155px" : "184px", cursor: "pointer" }}>
+      <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e", position: "absolute", borderTopRightRadius: "50%", borderBottomRightRadius: "50%", top: width < 576 ? "234px" : "282px", left:"-10px"}}></Box>
+      <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e",  position: "absolute", borderTopLeftRadius: "50%", borderBottomRightRadius: "50%", borderRadius: "50%", top: width < 576 ? "234px" : "282px", right:"-10px"}}></Box>
       <Box
         sx={{
           width: "100%",
@@ -90,16 +92,16 @@ export default function ItemComponent({ countdown, tourInfo }) {
               ...styleTypography,
               overflow: "hidden",
               color: "#000",
-              textOverflow: "eclipse",
               fontSize: "14px",
               fontStyle: "normal",
               fontWeight: "500",
               lineHeight: "normal",
               height: "30px",
-              maxHeight: "30px"
+              maxHeight: "30px",
+              width: "120px",
             }}
           >
-            {tourInfo?.tournamentName}
+            {tourInfo?.tournamentName.length>30?tourInfo?.tournamentName.slice(0,30)+" ...":tourInfo?.tournamentName}
           </Typography>
           <Box
             sx={{
@@ -112,7 +114,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
               <Typography
                 sx={{
                   ...styleTypography,
-                  fontSize: width < 576 ? "13px" : "16px",
+                  fontSize: width < 576 ? "12px" : "14px",
                   color: "#5747EA",
                   fontWeight: "700 !important",
                 }}
@@ -132,7 +134,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
               <Typography
                 sx={{
                   ...styleTypography,
-                  fontSize: width < 576 ? "12px" : "16px",
+                  fontSize: width < 576 ? "12px" : "14px",
                 }}
               >
                 {tourInfo?.tournamentQuantity !== 0 ? (
