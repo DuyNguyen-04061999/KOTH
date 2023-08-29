@@ -97,7 +97,8 @@ export default function ItemComponent({ countdown, tourInfo }) {
               fontWeight: "500",
               lineHeight: "normal",
               height: "30px",
-              maxHeight: "30px",
+              maxHeight: "45px",
+              minHeight: "30px",
               width: "120px",
             }}
           >

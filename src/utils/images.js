@@ -287,6 +287,14 @@ import signInCrypto from "../assets/images/signin_crypto.png";
 import EndTourAvatar from "../assets/images/Feedback_Play4promo (1).png"
 import BigTourAvatar from "../assets/images/Feedback_Play4promo.png"
 
+import DummyBanner1 from "../assets/images/banners/dk1.png"
+import DummyBanner2 from "../assets/images/banners/dk2.png"
+import DummyBanner3 from "../assets/images/banners/dk3.png"
+import DummyBanner4 from "../assets/images/banners/mb1.png"
+import DummyBanner5 from "../assets/images/banners/mb2.png"
+import DummyBanner6 from "../assets/images/banners/mb3.png"
+
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -308,6 +316,12 @@ export const imageHome = {
 };
 
 export const images = {
+  bn1: DummyBanner1,
+  bn2: DummyBanner2,
+  bn3: DummyBanner3,
+  bn4: DummyBanner4,
+  bn5: DummyBanner5,
+  bn6: DummyBanner6,
   endTourAvatar: EndTourAvatar,
   bigTourAvatar: BigTourAvatar,
   bannerSteam: BannerSteam,

@@ -653,6 +653,7 @@ export default function Package() {
                       flexDirection: "column",
                       position: "relative",
                       marginTop: "20px",
+                      width: '100%'
                     }}
                     className={
                       i?.packageName === "Free"

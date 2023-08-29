@@ -144,33 +144,26 @@ export default function NewHomePage() {
           }}
         >
           <Box
-            onClick={() => {
-              if (width > 576) {
-                navigate("/week-long-tournament");
-              } else {
-                setOpen(true);
-                setType("week-long");
-              }
-            }}
             sx={{ marginBottom: width < 576 ? "24px" : "32px" }}
           >
             {" "}
             <SlickSlider
               appendDot={true}
               images={
-                width < 576
-                  ? threeBrandTour?.map(
-                      (n) =>
-                        process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        n?.tournamentBackgroundMobile
-                    )
-                  : threeBrandTour?.map(
-                      (n) =>
-                        process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        n?.tournamentBackground
-                    )
+                width < 576 ? [
+                  images.pepperBanner,
+                  images.pepperBanner,
+                  images.pepperBanner,
+                ]
+              : [
+                  images.pepperBanner,
+                  images.pepperBanner,
+                  images.pepperBanner,
+                ]
+                
+              }
+              tours={
+                threeBrandTour || []
               }
             />
           </Box>
