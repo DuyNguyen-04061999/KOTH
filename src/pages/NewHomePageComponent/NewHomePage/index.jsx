@@ -68,6 +68,7 @@ export default function NewHomePage() {
     biggestEndTour,
     brandTour,
     hotWeekTour,
+    threeBrandTour,
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -97,6 +98,9 @@ export default function NewHomePage() {
       dispatch({
         type: "GET_HOTTEST_WEEK_TOUR",
       });
+      dispatch({
+        type: "GET_THREE_BRAND_TOUR",
+      });
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
@@ -109,13 +113,23 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-  
+
   return (
     <Container
       maxWidth="lg"
       sx={{
-        paddingLeft: width < 576 ? "24px !important" : "0px !important",
-        paddingRight: width < 576 ? "24px !important" : "0px !important",
+        paddingLeft:
+          width < 576
+            ? "24px !important"
+            : 767 <= width <= 1280
+            ? "32px !important"
+            : "0px !important",
+        paddingRight:
+          width < 576
+            ? "24px !important"
+            : 767 <= width <= 1280
+            ? "32px !important"
+            : "0px !important",
         paddingTop: width < 576 ? "24px !important" : "50px !important",
       }}
     >
@@ -146,14 +160,14 @@ export default function NewHomePage() {
               images={
                 width < 576
                   ? [
-                      images.pepperBannerMobile,
-                      // images.bannerTournamentMobile_1,
-                      // images.bannerTournamentMobile_2,
+                      images.pepperBanner,
+                      images.pepperBanner,
+                      images.pepperBanner,
                     ]
                   : [
                       images.pepperBanner,
-                      // images.bannerTournament1,
-                      // images.bannerTournament2,
+                      images.pepperBanner,
+                      images.pepperBanner,
                     ]
               }
             />
@@ -503,7 +517,7 @@ export default function NewHomePage() {
             </Box>
           )}
           {/* Brief List Tournament */}
-          <Box
+          {/* <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
               display: "flex",
@@ -626,8 +640,8 @@ export default function NewHomePage() {
                 </Slider>
               )}
             </Box>
-          </Box>{" "}
-          <Box
+          </Box>{" "} */}
+          {/* <Box
             component={"div"}
             className="cursor-pointer"
             onClick={() => navigate("/week-long-tournament")}
@@ -646,7 +660,7 @@ export default function NewHomePage() {
                 type="video/mp4"
               />
             </video>
-          </Box>
+          </Box> */}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
@@ -754,7 +768,7 @@ export default function NewHomePage() {
             </Box>
           </Box>{" "}
           {/* Brief information */}
-          <Box
+          {/* <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
               marginBottom: width < 576 ? "24px" : "32px",
@@ -1027,7 +1041,7 @@ export default function NewHomePage() {
                 })}
               </Slider>
             )}
-          </Box>
+          </Box> */}
           {/* ------------------------ */}
           <Box
             sx={{
@@ -1124,8 +1138,8 @@ export default function NewHomePage() {
           {width < 576 ? (
             <Box
               sx={{
-                marginTop: width < 576 ? "24px" : "32px",
-                marginBottom: width < 576 ? "24px" : "32px",
+                marginTop: width < 576 ? "48px" : "32px",
+                marginBottom: width < 576 ? "0px" : "32px",
                 backgroundImage: `url(${imageHome.bannerTop1Mobile})`,
                 width: "100%",
                 height: "210px",

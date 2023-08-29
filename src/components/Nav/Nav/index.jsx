@@ -395,7 +395,7 @@ export default function Navbar() {
                     Hot tour
                   </span>
                 </Box>
-                <Box
+                {/* <Box
                   sx={{
                     cursor: "pointer",
                     display: "flex",
@@ -460,7 +460,7 @@ export default function Navbar() {
                   >
                     Hourly tour
                   </span>
-                </Box>
+                </Box> */}
                 <Box
                   sx={{
                     cursor: "pointer",

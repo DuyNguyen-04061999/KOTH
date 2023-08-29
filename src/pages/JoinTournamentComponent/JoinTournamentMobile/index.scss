@@ -5,7 +5,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-
 $red: #e84c3d;
 $grey: #ecedef;
 $black: #343434;
@@ -15,6 +14,7 @@ $black: #343434;
   //   margin: 3em auto;
   // font-family: sans-serif;
   display: flex;
+  align-items: center;
 }
 
 .cardMB {
@@ -34,8 +34,8 @@ $black: #343434;
 }
 
 .cardLeftMB {
-  width: 215px;
-  height: 116px;
+  width: 70%;
+  height: 112px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   // width: 262px;
@@ -46,7 +46,7 @@ $black: #343434;
 }
 
 .cardRightMB {
-  width:118px;
+  width: 30%;
   height: 112px;
   background-image: url(../../../assets//imagesDesktop//tikright.png);
   background-repeat: no-repeat;
@@ -81,11 +81,11 @@ h1 {
     font-weight: normal;
   }
 }
-h6{
-    margin-bottom: 0px !important;
-    color: #000000;
+h6 {
+  margin-bottom: 0px !important;
+  color: #000000;
 }
-h5{
+h5 {
   margin-bottom: 0px !important;
   font-family: "Cyntho Next";
 }
@@ -105,7 +105,7 @@ h5{
     font-size: 14px;
     color: #000000;
     font-weight: 500;
-    font-family: 'Cyntho Next';
+    font-family: "Cyntho Next";
   }
 }
 
@@ -162,9 +162,11 @@ h5{
 .numberMB {
   text-align: center;
   text-transform: uppercase;
-  position: absolute;
-  top: 9px;
-  left: 16px;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   h3 {
     color: $red;
     margin: 0.9em 0 0 0;
@@ -189,4 +191,3 @@ h5{
     64px 0 0 1px $black, 68px 0 0 1px $black, 72px 0 0 1px $black,
     74px 0 0 1px $black, 77px 0 0 1px $black, 81px 0 0 1px $black;
 }
-

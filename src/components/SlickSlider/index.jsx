@@ -13,8 +13,11 @@ export default function SlickSlider(props) {
     dots: true,
     arrows: false,
     autoplay: true,
+    fade: true,
     autoplaySpeed: 2000,
-    speed: 1000,
+    speed: 700,
+    slidesToShow: 1,
+    slidesToScroll: 1,
     adaptiveHeight: true,
     beforeChange: (prev, next) => {
       setIndex(next);
@@ -52,7 +55,7 @@ export default function SlickSlider(props) {
     ),
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <Slider {...settings}>
@@ -60,14 +63,26 @@ export default function SlickSlider(props) {
         ? [...images].map((item, index) => {
             return (
               <Box
-                onClick={() => {
-                  navigate("/tournamentDetail/1")
+                sx={{
+                  height: width < 576 ? "208px" : "363px",
                 }}
-                key={index}
-                sx={{ width: "100%", cursor: "pointer" }}
-                component={"img"}
-                src={item}
-              ></Box>
+              >
+                <Box
+                  onClick={() => {
+                    navigate("/tournamentDetail/1");
+                  }}
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    cursor: "pointer",
+                    borderRadius: "8px",
+                    objectFit: "cover"
+                  }}
+                  key={index}
+                  component={"img"}
+                  src={item}
+                ></Box>
+              </Box>
             );
           })
         : htmlCode}
