@@ -68,6 +68,7 @@ export default function NewHomePage() {
     biggestEndTour,
     brandTour,
     hotWeekTour,
+    threeBrandTour,
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -97,6 +98,9 @@ export default function NewHomePage() {
       dispatch({
         type: "GET_HOTTEST_WEEK_TOUR",
       });
+      dispatch({
+        type: "GET_THREE_BRAND_TOUR",
+      });
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
@@ -109,7 +113,7 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-
+  console.log("threeBrandTour: ", threeBrandTour);
   return (
     <Container
       maxWidth="lg"
@@ -155,16 +159,18 @@ export default function NewHomePage() {
               appendDot={true}
               images={
                 width < 576
-                  ? [
-                      images.pepperBanner,
-                      images.pepperBanner,
-                      images.pepperBanner,
-                    ]
-                  : [
-                      images.pepperBanner,
-                      images.pepperBanner,
-                      images.pepperBanner,
-                    ]
+                  ? threeBrandTour?.map(
+                      (n) =>
+                        process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        n?.tournamentBackgroundMobile
+                    )
+                  : threeBrandTour?.map(
+                      (n) =>
+                        process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        n?.tournamentBackground
+                    )
               }
             />
           </Box>
@@ -1207,7 +1213,7 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {hotWeekTour?.tournamentName}
+                    {/* {hotWeekTour?.tournamentName} */}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -1381,7 +1387,7 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {hotWeekTour?.tournamentName}
+                    {/* {hotWeekTour?.tournamentName} */}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>

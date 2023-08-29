@@ -4,6 +4,7 @@
   top: 48px;
   // top: 97.95px;
   transform: none;
+  z-index: 1201;
   // transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
   // transition: visibility 0s, all 0.2s ease-in-out;
 }
@@ -23,6 +24,11 @@ p {
   margin-bottom: 0 !important;
   // font-weight: 700;
   text-align: center;
+}
+
+.width-tablet{
+  width: 230px;
+  transition: all ease 1s;
 }
 
 .btn-sign-in {

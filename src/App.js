@@ -18,6 +18,7 @@ import ListGamePage from "./pages/GameManager/ListGamePage";
 import JoinTournamentComponent from "./pages/JoinTournamentComponent";
 import {
   getLeaderBoardSuccess,
+  getNavTablet,
   logoutSuccessFully,
   registerSuccesFully,
   saveDataLogin,
@@ -95,8 +96,17 @@ function App() {
   useTracking("");
 
   const [socket] = useState(_socket);
-  const { token } = store.getState().authReducer;
+  const { token, isNavTablet } = store.getState().authReducer;
   const { width } = useWindowDimensions();
+ 
+  console.log(isNavTablet);
+  useEffect(() => {
+    if(width <= 992 && width >= 576 ) {
+      store.dispatch(getNavTablet(false))
+    } else {
+      store.dispatch(getNavTablet(true))
+    }
+  },[width])
 
   useEffect(() => {
     if (!token) {
