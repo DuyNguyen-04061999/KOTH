@@ -177,6 +177,15 @@ export default function JoinTournament() {
         setIsFullScreen(true);
       }
     });
+
+    socket?.on("buyTicketTournamentSuccess", (data) => {
+      setTimeout(() => {
+        socket?.emit("detailTournament", {
+          tournamentId: data?.id,
+        });
+      }, 1000)
+    })
+
     return () => {
       socket?.off("joinTournamentSuccess");
     };
@@ -235,7 +244,7 @@ export default function JoinTournament() {
       setUnPauseGame(true);
     }
   }, [orientation, width, detailTournament, startGame]);
-  console.log("Detail Tournament: ", detailTournament);
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />

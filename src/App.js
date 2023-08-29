@@ -99,7 +99,6 @@ function App() {
   const { token, isNavTablet } = store.getState().authReducer;
   const { width } = useWindowDimensions();
  
-  console.log(isNavTablet);
   useEffect(() => {
     if(width <= 992 && width >= 576 ) {
       store.dispatch(getNavTablet(false))

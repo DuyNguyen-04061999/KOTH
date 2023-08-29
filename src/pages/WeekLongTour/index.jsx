@@ -43,7 +43,7 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
-  console.log(weeklyTournament);
+  
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {

@@ -113,7 +113,7 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-  console.log("threeBrandTour: ", threeBrandTour);
+  
   return (
     <Container
       maxWidth="lg"

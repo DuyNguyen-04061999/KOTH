@@ -22,8 +22,7 @@ export default function Navbar() {
   const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
-    console.log(isNav);
-    console.log(isNavTablet);
+
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
