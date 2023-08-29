@@ -1197,7 +1197,7 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {hotWeekTour?.tournamentName}
+                    {/* {hotWeekTour?.tournamentName} */}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -1371,7 +1371,7 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {hotWeekTour?.tournamentName}
+                    {/* {hotWeekTour?.tournamentName} */}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>

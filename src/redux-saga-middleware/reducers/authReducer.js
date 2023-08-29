@@ -106,6 +106,13 @@ export const showDropdown = (data) => {
   };
 };
 
+export const getNavTablet = (data) => {
+  return {
+    type: "GET_NAV_TABLET",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -127,6 +134,7 @@ const authReducer = (
     idPackage: "",
     userPackageId: "",
     isDropdownNav: true,
+    isNavTablet: true,
   },
   action
 ) => {
@@ -196,6 +204,10 @@ const authReducer = (
       return { ...state, idPackage: payload };
     case "SHOW_DROPDOWN":
       return { ...state, isDropdownNav: !state.isDropdownNav };
+    case "GET_NAV_TABLET":
+      // console.log(payload);
+      // console.log(state);
+      return { ...state, isNavTablet: payload };
     default:
       return state;
   }

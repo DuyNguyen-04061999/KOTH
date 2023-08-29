@@ -12,11 +12,18 @@ import {
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
 import { getAppType } from "../../../utils/helper";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { token, isNav, isDropdownNav } = useSelector((state) => state.authReducer);
+  const {width} = useWindowDimensions()
+  const [tablet,setTablet] = useState("")
+  const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
+    (state) => state.authReducer
+  );
+    console.log(isNav);
+    console.log(isNavTablet);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -28,24 +35,35 @@ export default function Navbar() {
 
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
-    dispatch(showDropdown(false))
+    dispatch(showDropdown(false));
   };
 
+  useEffect(() => {
+    if(isNavTablet === false) {
+      if( isNav === true){
+        setTablet('width-tablet')
+      } else {
+        setTablet("w")
+      }
+    }
+  })
+
+
   return (
-    <Box className="nav-section">
+    <Box className={`nav-section ${tablet}`} >
       <Box
         sx={{
           backgroundColor: "#2e233d",
           color: "#9485b8",
-          height: "95vh",
+          height: "96vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           paddingBottom: "9px",
           transitionDuration: "all 1s",
-          paddingLeft: isNav === true ? "30px" : "20px",
-          paddingRight: isNav === true ? "30px" : "20px",
-          transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+          paddingLeft: isNav === true ? "30px" : "7px",
+          paddingRight: isNav === true ? "30px" : "7px",
+          transition:' all ease 1s'
         }}
         className="pt-3 pb-3 nav-animate"
       >
@@ -251,43 +269,43 @@ export default function Navbar() {
                   >
                     Tournament
                   </span>
-                </Box>
-                <Box>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                    className="me-2"
-                    style={{
-                      transform:
-                      isDropdownNav === true
-                          ? "rotate(0deg)"
-                          : "rotate(-88deg)",
-                      transition: "all 0.3s",
-                    }}
-                  >
-                    <g clipPath="url(#clip0_2059_14801)">
-                      <g>
+                  <Box>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      fill="none"
+                      viewBox="0 0 14 14"
+                      className="me-2"
+                      style={{
+                        transform:
+                          isDropdownNav === true
+                            ? "rotate(0deg)"
+                            : "rotate(-88deg)",
+                        transition: "all 0.3s",
+                      }}
+                    >
+                      <g clipPath="url(#clip0_2059_14801)">
                         <g>
-                          <path
-                            fill="#A89CD7"
-                            d="M6.997 8.348l5.238-5.237a.76.76 0 01.541-.223.76.76 0 01.542.223l.458.46a.76.76 0 01.224.54.76.76 0 01-.224.542L7.54 10.89a.76.76 0 01-.543.223.76.76 0 01-.543-.223l-6.23-6.23A.76.76 0 010 4.117a.76.76 0 01.224-.541l.458-.46a.767.767 0 011.083 0l5.232 5.232z"
-                          ></path>
+                          <g>
+                            <path
+                              fill="#A89CD7"
+                              d="M6.997 8.348l5.238-5.237a.76.76 0 01.541-.223.76.76 0 01.542.223l.458.46a.76.76 0 01.224.54.76.76 0 01-.224.542L7.54 10.89a.76.76 0 01-.543.223.76.76 0 01-.543-.223l-6.23-6.23A.76.76 0 010 4.117a.76.76 0 01.224-.541l.458-.46a.767.767 0 011.083 0l5.232 5.232z"
+                            ></path>
+                          </g>
                         </g>
                       </g>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_2059_14801">
-                        <path
-                          fill="#fff"
-                          d="M0 0H14V14H0z"
-                          transform="matrix(0 -1 -1 0 14 14)"
-                        ></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
+                      <defs>
+                        <clipPath id="clip0_2059_14801">
+                          <path
+                            fill="#fff"
+                            d="M0 0H14V14H0z"
+                            transform="matrix(0 -1 -1 0 14 14)"
+                          ></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </Box>
                 </Box>
               </Box>
               <Box
@@ -938,107 +956,105 @@ export default function Navbar() {
               </span>
             </Box>
           )}
-         {getAppType() === "promote" ? (
-           <Box
-            className="cursor-pointer"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: isNav === true ? "flex-start" : "center",
-              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-            }}
-            onClick={() => {
-              navigate(`/help-center`);
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              fill="none"
-              viewBox="0 0 18 18"
-              className="p-1 me-1"
-            >
-              <g
-                stroke="#A89CD7"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.5"
-              >
-                <path
-                  strokeMiterlimit="10"
-                  d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
-                ></path>
-                <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
-              </g>
-            </svg>
-            <span
-              className="hover-nav"
-              style={{
-                cursor: "pointer",
-                fontWeight: "700",
-                fontSize: "15px",
-                marginLeft: "5px",
-                display: isNav === true ? "block" : "none",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
+          {getAppType() === "promote" ? (
+            <Box
+              className="cursor-pointer"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: isNav === true ? "flex-start" : "center",
+                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+              }}
+              onClick={() => {
+                navigate(`/help-center`);
               }}
             >
-              Help Center
-            </span>
-          </Box>
-         ) : (
-          <Box
-            className="cursor-pointer"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: isNav === true ? "flex-start" : "center",
-              transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-            }}
-            onClick={() => {
-              
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              fill="none"
-              viewBox="0 0 18 18"
-              className="p-1 me-1"
-            >
-              <g
-                stroke="#A89CD7"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.5"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                fill="none"
+                viewBox="0 0 18 18"
+                className="p-1 me-1"
               >
-                <path
-                  strokeMiterlimit="10"
-                  d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
-                ></path>
-                <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
-              </g>
-            </svg>
-            <span
-              className="hover-nav"
-              style={{
-                cursor: "pointer",
-                fontWeight: "700",
-                fontSize: "15px",
-                marginLeft: "5px",
-                display: isNav === true ? "block" : "none",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
+                <g
+                  stroke="#A89CD7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                >
+                  <path
+                    strokeMiterlimit="10"
+                    d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
+                  ></path>
+                  <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
+                </g>
+              </svg>
+              <span
+                className="hover-nav"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  marginLeft: "5px",
+                  display: isNav === true ? "block" : "none",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                }}
+              >
+                Help Center
+              </span>
+            </Box>
+          ) : (
+            <Box
+              className="cursor-pointer"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: isNav === true ? "flex-start" : "center",
+                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
               }}
+              onClick={() => {}}
             >
-              FAQs
-            </span>
-          </Box>
-         )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                fill="none"
+                viewBox="0 0 18 18"
+                className="p-1 me-1"
+              >
+                <g
+                  stroke="#A89CD7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                >
+                  <path
+                    strokeMiterlimit="10"
+                    d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
+                  ></path>
+                  <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
+                </g>
+              </svg>
+              <span
+                className="hover-nav"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  marginLeft: "5px",
+                  display: isNav === true ? "block" : "none",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                }}
+              >
+                FAQs
+              </span>
+            </Box>
+          )}
         </Box>
         {/* <Box
           sx={{
