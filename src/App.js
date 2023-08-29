@@ -563,7 +563,7 @@ function App() {
               element={<JoinTournamentComponent />}
             />
             <Route path="/hot-tournament" element={<HotTournament />} />
-            <Route path="/hourly-tournament" element={<HourlyTournament />} />
+            {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
             <Route path="/daily-tournament" element={<DailyTournament />} />
             <Route path="/week-long-tournament" element={<WeekLongTour />} />
             <Route path="/help-center" element={<FAQPage />} />

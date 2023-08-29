@@ -125,6 +125,9 @@ import brandImage from "../assets/imagesHome/brandImage.png";
 import iconMember from "../assets/imagesHome/iconMember.png";
 import PepperBanner from "../assets/images/banner 01 1.png";
 import PepperBannerMobile from "../assets/images/banner 01 2.png";
+import BannerLenovo from "../assets/imagesHome/bannerLenovo.png"
+import BannerAmazon from "../assets/imagesHome/bannerAmazon.png"
+import BannerSteam from "../assets/imagesHome/bannerSteam.png"
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -303,6 +306,9 @@ export const imageHome = {
 };
 
 export const images = {
+  bannerSteam: BannerSteam,
+  bannerAmazon: BannerAmazon,
+  bannerLenovo: BannerLenovo,
   pepperBanner: PepperBanner,
   pepperBannerMobile: PepperBannerMobile,
   signInCrypto: signInCrypto,
