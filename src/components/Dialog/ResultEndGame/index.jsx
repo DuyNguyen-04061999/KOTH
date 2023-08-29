@@ -23,7 +23,7 @@ export default function ResultEndGame() {
         aria-describedby="alert-dialog-description"
         sx={{
           zIndex: 2000,
-            "& .MuiPaper-root-MuiDialog-paper": {
+            "& .MuiDialog-paper": {
                 borderRadius: 0,
                 backgroundColor:"transparent",
                 boxShadow:"none"
@@ -73,7 +73,7 @@ export default function ResultEndGame() {
               </div>
               <div className="summary__cta">
                 <button onClick={() => {
-                  // window.location.reload()
+                  dispatch(toggleOpenResultEndGame())
                 }} className="btnResult btn__continue">Continue</button>
               </div>
             </div>

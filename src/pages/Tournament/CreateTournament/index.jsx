@@ -1988,7 +1988,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                         }}
                         value={timeType}
                       >
-                        <MenuItem
+                        {/* <MenuItem
                           sx={{
                             fontSize: getFontSizeDependOnWidth(width),
                             minHeight: "20px !important",
@@ -1996,7 +1996,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                           value={"hourly"}
                         >
                           Hourly Tour
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem
                           sx={{
                             fontSize: getFontSizeDependOnWidth(width),

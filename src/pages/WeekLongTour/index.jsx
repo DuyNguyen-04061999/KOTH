@@ -43,12 +43,13 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
+  console.log(weeklyTournament);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {
       dispatch({
         type: "CALL_LIST_TOURNAMENT",
-        payload: "week",
+        payload: "weekly",
       });
       setIsFetchList(false);
     }
@@ -100,8 +101,8 @@ export default function WeekLongTour() {
                 }}
               >
                 {weeklyTournament
-                  ?.slice(itemOffset, itemOffset + 10)
-                  .map((item, index) => {
+                  // ?.slice(itemOffset, itemOffset + 10)
+                  ?.map((item, index) => {
                     return (
                       <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
                         <ItemComponent tourInfo={item} countdown={true} />

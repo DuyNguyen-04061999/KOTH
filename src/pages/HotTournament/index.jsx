@@ -15,6 +15,7 @@ import { imageDesktop, images, video } from "../../utils/images";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
+import NewFooter from "../NewFooter";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -137,94 +138,7 @@ export default function HotTournament() {
                   })}
                 </Box>
               </Box>
-              <Box sx={{ marginBottom: "32px", marginTop: "64px" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: width < 576 ? "none" : "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      color: "#ffff",
-                      fontSize: width < 576 ? "16px" : "25px",
-                    }}
-                  >
-                    Support
-                  </Typography>
-                  <Box sx={{ width: width > 576 ? "38%" : "none" }}>
-                    {" "}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        padding: "20px 10px 0px",
-                      }}
-                    >
-                      <Typography sx={{ ...typographyStyle }}>
-                        Help center
-                      </Typography>
-                      <Typography sx={{ ...typographyStyle }}>
-                        Fairness
-                      </Typography>
-                      <Typography sx={{ ...typographyStyle }}>FAG</Typography>
-                      <Typography sx={{ ...typographyStyle }}>
-                        Privacy Policy
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        padding: "10px 40px",
-                      }}
-                    >
-                      <Typography sx={{ ...typographyStyle }}>
-                        Term of service
-                      </Typography>
-                      <Typography sx={{ ...typographyStyle }}>
-                        Design resources
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  {" "}
-                  <Box
-                    component={"img"}
-                    sx={{
-                      width: width < 576 ? "120px" : "200px",
-                      height: width < 576 ? "44px" : "73.333px",
-                      marginTop: "60px",
-                    }}
-                    src={imageDesktop.LogoCongTy}
-                  ></Box>
-                </Box>
-                <Typography
-                  sx={{
-                    color: "#fff",
-                    fontWeight: "200 !important",
-                    fontSize: width < 576 ? "12px" : "16px",
-                    lineHeight: "normal",
-                    marginTop: "30px",
-                  }}
-                >
-                  "Experience the thrill of gaming at Play4Promo, where
-                  tournaments, gameplay, and your dedication unlock exciting
-                  voucher rewards. Our policies guarantee a seamless and
-                  rewarding voucher redemption process for an enhanced gaming
-                  journey."
-                </Typography>
-                <Typography className="text-center text-white">
-                  Copyright © 2023 Play4Promo. All rights reserved. | Version 0.8
-                </Typography>
-              </Box>
+              <NewFooter />
             </ThemeProvider>
           </Container>
         ) : (

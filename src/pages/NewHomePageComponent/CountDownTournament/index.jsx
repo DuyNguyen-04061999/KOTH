@@ -45,6 +45,7 @@ export default function CountDownTournament({
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
+        marginRight: "102px"
       }}
     >
       <Typography
@@ -66,11 +67,13 @@ export default function CountDownTournament({
           sx={{
             display: "flex",
             alignItems: "center",
-            width: "25px",
-            height: "25px",
+            width: "29px",
+            height: "28px",
+            padding: "4px",
             backgroundColor: "#68399E",
             borderRadius: "5px",
             justifyContent: "center",
+            gap: "10px"
           }}
         >
           <Typography sx={{ ...typographyStyle }}>{hours}</Typography>
@@ -88,11 +91,13 @@ export default function CountDownTournament({
           sx={{
             display: "flex",
             alignItems: "center",
-            width: "25px",
-            height: "25px",
+            width: "29px",
+            height: "28px",
+            padding: "4px",
             backgroundColor: "#68399E",
             borderRadius: "5px",
             justifyContent: "center",
+            gap: "10px"
           }}
         >
           {" "}
@@ -112,11 +117,13 @@ export default function CountDownTournament({
           sx={{
             display: "flex",
             alignItems: "center",
-            width: "25px",
-            height: "25px",
+            width: "29px",
+            height: "28px",
+            padding: "4px",
             backgroundColor: "#68399E",
             borderRadius: "5px",
             justifyContent: "center",
+            gap: "10px"
           }}
         >
           {" "}
