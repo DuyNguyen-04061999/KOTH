@@ -252,7 +252,7 @@ export default function JoinTournament() {
               <Box
                 sx={{
                   width: "100%",
-                  height: width / 7,
+                  height: "340px",
                   boxSizing: "border-box",
                   padding: `${parseFloat(width / 51.9)}px`,
                   backgroundImage: `url("${
@@ -761,7 +761,7 @@ export default function JoinTournament() {
                     <Box className="d-flex" sx={{ marginTop: "16px" }}>
                       <div className="cardWrap">
                         <div className="cardT cardLeft">
-                          <h5 style={{ color: "#BE48ED", marginTop: "15px" }}>
+                          <h5 style={{ color: "#BE48ED", marginTop: "15px" }} className="mb-2">
                             {detailTournament?.tournamentInfors?.rewardInfors
                               ?.rewardTitle || "SS Z-Flip 5 free voucher"}
                           </h5>

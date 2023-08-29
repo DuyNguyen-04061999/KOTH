@@ -149,10 +149,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           <Box
             sx={{
               backgroundImage: `url("${
-                detailTournament?.tournamentBackground
+                detailTournament?.tournamentBackgroundMobile
                   ? process.env.REACT_APP_SOCKET_SERVER +
                     "/" +
-                    detailTournament?.tournamentBackground
+                    detailTournament?.tournamentBackgroundMobile
                   : images.DoubleDragonMobile
               }")`,
               backgroundSize: "cover",
@@ -231,176 +231,123 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ padding: "28px 27px 0px 27px" }}>
-            <Box>
-              <Typography
-                className="text-white"
-                sx={{
-                  marginLeft: "0px !important",
-                  fontFamily: "Cyntho Next !important",
-                  fontWeight: "500 !important",
-                  fontSize: "14px",
-                  ...typographyStyle,
-                }}
-              >
-                Reward
-              </Typography>
-              <p
-                className="text-white text-start f-500"
-                style={{
-                  fontFamily: "Cyntho Next !important",
-                  fontWeight: "500 !improtant",
-                  fontSize: "12px",
-                }}
-              >
-                Play game to get this voucher
-              </p>
-            </Box>
-            {/* ----------------------- */}
-            <div className="cardWrapMB justify-content-center">
-              <div className="cardMB cardLeftMB">
-                <h5
-                  style={{
-                    color: "#BE48ED",
-                    fontSize: "16px",
-                    paddingTop: "10px",
-                    paddingBottom: "12px",
-                    fontFamily: "Cyntho Next !important",
-                    fontWeight: "500 !important",
-                  }}
-                >
-                  {detailTournament?.tournamentInfors?.rewardInfors
-                    ?.rewardTitle &&
-                  detailTournament?.tournamentInfors?.rewardInfors?.rewardTitle
-                    ?.length > 10
-                    ? String(
+          <Box className="d-flex p-2 ps-3 pe-3" sx={{ marginTop: "16px" }}>
+              <div className="cardWrap">
+                <div className="cardT cardLeft">
+                  <h5 style={{ color: "#BE48ED", marginTop: "15px" }} className="mb-2">
+                    {detailTournament?.tournamentInfors?.rewardInfors
+                      ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                  </h5>
+                  <Grid container>
+                    <div className="d-flex justify-content-between" style={{
+                      width: '90%'
+                    }}>
+                      <Grid item md={5}>
+                        <div className="title d-flex flex-column mb-2">
+                          <h6
+                            style={{
+                              fontSize: "10px",
+                              marginBottom: "0px !important",
+                            }}
+                          >
+                            Recipient
+                          </h6>
+                          <span>
+                            {sliceString(
+                              detailTournament?.tournamentInfors
+                                ?.rewardInfors?.rewardRecipient
+                            ) || "Recipient"}
+                          </span>
+                        </div>
+                      </Grid>
+                      <Grid item md={6} className="text-end">
+                        <div className="name d-flex flex-column mb-2">
+                          <h6
+                            style={{
+                              fontSize: "10px",
+                              marginBottom: "0px !important",
+                            }}
+                          >
+                            Validity date
+                          </h6>
+                          <span>
+                            {moment(
+                              detailTournament?.tournamentInfors
+                                ?.rewardInfors?.rewardValidityDate
+                            )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
+                          </span>
+                        </div>
+                      </Grid>
+                    </div>
+                    <div className="d-flex justify-content-between" style={{
+                      width: '90%'
+                    }}>
+                      <Grid item md={5}>
+                          <div className="seat d-flex flex-column">
+                            <h2
+                              style={{
+                                fontSize: "10px",
+                                marginBottom: "0px !important",
+                              }}
+                            >
+                              Sponsor by
+                            </h2>
+                            <span>
+                              {detailTournament?.tournamentInfors?.owner
+                                ?.brandName || "Samsung"}
+                            </span>
+                          </div>
+                        </Grid>
+                        <Grid item md={6} className="text-end">
+                          <div className="time d-flex flex-column">
+                            <h2
+                              style={{
+                                fontSize: "10px",
+                                marginBottom: "0px !important",
+                              }}
+                            >
+                              Conditions
+                            </h2>
+                            <span
+                              onClick={() => setOpenVoucher(true)}
+                              style={{ color: "#0096FF" }}
+                            >
+                              See more
+                            </span>
+                          </div>
+                        </Grid>
+                    </div>
+                    
+                  </Grid>
+                </div>
+                <div className="cardT cardRight">
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img
+                      src={
                         detailTournament?.tournamentInfors?.rewardInfors
-                          ?.rewardTitle
-                      )?.slice(0, 10)
-                    : detailTournament?.tournamentInfors?.rewardInfors
-                        ?.rewardTitle}
-                </h5>
-                <Grid container>
-                  <Grid item xs={6}>
-                    <div className="titleMB d-flex flex-column mb-2">
-                      <h6
-                        style={{
-                          fontSize: "10px",
-                          marginBottom: "0px !important",
-                          color: "#525252",
-                        }}
-                      >
-                        Recipient
-                      </h6>
-                      <Typography
-                        sx={{
-                          fontWeight: "100",
-                          fontFamily: "Cyntho Next",
-                          fontSize: "12px",
-                          ...typographyStyle,
-                          color: "#000",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        {sliceString(
-                          detailTournament?.tournamentInfors?.rewardInfors
-                            ?.rewardRecipient
-                        ) || "Recipient"}
-                      </Typography>
-                    </div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <div className="nameMB d-flex flex-column mb-2">
-                      <h6
-                        style={{
-                          fontSize: "10px",
-                          marginBottom: "0px !important",
-                          color: "#525252",
-                        }}
-                      >
-                        Validity date
-                      </h6>
-                      <Typography
-                        sx={{
-                          fontWeight: "100",
-                          fontFamily: "Cyntho Next",
-                          fontSize: "12px",
-                          ...typographyStyle,
-                          color: "#000",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        {moment(
-                          detailTournament?.tournamentInfors?.rewardInfors
-                            ?.rewardValidityDate
-                        )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                      </Typography>
-                    </div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <div className="seatMB d-flex flex-column">
-                      <h2
-                        style={{
-                          fontSize: "10px",
-                          marginBottom: "0px !important",
-                        }}
-                      >
-                        Sponsor by
-                      </h2>
-                      <h6
-                        style={{
-                          fontWeight: "100",
-                          fontFamily: "Cyntho Next",
-                          fontSize: "12px",
-                        }}
-                      >
-                        {detailTournament?.tournamentInfors?.owner?.brandName ||
-                          "Samsung"}
-                      </h6>
-                    </div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <div className="timeMB d-flex flex-column">
-                      <h2
-                        style={{
-                          fontSize: "10px",
-                          marginBottom: "0px !important",
-                        }}
-                      >
-                        Conditions
-                      </h2>
-                      <h6
-                        onClick={() => setOpenVoucher(true)}
-                        style={{ color: "#0096FF", fontSize: "12px" }}
-                      >
-                        See more
-                      </h6>
-                    </div>
-                  </Grid>
-                </Grid>
-              </div>
-              <div className="cardMB cardRightMB">
-                <div className="numberMB">
-                  <img
-                    src={
-                      detailTournament?.tournamentInfors?.rewardInfors
-                        ?.rewardAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          detailTournament?.tournamentInfors?.rewardInfors
-                            ?.rewardAvatar
-                        : images.GameTournament
-                    }
-                    alt="..."
-                    width={"100%"}
-                    height={"100% "}
-                    style={{ borderRadius: "8px" }}
-                  />
+                          ?.rewardAvatar
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            detailTournament?.tournamentInfors
+                              ?.rewardInfors?.rewardAvatar
+                          : images.GameTournament
+                      }
+                      alt="..."
+                      width={100}
+                      height={105}
+                    />
+                  </Box>
                 </div>
               </div>
-            </div>
-            {/* --------------------------  */}
-          </Box>
+            </Box>
           <GameInTournament
             game={detailTournament?.tournamentInfors?.skin?.skinGame || null}
           />
