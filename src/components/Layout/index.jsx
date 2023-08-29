@@ -120,7 +120,7 @@ export default function Layout(props) {
   const { isWalletDialog, isTransactionDialog } = useSelector(
     (state) => state.walletReducer
   );
-  const { token, isNav, resetInputValue } = useSelector(
+  const { token, isNav, resetInputValue, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
 
@@ -170,6 +170,12 @@ export default function Layout(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    if(width < 992 && width > 576) {
+      dispatch(clickTabNav(false))
+    }
+  },[width])
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -259,7 +265,6 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      
       <StripeAlertComponent />
       <MetaMaskDialog />
       <PopUpReward />
@@ -292,7 +297,22 @@ export default function Layout(props) {
           }}
           className="pt-1 pb-1"
         >
-          {width > 900 ? (
+           {width < 992 && width > 576 ? (
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="23"
+              viewBox="0 0 30 23"
+              fill="none"
+              onClick={clickNavIcon}
+              className="cursor-pointer"
+            >
+              <rect width="30" height="5" rx="2" fill="#A968E2" />
+              <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
+              <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
+            </svg>
+            ) : ("")}
+          {width > 992 ? (
             <div className="d-flex align-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -307,14 +327,6 @@ export default function Layout(props) {
                 <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
                 <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
               </svg>
-              {/* <label className="containerHamburger">
-                <input onClick={clickNavIcon} type="checkbox" />
-                <div className="checkmark">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </label> */}
               <div
                 className="inp-header mx-3 ps-4 cursor-pointer"
                 style={{ position: "relative" }}
@@ -356,14 +368,13 @@ export default function Layout(props) {
           ) : (
             <NavLink to="/home">
               <img
-                style={{ width: "90px", height: "auto" }}
+                style={{ width: "90px", height: "auto", marginLeft:"15px" }}
                 className="logocongty"
                 src={imageDesktop.LogoCongTy}
                 alt="logocty"
               />
             </NavLink>
           )}
-
           <Box sx={{ flexGrow: 1 }}>
             {width > 1024 ? (
               <Box>
@@ -427,22 +438,6 @@ export default function Layout(props) {
           </AvatarGroup>
           <div className="icon-toggle">
             {chatPopup === false ? (
-              // <Box
-              //   onClick={() => {
-              //     dispatch(openChatPopup());
-              //   }}
-              //   color="inherit"
-              //   aria-label="open drawer"
-              //   edge="end"
-              //   sx={{
-              //     backgroundColor: "#aa73db",
-              //     borderRadius: "4px",
-              //     padding: "4px 8px 4px 8px",
-              //   }}
-              //   className="cursor-pointer"
-              // >
-              //   <i className="fa-solid fa-message"></i>
-              // </Box>
               <Box
                 sx={{
                   backgroundColor: "#68399E",
@@ -492,14 +487,20 @@ export default function Layout(props) {
           </div>
         </Toolbar>
       </AppBar>
+      {width <992 && width > 576 ? (
+        <div className="when-active" style={{display:isNav === true ? "block" : "none"}}></div>
+      ) : ("")}
       <Grid container>
-        {width > 992 ? (
+        {width > 576 ? (
           <Grid
             item
+            sm={1}
             md={isNav === true ? 1.6 : 0.6}
             position={"relative"}
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
+              position: isNavTablet === false ? "sticky" : "relative",
+              zIndex:"1201"
             }}
           >
             <Navbar navIcon={isNav} />
@@ -510,14 +511,18 @@ export default function Layout(props) {
         <Grid
           item
           xs={12}
-          sm={12}
+          sm={11}
           md={isNav === true ? 10.4 : 11.4}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",
+            position:"relative",
+            zIndex:1
           }}
         >
-          <Main open={chatPopup}>{children}</Main>
+          <Main open={chatPopup} sx={{
+            marginRight: isNavTablet === false ? "0" : ""
+          }}>{children}</Main>
         </Grid>
       </Grid>
       <Drawer

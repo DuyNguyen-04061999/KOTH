@@ -67,7 +67,7 @@
     "socket.io-client": "^4.6.2",
     "styled-components": "^5.3.11",
     "web-vitals": "^2.1.4",
-    "web3": "^4.1.0",
+    "web3": "^1.8.0",
     "webpack": "^5.88.2",
     "yup": "^1.0.2"
   },

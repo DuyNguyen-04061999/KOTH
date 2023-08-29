@@ -28,6 +28,7 @@ export default function WalletTypePromote(props) {
           backgroundImage: `url(${popup.proWallet})`,
           width: "100%",
           height: "100%",
+          overflow: 'auto'
         }}
       >
         {/* <FullScreenDialog /> */}

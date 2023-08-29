@@ -40,6 +40,10 @@ class TournamentService {
     const res = await API.get("/api/tournaments/hottest-week-tour");
     return res;
   }
+  async callThreeBrandTour() {
+    const res = await API.get("/api/tournaments/three-brand-tour");
+    return res;
+  }
 }
 
 export default TournamentService;

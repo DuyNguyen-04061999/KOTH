@@ -14,7 +14,7 @@ export default function NewFooter() {
     marginLeft: "0px !important",
     color: "#fff",
   };
-  
+
   const { tabHelpCenter } = useSelector((state) => state.helpcenterReducer);
   const dispatch = useDispatch();
 
@@ -25,8 +25,8 @@ export default function NewFooter() {
       type: "SET_TAB_HELPCENTER",
       payload: value,
     });
-    navigate("/help-center")
-  }
+    navigate("/help-center");
+  };
 
   return (
     <Box>
@@ -55,18 +55,27 @@ export default function NewFooter() {
               }}
             >
               <Typography
-                onClick={() =>navigateFooter(0)}
+                onClick={() => navigateFooter(0)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
                 Help center
               </Typography>
-              <Typography onClick={() =>navigateFooter(2)} sx={{ ...typographyStyle, cursor: "pointer" }}>
+              <Typography
+                onClick={() => navigateFooter(2)}
+                sx={{ ...typographyStyle, cursor: "pointer" }}
+              >
                 Fairness
               </Typography>
-              <Typography onClick={() =>navigateFooter(4)} sx={{ ...typographyStyle, cursor: "pointer" }}>
+              <Typography
+                onClick={() => navigateFooter(4)}
+                sx={{ ...typographyStyle, cursor: "pointer" }}
+              >
                 FAQ
               </Typography>
-              <Typography onClick={() =>navigateFooter(0)} sx={{ ...typographyStyle, cursor: "pointer" }}>
+              <Typography
+                onClick={() => navigateFooter(0)}
+                sx={{ ...typographyStyle, cursor: "pointer" }}
+              >
                 Privacy Policy
               </Typography>
             </Box>
@@ -77,10 +86,16 @@ export default function NewFooter() {
                 padding: "10px 40px",
               }}
             >
-              <Typography onClick={() => navigateFooter(1)} sx={{ ...typographyStyle, cursor: "pointer" }}>
+              <Typography
+                onClick={() => navigateFooter(1)}
+                sx={{ ...typographyStyle, cursor: "pointer" }}
+              >
                 Term of service
               </Typography>
-              <Typography onClick={() => navigateFooter(3)} sx={{ ...typographyStyle, cursor: "pointer" }}>
+              <Typography
+                onClick={() => navigateFooter(3)}
+                sx={{ ...typographyStyle, cursor: "pointer" }}
+              >
                 Design resources
               </Typography>
             </Box>
@@ -109,7 +124,7 @@ export default function NewFooter() {
             fontWeight: "200 !important",
             fontSize: width < 576 ? "12px" : "16px",
             lineHeight: "normal",
-            marginTop: "30px",
+            marginTop: "24px",
           }}
         >
           "Experience the thrill of gaming at Play4Promo, where tournaments,
@@ -117,7 +132,18 @@ export default function NewFooter() {
           policies guarantee a seamless and rewarding voucher redemption process
           for an enhanced gaming journey."
         </Typography>
-        <Typography className="text-center text-white">
+        <Typography
+          sx={{
+            color: "#A3A3A3",
+            textAlign: "center",
+            fontSize: "10px",
+            fontStyle: "normal",
+            fontWeight: "500",
+            lineHeight: "normal",
+            marginTop: "80px",
+            marginBottom:"30px !important"
+          }}
+        >
           Copyright © 2023 Play4Promo. All rights reserved. | Version 0.8
         </Typography>
       </Box>

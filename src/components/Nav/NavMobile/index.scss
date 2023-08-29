@@ -9,10 +9,10 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    z-index: 1302;
+    z-index: 1300;
     .content_nav {
       width: 100%;
-      .abc {
+      .nav-mobile {
         display: flex;
         // background-color: #5f3380;
         // background-color: #5e337f;
@@ -43,7 +43,7 @@
     position: fixed;
     bottom: 0px;
     right: 0px;
-    z-index: 1302;
+    z-index: 1300;
     .content_nav {
       background-color: #723d9f;
       background-position: center;
@@ -54,7 +54,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      .abc {
+      .nav-mobile {
         display: flex;
         // background-color: #5f3380;
         // background-color: #5e337f;

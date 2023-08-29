@@ -18,6 +18,7 @@ import ListGamePage from "./pages/GameManager/ListGamePage";
 import JoinTournamentComponent from "./pages/JoinTournamentComponent";
 import {
   getLeaderBoardSuccess,
+  getNavTablet,
   logoutSuccessFully,
   registerSuccesFully,
   saveDataLogin,
@@ -95,8 +96,16 @@ function App() {
   useTracking("");
 
   const [socket] = useState(_socket);
-  const { token } = store.getState().authReducer;
+  const { token, isNavTablet } = store.getState().authReducer;
   const { width } = useWindowDimensions();
+ 
+  useEffect(() => {
+    if(width <= 992 && width >= 576 ) {
+      store.dispatch(getNavTablet(false))
+    } else {
+      store.dispatch(getNavTablet(true))
+    }
+  },[width])
 
   useEffect(() => {
     if (!token) {
@@ -563,7 +572,7 @@ function App() {
               element={<JoinTournamentComponent />}
             />
             <Route path="/hot-tournament" element={<HotTournament />} />
-            <Route path="/hourly-tournament" element={<HourlyTournament />} />
+            {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
             <Route path="/daily-tournament" element={<DailyTournament />} />
             <Route path="/week-long-tournament" element={<WeekLongTour />} />
             <Route path="/help-center" element={<FAQPage />} />

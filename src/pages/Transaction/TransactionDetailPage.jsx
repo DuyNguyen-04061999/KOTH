@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom'
 import _socket from '../../redux-saga-middleware/config/socket';
-import { Web3 } from "web3"
+import Web3 from "web3"
 import { useDispatch } from 'react-redux';
 import { showAlert } from '../../redux-saga-middleware/reducers/alertReducer';
 

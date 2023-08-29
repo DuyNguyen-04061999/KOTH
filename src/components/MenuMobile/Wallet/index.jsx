@@ -36,7 +36,7 @@ import {
 import { images } from "../../../utils/images";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import TransactionDetailDialog from "../../Dialog/TransactionDetail";
-import { Web3 } from "web3";
+import Web3 from "web3";
 import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer";
 import WalletTypePromote from "./WalletTypePromote";
 import { getAppType } from "../../../utils/helper";
@@ -105,12 +105,15 @@ export default function DialogWallet(props) {
           data?.token_abi,
           data?.token_contract
         );
-        let depositAmount = data?.token_quantity + "000000000000000000";
+        let depositAmount = data?.token_quantity + "00000000";
 
-        let result = await contract.methods
+        let result = await contract.methods 
           .transfer(data?.target_wallet, depositAmount)
-          .send({ from: account, gas: 600000, gasPrice: 30 * 1e9 });
-
+          .send({ from: account });
+          
+          // console.log("tid", data?.transaction_id);
+          // console.log("txh", result?.transactionHash);
+          
         if (result) {
           socket?.emit("updateDepositTransaction", {
             type: "confirm",

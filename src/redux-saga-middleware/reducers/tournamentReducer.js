@@ -141,6 +141,12 @@ export const getHottestWeekTourSuccess = (data) => {
     payload: data,
   };
 };
+export const getThreeBrandTourSuccess = (data) => {
+  return {
+    type: "GET_THREE_BRAND_TOUR_SUCCESS",
+    payload: data,
+  };
+};
 
 export const toggleOpenResultEndGame = (data) => {
   return {
@@ -170,8 +176,9 @@ const tournamentReducer = (
     biggestEndTour: [],
     brandTour: [],
     hotWeekTour: [],
+    threeBrandTour: [],
     isResultEndGame: false,
-    endGameScore: 0
+    endGameScore: 0,
     //--------------------------------------
   },
   action
@@ -289,14 +296,19 @@ const tournamentReducer = (
         ...state,
         hotWeekTour: payload,
       };
-      case "TOGGLE_OPEN_RESULT_END_GAME" :
-        return {
-          ...state, 
-          isResultEndGame: !state.isResultEndGame,
-          endGameScore: payload || 0
-        }
+    case "GET_THREE_BRAND_TOUR_SUCCESS":
+      return {
+        ...state,
+        threeBrandTour: payload,
+      };
+    case "TOGGLE_OPEN_RESULT_END_GAME":
+      return {
+        ...state,
+        isResultEndGame: !state.isResultEndGame,
+        endGameScore: payload || 0,
+      };
     default:
-      return {...state};
+      return { ...state };
   }
 };
 export default tournamentReducer;

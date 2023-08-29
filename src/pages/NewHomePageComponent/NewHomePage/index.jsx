@@ -68,6 +68,7 @@ export default function NewHomePage() {
     biggestEndTour,
     brandTour,
     hotWeekTour,
+    threeBrandTour,
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -97,6 +98,9 @@ export default function NewHomePage() {
       dispatch({
         type: "GET_HOTTEST_WEEK_TOUR",
       });
+      dispatch({
+        type: "GET_THREE_BRAND_TOUR",
+      });
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
@@ -114,8 +118,18 @@ export default function NewHomePage() {
     <Container
       maxWidth="lg"
       sx={{
-        paddingLeft: width < 576 ? "24px !important" : "0px !important",
-        paddingRight: width < 576 ? "24px !important" : "0px !important",
+        paddingLeft:
+          width < 576
+            ? "24px !important"
+            : 767 <= width <= 1280
+            ? "32px !important"
+            : "0px !important",
+        paddingRight:
+          width < 576
+            ? "24px !important"
+            : 767 <= width <= 1280
+            ? "32px !important"
+            : "0px !important",
         paddingTop: width < 576 ? "24px !important" : "50px !important",
       }}
     >
@@ -130,31 +144,26 @@ export default function NewHomePage() {
           }}
         >
           <Box
-            onClick={() => {
-              if (width > 576) {
-                navigate("/week-long-tournament");
-              } else {
-                setOpen(true);
-                setType("week-long");
-              }
-            }}
             sx={{ marginBottom: width < 576 ? "24px" : "32px" }}
           >
             {" "}
             <SlickSlider
               appendDot={true}
               images={
-                width < 576
-                  ? [
-                      images.pepperBannerMobile,
-                      // images.bannerTournamentMobile_1,
-                      // images.bannerTournamentMobile_2,
-                    ]
-                  : [
-                      images.pepperBanner,
-                      // images.bannerTournament1,
-                      // images.bannerTournament2,
-                    ]
+                width < 576 ? [
+                  images.pepperBanner,
+                  images.pepperBanner,
+                  images.pepperBanner,
+                ]
+              : [
+                  images.pepperBanner,
+                  images.pepperBanner,
+                  images.pepperBanner,
+                ]
+                
+              }
+              tours={
+                threeBrandTour || []
               }
             />
           </Box>
@@ -218,7 +227,7 @@ export default function NewHomePage() {
               {width < 576 ? (
                 <Slider
                   dots={false}
-                  slidesToShow={2}
+                  slidesToShow={2.05}
                   arrows={false}
                   slidesToScroll={2}
                   infinite={false}
@@ -323,7 +332,7 @@ export default function NewHomePage() {
                       paddingTop: "10px",
                     }}
                   >
-                    {biggestEndTour?.bestUser?.userNickName}
+                    {biggestEndTour?.bestUser?.userNickName || "super_"}
                   </Typography>
                 </Box>
               </Box>
@@ -348,7 +357,11 @@ export default function NewHomePage() {
                 >
                   {String(
                     biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase() || "MEGA HOLIC"}
+                  )?.length > 10 ? String(
+                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                  )?.toUpperCase()?.slice(0, 10) + "..." || "MEGA HOLIC" : String(
+                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                  )?.toUpperCase()}
                 </Typography>
                 <Box
                   sx={{
@@ -366,9 +379,9 @@ export default function NewHomePage() {
                   }}
                 >
                   <Typography sx={{ color: "#fff", fontSize: "40px" }}>
-                    {biggestEndTour?.endTour?.tournamentPrize
-                      ? biggestEndTour?.endTour?.tournamentPrize + " $"
-                      : ""}
+                    {biggestEndTour?.endTour?.tournamentAutoAmount
+                      ? biggestEndTour?.endTour?.tournamentAutoAmount + " $"
+                      : "5000$"}
                   </Typography>
                   <Typography sx={{ color: "#fff", fontSize: "9px" }}>
                     GRAND TOURNAMENT WINNER
@@ -446,7 +459,7 @@ export default function NewHomePage() {
                     marginLeft: "0px !important",
                   }}
                 >
-                  {biggestEndTour?.bestUser?.userNickName}
+                  {biggestEndTour?.bestUser?.userNickName || "super_"}
                 </Typography>
               </Box>
               <Box
@@ -470,7 +483,11 @@ export default function NewHomePage() {
                 >
                   {String(
                     biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase() || "MEGA HOLIC"}
+                  )?.length > 10 ? String(
+                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                  )?.toUpperCase()?.slice(0, 10) + "..." || "MEGA HOLIC" : String(
+                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                  )?.toUpperCase()}
                 </Typography>
                 <Typography
                   sx={{
@@ -479,12 +496,13 @@ export default function NewHomePage() {
                     fontSize: "88px",
                     position: "absolute",
                     top: "85px",
-                    left: "45%",
+                    width: "100%"
                   }}
+                  className="text-center"
                 >
-                  {biggestEndTour?.endTour?.tournamentPrize
-                    ? biggestEndTour?.endTour?.tournamentPrize + "$"
-                    : ""}
+                  {biggestEndTour?.endTour?.tournamentAutoAmount
+                    ? biggestEndTour?.endTour?.tournamentAutoAmount + "$"
+                    : "5000$"}
                 </Typography>
                 <Typography
                   sx={{
@@ -503,7 +521,7 @@ export default function NewHomePage() {
             </Box>
           )}
           {/* Brief List Tournament */}
-          <Box
+          {/* <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
               display: "flex",
@@ -626,8 +644,8 @@ export default function NewHomePage() {
                 </Slider>
               )}
             </Box>
-          </Box>{" "}
-          <Box
+          </Box>{" "} */}
+          {/* <Box
             component={"div"}
             className="cursor-pointer"
             onClick={() => navigate("/week-long-tournament")}
@@ -646,7 +664,7 @@ export default function NewHomePage() {
                 type="video/mp4"
               />
             </video>
-          </Box>
+          </Box> */}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
@@ -754,7 +772,7 @@ export default function NewHomePage() {
             </Box>
           </Box>{" "}
           {/* Brief information */}
-          <Box
+          {/* <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
               marginBottom: width < 576 ? "24px" : "32px",
@@ -863,7 +881,7 @@ export default function NewHomePage() {
                                 fontSize: "25px",
                               }}
                             >
-                              {item?.tournamentPrize}$
+                              {item?.tournamentAutoAmount}$
                             </Typography>
                           </Box>
                           <button
@@ -999,7 +1017,7 @@ export default function NewHomePage() {
                                 fontSize: "25px",
                               }}
                             >
-                              {item?.tournamentPrize || 0}$
+                              {item?.tournamentAutoAmount || 0}$
                             </Typography>
                           </Box>
                           <button
@@ -1027,7 +1045,7 @@ export default function NewHomePage() {
                 })}
               </Slider>
             )}
-          </Box>
+          </Box> */}
           {/* ------------------------ */}
           <Box
             sx={{
@@ -1084,7 +1102,7 @@ export default function NewHomePage() {
               {width < 576 ? (
                 <Slider
                   dots={false}
-                  slidesToShow={2}
+                  slidesToShow={2.05}
                   arrows={false}
                   slidesToScroll={2}
                   infinite={false}
@@ -1124,8 +1142,8 @@ export default function NewHomePage() {
           {width < 576 ? (
             <Box
               sx={{
-                marginTop: width < 576 ? "24px" : "32px",
-                marginBottom: width < 576 ? "24px" : "32px",
+                marginTop: width < 576 ? "48px" : "32px",
+                marginBottom: width < 576 ? "0px" : "32px",
                 backgroundImage: `url(${imageHome.bannerTop1Mobile})`,
                 width: "100%",
                 height: "210px",
@@ -1197,7 +1215,7 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {hotWeekTour?.tournamentName}
+                    {String(hotWeekTour?.tournamentName)?.length > 10 ? String(hotWeekTour?.tournamentName)?.slice(0, 10) + "..." : String(hotWeekTour?.tournamentName)}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -1257,7 +1275,7 @@ export default function NewHomePage() {
                         marginRight: "5px",
                       }}
                     >
-                      ${hotWeekTour?.tournamentPrize}
+                      ${hotWeekTour?.tournamentAutoAmount}
                     </Typography>
                     <Typography
                       sx={{
@@ -1371,7 +1389,7 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {hotWeekTour?.tournamentName}
+                    {String(hotWeekTour?.tournamentName)?.length > 10 ? String(hotWeekTour?.tournamentName)?.slice(0, 10) + "..." : String(hotWeekTour?.tournamentName)}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -1431,7 +1449,7 @@ export default function NewHomePage() {
                         marginRight: "5px",
                       }}
                     >
-                      ${hotWeekTour?.tournamentPrize}
+                      ${hotWeekTour?.tournamentAutoAmount}
                     </Typography>
                     <Typography
                       sx={{
