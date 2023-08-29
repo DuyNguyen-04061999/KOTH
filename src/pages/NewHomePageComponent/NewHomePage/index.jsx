@@ -234,7 +234,7 @@ export default function NewHomePage() {
               {width < 576 ? (
                 <Slider
                   dots={false}
-                  slidesToShow={2}
+                  slidesToShow={2.05}
                   arrows={false}
                   slidesToScroll={2}
                   infinite={false}
@@ -1109,7 +1109,7 @@ export default function NewHomePage() {
               {width < 576 ? (
                 <Slider
                   dots={false}
-                  slidesToShow={2}
+                  slidesToShow={2.05}
                   arrows={false}
                   slidesToScroll={2}
                   infinite={false}
