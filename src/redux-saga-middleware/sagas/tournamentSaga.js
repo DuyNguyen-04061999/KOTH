@@ -16,6 +16,7 @@ import {
   getSkinForTournamentSuccess,
   getWeeklyTour,
   getHottestWeekTourSuccess,
+  getThreeBrandTourSuccess,
 } from "../reducers/tournamentReducer";
 import { showAlert } from "../reducers/alertReducer";
 const tournamentService = new TournamentService();
@@ -131,6 +132,16 @@ function* getHottestWeekTour() {
     console.log(error);
   }
 }
+function* getThreeBrandTour() {
+  try {
+    const res = yield call(tournamentService.callThreeBrandTour);
+    if (res.status === 200) {
+      yield put(getThreeBrandTourSuccess(res.data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 function* tournamentSaga() {
   yield takeEvery("CALL_BIGGEST_END_TOUR", getBiggesstEndTour);
   yield takeEvery("CALL_BRAND_TOUR", getBrandTour);
@@ -140,5 +151,6 @@ function* tournamentSaga() {
   yield takeEvery("GET_SKIN_FOR_TOURNAMENT", getSkinForTournamentSaga);
   yield takeEvery("GET_BRAND_TOURNAMENT", getListBrandForTournamentSaga);
   yield takeEvery("GET_HOTTEST_WEEK_TOUR", getHottestWeekTour);
+  yield takeEvery("GET_THREE_BRAND_TOUR", getThreeBrandTour);
 }
 export default tournamentSaga;
