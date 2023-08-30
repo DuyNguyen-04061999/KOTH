@@ -17,8 +17,8 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {width} = useWindowDimensions()
-  const [tablet,setTablet] = useState("")
+  const { width } = useWindowDimensions();
+  const [tablet, setTablet] = useState("");
   const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
@@ -38,18 +38,17 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    if(isNavTablet === false) {
-      if( isNav === true){
-        setTablet('width-tablet')
+    if (isNavTablet === false) {
+      if (isNav === true) {
+        setTablet("width-tablet");
       } else {
-        setTablet("w")
+        setTablet("w");
       }
     }
-  })
-
+  });
 
   return (
-    <Box className={`nav-section ${tablet}`} >
+    <Box className={`nav-section ${tablet}`}>
       <Box
         sx={{
           backgroundColor: "#2e233d",
@@ -62,7 +61,7 @@ export default function Navbar() {
           transitionDuration: "all 1s",
           paddingLeft: isNav === true ? "30px" : "7px",
           paddingRight: isNav === true ? "30px" : "7px",
-          transition:' all ease 1s'
+          transition: " all ease 1s",
         }}
         className="pt-3 pb-3 nav-animate"
       >
@@ -310,7 +309,7 @@ export default function Navbar() {
               <Box
                 sx={{
                   display: isDropdownNav === true ? "block" : "none",
-                  height: isDropdownNav === true ? "220px" : "0px",
+                  // height: isDropdownNav === true ? "220px" : "0px",
                   transition: "all 0.5s",
                 }}
                 className={`dropdown-content ${
@@ -389,6 +388,10 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("hot-tournament")
+                          ? "white"
+                          : "",
                     }}
                   >
                     Hot tour
@@ -523,6 +526,10 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("daily-tournament")
+                          ? "white"
+                          : "",
                     }}
                   >
                     Daily tour
@@ -551,13 +558,12 @@ export default function Navbar() {
                   {pathname && pathname?.includes("week-long-tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
+                      width="18"
+                      height="18"
                       fill="none"
                       viewBox="0 0 18 18"
-                      className="p-1 me-1"
                     >
-                      <g clipPath="url(#clip0_2059_14836)">
+                      <g clipPath="url(#clip0_2157_3131)">
                         <path
                           fill="#A89CD7"
                           stroke="#A89CD7"
@@ -566,7 +572,7 @@ export default function Navbar() {
                         ></path>
                       </g>
                       <defs>
-                        <clipPath id="clip0_2059_14836">
+                        <clipPath id="clip0_2157_3131">
                           <path fill="#fff" d="M0 0H18V18H0z"></path>
                         </clipPath>
                       </defs>
@@ -607,6 +613,10 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("week-long-tournament")
+                          ? "white"
+                          : "",
                     }}
                   >
                     Week-long tour
@@ -689,6 +699,8 @@ export default function Navbar() {
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
+                    color:
+                      pathname && pathname?.includes("package") ? "white" : "",
                   }}
                 >
                   Package

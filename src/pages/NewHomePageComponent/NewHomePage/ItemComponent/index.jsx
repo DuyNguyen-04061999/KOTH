@@ -98,7 +98,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
               lineHeight: "normal",
               height: "30px",
               maxHeight: "45px",
-              minHeight: "30px",
+              minHeight: "36px",
               width: "120px",
             }}
           >
@@ -108,7 +108,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width <576 ? "22px" : "32px",
+              marginTop: width <576 ? "20px" : "32px",
             }}
           >
             {countdown && (

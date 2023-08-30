@@ -17,7 +17,6 @@ export default function SlickSlider(props) {
     autoplay: true,
     autoplaySpeed: 3000,
     speed: 1000,
-    fade: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,

@@ -569,7 +569,7 @@ export default function Layout(props) {
                     backgroundColor: backgroundGlobal,
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
-                    padding: "3px",
+                    padding: "6px",
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -616,9 +616,9 @@ export default function Layout(props) {
                     <span
                       className="fs-7 mx-2"
                       style={{
-                        color: tabChat === true ? "white" : "#8a78b3",
+                        color: tabChat === true ? "white" : "#895DBF",
                         fontWeight: "700",
-                        fontSize: "15px",
+                        fontSize: "12px",
                       }}
                     >
                       Global
@@ -632,7 +632,7 @@ export default function Layout(props) {
                     backgroundColor: backgroundPrivate,
                     cursor: "pointer",
                     borderRadius: "0px 5px 5px 0px",
-                    padding: "3px",
+                    padding: "6px",
                   }}
                   onClick={() => {
                     if (token === null || token === "") {
@@ -683,9 +683,9 @@ export default function Layout(props) {
                     <span
                       className="fs-7 mx-2"
                       style={{
-                        color: tabChat === false ? "white" : "#8a78b3",
+                        color: tabChat === false ? "white" : "#895DBF",
                         fontWeight: "700",
-                        fontSize: "15px",
+                        fontSize: "12px",
                       }}
                     >
                       Private
@@ -722,7 +722,7 @@ export default function Layout(props) {
                     id="sendmessages"
                     onChange={handleChangeChat}
                     onKeyDown={handleOnKeyDown}
-                    placeholder="Type your message "
+                    placeholder="Type your message... "
                   />
                 </Box>
                 <Box

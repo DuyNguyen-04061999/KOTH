@@ -21,7 +21,7 @@ const Test = styled.input`
   background: #261a35 !important;
   padding: 10px 20px !important;
   color: #fff !important;
-  font-weight: bold !important;
+  font-weight: lighter !important;
   &:focus {
     outline: none;
   }
@@ -284,6 +284,8 @@ export default function ChatFriendList() {
             style={{
               border: "0px solid #3f3970",
               borderRadius: "4px",
+              fontWeight: "lighter !important",
+              fontSize: "14px"
             }}
             onChange={handleChangeSearchChat}
             placeholder="Search"
