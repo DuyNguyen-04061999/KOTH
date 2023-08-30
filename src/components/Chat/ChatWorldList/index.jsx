@@ -15,6 +15,7 @@ import { images } from "../../../utils/images";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useNavigate } from "react-router-dom";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
+import { PersonAddAlt1 } from "@mui/icons-material";
 const EndMessagetoend = styled.div`
   margin-bottom: 30px;
 `;
@@ -564,11 +565,10 @@ export default function ChatWorldList() {
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "100%",
-                    fontWeight: "bold",
                     borderRadius: "4px",
                   }}
                 >
-                  <AddFriendIcon className="me-2 pb-1" />
+                  <PersonAddAlt1 className="me-2 pb-1" />
                   Add Friend
                 </Box>
               </MenuItem>

@@ -12,12 +12,12 @@ import "./index.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import LeftIcon from "@mui/icons-material/ArrowBackIos";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import AddFriendIcon from "@mui/icons-material/Person";
 import copy from "copy-to-clipboard";
 import SettingProfile from "./SettingProfile";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { PersonAddAlt1, PersonRemove } from "@mui/icons-material";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -29,14 +29,9 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { userName, token } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
-  const {
-    id,
-    email,
-    refCode,
-    phone,
-    userNameProfile,
-    avatarUrl,
-  } = useSelector((state) => state.profileReducer);
+  const { id, email, refCode, phone, userNameProfile, avatarUrl } = useSelector(
+    (state) => state.profileReducer
+  );
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -78,19 +73,20 @@ export default function DialogProfile(props) {
                     socket?.emit("addFriend", { username: userNameProfile });
                     handleShowProfile();
                   }}
-                  className="p-2 text-white"
+                  className="mt-2 p-2 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "37%",
+                    width: "40%",
                     borderRadius: 1,
                     fontWeight: "bold",
                     display: "flex",
-                    justifyContent: "center",
                     cursor: "pointer",
+                    alignItems: "center",
+                    justifyContent: "space-between"
                   }}
                 >
-                  <AddFriendIcon className="me-1 pb-1" />
-                  <Typography>Add Friend</Typography>
+                  <PersonAddAlt1 />
+                  <Typography sx={{fontSize: "14px"}}>Add Friend</Typography>
                 </Box>
               ) : (
                 <Box
@@ -98,17 +94,22 @@ export default function DialogProfile(props) {
                     socket?.emit("deleteFriend", { username: userNameProfile });
                     handleShowProfile();
                   }}
-                  className="p-2 text-white cursor-pointer"
+                  className="mt-2 p-2 text-white cursor-pointer"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "40%",
                     borderRadius: 1,
                     fontWeight: "bold",
+                    display: "flex",
                     cursor: "pointer",
+                    alignItems: "center",
+                    justifyContent: "space-between"
                   }}
                 >
-                  <AddFriendIcon className="me-1 pb-1" />
-                  Delete Friend
+                  <PersonRemove/>
+                  <Typography sx={{ fontSize: "14px"}}>
+                    Delete Friend
+                  </Typography>
                 </Box>
               ))}
           </Box>

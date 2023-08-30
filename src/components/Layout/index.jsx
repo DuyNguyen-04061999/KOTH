@@ -477,7 +477,9 @@ export default function Layout(props) {
                 sx={{
                   backgroundColor: "#68399E",
                   borderRadius: "50%",
-                  padding: "4px 10px 5px 10px",
+                  padding: "5px 10px 5px 12px",
+                  width: "33px",
+                  height: "33px"
                 }}
                 className="cursor-pointer"
               >
