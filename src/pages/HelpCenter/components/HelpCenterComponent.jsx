@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import { Container } from "react-bootstrap";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { TabContext, TabList } from "@mui/lab";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,7 +52,7 @@ const HelpCenterComponent = () => {
   useEffect(() => {
     setListFAQ(listFAQPromote);
   }, [listFAQPromote]);
-
+  console.log("listFAQPromote: ", listFAQPromote);
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -95,7 +94,12 @@ const HelpCenterComponent = () => {
               />
             </Box>
             <Box sx={{ width: "100%", typography: "body1" }}>
-              <Tabs  value={tabHelpCenter} onChange={handleChange} indicatorColor="unset" style={{backgroundColor: "#302642"}}>
+              <Tabs
+                value={tabHelpCenter}
+                onChange={handleChange}
+                indicatorColor="unset"
+                style={{ backgroundColor: "#302642" }}
+              >
                 {listFAQ?.map((item, index) => {
                   return (
                     <Tab
