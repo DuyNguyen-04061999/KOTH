@@ -10,12 +10,14 @@ import {
   createTheme,
 } from "@mui/material";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { imageDesktop, images, video } from "../../utils/images";
+import {
+  //  imageDesktop, 
+  images, video } from "../../utils/images";
 import SliderTime from "../../components/SliderTime";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
 const theme = createTheme({
@@ -60,7 +62,7 @@ export default function DailyTournament() {
   useEffect(() => {
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [dailyTournament]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <Layout
       children={
@@ -117,7 +119,7 @@ export default function DailyTournament() {
                     ?.listTournament?.map((item, index) => {
                       return (
                         index < 10 && (
-                          <Box sx={{ width: "20%", marginTop: "50px" }}>
+                          <Box sx={{ width: "20%", marginTop: "50px", marginRight: width > 576 && width < 1200 ? "100px" : "none" }}>
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
                         )

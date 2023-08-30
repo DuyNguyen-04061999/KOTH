@@ -34,7 +34,7 @@ const theme = createTheme({
 });
 export default function WeekLongTour() {
   const { width } = useWindowDimensions();
-  const [itemOffset, setItemOffSet] = useState(1);
+  // const [itemOffset, setItemOffSet] = useState(1);
   const [isFetchList, setIsFetchList] = useState(true);
   const typographyStyle = {
     textAlign: "start",
@@ -104,7 +104,7 @@ export default function WeekLongTour() {
                   // ?.slice(itemOffset, itemOffset + 10)
                   ?.map((item, index) => {
                     return (
-                      <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
+                      <Box sx={{ width: "20%", marginTop: "50px", marginRight: width > 576 && width < 1200 ? "100px" : "none" }} key={index}>
                         <ItemComponent tourInfo={item} countdown={true} />
                       </Box>
                     );
@@ -116,7 +116,7 @@ export default function WeekLongTour() {
               <PaginatedItems
                 pageCount={Math.ceil(weeklyTournament.length / 10)}
                 changeOffSet={(value) => {
-                  setItemOffSet(((value - 1) * 10) % weeklyTournament.length);
+                  // setItemOffSet(((value - 1) * 10) % weeklyTournament.length);
                 }}
               />
             )}

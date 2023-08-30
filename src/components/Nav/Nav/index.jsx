@@ -12,13 +12,13 @@ import {
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
 import { getAppType } from "../../../utils/helper";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+// import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {width} = useWindowDimensions()
-  const [tablet,setTablet] = useState("")
+  // const { width } = useWindowDimensions();
+  const [tablet, setTablet] = useState("");
   const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
@@ -38,18 +38,17 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    if(isNavTablet === false) {
-      if( isNav === true){
-        setTablet('width-tablet')
+    if (isNavTablet === false) {
+      if (isNav === true) {
+        setTablet("width-tablet");
       } else {
-        setTablet("w")
+        setTablet("w");
       }
     }
-  })
-
+  }, [isNavTablet, isNav]);
 
   return (
-    <Box className={`nav-section ${tablet}`} >
+    <Box className={`nav-section ${tablet}`}>
       <Box
         sx={{
           backgroundColor: "#2e233d",
@@ -62,7 +61,7 @@ export default function Navbar() {
           transitionDuration: "all 1s",
           paddingLeft: isNav === true ? "30px" : "7px",
           paddingRight: isNav === true ? "30px" : "7px",
-          transition:' all ease 1s'
+          transition: " all ease 1s",
         }}
         className="pt-3 pb-3 nav-animate"
       >
@@ -83,7 +82,7 @@ export default function Navbar() {
 
                   borderRadius: "5px",
                   color:
-                    pathname && pathname?.includes("home")
+                    (pathname && pathname?.includes("home")) || pathname === "/"
                       ? "white"
                       : "#A89CD7",
                 }}
@@ -92,7 +91,7 @@ export default function Navbar() {
                 }}
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
-                {pathname && pathname?.includes("home") ? (
+                {(pathname && pathname?.includes("home")) || pathname === "/" ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -268,14 +267,13 @@ export default function Navbar() {
                   >
                     Tournament
                   </span>
-                  <Box>
+                  <Box sx={{marginLeft: "8px", marginRight: "6px"}}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"
                       height="14"
                       fill="none"
                       viewBox="0 0 14 14"
-                      className="me-2"
                       style={{
                         transform:
                           isDropdownNav === true
@@ -310,7 +308,7 @@ export default function Navbar() {
               <Box
                 sx={{
                   display: isDropdownNav === true ? "block" : "none",
-                  height: isDropdownNav === true ? "220px" : "0px",
+                  // height: isDropdownNav === true ? "220px" : "0px",
                   transition: "all 0.5s",
                 }}
                 className={`dropdown-content ${
@@ -389,6 +387,10 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("hot-tournament")
+                          ? "white"
+                          : "",
                     }}
                   >
                     Hot tour
@@ -523,6 +525,10 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("daily-tournament")
+                          ? "white"
+                          : "",
                     }}
                   >
                     Daily tour
@@ -557,43 +563,41 @@ export default function Navbar() {
                       viewBox="0 0 18 18"
                       className="p-1 me-1"
                     >
-                      <g clipPath="url(#clip0_2059_14836)">
+                      <g clipPath="url(#clip0_2689_14925)">
                         <path
-                          fill="#A89CD7"
-                          stroke="#A89CD7"
-                          strokeWidth="0.5"
-                          d="M3.933 17.03h0c-.358-.27-.52-.73-.425-1.168h0l.999-4.591-3.384-3.097s0 0 0 0C.792 7.872.67 7.4.802 6.971h0c.134-.43.501-.742.946-.785h0l4.469-.423 1.769-4.32h0A1.1 1.1 0 019 .75a1.1 1.1 0 011.013.693h0l1.77 4.32 4.467.424s0 0 0 0 0 0 0 0c.446.042.813.356.947.785.133.428.011.9-.319 1.202 0 0 0 0 0 0l-3.385 3.096 1 4.59v.001c.095.44-.068.9-.425 1.169a1.07 1.07 0 01-1.218.055h0l.133-.212-.133.211-8.917-.054zm0 0a1.075 1.075 0 001.216.056h0L9 14.684 3.933 17.03zm5.635-3.798h0l3.257 2.033-.846-3.886a1.16 1.16 0 01.345-1.103s0 0 0 0 0 0 0 0l2.88-2.636-3.8-.36h0a1.103 1.103 0 01-.914-.693s0 0 0 0L9 2.945 7.508 6.588s0 0 0 0a1.1 1.1 0 01-.912.69h0l-3.801.36 2.88 2.637 3.893 2.957zm0 0a1.075 1.075 0 00-1.136 0h0l-3.257 2.033m4.393-2.033l-4.393 2.033m0 0l.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-.5 4.99z"
+                          fill="#fff"
+                          d="M17.953 6.904a.955.955 0 00-.823-.657l-5.196-.471L9.881.968a.957.957 0 00-1.76 0L6.066 5.776.87 6.247a.958.958 0 00-.544 1.674l3.928 3.444-1.158 5.101A.957.957 0 004.519 17.5L9 14.822l4.48 2.678a.956.956 0 001.424-1.034l-1.158-5.1 3.928-3.445a.958.958 0 00.279-1.017z"
                         ></path>
                       </g>
                       <defs>
-                        <clipPath id="clip0_2059_14836">
+                        <clipPath id="clip0_2689_14925">
                           <path fill="#fff" d="M0 0H18V18H0z"></path>
                         </clipPath>
                       </defs>
                     </svg>
                   ) : (
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                      className="p-1 me-1"
-                    >
-                      <g clipPath="url(#clip0_2059_14836)">
-                        <path
-                          fill="#A89CD7"
-                          stroke="#A89CD7"
-                          strokeWidth="0.5"
-                          d="M3.933 17.03h0c-.358-.27-.52-.73-.425-1.168h0l.999-4.591-3.384-3.097s0 0 0 0C.792 7.872.67 7.4.802 6.971h0c.134-.43.501-.742.946-.785h0l4.469-.423 1.769-4.32h0A1.1 1.1 0 019 .75a1.1 1.1 0 011.013.693h0l1.77 4.32 4.467.424s0 0 0 0 0 0 0 0c.446.042.813.356.947.785.133.428.011.9-.319 1.202 0 0 0 0 0 0l-3.385 3.096 1 4.59v.001c.095.44-.068.9-.425 1.169a1.07 1.07 0 01-1.218.055h0l.133-.212-.133.211-8.917-.054zm0 0a1.075 1.075 0 001.216.056h0L9 14.684 3.933 17.03zm5.635-3.798h0l3.257 2.033-.846-3.886a1.16 1.16 0 01.345-1.103s0 0 0 0 0 0 0 0l2.88-2.636-3.8-.36h0a1.103 1.103 0 01-.914-.693s0 0 0 0L9 2.945 7.508 6.588s0 0 0 0a1.1 1.1 0 01-.912.69h0l-3.801.36 2.88 2.637 3.893 2.957zm0 0a1.075 1.075 0 00-1.136 0h0l-3.257 2.033m4.393-2.033l-4.393 2.033m0 0l.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-.5 4.99z"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_2059_14836">
-                          <path fill="#fff" d="M0 0H18V18H0z"></path>
-                        </clipPath>
-                      </defs>
-                    </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                    className="p-1 me-1"
+                  >
+                    <g clipPath="url(#clip0_3062_17515)">
+                      <path
+                        fill="#A89CD7"
+                        stroke="#A89CD7"
+                        strokeWidth="0.5"
+                        d="M5.017 16.874a.825.825 0 01-.934-.043.907.907 0 01-.33-.916l1.264.959zm-3.894-8.7l3.384 3.097-.999 4.59h0c-.095.44.067.9.424 1.17h0a1.075 1.075 0 001.217.056h0L9 14.683l3.85 2.4s0 0 0 0c.379.238.86.216 1.218-.054.357-.27.52-.73.424-1.169h0l-.999-4.59 3.385-3.097s0 0 0 0c.33-.302.452-.774.319-1.202a1.107 1.107 0 00-.947-.785l-4.468-.423-1.769-4.32h0A1.1 1.1 0 009 .75a1.1 1.1 0 00-1.013.694h0l-1.77 4.32-4.467.423h0a1.109 1.109 0 00-.947.785h0c-.133.429-.01.9.32 1.202 0 0 0 0 0 0zm8.445 5.059h0a1.076 1.076 0 00-1.136 0h0l-3.257 2.032.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-2.88-2.636 3.8-.36h0a1.1 1.1 0 00.913-.691s0 0 0 0L9 2.945l1.49 3.642s0 0 0 0c.156.385.503.654.914.693h0l3.8.36-2.88 2.636a1.16 1.16 0 00-.345 1.103l.846 3.886-3.257-2.032z"
+                      ></path>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_3062_17515">
+                        <path fill="#fff" d="M0 0H18V18H0z"></path>
+                      </clipPath>
+                    </defs>
+                  </svg>
                   )}
 
                   <span
@@ -607,6 +611,10 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("week-long-tournament")
+                          ? "white"
+                          : "",
                     }}
                   >
                     Week-long tour
@@ -637,7 +645,7 @@ export default function Navbar() {
                   borderRadius: "5px",
                 }}
                 onClick={() => {
-                  navigate("/package");
+                  navigate("/packages");
                 }}
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
@@ -689,6 +697,10 @@ export default function Navbar() {
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
+                    color:
+                    pathname && pathname?.includes("package")
+                      ? "white"
+                      : "",
                   }}
                 >
                   Package
@@ -963,6 +975,7 @@ export default function Navbar() {
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
                 transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                padding: "8px"
               }}
               onClick={() => {
                 navigate(`/help-center`);

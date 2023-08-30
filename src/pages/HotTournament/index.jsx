@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import SlickSlider from "../../components/SlickSlider";
-import { imageDesktop, images, video } from "../../utils/images";
-import { useNavigate } from "react-router-dom";
+import { images, video } from "../../utils/images";
 import { useSelector } from "react-redux";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
@@ -40,7 +39,6 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { hotTournament } = useSelector((state) => state.tournamentReducer);
-  const navigate = useNavigate();
   return (
     <Layout
       children={
@@ -80,9 +78,9 @@ export default function HotTournament() {
                           images.bannerTournament2,
                         ]
                       : [
-                          images.BannerHomePageDesktop,
-                          images.BannerHomePageDesktop,
-                          images.BannerHomePageDesktop,
+                          images.bannerTournament,
+                          images.bannerTournament,
+                          images.bannerTournament,
                         ]
                   }
                 />
@@ -96,7 +94,10 @@ export default function HotTournament() {
                   {hotTournament?.map((item, index) => {
                     return (
                       index < 10 && (
-                        <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
+                        <Box
+                          sx={{ width: "20%", marginTop: "50px", marginRight: width > 576 && width < 1200 ? "100px" : "none" }}
+                          key={index}
+                        >
                           <ItemComponent tourInfo={item} countdown={true} />
                         </Box>
                       )
@@ -130,7 +131,10 @@ export default function HotTournament() {
                   {hotTournament?.map((item, index) => {
                     return (
                       index >= 10 && (
-                        <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
+                        <Box
+                          sx={{ width: "20%", marginTop: "50px" }}
+                          key={index}
+                        >
                           <ItemComponent tourInfo={item} countdown={true} />
                         </Box>
                       )

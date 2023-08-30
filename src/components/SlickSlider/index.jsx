@@ -9,14 +9,14 @@ import { images } from "../../utils/images";
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { width } = useWindowDimensions();
-  const { images: im, appendDot, htmlCode, isHtmlCode, tours } = props;
-  
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours } = props;
+
   const settings = {
     dots: true,
     arrows: false,
     autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 700,
+    autoplaySpeed: 3000,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
@@ -59,51 +59,77 @@ export default function SlickSlider(props) {
   const navigate = useNavigate();
 
   function getImage(item) {
-    const name = item?.tournamentBrand?.brandName || ""
-    
-    if(name?.includes("Samsung")) {
-      if(width < 576) return images?.bn5 
-      else return images?.bn3
+    const name = item?.tournamentBrand?.brandName || "";
+
+    if (name?.includes("Samsung")) {
+      if (width < 576) return images?.bn5;
+      else return images?.bn3;
     } else if (name?.includes("Dr Pepper")) {
-      if(width < 576) return images?.bn4
-      else return images?.bn1
+      if (width < 576) return images?.bn4;
+      else return images?.bn1;
     } else if (name?.includes("Taylor Swift")) {
-      if(width < 576) return images?.bn6
-      else return images?.bn2
+      if (width < 576) return images?.bn6;
+      else return images?.bn2;
     }
-    return images?.pepperBanner
+    return images?.pepperBanner;
   }
 
-  return (
+  return img?.length > 0 ? (
+    <Slider {...settings}>
+      {img?.map((item, index) => {
+        return (
+          <Box
+            key={index}
+            sx={{
+              height: width < 576 ? "208px" : "363px",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                cursor: "pointer",
+                borderRadius: "8px",
+                objectFit: "cover",
+              }}
+              component={"img"}
+              src={item}
+            ></Box>
+          </Box>
+        );
+      })}
+    </Slider>
+  ) : (
     <Slider {...settings}>
       {!isHtmlCode && tours && tours?.length >= 3
-        ? tours?.filter(item => item)?.map((item, index) => {
-            return (
-              <Box
-                key={index}
-                sx={{
-                  height: width < 576 ? "208px" : "363px",
-                }}
-                
-              >
+        ? tours
+            ?.filter((item) => item)
+            ?.map((item, index) => {
+              return (
                 <Box
-                  onClick={() => {
-                    console.log("item", item);
-                    navigate(`/tournamentDetail/${item?.id}`);
-                  }}
+                  key={index}
                   sx={{
-                    width: "100%",
-                    height: "100%",
-                    cursor: "pointer",
-                    borderRadius: "8px",
-                    objectFit: "cover"
+                    height: width < 576 ? "208px" : "363px",
                   }}
-                  component={"img"}
-                  src={getImage(item)}
-                ></Box>
-              </Box>
-            );
-          })
+                >
+                  <Box
+                    onClick={() => {
+                      // console.log("item", item);
+                      navigate(`/tournamentDetail/${item?.id}`);
+                    }}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      cursor: "pointer",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                    component={"img"}
+                    src={getImage(item)}
+                  ></Box>
+                </Box>
+              );
+            })
         : htmlCode}
     </Slider>
   );

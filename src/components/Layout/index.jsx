@@ -9,8 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { imageDesktop, images } from "../../utils/images";
-import { inpChat } from "../../utils/cssFrom";
+import { imageDesktop } from "../../utils/images";
+// import { inpChat } from "../../utils/cssFrom";
 import styled from "styled-components";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import history from "../Router/history";
@@ -20,7 +20,7 @@ import { images280423_l } from "../../utils/images280423_l";
 import ChatWorldList from "../Chat/ChatWorldList";
 import ChatFriendList from "../Chat/ChatFriendList";
 // import ComponentChat from "../Chat/componentChat";
-import { imageChat } from "../../utils/imagesChat";
+// import { imageChat } from "../../utils/imagesChat";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 
 // import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
@@ -112,6 +112,7 @@ const Test = styled.input`
   }
   &::placeholder {
     color: #bfbeed;
+    font-size: 13px;
   }
 `;
 
@@ -127,7 +128,7 @@ export default function Layout(props) {
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
-  console.log(startGameCheck);
+
   const [showChat] = useState(true);
   const { children } = props;
   const { width } = useWindowDimensions();
@@ -146,9 +147,15 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (router && router !== window.location.pathname) {
+    if (
+      router &&
+      router !== window.location.pathname &&
+      router?.includes("tournamentDetail") &&
+      startGameCheck
+    ) {
+      window.location.reload();
     }
-  }, [router]);
+  }, [router, startGameCheck]);
 
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
@@ -173,10 +180,10 @@ export default function Layout(props) {
   }, [pathname]);
 
   useEffect(() => {
-    if(width < 992 && width > 576) {
-      dispatch(clickTabNav(false))
+    if (width < 1024 && width > 576) {
+      dispatch(clickTabNav(false));
     }
-  },[width])
+  }, [width, dispatch]);
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -244,7 +251,7 @@ export default function Layout(props) {
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
-
+// console.log(startGameCheck);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
       if (!isAlertDialog) {
@@ -289,7 +296,10 @@ export default function Layout(props) {
           dispatch(closeTransactionDialog());
         }}
       />
-      <AppBar position="sticky" className={startGameCheck ? "d-none" : ""}>
+      <AppBar
+        position="sticky"
+        className={width < 1200 && startGameCheck ? "d-none" : ""}
+      >
         <Toolbar
           sx={{
             background: "#352658",
@@ -298,8 +308,8 @@ export default function Layout(props) {
           }}
           className="pt-1 pb-1"
         >
-           {width < 992 && width > 576 ? (
-              <svg
+          {width < 1024 && width > 576 ? (
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
               height="23"
@@ -312,8 +322,10 @@ export default function Layout(props) {
               <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
               <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
             </svg>
-            ) : ("")}
-          {width > 992 ? (
+          ) : (
+            ""
+          )}
+          {width > 1023 ? (
             <div className="d-flex align-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -367,17 +379,23 @@ export default function Layout(props) {
               </div>
             </div>
           ) : (
-            <NavLink to="/home">
-              <img
-                style={{ width: "90px", height: "auto", marginLeft:"15px" }}
-                className="logocongty"
-                src={imageDesktop.LogoCongTy}
-                alt="logocty"
-              />
-            </NavLink>
+            <Box>
+              {location && location?.pathname?.includes("/packages") ? (
+                <span className="ms-2">Packages</span>
+              ) : (
+                <NavLink to="/home">
+                  <img
+                    style={{ width: "90px", height: "auto", marginLeft: "15px" }}
+                    className="logocongty"
+                    src={imageDesktop.LogoCongTy}
+                    alt="logocty"
+                  />
+                </NavLink>
+              )}
+            </Box>
           )}
           <Box sx={{ flexGrow: 1 }}>
-            {width > 1024 ? (
+            {width > 1199 ? (
               <Box>
                 <form
                   onSubmit={handleSubmit}
@@ -478,7 +496,9 @@ export default function Layout(props) {
                 sx={{
                   backgroundColor: "#68399E",
                   borderRadius: "50%",
-                  padding: "4px 10px 5px 10px",
+                  padding: "5px 10px 5px 12px",
+                  width: "33px",
+                  height: "33px",
                 }}
                 className="cursor-pointer"
               >
@@ -488,20 +508,32 @@ export default function Layout(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {width < 1200 && width > 576  && !startGameCheck ? (
-        <div className="when-active" style={{display:isNav === true ? "block" : "none"}}></div>
-      ) : ("")}
+      {width < 1200 && width > 576 && !startGameCheck ? (
+        <div
+          className="when-active"
+          style={{ display: isNav === true ? "block" : "none" }}
+        ></div>
+      ) : (
+        ""
+      )}
       <Grid container>
         {width > 576 ? (
           <Grid
+            display={startGameCheck ? "none" : "block"}
             item
             sm={1}
             md={isNav === true ? 1.6 : 0.6}
+            lg={isNav === true ? 1.9 : 0.6}
             position={"relative"}
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: isNavTablet === false ? "sticky" : "relative",
-              zIndex: !startGameCheck ? "1201" : "0"
+              zIndex: !startGameCheck && width < 1200 ? "1034" : "0",
+              width: "400px !important",
+              "& .MuiGrid-item": {
+                minWidth: "400px !important",
+                width: "400px !important",
+              },
             }}
           >
             <Navbar navIcon={isNav} />
@@ -514,19 +546,26 @@ export default function Layout(props) {
           xs={12}
           sm={11}
           md={isNav === true ? 10.4 : 11.4}
+          lg={isNav === true ? 10.1 : 11.4}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",
-            position:"relative",
-            zIndex:1
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          <Main open={chatPopup} sx={{
-            marginRight: isNavTablet === false ? "0" : ""
-          }}>{children}</Main>
+          <Main
+            open={chatPopup}
+            sx={{
+              marginRight: isNavTablet === false ? "0" : "",
+            }}
+          >
+            {children}
+          </Main>
         </Grid>
       </Grid>
       <Drawer
+        hidden={startGameCheck}
         sx={{
           width: drawerWidth,
           "& .MuiDrawer-paper": {
@@ -567,7 +606,7 @@ export default function Layout(props) {
                     backgroundColor: backgroundGlobal,
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
-                    padding: "3px",
+                    padding: "6px",
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -614,9 +653,10 @@ export default function Layout(props) {
                     <span
                       className="fs-7 mx-2"
                       style={{
-                        color: tabChat === true ? "white" : "#8a78b3",
+                        color: tabChat === true ? "white" : "#895DBF",
                         fontWeight: "700",
-                        fontSize: "15px",
+                        fontSize: "12px",
+                        letterSpacing: "1px",
                       }}
                     >
                       Global
@@ -630,7 +670,7 @@ export default function Layout(props) {
                     backgroundColor: backgroundPrivate,
                     cursor: "pointer",
                     borderRadius: "0px 5px 5px 0px",
-                    padding: "3px",
+                    padding: "6px",
                   }}
                   onClick={() => {
                     if (token === null || token === "") {
@@ -681,9 +721,10 @@ export default function Layout(props) {
                     <span
                       className="fs-7 mx-2"
                       style={{
-                        color: tabChat === false ? "white" : "#8a78b3",
+                        color: tabChat === false ? "white" : "#895DBF",
                         fontWeight: "700",
-                        fontSize: "15px",
+                        fontSize: "12px",
+                        letterSpacing: "1px",
                       }}
                     >
                       Private
@@ -715,12 +756,13 @@ export default function Layout(props) {
                   }}
                 >
                   <Test
+                    style={{ fontSize: "13px" }}
                     type="text"
                     value={chatF}
                     id="sendmessages"
                     onChange={handleChangeChat}
                     onKeyDown={handleOnKeyDown}
-                    placeholder="Type your message "
+                    placeholder="Type your message... "
                   />
                 </Box>
                 <Box

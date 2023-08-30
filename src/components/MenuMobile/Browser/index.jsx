@@ -260,7 +260,7 @@ export default function Browser(props) {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate(`/package`);
+                    navigate(`/packages`);
                   }}
                 >
                   <svg
@@ -301,7 +301,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Package
+                    Packages
                   </span>
                 </Box>
                 {getAppType() && getAppType() === "promote" ? (

@@ -1,5 +1,5 @@
 import {
-  Badge,
+  // Badge,
   Box,
   Dialog,
   FormControl,
@@ -11,7 +11,7 @@ import React, { useEffect } from "react";
 import { AvatarGroup } from "@mui/material";
 import { images, sign } from "../../../../utils/images";
 import "./index.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DialogProfile from "../../Profile";
 import Signup from "../Signup";
@@ -38,7 +38,7 @@ import {
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
 import Gold from "../../../Gold/Gold";
 import { getAppType } from "../../../../utils/helper";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+// import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { toast } from "react-toastify";
 
 function SimpleDialog(props) {
@@ -74,7 +74,7 @@ function SimpleDialog(props) {
   };
 
   const sendLogin = () => {
-    if(!username || !password) {
+    if (!username || !password) {
       toast.error("Login Failed! Enter username and password!", {
         icon: ({ theme, type }) => (
           <img
@@ -84,16 +84,15 @@ function SimpleDialog(props) {
           />
         ),
         position: "top-center",
-        className:
-          width < 576 ? "error-background-small" : "error-background",
+        className: width < 576 ? "error-background-small" : "error-background",
       });
-    } else if(username && password)  {
+    } else if (username && password) {
       socket?.emit("login", {
         username: username?.toLowerCase(),
         password: password,
       });
+      dispatch(toggleLoginDialog());
     }
-    
   };
   return (
     <>
@@ -540,7 +539,11 @@ function SimpleDialog(props) {
                   }}
                 >
                   <img
-                    src={getAppType() === "promote" ? sign.bannersignin : images?.signInCrypto}
+                    src={
+                      getAppType() === "promote"
+                        ? sign.bannersignin
+                        : images?.signInCrypto
+                    }
                     alt="..."
                     width={"100%"}
                     height={"100%"}
@@ -607,6 +610,8 @@ export default function Dialoglg() {
     dispatch(clickTabChat(true));
   };
   const { width } = useWindowDimensions();
+  const location = useLocation();
+
   return (
     <div className="dialog">
       {token === "" || !token || token === null ? (
@@ -773,13 +778,14 @@ export default function Dialoglg() {
             </Box>
           )}
           <Box
+            component={"div"}
             className={
               width && width > 576
                 ? "d-flex align-items-center user-name"
                 : "d-flex align-items-center user-name"
             }
           >
-            <Dropdown>
+            <Dropdown hidden={width < 576 && location && location?.pathname?.includes("packages")}>
               <Dropdown.Toggle
                 style={{
                   backgroundColor: "unset",
@@ -789,12 +795,6 @@ export default function Dialoglg() {
                 id="dropdown-basic"
                 className="dropdown-bs position-relative btn-ava"
               >
-                <Badge
-                  color="success"
-                  overlap="circular"
-                  badgeContent=""
-                  variant="dot"
-                >
                   <img
                     style={{
                       borderRadius: 50,
@@ -811,7 +811,6 @@ export default function Dialoglg() {
                     className="ava-signin ms-2 me-2"
                   />
                   {/* )} */}
-                </Badge>
               </Dropdown.Toggle>
               <Dropdown.Menu
                 style={{

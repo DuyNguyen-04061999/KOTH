@@ -7,18 +7,18 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { imageHome, images, video } from "../../../utils/images";
+import { imageHome, images } from "../../../utils/images";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
-import Draggable from "react-draggable";
+// import Draggable from "react-draggable";
 import { useNavigate } from "react-router-dom";
 import SliderTime from "../../../components/SliderTime";
 import Slider from "react-slick";
 import FullListTournament from "./FullListTournament";
-import CountDownTournament from "../CountDownTournament";
-import { getAppType } from "../../../utils/helper";
+// import CountDownTournament from "../CountDownTournament";
+import { getAppType, sliceString } from "../../../utils/helper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
@@ -43,13 +43,13 @@ const theme = createTheme({
 });
 export default function NewHomePage() {
   const [open, setOpen] = useState(false);
-  const [promotion, setPromotion] = useState(true);
-  const [startPoint, setstartPoint] = useState(null);
+  // const [promotion, setPromotion] = useState(true);
+  // const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
   const [isFetchList, setIsFetchList] = useState(true);
   const [type, setType] = useState("");
-  const [hourList, setHourList] = useState([]);
-  const [selectedHour, setSeHour] = useState(0);
+  // const [hourList, setHourList] = useState([]);
+  // const [selectedHour, setSeHour] = useState(0);
   const [dayList, setDayList] = useState([
     "Mon",
     "Tus",
@@ -66,7 +66,7 @@ export default function NewHomePage() {
     hourlyTournament,
     hotTournament,
     biggestEndTour,
-    brandTour,
+    // brandTour,
     hotWeekTour,
     threeBrandTour,
   } = useSelector((state) => state.tournamentReducer);
@@ -105,15 +105,15 @@ export default function NewHomePage() {
     }
   }, [dispatch, isFetchList]);
   useEffect(() => {
-    setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
+    // setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
-  const calculateDistance = (x, y, x1, y1) => {
-    let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
-    return distance;
-  };
-  
+  // const calculateDistance = (x, y, x1, y1) => {
+  //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
+  //   return distance;
+  // };
+
   return (
     <Container
       maxWidth="lg"
@@ -143,31 +143,25 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
-          <Box
-            sx={{ marginBottom: width < 576 ? "24px" : "32px" }}
-          >
-            {" "}
+          <Box sx={{ marginBottom: width < 576 ? "24px" : "32px" }}>
             <SlickSlider
               appendDot={true}
               images={
-                width < 576 ? [
-                  images.pepperBanner,
-                  images.pepperBanner,
-                  images.pepperBanner,
-                ]
-              : [
-                  images.pepperBanner,
-                  images.pepperBanner,
-                  images.pepperBanner,
-                ]
-                
+                width < 576
+                  ? [
+                      images.pepperBanner,
+                      images.pepperBanner,
+                      images.pepperBanner,
+                    ]
+                  : [
+                      images.pepperBanner,
+                      images.pepperBanner,
+                      images.pepperBanner,
+                    ]
               }
-              tours={
-                threeBrandTour || []
-              }
+              tours={threeBrandTour}
             />
           </Box>
-          {/* Brief List Tournament */}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
@@ -244,11 +238,35 @@ export default function NewHomePage() {
                 </Slider>
               ) : (
                 <Slider
-                  dots={false}
-                  slidesToShow={5}
-                  arrows={false}
-                  slidesToScroll={5}
-                  infinite={false}
+                dots={false}
+                slidesToShow={5}
+                arrows={false}
+                slidesToScroll={5}
+                infinite={false}
+                responsive={[
+                  {
+                    breakpoint: 1024,
+                    settings: {
+                      slidesToShow: 3,
+                      slidesToScroll: 3,
+                    }
+                  },
+                  {
+                    breakpoint: 600,
+                    settings: {
+                      slidesToShow: 2,
+                      slidesToScroll: 2,
+                      initialSlide: 2
+                    }
+                  },
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      slidesToShow: 1,
+                      slidesToScroll: 1
+                    }
+                  }
+                ]}
                 >
                   {hotTournament?.map((item, index) => {
                     return (
@@ -263,8 +281,6 @@ export default function NewHomePage() {
               )}
             </Box>
           </Box>{" "}
-          {/* ------------------------------------------- */}
-          {/* Banner winner ---> dynamically render */}
           {width < 576 ? (
             <Box
               sx={{
@@ -357,11 +373,15 @@ export default function NewHomePage() {
                 >
                   {String(
                     biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.length > 10 ? String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()?.slice(0, 10) + "..." || "MEGA HOLIC" : String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()}
+                  )?.length > 10
+                    ? String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )
+                        ?.toUpperCase()
+                        ?.slice(0, 10) + "..." || "MEGA HOLIC"
+                    : String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )?.toUpperCase()}
                 </Typography>
                 <Box
                   sx={{
@@ -406,7 +426,6 @@ export default function NewHomePage() {
             >
               <Box
                 sx={{
-                  backgroundImage: `url(${images.winnerBG})`,
                   height: "400px",
                   width: "568px",
                   marginLeft: "0px",
@@ -421,34 +440,37 @@ export default function NewHomePage() {
                 }}
               >
                 <Box
-                  component={"img"}
-                  src={
-                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        biggestEndTour?.bestUser?.tUser?.userAccount
-                          ?.accountAvatar
-                      : images.pool
-                  }
-                  sx={{
-                    borderRadius: "50%",
-                    width: "168px",
-                    position: "absolute",
-                    left: "200px",
-                    top: "116px",
-                  }}
-                ></Box>
-                <Box
-                  component={"img"}
-                  src={images.hatWinner}
-                  sx={{
-                    width: "81.119px",
-                    height: "auto",
-                    position: "absolute",
-                    left: "210px",
-                    top: "71px",
-                  }}
-                ></Box>
+                  sx={{ width: "168px", height: "168px", position: "relative" }}
+                >
+                  <Box
+                    style={{ border: "4px solid rgba(224, 127, 20,100)" }}
+                    component={"img"}
+                    src={
+                      biggestEndTour?.bestUser?.tUser?.userAccount
+                        ?.accountAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          biggestEndTour?.bestUser?.tUser?.userAccount
+                            ?.accountAvatar
+                        : images.pool
+                    }
+                    sx={{
+                      borderRadius: "50%",
+                      width: "168px",
+                    }}
+                  ></Box>
+                  <Box
+                    component={"img"}
+                    src={images.hatWinner}
+                    sx={{
+                      width: "81.119px",
+                      height: "auto",
+                      position: "absolute",
+                      left: "2px",
+                      top: "-30px",
+                    }}
+                  ></Box>
+                </Box>
                 <Typography
                   sx={{
                     position: "absolute",
@@ -475,28 +497,35 @@ export default function NewHomePage() {
                   sx={{
                     marginLeft: "0px !important",
                     color: "#FFDC62",
-                    fontSize: "30px",
+                    // fontSize: "30px",
                     position: "absolute",
                     top: "38px",
                     left: "90px",
+                    fontSize: width < 1024 && width > 576 ? "16px" : "20px",
                   }}
                 >
                   {String(
                     biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.length > 10 ? String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()?.slice(0, 10) + "..." || "MEGA HOLIC" : String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()}
+                  )?.length > 10
+                    ? String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )
+                        ?.toUpperCase()
+                        ?.slice(0, 10) + "..." || "MEGA HOLIC"
+                    : String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )?.toUpperCase()}
                 </Typography>
                 <Typography
                   sx={{
                     marginLeft: "0px !important",
                     color: "#fff",
-                    fontSize: "88px",
+                    // fontSize: "88px",
                     position: "absolute",
-                    top: "85px",
-                    width: "100%"
+                    top: "45%",
+                    left: "2rem",
+                    width: "100%",
+                    fontSize: width < 1024 && width > 576 ? "40px" : "48px",
                   }}
                   className="text-center"
                 >
@@ -506,16 +535,21 @@ export default function NewHomePage() {
                 </Typography>
                 <Typography
                   sx={{
-                    marginLeft: "0px !important",
-                    fontSize: "15px",
+                    marginLeft:
+                      width < 1024 && width > 576
+                        ? "-5px !important"
+                        : "0px !important",
+                    fontSize: width < 1024 && width > 576 ? "12px" : "15px",
                     color: "#ffff",
                     position: "absolute",
                     top: "214px",
                     left: "212px",
                     height: "20px",
+                    textOverflow: "ellipsis",
+                    minWidth: "60px",
                   }}
                 >
-                  GRAND TOURNAMENT WINNER
+                  {sliceString("GRAND TOURNAMENT WINNER")}...
                 </Typography>
               </Box>
             </Box>
@@ -755,6 +789,30 @@ export default function NewHomePage() {
                   arrows={false}
                   slidesToScroll={5}
                   infinite={false}
+                  responsive={[
+                    {
+                      breakpoint: 1024,
+                      settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                      }
+                    },
+                    {
+                      breakpoint: 600,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        initialSlide: 2
+                      }
+                    },
+                    {
+                      breakpoint: 480,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]}
                 >
                   {dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
@@ -1124,6 +1182,30 @@ export default function NewHomePage() {
                   arrows={false}
                   slidesToScroll={5}
                   infinite={false}
+                  responsive={[
+                    {
+                      breakpoint: 1024,
+                      settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                      }
+                    },
+                    {
+                      breakpoint: 600,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        initialSlide: 2
+                      }
+                    },
+                    {
+                      breakpoint: 480,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]}
                 >
                   {weeklyTournament?.map((item, index) => {
                     return (
@@ -1215,7 +1297,10 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {String(hotWeekTour?.tournamentName)?.length > 10 ? String(hotWeekTour?.tournamentName)?.slice(0, 10) + "..." : String(hotWeekTour?.tournamentName)}
+                    {String(hotWeekTour?.tournamentName)?.length > 10
+                      ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
+                        "..."
+                      : String(hotWeekTour?.tournamentName)}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -1333,18 +1418,19 @@ export default function NewHomePage() {
                   width: "210px",
                   height: "210px",
                   borderRadius: "50%",
-                  backgroundColor: "#0687C9",
                   position: "relative",
                 }}
               >
                 <Box
                   sx={{
                     borderRadius: "50%",
-                    width: "210px",
-                    height: "210px",
+                    width: 576 < width && 1024 > width ? "150px" :"210px",
+                    height: 576 < width && 1024 > width ? "150px" :"210px",
                     position: "absolute",
                     top: "-6px",
                     left: "-4px",
+
+                    boxShadow: "4px 4px 0px 3px rgba(6,135,201,1)",
                   }}
                   src={
                     hotWeekTour &&
@@ -1364,8 +1450,8 @@ export default function NewHomePage() {
                     width: "140px",
                     height: "auto",
                     position: "absolute",
-                    top: "-50px",
-                    left: "-76px",
+                    top: 576 < width && 1024 > width ? "-80px" :"-50px",
+                    left: 576 < width && 1024 > width ? "-40px" : "-76px",
                   }}
                   component={"img"}
                   src={imageHome.top1Icon}
@@ -1389,7 +1475,10 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {String(hotWeekTour?.tournamentName)?.length > 10 ? String(hotWeekTour?.tournamentName)?.slice(0, 10) + "..." : String(hotWeekTour?.tournamentName)}
+                    {String(hotWeekTour?.tournamentName)?.length > 10
+                      ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
+                        "..."
+                      : String(hotWeekTour?.tournamentName)}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>

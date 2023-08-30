@@ -1,8 +1,10 @@
-import { Box, Typography, createTheme } from "@mui/material";
+import { Box, Typography, 
+  // createTheme 
+} from "@mui/material";
 import React from "react";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
-import { imageHome, images } from "../../../../utils/images";
+// import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
+import { imageHome } from "../../../../utils/images";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -10,21 +12,22 @@ import { CalculateDistance } from "../../../../components/CountDownTimer/utils/C
 import moment from "moment";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
 
-const theme = createTheme({
-  typography: {
-    fontFamily: "Cyntho Next",
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
-      },
-    },
-  },
-});
+// const theme = createTheme({
+//   typography: {
+//     fontFamily: "Cyntho Next",
+//   },
+//   components: {
+//     MuiCssBaseline: {
+//       styleOverrides: {
+//         "@font-face": {
+//           fontFamily: "Cyntho Next",
+//           src: `url(${InspirationTTF}) format("truetype")`,
+//         },
+//       },
+//     },
+//   },
+// });
+
 export default function ItemComponent({ countdown, tourInfo }) {
   const { width } = useWindowDimensions();
   const [hours, setHour] = useState(null);
@@ -53,7 +56,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
   };
   const navigate = useNavigate();
   return (
-    <Box onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)} sx={{ position: "relative",display: "flex", flexDirection: "column", width: width < 576 ? "155px" : "184px", cursor: "pointer" }}>
+    <Box className="ms-2 me-2" onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)} sx={{ position: "relative",display: "flex", flexDirection: "column", width: width < 576 ? "155px" : "184px", cursor: "pointer" }}>
       <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e", position: "absolute", borderTopRightRadius: "50%", borderBottomRightRadius: "50%", top: width < 576 ? "234px" : "282px", left:"-10px"}}></Box>
       <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e",  position: "absolute", borderTopLeftRadius: "50%", borderBottomRightRadius: "50%", borderRadius: "50%", top: width < 576 ? "234px" : "282px", right:"-10px"}}></Box>
       <Box
@@ -98,7 +101,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
               lineHeight: "normal",
               height: "30px",
               maxHeight: "45px",
-              minHeight: "30px",
+              minHeight: "36px",
               width: "120px",
             }}
           >
@@ -108,7 +111,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width <576 ? "22px" : "32px",
+              marginTop: width <576 ? "20px" : "32px",
             }}
           >
             {countdown && (

@@ -27,7 +27,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
         >
           <Box
             sx={{
-              padding: "28px 62px 0px 62px",
+              padding:
+                576 < width < 1200
+                  ? "28px 30px 0px 30px"
+                  : "28px 62px 0px 62px",
               height: "auto",
               display: "flex",
               justifyContent: "space-between",
@@ -45,7 +48,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "#D5F0DF",
                   textAlign: "center",
-                  fontSize: "20px",
+                  fontSize: 576 < width < 1200 ? "15px" : "20px",
                   fontStyle: "normal",
                   fontWeight: "700",
                 }}
@@ -56,8 +59,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   background:
                     "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
-                  width: "66px",
-                  height: "66px",
+                  width: 576 < width < 1200 ? `${width / 20}px` : "66px",
+                  height: 576 < width < 1200 ? `${width / 20}px` : "66px",
                   marginTop: "10px",
                   borderRadius: "50%",
                   display: "flex",
@@ -69,8 +72,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   className=""
                   component={"img"}
                   sx={{
-                    width: "60px",
-                    height: "60px",
+                    width: 576 < width < 1200 ? width / 24 : "60px",
+                    height: 576 < width < 1200 ? width / 24 : "60px",
                     borderRadius: "50%",
                   }}
                   src={
@@ -88,7 +91,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "#BFBEED",
                   textAlign: "center",
-                  fontSize: "14px",
+                  fontSize: 576 < width < 1200 ? "12px" : "14px",
                   fontStyle: "normal",
                   marginTop: "10px",
                 }}
@@ -101,7 +104,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "rgba(191, 190, 237, 0.60)",
                   textAlign: "center",
-                  fontSize: "10px",
+                  fontSize: 576 < width < 1200 ? "8px" : "10px",
                   fontStyle: "normal",
                 }}
               >
@@ -113,7 +116,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 className="textReward"
                 sx={{
                   textAlign: "center",
-                  fontSize: "18px",
+                  fontSize: 576 < width < 1200 ? "16px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
@@ -135,7 +138,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "#FFCD00",
                   textAlign: "center",
-                  fontSize: "20px",
+                  fontSize: 576 < width < 1200 ? "15px" : "20px",
                   fontStyle: "normal",
                   fontWeight: "700",
                   marginLeft: "-2px !important",
@@ -148,8 +151,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   background:
                     "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
-                  width: "106px",
-                  height: "106px",
+                  width: 576 < width < 1200 ? `${width / 9.5}px` : "106px",
+                  height: 576 < width < 1200 ? `${width / 9.5}px` : "106px",
                   marginTop: "10px",
                   borderRadius: "50%",
                   display: "flex",
@@ -161,8 +164,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   className=""
                   component={"img"}
                   sx={{
-                    width: "100px",
-                    height: "100px",
+                    width: 576 < width < 1200 ? `${width / 10}px` : "100px",
+                    height: 576 < width < 1200 ? `${width / 10}px` : "100px",
                     borderRadius: "50%",
                   }}
                   src={
@@ -180,7 +183,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "#BFBEED",
                   textAlign: "center",
-                  fontSize: "28px",
+                  fontSize: 576 < width < 1200 ? "24px" : "28px",
                   fontStyle: "normal",
                   marginTop: "10px",
                 }}
@@ -193,7 +196,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "rgba(191, 190, 237, 0.60)",
                   textAlign: "center",
-                  fontSize: "12px",
+                  fontSize: 576 < width < 1200 ? "10px" : "12px",
                   fontStyle: "normal",
                 }}
               >
@@ -205,7 +208,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 className="textReward"
                 sx={{
                   textAlign: "center",
-                  fontSize: "25px",
+                  fontSize: 576 < width < 1200 ? "20px" : "25px",
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
@@ -227,7 +230,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "#CD8952",
                   textAlign: "center",
-                  fontSize: "20px",
+                  fontSize: 576 < width < 1200 ? "15px" : "20px",
                   fontStyle: "normal",
                   fontWeight: "700",
                 }}
@@ -238,8 +241,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   background:
                     "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
-                  width: "66px",
-                  height: "66px",
+                  width: 576 < width < 1200 ? `${width / 20}px` : "66px",
+                  height: 576 < width < 1200 ? `${width / 20}px` : "66px",
                   marginTop: "10px",
                   borderRadius: "50%",
                   display: "flex",
@@ -251,8 +254,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   className=""
                   component={"img"}
                   sx={{
-                    width: "60px",
-                    height: "60px",
+                    width: 576 < width < 1200 ? `${width / 24}px` : "60px",
+                    height: 576 < width < 1200 ? `${width / 24}px` : "60px",
                     borderRadius: "50%",
                   }}
                   src={
@@ -270,7 +273,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "#BFBEED",
                   textAlign: "center",
-                  fontSize: "14px",
+                  fontSize: 576 < width < 1200 ? "12px" : "14px",
                   fontStyle: "normal",
                   marginTop: "10px",
                 }}
@@ -283,7 +286,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "rgba(191, 190, 237, 0.60)",
                   textAlign: "center",
-                  fontSize: "10px",
+                  fontSize: 576 < width < 1200 ? "8px" : "10px",
                   fontStyle: "normal",
                 }}
               >
@@ -295,7 +298,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 className="textReward"
                 sx={{
                   textAlign: "center",
-                  fontSize: "18px",
+                  fontSize: 576 < width < 1200 ? "16px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:

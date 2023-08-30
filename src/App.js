@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
@@ -87,7 +87,7 @@ import useWindowDimensions from "./utils/useWindowDimensions";
 import { getAppType } from "./utils/helper";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
 import HotTournament from "./pages/HotTournament";
-import HourlyTournament from "./pages/HourlyTournament";
+// import HourlyTournament from "./pages/HourlyTournament";
 import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
 import LoadingScreen from "./components/LoadingScreen";
@@ -96,11 +96,11 @@ function App() {
   useTracking("");
 
   const [socket] = useState(_socket);
-  const { token, isNavTablet } = store.getState().authReducer;
+  const { token } = store.getState().authReducer;
   const { width } = useWindowDimensions();
  
   useEffect(() => {
-    if(width <= 992 && width >= 576 ) {
+    if(width <= 1024 && width >= 576 ) {
       store.dispatch(getNavTablet(false))
     } else {
       store.dispatch(getNavTablet(true))
@@ -593,7 +593,7 @@ function App() {
             <Route path="game/edit/:id" element={<GameEditPage />} />
             <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
             {getAppType() === "promote" && (
-              <Route path="package" element={<PackagePage />}></Route>
+              <Route path="packages" element={<PackagePage />}></Route>
             )}
             <Route
               path="transactions/:id"
