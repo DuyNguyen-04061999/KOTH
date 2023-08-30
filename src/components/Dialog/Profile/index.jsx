@@ -434,7 +434,7 @@ export default function DialogProfile(props) {
                 }}
               />
             </Box>
-            <Box className="box-body text-white" sx={{ height: "100vh" }}>
+            <Box className="box-body text-white" sx={{ height: "100%" }}>
               {tab === 0 ? (
                 renderUserInfo()
               ) : (
