@@ -128,7 +128,7 @@ export default function Layout(props) {
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
-  
+
   const [showChat] = useState(true);
   const { children } = props;
   const { width } = useWindowDimensions();
@@ -147,8 +147,13 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (router && router !== window.location.pathname && router?.includes("tournamentDetail") && startGameCheck) {
-      window.location.reload()
+    if (
+      router &&
+      router !== window.location.pathname &&
+      router?.includes("tournamentDetail") &&
+      startGameCheck
+    ) {
+      window.location.reload();
     }
   }, [router, startGameCheck]);
 
@@ -291,7 +296,10 @@ export default function Layout(props) {
           dispatch(closeTransactionDialog());
         }}
       />
-      <AppBar position="sticky" className={width < 1200 && startGameCheck ? "d-none" : ""}>
+      <AppBar
+        position="sticky"
+        className={width < 1200 && startGameCheck ? "d-none" : ""}
+      >
         <Toolbar
           sx={{
             background: "#352658",
@@ -381,7 +389,7 @@ export default function Layout(props) {
             </NavLink>
           )}
           <Box sx={{ flexGrow: 1 }}>
-            {width > 1024 ? (
+            {width > 1199 ? (
               <Box>
                 <form
                   onSubmit={handleSubmit}
@@ -508,12 +516,17 @@ export default function Layout(props) {
             item
             sm={1}
             md={isNav === true ? 1.6 : 0.6}
-            lg={isNav === true ? 1.6 : 0.6}
+            lg={isNav === true ? 1.9 : 0.6}
             position={"relative"}
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: isNavTablet === false ? "sticky" : "relative",
-              zIndex: !startGameCheck && width < 1200 ? "1201" : "0"
+              zIndex: !startGameCheck && width < 1200 ? "1034" : "0",
+              width: "400px !important",
+              "& .MuiGrid-item": {
+                minWidth: "400px !important",
+                width: "400px !important",
+              },
             }}
           >
             <Navbar navIcon={isNav} />
@@ -526,7 +539,7 @@ export default function Layout(props) {
           xs={12}
           sm={11}
           md={isNav === true ? 10.4 : 11.4}
-          lg={isNav === true ? 10.4 : 11.4}
+          lg={isNav === true ? 10.1 : 11.4}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",

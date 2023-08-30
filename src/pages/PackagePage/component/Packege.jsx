@@ -184,7 +184,7 @@ export default function Package() {
                             <Typography
                               variant="h5"
                               sx={{
-                                fontSize: "27px",
+                                fontSize: width < 1200 && width > 576 ? "20px" : "27px",
                                 marginTop: "5px",
                                 marginBottom: "15px",
                                 color:
@@ -210,7 +210,7 @@ export default function Package() {
                                 width: "100%",
                                 height: "auto",
                                 border: "none",
-                                padding: "25px",
+                                padding: width < 1200 && width > 576 ? "10px" : "25px",
                               }}
                             >
                               <Box
@@ -244,8 +244,8 @@ export default function Package() {
                                           i?.packageAvatar
                                         : images.free
                                     }
-                                    width={200}
-                                    height={200}
+                                    width={ width < 1200 && width > 576 ? 130 : 200}
+                                    height={ width < 1200 && width > 576 ? 130 : 200}
                                     alt=""
                                     style={{
                                       marginBottom:
@@ -311,12 +311,13 @@ export default function Package() {
                                         </svg>
                                       )}
                                       <Typography
-                                        variant="body1"
+                                        variant="body2"
                                         sx={{
-                                          fontSize: "17px",
+                                          fontSize:width < 1200 && width > 576 ? "12px" : "17px",
                                           color: "white",
                                           fontFamily: "Cyntho Next !important",
                                           fontWeight: "500 !important",
+                                          overflow:"hidden"
                                         }}
                                       >
                                         {i?.packageFreeTicketTournament} Free
@@ -456,6 +457,7 @@ export default function Package() {
                                         sx={{
                                           fontFamily: "Cyntho Next !important",
                                           fontWeight: "500 !important",
+                                          fontSize:width < 1200 && width > 576 ? "22px" : "30px"
                                         }}
                                       >
                                         ${i?.packagePrice}
@@ -465,7 +467,7 @@ export default function Package() {
                                         sx={{
                                           marginTop: "7px",
                                           fontFamily: "Cyntho Next",
-                                          fontSize: "12px",
+                                          fontSize:width < 1200 && width > 576 ? "10px" : "12px",
                                         }}
                                       >
                                         /month
@@ -490,7 +492,7 @@ export default function Package() {
                                         "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
                                       backdropFilter: " blur(4px)",
                                       width: "100%",
-                                      fontSize: "18px",
+                                      fontSize:width < 1200 && width > 576 ? "14px" : "18px",
                                       marginTop: "5px",
                                     }}
                                   >
