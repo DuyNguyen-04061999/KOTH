@@ -76,7 +76,7 @@ export default function DialogChat(props) {
       dispatch(toggleLoginDialog());
     } else {
       if (renderTab === false) {
-        if (e.key === "Enter" && chat) {
+        if (e.key === "Enter" && chat.trim() !== "") {
           socket?.emit("chat", { type: "World", toId: 0, content: chat });
           setChat("");
         }
@@ -89,7 +89,7 @@ export default function DialogChat(props) {
       dispatch(toggleLoginDialog());
     } else {
       if (renderTab === false) {
-        if (chat) {
+        if (chat.trim() !== "") {
           socket?.emit("chat", { type: "World", toId: 0, content: chat });
           setChat("");
         }
@@ -208,7 +208,7 @@ export default function DialogChat(props) {
                   )}
                   <span
                     style={{
-                      color: "White",
+                      color: "#895DBF",
                       fontSize: "10px",
                       marginLeft: "5px",
                     }}

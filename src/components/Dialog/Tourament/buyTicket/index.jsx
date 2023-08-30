@@ -114,12 +114,11 @@ export default function BuyTicket(props) {
           </Box>
           <Box
             sx={{
-              padding: width < 576 ? "80px 40px 150px" : "40px",
+              padding: width < 576 ? "3vh 40px 0px 40px" : "40px",
               boxSizing: "border-box",
               display: "flex",
               flexDirection: "column",
               height: "100%",
-              justifyContent: "space-between",
             }}
           >
             <Box

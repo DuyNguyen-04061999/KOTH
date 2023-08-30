@@ -257,7 +257,7 @@ export default function SettingProfile({ closePopup }) {
                 }}
               >
                 <Input
-                  type="text"
+                  type="number"
                   name="phone"
                   value={phoneNumber}
                   onChange={(e) => {

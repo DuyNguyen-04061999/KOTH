@@ -35,7 +35,7 @@ export default function WalletTypePromote(props) {
         {getAppType() === "promote" ? (
           <Box
             sx={{
-              minHeight: width < 576 ? "1000px" : "unset",
+              minHeight: width < 576 ? "100vh" : "unset",
               maxHeight: width < 576 ? "unset" : height - 100,
               backgroundImage: `url(${popup.proWallet})`,
               backgroundRepeat: "no-repeat",

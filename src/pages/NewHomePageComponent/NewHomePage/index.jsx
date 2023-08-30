@@ -113,7 +113,7 @@ export default function NewHomePage() {
     let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
     return distance;
   };
-  
+
   return (
     <Container
       maxWidth="lg"
@@ -143,31 +143,25 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
-          <Box
-            sx={{ marginBottom: width < 576 ? "24px" : "32px" }}
-          >
-            {" "}
+          <Box sx={{ marginBottom: width < 576 ? "24px" : "32px" }}>
             <SlickSlider
               appendDot={true}
               images={
-                width < 576 ? [
-                  images.pepperBanner,
-                  images.pepperBanner,
-                  images.pepperBanner,
-                ]
-              : [
-                  images.pepperBanner,
-                  images.pepperBanner,
-                  images.pepperBanner,
-                ]
-                
+                width < 576
+                  ? [
+                      images.pepperBanner,
+                      images.pepperBanner,
+                      images.pepperBanner,
+                    ]
+                  : [
+                      images.pepperBanner,
+                      images.pepperBanner,
+                      images.pepperBanner,
+                    ]
               }
-              tours={
-                threeBrandTour || []
-              }
+              tours={threeBrandTour}
             />
           </Box>
-          {/* Brief List Tournament */}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "32px",
@@ -263,8 +257,6 @@ export default function NewHomePage() {
               )}
             </Box>
           </Box>{" "}
-          {/* ------------------------------------------- */}
-          {/* Banner winner ---> dynamically render */}
           {width < 576 ? (
             <Box
               sx={{
@@ -357,11 +349,15 @@ export default function NewHomePage() {
                 >
                   {String(
                     biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.length > 10 ? String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()?.slice(0, 10) + "..." || "MEGA HOLIC" : String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()}
+                  )?.length > 10
+                    ? String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )
+                        ?.toUpperCase()
+                        ?.slice(0, 10) + "..." || "MEGA HOLIC"
+                    : String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )?.toUpperCase()}
                 </Typography>
                 <Box
                   sx={{
@@ -483,11 +479,15 @@ export default function NewHomePage() {
                 >
                   {String(
                     biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.length > 10 ? String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()?.slice(0, 10) + "..." || "MEGA HOLIC" : String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.toUpperCase()}
+                  )?.length > 10
+                    ? String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )
+                        ?.toUpperCase()
+                        ?.slice(0, 10) + "..." || "MEGA HOLIC"
+                    : String(
+                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                      )?.toUpperCase()}
                 </Typography>
                 <Typography
                   sx={{
@@ -496,7 +496,7 @@ export default function NewHomePage() {
                     fontSize: "88px",
                     position: "absolute",
                     top: "85px",
-                    width: "100%"
+                    width: "100%",
                   }}
                   className="text-center"
                 >
@@ -1215,7 +1215,10 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {String(hotWeekTour?.tournamentName)?.length > 10 ? String(hotWeekTour?.tournamentName)?.slice(0, 10) + "..." : String(hotWeekTour?.tournamentName)}
+                    {String(hotWeekTour?.tournamentName)?.length > 10
+                      ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
+                        "..."
+                      : String(hotWeekTour?.tournamentName)}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -1389,7 +1392,10 @@ export default function NewHomePage() {
                       textAlign: "start",
                     }}
                   >
-                    {String(hotWeekTour?.tournamentName)?.length > 10 ? String(hotWeekTour?.tournamentName)?.slice(0, 10) + "..." : String(hotWeekTour?.tournamentName)}
+                    {String(hotWeekTour?.tournamentName)?.length > 10
+                      ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
+                        "..."
+                      : String(hotWeekTour?.tournamentName)}
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
