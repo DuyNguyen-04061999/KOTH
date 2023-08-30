@@ -9,7 +9,7 @@ import { images } from "../../utils/images";
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { width } = useWindowDimensions();
-  const { images, appendDot, htmlCode, isHtmlCode, tours } = props;
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours } = props;
 
   const settings = {
     dots: true,
@@ -74,9 +74,9 @@ export default function SlickSlider(props) {
     return images?.pepperBanner;
   }
 
-  return images?.length > 0 ? (
+  return img?.length > 0 ? (
     <Slider {...settings}>
-      {images?.map((item, index) => {
+      {img?.map((item, index) => {
         return (
           <Box
             key={index}
@@ -101,8 +101,8 @@ export default function SlickSlider(props) {
     </Slider>
   ) : (
     <Slider {...settings}>
-      {!isHtmlCode
-        ? [...tours]
+      {!isHtmlCode && tours && tours?.length >= 3
+        ? tours
             ?.filter((item) => item)
             ?.map((item, index) => {
               return (

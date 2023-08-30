@@ -28,6 +28,10 @@ const theme = createTheme({
   },
 });
 const HelpCenterComponent = () => {
+  const splitToArray = (document) => {
+    const array = document.split(/\d\./);
+    return array;
+  };
   const { tabHelpCenter, listFAQPromote } = useSelector(
     (state) => state.helpcenterReducer
   );
@@ -52,7 +56,6 @@ const HelpCenterComponent = () => {
   useEffect(() => {
     setListFAQ(listFAQPromote);
   }, [listFAQPromote]);
-  console.log("listFAQPromote: ", listFAQPromote);
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -77,7 +80,6 @@ const HelpCenterComponent = () => {
       </div>
     );
   }
-
   if (width < 576) {
     return (
       <ThemeProvider theme={theme}>
@@ -100,32 +102,33 @@ const HelpCenterComponent = () => {
                 indicatorColor="unset"
                 style={{ backgroundColor: "#302642" }}
               >
-                {listFAQ?.map((item, index) => {
-                  return (
-                    <Tab
-                      key={index}
-                      label={item?.faqTitle}
-                      style={{
-                        color: tabHelpCenter === index ? "white" : "#9B9ACF",
-                        backgroundColor:
-                          tabHelpCenter === index ? "#5F3491" : "unset",
-                        fontSize: "10px",
-                        fontStyle: "normal",
-                        lineHeight: "normal",
-                        transition:
-                          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-                        textTransform: "capitalize !important",
-                      }}
-                      sx={{
-                        minWidth: "43px",
-                        textTransform: "unset",
-                        padding: "6px 12px",
-                        maxHeight: "36px",
-                        flexShrink: 1,
-                      }}
-                    />
-                  );
-                })}
+                {listFAQ?.length &&
+                  listFAQ?.map((item, index) => {
+                    return (
+                      <Tab
+                        key={index}
+                        label={item?.faqTitle}
+                        style={{
+                          color: tabHelpCenter === index ? "white" : "#9B9ACF",
+                          backgroundColor:
+                            tabHelpCenter === index ? "#5F3491" : "unset",
+                          fontSize: "10px",
+                          fontStyle: "normal",
+                          lineHeight: "normal",
+                          transition:
+                            "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                          textTransform: "capitalize !important",
+                        }}
+                        sx={{
+                          minWidth: "43px",
+                          textTransform: "unset",
+                          padding: "6px 12px",
+                          maxHeight: "36px",
+                          flexShrink: 1,
+                        }}
+                      />
+                    );
+                  })}
               </Tabs>
               <Box
                 sx={{
@@ -137,46 +140,63 @@ const HelpCenterComponent = () => {
                 }}
               >
                 <h4 style={{ fontSize: "16px" }}>
-                  {listFAQ[tabHelpCenter]?.faqTitle}
+                  {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqTitle}
                 </h4>
                 <p style={{ fontSize: "14px", textAlign: "start" }}>
-                  {listFAQ[tabHelpCenter]?.faqDesc}
+                  {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqDesc}
                 </p>
-                {listFAQ?.map((item, index) => (
-                  <TabPanel value={tabHelpCenter} key={index} index={index}>
-                    {item?.FAQPromoteData?.map((item, index) => (
-                      <Box key={index}>
-                        <h6
-                          style={{
-                            margin: "20px 0px",
-                            fontWeight: "bold",
-                            fontSize: "12px",
-                          }}
-                        >
-                          {item?.faqQuestion}
-                        </h6>
-                        <p
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "700",
-                            margin: "10px 0px",
-                            textAlign: "start",
-                          }}
-                        >
-                          {item?.faqAnswer}
-                        </p>
-                      </Box>
-                    ))}
-                    <p
-                      style={{
-                        margin: "20px 0px",
-                        fontSize: "10px",
-                      }}
-                    >{`Last Updated: [${moment(item?.updatedAt).format(
-                      "MMM Do YY"
-                    )}]`}</p>
-                  </TabPanel>
-                ))}
+                {listFAQ?.length &&
+                  listFAQ?.map((item, index) => (
+                    <TabPanel value={tabHelpCenter} key={index} index={index}>
+                      {item?.FAQPromoteData?.map((item, index) => (
+                        <Box key={index}>
+                          <h6
+                            style={{
+                              margin: "20px 0px",
+                              fontWeight: "bold",
+                              fontSize: "12px",
+                            }}
+                          >
+                            {item?.faqQuestion}
+                          </h6>
+                          <p
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: "lighter !important",
+                              margin: "10px 0px",
+                              textAlign: "start",
+                            }}
+                          >
+                            {splitToArray(item?.faqAnswer)?.map((n, index) => {
+                              return (
+                                n?.length > 1 && (
+                                  <p
+                                    style={{
+                                      fontSize: "12px",
+                                      textAlign: "start",
+                                    }}
+                                  >
+                                    {splitToArray(item?.faqAnswer)?.length > 1
+                                      ? index + ". "
+                                      : ""}
+                                    {n}
+                                  </p>
+                                )
+                              );
+                            })}
+                          </p>
+                        </Box>
+                      ))}
+                      <p
+                        style={{
+                          margin: "20px 0px",
+                          fontSize: "10px",
+                        }}
+                      >{`Last Updated: [${moment(item?.updatedAt).format(
+                        "MMM Do YY"
+                      )}]`}</p>
+                    </TabPanel>
+                  ))}
               </Box>
             </Box>
           </Container>
@@ -287,7 +307,26 @@ const HelpCenterComponent = () => {
                                 marginTop: "12px",
                               }}
                             >
-                              {item?.faqAnswer}
+                              {splitToArray(item?.faqAnswer)?.map(
+                                (n, index) => {
+                                  return (
+                                    n?.length > 1 && (
+                                      <p
+                                        style={{
+                                          fontSize: "14px",
+                                          textAlign: "start",
+                                        }}
+                                      >
+                                        {splitToArray(item?.faqAnswer)?.length >
+                                        1
+                                          ? index + ". "
+                                          : ""}
+                                        {n}
+                                      </p>
+                                    )
+                                  );
+                                }
+                              )}
                             </p>
                           </Box>
                         ))}

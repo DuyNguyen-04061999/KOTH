@@ -1,9 +1,10 @@
 import React, { Fragment, useCallback, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import LoadingScreen from "../LoadingScreen";
+import { toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
 
 export default function UnityGameComponent(props) {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function UnityGameComponent(props) {
 
   const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch()
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
       if (data[index]?.link?.includes(".loader.js")) {
@@ -85,6 +87,7 @@ export default function UnityGameComponent(props) {
   }, [GameFiles]);
 
   const handleGameLoad = useCallback(() => {
+    // dispatch(toggleStartGame(true))
     sendMessage("TournamentGameEntry", "SetToken", token);
     sendMessage("TournamentGameEntry", "SetTournamentId", tournamentId);
     sendMessage("TournamentGameEntry", "SetSkinId", skinId);
@@ -106,7 +109,8 @@ export default function UnityGameComponent(props) {
       });
     }
     handleEndGame(score || 0);
-  }, [navigate, unload, handleEndGame, gameId, type, fmod]);
+    dispatch(toggleStartGame(false))
+  }, [navigate, unload, handleEndGame, gameId, type, fmod, dispatch]);
 
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
