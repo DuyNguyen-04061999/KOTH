@@ -127,7 +127,8 @@ export default function Layout(props) {
 
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
-  const { router } = useSelector((state) => state.appReducer);
+  const { router, startGameCheck } = useSelector((state) => state.appReducer);
+  console.log(startGameCheck);
   const [showChat] = useState(true);
   const { children } = props;
   const { width } = useWindowDimensions();
@@ -289,7 +290,7 @@ export default function Layout(props) {
           dispatch(closeTransactionDialog());
         }}
       />
-      <AppBar position="sticky">
+      <AppBar position="sticky" className={startGameCheck ? "d-none" : ""}>
         <Toolbar
           sx={{
             background: "#352658",
@@ -488,7 +489,7 @@ export default function Layout(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {width < 1024 && width > 576 ? (
+      {width < 1200 && width > 576  && !startGameCheck ? (
         <div className="when-active" style={{display:isNav === true ? "block" : "none"}}></div>
       ) : ("")}
       <Grid container>
@@ -502,7 +503,7 @@ export default function Layout(props) {
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: isNavTablet === false ? "sticky" : "relative",
-              zIndex:"1099",
+              zIndex: !startGameCheck ? "1201" : "0"
             }}
           >
             <Navbar navIcon={isNav} />
