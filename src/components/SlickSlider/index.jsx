@@ -73,12 +73,11 @@ export default function SlickSlider(props) {
     }
     return images?.pepperBanner
   }
-console.log(tours);
 
   return (
     <Slider {...settings}>
-      {!isHtmlCode
-        ? [...tours]?.filter(item => item)?.map((item, index) => {
+      {!isHtmlCode && tours && tours?.length >= 3
+        ? tours?.filter(item => item)?.map((item, index) => {
             return (
               <Box
                 key={index}
