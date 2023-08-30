@@ -39,6 +39,7 @@ import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 
 const theme = createTheme({
   typography: {
@@ -163,14 +164,17 @@ export default function JoinTournament() {
       }, 1000)
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
+      dispatch(toggleStartGame(true))
       setStartGame(true);
       setVideoGame(true);
       setCheckMobile(true);
       setExpand(true);
       if (
-        width < 576 &&
-        !detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType &&
-        startGame
+        (width < 576 &&
+          !detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType &&
+          startGame) || (width > 576 && width < 1200 &&
+            detailTournament?.tournamentInfors?.skin?.skinGame?.gameScreenType &&
+            startGame) 
       ) {
         setExpand(true);
         screen.enter();
@@ -178,16 +182,17 @@ export default function JoinTournament() {
       }
     });
 
-    socket?.on("buyTicketTournamentSuccess", (data) => {
-      setTimeout(() => {
-        socket?.emit("detailTournament", {
-          tournamentId: data?.id,
-        });
-      }, 1000)
-    })
+    // socket?.on("buyTicketTournamentSuccess", (data) => {
+    //   setTimeout(() => {
+    //     socket?.emit("detailTournament", {
+    //       tournamentId: data?.id,
+    //     });
+    //   }, 1000)
+    // })
 
     return () => {
       socket?.off("joinTournamentSuccess");
+      // socket?.off("buyTicketTournamentSuccess");
     };
   }, [
     socket,
@@ -196,6 +201,7 @@ export default function JoinTournament() {
     width,
     screen,
     startGame,
+    dispatch
   ]);
 
   useEffect(() => {
@@ -233,7 +239,7 @@ export default function JoinTournament() {
       ((width < 576 &&
         detailTournament?.tournamentInfors?.game?.gameScreenType === 1 &&
         orientation === "portrait") ||
-        (width < 576 &&
+        (width > 576 && width < 1200 &&
           !detailTournament?.tournamentInfors?.game?.gameScreenType &&
           orientation === "landscape"))
     ) {
@@ -1077,7 +1083,7 @@ export default function JoinTournament() {
                 detailTournament?.tournamentInfors?.game?.GameFiles.length >=
                   4 && (
                   <FullScreen
-                    className={`fullscreen ${
+                    className={`${
                       deviceType === "iOS" ? "fullscreen_IOS" : ""
                     }`}
                     handle={screen}

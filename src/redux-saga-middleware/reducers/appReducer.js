@@ -55,6 +55,13 @@ export const getListPackage = (data) => {
     }
 }
 
+export const toggleStartGame = (data) => {
+    return {
+        type : "TOGGLE_START_GAME",
+        payload: data
+    }
+}
+
 const appReducer = (
     state = {
         isFetchListFaq: false,
@@ -62,7 +69,8 @@ const appReducer = (
         isFetchListBet: false,
         listBet: [],
         listPackage: [],
-        router: ""
+        router: "",
+        startGameCheck: false
     },
     action
 ) => {
@@ -77,6 +85,7 @@ const appReducer = (
         case "GET_LIST_BET_FAIL" : return {...state, isFetchListBet: true}
         case "CHANGE_ROUTER" : return {...state, router: payload}
         case "GET_LIST_PACKAGE" : return {...state, listPackage: payload}
+        case "TOGGLE_START_GAME": return {...state, startGameCheck: payload}
         default: return {...state}
     }
 }

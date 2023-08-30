@@ -235,8 +235,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               <div className="cardWrap">
                 <div className="cardT cardLeft">
                   <h5 style={{ color: "#BE48ED", marginTop: "15px" }} className="mb-2">
-                    {detailTournament?.tournamentInfors?.rewardInfors
-                      ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                    {sliceString(detailTournament?.tournamentInfors?.rewardInfors
+                      ?.rewardTitle || "SS Z-Flip 5 free voucher") + "..."}
                   </h5>
                   <Grid container>
                     <div className="d-flex justify-content-between" style={{
