@@ -128,7 +128,7 @@ export default function Layout(props) {
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
-  
+
   const [showChat] = useState(true);
   const { children } = props;
   const { width } = useWindowDimensions();
@@ -147,8 +147,13 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (router && router !== window.location.pathname && router?.includes("tournamentDetail") && startGameCheck) {
-      window.location.reload()
+    if (
+      router &&
+      router !== window.location.pathname &&
+      router?.includes("tournamentDetail") &&
+      startGameCheck
+    ) {
+      window.location.reload();
     }
   }, [router, startGameCheck]);
 
@@ -291,7 +296,10 @@ export default function Layout(props) {
           dispatch(closeTransactionDialog());
         }}
       />
-      <AppBar position="sticky" className={width < 1200 && startGameCheck ? "d-none" : ""}>
+      <AppBar
+        position="sticky"
+        className={width < 1200 && startGameCheck ? "d-none" : ""}
+      >
         <Toolbar
           sx={{
             background: "#352658",
@@ -513,7 +521,7 @@ export default function Layout(props) {
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: isNavTablet === false ? "sticky" : "relative",
-              zIndex: !startGameCheck && width < 1200 ? "1201" : "0"
+              zIndex: !startGameCheck && width < 1200 ? "1201" : "0",
             }}
           >
             <Navbar navIcon={isNav} />
@@ -735,6 +743,7 @@ export default function Layout(props) {
                   }}
                 >
                   <Test
+                    style={{ fontSize: "13px" }}
                     type="text"
                     value={chatF}
                     id="sendmessages"

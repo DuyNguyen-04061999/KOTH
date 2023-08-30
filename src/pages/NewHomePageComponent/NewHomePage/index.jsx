@@ -18,7 +18,7 @@ import SliderTime from "../../../components/SliderTime";
 import Slider from "react-slick";
 import FullListTournament from "./FullListTournament";
 import CountDownTournament from "../CountDownTournament";
-import { getAppType } from "../../../utils/helper";
+import { getAppType, sliceString } from "../../../utils/helper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
@@ -402,7 +402,6 @@ export default function NewHomePage() {
             >
               <Box
                 sx={{
-                  backgroundImage: `url(${images.winnerBG})`,
                   height: "400px",
                   width: "568px",
                   marginLeft: "0px",
@@ -417,34 +416,37 @@ export default function NewHomePage() {
                 }}
               >
                 <Box
-                  component={"img"}
-                  src={
-                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        biggestEndTour?.bestUser?.tUser?.userAccount
-                          ?.accountAvatar
-                      : images.pool
-                  }
-                  sx={{
-                    borderRadius: "50%",
-                    width: "168px",
-                    position: "absolute",
-                    left: "200px",
-                    top: "116px",
-                  }}
-                ></Box>
-                <Box
-                  component={"img"}
-                  src={images.hatWinner}
-                  sx={{
-                    width: "81.119px",
-                    height: "auto",
-                    position: "absolute",
-                    left: "210px",
-                    top: "71px",
-                  }}
-                ></Box>
+                  sx={{ width: "168px", height: "168px", position: "relative" }}
+                >
+                  <Box
+                    style={{ border: "4px solid rgba(224, 127, 20,100)" }}
+                    component={"img"}
+                    src={
+                      biggestEndTour?.bestUser?.tUser?.userAccount
+                        ?.accountAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          biggestEndTour?.bestUser?.tUser?.userAccount
+                            ?.accountAvatar
+                        : images.pool
+                    }
+                    sx={{
+                      borderRadius: "50%",
+                      width: "168px",
+                    }}
+                  ></Box>
+                  <Box
+                    component={"img"}
+                    src={images.hatWinner}
+                    sx={{
+                      width: "81.119px",
+                      height: "auto",
+                      position: "absolute",
+                      left: "2px",
+                      top: "-30px",
+                    }}
+                  ></Box>
+                </Box>
                 <Typography
                   sx={{
                     position: "absolute",
@@ -475,6 +477,7 @@ export default function NewHomePage() {
                     position: "absolute",
                     top: "38px",
                     left: "90px",
+                    fontSize: width < 1024 && width > 576 ? "16px" : "20px",
                   }}
                 >
                   {String(
@@ -495,8 +498,10 @@ export default function NewHomePage() {
                     color: "#fff",
                     fontSize: "88px",
                     position: "absolute",
-                    top: "85px",
+                    top: "45%",
+                    left: "2rem",
                     width: "100%",
+                    fontSize: width < 1024 && width > 576 ? "40px" : "48px",
                   }}
                   className="text-center"
                 >
@@ -506,16 +511,21 @@ export default function NewHomePage() {
                 </Typography>
                 <Typography
                   sx={{
-                    marginLeft: "0px !important",
-                    fontSize: "15px",
+                    marginLeft:
+                      width < 1024 && width > 576
+                        ? "-5px !important"
+                        : "0px !important",
+                    fontSize: width < 1024 && width > 576 ? "12px" : "15px",
                     color: "#ffff",
                     position: "absolute",
                     top: "214px",
                     left: "212px",
                     height: "20px",
+                    textOverflow: "ellipsis",
+                    minWidth: "60px",
                   }}
                 >
-                  GRAND TOURNAMENT WINNER
+                  {sliceString("GRAND TOURNAMENT WINNER")}...
                 </Typography>
               </Box>
             </Box>
@@ -1336,18 +1346,19 @@ export default function NewHomePage() {
                   width: "210px",
                   height: "210px",
                   borderRadius: "50%",
-                  backgroundColor: "#0687C9",
                   position: "relative",
                 }}
               >
                 <Box
                   sx={{
                     borderRadius: "50%",
-                    width: "210px",
-                    height: "210px",
+                    width: 576 < width && 1024 > width ? "150px" :"210px",
+                    height: 576 < width && 1024 > width ? "150px" :"210px",
                     position: "absolute",
                     top: "-6px",
                     left: "-4px",
+
+                    boxShadow: "4px 4px 0px 3px rgba(6,135,201,1)",
                   }}
                   src={
                     hotWeekTour &&
@@ -1367,8 +1378,8 @@ export default function NewHomePage() {
                     width: "140px",
                     height: "auto",
                     position: "absolute",
-                    top: "-50px",
-                    left: "-76px",
+                    top: 576 < width && 1024 > width ? "-80px" :"-50px",
+                    left: 576 < width && 1024 > width ? "-40px" : "-76px",
                   }}
                   component={"img"}
                   src={imageHome.top1Icon}

@@ -792,12 +792,6 @@ export default function Dialoglg() {
                 id="dropdown-basic"
                 className="dropdown-bs position-relative btn-ava"
               >
-                <Badge
-                  color="success"
-                  overlap="circular"
-                  badgeContent=""
-                  variant="dot"
-                >
                   <img
                     style={{
                       borderRadius: 50,
@@ -814,7 +808,6 @@ export default function Dialoglg() {
                     className="ava-signin ms-2 me-2"
                   />
                   {/* )} */}
-                </Badge>
               </Dropdown.Toggle>
               <Dropdown.Menu
                 style={{

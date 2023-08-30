@@ -261,6 +261,7 @@ export default function DialogChat(props) {
                 }}
               >
                 <Test
+                
                   type="text"
                   value={chat}
                   id="sendmessages"
