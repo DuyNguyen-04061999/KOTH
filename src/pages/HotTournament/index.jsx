@@ -95,7 +95,7 @@ export default function HotTournament() {
                     return (
                       index < 10 && (
                         <Box
-                          sx={{ width: "20%", marginTop: "50px" }}
+                          sx={{ width: "20%", marginTop: "50px", marginRight: width > 576 && width < 1200 ? "100px" : "none" }}
                           key={index}
                         >
                           <ItemComponent tourInfo={item} countdown={true} />

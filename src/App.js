@@ -593,7 +593,7 @@ function App() {
             <Route path="game/edit/:id" element={<GameEditPage />} />
             <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
             {getAppType() === "promote" && (
-              <Route path="package" element={<PackagePage />}></Route>
+              <Route path="packages" element={<PackagePage />}></Route>
             )}
             <Route
               path="transactions/:id"

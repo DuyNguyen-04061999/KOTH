@@ -3,11 +3,13 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toggleAlertStripeProcess } from '../../../redux-saga-middleware/reducers/stripeReducer'
+import useWindowDimensions from '../../../utils/useWindowDimensions'
 
 export default function StripeAlertComponent() {
     const navigate = useNavigate()
     const { isAlertDialog, typeAlert } = useSelector(state => state.stripeReducer)
     const dispatch = useDispatch()
+    const { width } = useWindowDimensions()
     
     return (
         <Dialog open={isAlertDialog} onClose={() => {
@@ -15,7 +17,7 @@ export default function StripeAlertComponent() {
             dispatch(toggleAlertStripeProcess())
         }} PaperProps={{
             style: {
-                width: '30%',
+                width: width < 576 ? "60%" : '30%',
                 backgroundColor: typeAlert && typeAlert === "success" ? "#9ED458" : "#F3D886",
                 boxShadow: '1px 2px 9px #404040',
             }

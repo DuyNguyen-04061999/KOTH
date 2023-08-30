@@ -104,7 +104,7 @@ export default function WeekLongTour() {
                   // ?.slice(itemOffset, itemOffset + 10)
                   ?.map((item, index) => {
                     return (
-                      <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
+                      <Box sx={{ width: "20%", marginTop: "50px", marginRight: width > 576 && width < 1200 ? "100px" : "none" }} key={index}>
                         <ItemComponent tourInfo={item} countdown={true} />
                       </Box>
                     );

@@ -109,10 +109,10 @@ export default function NavMobile() {
                   >
                     <div
                       onClick={() => {
-                        navigate("/package");
+                        navigate("/packages");
                       }}
                     >
-                      {pathname && pathname === "/package" ? (
+                      {pathname && pathname === "/packages" ? (
                         <svg
                           width={24}
                           height={24}

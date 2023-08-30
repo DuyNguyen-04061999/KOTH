@@ -579,18 +579,20 @@ export default function Package() {
           </div>
         ) : (
           <div className="Package-home" style={{ marginTop: "48px" }}>
-            <Typography
-              style={{
-                color: "white",
-                fontSize: "16px",
-                fontStyle: "normal",
-                fontWeight: "700",
-                lineHeight: "normal",
-                textAlign: "start",
-              }}
-            >
-              Package
-            </Typography>
+            {location && location?.pathname?.includes("home") && (
+                <Typography
+                style={{
+                  color: "white",
+                  fontSize: "16px",
+                  fontStyle: "normal",
+                  fontWeight: "700",
+                  lineHeight: "normal",
+                  textAlign: "start",
+                }}
+              >
+                Packages
+              </Typography>
+              )}
             <Box style={{ padding: "10px" }} sx={{ marginTop: "24px" }}>
               <Box
                 sx={{

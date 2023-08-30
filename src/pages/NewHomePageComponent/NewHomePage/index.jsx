@@ -238,11 +238,35 @@ export default function NewHomePage() {
                 </Slider>
               ) : (
                 <Slider
-                  dots={false}
-                  slidesToShow={5}
-                  arrows={false}
-                  slidesToScroll={5}
-                  infinite={false}
+                dots={false}
+                slidesToShow={5}
+                arrows={false}
+                slidesToScroll={5}
+                infinite={false}
+                responsive={[
+                  {
+                    breakpoint: 1024,
+                    settings: {
+                      slidesToShow: 3,
+                      slidesToScroll: 3,
+                    }
+                  },
+                  {
+                    breakpoint: 600,
+                    settings: {
+                      slidesToShow: 2,
+                      slidesToScroll: 2,
+                      initialSlide: 2
+                    }
+                  },
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      slidesToShow: 1,
+                      slidesToScroll: 1
+                    }
+                  }
+                ]}
                 >
                   {hotTournament?.map((item, index) => {
                     return (
@@ -755,6 +779,30 @@ export default function NewHomePage() {
                   arrows={false}
                   slidesToScroll={5}
                   infinite={false}
+                  responsive={[
+                    {
+                      breakpoint: 1024,
+                      settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                      }
+                    },
+                    {
+                      breakpoint: 600,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        initialSlide: 2
+                      }
+                    },
+                    {
+                      breakpoint: 480,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]}
                 >
                   {dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
@@ -1124,6 +1172,30 @@ export default function NewHomePage() {
                   arrows={false}
                   slidesToScroll={5}
                   infinite={false}
+                  responsive={[
+                    {
+                      breakpoint: 1024,
+                      settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                      }
+                    },
+                    {
+                      breakpoint: 600,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        initialSlide: 2
+                      }
+                    },
+                    {
+                      breakpoint: 480,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]}
                 >
                   {weeklyTournament?.map((item, index) => {
                     return (

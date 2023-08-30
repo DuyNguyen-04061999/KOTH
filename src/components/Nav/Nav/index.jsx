@@ -656,7 +656,7 @@ export default function Navbar() {
                   paddingLeft: isNav === true ? "0.5rem" : ""
                 }}
                 onClick={() => {
-                  navigate("/package");
+                  navigate("/packages");
                 }}
                 className="nav-home pt-2 pb-2 mb-3"
               >

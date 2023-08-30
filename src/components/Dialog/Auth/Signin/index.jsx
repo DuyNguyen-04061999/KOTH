@@ -11,7 +11,7 @@ import React, { useEffect } from "react";
 import { AvatarGroup } from "@mui/material";
 import { images, sign } from "../../../../utils/images";
 import "./index.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DialogProfile from "../../Profile";
 import Signup from "../Signup";
@@ -91,7 +91,7 @@ function SimpleDialog(props) {
         username: username?.toLowerCase(),
         password: password,
       });
-      dispatch(toggleLoginDialog())
+      dispatch(toggleLoginDialog());
     }
   };
   return (
@@ -610,6 +610,8 @@ export default function Dialoglg() {
     dispatch(clickTabChat(true));
   };
   const { width } = useWindowDimensions();
+  const location = useLocation();
+
   return (
     <div className="dialog">
       {token === "" || !token || token === null ? (
@@ -776,13 +778,14 @@ export default function Dialoglg() {
             </Box>
           )}
           <Box
+            component={"div"}
             className={
               width && width > 576
                 ? "d-flex align-items-center user-name"
                 : "d-flex align-items-center user-name"
             }
           >
-            <Dropdown>
+            <Dropdown hidden={width < 576 && location && location?.pathname?.includes("packages")}>
               <Dropdown.Toggle
                 style={{
                   backgroundColor: "unset",

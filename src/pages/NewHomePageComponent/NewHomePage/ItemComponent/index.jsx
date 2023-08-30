@@ -53,7 +53,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
   };
   const navigate = useNavigate();
   return (
-    <Box onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)} sx={{ position: "relative",display: "flex", flexDirection: "column", width: width < 576 ? "155px" : "184px", cursor: "pointer" }}>
+    <Box className="ms-2 me-2" onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)} sx={{ position: "relative",display: "flex", flexDirection: "column", width: width < 576 ? "155px" : "184px", cursor: "pointer" }}>
       <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e", position: "absolute", borderTopRightRadius: "50%", borderBottomRightRadius: "50%", top: width < 576 ? "234px" : "282px", left:"-10px"}}></Box>
       <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e",  position: "absolute", borderTopLeftRadius: "50%", borderBottomRightRadius: "50%", borderRadius: "50%", top: width < 576 ? "234px" : "282px", right:"-10px"}}></Box>
       <Box

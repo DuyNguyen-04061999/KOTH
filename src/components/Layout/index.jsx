@@ -371,14 +371,20 @@ export default function Layout(props) {
               </div>
             </div>
           ) : (
-            <NavLink to="/home">
-              <img
-                style={{ width: "90px", height: "auto", marginLeft: "15px" }}
-                className="logocongty"
-                src={imageDesktop.LogoCongTy}
-                alt="logocty"
-              />
-            </NavLink>
+            <Box>
+              {location && location?.pathname?.includes("/packages") ? (
+                <span className="ms-2">Packages</span>
+              ) : (
+                <NavLink to="/home">
+                  <img
+                    style={{ width: "90px", height: "auto", marginLeft: "15px" }}
+                    className="logocongty"
+                    src={imageDesktop.LogoCongTy}
+                    alt="logocty"
+                  />
+                </NavLink>
+              )}
+            </Box>
           )}
           <Box sx={{ flexGrow: 1 }}>
             {width > 1024 ? (
