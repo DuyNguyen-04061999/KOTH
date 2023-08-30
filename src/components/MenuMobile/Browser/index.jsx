@@ -260,7 +260,7 @@ export default function Browser(props) {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate(`/package`);
+                    navigate(`/packages`);
                   }}
                 >
                   <svg

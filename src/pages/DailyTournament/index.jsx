@@ -117,7 +117,7 @@ export default function DailyTournament() {
                     ?.listTournament?.map((item, index) => {
                       return (
                         index < 10 && (
-                          <Box sx={{ width: "20%", marginTop: "50px" }}>
+                          <Box sx={{ width: "20%", marginTop: "50px", marginRight: width > 576 && width < 1200 ? "100px" : "none" }}>
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
                         )

@@ -379,17 +379,23 @@ export default function Layout(props) {
               </div>
             </div>
           ) : (
-            <NavLink to="/home">
-              <img
-                style={{ width: "90px", height: "auto", marginLeft: "15px" }}
-                className="logocongty"
-                src={imageDesktop.LogoCongTy}
-                alt="logocty"
-              />
-            </NavLink>
+            <Box>
+              {location && location?.pathname?.includes("/packages") ? (
+                <span className="ms-2">Packages</span>
+              ) : (
+                <NavLink to="/home">
+                  <img
+                    style={{ width: "90px", height: "auto", marginLeft: "15px" }}
+                    className="logocongty"
+                    src={imageDesktop.LogoCongTy}
+                    alt="logocty"
+                  />
+                </NavLink>
+              )}
+            </Box>
           )}
           <Box sx={{ flexGrow: 1 }}>
-            {width > 1024 ? (
+            {width > 1199 ? (
               <Box>
                 <form
                   onSubmit={handleSubmit}
@@ -516,12 +522,17 @@ export default function Layout(props) {
             item
             sm={1}
             md={isNav === true ? 1.6 : 0.6}
-            lg={isNav === true ? 1.6 : 0.6}
+            lg={isNav === true ? 1.9 : 0.6}
             position={"relative"}
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: isNavTablet === false ? "sticky" : "relative",
-              zIndex: !startGameCheck && width < 1200 ? "1201" : "0",
+              zIndex: !startGameCheck && width < 1200 ? "1034" : "0",
+              width: "400px !important",
+              "& .MuiGrid-item": {
+                minWidth: "400px !important",
+                width: "400px !important",
+              },
             }}
           >
             <Navbar navIcon={isNav} />
@@ -534,7 +545,7 @@ export default function Layout(props) {
           xs={12}
           sm={11}
           md={isNav === true ? 10.4 : 11.4}
-          lg={isNav === true ? 10.4 : 11.4}
+          lg={isNav === true ? 10.1 : 11.4}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",

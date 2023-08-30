@@ -645,7 +645,7 @@ export default function Navbar() {
                   borderRadius: "5px",
                 }}
                 onClick={() => {
-                  navigate("/package");
+                  navigate("/packages");
                 }}
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
