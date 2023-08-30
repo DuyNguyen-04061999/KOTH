@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export default function Signup(props) {
   const { handleTab } = props;
@@ -25,10 +27,20 @@ export default function Signup(props) {
   const { width } = useWindowDimensions();
   const [passSai, setPassSai] = useState(false);
   const [socket, setSocket] = useState(null);
+  const [displayPassword, setDisplayPassword] = useState(false);
+  const [displayPasswordC, setDisplayPasswordC] = useState(false);
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
+  const handleSetPassword = () => {
+    setDisplayPassword(!displayPassword);
+  };
+  const handleSetPasswordC = () => {
+    setDisplayPasswordC(!displayPasswordC);
+  };
 
   useEffect(() => {
     if (registerValue === "success") {
@@ -53,7 +65,8 @@ export default function Signup(props) {
       password.length > 15 ||
       c_password.length > 15 ||
       password.length < 6 ||
-      c_password.length < 6
+      c_password.length < 6 || 
+      password !== c_password
     ) {
       setDisabledBtn(true);
     } else {
@@ -65,7 +78,7 @@ export default function Signup(props) {
     e.preventDefault();
     sendRegister();
   };
-
+  console.log(passSai);
   //------------------------------------------------------------------
   const sendRegister = () => {
     if (c_password !== password) {
@@ -93,7 +106,9 @@ export default function Signup(props) {
           <Typography
             variant="h5"
             className="text-center text-white"
-            sx={{ marginBottom: width < 576 ? "30px !important" : "30px !important" }}
+            sx={{
+              marginBottom: width < 576 ? "30px !important" : "30px !important",
+            }}
           >
             Sign Up
           </Typography>
@@ -228,7 +243,7 @@ export default function Signup(props) {
             }}
           />
           <Input
-            type="password"
+            type={displayPassword === false ? "password" : "text"} 
             name="password"
             placeholder="Password"
             autoComplete="new-password"
@@ -256,6 +271,27 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
+          <Box onClick={handleSetPassword}>
+            {displayPassword === false ? (
+              <VisibilityOffIcon
+                sx={{
+                  position: "absolute",
+                  top: width > 576 ? "10px" : "10px",
+                  right: width > 576 ? "12px" : "10px",
+                  color:"#7C81F2"
+                }}
+              />
+            ) : (
+              <VisibilityIcon
+                sx={{
+                  position: "absolute",
+                  top: width > 576 ? "10px" : "10px",
+                  right: width > 576 ? "12px" : "10px",
+                  color:"#7C81F2"
+                }}
+              />
+            )}
+          </Box>
           {password && password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
@@ -287,10 +323,13 @@ export default function Signup(props) {
             }}
           />
           <Input
-            type="password"
+            type={displayPasswordC === false ? "password" : "text"}
             name="c_password"
             autoComplete="new-password"
             onChange={(e) => {
+              if(password !== c_password) {
+                  setPassSai(true)
+              }
               setC_password(e.target.value);
             }}
             value={c_password}
@@ -313,17 +352,41 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
+          <Box onClick={handleSetPasswordC}>
+            {displayPasswordC === false ? (
+              <VisibilityOffIcon
+                sx={{
+                  position: "absolute",
+                  top: width > 576 ? "10px" : "10px",
+                  right: width > 576 ? "12px" : "10px",
+                  color:"#7C81F2"
+                }}
+              />
+            ) : (
+              <VisibilityIcon
+                sx={{
+                  position: "absolute",
+                  top: width > 576 ? "10px" : "10px",
+                  right: width > 576 ? "12px" : "10px",
+                  color:"#7C81F2"
+                }}
+              />
+            )}
+          </Box>
           {c_password && c_password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
           {c_password && c_password.length < 6 && (
+            <span className="text-danger">Password must be 6 or more characters</span>
+          )}
+          {c_password && c_password !== password && (
             <span className="text-danger">Password does not match</span>
           )}
-          {passSai === true ? (
-            <span className="text-danger">pass not march</span>
+          {/* {passSai === true ? (
+            <span className="text-danger">Password not march</span>
           ) : (
             ""
-          )}
+          )} */}
         </FormControl>
         <FormControl
           variant="standard"

@@ -74,7 +74,7 @@ function SimpleDialog(props) {
   };
 
   const sendLogin = () => {
-    if(!username || !password) {
+    if (!username || !password) {
       toast.error("Login Failed! Enter username and password!", {
         icon: ({ theme, type }) => (
           <img
@@ -84,16 +84,15 @@ function SimpleDialog(props) {
           />
         ),
         position: "top-center",
-        className:
-          width < 576 ? "error-background-small" : "error-background",
+        className: width < 576 ? "error-background-small" : "error-background",
       });
-    } else if(username && password)  {
+    } else if (username && password) {
       socket?.emit("login", {
         username: username?.toLowerCase(),
         password: password,
       });
+      dispatch(toggleLoginDialog())
     }
-    
   };
   return (
     <>
@@ -540,7 +539,11 @@ function SimpleDialog(props) {
                   }}
                 >
                   <img
-                    src={getAppType() === "promote" ? sign.bannersignin : images?.signInCrypto}
+                    src={
+                      getAppType() === "promote"
+                        ? sign.bannersignin
+                        : images?.signInCrypto
+                    }
                     alt="..."
                     width={"100%"}
                     height={"100%"}

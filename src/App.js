@@ -100,7 +100,7 @@ function App() {
   const { width } = useWindowDimensions();
  
   useEffect(() => {
-    if(width <= 992 && width >= 576 ) {
+    if(width <= 1024 && width >= 576 ) {
       store.dispatch(getNavTablet(false))
     } else {
       store.dispatch(getNavTablet(true))

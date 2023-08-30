@@ -112,6 +112,7 @@ const Test = styled.input`
   }
   &::placeholder {
     color: #bfbeed;
+    font-size: 13px;
   }
 `;
 
@@ -173,7 +174,7 @@ export default function Layout(props) {
   }, [pathname]);
 
   useEffect(() => {
-    if(width < 992 && width > 576) {
+    if(width < 1024 && width > 576) {
       dispatch(clickTabNav(false))
     }
   },[width])
@@ -298,7 +299,7 @@ export default function Layout(props) {
           }}
           className="pt-1 pb-1"
         >
-           {width < 992 && width > 576 ? (
+           {width < 1024 && width > 576 ? (
               <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -313,7 +314,7 @@ export default function Layout(props) {
               <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
             </svg>
             ) : ("")}
-          {width > 992 ? (
+          {width > 1023 ? (
             <div className="d-flex align-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -497,6 +498,7 @@ export default function Layout(props) {
             item
             sm={1}
             md={isNav === true ? 1.6 : 0.6}
+            lg={isNav === true ? 1.6 : 0.6}
             position={"relative"}
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
@@ -514,6 +516,7 @@ export default function Layout(props) {
           xs={12}
           sm={11}
           md={isNav === true ? 10.4 : 11.4}
+          lg={isNav === true ? 10.4 : 11.4}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",
@@ -615,8 +618,9 @@ export default function Layout(props) {
                       className="fs-7 mx-2"
                       style={{
                         color: tabChat === true ? "white" : "#8a78b3",
-                        fontWeight: "700",
+                        fontWeight: "500",
                         fontSize: "15px",
+                        letterSpacing:"1px"
                       }}
                     >
                       Global
@@ -682,8 +686,9 @@ export default function Layout(props) {
                       className="fs-7 mx-2"
                       style={{
                         color: tabChat === false ? "white" : "#8a78b3",
-                        fontWeight: "700",
+                        fontWeight: "500",
                         fontSize: "15px",
+                        letterSpacing:"1px"
                       }}
                     >
                       Private

@@ -17,8 +17,8 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {width} = useWindowDimensions()
-  const [tablet,setTablet] = useState("")
+  const { width } = useWindowDimensions();
+  const [tablet, setTablet] = useState("");
   const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
@@ -38,18 +38,17 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    if(isNavTablet === false) {
-      if( isNav === true){
-        setTablet('width-tablet')
+    if (isNavTablet === false) {
+      if (isNav === true) {
+        setTablet("width-tablet");
       } else {
-        setTablet("w")
+        setTablet("w");
       }
     }
-  })
-
+  });
 
   return (
-    <Box className={`nav-section ${tablet}`} >
+    <Box className={`nav-section ${tablet}`}>
       <Box
         sx={{
           backgroundColor: "#2e233d",
@@ -62,7 +61,7 @@ export default function Navbar() {
           transitionDuration: "all 1s",
           paddingLeft: isNav === true ? "30px" : "7px",
           paddingRight: isNav === true ? "30px" : "7px",
-          transition:' all ease 1s'
+          transition: " all ease 1s",
         }}
         className="pt-3 pb-3 nav-animate"
       >
@@ -86,11 +85,12 @@ export default function Navbar() {
                     pathname && pathname?.includes("home")
                       ? "white"
                       : "#A89CD7",
+                  paddingLeft: isNav === true ? "0.5rem" : ""
                 }}
                 onClick={() => {
                   navigate("/home");
                 }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
+                className="nav-home pt-2 pb-2 mb-3"
               >
                 {pathname && pathname?.includes("home") ? (
                   <svg
@@ -111,21 +111,25 @@ export default function Navbar() {
                 ) : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
+                    width="20"
+                    height="20"
                     fill="none"
-                    viewBox="0 0 24 24"
-                    className="p-1 me-1"
+                    viewBox="0 0 18 18"
                   >
-                    <g>
+                    <g clipPath="url(#clip0_3002_7386)">
                       <path
-                        stroke="#fff"
+                        stroke="#A89CD7"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth="1.5"
-                        d="M12 17.99v-3M9.02 2.84l-5.39 4.2C2.73 7.74 2 9.23 2 10.36v7.41c0 2.32 1.89 4.22 4.21 4.22h11.58c2.32 0 4.21-1.9 4.21-4.21V10.5c0-1.21-.81-2.76-1.8-3.45l-6.18-4.33c-1.4-.98-3.65-.93-5 .12z"
+                        d="M9 13.492v-2.25M6.765 2.13L2.723 5.28C2.048 5.805 1.5 6.923 1.5 7.77v5.558a3.169 3.169 0 003.157 3.165h8.685a3.167 3.167 0 003.158-3.158v-5.46c0-.907-.607-2.07-1.35-2.588L10.515 2.04c-1.05-.735-2.738-.698-3.75.09z"
                       ></path>
                     </g>
+                    <defs>
+                      <clipPath id="clip0_3002_7386">
+                        <path fill="#fff" d="M0 0H18V18H0z"></path>
+                      </clipPath>
+                    </defs>
                   </svg>
                 )}
 
@@ -178,7 +182,7 @@ export default function Navbar() {
                     alignItems: "center",
                   }}
                 >
-                  {pathname && pathname?.includes("week") ? (
+                  {pathname && pathname?.includes("Tournament") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -254,7 +258,7 @@ export default function Navbar() {
                     </svg>
                   )}
                   <span
-                    className="hover-nav"
+                    className="hover-nav me-2"
                     style={{
                       display: isNav === true ? "block" : "none",
                       cursor: "pointer",
@@ -275,7 +279,7 @@ export default function Navbar() {
                       height="14"
                       fill="none"
                       viewBox="0 0 14 14"
-                      className="me-2"
+                      className="me-2 mb-1"
                       style={{
                         transform:
                           isDropdownNav === true
@@ -331,11 +335,12 @@ export default function Navbar() {
                         : "transparent",
 
                     borderRadius: "5px",
+                    paddingLeft: isNav === true ? "0.5rem" : ""
                   }}
                   onClick={() => {
                     navigate("/hot-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
+                  className="nav-home pt-2 pb-2 mb-3 mt-2"
                 >
                   {pathname && pathname?.includes("hot-tournament") ? (
                     <svg
@@ -474,11 +479,12 @@ export default function Navbar() {
                         : "transparent",
 
                     borderRadius: "5px",
+                    paddingLeft: isNav === true ? "0.5rem" : ""
                   }}
                   onClick={() => {
                     navigate("/daily-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
+                  className="nav-home pt-2 pb-2  mb-3 mt-3"
                 >
                   {pathname && pathname?.includes("daily-tournament") ? (
                     <svg
@@ -542,11 +548,12 @@ export default function Navbar() {
                         : "transparent",
 
                     borderRadius: "5px",
+                    paddingLeft: isNav === true ? "0.5rem" : ""
                   }}
                   onClick={() => {
                     navigate("/week-long-tournament");
                   }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
+                  className="nav-home pt-2 pb-2 mb-3 mt-2"
                 >
                   {pathname && pathname?.includes("week-long-tournament") ? (
                     <svg
@@ -635,11 +642,12 @@ export default function Navbar() {
                       : "#462A71",
 
                   borderRadius: "5px",
+                  paddingLeft: isNav === true ? "0.5rem" : ""
                 }}
                 onClick={() => {
                   navigate("/package");
                 }}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
+                className="nav-home pt-2 pb-2 mb-3"
               >
                 {pathname && pathname?.includes("package") ? (
                   <svg
@@ -957,12 +965,13 @@ export default function Navbar() {
           )}
           {getAppType() === "promote" ? (
             <Box
-              className="cursor-pointer"
+              className="cursor-pointer pt-2 pb-2 "
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
                 transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                paddingLeft: isNav === true ? "0.5rem" : ""
               }}
               onClick={() => {
                 navigate(`/help-center`);
