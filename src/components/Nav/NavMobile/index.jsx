@@ -99,7 +99,7 @@ export default function NavMobile() {
                         </g>
                       </svg>
                       <p style={{ fontSize: getFontSizeDependOnWidth(width) }}>
-                        Package
+                        Packages
                       </p>
                     </div>
                   </div>

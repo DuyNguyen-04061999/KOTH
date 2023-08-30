@@ -301,7 +301,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Package
+                    Packages
                   </span>
                 </Box>
                 {getAppType() && getAppType() === "promote" ? (

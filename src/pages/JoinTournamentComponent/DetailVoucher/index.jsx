@@ -169,12 +169,15 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
                   Terms and Conditions
                 </Typography>
-                <ul>
+                <ul style={{
+                  maxHeight: "100px",
+                  overflow: "auto"
+                }}>
                   {
                     detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions && isJson(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions) && JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.length > 0 ? JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.map((term, index) => (
                     <li key={index} style={{ listStyleType: "disc", fontSize: "14px" }}>
-                      {term}
-                  </li>)) : (<>No Infors</>)   
+                      {term}.
+                    </li>)) : (<>No Infors</>)   
                   }
                   
                 </ul>
@@ -256,11 +259,14 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
               <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
                 Terms And Conditions
               </Typography>
-              <ul>
+              <ul style={{
+                  maxHeight: "100px",
+                  overflow: "auto"
+                }}>
                 {
                   detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions && isJson(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions) && JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.length > 0 ? JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.map((term, index) => (
                   <li key={index} style={{ listStyleType: "disc", fontSize: "14px" }}>
-                    {term}
+                    {term}.
                 </li>)) : (<>No Infors</>)   
                 }
                 

@@ -26,6 +26,7 @@ export default function UnityGameComponent(props) {
 
   const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
+  const { router } = useSelector((state) => state.appReducer);
   const dispatch = useDispatch()
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
@@ -139,6 +140,48 @@ export default function UnityGameComponent(props) {
       sendMessage("TournamentGameEntry", "UnpauseGame", "");
     }
   }, [unPauseGame, sendMessage])
+
+  useEffect(() => {
+    const onBeforeUnload = async (ev) => {
+      
+      //#############     
+      if(!fmod) {
+        await unload();
+      }
+      dispatch(toggleStartGame(false))
+      //#############
+
+      ev.returnValue = "Anything you wanna put here!";
+      return "Anything here as well, doesn't matter!";
+    };
+
+    window.addEventListener("beforeunload", onBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", onBeforeUnload);
+    };
+  }, [dispatch, unload, fmod]);
+
+  useEffect(() => {
+    const onBeforeUnload = async (ev) => {
+      
+      //#############     
+      if(!fmod) {
+        await unload();
+      }
+      dispatch(toggleStartGame(false))
+      //#############
+
+      ev.returnValue = "Anything you wanna put here!";
+      return "Anything here as well, doesn't matter!";
+    };
+
+    window.addEventListener("popstate", onBeforeUnload);
+
+    return () => {
+      window.removeEventListener("popstate", onBeforeUnload);
+    };
+  }, [dispatch, unload, fmod]);
 
   return (
     <Fragment>

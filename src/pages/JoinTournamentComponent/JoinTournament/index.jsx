@@ -71,6 +71,7 @@ export default function JoinTournament() {
   const [previousOri, setPreviousOri] = useState("");
   const { orientation } = useSelector((state) => state.gameReducer);
   const { deviceType } = useSelector((state) => state.deviceReducer);
+  const { router } = useSelector((state) => state.deviceReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
@@ -250,7 +251,7 @@ export default function JoinTournament() {
       setUnPauseGame(true);
     }
   }, [orientation, width, detailTournament, startGame]);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -743,7 +744,11 @@ export default function JoinTournament() {
                           fontWeight: "lighter !important",
                         }}
                       >
-                        Tournament of Hourly
+                        {detailTournament?.tournamentTimeType === "hourly"
+                          ? "Hourly Tournament"
+                          : detailTournament?.tournamentTimeType === "daily"
+                          ? "Daily Tournament"
+                          : "Weeklong Tournament"}
                       </Typography>
                     </Box>
                     <Box

@@ -691,7 +691,7 @@ export default function Navbar() {
                     overflow: "hidden",
                   }}
                 >
-                  Package
+                  Packages
                 </span>
               </Box>
             </Box>
