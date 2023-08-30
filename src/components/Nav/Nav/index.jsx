@@ -12,12 +12,12 @@ import {
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { useEffect, useState } from "react";
 import { getAppType } from "../../../utils/helper";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+// import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { width } = useWindowDimensions();
+  // const { width } = useWindowDimensions();
   const [tablet, setTablet] = useState("");
   const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
@@ -45,7 +45,7 @@ export default function Navbar() {
         setTablet("w");
       }
     }
-  });
+  }, [isNavTablet, isNav]);
 
   return (
     <Box className={`nav-section ${tablet}`}>
@@ -82,7 +82,7 @@ export default function Navbar() {
 
                   borderRadius: "5px",
                   color:
-                    pathname && pathname?.includes("home") || pathname === "/"
+                    (pathname && pathname?.includes("home")) || pathname === "/"
                       ? "white"
                       : "#A89CD7",
                 }}
@@ -91,7 +91,7 @@ export default function Navbar() {
                 }}
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
-                {pathname && pathname?.includes("home") || pathname === "/" ? (
+                {(pathname && pathname?.includes("home")) || pathname === "/" ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"

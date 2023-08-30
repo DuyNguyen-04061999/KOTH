@@ -7,17 +7,17 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { imageHome, images, video } from "../../../utils/images";
+import { imageHome, images } from "../../../utils/images";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
-import Draggable from "react-draggable";
+// import Draggable from "react-draggable";
 import { useNavigate } from "react-router-dom";
 import SliderTime from "../../../components/SliderTime";
 import Slider from "react-slick";
 import FullListTournament from "./FullListTournament";
-import CountDownTournament from "../CountDownTournament";
+// import CountDownTournament from "../CountDownTournament";
 import { getAppType, sliceString } from "../../../utils/helper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,13 +43,13 @@ const theme = createTheme({
 });
 export default function NewHomePage() {
   const [open, setOpen] = useState(false);
-  const [promotion, setPromotion] = useState(true);
-  const [startPoint, setstartPoint] = useState(null);
+  // const [promotion, setPromotion] = useState(true);
+  // const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
   const [isFetchList, setIsFetchList] = useState(true);
   const [type, setType] = useState("");
-  const [hourList, setHourList] = useState([]);
-  const [selectedHour, setSeHour] = useState(0);
+  // const [hourList, setHourList] = useState([]);
+  // const [selectedHour, setSeHour] = useState(0);
   const [dayList, setDayList] = useState([
     "Mon",
     "Tus",
@@ -66,7 +66,7 @@ export default function NewHomePage() {
     hourlyTournament,
     hotTournament,
     biggestEndTour,
-    brandTour,
+    // brandTour,
     hotWeekTour,
     threeBrandTour,
   } = useSelector((state) => state.tournamentReducer);
@@ -105,14 +105,14 @@ export default function NewHomePage() {
     }
   }, [dispatch, isFetchList]);
   useEffect(() => {
-    setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
+    // setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
-  const calculateDistance = (x, y, x1, y1) => {
-    let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
-    return distance;
-  };
+  // const calculateDistance = (x, y, x1, y1) => {
+  //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
+  //   return distance;
+  // };
 
   return (
     <Container
@@ -497,7 +497,7 @@ export default function NewHomePage() {
                   sx={{
                     marginLeft: "0px !important",
                     color: "#FFDC62",
-                    fontSize: "30px",
+                    // fontSize: "30px",
                     position: "absolute",
                     top: "38px",
                     left: "90px",
@@ -520,7 +520,7 @@ export default function NewHomePage() {
                   sx={{
                     marginLeft: "0px !important",
                     color: "#fff",
-                    fontSize: "88px",
+                    // fontSize: "88px",
                     position: "absolute",
                     top: "45%",
                     left: "2rem",

@@ -11,7 +11,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useEffect, useState } from "react";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
-import { images, popup } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
 import {
@@ -69,7 +69,7 @@ export default function Package() {
   useEffect(() => {
     if (listPackage && listPackage?.length > 0) {
       const list = listPackage?.filter(
-        (item) => item?.packageName == "Diamond"
+        (item) => item?.packageName === "Diamond"
       );
       setItem(list);
     }
@@ -93,7 +93,7 @@ export default function Package() {
       );
       setItem(itemPackage);
     }
-  }, [activePop]);
+  }, [activePop, listPackage]);
 
   const theme = createTheme({
     typography: {

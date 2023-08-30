@@ -1,5 +1,5 @@
 import {
-  Badge,
+  // Badge,
   Box,
   Dialog,
   FormControl,
@@ -38,7 +38,7 @@ import {
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
 import Gold from "../../../Gold/Gold";
 import { getAppType } from "../../../../utils/helper";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+// import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { toast } from "react-toastify";
 
 function SimpleDialog(props) {

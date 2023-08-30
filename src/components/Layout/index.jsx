@@ -9,8 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { imageDesktop, images } from "../../utils/images";
-import { inpChat } from "../../utils/cssFrom";
+import { imageDesktop } from "../../utils/images";
+// import { inpChat } from "../../utils/cssFrom";
 import styled from "styled-components";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import history from "../Router/history";
@@ -20,7 +20,7 @@ import { images280423_l } from "../../utils/images280423_l";
 import ChatWorldList from "../Chat/ChatWorldList";
 import ChatFriendList from "../Chat/ChatFriendList";
 // import ComponentChat from "../Chat/componentChat";
-import { imageChat } from "../../utils/imagesChat";
+// import { imageChat } from "../../utils/imagesChat";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 
 // import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
@@ -183,7 +183,7 @@ export default function Layout(props) {
     if (width < 1024 && width > 576) {
       dispatch(clickTabNav(false));
     }
-  }, [width]);
+  }, [width, dispatch]);
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -251,7 +251,7 @@ export default function Layout(props) {
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
-
+// console.log(startGameCheck);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
       if (!isAlertDialog) {
@@ -519,6 +519,7 @@ export default function Layout(props) {
       <Grid container>
         {width > 576 ? (
           <Grid
+            display={startGameCheck ? "none" : "block"}
             item
             sm={1}
             md={isNav === true ? 1.6 : 0.6}
@@ -564,6 +565,7 @@ export default function Layout(props) {
         </Grid>
       </Grid>
       <Drawer
+        hidden={startGameCheck}
         sx={{
           width: drawerWidth,
           "& .MuiDrawer-paper": {

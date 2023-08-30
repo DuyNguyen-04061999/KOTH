@@ -78,7 +78,7 @@ export default function Signup(props) {
     e.preventDefault();
     sendRegister();
   };
-  console.log(passSai);
+  // console.log(passSai);
   //------------------------------------------------------------------
   const sendRegister = () => {
     if (c_password !== password) {

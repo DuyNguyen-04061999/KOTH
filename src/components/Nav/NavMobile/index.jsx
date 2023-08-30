@@ -16,6 +16,7 @@ import { getAppType } from "../../../utils/helper";
 export default function NavMobile() {
   const { token, isLoginDialog } = useSelector((state) => state.authReducer);
   const { chatWorld } = useSelector((state) => state.chatReducer);
+  const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const [openMess, setOpenMess] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
@@ -35,7 +36,7 @@ export default function NavMobile() {
 
   return (
     <>
-      {isLoginDialog === false && width <= 576 ? (
+      {isLoginDialog === false && width <= 576  && !startGameCheck ? (
         <div className="mobile" style={{ display: `${hideNavMobile}` }}>
           {getAppType() === "promote" ? (
             <div className="content_nav">

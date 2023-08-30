@@ -34,7 +34,7 @@ const theme = createTheme({
 });
 export default function WeekLongTour() {
   const { width } = useWindowDimensions();
-  const [itemOffset, setItemOffSet] = useState(1);
+  // const [itemOffset, setItemOffSet] = useState(1);
   const [isFetchList, setIsFetchList] = useState(true);
   const typographyStyle = {
     textAlign: "start",
@@ -116,7 +116,7 @@ export default function WeekLongTour() {
               <PaginatedItems
                 pageCount={Math.ceil(weeklyTournament.length / 10)}
                 changeOffSet={(value) => {
-                  setItemOffSet(((value - 1) * 10) % weeklyTournament.length);
+                  // setItemOffSet(((value - 1) * 10) % weeklyTournament.length);
                 }}
               />
             )}

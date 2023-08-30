@@ -1,8 +1,10 @@
-import { Box, Typography, createTheme } from "@mui/material";
+import { Box, Typography, 
+  // createTheme 
+} from "@mui/material";
 import React from "react";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
-import { imageHome, images } from "../../../../utils/images";
+// import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
+import { imageHome } from "../../../../utils/images";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -10,21 +12,22 @@ import { CalculateDistance } from "../../../../components/CountDownTimer/utils/C
 import moment from "moment";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
 
-const theme = createTheme({
-  typography: {
-    fontFamily: "Cyntho Next",
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
-      },
-    },
-  },
-});
+// const theme = createTheme({
+//   typography: {
+//     fontFamily: "Cyntho Next",
+//   },
+//   components: {
+//     MuiCssBaseline: {
+//       styleOverrides: {
+//         "@font-face": {
+//           fontFamily: "Cyntho Next",
+//           src: `url(${InspirationTTF}) format("truetype")`,
+//         },
+//       },
+//     },
+//   },
+// });
+
 export default function ItemComponent({ countdown, tourInfo }) {
   const { width } = useWindowDimensions();
   const [hours, setHour] = useState(null);

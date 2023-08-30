@@ -15,7 +15,9 @@ import {
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
 import { images, video } from "../../../utils/images";
-import { useNavigate, useParams } from "react-router-dom";
+import { 
+  // useNavigate,
+   useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,7 +73,7 @@ export default function JoinTournament() {
   const [previousOri, setPreviousOri] = useState("");
   const { orientation } = useSelector((state) => state.gameReducer);
   const { deviceType } = useSelector((state) => state.deviceReducer);
-  const { router } = useSelector((state) => state.deviceReducer);
+  // const { router } = useSelector((state) => state.deviceReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
