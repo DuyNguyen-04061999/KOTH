@@ -23,9 +23,12 @@ export default function WalletTypePromote(props) {
   return (
     <>
       <Box
-        className="position-relative wallet-type-promote"
+        className="position-relative wallet-type-promote pb-4"
         sx={{
           backgroundImage: `url(${popup.proWallet})`,
+          backgroundRepeat:"no-repeat",
+          backgroundSize:"cover",
+          backgroundPosition:"center",
           width: "100%",
           height: "100%",
           overflow: 'auto'
@@ -37,7 +40,7 @@ export default function WalletTypePromote(props) {
             sx={{
               minHeight: width < 576 ? "100vh" : "unset",
               maxHeight: width < 576 ? "unset" : height - 100,
-              backgroundImage: `url(${popup.proWallet})`,
+              // backgroundImage: `url(${popup.proWallet})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
@@ -422,6 +425,7 @@ export default function WalletTypePromote(props) {
                   fontWeight: "bolder",
                   backgroundImage: "linear-gradient(#893aef,#7547ee)",
                   fontSize: "15px",
+                  marginBottom:"30px"
                 }}
                 onClick={() => {
                   if (!agree) {

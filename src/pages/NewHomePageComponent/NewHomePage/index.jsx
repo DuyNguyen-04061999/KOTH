@@ -26,6 +26,7 @@ import CountDownBannerHot from "../CountDownBannerHot";
 import NewFooter from "../../NewFooter";
 import ItemComponent from "./ItemComponent";
 import "./index.scss";
+import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -219,13 +220,16 @@ export default function NewHomePage() {
             </Box>
             <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               {width < 576 ? (
-                <Slider
-                  dots={false}
-                  slidesToShow={2.05}
-                  arrows={false}
-                  slidesToScroll={2}
-                  infinite={false}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={2.05}
+                //   arrows={false}
+                //   slidesToScroll={2}
+                //   infinite={false}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {hotTournament && hotTournament?.length > 0 && hotTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -237,39 +241,42 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               ) : (
-                <Slider
-                dots={false}
-                slidesToShow={5}
-                arrows={false}
-                slidesToScroll={5}
-                infinite={false}
-                responsive={[
-                  {
-                    breakpoint: 1024,
-                    settings: {
-                      slidesToShow: 3,
-                      slidesToScroll: 3,
-                    }
-                  },
-                  {
-                    breakpoint: 600,
-                    settings: {
-                      slidesToShow: 2,
-                      slidesToScroll: 2,
-                      initialSlide: 2
-                    }
-                  },
-                  {
-                    breakpoint: 480,
-                    settings: {
-                      slidesToShow: 1,
-                      slidesToScroll: 1
-                    }
-                  }
-                ]}
-                >
+                // <Slider
+                // dots={false}
+                // slidesToShow={5}
+                // arrows={false}
+                // slidesToScroll={5}
+                // infinite={false}
+                // responsive={[
+                //   {
+                //     breakpoint: 1024,
+                //     settings: {
+                //       slidesToShow: 3,
+                //       slidesToScroll: 3,
+                //     }
+                //   },
+                //   {
+                //     breakpoint: 600,
+                //     settings: {
+                //       slidesToShow: 2,
+                //       slidesToScroll: 2,
+                //       initialSlide: 2
+                //     }
+                //   },
+                //   {
+                //     breakpoint: 480,
+                //     settings: {
+                //       slidesToShow: 1,
+                //       slidesToScroll: 1
+                //     }
+                //   }
+                // ]}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {hotTournament && hotTournament?.length > 0 && hotTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -281,7 +288,7 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               )}
             </Box>
           </Box>{" "}
@@ -395,7 +402,7 @@ export default function NewHomePage() {
                     marginTop: "10px",
                     position: "absolute",
                     top: "89px",
-                    left: "-23px",
+                    left: "-30px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -767,14 +774,17 @@ export default function NewHomePage() {
 
             <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               {width < 576 ? (
-                <Slider
-                  dots={false}
-                  slidesToShow={2}
-                  arrows={false}
-                  slidesToScroll={2}
-                  infinite={false}
-                >
-                  {dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={2}
+                //   arrows={false}
+                //   slidesToScroll={2}
+                //   infinite={false}
+                // >
+                 
+                // </Slider>
+                <ScrollingCarousel>
+                   {dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay]) 
                     && dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])?.length > 0
@@ -795,39 +805,42 @@ export default function NewHomePage() {
                         </div>
                       );
                     })}
-                </Slider>
+                </ScrollingCarousel>
               ) : (
-                <Slider
-                  dots={false}
-                  slidesToShow={5}
-                  arrows={false}
-                  slidesToScroll={5}
-                  infinite={false}
-                  responsive={[
-                    {
-                      breakpoint: 1024,
-                      settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
-                      }
-                    },
-                    {
-                      breakpoint: 600,
-                      settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        initialSlide: 2
-                      }
-                    },
-                    {
-                      breakpoint: 480,
-                      settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={5}
+                //   arrows={false}
+                //   slidesToScroll={5}
+                //   infinite={false}
+                //   responsive={[
+                //     {
+                //       breakpoint: 1024,
+                //       settings: {
+                //         slidesToShow: 3,
+                //         slidesToScroll: 3,
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 600,
+                //       settings: {
+                //         slidesToShow: 2,
+                //         slidesToScroll: 2,
+                //         initialSlide: 2
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 480,
+                //       settings: {
+                //         slidesToShow: 1,
+                //         slidesToScroll: 1
+                //       }
+                //     }
+                //   ]}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay]) 
                     && dailyTournament && dailyTournament?.length > 0 && dailyTournament
@@ -849,7 +862,7 @@ export default function NewHomePage() {
                         </div>
                       );
                     })}
-                </Slider>
+                </ScrollingCarousel>
               )}
             </Box>
           </Box>{" "}
@@ -1182,13 +1195,16 @@ export default function NewHomePage() {
             </Box>
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               {width < 576 ? (
-                <Slider
-                  dots={false}
-                  slidesToShow={2.05}
-                  arrows={false}
-                  slidesToScroll={2}
-                  infinite={false}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={2.05}
+                //   arrows={false}
+                //   slidesToScroll={2}
+                //   infinite={false}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {weeklyTournament && weeklyTournament?.length > 0 && weeklyTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -1200,39 +1216,42 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               ) : (
-                <Slider
-                  dots={false}
-                  slidesToShow={5}
-                  arrows={false}
-                  slidesToScroll={5}
-                  infinite={false}
-                  responsive={[
-                    {
-                      breakpoint: 1024,
-                      settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
-                      }
-                    },
-                    {
-                      breakpoint: 600,
-                      settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        initialSlide: 2
-                      }
-                    },
-                    {
-                      breakpoint: 480,
-                      settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={5}
+                //   arrows={false}
+                //   slidesToScroll={5}
+                //   infinite={false}
+                //   responsive={[
+                //     {
+                //       breakpoint: 1024,
+                //       settings: {
+                //         slidesToShow: 3,
+                //         slidesToScroll: 3,
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 600,
+                //       settings: {
+                //         slidesToShow: 2,
+                //         slidesToScroll: 2,
+                //         initialSlide: 2
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 480,
+                //       settings: {
+                //         slidesToShow: 1,
+                //         slidesToScroll: 1
+                //       }
+                //     }
+                //   ]}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {weeklyTournament && weeklyTournament?.length > 0 && weeklyTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -1244,7 +1263,7 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               )}
             </Box>
           </Box>{" "}
