@@ -305,8 +305,12 @@ export default function Layout(props) {
             background: "#352658",
             boxShadow: "none",
             minHeight: "48px !important",
+            paddingTop:"9px",
+            paddingBottom:"10px",
+            paddingLeft:"18px",
+            paddingRight:"18px"
           }}
-          className="pt-1 pb-1"
+          // className="pt-1 pb-2"
         >
           {width < 1024 && width > 576 ? (
             <svg
