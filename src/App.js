@@ -97,6 +97,9 @@ function App() {
 
   const [socket] = useState(_socket);
   const { token } = store.getState().authReducer;
+  const { startGameCheck } = store.getState().appReducer;
+  const { orientation } = store.getState().gameReducer;
+  
   const { width } = useWindowDimensions();
  
   useEffect(() => {
@@ -120,11 +123,12 @@ function App() {
     const onWindowResize = () => {
       clearTimeout(window.resizeLag);
       window.resizeLag = setTimeout(() => {
+
         delete window.resizeLag;
         store.dispatch(
           changeOrientation(isLandscape() ? "landscape" : "portrait")
         );
-      }, 200);
+      }, 0);
     };
 
     onWindowResize();
@@ -134,9 +138,33 @@ function App() {
     return () => {
       window.removeEventListener("resize", onWindowResize);
     };
-  }, []);
+  }, [orientation, startGameCheck]);
 
- 
+  
+
+  useEffect(() => {
+    const updateOrientation = event => {
+      if(!startGameCheck) {
+        window.location.reload()
+      }
+    }
+
+    window.addEventListener(
+      'orientationchange',
+      updateOrientation
+    )
+    return () => {
+      window.removeEventListener(
+        'orientationchange',
+        updateOrientation
+      )
+    }
+  }, [startGameCheck])
+
+  useEffect(() => {
+      
+  }, [orientation, startGameCheck])
+
   const checkPreAuthRouter = () => {
     const params = window.location.pathname
     const newArr = params.split("/")

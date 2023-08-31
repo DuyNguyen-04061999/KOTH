@@ -226,13 +226,15 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {hotTournament?.map((item, index) => {
+                  {hotTournament && hotTournament?.length > 0 && hotTournament?.map((item, index) => {
                     return (
-                      <ItemComponent
-                        key={index}
-                        tourInfo={item}
-                        countdown={true}
-                      />
+                      <div key={index}>
+                        <ItemComponent
+                          key={index}
+                          tourInfo={item}
+                          countdown={true}
+                        />
+                      </div>
                     );
                   })}
                 </Slider>
@@ -268,13 +270,15 @@ export default function NewHomePage() {
                   }
                 ]}
                 >
-                  {hotTournament?.map((item, index) => {
+                  {hotTournament && hotTournament?.length > 0 && hotTournament?.map((item, index) => {
                     return (
-                      <ItemComponent
-                        key={index}
-                        countdown={true}
-                        tourInfo={item}
-                      />
+                      <div key={index}>
+                        <ItemComponent
+                          key={index}
+                          countdown={true}
+                          tourInfo={item}
+                        />
+                      </div>
                     );
                   })}
                 </Slider>
@@ -770,15 +774,25 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {dailyTournament
+                  {dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay]) 
+                    && dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])?.length > 0
+                    && dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]?.listTournament
+                    && dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]?.listTournament?.length > 0 &&
+                    dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <ItemComponent
-                          key={index}
-                          countdown={true}
-                          tourInfo={item}
-                        />
+                        <div key={index}>
+                          <ItemComponent
+                            key={index}
+                            countdown={true}
+                            tourInfo={item}
+                          />
+                        </div>
                       );
                     })}
                 </Slider>
@@ -814,15 +828,25 @@ export default function NewHomePage() {
                     }
                   ]}
                 >
-                  {dailyTournament
+                  {dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay]) 
+                    && dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])?.length > 0
+                    && dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]?.listTournament
+                    && dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]?.listTournament?.length > 0 &&
+                    dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        <ItemComponent
-                          key={index}
-                          countdown={true}
-                          tourInfo={item}
-                        />
+                        <div key={index}>
+                          <ItemComponent
+                            key={index}
+                            countdown={true}
+                            tourInfo={item}
+                          />
+                        </div>
                       );
                     })}
                 </Slider>
@@ -1165,13 +1189,15 @@ export default function NewHomePage() {
                   slidesToScroll={2}
                   infinite={false}
                 >
-                  {weeklyTournament?.map((item, index) => {
+                  {weeklyTournament && weeklyTournament?.length > 0 && weeklyTournament?.map((item, index) => {
                     return (
-                      <ItemComponent
-                        key={index}
-                        countdown={true}
-                        tourInfo={item}
-                      />
+                      <div key={index}>
+                        <ItemComponent
+                          key={index}
+                          countdown={true}
+                          tourInfo={item}
+                        />
+                      </div>
                     );
                   })}
                 </Slider>
@@ -1207,13 +1233,15 @@ export default function NewHomePage() {
                     }
                   ]}
                 >
-                  {weeklyTournament?.map((item, index) => {
+                  {weeklyTournament && weeklyTournament?.length > 0 && weeklyTournament?.map((item, index) => {
                     return (
-                      <ItemComponent
-                        key={index}
-                        countdown={true}
-                        tourInfo={item}
+                      <div key={index}>
+                        <ItemComponent
+                          key={index}
+                          countdown={true}
+                          tourInfo={item}
                       />
+                      </div>
                     );
                   })}
                 </Slider>
