@@ -74,18 +74,30 @@ export default function JoinTournament() {
   const [previousOri, setPreviousOri] = useState("");
   const { orientation } = useSelector((state) => state.gameReducer);
   const { deviceType } = useSelector((state) => state.deviceReducer);
-  // const { router } = useSelector((state) => state.deviceReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
-  // const [width, setWidth] = useState(1920);
+  const [second, setSeconds] = useState(7);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
+  useEffect(() => {
+    let timeInterval = setInterval(() => {
+      if (second > 0) {
+        setSeconds(second - 1);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(timeInterval);
+    };
+  }, [second]);
+  useEffect(() => {
+    setSeconds(7);
+  }, [videoGame, id]);
   useEffect(() => {
     if (orientation === "landscape" && width > 576 && width < 1200) {
       setIsFullScreen(true);
@@ -209,7 +221,6 @@ export default function JoinTournament() {
     startGame,
     dispatch,
   ]);
-
   useEffect(() => {
     if (width > 1200) {
       if (
@@ -243,7 +254,6 @@ export default function JoinTournament() {
       }
     }
   }, [detailTournament, width]);
-  console.log(detailTournament);
   const handleEndGame = (score) => {
     setTimeout(() => {
       setStartGame(false);
@@ -255,7 +265,6 @@ export default function JoinTournament() {
 
   const [pauseGame, setPauseGame] = useState(false);
   const [unPauseGame, setUnPauseGame] = useState(false);
-  console.log(width);
   useEffect(() => {
     if (
       startGame &&
@@ -274,7 +283,6 @@ export default function JoinTournament() {
       setUnPauseGame(true);
     }
   }, [orientation, width, detailTournament, startGame]);
-  console.log(width, previousOri, orientation);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -829,7 +837,10 @@ export default function JoinTournament() {
                               : "28px",
                         }}
                       >
-                        Galaxy Quest : SS Z-Flip 5
+                        {detailTournament?.tournamentName?.length > 30
+                          ? detailTournament?.tournamentName.slice(0, 30) +
+                            " ..."
+                          : detailTournament?.tournamentName}
                       </Typography>
                       <Typography
                         sx={{
@@ -1280,39 +1291,98 @@ export default function JoinTournament() {
                   >
                     {videoGame ? (
                       <Fragment>
-                        <video
-                          className={
-                            isFullScreen && startGame ? "fullscreenVideo" : ""
-                          }
-                          width={"100%"}
-                          playsInline
-                          muted
-                          autoPlay
-                          onEnded={() => {
-                            setVideoGame(false);
-                            if (
-                              width < 576 &&
-                              !detailTournament?.tournamentInfors?.skin
-                                ?.skinGame?.gameScreenType &&
-                              startGame
-                            ) {
-                              setExpand(true);
-                              screen.enter();
-                              setIsFullScreen(true);
+                        <Box sx={{ position: "relative" }}>
+                          {" "}
+                          <video
+                            className={
+                              isFullScreen && startGame ? "fullscreenVideo" : ""
                             }
-                          }}
-                        >
-                          <source
-                            src={
-                              detailTournament?.tournamentVideo
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  detailTournament?.tournamentVideo
-                                : video.LogoAnim
-                            }
-                            type="video/mp4"
-                          />
-                        </video>
+                            width={"100%"}
+                            playsInline
+                            autoPlay
+                            muted
+                            onEnded={() => {
+                              setVideoGame(false);
+                              if (
+                                width < 576 &&
+                                !detailTournament?.tournamentInfors?.skin
+                                  ?.skinGame?.gameScreenType &&
+                                startGame
+                              ) {
+                                setExpand(true);
+                                screen.enter();
+                                setIsFullScreen(true);
+                              }
+                            }}
+                          >
+                            <source
+                              src={
+                                detailTournament?.tournamentVideo
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    detailTournament?.tournamentVideo
+                                  : video.LogoAnim
+                              }
+                              type="video/mp4"
+                            />
+                          </video>{" "}
+                          <Box
+                            onClick={() => {
+                              if (second === 0) {
+                                setVideoGame(false);
+                                if (
+                                  width < 576 &&
+                                  !detailTournament?.tournamentInfors?.skin
+                                    ?.skinGame?.gameScreenType &&
+                                  startGame
+                                ) {
+                                  setExpand(true);
+                                  screen.enter();
+                                  setIsFullScreen(true);
+                                }
+                              }
+                            }}
+                            sx={{
+                              position:
+                                detailTournament?.tournamentInfors?.game
+                                  ?.gameScreenType === 0 ||
+                                !detailTournament?.tournamentInfors?.game
+                                  ?.gameScreenType
+                                  ? "absolute"
+                                  : "fixed",
+                              top: width < 576 ? "70%" : "80%",
+                              right: "20px",
+                              display: "flex",
+                              alignItems: "center",
+                              padding: "10px",
+                              backgroundColor: "#000",
+                              border: "2px solid #ffff",
+                              cursor: "pointer",
+                              zIndex: "1000000000000",
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                color: "white",
+                                marginRight: "4px",
+                                fontSize:
+                                  width < 576 ? "10px !important" : "14px",
+                              }}
+                            >
+                              {second !== 0
+                                ? `You can skip Ads after ${second}s`
+                                : "Skip Ads"}
+                            </Typography>
+                            <i
+                              style={{
+                                color: "#ffff",
+                                marginTop: "2px",
+                                fontSize: width < 576 ? "10px" : "14px",
+                              }}
+                              className="fa-solid fa-angle-right"
+                            ></i>
+                          </Box>
+                        </Box>
                       </Fragment>
                     ) : (
                       <Fragment>
