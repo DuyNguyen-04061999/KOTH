@@ -167,6 +167,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             }}
           >
             {detailTournament?.tournamentStatus === 2 && <BgEndGame />}
+            <Box component={"div"} className="position-absolute d-flex ps-2 pe-2 pt-1 pb-1 rounded text-white" sx={{
+              color: '#fff',
+              right: 10,
+              top: 50,
+              background: "#8A3AF1"
+            }}>
+                <Typography
+                    sx={{
+                      color: "#ffff",
+                      marginRight: "2px",
+                      marginTop: "5px",
+                    }}
+                  >
+                    {detailTournament?.turnCountLeft || 0}
+                  </Typography>
+                  <Box
+                    component={"img"}
+                    src={images.ticketIconTournament}
+                  ></Box>
+            </Box>
           </Box>
           <Box
             component={"div"}

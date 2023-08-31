@@ -176,7 +176,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 }}>
                   {
                     detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions && isJson(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions) && JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.length > 0 ? JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.map((term, index) => (
-                    <li key={index} style={{ listStyleType: "none", fontSize: "14px" }}>
+                    <li key={index} style={{ listStyleType: "disc", fontSize: "14px" }}>
                       {term}.
                     </li>)) : (<>No Infors</>)   
                   }
@@ -267,7 +267,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 }}>
                 {
                   detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions && isJson(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions) && JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.length > 0 ? JSON.parse(detail?.tournamentInfors?.rewardInfors?.rewardTermAndConditions)?.map((term, index) => (
-                  <li key={index} style={{ listStyleType: "none", fontSize: "14px" }}>
+                  <li key={index} style={{ listStyleType: "disc", fontSize: "14px" }}>
                     {term}.
                 </li>)) : (<>No Infors</>)   
                 }

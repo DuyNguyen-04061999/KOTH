@@ -312,22 +312,22 @@ export default function NewHomePage() {
                 backgroundSize:
                   width < 576 ? "cover" : width < 1024 ? "contain" : " cover",
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "center",
                 alignItems: "center",
                 overflow: "hidden",
-                padding: (width > 576 && width < 1024) & "36px 160px",
+                padding: (width > 576 && width < 1024) && "36px 160px",
               }}
             >
               <Box
                 sx={{
-                  width: "50%",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   position: "relative",
+                  marginRight: "32px"
                 }}
               >
-                <Box sx={{ position: "absolute", top: "-35px" }}>
+                <Box sx={{}}>
                   {" "}
                   <Box
                     sx={{
@@ -380,9 +380,8 @@ export default function NewHomePage() {
                   display: "flex",
                   flexDirection: "column",
                   boxSizing: "border-box",
-                  margin: "50px 0px 0px 0px",
                   position: "relative",
-                  justifyContent: "flex-start",
+                  justifyContent: "center",
                   height: "100%",
                 }}
               >
@@ -391,6 +390,10 @@ export default function NewHomePage() {
                     color: "#FFDC62",
                     fontSize: "18px",
                     marginLeft: "0px !important",
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                    overflow: 'hidden',
                   }}
                 >
                   {String(
@@ -410,14 +413,11 @@ export default function NewHomePage() {
                     backgroundImage: `url(${imageHome.megaholicMobile})`,
                     width: `${width / 1.6}px`,
                     height: "113px",
-                    marginTop: width < 576 ? "40px" : "10px",
-                    position: "absolute",
-                    top: width > 576 && "89px",
-                    left: "-23px",
+                    marginTop: "10px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: width < 576 ? "flex-start" : "center",
-                    padding: "10px 40px",
+                    padding: "10px 47px",
                   }}
                 >
                   <Typography sx={{ color: "#fff", fontSize: "40px" }}>
@@ -443,9 +443,8 @@ export default function NewHomePage() {
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 display: "flex",
-                justifyContent: "space-around",
+                justifyContent: "space-evenly",
                 alignItems: "center",
-                paddingLeft: "65px",
               }}
             >
               <Box
@@ -520,7 +519,7 @@ export default function NewHomePage() {
                   width: width < 1024 ? "385px" : "504px",
                   height: width < 1024 ? "212px" : "278px",
                   position: "relative",
-                  marginLeft: "20px",
+                  marginRight: "20px",
                 }}
               >
                 <Typography
@@ -529,9 +528,9 @@ export default function NewHomePage() {
                     color: "#FFDC62",
                     // fontSize: "30px",
                     position: "absolute",
-                    top: "38px",
-                    left: "90px",
-                    fontSize: width < 1024 && width > 576 ? "16px" : "20px",
+                    top: width < 1024 && width > 576 ? "35px" :"38px",
+                    left: width < 1024 && width > 576 ? "60px" :"90px",
+                    fontSize: width < 1024 && width > 576 ? "20px" : "32px",
                   }}
                 >
                   {String(
@@ -574,13 +573,15 @@ export default function NewHomePage() {
                     color: "#ffff",
                     position: "absolute",
                     top: width > 576 && width < 1024 ? "165px" : "214px",
-                    left: width > 576 && width < 1024 ? "180px" : "212px",
+                    left: width > 576 && width < 1024 ? "164px" : "212px",
                     height: "20px",
+                    maxWidth: "191pxpx",
+                    overflow: "hidden",
                     textOverflow: "ellipsis",
-                    minWidth: "60px",
+                    whiteSpace: "nowrap"
                   }}
                 >
-                  {sliceString("GRAND TOURNAMENT WINNER")}...
+                  GRAND TOURNAMENT WINNER
                 </Typography>
               </Box>
             </Box>
@@ -1516,16 +1517,17 @@ export default function NewHomePage() {
                 backgroundSize: "cover",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "space-evenly",
                 boxSizing: "border-box",
               }}
             >
               <Box
                 sx={{
                   width: "210px",
-                  height: "210px",
+                  height: "max-content",
                   borderRadius: "50%",
                   position: "relative",
+                  marginLeft: width < 1024 && "32px",
                 }}
               >
                 <Box
@@ -1533,10 +1535,6 @@ export default function NewHomePage() {
                     borderRadius: "50%",
                     width: 576 < width && 1024 > width ? "150px" : "210px",
                     height: 576 < width && 1024 > width ? "150px" : "210px",
-                    position: "absolute",
-                    top: "-6px",
-                    left: "-4px",
-
                     boxShadow: "4px 4px 0px 3px rgba(6,135,201,1)",
                   }}
                   src={
@@ -1619,7 +1617,7 @@ export default function NewHomePage() {
                     borderRadius: "5px",
                     marginTop: "35px",
                     padding: "10.026px 14.037px",
-                    width: "420px",
+                    width: width < 1024 ? "310px" : "420px",
                     display: "flex",
                     justifyContent: "space-between",
                   }}
@@ -1672,7 +1670,7 @@ export default function NewHomePage() {
                       borderRadius: "5px",
                       color: "#fff",
                       padding: "0px 60px",
-                      fontSize: "16px",
+                      fontSize: width < 1024 ? "12px" : "16px",
                       cursor: "pointer",
                     }}
                   >
