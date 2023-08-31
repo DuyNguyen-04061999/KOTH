@@ -131,7 +131,7 @@ export default function Layout(props) {
 
   const [showChat] = useState(true);
   const { children } = props;
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const navigate = useNavigate();
   const pathname = useLocation();
 
@@ -298,17 +298,21 @@ export default function Layout(props) {
       />
       <AppBar
         position="sticky"
-        className={width < 1200 && startGameCheck ? "d-none" : ""}
+        className={
+          ((width < 1200 && height < 768) || width < 576) && startGameCheck
+            ? "d-none"
+            : ""
+        }
       >
         <Toolbar
           sx={{
             background: "#352658",
             boxShadow: "none",
             minHeight: "48px !important",
-            paddingTop:"9px",
-            paddingBottom:"10px",
-            paddingLeft:"18px",
-            paddingRight:"18px"
+            paddingTop: "9px",
+            paddingBottom: "10px",
+            paddingLeft: "18px",
+            paddingRight: "18px",
           }}
           // className="pt-1 pb-2"
         >
@@ -405,7 +409,7 @@ export default function Layout(props) {
           <Box sx={{ flexGrow: 1 }}>
             {width > 1199 ? (
               <Box>
-                <form
+                {/* <form
                   onSubmit={handleSubmit}
                   className="form"
                   style={{
@@ -453,7 +457,7 @@ export default function Layout(props) {
                       }}
                     />
                   </button>
-                </form>
+                </form> */}
               </Box>
             ) : (
               ""
@@ -541,6 +545,10 @@ export default function Layout(props) {
                 minWidth: "400px !important",
                 width: "400px !important",
               },
+              display:
+                startGameCheck && width > 576 && width < 1200 && height < 768
+                  ? "none"
+                  : "block",
             }}
           >
             <Navbar navIcon={isNav} />

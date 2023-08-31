@@ -177,8 +177,9 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               className="fs-4"
               sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important" }}
             >
-              {detailTournament?.tournamentInfors?.game &&
-                detailTournament?.tournamentInfors?.game?.gameName}
+              {detailTournament?.tournamentName?.length > 30
+                ? detailTournament?.tournamentName.slice(0, 30) + " ..."
+                : detailTournament?.tournamentName}
             </Typography>
             <Typography
               sx={{
