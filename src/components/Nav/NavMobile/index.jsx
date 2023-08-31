@@ -351,7 +351,7 @@ export default function NavMobile() {
               {openMess === true ? (
                 ""
               ) : (
-                <div className="abc">
+                <div className="nav-mobile">
                   <div
                     className="items"
                     style={{
