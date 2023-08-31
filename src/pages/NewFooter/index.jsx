@@ -45,13 +45,14 @@ export default function NewFooter() {
           >
             Support
           </Typography>
-          <Box sx={{ width: width > 576 ? "38%" : "none" }}>
+          <Box sx={{ marginTop: width < 1024 ? "24px" : "20px" }}>
             {" "}
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                padding: "20px 10px 0px",
+                padding: width < 576 ? "20px 10px 0px" : "unset",
+                gap: width < 1024 ? "24px" : "41.47px",
               }}
             >
               <Typography
@@ -82,8 +83,9 @@ export default function NewFooter() {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
-                padding: "10px 40px",
+                justifyContent: "center",
+                gap: "24px",
+                marginTop: "16px",
               }}
             >
               <Typography
@@ -113,7 +115,7 @@ export default function NewFooter() {
             sx={{
               width: width < 576 ? "120px" : "200px",
               height: width < 576 ? "44px" : "73.333px",
-              marginTop: "30px",
+              marginTop: width < 1024 ? "30px" : "96.83px",
             }}
             src={imageDesktop.LogoCongTy}
           ></Box>
@@ -124,7 +126,7 @@ export default function NewFooter() {
             fontWeight: "200 !important",
             fontSize: width < 576 ? "12px" : "16px",
             lineHeight: "normal",
-            marginTop: "24px",
+            marginTop: "20px",
           }}
         >
           "Experience the thrill of gaming at Play4Promo, where tournaments,
@@ -136,12 +138,12 @@ export default function NewFooter() {
           sx={{
             color: "#A3A3A3",
             textAlign: "center",
-            fontSize: "10px",
+            fontSize: width < 1024 ? "10px" : "14px",
             fontStyle: "normal",
             fontWeight: "500",
             lineHeight: "normal",
             marginTop: "80px",
-            marginBottom:"30px !important"
+            marginBottom: "30px !important",
           }}
         >
           Copyright © 2023 Play4Promo. All rights reserved. | Version 0.8
