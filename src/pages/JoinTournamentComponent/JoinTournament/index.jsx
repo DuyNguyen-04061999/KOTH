@@ -243,7 +243,7 @@ export default function JoinTournament() {
       }
     }
   }, [detailTournament, width]);
-
+  console.log(detailTournament);
   const handleEndGame = (score) => {
     setTimeout(() => {
       setStartGame(false);
@@ -1302,7 +1302,16 @@ export default function JoinTournament() {
                             }
                           }}
                         >
-                          <source src={video.LogoAnim} type="video/mp4" />
+                          <source
+                            src={
+                              detailTournament?.tournamentVideo
+                                ? process.env.REACT_APP_SOCKET_SERVER +
+                                  "/" +
+                                  detailTournament?.tournamentVideo
+                                : video.LogoAnim
+                            }
+                            type="video/mp4"
+                          />
                         </video>
                       </Fragment>
                     ) : (
