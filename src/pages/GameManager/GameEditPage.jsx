@@ -164,6 +164,9 @@ export default function GameEditPage() {
             <Box component={"div"} className='text-white mt-3 mb-3' onClick={() => navigate(`/game/${location?.state?.id}/upload-skins`)}>
                 Add Skin Games
             </Box>
+            <Button className='bg-warning text-white rounded mt-2' onClick={() => navigate(`/game/${location?.state?.id}/delete-skins`)}>
+                List Skin Games
+            </Button>
 
             <Button type='submit' className='bg-info text-white rounded mt-2'>
                 Edit Game

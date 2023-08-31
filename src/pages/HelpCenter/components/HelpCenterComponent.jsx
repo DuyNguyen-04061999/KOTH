@@ -80,11 +80,13 @@ const HelpCenterComponent = () => {
       </div>
     );
   }
-  if (width < 576) {
+  if (width < 576 || width < 1024) {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Container style={{ padding: "16px 24px 24px 24px" }}>
+          <Container style={{ 
+            padding: width < 576 ? "16px 24px 24px 24px" :  "16px 24px 24px 42px",
+             }}>
             <Box sx={{ margin: "16px 0px 32px 0px" }}>
               <Typography
                 sx={{
