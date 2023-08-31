@@ -199,9 +199,8 @@ const gameReducer = (
   const { type, payload } = action;
   switch (type) {
     case REHYDRATE: {
-      const { gameReducer } = payload
-      const { orientation } = gameReducer
-      console.log(orientation, "o");
+      const { gameReducer } = payload || {}
+      const { orientation } = gameReducer || {}
       return {...state, orientation: orientation || "portrait"}
     }
     case "GET_LIST_GAME":
