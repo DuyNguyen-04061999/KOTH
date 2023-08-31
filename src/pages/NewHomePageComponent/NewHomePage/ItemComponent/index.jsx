@@ -62,7 +62,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
       <Box
         sx={{
           width: "100%",
-          height: width < 576 ? "242px" : "291px",
+          height: width < 576 ? "" : "291px",
           bgcolor: "white",
           borderStartStartRadius: "8px",
           overflow: "hidden",
@@ -159,7 +159,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
       <Box
         sx={{
           width: "100%",
-          height: width <576 ? "58px" : "69px",
+          height: width <576 ? "" : "69px",
           bgcolor: "#C0C0C0",
           borderEndEndRadius: "8px",
           borderEndStartRadius: "8px",

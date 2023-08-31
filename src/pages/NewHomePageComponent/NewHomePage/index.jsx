@@ -219,7 +219,7 @@ export default function NewHomePage() {
                 ></Box>
               </Box>
             </Box>
-            <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
+            <div style={{ paddingTop: width < 576 ? "24px" : "32px" }}>
               {width < 576 ? (
                 // <Slider
                 //   dots={false}
@@ -230,21 +230,23 @@ export default function NewHomePage() {
                 // >
 
                 // </Slider>
-                <ScrollingCarousel>
-                  {hotTournament &&
-                    hotTournament?.length > 0 &&
-                    hotTournament?.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <ItemComponent
-                            key={index}
-                            tourInfo={item}
-                            countdown={true}
-                          />
-                        </div>
-                      );
-                    })}
-                </ScrollingCarousel>
+                <div className="scrolling-carousel-example1-container">
+                  <ScrollingCarousel>
+                    {hotTournament &&
+                      hotTournament?.length > 0 &&
+                      hotTournament?.map((item, index) => {
+                        return (
+                          <div key={index} style={{width: "174px"}}>
+                            <ItemComponent
+                              // key={index}
+                              tourInfo={item}
+                              countdown={true}
+                            />
+                          </div>
+                        );
+                      })}
+                  </ScrollingCarousel>
+                </div>
               ) : (
                 // <Slider
                 // dots={false}
@@ -279,7 +281,8 @@ export default function NewHomePage() {
                 // >
 
                 // </Slider>
-                <ScrollingCarousel>
+                <div className="scrolling-carousel-example1-container">
+                  <ScrollingCarousel>
                   {hotTournament &&
                     hotTournament?.length > 0 &&
                     hotTournament?.map((item, index) => {
@@ -294,8 +297,9 @@ export default function NewHomePage() {
                       );
                     })}
                 </ScrollingCarousel>
+                </div>
               )}
-            </Box>
+            </div>
           </Box>{" "}
           {width < 576 ? (
             <Box
@@ -800,7 +804,8 @@ export default function NewHomePage() {
                 // >
 
                 // </Slider>
-                <ScrollingCarousel>
+                <div className="scrolling-carousel-example1-container">
+                  <ScrollingCarousel>
                   {dailyTournament &&
                     dailyTournament?.length > 0 &&
                     dailyTournament?.filter(
@@ -837,6 +842,7 @@ export default function NewHomePage() {
                         );
                       })}
                 </ScrollingCarousel>
+                </div>
               ) : (
                 // <Slider
                 //   dots={false}
@@ -871,7 +877,8 @@ export default function NewHomePage() {
                 // >
 
                 // </Slider>
-                <ScrollingCarousel>
+               <div className="scrolling-carousel-example1-container">
+                 <ScrollingCarousel>
                   {dailyTournament &&
                     dailyTournament?.length > 0 &&
                     dailyTournament?.filter(
@@ -908,6 +915,7 @@ export default function NewHomePage() {
                         );
                       })}
                 </ScrollingCarousel>
+               </div>
               )}
             </Box>
           </Box>{" "}
@@ -1249,7 +1257,8 @@ export default function NewHomePage() {
                 // >
 
                 // </Slider>
-                <ScrollingCarousel>
+                <div className="scrolling-carousel-example1-container">
+                  <ScrollingCarousel>
                   {weeklyTournament &&
                     weeklyTournament?.length > 0 &&
                     weeklyTournament?.map((item, index) => {
@@ -1264,6 +1273,7 @@ export default function NewHomePage() {
                       );
                     })}
                 </ScrollingCarousel>
+                </div>
               ) : (
                 // <Slider
                 //   dots={false}
@@ -1298,7 +1308,8 @@ export default function NewHomePage() {
                 // >
 
                 // </Slider>
-                <ScrollingCarousel>
+                <div className="scrolling-carousel-example1-container">
+                  <ScrollingCarousel>
                   {weeklyTournament &&
                     weeklyTournament?.length > 0 &&
                     weeklyTournament?.map((item, index) => {
@@ -1313,6 +1324,7 @@ export default function NewHomePage() {
                       );
                     })}
                 </ScrollingCarousel>
+                </div>
               )}
             </Box>
           </Box>{" "}
