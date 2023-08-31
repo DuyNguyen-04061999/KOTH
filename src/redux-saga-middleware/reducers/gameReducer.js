@@ -1,5 +1,7 @@
 // import { REHYDRATE } from "redux-persist";
 
+import { REHYDRATE } from "redux-persist";
+
 export const getListGame = (data) => {
   return {
     type: "GET_LIST_GAME",
@@ -196,6 +198,11 @@ const gameReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
+    case REHYDRATE: {
+      const { gameReducer } = payload || {}
+      const { orientation } = gameReducer || {}
+      return {...state, orientation: orientation || "portrait"}
+    }
     case "GET_LIST_GAME":
       return { ...state, isFetchListGame: true };
     case "GET_LIST_GAME_SUCCESS":

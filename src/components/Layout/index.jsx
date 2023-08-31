@@ -251,7 +251,7 @@ export default function Layout(props) {
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
-// console.log(startGameCheck);
+  // console.log(startGameCheck);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
       if (!isAlertDialog) {
@@ -305,8 +305,12 @@ export default function Layout(props) {
             background: "#352658",
             boxShadow: "none",
             minHeight: "48px !important",
+            paddingTop:"9px",
+            paddingBottom:"10px",
+            paddingLeft:"18px",
+            paddingRight:"18px"
           }}
-          className="pt-1 pb-1"
+          // className="pt-1 pb-2"
         >
           {width < 1024 && width > 576 ? (
             <svg
@@ -385,7 +389,11 @@ export default function Layout(props) {
               ) : (
                 <NavLink to="/home">
                   <img
-                    style={{ width: "90px", height: "auto", marginLeft: "15px" }}
+                    style={{
+                      width: "90px",
+                      height: "auto",
+                      marginLeft: "15px",
+                    }}
                     className="logocongty"
                     src={imageDesktop.LogoCongTy}
                     alt="logocty"
@@ -519,7 +527,6 @@ export default function Layout(props) {
       <Grid container>
         {width > 576 ? (
           <Grid
-            display={startGameCheck ? "none" : "block"}
             item
             sm={1}
             md={isNav === true ? 1.6 : 0.6}
@@ -528,7 +535,7 @@ export default function Layout(props) {
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: isNavTablet === false ? "sticky" : "relative",
-              zIndex: !startGameCheck && width < 1200 ? "1034" : "0",
+              zIndex: width < 1200 ? "1034" : "0",
               width: "400px !important",
               "& .MuiGrid-item": {
                 minWidth: "400px !important",
@@ -565,7 +572,7 @@ export default function Layout(props) {
         </Grid>
       </Grid>
       <Drawer
-        hidden={startGameCheck}
+        // hidden={startGameCheck && width < 1200}
         sx={{
           width: drawerWidth,
           "& .MuiDrawer-paper": {

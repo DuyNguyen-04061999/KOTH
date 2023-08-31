@@ -92,11 +92,15 @@ import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
 import LoadingScreen from "./components/LoadingScreen";
 import { updateDeviceType } from "./redux-saga-middleware/reducers/deviceReducer";
+import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 function App() {
   useTracking("");
 
   const [socket] = useState(_socket);
   const { token } = store.getState().authReducer;
+  const { startGameCheck } = store.getState().appReducer;
+  const { orientation } = store.getState().gameReducer;
+  
   const { width } = useWindowDimensions();
  
   useEffect(() => {
@@ -120,11 +124,12 @@ function App() {
     const onWindowResize = () => {
       clearTimeout(window.resizeLag);
       window.resizeLag = setTimeout(() => {
+
         delete window.resizeLag;
         store.dispatch(
           changeOrientation(isLandscape() ? "landscape" : "portrait")
         );
-      }, 200);
+      }, 0);
     };
 
     onWindowResize();
@@ -134,9 +139,33 @@ function App() {
     return () => {
       window.removeEventListener("resize", onWindowResize);
     };
-  }, []);
+  }, [orientation, startGameCheck]);
 
- 
+  
+
+  useEffect(() => {
+    const updateOrientation = event => {
+      if(!startGameCheck && !window.location.pathname?.includes("tournamentDetail")) {
+        window.location.reload()
+      }
+    }
+
+    window.addEventListener(
+      'orientationchange',
+      updateOrientation
+    )
+    return () => {
+      window.removeEventListener(
+        'orientationchange',
+        updateOrientation
+      )
+    }
+  }, [startGameCheck])
+
+  useEffect(() => {
+      
+  }, [orientation, startGameCheck])
+
   const checkPreAuthRouter = () => {
     const params = window.location.pathname
     const newArr = params.split("/")
@@ -592,6 +621,7 @@ function App() {
 
             <Route path="game/edit/:id" element={<GameEditPage />} />
             <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
+            <Route path="game/:id/delete-skins" element={<DeleteSkinPage />} />
             {getAppType() === "promote" && (
               <Route path="packages" element={<PackagePage />}></Route>
             )}

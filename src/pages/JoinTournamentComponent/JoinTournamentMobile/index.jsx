@@ -90,7 +90,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
         socket?.emit("detailTournament", {
           tournamentId: data?.id,
         });
-      }, 1000)
+      }, 1000);
     });
     return () => {
       socket?.off("joinTournamentSuccess");
@@ -232,122 +232,132 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             </Box>
           </Box>
           <Box className="d-flex p-2 ps-3 pe-3" sx={{ marginTop: "16px" }}>
-              <div className="cardWrap">
-                <div className="cardT cardLeft">
-                  <h5 style={{ color: "#BE48ED", marginTop: "15px" }} className="mb-2">
-                    {sliceString(detailTournament?.tournamentInfors?.rewardInfors
-                      ?.rewardTitle || "SS Z-Flip 5 free voucher") + "..."}
-                  </h5>
-                  <Grid container>
-                    <div className="d-flex justify-content-between" style={{
-                      width: '90%'
-                    }}>
-                      <Grid item md={5}>
-                        <div className="title d-flex flex-column mb-2">
-                          <h6
-                            style={{
-                              fontSize: "10px",
-                              marginBottom: "0px !important",
-                            }}
-                          >
-                            Recipient
-                          </h6>
-                          <span>
-                            {sliceString(
-                              detailTournament?.tournamentInfors
-                                ?.rewardInfors?.rewardRecipient
-                            ) || "Recipient"}
-                          </span>
-                        </div>
-                      </Grid>
-                      <Grid item md={6} className="text-end">
-                        <div className="name d-flex flex-column mb-2">
-                          <h6
-                            style={{
-                              fontSize: "10px",
-                              marginBottom: "0px !important",
-                            }}
-                          >
-                            Validity date
-                          </h6>
-                          <span>
-                            {moment(
-                              detailTournament?.tournamentInfors
-                                ?.rewardInfors?.rewardValidityDate
-                            )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                          </span>
-                        </div>
-                      </Grid>
-                    </div>
-                    <div className="d-flex justify-content-between" style={{
-                      width: '90%'
-                    }}>
-                      <Grid item md={5}>
-                          <div className="seat d-flex flex-column">
-                            <h2
-                              style={{
-                                fontSize: "10px",
-                                marginBottom: "0px !important",
-                              }}
-                            >
-                              Sponsor by
-                            </h2>
-                            <span>
-                              {detailTournament?.tournamentInfors?.owner
-                                ?.brandName || "Samsung"}
-                            </span>
-                          </div>
-                        </Grid>
-                        <Grid item md={6} className="text-end">
-                          <div className="time d-flex flex-column">
-                            <h2
-                              style={{
-                                fontSize: "10px",
-                                marginBottom: "0px !important",
-                              }}
-                            >
-                              Conditions
-                            </h2>
-                            <span
-                              onClick={() => setOpenVoucher(true)}
-                              style={{ color: "#0096FF" }}
-                            >
-                              See more
-                            </span>
-                          </div>
-                        </Grid>
-                    </div>
-                    
-                  </Grid>
-                </div>
-                <div className="cardT cardRight">
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+            <div className="cardWrap">
+              <div className="cardT cardLeft">
+                <h5
+                  style={{ color: "#BE48ED", marginTop: "15px" }}
+                  className="mb-2"
+                >
+                  {sliceString(
+                    detailTournament?.tournamentInfors?.rewardInfors
+                      ?.rewardTitle || "SS Z-Flip 5 free voucher"
+                  ) + "..."}
+                </h5>
+                <Grid container>
+                  <div
+                    className="d-flex justify-content-between"
+                    style={{
+                      width: "90%",
                     }}
                   >
-                    <img
-                      src={
-                        detailTournament?.tournamentInfors?.rewardInfors
-                          ?.rewardAvatar
-                          ? process.env.REACT_APP_SOCKET_SERVER +
-                            "/" +
-                            detailTournament?.tournamentInfors
-                              ?.rewardInfors?.rewardAvatar
-                          : images.GameTournament
-                      }
-                      alt="..."
-                      width={100}
-                      height={105}
-                    />
-                  </Box>
-                </div>
+                    <Grid item md={5}>
+                      <div className="title d-flex flex-column mb-2">
+                        <h6
+                          style={{
+                            fontSize: "10px",
+                            marginBottom: "0px !important",
+                          }}
+                        >
+                          Recipient
+                        </h6>
+                        <span>
+                          {sliceString(
+                            detailTournament?.tournamentInfors?.rewardInfors
+                              ?.rewardRecipient
+                          ) || "Recipient"}
+                        </span>
+                      </div>
+                    </Grid>
+                    <Grid item md={6} className="text-end">
+                      <div className="name d-flex flex-column mb-2">
+                        <h6
+                          style={{
+                            fontSize: "10px",
+                            marginBottom: "0px !important",
+                          }}
+                        >
+                          Validity date
+                        </h6>
+                        <span>
+                          {moment(
+                            detailTournament?.tournamentInfors?.rewardInfors
+                              ?.rewardValidityDate
+                          )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
+                        </span>
+                      </div>
+                    </Grid>
+                  </div>
+                  <div
+                    className="d-flex justify-content-between"
+                    style={{
+                      width: "90%",
+                    }}
+                  >
+                    <Grid item md={5}>
+                      <div className="seat d-flex flex-column">
+                        <h2
+                          style={{
+                            fontSize: "10px",
+                            marginBottom: "0px !important",
+                          }}
+                        >
+                          Sponsor by
+                        </h2>
+                        <span>
+                          {detailTournament?.tournamentInfors?.owner
+                            ?.brandName || "Samsung"}
+                        </span>
+                      </div>
+                    </Grid>
+                    <Grid item md={6} className="text-end">
+                      <div className="time d-flex flex-column">
+                        <h2
+                          style={{
+                            fontSize: "10px",
+                            marginBottom: "0px !important",
+                          }}
+                        >
+                          Conditions
+                        </h2>
+                        <span
+                          onClick={() => setOpenVoucher(true)}
+                          style={{ color: "#0096FF" }}
+                        >
+                          See more
+                        </span>
+                      </div>
+                    </Grid>
+                  </div>
+                </Grid>
               </div>
-            </Box>
+              <div className="cardT cardRight">
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={
+                      detailTournament?.tournamentInfors?.rewardInfors
+                        ?.rewardAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          detailTournament?.tournamentInfors?.rewardInfors
+                            ?.rewardAvatar
+                        : images.GameTournament
+                    }
+                    alt="..."
+                    width={100}
+                    height={105}
+                  />
+                </Box>
+              </div>
+            </div>
+          </Box>
           <GameInTournament
             game={detailTournament?.tournamentInfors?.skin?.skinGame || null}
           />
@@ -723,6 +733,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               width: "100%",
               background: "rgba(37, 37, 37, 0.20)",
               backdropFilter: "blur(2px)",
+              zIndex: "25",
             }}
           >
             {!detailTournament?.checkInTournament ? (

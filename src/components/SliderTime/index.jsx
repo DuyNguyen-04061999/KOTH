@@ -20,7 +20,7 @@ export default function SliderTime({
 
   return (
     <Slider {...settings}>
-      {list?.map((item, index) => {
+      {list && list?.length > 0 && list?.map((item, index) => {
         return (
           <Box
             key={index}
