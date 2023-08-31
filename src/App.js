@@ -92,6 +92,7 @@ import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
 import LoadingScreen from "./components/LoadingScreen";
 import { updateDeviceType } from "./redux-saga-middleware/reducers/deviceReducer";
+import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 function App() {
   useTracking("");
 
@@ -620,6 +621,7 @@ function App() {
 
             <Route path="game/edit/:id" element={<GameEditPage />} />
             <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
+            <Route path="game/:id/delete-skins" element={<DeleteSkinPage />} />
             {getAppType() === "promote" && (
               <Route path="packages" element={<PackagePage />}></Route>
             )}

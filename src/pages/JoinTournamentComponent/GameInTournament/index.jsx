@@ -71,15 +71,17 @@ export default function GameInTournament(props) {
                   : images.gameHotTournament
               }
               alt="..."
-              width={576 < width < 1200 ? width / 14 : 120}
-              height={576 < width < 1200 ? width / 14 : 120}
+              width={576 < width && width < 1200 ? width / 14 : 120}
+              height={576 < width && width < 1200 ? width / 14 : 120}
               style={{ borderRadius: "10px" }}
             />
             {width > 576 && (
               <Typography
                 sx={{
-                  fontSize: 576 < width < 1200 ? "25px" : "30px",
-                  marginLeft: 576 < width < 1200 ? "25px" : "32px !important",
+                  fontSize:
+                    576 < width && width < 1200 ? `${width / 40}px` : "30px",
+                  marginLeft:
+                    576 < width && width < 1200 ? "25px" : "32px !important",
                 }}
               >
                 {game?.gameName || "Game Name"}

@@ -46,8 +46,8 @@ export default function HotTournament() {
           <Container
             maxWidth="lg"
             sx={{
-              paddingLeft: width < 576 ? "24px !important" : "0px !important",
-              paddingRight: width < 576 ? "24px !important" : "0px !important",
+              paddingLeft: width < 576 ? "24px !important" : width < 1024 ? "42px !important" :"0px !important",
+              paddingRight: width < 576 ? "24px !important":  width < 1024 ? "32px !important" :"0px !important",
               paddingTop: width < 576 ? "24px !important" : "50px !important",
             }}
           >

@@ -26,6 +26,7 @@ import CountDownBannerHot from "../CountDownBannerHot";
 import NewFooter from "../../NewFooter";
 import ItemComponent from "./ItemComponent";
 import "./index.scss";
+import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -220,13 +221,16 @@ export default function NewHomePage() {
             </Box>
             <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               {width < 576 ? (
-                <Slider
-                  dots={false}
-                  slidesToShow={2.05}
-                  arrows={false}
-                  slidesToScroll={2}
-                  infinite={false}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={2.05}
+                //   arrows={false}
+                //   slidesToScroll={2}
+                //   infinite={false}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {hotTournament && hotTournament?.length > 0 && hotTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -238,39 +242,42 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               ) : (
-                <Slider
-                dots={false}
-                slidesToShow={5}
-                arrows={false}
-                slidesToScroll={5}
-                infinite={false}
-                responsive={[
-                  {
-                    breakpoint: 1024,
-                    settings: {
-                      slidesToShow: 3,
-                      slidesToScroll: 3,
-                    }
-                  },
-                  {
-                    breakpoint: 600,
-                    settings: {
-                      slidesToShow: 2,
-                      slidesToScroll: 2,
-                      initialSlide: 2
-                    }
-                  },
-                  {
-                    breakpoint: 480,
-                    settings: {
-                      slidesToShow: 1,
-                      slidesToScroll: 1
-                    }
-                  }
-                ]}
-                >
+                // <Slider
+                // dots={false}
+                // slidesToShow={5}
+                // arrows={false}
+                // slidesToScroll={5}
+                // infinite={false}
+                // responsive={[
+                //   {
+                //     breakpoint: 1024,
+                //     settings: {
+                //       slidesToShow: 3,
+                //       slidesToScroll: 3,
+                //     }
+                //   },
+                //   {
+                //     breakpoint: 600,
+                //     settings: {
+                //       slidesToShow: 2,
+                //       slidesToScroll: 2,
+                //       initialSlide: 2
+                //     }
+                //   },
+                //   {
+                //     breakpoint: 480,
+                //     settings: {
+                //       slidesToShow: 1,
+                //       slidesToScroll: 1
+                //     }
+                //   }
+                // ]}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {hotTournament && hotTournament?.length > 0 && hotTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -282,7 +289,7 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               )}
             </Box>
           </Box>{" "}
@@ -294,11 +301,12 @@ export default function NewHomePage() {
                 marginBottom: width < 576 ? "24px" : "32px",
                 backgroundImage: `url(${imageHome.banner_win_Mobile})`,
                 height: "208.612px",
-                backgroundSize: "cover",
-                display: "flex",
+                backgroundSize: width < 576 ? "cover" : width < 1024 ?  "contain" : " cover",
+                display: "flex", 
                 justifyContent: "space-between",
                 alignItems: "center",
                 overflow: "hidden",
+                padding: (width > 576 && width < 1024) & "36px 160px"
               }}
             >
               <Box
@@ -363,7 +371,7 @@ export default function NewHomePage() {
                   display: "flex",
                   flexDirection: "column",
                   boxSizing: "border-box",
-                  padding: "50px 0px 0px 0px",
+                  margin: "50px 0px 0px 0px",
                   position: "relative",
                   justifyContent: "flex-start",
                   height: "100%",
@@ -393,14 +401,14 @@ export default function NewHomePage() {
                     backgroundImage: `url(${imageHome.megaholicMobile})`,
                     width: `${width / 1.6}px`,
                     height: "113px",
-                    marginTop: "10px",
+                    marginTop: width < 576 ? "40px" : "10px",
                     position: "absolute",
-                    top: "89px",
+                    top: width > 576 && "89px",
                     left: "-23px",
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
-                    padding: "10px 40px",
+                    alignItems: width < 576 ? "flex-start" : "center",
+                    padding:"10px 40px",
                   }}
                 >
                   <Typography sx={{ color: "#fff", fontSize: "40px" }}>
@@ -421,31 +429,33 @@ export default function NewHomePage() {
                 marginTop: width < 576 ? "24px" : "32px",
                 marginBottom: width < 576 ? "24px" : "32px",
                 backgroundImage: `url(${images.banner_win_BG})`,
-                height: "348.909px",
-                backgroundSize: "cover",
+                height: width < 1024 ? "266.56px" : "348.909px",
+                backgroundSize:"cover",
+                backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
+                paddingLeft: "65px"
               }}
             >
               <Box
                 sx={{
                   height: "400px",
-                  width: "568px",
+                  width: (width >576 && width < 1024) ? "fit-content" :  "200px",
                   marginLeft: "0px",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   display: "flex",
+                  flexDirection: "column",
                   justifyContent: "center",
-                  alignItems: "center",
                   position: "relative",
                   boxSizing: "border-box",
                   paddingLeft: "10px",
                 }}
               >
                 <Box
-                  sx={{ width: "168px", height: "168px", position: "relative" }}
+                  sx={{ width: width <1024 ? "135px" : "168px", height:  width <1024 ? "135px" : "168px", position: "relative" }}
                 >
                   <Box
                     style={{ border: "4px solid rgba(224, 127, 20,100)" }}
@@ -461,14 +471,15 @@ export default function NewHomePage() {
                     }
                     sx={{
                       borderRadius: "50%",
-                      width: "168px",
+                      width: "100%",
+                      height: "100%"
                     }}
                   ></Box>
                   <Box
                     component={"img"}
                     src={images.hatWinner}
                     sx={{
-                      width: "81.119px",
+                      width: width < 1024 ? "60px" : "81.119px",
                       height: "auto",
                       position: "absolute",
                       left: "2px",
@@ -480,7 +491,7 @@ export default function NewHomePage() {
                   sx={{
                     position: "absolute",
                     // left: "271px",
-                    bottom: "50px",
+                    bottom: width < 1024 ? "80px" : "50px",
                     color: "#ffff",
                     fontSize: "33px",
                     marginLeft: "0px !important",
@@ -493,9 +504,10 @@ export default function NewHomePage() {
                 sx={{
                   backgroundImage: `url(${imageHome.megaHolicBanner})`,
                   backgroundSize: "cover",
-                  width: "503px",
-                  height: "278px",
+                  width: width < 1024 ? "385px" : "504px",
+                  height: width < 1024 ? "212px" :"278px",
                   position: "relative",
+                  marginLeft: "20px"
                 }}
               >
                 <Typography
@@ -527,10 +539,10 @@ export default function NewHomePage() {
                     color: "#fff",
                     // fontSize: "88px",
                     position: "absolute",
-                    top: "45%",
+                    top: width < 576 ? "" : width < 1024 ? "85px" :"90px",
                     left: "2rem",
                     width: "100%",
-                    fontSize: width < 1024 && width > 576 ? "40px" : "48px",
+                    fontSize: width < 576 ? "40px" : width < 1024 ? "50px" : "80px",
                   }}
                   className="text-center"
                 >
@@ -547,8 +559,8 @@ export default function NewHomePage() {
                     fontSize: width < 1024 && width > 576 ? "12px" : "15px",
                     color: "#ffff",
                     position: "absolute",
-                    top: "214px",
-                    left: "212px",
+                    top: (width > 576 && width < 1024) ? "165px" : "214px",
+                    left: (width > 576 && width < 1024)  ?  "180px" :"212px",
                     height: "20px",
                     textOverflow: "ellipsis",
                     minWidth: "60px",
@@ -768,14 +780,17 @@ export default function NewHomePage() {
 
             <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               {width < 576 ? (
-                <Slider
-                  dots={false}
-                  slidesToShow={2}
-                  arrows={false}
-                  slidesToScroll={2}
-                  infinite={false}
-                >
-                  {dailyTournament && dailyTournament?.length > 0 && dailyTournament
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={2}
+                //   arrows={false}
+                //   slidesToScroll={2}
+                //   infinite={false}
+                // >
+                 
+                // </Slider>
+                <ScrollingCarousel>
+                   {dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay]) 
                     && dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay])?.length > 0
@@ -796,39 +811,42 @@ export default function NewHomePage() {
                         </div>
                       );
                     })}
-                </Slider>
+                </ScrollingCarousel>
               ) : (
-                <Slider
-                  dots={false}
-                  slidesToShow={5}
-                  arrows={false}
-                  slidesToScroll={5}
-                  infinite={false}
-                  responsive={[
-                    {
-                      breakpoint: 1024,
-                      settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
-                      }
-                    },
-                    {
-                      breakpoint: 600,
-                      settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        initialSlide: 2
-                      }
-                    },
-                    {
-                      breakpoint: 480,
-                      settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={5}
+                //   arrows={false}
+                //   slidesToScroll={5}
+                //   infinite={false}
+                //   responsive={[
+                //     {
+                //       breakpoint: 1024,
+                //       settings: {
+                //         slidesToShow: 3,
+                //         slidesToScroll: 3,
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 600,
+                //       settings: {
+                //         slidesToShow: 2,
+                //         slidesToScroll: 2,
+                //         initialSlide: 2
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 480,
+                //       settings: {
+                //         slidesToShow: 1,
+                //         slidesToScroll: 1
+                //       }
+                //     }
+                //   ]}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {dailyTournament && dailyTournament?.length > 0 && dailyTournament
                     ?.filter((n) => n.timeStart === dayList[selectedDay]) 
                     && dailyTournament && dailyTournament?.length > 0 && dailyTournament
@@ -850,7 +868,7 @@ export default function NewHomePage() {
                         </div>
                       );
                     })}
-                </Slider>
+                </ScrollingCarousel>
               )}
             </Box>
           </Box>{" "}
@@ -1183,13 +1201,16 @@ export default function NewHomePage() {
             </Box>
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               {width < 576 ? (
-                <Slider
-                  dots={false}
-                  slidesToShow={2.05}
-                  arrows={false}
-                  slidesToScroll={2}
-                  infinite={false}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={2.05}
+                //   arrows={false}
+                //   slidesToScroll={2}
+                //   infinite={false}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {weeklyTournament && weeklyTournament?.length > 0 && weeklyTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -1201,39 +1222,42 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               ) : (
-                <Slider
-                  dots={false}
-                  slidesToShow={5}
-                  arrows={false}
-                  slidesToScroll={5}
-                  infinite={false}
-                  responsive={[
-                    {
-                      breakpoint: 1024,
-                      settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
-                      }
-                    },
-                    {
-                      breakpoint: 600,
-                      settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        initialSlide: 2
-                      }
-                    },
-                    {
-                      breakpoint: 480,
-                      settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]}
-                >
+                // <Slider
+                //   dots={false}
+                //   slidesToShow={5}
+                //   arrows={false}
+                //   slidesToScroll={5}
+                //   infinite={false}
+                //   responsive={[
+                //     {
+                //       breakpoint: 1024,
+                //       settings: {
+                //         slidesToShow: 3,
+                //         slidesToScroll: 3,
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 600,
+                //       settings: {
+                //         slidesToShow: 2,
+                //         slidesToScroll: 2,
+                //         initialSlide: 2
+                //       }
+                //     },
+                //     {
+                //       breakpoint: 480,
+                //       settings: {
+                //         slidesToShow: 1,
+                //         slidesToScroll: 1
+                //       }
+                //     }
+                //   ]}
+                // >
+                  
+                // </Slider>
+                <ScrollingCarousel>
                   {weeklyTournament && weeklyTournament?.length > 0 && weeklyTournament?.map((item, index) => {
                     return (
                       <div key={index}>
@@ -1245,7 +1269,7 @@ export default function NewHomePage() {
                       </div>
                     );
                   })}
-                </Slider>
+                </ScrollingCarousel>
               )}
             </Box>
           </Box>{" "}
@@ -1453,8 +1477,8 @@ export default function NewHomePage() {
                 <Box
                   sx={{
                     borderRadius: "50%",
-                    width: 576 < width && 1024 > width ? "150px" :"210px",
-                    height: 576 < width && 1024 > width ? "150px" :"210px",
+                    width: 576 < width && 1024 > width ? "150px" : "210px",
+                    height: 576 < width && 1024 > width ? "150px" : "210px",
                     position: "absolute",
                     top: "-6px",
                     left: "-4px",
@@ -1479,7 +1503,7 @@ export default function NewHomePage() {
                     width: "140px",
                     height: "auto",
                     position: "absolute",
-                    top: 576 < width && 1024 > width ? "-80px" :"-50px",
+                    top: 576 < width && 1024 > width ? "-80px" : "-50px",
                     left: 576 < width && 1024 > width ? "-40px" : "-76px",
                   }}
                   component={"img"}
