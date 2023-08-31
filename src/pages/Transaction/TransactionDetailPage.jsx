@@ -46,7 +46,7 @@ export default function TransactionDetailPage() {
             })
       
             let contract = new web3.eth.Contract(JSON.parse(transaction?.transactionAbi), transaction?.transactionContract)
-            let depositAmount = (transaction?.transactionQuantity) + "000000000000000000";
+            let depositAmount = (transaction?.transactionQuantity) + "00000000";
       
             if(!transaction?.transactionScanQr || transaction?.transactionScanQr) {
               let result = await contract.methods.transfer(transaction?.transactionWallet, depositAmount).send({ from: account })

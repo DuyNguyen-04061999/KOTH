@@ -147,17 +147,18 @@ export default function NewHomePage() {
             <SlickSlider
               appendDot={true}
               images={
-                width < 576
-                  ? [
-                      images.pepperBanner,
-                      images.pepperBanner,
-                      images.pepperBanner,
-                    ]
-                  : [
-                      images.pepperBanner,
-                      images.pepperBanner,
-                      images.pepperBanner,
-                    ]
+                []
+                // width < 576
+                //   ? [
+                //       images.pepperBanner,
+                //       images.pepperBanner,
+                //       images.pepperBanner,
+                //     ]
+                //   : [
+                //       images.pepperBanner,
+                //       images.pepperBanner,
+                //       images.pepperBanner,
+                //     ]
               }
               tours={threeBrandTour}
             />
