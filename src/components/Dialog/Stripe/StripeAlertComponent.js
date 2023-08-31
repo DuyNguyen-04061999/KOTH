@@ -25,7 +25,9 @@ export default function StripeAlertComponent() {
             <Box component={"div"} className='position-relative rounded p-3' sx={{
                 
             }}>
-                <Box component={"div"} className='position-absolute' sx={{ right: 10, top: 10 }}>
+                <Box component={"div"} className='position-absolute' onClick={() => {
+                    dispatch(toggleAlertStripeProcess())
+                }} sx={{ right: 10, top: 10 }}>
                     {typeAlert && typeAlert === "success" ? (
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

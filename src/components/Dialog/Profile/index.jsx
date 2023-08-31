@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { PersonAddAlt1, PersonRemove } from "@mui/icons-material";
+import { ToastContainer, toast } from "react-toastify";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -350,7 +351,19 @@ export default function DialogProfile(props) {
                         alt=""
                         onClick={() => {
                           copy(refCode);
-                          dispatch(showAlert("success", "Copy successfully!"));
+                          // dispatch(showAlert("success", "Copy successfully!"));
+                          toast.success("Copy ref code successfully!", {
+                            icon: ({ theme, type }) => (
+                              <img
+                                style={{ width: "20px", marginRight: "10px" }}
+                                alt="..."
+                                src={images.successIcon}
+                              />
+                            ),
+                            position: "top-center",
+                            className:
+                              width < 576 ? "success-background-small" : "success-background",
+                          });
                         }}
                       />
                     </Box>

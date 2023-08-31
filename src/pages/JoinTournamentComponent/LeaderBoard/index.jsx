@@ -15,7 +15,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   useEffect(() => {
     setTop3(detailTournament?.tournamentResult?.slice(0, 3));
   }, [detailTournament]);
-
   return (
     <Box>
       {width > 576 ? (
@@ -80,7 +79,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   }}
                   src={
                     top3 &&
-                    top3?.length >= 3 &&
+                    top3[1] &&
                     top3[1]?.tUser?.userAccount?.accountAvatar
                       ? process.env.REACT_APP_SOCKET_SERVER +
                         "/" +
@@ -177,7 +176,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   }}
                   src={
                     top3 &&
-                    top3?.length >= 3 &&
+                    top3[0] &&
                     top3[0]?.tUser?.userAccount?.accountAvatar
                       ? process.env.REACT_APP_SOCKET_SERVER +
                         "/" +
@@ -272,7 +271,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   }}
                   src={
                     top3 &&
-                    top3?.length >= 3 &&
+                    top3[2] &&
                     top3[2]?.tUser?.userAccount?.accountAvatar
                       ? process.env.REACT_APP_SOCKET_SERVER +
                         "/" +
@@ -960,7 +959,13 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 padding: "16px 44px 16px 28px",
                               }}
                             >
-                              <Box sx={{ color: "#ffff", width: "10%" }}>4</Box>
+                              <Box sx={{ color: "#ffff", width: "10%" }}>
+                                {detailTournament?.tournamentResult
+                                  ?.map((item, index) => {
+                                    return item?.userNickName;
+                                  })
+                                  .indexOf(userName) + 1}
+                              </Box>
                               <Box
                                 sx={{
                                   display: "flex",
@@ -1189,7 +1194,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   }}
                   src={
                     top3 &&
-                    top3?.length >= 3 &&
+                    top3[1] &&
                     top3[1]?.tUser?.userAccount?.accountAvatar
                       ? process.env.REACT_APP_SOCKET_SERVER +
                         "/" +
@@ -1282,7 +1287,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   }}
                   src={
                     top3 &&
-                    top3?.length >= 3 &&
+                    top3[0] &&
                     top3[0]?.tUser?.userAccount?.accountAvatar
                       ? process.env.REACT_APP_SOCKET_SERVER +
                         "/" +
@@ -1373,7 +1378,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   }}
                   src={
                     top3 &&
-                    top3?.length >= 3 &&
+                    top3[2] &&
                     top3[2]?.tUser?.userAccount?.accountAvatar
                       ? process.env.REACT_APP_SOCKET_SERVER +
                         "/" +
@@ -1595,7 +1600,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             }}
                             src={
                               top3 &&
-                              top3?.length >= 3 &&
+                              top3[1] &&
                               top3[1]?.tUser?.userAccount?.accountAvatar
                                 ? process.env.REACT_APP_SOCKET_SERVER +
                                   "/" +
@@ -1690,7 +1695,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             }}
                             src={
                               top3 &&
-                              top3?.length >= 3 &&
+                              top3[0] &&
                               top3[0]?.tUser?.userAccount?.accountAvatar
                                 ? process.env.REACT_APP_SOCKET_SERVER +
                                   "/" +
@@ -1783,7 +1788,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             }}
                             src={
                               top3 &&
-                              top3?.length >= 3 &&
+                              top3[2] &&
                               top3[2]?.tUser?.userAccount?.accountAvatar
                                 ? process.env.REACT_APP_SOCKET_SERVER +
                                   "/" +
@@ -1947,7 +1952,13 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               padding: "16px 44px 16px 28px",
                             }}
                           >
-                            <Box sx={{ color: "#ffff", width: "10%" }}>4</Box>
+                            <Box sx={{ color: "#ffff", width: "10%" }}>
+                              {detailTournament?.tournamentResult
+                                ?.map((item, index) => {
+                                  return item?.userNickName;
+                                })
+                                .indexOf(userName) + 1}
+                            </Box>
                             <Box
                               sx={{
                                 display: "flex",

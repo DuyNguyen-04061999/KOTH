@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import List from "@mui/material/List";
 import t from "prop-types";
 import { makeStyles } from "@mui/styles";
-import { Avatar, Badge } from "@mui/material";
+import { Avatar, Badge, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   closeLoading,
@@ -104,6 +104,9 @@ export const AvatarPicker = (props) => {
               alignItems: "center",
             }}
           >
+            <Box className="text-danger mt-1 mb-1" component={"div"}>
+                {"The image's size must be < 1 MB"}
+            </Box>
             <button
               onClick={showOpenFileDialog}
               style={{
@@ -120,6 +123,7 @@ export const AvatarPicker = (props) => {
             >
               Update Avatar
             </button>
+            
             <Avatar
               src={
                 file && file.includes("data:image/png;base64,")
@@ -134,7 +138,9 @@ export const AvatarPicker = (props) => {
                 borderRadius: "50%",
               }}
             />
+             
           </Badge>
+          
           <input
             ref={imageRef}
             type="file"

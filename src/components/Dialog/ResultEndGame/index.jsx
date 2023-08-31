@@ -11,7 +11,7 @@ export default function ResultEndGame() {
   const dispatch = useDispatch()
   const handleClose = () => {
     dispatch(toggleOpenResultEndGame())
-    // window.location.reload()
+    window.location.reload()
   };
 
   return (
@@ -74,6 +74,7 @@ export default function ResultEndGame() {
               <div className="summary__cta">
                 <button onClick={() => {
                   dispatch(toggleOpenResultEndGame())
+                  window.location.reload()
                 }} className="btnResult btn__continue">Continue</button>
               </div>
             </div>
