@@ -144,7 +144,7 @@ function App() {
 
   useEffect(() => {
     const updateOrientation = event => {
-      if(!startGameCheck) {
+      if(!startGameCheck && !window.location.pathname?.includes("tournamentDetail")) {
         window.location.reload()
       }
     }
