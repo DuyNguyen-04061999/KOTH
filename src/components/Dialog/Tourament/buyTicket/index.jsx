@@ -53,7 +53,7 @@ export default function BuyTicket(props) {
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -324,6 +324,7 @@ export default function BuyTicket(props) {
                     packageId: ticketBuy?.id,
                   });
                 }
+                handleClose();
               }}
               style={{
                 border: "none",

@@ -15,9 +15,10 @@ import {
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
 import { images, video } from "../../../utils/images";
-import { 
+import {
   // useNavigate,
-   useParams } from "react-router-dom";
+  useParams,
+} from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,7 +81,7 @@ export default function JoinTournament() {
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
-
+  // const [width, setWidth] = useState(1920);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
@@ -273,7 +274,7 @@ export default function JoinTournament() {
       setUnPauseGame(true);
     }
   }, [orientation, width, detailTournament, startGame]);
-
+  console.log(width, previousOri, orientation);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -282,8 +283,8 @@ export default function JoinTournament() {
           <Container
             maxWidth="lg"
             sx={{
-              paddingTop: 576 < width < 1200 ? "32px" : "50px",
-              maxWidth: 576 < width < 1200 ? width * 0.9 : "none",
+              paddingTop: 576 < width && width < 1200 ? "32px" : "50px",
+              maxWidth: 576 < width && width < 1200 ? width * 0.9 : "none",
             }}
           >
             <Box
@@ -364,7 +365,9 @@ export default function JoinTournament() {
                       }}
                       style={{
                         padding: `0px ${
-                          576 < width < 1200 ? "70" : parseFloat(width / 28)
+                          576 < width && width < 1200
+                            ? "70"
+                            : parseFloat(width / 28)
                         }px`,
                         height: "40px",
                         borderRadius: "5px",
@@ -372,7 +375,9 @@ export default function JoinTournament() {
                         outline: "none",
                         background: "linear-gradient(#7440E9,#A345FB)",
                         color: "white",
-                        fontSize: `${576 < width < 1200 ? "15px" : "18px"}`,
+                        fontSize: `${
+                          576 < width && width < 1200 ? "15px" : "18px"
+                        }`,
                       }}
                     >
                       Join
@@ -469,7 +474,10 @@ export default function JoinTournament() {
                         sx={{
                           color: "#ffff",
                           textAlign: "start",
-                          fontSize: 576 < width < 1200 ? "16px" : "18px",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 62.5}px`
+                              : `18px`,
                           letterSpacing: "0.7px",
                           marginLeft: "0px !important",
                         }}
@@ -480,7 +488,10 @@ export default function JoinTournament() {
                         sx={{
                           color: "#fff",
                           textAlign: "start",
-                          fontSize: 576 < width < 1200 ? "12px" : "14px",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 76}px`
+                              : "14px",
                           fontWeight: "lighter !important",
                           fontFamily: "Cyntho Next",
                           marginLeft: "0px !important",
@@ -510,7 +521,10 @@ export default function JoinTournament() {
                         sx={{
                           color: "#ffff",
                           textAlign: "start",
-                          fontSize: 576 < width < 1200 ? "16px" : "18px",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 62.5}px`
+                              : "18px",
                           letterSpacing: "0.7px",
                           marginLeft: "0px !important",
                         }}
@@ -521,7 +535,10 @@ export default function JoinTournament() {
                         sx={{
                           color: "#fff",
                           textAlign: "start",
-                          fontSize: 576 < width < 1200 ? "12px" : "14px",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 76}px`
+                              : "14px",
                           fontWeight: "500 !important",
                           fontFamily: "Cyntho Next",
                           marginLeft: "0px !important",
@@ -548,7 +565,10 @@ export default function JoinTournament() {
                     <Typography
                       sx={{
                         color: "#fff",
-                        fontSize: 576 < width < 1200 ? "16px" : "18px",
+                        fontSize:
+                          576 < width && width < 1200
+                            ? `${width / 62.5}px`
+                            : "18px",
                       }}
                     >
                       Participants
@@ -556,7 +576,10 @@ export default function JoinTournament() {
                     <Typography
                       sx={{
                         color: "#FFFFFF",
-                        fontSize: 576 < width < 1200 ? "14px" : "16px",
+                        fontSize:
+                          576 < width && width < 1200
+                            ? `${width / 76}px`
+                            : "14px",
                       }}
                     >
                       {detailTournament?.tournamentParticipants?.length}/
@@ -593,12 +616,12 @@ export default function JoinTournament() {
                                 key={index}
                                 sx={{
                                   width:
-                                    576 < width < 1200
+                                    576 < width && width < 1200
                                       ? "36px"
                                       : parseFloat(width / 42.67) +
                                         parseFloat(width / 384),
                                   height:
-                                    576 < width < 1200
+                                    576 < width && width < 1200
                                       ? "36px"
                                       : parseFloat(width / 42.67) +
                                         parseFloat(width / 384),
@@ -606,7 +629,7 @@ export default function JoinTournament() {
                                   borderRadius: "50%",
                                   boxSizing: "border-box",
                                   padding:
-                                    576 < width < 1200
+                                    576 < width && width < 1200
                                       ? "3px"
                                       : `${parseFloat(width / 384)}px`,
                                   position: "absolute",
@@ -667,12 +690,12 @@ export default function JoinTournament() {
                                 key={index}
                                 sx={{
                                   width:
-                                    576 < width < 1200
+                                    576 < width && width < 1200
                                       ? "36px"
                                       : parseFloat(width / 42.67) +
                                         parseFloat(width / 384),
                                   height:
-                                    576 < width < 1200
+                                    576 < width && width < 1200
                                       ? "36px"
                                       : parseFloat(width / 42.67) +
                                         parseFloat(width / 384),
@@ -682,7 +705,7 @@ export default function JoinTournament() {
                                   padding: `${parseFloat(width / 384)}px`,
                                   position: "absolute",
                                   right:
-                                    576 < width < 1200
+                                    576 < width && width < 1200
                                       ? `${index * 25}px`
                                       : `${
                                           (parseFloat(width / 42.67) +
@@ -719,12 +742,12 @@ export default function JoinTournament() {
                             key={index}
                             sx={{
                               width:
-                                576 < width < 1200
+                                576 < width && width < 1200
                                   ? "36px"
                                   : parseFloat(width / 42.67) +
                                     parseFloat(width / 384),
                               height:
-                                576 < width < 1200
+                                576 < width && width < 1200
                                   ? "36px"
                                   : parseFloat(width / 42.67) +
                                     parseFloat(width / 384),
@@ -734,7 +757,7 @@ export default function JoinTournament() {
                               padding: `${parseFloat(width / 384)}px`,
                               position: "absolute",
                               right:
-                                576 < width < 1200
+                                576 < width && width < 1200
                                   ? `${index * 25}px`
                                   : `${
                                       (parseFloat(width / 42.67) +
@@ -784,7 +807,7 @@ export default function JoinTournament() {
               >
                 <Box
                   sx={{
-                    width: 576 < width < 1200 ? "55%" : "495px",
+                    width: 576 < width && width < 1200 ? "55%" : "495px",
                   }}
                 >
                   <Box>
@@ -800,7 +823,10 @@ export default function JoinTournament() {
                       <Typography
                         sx={{
                           margin: "0px !important",
-                          fontSize: 576 < width < 1200 ? "24px" : "28px",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 42}px`
+                              : "28px",
                         }}
                       >
                         Galaxy Quest : SS Z-Flip 5
@@ -808,7 +834,8 @@ export default function JoinTournament() {
                       <Typography
                         sx={{
                           margin: "0px !important",
-                          fontSize: 576 < width < 1200 ? "12px" : "14px",
+                          fontSize:
+                            576 < width && width < 1200 ? "12px" : "14px",
                           fontWeight: "lighter !important",
                         }}
                       >
@@ -828,7 +855,10 @@ export default function JoinTournament() {
                           textAlign: "start",
                           fontWeight: "lighter",
                           color: "#fff",
-                          fontSize: "18px",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 55}px`
+                              : "18px",
                         }}
                       >
                         Reward
@@ -853,7 +883,8 @@ export default function JoinTournament() {
                             style={{
                               color: "#BE48ED",
                               marginTop: "15px",
-                              fontSize: 576 < width < 1200 ? "18px" : "20px",
+                              fontSize:
+                                576 < width && width < 1200 ? "18px" : "20px",
                             }}
                             className="mb-2"
                           >
@@ -884,7 +915,9 @@ export default function JoinTournament() {
                                   <span
                                     style={{
                                       fontSize:
-                                        576 < width < 1200 ? "12px" : "14px",
+                                        576 < width && width < 1200
+                                          ? "12px"
+                                          : "14px",
                                     }}
                                   >
                                     {sliceString(
@@ -913,7 +946,9 @@ export default function JoinTournament() {
                                   <span
                                     style={{
                                       fontSize:
-                                        576 < width < 1200 ? "12px" : "14px",
+                                        576 < width && width < 1200
+                                          ? "12px"
+                                          : "14px",
                                     }}
                                   >
                                     {moment(
@@ -947,7 +982,9 @@ export default function JoinTournament() {
                                   <span
                                     style={{
                                       fontSize:
-                                        576 < width < 1200 ? "12px" : "14px",
+                                        576 < width && width < 1200
+                                          ? "12px"
+                                          : "14px",
                                     }}
                                   >
                                     {detailTournament?.tournamentInfors?.owner
@@ -975,7 +1012,9 @@ export default function JoinTournament() {
                                     style={{
                                       color: "#0096FF",
                                       fontSize:
-                                        576 < width < 1200 ? "12px" : "14px",
+                                        576 < width && width < 1200
+                                          ? "12px"
+                                          : "14px",
                                     }}
                                   >
                                     See more
@@ -1007,8 +1046,8 @@ export default function JoinTournament() {
                                   : images.GameTournament
                               }
                               alt="..."
-                              width={100}
-                              height={105}
+                              width={"95%"}
+                              height={"90%"}
                             />
                           </Box>
                         </div>
@@ -1022,7 +1061,10 @@ export default function JoinTournament() {
                       textAlign: "start",
                       color: "#fff",
                       marginLeft: "0px !important",
-                      fontSize: "18px",
+                      fontSize:
+                        576 < width && width < 1200
+                          ? `${width / 42}px`
+                          : "18px",
                       marginTop: "36px",
                     }}
                   >
@@ -1047,15 +1089,15 @@ export default function JoinTournament() {
 
                 <Box
                   sx={{
-                    flexGrow: 576 < width < 1200 ? "none" : "1",
+                    flexGrow: 576 < width && width < 1200 ? "none" : "1",
                     padding:
-                      576 < width < 1200
+                      576 < width && width < 1200
                         ? `0px 0px ${parseFloat(width / 43.6)}px 20px`
                         : `0px 0px ${parseFloat(width / 43.6)}px 60px`,
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
-                    width: 576 < width < 1200 ? "45%" : "auto",
+                    justifyContent: "flex-start",
+                    width: 576 < width && width < 1200 ? "45%" : "auto",
                   }}
                 >
                   <Box
@@ -1071,7 +1113,10 @@ export default function JoinTournament() {
                       sx={{
                         textAlign: "start",
                         fontWeight: "lighter !important",
-                        fontSize: "20px",
+                        fontSize:
+                          576 < width && width < 1200
+                            ? `${width / 42}px`
+                            : "28px",
                       }}
                     >
                       Current Result
@@ -1083,7 +1128,10 @@ export default function JoinTournament() {
                       sx={{
                         textAlign: "start",
                         fontWeight: "lighter !important",
-                        fontSize: "14px",
+                        fontSize:
+                          576 < width && width < 1200
+                            ? `${width / 71}px`
+                            : "18px",
                         color: "#BE48ED",
                         cursor: "pointer",
                       }}
@@ -1158,7 +1206,10 @@ export default function JoinTournament() {
                             fontWeight: "500 !important",
                             marginLeft: "0px !important",
                             fontFamily: "Cyntho Next",
-                            fontSize: 576 < width < 1200 ? "14px" : "16px",
+                            fontSize:
+                              576 < width && width < 1200
+                                ? `${width / 71}px`
+                                : "16px",
                           }}
                         >
                           {item
@@ -1602,8 +1653,8 @@ export default function JoinTournament() {
               </Dialog>
             )}
           {/* Portrait */}
-          {width > 576 &&
-            width < 1024 &&
+          {width < 1200 &&
+            width > 576 &&
             previousOri === "landscape" &&
             orientation === "landscape" &&
             startGame &&

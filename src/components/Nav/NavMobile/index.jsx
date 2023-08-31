@@ -36,7 +36,7 @@ export default function NavMobile() {
 
   return (
     <>
-      {isLoginDialog === false && width <= 576  && !startGameCheck ? (
+      {isLoginDialog === false && width <= 576 && !startGameCheck ? (
         <div className="mobile" style={{ display: `${hideNavMobile}` }}>
           {getAppType() === "promote" ? (
             <div className="content_nav">
@@ -95,7 +95,7 @@ export default function NavMobile() {
                           fontSize: "12px",
                           fontWeight: 400,
                           color: "white",
-                          marginTop: "4px"
+                          marginTop: "4px",
                         }}
                       >
                         Home
@@ -162,7 +162,7 @@ export default function NavMobile() {
                           fontSize: "12px",
                           fontWeight: 400,
                           color: "white",
-                          marginTop: "4px"
+                          marginTop: "4px",
                         }}
                       >
                         Packages
@@ -213,7 +213,7 @@ export default function NavMobile() {
                         fontSize: "12px",
                         fontWeight: 400,
                         color: "white",
-                        marginTop: "4px"
+                        marginTop: "4px",
                       }}
                     >
                       Credit
@@ -259,7 +259,7 @@ export default function NavMobile() {
                               fontSize: "12px",
                               fontWeight: 400,
                               color: "white",
-                              marginTop: "4px"
+                              marginTop: "4px",
                             }}
                           >
                             Chat
@@ -314,7 +314,7 @@ export default function NavMobile() {
                           fontSize: "12px",
                           fontWeight: 400,
                           color: "white",
-                          marginTop: "4px"
+                          marginTop: "4px",
                         }}
                       >
                         Menu
