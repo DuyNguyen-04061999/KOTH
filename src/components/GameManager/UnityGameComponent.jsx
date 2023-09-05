@@ -19,15 +19,16 @@ export default function UnityGameComponent(props) {
     handleEndGame,
     type,
     skinName,
-    pauseGame, 
+    pauseGame,
     unPauseGame,
-    fmod
+    fmod,
+    videoGame,
   } = props;
 
   const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   // const { router } = useSelector((state) => state.appReducer);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
       if (data[index]?.link?.includes(".loader.js")) {
@@ -100,18 +101,21 @@ export default function UnityGameComponent(props) {
     sendMessage("TournamentGameEntry", "StartGame", "Start");
   }, [sendMessage, tournamentId, token, skinId]);
 
-  const handleFinalGame = useCallback(async (score) => {
-    if(!fmod) {
-      await unload();
-    }
-    if (type && type === "pvp") {
-      navigate({
-        pathname: `/selectroom/${gameId}`,
-      });
-    }
-    handleEndGame(score || 0);
-    dispatch(toggleStartGame(false))
-  }, [navigate, unload, handleEndGame, gameId, type, fmod, dispatch]);
+  const handleFinalGame = useCallback(
+    async (score) => {
+      if (!fmod) {
+        await unload();
+      }
+      if (type && type === "pvp") {
+        navigate({
+          pathname: `/selectroom/${gameId}`,
+        });
+      }
+      handleEndGame(score || 0);
+      dispatch(toggleStartGame(false));
+    },
+    [navigate, unload, handleEndGame, gameId, type, fmod, dispatch]
+  );
 
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
@@ -130,25 +134,24 @@ export default function UnityGameComponent(props) {
   const unityRef = useRef();
 
   useEffect(() => {
-    if(pauseGame) {
+    if (pauseGame) {
       sendMessage("TournamentGameEntry", "PauseGame", "");
     }
-  }, [pauseGame, sendMessage])
+  }, [pauseGame, sendMessage]);
 
   useEffect(() => {
-    if(unPauseGame) {
+    if (unPauseGame) {
       sendMessage("TournamentGameEntry", "UnpauseGame", "");
     }
-  }, [unPauseGame, sendMessage])
+  }, [unPauseGame, sendMessage]);
 
   useEffect(() => {
     const onBeforeUnload = async (ev) => {
-      
-      //#############     
-      if(!fmod) {
+      //#############
+      if (!fmod) {
         await unload();
       }
-      dispatch(toggleStartGame(false))
+      dispatch(toggleStartGame(false));
       //#############
 
       ev.returnValue = "Anything you wanna put here!";
@@ -164,12 +167,11 @@ export default function UnityGameComponent(props) {
 
   useEffect(() => {
     const onBeforeUnload = async (ev) => {
-      
-      //#############     
-      if(!fmod) {
+      //#############
+      if (!fmod) {
         await unload();
       }
-      dispatch(toggleStartGame(false))
+      dispatch(toggleStartGame(false));
       //#############
 
       ev.returnValue = "Anything you wanna put here!";
@@ -185,7 +187,7 @@ export default function UnityGameComponent(props) {
 
   return (
     <Fragment>
-      {!isLoaded && (
+      {!isLoaded && !videoGame && (
         <LoadingScreen
           loadingProgression={Math.round(loadingProgression * 100)}
         />

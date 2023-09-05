@@ -78,6 +78,9 @@ input::-webkit-inner-spin-button {
   z-index: 2000 !important;
   top: 0;
 }
+.position_Relative {
+  position: relative;
+}
 /* .Toastify__toast {
   width: 465px !important;
 } */

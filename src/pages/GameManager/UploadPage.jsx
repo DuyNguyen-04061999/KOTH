@@ -15,11 +15,11 @@ export default function UploadPage() {
   const [fmod, setFmod] = useState(false);
 
   function checkExtension(exts, files) {
-      for (let index = 0; index < files.length; index++) {
-        if(!exts?.includes(files[index]?.type)) {
-          return false;
-        }
-      }
+      // for (let index = 0; index < files.length; index++) {
+      //   if(!exts?.includes(files[index]?.type)) {
+      //     return false;
+      //   }
+      // }
       return true;
   }
 

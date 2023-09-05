@@ -342,17 +342,15 @@ export default function FullListTournament({ handleOnClose, open, type }) {
               />
             </Box>
           )}
-          <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr"}} >
             {tourList?.map((item, index) => {
               return index % 2 === 0 ? (
                 <Box
                   onClick={() => navigate("/tournamentDetail/" + item?.id)}
                   key={index}
                   sx={{
-                    width: "50%",
                     boxSizing: "border-box",
                     marginTop: "24px",
-                    paddingRight: "10px",
                   }}
                 >
                   <ItemComponent countdown={true} tourInfo={item} />
@@ -362,10 +360,8 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                   onClick={() => navigate("/tournamentDetail/" + item?.id)}
                   key={index}
                   sx={{
-                    width: "50%",
                     boxSizing: "border-box",
                     marginTop: "24px",
-                    paddingLeft: "10px",
                   }}
                 >
                   <ItemComponent countdown={true} tourInfo={item} />

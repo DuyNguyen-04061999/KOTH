@@ -115,6 +115,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
         display: "flex",
         justifyContent: "center",
         marginTop: "32px",
+        marginBottom: "32px",
       }}
     >
       <Pagination
