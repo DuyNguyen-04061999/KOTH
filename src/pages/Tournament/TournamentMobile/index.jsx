@@ -36,7 +36,7 @@ export default function TournamentMobile() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ paddingBottom: "70px" }}>
+      <Box sx={{ paddingBottom: "70px", backgroundColor: "#1a151e" }}>
         <SlickSlider
           images={[
             images.bannerTournament,

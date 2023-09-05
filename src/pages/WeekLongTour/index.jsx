@@ -63,6 +63,7 @@ export default function WeekLongTour() {
             paddingLeft: width < 576 ? "24px !important" : width < 1024 ? "42px !important" :"0px !important",
             paddingRight: width < 576 ? "24px !important":  width < 1024 ? "32px !important" :"0px !important",
             paddingTop: width < 576 ? "24px !important" : "50px !important",
+            backgroundColor: "#1a151e",
           }}
         >
           <ThemeProvider theme={theme}>
@@ -95,8 +96,10 @@ export default function WeekLongTour() {
             >
               <Box
                 sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
+                  marginTop: "50px",
+                  display: "grid",
+                  gridTemplateColumns: width < 576 ? "1fr 1fr" : "1fr 1fr 1fr 1fr 1fr",
+                  gridRowGap: "16px",
                   minHeight: "577.88px",
                 }}
               >
@@ -104,7 +107,7 @@ export default function WeekLongTour() {
                   // ?.slice(itemOffset, itemOffset + 10)
                   ?.map((item, index) => {
                     return (
-                      <Box sx={{ width: "20%", marginTop: "50px", marginRight: width > 576 && width < 1200 ? "100px" : "none" }} key={index}>
+                      <Box sx={{marginRight: width > 576 && width < 1200 ? "100px" : "none" }} key={index}>
                         <ItemComponent tourInfo={item} countdown={true} />
                       </Box>
                     );

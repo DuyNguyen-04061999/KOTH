@@ -31,20 +31,22 @@ export default function WalletTypePromote(props) {
           backgroundPosition:"center",
           width: "100%",
           height: "100%",
-          overflow: 'auto'
+          overflow: 'auto',
+          minHeight: width < 576 ? "100vh" : "unset",
+          maxHeight: width < 576 ? "unset" : height - 100,
         }}
       >
         {/* <FullScreenDialog /> */}
         {getAppType() === "promote" ? (
           <Box
             sx={{
-              minHeight: width < 576 ? "100vh" : "unset",
-              maxHeight: width < 576 ? "unset" : height - 100,
+              width: "100%",
+              height: "100%",
               // backgroundImage: `url(${popup.proWallet})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
-              padding: "25px",
+              padding: "25px 25px 0px 25px",
             }}
           >
             <Box

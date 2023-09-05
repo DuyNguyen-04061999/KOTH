@@ -91,7 +91,7 @@ const AppBar = muiStyled(MuiAppBar, {
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-start",
-  paddingTop: "48px",
+  paddingTop: "60px",
 }));
 
 const Test = styled.input`
