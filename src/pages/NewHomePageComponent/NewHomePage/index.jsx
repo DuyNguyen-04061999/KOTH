@@ -27,6 +27,9 @@ import NewFooter from "../../NewFooter";
 import ItemComponent from "./ItemComponent";
 import "./index.scss";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
+import ListItemLoading from "./ItemLoading";
+import ListEmpty from "./ListEmpty";
+import { isEmpty } from "lodash";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -62,7 +65,10 @@ export default function NewHomePage() {
   ]);
   const [selectedDay, setSeDay] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
-  setTimeout(() => setIsFetching(false), 5000);
+  if (!isFetchList) {
+    setTimeout(() => setIsFetching(false), 2000);
+  }
+
   const {
     dailyTournament,
     weeklyTournament,
@@ -116,7 +122,6 @@ export default function NewHomePage() {
   //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
   //   return distance;
   // };
-
   return (
     <Container
       maxWidth="lg"
@@ -154,8 +159,11 @@ export default function NewHomePage() {
           >
             {isFetching ? (
               <Skeleton
-                sx={{height:width < 576 ? "208" :"363px", bgcolor: "rgba(255,255,255,1)" }}
-                variant="rectangular" 
+                sx={{
+                  height: width < 576 ? "214px" : "363px",
+                  bgcolor: "rgba(255,255,255,0.1)",
+                }}
+                variant="rectangular"
                 animation="pulse"
               ></Skeleton>
             ) : (
@@ -246,8 +254,9 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {hotTournament &&
-                      hotTournament?.length > 0 &&
+                    {isFetching ? (
+                      <ListItemLoading></ListItemLoading>
+                    ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
                         return (
                           <div key={index} style={{ width: "174px" }}>
@@ -258,7 +267,10 @@ export default function NewHomePage() {
                             />
                           </div>
                         );
-                      })}
+                      })
+                    ) : (
+                      <ListEmpty></ListEmpty>
+                    )}
                   </ScrollingCarousel>
                 </div>
               ) : (
@@ -297,154 +309,180 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {hotTournament &&
-                      hotTournament?.length > 0 &&
+                    {isFetching ? (
+                      <ListItemLoading></ListItemLoading>
+                    ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
                         return (
-                          <div key={index}>
+                          <div key={index} style={{ width: "174px" }}>
                             <ItemComponent
-                              key={index}
-                              countdown={true}
+                              // key={index}
                               tourInfo={item}
+                              countdown={true}
                             />
                           </div>
                         );
-                      })}
+                      })
+                    ) : (
+                      <ListEmpty></ListEmpty>
+                    )}
                   </ScrollingCarousel>
                 </div>
               )}
             </div>
           </Box>{" "}
           {width < 576 ? (
-            <Box
-              sx={{
-                width: "100%",
-                marginTop: width < 576 ? "24px" : "32px",
-                marginBottom: width < 576 ? "24px" : "32px",
-                backgroundImage: `url(${imageHome.banner_win_Mobile})`,
-                height: "208.612px",
-                backgroundSize:
-                  width < 576 ? "cover" : width < 1024 ? "contain" : " cover",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                overflow: "hidden",
-                padding: width > 576 && width < 1024 && "36px 160px",
-              }}
-            >
+            isFetching ? (
+              <Skeleton
+                sx={{
+                  height: width < 576 ? "214px" : "363px",
+                  bgcolor: "rgba(255,255,255,1)",
+                }}
+                variant="rectangular"
+                animation="pulse"
+              ></Skeleton>
+            ) : (
               <Box
                 sx={{
+                  width: "100%",
+                  marginTop: width < 576 ? "24px" : "32px",
+                  marginBottom: width < 576 ? "24px" : "32px",
+                  backgroundImage: `url(${imageHome.banner_win_Mobile})`,
+                  height: "208.612px",
+                  backgroundSize:
+                    width < 576 ? "cover" : width < 1024 ? "contain" : " cover",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  position: "relative",
-                  marginRight: "32px",
+                  overflow: "hidden",
+                  padding: width > 576 && width < 1024 && "36px 160px",
                 }}
               >
-                <Box sx={{}}>
-                  {" "}
-                  <Box
-                    sx={{
-                      backgroundImage: `url(${imageHome.ringMobile})`,
-                      width: "81px",
-                      height: "81px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: "75px",
-                        height: "75px",
-                        borderRadius: "50%",
-                      }}
-                      src={
-                        biggestEndTour?.bestUser?.tUser?.userAccount
-                          ?.accountAvatar
-                          ? process.env.REACT_APP_SOCKET_SERVER +
-                            "/" +
-                            biggestEndTour?.bestUser?.tUser?.userAccount
-                              ?.accountAvatar
-                          : images.gameHotTournament
-                      }
-                      component={"img"}
-                    ></Box>
-                    <Box
-                      sx={{ position: "absolute", top: "-17px", left: "5px" }}
-                      component={"img"}
-                      src={imageHome.hatMobile}
-                    ></Box>
-                  </Box>
-                  <Typography
-                    sx={{
-                      color: "#fff",
-                      fontSize: "12.035px",
-                      fontWeight: "lighter !important",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    {biggestEndTour?.bestUser?.userNickName || "super_"}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  width: "50%",
-                  display: "flex",
-                  flexDirection: "column",
-                  boxSizing: "border-box",
-                  position: "relative",
-                  justifyContent: "center",
-                  height: "100%",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "#FFDC62",
-                    fontSize: "18px",
-                    marginLeft: "0px !important",
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                    overflow: "hidden",
-                  }}
-                >
-                  {String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.length > 10
-                    ? String(
-                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                      )
-                        ?.toUpperCase()
-                        ?.slice(0, 10) + "..." || "MEGA HOLIC"
-                    : String(
-                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                      )?.toUpperCase()}
-                </Typography>
                 <Box
                   sx={{
-                    backgroundImage: `url(${imageHome.megaholicMobile})`,
-                    width: `${width / 1.6}px`,
-                    height: "113px",
-                    marginTop: "10px",
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems: width < 576 ? "flex-start" : "center",
-                    padding: "10px 47px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                    marginRight: "32px",
                   }}
                 >
-                  <Typography sx={{ color: "#fff", fontSize: "40px" }}>
-                    {biggestEndTour?.endTour?.tournamentAutoAmount
-                      ? biggestEndTour?.endTour?.tournamentAutoAmount + " $"
-                      : "5000$"}
+                  <Box sx={{}}>
+                    {" "}
+                    <Box
+                      sx={{
+                        backgroundImage: `url(${imageHome.ringMobile})`,
+                        width: "81px",
+                        height: "81px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: "75px",
+                          height: "75px",
+                          borderRadius: "50%",
+                        }}
+                        src={
+                          biggestEndTour?.bestUser?.tUser?.userAccount
+                            ?.accountAvatar
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              biggestEndTour?.bestUser?.tUser?.userAccount
+                                ?.accountAvatar
+                            : images.gameHotTournament
+                        }
+                        component={"img"}
+                      ></Box>
+                      <Box
+                        sx={{ position: "absolute", top: "-17px", left: "5px" }}
+                        component={"img"}
+                        src={imageHome.hatMobile}
+                      ></Box>
+                    </Box>
+                    <Typography
+                      sx={{
+                        color: "#fff",
+                        fontSize: "12.035px",
+                        fontWeight: "lighter !important",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      {biggestEndTour?.bestUser?.userNickName || "super_"}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    width: "50%",
+                    display: "flex",
+                    flexDirection: "column",
+                    boxSizing: "border-box",
+                    position: "relative",
+                    justifyContent: "center",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "#FFDC62",
+                      fontSize: "18px",
+                      marginLeft: "0px !important",
+                      display: "-webkit-box",
+                      WebkitBoxOrient: "vertical",
+                      WebkitLineClamp: 2,
+                      overflow: "hidden",
+                    }}
+                  >
+                    {String(
+                      biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+                    )?.length > 10
+                      ? String(
+                          biggestEndTour?.endTour?.tournamentName ||
+                            "MEGA HOLIC"
+                        )
+                          ?.toUpperCase()
+                          ?.slice(0, 10) + "..." || "MEGA HOLIC"
+                      : String(
+                          biggestEndTour?.endTour?.tournamentName ||
+                            "MEGA HOLIC"
+                        )?.toUpperCase()}
                   </Typography>
-                  <Typography sx={{ color: "#fff", fontSize: "9px" }}>
-                    GRAND TOURNAMENT WINNER
-                  </Typography>
+                  <Box
+                    sx={{
+                      backgroundImage: `url(${imageHome.megaholicMobile})`,
+                      width: `${width / 1.6}px`,
+                      height: "113px",
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: width < 576 ? "flex-start" : "center",
+                      padding: "10px 47px",
+                    }}
+                  >
+                    <Typography sx={{ color: "#fff", fontSize: "40px" }}>
+                      {biggestEndTour?.endTour?.tournamentAutoAmount
+                        ? biggestEndTour?.endTour?.tournamentAutoAmount + " $"
+                        : "5000$"}
+                    </Typography>
+                    <Typography sx={{ color: "#fff", fontSize: "9px" }}>
+                      GRAND TOURNAMENT WINNER
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            )
+          ) : isFetching ? (
+            <Skeleton
+              sx={{
+                height: width < 576 ? "214px" : "363px",
+                bgcolor: "rgba(255,255,255,0.1)",
+              }}
+              variant="rectangular"
+              animation="pulse"
+            ></Skeleton>
           ) : (
             <Box
               sx={{
@@ -820,28 +858,13 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {dailyTournament &&
+                    {isFetching ? (
+                      <ListItemLoading />
+                    ) : dailyTournament &&
                       dailyTournament?.length > 0 &&
                       dailyTournament?.filter(
                         (n) => n.timeStart === dayList[selectedDay]
-                      ) &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
-                      dailyTournament?.filter(
-                        (n) => n.timeStart === dayList[selectedDay]
-                      )?.length > 0 &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
-                      dailyTournament?.filter(
-                        (n) => n.timeStart === dayList[selectedDay]
-                      )[0]?.listTournament &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
-                      dailyTournament?.filter(
-                        (n) => n.timeStart === dayList[selectedDay]
-                      )[0]?.listTournament?.length > 0 &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
+                      )[0]?.listTournament?.length !== 0 ? (
                       dailyTournament
                         ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                         ?.listTournament?.map((item, index) => {
@@ -854,7 +877,10 @@ export default function NewHomePage() {
                               />
                             </div>
                           );
-                        })}
+                        })
+                    ) : (
+                      <ListEmpty />
+                    )}
                   </ScrollingCarousel>
                 </div>
               ) : (
@@ -893,28 +919,13 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {dailyTournament &&
+                    {isFetching ? (
+                      <ListItemLoading />
+                    ) : dailyTournament &&
                       dailyTournament?.length > 0 &&
                       dailyTournament?.filter(
                         (n) => n.timeStart === dayList[selectedDay]
-                      ) &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
-                      dailyTournament?.filter(
-                        (n) => n.timeStart === dayList[selectedDay]
-                      )?.length > 0 &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
-                      dailyTournament?.filter(
-                        (n) => n.timeStart === dayList[selectedDay]
-                      )[0]?.listTournament &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
-                      dailyTournament?.filter(
-                        (n) => n.timeStart === dayList[selectedDay]
-                      )[0]?.listTournament?.length > 0 &&
-                      dailyTournament &&
-                      dailyTournament?.length > 0 &&
+                      )[0]?.listTournament?.length !== 0 ? (
                       dailyTournament
                         ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                         ?.listTournament?.map((item, index) => {
@@ -927,7 +938,10 @@ export default function NewHomePage() {
                               />
                             </div>
                           );
-                        })}
+                        })
+                    ) : (
+                      <ListEmpty />
+                    )}
                   </ScrollingCarousel>
                 </div>
               )}
@@ -1273,20 +1287,23 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {weeklyTournament &&
-                      weeklyTournament?.length > 0 &&
+                    {isFetching ? (
+                      <ListItemLoading />
+                    ) : weeklyTournament && weeklyTournament?.length > 0 ? (
                       weeklyTournament?.map((item, index) => {
                         return (
                           <div key={index}>
                             <ItemComponent
-                              isLoading={isFetching}
                               key={index}
                               countdown={true}
                               tourInfo={item}
                             />
                           </div>
                         );
-                      })}
+                      })
+                    ) : (
+                      <ListEmpty />
+                    )}
                   </ScrollingCarousel>
                 </div>
               ) : (
@@ -1325,20 +1342,23 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {weeklyTournament &&
-                      weeklyTournament?.length > 0 &&
+                    {isFetching ? (
+                      <ListItemLoading />
+                    ) : weeklyTournament && weeklyTournament?.length > 0 ? (
                       weeklyTournament?.map((item, index) => {
                         return (
                           <div key={index}>
                             <ItemComponent
-                              isLoading={isFetching}
                               key={index}
                               countdown={true}
                               tourInfo={item}
                             />
                           </div>
                         );
-                      })}
+                      })
+                    ) : (
+                      <ListEmpty></ListEmpty>
+                    )}
                   </ScrollingCarousel>
                 </div>
               )}
@@ -1346,178 +1366,199 @@ export default function NewHomePage() {
           </Box>{" "}
           {/* Banner Top1 */}
           {width < 576 ? (
-            <Box
-              sx={{
-                marginTop: width < 576 ? "48px" : "32px",
-                marginBottom: width < 576 ? "0px" : "32px",
-                backgroundImage: `url(${imageHome.bannerTop1Mobile})`,
-                width: "100%",
-                height: "210px",
-                backgroundSize: "cover",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxSizing: "border-box",
-              }}
-            >
+            isFetching ? (
+              <Skeleton
+                sx={{
+                  height: width < 576 ? "214px" : "363px",
+                  bgcolor: "rgba(255,255,255,0.1)",
+                }}
+                variant="rectangular"
+                animation="pulse"
+              ></Skeleton>
+            ) : (
               <Box
                 sx={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "50%",
-                  backgroundColor: "#0687C9",
-                  position: "relative",
+                  marginTop: width < 576 ? "48px" : "32px",
+                  marginBottom: width < 576 ? "0px" : "32px",
+                  backgroundImage: `url(${imageHome.bannerTop1Mobile})`,
+                  width: "100%",
+                  height: "210px",
+                  backgroundSize: "cover",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxSizing: "border-box",
                 }}
               >
                 <Box
                   sx={{
-                    borderRadius: "50%",
                     width: "80px",
                     height: "80px",
-                    position: "absolute",
-                    top: "-3px",
-                    left: "-2px",
-                  }}
-                  src={
-                    hotWeekTour &&
-                    hotWeekTour?.bestUser &&
-                    hotWeekTour?.bestUser?.tUser &&
-                    hotWeekTour?.bestUser?.tUser?.userAccount &&
-                    hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      : images.pool
-                  }
-                  component={"img"}
-                ></Box>{" "}
-                <Box
-                  sx={{
-                    width: "60px",
-                    height: "auto",
-                    position: "absolute",
-                    top: "-40px",
-                    left: "-19px",
-                  }}
-                  component={"img"}
-                  src={imageHome.top1Icon}
-                ></Box>
-              </Box>
-              <Box sx={{ paddingLeft: "20px" }}>
-                <Typography
-                  sx={{
-                    color: "#FFDC62",
-                    textAlign: "start",
-                    fontSize: "10px",
-                    marginLeft: "0px !important",
+                    borderRadius: "50%",
+                    backgroundColor: "#0687C9",
+                    position: "relative",
                   }}
                 >
-                  TOURNAMENT OF THE WEEK
-                </Typography>
-                <Box className="name-tour-mobile">
-                  <Typography
-                    sx={{
-                      fontSize: "22px",
-                      textAlign: "start",
-                    }}
-                  >
-                    {String(hotWeekTour?.tournamentName)?.length > 10
-                      ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
-                        "..."
-                      : String(hotWeekTour?.tournamentName)}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: "flex" }}>
                   <Box
-                    sx={{ width: "23px", height: "auto" }}
-                    component={"img"}
+                    sx={{
+                      borderRadius: "50%",
+                      width: "80px",
+                      height: "80px",
+                      position: "absolute",
+                      top: "-3px",
+                      left: "-2px",
+                    }}
                     src={
                       hotWeekTour &&
-                      hotWeekTour?.tournamentBrand &&
-                      hotWeekTour?.tournamentBrand?.brandAvatar
+                      hotWeekTour?.bestUser &&
+                      hotWeekTour?.bestUser?.tUser &&
+                      hotWeekTour?.bestUser?.tUser?.userAccount &&
+                      hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          hotWeekTour?.tournamentBrand?.brandAvatar
-                        : imageHome.brandAvatar
+                          hotWeekTour?.bestUser?.tUser?.userAccount
+                            ?.accountAvatar
+                        : images.pool
                     }
-                  ></Box>
+                    component={"img"}
+                  ></Box>{" "}
                   <Box
                     sx={{
-                      width: "0.729px",
-                      backgroundColor: "#371972",
-                      margin: "0px 12px 0px 12px",
+                      width: "60px",
+                      height: "auto",
+                      position: "absolute",
+                      top: "-40px",
+                      left: "-19px",
                     }}
+                    component={"img"}
+                    src={imageHome.top1Icon}
                   ></Box>
-                  <CountDownBannerHot
-                    expiryTime={moment(hotWeekTour?.tournamentEndAt)}
-                  />
                 </Box>
-                <Box
-                  sx={{
-                    backgroundColor: "rgba(139, 31, 207, 0.30)",
-                    borderRadius: "5px",
-                    marginTop: "15px",
-                    padding: "4px 5px",
-                    width: `${width / 2.1}px`,
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography
-                      sx={{
-                        color: "#00CBEF",
-                        textAlign: "start",
-                        fontSize: "8px",
-                        marginLeft: "0px !important",
-                        marginRight: "5px",
-                      }}
-                    >
-                      Get
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#FAA515",
-                        textAlign: "start",
-                        fontSize: "10.062px",
-                        marginLeft: "0px !important",
-                        marginRight: "5px",
-                      }}
-                    >
-                      ${hotWeekTour?.tournamentAutoAmount}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#00CBEF",
-                        textAlign: "start",
-                        fontSize: "8px",
-                        marginLeft: "0px !important",
-                      }}
-                    >
-                      gift
-                    </Typography>
-                  </Box>
-                  <button
-                    onClick={() => {
-                      navigate("/tournamentDetail/" + hotWeekTour?.id);
-                    }}
-                    style={{
-                      background:
-                        "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-                      outline: "none",
-                      border: "none",
-                      borderRadius: "5px",
-                      color: "#fff",
-                      padding: `2.683px ${width / 16}px`,
+                <Box sx={{ paddingLeft: "20px" }}>
+                  <Typography
+                    sx={{
+                      color: "#FFDC62",
+                      textAlign: "start",
                       fontSize: "10px",
-                      cursor: "pointer",
+                      marginLeft: "0px !important",
                     }}
                   >
-                    Play now
-                  </button>
+                    TOURNAMENT OF THE WEEK
+                  </Typography>
+                  <Box className="name-tour-mobile">
+                    <Typography
+                      sx={{
+                        fontSize: "22px",
+                        textAlign: "start",
+                      }}
+                    >
+                      {String(hotWeekTour?.tournamentName)?.length > 10
+                        ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
+                          "..."
+                        : String(hotWeekTour?.tournamentName)}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex" }}>
+                    <Box
+                      sx={{ width: "23px", height: "auto" }}
+                      component={"img"}
+                      src={
+                        hotWeekTour &&
+                        hotWeekTour?.tournamentBrand &&
+                        hotWeekTour?.tournamentBrand?.brandAvatar
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            hotWeekTour?.tournamentBrand?.brandAvatar
+                          : imageHome.brandAvatar
+                      }
+                    ></Box>
+                    <Box
+                      sx={{
+                        width: "0.729px",
+                        backgroundColor: "#371972",
+                        margin: "0px 12px 0px 12px",
+                      }}
+                    ></Box>
+                    <CountDownBannerHot
+                      expiryTime={moment(hotWeekTour?.tournamentEndAt)}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      backgroundColor: "rgba(139, 31, 207, 0.30)",
+                      borderRadius: "5px",
+                      marginTop: "15px",
+                      padding: "4px 5px",
+                      width: `${width / 2.1}px`,
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Typography
+                        sx={{
+                          color: "#00CBEF",
+                          textAlign: "start",
+                          fontSize: "8px",
+                          marginLeft: "0px !important",
+                          marginRight: "5px",
+                        }}
+                      >
+                        Get
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#FAA515",
+                          textAlign: "start",
+                          fontSize: "10.062px",
+                          marginLeft: "0px !important",
+                          marginRight: "5px",
+                        }}
+                      >
+                        ${hotWeekTour?.tournamentAutoAmount}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#00CBEF",
+                          textAlign: "start",
+                          fontSize: "8px",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        gift
+                      </Typography>
+                    </Box>
+                    <button
+                      onClick={() => {
+                        navigate("/tournamentDetail/" + hotWeekTour?.id);
+                      }}
+                      style={{
+                        background:
+                          "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                        outline: "none",
+                        border: "none",
+                        borderRadius: "5px",
+                        color: "#fff",
+                        padding: `2.683px ${width / 16}px`,
+                        fontSize: "10px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Play now
+                    </button>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            )
+          ) : isFetching ? (
+            <Skeleton
+              sx={{
+                height: width < 576 ? "214px" : "363px",
+                bgcolor: "rgba(255,255,255,0.1)",
+              }}
+              variant="rectangular"
+              animation="pulse"
+            ></Skeleton>
           ) : (
             <Box
               sx={{

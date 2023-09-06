@@ -532,8 +532,8 @@ export default function Package() {
                               {i?.packageName === "Diamond" ? (
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
-                                  width="123"
-                                  height="113"
+                                  width= {width < 1024 ?"100" : "110"}
+                                  height={width < 1024 ?"100" : "113"}
                                   fill="none"
                                   viewBox="0 0 123 113"
                                 >

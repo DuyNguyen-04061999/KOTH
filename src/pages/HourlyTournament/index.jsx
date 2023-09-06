@@ -39,6 +39,10 @@ export default function HourlyTournament() {
   const dispatch = useDispatch();
   const [isFetchList, setIsFetchList] = useState(true);
   const { hourlyTournament } = useSelector((state) => state.tournamentReducer);
+  const [isFetching, setIsFetching] = useState(true);
+  if (!isFetchList) {
+    setTimeout(() => setIsFetching(false), 2000);
+  }
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
