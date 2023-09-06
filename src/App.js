@@ -91,8 +91,12 @@ import HotTournament from "./pages/HotTournament";
 import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
 import LoadingScreen from "./components/LoadingScreen";
-import { updateDeviceType } from "./redux-saga-middleware/reducers/deviceReducer";
+import {
+  updateDevice,
+  updateDeviceType,
+} from "./redux-saga-middleware/reducers/deviceReducer";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
+import { detectDevice } from "./utils/detectDevice";
 function App() {
   useTracking("");
 
@@ -100,16 +104,16 @@ function App() {
   const { token } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
   const { orientation } = store.getState().gameReducer;
-  
+
   const { width } = useWindowDimensions();
- 
+
   useEffect(() => {
-    if(width <= 1024 && width >= 576 ) {
-      store.dispatch(getNavTablet(false))
+    if (width <= 1024 && width >= 576) {
+      store.dispatch(getNavTablet(false));
     } else {
-      store.dispatch(getNavTablet(true))
+      store.dispatch(getNavTablet(true));
     }
-  },[width])
+  }, [width]);
 
   useEffect(() => {
     if (!token) {
@@ -124,7 +128,6 @@ function App() {
     const onWindowResize = () => {
       clearTimeout(window.resizeLag);
       window.resizeLag = setTimeout(() => {
-
         delete window.resizeLag;
         store.dispatch(
           changeOrientation(isLandscape() ? "landscape" : "portrait")
@@ -141,37 +144,30 @@ function App() {
     };
   }, [orientation, startGameCheck]);
 
-  
-
   useEffect(() => {
-    const updateOrientation = event => {
-      if(!startGameCheck && !window.location.pathname?.includes("tournamentDetail")) {
-        window.location.reload()
+    const updateOrientation = (event) => {
+      if (
+        !startGameCheck &&
+        !window.location.pathname?.includes("tournamentDetail")
+      ) {
+        window.location.reload();
       }
-    }
+    };
 
-    window.addEventListener(
-      'orientationchange',
-      updateOrientation
-    )
+    window.addEventListener("orientationchange", updateOrientation);
     return () => {
-      window.removeEventListener(
-        'orientationchange',
-        updateOrientation
-      )
-    }
-  }, [startGameCheck])
+      window.removeEventListener("orientationchange", updateOrientation);
+    };
+  }, [startGameCheck]);
 
-  useEffect(() => {
-      
-  }, [orientation, startGameCheck])
+  useEffect(() => {}, [orientation, startGameCheck]);
 
   const checkPreAuthRouter = () => {
-    const params = window.location.pathname
-    const newArr = params.split("/")
-    if(params.includes('tournamentDetail')) {
+    const params = window.location.pathname;
+    const newArr = params.split("/");
+    if (params.includes("tournamentDetail")) {
       socket?.emit("detailTournament", {
-        tournamentId: newArr.pop()
+        tournamentId: newArr.pop(),
       });
     }
   };
@@ -204,7 +200,7 @@ function App() {
         socket.emit("listPackage", {
           type: true,
         });
-        checkPreAuthRouter()
+        checkPreAuthRouter();
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -572,9 +568,11 @@ function App() {
     return "Window";
   };
   const os = getMobileOS();
+  const device = detectDevice();
   useEffect(() => {
     store.dispatch(updateDeviceType(os));
-  }, [os]);
+    store.dispatch(updateDevice(device));
+  }, [os, device]);
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
