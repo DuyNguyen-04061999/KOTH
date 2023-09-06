@@ -188,7 +188,7 @@ export default function Layout(props) {
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
-
+  console.log(isNav);
   const handleChangeChat = (e) => {
     setChatF(e.target.value);
   };
@@ -551,7 +551,7 @@ export default function Layout(props) {
                   : "block",
             }}
           >
-            <Navbar navIcon={isNav} />
+            <Navbar />
           </Grid>
         ) : (
           <NavMobile />

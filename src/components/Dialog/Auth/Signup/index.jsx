@@ -65,7 +65,6 @@ export default function Signup(props) {
       password.length > 15 ||
       c_password.length > 15 ||
       password.length < 6 ||
-      c_password.length < 6 || 
       password !== c_password
     ) {
       setDisabledBtn(true);
@@ -375,9 +374,6 @@ export default function Signup(props) {
           </Box>
           {c_password && c_password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
-          )}
-          {c_password && c_password.length < 6 && (
-            <span className="text-danger">Password must be 6 or more characters</span>
           )}
           {c_password && c_password !== password && (
             <span className="text-danger">Password does not match</span>
