@@ -77,7 +77,7 @@ export default function JoinTournament() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoGame, setVideoGame] = useState(false);
   const [checkMobile, setCheckMobile] = useState(false);
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
   const [second, setSeconds] = useState(7);
@@ -1289,7 +1289,7 @@ export default function JoinTournament() {
                     handle={screen}
                     onChange={reportChange}
                   >
-                    {videoGame ? (
+                    {videoGame && (
                       <Fragment>
                         <Box sx={{ position: "relative" }}>
                           {" "}
@@ -1384,164 +1384,163 @@ export default function JoinTournament() {
                           </Box>
                         </Box>
                       </Fragment>
-                    ) : (
-                      <Fragment>
-                        <UnityGameComponent
-                          fmod={
-                            detailTournament?.tournamentInfors?.game?.gameFmod
-                          }
-                          GameFiles={
-                            detailTournament?.tournamentInfors?.game?.GameFiles
-                          }
-                          width="100%"
-                          height="800px"
-                          cwidth="100%"
-                          cheight="100%"
-                          tournamentId={id}
-                          isFullScreen={isFullScreen}
-                          fullScreen={expand}
-                          gameId={
-                            detailTournament?.tournamentInfors?.game?.id || ""
-                          }
-                          skinName={
-                            detailTournament?.tournamentInfors?.skin
-                              ?.skinName || ""
-                          }
-                          skinId={
-                            detailTournament?.tournamentInfors?.skin?.id || ""
-                          }
-                          type="tournament"
-                          handleEndGame={handleEndGame}
-                          gameName={
-                            detailTournament?.tournamentInfors?.game
-                              ?.gameName || ""
-                          }
-                          pauseGame={pauseGame}
-                          unPauseGame={unPauseGame}
-                        />
-                        {startGame && expand === true && width > 576 && (
-                          <>
-                            <Box
-                              className={
-                                mouseEnter === false
-                                  ? "showButtonFullScreen"
-                                  : "showButtonFullScreenDis"
-                              }
-                              sx={{
-                                width: "100%",
-                                height: "60px",
-                                boxSizing: "border-box",
-                                position: "absolute",
+                    )}
+                    <Fragment>
+                      <UnityGameComponent
+                        fmod={
+                          detailTournament?.tournamentInfors?.game?.gameFmod
+                        }
+                        GameFiles={
+                          detailTournament?.tournamentInfors?.game?.GameFiles
+                        }
+                        width="100%"
+                        height="800px"
+                        cwidth="100%"
+                        cheight="100%"
+                        tournamentId={id}
+                        isFullScreen={isFullScreen}
+                        fullScreen={expand}
+                        gameId={
+                          detailTournament?.tournamentInfors?.game?.id || ""
+                        }
+                        skinName={
+                          detailTournament?.tournamentInfors?.skin?.skinName ||
+                          ""
+                        }
+                        skinId={
+                          detailTournament?.tournamentInfors?.skin?.id || ""
+                        }
+                        type="tournament"
+                        handleEndGame={handleEndGame}
+                        gameName={
+                          detailTournament?.tournamentInfors?.game?.gameName ||
+                          ""
+                        }
+                        pauseGame={pauseGame}
+                        unPauseGame={unPauseGame}
+                        videoGame={videoGame}
+                      />
+                      {startGame && expand === true && width > 576 && (
+                        <>
+                          <Box
+                            className={
+                              mouseEnter === false
+                                ? "showButtonFullScreen"
+                                : "showButtonFullScreenDis"
+                            }
+                            sx={{
+                              width: "100%",
+                              height: "60px",
+                              boxSizing: "border-box",
+                              position: "absolute",
+                              display: "flex",
+                              bottom: "0px",
+                              justifyContent: "center",
+                              alignItems: "flex-end",
+                            }}
+                          >
+                            <button
+                              style={{
+                                width: "70px",
+                                height: "50px",
+                                border: "none",
+                                outline: "none",
+                                borderRadius: "40px 40px 0px 0px",
                                 display: "flex",
-                                bottom: "0px",
                                 justifyContent: "center",
-                                alignItems: "flex-end",
-                              }}
-                            >
-                              <button
-                                style={{
-                                  width: "70px",
-                                  height: "50px",
-                                  border: "none",
-                                  outline: "none",
-                                  borderRadius: "40px 40px 0px 0px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                onClick={() => setMouseEnter(true)}
-                              >
-                                <img
-                                  alt="..."
-                                  width="30px"
-                                  src={images.eyeIcon}
-                                />
-                              </button>
-                            </Box>
-                            <Box
-                              className={
-                                mouseEnter === true
-                                  ? "navBarFullScreen"
-                                  : "navBarFullScreenDis"
-                              }
-                              sx={{
-                                width: "100%",
-                                height: "auto",
-                                boxSizing: "border-box",
-                                padding: "10px 20px",
-                                display: "flex",
-                                justifyContent: "flex-end",
                                 alignItems: "center",
-                                backgroundColor: "rgb(46, 40, 68)",
+                              }}
+                              onClick={() => setMouseEnter(true)}
+                            >
+                              <img
+                                alt="..."
+                                width="30px"
+                                src={images.eyeIcon}
+                              />
+                            </button>
+                          </Box>
+                          <Box
+                            className={
+                              mouseEnter === true
+                                ? "navBarFullScreen"
+                                : "navBarFullScreenDis"
+                            }
+                            sx={{
+                              width: "100%",
+                              height: "auto",
+                              boxSizing: "border-box",
+                              padding: "10px 20px",
+                              display: "flex",
+                              justifyContent: "flex-end",
+                              alignItems: "center",
+                              backgroundColor: "rgb(46, 40, 68)",
+                            }}
+                          >
+                            <img
+                              style={{
+                                position: "absolute",
+                                left: "50px",
+                              }}
+                              width="150px"
+                              alt="..."
+                              src={images.Logo_Text}
+                            />
+                            <button
+                              onClick={() => setMouseEnter(false)}
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                position: "absolute",
+                                padding: "6px 50px",
+                                borderRadius: "10px",
+                                left: "45%",
+                                background: "linear-gradient(#873CF0,#7946EE)",
+                                color: "white",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
                               }}
                             >
                               <img
-                                style={{
-                                  position: "absolute",
-                                  left: "50px",
-                                }}
-                                width="150px"
+                                width="25px"
                                 alt="..."
-                                src={images.Logo_Text}
+                                src={images.closeEyefullscreen}
+                                style={{ marginRight: "5px" }}
                               />
-                              <button
-                                onClick={() => setMouseEnter(false)}
+                              Hide this bar
+                            </button>
+                            {expand === false ? (
+                              <img
+                                alt=".."
+                                width={width < 576 ? width / 20 : width / 68}
                                 style={{
-                                  border: "none",
-                                  outline: "none",
-                                  position: "absolute",
-                                  padding: "6px 50px",
-                                  borderRadius: "10px",
-                                  left: "45%",
-                                  background:
-                                    "linear-gradient(#873CF0,#7946EE)",
-                                  color: "white",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
+                                  marginLeft: width < 576 ? "20px" : "30px",
+                                  cursor: "pointer",
                                 }}
-                              >
-                                <img
-                                  width="25px"
-                                  alt="..."
-                                  src={images.closeEyefullscreen}
-                                  style={{ marginRight: "5px" }}
-                                />
-                                Hide this bar
-                              </button>
-                              {expand === false ? (
-                                <img
-                                  alt=".."
-                                  width={width < 576 ? width / 20 : width / 68}
-                                  style={{
-                                    marginLeft: width < 576 ? "20px" : "30px",
-                                    cursor: "pointer",
-                                  }}
-                                  onClick={() => {
-                                    setExpand(true);
-                                  }}
-                                  src={images.expandIcon}
-                                />
-                              ) : (
-                                <img
-                                  alt="..."
-                                  width={width < 576 ? width / 20 : width / 68}
-                                  style={{
-                                    marginLeft: width < 576 ? "20px" : "30px",
-                                    cursor: "pointer",
-                                  }}
-                                  onClick={() => {
-                                    setExpand(false);
-                                    screen.exit();
-                                  }}
-                                  src={images.ZoomInIcon}
-                                />
-                              )}
-                            </Box>
-                          </>
-                        )}
-                      </Fragment>
-                    )}
+                                onClick={() => {
+                                  setExpand(true);
+                                }}
+                                src={images.expandIcon}
+                              />
+                            ) : (
+                              <img
+                                alt="..."
+                                width={width < 576 ? width / 20 : width / 68}
+                                style={{
+                                  marginLeft: width < 576 ? "20px" : "30px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  setExpand(false);
+                                  screen.exit();
+                                }}
+                                src={images.ZoomInIcon}
+                              />
+                            )}
+                          </Box>
+                        </>
+                      )}
+                    </Fragment>
                   </FullScreen>
                 )}
               {startGame && expand === false && width > 576 && !videoGame && (

@@ -2,6 +2,7 @@ import {
   Box,
   Container,
   CssBaseline,
+  Skeleton,
   ThemeProvider,
   Typography,
   createTheme,
@@ -15,10 +16,9 @@ import { Package } from "../../PackagePage/component";
 // import Draggable from "react-draggable";
 import { useNavigate } from "react-router-dom";
 import SliderTime from "../../../components/SliderTime";
-import Slider from "react-slick";
 import FullListTournament from "./FullListTournament";
 // import CountDownTournament from "../CountDownTournament";
-import { getAppType, sliceString } from "../../../utils/helper";
+import { getAppType } from "../../../utils/helper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
@@ -61,6 +61,8 @@ export default function NewHomePage() {
     "Sun",
   ]);
   const [selectedDay, setSeDay] = useState(0);
+  const [isFetching, setIsFetching] = useState(true);
+  setTimeout(() => setIsFetching(false), 5000);
   const {
     dailyTournament,
     weeklyTournament,
@@ -132,6 +134,7 @@ export default function NewHomePage() {
             ? "32px !important"
             : "0px !important",
         paddingTop: width < 576 ? "24px !important" : "50px !important",
+        backgroundColor: "#1a151e",
       }}
     >
       {" "}
@@ -144,25 +147,37 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
-          <Box sx={{ marginBottom: width < 576 ? "24px" : "32px" }}>
-            <SlickSlider
-              appendDot={true}
-              images={
-                []
-                // width < 576
-                //   ? [
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //     ]
-                //   : [
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //     ]
-              }
-              tours={threeBrandTour}
-            />
+          <Box
+            sx={{
+              marginBottom: width < 576 ? "24px" : "32px",
+            }}
+          >
+            {isFetching ? (
+              <Skeleton
+                sx={{height:width < 576 ? "208" :"363px", bgcolor: "rgba(255,255,255,1)" }}
+                variant="rectangular" 
+                animation="pulse"
+              ></Skeleton>
+            ) : (
+              <SlickSlider
+                appendDot={true}
+                images={
+                  []
+                  // width < 576
+                  //   ? [
+                  //       images.pepperBanner,
+                  //       images.pepperBanner,
+                  //       images.pepperBanner,
+                  //     ]
+                  //   : [
+                  //       images.pepperBanner,
+                  //       images.pepperBanner,
+                  //       images.pepperBanner,
+                  //     ]
+                }
+                tours={threeBrandTour}
+              />
+            )}
           </Box>
           <Box
             sx={{
@@ -228,7 +243,6 @@ export default function NewHomePage() {
                 //   slidesToScroll={2}
                 //   infinite={false}
                 // >
-
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
@@ -236,7 +250,7 @@ export default function NewHomePage() {
                       hotTournament?.length > 0 &&
                       hotTournament?.map((item, index) => {
                         return (
-                          <div key={index} style={{width: "174px"}}>
+                          <div key={index} style={{ width: "174px" }}>
                             <ItemComponent
                               // key={index}
                               tourInfo={item}
@@ -283,20 +297,20 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                  {hotTournament &&
-                    hotTournament?.length > 0 &&
-                    hotTournament?.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <ItemComponent
-                            key={index}
-                            countdown={true}
-                            tourInfo={item}
-                          />
-                        </div>
-                      );
-                    })}
-                </ScrollingCarousel>
+                    {hotTournament &&
+                      hotTournament?.length > 0 &&
+                      hotTournament?.map((item, index) => {
+                        return (
+                          <div key={index}>
+                            <ItemComponent
+                              key={index}
+                              countdown={true}
+                              tourInfo={item}
+                            />
+                          </div>
+                        );
+                      })}
+                  </ScrollingCarousel>
                 </div>
               )}
             </div>
@@ -315,7 +329,7 @@ export default function NewHomePage() {
                 justifyContent: "center",
                 alignItems: "center",
                 overflow: "hidden",
-                padding: (width > 576 && width < 1024) && "36px 160px",
+                padding: width > 576 && width < 1024 && "36px 160px",
               }}
             >
               <Box
@@ -324,7 +338,7 @@ export default function NewHomePage() {
                   justifyContent: "center",
                   alignItems: "center",
                   position: "relative",
-                  marginRight: "32px"
+                  marginRight: "32px",
                 }}
               >
                 <Box sx={{}}>
@@ -390,10 +404,10 @@ export default function NewHomePage() {
                     color: "#FFDC62",
                     fontSize: "18px",
                     marginLeft: "0px !important",
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
                     WebkitLineClamp: 2,
-                    overflow: 'hidden',
+                    overflow: "hidden",
                   }}
                 >
                   {String(
@@ -528,8 +542,8 @@ export default function NewHomePage() {
                     color: "#FFDC62",
                     // fontSize: "30px",
                     position: "absolute",
-                    top: width < 1024 && width > 576 ? "35px" :"38px",
-                    left: width < 1024 && width > 576 ? "60px" :"90px",
+                    top: width < 1024 && width > 576 ? "35px" : "38px",
+                    left: width < 1024 && width > 576 ? "60px" : "90px",
                     fontSize: width < 1024 && width > 576 ? "20px" : "32px",
                   }}
                 >
@@ -578,7 +592,7 @@ export default function NewHomePage() {
                     maxWidth: "191pxpx",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
+                    whiteSpace: "nowrap",
                   }}
                 >
                   GRAND TOURNAMENT WINNER
@@ -806,42 +820,42 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                  {dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    ) &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    )?.length > 0 &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    )[0]?.listTournament &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    )[0]?.listTournament?.length > 0 &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament
-                      ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-                      ?.listTournament?.map((item, index) => {
-                        return (
-                          <div key={index}>
-                            <ItemComponent
-                              key={index}
-                              countdown={true}
-                              tourInfo={item}
-                            />
-                          </div>
-                        );
-                      })}
-                </ScrollingCarousel>
+                    {dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      ) &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      )?.length > 0 &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      )[0]?.listTournament &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      )[0]?.listTournament?.length > 0 &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament
+                        ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+                        ?.listTournament?.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <ItemComponent
+                                key={index}
+                                countdown={true}
+                                tourInfo={item}
+                              />
+                            </div>
+                          );
+                        })}
+                  </ScrollingCarousel>
                 </div>
               ) : (
                 // <Slider
@@ -877,45 +891,45 @@ export default function NewHomePage() {
                 // >
 
                 // </Slider>
-               <div className="scrolling-carousel-example1-container">
-                 <ScrollingCarousel>
-                  {dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    ) &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    )?.length > 0 &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    )[0]?.listTournament &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament?.filter(
-                      (n) => n.timeStart === dayList[selectedDay]
-                    )[0]?.listTournament?.length > 0 &&
-                    dailyTournament &&
-                    dailyTournament?.length > 0 &&
-                    dailyTournament
-                      ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-                      ?.listTournament?.map((item, index) => {
-                        return (
-                          <div key={index}>
-                            <ItemComponent
-                              key={index}
-                              countdown={true}
-                              tourInfo={item}
-                            />
-                          </div>
-                        );
-                      })}
-                </ScrollingCarousel>
-               </div>
+                <div className="scrolling-carousel-example1-container">
+                  <ScrollingCarousel>
+                    {dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      ) &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      )?.length > 0 &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      )[0]?.listTournament &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament?.filter(
+                        (n) => n.timeStart === dayList[selectedDay]
+                      )[0]?.listTournament?.length > 0 &&
+                      dailyTournament &&
+                      dailyTournament?.length > 0 &&
+                      dailyTournament
+                        ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+                        ?.listTournament?.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <ItemComponent
+                                key={index}
+                                countdown={true}
+                                tourInfo={item}
+                              />
+                            </div>
+                          );
+                        })}
+                  </ScrollingCarousel>
+                </div>
               )}
             </Box>
           </Box>{" "}
@@ -1259,20 +1273,21 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                  {weeklyTournament &&
-                    weeklyTournament?.length > 0 &&
-                    weeklyTournament?.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <ItemComponent
-                            key={index}
-                            countdown={true}
-                            tourInfo={item}
-                          />
-                        </div>
-                      );
-                    })}
-                </ScrollingCarousel>
+                    {weeklyTournament &&
+                      weeklyTournament?.length > 0 &&
+                      weeklyTournament?.map((item, index) => {
+                        return (
+                          <div key={index}>
+                            <ItemComponent
+                              isLoading={isFetching}
+                              key={index}
+                              countdown={true}
+                              tourInfo={item}
+                            />
+                          </div>
+                        );
+                      })}
+                  </ScrollingCarousel>
                 </div>
               ) : (
                 // <Slider
@@ -1310,20 +1325,21 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                  {weeklyTournament &&
-                    weeklyTournament?.length > 0 &&
-                    weeklyTournament?.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <ItemComponent
-                            key={index}
-                            countdown={true}
-                            tourInfo={item}
-                          />
-                        </div>
-                      );
-                    })}
-                </ScrollingCarousel>
+                    {weeklyTournament &&
+                      weeklyTournament?.length > 0 &&
+                      weeklyTournament?.map((item, index) => {
+                        return (
+                          <div key={index}>
+                            <ItemComponent
+                              isLoading={isFetching}
+                              key={index}
+                              countdown={true}
+                              tourInfo={item}
+                            />
+                          </div>
+                        );
+                      })}
+                  </ScrollingCarousel>
                 </div>
               )}
             </Box>

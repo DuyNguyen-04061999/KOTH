@@ -61,7 +61,6 @@ function* getListGameForTournamentSaga(dataRequest) {
     const res = yield call(tournamentService.listGameForTournament, payload);
     const { status, data } = res;
     console.log(data);
-    console.log(123);
     if (status === 200) {
       yield put(getListGameForTournamentSuccess());
     }

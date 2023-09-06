@@ -1,5 +1,8 @@
-import { Box, Typography, 
-  // createTheme 
+import {
+  Box,
+  Skeleton,
+  Typography,
+  // createTheme
 } from "@mui/material";
 import React from "react";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -28,7 +31,7 @@ import InfinityIcon from "@mui/icons-material/AllInclusive";
 //   },
 // });
 
-export default function ItemComponent({ countdown, tourInfo }) {
+export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const { width } = useWindowDimensions();
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
@@ -56,9 +59,39 @@ export default function ItemComponent({ countdown, tourInfo }) {
   };
   const navigate = useNavigate();
   return (
-    <Box className="ms-2 me-2" onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)} sx={{ position: "relative",display: "flex", flexDirection: "column", width: width < 576 ? "155px" : "184px", cursor: "pointer" }}>
-      <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e", position: "absolute", borderTopRightRadius: "50%", borderBottomRightRadius: "50%", top: width < 576 ? "234px" : "282px", left:"-10px"}}></Box>
-      <Box sx={{height: "20px", width:"20px", bgcolor:"#1a151e",  position: "absolute", borderTopLeftRadius: "50%", borderBottomRightRadius: "50%", borderRadius: "50%", top: width < 576 ? "234px" : "282px", right:"-10px"}}></Box>
+    <Box
+      className="ms-2 me-2"
+      onClick={() => isLoading ? null : navigate("/tournamentDetail/" + tourInfo?.id)}
+      sx={{
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        width: width < 576 ? "155px" : "184px",
+        cursor: "pointer",
+      }}
+    >
+      <Box
+        sx={{
+          height: "20px",
+          width: "20px",
+          bgcolor: "#1a151e",
+          position: "absolute",
+          borderRadius: "50%",
+          top: width < 576 ? "234px" : "282px",
+          left: "-10px",
+        }}
+      ></Box>
+      <Box
+        sx={{
+          height: "20px",
+          width: "20px",
+          bgcolor: "#1a151e",
+          position: "absolute",
+          borderRadius: "50%",
+          top: width < 576 ? "234px" : "282px",
+          right: "-10px",
+        }}
+      ></Box>
       <Box
         sx={{
           width: "100%",
@@ -69,18 +102,26 @@ export default function ItemComponent({ countdown, tourInfo }) {
           borderStartEndRadius: "8px",
         }}
       >
-        <Box
-          sx={{ maxHeight: width <576 ? "156px" : "184px", minHeight: width <576 ?"156px" : "184px", width:"100%", objectFit: "cover" }}
-          component={"img"}
-          src={
-            tourInfo?.tournamentAvatar
-              ? process.env.REACT_APP_SOCKET_SERVER +
-                "/" +
-                tourInfo?.tournamentAvatar
-              : 
-            imageHome.brandImage
-          }
-        ></Box>
+        {isLoading ? (
+        <Skeleton sx={{ height: width < 576 ? 156 : 184 }} animation="wave" variant="rectangular" />
+        ) : (
+          <Box
+            sx={{
+              maxHeight: width < 576 ? "156px" : "184px",
+              minHeight: width < 576 ? "156px" : "184px",
+              width: "100%",
+              objectFit: "cover",
+            }}
+            component={"img"}
+            src={
+              tourInfo?.tournamentAvatar
+                ? process.env.REACT_APP_SOCKET_SERVER +
+                  "/" +
+                  tourInfo?.tournamentAvatar
+                : imageHome.brandImage
+            }
+          ></Box>
+        )}
         <Box
           sx={{
             marginTop: "8px",
@@ -102,16 +143,25 @@ export default function ItemComponent({ countdown, tourInfo }) {
               height: "30px",
               maxHeight: "45px",
               minHeight: "36px",
-              width: "120px",
+              width: "100%",
             }}
           >
-            {tourInfo?.tournamentName.length>30?tourInfo?.tournamentName.slice(0,30)+" ...":tourInfo?.tournamentName}
+            {isLoading ? (
+              <>
+                <Skeleton variant="text" />
+                <Skeleton variant="text" />
+              </>
+            ) : tourInfo?.tournamentName.length > 30 ? (
+              tourInfo?.tournamentName.slice(0, 30) + " ..."
+            ) : (
+              tourInfo?.tournamentName
+            )}
           </Typography>
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width <576 ? "20px" : "32px",
+              marginTop: width < 576 ? "20px" : "32px",
             }}
           >
             {countdown && (
@@ -121,11 +171,16 @@ export default function ItemComponent({ countdown, tourInfo }) {
                   fontSize: width < 576 ? "12px" : "14px",
                   color: "#5747EA",
                   fontWeight: "700 !important",
+                  minWidth: "100px"
                 }}
               >
-                {width < 576
-                  ? `${days}d:${hours}h:${minutes}m`
-                  : `${days}d:${hours}h:${minutes}m:${seconds}s`}
+                {isLoading ? (
+                  <Skeleton variant="text" />
+                ) : width < 576 ? (
+                  `${days}d:${hours}h:${minutes}m`
+                ) : (
+                  `${days}d:${hours}h:${minutes}m:${seconds}s`
+                )}
               </Typography>
             )}
 
@@ -159,7 +214,7 @@ export default function ItemComponent({ countdown, tourInfo }) {
       <Box
         sx={{
           width: "100%",
-          height: width <576 ? "" : "69px",
+          height: width < 576 ? "" : "69px",
           bgcolor: "#C0C0C0",
           borderEndEndRadius: "8px",
           borderEndStartRadius: "8px",
@@ -174,26 +229,29 @@ export default function ItemComponent({ countdown, tourInfo }) {
             alignItems: "center",
           }}
         >
-          <Box
-            sx={{
-              width: width < 576 ? `40px` : "49px",
-              height: width < 576 ? `40px` : "49px",
-              borderRadius: "4px",
-            }}
-            component={"img"}
-            src={
-              tourInfo &&
-              tourInfo?.tourSkins &&
-              tourInfo?.tourSkins?.length > 0 &&
-              tourInfo?.tourSkins[0]?.skinGame &&
-              tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-                ? process.env.REACT_APP_SOCKET_SERVER +
-                  "/" +
-                  tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-                : 
-              imageHome.brandImage
-            }
-          ></Box>
+          {isLoading ? (
+            <Skeleton variant="circular"  width={40} height={40} animation="wave"/>
+          ) : (
+            <Box
+              sx={{
+                width: width < 576 ? `40px` : "49px",
+                height: width < 576 ? `40px` : "49px",
+                borderRadius: "4px",
+              }}
+              component={"img"}
+              src={
+                tourInfo &&
+                tourInfo?.tourSkins &&
+                tourInfo?.tourSkins?.length > 0 &&
+                tourInfo?.tourSkins[0]?.skinGame &&
+                tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                  : imageHome.brandImage
+              }
+            ></Box>
+          )}
           <Box>
             <Typography
               sx={{
@@ -209,13 +267,15 @@ export default function ItemComponent({ countdown, tourInfo }) {
                 maxWidth: "90px",
               }}
             >
-              {tourInfo &&
-              tourInfo?.tourSkins &&
-              tourInfo?.tourSkins?.length > 0 &&
-              tourInfo?.tourSkins[0]?.skinGame &&
-              tourInfo?.tourSkins[0]?.skinGame?.gameName
-                ? tourInfo?.tourSkins[0]?.skinGame?.gameName
-                : "game Name"}
+              {
+                isLoading ? <Skeleton/> : (tourInfo &&
+                  tourInfo?.tourSkins &&
+                  tourInfo?.tourSkins?.length > 0 &&
+                  tourInfo?.tourSkins[0]?.skinGame &&
+                  tourInfo?.tourSkins[0]?.skinGame?.gameName
+                    ? tourInfo?.tourSkins[0]?.skinGame?.gameName
+                    : "game Name")
+              }
             </Typography>
             <button
               onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)}

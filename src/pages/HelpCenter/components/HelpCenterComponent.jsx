@@ -156,6 +156,7 @@ const HelpCenterComponent = () => {
                             style={{
                               margin: "20px 0px",
                               fontWeight: "bold",
+                              color: '#fff',
                               fontSize: "12px",
                             }}
                           >
@@ -166,13 +167,15 @@ const HelpCenterComponent = () => {
                               fontSize: "12px",
                               fontWeight: "lighter !important",
                               margin: "10px 0px",
+                              color: '#fff',
                               textAlign: "start",
                             }}
                           >
                             {splitToArray(item?.faqAnswer)?.map((n, index) => {
                               return (
                                 n?.length > 1 && (
-                                  <p
+                                  <span
+                                    key={index}
                                     style={{
                                       fontSize: "12px",
                                       textAlign: "start",
@@ -182,7 +185,7 @@ const HelpCenterComponent = () => {
                                       ? index + ". "
                                       : ""}
                                     {n}
-                                  </p>
+                                  </span>
                                 )
                               );
                             })}
@@ -297,6 +300,7 @@ const HelpCenterComponent = () => {
                                 fontSize: "20px",
                                 textAlign: "start",
                                 margin: "24px 0px",
+                                color: '#fff',
                                 fontWeight: "bold",
                               }}
                             >
@@ -307,13 +311,15 @@ const HelpCenterComponent = () => {
                                 fontSize: "14px",
                                 textAlign: "start",
                                 marginTop: "12px",
+                                color: '#fff',
                               }}
                             >
                               {splitToArray(item?.faqAnswer)?.map(
                                 (n, index) => {
                                   return (
                                     n?.length > 1 && (
-                                      <p
+                                      <span
+                                        key={index}
                                         style={{
                                           fontSize: "14px",
                                           textAlign: "start",
@@ -324,7 +330,7 @@ const HelpCenterComponent = () => {
                                           ? index + ". "
                                           : ""}
                                         {n}
-                                      </p>
+                                      </span>
                                     )
                                   );
                                 }

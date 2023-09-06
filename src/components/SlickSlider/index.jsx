@@ -9,7 +9,7 @@ import { images } from "../../utils/images";
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { width } = useWindowDimensions();
-  const { images: img, appendDot, htmlCode, isHtmlCode, tours } = props;
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours, isLoading } = props;
 
   const settings = {
     dots: true,
