@@ -24,4 +24,16 @@ export class ADMIN_MASTER_SERVICE {
 
         return res
     }
+
+    async getDetailDistributor (dataRequest) {
+        const res = ADMIN_API.get(`/api/admin/master/detail-distributor/${dataRequest?.id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+                "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+            }
+        })
+
+        return res
+    }
 }

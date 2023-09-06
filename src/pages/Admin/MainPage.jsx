@@ -25,12 +25,8 @@ export default function MainPage() {
       link: "/master/create-distributor"
     },
     {
-      name: "Edit Distributor",
-      link: ""
-    },
-    {
-      name: "Delete Distributor",
-      link: ""
+      name: "List Distributor",
+      link: "/master/list-distributor"
     },
     {
       name: "Database Manager",

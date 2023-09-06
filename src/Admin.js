@@ -7,7 +7,7 @@ import { CustomRouter, history } from './components/Router';
 import { Provider } from 'react-redux';
 import { LoginPage, MainPage } from './pages/Admin';
 import { PrivateRouteComponent } from './components/Admin';
-import { CreateDistributorPage, ProvideTicketMasterPage } from './pages/Admin/Master';
+import { CreateDistributorPage, EditDistributorPage, ListDistributorPage, ProvideTicketMasterPage } from './pages/Admin/Master';
 import { CreateSubDistributorPage, ProvideTicketDistributorPage } from './pages/Admin/Distributor';
 import { ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
 
@@ -20,6 +20,8 @@ export default function Admin() {
                         <Routes>
                             <Route path="/" element={<PrivateRouteComponent children={<MainPage/>}/>} />
                             <Route path="/master/create-distributor" element={<PrivateRouteComponent children={<CreateDistributorPage/>}/>} />
+                            <Route path="/master/list-distributor" element={<PrivateRouteComponent children={<ListDistributorPage/>}/>} />
+                            <Route path="/master/edit-distributor/:id" element={<PrivateRouteComponent children={<EditDistributorPage/>}/>} />
                             <Route path="/master/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketMasterPage/>}/>} />
                             <Route path="/distributor/create-sub-distributor" element={<PrivateRouteComponent children={<CreateSubDistributorPage/>}/>} />
                             <Route path="/distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketDistributorPage/>}/>} />

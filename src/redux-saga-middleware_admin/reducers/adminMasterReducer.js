@@ -43,12 +43,35 @@ export const getListDistributorFail = (data) => {
   }
 }
 
+export const getDetailDistributor = (data) => {
+  return {
+    type: "GET_DETAIL_DISTRIBUTOR",
+    payload: data
+  }
+}
+
+export const getDetailDistributorSuccess = (data) => {
+  return {
+    type: "GET_DETAIL_DISTRIBUTOR_SUCCESS",
+    payload: data
+  }
+}
+
+export const getDetailDistributorFail = (data) => {
+  return {
+    type: "GET_DETAIL_DISTRIBUTOR_FAIL",
+    payload: data
+  }
+}
+
 const adminMasterReducer = (
   state = {
     isCreateDistributor: false,
     newDistributor: null,
     isFetchDistributor: false,
     listDistributor: [],
+    isFetchDetailDis: false,
+    detailDistributor: null
   },
   action
 ) => {
@@ -64,6 +87,9 @@ const adminMasterReducer = (
       case "GET_LIST_DISTRIBUTOR": return {...state, isFetchDistributor: true}
       case "GET_LIST_DISTRIBUTOR_SUCCESS": return {...state, isFetchDistributor: false, listDistributor: payload?.list || []}
       case "GET_LIST_DISTRIBUTOR_FAIL": return {...state, isFetchDistributor: false}
+      case "GET_DETAIL_DISTRIBUTOR": return {...state, isFetchDetailDis: true}
+      case "GET_DETAIL_DISTRIBUTOR_SUCCESS": return {...state, isFetchDetailDis: false, detailDistributor: payload?.detail || null}
+      case "GET_DETAIL_DISTRIBUTOR_FAIL": return {...state, isFetchDetailDis: false}
       default:
         return { ...state };
   }
