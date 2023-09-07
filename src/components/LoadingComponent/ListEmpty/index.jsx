@@ -1,7 +1,7 @@
 import React from "react";
 import FolderOffIcon from "@mui/icons-material/FolderOff";
 import { Box, Typography } from "@mui/material";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const ListEmpty = () => {
     const { width } = useWindowDimensions();
