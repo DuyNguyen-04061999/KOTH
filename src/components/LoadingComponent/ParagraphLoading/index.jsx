@@ -5,9 +5,7 @@ const ParagraphLoading = (props) => {
   const { lines = 5, bgColor= "rgba(255,255,255,0.5)", width= "100%" ,height= 16,...other  } = props;
   const paragraphLoading = [];
   for (let i = 0; i < lines; i++) {
-    paragraphLoading.push(<Box sx={{marginBottom: "24px", maxWidth: width}}>
-        <Skeleton width={"100%"} sx={{bgcolor: bgColor}} height={height} key={i} />
-        <Skeleton width={"80%"} sx={{bgcolor: bgColor}} height={height} key={i} />
+    paragraphLoading.push(<Box sx={{marginBottom: "24px", width: width}}>
         <Skeleton width={"100%"} sx={{bgcolor: bgColor}} height={height} key={i} />
         <Skeleton width={"80%"} sx={{bgcolor: bgColor}} height={height} key={i} />
     </Box>);

@@ -108,7 +108,7 @@ export default function JoinTournament() {
       if (!fetchT) {
         setIsFetching(false);
       }
-    }, 100000);
+    }, 1000);
     return () => {
       clearTimeout(timeOut);
     };
@@ -506,13 +506,16 @@ export default function JoinTournament() {
                             : "14px",
                       }}
                     >
-                      {isFetching ? (
-                        <Skeleton height={21} variant="rounded" sx={{bgcolor: "rgba(255,255,255,0.5)"}} />
+                      {detailTournament?.tournamentParticipants?.length}/
+                      {detailTournament?.tournamentQuantity > 0 ? (
+                        detailTournament?.tournamentQuantity
                       ) : (
-                        detailTournament?.tournamentParticipants?.length +
-                          "/" +
-                          detailTournament?.tournamentQuantity >
-                          0 && detailTournament?.tournamentQuantity
+                        <InfinityIcon
+                          sx={{
+                            width: 15,
+                            height: 15,
+                          }}
+                        />
                       )}
                     </Typography>
                   </Box>
@@ -741,30 +744,44 @@ export default function JoinTournament() {
                         marginBottom: "30px",
                       }}
                     >
-                      <Typography
-                        sx={{
-                          margin: "0px !important",
-                          fontSize:
-                            576 < width && width < 1200
-                              ? `${width / 42}px`
-                              : "28px",
-                        }}
-                      >
-                      </Typography>
-                      <Typography
-                        sx={{
-                          margin: "0px !important",
-                          fontSize:
-                            576 < width && width < 1200 ? "12px" : "14px",
-                          fontWeight: "lighter !important",
-                        }}
-                      >
-                        {detailTournament?.tournamentTimeType === "hourly"
-                          ? "Hourly Tournament"
-                          : detailTournament?.tournamentTimeType === "daily"
-                          ? "Daily Tournament"
-                          : "Weeklong Tournament"}
-                      </Typography>
+                      {isFetching ? (
+                        <ParagraphLoading
+                          lines={1}
+                          width={"100%"}
+                          height={36}
+                        />
+                      ) : (
+                        <>
+                          <Typography
+                            sx={{
+                              margin: "0px !important",
+                              fontSize:
+                                576 < width && width < 1200
+                                  ? `${width / 42}px`
+                                  : "28px",
+                            }}
+                          >
+                            {detailTournament?.tournamentName?.length > 30
+                              ? detailTournament?.tournamentName.slice(0, 30) +
+                                " ..."
+                              : detailTournament?.tournamentName}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              margin: "0px !important",
+                              fontSize:
+                                576 < width && width < 1200 ? "12px" : "14px",
+                              fontWeight: "lighter !important",
+                            }}
+                          >
+                            {detailTournament?.tournamentTimeType === "hourly"
+                              ? "Hourly Tournament"
+                              : detailTournament?.tournamentTimeType === "daily"
+                              ? "Daily Tournament"
+                              : "Weeklong Tournament"}
+                          </Typography>
+                        </>
+                      )}
                     </Box>
                     <Box
                       sx={{ display: "flex", justifyContent: "space-between" }}
@@ -1309,6 +1326,7 @@ export default function JoinTournament() {
                       setCurrentResult(false);
                     }}
                     detailTournament={detailTournament}
+                    isFetching={isFetching}
                   />
                 </Box>
               </Box>
