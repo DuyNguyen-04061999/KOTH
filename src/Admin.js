@@ -9,7 +9,7 @@ import { LoginPage, MainPage } from './pages/Admin';
 import { PrivateRouteComponent } from './components/Admin';
 import { CreateDistributorPage, DatabaseManagerPage, EditDistributorPage, FeedbackManagerPage, ListDistributorPage, ProvideTicketMasterPage, TemplateManagerPage } from './pages/Admin/Master';
 import { CreateSubDistributorPage, EditSubDistributorPage, ListSubDistributorPage, ProvideTicketDistributorPage } from './pages/Admin/Distributor';
-import { ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
+import { DetailSubDistributorPage, ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
 
 export default function Admin() {
     return (
@@ -33,6 +33,7 @@ export default function Admin() {
                             <Route path="/distributor/edit-sub-distributor/:id" element={<PrivateRouteComponent children={<EditSubDistributorPage/>}/>} />
                             <Route path="/distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketDistributorPage/>}/>} />
                             {/* Sub Distributor */}
+                            <Route path="/sub-distributor/detail" element={<PrivateRouteComponent children={<DetailSubDistributorPage/>}/>} />
                             <Route path="/sub-distributor/refs" element={<PrivateRouteComponent children={<ListRefPage/>}/>} />
                             <Route path="/sub-distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketPage/>}/>} />
                             <Route path="/login" element={<LoginPage/>} />
