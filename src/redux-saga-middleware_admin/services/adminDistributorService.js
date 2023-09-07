@@ -24,4 +24,18 @@ export class ADMIN_DISTRIBUTOR_SERVICE {
 
         return res
     }
+
+    async updateSubDistributor (dataRequest) {
+        const res = ADMIN_API.patch(`/api/admin/distributor/update-sub-distributor/${dataRequest?.id}`, {
+            password: dataRequest?.newPassword || ""
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+                "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+            }
+        })
+
+        return res
+    }
 }
