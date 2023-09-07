@@ -188,7 +188,6 @@ export default function Layout(props) {
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
-  console.log(isNav);
   const handleChangeChat = (e) => {
     setChatF(e.target.value);
   };
@@ -210,11 +209,21 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
-    if (token === "" || token === null) {
-      setBackgroundGlobal("#61388e");
-      setBackgroundPrivate("#261a35");
+    if(tabChat === true) {
+      setBackgroundGlobal("#883AF0")
+      setBackgroundPrivate("#261a35")
+    } else {
+      setBackgroundGlobal("#261a35")
+      setBackgroundPrivate("#883AF0")
     }
-  }, [token]);
+  },[tabChat])
+
+  // useEffect(() => {
+  //   if (token === "" || token === null) {
+  //     setBackgroundGlobal("#883AF0");
+  //     setBackgroundPrivate("#261a35");
+  //   }
+  // }, [token]);
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = () => {
@@ -251,7 +260,6 @@ export default function Layout(props) {
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
-  // console.log(startGameCheck);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
       if (!isAlertDialog) {
@@ -622,6 +630,7 @@ export default function Layout(props) {
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
                     padding: "6px",
+                    color:"#fff"
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -686,6 +695,7 @@ export default function Layout(props) {
                     cursor: "pointer",
                     borderRadius: "0px 5px 5px 0px",
                     padding: "6px",
+                    color:"#fff"
                   }}
                   onClick={() => {
                     if (token === null || token === "") {
