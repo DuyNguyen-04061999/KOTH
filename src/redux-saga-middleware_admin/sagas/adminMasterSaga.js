@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_MASTER_SERVICE } from "../services/adminMasterService";
-import { createDistributorFail, createDistributorSuccess, getDetailDistributorFail, getDetailDistributorSuccess, getListDistributorFail, getListDistributorSuccess } from "../reducers/adminMasterReducer";
+import { createDistributorFail, createDistributorSuccess, deleteDistributorFail, deleteDistributorSuccess, getDetailDistributorFail, getDetailDistributorSuccess, getListDistributorFail, getListDistributorSuccess, getListTableFail, getListTableSuccess, updateDistributorFail, updateDistributorSuccess } from "../reducers/adminMasterReducer";
 const adminMasterService = new ADMIN_MASTER_SERVICE();
 
 function* createDistributorSaga(dataRequest) {
@@ -51,10 +51,64 @@ function* getDetailDistributorSaga(dataRequest) {
     }
 }
 
+function* updateDistributorSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminMasterService.updateDistributor, payload)
+        if(res && res.status === 200) {
+           yield put(updateDistributorSuccess())
+           alert("Update Distributor Success!")
+        } else {
+           yield put(updateDistributorFail())
+        }
+        
+    } catch (error) {
+        yield put(updateDistributorFail())
+    }
+}
+
+function* deleteDistributorSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminMasterService.deleteDistributor, payload)
+        if(res && res.status === 200) {
+           yield put(deleteDistributorSuccess())
+           alert("Delete Distributor Success!")
+           setTimeout(() => {
+            window.location.reload()
+           }, 1000)
+        } else {
+           yield put(deleteDistributorFail())
+        }
+        
+    } catch (error) {
+        yield put(deleteDistributorFail())
+    }
+}
+
+function* getListTableSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminMasterService.getListTable, payload)
+        const { list } = res?.data?.data || []
+        if(res && res.status === 200) {
+           yield put(getListTableSuccess({ list }))
+        } else {
+           yield put(getListTableFail())
+        }
+        
+    } catch (error) {
+        yield put(getListTableFail())
+    }
+}
+
 function* adminMasterSaga() {
     yield takeEvery("CREATE_DISTRIBUTOR", createDistributorSaga)
     yield takeEvery("GET_LIST_DISTRIBUTOR", getListDistributorSaga)
     yield takeEvery("GET_DETAIL_DISTRIBUTOR", getDetailDistributorSaga)
+    yield takeEvery("UPDATE_DISTRIBUTOR", updateDistributorSaga)
+    yield takeEvery("DELETE_DISTRIBUTOR", deleteDistributorSaga)
+    yield takeEvery("GET_LIST_TABLE", getListTableSaga)
 }
 
 export default adminMasterSaga

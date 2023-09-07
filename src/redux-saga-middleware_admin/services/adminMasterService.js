@@ -36,4 +36,42 @@ export class ADMIN_MASTER_SERVICE {
 
         return res
     }
+
+    async updateDistributor (dataRequest) {
+        const res = ADMIN_API.patch(`/api/admin/master/update-distributor/${dataRequest?.id}`, {
+            password: dataRequest?.newPassword || ""
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+                "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+            }
+        })
+
+        return res
+    }
+
+    async deleteDistributor (dataRequest) {
+        const res = ADMIN_API.delete(`/api/admin/master/delete-distributor/${dataRequest?.id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+                "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+            }
+        })
+
+        return res
+    }
+
+    async getListTable (dataRequest) {
+        const res = ADMIN_API.get(`/api/admin/master/database-manager`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+                "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+            }
+        })
+
+        return res
+    }
 }
