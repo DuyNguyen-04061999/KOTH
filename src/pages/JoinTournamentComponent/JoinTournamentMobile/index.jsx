@@ -880,7 +880,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     border: "none",
                     outline: "none",
                     width: "45%",
-                    background: "linear-gradient(#7440E9,#A345FB)",
+                    background: "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
                     color: "white",
                   }}
                 >
@@ -892,7 +892,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     borderRadius: "5px",
                     border: "none",
                     outline: "none",
-                    backgroundColor: "#69389E",
+                    background: "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
                     color: "white",
                     padding: "8px 0px",
                     width: "45%",
