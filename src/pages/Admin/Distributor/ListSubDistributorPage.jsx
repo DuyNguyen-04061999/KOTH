@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { CheckDistributorComponent } from '../../../components/Admin'
 import { useDispatch, useSelector } from 'react-redux'
-import { getListSub } from '../../../redux-saga-middleware_admin/reducers/adminDistributorReducer'
+import { deleteSub, getListSub } from '../../../redux-saga-middleware_admin/reducers/adminDistributorReducer'
 import { Box } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
@@ -21,7 +21,9 @@ export default function ListSubDistributorPage() {
     }
 
     const handleDelete = (id) => {
-        
+        if(window.confirm("Are you sure?")) {
+            dispatch(deleteSub({ id }))
+        }
     }
 
     return (

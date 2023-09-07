@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_DISTRIBUTOR_SERVICE } from "../services/adminDistributorService";
-import { createSubDistributorSuccess, createSubDistributorFail, getListSubSuccess, getListSubFail, updateSubSuccess, updateSubFail } from "../reducers/adminDistributorReducer";
+import { createSubDistributorSuccess, createSubDistributorFail, getListSubSuccess, getListSubFail, updateSubSuccess, updateSubFail, deleteSubSuccess, deleteSubFail } from "../reducers/adminDistributorReducer";
 
 const adminDistributorService = new ADMIN_DISTRIBUTOR_SERVICE();
 
@@ -52,10 +52,30 @@ function* updateSubSaga(dataRequest) {
     }
 }
 
+function* deleteSubSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminDistributorService.deleteSubDistributor, payload)
+        if(res && res.status === 200) {
+          yield put(deleteSubSuccess())
+          alert("Delete Sub Distributor Success!")
+          setTimeout(() => {
+           window.location.reload()
+          }, 1000)
+        } else {
+          yield put(deleteSubFail())
+        }
+        
+    } catch (error) {
+        yield put(deleteSubFail())
+    }
+}
+
 function* adminDistributorSaga() {
     yield takeEvery("CREATE_SUB_DISTRIBUTOR", createSubDistributorSaga)
     yield takeEvery("GET_LIST_SUB", getListSubSaga)
     yield takeEvery("UPDATE_SUB", updateSubSaga)
+    yield takeEvery("DELETE_SUB", deleteSubSaga)
 }
 
 export default adminDistributorSaga

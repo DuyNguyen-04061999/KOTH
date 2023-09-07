@@ -38,4 +38,17 @@ export class ADMIN_DISTRIBUTOR_SERVICE {
 
         return res
     }
+
+    async deleteSubDistributor (dataRequest) {
+        const res = ADMIN_API.delete(`/api/admin/distributor/delete-sub-distributor/${dataRequest?.id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+                "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+            }
+        })
+
+        return res
+    }
+
 }

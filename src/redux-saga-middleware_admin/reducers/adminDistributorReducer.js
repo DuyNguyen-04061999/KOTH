@@ -63,13 +63,35 @@ export const updateSubFail = (data) => {
   }
 }
 
+export const deleteSub = (data) => {
+  return {
+    type: "DELETE_SUB",
+    payload: data
+  }
+}
+
+export const deleteSubSuccess = (data) => {
+  return {
+    type: "DELETE_SUB_SUCCESS",
+    payload: data
+  }
+}
+
+export const deleteSubFail = (data) => {
+  return {
+    type: "DELETE_SUB_FAIL",
+    payload: data
+  }
+}
+
 const adminDistributorReducer = (
   state = {
     isCreateSubDistributor: false,
     newSubDistributor: null,
     isFetchSub: false,
     listSub: [],
-    isUpdateSub: false
+    isUpdateSub: false,
+    isDeleteSub: false
   },
   action
 ) => {
@@ -88,6 +110,9 @@ const adminDistributorReducer = (
       case "UPDATE_SUB": return {...state, isUpdateSub: true}
       case "UPDATE_SUB_SUCCESS": return {...state, isUpdateSub: false}
       case "UPDATE_SUB_FAIL": return {...state, isUpdateSub: false}
+      case "DELETE_SUB": return {...state, isDeleteSub: true}
+      case "DELETE_SUB_SUCCESS": return {...state, isDeleteSub: false}
+      case "DELETE_SUB_FAIL": return {...state, isDeleteSub: false}
       default:
         return { ...state };
   }
