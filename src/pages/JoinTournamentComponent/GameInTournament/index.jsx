@@ -35,7 +35,7 @@ export default function GameInTournament(props) {
             >
               <Typography
                 sx={{
-                  fontFamily: "Cyntho !important",
+                  // fontFamily: "Cyntho !important",
                   fontWeight: " 500 !important",
                   fontSize: "20px",
                 }}
@@ -45,7 +45,6 @@ export default function GameInTournament(props) {
               <Typography
                 variant="body1"
                 sx={{
-                  fontFamily: "Cyntho Next",
                   fontWeight: "500 !important",
                   fontSize: "12px",
                 }}

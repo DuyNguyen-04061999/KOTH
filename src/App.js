@@ -16,6 +16,8 @@ import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
 import JoinTournamentComponent from "./pages/JoinTournamentComponent";
+import InspirationTTF from "./assets/font/CynthoNextRegular.otf";
+
 import {
   getLeaderBoardSuccess,
   getNavTablet,
@@ -97,6 +99,7 @@ import {
 } from "./redux-saga-middleware/reducers/deviceReducer";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 import { detectDevice } from "./utils/detectDevice";
+import { CssBaseline, ThemeProvider, createMuiTheme, createTheme } from "@mui/material";
 function App() {
   useTracking("");
 
@@ -573,71 +576,84 @@ function App() {
     store.dispatch(updateDeviceType(os));
     store.dispatch(updateDevice(device));
   }, [os, device]);
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <CustomRouter history={history}>
-          <Routes>
-            <Route
-              path=""
-              element={
-                getAppType() === "promote" ? (
-                  <NewHomePageComponent />
-                ) : (
-                  <HomePage />
-                )
-              }
-            >
-              <Route path="/home" element={<HomePage />} />
-            </Route>
-            <Route path="/gamelobby/:id" element={<GameLobby />} />
-            <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
-            {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
-            <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
-            <Route
-              path="/tournamentDetail/:id"
-              element={<JoinTournamentComponent />}
-            />
-            <Route path="/hot-tournament" element={<HotTournament />} />
-            {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
-            <Route path="/daily-tournament" element={<DailyTournament />} />
-            <Route path="/week-long-tournament" element={<WeekLongTour />} />
-            <Route path="/help-center" element={<FAQPage />} />
-            <Route path="/loadingscreen" element={<LoadingScreen />} />
-            <Route path="/new-home" element={<NewHomePageComponent />} />
-            <Route path="/countdowntimer" element={<CountDownTimer />} />
-            <Route path="list-game-manager" element={<ListGamePage />} />
-            <Route path="upload" element={<UploadPage />} />
-            <Route path="game" element={<GamePage />} />
-            <Route path="game/:id" element={<GameDetailPage />} />
-            {getAppType() === "promote" && (
-              <Route path="/tournaments" element={<Tournament />} />
-            )}
-            {getAppType() !== "promote" && (
-              <Route path="game-type/:type" element={<TypeGamePage />} />
-            )}
 
-            <Route path="game/edit/:id" element={<GameEditPage />} />
-            <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
-            <Route path="game/:id/delete-skins" element={<DeleteSkinPage />} />
-            {getAppType() === "promote" && (
-              <Route path="packages" element={<PackagePage />}></Route>
-            )}
-            <Route
-              path="transactions/:id"
-              element={<TransactionDetailPage />}
-            />
-            <Route path="*" element={<Navigate to="/home" />} />
-          </Routes>
-          <ToastContainer
-            hideProgressBar={true}
-            autoClose={1000}
-            position="top-center"
-            draggable={false}
-          />
-        </CustomRouter>
-      </PersistGate>
-    </Provider>
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cyntho Next',
+        'sans-serif',
+      ].join(','),
+    }, });
+
+  return (
+    <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <CustomRouter history={history}>
+                <Routes>
+                  <Route
+                    path=""
+                    element={
+                      getAppType() === "promote" ? (
+                        <NewHomePageComponent />
+                      ) : (
+                        <HomePage />
+                      )
+                    }
+                  >
+                    <Route path="/home" element={<HomePage />} />
+                  </Route>
+                  <Route path="/gamelobby/:id" element={<GameLobby />} />
+                  <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
+                  {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
+                  <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
+                  <Route
+                    path="/tournamentDetail/:id"
+                    element={<JoinTournamentComponent />}
+                  />
+                  <Route path="/hot-tournament" element={<HotTournament />} />
+                  {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
+                  <Route path="/daily-tournament" element={<DailyTournament />} />
+                  <Route path="/week-long-tournament" element={<WeekLongTour />} />
+                  <Route path="/help-center" element={<FAQPage />} />
+                  <Route path="/loadingscreen" element={<LoadingScreen />} />
+                  <Route path="/new-home" element={<NewHomePageComponent />} />
+                  <Route path="/countdowntimer" element={<CountDownTimer />} />
+                  <Route path="list-game-manager" element={<ListGamePage />} />
+                  <Route path="upload" element={<UploadPage />} />
+                  <Route path="game" element={<GamePage />} />
+                  <Route path="game/:id" element={<GameDetailPage />} />
+                  {getAppType() === "promote" && (
+                    <Route path="/tournaments" element={<Tournament />} />
+                  )}
+                  {getAppType() !== "promote" && (
+                    <Route path="game-type/:type" element={<TypeGamePage />} />
+                  )}
+
+                  <Route path="game/edit/:id" element={<GameEditPage />} />
+                  <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
+                  <Route path="game/:id/delete-skins" element={<DeleteSkinPage />} />
+                  {getAppType() === "promote" && (
+                    <Route path="packages" element={<PackagePage />}></Route>
+                  )}
+                  <Route
+                    path="transactions/:id"
+                    element={<TransactionDetailPage />}
+                  />
+                  <Route path="*" element={<Navigate to="/home" />} />
+                </Routes>
+                <ToastContainer
+                  hideProgressBar={true}
+                  autoClose={1000}
+                  position="top-center"
+                  draggable={false}
+                />
+              </CustomRouter>
+            </PersistGate>
+          </Provider>
+        </CssBaseline>
+    </ThemeProvider>
   );
 }
 

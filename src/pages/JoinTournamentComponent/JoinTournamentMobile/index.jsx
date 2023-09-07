@@ -28,15 +28,15 @@ import { toast } from "react-toastify";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -107,7 +107,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Dialog
-        sx={{ zIndex: "1310", fontFamily: "Cyntho Next !important" }}
+        sx={{ zIndex: "1310"}}
         open={true}
         fullScreen={true}
       >
@@ -195,7 +195,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           >
             <Typography
               className="fs-4"
-              sx={{ fontFamily: "Cyntho Next", fontWeight: "500 !important" }}
             >
               {detailTournament?.tournamentName?.length > 30
                 ? detailTournament?.tournamentName.slice(0, 30) + " ..."
@@ -203,7 +202,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "Cyntho Next",
                 fontWeight: "500 !important",
                 fontSize: "12px",
               }}
@@ -390,7 +388,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   color: "#fff",
                   fontSize: "14px",
                   fontWeight: "500 !important",
-                  fontFamily: "Cyntho Next !important",
                 }}
               >
                 Participants
@@ -661,7 +658,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             textAlign: "start",
                             fontWeight: "500 !important",
                             fontSize: "13px",
-                            fontFamily: "Cyntho Next !important",
                           }}
                         >
                           {item?.length > 200

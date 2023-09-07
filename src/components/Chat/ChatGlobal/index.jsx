@@ -26,7 +26,6 @@ const Test = styled.input`
   padding: 7px !important;
   color: #9d9ace !important;
   font-weight: 500 !important;
-  font-family: Cyntho Next !important;
   &:focus {
     outline: none;
   }
@@ -214,7 +213,6 @@ export default function ChatGlobal(props) {
                     <span
                       style={{
                         color: "white",
-                        fontFamily: "Cyntho Next",
                         fontSize: "15px",
                         marginLeft: "10px",
                       }}
@@ -373,7 +371,6 @@ export default function ChatGlobal(props) {
                     <span
                       style={{
                         color: "white",
-                        fontFamily: "Cyntho Next",
                         fontSize: "15px",
                         marginLeft: "10px",
                       }}

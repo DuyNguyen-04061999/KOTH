@@ -22,15 +22,15 @@ import ListItemLoading from "../NewHomePageComponent/NewHomePage/ItemLoading";
 import ListEmpty from "../NewHomePageComponent/NewHomePage/ListEmpty";
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
