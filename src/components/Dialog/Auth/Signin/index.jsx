@@ -45,7 +45,7 @@ function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isTab } = useSelector((state) => state.authReducer);
+  const { isTab  } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const [socket, setSocket] = useState(null);

@@ -457,7 +457,7 @@ export default function ChatWorldList() {
     } else if (width > 1200) {
       return height - 163;
     } else if (width > 576 && width < 1199) {
-      return height - 160;
+      return height - 167;
     }
     return height;
   };
