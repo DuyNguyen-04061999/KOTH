@@ -41,6 +41,7 @@ export default function LoadingScreen({ loadingProgression }) {
         boxSizing: "border-box",
         paddingBottom: "50px",
         alignItems: "center",
+        position: "absolute",
       }}
     >
       <Typography sx={{ color: "#00E8FF", fontSize: "25px" }}>

@@ -71,6 +71,7 @@
 .navBarFullScreenDis {
   animation: MovecDown 0.3s linear;
   position: absolute;
+  bottom: -55.23px;
 }
 @keyframes MovecDown {
   0% {
@@ -78,7 +79,7 @@
   }
   100% {
     bottom: -55.23px;
-    display: none !important;
+    visibility: hidden;
   }
 }
 .fullscreenVideo {

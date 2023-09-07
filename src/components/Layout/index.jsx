@@ -153,7 +153,7 @@ export default function Layout(props) {
       router?.includes("tournamentDetail") &&
       startGameCheck
     ) {
-      window.location.reload();
+      // window.location.reload();
     }
   }, [router, startGameCheck]);
 

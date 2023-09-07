@@ -23,6 +23,7 @@ export default function UnityGameComponent(props) {
     unPauseGame,
     fmod,
     videoGame,
+    setIsLoaded,
   } = props;
 
   const { width, height } = useWindowDimensions();
@@ -184,11 +185,14 @@ export default function UnityGameComponent(props) {
       window.removeEventListener("popstate", onBeforeUnload);
     };
   }, [dispatch, unload, fmod]);
-
+  useEffect(() => {
+    setIsLoaded(isLoaded);
+  }, [isLoaded, setIsLoaded]);
   return (
     <Fragment>
       {!isLoaded && !videoGame && (
         <LoadingScreen
+          isLoaded={isLoaded}
           loadingProgression={Math.round(loadingProgression * 100)}
         />
       )}

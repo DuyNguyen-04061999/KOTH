@@ -150,7 +150,7 @@ function App() {
         !startGameCheck &&
         !window.location.pathname?.includes("tournamentDetail")
       ) {
-        window.location.reload();
+        // window.location.reload();
       }
     };
 
