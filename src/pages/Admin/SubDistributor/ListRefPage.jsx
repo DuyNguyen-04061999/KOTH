@@ -20,11 +20,11 @@ export default function ListRefPage() {
             {permissions && permissions?.length > 0 && permissions?.includes("view_ref_end_user")
             && roles && roles?.length > 0 && roles?.includes("sub_distributor")
             ? (
-                <Box component={"div"} className='p-2 bg-white text-dark' sx={{
+                <Box component={"div"} className='p-2 bg-white text-dark d-flex flex-wrap' sx={{
                     height
                 }}>
                     {listRefs && listRefs?.length > 0 && listRefs?.map((ref, i_ref) => (
-                        <Box component={"div"} key={i_ref}>
+                        <Box component={"div"} key={i_ref} className='card p-2 me-2 mb-2'>
                             {ref?.userName}
                             {
                                 ref?.receivers && ref?.receivers?.length > 0 && ref?.receivers?.map((sR, i_sr) => (

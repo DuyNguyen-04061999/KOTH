@@ -7,9 +7,9 @@ import { CustomRouter, history } from './components/Router';
 import { Provider } from 'react-redux';
 import { LoginPage, MainPage } from './pages/Admin';
 import { PrivateRouteComponent } from './components/Admin';
-import { CreateDistributorPage, EditDistributorPage, ListDistributorPage, ProvideTicketMasterPage } from './pages/Admin/Master';
-import { CreateSubDistributorPage, ProvideTicketDistributorPage } from './pages/Admin/Distributor';
-import { ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
+import { CreateDistributorPage, DatabaseManagerPage, EditDistributorPage, FeedbackManagerPage, ListDistributorPage, ProvideTicketMasterPage, TemplateManagerPage } from './pages/Admin/Master';
+import { CreateSubDistributorPage, EditSubDistributorPage, ListSubDistributorPage, ProvideTicketDistributorPage } from './pages/Admin/Distributor';
+import { DetailSubDistributorPage, ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
 
 export default function Admin() {
     return (
@@ -19,15 +19,25 @@ export default function Admin() {
                     <CustomRouter history={history}>
                         <Routes>
                             <Route path="/" element={<PrivateRouteComponent children={<MainPage/>}/>} />
+                            {/* Master */}
                             <Route path="/master/create-distributor" element={<PrivateRouteComponent children={<CreateDistributorPage/>}/>} />
                             <Route path="/master/list-distributor" element={<PrivateRouteComponent children={<ListDistributorPage/>}/>} />
                             <Route path="/master/edit-distributor/:id" element={<PrivateRouteComponent children={<EditDistributorPage/>}/>} />
+                            <Route path="/master/database-manager" element={<PrivateRouteComponent children={<DatabaseManagerPage/>}/>} />
+                            <Route path="/master/template-manager" element={<PrivateRouteComponent children={<TemplateManagerPage/>}/>} />
+                            <Route path="/master/feedback-manager" element={<PrivateRouteComponent children={<FeedbackManagerPage/>}/>} />
                             <Route path="/master/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketMasterPage/>}/>} />
+                            {/* Distributor */}
                             <Route path="/distributor/create-sub-distributor" element={<PrivateRouteComponent children={<CreateSubDistributorPage/>}/>} />
+                            <Route path="/distributor/list-sub-distributor" element={<PrivateRouteComponent children={<ListSubDistributorPage/>}/>} />
+                            <Route path="/distributor/edit-sub-distributor/:id" element={<PrivateRouteComponent children={<EditSubDistributorPage/>}/>} />
                             <Route path="/distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketDistributorPage/>}/>} />
+                            {/* Sub Distributor */}
+                            <Route path="/sub-distributor/detail" element={<PrivateRouteComponent children={<DetailSubDistributorPage/>}/>} />
                             <Route path="/sub-distributor/refs" element={<PrivateRouteComponent children={<ListRefPage/>}/>} />
                             <Route path="/sub-distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketPage/>}/>} />
                             <Route path="/login" element={<LoginPage/>} />
+                            {/* Not Found */}
                             <Route path="*" element={<LoginPage/>} />
                         </Routes>
                     </CustomRouter>
