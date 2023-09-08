@@ -155,7 +155,6 @@ export default function Layout(props) {
       window.location.reload();
     }
   }, [router, startGameCheck]);
-  console.log(123);
 
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
