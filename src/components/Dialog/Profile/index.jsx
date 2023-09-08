@@ -77,7 +77,7 @@ export default function DialogProfile(props) {
                   className="mt-2 p-2 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "40%",
+                    width: "fit-content",
                     borderRadius: 1,
                     fontWeight: "bold",
                     display: "flex",
@@ -98,7 +98,7 @@ export default function DialogProfile(props) {
                   className="mt-2 p-2 text-white cursor-pointer"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "40%",
+                    width: "fit-content",
                     borderRadius: 1,
                     fontWeight: "bold",
                     display: "flex",

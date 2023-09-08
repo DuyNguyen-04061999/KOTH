@@ -509,6 +509,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
             open={open}
           >
             <Box
+              className="test"
               sx={{
                 backgroundColor: "#211D28",
                 width: "100%",
@@ -1861,6 +1862,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 detailTournament?.tournamentResult?.length - 1
                                   ? "20px"
                                   : "none",
+                                  backgroundColor: "#211D28"
                             }}
                           >
                             <Box sx={{ color: "#BFBEED", width: "10%" }}>
@@ -1871,6 +1873,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 display: "flex",
                                 width: "70%",
                                 justifyContent: "flex-start",
+                                backgroundColor: "#211D28"
                               }}
                             >
                               <Box

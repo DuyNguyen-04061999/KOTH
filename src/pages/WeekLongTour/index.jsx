@@ -18,8 +18,9 @@ import { useState } from "react";
 import PaginatedItems from "../PaginatedItems";
 import NewFooter from "../NewFooter";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
-import ListItemLoading from "../NewHomePageComponent/NewHomePage/ItemLoading";
-import ListEmpty from "../NewHomePageComponent/NewHomePage/ListEmpty";
+import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../components/LoadingComponent/ListEmpty";
+import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 const theme = createTheme({
   typography: {
     fontFamily: "Cyntho Next",
@@ -40,9 +41,7 @@ export default function WeekLongTour() {
   // const [itemOffset, setItemOffSet] = useState(1);
   const [isFetchList, setIsFetchList] = useState(true);
   const [isFetching, setIsFetching] = useState(true);
-  if (!isFetchList) {
-    setTimeout(() => setIsFetching(false), 2000);
-  }
+
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -50,6 +49,17 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      if (!isFetchList) {
+        setIsFetching(false);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [isFetchList]);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -102,14 +112,7 @@ export default function WeekLongTour() {
             >
               {" "}
               {isFetching ? (
-              <Skeleton
-              sx={{
-                height: width < 576 ? "" : "375px",
-                bgcolor: "rgba(255,255,255,0.1)",
-              }}
-              variant="rectangular"
-              animation="pulse"
-            ></Skeleton>
+                <BannerLoading height={width < 576 ? "106px" : width < 1024  ? "211px" :"375px"} />
               ) : (
                 <Box
                   component={"img"}
@@ -128,21 +131,23 @@ export default function WeekLongTour() {
                   marginTop: "50px",
                   display: "grid",
                   gridTemplateColumns:
-                    width < 576 ? "1fr 1fr" : width < 1024 ? "1fr 1fr 1fr" :"1fr 1fr 1fr 1fr 1fr",
+                    width < 576
+                      ? "1fr 1fr"
+                      : width < 1024
+                      ? "1fr 1fr 1fr"
+                      : "1fr 1fr 1fr 1fr 1fr",
                   gridRowGap: "16px",
                   minHeight: "577.88px",
                 }}
               >
                 {isFetching ? (
-                  <ListItemLoading />
+                  <ListItemLoading itemCount={5}/>
                 ) : weeklyTournament ? (
                   weeklyTournament
                     // ?.slice(itemOffset, itemOffset + 10)
                     ?.map((item, index) => {
                       return (
-                        <Box
-                          key={index}
-                        >
+                        <Box key={index}>
                           <ItemComponent tourInfo={item} countdown={true} />
                         </Box>
                       );
