@@ -232,7 +232,7 @@ export default function NavMobile() {
                   >
                     <div>
                       <Badge
-                        badgeContent={`${chatWorld.length}`}
+                        // badgeContent={`${chatWorld.length}`}
                         sx={{
                           ".css-106c1u2-MuiBadge-badge": {
                             fontSize: "10px",
