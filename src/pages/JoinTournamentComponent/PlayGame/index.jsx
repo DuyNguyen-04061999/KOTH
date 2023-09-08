@@ -17,7 +17,7 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 export default function PlayGame(props) {
   const { startGame, detailTournament, setStartGame, videoGame, setVideoGame } =
     props;
-  const { deviceType, device } = useSelector((state) => state.deviceReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const screen = useFullScreenHandle();
   const [expand, setExpand] = useState(false);
@@ -32,7 +32,6 @@ export default function PlayGame(props) {
   const dispatch = useDispatch();
   const [mouseEnter, setMouseEnter] = useState(false);
   const [socket, setSocket] = useState(null);
-
   const reportChange = useCallback(
     (state, handle) => {
       if (handle === screen) {
@@ -123,13 +122,6 @@ export default function PlayGame(props) {
     }
   }, [orientation, width]);
 
-  console.log(
-    "Detail Tournament: ",
-    startGame,
-    detailTournament,
-    setStartGame,
-    videoGame
-  );
   useEffect(() => {
     const checkFullMobileScreen = () => {
       if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
@@ -150,8 +142,6 @@ export default function PlayGame(props) {
     socket?.on("startGameInTournamentSuccess", (data) => {
       setExpand(true);
       if (checkFullMobileScreen()) {
-        setExpand(true);
-        screen.enter();
         setIsFullScreen(true);
       }
     });
@@ -222,8 +212,6 @@ export default function PlayGame(props) {
                       onEnded={() => {
                         setVideoGame(false);
                         if (device === "Mobile") {
-                          setExpand(true);
-                          screen.enter();
                           setIsFullScreen(true);
                         }
                       }}
@@ -244,8 +232,6 @@ export default function PlayGame(props) {
                         if (second === 0) {
                           setVideoGame(false);
                           if (device === "Mobile") {
-                            setExpand(true);
-                            screen.enter();
                             setIsFullScreen(true);
                           }
                         }
@@ -513,7 +499,7 @@ export default function PlayGame(props) {
       </Box>
 
       {checkLockScreen() && startGame && (
-        <Dialog sx={{ zIndex: "100000" }} fullScreen={true} open={true}>
+        <Dialog sx={{ zIndex: "100000000" }} fullScreen={true} open={true}>
           {continueGame === true ? (
             <Box
               sx={{
@@ -605,7 +591,19 @@ export default function PlayGame(props) {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
-                ></Box>
+                >
+                  {" "}
+                  <Box sx={{}}>
+                    <Box
+                      sx={{ width: "200px", height: "200px" }}
+                      component={"img"}
+                      src={images.RotateScreen}
+                    ></Box>
+                    <Typography sx={{ color: "white", marginTop: "20px" }}>
+                      Rotate Your Screen
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
               <Box
                 onClick={() => {
@@ -626,16 +624,6 @@ export default function PlayGame(props) {
                   src={images.BackButtonLobby}
                 ></Box>
                 <Typography sx={{ color: "white" }}>Lobby</Typography>
-              </Box>
-              <Box sx={{ position: "fixed", top: "40%", left: "33%" }}>
-                <Box
-                  sx={{ width: width / 3, height: width / 3 }}
-                  component={"img"}
-                  src={images.RotateScreen}
-                ></Box>
-                <Typography sx={{ color: "white" }}>
-                  Rotate Your Screen
-                </Typography>
               </Box>
             </Box>
           )}
