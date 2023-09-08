@@ -13,19 +13,19 @@ import InspirationTTF1 from "../../../assets/font/CynthoNextBold.otf";
 import SlickSlider from "../../../components/SlickSlider";
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next, Cyntho Next Bold",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
-        "@font-face1": {
-          fontFamily: "Cyntho Next Bold",
-          src: `url(${InspirationTTF1}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
+        // "@font-face1": {
+        //   fontFamily: "Cyntho Next Bold",
+        //   src: `url(${InspirationTTF1}) format("truetype")`,
+        // },
       },
     },
   },

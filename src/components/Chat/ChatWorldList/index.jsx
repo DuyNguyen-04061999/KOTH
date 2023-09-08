@@ -16,6 +16,7 @@ import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authR
 import { useNavigate } from "react-router-dom";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { PersonAddAlt1 } from "@mui/icons-material";
+import UserChatLoading from "../../LoadingComponent/UserChatLoading";
 const EndMessagetoend = styled.div`
   margin-bottom: 30px;
 `;
@@ -185,7 +186,6 @@ export default function ChatWorldList() {
                           style={{
                             color: "white",
                             fontWeight: "500 !important",
-                            fontFamily: "Cyntho Next !important",
                           }}
                         >
                           {e?.messageGameName?.slice(0, 10) + `...`}
@@ -239,7 +239,6 @@ export default function ChatWorldList() {
                           color: "white",
                           fontSize: "10px",
                           fontWeight: "500 !important",
-                          fontFamily: "Cyntho Next !important",
                           letterSpacing: "0.5px",
                         }}
                       >
@@ -256,7 +255,7 @@ export default function ChatWorldList() {
                         wordWrap: "break-word",
                         borderRadius: "5px",
                         fontWeight: "500 !important",
-                        fontFamily: "Cyntho Next !important",
+                        
                         letterSpacing: "0.5px",
                       }}
                     >
@@ -291,14 +290,14 @@ export default function ChatWorldList() {
                       color: "#7C81F2",
                       borderRadius: "5px",
                       fontWeight: "500 !important",
-                      fontFamily: "Cyntho Next !important",
+                      
                       letterSpacing: "0.5px",
                     }}
                   >
                     <span
                       style={{
                         fontWeight: "500 !important",
-                        fontFamily: "Cyntho Next !important",
+                        
                         letterSpacing: "0.5px",
                       }}
                     >
@@ -312,7 +311,7 @@ export default function ChatWorldList() {
                         marginLeft: "15px",
                         fontSize: "10px",
                         fontWeight: "500 !important",
-                        fontFamily: "Cyntho Next !important",
+                        
                         letterSpacing: "0.5px",
                       }}
                     >
@@ -329,7 +328,7 @@ export default function ChatWorldList() {
                     fontWeight: "500",
                     wordWrap: "break-word",
                     borderRadius: "5px",
-                    fontFamily: "Cyntho Next !important",
+                    
                     letterSpacing: "0.5px",
                   }}
                   className="p-1 mt-2 d-flex ps-2 pe-2"
@@ -341,7 +340,7 @@ export default function ChatWorldList() {
                       fontSize: "14px",
                       width: "100%",
                       wordWrap: "break-word" /* IE 5.5-7 */,
-                      fontFamily: "Cyntho Next !important",
+                      
                       letterSpacing: "0.5px",
                     }}
                   >
@@ -435,7 +434,7 @@ export default function ChatWorldList() {
                       <span
                         style={{
                           fontWeight: "500 !important",
-                          fontFamily: "Cyntho Next !important",
+                          
                           letterSpacing: "0.5px",
                         }}
                       >
@@ -446,6 +445,7 @@ export default function ChatWorldList() {
                 </Box>
               </Box>
             </Box>
+            // <UserChatLoading />
           )}
         </Box>
       );
@@ -457,7 +457,7 @@ export default function ChatWorldList() {
     } else if (width > 1200) {
       return height - 163;
     } else if (width > 576 && width < 1199) {
-      return height - 160;
+      return height - 167;
     }
     return height;
   };

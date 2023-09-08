@@ -17,14 +17,13 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import InspirationTTF from "../../../../assets/font/CynthoNextRegular.otf";
 
 const theme = createTheme({
-  typography: { fontFamily: "Cyntho Next, Cyntho Next Bold" },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -174,7 +173,7 @@ export default function BuyTicket(props) {
                       sx={{
                         color: "#8042EF",
                         fontSize: "16px",
-                        fontFamily: "Cyntho Next Bold",
+                        
                       }}
                     >
                       Double Dragon
@@ -182,7 +181,7 @@ export default function BuyTicket(props) {
                     <Typography
                       sx={{
                         fontSize: "19px",
-                        fontFamily: "",
+                        // fontFamily: "",
                       }}
                     >
                       {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"}
@@ -210,7 +209,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -233,7 +232,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -264,7 +263,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -287,7 +286,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}

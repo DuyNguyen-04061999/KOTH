@@ -390,7 +390,7 @@ export default function Navbar() {
                           : "",
                     }}
                   >
-                    Hot tour
+                    Hot
                   </span>
                 </Box>
                 {/* <Box
@@ -528,7 +528,7 @@ export default function Navbar() {
                           : "",
                     }}
                   >
-                    Daily tour
+                    Daily
                   </span>
                 </Box>
                 <Box
@@ -614,7 +614,7 @@ export default function Navbar() {
                           : "",
                     }}
                   >
-                    Week-long tour
+                    Week-long
                   </span>
                 </Box>
               </Box>
