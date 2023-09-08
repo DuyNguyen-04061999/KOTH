@@ -594,7 +594,7 @@ export default function Layout(props) {
           width: drawerWidth,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
-            zIndex: 1,
+            zIndex: 1033,
             overflowY: "unset",
             backgroundColor: "unset",
             borderLeftWidth: "none",
