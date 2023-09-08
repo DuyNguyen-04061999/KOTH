@@ -120,6 +120,7 @@ export default function ChatGlobal(props) {
           open={openMess}
           sx={{
             maxHeight: checkHeightResponsive(),
+            minHeight: checkHeightResponsive(),
             // "& .MuiDialog-container": {
             //   position: "fixed",
             //   top: "-10px",
@@ -242,7 +243,7 @@ export default function ChatGlobal(props) {
               className="d-flex justify-content-between align-items-center"
               sx={{
                 position: "absolute",
-                bottom: width < 576 ? "0px" : "46px",
+                bottom: width < 576 ? "0px" : "56px",
                 background: "#2E1E38",
                 padding: "12px 20px ",
                 zIndex: "20",

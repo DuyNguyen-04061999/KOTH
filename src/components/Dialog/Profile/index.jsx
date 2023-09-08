@@ -411,7 +411,7 @@ export default function DialogProfile(props) {
             sx={{
               backgroundColor: "#291e3a",
               width: width < 576 ? "100%" : "490px",
-              height: height > 800 ? 800 : "auto",
+              height: height > 800 ? "auto" : "auto",
             }}
           >
             <Box

@@ -388,7 +388,7 @@ export default function ComponentChat() {
     } else if (width > 1200) {
       return height - 170;
     } else if (width > 576 && width < 1199) {
-      return height - 450;
+      return height - 158;
     }
     return height;
   };
@@ -405,7 +405,7 @@ export default function ComponentChat() {
   return (
     <Box
       sx={{
-        // minHeight: checkHeightResponsive(),
+        minHeight: checkHeightResponsive(),
         maxHeight: checkHeightResponsive(),
         // minWidth: checkWidthResponsive(),
         // maxWidth: checkWidthResponsive(),
