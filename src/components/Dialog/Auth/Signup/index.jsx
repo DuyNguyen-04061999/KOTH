@@ -318,7 +318,7 @@ export default function Signup(props) {
             </span>
           )}
           {containsSpecialCharacters(password) === false && (
-            <span className="text-danger">Password is not in correct format</span>
+            <span className="text-danger">Password must be at least 6 characters. Password must have at least one non letter, one digit ('0-9'), one upper case</span>
           )}
         </FormControl>
         <FormControl
