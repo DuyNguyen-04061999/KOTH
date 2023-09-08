@@ -156,7 +156,6 @@ export default function Layout(props) {
     }
   }, [router, startGameCheck]);
 
-
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
       socket?.emit("leaveAllRoom");
@@ -397,7 +396,7 @@ export default function Layout(props) {
             </div>
           ) : (
             <Box>
-              {location && location?.pathname?.includes("/packages") ? (
+              {location && width < 576 && location?.pathname?.includes("/packages") ? (
                 <span className="ms-2">Packages</span>
               ) : (
                 <NavLink to="/home">
@@ -594,7 +593,7 @@ export default function Layout(props) {
           width: drawerWidth,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
-            zIndex: 1,
+            zIndex: 1033,
             overflowY: "unset",
             backgroundColor: "unset",
             borderLeftWidth: "none",
