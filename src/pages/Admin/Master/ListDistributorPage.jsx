@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getListDistributor } from '../../../redux-saga-middleware_admin/reducers/adminMasterReducer'
+import { deleteDistributor, getListDistributor } from '../../../redux-saga-middleware_admin/reducers/adminMasterReducer'
 import { Box } from '@mui/material'
 import useWindowDimensions from '../../../utils/useWindowDimensions'
 import EditIcon from "@mui/icons-material/Edit"
@@ -11,9 +11,6 @@ export default function ListDistributorPage() {
     const dispatch = useDispatch()
     const { listDistributor } = useSelector(state => state.adminMasterReducer)
     const { roles } = useSelector(state => state.adminAuthReducer)
-
-    console.log("listDistributor", listDistributor);
-    console.log("role", roles);
     
     useEffect(() => {
         dispatch(getListDistributor())
@@ -26,8 +23,10 @@ export default function ListDistributorPage() {
         navigate(`/master/edit-distributor/${id}`)
     }
 
-    const handleDelete = () => {
-
+    const handleDelete = (id) => {
+        if(window.confirm("Are you sure?")) {
+            dispatch(deleteDistributor({ id }))
+        }
     }
 
     return (
@@ -41,7 +40,7 @@ export default function ListDistributorPage() {
                             {dis?.userName}
                             <Box component={"div"} className='d-flex'>
                                 <EditIcon color='success' onClick={() => handleEdit(dis?.id)}/>
-                                <DeleteIcon color="error" onClick={handleDelete} className='ms-3'/>
+                                <DeleteIcon color="error" onClick={() => handleDelete(dis?.id)} className='ms-3'/>
                             </Box>
                         </Box>
                     ))}

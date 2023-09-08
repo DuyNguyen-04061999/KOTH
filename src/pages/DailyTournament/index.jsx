@@ -24,15 +24,15 @@ import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -183,7 +183,7 @@ export default function DailyTournament() {
                     ?.listTournament?.map((item, index) => {
                       return (
                         index >= 10 && (
-                          <Box sx={{ width: "20%", marginTop: "50px" }}>
+                          <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
                         )

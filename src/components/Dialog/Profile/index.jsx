@@ -77,7 +77,7 @@ export default function DialogProfile(props) {
                   className="mt-2 p-2 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "40%",
+                    width: "fit-content",
                     borderRadius: 1,
                     fontWeight: "bold",
                     display: "flex",
@@ -98,7 +98,7 @@ export default function DialogProfile(props) {
                   className="mt-2 p-2 text-white cursor-pointer"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "40%",
+                    width: "fit-content",
                     borderRadius: 1,
                     fontWeight: "bold",
                     display: "flex",
@@ -411,7 +411,7 @@ export default function DialogProfile(props) {
             sx={{
               backgroundColor: "#291e3a",
               width: width < 576 ? "100%" : "490px",
-              height: height > 800 ? 800 : "auto",
+              height: height > 800 ? "auto" : "auto",
             }}
           >
             <Box

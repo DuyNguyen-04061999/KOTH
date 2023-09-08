@@ -4,7 +4,7 @@ body {
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'NextBold',
     sans-serif; */
-  font-family: "Cyntho Next";
+  /* font-family: "Cyntho Next"; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -25,16 +25,16 @@ code {
 }
 
 @font-face {
-  font-family: "Cyntho";
+  font-family: "Cyntho Next";
   src: url(../font/CynthoNextRegular.otf);
   font-weight: normal;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Cyntho Bold";
   src: url(../font/CynthoNextBold.otf);
   font-weight: bold;
-}
+} */
 
 #root {
   transition: all 0.2s linear 0s;

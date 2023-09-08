@@ -27,20 +27,21 @@ import NewFooter from "../../NewFooter";
 import ItemComponent from "./ItemComponent";
 import "./index.scss";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
-import ListItemLoading from "./ItemLoading";
-import ListEmpty from "./ListEmpty";
-import { isEmpty } from "lodash";
+import ListItemLoading from "../../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
+import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
+
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -65,9 +66,17 @@ export default function NewHomePage() {
   ]);
   const [selectedDay, setSeDay] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
-  if (!isFetchList) {
-    setTimeout(() => setIsFetching(false), 2000);
-  }
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      if (!isFetchList) {
+        setIsFetching(false);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [isFetchList]);
 
   const {
     dailyTournament,
@@ -158,14 +167,10 @@ export default function NewHomePage() {
             }}
           >
             {isFetching ? (
-              <Skeleton
-                sx={{
-                  height: width < 576 ? "214px" : "363px",
-                  bgcolor: "rgba(255,255,255,0.1)",
-                }}
-                variant="rectangular"
-                animation="pulse"
-              ></Skeleton>
+              <BannerLoading
+                height={width < 576 ? "214px" : "363px"}
+                width={"100%"}
+              />
             ) : (
               <SlickSlider
                 appendDot={true}
@@ -333,14 +338,10 @@ export default function NewHomePage() {
           </Box>{" "}
           {width < 576 ? (
             isFetching ? (
-              <Skeleton
-                sx={{
-                  height: width < 576 ? "214px" : "363px",
-                  bgcolor: "rgba(255,255,255,1)",
-                }}
-                variant="rectangular"
-                animation="pulse"
-              ></Skeleton>
+              <BannerLoading
+                height={width < 576 ? "214px" : "363px"}
+                width={"100%"}
+              />
             ) : (
               <Box
                 sx={{
@@ -475,14 +476,10 @@ export default function NewHomePage() {
               </Box>
             )
           ) : isFetching ? (
-            <Skeleton
-              sx={{
-                height: width < 576 ? "214px" : "363px",
-                bgcolor: "rgba(255,255,255,0.1)",
-              }}
-              variant="rectangular"
-              animation="pulse"
-            ></Skeleton>
+            <BannerLoading
+              height={width < 576 ? "214px" : "363px"}
+              width={"100%"}
+            />
           ) : (
             <Box
               sx={{
@@ -1367,14 +1364,14 @@ export default function NewHomePage() {
           {/* Banner Top1 */}
           {width < 576 ? (
             isFetching ? (
-              <Skeleton
+              <Box
                 sx={{
-                  height: width < 576 ? "214px" : "363px",
-                  bgcolor: "rgba(255,255,255,0.1)",
+                  marginTop: width < 576 ? "48px" : "32px",
+                  marginBottom: width < 576 ? "0px" : "32px",
                 }}
-                variant="rectangular"
-                animation="pulse"
-              ></Skeleton>
+              >
+                <BannerLoading height={width < 576 ? "214px" : "363px"} />
+              </Box>
             ) : (
               <Box
                 sx={{
@@ -1551,14 +1548,10 @@ export default function NewHomePage() {
               </Box>
             )
           ) : isFetching ? (
-            <Skeleton
-              sx={{
-                height: width < 576 ? "214px" : "363px",
-                bgcolor: "rgba(255,255,255,0.1)",
-              }}
-              variant="rectangular"
-              animation="pulse"
-            ></Skeleton>
+            <BannerLoading
+              height={width < 576 ? "214px" : "363px"}
+              width={"100%"}
+            />
           ) : (
             <Box
               sx={{

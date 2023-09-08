@@ -256,7 +256,7 @@
 .copy {
   --tooltip-bg: #f4f3f3;
   --toolptip-border-radius: 4px;
-  --tooltip-font-family: Menlo, Roboto Mono, monospace;
+  // --tooltip-font-family: Menlo, Roboto Mono, monospace;
   /* 👆 this field should not be empty */
   --tooltip-font-size: 12px;
   /* 👆 this field should not be empty */
@@ -272,7 +272,7 @@
     left: 94%;
     transform: translateX(-50%);
     white-space: nowrap;
-    font: var(--tooltip-font-size) var(--tooltip-font-family);
+    // font: var(--tooltip-font-size) var(--tooltip-font-family);
     color: var(--tootip-text-color);
     background: var(--tooltip-bg);
     padding: var(--tooltip-padding-y) var(--tooltip-padding-x);

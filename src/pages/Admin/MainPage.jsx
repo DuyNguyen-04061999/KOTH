@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom'
 const RenderActions = (data) => {
   const navigate = useNavigate()
   return (
-    <>
+    <Box component={"div"} className='d-flex mt-3 mb-3'>
       {data && data?.length > 0 && data?.map((action, i_action) => (
-        <Box component={"div"} onClick={() => navigate(action?.link)} className='p-2' key={i_action}>
+        <Box component={"div"} onClick={() => navigate(action?.link)} className='p-2 card text-dark ms-2 me-2 cursor-pointer' key={i_action}>
             {action?.name}
         </Box>
       ))}
-    </>
+    </Box>
   )
 }
 
@@ -30,15 +30,15 @@ export default function MainPage() {
     },
     {
       name: "Database Manager",
-      link: ""
+      link: "/master/database-manager"
     },
     {
       name: "Templates Manager",
-      link: ""
+      link: "/master/template-manager"
     },
     {
       name: "Feedbacks Manager",
-      link: ""
+      link: "/master/feedback-manager"
     },
     {
       name: "Ticket Provider",
@@ -51,16 +51,8 @@ export default function MainPage() {
       link: "/distributor/create-sub-distributor"
     },
     {
-      name: "Edit Sub Distributor",
-      link: ""
-    },
-    {
-      name: "Delete Sub Distributor",
-      link: ""
-    },
-    {
-      name: "View Sub Distributor",
-      link: ""
+      name: "List Sub Distributor",
+      link: "/distributor/list-sub-distributor"
     },
     {
       name: "Ticket Provider",
@@ -70,7 +62,7 @@ export default function MainPage() {
   const subDistributorActions = [
     {
       name: "View Sub Distributor",
-      link: ""
+      link: "/sub-distributor/detail"
     },
     {
       name: "View Ref User",
@@ -90,7 +82,7 @@ export default function MainPage() {
 
   return (
     <div className='text-white p-2'>
-      <span className='ms-2'>Welcome {ref}</span>
+      <span className='ms-2'>Welcome - {roles && roles?.length > 0 && roles?.includes("master") ? "Master" : roles && roles?.length > 0 && roles?.includes("distributor") ? "Distributor" : "Sub-Distributor"} - {ref}</span>
       {roles && roles?.length > 0 && roles?.includes("master") && RenderActions(masterActions)}
       {roles && roles?.length > 0 && roles?.includes("distributor") && !roles?.includes("Sub") && RenderActions(distributorActions)}
       {roles && roles?.length > 0 && roles?.includes("sub_distributor") && RenderActions(subDistributorActions)}

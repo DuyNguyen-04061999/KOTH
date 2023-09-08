@@ -53,6 +53,17 @@ export default function Signup(props) {
     }
   }, [registerValue, handleTab]);
 
+  function isAlphanumeric(input) {
+    const regex = /^[a-zA-Z0-9]+$/;
+    return regex.test(input);
+  }
+
+  function containsSpecialCharacters(input) {
+    const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{6,15}$/; // Define your special character pattern
+    return regex.test(input);
+  }
+
+
   useEffect(() => {
     if (
       gender === "" ||
@@ -65,7 +76,9 @@ export default function Signup(props) {
       password.length > 15 ||
       c_password.length > 15 ||
       password.length < 6 ||
-      password !== c_password
+      password !== c_password ||
+       isAlphanumeric(username) === false ||
+       containsSpecialCharacters(password) === false 
     ) {
       setDisabledBtn(true);
     } else {
@@ -98,6 +111,8 @@ export default function Signup(props) {
     }
     // socket?.on("registerError", (data) => {});
   };
+
+
   return (
     <Box className="signup">
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -170,6 +185,9 @@ export default function Signup(props) {
           )}
           {username && username.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
+          )}
+          {isAlphanumeric(username) === false && (
+            <span className="text-danger">Account name should contain only letters and numbers</span>
           )}
         </FormControl>
         {/* <Box className="position-relative">
@@ -298,6 +316,9 @@ export default function Signup(props) {
             <span className="text-danger">
               Password must be 6 characters or more
             </span>
+          )}
+          {containsSpecialCharacters(password) === false && (
+            <span className="text-danger">Password is not in correct format</span>
           )}
         </FormControl>
         <FormControl
