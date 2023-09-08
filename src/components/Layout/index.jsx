@@ -188,7 +188,7 @@ export default function Layout(props) {
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
-  console.log(isNav);
+
   const handleChangeChat = (e) => {
     setChatF(e.target.value);
   };
