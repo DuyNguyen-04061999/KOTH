@@ -22,10 +22,11 @@ import { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
+import BannerLoading from "../../components/LoadingComponent/BannerLoading";
+import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -50,6 +51,19 @@ export default function DailyTournament() {
     color: "#fff",
   };
   const dispatch = useDispatch();
+
+  const [isFetching, setIsFetching] = useState(true);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      if (!isFetchList) {
+        setIsFetching(false);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [isFetchList]);
 
   useEffect(() => {
     if (isFetchList) {
@@ -104,11 +118,15 @@ export default function DailyTournament() {
                 }}
               >
                 {" "}
-                <Box
-                  component={"img"}
-                  src={images.PurpleBanner}
-                  sx={{ width: "100%" }}
-                ></Box>
+                {isFetching ? (
+                  <BannerLoading height={375} />
+                ) : (
+                  <Box
+                    component={"img"}
+                    src={images.PurpleBanner}
+                    sx={{ width: "100%" }}
+                  ></Box>
+                )}
               </Box>
               <Box>
                 <SliderTime
@@ -137,22 +155,29 @@ export default function DailyTournament() {
                     gridRowGap: "16px",
                   }}
                 >
-                  {dailyTournament
-                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-                    ?.listTournament?.map((item, index) => {
-                      return (
-                        index < 10 && (
-                          <Box
-                            sx={{
-                              width: "20%",
-                              marginTop: "50px",
-                            }}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })}
+                  {isFetching ? (
+                    <ListItemLoading />
+                  ) : dailyTournament &&
+                    dailyTournament?.length > 0 &&
+                    dailyTournament?.filter(
+                      (n) => n.timeStart === dayList[selectedDay]
+                    )[0]?.listTournament?.length !== 0 ? (
+                    dailyTournament
+                      ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+                      ?.listTournament?.map((item, index) => {
+                        return (
+                          <div style={{ marginTop: "50px" }} key={index}>
+                            <ItemComponent
+                              key={index}
+                              countdown={true}
+                              tourInfo={item}
+                            />
+                          </div>
+                        );
+                      })
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               </Box>
               <Box
@@ -161,16 +186,20 @@ export default function DailyTournament() {
                   paddingBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <video width={"100%"} playsInline muted autoPlay loop={true}>
-                  <source
-                    src={
-                      width < 576
-                        ? video.Promo_Sale_Video_Mobile
-                        : video.Promo_Sale_Video_Desktop
-                    }
-                    type="video/mp4"
-                  />
-                </video>
+                {isFetching ? (
+                  <BannerLoading height={520} />
+                ) : (
+                  <video width={"100%"} playsInline muted autoPlay loop={true}>
+                    <source
+                      src={
+                        width < 576
+                          ? video.Promo_Sale_Video_Mobile
+                          : video.Promo_Sale_Video_Desktop
+                      }
+                      type="video/mp4"
+                    />
+                  </video>
+                )}
               </Box>{" "}
               <Box
                 sx={{
@@ -183,7 +212,10 @@ export default function DailyTournament() {
                     ?.listTournament?.map((item, index) => {
                       return (
                         index >= 10 && (
-                          <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
+                          <Box
+                            sx={{ width: "20%", marginTop: "50px" }}
+                            key={index}
+                          >
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
                         )
