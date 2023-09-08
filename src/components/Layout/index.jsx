@@ -1,4 +1,4 @@
-import { Box, Drawer, Grid } from "@mui/material";
+import { Box, Drawer, Grid, Typography } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
@@ -105,7 +105,6 @@ const Test = styled.input`
   padding: 7px !important;
   color: #bfbeed !important;
   letter-spacing: 0.5px;
-  font-weight: Cyntho Next !important ;
   border: none;
   &:focus {
     outline: none;

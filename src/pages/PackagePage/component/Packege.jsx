@@ -97,15 +97,15 @@ export default function Package() {
 
   const theme = createTheme({
     typography: {
-      fontFamily: "Cyntho Next",
+
     },
     components: {
       MuiCssBaseline: {
         styleOverrides: {
-          "@font-face": {
-            fontFamily: "Cyntho Next",
-            src: `url(${InspirationTTF}) format("truetype")`,
-          },
+          // "@font-face": {
+          //   fontFamily: "Cyntho Next",
+          //   src: `url(${InspirationTTF}) format("truetype")`,
+          // },
         },
       },
     },
@@ -324,7 +324,7 @@ export default function Package() {
                                               ? "12px"
                                               : "17px",
                                           color: "white",
-                                          fontFamily: "Cyntho Next !important",
+                                          
                                           fontWeight: "500 !important",
                                           overflow: "hidden",
                                           marginLeft: "4px !important",
@@ -365,7 +365,7 @@ export default function Package() {
                                       sx={{
                                         fontSize: "17px",
                                         color: "white",
-                                        fontFamily: "Cyntho Next !important",
+                                        
                                         fontWeight: "500 !important",
                                       }}
                                     >
@@ -425,7 +425,7 @@ export default function Package() {
                                       sx={{
                                         fontSize: "17px",
                                         color: "white",
-                                        fontFamily: "Cyntho Next !important",
+                                        
                                         fontWeight: "500 !important",
                                       }}
                                     >
@@ -446,7 +446,7 @@ export default function Package() {
                                       <Typography
                                         variant="h4"
                                         sx={{
-                                          fontFamily: "Cyntho Next !important",
+                                          
                                           fontWeight: "500 !important",
                                         }}
                                       >
@@ -465,7 +465,7 @@ export default function Package() {
                                       <Typography
                                         variant="h4"
                                         sx={{
-                                          fontFamily: "Cyntho Next !important",
+                                          
                                           fontWeight: "500 !important",
                                           fontSize:
                                             width < 1200 && width > 576
@@ -479,7 +479,6 @@ export default function Package() {
                                         variant="body1"
                                         sx={{
                                           marginTop: "7px",
-                                          fontFamily: "Cyntho Next",
                                           fontSize:
                                             width < 1200 && width > 576
                                               ? "10px"
@@ -854,7 +853,7 @@ export default function Package() {
                                   sx={{
                                     fontSize: "14px",
                                     color: "white",
-                                    fontFamily: "Cyntho Next !important",
+                                    
                                     fontWeight: "500 !important",
                                     marginLeft: "4px !important",
                                   }}
@@ -894,7 +893,7 @@ export default function Package() {
                                 sx={{
                                   fontSize: "14px",
                                   color: "white",
-                                  fontFamily: "Cyntho Next !important",
+                                  
                                   fontWeight: "500 !important",
                                 }}
                               >
@@ -955,7 +954,7 @@ export default function Package() {
                                 sx={{
                                   fontSize: "14px",
                                   color: "white",
-                                  fontFamily: "Cyntho Next !important",
+                                  
                                   fontWeight: "500 !important",
                                 }}
                               >
@@ -975,7 +974,7 @@ export default function Package() {
                                 <Typography
                                   variant="h4"
                                   sx={{
-                                    fontFamily: "Cyntho Next !important",
+                                    
                                     fontWeight: "500 !important",
                                   }}
                                 >
@@ -994,7 +993,7 @@ export default function Package() {
                                 <Typography
                                   variant="h4"
                                   sx={{
-                                    fontFamily: "Cyntho Next !important",
+                                    
                                     fontWeight: "500 !important",
                                   }}
                                 >
@@ -1004,7 +1003,6 @@ export default function Package() {
                                   variant="body1"
                                   sx={{
                                     marginTop: "7px",
-                                    fontFamily: "Cyntho Next",
                                     fontSize: "12px",
                                   }}
                                 >

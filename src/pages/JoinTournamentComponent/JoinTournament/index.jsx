@@ -41,15 +41,15 @@ import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoad
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -413,7 +413,6 @@ export default function JoinTournament() {
                               ? `${width / 76}px`
                               : "14px",
                           fontWeight: "lighter !important",
-                          fontFamily: "Cyntho Next",
                           marginLeft: "0px !important",
                           minWidth: "155px",
                         }}
@@ -462,7 +461,6 @@ export default function JoinTournament() {
                               ? `${width / 76}px`
                               : "14px",
                           fontWeight: "500 !important",
-                          fontFamily: "Cyntho Next",
                           marginLeft: "0px !important",
                           minWidth: "155px",
                         }}
@@ -1390,7 +1388,6 @@ export default function JoinTournament() {
                             textAlign: "start",
                             fontWeight: "500 !important",
                             marginLeft: "0px !important",
-                            fontFamily: "Cyntho Next",
                             fontSize:
                               576 < width && width < 1200
                                 ? `${width / 71}px`
