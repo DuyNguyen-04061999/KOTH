@@ -17,12 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { PersonAddAlt1 } from "@mui/icons-material";
 import UserChatLoading from "../../LoadingComponent/UserChatLoading";
+import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 const EndMessagetoend = styled.div`
   margin-bottom: 30px;
 `;
 export default function ChatWorldList() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [messagefromName, setMessFromName] = useState(null);
+  const [isFetching, setIsFetching] = useState(true);
   const { chatWorld, friendList, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
@@ -38,6 +40,18 @@ export default function ChatWorldList() {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
+  useEffect(() => {
+    let timeOut = 0;
+    if (chatWorld) {
+      timeOut = setTimeout(() => setIsFetching(false), 1000);
+    }
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, []);
+
+
   const handleClick = (event, userName) => {
     setUserName(userName);
     setAnchorEl(event.currentTarget);
@@ -107,349 +121,353 @@ export default function ChatWorldList() {
       gameId: gameId,
     });
   };
-  const renderChat = worldMessage
-    ?.filter((n) => n.messageType === "World")
-    .map((e, index) => {
-      return (
-        <Box
-          key={index}
-          style={{
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-          }}
-          className="d-flex"
-        >
-          {e?.messageFromName === userName && token ? (
-            <>
-              {e?.messageGameId > 0 && e?.messageRoomName ? (
-                <Box
-                  className="d-flex justify-content-between"
-                  sx={{
-                    width: "100%",
-                  }}
-                >
+  const renderChat = isFetching ? (
+    <UserChatLoadingList />
+  ) : (
+    worldMessage
+      ?.filter((n) => n.messageType === "World")
+      .map((e, index) => {
+        return (
+          <Box
+            key={index}
+            style={{
+              paddingLeft: 10,
+              paddingRight: 10,
+              paddingTop: 10,
+              paddingBottom: 10,
+            }}
+            className="d-flex"
+          >
+            {e?.messageFromName === userName && token ? (
+              <>
+                {e?.messageGameId > 0 && e?.messageRoomName ? (
                   <Box
+                    className="d-flex justify-content-between"
                     sx={{
-                      width: "20%",
+                      width: "100%",
                     }}
-                  ></Box>
-                  <Box
-                    sx={{
-                      width: "fit-content",
-                      maxWidth: "80%",
-                      background: "#4d3565",
-                      color: "#7878a7",
-                      fontSize: "14px",
-                      borderRadius: "5px",
-                    }}
-                    className="p-2"
                   >
-                    {/* <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span> */}
                     <Box
-                      className="mt-2 p-2 d-flex"
                       sx={{
-                        backgroundColor: "#3e2a52",
+                        width: "20%",
+                      }}
+                    ></Box>
+                    <Box
+                      sx={{
+                        width: "fit-content",
+                        maxWidth: "80%",
+                        background: "#4d3565",
+                        color: "#7878a7",
+                        fontSize: "14px",
                         borderRadius: "5px",
                       }}
+                      className="p-2"
                     >
+                      {/* <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span> */}
                       <Box
+                        className="mt-2 p-2 d-flex"
                         sx={{
-                          width: "40%",
-                          height: "55px",
+                          backgroundColor: "#3e2a52",
+                          borderRadius: "5px",
                         }}
                       >
-                        <img
-                          src={
-                            e &&
-                            e?.messageGameAvatar &&
-                            e?.messageGameAvatar !== "normal"
-                              ? process.env.REACT_APP_SOCKET_SERVER +
-                                "/" +
-                                e?.messageGameAvatar
-                              : images.Aa
-                          }
-                          alt="..."
-                          width={"100%"}
-                          height={"75px"}
-                          style={{
-                            objectFit: "cover",
-                          }}
-                        />
-                      </Box>
-                      <Box
-                        className="ms-2 d-flex flex-column flex-end"
-                        sx={{ width: "60%" }}
-                      >
-                        <span
-                          style={{
-                            color: "white",
-                            fontWeight: "500 !important",
-                          }}
-                        >
-                          {e?.messageGameName?.slice(0, 10) + `...`}
-                        </span>
-                        <span className="text-white font-weight-bold">
-                          Price: {e?.messageBetPrice}
-                        </span>
                         <Box
-                          onClick={() =>
-                            handleOnClickInviteGameMess(
-                              e.messageGameId,
-                              e.messageRoomId
-                            )
-                          }
-                          className="p-1 mt-1 text-center text-white cursor-pointer"
                           sx={{
-                            width: "100%",
-                            background:
-                              "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                            fontWeight: "bold",
-                            borderRadius: "4px",
+                            width: "40%",
+                            height: "55px",
                           }}
                         >
-                          PLAY NOW
+                          <img
+                            src={
+                              e &&
+                              e?.messageGameAvatar &&
+                              e?.messageGameAvatar !== "normal"
+                                ? process.env.REACT_APP_SOCKET_SERVER +
+                                  "/" +
+                                  e?.messageGameAvatar
+                                : images.Aa
+                            }
+                            alt="..."
+                            width={"100%"}
+                            height={"75px"}
+                            style={{
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Box>
+                        <Box
+                          className="ms-2 d-flex flex-column flex-end"
+                          sx={{ width: "60%" }}
+                        >
+                          <span
+                            style={{
+                              color: "white",
+                              fontWeight: "500 !important",
+                            }}
+                          >
+                            {e?.messageGameName?.slice(0, 10) + `...`}
+                          </span>
+                          <span className="text-white font-weight-bold">
+                            Price: {e?.messageBetPrice}
+                          </span>
+                          <Box
+                            onClick={() =>
+                              handleOnClickInviteGameMess(
+                                e.messageGameId,
+                                e.messageRoomId
+                              )
+                            }
+                            className="p-1 mt-1 text-center text-white cursor-pointer"
+                            sx={{
+                              width: "100%",
+                              background:
+                                "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                              fontWeight: "bold",
+                              borderRadius: "4px",
+                            }}
+                          >
+                            PLAY NOW
+                          </Box>
                         </Box>
                       </Box>
                     </Box>
                   </Box>
-                </Box>
-              ) : (
-                <Box
-                  className="d-flex justify-content-between"
-                  sx={{
-                    width: "100%",
-                  }}
-                >
+                ) : (
                   <Box
+                    className="d-flex justify-content-between"
                     sx={{
-                      width: "20%",
-                    }}
-                  ></Box>
-                  <Box
-                    sx={{
-                      width: "fit-content",
-                      maxWidth: "80%",
+                      width: "100%",
                     }}
                   >
-                    <Box className="d-flex justify-content-end">
+                    <Box
+                      sx={{
+                        width: "20%",
+                      }}
+                    ></Box>
+                    <Box
+                      sx={{
+                        width: "fit-content",
+                        maxWidth: "80%",
+                      }}
+                    >
+                      <Box className="d-flex justify-content-end">
+                        <span
+                          style={{
+                            color: "white",
+                            fontSize: "10px",
+                            fontWeight: "500 !important",
+                            letterSpacing: "0.5px",
+                          }}
+                        >
+                          {e?.updatedAt &&
+                            moment(e?.updatedAt).format("H:mm a")}
+                        </span>
+                      </Box>
+                      <Box
+                        className="p-1 mt-2 ps-2 pe-2"
+                        sx={{
+                          background: "#443565",
+                          color: "white",
+                          fontSize: "14px",
+                          width: "100%",
+                          wordWrap: "break-word",
+                          borderRadius: "5px",
+                          fontWeight: "500 !important",
+
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        {e?.messageContent}
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
+              </>
+            ) : (
+              <Box className="d-flex justify-content-between">
+                <Box className="pt-2">
+                  <Avatar
+                    onClick={(event) => {
+                      handleClick(event, e?.messageFromName);
+                    }}
+                    alt={e?.messageFromName}
+                    src={
+                      e?.messageFromAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          e?.messageFromAvatar
+                        : images.undefinedAvatar
+                    }
+                    sx={{ borderRadius: "50%", marginLeft: "5px" }}
+                  />
+                </Box>
+                <Box className="mx-2" sx={{ borderRadius: "5px" }}>
+                  <Box className="d-flex justify-content-start align-items-center">
+                    <span
+                      style={{
+                        color: "#7C81F2",
+                        borderRadius: "5px",
+                        fontWeight: "500 !important",
+
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontWeight: "500 !important",
+
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        {e?.messageFromName}
+                      </span>
+                    </span>
+                    <Box>
                       <span
                         style={{
                           color: "white",
+                          marginLeft: "15px",
                           fontSize: "10px",
                           fontWeight: "500 !important",
+
                           letterSpacing: "0.5px",
                         }}
                       >
                         {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
                       </span>
                     </Box>
-                    <Box
-                      className="p-1 mt-2 ps-2 pe-2"
-                      sx={{
-                        background: "#443565",
+                  </Box>
+                  <Box
+                    sx={{
+                      background: "#443565",
+                      width: "fit-content",
+                      maxWidth: width < 576 ? width - 100 : 215,
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      wordWrap: "break-word",
+                      borderRadius: "5px",
+
+                      letterSpacing: "0.5px",
+                    }}
+                    className="p-1 mt-2 d-flex ps-2 pe-2"
+                  >
+                    <div
+                      style={{
                         color: "white",
+                        fontWeight: "500 !important",
                         fontSize: "14px",
                         width: "100%",
-                        wordWrap: "break-word",
-                        borderRadius: "5px",
-                        fontWeight: "500 !important",
-                        
+                        wordWrap: "break-word" /* IE 5.5-7 */,
+
                         letterSpacing: "0.5px",
                       }}
                     >
-                      {e?.messageContent}
-                    </Box>
-                  </Box>
-                </Box>
-              )}
-            </>
-          ) : (
-            <Box className="d-flex justify-content-between">
-              <Box className="pt-2">
-                <Avatar
-                  onClick={(event) => {
-                    handleClick(event, e?.messageFromName);
-                  }}
-                  alt={e?.messageFromName}
-                  src={
-                    e?.messageFromAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        e?.messageFromAvatar
-                      : images.undefinedAvatar
-                  }
-                  sx={{ borderRadius: "50%", marginLeft: "5px" }}
-                />
-              </Box>
-              <Box className="mx-2" sx={{ borderRadius: "5px" }}>
-                <Box className="d-flex justify-content-start align-items-center">
-                  <span
-                    style={{
-                      color: "#7C81F2",
-                      borderRadius: "5px",
-                      fontWeight: "500 !important",
-                      
-                      letterSpacing: "0.5px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontWeight: "500 !important",
-                        
-                        letterSpacing: "0.5px",
-                      }}
-                    >
-                      {e?.messageFromName}
-                    </span>
-                  </span>
-                  <Box>
-                    <span
-                      style={{
-                        color: "white",
-                        marginLeft: "15px",
-                        fontSize: "10px",
-                        fontWeight: "500 !important",
-                        
-                        letterSpacing: "0.5px",
-                      }}
-                    >
-                      {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
-                    </span>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    background: "#443565",
-                    width: "fit-content",
-                    maxWidth: width < 576 ? width - 100 : 215,
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    wordWrap: "break-word",
-                    borderRadius: "5px",
-                    
-                    letterSpacing: "0.5px",
-                  }}
-                  className="p-1 mt-2 d-flex ps-2 pe-2"
-                >
-                  <div
-                    style={{
-                      color: "white",
-                      fontWeight: "500 !important",
-                      fontSize: "14px",
-                      width: "100%",
-                      wordWrap: "break-word" /* IE 5.5-7 */,
-                      
-                      letterSpacing: "0.5px",
-                    }}
-                  >
-                    {e?.messageGameId > 0 && e?.messageRoomName ? (
-                      <Box
-                        className="d-flex justify-content-between"
-                        sx={{
-                          width: "100%",
-                        }}
-                      >
+                      {e?.messageGameId > 0 && e?.messageRoomName ? (
                         <Box
+                          className="d-flex justify-content-between"
                           sx={{
-                            width: "fit-content",
-                            color: "#7878a7",
-                            fontSize: "14px",
+                            width: "100%",
                           }}
                         >
-                          <span
-                            style={{ fontWeight: "bold", color: "#9b9acf" }}
-                          >
-                            You're invited to play:
-                          </span>
                           <Box
-                            className="p-2 d-flex"
                             sx={{
-                              backgroundColor: "#2a1932",
+                              width: "fit-content",
+                              color: "#7878a7",
+                              fontSize: "14px",
                             }}
                           >
+                            <span
+                              style={{ fontWeight: "bold", color: "#9b9acf" }}
+                            >
+                              You're invited to play:
+                            </span>
                             <Box
+                              className="p-2 d-flex"
                               sx={{
-                                width: "40%",
-                                height: "50px",
+                                backgroundColor: "#2a1932",
                               }}
                             >
-                              <img
-                                src={
-                                  e &&
-                                  e?.messageGameAvatar &&
-                                  e?.messageGameAvatar !== "normal"
-                                    ? process.env.REACT_APP_SOCKET_SERVER +
-                                      "/" +
-                                      e?.messageGameAvatar
-                                    : images.Aa
-                                }
-                                alt="..."
-                                width={"100%"}
-                                height={"75px"}
-                                style={{
-                                  objectFit: "cover",
-                                }}
-                              />
-                            </Box>
-                            <Box
-                              className="ms-2 d-flex flex-column flex-end"
-                              sx={{ width: "60%" }}
-                            >
-                              <span
-                                style={{
-                                  color: "white",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                {e?.messageGameName?.slice(0, 10) + `...`}
-                              </span>
-                              <span className="text-white font-weight-bold">
-                                Price: {e?.messageBetPrice}
-                              </span>
                               <Box
-                                onClick={() =>
-                                  handleOnClickInviteGameMess(
-                                    e.messageGameId,
-                                    e.messageRoomId
-                                  )
-                                }
-                                className="p-1 mt-1 text-center text-white cursor-pointer"
                                 sx={{
-                                  width: "100%",
-                                  background:
-                                    "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                                  fontWeight: "bold",
-                                  borderRadius: "4px",
+                                  width: "40%",
+                                  height: "50px",
                                 }}
                               >
-                                PLAY GAME
+                                <img
+                                  src={
+                                    e &&
+                                    e?.messageGameAvatar &&
+                                    e?.messageGameAvatar !== "normal"
+                                      ? process.env.REACT_APP_SOCKET_SERVER +
+                                        "/" +
+                                        e?.messageGameAvatar
+                                      : images.Aa
+                                  }
+                                  alt="..."
+                                  width={"100%"}
+                                  height={"75px"}
+                                  style={{
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              </Box>
+                              <Box
+                                className="ms-2 d-flex flex-column flex-end"
+                                sx={{ width: "60%" }}
+                              >
+                                <span
+                                  style={{
+                                    color: "white",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {e?.messageGameName?.slice(0, 10) + `...`}
+                                </span>
+                                <span className="text-white font-weight-bold">
+                                  Price: {e?.messageBetPrice}
+                                </span>
+                                <Box
+                                  onClick={() =>
+                                    handleOnClickInviteGameMess(
+                                      e.messageGameId,
+                                      e.messageRoomId
+                                    )
+                                  }
+                                  className="p-1 mt-1 text-center text-white cursor-pointer"
+                                  sx={{
+                                    width: "100%",
+                                    background:
+                                      "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                                    fontWeight: "bold",
+                                    borderRadius: "4px",
+                                  }}
+                                >
+                                  PLAY GAME
+                                </Box>
                               </Box>
                             </Box>
                           </Box>
                         </Box>
-                      </Box>
-                    ) : (
-                      <span
-                        style={{
-                          fontWeight: "500 !important",
-                          
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {e?.messageContent}
-                      </span>
-                    )}
-                  </div>
+                      ) : (
+                        <span
+                          style={{
+                            fontWeight: "500 !important",
+
+                            letterSpacing: "0.5px",
+                          }}
+                        >
+                          {e?.messageContent}
+                        </span>
+                      )}
+                    </div>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-            // <UserChatLoading />
-          )}
-        </Box>
-      );
-    });
+            )}
+          </Box>
+        );
+      })
+  );
 
   const checkHeightResponsive = () => {
     if (width < 576) {

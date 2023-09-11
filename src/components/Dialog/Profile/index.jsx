@@ -361,6 +361,7 @@ export default function DialogProfile(props) {
                               />
                             ),
                             position: "top-center",
+                            
                             className:
                               width < 576 ? "success-background-small" : "success-background",
                           });

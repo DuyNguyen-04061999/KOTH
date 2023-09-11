@@ -3,7 +3,7 @@ import React from "react";
 
 const UserChatLoading = (props) => {
   const {
-    bgColor = "rgba(255,255,255,0.3)",
+    bgColor = "rgba(255,255,255,0.5)",
     animation = "pulse",
     ...other
   } = props;
@@ -38,9 +38,8 @@ const UserChatLoading = (props) => {
   );
 };
 
-
 const UserChatLoadingList = (props) => {
-    const {itemCount = 10} = props
+    const {itemCount = 10, } = props
     const listItemLoading = [];
     for (let i = 0; i < itemCount; i++) {
       listItemLoading.push(<UserChatLoading key={i} />);
