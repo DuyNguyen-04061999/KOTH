@@ -767,19 +767,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               justifyContent: "flex-end",
             }}
           >
-            <Typography
-              sx={{
-                color: "#fff",
-                fontWeight: "500 !important",
-                fontSize: "12px",
-                display: "flex",
-                alignItems: "center",
-                marginRight: "28px",
-                marginTop: "10px",
-              }}
-            >
-              {readMore ? "Read less" : "Read more"}
-            </Typography>
+            {
+              detailTournament &&
+              detailTournament?.tournamentInformations &&
+              isJson(detailTournament?.tournamentInformations) &&
+              JSON.parse(detailTournament?.tournamentInformations) &&
+              JSON.parse(detailTournament?.tournamentInformations)?.length >
+                3 && <Typography
+                sx={{
+                  color: "#fff",
+                  fontWeight: "500 !important",
+                  fontSize: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  marginRight: "28px",
+                  marginTop: "10px",
+                }}
+              >
+                {readMore ? "Read less" : "Read more"}
+              </Typography>
+            } 
           </Box>
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             <Box

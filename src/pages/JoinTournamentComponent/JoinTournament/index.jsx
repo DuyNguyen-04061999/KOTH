@@ -332,7 +332,7 @@ export default function JoinTournament() {
                             border: "none",
                             outline: "none",
                             height: "40px",
-                            backgroundColor: "#69389E",
+                            background: "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
                             color: "white",
                             display: "flex",
                             alignItems: "center",
