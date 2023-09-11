@@ -10,7 +10,6 @@ export default function StripeAlertComponent() {
   const { isAlertDialog, typeAlert } = useSelector(
     (state) => state.stripeReducer
   );
-console.log(isAlertDialog);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
 
