@@ -76,9 +76,9 @@ export default function Signup(props) {
       password.length > 15 ||
       c_password.length > 15 ||
       password.length < 6 ||
-      password !== c_password ||
-       isAlphanumeric(username) === false ||
-       containsSpecialCharacters(password) === false 
+      // password !== c_password ||
+       isAlphanumeric(username) === false 
+      //  containsSpecialCharacters(password) === false 
     ) {
       setDisabledBtn(true);
     } else {
@@ -92,9 +92,23 @@ export default function Signup(props) {
   };
   // console.log(passSai);
   //------------------------------------------------------------------
+  const [textC_pass,setTextC_pass] = useState("")
+  const [textPassValid,setPassValid] = useState("")
+  const [textUserName,setTextUserName] = useState("")
   const sendRegister = () => {
-    if (c_password !== password) {
+    if(isAlphanumeric(username) === false) {
       setPassSai(true);
+      setTextUserName("Account name should contain only letters and numbers")
+      return
+    }
+    else if (c_password !== password) {
+      setPassSai(true);
+      setTextC_pass("Password does not match")
+      return
+    } else if (containsSpecialCharacters(password) === false) {
+      setPassSai(true);
+      setPassValid("Password must be at least 6 characters. Password must have at least one non letter, one digit ('0-9'), one upper case")
+      return
     } else {
       setPassSai(false);
       socket?.emit("register", {
@@ -186,9 +200,9 @@ export default function Signup(props) {
           {username && username.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
-          {isAlphanumeric(username) === false && (
-            <span className="text-danger">Account name should contain only letters and numbers</span>
-          )}
+          {/* {isAlphanumeric(username) === false && ( */}
+            <span className="text-danger">{textUserName}</span>
+          {/* )} */}
         </FormControl>
         {/* <Box className="position-relative">
           <div className="d-flex justify-content-between align-items-center ps-2 pe-2 pb-2 radio-group">
@@ -317,9 +331,9 @@ export default function Signup(props) {
               Password must be 6 characters or more
             </span>
           )}
-          {containsSpecialCharacters(password) === false && (
-            <span className="text-danger">Password must be at least 6 characters. Password must have at least one non letter, one digit ('0-9'), one upper case</span>
-          )}
+          {/* {containsSpecialCharacters(password) === false && ( */}
+            <span className="text-danger">{textPassValid}</span>
+          {/* )} */}
         </FormControl>
         <FormControl
           variant="standard"
@@ -393,12 +407,12 @@ export default function Signup(props) {
               />
             )}
           </Box>
-          {c_password && c_password.length > 15 && (
+          {/* {c_password && c_password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
-          )}
-          {c_password && c_password !== password && (
-            <span className="text-danger">Password does not match</span>
-          )}
+          )} */}
+          {/* {c_password && c_password !== password && ( */}
+            <span className="text-danger">{textC_pass}</span>
+          {/* )} */}
           {/* {passSai === true ? (
             <span className="text-danger">Password not march</span>
           ) : (
