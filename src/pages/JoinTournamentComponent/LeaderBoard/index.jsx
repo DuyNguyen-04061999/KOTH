@@ -504,7 +504,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
             onClose={handleOnClose}
             sx={{
               zIndex: "1311",
-              backgroundColor:"#211d28"
+              // backgroundColor:"#211d28"
             }}
             open={open}
           >
