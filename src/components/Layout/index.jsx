@@ -139,6 +139,7 @@ export default function Layout(props) {
   const [chatF, setChatF] = useState("");
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
+  const { device } = useSelector((state) => state.deviceReducer);
   useEffect(() => {
     dispatch(changeRouter(window.location.pathname));
     const socket = _socket;
@@ -155,7 +156,6 @@ export default function Layout(props) {
       // window.location.reload();
     }
   }, [router, startGameCheck]);
-
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
       socket?.emit("leaveAllRoom");
@@ -187,7 +187,7 @@ export default function Layout(props) {
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
-  
+
   const handleChangeChat = (e) => {
     setChatF(e.target.value);
   };
@@ -209,14 +209,14 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
-    if(tabChat === true) {
-      setBackgroundGlobal("#883AF0")
-      setBackgroundPrivate("#261a35")
+    if (tabChat === true) {
+      setBackgroundGlobal("#883AF0");
+      setBackgroundPrivate("#261a35");
     } else {
-      setBackgroundGlobal("#261a35")
-      setBackgroundPrivate("#883AF0")
+      setBackgroundGlobal("#261a35");
+      setBackgroundPrivate("#883AF0");
     }
-  },[tabChat])
+  }, [tabChat]);
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -328,7 +328,7 @@ export default function Layout(props) {
       <AppBar
         position="sticky"
         className={
-          ((width < 1200 && height < 768) || width < 576) && startGameCheck
+          (device === "Tablet" || device === "Mobile") && startGameCheck
             ? "d-none"
             : ""
         }
@@ -417,7 +417,9 @@ export default function Layout(props) {
             </div>
           ) : (
             <Box>
-              {location && width < 576 && location?.pathname?.includes("/packages") ? (
+              {location &&
+              width < 576 &&
+              location?.pathname?.includes("/packages") ? (
                 <span className="ms-2">Packages</span>
               ) : (
                 <NavLink to="/home">
@@ -574,10 +576,7 @@ export default function Layout(props) {
                 minWidth: "400px !important",
                 width: "400px !important",
               },
-              display:
-                startGameCheck && width > 576 && width < 1200 && height < 768
-                  ? "none"
-                  : "block",
+              display: startGameCheck && device === "Tablet" ? "none" : "block",
             }}
           >
             <Navbar />
@@ -651,7 +650,7 @@ export default function Layout(props) {
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
                     padding: "6px",
-                    color:"#fff"
+                    color: "#fff",
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -716,7 +715,7 @@ export default function Layout(props) {
                     cursor: "pointer",
                     borderRadius: "0px 5px 5px 0px",
                     padding: "6px",
-                    color:"#fff"
+                    color: "#fff",
                   }}
                   onClick={() => {
                     if (token === null || token === "") {

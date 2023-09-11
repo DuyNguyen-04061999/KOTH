@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { images, video } from "../../../utils/images";
+import { imageDesktop, images, video } from "../../../utils/images";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
@@ -53,13 +53,19 @@ export default function PlayGame(props) {
 
   const checkLockScreen = () => {
     if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-      if (device === "Mobile" && orientation === "portrait") {
+      if (
+        (device === "Mobile" || device === "Tablet") &&
+        orientation === "portrait"
+      ) {
         return true;
       } else {
         return false;
       }
     } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-      if (device === "Mobile" && orientation === "landscape") {
+      if (
+        (device === "Mobile" || device === "Tablet") &&
+        orientation === "landscape"
+      ) {
         return true;
       } else {
         return false;
@@ -86,13 +92,19 @@ export default function PlayGame(props) {
   useEffect(() => {
     const checkLockScreen = () => {
       if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-        if (device === "Mobile" && orientation === "portrait") {
+        if (
+          (device === "Mobile" || device === "Tablet") &&
+          orientation === "portrait"
+        ) {
           return true;
         } else {
           return false;
         }
       } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-        if (device === "Mobile" && orientation === "landscape") {
+        if (
+          (device === "Mobile" || device === "Tablet") &&
+          orientation === "landscape"
+        ) {
           return true;
         } else {
           return false;
@@ -110,28 +122,21 @@ export default function PlayGame(props) {
   }, [orientation, width, detailTournament, startGame, device]);
 
   useEffect(() => {
-    if (orientation === "landscape" && width > 576 && width < 1200) {
-      setIsFullScreen(true);
-    }
-
-    if (
-      orientation === "portrait" ||
-      (width > 576 && orientation === "portrait")
-    ) {
-      setIsFullScreen(false);
-    }
-  }, [orientation, width]);
-
-  useEffect(() => {
     const checkFullMobileScreen = () => {
       if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-        if (device === "Mobile" && orientation === "landscape") {
+        if (
+          (device === "Mobile" || device === "Tablet") &&
+          orientation === "landscape"
+        ) {
           return true;
         } else {
           return false;
         }
       } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-        if (device === "Mobile" && orientation === "portrait") {
+        if (
+          (device === "Mobile" || device === "Tablet") &&
+          orientation === "portrait"
+        ) {
           return true;
         } else {
           return false;
@@ -173,7 +178,11 @@ export default function PlayGame(props) {
         <Box
           sx={{
             width:
-              isFullScreen && startGame ? "100%" : width < 576 ? "100%" : "80%",
+              isFullScreen && startGame
+                ? "100%"
+                : device === "Mobile" || device === "Tablet"
+                ? "100%"
+                : "80%",
             height: isFullScreen && startGame ? "100%" : "auto",
             paddingBottom: width < 576 ? "60px" : "none",
             position: isFullScreen && startGame ? "fixed" : "relative",
@@ -185,7 +194,11 @@ export default function PlayGame(props) {
         >
           {detailTournament && (
             <FullScreen
-              className={device === "Mobile" ? "fullscreen_IOS" : ""}
+              className={
+                device === "Mobile" || device === "Tablet"
+                  ? "fullscreen_IOS"
+                  : ""
+              }
               handle={screen}
               onChange={reportChange}
             >
@@ -211,7 +224,7 @@ export default function PlayGame(props) {
                       muted
                       onEnded={() => {
                         setVideoGame(false);
-                        if (device === "Mobile") {
+                        if (device === "Mobile" || device === "Tablet") {
                           setIsFullScreen(true);
                         }
                       }}
@@ -231,7 +244,7 @@ export default function PlayGame(props) {
                       onClick={() => {
                         if (second === 0) {
                           setVideoGame(false);
-                          if (device === "Mobile") {
+                          if (device === "Mobile" || device === "Tablet") {
                             setIsFullScreen(true);
                           }
                         }
@@ -239,7 +252,8 @@ export default function PlayGame(props) {
                       sx={{
                         position:
                           device === "Desktop" ||
-                          (device === "Mobile" && orientation === "portrait")
+                          ((device === "Mobile" || device === "Tablet") &&
+                            orientation === "portrait")
                             ? "absolute"
                             : "fixed",
                         top: width < 576 ? "70%" : "80%",
@@ -320,125 +334,131 @@ export default function PlayGame(props) {
                       unPauseGame={unPauseGame}
                       videoGame={videoGame}
                     />
-                    {startGame && expand === true && width > 576 && (
-                      <>
-                        <Box
-                          className={
-                            mouseEnter === false
-                              ? "showButtonFullScreen"
-                              : "showButtonFullScreenDis"
-                          }
-                          sx={{
-                            width: "100%",
-                            height: "60px",
-                            boxSizing: "border-box",
-                            position: "absolute",
-                            display: "flex",
-                            bottom: "0px",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                          }}
-                        >
-                          <button
-                            style={{
-                              width: "70px",
-                              height: "50px",
-                              border: "none",
-                              outline: "none",
-                              borderRadius: "40px 40px 0px 0px",
+                    {startGame &&
+                      expand === true &&
+                      (device === "Desktop" || device === "Tablet") && (
+                        <>
+                          <Box
+                            className={
+                              mouseEnter === false
+                                ? "showButtonFullScreen"
+                                : "showButtonFullScreenDis"
+                            }
+                            sx={{
+                              width: "100%",
+                              height: "60px",
+                              boxSizing: "border-box",
+                              position: "absolute",
                               display: "flex",
+                              bottom: "0px",
                               justifyContent: "center",
-                              alignItems: "center",
+                              alignItems: "flex-end",
                             }}
-                            onClick={() => setMouseEnter(true)}
                           >
-                            <img alt="..." width="30px" src={images.eyeIcon} />
-                          </button>
-                        </Box>
-                        <Box
-                          className={
-                            mouseEnter === true
-                              ? "navBarFullScreen"
-                              : "navBarFullScreenDis"
-                          }
-                          sx={{
-                            width: "100%",
-                            height: "auto",
-                            boxSizing: "border-box",
-                            padding: "10px 20px",
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            alignItems: "center",
-                            backgroundColor: "rgb(46, 40, 68)",
-                          }}
-                        >
-                          <img
-                            style={{
-                              position: "absolute",
-                              left: "50px",
-                            }}
-                            width="150px"
-                            alt="..."
-                            src={images.Logo_Text}
-                          />
-                          <button
-                            onClick={() => setMouseEnter(false)}
-                            style={{
-                              border: "none",
-                              outline: "none",
-                              position: "absolute",
-                              padding: "6px 50px",
-                              borderRadius: "10px",
-                              left: "45%",
-                              background: "linear-gradient(#873CF0,#7946EE)",
-                              color: "white",
+                            <button
+                              style={{
+                                width: "70px",
+                                height: "50px",
+                                border: "none",
+                                outline: "none",
+                                borderRadius: "40px 40px 0px 0px",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                              onClick={() => setMouseEnter(true)}
+                            >
+                              <img
+                                alt="..."
+                                width="30px"
+                                src={images.eyeIcon}
+                              />
+                            </button>
+                          </Box>
+                          <Box
+                            className={
+                              mouseEnter === true
+                                ? "navBarFullScreen"
+                                : "navBarFullScreenDis"
+                            }
+                            sx={{
+                              width: "100%",
+                              height: "auto",
+                              boxSizing: "border-box",
+                              padding: "10px 20px",
                               display: "flex",
-                              justifyContent: "center",
+                              justifyContent: "flex-end",
                               alignItems: "center",
+                              backgroundColor: "rgb(46, 40, 68)",
                             }}
                           >
                             <img
-                              width="25px"
-                              alt="..."
-                              src={images.closeEyefullscreen}
-                              style={{ marginRight: "5px" }}
-                            />
-                            Hide this bar
-                          </button>
-                          {expand === false ? (
-                            <img
-                              alt=".."
-                              width={width < 576 ? width / 20 : width / 68}
                               style={{
-                                marginLeft: width < 576 ? "20px" : "30px",
-                                cursor: "pointer",
+                                position: "absolute",
+                                left: "50px",
                               }}
-                              onClick={() => {
-                                setExpand(true);
-                              }}
-                              src={images.expandIcon}
-                            />
-                          ) : (
-                            <img
+                              width="150px"
                               alt="..."
-                              width={width < 576 ? width / 20 : width / 68}
-                              style={{
-                                marginLeft: width < 576 ? "20px" : "30px",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                setExpand(false);
-                                screen.exit();
-                              }}
-                              src={images.ZoomInIcon}
+                              src={imageDesktop.LogoCongTy}
                             />
-                          )}
-                        </Box>
-                      </>
-                    )}{" "}
+                            <button
+                              onClick={() => setMouseEnter(false)}
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                position: "absolute",
+                                padding: "6px 50px",
+                                borderRadius: "10px",
+                                left: "45%",
+                                background: "linear-gradient(#873CF0,#7946EE)",
+                                color: "white",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <img
+                                width="25px"
+                                alt="..."
+                                src={images.closeEyefullscreen}
+                                style={{ marginRight: "5px" }}
+                              />
+                              Hide this bar
+                            </button>
+                            {expand === false ? (
+                              <img
+                                alt=".."
+                                width={width < 576 ? width / 20 : width / 68}
+                                style={{
+                                  marginLeft: width < 576 ? "20px" : "30px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  setExpand(true);
+                                }}
+                                src={images.expandIcon}
+                              />
+                            ) : (
+                              <img
+                                alt="..."
+                                width={width < 576 ? width / 20 : width / 68}
+                                style={{
+                                  marginLeft: width < 576 ? "20px" : "30px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  setExpand(false);
+                                  screen.exit();
+                                }}
+                                src={images.ZoomInIcon}
+                              />
+                            )}
+                          </Box>
+                        </>
+                      )}{" "}
                     {startGame &&
                       expand === false &&
-                      width > 576 &&
+                      (device === "Desktop" || device === "Tablet") &&
                       !videoGame &&
                       isLoaded && (
                         <Box
@@ -456,12 +476,12 @@ export default function PlayGame(props) {
                         >
                           <img
                             style={{
-                              width: "120px",
+                              width: "85px",
                               position: "absolute",
                               left: "20px",
                             }}
                             alt="..."
-                            src={images.Logo_Text}
+                            src={imageDesktop.LogoCongTy}
                           />
                           {expand === false ? (
                             <img
@@ -612,6 +632,8 @@ export default function PlayGame(props) {
                 sx={{
                   position: "fixed",
                   top: "40%",
+                  width: "90px",
+                  height: "44px",
                   display: "flex",
                   padding: "10px",
                   backgroundImage: "linear-gradient(#6844de,#8c39ff)",

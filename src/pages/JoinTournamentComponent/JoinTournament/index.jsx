@@ -23,7 +23,6 @@ import moment from "moment/moment";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import JoinTournamentMobile from "../JoinTournamentMobile";
-import InspirationTTF from "../../../assets/font/CynthoNextExtraLight.otf";
 import LeaderBoard from "../LeaderBoard";
 import DetailVoucher from "../DetailVoucher";
 import "./index.scss";
@@ -40,9 +39,7 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
