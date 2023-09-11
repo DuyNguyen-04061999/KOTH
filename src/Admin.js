@@ -18,7 +18,7 @@ export default function Admin() {
                 <PersistGate loading={null} persistor={persistorAdmin}>
                     <CustomRouter history={history}>
                         <Routes>
-                            <Route path="/" element={<PrivateRouteComponent children={<MainPage/>}/>} />
+                            <Route path="/" element={<PrivateRouteComponent children={<MainPage/>}/>} >
                             {/* Master */}
                             <Route path="/master/create-distributor" element={<PrivateRouteComponent children={<CreateDistributorPage/>}/>} />
                             <Route path="/master/list-distributor" element={<PrivateRouteComponent children={<ListDistributorPage/>}/>} />
@@ -36,6 +36,7 @@ export default function Admin() {
                             <Route path="/sub-distributor/detail" element={<PrivateRouteComponent children={<DetailSubDistributorPage/>}/>} />
                             <Route path="/sub-distributor/refs" element={<PrivateRouteComponent children={<ListRefPage/>}/>} />
                             <Route path="/sub-distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketPage/>}/>} />
+                            </Route>
                             <Route path="/login" element={<LoginPage/>} />
                             {/* Not Found */}
                             <Route path="*" element={<LoginPage/>} />
