@@ -218,6 +218,27 @@ export default function Layout(props) {
     }
   },[tabChat])
 
+  useEffect(() => {
+    const handleKeyboardOpen = () => {
+      // Check if the virtual keyboard is open (adjust the threshold if needed)
+      if (window.innerHeight < window.outerHeight) {
+        // Adjust the timeout delay if needed
+        setTimeout(() => {
+          // Scroll to the top or any other desired behavior
+          window.scrollTo(0, 0);
+        }, 300); // Wait for virtual keyboard to fully open (adjust as needed)
+      }
+    };
+
+    // Add event listener for the focus event
+    window.addEventListener('focus', handleKeyboardOpen);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('focus', handleKeyboardOpen);
+    };
+  }, []);
+
   // useEffect(() => {
   //   if (token === "" || token === null) {
   //     setBackgroundGlobal("#883AF0");
