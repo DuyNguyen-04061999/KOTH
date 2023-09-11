@@ -40,12 +40,15 @@ import Gold from "../../../Gold/Gold";
 import { getAppType } from "../../../../utils/helper";
 // import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { toast } from "react-toastify";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isTab  } = useSelector((state) => state.authReducer);
+  const [displayPassword, setDisplayPassword] = useState(false);
+  const { isTab } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const [socket, setSocket] = useState(null);
@@ -53,10 +56,16 @@ function SimpleDialog(props) {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
+  const handleSetPassword = () => {
+    setDisplayPassword(!displayPassword);
+  };
+
   const handleClose = () => {
     onClose(selectedValue);
     setUsername("");
     setPassword("");
+    dispatch(clickTab(false))
   };
   useEffect(() => {
     socket?.on("loginError", (data) => {});
@@ -221,7 +230,7 @@ function SimpleDialog(props) {
                       <Input
                         id="login_password"
                         placeholder="Password"
-                        type="password"
+                        type={displayPassword === false ? "password" : "text"}
                         name="password"
                         value={password}
                         autoComplete="current-password"
@@ -247,6 +256,27 @@ function SimpleDialog(props) {
                           padding: "0px 0px 0px 25px !important",
                         }}
                       />
+                      <Box onClick={handleSetPassword}>
+                        {displayPassword === false ? (
+                          <VisibilityOffIcon
+                            sx={{
+                              position: "absolute",
+                              top: width > 576 ? "12px" : "14px",
+                              right: width > 576 ? "12px" : "10px",
+                              color: "#7C81F2",
+                            }}
+                          />
+                        ) : (
+                          <VisibilityIcon
+                            sx={{
+                              position: "absolute",
+                              top: width > 576 ? "12px" : "10px",
+                              right: width > 576 ? "12px" : "10px",
+                              color: "#7C81F2",
+                            }}
+                          />
+                        )}
+                      </Box>
                     </FormControl>
                     <Box className="d-flex justify-content-end mt-4">
                       {/* <Box
@@ -421,7 +451,7 @@ function SimpleDialog(props) {
                         <Input
                           id="login_password"
                           placeholder="Password"
-                          type="password"
+                          type={displayPassword === false ? "password" : "text"}
                           value={password}
                           autoComplete="current-password"
                           onChange={handleChangePassword}
@@ -443,6 +473,27 @@ function SimpleDialog(props) {
                             padding: "0px 0px 0px 25px !important",
                           }}
                         />
+                        <Box onClick={handleSetPassword}>
+                          {displayPassword === false ? (
+                            <VisibilityOffIcon
+                              sx={{
+                                position: "absolute",
+                                top: width > 576 ? "12px" : "10px",
+                                right: width > 576 ? "12px" : "10px",
+                                color: "#7C81F2",
+                              }}
+                            />
+                          ) : (
+                            <VisibilityIcon
+                              sx={{
+                                position: "absolute",
+                                top: width > 576 ? "12px" : "10px",
+                                right: width > 576 ? "12px" : "10px",
+                                color: "#7C81F2",
+                              }}
+                            />
+                          )}
+                        </Box>
                       </FormControl>
                       <Box className="d-flex justify-content-end">
                         {/* <Box
@@ -785,7 +836,13 @@ export default function Dialoglg() {
                 : "d-flex align-items-center user-name"
             }
           >
-            <Dropdown hidden={width < 576 && location && location?.pathname?.includes("packages")}>
+            <Dropdown
+              hidden={
+                width < 576 &&
+                location &&
+                location?.pathname?.includes("packages")
+              }
+            >
               <Dropdown.Toggle
                 style={{
                   backgroundColor: "unset",
@@ -795,22 +852,22 @@ export default function Dialoglg() {
                 id="dropdown-basic"
                 className="dropdown-bs position-relative btn-ava"
               >
-                  <img
-                    style={{
-                      borderRadius: 50,
-                      border: "2px solid #68399E",
-                    }}
-                    alt="Remy Sharp"
-                    src={
-                      userAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
-                        : images.undefinedAvatar
-                    }
-                    height={34}
-                    width={34}
-                    className="ava-signin ms-2 me-2"
-                  />
-                  {/* )} */}
+                <img
+                  style={{
+                    borderRadius: 50,
+                    border: "2px solid #68399E",
+                  }}
+                  alt="Remy Sharp"
+                  src={
+                    userAvatar
+                      ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
+                      : images.undefinedAvatar
+                  }
+                  height={34}
+                  width={34}
+                  className="ava-signin ms-2 me-2"
+                />
+                {/* )} */}
               </Dropdown.Toggle>
               <Dropdown.Menu
                 style={{

@@ -1,6 +1,10 @@
 export const detectDevice = () => {
-  console.log(navigator.userAgent.toLowerCase(), "detect");
   if (
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 0) ||
+    navigator.platform === "iPad"
+  ) {
+    return "Tablet";
+  } else if (
     /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(
       navigator.userAgent.toLowerCase()
     )
