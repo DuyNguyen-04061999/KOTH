@@ -207,7 +207,7 @@ export default function DialogChat(props) {
                   )}
                   <span
                     style={{
-                      color: "#895DBF",
+                      color: renderTab === true ? "white" : "#895DBF",
                       fontSize: "10px",
                       marginLeft: "5px",
                     }}
