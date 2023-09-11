@@ -184,7 +184,8 @@ export default function BuyTicket(props) {
                         // fontFamily: "",
                       }}
                     >
-                      {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"}
+                      {/* {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"} */}
+                      0.5 ${" "}
                     </Typography>
                   </Box>
                   <Box sx={{ marginTop: "20px" }}>
@@ -257,7 +258,7 @@ export default function BuyTicket(props) {
                             textAlign: "start",
                           }}
                         >
-                          1 ticket
+                          3 ticket
                         </Typography>
                         <Typography
                           sx={{
@@ -268,7 +269,7 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          1 gameplay{" "}
+                          3 gameplay{" "}
                         </Typography>
                       </Box>
                       <Box sx={{ width: "40%" }}>
@@ -291,7 +292,7 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          2.99 ${" "}
+                          0.5 ${" "}
                         </Typography>
                       </Box>
                     </Box>
@@ -313,12 +314,13 @@ export default function BuyTicket(props) {
               onClick={() => {
                 if (!bought) {
                   socket?.emit("buyPackage", {
+                    price: 0.5,
                     tournamentId: tournamentId,
                     packageId: ticketBuy?.id,
                   });
                 } else {
                   socket?.emit("buyPackage", {
-                    price: 2.99,
+                    price: 0.5,
                     tournamentId: tournamentId,
                     packageId: ticketBuy?.id,
                   });
