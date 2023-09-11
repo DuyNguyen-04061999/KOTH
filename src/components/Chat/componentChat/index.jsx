@@ -428,7 +428,7 @@ export default function ComponentChat() {
       }}
     >
       {renderChat}
-      <div ref={bottomRef}></div>
+      <span ref={bottomRef}></span>
     </Box>
   );
 }
