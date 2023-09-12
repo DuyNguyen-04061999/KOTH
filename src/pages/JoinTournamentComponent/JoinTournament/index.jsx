@@ -116,6 +116,9 @@ export default function JoinTournament() {
       setDetailTournament(data);
       setFetchT(false);
     });
+    socket?.on("buyTicketTournamentSuccess", () => {
+      window.location.reload();
+    });
     socket?.on("joinTournamentSuccess", (data) => {
       // socket?.emit("detailTournament", {
       //   tournamentId: data?.id,
@@ -136,6 +139,7 @@ export default function JoinTournament() {
           tournamentId: data?.id,
         });
       }, 1000);
+      window.location.reload();
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       dispatch(toggleStartGame(true));
@@ -187,7 +191,12 @@ export default function JoinTournament() {
       }
     }
   }, [detailTournament, width]);
-
+  // useEffect(() => {
+  //   if (!window.location.hash.includes("#reloaded")) {
+  //     window.location.href += "#reloaded";
+  //     window.location.reload();
+  //   }
+  // }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -329,7 +338,8 @@ export default function JoinTournament() {
                             border: "none",
                             outline: "none",
                             height: "40px",
-                            background: "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
+                            background:
+                              "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
                             color: "white",
                             display: "flex",
                             alignItems: "center",

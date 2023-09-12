@@ -989,7 +989,6 @@ export default function Navbar() {
                   fill="none"
                   viewBox="0 0 24 24"
                   className="p-1 me-1"
-
                 >
                   <g>
                     <path

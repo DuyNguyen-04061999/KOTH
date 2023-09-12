@@ -173,7 +173,6 @@ export default function BuyTicket(props) {
                       sx={{
                         color: "#8042EF",
                         fontSize: "16px",
-                        
                       }}
                     >
                       Double Dragon
@@ -210,7 +209,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            
+
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -233,7 +232,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            
+
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -264,7 +263,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            
+
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -287,7 +286,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            
+
                             textAlign: "start",
                             marginTop: "5px",
                           }}

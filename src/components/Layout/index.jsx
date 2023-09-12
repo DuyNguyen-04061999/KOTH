@@ -231,11 +231,11 @@ export default function Layout(props) {
     };
 
     // Add event listener for the focus event
-    window.addEventListener('focus', handleKeyboardOpen);
+    window.addEventListener("focus", handleKeyboardOpen);
 
     // Clean up the event listener on unmount
     return () => {
-      window.removeEventListener('focus', handleKeyboardOpen);
+      window.removeEventListener("focus", handleKeyboardOpen);
     };
   }, []);
 
@@ -576,7 +576,7 @@ export default function Layout(props) {
                 minWidth: "400px !important",
                 width: "400px !important",
               },
-              display: startGameCheck && device === "Tablet" ? "none" : "block",
+              display: startGameCheck ? "none" : "block",
             }}
           >
             <Navbar />

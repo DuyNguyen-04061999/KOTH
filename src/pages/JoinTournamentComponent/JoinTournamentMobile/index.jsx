@@ -73,6 +73,9 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       setDetailTournament(data);
       setFetchT(false);
     });
+    socket?.on("buyTicketTournamentSuccess", () => {
+      window.location.reload();
+    });
     socket?.on("joinTournamentSuccess", (data) => {
       // socket?.emit("detailTournament", {
       //   tournamentId: data?.id,
@@ -93,6 +96,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           tournamentId: data?.id,
         });
       }, 1000);
+      window.location.reload();
     });
     return () => {
       socket?.off("joinTournamentSuccess");
@@ -724,8 +728,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 fontSize: "11px",
                 height: readMore ? "fit-content" : "100px",
                 overflow: "hidden",
-                transition: 'height 0.5s ease',
-
+                transition: "height 0.5s ease",
               }}
             >
               {detailTournament &&
@@ -767,26 +770,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               justifyContent: "flex-end",
             }}
           >
-            {
-              detailTournament &&
+            {detailTournament &&
               detailTournament?.tournamentInformations &&
               isJson(detailTournament?.tournamentInformations) &&
               JSON.parse(detailTournament?.tournamentInformations) &&
               JSON.parse(detailTournament?.tournamentInformations)?.length >
-                3 && <Typography
-                sx={{
-                  color: "#fff",
-                  fontWeight: "500 !important",
-                  fontSize: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  marginRight: "28px",
-                  marginTop: "10px",
-                }}
-              >
-                {readMore ? "Read less" : "Read more"}
-              </Typography>
-            } 
+                3 && (
+                <Typography
+                  sx={{
+                    color: "#fff",
+                    fontWeight: "500 !important",
+                    fontSize: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    marginRight: "28px",
+                    marginTop: "10px",
+                  }}
+                >
+                  {readMore ? "Read less" : "Read more"}
+                </Typography>
+              )}
           </Box>
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             <Box

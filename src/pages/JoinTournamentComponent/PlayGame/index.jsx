@@ -17,16 +17,16 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 export default function PlayGame(props) {
   const { startGame, detailTournament, setStartGame, videoGame, setVideoGame } =
     props;
-  const { device } = useSelector((state) => state.deviceReducer);
+  const { device, deviceType } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const screen = useFullScreenHandle();
   const [expand, setExpand] = useState(false);
-  const [second, setSeconds] = useState(7);
+  const [second, setSeconds] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [pauseGame, setPauseGame] = useState(false);
   const [unPauseGame, setUnPauseGame] = useState(false);
   const [continueGame, setContinueGame] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -86,9 +86,9 @@ export default function PlayGame(props) {
       clearInterval(timeInterval);
     };
   }, [second]);
-  useEffect(() => {
-    setSeconds(7);
-  }, [videoGame, id]);
+  // useEffect(() => {
+  //   setSeconds(7);
+  // }, [videoGame, id]);
   useEffect(() => {
     const checkLockScreen = () => {
       if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
@@ -220,8 +220,12 @@ export default function PlayGame(props) {
                       }
                       width={"100%"}
                       playsInline
+                      // muted
+                      controls={deviceType === "iOS" ? true : false}
                       autoPlay
-                      muted
+                      onPlay={() => {
+                        setSeconds(7);
+                      }}
                       onEnded={() => {
                         setVideoGame(false);
                         if (device === "Mobile" || device === "Tablet") {
@@ -240,53 +244,56 @@ export default function PlayGame(props) {
                         type="video/mp4"
                       />
                     </video>{" "}
-                    <Box
-                      onClick={() => {
-                        if (second === 0) {
-                          setVideoGame(false);
-                          if (device === "Mobile" || device === "Tablet") {
-                            setIsFullScreen(true);
+                    {second !== null && (
+                      <Box
+                        onClick={() => {
+                          if (second === 0) {
+                            setVideoGame(false);
+                            if (device === "Mobile" || device === "Tablet") {
+                              setIsFullScreen(true);
+                            }
+                            setSeconds(null);
                           }
-                        }
-                      }}
-                      sx={{
-                        position:
-                          device === "Desktop" ||
-                          ((device === "Mobile" || device === "Tablet") &&
-                            orientation === "portrait")
-                            ? "absolute"
-                            : "fixed",
-                        top: width < 576 ? "70%" : "80%",
-                        right: "20px",
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "10px",
-                        backgroundColor: "#000",
-                        border: "2px solid #ffff",
-                        cursor: "pointer",
-                        zIndex: "1000000000000",
-                      }}
-                    >
-                      <Typography
+                        }}
                         sx={{
-                          color: "white",
-                          marginRight: "4px",
-                          fontSize: width < 576 ? "10px !important" : "14px",
+                          position:
+                            device === "Desktop" ||
+                            ((device === "Mobile" || device === "Tablet") &&
+                              orientation === "portrait")
+                              ? "absolute"
+                              : "fixed",
+                          top: width < 576 ? "70%" : "80%",
+                          right: "20px",
+                          display: "flex",
+                          alignItems: "center",
+                          padding: "10px",
+                          backgroundColor: "#000",
+                          border: "2px solid #ffff",
+                          cursor: "pointer",
+                          zIndex: "1000000000000",
                         }}
                       >
-                        {second !== 0
-                          ? `You can skip Ads after ${second}s`
-                          : "Skip Ads"}
-                      </Typography>
-                      <i
-                        style={{
-                          color: "#ffff",
-                          marginTop: "2px",
-                          fontSize: width < 576 ? "10px" : "14px",
-                        }}
-                        className="fa-solid fa-angle-right"
-                      ></i>
-                    </Box>
+                        <Typography
+                          sx={{
+                            color: "white",
+                            marginRight: "4px",
+                            fontSize: width < 576 ? "10px !important" : "14px",
+                          }}
+                        >
+                          {second !== 0
+                            ? `You can skip Ads after ${second}s`
+                            : "Skip Ads"}
+                        </Typography>
+                        <i
+                          style={{
+                            color: "#ffff",
+                            marginTop: "2px",
+                            fontSize: width < 576 ? "10px" : "14px",
+                          }}
+                          className="fa-solid fa-angle-right"
+                        ></i>
+                      </Box>
+                    )}
                   </Box>
                 </Box>
               )}
@@ -302,9 +309,6 @@ export default function PlayGame(props) {
                     }}
                   >
                     <UnityGameComponent
-                      setIsLoaded={(data) => {
-                        setIsLoaded(data);
-                      }}
                       fmod={detailTournament?.tournamentInfors?.game?.gameFmod}
                       GameFiles={
                         detailTournament?.tournamentInfors?.game?.GameFiles
@@ -459,8 +463,7 @@ export default function PlayGame(props) {
                     {startGame &&
                       expand === false &&
                       (device === "Desktop" || device === "Tablet") &&
-                      !videoGame &&
-                      isLoaded && (
+                      !videoGame && (
                         <Box
                           sx={{
                             width: "100%",
