@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_AGENT_SERVICE } from "../services/adminAgentService";
-import { createAgentFail, createAgentSuccess, getListAgentFail, getListAgentSuccess } from "../reducers/adminAgentReducer";
+import { createAgentFail, createAgentSuccess, deleteAgentFail, deleteAgentSuccess, getListAgentFail, getListAgentSuccess, updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
 const adminAgentService = new ADMIN_AGENT_SERVICE();
 
 function* createAgent(dataRequest) {
@@ -37,10 +37,44 @@ function* getListAgent(dataRequest) {
 }
 
 
+function* updateAgent(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminAgentService.updateAgent, payload)
+        if(res && res.status === 200) {
+           yield put(updateAgentSuccess())
+           alert("Update Agent Success!")
+        } else {
+           yield put(updateAgentFail())
+        }
+        
+    } catch (error) {
+        yield put(updateAgentFail())
+    }
+}
+
+function* deleteAgent(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminAgentService.deleteAgent, payload)
+        if(res && res.status === 200) {
+           yield put(deleteAgentSuccess())
+           alert("Delete Agent Success!")
+        } else {
+           yield put(deleteAgentFail())
+        }
+        
+    } catch (error) {
+        yield put(deleteAgentFail())
+    }
+}
+
+
 function* adminSubDistributorSaga() {
     yield takeEvery("GET_LIST_AGENT", getListAgent);
     yield takeEvery("CREATE_AGENT", createAgent);
-
+    yield takeEvery("UPDATE_AGENT", updateAgent);
+    yield takeEvery("DELETE_AGENT", deleteAgent);
 }
 
 export default adminSubDistributorSaga
