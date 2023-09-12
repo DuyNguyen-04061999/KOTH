@@ -25,14 +25,14 @@ stages:
 build-crypto:
   <<: *build
   only:
-    - staging
+    - develop
   environment:
     name: crypto
 
 build-promote:
   <<: *build
   only:
-    - staging
+    - develop
   environment:
     name: promote
 
@@ -57,14 +57,14 @@ build-play4promo-prod:
 deploy-crypto:
   <<: *deploy
   only:
-    - staging
+    - develop
   environment:
     name: crypto
 
 deploy-promote:
   <<: *deploy
   only:
-    - staging
+    - develop
   environment:
     name: promote
 
