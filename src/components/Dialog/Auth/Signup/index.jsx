@@ -110,7 +110,10 @@ export default function Signup(props) {
     if(c_password === password) {
       setTextC_pass("")
     }
-  },[password,c_password])
+    if(checkEmailFormat(email) === true){
+      setValidEmail("")
+    }
+  },[password,c_password, email])
 
   const sendRegister = () => {
     if(isAlphanumeric(username) === false) {
