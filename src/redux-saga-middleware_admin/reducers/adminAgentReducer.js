@@ -84,14 +84,37 @@ export const deleteAgentFail = (data) => {
   }
 }
 
+export const createEndUser = (data) => {
+  return {
+    type: "CREATE_END_USER",
+    payload: data
+  }
+}
+
+export const createEndUserSuccess = (data) => {
+  return {
+    type: "CREATE_END_USER_SUCCESS",
+    payload: data
+  }
+}
+
+export const createEndUserFail = (data) => {
+  return {
+    type: "CREATE_END_USER_FAIL",
+    payload: data
+  }
+}
+
 const adminAgentReducer = (
   state = {
+    isCreateEndUser: false,
     isCreateAgent: false,
     newAgent: null,
-    isFetchAgent: false,
-    listAgent: [],
-    isUpdateAgent: false,
-    isDeleteAgent: false
+    newEndUser: null,
+    isFetchEndUser: false,
+    listEndUser: [],
+    isUpdateEndUser: false,
+    isDeleteEndUser: false
   },
   action
 ) => {
@@ -99,20 +122,23 @@ const adminAgentReducer = (
   switch (type) {
       case REHYDRATE: 
         const { adminAgentReducer } = payload || {}
-        const { listAgent } = adminAgentReducer || {}
-        return { ...state, listAgent: listAgent || []};
+        const { listEndUser } = adminAgentReducer || {}
+        return { ...state, listEndUser: listEndUser || []};
       case "CREATE_AGENT": return {...state, isCreateAgent: true}
       case "CREATE_AGENT_SUCCESS": return {...state, isCreateAgent: false, newAgent: payload}
       case "CREATE_AGENT_FAIL": return {...state, isCreateAgent: false}
-      case "GET_LIST_AGENT": return {...state, isFetchAgent: true}
-      case "GET_LIST_AGENT_SUCCESS": return {...state, isFetchAgent: false, listAgent: payload?.list || []}
-      case "GET_LIST_AGENT_FAIL": return {...state, isFetchAgent: false}
-      case "UPDATE_AGENT": return {...state, isUpdateAgent: true}
-      case "UPDATE_AGENT_SUCCESS": return {...state, isUpdateAgent: false}
-      case "UPDATE_AGENT_FAIL": return {...state, isUpdateAgent: false}
-      case "DELETE_AGENT": return {...state, isDeleteAgent: true}
-      case "DELETE_AGENT_SUCCESS": return {...state, isDeleteAgent: false}
-      case "DELETE_AGENT_FAIL": return {...state, isDeleteAgent: false}
+      case "GET_LIST_AGENT": return {...state, isFetchEndUser: true}
+      case "GET_LIST_AGENT_SUCCESS": return {...state, isFetchEndUser: false, listEndUser: payload?.list || []}
+      case "GET_LIST_AGENT_FAIL": return {...state, isFetchEndUser: false}
+      case "UPDATE_AGENT": return {...state, isUpdateEndUser: true}
+      case "UPDATE_AGENT_SUCCESS": return {...state, isUpdateEndUser: false}
+      case "UPDATE_AGENT_FAIL": return {...state, isUpdateEndUser: false}
+      case "DELETE_AGENT": return {...state, isDeleteEndUser: true}
+      case "DELETE_AGENT_SUCCESS": return {...state, isDeleteEndUser: false}
+      case "DELETE_AGENT_FAIL": return {...state, isDeleteEndUser: false}
+      case "CREATE_END_USER": return {...state, isCreateEndUser: true}
+      case "CREATE_END_USER_SUCCESS": return {...state, isCreateEndUser: false, newEndUser: payload}
+      case "CREATE_END_USER_FAIL": return {...state, isCreateEndUser: false}
       default:
         return { ...state };
   }

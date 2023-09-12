@@ -2,7 +2,19 @@ import { ADMIN_API } from "../axios/admin_api";
 
 export class ADMIN_AGENT_SERVICE {
     async createAgent (dataRequest) {
-        const res = ADMIN_API.post(``, {
+        const res = ADMIN_API.post(`/api/admin/sub-distributor/create-agent`, {
+            token: localStorage.getItem("token_admin"),
+            ...dataRequest
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        return res
+    }
+
+    async createEndUser (dataRequest) {
+        const res = ADMIN_API.post(`/api/admin/agent/create-end-user`, {
             token: localStorage.getItem("token_admin"),
             ...dataRequest
         }, {

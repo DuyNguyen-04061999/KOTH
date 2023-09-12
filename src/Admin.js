@@ -10,7 +10,7 @@ import { PrivateRouteComponent } from './components/Admin';
 import { CreateDistributorPage, DatabaseManagerPage, EditDistributorPage, FeedbackManagerPage, ListDistributorPage, ProvideTicketMasterPage, TemplateManagerPage } from './pages/Admin/Master';
 import { CreateSubDistributorPage, EditSubDistributorPage, ListSubDistributorPage, ProvideTicketDistributorPage } from './pages/Admin/Distributor';
 import { CreateAgentPage, DetailSubDistributorPage, ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
-import { CreateEndUserPage, ProvideAgentTicketPage } from './pages/Admin/Agent';
+import { CreateEndUserPage, ProvideEndUserTicketPage } from './pages/Admin/Agent';
 
 export default function Admin() {
     return (
@@ -19,7 +19,7 @@ export default function Admin() {
                 <PersistGate loading={null} persistor={persistorAdmin}>
                     <CustomRouter history={history}>
                         <Routes>
-                            <Route path="/" element={<PrivateRouteComponent children={<MainPage/>}/>} >
+                            <Route path="/" element={<PrivateRouteComponent children={<MainPage/>}/>} > 
                             {/* Master */}
                             <Route path="/master/create-distributor" element={<PrivateRouteComponent children={<CreateDistributorPage/>}/>} />
                             <Route path="/master/list-distributor" element={<PrivateRouteComponent children={<ListDistributorPage/>}/>} />
@@ -34,16 +34,16 @@ export default function Admin() {
                             <Route path="/distributor/edit-sub-distributor/:id" element={<PrivateRouteComponent children={<EditSubDistributorPage/>}/>} />
                             <Route path="/distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketDistributorPage/>}/>} />
                             {/* Sub Distributor */}
-                            <Route path="/sub-distributor/create-agent" element={<PrivateRouteComponent children={<DetailSubDistributorPage/>}/>} />
+                            <Route path="/sub-distributor/create-agent" element={<PrivateRouteComponent children={<CreateAgentPage/>}/>} />
                             <Route path="/sub-distributor/detail" element={<PrivateRouteComponent children={<DetailSubDistributorPage/>}/>} />
                             <Route path="/sub-distributor/create-agent" element={<PrivateRouteComponent children={<CreateAgentPage/>}/>} />
                             <Route path="/sub-distributor/refs" element={<PrivateRouteComponent children={<ListRefPage/>}/>} />
                             <Route path="/sub-distributor/provide-ticket" element={<PrivateRouteComponent children={<ProvideTicketPage/>}/>} />
-                            </Route>
-                            <Route path="/login" element={<LoginPage/>} />
                             {/* Agent */}
                             <Route path="/agent/create-end-user" element={<PrivateRouteComponent children={<CreateEndUserPage/>}/>} />
-                            <Route path="/agent/provide-ticket" element={<PrivateRouteComponent children={<ProvideAgentTicketPage/>}/>} />
+                            <Route path="/agent/provide-ticket" element={<PrivateRouteComponent children={<ProvideEndUserTicketPage/>}/>} />
+                            </Route>
+                            <Route path="/login" element={<LoginPage/>} />
                             {/* Not Found */}
                             <Route path="*" element={<LoginPage/>} />
                         </Routes>

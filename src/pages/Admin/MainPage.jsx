@@ -14,10 +14,9 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(getConfigs());
   }, [dispatch]);
-  console.log("home");
 
   return (
-    <Box sx={{ display: "flex"}}>
+    <Box sx={{ display: "flex", bgcolor: "white", width: "100vw", height: "100vh"}}>
       <Box sx={{ width: "348px" }}>
         <Box
           sx={{
@@ -26,17 +25,10 @@ export default function MainPage() {
             top: "0",
             bottom: "0",
             bgcolor: "white",
+            padding: "47px 29px",
+            borderRight: "solid 2px #EEE"
           }}
         >
-          <span className="ms-2">
-            Welcome -{" "}
-            {roles && roles?.length > 0 && roles?.includes("master")
-              ? "Master"
-              : roles && roles?.length > 0 && roles?.includes("distributor")
-              ? "Distributor"
-              : "Sub-Distributor"}{" "}
-            - {ref}
-          </span>
           <AdminNavigation />    
         </Box>
       </Box>

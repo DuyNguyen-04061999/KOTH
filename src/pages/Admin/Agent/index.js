@@ -1,7 +1,7 @@
-import ProvideAgentTicketPage from './ProvideAgentTicketPage'
+import ProvideEndUserTicketPage from './ProvideEndUserTicketPage'
 import CreateEndUserPage from './CreateEndUserPage'
 
 export {
     CreateEndUserPage,
-    ProvideAgentTicketPage,
+    ProvideEndUserTicketPage,
 }
