@@ -12,6 +12,8 @@ export default function CreateSubDistributorPage() {
     const dispatch = useDispatch()
     const [pIds, setPIds] = useState([]);
 
+    console.log("Dis re-render");
+
     const handleSubmit = (e) => {
       e.preventDefault()
       const data = new FormData(e.currentTarget);
@@ -75,7 +77,7 @@ export default function CreateSubDistributorPage() {
               </Select>
               </FormControl>
             </Box>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }} className='text-white'>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
                   required
