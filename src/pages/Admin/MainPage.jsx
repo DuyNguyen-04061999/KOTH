@@ -25,8 +25,9 @@ export default function MainPage() {
             top: "0",
             bottom: "0",
             bgcolor: "white",
-            padding: {sm: "47px 29px", xs:"0"},
-            borderRight:{ sm: "solid 2px #EEE", xs:"0"}
+            width: {xs: "100vw", sm: "348px"},
+            borderRight:{ sm: "solid 2px #EEE", xs:"0"},
+            height: "100%"
           }}
         >
          <DrawerNavigation /> 

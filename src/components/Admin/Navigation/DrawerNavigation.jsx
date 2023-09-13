@@ -25,7 +25,7 @@ const DrawerNavigation = (props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{height: "100%"}}>
       <CssBaseline />
       <AppBar
         sx={{ display: { sm: "none" }, boxShadow: "unset" }}
@@ -44,7 +44,7 @@ const DrawerNavigation = (props) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <nav>
+      <nav style={{height: "100%"}}>
         <Box>
           <Drawer
             container={container}
@@ -75,7 +75,7 @@ const DrawerNavigation = (props) => {
             </Box>
           </Drawer>
         </Box>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        <Box sx={{ display: { xs: "none", sm: "block", height: "100%"} }}>
           <AdminNavigation />
         </Box>
       </nav>
