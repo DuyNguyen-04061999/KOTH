@@ -3,6 +3,9 @@ import { Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { getConfigs } from '../../redux-saga-middleware_admin/reducers/adminConfigReducer'
 import { useNavigate } from 'react-router-dom'
+import CreateAccountDialogComponent from '../../components/Admin/Dialog/CreateAccountDialogComponent'
+import ProvideTicketDialogComponent from '../../components/Admin/Dialog/ProvideTicketDialogComponent'
+import { DetailAccountDialogComponent } from '../../components/Admin/Dialog'
 
 const RenderActions = (data) => {
   const navigate = useNavigate()
@@ -82,6 +85,9 @@ export default function MainPage() {
 
   return (
     <div className='text-white p-2'>
+      <CreateAccountDialogComponent/>
+      <ProvideTicketDialogComponent/>
+      <DetailAccountDialogComponent/>
       <span className='ms-2'>Welcome - {roles && roles?.length > 0 && roles?.includes("master") ? "Master" : roles && roles?.length > 0 && roles?.includes("distributor") ? "Distributor" : "Sub-Distributor"} - {ref}</span>
       {roles && roles?.length > 0 && roles?.includes("master") && RenderActions(masterActions)}
       {roles && roles?.length > 0 && roles?.includes("distributor") && !roles?.includes("Sub") && RenderActions(distributorActions)}
