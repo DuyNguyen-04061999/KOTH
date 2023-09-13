@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Container,
+  FormControl,
   MenuItem,
   OutlinedInput,
   Select,
@@ -12,35 +13,30 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import {
-  getListTicket,
   provideTicket,
 } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
-import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { FormControl } from "react-bootstrap";
+import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+;
 
 const ProvideEndUserTicketPage = () => {
   const { roles, permissions } = useSelector((state) => state.adminAuthReducer);
-  const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
+  const { listEndUser } = useSelector((state) => state.adminAgentReducer );
   const { listTicket } = useSelector((state) => state.adminConfigReducer);
-
+  const { height } = useWindowDimensions();
+  const [listUserRef, setListUserRef] = useState([]);
   const [disId, setDisId] = useState("");
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListRef());
-    dispatch(getListTicket());
+    dispatch(getListEndUser());
   }, [dispatch]);
 
-  const { height } = useWindowDimensions();
-
-  const [listUserRef, setListUserRef] = useState([]);
 
   useEffect(() => {
     let list = [];
-    for (let index = 0; index < listRefs.length; index++) {
-      const element = listRefs[index];
+    for (let index = 0; index < listEndUser?.length; index++) {
+      const element = listEndUser[index];
       list?.push(element);
       if (element?.receivers && element?.receivers?.length > 0) {
         for (let ii = 0; ii < element?.receivers?.length; ii++) {
@@ -50,7 +46,7 @@ const ProvideEndUserTicketPage = () => {
       }
     }
     setListUserRef(list);
-  }, [listRefs]);
+  }, [listEndUser]);
 
   const getUsername = (se) => {
     let username;
@@ -96,7 +92,7 @@ const ProvideEndUserTicketPage = () => {
             {listTicket && listTicket?.length > 0 ? listTicket?.length : 0}
           </Box>
           <Box component={"div"} className="mt-2">
-            {/* <FormControl sx={{ width: 300 }}>
+            <FormControl sx={{ width: 300 }}>
               <Select
                 inputProps={{
                   style: {
@@ -129,7 +125,7 @@ const ProvideEndUserTicketPage = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl> */}
+            </FormControl>
           </Box>
           <Box
             component="form"

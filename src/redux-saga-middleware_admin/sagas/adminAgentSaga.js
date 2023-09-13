@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_AGENT_SERVICE } from "../services/adminAgentService";
-import { createAgentFail, createAgentSuccess, createEndUserSuccess, deleteAgentFail, deleteAgentSuccess, getListEndUserSuccess, getListEndUserFail,updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
+import { createAgentFail, createAgentSuccess, createEndUserSuccess, deleteAgentFail, deleteAgentSuccess,getListEndUserSuccess, getListEndUserFail,updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
 
 const adminAgentService = new ADMIN_AGENT_SERVICE();
 
@@ -25,11 +25,11 @@ function* getListEndUser(dataRequest) {
         const { payload } = dataRequest;
         const res = yield call(adminAgentService.getListEndUser, payload)
         const { refs } = res?.data?.data || []
-
+console.log(refs);
         if(res && res.status === 200) {
-           yield put(get({ refs }))
+           yield put(getListEndUserSuccess({ list: refs }))
         } else {
-            yield put(getListEndUserSuccess())
+            yield put(getListEndUserFail())
         }
         
     } catch (error) {

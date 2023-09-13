@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getConfigs } from "../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import { Outlet } from "react-router-dom";
 import AdminNavigation from "../../components/Admin/Navigation/AdminNavigation";
+import DrawerNavigation from "../../components/Admin/Navigation/DrawerNavigation";
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -17,7 +18,6 @@ export default function MainPage() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "white", width: "100vw", height: "100vh"}}>
-      <Box sx={{ width: "348px" }}>
         <Box
           sx={{
             position: "fixed",
@@ -25,13 +25,12 @@ export default function MainPage() {
             top: "0",
             bottom: "0",
             bgcolor: "white",
-            padding: "47px 29px",
-            borderRight: "solid 2px #EEE"
+            padding: {sm: "47px 29px", xs:"0"},
+            borderRight:{ sm: "solid 2px #EEE", xs:"0"}
           }}
         >
-          <AdminNavigation />    
+         <DrawerNavigation /> 
         </Box>
-      </Box>
       <Outlet />
     </Box>
   );
