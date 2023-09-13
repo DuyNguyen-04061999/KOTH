@@ -28,9 +28,7 @@ import { toast } from "react-toastify";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -49,6 +47,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [currentResult, setCurrentResult] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const [openVoucher, setOpenVoucher] = useState(false);
+  const [readMore, setReadMore] = useState(false);
   const { id } = useParams();
   const { token } = useSelector((state) => state.authReducer);
   const typographyStyle = {
@@ -67,6 +66,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       });
     }
   });
+
   const { width } = useWindowDimensions();
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
@@ -108,11 +108,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dialog
-        sx={{ zIndex: "1310"}}
-        open={true}
-        fullScreen={true}
-      >
+      <Dialog sx={{ zIndex: "1310" }} open={true} fullScreen={true}>
         <Box
           sx={{
             width: "100%",
@@ -196,9 +192,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             className="mb-2 text-center text-white"
             sx={{ marginTop: "20px" }}
           >
-            <Typography
-              className="fs-4"
-            >
+            <Typography className="fs-4">
               {detailTournament?.tournamentName?.length > 30
                 ? detailTournament?.tournamentName.slice(0, 30) + " ..."
                 : detailTournament?.tournamentName}
@@ -372,7 +366,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
                       </span>
                     </Box>
-                    <Box sx={{ marginTop: "6px", display:"flex", flexDirection: "column" }}>
+                    <Box
+                      sx={{
+                        marginTop: "6px",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
                       {" "}
                       <h6
                         style={{
@@ -416,7 +416,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: "8px",
-                    position: "relative"
+                    position: "relative",
                   }}
                 >
                   <Box
@@ -427,7 +427,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       position: "absolute",
                       borderRadius: "50%",
                       top: "-10px",
-                      left: "-10px"
+                      left: "-10px",
                     }}
                   ></Box>
                   <Box
@@ -438,7 +438,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       position: "absolute",
                       borderRadius: "50%",
                       bottom: "-10px",
-                      left: "-10px"
+                      left: "-10px",
                     }}
                   ></Box>
                   <img
@@ -722,6 +722,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 color: "#9384B7",
                 fontWeight: "lighter !important",
                 fontSize: "11px",
+                height: readMore ? "fit-content" : "100px",
+                overflow: "hidden",
+                transition: 'height 0.5s ease',
+
               }}
             >
               {detailTournament &&
@@ -748,9 +752,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             fontSize: "13px",
                           }}
                         >
-                          {item?.length > 200
-                            ? item.slice(0, 200) + "..."
-                            : item}
+                          {item}
                         </Typography>
                       </Box>
                     );
@@ -759,24 +761,32 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             </Box>
           </Box>
           <Box
+            onClick={() => setReadMore(!readMore)}
             sx={{
               display: "flex",
               justifyContent: "flex-end",
             }}
           >
-            <Typography
-              sx={{
-                color: "#fff",
-                fontWeight: "500 !important",
-                fontSize: "12px",
-                display: "flex",
-                alignItems: "center",
-                marginRight: "28px",
-                marginTop: "10px",
-              }}
-            >
-              Read more
-            </Typography>
+            {
+              detailTournament &&
+              detailTournament?.tournamentInformations &&
+              isJson(detailTournament?.tournamentInformations) &&
+              JSON.parse(detailTournament?.tournamentInformations) &&
+              JSON.parse(detailTournament?.tournamentInformations)?.length >
+                3 && <Typography
+                sx={{
+                  color: "#fff",
+                  fontWeight: "500 !important",
+                  fontSize: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  marginRight: "28px",
+                  marginTop: "10px",
+                }}
+              >
+                {readMore ? "Read less" : "Read more"}
+              </Typography>
+            } 
           </Box>
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             <Box
@@ -834,10 +844,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             sx={{
               position: "fixed",
               bottom: "0px",
-              padding: "28px",
+              padding: "28px 28px 28px 28px",
               width: "100%",
               background: "rgba(37, 37, 37, 0.20)",
-              backdropFilter: "blur(2px)",
+              // backdropFilter: "blur(2px)",
               zIndex: "25",
             }}
           >
@@ -876,7 +886,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     border: "none",
                     outline: "none",
                     width: "45%",
-                    background: "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
+                    background:
+                      "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
                     color: "white",
                   }}
                 >
@@ -888,7 +899,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     borderRadius: "5px",
                     border: "none",
                     outline: "none",
-                    background: "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
+                    background:
+                      "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
                     color: "white",
                     padding: "8px 0px",
                     width: "45%",

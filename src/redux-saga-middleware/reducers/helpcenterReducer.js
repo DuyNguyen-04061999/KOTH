@@ -1,3 +1,5 @@
+import { faL } from "@fortawesome/free-solid-svg-icons";
+
 export const setTabHelpCenter = (data) => {
   return {
     type: "SET_TAB_HELPCENTER",
@@ -29,6 +31,7 @@ const helpcenterReducer = (
   state = {
     tabHelpCenter: 0,
     listFAQPromote: [],
+    isFetching: false
   },
   action
 ) => {
@@ -46,6 +49,20 @@ const helpcenterReducer = (
       return {
         ...state,
         listFAQPromote: payload,
+        isFetching: false
+      };
+    }
+    case "GET_LIST_FAQ_PROMOTE": {
+      return {
+        ...state,
+        isFetching: true
+      };
+    }
+    case "GET_LIST_FAQ_PROMOTE_FAIL": {
+      return {
+        ...state,
+        listFAQPromote: payload,
+        isFetching: false
       };
     }
     default:

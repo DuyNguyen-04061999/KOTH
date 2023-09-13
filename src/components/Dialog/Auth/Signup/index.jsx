@@ -63,6 +63,11 @@ export default function Signup(props) {
     return regex.test(input);
   }
 
+  function checkEmailFormat(email) {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  }
+
 
   useEffect(() => {
     if (
@@ -70,15 +75,16 @@ export default function Signup(props) {
       username === "" ||
       password === "" ||
       c_password === "" ||
-      !email.includes("@gmail.com") ||
       username.includes(" ") ||
       username.length > 15 ||
       password.length > 15 ||
       c_password.length > 15 ||
       password.length < 6 ||
-      password !== c_password ||
-       isAlphanumeric(username) === false ||
-       containsSpecialCharacters(password) === false 
+      // password !== c_password ||
+       isAlphanumeric(username) === false  ||
+      //  checkEmailFormat(email) === false
+      email === ""
+      //  containsSpecialCharacters(password) === false 
     ) {
       setDisabledBtn(true);
     } else {
@@ -92,9 +98,41 @@ export default function Signup(props) {
   };
   // console.log(passSai);
   //------------------------------------------------------------------
+  const [textC_pass,setTextC_pass] = useState("")
+  const [textPassValid,setPassValid] = useState("")
+  const [textUserName,setTextUserName] = useState("")
+  const [validEmail,setValidEmail] = useState("")
+
+  useEffect(() => {
+    if(containsSpecialCharacters(password) === true){
+      setPassValid("")
+    } 
+    if(c_password === password) {
+      setTextC_pass("")
+    }
+    if(checkEmailFormat(email) === true){
+      setValidEmail("")
+    }
+  },[password,c_password, email])
+
   const sendRegister = () => {
-    if (c_password !== password) {
+    if(isAlphanumeric(username) === false) {
       setPassSai(true);
+      setTextUserName("Account name should contain only letters and numbers")
+      return
+    }
+    else if (c_password !== password) {
+      setPassSai(true);
+      setTextC_pass("Password does not match")
+      return
+    } else if (containsSpecialCharacters(password) === false) {
+      setPassSai(true);
+      setPassValid("Password must be at least 6 characters. Password must have at least one non letter, one digit ('0-9'), one upper case")
+      return
+    } else if(checkEmailFormat(email) === false) {
+      setPassSai(true);
+      setValidEmail("Invalid Email Address")
+      return
     } else {
       setPassSai(false);
       socket?.emit("register", {
@@ -186,9 +224,9 @@ export default function Signup(props) {
           {username && username.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
           )}
-          {isAlphanumeric(username) === false && (
-            <span className="text-danger">Account name should contain only letters and numbers</span>
-          )}
+          {/* {isAlphanumeric(username) === false && ( */}
+            <span className="text-danger">{textUserName}</span>
+          {/* )} */}
         </FormControl>
         {/* <Box className="position-relative">
           <div className="d-flex justify-content-between align-items-center ps-2 pe-2 pb-2 radio-group">
@@ -309,17 +347,9 @@ export default function Signup(props) {
               />
             )}
           </Box>
-          {password && password.length > 15 && (
-            <span className="text-danger">no more than 15 characters</span>
-          )}
-          {password && password.length < 6 && (
-            <span className="text-danger">
-              Password must be 6 characters or more
-            </span>
-          )}
-          {containsSpecialCharacters(password) === false && (
-            <span className="text-danger">Password is not in correct format</span>
-          )}
+          {/* {containsSpecialCharacters(password) === false && ( */}
+            <span className="text-danger">{textPassValid}</span>
+          {/* )} */}
         </FormControl>
         <FormControl
           variant="standard"
@@ -393,12 +423,12 @@ export default function Signup(props) {
               />
             )}
           </Box>
-          {c_password && c_password.length > 15 && (
+          {/* {c_password && c_password.length > 15 && (
             <span className="text-danger">no more than 15 characters</span>
-          )}
-          {c_password && c_password !== password && (
-            <span className="text-danger">Password does not match</span>
-          )}
+          )} */}
+          {/* {c_password && c_password !== password && ( */}
+            <span className="text-danger">{textC_pass}</span>
+          {/* )} */}
           {/* {passSai === true ? (
             <span className="text-danger">Password not march</span>
           ) : (
@@ -452,12 +482,7 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />{" "}
-          {email && !email.includes("@gmail.com") && (
-            <span className="text-danger">Email must contain @gmail.com</span>
-          )}
-          {email && email.length > 30 && (
-            <span className="text-danger">no more than 30 characters</span>
-          )}
+            <span className="text-danger">{validEmail}</span>
         </FormControl>
         <FormControl
           variant="standard"

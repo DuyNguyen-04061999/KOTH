@@ -23,7 +23,6 @@ import moment from "moment/moment";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import JoinTournamentMobile from "../JoinTournamentMobile";
-import InspirationTTF from "../../../assets/font/CynthoNextExtraLight.otf";
 import LeaderBoard from "../LeaderBoard";
 import DetailVoucher from "../DetailVoucher";
 import "./index.scss";
@@ -40,9 +39,7 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -332,7 +329,7 @@ export default function JoinTournament() {
                             border: "none",
                             outline: "none",
                             height: "40px",
-                            backgroundColor: "#69389E",
+                            background: "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
                             color: "white",
                             display: "flex",
                             alignItems: "center",

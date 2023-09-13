@@ -23,6 +23,7 @@ export default function UnityGameComponent(props) {
     unPauseGame,
     fmod,
     videoGame,
+    setIsLoaded,
   } = props;
 
   const { width, height } = useWindowDimensions();
@@ -134,61 +135,65 @@ export default function UnityGameComponent(props) {
   const unityRef = useRef();
 
   useEffect(() => {
-    if (pauseGame) {
+    if (pauseGame && isLoaded) {
       sendMessage("TournamentGameEntry", "PauseGame", "");
     }
-  }, [pauseGame, sendMessage]);
+  }, [pauseGame, sendMessage, isLoaded]);
 
   useEffect(() => {
-    if (unPauseGame) {
+    if (unPauseGame && isLoaded) {
       sendMessage("TournamentGameEntry", "UnpauseGame", "");
     }
-  }, [unPauseGame, sendMessage]);
+  }, [unPauseGame, sendMessage, isLoaded]);
+
+  // useEffect(() => {
+  //   const onBeforeUnload = async (ev) => {
+  //     //#############
+  //     if (!fmod) {
+  //       await unload();
+  //     }
+  //     dispatch(toggleStartGame(false));
+  //     //#############
+
+  //     ev.returnValue = "Anything you wanna put here!";
+  //     return "Anything here as well, doesn't matter!";
+  //   };
+
+  //   window.addEventListener("beforeunload", onBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener("beforeunload", onBeforeUnload);
+  //   };
+  // }, [dispatch, unload, fmod]);
+
+  // useEffect(() => {
+  //   const onBeforeUnload = async (ev) => {
+  //     //#############
+  //     if (!fmod) {
+  //       await unload();
+  //     }
+  //     dispatch(toggleStartGame(false));
+  //     //#############
+
+  //     ev.returnValue = "Anything you wanna put here!";
+  //     return "Anything here as well, doesn't matter!";
+  //   };
+
+  //   window.addEventListener("popstate", onBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener("popstate", onBeforeUnload);
+  //   };
+  // }, [dispatch, unload, fmod]);
 
   useEffect(() => {
-    const onBeforeUnload = async (ev) => {
-      //#############
-      if (!fmod) {
-        await unload();
-      }
-      dispatch(toggleStartGame(false));
-      //#############
-
-      ev.returnValue = "Anything you wanna put here!";
-      return "Anything here as well, doesn't matter!";
-    };
-
-    window.addEventListener("beforeunload", onBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", onBeforeUnload);
-    };
-  }, [dispatch, unload, fmod]);
-
-  useEffect(() => {
-    const onBeforeUnload = async (ev) => {
-      //#############
-      if (!fmod) {
-        await unload();
-      }
-      dispatch(toggleStartGame(false));
-      //#############
-
-      ev.returnValue = "Anything you wanna put here!";
-      return "Anything here as well, doesn't matter!";
-    };
-
-    window.addEventListener("popstate", onBeforeUnload);
-
-    return () => {
-      window.removeEventListener("popstate", onBeforeUnload);
-    };
-  }, [dispatch, unload, fmod]);
-
+    setIsLoaded(isLoaded);
+  }, [isLoaded, setIsLoaded]);
   return (
     <Fragment>
       {!isLoaded && !videoGame && (
         <LoadingScreen
+          isLoaded={isLoaded}
           loadingProgression={Math.round(loadingProgression * 100)}
         />
       )}

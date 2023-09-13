@@ -208,7 +208,7 @@ export default function PlayGame() {
 
     return () => {
       // socket?.off()
-    }
+    };
   }, [socket, detailGame, roomIdSelect, dispatch]);
 
   useEffect(() => {
