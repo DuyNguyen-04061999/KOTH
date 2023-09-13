@@ -95,6 +95,16 @@ export default function Signup(props) {
   const [textC_pass,setTextC_pass] = useState("")
   const [textPassValid,setPassValid] = useState("")
   const [textUserName,setTextUserName] = useState("")
+
+  useEffect(() => {
+    if(containsSpecialCharacters(password) === true){
+      setPassValid("")
+    } 
+    if(c_password === password) {
+      setTextC_pass("")
+    }
+  },[password,c_password])
+
   const sendRegister = () => {
     if(isAlphanumeric(username) === false) {
       setPassSai(true);
@@ -323,14 +333,6 @@ export default function Signup(props) {
               />
             )}
           </Box>
-          {password && password.length > 15 && (
-            <span className="text-danger">no more than 15 characters</span>
-          )}
-          {password && password.length < 6 && (
-            <span className="text-danger">
-              Password must be 6 characters or more
-            </span>
-          )}
           {/* {containsSpecialCharacters(password) === false && ( */}
             <span className="text-danger">{textPassValid}</span>
           {/* )} */}
