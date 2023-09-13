@@ -506,7 +506,7 @@ export default function Browser(props) {
                           : "",
                     }}
                   >
-                    Hot tour
+                    Hot
                   </span>
                 </Box>
                 {/* <Box
@@ -644,7 +644,7 @@ export default function Browser(props) {
                           : "",
                     }}
                   >
-                    Daily tour
+                    Daily
                   </span>
                 </Box>
                 <Box
@@ -730,7 +730,7 @@ export default function Browser(props) {
                           : "",
                     }}
                   >
-                    Week-long tour
+                    Week-long
                   </span>
                 </Box>
               </Box>
