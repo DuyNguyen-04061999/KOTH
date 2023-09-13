@@ -33,10 +33,9 @@ export default function NavMobile() {
     }
   }, [isProfileDialog]);
   const { pathname } = useLocation();
-
   return (
     <>
-      {isLoginDialog === false && width <= 576 && !startGameCheck ? (
+      { width <= 576 && !startGameCheck ? (
         <div className="mobile" style={{ display: `${hideNavMobile}` }}>
           {getAppType() === "promote" ? (
             <div className="content_nav">
