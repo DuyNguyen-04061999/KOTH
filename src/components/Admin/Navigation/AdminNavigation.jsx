@@ -101,19 +101,21 @@ const AdminNavigation = (props) => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      <Box />
+      <Box>
       <Box
         className="inp-header mx-3 ps-4 cursor-pointer"
         onClick={() => {
           navigate("/");
         }}
         component={"img"}
-        src={images}
+        src={images.adminLogo}
+        sx={{height: "100px"}}
       >
+      </Box>
       </Box>
       <Box
         sx={{
-          width: "288px",
+          width: "100%",
           color: "#355DFF",
           marginTop: "66px",
         }}
