@@ -358,6 +358,7 @@ export default function WalletTypePromote(props) {
                 <input
                   type="radio"
                   className="radio-input"
+                  defaultChecked
                   style={{
                     position: "absolute",
                     top: 43,
