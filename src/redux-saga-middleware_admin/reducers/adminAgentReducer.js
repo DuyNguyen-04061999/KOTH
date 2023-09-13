@@ -21,23 +21,23 @@ export const createAgentFail = (data) => {
   }
 }
 
-export const getListAgent = (data) => {
+export const getListEndUser = (data) => {
   return {
-    type: "GET_LIST_AGENT",
+    type: "GET_LIST_END_USER",
     payload: data
   }
 }
 
-export const getListAgentSuccess = (data) => {
+export const getListEndUserSuccess = (data) => {
   return {
-    type: "GET_LIST_AGENT_SUCCESS",
+    type: "GET_LIST_END_USER_SUCCESS",
     payload: data
   }
 }
 
-export const getListAgentFail = (data) => {
+export const getListEndUserFail = (data) => {
   return {
-    type: "GET_LIST_AGENT_FAIL",
+    type: "GET_LIST_END_USER_FAIL",
     payload: data
   }
 }

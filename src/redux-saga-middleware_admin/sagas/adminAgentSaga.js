@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_AGENT_SERVICE } from "../services/adminAgentService";
-import { createAgentFail, createAgentSuccess, createEndUserSuccess, deleteAgentFail, deleteAgentSuccess, getListAgentFail, getListAgentSuccess, updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
+import { createAgentFail, createAgentSuccess, createEndUserSuccess, deleteAgentFail, deleteAgentSuccess, getListEndUserSuccess, getListEndUserFail,updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
 
 const adminAgentService = new ADMIN_AGENT_SERVICE();
 
@@ -20,39 +20,23 @@ function* createAgent(dataRequest) {
     }
 }
 
-function* getListAgent(dataRequest) {
-    try {
-        const { payload } = dataRequest;
-        const res = yield call(adminAgentService.getListAgent, payload)
-        const { refs } = res?.data?.data || []
-
-        if(res && res.status === 200) {
-           yield put(getListAgentSuccess({ refs }))
-        } else {
-            yield put(getListAgentFail())
-        }
-        
-    } catch (error) {
-        yield put(getListAgentFail())
-    }
-}
-
 function* getListEndUser(dataRequest) {
     try {
         const { payload } = dataRequest;
-        const res = yield call(adminAgentService.getListAgent, payload)
+        const res = yield call(adminAgentService.getListEndUser, payload)
         const { refs } = res?.data?.data || []
 
         if(res && res.status === 200) {
-           yield put(getListAgentSuccess({ refs }))
+           yield put(get({ refs }))
         } else {
-            yield put(getListAgentFail())
+            yield put(getListEndUserSuccess())
         }
         
     } catch (error) {
-        yield put(getListAgentFail())
+        yield put(getListEndUserFail())
     }
 }
+
 
 
 function* updateAgent(dataRequest) {
@@ -107,7 +91,7 @@ function* createEndUser(dataRequest) {
 
 function* adminAgentSaga() {
     yield takeEvery("CREATE_AGENT", createAgent);
-    yield takeEvery("GET_LIST_AGENT", getListAgent);
+    yield takeEvery("GET_LIST_END_USER", getListEndUser);
     yield takeEvery("UPDATE_AGENT", updateAgent);
     yield takeEvery("DELETE_AGENT", deleteAgent);
     yield takeEvery("CREATE_END_USER", createEndUser);

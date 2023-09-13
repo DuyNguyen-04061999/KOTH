@@ -25,8 +25,8 @@ export class ADMIN_AGENT_SERVICE {
         return res
     }
 
-    async getListAgent (dataRequest) {
-        const res = ADMIN_API.get(``, {
+    async getListEndUser (dataRequest) {
+        const res = ADMIN_API.get(`/api/admin/agent/refs`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
