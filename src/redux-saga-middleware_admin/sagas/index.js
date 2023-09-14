@@ -4,6 +4,7 @@ import adminConfigAuthSaga from "./adminConfigSaga";
 import adminMasterSaga from "./adminMasterSaga";
 import adminDistributorSaga from "./adminDistributorSaga";
 import adminSubDistributorSaga from "./adminSubDistributorSaga";
+import adminAgentSaga from "./adminAgentSaga";
 
 function* watchAll() {
   yield all([
@@ -11,7 +12,8 @@ function* watchAll() {
     adminConfigAuthSaga(),
     adminMasterSaga(),
     adminDistributorSaga(),
-    adminSubDistributorSaga()
+    adminSubDistributorSaga(),
+    adminAgentSaga()
   ]);
 }
 
