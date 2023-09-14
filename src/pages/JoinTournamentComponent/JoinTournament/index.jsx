@@ -13,6 +13,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { images } from "../../../utils/images";
 import {
+  useNavigate,
   // useNavigate,
   useParams,
 } from "react-router-dom";
@@ -37,6 +38,7 @@ import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appRedu
 import PlayGame from "../PlayGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
 
 const theme = createTheme({
   typography: {},
@@ -70,6 +72,9 @@ export default function JoinTournament() {
   };
   const screen = useFullScreenHandle();
   const [minLength, setMinLength] = useState(0);
+  useEffect(() => {
+    dispatch(updateDetailTour(detailTournament));
+  }, [detailTournament, dispatch]);
   const timeEnd =
     moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
     " " +
@@ -142,6 +147,7 @@ export default function JoinTournament() {
       window.location.reload();
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
+      console.log(123);
       dispatch(toggleStartGame(true));
       setStartGame(true);
       setVideoGame(true);

@@ -124,6 +124,7 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
@@ -292,7 +293,6 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-
   return (
     <Box
       className="tong"
@@ -560,7 +560,7 @@ export default function Layout(props) {
         ""
       )}
       <Grid container>
-        {width > 576 ? (
+        {device === "Desktop" || device === "Tablet" ? (
           <Grid
             item
             sm={1}
@@ -576,7 +576,7 @@ export default function Layout(props) {
                 minWidth: "400px !important",
                 width: "400px !important",
               },
-              display: startGameCheck ? "none" : "block",
+              display: startGameCheck && device === "Tablet" ? "none" : "block",
             }}
           >
             <Navbar />

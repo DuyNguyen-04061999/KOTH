@@ -13,6 +13,8 @@ import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import ReactPlayer from "react-player";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 
 export default function PlayGame(props) {
   const { startGame, detailTournament, setStartGame, videoGame, setVideoGame } =
@@ -32,6 +34,7 @@ export default function PlayGame(props) {
   const dispatch = useDispatch();
   const [mouseEnter, setMouseEnter] = useState(false);
   const [socket, setSocket] = useState(null);
+
   const reportChange = useCallback(
     (state, handle) => {
       if (handle === screen) {
@@ -164,6 +167,16 @@ export default function PlayGame(props) {
     dispatch,
     device,
   ]);
+  // useEffect(() => {
+  //   return async () => {
+  //     if (window.confirm("Do you want to quit the game ?")) {
+  //       const element = document.getElementById("play-game-iframe");
+  //       element.remove();
+  //       console.log("Unloaded");
+  //     }
+  //     dispatch(toggleStartGame(false));
+  //   };
+  // }, [dispatch]);
   return (
     <>
       <Box
@@ -214,36 +227,70 @@ export default function PlayGame(props) {
                 >
                   <Box sx={{ position: "relative" }}>
                     {" "}
-                    <video
-                      className={
-                        isFullScreen && startGame ? "fullscreenVideo" : ""
-                      }
-                      width={"100%"}
-                      playsInline
-                      // muted
-                      controls={deviceType === "iOS" ? true : false}
-                      autoPlay
-                      onPlay={() => {
-                        setSeconds(7);
-                      }}
-                      onEnded={() => {
-                        setVideoGame(false);
-                        if (device === "Mobile" || device === "Tablet") {
-                          setIsFullScreen(true);
+                    {deviceType === "iOS" && device === "Mobile" ? (
+                      <video
+                        autoplay
+                        className={
+                          isFullScreen && startGame ? "fullscreenVideo" : ""
                         }
-                      }}
-                    >
-                      <source
-                        src={
+                        width={"100%"}
+                        playsInline
+                        // muted
+                        controls={deviceType === "iOS" ? true : false}
+                        onPlay={() => {
+                          setSeconds(7);
+                        }}
+                        onEnded={() => {
+                          setVideoGame(false);
+                          if (device === "Mobile" || device === "Tablet") {
+                            setIsFullScreen(true);
+                          }
+                        }}
+                      >
+                        <source
+                          src={
+                            detailTournament?.tournamentVideo
+                              ? process.env.REACT_APP_SOCKET_SERVER +
+                                "/" +
+                                detailTournament?.tournamentVideo
+                              : video.LogoAnim
+                          }
+                          type="video/mp4"
+                        />
+                      </video>
+                    ) : (
+                      <ReactPlayer
+                        width="100%"
+                        height="100%"
+                        playsInline={true}
+                        controls={true}
+                        onStart={() => {
+                          setSeconds(7);
+                        }}
+                        onEnded={() => {
+                          setVideoGame(false);
+                          if (device === "Mobile" || device === "Tablet") {
+                            setIsFullScreen(true);
+                          }
+                          setSeconds(null);
+                        }}
+                        config={{
+                          file: {
+                            attributes: {
+                              controlsList: "nofullscreen",
+                            },
+                          },
+                        }}
+                        playing={true}
+                        url={
                           detailTournament?.tournamentVideo
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
                               detailTournament?.tournamentVideo
                             : video.LogoAnim
                         }
-                        type="video/mp4"
                       />
-                    </video>{" "}
+                    )}
                     {second !== null && (
                       <Box
                         onClick={() => {
@@ -308,7 +355,7 @@ export default function PlayGame(props) {
                       flexDirection: "column",
                     }}
                   >
-                    <UnityGameComponent
+                    {/* <UnityGameComponent
                       fmod={detailTournament?.tournamentInfors?.game?.gameFmod}
                       GameFiles={
                         detailTournament?.tournamentInfors?.game?.GameFiles
@@ -337,7 +384,12 @@ export default function PlayGame(props) {
                       pauseGame={pauseGame}
                       unPauseGame={unPauseGame}
                       videoGame={videoGame}
-                    />
+                    /> */}
+                    <iframe
+                      style={{ height: "500px" }}
+                      title="game"
+                      src={`http://localhost:3005/playgame/${id}`}
+                    ></iframe>
                     {startGame &&
                       expand === true &&
                       (device === "Desktop" || device === "Tablet") && (
