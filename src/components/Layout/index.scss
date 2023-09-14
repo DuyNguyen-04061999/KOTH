@@ -124,6 +124,20 @@
   text-transform: uppercase;
 }
 
+.globalIn{
+  z-index: 3;
+}
+.globalOut{
+  z-index: 3;
+}
+
+.PriviteIn{
+  z-index: 3;
+}
+.PriviteOut{
+  z-index: 3;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }

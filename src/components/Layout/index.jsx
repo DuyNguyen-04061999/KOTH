@@ -646,7 +646,7 @@ export default function Layout(props) {
                   className="d-flex justify-content-center align-items-center"
                   style={{
                     width: "50%",
-                    backgroundColor: backgroundGlobal,
+                    backgroundColor: "#261a35",
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
                     padding: "6px",
@@ -665,6 +665,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 16 12"
+                      className="globalIn"
                     >
                       <g>
                         <g>
@@ -682,6 +683,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 16 12"
+                      className="globalOut"
                     >
                       <g>
                         <g>
@@ -701,6 +703,7 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
+                        zIndex:2
                       }}
                     >
                       Global
@@ -711,7 +714,7 @@ export default function Layout(props) {
                   className="d-flex justify-content-center align-items-center"
                   style={{
                     width: "50%",
-                    backgroundColor: backgroundPrivate,
+                    backgroundColor: "#261a35",
                     cursor: "pointer",
                     borderRadius: "0px 5px 5px 0px",
                     padding: "6px",
@@ -734,6 +737,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 11 14"
+                      className="PriviteIn"
                     >
                       <g>
                         <g>
@@ -751,6 +755,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 11 14"
+                      className="PriviteOut"
                     >
                       <g>
                         <g>
@@ -770,12 +775,26 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
+                        zIndex:2
                       }}
                     >
                       Private
                     </span>
                   </div>
                 </div>
+                <div style={{
+                  position:"absolute",
+                  top:15,
+                  left:15,
+                  width:140,
+                  height:30,
+                  borderRadius: "5px 5px 5px 5px",
+                  padding: "6px",
+                  background:"#883AF0",
+                  transform:tabChat === true ? "translate(0px)" :'translate(140px)',
+                  zIndex:1,
+                  transition:"0.3s ease-out"
+                }}></div>
               </div>
             </Box>
             <Box component="div" hidden={!showChat}>

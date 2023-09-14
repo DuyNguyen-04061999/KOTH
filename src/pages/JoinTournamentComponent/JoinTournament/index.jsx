@@ -267,9 +267,11 @@ export default function JoinTournament() {
                       width: "100%",
                       alignItems: "flex-end",
                     }}
+                    className="btn-conteiner"
                   >
                     {!detailTournament?.checkInTournament ? (
                       <button
+                        className="button-join-hover"
                         onClick={() => {
                           if (token) {
                             socket?.emit("joinTournament", {
@@ -299,8 +301,9 @@ export default function JoinTournament() {
                         Join
                       </button>
                     ) : (
-                      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                      <Box sx={{ display: "flex", justifyContent: "flex-end" }} className="btn-conteiner">
                         <button
+                          className="button-join-hover"
                           onClick={() => {
                             socket?.emit("startGameInTournament", {
                               tournamentId: id,
@@ -322,6 +325,7 @@ export default function JoinTournament() {
                           Play
                         </button>
                         <button
+                          className="button-join-hover"
                           onClick={handleClickOpen}
                           style={{
                             padding: `0px ${parseFloat(width / 45)}px`,
@@ -329,7 +333,8 @@ export default function JoinTournament() {
                             border: "none",
                             outline: "none",
                             height: "40px",
-                            background: "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
+                            background:
+                              "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
                             color: "white",
                             display: "flex",
                             alignItems: "center",
