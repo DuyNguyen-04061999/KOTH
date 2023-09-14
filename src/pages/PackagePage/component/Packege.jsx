@@ -53,23 +53,29 @@ export default function Package() {
   //   setBgGold("transparent");
   //   setAcivePop(0);
   // };
-  const handleClickDiamond = () => {
-    // setBgFree("transparent");
-    setBgDiamond("#A361EE");
-    setBgGold("transparent");
-    setAcivePop(1);
-  };
-  const handleClickGold = () => {
-    // setBgFree("transparent");
-    setBgDiamond("transparent");
-    setBgGold("#A361EE");
-    setAcivePop(2);
-  };
+  // const handleClickDiamond = () => {
+  //   // setBgFree("transparent");
+  //   setBgDiamond("#A361EE");
+  //   setBgGold("transparent");
+  //   setAcivePop(1);
+  // };
+  // const handleClickGold = () => {
+  //   // setBgFree("transparent");
+  //   setBgDiamond("transparent");
+  //   setBgGold("#A361EE");
+  //   setAcivePop(2);
+  // };
 
   useEffect(() => {
+    // if (listPackage && listPackage?.length > 0) {
+    //   const list = listPackage?.filter(
+    //     (item) => item?.packageName === "Diamond"
+    //   );
+    //   setItem(list);
+    // }
     if (listPackage && listPackage?.length > 0) {
       const list = listPackage?.filter(
-        (item) => item?.packageName === "Diamond"
+        (item) => item?.packageName === "Subscription"
       );
       setItem(list);
     }
@@ -82,17 +88,21 @@ export default function Package() {
     //   );
     //   setItem(itemPackage);
     // } else
-    if (activePop === 1) {
-      const itemPackage = listPackage?.filter(
-        (item) => item?.packageName === "Diamond"
-      );
-      setItem(itemPackage);
-    } else if (activePop === 2) {
-      const itemPackage = listPackage?.filter(
-        (item) => item?.packageName === "Gold"
-      );
-      setItem(itemPackage);
-    }
+    // if (activePop === 1) {
+    //   const itemPackage = listPackage?.filter(
+    //     (item) => item?.packageName === "Diamond"
+    //   );
+    //   setItem(itemPackage);
+    // } else if (activePop === 2) {
+    //   const itemPackage = listPackage?.filter(
+    //     (item) => item?.packageName === "Gold"
+    //   );
+    //   setItem(itemPackage);
+    // }
+    const itemPackage = listPackage?.filter(
+      (item) => item?.packageName === "Subscription"
+    );
+    setItem(itemPackage)
   }, [activePop, listPackage]);
 
   const theme = createTheme({
@@ -140,26 +150,32 @@ export default function Package() {
                       justifyContent: "space-around",
                     }}
                   >
-                    {listPackage
+                    {/* {listPackage
                       ?.filter(
                         (item) =>
                           item?.packageName !== "Ticket Play" &&
                           item?.packageName !== "Merchant" &&
                           item?.packageName !== "Free"
                       )
+                      ?.map((i, index) => { */}
+                      {listPackage
+                      ?.filter(
+                        (item) =>
+                          item?.packageName === "Subscription"
+                      )
                       ?.map((i, index) => {
                         return (
                           <Box
                             key={index}
                             sx={{
-                              background:
-                                i?.packageName === "Free"
-                                  ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
-                                  : "" || i?.packageName === "Diamond"
-                                  ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
-                                  : "" || i?.packageName === "Gold"
-                                  ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
-                                  : "",
+                              background: "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)",
+                                // i?.packageName === "Free"
+                                //   ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
+                                //   : "" || i?.packageName === "Diamond"
+                                //   ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
+                                //   : "" || i?.packageName === "Gold"
+                                //   ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
+                                //   : "",
                               padding: "14px 14px 14px 14px",
                               borderRadius: "24px",
                               display: "flex",
@@ -172,13 +188,14 @@ export default function Package() {
                               // borderImageSource:"linear-gradient(to bottom, #743ad5, #d53a9d)"
                             }}
                             className={
-                              i?.packageName === "Free"
-                                ? "gradient-border-rounded"
-                                : "" || i?.packageName === "Diamond"
-                                ? "gradient-border-rounded1"
-                                : "" || i?.packageName === "Gold"
-                                ? "gradient-border-rounded2"
-                                : ""
+                              // i?.packageName === "Free"
+                              //   ? "gradient-border-rounded"
+                              //   : "" || i?.packageName === "Diamond"
+                              //   ? "gradient-border-rounded1"
+                              //   : "" || i?.packageName === "Gold"
+                              //   ? "gradient-border-rounded2"
+                              //   : ""
+                              "gradient-border-rounded1"
                             }
                           >
                             <Typography
@@ -189,13 +206,14 @@ export default function Package() {
                                 marginTop: "5px",
                                 marginBottom: "15px",
                                 color:
-                                  i?.packageName === "Free"
-                                    ? "#383B80"
-                                    : "" || i?.packageName === "Diamond"
-                                    ? "white"
-                                    : "" || i?.packageName === "Gold"
-                                    ? "black"
-                                    : "",
+                                  "white"
+                                  // i?.packageName === "Free"
+                                  //   ? "#383B80"
+                                  //   : "" || i?.packageName === "Diamond"
+                                  //   ? "white"
+                                  //   : "" || i?.packageName === "Gold"
+                                  //   ? "black"
+                                  //   : "",
                               }}
                             >
                               {i?.packageName} Pack
@@ -257,11 +275,12 @@ export default function Package() {
                                       marginBottom:
                                         i?.packageName === "Free" ? "15px" : "",
                                       marginTop:
-                                        i?.packageName === "Gold"
-                                          ? "15px"
-                                          : "" || i?.packageName === "Diamond"
-                                          ? "15px"
-                                          : "",
+                                        // i?.packageName === "Gold"
+                                        //   ? "15px"
+                                        //   : "" || i?.packageName === "Diamond"
+                                        //   ? "15px"
+                                        //   : "",
+                                        "15px"
                                     }}
                                   />
                                   <Box
@@ -334,7 +353,7 @@ export default function Package() {
                                         voucher/tournament
                                       </Typography>
                                     </Box>
-                                    {/* <Box
+                                    <Box
                                     sx={{
                                       display: "flex",
                                       justifyContent: "flex-start",
@@ -371,10 +390,10 @@ export default function Package() {
                                     >
                                       {i?.packageReduceWatchAds === 0
                                         ? "No watching ads"
-                                        : "Reducing 50% time of ads"}
+                                        : `Reducing ${i?.packageReduceWatchAds}s time of ads`}
                                     </Typography>
                                   </Box>
-                                  <Box
+                                  {/* <Box
                                     sx={{
                                       display: "flex",
                                       justifyContent: "flex-start",
@@ -492,8 +511,10 @@ export default function Package() {
                                   <button
                                     onClick={() => {
                                       if (i?.packageName !== "Free") {
-                                        dispatch(toggleDialogConfirm());
-                                        dispatch(getIdPackage(i?.id));
+                                        if(token) {
+                                          dispatch(toggleDialogConfirm());
+                                          dispatch(getIdPackage(i?.id));
+                                        }
                                       } else {
                                         console.log("Cannot buy free pack!");
                                       }
@@ -525,10 +546,11 @@ export default function Package() {
                             </Box>
                             <Box
                               className={
-                                i?.packageName === "Diamond" ? "sale" : ""
+                                // i?.packageName === "Diamond" ? "sale" : ""
+                                "sale"
                               }
                             >
-                              {i?.packageName === "Diamond" ? (
+                              {i?.packageName === "Diamond" ||  i?.packageName === "Subscription" ? (
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width= {width < 1024 ?"100" : "110"}
@@ -648,7 +670,7 @@ export default function Package() {
                   >
                     Free
                   </Box> */}
-                    <Box
+                    {/* <Box
                       onClick={handleClickDiamond}
                       sx={{
                         padding: "0px 20px",
@@ -675,7 +697,7 @@ export default function Package() {
                       }}
                     >
                       Gold
-                    </Box>
+                    </Box> */}
                   </Box>
                 </Box>
               </Box>
@@ -691,14 +713,14 @@ export default function Package() {
                     <Box
                       key={index}
                       sx={{
-                        background:
-                          i?.packageName === "Free"
-                            ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
-                            : "" || i?.packageName === "Diamond"
-                            ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
-                            : "" || i?.packageName === "Gold"
-                            ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
-                            : "",
+                        background: "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)",
+                          // i?.packageName === "Free"
+                          //   ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
+                          //   : "" || i?.packageName === "Diamond"
+                          //   ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
+                          //   : "" || i?.packageName === "Gold"
+                          //   ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
+                          //   : "",
                         padding: "14px 14px 14px 14px",
                         borderRadius: "24px",
                         display: "flex",
@@ -709,13 +731,14 @@ export default function Package() {
                         width: "100%",
                       }}
                       className={
-                        i?.packageName === "Free"
-                          ? "gradient-border-rounded"
-                          : "" || i?.packageName === "Diamond"
-                          ? "gradient-border-rounded1"
-                          : "" || i?.packageName === "Gold"
-                          ? "gradient-border-rounded2"
-                          : ""
+                        // i?.packageName === "Free"
+                        //   ? "gradient-border-rounded"
+                        //   : "" || i?.packageName === "Diamond"
+                        //   ? "gradient-border-rounded1"
+                        //   : "" || i?.packageName === "Gold"
+                        //   ? "gradient-border-rounded2"
+                        //   : ""
+                        "gradient-border-rounded1"
                       }
                     >
                       <Typography
@@ -725,13 +748,14 @@ export default function Package() {
                           marginTop: "5px",
                           marginBottom: "15px !important",
                           color:
-                            i?.packageName === "Free"
-                              ? "#383B80"
-                              : "" || i?.packageName === "Diamond"
-                              ? "white"
-                              : "" || i?.packageName === "Gold"
-                              ? "black"
-                              : "",
+                            // i?.packageName === "Free"
+                            //   ? "#383B80"
+                            //   : "" || i?.packageName === "Diamond"
+                            //   ? "white"
+                            //   : "" || i?.packageName === "Gold"
+                            //   ? "black"
+                            //   : "",
+                            "white"
                         }}
                       >
                         {i?.packageName} Pack
@@ -785,14 +809,14 @@ export default function Package() {
                               height={167}
                               alt=""
                               style={{
-                                marginTop:
-                                  i?.packageName === "Gold"
-                                    ? "25px"
-                                    : "" || i?.packageName === "Diamond"
-                                    ? "25px"
-                                    : "" || i?.packageName === "Free"
-                                    ? "25px"
-                                    : "",
+                                marginTop: "25px"
+                                  // i?.packageName === "Gold"
+                                  //   ? "25px"
+                                  //   : "" || i?.packageName === "Diamond"
+                                  //   ? "25px"
+                                  //   : "" || i?.packageName === "Free"
+                                  //   ? "25px"
+                                  //   : "",
                               }}
                             />
                             <Box
@@ -862,7 +886,7 @@ export default function Package() {
                                   voucher/tournament
                                 </Typography>
                               </Box>
-                              {/* <Box
+                              <Box
                               sx={{
                                 display: "flex",
                                 justifyContent: "flex-start",
@@ -899,10 +923,10 @@ export default function Package() {
                               >
                                 {i?.packageReduceWatchAds === 0
                                   ? "No watching ads"
-                                  : "Reducing 50% time of ads"}
+                                  : `Reducing ${i?.packageReduceWatchAds}s time of ads`}
                               </Typography>
                             </Box>
-                            <Box
+                            {/* <Box
                               sx={{
                                 display: "flex",
                                 justifyContent: "flex-start",
@@ -1013,8 +1037,10 @@ export default function Package() {
                             <button
                               onClick={() => {
                                 if (i?.packageName !== "Free") {
-                                  dispatch(toggleDialogConfirm());
-                                  dispatch(getIdPackage(i?.id));
+                                  if(token) {
+                                    dispatch(toggleDialogConfirm());
+                                    dispatch(getIdPackage(i?.id));
+                                  }
                                 } else {
                                   console.log("Cannot buy free pack!");
                                 }
@@ -1045,10 +1071,11 @@ export default function Package() {
                       </Box>
                       <Box
                         className={
-                          i?.packageName === "Diamond" ? "saleMobile" : ""
+                          // i?.packageName === "Diamond" ? "saleMobile" : ""
+                          "saleMobile"
                         }
                       >
-                        {i?.packageName === "Diamond" ? (
+                        {i?.packageName === "Diamond"  ||  i?.packageName === "Subscription" ? (
                           <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="110"

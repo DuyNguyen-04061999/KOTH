@@ -29,7 +29,8 @@ export default function StripeAlertComponent() {
         },
       }}
     >
-      <Box component={"div"} className="position-relative rounded p-3" sx={{}}>
+      {isAlertDialog && (
+        <Box component={"div"} className="position-relative rounded p-3" sx={{}}>
         <Box
           component={"div"}
           className="position-absolute cursor-pointer"
@@ -139,6 +140,7 @@ export default function StripeAlertComponent() {
           After a successful payment, the customer return to your websites.
         </Box>
       </Box>
+      )}
     </Dialog>
   );
 }
