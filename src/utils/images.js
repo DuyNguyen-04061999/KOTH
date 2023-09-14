@@ -294,6 +294,8 @@ import DummyBanner4 from "../assets/images/banners/mb1.png"
 import DummyBanner5 from "../assets/images/banners/mb2.png"
 import DummyBanner6 from "../assets/images/banners/mb3.png"
 
+import AdminLogo from "../assets/images/lggame.png"
+
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -474,6 +476,7 @@ export const images = {
   bannerTournamentMobile_1: bannerTournamentMobile_1,
   bannerTournamentMobile_2: bannerTournamentMobile_2,
   bannerLoading: bannerLoading,
+  adminLogo: AdminLogo
 };
 
 export const images2 = {

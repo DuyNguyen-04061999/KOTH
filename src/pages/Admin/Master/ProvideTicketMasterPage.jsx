@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getListDistributor } from '../../../redux-saga-middleware_admin/reducers/adminMasterReducer'
 import { Navigate } from 'react-router-dom'
-import { Box, Button, FormControl, MenuItem, OutlinedInput, Select, TextField } from '@mui/material'
+import { Box, Button, Container, FormControl, MenuItem, OutlinedInput, Select, TextField } from '@mui/material'
 import useWindowDimensions from './../../../utils/useWindowDimensions'
 import { getListTicket, provideTicket } from '../../../redux-saga-middleware_admin/reducers/adminConfigReducer'
 
@@ -48,7 +48,7 @@ export default function ProvideTicketMasterPage() {
     }
 
     return (
-        <> 
+        <Container fixed> 
             {permissions && permissions?.length > 0 && permissions?.includes("provide_ticket")
             && roles && roles?.length > 0 && roles?.includes("master")
             ? (
@@ -126,6 +126,6 @@ export default function ProvideTicketMasterPage() {
                 </Box>
 
             ) : <Navigate to={"/"}/> }
-        </>
+        </Container>
     )
 }

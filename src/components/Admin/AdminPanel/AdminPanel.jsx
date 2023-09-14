@@ -1,0 +1,286 @@
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import React from "react";
+import { useSelector } from "react-redux";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+
+const AdminPanel = () => {
+  const { roles } = useSelector((state) => state.adminAuthReducer);
+  const { width } = useWindowDimensions();
+  const SearchBar = ({ setSearchQuery }) => (
+    <form>
+      <Box
+        sx={{
+          border: "2px solid #5474F1",
+          borderRadius: "16px",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 16px",
+          marginTop: { xs: "14px" },
+        }}
+      >
+        <TextField
+          id="search-bar"
+          className="text"
+          placeholder="Account"
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // <== added this
+          }}
+          sx={{ width: { xs: "100%", sm: "260px" } }}
+        />
+        <IconButton type="submit" aria-label="search">
+          <SearchIcon style={{ fill: "black" }} />
+        </IconButton>
+      </Box>
+    </form>
+  );
+
+  const ProvideTicketSVG = () => {
+    return (
+      <Box sx={{ marginRight: "10px" }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="15"
+          height="12"
+          fill="none"
+          viewBox="0 0 15 12"
+        >
+          <path
+            fill="#fff"
+            d="M8.906 10.333a.844.844 0 01.076.04c1.333.895.989.766 2.651.776.302 0 .605.007.906-.005.807-.03 1.48-.674 1.485-1.48.015-2.434.015-4.869 0-7.304-.005-.819-.678-1.474-1.5-1.494-.652-.015-1.307-.031-1.957.009-.287.017-.58.141-.844.272-.285.142-.538.348-.822.537-.207-.159-.414-.317-.62-.479A1.578 1.578 0 007.28.861C5.381.86 3.481.856 1.583.863.678.868.01 1.532.005 2.433c-.007 2.377-.007 4.753 0 7.13.006.92.673 1.58 1.596 1.583 1.899.007 3.799 0 5.697 0 .354.004.698-.113.976-.33l.632-.483zm-.009-3.86a.468.468 0 11.325-.144.468.468 0 01-.325.142v.002zm-.472 1.77a.468.468 0 01.93-.08.468.468 0 01-.93.08zm.467-4.898a.468.468 0 01.464.467.468.468 0 01-.931-.003.468.468 0 01.466-.464h.001z"
+          ></path>
+        </svg>
+      </Box>
+    );
+  };
+
+  return (
+    <Box>
+      <Container sx={{ marginTop: "80px" }}>
+        <Typography
+          sx={{ textAlign: "start",fontWeight: {xs: 700, sm: 600} ,fontSize: {xs: "20px", sm: "24px"}, fontWeight: 600, }}
+        >
+          {width < 576
+            ? `${roles?.includes("agent") ? "User Manager" : "Admin Structure"}`
+            : `Welcome
+            ${
+              roles?.includes("master")
+                ? "Master"
+                : roles?.includes("distributor")
+                ? "Distributor"
+                : roles?.includes("sub_distributor")
+                ? "Sub Distributor"
+                : "Agent"
+            } Account`}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            border: { xs: "unset", sm: "2px solid #E4E4E4" },
+            borderRadius: "16px",
+            padding: "18px",
+            marginTop: { xs: "-52px", sm: "24px" },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: { xs: "column-reverse", sm: "row" },
+            }}
+          >
+            <SearchBar></SearchBar>
+            <Box sx={{ marginLeft: "auto" }}>
+              <Button
+                children={"Create Account"}
+                sx={{
+                  padding: { xs: "4px 14px", sm: "16px 34px" },
+                  backgroundColor: "#355DFF",
+                  borderRadius: { xs: "10px", sm: "16px" },
+                  color: "white",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  textTransform: "unset",
+                  ":hover": { backgroundColor: "#355DFF" },
+                }}
+              ></Button>
+            </Box>
+          </Box>
+          <Grid
+            container
+            sx={{
+              border: "2px solid #E4E4E4",
+              borderRadius: "16px",
+              marginTop: "24px",
+              display: { xs: "none", sm: "flex" },
+            }}
+          >
+            <Grid
+              sx={{
+                padding: "24px",
+                borderRight: "2px solid #E4E4E4",
+                flex: 1,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                Account
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                Distributor_01
+              </Typography>
+            </Grid>
+            <Grid
+              sx={{
+                padding: "24px",
+                borderRight: "2px solid #E4E4E4",
+                flex: 1,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                Level
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                Distributor
+              </Typography>
+            </Grid>
+            <Grid
+              sx={{
+                padding: "24px",
+                borderRight: "2px solid #E4E4E4",
+                flex: 1,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                Balance
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                100
+              </Typography>
+            </Grid>
+            <Grid
+              sx={{
+                padding: "24px",
+                borderRight: "2px solid #E4E4E4",
+                flex: 1,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                Ticket
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                20
+              </Typography>
+            </Grid>
+            <Grid
+              sx={{
+                padding: "24px",
+                borderRight: "2px solid #E4E4E4",
+                flex: 1,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                RefCode
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                123456789
+              </Typography>
+            </Grid>
+            <Grid
+              sx={{
+                padding: "24px",
+                borderRight: "2px solid #E4E4E4",
+                flex: 1,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                Register Date
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                2022-07-23 17:36:50
+              </Typography>
+            </Grid>
+            <Grid
+              sx={{
+                padding: "24px",
+                borderRight: "2px solid #E4E4E4",
+                flex: 1,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                Amount Account
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                128
+              </Typography>
+            </Grid>
+            <Grid sx={{ padding: "24px", flex: 1 }}>
+              <Typography
+                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+              >
+                Status
+              </Typography>
+              <Button
+                children={"Active"}
+                sx={{
+                  fontSize: "14px",
+                  borderRadius: "16px",
+                  padding: "2px 16px",
+                  bgcolor: "#355DFF",
+                  color: "#FFF",
+                  fontWeight: 700,
+                  textTransform: "unset",
+                  ":hover": {
+                    backgroundColor: "#355DFF",
+                  },
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
+            <Button
+              sx={{
+                backgroundColor: "#FF9F38",
+                fontWeight: 700,
+                fontSize: "14px",
+                textTransform: "unset",
+                color: "white",
+                padding: "8px 24px",
+                borderRadius: "16px",
+                ":hover": { backgroundColor: "#FF9F38" },
+              }}
+            >
+              <ProvideTicketSVG></ProvideTicketSVG>
+              Provide Ticket
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
+
+export default AdminPanel;

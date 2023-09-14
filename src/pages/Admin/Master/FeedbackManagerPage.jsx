@@ -1,17 +1,25 @@
-import React from 'react'
-import CheckMasterComponent from '../../../components/Admin/CheckMasterComponent'
-import { Box } from '@mui/material'
-import useWindowDimensions from '../../../utils/useWindowDimensions'
+import React from "react";
+import CheckMasterComponent from "../../../components/Admin/CheckMasterComponent";
+import { Box, Container } from "@mui/material";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function FeedbackManagerPage() {
-    const { height } = useWindowDimensions()
-    return (
-        <CheckMasterComponent children={
-            <Box component={"div"} className='bg-white text-dark p-2' sx={{
-                height
-            }}>
-                Updating.......
-            </Box>
-        }/>
-    )   
+  const { height } = useWindowDimensions();
+  return (
+    <Container fixed>
+      <CheckMasterComponent
+        children={
+          <Box
+            component={"div"}
+            className="bg-white text-dark p-2"
+            sx={{
+              height,
+            }}
+          >
+            Updating.......
+          </Box>
+        }
+      />
+    </Container>
+  );
 }
