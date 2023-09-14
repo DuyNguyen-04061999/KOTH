@@ -363,6 +363,7 @@ export default function Signup(props) {
               variant="body1"
               sx={{
                 color: characterPass === true ? "green" : "white",
+                fontSize: 12,
               }}
             >
               {" "}
@@ -416,6 +417,7 @@ export default function Signup(props) {
               variant="body1"
               sx={{
                 color: passOneLetter === true ? "green" : "white",
+                fontSize: 12,
               }}
             >
               {" "}
@@ -469,6 +471,7 @@ export default function Signup(props) {
               variant="body1"
               sx={{
                 color: passOneNumber === true ? "green" : "white",
+                fontSize: 12,
               }}
             >
               {" "}
@@ -522,6 +525,7 @@ export default function Signup(props) {
               variant="body1"
               sx={{
                 color: hasUppercase === true ? "green" : "white",
+                fontSize: 12,
               }}
             >
               {" "}
