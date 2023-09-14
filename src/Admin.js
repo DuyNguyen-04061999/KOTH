@@ -1,4 +1,5 @@
 import React from 'react'
+import "./assets/admin/css/index.css";
 import ErrorBoundary from "./components/CatchError";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { Route, Routes } from 'react-router-dom';

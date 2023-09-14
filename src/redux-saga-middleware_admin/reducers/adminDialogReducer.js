@@ -28,10 +28,25 @@ export const closeProvideDialog = (data) => {
     }
 }
 
+export const openDetailDialog = (data) => {
+    return {
+        type: "OPEN_DETAIL_DIALOG",
+        payload: data
+    }
+}
+
+export const closeDetailDialog = (data) => {
+    return {
+        type: "CLOSE_DETAIL_DIALOG",
+        payload: data
+    }
+}
+
 const adminDialogReducer = (
     state = {
         isCreateDialog: false,
-        isProvideDialog: false
+        isProvideDialog: false,
+        isDetailDialog: false
     },
     action
 ) => {
@@ -42,6 +57,8 @@ const adminDialogReducer = (
         case "CLOSE_CREATE_DIALOG": return {...state, isCreateDialog: false}
         case "OPEN_PROVIDE_DIALOG": return {...state, isProvideDialog: true}
         case "CLOSE_PROVIDE_DIALOG": return {...state, isProvideDialog: false}
+        case "OPEN_DETAIL_DIALOG": return {...state, isDetailDialog: true}
+        case "CLOSE_DETAIL_DIALOG": return {...state, isDetailDialog: false}
         default: return {...state}
     }
 }
