@@ -13,78 +13,99 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { images } from "../../../utils/images";
+import { makeStyles } from "@mui/styles";
 
 const AdminNavigation = (props) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { roles, ref } = useSelector((state) => state.adminAuthReducer);
   const masterActions = [
+    // {
+    //   name: "Create Distributor",
+    //   link: "/master/create-distributor",
+    // },
+    // {
+    //   name: "List Distributor",
+    //   link: "/master/list-distributor",
+    // },
+    // {
+    //   name: "Database Manager",
+    //   link: "/master/database-manager",
+    // },
+    // {
+    //   name: "Templates Manager",
+    //   link: "/master/template-manager",
+    // },
+    // {
+    //   name: "Feedbacks Manager",
+    //   link: "/master/feedback-manager",
+    // },
+    // {
+    //   name: "Ticket Provider",
+    //   link: "/master/provide-ticket",
+    // },
     {
-      name: "Create Distributor",
-      link: "/master/create-distributor",
-    },
-    {
-      name: "List Distributor",
-      link: "/master/list-distributor",
-    },
-    {
-      name: "Database Manager",
-      link: "/master/database-manager",
-    },
-    {
-      name: "Templates Manager",
-      link: "/master/template-manager",
-    },
-    {
-      name: "Feedbacks Manager",
-      link: "/master/feedback-manager",
-    },
-    {
-      name: "Ticket Provider",
-      link: "/master/provide-ticket",
+      name: "Admin Structure",
+      icon: "",
+      link: "/admin-structure",
     },
   ];
   const distributorActions = [
+    // {
+    //   name: "Create Sub Distributor",
+    //   link: "/distributor/create-sub-distributor",
+    // },
+    // {
+    //   name: "List Sub Distributor",
+    //   link: "/distributor/list-sub-distributor",
+    // },
+    // {
+    //   name: "Ticket Provider",
+    //   link: "/distributor/provide-ticket",
+    // },
     {
-      name: "Create Sub Distributor",
-      link: "/distributor/create-sub-distributor",
-    },
-    {
-      name: "List Sub Distributor",
-      link: "/distributor/list-sub-distributor",
-    },
-    {
-      name: "Ticket Provider",
-      link: "/distributor/provide-ticket",
+      name: "Admin Structure",
+      icon: "",
+      link: "/admin-structure",
     },
   ];
   const subDistributorActions = [
+    // {
+    //   name: "View Sub Distributor",
+    //   link: "/sub-distributor/detail",
+    // },
+    // {
+    //   name: "Create Agent",
+    //   link: "/sub-distributor/create-agent",
+    // },
+    // {
+    //   name: "View Ref User",
+    //   link: "/sub-distributor/refs",
+    // },
+    // {
+    //   name: "Ticket Provider",
+    //   link: "/sub-distributor/provide-ticket",
+    // },
     {
-      name: "View Sub Distributor",
-      link: "/sub-distributor/detail",
-    },
-    {
-      name: "Create Agent",
-      link: "/sub-distributor/create-agent",
-    },
-    {
-      name: "View Ref User",
-      link: "/sub-distributor/refs",
-    },
-    {
-      name: "Ticket Provider",
-      link: "/sub-distributor/provide-ticket",
+      name: "Admin Structure",
+      icon: "",
+      link: "/admin-structure",
     },
   ];
 
   const agentActions = [
+    // {
+    //   name: "User Manager",
+    //   link: "/agent/create-end-user",
+    // },
+    // {
+    //   name: "Ticket Provider",
+    //   link: "/agent/provide-ticket",
+    // },
     {
-      name: "Create End User",
-      link: "/agent/create-end-user",
-    },
-    {
-      name: "Ticket Provider",
-      link: "/agent/provide-ticket",
+      name: "User Manager",
+      icon: "",
+      link: "/user-manager",
     },
   ];
 
@@ -101,27 +122,25 @@ const AdminNavigation = (props) => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      <Box>
-      <Box
-        className="inp-header mx-3 ps-4 cursor-pointer"
-        onClick={() => {
-          navigate("/");
-        }}
-        component={"img"}
-        src={images.adminLogo}
-        sx={{height: "100px"}}
-      >
-      </Box>
+      <Box sx={{ marginTop: "47px", display: "flex", marginLeft: "46px" }}>
+        <Box
+          className="inp-header mx-3 ps-4 cursor-pointer"
+          onClick={() => {
+            navigate("/");
+          }}
+          component={"img"}
+          src={images.adminLogo}
+          sx={{ width: "150px" }}
+        ></Box>
       </Box>
       <Box
         sx={{
           width: "100%",
-          color: "#355DFF",
-          marginTop: "66px",
+          marginTop: "42px",
         }}
       >
         <nav aria-label="main mailbox folders">
-          <List>
+          <List sx={{ padding: "0 30px" }}>
             {listAction &&
               listAction?.length > 0 &&
               listAction?.map((action, i_action) => (
@@ -129,14 +148,31 @@ const AdminNavigation = (props) => {
                   disablePadding
                   onClick={() => navigate(action?.link)}
                   key={i_action}
-                  selected={pathname === action?.link}
-
+                  selected={
+                    pathname === "/" || pathname === ""
+                      ? action?.link === "/admin-structure"
+                      : pathname === action?.link
+                  }
+                  style={{ borderRadius: "20px" }}
                 >
-                  <ListItemButton>
+                  <ListItemButton
+                    style={{
+                      borderRadius: "20px", padding: "12px"
+                    }}
+                  >
                     <ListItemIcon>
                       <InboxIcon />
                     </ListItemIcon>
-                    <ListItemText primary={action?.name} />
+                    <ListItemText
+                      sx={{
+                        "> span": {
+                          fontSize: "16px",
+                          fontWeight: 600,
+                          color: "#8C8D9B",
+                        },
+                      }}
+                      primary={action?.name}
+                    />
                   </ListItemButton>
                 </ListItem>
               ))}
@@ -148,7 +184,7 @@ const AdminNavigation = (props) => {
                 window.open("/", "_self");
               }}
             >
-              <ListItemButton>
+              <ListItemButton style={{ borderRadius: "20px" }}>
                 <ListItemIcon>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +203,16 @@ const AdminNavigation = (props) => {
                     />
                   </svg>
                 </ListItemIcon>
-                <ListItemText primary="Logout" />
+                <ListItemText
+                  sx={{
+                    "> span": {
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#8C8D9B",
+                    },
+                  }}
+                  primary="Logout"
+                />
               </ListItemButton>
             </ListItem>
           </List>
@@ -181,6 +226,8 @@ const AdminNavigation = (props) => {
           fontSize: "30px",
           fontWeight: 600,
           textAlign: "start",
+          paddingLeft: "43px",
+          paddingBottom: "130px"
         }}
       >
         {roles && roles?.length > 0 && roles?.includes("master")

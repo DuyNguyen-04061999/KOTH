@@ -17,6 +17,8 @@ export default function ListRefPage() {
   }, [dispatch]);
   const { height } = useWindowDimensions();
 
+  console.log(listRefs);
+
   return (
     <Container fixed>
       {permissions &&
@@ -25,25 +27,22 @@ export default function ListRefPage() {
       roles &&
       roles?.length > 0 &&
       roles?.includes("sub_distributor") ? (
-        // <Box component={"div"} className='p-2 bg-white text-dark d-flex flex-wrap' sx={{
-        //     height
-        // }}>
-        //     {listRefs && listRefs?.length > 0 && listRefs?.map((ref, i_ref) => (
-        //         <Box component={"div"} key={i_ref} className='card p-2 me-2 mb-2'>
-        //             {ref?.userName}
-        //             {
-        //                 ref?.receivers && ref?.receivers?.length > 0 && ref?.receivers?.map((sR, i_sr) => (
-        //                     <Box component={"div"} className='ms-3' key={i_sr}>
-        //                         - {sR?.userName}
-        //                     </Box>
-        //                 ))
-        //             }
-        //         </Box>
-        //     ))}
+        <Box component={"div"} className='p-2 bg-white text-dark d-flex flex-wrap' sx={{
+            height
+        }}>
+            {listRefs && listRefs?.length > 0 && listRefs?.map((ref, i_ref) => (
+                <Box component={"div"} key={i_ref} className='card p-2 me-2 mb-2'>
+                    {ref?.userName}
+                    {
+                        ref?.receivers && ref?.receivers?.length > 0 && ref?.receivers?.map((sR, i_sr) => (
+                            <Box component={"div"} className='ms-3' key={i_sr}>
+                                - {sR?.userName}
+                            </Box>
+                        ))
+                    }
+                </Box>
+            ))}
 
-        // </Box>
-        <Box sx={{ marginTop: "50px" }}>
-          <NestedTable data={listRefs}></NestedTable>
         </Box>
       ) : (
         <Navigate to={"/"} />

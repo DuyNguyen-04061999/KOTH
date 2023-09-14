@@ -1,212 +1,201 @@
 import {
   Box,
-  IconButton,
+  Button,
   Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
-  Typography,
-  tableCellClasses,
   tableClasses,
   tableHeadClasses,
 } from "@mui/material";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import React from "react";
-import ReactDOM from "react-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { RowTable } from "./RowTable";
-import { isArray } from "lodash";
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
+const StyledTableHead = styled(TableHead)(({ theme }) => ({
+  [`&.${tableHeadClasses.root}`]: {
+    textAlign: "center",
+    color: "#808191",
+  },
+}));
+
+const StyleTable = styled(Table)(({ theme }) => ({
+  [`&.${tableClasses.root}`]: {
+    background: "#FFF",
+    border: "2px solid #E4E4E4",
+    borderRadius: "16px",
+    overflow: "scroll",
+  },
+}));
+
 const NestedTable = (props) => {
-  const [expand, setExpand] = useState(false);
   const { data } = props;
-  const handleExpand = () => setExpand((prevState) => !prevState);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  function createData(name, calories, fat, carbs, protein, price, level) {
-    return {
-      name,
-      calories,
-      fat,
-      carbs,
-      protein,
-      price,
-      level,
-    };
-  }
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-  const rows = [
-    {
-      id: 1,
-      account: "distributor1",
-      level: "Distributor",
-      commission: 100,
-      ticket: 20,
-      ref: "sadjkahsdjkahdjkadkj",
-      date: "20/08/2023",
-      amount: 100,
-      status: 1,
-      levelRole: 1,
-      child: [
-        {
-          id: 2,
-          account: "subdistributor1",
-          level: "Sub Distributor",
-          commission: 100,
-          ticket: 20,
-          ref: "sadjkahsdjkahdjkadkj",
-          date: "20/08/2023",
-          amount: 100,
-          status: 1,
-          levelRole: 2,
-          child: [
-            {
-              id: 3,
-              account: "agent1",
-              level: "Agent",
-              commission: 100,
-              ticket: 20,
-              ref: "sadjkahsdjkahdjkadkj",
-              date: "20/08/2023",
-              amount: 100,
-              status: 1,
-              levelRole: 3,
-              child: [
-                {
-                  id: 4,
-                  account: "enduser",
-                  level: "End User",
-                  commission: 100,
-                  ticket: 20,
-                  ref: "sadjkahsdjkahdjkadkj",
-                  date: "20/08/2023",
-                  amount: 100,
-                  status: 1,
-                  levelRole: 4,
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  
 
   const { width } = useWindowDimensions();
 
-  const StyledTableHead = styled(TableHead)(({ theme }) => ({
-    [`&.${tableHeadClasses.root}`]: {
-      background: "#F7F7F7",
-      textAlign: "center",
-      color: "#808191",
-      backgroundColor: "#fff",
-      color: "#7c81f3",
-      fontWeight: "bolder",
-      fontSize: 13,
-      width: width / 5,
-      maxWidth: width / 5,
-      border: "none",
-      padding: "10px 0px",
-    },
-  }));
-
-  const StyleTable = styled(Table)(({ theme }) => ({
-    [`&.${tableClasses.root}`]: {
-      background: "#FFF",
-      border: "2px solid #E4E4E4",
-    },
-  }));
-
-  //   const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  //     [`&.${tableCellClasses.head}`]: {
-  //       backgroundColor: "#fff",
-  //       color: "#7c81f3",
-  //       fontWeight: "bolder",
-  //       fontSize: 13,
-  //       width: "1000px",
-  //       maxWidth: width / 5,
-  //       border: "none",
-  //       padding: "10px 0px",
-  //     },
-  //     [`&.${tableCellClasses.body}`]: {
-  //       fontSize: 12,
-  //       width: width / 5,
-  //     //   maxWidth: width / 5,
-  //       border: "none",
-  //     },
-  //   }));
-
   return (
-    <TableContainer
-      style={{ borderRadius: "16px", boxShadow: "unset" }}
-      component={Paper}
-    >
-      <StyleTable aria-label="collapsible table">
-        <StyledTableHead>
-          <TableRow>
-            {/* <TableCell style={{color: "#808191",}}/> */}
-            <TableCell style={{ color: "#808191" }} children="Action" />
-            <TableCell style={{ color: "#808191" }} children="Account" />
-            <TableCell style={{ color: "#808191" }} children="Level " />
-            <TableCell style={{ color: "#808191" }} children="Commission" />
-            <TableCell style={{ color: "#808191" }} children="Ticket" />
-            <TableCell style={{ color: "#808191" }} children="Ref Code" />
-            <TableCell style={{ color: "#808191" }} children="Date" />
-            <TableCell style={{ color: "#808191" }} children="Amount Account" />
-            <TableCell style={{ color: "#808191" }} children="Status" />
-            {/* {
+    <Box sx={{ width: "100%", overflow: "hidden", position: "relative" }}>
+      <TableContainer
+        sx={{
+          width: "100%",
+          maxHeight: { xs: "70vh", sm: "440px" },
+          borderRadius: 0,
+          "& .MuiTableCell-root": {
+            borderWidth: "none",
+          },
+        }}
+        style={{ boxShadow: "unset" }}
+        component={Paper}
+      >
+        <StyleTable
+          stickyHeader
+          sx={{ background: "#F7F7F7" }}
+          aria-label="collapsible table"
+        >
+          <StyledTableHead>
+            <TableRow>
+              {/* <TableCell style={{color: "#808191",}}/> */}
+              <TableCell
+                sx={{
+                  display: { xs: "none", sm: "table-cell" },
+                  maxWidth: "unset",
+                }}
+                style={{ color: "#808191" }}
+                children=" "
+              />
+              <TableCell
+                sx={{ width: "100px" }}
+                style={{ color: "#808191" }}
+                children="Account"
+              />
+              <TableCell
+                sx={{ maxWidth: "unset" }}
+                style={{ color: "#808191" }}
+                children="Level "
+              />
+              <TableCell style={{ color: "#808191" }} children="Revenue" />
+              <TableCell style={{ color: "#808191" }} children="Ticket" />
+              <TableCell style={{ color: "#808191" }} children="Ref Code" />
+              <TableCell style={{ color: "#808191" }} children="Date" />
+              <TableCell
+                style={{ color: "#808191" }}
+                children="Amount Account"
+              />
+              <TableCell style={{ color: "#808191" }} children="Status" />
+              {/* {
                 Object.keys(data[0])?.map((element,index) => (<TableCell key={index} align="right">{element}</TableCell>))
             } */}
-          </TableRow>
-        </StyledTableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <RowTable
-              key={index}
-              row={row}
-              children={
-                row.child && (
-                  <>
-                    {row.child.map((row, index) => (
-                      <RowTable
-                        key={index}
-                        row={row}
-                        children={
-                          row.child && (
-                            <>
-                              {row.child.map((row, index) => (
-                                <RowTable
-                                  key={index}
-                                  row={row}
-                                  children={
-                                    row.child && (
-                                      <>
-                                        {row.child.map((row, index) => (
-                                          <RowTable key={index} row={row} />
-                                        ))}
-                                      </>
-                                    )
-                                  }
-                                />
-                              ))}
-                            </>
-                          )
-                        }
-                      />
-                    ))}
-                  </>
-                )
-              }
-            />
-          ))}
-        </TableBody>
-      </StyleTable>
-    </TableContainer>
+            </TableRow>
+          </StyledTableHead>
+          <TableBody>
+            {data.map((row, index) => (
+              <RowTable
+                key={row.account + index}
+                index={index}
+                row={row}
+                children={
+                  row.child && (
+                    <>
+                      {row.child.map((row, _index) => (
+                        <RowTable
+                          key={row.account + index}
+                          row={row}
+                          index={_index}
+                          children={
+                            row.child && (
+                              <>
+                                {row.child.map((row, __index) => (
+                                  <RowTable
+                                    key={row.account + index}
+                                    index={__index}
+                                    row={row}
+                                    children={
+                                      row.child && (
+                                        <>
+                                          {row.child.map((row, ___index) => (
+                                            <RowTable
+                                              key={row.account + index}
+                                              index={___index}
+                                              row={row}
+                                            />
+                                          ))}
+                                        </>
+                                      )
+                                    }
+                                  />
+                                ))}
+                              </>
+                            )
+                          }
+                        />
+                      ))}
+                    </>
+                  )
+                }
+              />
+            ))}
+          </TableBody>
+        </StyleTable>
+      </TableContainer>
+      {/* <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={data.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      /> */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "105px",
+          position: "absolute",
+          bottom: 0,
+          zIndex: 10,
+          background: "rgba(233, 233, 233, 0.80)",
+          borderRadius: "20px 20px 0px 0px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderTop: "2px solid #C3C3C3",
+          display:{xs: "flex", sm: "none"}
+        }}
+      >
+        <Button
+          sx={{
+            padding: "6px 30px",
+            backgroundColor: "#4FBF67",
+            ":hover": { backgroundColor: "#4FBF67" },
+            color: "white",
+            textTransform: "unset",
+            fontWeight: 700,
+            borderRadius: "16px",
+
+          }}
+        >
+          View All
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

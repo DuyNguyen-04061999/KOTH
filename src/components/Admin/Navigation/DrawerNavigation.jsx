@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import AdminNavigation from "./AdminNavigation";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Box,
@@ -16,6 +15,50 @@ import {
 const DrawerNavigation = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  
+  const MenuIconOpenSVG = () => {
+    return (
+      <Box sx={{transform: mobileOpen && "rotate(180deg)",width: "40px", height:"40px"}}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="18"
+          fill="none"
+          viewBox="0 0 22 18"
+        >
+          <path
+            stroke="#11142D"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M1 9h19"
+          ></path>
+          <path
+            stroke="#808191"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M1 1h9"
+          ></path>
+          <path
+            stroke="#808191"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M1 17h9"
+            opacity="0.301"
+          ></path>
+          <path
+            stroke="#11142D"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M16 4l5 5-5 5"
+          ></path>
+        </svg>
+      </Box>
+    );
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -40,7 +83,7 @@ const DrawerNavigation = (props) => {
             onClick={handleDrawerToggle}
             sx={{ mr: 1 }}
           >
-            <MenuIcon />
+            <MenuIconOpenSVG />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -70,7 +113,7 @@ const DrawerNavigation = (props) => {
                 onClick={handleDrawerToggle}
                 style={{ position: "fixed", top: 0, right: 0}}
               >
-                <MenuIcon />
+                <MenuIconOpenSVG />
               </IconButton>
             </Box>
           </Drawer>

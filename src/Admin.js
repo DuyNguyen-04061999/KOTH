@@ -5,12 +5,15 @@ import { Route, Routes } from 'react-router-dom';
 import { persistorAdmin, storeAdmin } from './redux-saga-middleware_admin/config/configRedux';
 import { CustomRouter, history } from './components/Router';
 import { Provider } from 'react-redux';
-import { LoginPage, MainPage } from './pages/Admin';
+import { LoginPage } from './pages/Admin';
 import { PrivateRouteComponent } from './components/Admin';
 import { CreateDistributorPage, DatabaseManagerPage, EditDistributorPage, FeedbackManagerPage, ListDistributorPage, ProvideTicketMasterPage, TemplateManagerPage } from './pages/Admin/Master';
 import { CreateSubDistributorPage, EditSubDistributorPage, ListSubDistributorPage, ProvideTicketDistributorPage } from './pages/Admin/Distributor';
 import { CreateAgentPage, DetailSubDistributorPage, ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
 import { CreateEndUserPage, ProvideEndUserTicketPage } from './pages/Admin/Agent';
+import AdminStructure from './components/Admin/AdminStructure/AdminStructure';
+import MainLayout from './pages/Admin/MainLayout';
+import HomePage from './pages/Admin/HomePage';
 
 export default function Admin() {
     return (
@@ -19,8 +22,9 @@ export default function Admin() {
                 <PersistGate loading={null} persistor={persistorAdmin}>
                     <CustomRouter history={history}>
                         <Routes>
-                            <Route path="/" element={<PrivateRouteComponent children={<MainPage/>}/>} > 
+                            <Route path="/" element={<PrivateRouteComponent children={<MainLayout/>}/>} > 
                             {/* Master */}
+                            <Route index element={<PrivateRouteComponent children={<HomePage/>}/>} />
                             <Route path="/master/create-distributor" element={<PrivateRouteComponent children={<CreateDistributorPage/>}/>} />
                             <Route path="/master/list-distributor" element={<PrivateRouteComponent children={<ListDistributorPage/>}/>} />
                             <Route path="/master/edit-distributor/:id" element={<PrivateRouteComponent children={<EditDistributorPage/>}/>} />
