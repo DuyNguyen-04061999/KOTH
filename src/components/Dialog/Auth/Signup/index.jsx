@@ -68,7 +68,6 @@ export default function Signup(props) {
     return emailRegex.test(email);
   }
 
-
   useEffect(() => {
     if (
       gender === "" ||
@@ -77,20 +76,20 @@ export default function Signup(props) {
       c_password === "" ||
       username.includes(" ") ||
       username.length > 15 ||
-      password.length > 15 ||
       c_password.length > 15 ||
-      password.length < 6 ||
-      // password !== c_password ||
-       isAlphanumeric(username) === false  ||
-      //  checkEmailFormat(email) === false
-      email === ""
-      //  containsSpecialCharacters(password) === false 
+      isAlphanumeric(username) === false ||
+      email === "" ||
+      characterPass === false ||
+      passOneLetter === false ||
+      passOneNumber === false ||
+      hasUppercase === false
+      //  containsSpecialCharacters(password) === false
     ) {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
     }
-  }, [username, password, c_password, email, gender]);
+  }, [username, password, c_password, email]);
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
@@ -98,48 +97,68 @@ export default function Signup(props) {
   };
   // console.log(passSai);
   //------------------------------------------------------------------
-  const [textC_pass,setTextC_pass] = useState("")
-  const [textPassValid,setPassValid] = useState("")
-  const [textUserName,setTextUserName] = useState("")
-  const [validEmail,setValidEmail] = useState("")
+  const [textC_pass, setTextC_pass] = useState("");
+  const [textUserName, setTextUserName] = useState("");
+  const [validEmail, setValidEmail] = useState("");
+  const [characterPass, setCharacterPass] = useState(false);
+  const [passOneNumber, setPassOneNumber] = useState(false);
+  const [passOneLetter, setPassOneLetter] = useState(false);
+  const [hasUppercase, setHasUppercase] = useState(false);
+  const handleChangePass = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    // Check if the password contains at least one uppercase character
+    const specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-=|]/;
+    const containsSpecialCharacter = specialCharacterRegex.test(newPassword);
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const isPasswordValid = newPassword.length >= 6;
+    const containsUppercase = uppercaseRegex.test(newPassword);
+    const containNumber = numberRegex.test(newPassword);
+    setHasUppercase(containsUppercase);
+    setCharacterPass(isPasswordValid);
+    setPassOneNumber(containNumber);
+    setPassOneLetter(containsSpecialCharacter);
+  };
 
   useEffect(() => {
-    if(containsSpecialCharacters(password) === true){
-      setPassValid("")
-    } 
-    if(c_password === password) {
-      setTextC_pass("")
+    if (password && password.length >= 6) {
+      setCharacterPass(true);
     }
-    if(checkEmailFormat(email) === true){
-      setValidEmail("")
+    if (c_password === password) {
+      setTextC_pass("");
     }
-  },[password,c_password, email])
+    if (checkEmailFormat(email) === true) {
+      setValidEmail("");
+    }
+  }, [
+    c_password,
+    email,
+    password,
+    hasUppercase,
+    characterPass,
+    passOneNumber,
+    passOneLetter,
+  ]);
 
   const sendRegister = () => {
-    if(isAlphanumeric(username) === false) {
+    if (isAlphanumeric(username) === false) {
       setPassSai(true);
-      setTextUserName("Account name should contain only letters and numbers")
-      return
-    }
-    else if (c_password !== password) {
+      setTextUserName("Account name should contain only letters and numbers");
+      return;
+    } else if (c_password !== password) {
       setPassSai(true);
-      setTextC_pass("Password does not match")
-      return
-    } else if (containsSpecialCharacters(password) === false) {
+      setTextC_pass("Password does not match");
+      return;
+    } else if (checkEmailFormat(email) === false) {
       setPassSai(true);
-      setPassValid("Password must be at least 6 characters. Password must have at least one non letter, one digit ('0-9'), one upper case")
-      return
-    } else if(checkEmailFormat(email) === false) {
-      setPassSai(true);
-      setValidEmail("Invalid Email Address")
-      return
+      setValidEmail("Invalid Email Address");
+      return;
     } else {
       setPassSai(false);
       socket?.emit("register", {
         username: username,
         password: password,
-        // firstName: firstName,
-        // lastName: lastName,
         email: email,
         phone: phone,
         ref: ref,
@@ -149,7 +168,6 @@ export default function Signup(props) {
     }
     // socket?.on("registerError", (data) => {});
   };
-
 
   return (
     <Box className="signup">
@@ -225,57 +243,9 @@ export default function Signup(props) {
             <span className="text-danger">no more than 15 characters</span>
           )}
           {/* {isAlphanumeric(username) === false && ( */}
-            <span className="text-danger">{textUserName}</span>
+          <span className="text-danger">{textUserName}</span>
           {/* )} */}
         </FormControl>
-        {/* <Box className="position-relative">
-          <div className="d-flex justify-content-between align-items-center ps-2 pe-2 pb-2 radio-group">
-            <div
-              onClick={() => {
-                setGender(0);
-              }}
-            >
-              <input
-                className="me-2"
-                type="radio"
-                id="contactChoice1"
-                name="contact"
-                defaultChecked
-              />
-              <label style={{ color: "white" }}>Mr</label>
-            </div>
-
-            <div
-              onClick={() => {
-                setGender(1);
-              }}
-            >
-              <input
-                className="me-2"
-                type="radio"
-                id="contactChoice2"
-                name="contact"
-                value="phone"
-              />
-              <label style={{ color: "white" }}>Mrs</label>
-            </div>
-
-            <div
-              onClick={() => {
-                setGender(2);
-              }}
-            >
-              <input
-                className="me-2"
-                type="radio"
-                id="contactChoice3"
-                name="contact"
-                value="mail"
-              />
-              <label style={{ color: "white" }}>Other</label>
-            </div>
-          </div>
-        </Box> */}
         <FormControl
           variant="standard"
           sx={{
@@ -298,15 +268,11 @@ export default function Signup(props) {
             }}
           />
           <Input
-            type={displayPassword === false ? "password" : "text"} 
+            type={displayPassword === false ? "password" : "text"}
             name="password"
             placeholder="Password"
             autoComplete="new-password"
-            onChange={(e) => {
-              // setBlur(false);
-              setPassword(e.target.value);
-            }}
-            // onBlur={() => setBlur(true)}
+            onChange={handleChangePass}
             value={password}
             sx={{
               "&:before": {
@@ -333,7 +299,7 @@ export default function Signup(props) {
                   position: "absolute",
                   top: width > 576 ? "10px" : "10px",
                   right: width > 576 ? "12px" : "10px",
-                  color:"#7C81F2"
+                  color: "#7C81F2",
                 }}
               />
             ) : (
@@ -342,15 +308,227 @@ export default function Signup(props) {
                   position: "absolute",
                   top: width > 576 ? "10px" : "10px",
                   right: width > 576 ? "12px" : "10px",
-                  color:"#7C81F2"
+                  color: "#7C81F2",
                 }}
               />
             )}
           </Box>
-          {/* {containsSpecialCharacters(password) === false && ( */}
-            <span className="text-danger">{textPassValid}</span>
-          {/* )} */}
         </FormControl>
+        <Box className="mb-3">
+          {" "}
+          <Box className="d-flex align-items-center ms-3">
+            {" "}
+            {characterPass === true ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: characterPass === true ? "green" : "white",
+              }}
+            >
+              {" "}
+              Password must be at least 6 characters.{" "}
+            </Typography>{" "}
+          </Box>{" "}
+          <Box className="d-flex align-items-center ms-3 text-white">
+            {" "}
+            {passOneLetter === true ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: passOneLetter === true ? "green" : "white",
+              }}
+            >
+              {" "}
+              Password must have at least one non letter.{" "}
+            </Typography>{" "}
+          </Box>{" "}
+          <Box className="d-flex align-items-center ms-3 text-white">
+            {" "}
+            {passOneNumber === true ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: passOneNumber === true ? "green" : "white",
+              }}
+            >
+              {" "}
+              Password must have at least one digit ('0-9').{" "}
+            </Typography>{" "}
+          </Box>{" "}
+          <Box className="d-flex align-items-center ms-3 text-white">
+            {" "}
+            {hasUppercase === true ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: hasUppercase === true ? "green" : "white",
+              }}
+            >
+              {" "}
+              Password must have at least one upper case.{" "}
+            </Typography>{" "}
+          </Box>{" "}
+        </Box>
         <FormControl
           variant="standard"
           sx={{
@@ -377,8 +555,8 @@ export default function Signup(props) {
             name="c_password"
             autoComplete="new-password"
             onChange={(e) => {
-              if(password !== c_password) {
-                  setPassSai(true)
+              if (password !== c_password) {
+                setPassSai(true);
               }
               setC_password(e.target.value);
             }}
@@ -409,7 +587,7 @@ export default function Signup(props) {
                   position: "absolute",
                   top: width > 576 ? "10px" : "10px",
                   right: width > 576 ? "12px" : "10px",
-                  color:"#7C81F2"
+                  color: "#7C81F2",
                 }}
               />
             ) : (
@@ -418,7 +596,7 @@ export default function Signup(props) {
                   position: "absolute",
                   top: width > 576 ? "10px" : "10px",
                   right: width > 576 ? "12px" : "10px",
-                  color:"#7C81F2"
+                  color: "#7C81F2",
                 }}
               />
             )}
@@ -427,7 +605,7 @@ export default function Signup(props) {
             <span className="text-danger">no more than 15 characters</span>
           )} */}
           {/* {c_password && c_password !== password && ( */}
-            <span className="text-danger">{textC_pass}</span>
+          <span className="text-danger">{textC_pass}</span>
           {/* )} */}
           {/* {passSai === true ? (
             <span className="text-danger">Password not march</span>
@@ -482,7 +660,7 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />{" "}
-            <span className="text-danger">{validEmail}</span>
+          <span className="text-danger">{validEmail}</span>
         </FormControl>
         <FormControl
           variant="standard"
