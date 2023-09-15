@@ -610,7 +610,7 @@ function App() {
             <CustomRouter history={history}>
               <Routes>
                 <Route
-                  path=""
+                  path="/home"
                   element={
                     getAppType() === "promote" ? (
                       <NewHomePageComponent />

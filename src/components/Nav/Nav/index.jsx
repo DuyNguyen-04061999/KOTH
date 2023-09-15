@@ -47,6 +47,72 @@ export default function Navbar() {
     }
   }, [isNavTablet, isNav]);
 
+  const [isHoveredHome, setIsHoveredHome] = useState(false);
+  const [isHoveredHot, setIsHoveredHot] = useState(false);
+  const [isHoveredDaly, setIsHoveredDaly] = useState(false);
+  const [isHoveredLong, setIsHoveredLong] = useState(false);
+  const [isHoveredSub, setIsHoveredSub] = useState(false);
+  const [isHoveredHelp, setIsHoveredHelp] = useState(false);
+
+  // Step 3: Add event listeners
+  const handleMouseEnterHome = () => {
+    // Step 4: Update state
+    setIsHoveredHome(true);
+  };
+
+  const handleMouseLeaveHome = () => {
+    // Step 4: Update state
+    setIsHoveredHome(false);
+  };
+
+  const handleMouseEnterHot = () => {
+    // Step 4: Update state
+    setIsHoveredHot(true);
+  };
+
+  const handleMouseLeaveHot = () => {
+    // Step 4: Update state
+    setIsHoveredHot(false);
+  };
+
+  const handleMouseEnterDaly = () => {
+    // Step 4: Update state
+    setIsHoveredDaly(true);
+  };
+
+  const handleMouseLeaveDaly = () => {
+    // Step 4: Update state
+    setIsHoveredDaly(false);
+  };
+  const handleMouseEnterLong = () => {
+    // Step 4: Update state
+    setIsHoveredLong(true);
+  };
+
+  const handleMouseLeaveLong = () => {
+    // Step 4: Update state
+    setIsHoveredLong(false);
+  };
+
+  const handleMouseEnterSub = () => {
+    // Step 4: Update state
+    setIsHoveredSub(true);
+  };
+
+  const handleMouseLeaveSub = () => {
+    // Step 4: Update state
+    setIsHoveredSub(false);
+  };
+
+  const handleMouseEnterHelp = () => {
+    // Step 4: Update state
+    setIsHoveredHelp(true);
+  };
+
+  const handleMouseLeaveHelp = () => {
+    // Step 4: Update state
+    setIsHoveredHelp(false);
+  };
   return (
     <Box className={`nav-section ${tablet}`}>
       <Box
@@ -69,20 +135,27 @@ export default function Navbar() {
           {getAppType() === "promote" ? (
             <Box>
               <Box
+                onMouseEnter={handleMouseEnterHome}
+                onMouseLeave={handleMouseLeaveHome}
                 sx={{
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  transition: "1s ease-out",
+                  boxShadow: isHoveredHome === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                   backgroundColor:
-                    pathname && pathname?.includes("home")
+                    (pathname && pathname?.includes("home")) ||
+                    isHoveredHome === true
                       ? "#7648ED"
                       : "#462A71",
 
                   borderRadius: "5px",
                   color:
-                    (pathname && pathname?.includes("home")) || pathname === "/"
+                    (pathname && pathname?.includes("home")) ||
+                    pathname === "/" ||
+                    isHoveredHome === true
                       ? "white"
                       : "#A89CD7",
                 }}
@@ -92,7 +165,8 @@ export default function Navbar() {
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
                 {(pathname && pathname?.includes("home")) ||
-                pathname === "/" ? (
+                pathname === "/" ||
+                isHoveredHome === true ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -317,15 +391,20 @@ export default function Navbar() {
                 }`}
               >
                 <Box
+                  onMouseEnter={handleMouseEnterHot}
+                  onMouseLeave={handleMouseLeaveHot}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredHot === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("hot-tournament")
+                      (pathname && pathname?.includes("hot-tournament")) ||
+                      isHoveredHot === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -336,7 +415,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("hot-tournament") ? (
+                  {(pathname && pathname?.includes("hot-tournament")) ||
+                  isHoveredHot === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -385,7 +465,8 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("hot-tournament")
+                        (pathname && pathname?.includes("hot-tournament")) ||
+                        isHoveredHot === true
                           ? "white"
                           : "",
                     }}
@@ -460,15 +541,20 @@ export default function Navbar() {
                   </span>
                 </Box> */}
                 <Box
+                  onMouseEnter={handleMouseEnterDaly}
+                  onMouseLeave={handleMouseLeaveDaly}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredDaly === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("daily-tournament")
+                      (pathname && pathname?.includes("daily-tournament")) ||
+                      isHoveredDaly === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -479,7 +565,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                 >
-                  {pathname && pathname?.includes("daily-tournament") ? (
+                  {(pathname && pathname?.includes("daily-tournament")) ||
+                  isHoveredDaly === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -523,7 +610,8 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("daily-tournament")
+                        (pathname && pathname?.includes("daily-tournament")) ||
+                        isHoveredDaly === true
                           ? "white"
                           : "",
                     }}
@@ -532,15 +620,21 @@ export default function Navbar() {
                   </span>
                 </Box>
                 <Box
+                  onMouseEnter={handleMouseEnterLong}
+                  onMouseLeave={handleMouseLeaveLong}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredLong === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("week-long-tournament")
+                      (pathname &&
+                        pathname?.includes("week-long-tournament")) ||
+                      isHoveredLong === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -551,7 +645,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("week-long-tournament") ? (
+                  {(pathname && pathname?.includes("week-long-tournament")) ||
+                  isHoveredLong === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -609,7 +704,9 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("week-long-tournament")
+                        (pathname &&
+                          pathname?.includes("week-long-tournament")) ||
+                        isHoveredLong === true
                           ? "white"
                           : "",
                     }}
@@ -714,14 +811,19 @@ export default function Navbar() {
                 }}
               />
               <Box
+                onMouseEnter={handleMouseEnterSub}
+                onMouseLeave={handleMouseLeaveSub}
                 sx={{
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  transition: "1s ease-out",
+                  boxShadow: isHoveredSub === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                   backgroundColor:
-                    pathname && pathname?.includes("package")
+                    (pathname && pathname?.includes("package")) ||
+                    isHoveredSub === true
                       ? "#7648ED"
                       : "#462A71",
 
@@ -732,7 +834,8 @@ export default function Navbar() {
                 }}
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
-                {pathname && pathname?.includes("package") ? (
+                {(pathname && pathname?.includes("package")) ||
+                isHoveredSub === true ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -781,7 +884,10 @@ export default function Navbar() {
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     color:
-                      pathname && pathname?.includes("package") ? "white" : "",
+                      (pathname && pathname?.includes("package")) ||
+                      isHoveredSub === true
+                        ? "white"
+                        : "",
                   }}
                 >
                   Subscription
@@ -1051,14 +1157,19 @@ export default function Navbar() {
           {getAppType() === "promote" ? (
             <Box
               className="cursor-pointer"
+              onMouseEnter={handleMouseEnterHelp}
+              onMouseLeave={handleMouseLeaveHelp}
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
-                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                transition: "1s ease-out",
                 padding: "8px",
+                boxShadow: isHoveredHelp === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                 backgroundColor:
-                  pathname && pathname?.includes("help-center")
+                  (pathname && pathname?.includes("help-center")) ||
+                  isHoveredHelp === true
                     ? "#7648ED"
                     : "",
                 borderRadius: "5px",
@@ -1067,7 +1178,8 @@ export default function Navbar() {
                 navigate(`/help-center`);
               }}
             >
-              {pathname && pathname?.includes("help-center") ? (
+              {(pathname && pathname?.includes("help-center")) ||
+              isHoveredHelp === true ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"
@@ -1119,7 +1231,10 @@ export default function Navbar() {
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   color:
-                    pathname && pathname?.includes("help-center") ? "#fff" : "",
+                    (pathname && pathname?.includes("help-center")) ||
+                    isHoveredHelp === true
+                      ? "#fff"
+                      : "",
                 }}
               >
                 Help Center

@@ -65,7 +65,7 @@ function SimpleDialog(props) {
     onClose(selectedValue);
     setUsername("");
     setPassword("");
-    dispatch(clickTab(false))
+    dispatch(clickTab(false));
   };
   useEffect(() => {
     socket?.on("loginError", (data) => {});
@@ -663,6 +663,17 @@ export default function Dialoglg() {
   const { width } = useWindowDimensions();
   const location = useLocation();
 
+  const [isHovering, setIsHovering] = useState(false);
+  console.log(isHovering);
+
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
   return (
     <div className="dialog">
       {token === "" || !token || token === null ? (
@@ -925,7 +936,7 @@ export default function Dialoglg() {
                     container
                     sx={{ padding: "10px 15px", maxWidth: "300px" }}
                   >
-                    <Grid item xs={6}>
+                    <Grid item xs={6} className="hover-dropdown">
                       <Dropdown.Item
                         style={{
                           paddingRight: "0px",
@@ -977,7 +988,7 @@ export default function Dialoglg() {
                         </button>
                       </Dropdown.Item>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} className="hover-dropdown">
                       <Dropdown.Item
                         style={{
                           paddingRight: "0px",
@@ -1082,7 +1093,13 @@ export default function Dialoglg() {
                 <Box
                   onClick={logout}
                   className="log-out"
-                  sx={{ padding: "5px 15px" }}
+                  sx={{
+                    backgroundColor:
+                      isHovering === true ? "#462A71 !important" : "",
+                      margin:" 5px 15px"
+                  }}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
                 >
                   <Dropdown.Item style={{ paddingLeft: "5px" }}>
                     <svg
