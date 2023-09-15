@@ -115,7 +115,7 @@ export default function NewFooter() {
             sx={{
               width: width < 576 ? "120px" : "200px",
               height: width < 576 ? "44px" : "73.333px",
-              marginTop: width < 1024 ? "30px" : "64px",
+              marginTop: width < 1024 ? "0px" : "64px",
             }}
             src={imageDesktop.LogoCongTy}
           ></Box>
