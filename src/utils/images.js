@@ -296,6 +296,9 @@ import DummyBanner6 from "../assets/images/banners/mb3.png"
 
 import AdminLogo from "../assets/images/lggame.png"
 import bannerWindesk from "../assets/imagesDesktop/bannerwin.png"
+import bannertourDesk from "../assets/imagesDesktop/bannertourDesk.png"
+import bannertour5 from "../assets/imagesDesktop/bannertour5.png"
+import bannerWinBM from '../assets/imagesDesktop/bannerwinMB.png'
 
 
 export const imageHome = {
@@ -587,7 +590,10 @@ export const imageDesktop = {
   SmallBanner2: SmallBanner2,
   logoCT: logoCT,
   LogoCongTy: LogoCongTy,
-  bannerWindesk:bannerWindesk
+  bannerWindesk:bannerWindesk,
+  bannertourDesk:bannertourDesk,
+  bannertour5:bannertour5,
+  bannerWinBM:bannerWinBM
 };
 
 export const imagesV2 = {
