@@ -1,6 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_MASTER_SERVICE } from "../services/adminMasterService";
 import { createDistributorFail, createDistributorSuccess, deleteDistributorFail, deleteDistributorSuccess, getDetailDistributorFail, getDetailDistributorSuccess, getListDistributorFail, getListDistributorSuccess, getListTableFail, getListTableSuccess, updateDistributorFail, updateDistributorSuccess } from "../reducers/adminMasterReducer";
+import { closeCreateDialog } from "../reducers/adminDialogReducer";
 const adminMasterService = new ADMIN_MASTER_SERVICE();
 
 function* createDistributorSaga(dataRequest) {
@@ -10,6 +11,8 @@ function* createDistributorSaga(dataRequest) {
         if(res && res.status === 200) {
            yield put(createDistributorSuccess())
            alert("Create Distributor Success!")
+           yield put(closeCreateDialog());
+           window.location.reload();
         } else {
            yield put(createDistributorFail())
         }

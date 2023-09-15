@@ -8,32 +8,64 @@ import { MobileDatePicker, MobileTimePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { closeProvideDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import {
+  getListTicket,
+  provideTicket,
+} from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
+import { useEffect } from "react";
+import { LoadingButton } from "@mui/lab";
 
 const bg = "rgba(228, 228, 228, 0.2967)";
 // const borderRadius = 12
 
 export default function ProvideTicketDialogComponent(props) {
   const { account, customerTicket, availableTicket } = props;
-  const { isProvideDialog } = useSelector(state => state.adminDialogReducer)
-  const dispatch = useDispatch()
-
+  const { roles } = useSelector((state) => state.adminAuthReducer);
+  const { isProvideDialog } = useSelector((state) => state.adminDialogReducer);
+  const { detailAccount } = useSelector((state) => state.adminReducer_);
+  const { listTicket, isProvideTicket } = useSelector(
+    (state) => state.adminConfigReducer
+  );
+  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
   const [dateInput, setDateInput] = useState({
     date: moment().format("YYYY/MM/DD"),
-    time: moment("2022-04-17T15:30"),
   });
   const [ticketQuantity, setTicketQuantity] = useState(0);
+  console.log(isProvideTicket);
+  useEffect(() => {
+    dispatch(getListTicket());
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const provideTicketInfo = {
-      account: account,
-      customerTicket: customerTicket,
-      availableTicket: availableTicket,
-      ticketQuantity: ticketQuantity,
-      date: dateInput,
+      accountName: detailAccount.account,
+      quantity: parseInt(ticketQuantity),
+      date: roles?.includes("master") && dateInput.date,
     };
-    console.log(provideTicketInfo);
-    e.target.reset();
+    if (
+      !provideTicketInfo.disId ||
+      provideTicketInfo.quantity === 0 ||
+      !provideTicketInfo.date
+    ) {
+      setErrorMessage("Please fill all required fields");
+    }
+    if (
+      roles?.includes("master")
+        ? provideTicketInfo.quantity > 10000
+        : provideTicketInfo.quantity > listTicket?.length
+    ) {
+      setErrorMessage("Not enough available tickets to provide");
+    } else if (
+      roles?.includes("master") &&
+      new Date(dateInput.date).getTime() < new Date().getTime()
+    ) {
+      setErrorMessage("Date you have selected is before current date");
+    } else {
+      dispatch(provideTicket(provideTicketInfo));
+      setErrorMessage("");
+    }
   };
 
   const handleTicketQuantityChange = (e) => {
@@ -46,8 +78,8 @@ export default function ProvideTicketDialogComponent(props) {
   const onBlurRechargeInput = () => setFocusedRechargeInput(false);
 
   const handleClose = () => {
-    dispatch(closeProvideDialog())
-  }
+    dispatch(closeProvideDialog());
+  };
 
   return (
     <Dialog
@@ -91,7 +123,7 @@ export default function ProvideTicketDialogComponent(props) {
               boxShadow: "1px 20px 25px 5px #E4E4E4",
             }}
           >
-            <CloseIcon onClick={handleClose} sx={{}} />
+            <CloseIcon onClick={handleClose} sx={{ cursor: "pointer" }} />
           </Box>
         </Box>
         <Box component={"form"} onSubmit={handleSubmit}>
@@ -120,7 +152,7 @@ export default function ProvideTicketDialogComponent(props) {
             </Box>
             <Box
               component={"input"}
-              value={account || "Account"}
+              value={detailAccount?.account || "Account"}
               disabled
               className="pt-0 pb-2"
               sx={{
@@ -167,7 +199,7 @@ export default function ProvideTicketDialogComponent(props) {
             </Box>
             <Box
               component={"input"}
-              value={customerTicket || "Customer tickets"}
+              value={detailAccount?.ticket}
               disabled
               className="pt-0 pb-2"
               sx={{
@@ -214,7 +246,9 @@ export default function ProvideTicketDialogComponent(props) {
             </Box>
             <Box
               component={"input"}
-              value={availableTicket || "Available tickets"}
+              value={
+                roles?.includes("master") ? "Unlimited" : listTicket?.length
+              }
               disabled
               className="pt-0 pb-2"
               sx={{
@@ -289,68 +323,77 @@ export default function ProvideTicketDialogComponent(props) {
             ></Box>
           </Box>
 
-          <Box component={"div"} className="rounded mt-3">
-            <div>
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <Box>
-                  {" "}
-                  <DatePicker
-                   onChange={(newValue) => {
-                    setDateInput({
-                      ...dateInput,
-                      date: newValue,
-                    });
-                  }}
-                    format="YYYY/MM/DD"
-                    value={moment(dateInput?.date, "YYYY/MM/DD")}
-                    sx={{
-                      display: { xs: "none", sm: "block" },
-                      "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
-                        border: "none",
-                        outline: "none",
-                        width: "100%",
-                        padding: "10px 16px 10px 2px",
-                      },
-                      "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
-                        {
-                          border: "none",
-                          outline: "none",
-                          borderRadius: "10px",
-                          padding: "10px 20px",
+          {roles.includes("master") && (
+            <Box component={"div"} className="rounded mt-3">
+              <div>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <Box>
+                    {" "}
+                    <DatePicker
+                      onChange={(newValue) => {
+                        setDateInput({
+                          date: moment(newValue).format("YYYY/MM/DD"),
+                        });
+                      }}
+                      format="YYYY/MM/DD"
+                      value={moment(dateInput?.date, "YYYY/MM/DD")}
+                      sx={{
+                        display: { xs: "none", sm: "block" },
+                        "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
+                          {
+                            border: "none",
+                            outline: "none",
+                            width: "100%",
+                            padding: "10px 16px 10px 2px",
+                          },
+                        "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
+                          {
+                            border: "none",
+                            outline: "none",
+                            borderRadius: "10px",
+                            padding: "10px 20px",
+                          },
+                      }}
+                    />
+                    <MobileDatePicker
+                      format="YYYY/MM/DD"
+                      value={moment(dateInput?.date, "YYYY/MM/DD")}
+                      onChange={(newValue) =>
+                        setDateInput({
+                          date: moment(newValue).format("YYYY/MM/DD"),
+                        })
+                      }
+                      sx={{
+                        display: { xs: "block", sm: "none" },
+                        "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root":
+                          {
+                            width: "100%",
+                            padding: "10px 16px 10px 2px",
+                          },
+                        "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input":
+                          {
+                            border: "none",
+                            outline: "none",
+                            padding: "10px 15px",
+                            borderRadius: "5px",
+                          },
+                        "& .css-1g7nc1s-MuiPickersLayout-root": {
+                          backgroundColor: "white",
                         },
-                    }}
-                  />
-                  <MobileDatePicker
-                    format="YYYY/MM/DD"
-                    value={moment(dateInput?.date, "YYYY/MM/DD")}
-                    onChange={(newValue) => setDateInput({
-                      ...dateInput,
-                      date: newValue,
-                    })}
-                    sx={{
-                      display: { xs: "block", sm: "none" },
-                      "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
-                        width: "100%",
-                        padding: "10px 16px 10px 2px",
-                      },
-                      "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input":
-                        {
-                          border: "none",
-                          outline: "none",
-                          padding: "10px 15px",
-                          borderRadius: "5px",
-                        },
-                      "& .css-1g7nc1s-MuiPickersLayout-root": {
-                        backgroundColor: "white",
-                      },
-                    }}
-                  />
-                </Box>
-              </LocalizationProvider>
-            </div>
-          </Box>
+                      }}
+                    />
+                  </Box>
+                </LocalizationProvider>
+              </div>
+            </Box>
+          )}
 
-          <Button
+          {errorMessage && (
+            <p style={{ color: "red", marginTop: "24px" }}>{errorMessage}</p>
+          )}
+
+          <LoadingButton
+            loading={isProvideTicket}
             className="mt-3 rounded mb-4 pt-2 pb-2"
             sx={{
               "&:hover": {
@@ -366,7 +409,7 @@ export default function ProvideTicketDialogComponent(props) {
             type="submit"
           >
             Recharge
-          </Button>
+          </LoadingButton>
         </Box>
       </Box>
     </Dialog>
