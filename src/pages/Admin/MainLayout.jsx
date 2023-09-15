@@ -5,6 +5,8 @@ import { getConfigs } from "../../redux-saga-middleware_admin/reducers/adminConf
 import { Outlet } from "react-router-dom";
 import AdminNavigation from "../../components/Admin/Navigation/AdminNavigation";
 import DrawerNavigation from "../../components/Admin/Navigation/DrawerNavigation";
+import CreateAccountDialogComponent from "../../components/Admin/Dialog/CreateAccountDialogComponent";
+import ProvideTicketDialogComponent from "../../components/Admin/Dialog/ProvideTicketDialogComponent";
 
 export default function MainLayout() {
   const dispatch = useDispatch();
@@ -23,6 +25,8 @@ export default function MainLayout() {
         minHeight: "100vh",
       }}
     >
+      <CreateAccountDialogComponent/>
+      <ProvideTicketDialogComponent/>
       <Box
         sx={{
           bgcolor: "white",

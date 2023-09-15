@@ -18,6 +18,7 @@ const HomePage = () => {
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
+  console.log(listEndUser, "listEnd");
   const [data, setData] = useState([]);
 
   const dispatch = useDispatch();
@@ -26,32 +27,52 @@ const HomePage = () => {
       switch (roles[0]) {
         case "master": {
           dispatch(getListDistributor());
-          setData([...listDistributor]);
           break;
         }
         case "distributor": {
           dispatch(getListSub());
-          setData([...listSub]);
           break;
         }
         case "sub_distributor": {
-          console.log("sub", listRefs);
           dispatch(getListRef());
-          setData([...listRefs]);
           break;
         }
         case "agent": {
           dispatch(getListEndUser());
-          setData([...listEndUser]);
           break;
         }
         default: {
-          setData([]);
           break;
         }
       }
     }
   }, [dispatch, roles]);
+
+  useEffect(() => {
+    if (roles && roles?.length && roles[0]) {
+      switch (roles[0]) {
+        case "master": {
+          setData([...listDistributor]);
+          break;
+        }
+        case "distributor": {
+          setData([...listSub]);
+          break;
+        }
+        case "sub_distributor": {
+          setData([...listRefs]);
+          break;
+        }
+        case "agent": {
+          setData([...listEndUser]);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
   if (!roles.includes("agent"))
     return (
@@ -64,17 +85,6 @@ const HomePage = () => {
       <>
         <AdminPanel></AdminPanel>
         <UserManager data={data} />
-        <Box
-          sx={{
-            width: "100%",
-            height: "105px",
-            position: "absolute",
-            bottom: 0,
-            zIndex: 10,
-          }}
-        >
-          <Button>View All</Button>
-        </Box>
       </>
     );
 };

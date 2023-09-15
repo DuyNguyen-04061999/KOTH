@@ -186,9 +186,10 @@ export default function UnityGameComponent(props) {
   //   };
   // }, [dispatch, unload, fmod]);
 
-  useEffect(() => {
-    setIsLoaded(isLoaded);
-  }, [isLoaded, setIsLoaded]);
+  // useEffect(() => {
+  //   setIsLoaded(isLoaded);
+  // }, [isLoaded, setIsLoaded]);
+  
   return (
     <Fragment>
       {!isLoaded && !videoGame && (
