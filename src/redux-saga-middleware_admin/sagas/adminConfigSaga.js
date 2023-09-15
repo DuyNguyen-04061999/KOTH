@@ -1,6 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
 import { activeAccountFail, activeAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess } from "../reducers/adminConfigReducer";
+import { closeProvideDialog } from "../reducers/adminDialogReducer";
 const adminConfigService = new ADMIN_CONFIG_SERVICE();
 
 function* getConfigSaga(dataRequest) {
@@ -42,7 +43,9 @@ function* provideTicketSaga(dataRequest) {
         const res = yield call(adminConfigService.provideTicket, payload)
         if(res && res.status === 200) {
             yield put(provideTicketSuccess())
-           window.location.reload()
+           alert("Provide Ticket success");
+           yield put(closeProvideDialog());
+           window.location.reload();
         } else {
             yield put(provideTicketFail())
         }

@@ -7,7 +7,7 @@ import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminS
 
 const AdminStructure = (props) => {
   const { data } = props;
-  console.log(data);
+  
   return (
     <Container>
       <Box sx={{ marginTop: "36px" }}>
