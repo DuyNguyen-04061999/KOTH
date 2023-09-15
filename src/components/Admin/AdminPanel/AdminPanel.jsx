@@ -45,6 +45,9 @@ const AdminPanel = () => {
           const listFilter = listDistributor?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
           if(listFilter && listFilter?.length > 0) {
             dispatch(updateDetailAccount(listFilter[0]))
+            if(width < 576) {
+              dispatch(openDetailDialog())
+            }
           } else {
             dispatch(updateDetailAccount())
           }
@@ -54,6 +57,9 @@ const AdminPanel = () => {
           const listFilter = listSub?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
           if(listFilter && listFilter?.length > 0) {
             dispatch(updateDetailAccount(listFilter[0]))
+            if(width < 576) {
+              dispatch(openDetailDialog())
+            }
           } else {
             dispatch(updateDetailAccount())
           }
@@ -63,6 +69,9 @@ const AdminPanel = () => {
           const listFilter = listRefs?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
           if(listFilter && listFilter?.length > 0) {
             dispatch(updateDetailAccount(listFilter[0]))
+            if(width < 576) {
+              dispatch(openDetailDialog())
+            }
           } else {
             dispatch(updateDetailAccount())
           }
@@ -72,14 +81,14 @@ const AdminPanel = () => {
           const listFilter = listEndUser?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
           if(listFilter && listFilter?.length > 0) {
             dispatch(updateDetailAccount(listFilter[0]))
+            if(width < 576) {
+              dispatch(openDetailDialog())
+            }
           } else {
             dispatch(updateDetailAccount())
           }
         }
-  
-        if(width < 576 & detailAccount) {
-          dispatch(openDetailDialog())
-        }
+
       }
       
     }

@@ -100,9 +100,11 @@ export const RowTable = (props) => {
         ".MuiTableCell-root": {
           borderBottom: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
           borderTop: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
-        }
+        },
+        borderBottom: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
+        borderTop: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
       }} style={{backgroundColor: index % 2 !== 0 && "#F7F7F7",borderRadius: "5px"}}>
-        {row.action ? (
+        {row.action && width > 576 ? (
           <StyledTableCell sx={{display: {xs: "none", sm: "table-cell"}, }}>
             <Button onClick={handleUpdate} children={"Update"} sx={{
               fontSize: "14px" ,borderRadius: "16px",padding:"2px 16px",bgcolor: "#355DFF", color: "#FFF", fontWeight: 700, textTransform: "unset",
@@ -144,10 +146,21 @@ export const RowTable = (props) => {
           {/* {row.commission} */}{"-"}
         </StyledTableCell>
         <StyledTableCell className="text-center">{row.ticket}</StyledTableCell>
-        <StyledTableCell className="text-center">{row.ref}</StyledTableCell>
-        <StyledTableCell className="text-center">{moment(row.date).format('ll')}</StyledTableCell>
-        <StyledTableCell className="text-center" sx={{color: "#3DBAA2"}}>{row.amount}</StyledTableCell>
-        <StyledTableCell className="text-center">{row.status ? "Active" : "Prohibit"}</StyledTableCell>
+        
+        {width > 576 && (
+          <StyledTableCell className="text-center">{row.ref}</StyledTableCell>
+        )}
+        {
+          width > 576 && (
+            <StyledTableCell className="text-center">{moment(row.date).format('ll')}</StyledTableCell>
+          )
+        }
+        {width > 576 && (
+          <StyledTableCell className="text-center" sx={{color: "#3DBAA2"}}>{row.amount}</StyledTableCell>
+        )}
+        {width > 576 && (
+          <StyledTableCell className="text-center">{row.status ? "Active" : "Prohibit"}</StyledTableCell>
+        )}
       </TableRow>
       {open && children}
     </React.Fragment>

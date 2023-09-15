@@ -29,7 +29,7 @@ const StyledTableHead = styled(TableHead)(({ theme }) => ({
 const StyleTable = styled(Table)(({ theme }) => ({
   [`&.${tableClasses.root}`]: {
     background: "#FFF",
-    border: "2px solid #E4E4E4",
+    border: useWindowDimensions().width < 576 ? "unset" : "2px solid #E4E4E4",
     borderRadius: "16px",
     overflow: "scroll",
   },
@@ -61,7 +61,8 @@ const NestedTable = (props) => {
       <TableContainer
         sx={{
           width: "100%",
-          maxHeight: { xs: "70vh", sm: "440px" },
+          maxHeight: { xs: "70vh", sm: "440px"},
+          overflow: "hidden",
           borderRadius: 0,
           "& .MuiTableCell-root": {
             borderWidth: "none",
@@ -72,20 +73,22 @@ const NestedTable = (props) => {
       >
         <StyleTable
           stickyHeader
-          sx={{ background: "#F7F7F7" }}
+          sx={{ background: "#F7F7F7", marginBottom: "120px"}}
           aria-label="collapsible table"
         >
           <StyledTableHead>
             <TableRow>
               {/* <TableCell style={{color: "#808191",}}/> */}
-              <TableCell
-                sx={{
-                  display: { xs: "none", sm: "table-cell" },
-                  maxWidth: "unset",
-                }}
-                style={{ color: "#808191" }}
-                children=" "
-              />
+              {width > 576 && (
+                <TableCell
+                  sx={{
+                    display: { xs: "none", sm: "table-cell" },
+                    maxWidth: "unset",
+                  }}
+                  style={{ color: "#808191" }}
+                  children=" "
+                />
+              )}
               <TableCell
                 sx={{ width: "100px" }}
                 style={{ color: "#808191" }}
@@ -100,14 +103,22 @@ const NestedTable = (props) => {
               />
               <TableCell className="text-center" style={{ color: "#808191" }} children="Revenue" />
               <TableCell className="text-center" style={{ color: "#808191" }} children="Ticket" />
-              <TableCell className="text-center" style={{ color: "#808191" }} children="Ref Code" />
-              <TableCell className="text-center" style={{ color: "#808191" }} children="Date" />
-              <TableCell
-                style={{ color: "#808191" }}
-                children="Amount Account"
-                className="text-center"
-              />
-              <TableCell className="text-center" style={{ color: "#808191" }} children="Status" />
+              {width > 576 && (
+                <TableCell className="text-center" style={{ color: "#808191" }} children="Ref Code" />
+              )}
+              {width > 576 && (
+                <TableCell className="text-center" style={{ color: "#808191" }} children="Date" />
+              )}
+              {width > 576 && (
+                <TableCell
+                  style={{ color: "#808191" }}
+                  children="Amount Account"
+                  className="text-center"
+                />
+              )}
+              {width > 576 && (
+                <TableCell className="text-center" style={{ color: "#808191" }} children="Status" />
+              )}
               {/* {
                 Object.keys(data[0])?.map((element,index) => (<TableCell key={index} align="right">{element}</TableCell>))
             } */}
