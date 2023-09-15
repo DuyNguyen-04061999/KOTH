@@ -7,10 +7,10 @@ const ListEmpty = () => {
   const { width } = useWindowDimensions();
   return (
     <Box
+      className="pt-4 pb-4 rounded"
       sx={{
         bgcolor: "#282134",
         width: "100%",
-        height: width < 576 ? "308px" : "360px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -20,8 +20,8 @@ const ListEmpty = () => {
       {/* <FolderOffIcon sx={{ color: "white", fontSize: "56px" }}></FolderOffIcon> */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="72"
-        height="72"
+        width="40"
+        height="40"
         fill="none"
         viewBox="0 0 72 72"
       >
@@ -57,10 +57,10 @@ const ListEmpty = () => {
           ></path>
         </g>
       </svg>
-      <Typography sx={{ color: "white", fontSize: "14px", marginTop: "24px", color:"#979797", lineHeight:"14px", letterSpacing:"0.8px" }}>
+      <Typography className="text-center" sx={{ fontSize: "14px", marginTop: "12px", color:"#979797", lineHeight:"14px", letterSpacing:"0.8px" }}>
         No hot tournaments available
       </Typography>{" "}
-      <Typography sx={{ color: "white", fontSize: "14px", marginTop: "4px", color:"#979797",lineHeight:"14px", letterSpacing:"0.8px" }}>
+      <Typography className="text-center" sx={{ fontSize: "14px", marginTop: "4px", color:"#979797",lineHeight:"14px", letterSpacing:"0.8px" }}>
       at the moment
       </Typography>
     </Box>
