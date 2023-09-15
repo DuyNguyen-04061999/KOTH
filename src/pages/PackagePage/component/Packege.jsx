@@ -126,7 +126,7 @@ export default function Package() {
       <CssBaseline>
         <DialogConfirm />
         {width > 576 ? (
-          <div className="Package-home pb-5 mb-5">
+          <div className="Package-home pb-5 ">
             <Box className="pt-5 pb-4 text-white">
               {location && location?.pathname?.includes("home") && (
                 <Typography variant="h5">Subscription</Typography>
@@ -381,7 +381,7 @@ export default function Package() {
                                         }}
                                       >
                                         {i?.packageFreeTicketTournament} Free
-                                        voucher/tournament
+                                        ticket/tournament
                                       </Typography>
                                     </Box>
                                     <Box
@@ -913,7 +913,7 @@ export default function Package() {
                                   }}
                                 >
                                   {i?.packageFreeTicketTournament} Free
-                                  voucher/tournament
+                                  ticket/tournament
                                 </Typography>
                               </Box>
                               <Box
