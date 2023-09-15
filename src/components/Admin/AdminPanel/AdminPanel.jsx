@@ -8,41 +8,113 @@ import {
   Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import moment from "moment";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
+import DetailAccountDialogComponent from "../Dialog/DetailAccountDialogComponent";
+import { openDetailDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 
 const AdminPanel = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
+  const { detailAccount } = useSelector((state) => state.adminReducer_);
+  const { listDistributor } = useSelector((state) => state.adminMasterReducer);
+  const { listSub } = useSelector((state) => state.adminDistributorReducer);
+  const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
+  const { listEndUser } = useSelector((state) => state.adminAgentReducer);
+  console.log(listEndUser);
+  useEffect(() => {
+
+  })
+
   const { width } = useWindowDimensions();
-  const SearchBar = ({ setSearchQuery }) => (
-    <form>
-      <Box
-        sx={{
-          border: "2px solid #5474F1",
-          borderRadius: "16px",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 16px",
-          marginTop: { xs: "14px" },
-        }}
-      >
-        <TextField
-          id="search-bar"
-          className="text"
-          placeholder="Account"
-          variant="standard"
-          InputProps={{
-            disableUnderline: true, // <== added this
+  const SearchBar = ({ setSearchQuery }) => {
+    const dispatch = useDispatch()
+
+    const [searchValue, setSearchValue] = useState("")
+    const handleChangeSearch = (e) => {
+      setSearchValue(e?.target?.value)
+    }
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      if(searchValue) {
+        if(roles && roles?.length > 0 && roles?.includes("master")) {
+          const listFilter = listDistributor?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
+          if(listFilter && listFilter?.length > 0) {
+            dispatch(updateDetailAccount(listFilter[0]))
+          } else {
+            dispatch(updateDetailAccount())
+          }
+        }
+  
+        if(roles && roles?.length > 0 && roles?.includes("distributor")) {
+          const listFilter = listSub?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
+          if(listFilter && listFilter?.length > 0) {
+            dispatch(updateDetailAccount(listFilter[0]))
+          } else {
+            dispatch(updateDetailAccount())
+          }
+        }
+  
+        if(roles && roles?.length > 0 && roles?.includes("sub_distributor")) {
+          const listFilter = listRefs?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
+          if(listFilter && listFilter?.length > 0) {
+            dispatch(updateDetailAccount(listFilter[0]))
+          } else {
+            dispatch(updateDetailAccount())
+          }
+        }
+  
+        if(roles && roles?.length > 0 && roles?.includes("agent")) {
+          const listFilter = listEndUser?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
+          if(listFilter && listFilter?.length > 0) {
+            dispatch(updateDetailAccount(listFilter[0]))
+          } else {
+            dispatch(updateDetailAccount())
+          }
+        }
+  
+        if(width < 576 & detailAccount) {
+          dispatch(openDetailDialog())
+        }
+      }
+      
+    }
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <Box
+          sx={{
+            border: "2px solid #5474F1",
+            borderRadius: "16px",
+            display: "flex",
+            alignItems: "center",
+            padding: "0 16px",
+            marginTop: { xs: "14px" },
           }}
-          sx={{ width: { xs: "100%", sm: "260px" } }}
-        />
-        <IconButton type="submit" aria-label="search">
-          <SearchIcon style={{ fill: "black" }} />
-        </IconButton>
-      </Box>
-    </form>
-  );
+        >
+          <TextField
+            id="search-bar"
+            className="text"
+            placeholder="Account"
+            variant="standard"
+            value={searchValue}
+            InputProps={{
+              disableUnderline: true, // <== added this
+            }}
+            onChange={handleChangeSearch}
+            sx={{ width: { xs: "100%", sm: "260px" } }}
+          />
+          <IconButton type="submit" aria-label="search" onClick={handleSubmit}>
+            <SearchIcon style={{ fill: "black" }} />
+          </IconButton>
+        </Box>
+      </form>
+    )
+  };
 
   const ProvideTicketSVG = () => {
     return (
@@ -63,11 +135,23 @@ const AdminPanel = () => {
     );
   };
 
+  const dispatch = useDispatch()
+
+  const handleActive = () => {
+    if(detailAccount) {
+      dispatch(activeAccount({
+        accountName: detailAccount?.account,
+        active: detailAccount?.status ? 0 : 1
+      }))
+    }
+  }
+
   return (
     <Box>
+      <DetailAccountDialogComponent/>
       <Container sx={{ marginTop: "80px" }}>
         <Typography
-          sx={{ textAlign: "start",fontWeight: {xs: 700, sm: 600} ,fontSize: {xs: "20px", sm: "24px"}, fontWeight: 600, }}
+          sx={{ textAlign: "start",fontWeight: {xs: 700, sm: 600} ,fontSize: {xs: "20px", sm: "24px"} }}
         >
           {width < 576
             ? `${roles?.includes("agent") ? "User Manager" : "Admin Structure"}`
@@ -116,167 +200,172 @@ const AdminPanel = () => {
               ></Button>
             </Box>
           </Box>
-          <Grid
-            container
-            sx={{
-              border: "2px solid #E4E4E4",
-              borderRadius: "16px",
-              marginTop: "24px",
-              display: { xs: "none", sm: "flex" },
-            }}
-          >
+          {detailAccount && (
             <Grid
+              container
               sx={{
-                padding: "24px",
-                borderRight: "2px solid #E4E4E4",
-                flex: 1,
-              }}
-            >
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                Account
-              </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
-                Distributor_01
-              </Typography>
-            </Grid>
-            <Grid
-              sx={{
-                padding: "24px",
-                borderRight: "2px solid #E4E4E4",
-                flex: 1,
-              }}
-            >
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                Level
-              </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
-                Distributor
-              </Typography>
-            </Grid>
-            <Grid
-              sx={{
-                padding: "24px",
-                borderRight: "2px solid #E4E4E4",
-                flex: 1,
-              }}
-            >
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                Balance
-              </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
-                100
-              </Typography>
-            </Grid>
-            <Grid
-              sx={{
-                padding: "24px",
-                borderRight: "2px solid #E4E4E4",
-                flex: 1,
-              }}
-            >
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                Ticket
-              </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
-                20
-              </Typography>
-            </Grid>
-            <Grid
-              sx={{
-                padding: "24px",
-                borderRight: "2px solid #E4E4E4",
-                flex: 1,
-              }}
-            >
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                RefCode
-              </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
-                123456789
-              </Typography>
-            </Grid>
-            <Grid
-              sx={{
-                padding: "24px",
-                borderRight: "2px solid #E4E4E4",
-                flex: 1,
-              }}
-            >
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                Register Date
-              </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
-                2022-07-23 17:36:50
-              </Typography>
-            </Grid>
-            <Grid
-              sx={{
-                padding: "24px",
-                borderRight: "2px solid #E4E4E4",
-                flex: 1,
-              }}
-            >
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                Amount Account
-              </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
-                128
-              </Typography>
-            </Grid>
-            <Grid sx={{ padding: "24px", flex: 1 }}>
-              <Typography
-                sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
-              >
-                Status
-              </Typography>
-              <Button
-                children={"Active"}
-                sx={{
-                  fontSize: "14px",
-                  borderRadius: "16px",
-                  padding: "2px 16px",
-                  bgcolor: "#355DFF",
-                  color: "#FFF",
-                  fontWeight: 700,
-                  textTransform: "unset",
-                  ":hover": {
-                    backgroundColor: "#355DFF",
-                  },
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
-            <Button
-              sx={{
-                backgroundColor: "#FF9F38",
-                fontWeight: 700,
-                fontSize: "14px",
-                textTransform: "unset",
-                color: "white",
-                padding: "8px 24px",
+                border: "2px solid #E4E4E4",
                 borderRadius: "16px",
-                ":hover": { backgroundColor: "#FF9F38" },
+                marginTop: "24px",
+                display: { xs: "none", sm: "flex" },
               }}
             >
-              <ProvideTicketSVG></ProvideTicketSVG>
-              Provide Ticket
-            </Button>
-          </Box>
+              <Grid
+                sx={{
+                  padding: "24px",
+                  borderRight: "2px solid #E4E4E4",
+                  flex: 1,
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  Account
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                  {detailAccount?.account || ""}
+                </Typography>
+              </Grid>
+              <Grid
+                sx={{
+                  padding: "24px",
+                  borderRight: "2px solid #E4E4E4",
+                  flex: 1,
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  Level
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                {detailAccount?.level || ""}
+                </Typography>
+              </Grid>
+              <Grid
+                sx={{
+                  padding: "24px",
+                  borderRight: "2px solid #E4E4E4",
+                  flex: 1,
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  Revenue
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                  _
+                </Typography>
+              </Grid>
+              <Grid
+                sx={{
+                  padding: "24px",
+                  borderRight: "2px solid #E4E4E4",
+                  flex: 1,
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  Ticket
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                  {detailAccount?.ticket || 0}
+                </Typography>
+              </Grid>
+              <Grid
+                sx={{
+                  padding: "24px",
+                  borderRight: "2px solid #E4E4E4",
+                  flex: 1,
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  RefCode
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                  {detailAccount?.ref || ""}
+                </Typography>
+              </Grid>
+              <Grid
+                sx={{
+                  padding: "24px",
+                  borderRight: "2px solid #E4E4E4",
+                  flex: 1,
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  Register Date
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                  {detailAccount?.date ? moment(detailAccount?.date).format('ll') : ""}
+                </Typography>
+              </Grid>
+              <Grid
+                sx={{
+                  padding: "24px",
+                  borderRight: "2px solid #E4E4E4",
+                  flex: 1,
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  Amount Account
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                  {detailAccount?.amount || 0}
+                </Typography>
+              </Grid>
+              <Grid sx={{ padding: "24px", flex: 1 }}>
+                <Typography
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                >
+                  Status
+                </Typography>
+                <Button
+                  onClick={handleActive}
+                  children={detailAccount?.status ? "Active" : "Prohibit"}
+                  sx={{
+                    fontSize: "14px",
+                    borderRadius: "16px",
+                    padding: "2px 16px",
+                    bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
+                    color: "#FFF",
+                    fontWeight: 700,
+                    textTransform: "unset",
+                    ":hover": {
+                      backgroundColor: detailAccount?.status ? "#355DFF" : "#FF4135",
+                    },
+                  }}
+                />
+              </Grid>
+            </Grid>
+          )}
+          {detailAccount && (
+            <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#FF9F38",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  textTransform: "unset",
+                  color: "white",
+                  padding: "8px 24px",
+                  borderRadius: "16px",
+                  ":hover": { backgroundColor: "#FF9F38" },
+                }}
+              >
+                <ProvideTicketSVG></ProvideTicketSVG>
+                Provide Ticket
+              </Button>
+            </Box>
+          )}
         </Box>
       </Container>
     </Box>

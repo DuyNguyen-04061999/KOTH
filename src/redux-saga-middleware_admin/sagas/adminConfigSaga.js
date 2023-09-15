@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
-import { getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess } from "../reducers/adminConfigReducer";
+import { activeAccountFail, activeAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess } from "../reducers/adminConfigReducer";
 const adminConfigService = new ADMIN_CONFIG_SERVICE();
 
 function* getConfigSaga(dataRequest) {
@@ -52,10 +52,27 @@ function* provideTicketSaga(dataRequest) {
     }
 }
 
+function* activeAccountSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminConfigService.activeAccount, payload)
+        if(res && res.status === 200) {
+            yield put(activeAccountSuccess())
+           window.location.reload()
+        } else {
+            yield put(activeAccountFail())
+        }
+        
+    } catch (error) {
+        yield put(activeAccountFail())
+    }
+}
+
 function* adminAuthSaga() {
     yield takeEvery("GET_CONFIG", getConfigSaga)
     yield takeEvery("GET_LIST_TICKET", getTicketSaga)
     yield takeEvery("PROVIDE_TICKET", provideTicketSaga)
+    yield takeEvery("ACTIVE_ACCOUNT", activeAccountSaga)
 }
 
 export default adminAuthSaga

@@ -7,7 +7,7 @@ const UserManager = (props) => {
   return (
     <Container >
       <Box sx={{ marginTop: "36px" }}>
-        <NestedTable data={data}></NestedTable>A
+        <NestedTable data={data}></NestedTable>
       </Box>
     </Container>
   )
