@@ -40,7 +40,7 @@ const DeleteSkinPage = () => {
   const handleDeleteSkin = async (id) => {
     try {
       const response = await axios.delete(
-        process.env.REACT_APP_END_POINT + `/api/games/${game.id}/skins/${game.id}`
+        process.env.REACT_APP_END_POINT + `/api/games/${game.id}/skins/${id}`
       );
       if (response?.data || response?.status === 200) {
         window.location.reload();

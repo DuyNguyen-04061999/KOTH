@@ -7,7 +7,6 @@ import { Navigate } from 'react-router-dom'
 export default function CreateSubDistributorPage() {
     const { listRole, listPermission } = useSelector(state => state.adminConfigReducer)
     const { roles, permissions } = useSelector(state => state.adminAuthReducer)
-
     const [roleId, setRoleId] = useState(0)
     const dispatch = useDispatch()
     const [pIds, setPIds] = useState([]);
@@ -75,7 +74,7 @@ export default function CreateSubDistributorPage() {
               </Select>
               </FormControl>
             </Box>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }} className='text-white'>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
                   required

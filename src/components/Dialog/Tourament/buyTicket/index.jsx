@@ -17,14 +17,13 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import InspirationTTF from "../../../../assets/font/CynthoNextRegular.otf";
 
 const theme = createTheme({
-  typography: { fontFamily: "Cyntho Next, Cyntho Next Bold" },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -174,7 +173,7 @@ export default function BuyTicket(props) {
                       sx={{
                         color: "#8042EF",
                         fontSize: "16px",
-                        fontFamily: "Cyntho Next Bold",
+                        
                       }}
                     >
                       Double Dragon
@@ -182,10 +181,11 @@ export default function BuyTicket(props) {
                     <Typography
                       sx={{
                         fontSize: "19px",
-                        fontFamily: "",
+                        // fontFamily: "",
                       }}
                     >
-                      {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"}
+                      {/* {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"} */}
+                      0.5 ${" "}
                     </Typography>
                   </Box>
                   <Box sx={{ marginTop: "20px" }}>
@@ -210,7 +210,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -233,7 +233,7 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}
@@ -258,18 +258,18 @@ export default function BuyTicket(props) {
                             textAlign: "start",
                           }}
                         >
-                          1 ticket
+                          3 ticket
                         </Typography>
                         <Typography
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}
                         >
-                          1 gameplay{" "}
+                          3 gameplay{" "}
                         </Typography>
                       </Box>
                       <Box sx={{ width: "40%" }}>
@@ -287,12 +287,12 @@ export default function BuyTicket(props) {
                           sx={{
                             fontSize: "13px",
                             color: "#111827",
-                            fontFamily: "Cyntho Next Bold",
+                            
                             textAlign: "start",
                             marginTop: "5px",
                           }}
                         >
-                          2.99 ${" "}
+                          0.5 ${" "}
                         </Typography>
                       </Box>
                     </Box>
@@ -314,12 +314,13 @@ export default function BuyTicket(props) {
               onClick={() => {
                 if (!bought) {
                   socket?.emit("buyPackage", {
+                    price: 0.5,
                     tournamentId: tournamentId,
                     packageId: ticketBuy?.id,
                   });
                 } else {
                   socket?.emit("buyPackage", {
-                    price: 2.99,
+                    price: 0.5,
                     tournamentId: tournamentId,
                     packageId: ticketBuy?.id,
                   });

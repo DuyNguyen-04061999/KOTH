@@ -5,6 +5,7 @@ import {
   Box,
   Container,
   CssBaseline,
+  Skeleton,
   ThemeProvider,
   Typography,
   createTheme,
@@ -17,17 +18,20 @@ import { useState } from "react";
 import PaginatedItems from "../PaginatedItems";
 import NewFooter from "../NewFooter";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
+import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../components/LoadingComponent/ListEmpty";
+import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -36,6 +40,8 @@ export default function WeekLongTour() {
   const { width } = useWindowDimensions();
   // const [itemOffset, setItemOffSet] = useState(1);
   const [isFetchList, setIsFetchList] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
+
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -43,7 +49,18 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
-  
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      if (!isFetchList) {
+        setIsFetching(false);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [isFetchList]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {
@@ -60,8 +77,18 @@ export default function WeekLongTour() {
         <Container
           maxWidth="lg"
           sx={{
-            paddingLeft: width < 576 ? "24px !important" : width < 1024 ? "42px !important" :"0px !important",
-            paddingRight: width < 576 ? "24px !important":  width < 1024 ? "32px !important" :"0px !important",
+            paddingLeft:
+              width < 576
+                ? "24px !important"
+                : width < 1024
+                ? "42px !important"
+                : "0px !important",
+            paddingRight:
+              width < 576
+                ? "24px !important"
+                : width < 1024
+                ? "32px !important"
+                : "0px !important",
             paddingTop: width < 576 ? "24px !important" : "50px !important",
             backgroundColor: "#1a151e",
           }}
@@ -80,14 +107,19 @@ export default function WeekLongTour() {
               sx={{
                 marginBottom: width < 576 ? "24px" : "32px",
                 marginTop: width < 576 ? "24px" : "32px",
+                minHeight: width < 576 ? "" : "375px",
               }}
             >
               {" "}
-              <Box
-                component={"img"}
-                src={images.PurpleBanner}
-                sx={{ width: "100%" }}
-              ></Box>
+              {isFetching ? (
+                <BannerLoading height={width < 576 ? "106px" : width < 1024  ? "211px" :"375px"} />
+              ) : (
+                <Box
+                  component={"img"}
+                  src={images.PurpleBanner}
+                  sx={{ width: "100%" }}
+                ></Box>
+              )}
             </Box>
             <Box
               sx={{
@@ -98,24 +130,35 @@ export default function WeekLongTour() {
                 sx={{
                   marginTop: "50px",
                   display: "grid",
-                  gridTemplateColumns: width < 576 ? "1fr 1fr" : "1fr 1fr 1fr 1fr 1fr",
+                  gridTemplateColumns:
+                    width < 576
+                      ? "1fr 1fr"
+                      : width < 1024
+                      ? "1fr 1fr 1fr"
+                      : "1fr 1fr 1fr 1fr 1fr",
                   gridRowGap: "16px",
                   minHeight: "577.88px",
                 }}
               >
-                {weeklyTournament
-                  // ?.slice(itemOffset, itemOffset + 10)
-                  ?.map((item, index) => {
-                    return (
-                      <Box sx={{marginRight: width > 576 && width < 1200 ? "100px" : "none" }} key={index}>
-                        <ItemComponent tourInfo={item} countdown={true} />
-                      </Box>
-                    );
-                  })}
+                {isFetching ? (
+                  <ListItemLoading itemCount={5}/>
+                ) : weeklyTournament ? (
+                  weeklyTournament
+                    // ?.slice(itemOffset, itemOffset + 10)
+                    ?.map((item, index) => {
+                      return (
+                        <Box key={index}>
+                          <ItemComponent tourInfo={item} countdown={true} />
+                        </Box>
+                      );
+                    })
+                ) : (
+                  <ListEmpty />
+                )}
               </Box>
             </Box>
 
-            {weeklyTournament?.length > 0 && (
+            {!isFetching && weeklyTournament?.length > 0 && (
               <PaginatedItems
                 pageCount={Math.ceil(weeklyTournament.length / 10)}
                 changeOffSet={(value) => {

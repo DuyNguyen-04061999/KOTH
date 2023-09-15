@@ -294,6 +294,12 @@ import DummyBanner4 from "../assets/images/banners/mb1.png"
 import DummyBanner5 from "../assets/images/banners/mb2.png"
 import DummyBanner6 from "../assets/images/banners/mb3.png"
 
+import AdminLogo from "../assets/images/lggame.png"
+import bannerWindesk from "../assets/imagesDesktop/bannerwin.png"
+import bannertourDesk from "../assets/imagesDesktop/bannertourDesk.png"
+import bannertour5 from "../assets/imagesDesktop/bannertour5.png"
+import bannerWinBM from '../assets/imagesDesktop/bannerwinMB.png'
+
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -474,6 +480,7 @@ export const images = {
   bannerTournamentMobile_1: bannerTournamentMobile_1,
   bannerTournamentMobile_2: bannerTournamentMobile_2,
   bannerLoading: bannerLoading,
+  adminLogo: AdminLogo
 };
 
 export const images2 = {
@@ -583,6 +590,10 @@ export const imageDesktop = {
   SmallBanner2: SmallBanner2,
   logoCT: logoCT,
   LogoCongTy: LogoCongTy,
+  bannerWindesk:bannerWindesk,
+  bannertourDesk:bannertourDesk,
+  bannertour5:bannertour5,
+  bannerWinBM:bannerWinBM
 };
 
 export const imagesV2 = {

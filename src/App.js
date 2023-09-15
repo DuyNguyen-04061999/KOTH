@@ -16,6 +16,8 @@ import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
 import JoinTournamentComponent from "./pages/JoinTournamentComponent";
+import InspirationTTF from "./assets/font/CynthoNextRegular.otf";
+
 import {
   getLeaderBoardSuccess,
   getNavTablet,
@@ -91,8 +93,18 @@ import HotTournament from "./pages/HotTournament";
 import DailyTournament from "./pages/DailyTournament";
 import WeekLongTour from "./pages/WeekLongTour";
 import LoadingScreen from "./components/LoadingScreen";
-import { updateDeviceType } from "./redux-saga-middleware/reducers/deviceReducer";
+import {
+  updateDevice,
+  updateDeviceType,
+} from "./redux-saga-middleware/reducers/deviceReducer";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
+import { detectDevice } from "./utils/detectDevice";
+import {
+  CssBaseline,
+  ThemeProvider,
+  createMuiTheme,
+  createTheme,
+} from "@mui/material";
 function App() {
   useTracking("");
 
@@ -100,16 +112,16 @@ function App() {
   const { token } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
   const { orientation } = store.getState().gameReducer;
-  
+
   const { width } = useWindowDimensions();
- 
+
   useEffect(() => {
-    if(width <= 1024 && width >= 576 ) {
-      store.dispatch(getNavTablet(false))
+    if (width <= 1024 && width >= 576) {
+      store.dispatch(getNavTablet(false));
     } else {
-      store.dispatch(getNavTablet(true))
+      store.dispatch(getNavTablet(true));
     }
-  },[width])
+  }, [width]);
 
   useEffect(() => {
     if (!token) {
@@ -124,7 +136,6 @@ function App() {
     const onWindowResize = () => {
       clearTimeout(window.resizeLag);
       window.resizeLag = setTimeout(() => {
-
         delete window.resizeLag;
         store.dispatch(
           changeOrientation(isLandscape() ? "landscape" : "portrait")
@@ -141,37 +152,30 @@ function App() {
     };
   }, [orientation, startGameCheck]);
 
-  
-
   useEffect(() => {
-    const updateOrientation = event => {
-      if(!startGameCheck && !window.location.pathname?.includes("tournamentDetail")) {
-        window.location.reload()
+    const updateOrientation = (event) => {
+      if (
+        !startGameCheck &&
+        !window.location.pathname?.includes("tournamentDetail")
+      ) {
+        // window.location.reload();
       }
-    }
+    };
 
-    window.addEventListener(
-      'orientationchange',
-      updateOrientation
-    )
+    window.addEventListener("orientationchange", updateOrientation);
     return () => {
-      window.removeEventListener(
-        'orientationchange',
-        updateOrientation
-      )
-    }
-  }, [startGameCheck])
+      window.removeEventListener("orientationchange", updateOrientation);
+    };
+  }, [startGameCheck]);
 
-  useEffect(() => {
-      
-  }, [orientation, startGameCheck])
+  useEffect(() => {}, [orientation, startGameCheck]);
 
   const checkPreAuthRouter = () => {
-    const params = window.location.pathname
-    const newArr = params.split("/")
-    if(params.includes('tournamentDetail')) {
+    const params = window.location.pathname;
+    const newArr = params.split("/");
+    if (params.includes("tournamentDetail")) {
       socket?.emit("detailTournament", {
-        tournamentId: newArr.pop()
+        tournamentId: newArr.pop(),
       });
     }
   };
@@ -204,7 +208,7 @@ function App() {
         socket.emit("listPackage", {
           type: true,
         });
-        checkPreAuthRouter()
+        checkPreAuthRouter();
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -572,74 +576,102 @@ function App() {
     return "Window";
   };
   const os = getMobileOS();
+  const device = detectDevice();
   useEffect(() => {
     store.dispatch(updateDeviceType(os));
-  }, [os]);
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <CustomRouter history={history}>
-          <Routes>
-            <Route
-              path=""
-              element={
-                getAppType() === "promote" ? (
-                  <NewHomePageComponent />
-                ) : (
-                  <HomePage />
-                )
-              }
-            >
-              <Route path="/home" element={<HomePage />} />
-            </Route>
-            <Route path="/gamelobby/:id" element={<GameLobby />} />
-            <Route path="/selectroom/:id" element={<SelectRoomContainer />} />
-            {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
-            <Route path="/testsocketAPI" element={<TestSocketFriendAPI />} />
-            <Route
-              path="/tournamentDetail/:id"
-              element={<JoinTournamentComponent />}
-            />
-            <Route path="/hot-tournament" element={<HotTournament />} />
-            {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
-            <Route path="/daily-tournament" element={<DailyTournament />} />
-            <Route path="/week-long-tournament" element={<WeekLongTour />} />
-            <Route path="/help-center" element={<FAQPage />} />
-            <Route path="/loadingscreen" element={<LoadingScreen />} />
-            <Route path="/new-home" element={<NewHomePageComponent />} />
-            <Route path="/countdowntimer" element={<CountDownTimer />} />
-            <Route path="list-game-manager" element={<ListGamePage />} />
-            <Route path="upload" element={<UploadPage />} />
-            <Route path="game" element={<GamePage />} />
-            <Route path="game/:id" element={<GameDetailPage />} />
-            {getAppType() === "promote" && (
-              <Route path="/tournaments" element={<Tournament />} />
-            )}
-            {getAppType() !== "promote" && (
-              <Route path="game-type/:type" element={<TypeGamePage />} />
-            )}
+    store.dispatch(updateDevice(device));
+  }, [os, device]);
 
-            <Route path="game/edit/:id" element={<GameEditPage />} />
-            <Route path="game/:id/upload-skins" element={<UploadSkinPage />} />
-            <Route path="game/:id/delete-skins" element={<DeleteSkinPage />} />
-            {getAppType() === "promote" && (
-              <Route path="packages" element={<PackagePage />}></Route>
-            )}
-            <Route
-              path="transactions/:id"
-              element={<TransactionDetailPage />}
-            />
-            <Route path="*" element={<Navigate to="/home" />} />
-          </Routes>
-          <ToastContainer
-            hideProgressBar={true}
-            autoClose={1000}
-            position="top-center"
-            draggable={false}
-          />
-        </CustomRouter>
-      </PersistGate>
-    </Provider>
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+    },
+  });
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <CustomRouter history={history}>
+              <Routes>
+                <Route
+                  path="/home"
+                  element={
+                    getAppType() === "promote" ? (
+                      <NewHomePageComponent />
+                    ) : (
+                      <HomePage />
+                    )
+                  }
+                >
+                  <Route path="/home" element={<HomePage />} />
+                </Route>
+                <Route path="/gamelobby/:id" element={<GameLobby />} />
+                <Route
+                  path="/selectroom/:id"
+                  element={<SelectRoomContainer />}
+                />
+                {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
+                <Route
+                  path="/testsocketAPI"
+                  element={<TestSocketFriendAPI />}
+                />
+                <Route
+                  path="/tournamentDetail/:id"
+                  element={<JoinTournamentComponent />}
+                />
+                <Route path="/hot-tournament" element={<HotTournament />} />
+                {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
+                <Route path="/daily-tournament" element={<DailyTournament />} />
+                <Route
+                  path="/week-long-tournament"
+                  element={<WeekLongTour />}
+                />
+                <Route path="/help-center" element={<FAQPage />} />
+                <Route path="/loadingscreen" element={<LoadingScreen />} />
+                <Route path="/new-home" element={<NewHomePageComponent />} />
+                <Route path="/countdowntimer" element={<CountDownTimer />} />
+                <Route path="list-game-manager" element={<ListGamePage />} />
+                <Route path="upload" element={<UploadPage />} />
+                <Route path="game" element={<GamePage />} />
+                <Route path="game/:id" element={<GameDetailPage />} />
+                {getAppType() === "promote" && (
+                  <Route path="/tournaments" element={<Tournament />} />
+                )}
+                {getAppType() !== "promote" && (
+                  <Route path="game-type/:type" element={<TypeGamePage />} />
+                )}
+
+                <Route path="game/edit/:id" element={<GameEditPage />} />
+                <Route
+                  path="game/:id/upload-skins"
+                  element={<UploadSkinPage />}
+                />
+                <Route
+                  path="game/:id/delete-skins"
+                  element={<DeleteSkinPage />}
+                />
+                {getAppType() === "promote" && (
+                  <Route path="packages" element={<PackagePage />}></Route>
+                )}
+                <Route
+                  path="transactions/:id"
+                  element={<TransactionDetailPage />}
+                />
+                <Route path="*" element={<Navigate to="/home" />} />
+              </Routes>
+              <ToastContainer
+                hideProgressBar={true}
+                autoClose={1000}
+                position="top-center"
+                draggable={false}
+              />
+            </CustomRouter>
+          </PersistGate>
+        </Provider>
+      </CssBaseline>
+    </ThemeProvider>
   );
 }
 

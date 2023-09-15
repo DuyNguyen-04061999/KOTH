@@ -76,7 +76,7 @@ export default function WalletTypePromote(props) {
                   className="me-2 ms-4 text-white"
                   sx={{
                     fontWeight: "lighter !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   Wallet
@@ -98,7 +98,7 @@ export default function WalletTypePromote(props) {
                     fontSize: "13px",
                     fontWeight: "lighter !important",
                     marginLeft: "0px !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   My wallet
@@ -158,7 +158,7 @@ export default function WalletTypePromote(props) {
                         fontSize: "13px",
                         fontWeight: "lighter !important",
                         marginLeft: "0px !important",
-                        fontFamily: "Cyntho Next",
+                        
                       }}
                     >
                       Currency
@@ -178,7 +178,7 @@ export default function WalletTypePromote(props) {
                         paddingLeft: "10px",
                         color: "white",
                         fontWeight: "bold",
-                        fontFamily: "Cyntho Next",
+                        
                       }}
                     >
                       <option value="USD" style={{ color: "#642CDA" }}>
@@ -202,7 +202,7 @@ export default function WalletTypePromote(props) {
                         fontSize: "13px",
                         fontWeight: "lighter !important",
                         marginLeft: "0px !important",
-                        fontFamily: "Cyntho Next",
+                        
                       }}
                     >
                       Amount
@@ -239,7 +239,7 @@ export default function WalletTypePromote(props) {
                   sx={{
                     fontSize: "15px",
                     fontWeight: "lighter !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   Amount
@@ -249,7 +249,7 @@ export default function WalletTypePromote(props) {
                   sx={{
                     fontSize: "15px",
                     fontWeight: "lighter !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   {userGold &&
@@ -270,7 +270,7 @@ export default function WalletTypePromote(props) {
                     fontSize: "12px",
                     color: "gray",
                     fontWeight: "lighter !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   Limit
@@ -281,7 +281,7 @@ export default function WalletTypePromote(props) {
                     fontSize: "12px",
                     color: "gray",
                     fontWeight: "lighter !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   {userGold &&
@@ -297,7 +297,7 @@ export default function WalletTypePromote(props) {
                   variant="body1"
                   sx={{
                     fontWeight: "lighter !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   Total payment
@@ -334,7 +334,7 @@ export default function WalletTypePromote(props) {
                     fontSize: "13px",
                     fontWeight: "lighter !important",
                     marginLeft: "0px !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   Payment method
@@ -358,6 +358,7 @@ export default function WalletTypePromote(props) {
                 <input
                   type="radio"
                   className="radio-input"
+                  defaultChecked
                   style={{
                     position: "absolute",
                     top: 43,
@@ -397,7 +398,7 @@ export default function WalletTypePromote(props) {
                     fontWeight: "lighter !important",
                     fontSize: "14px",
                     marginLeft: "0px !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                   className="text-white"
                 >
@@ -449,7 +450,7 @@ export default function WalletTypePromote(props) {
                     fontWeight: "bold",
                     fontSize: "14px",
                     marginLeft: "0px !important",
-                    fontFamily: "Cyntho Next",
+                    
                   }}
                 >
                   Continue

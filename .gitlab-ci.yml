@@ -12,6 +12,7 @@ stages:
   script:
     - echo "$(env | grep "REACT_APP_")" > env.text
     - cat env.text | while read line; do echo -n " --build-arg $line" >> ci/docker_build.sh; done
+    - cat env.text
     - chmod +x ci/docker_build.sh
     - ./ci/docker_build.sh
       #- docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
@@ -24,14 +25,14 @@ stages:
 build-crypto:
   <<: *build
   only:
-    - staging/crypto
+    - staging
   environment:
     name: crypto
 
 build-promote:
   <<: *build
   only:
-    - staging/promote
+    - staging
   environment:
     name: promote
 
@@ -56,14 +57,14 @@ build-play4promo-prod:
 deploy-crypto:
   <<: *deploy
   only:
-    - staging/crypto
+    - staging
   environment:
     name: crypto
 
 deploy-promote:
   <<: *deploy
   only:
-    - staging/promote
+    - staging
   environment:
     name: promote
 

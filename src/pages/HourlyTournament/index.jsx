@@ -21,15 +21,15 @@ import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -39,6 +39,10 @@ export default function HourlyTournament() {
   const dispatch = useDispatch();
   const [isFetchList, setIsFetchList] = useState(true);
   const { hourlyTournament } = useSelector((state) => state.tournamentReducer);
+  const [isFetching, setIsFetching] = useState(true);
+  if (!isFetchList) {
+    setTimeout(() => setIsFetching(false), 2000);
+  }
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",

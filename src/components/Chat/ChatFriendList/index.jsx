@@ -106,7 +106,6 @@ export default function ChatFriendList() {
                         marginBottom: "0px !important",
                         fontSize: "12px",
                         fontWeight: "500 !important",
-                        fontFamily: "Cyntho Next !important",
                         letterSpacing:"1px"
                       }}
                     >
@@ -200,7 +199,6 @@ export default function ChatFriendList() {
                     color: "#7C81F2",
                     fontSize: "15px",
                     fontWeight: "500 !important",
-                    fontFamily: "Cyntho Next !important",
                     letterSpacing:"1px"
                   }}
                 >
@@ -210,7 +208,6 @@ export default function ChatFriendList() {
                   style={{
                     color: "white",
                     fontWeight: "500 !important",
-                    fontFamily: "Cyntho Next !important",
                     letterSpacing:"1px"
                   }}
                 >
@@ -227,7 +224,6 @@ export default function ChatFriendList() {
                   color: "white",
                   fontWeight: "500",
                   fontSize: "11px",
-                  fontFamily:"Cyntho Next !important"
                 }}
               >
                 {e?.receiveMessages?.length > 0 ? (

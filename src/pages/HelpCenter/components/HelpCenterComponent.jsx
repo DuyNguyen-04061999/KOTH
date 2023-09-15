@@ -14,15 +14,15 @@ import moment from "moment/moment";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -84,9 +84,12 @@ const HelpCenterComponent = () => {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Container style={{ 
-            padding: width < 576 ? "16px 24px 24px 24px" :  "16px 24px 24px 42px",
-             }}>
+          <Container
+            style={{
+              padding:
+                width < 576 ? "16px 24px 24px 24px" : "16px 24px 24px 42px",
+            }}
+          >
             <Box sx={{ margin: "16px 0px 32px 0px" }}>
               <Typography
                 sx={{
@@ -156,6 +159,7 @@ const HelpCenterComponent = () => {
                             style={{
                               margin: "20px 0px",
                               fontWeight: "bold",
+                              color: "#fff",
                               fontSize: "12px",
                             }}
                           >
@@ -166,26 +170,11 @@ const HelpCenterComponent = () => {
                               fontSize: "12px",
                               fontWeight: "lighter !important",
                               margin: "10px 0px",
+                              color: "#fff",
                               textAlign: "start",
                             }}
                           >
-                            {splitToArray(item?.faqAnswer)?.map((n, index) => {
-                              return (
-                                n?.length > 1 && (
-                                  <p
-                                    style={{
-                                      fontSize: "12px",
-                                      textAlign: "start",
-                                    }}
-                                  >
-                                    {splitToArray(item?.faqAnswer)?.length > 1
-                                      ? index + ". "
-                                      : ""}
-                                    {n}
-                                  </p>
-                                )
-                              );
-                            })}
+                            {item?.faqAnswer.replace(/(\d+\.) /g, "<br>")}
                           </p>
                         </Box>
                       ))}
@@ -297,6 +286,7 @@ const HelpCenterComponent = () => {
                                 fontSize: "20px",
                                 textAlign: "start",
                                 margin: "24px 0px",
+                                color: "#fff",
                                 fontWeight: "bold",
                               }}
                             >
@@ -307,28 +297,10 @@ const HelpCenterComponent = () => {
                                 fontSize: "14px",
                                 textAlign: "start",
                                 marginTop: "12px",
+                                color: "#fff",
                               }}
                             >
-                              {splitToArray(item?.faqAnswer)?.map(
-                                (n, index) => {
-                                  return (
-                                    n?.length > 1 && (
-                                      <p
-                                        style={{
-                                          fontSize: "14px",
-                                          textAlign: "start",
-                                        }}
-                                      >
-                                        {splitToArray(item?.faqAnswer)?.length >
-                                        1
-                                          ? index + ". "
-                                          : ""}
-                                        {n}
-                                      </p>
-                                    )
-                                  );
-                                }
-                              )}
+                              {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
                             </p>
                           </Box>
                         ))}

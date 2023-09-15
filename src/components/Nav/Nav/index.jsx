@@ -47,6 +47,72 @@ export default function Navbar() {
     }
   }, [isNavTablet, isNav]);
 
+  const [isHoveredHome, setIsHoveredHome] = useState(false);
+  const [isHoveredHot, setIsHoveredHot] = useState(false);
+  const [isHoveredDaly, setIsHoveredDaly] = useState(false);
+  const [isHoveredLong, setIsHoveredLong] = useState(false);
+  const [isHoveredSub, setIsHoveredSub] = useState(false);
+  const [isHoveredHelp, setIsHoveredHelp] = useState(false);
+
+  // Step 3: Add event listeners
+  const handleMouseEnterHome = () => {
+    // Step 4: Update state
+    setIsHoveredHome(true);
+  };
+
+  const handleMouseLeaveHome = () => {
+    // Step 4: Update state
+    setIsHoveredHome(false);
+  };
+
+  const handleMouseEnterHot = () => {
+    // Step 4: Update state
+    setIsHoveredHot(true);
+  };
+
+  const handleMouseLeaveHot = () => {
+    // Step 4: Update state
+    setIsHoveredHot(false);
+  };
+
+  const handleMouseEnterDaly = () => {
+    // Step 4: Update state
+    setIsHoveredDaly(true);
+  };
+
+  const handleMouseLeaveDaly = () => {
+    // Step 4: Update state
+    setIsHoveredDaly(false);
+  };
+  const handleMouseEnterLong = () => {
+    // Step 4: Update state
+    setIsHoveredLong(true);
+  };
+
+  const handleMouseLeaveLong = () => {
+    // Step 4: Update state
+    setIsHoveredLong(false);
+  };
+
+  const handleMouseEnterSub = () => {
+    // Step 4: Update state
+    setIsHoveredSub(true);
+  };
+
+  const handleMouseLeaveSub = () => {
+    // Step 4: Update state
+    setIsHoveredSub(false);
+  };
+
+  const handleMouseEnterHelp = () => {
+    // Step 4: Update state
+    setIsHoveredHelp(true);
+  };
+
+  const handleMouseLeaveHelp = () => {
+    // Step 4: Update state
+    setIsHoveredHelp(false);
+  };
   return (
     <Box className={`nav-section ${tablet}`}>
       <Box
@@ -69,20 +135,27 @@ export default function Navbar() {
           {getAppType() === "promote" ? (
             <Box>
               <Box
+                onMouseEnter={handleMouseEnterHome}
+                onMouseLeave={handleMouseLeaveHome}
                 sx={{
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  transition: "1s ease-out",
+                  boxShadow: isHoveredHome === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                   backgroundColor:
-                    pathname && pathname?.includes("home")
+                    (pathname && pathname?.includes("home")) ||
+                    isHoveredHome === true
                       ? "#7648ED"
                       : "#462A71",
 
                   borderRadius: "5px",
                   color:
-                    (pathname && pathname?.includes("home")) || pathname === "/"
+                    (pathname && pathname?.includes("home")) ||
+                    pathname === "/" ||
+                    isHoveredHome === true
                       ? "white"
                       : "#A89CD7",
                 }}
@@ -92,7 +165,8 @@ export default function Navbar() {
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
                 {(pathname && pathname?.includes("home")) ||
-                pathname === "/" ? (
+                pathname === "/" ||
+                isHoveredHome === true ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -317,15 +391,20 @@ export default function Navbar() {
                 }`}
               >
                 <Box
+                  onMouseEnter={handleMouseEnterHot}
+                  onMouseLeave={handleMouseLeaveHot}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredHot === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("hot-tournament")
+                      (pathname && pathname?.includes("hot-tournament")) ||
+                      isHoveredHot === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -336,7 +415,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("hot-tournament") ? (
+                  {(pathname && pathname?.includes("hot-tournament")) ||
+                  isHoveredHot === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -385,12 +465,13 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("hot-tournament")
+                        (pathname && pathname?.includes("hot-tournament")) ||
+                        isHoveredHot === true
                           ? "white"
                           : "",
                     }}
                   >
-                    Hot tour
+                    Hot
                   </span>
                 </Box>
                 {/* <Box
@@ -460,15 +541,20 @@ export default function Navbar() {
                   </span>
                 </Box> */}
                 <Box
+                  onMouseEnter={handleMouseEnterDaly}
+                  onMouseLeave={handleMouseLeaveDaly}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredDaly === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("daily-tournament")
+                      (pathname && pathname?.includes("daily-tournament")) ||
+                      isHoveredDaly === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -479,7 +565,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                 >
-                  {pathname && pathname?.includes("daily-tournament") ? (
+                  {(pathname && pathname?.includes("daily-tournament")) ||
+                  isHoveredDaly === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -523,24 +610,31 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("daily-tournament")
+                        (pathname && pathname?.includes("daily-tournament")) ||
+                        isHoveredDaly === true
                           ? "white"
                           : "",
                     }}
                   >
-                    Daily tour
+                    Daily
                   </span>
                 </Box>
                 <Box
+                  onMouseEnter={handleMouseEnterLong}
+                  onMouseLeave={handleMouseLeaveLong}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredLong === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("week-long-tournament")
+                      (pathname &&
+                        pathname?.includes("week-long-tournament")) ||
+                      isHoveredLong === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -551,7 +645,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("week-long-tournament") ? (
+                  {(pathname && pathname?.includes("week-long-tournament")) ||
+                  isHoveredLong === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -609,12 +704,14 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("week-long-tournament")
+                        (pathname &&
+                          pathname?.includes("week-long-tournament")) ||
+                        isHoveredLong === true
                           ? "white"
                           : "",
                     }}
                   >
-                    Week-long tour
+                    Week-long
                   </span>
                 </Box>
               </Box>
@@ -628,14 +725,19 @@ export default function Navbar() {
                 }}
               />
               <Box
+                onMouseEnter={handleMouseEnterSub}
+                onMouseLeave={handleMouseLeaveSub}
                 sx={{
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  transition: "1s ease-out",
+                  boxShadow: isHoveredSub === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                   backgroundColor:
-                    pathname && pathname?.includes("package")
+                    (pathname && pathname?.includes("package")) ||
+                    isHoveredSub === true
                       ? "#7648ED"
                       : "#462A71",
 
@@ -646,7 +748,8 @@ export default function Navbar() {
                 }}
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
-                {pathname && pathname?.includes("package") ? (
+                {(pathname && pathname?.includes("package")) ||
+                isHoveredSub === true ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -695,7 +798,10 @@ export default function Navbar() {
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     color:
-                      pathname && pathname?.includes("package") ? "white" : "",
+                      (pathname && pathname?.includes("package")) ||
+                      isHoveredSub === true
+                        ? "white"
+                        : "",
                   }}
                 >
                   Subscription
@@ -965,38 +1071,68 @@ export default function Navbar() {
           {getAppType() === "promote" ? (
             <Box
               className="cursor-pointer"
+              onMouseEnter={handleMouseEnterHelp}
+              onMouseLeave={handleMouseLeaveHelp}
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
-                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                transition: "1s ease-out",
                 padding: "8px",
+                boxShadow: isHoveredHelp === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                backgroundColor:
+                  (pathname && pathname?.includes("help-center")) ||
+                  isHoveredHelp === true
+                    ? "#7648ED"
+                    : "",
+                borderRadius: "5px",
               }}
               onClick={() => {
                 navigate(`/help-center`);
               }}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                fill="none"
-                viewBox="0 0 18 18"
-                className="p-1 me-1"
-              >
-                <g
-                  stroke="#A89CD7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
+              {(pathname && pathname?.includes("help-center")) ||
+              isHoveredHelp === true ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="p-1 me-1"
                 >
-                  <path
-                    strokeMiterlimit="10"
-                    d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
-                  ></path>
-                  <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
-                </g>
-              </svg>
+                  <g>
+                    <path
+                      fill="#fff"
+                      d="M17 2.43H7c-3 0-5 2-5 5v6c0 3 2 5 5 5v2.13c0 .8.89 1.28 1.55.83L13 18.43h4c3 0 5-2 5-5v-6c0-3-2-5-5-5zM12 14.6a.75.75 0 110-1.5.75.75 0 010 1.5zm1.26-4.15c-.39.26-.51.43-.51.71v.21c0 .41-.34.75-.75.75s-.75-.34-.75-.75v-.21c0-1.16.85-1.73 1.17-1.95.37-.25.49-.42.49-.68 0-.5-.41-.91-.91-.91s-.91.41-.91.91c0 .41-.34.75-.75.75s-.75-.34-.75-.75c0-1.33 1.08-2.41 2.41-2.41s2.41 1.08 2.41 2.41c0 1.14-.84 1.71-1.15 1.92z"
+                    ></path>
+                  </g>
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  fill="none"
+                  viewBox="0 0 18 18"
+                  className="p-1 me-1"
+                >
+                  <g
+                    stroke="#A89CD7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                  >
+                    <path
+                      strokeMiterlimit="10"
+                      d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
+                    ></path>
+                    <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
+                  </g>
+                </svg>
+              )}
+
               <span
                 className="hover-nav"
                 style={{
@@ -1008,6 +1144,11 @@ export default function Navbar() {
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
+                  color:
+                    (pathname && pathname?.includes("help-center")) ||
+                    isHoveredHelp === true
+                      ? "#fff"
+                      : "",
                 }}
               >
                 Help Center

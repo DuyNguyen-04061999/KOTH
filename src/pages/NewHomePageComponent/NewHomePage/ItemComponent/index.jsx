@@ -38,17 +38,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const [days, setDay] = useState(null);
   const [seconds, setSeconds] = useState(null);
   useEffect(() => {
-    let timeInterval = setInterval(() => {
       let countdownDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
       let timeNow = new Date().getTime();
       setHour(CalculateDistance(countdownDate, timeNow).hours);
       setMinute(CalculateDistance(countdownDate, timeNow).minutes);
       setDay(CalculateDistance(countdownDate, timeNow).days);
-      setSeconds(CalculateDistance(countdownDate, timeNow).seconds);
-    }, 1000);
-    return () => {
-      clearInterval(timeInterval);
-    };
   }, [tourInfo]);
 
   const styleTypography = {
@@ -57,17 +51,33 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     fontWeight: "700 !important",
     marginLeft: "0px !important",
   };
+
+  const [isHovered, setIsHovered] = useState(false);
+  // Step 3: Add event listeners
+  const handleMouseEnter = () => {
+    // Step 4: Update state
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    // Step 4: Update state
+    setIsHovered(false);
+  };
   const navigate = useNavigate();
   return (
     <Box
       className="ms-2 me-2"
-      onClick={() => isLoading ? null : navigate("/tournamentDetail/" + tourInfo?.id)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={() =>
+        !isLoading && navigate("/tournamentDetail/" + tourInfo?.id)
+      }
       sx={{
         position: "relative",
         display: "flex",
         flexDirection: "column",
         width: width < 576 ? "155px" : "184px",
-        cursor: "pointer",
+        cursor: isLoading ? "auto" : "pointer",
       }}
     >
       <Box
@@ -95,7 +105,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
       <Box
         sx={{
           width: "100%",
-          height: width < 576 ? "" : "291px",
+          height: width < 576 ? "244px" : "291px",
           bgcolor: "white",
           borderStartStartRadius: "8px",
           overflow: "hidden",
@@ -103,7 +113,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         }}
       >
         {isLoading ? (
-        <Skeleton sx={{ height: width < 576 ? 156 : 184 }} animation="wave" variant="rectangular" />
+          <Skeleton
+            sx={{ height: width < 576 ? 156 : 184 }}
+            animation="wave"
+            variant="rectangular"
+          />
         ) : (
           <Box
             sx={{
@@ -164,24 +178,22 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               marginTop: width < 576 ? "20px" : "32px",
             }}
           >
-            {countdown && (
-              <Typography
-                sx={{
-                  ...styleTypography,
-                  fontSize: width < 576 ? "12px" : "14px",
-                  color: "#5747EA",
-                  fontWeight: "700 !important",
-                  minWidth: "100px"
-                }}
-              >
-                {isLoading ? (
-                  <Skeleton variant="text" />
-                ) : width < 576 ? (
-                  `${days}d:${hours}h:${minutes}m`
-                ) : (
-                  `${days}d:${hours}h:${minutes}m:${seconds}s`
-                )}
-              </Typography>
+            {isLoading ? (
+              <Skeleton variant="text" width={120} />
+            ) : (
+              countdown && (
+                <Typography
+                  sx={{
+                    ...styleTypography,
+                    fontSize: width < 576 ? "12px" : "14px",
+                    color: "#5747EA",
+                    fontWeight: "700 !important",
+                    minWidth: "100px",
+                  }}
+                >
+                  {`${days}d:${hours}h:${minutes}m`}
+                </Typography>
+              )
             )}
 
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -196,7 +208,9 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                   fontSize: width < 576 ? "12px" : "14px",
                 }}
               >
-                {tourInfo?.tournamentQuantity !== 0 ? (
+                {isLoading ? (
+                  <Skeleton variant="text" width={20} />
+                ) : tourInfo?.tournamentQuantity !== 0 ? (
                   tourInfo?.tournamentQuantity
                 ) : (
                   <InfinityIcon
@@ -212,13 +226,16 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         </Box>
       </Box>
       <Box
+        className={isHovered === true ? "hover-card" : ""}
         sx={{
           width: "100%",
-          height: width < 576 ? "" : "69px",
-          bgcolor: "#C0C0C0",
+          height: width < 576 ? "64px" : "69px",
+          bgcolor:isHovered === true ? "#42285B" : "#C0C0C0",
+          color:isHovered === true ? "white" : "black",
           borderEndEndRadius: "8px",
           borderEndStartRadius: "8px",
           borderTop: "dashed 2px black",
+          transition:"0.3s ease-out"
         }}
       >
         <Box
@@ -230,7 +247,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           }}
         >
           {isLoading ? (
-            <Skeleton variant="circular"  width={40} height={40} animation="wave"/>
+            <Skeleton
+              variant="circular"
+              width={40}
+              height={40}
+              animation="wave"
+            />
           ) : (
             <Box
               sx={{
@@ -264,21 +286,24 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 textOverflow: "ellipsis",
                 maxHeight: "1rem",
                 whiteSpace: "nowrap",
-                maxWidth: "90px",
+                maxWidth: "100px",
               }}
             >
-              {
-                isLoading ? <Skeleton/> : (tourInfo &&
-                  tourInfo?.tourSkins &&
-                  tourInfo?.tourSkins?.length > 0 &&
-                  tourInfo?.tourSkins[0]?.skinGame &&
-                  tourInfo?.tourSkins[0]?.skinGame?.gameName
-                    ? tourInfo?.tourSkins[0]?.skinGame?.gameName
-                    : "game Name")
-              }
+              {isLoading ? (
+                <Skeleton variant="text" />
+              ) : tourInfo &&
+                tourInfo?.tourSkins &&
+                tourInfo?.tourSkins?.length > 0 &&
+                tourInfo?.tourSkins[0]?.skinGame &&
+                tourInfo?.tourSkins[0]?.skinGame?.gameName ? (
+                tourInfo?.tourSkins[0]?.skinGame?.gameName
+              ) : (
+                "game Name"
+              )}
             </Typography>
             <button
               onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)}
+              disabled={isLoading}
               style={{
                 border: "none",
                 outline: "none",
@@ -287,6 +312,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
                 color: "#ffff",
                 fontSize: width < 576 ? "12px" : "14px",
+                minHeight: "24px",
               }}
             >
               {tourInfo && tourInfo?.tournamentStatus === 0

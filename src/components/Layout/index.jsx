@@ -1,4 +1,4 @@
-import { Box, Drawer, Grid } from "@mui/material";
+import { Box, Drawer, Grid, Typography } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
@@ -91,7 +91,7 @@ const AppBar = muiStyled(MuiAppBar, {
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-start",
-  paddingTop: "60px",
+  paddingTop: "54px",
 }));
 
 const Test = styled.input`
@@ -105,7 +105,6 @@ const Test = styled.input`
   padding: 7px !important;
   color: #bfbeed !important;
   letter-spacing: 0.5px;
-  font-weight: Cyntho Next !important ;
   border: none;
   &:focus {
     outline: none;
@@ -140,6 +139,7 @@ export default function Layout(props) {
   const [chatF, setChatF] = useState("");
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
+  const { device } = useSelector((state) => state.deviceReducer);
   useEffect(() => {
     dispatch(changeRouter(window.location.pathname));
     const socket = _socket;
@@ -156,7 +156,6 @@ export default function Layout(props) {
       window.location.reload();
     }
   }, [router, startGameCheck]);
-
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
       socket?.emit("leaveAllRoom");
@@ -210,11 +209,42 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
-    if (token === "" || token === null) {
-      setBackgroundGlobal("#61388e");
+    if (tabChat === true) {
+      setBackgroundGlobal("#883AF0");
       setBackgroundPrivate("#261a35");
+    } else {
+      setBackgroundGlobal("#261a35");
+      setBackgroundPrivate("#883AF0");
     }
-  }, [token]);
+  }, [tabChat]);
+
+  useEffect(() => {
+    const handleKeyboardOpen = () => {
+      // Check if the virtual keyboard is open (adjust the threshold if needed)
+      if (window.innerHeight < window.outerHeight) {
+        // Adjust the timeout delay if needed
+        setTimeout(() => {
+          // Scroll to the top or any other desired behavior
+          window.scrollTo(0, 0);
+        }, 300); // Wait for virtual keyboard to fully open (adjust as needed)
+      }
+    };
+
+    // Add event listener for the focus event
+    window.addEventListener('focus', handleKeyboardOpen);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('focus', handleKeyboardOpen);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   if (token === "" || token === null) {
+  //     setBackgroundGlobal("#883AF0");
+  //     setBackgroundPrivate("#261a35");
+  //   }
+  // }, [token]);
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = () => {
@@ -251,7 +281,6 @@ export default function Layout(props) {
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
-  // console.log(startGameCheck);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
       if (!isAlertDialog) {
@@ -299,7 +328,7 @@ export default function Layout(props) {
       <AppBar
         position="sticky"
         className={
-          ((width < 1200 && height < 768) || width < 576) && startGameCheck
+          (device === "Tablet" || device === "Mobile") && startGameCheck
             ? "d-none"
             : ""
         }
@@ -388,7 +417,9 @@ export default function Layout(props) {
             </div>
           ) : (
             <Box>
-              {location && location?.pathname?.includes("/packages") ? (
+              {location &&
+              width < 576 &&
+              location?.pathname?.includes("/packages") ? (
                 <span className="ms-2">Packages</span>
               ) : (
                 <NavLink to="/home">
@@ -545,13 +576,10 @@ export default function Layout(props) {
                 minWidth: "400px !important",
                 width: "400px !important",
               },
-              display:
-                startGameCheck && width > 576 && width < 1200 && height < 768
-                  ? "none"
-                  : "block",
+              display: startGameCheck && device === "Tablet" ? "none" : "block",
             }}
           >
-            <Navbar navIcon={isNav} />
+            <Navbar />
           </Grid>
         ) : (
           <NavMobile />
@@ -585,7 +613,7 @@ export default function Layout(props) {
           width: drawerWidth,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
-            zIndex: 1,
+            zIndex: 1033,
             overflowY: "unset",
             backgroundColor: "unset",
             borderLeftWidth: "none",
@@ -618,10 +646,11 @@ export default function Layout(props) {
                   className="d-flex justify-content-center align-items-center"
                   style={{
                     width: "50%",
-                    backgroundColor: backgroundGlobal,
+                    backgroundColor: "#261a35",
                     cursor: "pointer",
                     borderRadius: "5px 0px 0px 5px",
                     padding: "6px",
+                    color: "#fff",
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
@@ -636,6 +665,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 16 12"
+                      className="globalIn"
                     >
                       <g>
                         <g>
@@ -653,6 +683,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 16 12"
+                      className="globalOut"
                     >
                       <g>
                         <g>
@@ -672,6 +703,7 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
+                        zIndex:2
                       }}
                     >
                       Global
@@ -682,10 +714,11 @@ export default function Layout(props) {
                   className="d-flex justify-content-center align-items-center"
                   style={{
                     width: "50%",
-                    backgroundColor: backgroundPrivate,
+                    backgroundColor: "#261a35",
                     cursor: "pointer",
                     borderRadius: "0px 5px 5px 0px",
                     padding: "6px",
+                    color: "#fff",
                   }}
                   onClick={() => {
                     if (token === null || token === "") {
@@ -704,6 +737,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 11 14"
+                      className="PriviteIn"
                     >
                       <g>
                         <g>
@@ -721,6 +755,7 @@ export default function Layout(props) {
                       height="16"
                       fill="none"
                       viewBox="0 0 11 14"
+                      className="PriviteOut"
                     >
                       <g>
                         <g>
@@ -740,12 +775,26 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
+                        zIndex:2
                       }}
                     >
                       Private
                     </span>
                   </div>
                 </div>
+                <div style={{
+                  position:"absolute",
+                  top:15,
+                  left:15,
+                  width:140,
+                  height:30,
+                  borderRadius: "5px 5px 5px 5px",
+                  padding: "6px",
+                  background:"#883AF0",
+                  transform:tabChat === true ? "translate(0px)" :'translate(140px)',
+                  zIndex:1,
+                  transition:"0.3s ease-out"
+                }}></div>
               </div>
             </Box>
             <Box component="div" hidden={!showChat}>

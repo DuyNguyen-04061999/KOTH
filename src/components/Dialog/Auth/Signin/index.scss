@@ -363,3 +363,11 @@
     outline-offset: 0;
   }
 }
+
+.hover-dropdown{
+  &:hover{
+    transition: 0.3s ease-out;
+    background-color: #462A71;
+    border-radius: 5px;
+  }
+}

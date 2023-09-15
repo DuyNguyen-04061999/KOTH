@@ -33,10 +33,9 @@ export default function NavMobile() {
     }
   }, [isProfileDialog]);
   const { pathname } = useLocation();
-
   return (
     <>
-      {isLoginDialog === false && width <= 576 && !startGameCheck ? (
+      { width <= 576 && !startGameCheck ? (
         <div className="mobile" style={{ display: `${hideNavMobile}` }}>
           {getAppType() === "promote" ? (
             <div className="content_nav">
@@ -232,7 +231,7 @@ export default function NavMobile() {
                   >
                     <div>
                       <Badge
-                        badgeContent={`${chatWorld.length}`}
+                        // badgeContent={`${chatWorld.length}`}
                         sx={{
                           ".css-106c1u2-MuiBadge-badge": {
                             fontSize: "10px",

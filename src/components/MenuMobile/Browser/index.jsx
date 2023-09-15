@@ -83,7 +83,6 @@ export default function Browser(props) {
                 ></path>
               </svg>
               <Typography variant="h5" sx={{
-                fontFamily:"Cyntho Next !important",
                 fontWeight:"500 !important",
                 marginLeft:"10px !important"
               }}>Menu</Typography>
@@ -507,7 +506,7 @@ export default function Browser(props) {
                           : "",
                     }}
                   >
-                    Hot tour
+                    Hot
                   </span>
                 </Box>
                 {/* <Box
@@ -645,7 +644,7 @@ export default function Browser(props) {
                           : "",
                     }}
                   >
-                    Daily tour
+                    Daily
                   </span>
                 </Box>
                 <Box
@@ -731,7 +730,7 @@ export default function Browser(props) {
                           : "",
                     }}
                   >
-                    Week-long tour
+                    Week-long
                   </span>
                 </Box>
               </Box>

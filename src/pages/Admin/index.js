@@ -1,7 +1,7 @@
-import MainPage from "./MainPage";
+import MainLayout from "./MainLayout";
 import LoginPage from "./LoginPage";
 
 export { 
-    MainPage,
+    MainLayout,
     LoginPage
 }

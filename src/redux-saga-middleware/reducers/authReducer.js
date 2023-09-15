@@ -191,7 +191,6 @@ const authReducer = (
         isTab: false,
         isUpdateProfile: false,
         userChangeAvatar: "",
-        isNav: false,
       };
     case "GET_LEADERBOARD_SUCCESS":
       return { ...state, leaderBoard: payload };
@@ -205,8 +204,6 @@ const authReducer = (
     case "SHOW_DROPDOWN":
       return { ...state, isDropdownNav: !state.isDropdownNav };
     case "GET_NAV_TABLET":
-      // console.log(payload);
-      // console.log(state);
       return { ...state, isNavTablet: payload };
     default:
       return state;

@@ -19,15 +19,17 @@ export default function UnityGameComponent(props) {
     handleEndGame,
     type,
     skinName,
-    pauseGame, 
+    pauseGame,
     unPauseGame,
-    fmod
+    fmod,
+    videoGame,
+    setIsLoaded,
   } = props;
 
   const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   // const { router } = useSelector((state) => state.appReducer);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
       if (data[index]?.link?.includes(".loader.js")) {
@@ -88,7 +90,7 @@ export default function UnityGameComponent(props) {
   }, [GameFiles]);
 
   const handleGameLoad = useCallback(() => {
-    // dispatch(toggleStartGame(true))
+    dispatch(toggleStartGame(true))
     sendMessage("TournamentGameEntry", "SetToken", token);
     sendMessage("TournamentGameEntry", "SetTournamentId", tournamentId);
     sendMessage("TournamentGameEntry", "SetSkinId", skinId);
@@ -98,20 +100,23 @@ export default function UnityGameComponent(props) {
       process.env.REACT_APP_END_POINT_TOURNAMENT
     );
     sendMessage("TournamentGameEntry", "StartGame", "Start");
-  }, [sendMessage, tournamentId, token, skinId]);
+  }, [sendMessage, tournamentId, token, skinId, dispatch]);
 
-  const handleFinalGame = useCallback(async (score) => {
-    if(!fmod) {
-      await unload();
-    }
-    if (type && type === "pvp") {
-      navigate({
-        pathname: `/selectroom/${gameId}`,
-      });
-    }
-    handleEndGame(score || 0);
-    dispatch(toggleStartGame(false))
-  }, [navigate, unload, handleEndGame, gameId, type, fmod, dispatch]);
+  const handleFinalGame = useCallback(
+    async (score) => {
+      if (!fmod) {
+        await unload();
+      }
+      if (type && type === "pvp") {
+        navigate({
+          pathname: `/selectroom/${gameId}`,
+        });
+      }
+      handleEndGame(score || 0);
+      dispatch(toggleStartGame(false));
+    },
+    [navigate, unload, handleEndGame, gameId, type, fmod, dispatch]
+  );
 
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
@@ -130,29 +135,23 @@ export default function UnityGameComponent(props) {
   const unityRef = useRef();
 
   useEffect(() => {
-    if(pauseGame) {
+    if (pauseGame && isLoaded) {
       sendMessage("TournamentGameEntry", "PauseGame", "");
     }
-  }, [pauseGame, sendMessage])
+  }, [pauseGame, sendMessage, isLoaded]);
 
   useEffect(() => {
-    if(unPauseGame) {
+    if (unPauseGame && isLoaded) {
       sendMessage("TournamentGameEntry", "UnpauseGame", "");
     }
-  }, [unPauseGame, sendMessage])
+  }, [unPauseGame, sendMessage, isLoaded]);
 
   useEffect(() => {
     const onBeforeUnload = async (ev) => {
-      
-      //#############     
-      if(!fmod) {
+      if (!fmod) {
         await unload();
       }
-      dispatch(toggleStartGame(false))
-      //#############
-
-      ev.returnValue = "Anything you wanna put here!";
-      return "Anything here as well, doesn't matter!";
+      dispatch(toggleStartGame(false));
     };
 
     window.addEventListener("beforeunload", onBeforeUnload);
@@ -164,16 +163,10 @@ export default function UnityGameComponent(props) {
 
   useEffect(() => {
     const onBeforeUnload = async (ev) => {
-      
-      //#############     
-      if(!fmod) {
+      if (!fmod) {
         await unload();
       }
-      dispatch(toggleStartGame(false))
-      //#############
-
-      ev.returnValue = "Anything you wanna put here!";
-      return "Anything here as well, doesn't matter!";
+      dispatch(toggleStartGame(false));
     };
 
     window.addEventListener("popstate", onBeforeUnload);
@@ -185,8 +178,9 @@ export default function UnityGameComponent(props) {
 
   return (
     <Fragment>
-      {!isLoaded && (
+      {!isLoaded && !videoGame && (
         <LoadingScreen
+          isLoaded={isLoaded}
           loadingProgression={Math.round(loadingProgression * 100)}
         />
       )}
