@@ -102,8 +102,6 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
     videoRef.current.click();
   };
 
-
-
   const showOpenFileDialogAvatar = (event) => {
     avaRef.current.click();
   };
