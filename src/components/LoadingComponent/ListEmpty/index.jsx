@@ -58,7 +58,7 @@ const ListEmpty = () => {
         </g>
       </svg>
       <Typography sx={{ color: "white", fontSize: "14px", marginTop: "24px", color:"#979797", lineHeight:"14px", letterSpacing:"0.8px" }}>
-        No hot tournaments available at the moment
+        No hot tournaments available
       </Typography>{" "}
       <Typography sx={{ color: "white", fontSize: "14px", marginTop: "4px", color:"#979797",lineHeight:"14px", letterSpacing:"0.8px" }}>
       at the moment
