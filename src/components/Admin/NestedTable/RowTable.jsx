@@ -10,6 +10,8 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useState } from "react";
 import { Button } from "@mui/material";
 import moment from "moment/moment";
+import { useDispatch, useSelector } from "react-redux";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 
 const MinusIconSVG = () => {
   return (
@@ -80,22 +82,40 @@ export const RowTable = (props) => {
   const { row, children, index } = props;
   const [open, setOpen] = useState(false);
   const { width } = useWindowDimensions();
+  const { detailAccount } = useSelector((state) => state.adminReducer_);
 
+  const dispatch = useDispatch()
+
+  const handleUpdate = () => {
+    dispatch(updateDetailAccount(row))
+  }
 
   return (
     <React.Fragment>
-      <TableRow style={{border: "2px solid #E4E4E4", backgroundColor: index % 2 !== 0 && "#F7F7F7",borderRadius: "5px"}}>
+      <TableRow onClick={() => {
+        if(width < 576 && row?.action) {
+          dispatch(updateDetailAccount(row))
+        }
+      }} sx={{
+        ".MuiTableCell-root": {
+          borderBottom: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
+          borderTop: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
+        }
+      }} style={{backgroundColor: index % 2 !== 0 && "#F7F7F7",borderRadius: "5px"}}>
         {row.action ? (
-          <StyledTableCell sx={{display: {xs: "none", sm: "table-cell"}}}><Button children={"Update"} sx={{
-            fontSize: "14px" ,borderRadius: "16px",padding:"2px 16px",bgcolor: "#355DFF", color: "#FFF", fontWeight: 700, textTransform: "unset",
+          <StyledTableCell sx={{display: {xs: "none", sm: "table-cell"}, }}>
+            <Button onClick={handleUpdate} children={"Update"} sx={{
+              fontSize: "14px" ,borderRadius: "16px",padding:"2px 16px",bgcolor: "#355DFF", color: "#FFF", fontWeight: 700, textTransform: "unset",
             ":hover": {
               backgroundColor: '#355DFF'
-            }
+            },
           }}/></StyledTableCell>
         ) : (
-          <StyledTableCell  sx={{display: {xs: "none", sm: "table-cell"}}}></StyledTableCell>
+          <StyledTableCell  sx={{display: {xs: "none", sm: "table-cell"}}}>
+
+          </StyledTableCell>
         )}
-        <StyledTableCell>
+        <StyledTableCell className="text-center">
           <Box
             sx={{
               marginLeft: {xs: row?.levelRole*1, sm: row?.levelRole*2},
@@ -119,13 +139,15 @@ export const RowTable = (props) => {
             {row.account}
           </Box>
         </StyledTableCell>
-        <StyledTableCell>{row.level}</StyledTableCell>
-        <StyledTableCell>{row.commission}</StyledTableCell>
-        <StyledTableCell>{row.ticket}</StyledTableCell>
-        <StyledTableCell>{row.ref}</StyledTableCell>
-        <StyledTableCell>{moment(row.date).format('ll')}</StyledTableCell>
-        <StyledTableCell sx={{color: "#3DBAA2"}}>{row.amount}</StyledTableCell>
-        <StyledTableCell>{row.status === 1 ? "Active" : ""}</StyledTableCell>
+        <StyledTableCell className="text-center">{row.level}</StyledTableCell>
+        <StyledTableCell className="text-center">
+          {/* {row.commission} */}{"-"}
+        </StyledTableCell>
+        <StyledTableCell className="text-center">{row.ticket}</StyledTableCell>
+        <StyledTableCell className="text-center">{row.ref}</StyledTableCell>
+        <StyledTableCell className="text-center">{moment(row.date).format('ll')}</StyledTableCell>
+        <StyledTableCell className="text-center" sx={{color: "#3DBAA2"}}>{row.amount}</StyledTableCell>
+        <StyledTableCell className="text-center">{row.status ? "Active" : "Prohibit"}</StyledTableCell>
       </TableRow>
       {open && children}
     </React.Fragment>

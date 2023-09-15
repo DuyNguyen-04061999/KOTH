@@ -16,6 +16,8 @@ import React, { useState } from "react";
 import { RowTable } from "./RowTable";
 import styled from "styled-components";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { useDispatch, useSelector } from "react-redux";
+import { openDetailDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
   [`&.${tableHeadClasses.root}`]: {
@@ -35,6 +37,9 @@ const StyleTable = styled(Table)(({ theme }) => ({
 
 const NestedTable = (props) => {
   const { data } = props;
+  const { detailAccount } = useSelector((state) => state.adminReducer_);
+  const dispatch = useDispatch();
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -85,21 +90,24 @@ const NestedTable = (props) => {
                 sx={{ width: "100px" }}
                 style={{ color: "#808191" }}
                 children="Account"
+                className="text-center"
               />
               <TableCell
                 sx={{ maxWidth: "unset" }}
                 style={{ color: "#808191" }}
                 children="Level "
+                className="text-center"
               />
-              <TableCell style={{ color: "#808191" }} children="Revenue" />
-              <TableCell style={{ color: "#808191" }} children="Ticket" />
-              <TableCell style={{ color: "#808191" }} children="Ref Code" />
-              <TableCell style={{ color: "#808191" }} children="Date" />
+              <TableCell className="text-center" style={{ color: "#808191" }} children="Revenue" />
+              <TableCell className="text-center" style={{ color: "#808191" }} children="Ticket" />
+              <TableCell className="text-center" style={{ color: "#808191" }} children="Ref Code" />
+              <TableCell className="text-center" style={{ color: "#808191" }} children="Date" />
               <TableCell
                 style={{ color: "#808191" }}
                 children="Amount Account"
+                className="text-center"
               />
-              <TableCell style={{ color: "#808191" }} children="Status" />
+              <TableCell className="text-center" style={{ color: "#808191" }} children="Status" />
               {/* {
                 Object.keys(data[0])?.map((element,index) => (<TableCell key={index} align="right">{element}</TableCell>))
             } */}
@@ -116,7 +124,7 @@ const NestedTable = (props) => {
                     <>
                       {row.child.map((row, _index) => (
                         <RowTable
-                          key={row.account + index}
+                          key={row.account + _index}
                           row={row}
                           index={_index}
                           children={
@@ -124,7 +132,7 @@ const NestedTable = (props) => {
                               <>
                                 {row.child.map((row, __index) => (
                                   <RowTable
-                                    key={row.account + index}
+                                    key={row.account + __index}
                                     index={__index}
                                     row={row}
                                     children={
@@ -132,7 +140,7 @@ const NestedTable = (props) => {
                                         <>
                                           {row.child.map((row, ___index) => (
                                             <RowTable
-                                              key={row.account + index}
+                                              key={row.account + ___index}
                                               index={___index}
                                               row={row}
                                             />
@@ -164,37 +172,45 @@ const NestedTable = (props) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       /> */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "105px",
-          position: "absolute",
-          bottom: 0,
-          zIndex: 10,
-          background: "rgba(233, 233, 233, 0.80)",
-          borderRadius: "20px 20px 0px 0px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderTop: "2px solid #C3C3C3",
-          display:{xs: "flex", sm: "none"}
-        }}
-      >
-        <Button
+      {detailAccount && (
+        <Box
           sx={{
-            padding: "6px 30px",
-            backgroundColor: "#4FBF67",
-            ":hover": { backgroundColor: "#4FBF67" },
-            color: "white",
-            textTransform: "unset",
-            fontWeight: 700,
-            borderRadius: "16px",
-
+            width: "100%",
+            height: "105px",
+            position: "absolute",
+            bottom: 0,
+            zIndex: 10,
+            background: "rgba(233, 233, 233, 0.80)",
+            borderRadius: "20px 20px 0px 0px",
+            display:{xs: "flex", sm: "none"},
+            alignItems: "center",
+            justifyContent: "center",
+            borderTop: "2px solid #C3C3C3",
           }}
         >
-          View All
-        </Button>
-      </Box>
+          {detailAccount && (
+            <Button
+              onClick={() => {
+                if(detailAccount) {
+                  dispatch(openDetailDialog())
+                }
+              }}
+              sx={{
+                padding: "6px 30px",
+                backgroundColor: "#4FBF67",
+                ":hover": { backgroundColor: "#4FBF67" },
+                color: "white",
+                textTransform: "unset",
+                fontWeight: 700,
+                borderRadius: "16px",
+
+              }}
+            >
+              View All
+            </Button>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };

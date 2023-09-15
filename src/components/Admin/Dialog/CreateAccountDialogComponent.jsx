@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Button, Dialog, TextField, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { closeCreateDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 
 const bg = "rgba(228, 228, 228, 0.2967)";
 // const borderRadius = 12
@@ -12,7 +14,9 @@ export default function CreateAccountDialogComponent() {
   const passInput = useRef("");
   const cPassInput = useRef("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const { isCreateDialog } = useSelector(state => state.adminDialogReducer)
+  const dispatch = useDispatch()
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const accountInfo = {
@@ -57,9 +61,14 @@ export default function CreateAccountDialogComponent() {
   const onFocusCPassInput = () => setFocusedCPassInput(true);
   const onBlurCPassInput = () => setFocusedCPassInput(false);
 
+  const handleClose = () => {
+    dispatch(closeCreateDialog())
+  }
+
   return (
     <Dialog
-      open={false}
+      open={isCreateDialog}
+      onClose={handleClose}
       sx={{
         "& .MuiPaper-root-MuiDialog-paper": {
           overflowY: "hidden",
@@ -98,7 +107,7 @@ export default function CreateAccountDialogComponent() {
               boxShadow: "1px 20px 25px 5px #E4E4E4",
             }}
           >
-            <CloseIcon sx={{}} />
+            <CloseIcon onClick={handleClose} sx={{}} />
           </Box>
         </Box>
         <Box component={"form"} onSubmit={handleSubmit}>
