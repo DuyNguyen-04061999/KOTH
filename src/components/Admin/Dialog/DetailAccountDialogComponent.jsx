@@ -6,17 +6,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeDetailDialog, openProvideDialog } from '../../../redux-saga-middleware_admin/reducers/adminDialogReducer'
 import { updateDetailAccount } from '../../../redux-saga-middleware_admin/reducers/adminReducer'
 import moment from 'moment'
+import { activeAccount } from '../../../redux-saga-middleware_admin/reducers/adminConfigReducer'
 
 export default function DetailAccountDialogComponent() {
     const { width } = useWindowDimensions()
     const { isDetailDialog } = useSelector((state) => state.adminDialogReducer);
     const { detailAccount } = useSelector((state) => state.adminReducer_);
     const dispatch = useDispatch()
-    console.log(detailAccount);
+
     const handleClose = () => {
         dispatch(closeDetailDialog())
         dispatch(updateDetailAccount())
     }
+
+    const handleActive = () => {
+        if(detailAccount) {
+          dispatch(activeAccount({
+            accountName: detailAccount?.account,
+            active: detailAccount?.status ? 0 : 1
+          }))
+        }
+      }
 
     return (
         <Dialog open={isDetailDialog} onClose={handleClose} fullScreen fullWidth sx={{
@@ -166,7 +176,7 @@ export default function DetailAccountDialogComponent() {
                                 }}>{detailAccount?.amount || 0}</Typography>
                             </Box>
                         </Box>
-                        <Box component={"div"} className='text-center p-2 text-white' sx={{
+                        <Box component={"div"} onClick={handleActive} className='text-center p-2 text-white' sx={{
                             marginTop: "14px",
                             borderRadius: "16px", background: detailAccount?.status ? "#355DFF" : "#FF4135"
                         }}>
