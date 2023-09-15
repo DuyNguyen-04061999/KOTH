@@ -70,7 +70,7 @@ export default function GameEditPage() {
     return (
         <Box
             component={"form"}
-            className='p-2 d-flex flex-column'
+            className='p-2 d-flex flex-column bg-info'
             onSubmit={handleSubmit}
             encType='multipart/form-data'
             >

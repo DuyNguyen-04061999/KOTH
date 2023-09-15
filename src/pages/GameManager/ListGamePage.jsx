@@ -49,7 +49,7 @@ export default function ListGamePage() {
         </Box>
         <Grid container spacing={2}>
           {games && games?.length > 0 && games.map((game, i_game) => (
-            <Grid item xs={2} key={i_game} sx={{
+            <Grid item xs={4} key={i_game} sx={{
               cursor: 'pointer'
             }}>
               <Card className='rounded bg-info position-relative'>
