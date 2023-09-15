@@ -664,7 +664,6 @@ export default function Dialoglg() {
   const location = useLocation();
 
   const [isHovering, setIsHovering] = useState(false);
-  console.log(isHovering);
 
   const handleMouseEnter = () => {
     setIsHovering(true);
