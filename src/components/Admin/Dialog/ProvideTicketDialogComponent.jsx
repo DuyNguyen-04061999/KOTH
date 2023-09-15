@@ -6,12 +6,17 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker, MobileTimePicker } from "@mui/x-date-pickers";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { closeProvideDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 
 const bg = "rgba(228, 228, 228, 0.2967)";
 // const borderRadius = 12
 
 export default function ProvideTicketDialogComponent(props) {
   const { account, customerTicket, availableTicket } = props;
+  const { isProvideDialog } = useSelector(state => state.adminDialogReducer)
+  const dispatch = useDispatch()
+
   const [dateInput, setDateInput] = useState({
     date: moment().format("YYYY/MM/DD"),
     time: moment("2022-04-17T15:30"),
@@ -40,9 +45,14 @@ export default function ProvideTicketDialogComponent(props) {
   const onFocusRechargeInput = () => setFocusedRechargeInput(true);
   const onBlurRechargeInput = () => setFocusedRechargeInput(false);
 
+  const handleClose = () => {
+    dispatch(closeProvideDialog())
+  }
+
   return (
     <Dialog
-      open={true}
+      open={isProvideDialog}
+      onClose={handleClose}
       sx={{
         "& .MuiPaper-root-MuiDialog-paper": {
           overflowY: "hidden",
@@ -81,7 +91,7 @@ export default function ProvideTicketDialogComponent(props) {
               boxShadow: "1px 20px 25px 5px #E4E4E4",
             }}
           >
-            <CloseIcon sx={{}} />
+            <CloseIcon onClick={handleClose} sx={{}} />
           </Box>
         </Box>
         <Box component={"form"} onSubmit={handleSubmit}>

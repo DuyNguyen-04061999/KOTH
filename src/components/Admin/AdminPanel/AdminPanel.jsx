@@ -14,7 +14,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import moment from "moment";
 import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 import DetailAccountDialogComponent from "../Dialog/DetailAccountDialogComponent";
-import { openDetailDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { openCreateDialog, openDetailDialog, openProvideDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 
 const AdminPanel = () => {
@@ -187,6 +187,7 @@ const AdminPanel = () => {
             <Box sx={{ marginLeft: "auto" }}>
               <Button
                 children={"Create Account"}
+                onClick={() => dispatch(openCreateDialog())}
                 sx={{
                   padding: { xs: "4px 14px", sm: "16px 34px" },
                   backgroundColor: "#355DFF",
@@ -350,6 +351,7 @@ const AdminPanel = () => {
           {detailAccount && (
             <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
               <Button
+                onClick={() => dispatch(openProvideDialog())}
                 sx={{
                   backgroundColor: "#FF9F38",
                   fontWeight: 700,

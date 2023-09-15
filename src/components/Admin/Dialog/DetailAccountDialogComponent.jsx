@@ -3,7 +3,7 @@ import React from 'react'
 import BackIcon from "@mui/icons-material/ArrowBack"
 import useWindowDimensions from '../../../utils/useWindowDimensions'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeDetailDialog } from '../../../redux-saga-middleware_admin/reducers/adminDialogReducer'
+import { closeDetailDialog, openProvideDialog } from '../../../redux-saga-middleware_admin/reducers/adminDialogReducer'
 import { updateDetailAccount } from '../../../redux-saga-middleware_admin/reducers/adminReducer'
 import moment from 'moment'
 
@@ -186,7 +186,9 @@ export default function DetailAccountDialogComponent() {
                     <Box component={"div"} className='d-flex' sx={{
                         marginTop: "40px"
                     }}>
-                        <Box component={"div"} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
+                        <Box component={"div"}
+                            onClick={() => dispatch(openProvideDialog())}
+                            className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
                             borderRadius: "7.618px",
                             maxWidth: width/4,
                             boxShadow: "1px 20px 25px 5px #E4E4E4"
