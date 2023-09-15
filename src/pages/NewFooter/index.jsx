@@ -45,7 +45,7 @@ export default function NewFooter() {
           >
             Support
           </Typography>
-          <Box sx={{ marginTop: width < 1024 ? "24px" : "20px" }}>
+          <Box sx={{ marginTop: width < 1024 ? "24px" : "16px", marginBottom: width < 1024 ? "40px" : "" }}>
             {" "}
             <Box
               sx={{
@@ -115,7 +115,7 @@ export default function NewFooter() {
             sx={{
               width: width < 576 ? "120px" : "200px",
               height: width < 576 ? "44px" : "73.333px",
-              marginTop: width < 1024 ? "30px" : "96.83px",
+              marginTop: width < 1024 ? "30px" : "64px",
             }}
             src={imageDesktop.LogoCongTy}
           ></Box>
@@ -127,6 +127,7 @@ export default function NewFooter() {
             fontSize: width < 576 ? "12px" : "16px",
             lineHeight: "normal",
             marginTop: "20px",
+            textAlign:"center"
           }}
         >
           "Experience the thrill of gaming at Play4Promo, where tournaments,
@@ -142,7 +143,7 @@ export default function NewFooter() {
             fontStyle: "normal",
             fontWeight: "500",
             lineHeight: "normal",
-            marginTop: "80px",
+            marginTop: "64px",
             marginBottom: "30px !important",
           }}
         >
