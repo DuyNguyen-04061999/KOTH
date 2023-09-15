@@ -165,6 +165,9 @@ export default function PlayGame(props) {
     dispatch,
     device,
   ]);
+
+console.log(expand, startGame);
+
   return (
     <>
       <Box
@@ -461,8 +464,7 @@ export default function PlayGame(props) {
                     {startGame &&
                       expand === false &&
                       (device === "Desktop" || device === "Tablet") &&
-                      !videoGame &&
-                      isLoaded && (
+                      !videoGame && (
                         <Box
                           sx={{
                             width: "100%",
