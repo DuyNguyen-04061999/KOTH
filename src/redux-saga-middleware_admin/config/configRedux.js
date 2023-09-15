@@ -10,6 +10,7 @@ import adminMasterReducer from "../reducers/adminMasterReducer";
 import adminDistributorReducer from "../reducers/adminDistributorReducer";
 import adminSubDistributorReducer from "../reducers/adminSubDistributorReducer";
 import adminAgentReducer from "../reducers/adminAgentReducer";
+import adminDialogReducer from "../reducers/adminDialogReducer";
 
 let adminReducer = combineReducers({
   adminReducer_,
@@ -18,7 +19,8 @@ let adminReducer = combineReducers({
   adminMasterReducer,
   adminDistributorReducer,
   adminSubDistributorReducer,
-  adminAgentReducer
+  adminAgentReducer,
+  adminDialogReducer
 });
 
 const persistConfig = {

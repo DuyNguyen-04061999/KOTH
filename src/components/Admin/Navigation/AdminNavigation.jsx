@@ -14,8 +14,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { images } from "../../../utils/images";
 import { makeStyles } from "@mui/styles";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const AdminNavigation = (props) => {
+  const { width } = useWindowDimensions()
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { roles, ref } = useSelector((state) => state.adminAuthReducer);
@@ -47,7 +49,7 @@ const AdminNavigation = (props) => {
     {
       name: "Admin Structure",
       icon: "",
-      link: "/admin-structure",
+      link: "/",
     },
   ];
   const distributorActions = [
@@ -66,7 +68,7 @@ const AdminNavigation = (props) => {
     {
       name: "Admin Structure",
       icon: "",
-      link: "/admin-structure",
+      link: "/",
     },
   ];
   const subDistributorActions = [
@@ -89,7 +91,7 @@ const AdminNavigation = (props) => {
     {
       name: "Admin Structure",
       icon: "",
-      link: "/admin-structure",
+      link: "/",
     },
   ];
 
@@ -105,7 +107,7 @@ const AdminNavigation = (props) => {
     {
       name: "User Manager",
       icon: "",
-      link: "/user-manager",
+      link: "/",
     },
   ];
 
@@ -150,7 +152,7 @@ const AdminNavigation = (props) => {
                   key={i_action}
                   selected={
                     pathname === "/" || pathname === ""
-                      ? action?.link === "/admin-structure"
+                      ? action?.link === "/"
                       : pathname === action?.link
                   }
                   style={{ borderRadius: "20px" }}
@@ -218,26 +220,28 @@ const AdminNavigation = (props) => {
           </List>
         </nav>
       </Box>
-      <Typography
-        className="ms-2"
-        sx={{
-          marginTop: "auto",
-          color: "#000",
-          fontSize: "30px",
-          fontWeight: 600,
-          textAlign: "start",
-          paddingLeft: "43px",
-          paddingBottom: "130px"
-        }}
-      >
-        {roles && roles?.length > 0 && roles?.includes("master")
-          ? "Master"
-          : roles && roles?.length > 0 && roles?.includes("distributor")
-          ? "Distributor"
-          : roles && roles?.length > 0 && roles?.includes("sub_distributor")
-          ? "Sub-Distributor"
-          : "Agent"}
-      </Typography>
+      {width < 576 && (
+        <Typography
+          className="ms-2"
+          sx={{
+            marginTop: "auto",
+            color: "#000",
+            fontSize: "30px",
+            fontWeight: 600,
+            textAlign: "start",
+            paddingLeft: "43px",
+            paddingBottom: "130px"
+          }}
+        >
+          {roles && roles?.length > 0 && roles?.includes("master")
+            ? "Master"
+            : roles && roles?.length > 0 && roles?.includes("distributor")
+            ? "Distributor"
+            : roles && roles?.length > 0 && roles?.includes("sub_distributor")
+            ? "Sub-Distributor"
+            : "Agent"}
+        </Typography>
+      )}
     </Box>
   );
 };

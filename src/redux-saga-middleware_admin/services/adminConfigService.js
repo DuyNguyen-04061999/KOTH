@@ -35,4 +35,16 @@ export class ADMIN_CONFIG_SERVICE {
         })
         return res
     }
+
+    async activeAccount (dataRequest) {
+        const res = ADMIN_API.post(`/api/admin/configs/active-account`, {
+            token: localStorage.getItem("token_admin"),
+            ...dataRequest
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        return res
+    }
 }
