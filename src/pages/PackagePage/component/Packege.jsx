@@ -269,7 +269,7 @@ export default function Package() {
                                     <source
                                       src={
                                         i?.packageAvatar
-                                          ? process.env.REACT_APP_END_POINT +
+                                          ? process.env.REACT_APP_SOCKET_SERVER +
                                             "/" +
                                             i?.packageAvatar
                                           : images.free
@@ -842,7 +842,7 @@ export default function Package() {
                               <source
                                 src={
                                   i?.packageAvatar
-                                    ? process.env.REACT_APP_END_POINT +
+                                    ? process.env.REACT_APP_SOCKET_SERVER +
                                       "/" +
                                       i?.packageAvatar
                                     : images.free
