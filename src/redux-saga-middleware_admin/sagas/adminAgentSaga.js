@@ -1,6 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_AGENT_SERVICE } from "../services/adminAgentService";
 import { createAgentFail, createAgentSuccess, createEndUserSuccess, deleteAgentFail, deleteAgentSuccess,getListEndUserSuccess, getListEndUserFail,updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
+import { closeCreateDialog } from "../reducers/adminDialogReducer";
 
 const adminAgentService = new ADMIN_AGENT_SERVICE();
 
@@ -10,7 +11,9 @@ function* createAgent(dataRequest) {
         const res = yield call(adminAgentService.createAgent, payload)
         if(res && res.status === 200) {
            yield put(createAgentSuccess())
-           alert("Create Agent Success!")
+           alert("Create Agent Success!");
+           window.location.reload();
+           yield put(closeCreateDialog());
         } else {
            yield put(createAgentFail())
         }
@@ -79,6 +82,8 @@ function* createEndUser(dataRequest) {
         if(res && res.status === 200) {
            yield put(createEndUserSuccess())
            alert("Create End User Success!")
+           window.location.reload();
+           yield put(closeCreateDialog());
         } else {
            yield put(createAgentFail())
         }
