@@ -30,7 +30,7 @@ import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import ListItemLoading from "../../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
-import BannerTop1 from "../../../components/BannerTop1";
+import { BannerWin, BannerWinMobile } from "../../../components/Banner";
 
 const theme = createTheme({
   typography: {
@@ -475,7 +475,7 @@ export default function NewHomePage() {
               //     </Box>
               //   </Box>
               // </Box>
-              <img src={imageDesktop.bannerWinBM} alt="..." />
+              <BannerWinMobile />
             )
           ) : isFetching ? (
             <BannerLoading
@@ -636,7 +636,7 @@ export default function NewHomePage() {
             //     </Typography>
             //   </Box>
             // </Box>
-              <img src={imageDesktop.bannerWindesk} alt="..." />
+              <BannerWin/>
 
           )}
           {/* Brief List Tournament */}
