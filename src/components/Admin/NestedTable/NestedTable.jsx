@@ -52,17 +52,13 @@ const NestedTable = (props) => {
     setPage(0);
   };
 
-  
-
   const { width } = useWindowDimensions();
 
   return (
-    <Box sx={{ width: "100%", overflow: "hidden", position: "relative" }}>
+    <Box sx={{position: "relative" }}>
       <TableContainer
         sx={{
-          width: "100%",
-          maxHeight: { xs: "70vh", sm: "440px"},
-          overflow: "hidden",
+          maxHeight: { xs: "70vh", sm: "440px" },
           borderRadius: 0,
           "& .MuiTableCell-root": {
             borderWidth: "none",
@@ -73,7 +69,7 @@ const NestedTable = (props) => {
       >
         <StyleTable
           stickyHeader
-          sx={{ background: "#F7F7F7", marginBottom: "120px"}}
+          sx={{  }}
           aria-label="collapsible table"
         >
           <StyledTableHead>
@@ -101,13 +97,29 @@ const NestedTable = (props) => {
                 children="Level "
                 className="text-center"
               />
-              <TableCell className="text-center" style={{ color: "#808191" }} children="Revenue" />
-              <TableCell className="text-center" style={{ color: "#808191" }} children="Ticket" />
+              <TableCell
+                className="text-center"
+                style={{ color: "#808191" }}
+                children="Revenue"
+              />
+              <TableCell
+                className="text-center"
+                style={{ color: "#808191" }}
+                children="Ticket"
+              />
               {width > 576 && (
-                <TableCell className="text-center" style={{ color: "#808191" }} children="Ref Code" />
+                <TableCell
+                  className="text-center"
+                  style={{ color: "#808191" }}
+                  children="Ref Code"
+                />
               )}
               {width > 576 && (
-                <TableCell className="text-center" style={{ color: "#808191" }} children="Date" />
+                <TableCell
+                  className="text-center"
+                  style={{ color: "#808191" }}
+                  children="Date"
+                />
               )}
               {width > 576 && (
                 <TableCell
@@ -117,7 +129,11 @@ const NestedTable = (props) => {
                 />
               )}
               {width > 576 && (
-                <TableCell className="text-center" style={{ color: "#808191" }} children="Status" />
+                <TableCell
+                  className="text-center"
+                  style={{ color: "#808191" }}
+                  children="Status"
+                />
               )}
               {/* {
                 Object.keys(data[0])?.map((element,index) => (<TableCell key={index} align="right">{element}</TableCell>))
@@ -193,7 +209,7 @@ const NestedTable = (props) => {
             zIndex: 10,
             background: "rgba(233, 233, 233, 0.80)",
             borderRadius: "20px 20px 0px 0px",
-            display:{xs: "flex", sm: "none"},
+            display: { xs: "flex", sm: "none" },
             alignItems: "center",
             justifyContent: "center",
             borderTop: "2px solid #C3C3C3",
@@ -202,8 +218,8 @@ const NestedTable = (props) => {
           {detailAccount && (
             <Button
               onClick={() => {
-                if(detailAccount) {
-                  dispatch(openDetailDialog())
+                if (detailAccount) {
+                  dispatch(openDetailDialog());
                 }
               }}
               sx={{
@@ -214,7 +230,6 @@ const NestedTable = (props) => {
                 textTransform: "unset",
                 fontWeight: 700,
                 borderRadius: "16px",
-
               }}
             >
               View All
