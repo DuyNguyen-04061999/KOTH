@@ -848,7 +848,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               width: "100%",
               background: "rgba(37, 37, 37, 0.20)",
               // backdropFilter: "blur(2px)",
-              zIndex: "25",
+              zIndex: "28",
             }}
           >
             {!detailTournament?.checkInTournament ? (
