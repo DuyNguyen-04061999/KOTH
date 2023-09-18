@@ -775,10 +775,10 @@ export default function JoinTournament() {
                             }}
                           >
                             {detailTournament?.tournamentTimeType === "hourly"
-                              ? "Hourly Tournament"
+                              ? "Hourly tournaments"
                               : detailTournament?.tournamentTimeType === "daily"
-                              ? "Daily Tournament"
-                              : "Weeklong Tournament"}
+                              ? "Daily tournaments"
+                              : "Week-long tournaments"}
                           </Typography>
                         </>
                       )}

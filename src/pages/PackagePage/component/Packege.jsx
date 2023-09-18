@@ -380,8 +380,7 @@ export default function Package() {
                                           marginLeft: "4px !important",
                                         }}
                                       >
-                                        {i?.packageFreeTicketTournament} Free
-                                        ticket/tournament
+                                        {i?.packageFreeTicketTournament} ticket / tournament
                                       </Typography>
                                     </Box>
                                     <Box
@@ -912,8 +911,7 @@ export default function Package() {
                                     marginLeft: "4px !important",
                                   }}
                                 >
-                                  {i?.packageFreeTicketTournament} Free
-                                  ticket/tournament
+                                  {i?.packageFreeTicketTournament} ticket / tournament
                                 </Typography>
                               </Box>
                               <Box

@@ -815,7 +815,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Daily Tournaments
+                  Daily tournaments
                 </Typography>
               </Box>
               <Box
@@ -1255,7 +1255,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Week-long tournament{" "}
+                  Week-long tournaments{" "}
                 </Typography>
               </Box>
               <Box

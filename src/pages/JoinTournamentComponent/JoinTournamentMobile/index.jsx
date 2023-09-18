@@ -204,10 +204,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               }}
             >
               {detailTournament?.tournamentTimeType === "hourly"
-                ? "Hourly Tournament"
+                ? "Hourly tournaments"
                 : detailTournament?.tournamentTimeType === "daily"
-                ? "Daily Tournament"
-                : "Weeklong Tournament"}
+                ? "Daily tournaments"
+                : "Week-long tournaments"}
             </Typography>
           </Box>
           <Box
