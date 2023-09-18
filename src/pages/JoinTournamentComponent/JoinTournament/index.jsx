@@ -1130,7 +1130,7 @@ export default function JoinTournament() {
                                 >
                                   Conditions
                                 </h6>
-                                <a
+                                <span
                                   href="#"
                                   onClick={(e) => {
                                     e.preventDefault();
@@ -1145,7 +1145,7 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   See more
-                                </a>
+                                </span>
                               </Box>
                             </Box>
                           </Box>

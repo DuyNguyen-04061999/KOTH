@@ -4,44 +4,88 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import {
+  createAgent,
+  createEndUser,
+} from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { createSubDistributor } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { createDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { LoadingButton } from "@mui/lab";
 
 const bg = "rgba(228, 228, 228, 0.2967)";
 // const borderRadius = 12
 
 export default function CreateAccountDialogComponent() {
+  const { roles } = useSelector((state) => state.adminAuthReducer);
+  const {isCreateEndUser, isCreateAgent} = useSelector((state) => state.adminAgentReducer);
+  const {isCreateSubDistributor} = useSelector(state => state.adminDistributorReducer);
+  const {isCreateDistributor} = useSelector(state => state.adminMasterReducer);
   const userNameInput = useRef("");
   const userNicknameInput = useRef("");
   const passInput = useRef("");
   const cPassInput = useRef("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { isCreateDialog } = useSelector(state => state.adminDialogReducer)
-  const dispatch = useDispatch()
-  
+  const { isCreateDialog } = useSelector((state) => state.adminDialogReducer);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch(closeCreateDialog());
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const accountInfo = {
-      userName: userNameInput.current.value,
+      username: userNameInput.current.value,
       nickName: userNicknameInput.current.value,
-      password: passInput.current.value
-    }
-    if (!accountInfo.userName || !accountInfo.nickName | !accountInfo.password || !cPassInput.current.value) {
+      password: passInput.current.value,
+    };
+    if (
+      !accountInfo.username ||
+      !accountInfo.nickName || !accountInfo.password ||
+      !cPassInput.current.value
+    ) {
       setErrorMessage({
         type: "fill",
         message: "Please fill all required fields",
       });
-      return
+      return;
     }
     if (accountInfo.password !== cPassInput.current.value) {
       setErrorMessage({
         type: "confirm-password",
         message: "The confirm password does not match",
       });
-
     } else {
-      //Submit
-      console.log(accountInfo);
+      if(isCreateAgent || isCreateEndUser || isCreateSubDistributor || isCreateDistributor){
+        setIsLoading(true)
+      }
+      if (roles && roles?.length && roles[0]) {
+        switch (roles[0]) {
+          case "master": {
+            dispatch(createDistributor(accountInfo));
+            break;
+          }
+          case "distributor": {
+            dispatch(createSubDistributor(accountInfo));
+            break;
+          }
+          case "sub_distributor": {
+            dispatch(createAgent(accountInfo));
+            break;
+          }
+          case "agent": {
+            dispatch(createEndUser(accountInfo));
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
       setErrorMessage("");
-      e.target.reset();
+      setIsLoading(false);
     }
   };
 
@@ -61,9 +105,6 @@ export default function CreateAccountDialogComponent() {
   const onFocusCPassInput = () => setFocusedCPassInput(true);
   const onBlurCPassInput = () => setFocusedCPassInput(false);
 
-  const handleClose = () => {
-    dispatch(closeCreateDialog())
-  }
 
   return (
     <Dialog
@@ -107,7 +148,7 @@ export default function CreateAccountDialogComponent() {
               boxShadow: "1px 20px 25px 5px #E4E4E4",
             }}
           >
-            <CloseIcon onClick={handleClose} sx={{}} />
+            <CloseIcon onClick={handleClose} sx={{cursor: "pointer"}} />
           </Box>
         </Box>
         <Box component={"form"} onSubmit={handleSubmit}>
@@ -118,7 +159,7 @@ export default function CreateAccountDialogComponent() {
               backgroundColor: bg,
               border: focusedUserName
                 ? "2px solid #355DFF"
-                :"2px solid transparent",
+                : "2px solid transparent",
             }}
           >
             <Box component={"div"}>
@@ -317,9 +358,14 @@ export default function CreateAccountDialogComponent() {
             ></Box>
           </Box>
 
-          {errorMessage && <p style={{ color: 'red', marginTop: "24px" }}>{errorMessage.message}</p>}
+          {errorMessage && (
+            <p style={{ color: "red", marginTop: "24px" }}>
+              {errorMessage.message}
+            </p>
+          )}
 
-          <Button
+          <LoadingButton
+            loading={isLoading}
             className="mt-3 rounded mb-4 pt-2 pb-2"
             sx={{
               "&:hover": {
@@ -335,7 +381,7 @@ export default function CreateAccountDialogComponent() {
             type="submit"
           >
             Create
-          </Button>
+          </LoadingButton>
         </Box>
       </Box>
     </Dialog>

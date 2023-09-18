@@ -62,7 +62,6 @@ const NestedTable = (props) => {
         sx={{
           width: "100%",
           maxHeight: { xs: "70vh", sm: "440px"},
-          overflow: "hidden",
           borderRadius: 0,
           "& .MuiTableCell-root": {
             borderWidth: "none",

@@ -18,7 +18,6 @@ const HomePage = () => {
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
-  console.log(listEndUser, "listEnd");
   const [data, setData] = useState([]);
 
   const dispatch = useDispatch();

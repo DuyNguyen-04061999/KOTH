@@ -159,7 +159,7 @@ const AdminNavigation = (props) => {
                 >
                   <ListItemButton
                     style={{
-                      borderRadius: "20px", padding: "12px"
+                      borderRadius: "20px", padding: "12px" 
                     }}
                   >
                     <ListItemIcon>
@@ -186,7 +186,7 @@ const AdminNavigation = (props) => {
                 window.open("/", "_self");
               }}
             >
-              <ListItemButton style={{ borderRadius: "20px" }}>
+              <ListItemButton style={{ borderRadius: "20px",padding: "12px" }}>
                 <ListItemIcon>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
