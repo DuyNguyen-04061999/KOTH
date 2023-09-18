@@ -58,7 +58,8 @@ const NestedTable = (props) => {
     <Box sx={{position: "relative" }}>
       <TableContainer
         sx={{
-          maxHeight: { xs: "70vh", sm: "440px" },
+          width: "100%",
+          maxHeight: { xs: "70vh", sm: "440px"},
           borderRadius: 0,
           "& .MuiTableCell-root": {
             borderWidth: "none",

@@ -90,7 +90,7 @@ export default function UnityGameComponent(props) {
   }, [GameFiles]);
 
   const handleGameLoad = useCallback(() => {
-    // dispatch(toggleStartGame(true))
+    dispatch(toggleStartGame(true))
     sendMessage("TournamentGameEntry", "SetToken", token);
     sendMessage("TournamentGameEntry", "SetTournamentId", tournamentId);
     sendMessage("TournamentGameEntry", "SetSkinId", skinId);
@@ -100,7 +100,7 @@ export default function UnityGameComponent(props) {
       process.env.REACT_APP_END_POINT_TOURNAMENT
     );
     sendMessage("TournamentGameEntry", "StartGame", "Start");
-  }, [sendMessage, tournamentId, token, skinId]);
+  }, [sendMessage, tournamentId, token, skinId, dispatch]);
 
   const handleFinalGame = useCallback(
     async (score) => {
@@ -146,50 +146,36 @@ export default function UnityGameComponent(props) {
     }
   }, [unPauseGame, sendMessage, isLoaded]);
 
-  // useEffect(() => {
-  //   const onBeforeUnload = async (ev) => {
-  //     //#############
-  //     if (!fmod) {
-  //       await unload();
-  //     }
-  //     dispatch(toggleStartGame(false));
-  //     //#############
+  useEffect(() => {
+    const onBeforeUnload = async (ev) => {
+      if (!fmod) {
+        await unload();
+      }
+      dispatch(toggleStartGame(false));
+    };
 
-  //     ev.returnValue = "Anything you wanna put here!";
-  //     return "Anything here as well, doesn't matter!";
-  //   };
+    window.addEventListener("beforeunload", onBeforeUnload);
 
-  //   window.addEventListener("beforeunload", onBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", onBeforeUnload);
+    };
+  }, [dispatch, unload, fmod]);
 
-  //   return () => {
-  //     window.removeEventListener("beforeunload", onBeforeUnload);
-  //   };
-  // }, [dispatch, unload, fmod]);
+  useEffect(() => {
+    const onBeforeUnload = async (ev) => {
+      if (!fmod) {
+        await unload();
+      }
+      dispatch(toggleStartGame(false));
+    };
 
-  // useEffect(() => {
-  //   const onBeforeUnload = async (ev) => {
-  //     //#############
-  //     if (!fmod) {
-  //       await unload();
-  //     }
-  //     dispatch(toggleStartGame(false));
-  //     //#############
+    window.addEventListener("popstate", onBeforeUnload);
 
-  //     ev.returnValue = "Anything you wanna put here!";
-  //     return "Anything here as well, doesn't matter!";
-  //   };
+    return () => {
+      window.removeEventListener("popstate", onBeforeUnload);
+    };
+  }, [dispatch, unload, fmod]);
 
-  //   window.addEventListener("popstate", onBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("popstate", onBeforeUnload);
-  //   };
-  // }, [dispatch, unload, fmod]);
-
-  // useEffect(() => {
-  //   setIsLoaded(isLoaded);
-  // }, [isLoaded, setIsLoaded]);
-  
   return (
     <Fragment>
       {!isLoaded && !videoGame && (

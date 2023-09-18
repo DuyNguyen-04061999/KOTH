@@ -24,10 +24,6 @@ const AdminPanel = () => {
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
-  console.log(listEndUser);
-  useEffect(() => {
-
-  })
 
   const { width } = useWindowDimensions();
   const SearchBar = ({ setSearchQuery }) => {
@@ -229,11 +225,11 @@ const AdminPanel = () => {
                 })}
               >
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center"}}
                 >
                   Account
                 </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
                   {detailAccount?.account || ""}
                 </Typography>
               </Grid>
@@ -244,11 +240,11 @@ const AdminPanel = () => {
                 })}
               >
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
                 >
                   Level
                 </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
                 {detailAccount?.level || ""}
                 </Typography>
               </Grid>
@@ -259,11 +255,11 @@ const AdminPanel = () => {
                 })}
               >
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
                 >
                   Revenue
                 </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
                   _
                 </Typography>
               </Grid>
@@ -274,11 +270,11 @@ const AdminPanel = () => {
                 })}
               >
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
                 >
                   Ticket
                 </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
                   {detailAccount?.ticket || 0}
                 </Typography>
               </Grid>
@@ -289,11 +285,11 @@ const AdminPanel = () => {
                 })}
               >
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
                 >
                   RefCode
                 </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
                   {detailAccount?.ref || ""}
                 </Typography>
               </Grid>
@@ -304,11 +300,11 @@ const AdminPanel = () => {
                 })}
               >
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
                 >
                   Register Date
                 </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
                   {detailAccount?.date ? moment(detailAccount?.date).format('ll') : ""}
                 </Typography>
               </Grid>
@@ -319,17 +315,17 @@ const AdminPanel = () => {
                 })}
               >
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
                 >
                   Amount Account
                 </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px" }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
                   {detailAccount?.amount || 0}
                 </Typography>
               </Grid>
               <Grid sx={{ padding: "24px", flex: 1 }}>
                 <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191" }}
+                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
                 >
                   Status
                 </Typography>
@@ -343,6 +339,7 @@ const AdminPanel = () => {
                     bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
                     color: "#FFF",
                     fontWeight: 700,
+                    marginTop: "12px",
                     textTransform: "unset",
                     ":hover": {
                       backgroundColor: detailAccount?.status ? "#355DFF" : "#FF4135",

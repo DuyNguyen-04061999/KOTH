@@ -17,8 +17,9 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 export default function PlayGame(props) {
   const { startGame, detailTournament, setStartGame, videoGame, setVideoGame } =
     props;
-  const { device } = useSelector((state) => state.deviceReducer);
+  const { device, deviceType } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
+  const { startGameCheck } = useSelector((state) => state.gameReducer);
   const screen = useFullScreenHandle();
   const [expand, setExpand] = useState(false);
   const [second, setSeconds] = useState(7);
@@ -164,6 +165,9 @@ export default function PlayGame(props) {
     dispatch,
     device,
   ]);
+
+console.log(expand, startGame);
+
   return (
     <>
       <Box
@@ -221,7 +225,8 @@ export default function PlayGame(props) {
                       width={"100%"}
                       playsInline
                       autoPlay
-                      muted
+                      muted={deviceType === "iOS" ? true : false}
+                      controls={deviceType === "iOS" ? true : false}
                       onEnded={() => {
                         setVideoGame(false);
                         if (device === "Mobile" || device === "Tablet") {
@@ -459,8 +464,7 @@ export default function PlayGame(props) {
                     {startGame &&
                       expand === false &&
                       (device === "Desktop" || device === "Tablet") &&
-                      !videoGame &&
-                      isLoaded && (
+                      !videoGame && (
                         <Box
                           sx={{
                             width: "100%",
