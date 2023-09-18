@@ -580,10 +580,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           position: "absolute",
                           left: `${index * 25}px`,
                           top: "0px",
-                          zIndex: `${
-                            detailTournament?.tournamentParticipants?.length -
-                            index
-                          }`,
+                          // zIndex: `${
+                          //   detailTournament?.tournamentParticipants?.length -
+                          //   index
+                          // }`,
+                          zIndex: 0,
                         }}
                       >
                         <Box
@@ -619,6 +620,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                                   ? "white"
                                   : "none",
                               fontSize: "12px",
+                              zIndex: 0
                             }}
                           >
                             <Typography
@@ -652,10 +654,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           position: "absolute",
                           top: "0px",
                           left: `${index * 25}px`,
-                          zIndex: `${
-                            detailTournament?.tournamentParticipants?.length -
-                            index
-                          }`,
+                          // zIndex: `${
+                          //   detailTournament?.tournamentParticipants?.length -
+                          //   index
+                          // }`,
+                          zIndex: 0
                         }}
                       >
                         <Box
