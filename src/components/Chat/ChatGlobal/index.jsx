@@ -190,6 +190,7 @@ export default function ChatGlobal(props) {
               top: width < 576 ? "-49px" : "-60px",
               right: "0px",
               width: "100%",
+              zIndex:3
             }}
           >
             <Box

@@ -216,7 +216,9 @@ function App() {
       });
 
       socket?.on("chatSuccess", (data) => {
-        socket.emit("listFriend");
+        if(token) {
+          socket.emit("listFriend");
+        }
         store.dispatch(updateChatWorld(data));
       });
 

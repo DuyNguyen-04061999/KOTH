@@ -847,11 +847,11 @@ export default function Dialoglg() {
             }
           >
             <Dropdown
-              hidden={
-                width < 576 &&
-                location &&
-                location?.pathname?.includes("packages")
-              }
+              // hidden={
+              //   width < 576 &&
+              //   location &&
+              //   location?.pathname?.includes("packages")
+              // }
             >
               <Dropdown.Toggle
                 style={{

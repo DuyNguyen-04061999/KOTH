@@ -24,6 +24,7 @@ export default function SettingProfile({ closePopup }) {
   const [emailAddress, setEmailAddress] = useState(email);
   const [phoneNumber,setPhoneNumber] = useState(phone)
   const [disable, setDisable] = useState(true);
+  const [validEmailSetting, setValidEmailSetting] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -37,13 +38,22 @@ export default function SettingProfile({ closePopup }) {
     return kb;
   }
 
+  function checkEmailFormat(email) {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  }
+
   useEffect(() => {
-    if (fName === "" || lName === "" || !emailAddress.includes("@gmail.com")) {
+    if (fName === "" || lName === "" || checkEmailFormat(emailAddress) === false) {
+      setValidEmailSetting("Invalid Email Address")
+      console.log(validEmailSetting);
       setDisable(true);
+      return
     } else {
       setDisable(false);
+      setValidEmailSetting("")
     }
-  }, [fName, lName, emailAddress]);
+  }, [fName, lName, emailAddress, checkEmailFormat()]);
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
@@ -229,14 +239,10 @@ export default function SettingProfile({ closePopup }) {
                   }}
                 />{" "}
                 {""}
-                {emailAddress && !emailAddress.includes("@gmail.com") && (
-                  <span className="text-danger">
-                    Email must contain @gmail.com
-                  </span>
-                )}
+                <span className="text-danger">{validEmailSetting}</span>
               </FormControl>
             </Box>
-            <Box className="Email mb-3 d-flex flex-column align-items-start">
+            <Box className="Phone mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
                 sx={{

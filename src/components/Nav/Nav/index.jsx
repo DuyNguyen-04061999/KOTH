@@ -1085,7 +1085,7 @@ export default function Navbar() {
                   (pathname && pathname?.includes("help-center")) ||
                   isHoveredHelp === true
                     ? "#7648ED"
-                    : "",
+                    : "#462A71",
                 borderRadius: "5px",
               }}
               onClick={() => {
