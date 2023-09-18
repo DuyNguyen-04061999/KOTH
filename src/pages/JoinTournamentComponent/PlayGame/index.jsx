@@ -122,6 +122,8 @@ export default function PlayGame(props) {
           display: "flex",
           paddingTop: "50px",
           justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <Box
@@ -142,7 +144,6 @@ export default function PlayGame(props) {
           {detailTournament?.tournamentVideo && videoGame ? (
             <Box
               sx={{
-                position: "absolute",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -282,477 +283,311 @@ export default function PlayGame(props) {
               src={`http://localhost:3005/playgame/${id}`}
             ></iframe>
           )}
-          {device === "Desktop" && (
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            width: "80%",
+            marginTop: "30px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
             <Box
               sx={{
                 display: "flex",
-                backgroundColor: "#1A151E",
-                marginBottom: `${parseFloat(width / 66)}px`,
-                justifyContent: "space-between",
-                paddingTop: "36px",
+                flexDirection: "column",
+                alignItems: "start",
+                color: "white",
+                marginBottom: "30px",
+              }}
+            >
+              <>
+                <Typography
+                  sx={{
+                    margin: "0px !important",
+                    fontSize:
+                      576 < width && width < 1200 ? `${width / 42}px` : "28px",
+                  }}
+                >
+                  {detailTournament?.tournamentName?.length > 30
+                    ? detailTournament?.tournamentName.slice(0, 30) + " ..."
+                    : detailTournament?.tournamentName}
+                </Typography>
+                <Typography
+                  sx={{
+                    margin: "0px !important",
+                    fontSize: 576 < width && width < 1200 ? "12px" : "14px",
+                    fontWeight: "lighter !important",
+                  }}
+                >
+                  {detailTournament?.tournamentTimeType === "hourly"
+                    ? "Hourly Tournament"
+                    : detailTournament?.tournamentTimeType === "daily"
+                    ? "Daily Tournament"
+                    : "Weeklong Tournament"}
+                </Typography>
+              </>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              {" "}
+              <Box
+                sx={{
+                  textAlign: "start",
+                  fontWeight: "lighter",
+                  color: "#fff",
+                  fontSize:
+                    576 < width && width < 1200 ? `${width / 55}px` : "18px",
+                }}
+              >
+                Reward
+              </Box>
+              <Box
+                sx={{
+                  textAlign: "start",
+                  fontWeight: "lighter !important",
+                  color: "#fff",
+                  fontSize: "14px",
+                }}
+              >
+                Play game to get this voucher
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                bgcolor: "white",
                 width: "100%",
+                height: "147px",
+                marginTop: "24px",
+                position: "relative",
+                display: "flex",
+                borderRadius: "8px",
               }}
             >
               <Box
                 sx={{
-                  width: width < 1024 ? "320px" : "433px",
+                  width: "65%",
+                  height: "100%",
+                  borderRadius: "1px 0px 0px 8px",
+                  padding: "16px 14px",
                 }}
               >
                 <Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "start",
-                      color: "white",
-                      marginBottom: "30px",
+                  <h5
+                    style={{
+                      color: "#BE48ED",
+                      fontSize: 576 < width && width < 1200 ? "18px" : "16px",
+                      maxHeight: "24px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
-                  >
-                    <>
-                      <Typography
-                        sx={{
-                          margin: "0px !important",
-                          fontSize:
-                            576 < width && width < 1200
-                              ? `${width / 42}px`
-                              : "28px",
-                        }}
-                      >
-                        {detailTournament?.tournamentName?.length > 30
-                          ? detailTournament?.tournamentName.slice(0, 30) +
-                            " ..."
-                          : detailTournament?.tournamentName}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          margin: "0px !important",
-                          fontSize:
-                            576 < width && width < 1200 ? "12px" : "14px",
-                          fontWeight: "lighter !important",
-                        }}
-                      >
-                        {detailTournament?.tournamentTimeType === "hourly"
-                          ? "Hourly Tournament"
-                          : detailTournament?.tournamentTimeType === "daily"
-                          ? "Daily Tournament"
-                          : "Weeklong Tournament"}
-                      </Typography>
-                    </>
-                  </Box>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
                   >
                     {" "}
-                    <Box
-                      sx={{
-                        textAlign: "start",
-                        fontWeight: "lighter",
-                        color: "#fff",
-                        fontSize:
-                          576 < width && width < 1200
-                            ? `${width / 55}px`
-                            : "18px",
-                      }}
-                    >
-                      Reward
-                    </Box>
-                    <Box
-                      sx={{
-                        textAlign: "start",
-                        fontWeight: "lighter !important",
-                        color: "#fff",
-                        fontSize: "14px",
-                      }}
-                    >
-                      Play game to get this voucher
-                    </Box>
-                  </Box>
-
-                  {/* ----------------------- */}
-                  {/* <Box className="d-flex" sx={{ marginTop: "16px" }}>
-                      <div className="cardWrap">
-                        <div className="cardT cardLeft">
-                          <h5
-                            style={{
-                              color: "#BE48ED",
-                              marginTop: "15px",
-                              fontSize:
-                                576 < width && width < 1200 ? "18px" : "20px",
-                            }}
-                            className="mb-2"
-                          >
-                            {detailTournament?.tournamentInfors?.rewardInfors
-                              ?.rewardTitle || "SS Z-Flip 5 free voucher"}
-                          </h5>
-                          <Grid container>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "100%",
-                                boxSizing: "border-box",
-                                paddingRight: "1rem",
-                              }}
-                            >
-                              <Grid item sx={{ width: "60%" }}>
-                                <div className="title d-flex flex-column mb-2">
-                                  <h6
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                      color: "#525252",
-                                    }}
-                                  >
-                                    Recipient
-                                  </h6>
-                                  <span
-                                    style={{
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    {sliceString(
-                                      detailTournament?.tournamentInfors
-                                        ?.rewardInfors?.rewardRecipient
-                                    ) || "Recipient"}
-                                  </span>
-                                </div>
-                              </Grid>
-                              <Grid
-                                item
-                                sx={{
-                                  width: "40%",
-                                }}
-                              >
-                                <div className="name d-flex flex-column mb-2">
-                                  <h6
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                      color: "#525252",
-                                    }}
-                                  >
-                                    Validity date
-                                  </h6>
-                                  <span
-                                    style={{
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    {moment(
-                                      detailTournament?.tournamentInfors
-                                        ?.rewardInfors?.rewardValidityDate
-                                    )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                                  </span>
-                                </div>
-                              </Grid>
-                            </Box>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "100%",
-                                boxSizing: "border-box",
-                                paddingRight: "1rem",
-                              }}
-                            >
-                              {" "}
-                              <Grid sx={{ width: "60%" }} item>
-                                <div className="seat d-flex flex-column">
-                                  <h2
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                    }}
-                                  >
-                                    Sponsor by
-                                  </h2>
-                                  <span
-                                    style={{
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    {detailTournament?.tournamentInfors?.owner
-                                      ?.brandName || "Samsung"}
-                                  </span>
-                                </div>
-                              </Grid>
-                              <Grid
-                                sx={{
-                                  width: "40%",
-                                }}
-                                item
-                              >
-                                <div className="time d-flex flex-column">
-                                  <h2
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                    }}
-                                  >
-                                    Conditions
-                                  </h2>
-                                  <span
-                                    onClick={() => setOpenVoucher(true)}
-                                    style={{
-                                      color: "#0096FF",
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    See more
-                                  </span>
-                                </div>
-                              </Grid>
-                            </Box>
-                          </Grid>
-                        </div>
-                        <div className="cardT cardRight">
-
-                        </div>
-                      </div>
-                    </Box> */}
-
-                  <Box
-                    sx={{
-                      bgcolor: "white",
-                      width: "100%",
-                      height: "147px",
-                      marginTop: "24px",
-                      position: "relative",
-                      display: "flex",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: "65%",
-                        height: "100%",
-                        borderRadius: "1px 0px 0px 8px",
-                        padding: "16px 14px",
-                      }}
-                    >
-                      <Box>
-                        <h5
-                          style={{
-                            color: "#BE48ED",
-                            fontSize:
-                              576 < width && width < 1200 ? "18px" : "16px",
-                            maxHeight: "24px",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          {" "}
-                          {detailTournament?.tournamentInfors?.rewardInfors
-                            ?.rewardTitle || "SS Z-Flip 5 free voucher"}
-                        </h5>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          // justifyContent: "space-between",
-                          marginTop: "15.2px",
-                        }}
-                      >
-                        <Box>
-                          <Box>
-                            {" "}
-                            <h6
-                              style={{
-                                fontSize: "10px",
-                                marginBottom: "0px !important",
-                                color: "#525252",
-                              }}
-                            >
-                              Recipient
-                            </h6>
-                            <span
-                              style={{
-                                fontSize:
-                                  576 < width && width < 1200 ? "12px" : "14px",
-                              }}
-                            >
-                              {sliceString(
-                                detailTournament?.tournamentInfors?.rewardInfors
-                                  ?.rewardRecipient
-                              ) || "Recipient"}
-                            </span>
-                          </Box>
-                          <Box sx={{ marginTop: "7.6px" }}>
-                            {" "}
-                            <h6
-                              style={{
-                                fontSize: "10px",
-                                marginBottom: "0px !important",
-                                color: "#525252",
-                              }}
-                            >
-                              Sponsor by
-                            </h6>
-                            <span
-                              style={{
-                                fontSize:
-                                  576 < width && width < 1200 ? "12px" : "14px",
-                              }}
-                            >
-                              {detailTournament?.tournamentInfors?.owner
-                                ?.brandName || "Samsung"}
-                            </span>
-                          </Box>
-                        </Box>
-                        <Box
-                          sx={{
-                            marginLeft: width < 1024 ? "10px" : "60px",
-                          }}
-                        >
-                          {" "}
-                          <Box>
-                            {" "}
-                            <h6
-                              style={{
-                                fontSize: "10px",
-                                marginBottom: "0px !important",
-                                color: "#525252",
-                              }}
-                            >
-                              Validity date
-                            </h6>
-                            <span
-                              style={{
-                                fontSize:
-                                  576 < width && width < 1200 ? "12px" : "14px",
-                              }}
-                            >
-                              {moment(
-                                detailTournament?.tournamentInfors?.rewardInfors
-                                  ?.rewardValidityDate
-                              )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                            </span>
-                          </Box>
-                          <Box sx={{ marginTop: "7.6px" }}>
-                            {" "}
-                            <h6
-                              style={{
-                                fontSize: "10px",
-                                marginBottom: "0px !important",
-                                color: "#525252",
-                              }}
-                            >
-                              Conditions
-                            </h6>
-                            <h6>See More</h6>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        width: "35%",
-                        height: "100%",
-                        borderLeft: "dashed 1px #0D0804",
-                        borderRadius: "0px 8px 8px 0px",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          position: "relative",
-                          borderRadius: "8px",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            height: "20px",
-                            width: "20px",
-                            bgcolor: "#1a151e",
-                            position: "absolute",
-                            borderRadius: "50%",
-                            top: "-10px",
-                            left: "-10px",
-                          }}
-                        ></Box>
-                        <Box
-                          sx={{
-                            height: "20px",
-                            width: "20px",
-                            bgcolor: "#1a151e",
-                            position: "absolute",
-                            borderRadius: "50%",
-                            bottom: "-10px",
-                            left: "-10px",
-                          }}
-                        ></Box>
-                        <img
-                          style={{
-                            borderRadius: "8px",
-                            objectFit: "cover",
-                            width: "100%",
-                            height: "100%",
-                          }}
-                          src={
-                            detailTournament?.tournamentInfors?.rewardInfors
-                              ?.rewardAvatar
-                              ? process.env.REACT_APP_SOCKET_SERVER +
-                                "/" +
-                                detailTournament?.tournamentInfors?.rewardInfors
-                                  ?.rewardAvatar
-                              : images.GameTournament
-                          }
-                          alt="..."
-                          width={"95%"}
-                          height={"90%"}
-                        />
-                      </Box>
-                    </Box>
-                  </Box>
-                  {/* --------------------------  */}
+                    {detailTournament?.tournamentInfors?.rewardInfors
+                      ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                  </h5>
                 </Box>
-                <Typography
-                  sx={{
-                    textAlign: "start",
-                    color: "#fff",
-                    marginLeft: "0px !important",
-                    fontSize:
-                      576 < width && width < 1200 ? `${width / 42}px` : "18px",
-                    marginTop: "36px",
-                  }}
-                >
-                  Game for tournament
-                </Typography>
-
                 <Box
                   sx={{
                     display: "flex",
-                    alignItems: "flex-start",
-                    marginTop: "16px",
+                    alignItems: "center",
+                    // justifyContent: "space-between",
+                    marginTop: "15.2px",
                   }}
                 >
-                  <GameInTournament
-                    game={
-                      detailTournament?.tournamentInfors?.skin?.skinGame || null
+                  <Box>
+                    <Box>
+                      {" "}
+                      <h6
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                          color: "#525252",
+                        }}
+                      >
+                        Recipient
+                      </h6>
+                      <span
+                        style={{
+                          fontSize:
+                            576 < width && width < 1200 ? "12px" : "14px",
+                        }}
+                      >
+                        {sliceString(
+                          detailTournament?.tournamentInfors?.rewardInfors
+                            ?.rewardRecipient
+                        ) || "Recipient"}
+                      </span>
+                    </Box>
+                    <Box sx={{ marginTop: "7.6px" }}>
+                      {" "}
+                      <h6
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                          color: "#525252",
+                        }}
+                      >
+                        Sponsor by
+                      </h6>
+                      <span
+                        style={{
+                          fontSize:
+                            576 < width && width < 1200 ? "12px" : "14px",
+                        }}
+                      >
+                        {detailTournament?.tournamentInfors?.owner?.brandName ||
+                          "Samsung"}
+                      </span>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      marginLeft: width < 1024 ? "10px" : "60px",
+                    }}
+                  >
+                    {" "}
+                    <Box>
+                      {" "}
+                      <h6
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                          color: "#525252",
+                        }}
+                      >
+                        Validity date
+                      </h6>
+                      <span
+                        style={{
+                          fontSize:
+                            576 < width && width < 1200 ? "12px" : "14px",
+                        }}
+                      >
+                        {moment(
+                          detailTournament?.tournamentInfors?.rewardInfors
+                            ?.rewardValidityDate
+                        )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
+                      </span>
+                    </Box>
+                    <Box sx={{ marginTop: "7.6px" }}>
+                      {" "}
+                      <h6
+                        style={{
+                          fontSize: "10px",
+                          marginBottom: "0px !important",
+                          color: "#525252",
+                        }}
+                      >
+                        Conditions
+                      </h6>
+                      <span
+                        href="#"
+                        style={{
+                          color: "#0096FF",
+                          fontSize:
+                            576 < width && width < 1024 ? "12px" : "14px",
+                        }}
+                      >
+                        See more
+                      </span>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  width: "35%",
+                  height: "100%",
+                  borderLeft: "dashed 1px #0D0804",
+                  borderRadius: "0px 8px 8px 0px",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      height: "20px",
+                      width: "20px",
+                      bgcolor: "#1a151e",
+                      position: "absolute",
+                      borderRadius: "50%",
+                      top: "-10px",
+                      left: "-10px",
+                    }}
+                  ></Box>
+                  <Box
+                    sx={{
+                      height: "20px",
+                      width: "20px",
+                      bgcolor: "#1a151e",
+                      position: "absolute",
+                      borderRadius: "50%",
+                      bottom: "-10px",
+                      left: "-10px",
+                    }}
+                  ></Box>
+                  <img
+                    style={{
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                    src={
+                      detailTournament?.tournamentInfors?.rewardInfors
+                        ?.rewardAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          detailTournament?.tournamentInfors?.rewardInfors
+                            ?.rewardAvatar
+                        : images.GameTournament
                     }
+                    alt="..."
+                    width={"95%"}
+                    height={"90%"}
                   />
                 </Box>
               </Box>
             </Box>
-          )}
+          </Box>
+          <Box>
+            <Typography
+              sx={{
+                textAlign: "start",
+                color: "#fff",
+                marginLeft: "0px !important",
+                fontSize:
+                  576 < width && width < 1200 ? `${width / 42}px` : "18px",
+              }}
+            >
+              Game for tournament
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                marginTop: "16px",
+              }}
+            >
+              <GameInTournament
+                game={
+                  detailTournament?.tournamentInfors?.skin?.skinGame || null
+                }
+              />
+            </Box>
+          </Box>
         </Box>
       </Box>
     </>

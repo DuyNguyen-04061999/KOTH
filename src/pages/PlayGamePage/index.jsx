@@ -145,7 +145,7 @@ export default function PlayGamePage() {
     );
   };
   return detailTournament?.id ? (
-    <>
+    <Box>
       {detailTournament && (
         <Box>
           <Box>
@@ -236,7 +236,7 @@ export default function PlayGamePage() {
                   </Box>
                 </Box>
               )}
-          </Box>{" "}
+          </Box>
         </Box>
       )}
 
@@ -373,7 +373,7 @@ export default function PlayGamePage() {
           )}
         </Dialog>
       )}
-    </>
+    </Box>
   ) : (
     <></>
   );
