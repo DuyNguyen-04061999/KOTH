@@ -147,7 +147,6 @@ export default function JoinTournament() {
       window.location.reload();
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
-      console.log(123);
       dispatch(toggleStartGame(true));
       setStartGame(true);
       setVideoGame(true);
@@ -316,7 +315,10 @@ export default function JoinTournament() {
                         Join
                       </button>
                     ) : (
-                      <Box sx={{ display: "flex", justifyContent: "flex-end" }} className="btn-conteiner">
+                      <Box
+                        sx={{ display: "flex", justifyContent: "flex-end" }}
+                        className="btn-conteiner"
+                      >
                         <button
                           className="button-join-hover"
                           onClick={() => {

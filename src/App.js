@@ -181,7 +181,6 @@ function App() {
       });
     }
   };
-  console.log(startGameCheck);
   useEffect(() => {
     if (socket) {
       socket.once("connect", (data) => {});

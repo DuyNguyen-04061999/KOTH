@@ -56,7 +56,6 @@ export const getListPackage = (data) => {
 };
 
 export const toggleStartGame = (data) => {
-  console.log("Working!!!!", data);
   return {
     type: "TOGGLE_START_GAME",
     payload: data,
