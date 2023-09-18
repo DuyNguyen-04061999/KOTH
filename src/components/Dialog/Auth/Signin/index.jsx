@@ -1093,8 +1093,8 @@ export default function Dialoglg() {
                   onClick={logout}
                   className="log-out"
                   sx={{
-                    backgroundColor:
-                      isHovering === true ? "#462A71 !important" : "",
+                    // backgroundColor:
+                    //   isHovering === true ? "#462A71 !important" : "",
                       margin:" 5px 15px"
                   }}
                   onMouseEnter={handleMouseEnter}
