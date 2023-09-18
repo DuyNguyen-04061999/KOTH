@@ -17,6 +17,7 @@ import DialogConfirm from "./DialogConfirm";
 import {
   getIdPackage,
   toggleDialogConfirm,
+  toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { useLocation } from "react-router-dom";
@@ -539,6 +540,10 @@ export default function Package() {
                                   )}
                                   <button
                                     onClick={() => {
+                                      if(token === null || token === "") {
+                                        dispatch(toggleLoginDialog())
+                                        return
+                                      }
                                       if (i?.packageName !== "Free") {
                                         if (token) {
                                           dispatch(toggleDialogConfirm());
