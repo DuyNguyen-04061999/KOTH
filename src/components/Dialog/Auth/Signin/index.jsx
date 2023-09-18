@@ -1095,7 +1095,7 @@ export default function Dialoglg() {
                   sx={{
                     backgroundColor:
                       isHovering === true ? "#462A71 !important" : "",
-                      margin:" 5px 15px"
+                    margin: " 5px 15px",
                   }}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}

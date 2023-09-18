@@ -33,9 +33,7 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import BannerTop1 from "../../../components/BannerTop1";
 
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -162,6 +160,7 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
+          {" "}
           <Box
             sx={{
               marginBottom: width < 576 ? "24px" : "32px",
