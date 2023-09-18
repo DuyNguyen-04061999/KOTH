@@ -118,6 +118,7 @@ export default function BuyTicket(props) {
               display: "flex",
               flexDirection: "column",
               height: "100%",
+              backgroundColor:"#211D28"
             }}
           >
             <Box
