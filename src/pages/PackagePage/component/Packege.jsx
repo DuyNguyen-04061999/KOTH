@@ -548,12 +548,13 @@ export default function Package() {
                                         console.log("Cannot buy free pack!");
                                       }
                                     }}
+                                    disabled={i?.id === userPackageId ? true : false}
                                     style={{
                                       border: "none",
                                       padding: "7px 35px",
                                       borderRadius: "24px",
                                       color: "white",
-                                      background:
+                                      background: i?.id === userPackageId ? "Gray" :
                                         "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
                                       backdropFilter: " blur(4px)",
                                       width: "100%",
@@ -1073,6 +1074,7 @@ export default function Package() {
                                   console.log("Cannot buy free pack!");
                                 }
                               }}
+                              disabled={i?.id === userPackageId ? true : false}
                               style={{
                                 border: "none",
                                 padding: "7px 35px",
