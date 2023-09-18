@@ -124,6 +124,7 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
@@ -231,11 +232,11 @@ export default function Layout(props) {
     };
 
     // Add event listener for the focus event
-    window.addEventListener('focus', handleKeyboardOpen);
+    window.addEventListener("focus", handleKeyboardOpen);
 
     // Clean up the event listener on unmount
     return () => {
-      window.removeEventListener('focus', handleKeyboardOpen);
+      window.removeEventListener("focus", handleKeyboardOpen);
     };
   }, []);
 
@@ -292,7 +293,6 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-
   return (
     <Box
       className="tong"
@@ -560,7 +560,7 @@ export default function Layout(props) {
         ""
       )}
       <Grid container>
-        {width > 576 ? (
+        {device === "Desktop" || device === "Tablet" ? (
           <Grid
             item
             sm={1}

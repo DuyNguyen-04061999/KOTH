@@ -17,6 +17,7 @@ import DialogConfirm from "./DialogConfirm";
 import {
   getIdPackage,
   toggleDialogConfirm,
+  toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { useLocation } from "react-router-dom";
@@ -538,6 +539,10 @@ export default function Package() {
                                   )}
                                   <button
                                     onClick={() => {
+                                      if(token === null || token === "") {
+                                        dispatch(toggleLoginDialog())
+                                        return
+                                      }
                                       if (i?.packageName !== "Free") {
                                         if (token) {
                                           dispatch(toggleDialogConfirm());
@@ -547,12 +552,13 @@ export default function Package() {
                                         console.log("Cannot buy free pack!");
                                       }
                                     }}
+                                    disabled={i?.id === userPackageId ? true : false}
                                     style={{
                                       border: "none",
                                       padding: "7px 35px",
                                       borderRadius: "24px",
                                       color: "white",
-                                      background:
+                                      background: i?.id === userPackageId ? "Gray" :
                                         "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
                                       backdropFilter: " blur(4px)",
                                       width: "100%",
@@ -1071,6 +1077,7 @@ export default function Package() {
                                   console.log("Cannot buy free pack!");
                                 }
                               }}
+                              disabled={i?.id === userPackageId ? true : false}
                               style={{
                                 border: "none",
                                 padding: "7px 35px",

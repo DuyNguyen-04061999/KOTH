@@ -13,6 +13,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { images } from "../../../utils/images";
 import {
+  useNavigate,
   // useNavigate,
   useParams,
 } from "react-router-dom";
@@ -37,6 +38,7 @@ import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appRedu
 import PlayGame from "../PlayGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
 
 const theme = createTheme({
   typography: {},
@@ -70,6 +72,9 @@ export default function JoinTournament() {
   };
   const screen = useFullScreenHandle();
   const [minLength, setMinLength] = useState(0);
+  useEffect(() => {
+    dispatch(updateDetailTour(detailTournament));
+  }, [detailTournament, dispatch]);
   const timeEnd =
     moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
     " " +
@@ -116,6 +121,9 @@ export default function JoinTournament() {
       setDetailTournament(data);
       setFetchT(false);
     });
+    socket?.on("buyTicketTournamentSuccess", () => {
+      window.location.reload();
+    });
     socket?.on("joinTournamentSuccess", (data) => {
       // socket?.emit("detailTournament", {
       //   tournamentId: data?.id,
@@ -136,6 +144,7 @@ export default function JoinTournament() {
           tournamentId: data?.id,
         });
       }, 1000);
+      window.location.reload();
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       dispatch(toggleStartGame(true));
@@ -187,7 +196,12 @@ export default function JoinTournament() {
       }
     }
   }, [detailTournament, width]);
-
+  // useEffect(() => {
+  //   if (!window.location.hash.includes("#reloaded")) {
+  //     window.location.href += "#reloaded";
+  //     window.location.reload();
+  //   }
+  // }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -301,7 +315,10 @@ export default function JoinTournament() {
                         Join
                       </button>
                     ) : (
-                      <Box sx={{ display: "flex", justifyContent: "flex-end" }} className="btn-conteiner">
+                      <Box
+                        sx={{ display: "flex", justifyContent: "flex-end" }}
+                        className="btn-conteiner"
+                      >
                         <button
                           className="button-join-hover"
                           onClick={() => {

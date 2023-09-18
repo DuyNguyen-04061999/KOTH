@@ -13,7 +13,7 @@ export default function ResultEndGame() {
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(toggleOpenResultEndGame());
-    window.location.reload()
+    window.location.reload();
   };
 
   return (

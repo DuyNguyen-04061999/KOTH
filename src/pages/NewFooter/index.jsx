@@ -41,7 +41,7 @@ export default function NewFooter() {
           }}
         >
           <Typography
-            sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px" }}
+            sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px", textAlign:"center" }}
           >
             Support
           </Typography>
