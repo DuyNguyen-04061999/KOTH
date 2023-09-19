@@ -2,7 +2,7 @@ import {
   Box,
   CssBaseline,
   Dialog,
-  Grid,
+  // Grid,
   ThemeProvider,
   Typography,
   createTheme,
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import "./index.scss";
 import moment from "moment";
-import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
+// import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import LeaderBoard from "../LeaderBoard/index";
@@ -25,7 +25,7 @@ import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+// import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
   typography: {},
@@ -67,7 +67,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     }
   });
 
-  const { width } = useWindowDimensions();
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
@@ -208,10 +207,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               }}
             >
               {detailTournament?.tournamentTimeType === "hourly"
-                ? "Hourly Tournament"
+                ? "Hourly tournaments"
                 : detailTournament?.tournamentTimeType === "daily"
-                ? "Daily Tournament"
-                : "Weeklong Tournament"}
+                ? "Daily tournaments"
+                : "Week-long tournaments"}
             </Typography>
           </Box>
           <Box
@@ -387,8 +386,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       >
                         Conditions
                       </h6>
-                      <a
-                        href="#"
+                      <span
                         onClick={(e) => {
                           e.preventDefault();
                           setOpenVoucher(true);
@@ -399,7 +397,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         }}
                       >
                         See more
-                      </a>
+                      </span>
                     </Box>
                   </Box>
                 </Box>
@@ -584,10 +582,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           position: "absolute",
                           left: `${index * 25}px`,
                           top: "0px",
-                          zIndex: `${
-                            detailTournament?.tournamentParticipants?.length -
-                            index
-                          }`,
+                          // zIndex: `${
+                          //   detailTournament?.tournamentParticipants?.length -
+                          //   index
+                          // }`,
+                          zIndex: 0,
                         }}
                       >
                         <Box
@@ -623,6 +622,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                                   ? "white"
                                   : "none",
                               fontSize: "12px",
+                              zIndex: 0
                             }}
                           >
                             <Typography
@@ -656,10 +656,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           position: "absolute",
                           top: "0px",
                           left: `${index * 25}px`,
-                          zIndex: `${
-                            detailTournament?.tournamentParticipants?.length -
-                            index
-                          }`,
+                          // zIndex: `${
+                          //   detailTournament?.tournamentParticipants?.length -
+                          //   index
+                          // }`,
+                          zIndex: 0
                         }}
                       >
                         <Box

@@ -1,21 +1,32 @@
 import React, { Fragment, useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 import LoadingScreen from "../LoadingScreen";
 import { toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
 
-export default function UnityGameComponent({
-  detailTournament,
-  expand,
-  pauseGame,
-  unPauseGame,
-  handleEndGame,
-}) {
-  const { id } = useParams();
-  const { device } = useSelector((state) => state.deviceReducer);
+export default function UnityGameComponent(props) {
+  const navigate = useNavigate();
+  const {
+    GameFiles,
+    cwidth,
+    cheight,
+    tournamentId,
+    gameId,
+    isFullScreen,
+    skinId,
+    handleEndGame,
+    type,
+    skinName,
+    pauseGame,
+    unPauseGame,
+    fmod,
+    videoGame,
+  } = props;
+
+  const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
-  // const { router } = useSelector((state) => state.appReducer);
   const dispatch = useDispatch();
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
@@ -25,7 +36,6 @@ export default function UnityGameComponent({
     }
   }
 
-  console.log("ID: ", id, token);
   function getFrameworkJs(data) {
     for (let index = 0; index < data?.length; index++) {
       if (data[index]?.link?.includes(".framework.js")) {
@@ -50,7 +60,6 @@ export default function UnityGameComponent({
     }
   }
 
-  console.log(detailTournament);
   const {
     unityProvider,
     unload,
@@ -61,91 +70,51 @@ export default function UnityGameComponent({
     loadingProgression,
     isLoaded,
   } = useUnityContext({
-    loaderUrl: getLoaderJs(detailTournament?.tournamentInfors?.game?.GameFiles),
-    dataUrl: getDataJs(detailTournament?.tournamentInfors?.game?.GameFiles),
-    frameworkUrl: getFrameworkJs(
-      detailTournament?.tournamentInfors?.game?.GameFiles
-    ),
-    codeUrl: getWasmJs(detailTournament?.tournamentInfors?.game?.GameFiles),
+    loaderUrl: getLoaderJs(GameFiles),
+    dataUrl: getDataJs(GameFiles),
+    frameworkUrl: getFrameworkJs(GameFiles),
+    codeUrl: getWasmJs(GameFiles),
     streamingAssetsUrl:
       process.env.REACT_APP_GAME_STREAMING_ASSET_URL +
-        `/${String(detailTournament?.tournamentInfors?.game?.id)}/${String(
-          detailTournament?.tournamentInfors?.skin?.skinName
-        )
+        `/${String(gameId)}/${String(skinName)
           ?.replaceAll(" ", "_")
           ?.toLowerCase()}` || "",
   });
-  console.log(
-    "getLoaderJs: ",
-    getLoaderJs(detailTournament?.tournamentInfors?.game?.GameFiles)
-  );
-  console.log(
-    "getFrameworkJs: ",
-    getFrameworkJs(detailTournament?.tournamentInfors?.game?.GameFiles)
-  );
-  console.log(
-    "getDataJs: ",
-    getDataJs(detailTournament?.tournamentInfors?.game?.GameFiles)
-  );
-  console.log(
-    "getWasmJs: ",
-    getWasmJs(detailTournament?.tournamentInfors?.game?.GameFiles)
-  );
+
   window.myGameInstance = UNSAFE__unityInstance;
+
   useEffect(() => {
-    dispatch(toggleStartGame(true));
-  }, []);
-  useEffect(() => {
-    localStorage.setItem(
-      "GameFiles",
-      JSON.stringify(detailTournament?.tournamentInfors?.game?.GameFiles)
-    );
-  }, [detailTournament?.tournamentInfors?.game?.GameFiles]);
+    localStorage.setItem("GameFiles", JSON.stringify(GameFiles));
+  }, [GameFiles]);
 
   const handleGameLoad = useCallback(() => {
-    // dispatch(toggleStartGame(true))
-    sendMessage("TournamentGameEntry", "SetToken", "testToken");
-    sendMessage("TournamentGameEntry", "SetTournamentId", detailTournament?.id);
-    sendMessage(
-      "TournamentGameEntry",
-      "SetSkinId",
-      detailTournament?.tournamentInfors?.skin?.id
-    );
+    dispatch(toggleStartGame(true))
+    sendMessage("TournamentGameEntry", "SetToken", token);
+    sendMessage("TournamentGameEntry", "SetTournamentId", tournamentId);
+    sendMessage("TournamentGameEntry", "SetSkinId", skinId);
     sendMessage(
       "TournamentGameEntry",
       "SetSubmitScoreUrl",
       process.env.REACT_APP_END_POINT_TOURNAMENT
     );
     sendMessage("TournamentGameEntry", "StartGame", "Start");
-  }, [
-    sendMessage,
-    detailTournament?.id,
-    // token,
-    detailTournament?.tournamentInfors?.skin?.id,
-  ]);
-  // const handleFinalGame = useCallback(
-  //   async (score) => {
-  //     if (!detailTournament?.tournamentInfors?.game?.gameFmod) {
-  //       await unload();
-  //     }
-  //     if (type && type === "pvp") {
-  //       navigate({
-  //         pathname: `/selectroom/${detailTournament?.tournamentInfors?.game?.id}`,
-  //       });
-  //     }
-  //     handleEndGame(score || 0);
-  //     dispatch(toggleStartGame(false));
-  //   },
-  //   [
-  //     navigate,
-  //     unload,
-  //     handleEndGame,
-  //     detailTournament?.tournamentInfors?.game?.id,
-  //     type,
-  //     detailTournament?.tournamentInfors?.game?.gameFmod,
-  //     dispatch,
-  //   ]
-  // );
+  }, [sendMessage, tournamentId, token, skinId, dispatch]);
+
+  const handleFinalGame = useCallback(
+    async (score) => {
+      if (!fmod) {
+        await unload();
+      }
+      if (type && type === "pvp") {
+        navigate({
+          pathname: `/selectroom/${gameId}`,
+        });
+      }
+      handleEndGame(score || 0);
+      dispatch(toggleStartGame(false));
+    },
+    [navigate, unload, handleEndGame, gameId, type, fmod, dispatch]
+  );
 
   useEffect(() => {
     addEventListener("Ready", handleGameLoad);
@@ -155,11 +124,11 @@ export default function UnityGameComponent({
   }, [addEventListener, removeEventListener, handleGameLoad]);
 
   useEffect(() => {
-    addEventListener("GameOver", handleEndGame);
+    addEventListener("GameOver", handleFinalGame);
     return () => {
-      removeEventListener("GameOver", handleEndGame);
+      removeEventListener("GameOver", handleFinalGame);
     };
-  }, [addEventListener, removeEventListener, handleEndGame]);
+  }, [addEventListener, removeEventListener, handleFinalGame]);
 
   const unityRef = useRef();
 
@@ -177,16 +146,10 @@ export default function UnityGameComponent({
 
   useEffect(() => {
     const onBeforeUnload = async (ev) => {
-      //#############
-      if (!detailTournament?.tournamentInfors?.game?.gameFmod) {
+      if (!fmod) {
         await unload();
       }
       dispatch(toggleStartGame(false));
-
-      //#############
-
-      ev.returnValue = "Anything you wanna put here!";
-      return "Anything here as well, doesn't matter!";
     };
 
     window.addEventListener("beforeunload", onBeforeUnload);
@@ -194,20 +157,14 @@ export default function UnityGameComponent({
     return () => {
       window.removeEventListener("beforeunload", onBeforeUnload);
     };
-  }, [dispatch, unload, detailTournament?.tournamentInfors?.game?.gameFmod]);
+  }, [dispatch, unload, fmod]);
 
   useEffect(() => {
     const onBeforeUnload = async (ev) => {
-      //#############
-      if (!detailTournament?.tournamentInfors?.game?.gameFmod) {
+      if (!fmod) {
         await unload();
       }
       dispatch(toggleStartGame(false));
-
-      //#############
-
-      ev.returnValue = "Anything you wanna put here!";
-      return "Anything here as well, doesn't matter!";
     };
 
     window.addEventListener("popstate", onBeforeUnload);
@@ -215,40 +172,33 @@ export default function UnityGameComponent({
     return () => {
       window.removeEventListener("popstate", onBeforeUnload);
     };
-  }, [dispatch, unload, detailTournament?.tournamentInfors?.game?.gameFmod]);
-  // useEffect(() => {
-  //   return async () => {
-  //     if (window.confirm("Do you want to quit the game ?")) {
-  //       if (!detailTournament?.tournamentInfors?.game?.gameFmod) {
-  //         await unload();
-  //       }
-  //       dispatch(toggleStartGame(false));
-  //     }
-  //   };
-  // }, [unload, detailTournament?.tournamentInfors?.game?.gameFmod, dispatch]);
-  const isFullScreen = true;
-  console.log("Pausegame: ", pauseGame, unPauseGame);
+  }, [dispatch, unload, fmod]);
+
   return (
     <Fragment>
-      {" "}
-      {!isLoaded && (
+      {!isLoaded && !videoGame && (
         <LoadingScreen
+          isLoaded={isLoaded}
           loadingProgression={Math.round(loadingProgression * 100)}
         />
       )}
       <Unity
-        style={{
-          width: "100%",
-          minWidth: "100%",
-          height:
-            device === "Mobile" || device === "Tablet" || expand === true
-              ? "100%"
-              : "95%",
-          position: isFullScreen ? "fixed" : "none",
-          top: isFullScreen ? 0 : "none",
-          left: isFullScreen ? 0 : "none",
-          zIndex: isFullScreen ? 2000 : "none",
-        }}
+        style={
+          type && type === "test"
+            ? {
+                width,
+                height,
+              }
+            : {
+                width: isFullScreen ? width : cwidth ? cwidth : "100%",
+                minWidth: "100%",
+                height: isFullScreen ? "100%" : cheight ? cheight : "100%",
+                position: isFullScreen ? "fixed" : "none",
+                top: isFullScreen ? 0 : "none",
+                left: isFullScreen ? 0 : "none",
+                zIndex: isFullScreen ? 2000 : "none",
+              }
+        }
         unityProvider={unityProvider}
         ref={unityRef}
       />

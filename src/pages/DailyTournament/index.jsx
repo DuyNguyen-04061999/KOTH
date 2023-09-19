@@ -93,7 +93,7 @@ export default function DailyTournament() {
                   fontSize: "24px",
                 }}
               >
-                Daily Tournament
+                Daily tournaments
               </Typography>
               <Box
                 sx={{
@@ -220,7 +220,7 @@ export default function DailyTournament() {
                   fontSize: "24px",
                 }}
               >
-                Daily Tournament
+                Daily tournaments
               </Typography>
               <Box
                 sx={{

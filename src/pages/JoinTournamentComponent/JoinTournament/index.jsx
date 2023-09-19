@@ -2,7 +2,7 @@ import {
   Box,
   Container,
   CssBaseline,
-  Grid,
+  // Grid,
   Skeleton,
   ThemeProvider,
   Typography,
@@ -13,7 +13,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { images } from "../../../utils/images";
 import {
-  useNavigate,
+  // useNavigate,
   // useNavigate,
   useParams,
 } from "react-router-dom";
@@ -792,10 +792,10 @@ export default function JoinTournament() {
                             }}
                           >
                             {detailTournament?.tournamentTimeType === "hourly"
-                              ? "Hourly Tournament"
+                              ? "Hourly tournaments"
                               : detailTournament?.tournamentTimeType === "daily"
-                              ? "Daily Tournament"
-                              : "Weeklong Tournament"}
+                              ? "Daily tournaments"
+                              : "Week-long tournaments"}
                           </Typography>
                         </>
                       )}
