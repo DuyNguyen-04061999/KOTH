@@ -32,7 +32,7 @@ export default function ProvideTicketDialogComponent(props) {
     date: moment().format("YYYY/MM/DD"),
   });
   const [ticketQuantity, setTicketQuantity] = useState(0);
-  console.log(isProvideTicket);
+  
   useEffect(() => {
     dispatch(getListTicket());
   }, [dispatch]);

@@ -28,7 +28,6 @@ function* getListEndUser(dataRequest) {
         const { payload } = dataRequest;
         const res = yield call(adminAgentService.getListEndUser, payload)
         const { refs } = res?.data?.data || []
-console.log(refs);
         if(res && res.status === 200) {
            yield put(getListEndUserSuccess({ list: refs }))
         } else {
