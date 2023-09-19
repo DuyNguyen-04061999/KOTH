@@ -89,7 +89,7 @@ export default function UnityGameComponent(props) {
 
   const handleGameLoad = useCallback(() => {
     dispatch(toggleStartGame(true))
-    sendMessage("TournamentGameEntry", "SetToken", token);
+    sendMessage("TournamentGameEntry", "SetToken", process.env.REACT_APP_TEST === "test" ? "testToken" : token);
     sendMessage("TournamentGameEntry", "SetTournamentId", tournamentId);
     sendMessage("TournamentGameEntry", "SetSkinId", skinId);
     sendMessage(
