@@ -23,12 +23,10 @@ export default function UnityGameComponent(props) {
     unPauseGame,
     fmod,
     videoGame,
-    setIsLoaded,
   } = props;
 
   const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
-  // const { router } = useSelector((state) => state.appReducer);
   const dispatch = useDispatch();
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {

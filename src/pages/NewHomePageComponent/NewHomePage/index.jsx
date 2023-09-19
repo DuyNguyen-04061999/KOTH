@@ -33,9 +33,7 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import { BannerWin, BannerWinMobile } from "../../../components/Banner";
 
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -132,6 +130,8 @@ export default function NewHomePage() {
   //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
   //   return distance;
   // };
+
+  
   return (
     <Container
       maxWidth="lg"
@@ -152,6 +152,16 @@ export default function NewHomePage() {
         backgroundColor: "#1a151e",
       }}
     >
+      {process.env.REACT_APP_TEST === "test" && (
+        <div
+          className="text-white p-2 ps-3"
+          onClick={() => {
+            navigate("/list-game-manager");
+          }}
+        >
+          Game Manager
+        </div>
+      )}
       {" "}
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -162,6 +172,7 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
+          {" "}
           <Box
             sx={{
               marginBottom: width < 576 ? "24px" : "32px",
@@ -803,7 +814,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Daily Tournaments
+                  Daily tournaments
                 </Typography>
               </Box>
               <Box
@@ -1243,7 +1254,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Week-long tournament{" "}
+                  Week-long tournaments{" "}
                 </Typography>
               </Box>
               <Box

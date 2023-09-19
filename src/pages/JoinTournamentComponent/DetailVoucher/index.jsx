@@ -136,6 +136,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                   >
                     Sponsor by
                     <Typography
+                      component={"span"}
                       sx={{
                         fontSize: "16px",
                         marginLeft: "0px !important",

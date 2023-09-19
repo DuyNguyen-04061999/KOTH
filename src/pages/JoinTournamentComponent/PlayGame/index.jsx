@@ -13,13 +13,14 @@ import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import ReactPlayer from "react-player"
 
 export default function PlayGame(props) {
   const { startGame, detailTournament, setStartGame, videoGame, setVideoGame } =
     props;
   const { device, deviceType } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
-  const { startGameCheck } = useSelector((state) => state.gameReducer);
+  // const { startGameCheck } = useSelector((state) => state.gameReducer);
   const screen = useFullScreenHandle();
   const [expand, setExpand] = useState(false);
   const [second, setSeconds] = useState(7);
@@ -27,7 +28,7 @@ export default function PlayGame(props) {
   const [pauseGame, setPauseGame] = useState(false);
   const [unPauseGame, setUnPauseGame] = useState(false);
   const [continueGame, setContinueGame] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -166,8 +167,6 @@ export default function PlayGame(props) {
     device,
   ]);
 
-console.log(expand, startGame);
-
   return (
     <>
       <Box
@@ -218,7 +217,68 @@ console.log(expand, startGame);
                 >
                   <Box sx={{ position: "relative" }}>
                     {" "}
-                    <video
+                    {deviceType === "iOS" && device === "Mobile" ? (
+                      <video
+                        autoPlay
+                        className={isFullScreen ? "fullscreenVideo" : ""}
+                        width={"100%"}
+                        playsInline
+                        // muted
+                        controls={deviceType === "iOS" ? true : false}
+                        onPlay={() => {
+                          setSeconds(7);
+                        }}
+                        onEnded={() => {
+                          setVideoGame(false);
+                          if (device === "Mobile" || device === "Tablet") {
+                            setIsFullScreen(true);
+                          }
+                        }}
+                      >
+                        <source
+                          src={
+                            detailTournament?.tournamentVideo
+                              ? process.env.REACT_APP_SOCKET_SERVER +
+                                "/" +
+                                detailTournament?.tournamentVideo
+                              : video.LogoAnim
+                          }
+                          type="video/mp4"
+                        />
+                      </video>
+                    ) : (
+                      <ReactPlayer
+                        width="100%"
+                        height="100%"
+                        playsInline={true}
+                        controls={true}
+                        onStart={() => {
+                          setSeconds(7);
+                        }}
+                        onEnded={() => {
+                          setVideoGame(false);
+                          if (device === "Mobile" || device === "Tablet") {
+                            setIsFullScreen(true);
+                          }
+                        }}
+                        config={{
+                          file: {
+                            attributes: {
+                              controlsList: "nofullscreen",
+                            },
+                          },
+                        }}
+                        playing={true}
+                        url={
+                          detailTournament?.tournamentVideo
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              detailTournament?.tournamentVideo
+                            : video.LogoAnim
+                        }
+                      />
+                    )}
+                    {/* <video
                       className={
                         isFullScreen && startGame ? "fullscreenVideo" : ""
                       }
@@ -244,54 +304,57 @@ console.log(expand, startGame);
                         }
                         type="video/mp4"
                       />
-                    </video>{" "}
-                    <Box
-                      onClick={() => {
-                        if (second === 0) {
-                          setVideoGame(false);
-                          if (device === "Mobile" || device === "Tablet") {
-                            setIsFullScreen(true);
+                    </video>{" "} */}
+                    {second !== null && (
+                      <Box
+                        onClick={() => {
+                          if (second === 0) {
+                            setVideoGame(false);
+                            if (device === "Mobile" || device === "Tablet") {
+                              setIsFullScreen(true);
+                            }
                           }
-                        }
-                      }}
-                      sx={{
-                        position:
-                          device === "Desktop" ||
-                          ((device === "Mobile" || device === "Tablet") &&
-                            orientation === "portrait")
-                            ? "absolute"
-                            : "fixed",
-                        top: width < 576 ? "70%" : "80%",
-                        right: "20px",
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "10px",
-                        backgroundColor: "#000",
-                        border: "2px solid #ffff",
-                        cursor: "pointer",
-                        zIndex: "1000000000000",
-                      }}
-                    >
-                      <Typography
+                          setSeconds(null);
+                        }}
                         sx={{
-                          color: "white",
-                          marginRight: "4px",
-                          fontSize: width < 576 ? "10px !important" : "14px",
+                          position:
+                            device === "Desktop" ||
+                            ((device === "Mobile" || device === "Tablet") &&
+                              orientation === "portrait")
+                              ? "absolute"
+                              : "fixed",
+                          top: width < 576 ? "70%" : "80%",
+                          right: "20px",
+                          display: "flex",
+                          alignItems: "center",
+                          padding: "10px",
+                          backgroundColor: "#000",
+                          border: "2px solid #ffff",
+                          cursor: "pointer",
+                          zIndex: "1000000000000",
                         }}
                       >
-                        {second !== 0
-                          ? `You can skip Ads after ${second}s`
-                          : "Skip Ads"}
-                      </Typography>
-                      <i
-                        style={{
-                          color: "#ffff",
-                          marginTop: "2px",
-                          fontSize: width < 576 ? "10px" : "14px",
-                        }}
-                        className="fa-solid fa-angle-right"
-                      ></i>
-                    </Box>
+                        <Typography
+                          sx={{
+                            color: "white",
+                            marginRight: "4px",
+                            fontSize: width < 576 ? "10px !important" : "14px",
+                          }}
+                        >
+                          {second !== 0
+                            ? `You can skip Ads after ${second}s`
+                            : "Skip Ads"}
+                        </Typography>
+                        <i
+                          style={{
+                            color: "#ffff",
+                            marginTop: "2px",
+                            fontSize: width < 576 ? "10px" : "14px",
+                          }}
+                          className="fa-solid fa-angle-right"
+                        ></i>
+                      </Box>
+                    )}
                   </Box>
                 </Box>
               )}
@@ -307,9 +370,9 @@ console.log(expand, startGame);
                     }}
                   >
                     <UnityGameComponent
-                      setIsLoaded={(data) => {
-                        setIsLoaded(data);
-                      }}
+                      // setIsLoaded={(data) => {
+                      //   setIsLoaded(data);
+                      // }}
                       fmod={detailTournament?.tournamentInfors?.game?.gameFmod}
                       GameFiles={
                         detailTournament?.tournamentInfors?.game?.GameFiles
