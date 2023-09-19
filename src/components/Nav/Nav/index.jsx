@@ -714,7 +714,7 @@ export default function Navbar() {
                     Week-long
                   </span>
                 </Box>
-                <Box
+                {/* <Box
                   sx={{
                     cursor: "pointer",
                     display: "flex",
@@ -799,7 +799,7 @@ export default function Navbar() {
                   >
                     List Game Manager
                   </span>
-                </Box>
+                </Box> */}
               </Box>
               <hr
                 style={{

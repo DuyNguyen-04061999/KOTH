@@ -1,4 +1,4 @@
-import { Box, Drawer, Grid, Typography } from "@mui/material";
+import { Box, Drawer, Grid } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
@@ -26,7 +26,7 @@ import GameLogDialog from "../Dialog/GameLog/GameLog";
 // import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
-import { Search } from "@mui/icons-material";
+// import { Search } from "@mui/icons-material";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import _socket from "../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +37,7 @@ import {
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
-import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
+// import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
 import {
   clickTabChat,
   closeChatPopup,
@@ -52,7 +52,7 @@ import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
-import { getAppType } from "../../utils/helper";
+// import { getAppType } from "../../utils/helper";
 
 const drawerWidth = 310;
 
@@ -124,19 +124,19 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
 
-  const { detailTournament } = useSelector((state) => state.playgameReducer);
+  // const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
 
   const [showChat] = useState(true);
   const { children } = props;
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const pathname = useLocation();
 
-  const [backgroundGlobal, setBackgroundGlobal] = useState("#883AF0");
-  const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
+  // const [backgroundGlobal, setBackgroundGlobal] = useState("#883AF0");
+  // const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
   const [chatF, setChatF] = useState("");
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -210,13 +210,13 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
-    if (tabChat === true) {
-      setBackgroundGlobal("#883AF0");
-      setBackgroundPrivate("#261a35");
-    } else {
-      setBackgroundGlobal("#261a35");
-      setBackgroundPrivate("#883AF0");
-    }
+    // if (tabChat === true) {
+    //   setBackgroundGlobal("#883AF0");
+    //   setBackgroundPrivate("#261a35");
+    // } else {
+    //   setBackgroundGlobal("#261a35");
+    //   setBackgroundPrivate("#883AF0");
+    // }
   }, [tabChat]);
 
   useEffect(() => {
@@ -246,37 +246,37 @@ export default function Layout(props) {
   //     setBackgroundPrivate("#261a35");
   //   }
   // }, [token]);
-  const [searchValue, setSearchValue] = useState("");
+  // const [searchValue, setSearchValue] = useState("");
 
-  const handleSearch = () => {
-    if (getAppType() !== "promote") {
-      if (!searchValue) {
-      } else {
-        const lowercaseSearchValue = searchValue.toUpperCase();
-        navigate("/game-type/search", {
-          state: { value: lowercaseSearchValue },
-        });
-        dispatch(getSearchGame(lowercaseSearchValue));
-      }
-    }
-  };
+  // const handleSearch = () => {
+  //   if (getAppType() !== "promote") {
+  //     if (!searchValue) {
+  //     } else {
+  //       const lowercaseSearchValue = searchValue.toUpperCase();
+  //       navigate("/game-type/search", {
+  //         state: { value: lowercaseSearchValue },
+  //       });
+  //       dispatch(getSearchGame(lowercaseSearchValue));
+  //     }
+  //   }
+  // };
 
-  const handleOnKeyDownEnter = (e) => {
-    if (getAppType() !== "promote") {
-      if (e.key === "Enter" && searchValue) {
-        const lowercaseSearchValue = searchValue.toLowerCase();
-        navigate("/game-type/search", {
-          state: { value: lowercaseSearchValue },
-        });
-        dispatch(getSearchGame(lowercaseSearchValue));
-        setChatF("");
-      }
-    }
-  };
+  // const handleOnKeyDownEnter = (e) => {
+  //   if (getAppType() !== "promote") {
+  //     if (e.key === "Enter" && searchValue) {
+  //       const lowercaseSearchValue = searchValue.toLowerCase();
+  //       navigate("/game-type/search", {
+  //         state: { value: lowercaseSearchValue },
+  //       });
+  //       dispatch(getSearchGame(lowercaseSearchValue));
+  //       setChatF("");
+  //     }
+  //   }
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  // };
 
   const location = useLocation();
   const useQuery = () => new URLSearchParams(location.search);
@@ -654,8 +654,8 @@ export default function Layout(props) {
                   }}
                   onClick={() => {
                     dispatch(clickTabChat(true));
-                    setBackgroundGlobal("#883AF0");
-                    setBackgroundPrivate("#261a35");
+                    // setBackgroundGlobal("#883AF0");
+                    // setBackgroundPrivate("#261a35");
                   }}
                 >
                   {tabChat === false ? (
@@ -725,8 +725,8 @@ export default function Layout(props) {
                       dispatch(toggleLoginDialog());
                     } else {
                       dispatch(clickTabChat(false));
-                      setBackgroundPrivate("#883AF0");
-                      setBackgroundGlobal("#261a35");
+                      // setBackgroundPrivate("#883AF0");
+                      // setBackgroundGlobal("#261a35");
                     }
                   }}
                 >
