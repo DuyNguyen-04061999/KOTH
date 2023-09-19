@@ -81,7 +81,7 @@ export default function DialogChat(props) {
           setChat("");
         }
       }
-    }
+    } 
   };
 
   const handleOnClickSendMessageWorld = () => {

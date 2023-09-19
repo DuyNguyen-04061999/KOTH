@@ -481,7 +481,6 @@ export default function ChatWorldList() {
   };
 
   return (
-    <Box>
       <Box
         className="chat-content"
         sx={{
@@ -592,11 +591,8 @@ export default function ChatWorldList() {
               </MenuItem>
             ))}
         </Menu>
-        <div>
           {renderChat}
-          <EndMessagetoend ref={endOfMessageRef}></EndMessagetoend>
-        </div>
+          <span ref={endOfMessageRef}></span>
       </Box>
-    </Box>
   );
 }
