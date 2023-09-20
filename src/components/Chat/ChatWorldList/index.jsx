@@ -22,6 +22,8 @@ const EndMessagetoend = styled.div`
   margin-bottom: 30px;
 `;
 export default function ChatWorldList() {
+  const endOfMessageRef = useRef(null);
+  const [worldMessage, setWorldMessage] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [messagefromName, setMessFromName] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
@@ -36,6 +38,14 @@ export default function ChatWorldList() {
   const [socket, setSocket] = useState(null);
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
+  useEffect(() => {
+    endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [worldMessage,chatPopup]);
+
+  useEffect(() => {
+    setWorldMessage(chatWorld);
+  }, [chatWorld]);
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -79,23 +89,8 @@ export default function ChatWorldList() {
     setAnchorEl(null);
   };
   const { height, width } = useWindowDimensions();
-  const [worldMessage, setWorldMessage] = useState([]);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [worldMessage]);
-  useEffect(() => {
-    setWorldMessage(chatWorld);
-  }, [chatWorld]);
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatPopup]);
-  const endOfMessageRef = useRef(null);
 
-  const scrollToBottom = () => {
-    if (endOfMessageRef.current !== null)
-      endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
   // const checkExistInArray = (membersInRoom, userName) => {
   //   return membersInRoom?.filter((n) => {
   //     return n.username === userName && n.owner === 0;
