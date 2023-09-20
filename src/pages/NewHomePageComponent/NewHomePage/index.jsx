@@ -489,7 +489,27 @@ export default function NewHomePage() {
               //     </Box>
               //   </Box>
               // </Box>
-              <BannerWinMobile />
+              <BannerWinMobile
+                userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+                userAvatar={
+                  biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      biggestEndTour?.bestUser?.tUser?.userAccount
+                        ?.accountAvatar
+                    : imageHome.BannerWinAva
+                }
+                sponsorName={
+                  biggestEndTour && biggestEndTour?.endTour
+                    ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                    : "Samsung"
+                }
+                tournamentName={
+                  biggestEndTour && biggestEndTour?.endTour
+                    ? biggestEndTour?.endTour?.tournamentName
+                    : "Galaxy Z-flip 5"
+                }
+              />
             )
           ) : isFetching ? (
             <BannerLoading
@@ -650,7 +670,26 @@ export default function NewHomePage() {
             //     </Typography>
             //   </Box>
             // </Box>
-            <BannerWin />
+            <BannerWin
+              userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+              userAvatar={
+                biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  : imageHome.BannerWinAva
+              }
+              sponsorName={
+                biggestEndTour && biggestEndTour?.endTour
+                  ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                  : "Samsung"
+              }
+              tournamentName={
+                biggestEndTour && biggestEndTour?.endTour
+                  ? biggestEndTour?.endTour?.tournamentName
+                  : "Galaxy Z-flip 5"
+              }
+            />
           )}
           {/* Brief List Tournament */}
           {/* <Box
@@ -1390,7 +1429,33 @@ export default function NewHomePage() {
                 <BannerLoading height={width < 576 ? "214px" : "363px"} />
               </Box>
             ) : (
-              <BannerTourMobile />
+              <BannerTourMobile
+                tournamentName={
+                  hotWeekTour && hotWeekTour?.tournamentName
+                    ? hotWeekTour?.tournamentName
+                    : "Galaxy Z-flip 5"
+                }
+                sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+                userName={
+                  hotWeekTour &&
+                  hotWeekTour?.bestUser &&
+                  hotWeekTour?.bestUser?.tUser &&
+                  hotWeekTour?.bestUser?.tUser?.userName
+                }
+                endTime={hotWeekTour?.tournamentEndAt}
+                userScore={hotWeekTour?.bestUser?.score}
+                userAvatar={
+                  hotWeekTour &&
+                  hotWeekTour?.bestUser &&
+                  hotWeekTour?.bestUser?.tUser &&
+                  hotWeekTour?.bestUser?.tUser?.userAccount &&
+                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                    : images.pool
+                }
+              />
             )
           ) : isFetching ? (
             <BannerLoading
@@ -1575,7 +1640,33 @@ export default function NewHomePage() {
             //   </Box>
             // </Box>
             // <BannerTop1 />
-            <BannerTour />
+            <BannerTour
+              tournamentName={
+                hotWeekTour && hotWeekTour?.tournamentName
+                  ? hotWeekTour?.tournamentName
+                  : "Galaxy Z-flip 5"
+              }
+              sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+              userName={
+                hotWeekTour &&
+                hotWeekTour?.bestUser &&
+                hotWeekTour?.bestUser?.tUser &&
+                hotWeekTour?.bestUser?.tUser?.userName
+              }
+              endTime={hotWeekTour?.tournamentEndAt}
+              userScore={hotWeekTour?.bestUser?.score}
+              userAvatar={
+                hotWeekTour &&
+                hotWeekTour?.bestUser &&
+                hotWeekTour?.bestUser?.tUser &&
+                hotWeekTour?.bestUser?.tUser?.userAccount &&
+                hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  : images.pool
+              }
+            />
           )}
           <FullListTournament
             type={type}

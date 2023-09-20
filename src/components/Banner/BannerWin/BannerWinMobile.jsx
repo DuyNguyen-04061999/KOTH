@@ -2,7 +2,15 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { imageHome } from "../../../utils/images";
 
-const BannerWinMobile = () => {
+const BannerWinMobile = (props) => {
+  const {
+    tournamentName,
+    sponsorName,
+    userAvatar,
+    userName,
+    endTime,
+    userScore,
+  } = props;
   return (
     <Box
       sx={{
@@ -61,14 +69,14 @@ const BannerWinMobile = () => {
             fontWeight: 700,
           }}
         >
-          Sponsor by: Samsung
+          Sponsor by: {sponsorName}
         </Typography>
       </Box>
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <Box
@@ -82,9 +90,9 @@ const BannerWinMobile = () => {
             sx={{
               width: "78px",
               height: "87px",
-              border:"2px solid  rgba(246,212,0,1)",
+              border: "2px solid  rgba(246,212,0,1)",
               boxShadow: "0px 0px 0px 4px #f5c40c",
-              borderRadius:"8px"
+              borderRadius: "8px",
             }}
           >
             <img
@@ -93,7 +101,7 @@ const BannerWinMobile = () => {
                 height: "100%",
                 objectFit: "cover",
               }}
-              src={imageHome.BannerWinAva}
+              src={userAvatar}
             ></img>
           </Box>
           <Box>
@@ -103,10 +111,10 @@ const BannerWinMobile = () => {
                 fontSize: "10px",
                 fontWeight: 500,
                 textTransform: "uppercase",
-                marginTop:"8px"
+                marginTop: "8px",
               }}
             >
-              Ana belle 3333
+              {userName}
             </Typography>
           </Box>
         </Box>
@@ -132,9 +140,11 @@ const BannerWinMobile = () => {
                 wordWrap: "break-word",
                 textTransform: "uppercase",
                 lineHeight: "1.5",
+                height: "100px",
+                overflow: "hidden",
               }}
             >
-              Galaxy Z-Flip 5
+              {tournamentName}
               <Typography
                 sx={{
                   fontWeight: 800,
@@ -147,9 +157,11 @@ const BannerWinMobile = () => {
                   WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                   wordWrap: "break-word",
                   lineHeight: "1.5",
+                  height: "100px",
+                  overflow: "hidden",
                 }}
               >
-                Galaxy Z-Flip 5
+                {tournamentName}
               </Typography>
             </Box>
           </Box>

@@ -3,8 +3,11 @@ import React from "react";
 import { imageHome } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useNavigate } from "react-router-dom";
+import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
+import moment from "moment";
 
-const BannerTour = () => {
+const BannerTour = (props) => {
+  const { tournamentName, sponsorName, userAvatar, userName, endTime, userScore } = props;
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   return (
@@ -37,7 +40,7 @@ const BannerTour = () => {
               textTransform: "uppercase",
             }}
           >
-            Galaxy Quest: Win a Z Flip 5 Galaxy
+            {tournamentName}
           </Typography>
         </Box>
         <Box sx={{ marginBottom: "8px" }}>
@@ -64,9 +67,11 @@ const BannerTour = () => {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               lineHeight: "0.9",
+              height: "140px",
+              overflow: "hidden",
             }}
           >
-            Galaxy z-flip 5
+            {tournamentName}
           </Typography>
         </Box>
         <Box sx={{ marginBottom: "8px" }}>
@@ -78,7 +83,7 @@ const BannerTour = () => {
               fontWeight: 700,
             }}
           >
-            Sponsor by: Samsung
+            Sponsor by: {sponsorName}
           </Typography>
         </Box>
         <Box
@@ -92,7 +97,7 @@ const BannerTour = () => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography
+            <Box
               sx={{
                 color: "#FFF",
                 textAlign: "start",
@@ -102,8 +107,10 @@ const BannerTour = () => {
                 fontWeight: 800,
               }}
             >
-              1d:55h:32m
-            </Typography>
+              <CountDownBannerHot
+                expiryTime={moment(endTime || "20/10/2023")}
+              />
+            </Box>
           </Box>
           <button
             onClick={() => {
@@ -187,7 +194,7 @@ const BannerTour = () => {
                   fontWeight: 800,
                 }}
               >
-                99999
+                {userScore || 99999}
               </Typography>{" "}
             </Box>
           </Box>
@@ -208,7 +215,7 @@ const BannerTour = () => {
                 height: "100%",
                 objectFit: "cover",
               }}
-              src={imageHome.BannerWinAva}
+              src={userAvatar}
             ></img>
           </Box>
           <Box
@@ -245,7 +252,7 @@ const BannerTour = () => {
               textTransform: "uppercase",
             }}
           >
-            Ana belle 33
+            {userName ? userName : "Super_"}
           </Typography>
         </Box>
       </Box>

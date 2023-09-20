@@ -4,11 +4,20 @@ import React from "react";
 import { imageHome } from "../../../utils/images";
 import { useNavigate } from "react-router";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
+import moment from "moment";
 
-const BannerTourMobile = () => {
+const BannerTourMobile = (props) => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
-
+  const {
+    tournamentName,
+    sponsorName,
+    userAvatar,
+    userName,
+    endTime,
+    userScore,
+  } = props;
   return (
     <Box
       sx={{
@@ -36,9 +45,13 @@ const BannerTourMobile = () => {
               color: "white",
               fontWeight: 700,
               textTransform: "uppercase",
+              height: "40px",
+              overflow: "hidden",
             }}
           >
-            Galaxy Quest: Win a Z Flip 5 Galaxy
+            {tournamentName
+              ? tournamentName
+              : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
           </Typography>
         </Box>
         <Box>
@@ -64,9 +77,13 @@ const BannerTourMobile = () => {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               lineHeight: "0.9",
+              height: "65px",
+              overflow: "hidden",
             }}
           >
-            Galaxy z-flip 5
+            {tournamentName
+              ? tournamentName
+              : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
           </Typography>
         </Box>
         <Box
@@ -80,7 +97,7 @@ const BannerTourMobile = () => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography
+            <Box
               sx={{
                 color: "#FFF",
                 textAlign: "start",
@@ -90,8 +107,10 @@ const BannerTourMobile = () => {
                 fontWeight: 800,
               }}
             >
-              1d:55h:32m
-            </Typography>
+              <CountDownBannerHot
+                expiryTime={moment(endTime || "2024-09-08T01:30:00.000Z")}
+              />
+            </Box>
           </Box>
           <button
             onClick={() => {
@@ -143,11 +162,11 @@ const BannerTourMobile = () => {
               backgroundPosition: "center",
               display: width > 425 ? "flex" : "none",
               alignItems: "center",
-              justifyContent:"flex-start",
+              justifyContent: "flex-start",
               position: "absolute",
               top: "-20px",
               left: "-50px",
-              zIndex:10,
+              zIndex: 10,
             }}
           >
             <Box
@@ -195,7 +214,7 @@ const BannerTourMobile = () => {
                 height: "100%",
                 objectFit: "cover",
               }}
-              src={imageHome.BannerWinAva}
+              src={userAvatar}
             ></img>
           </Box>
           <Box
@@ -239,7 +258,7 @@ const BannerTourMobile = () => {
               width: "max-content",
             }}
           >
-            Ana belle 33
+            {userName}
           </Typography>
         </Box>
       </Box>

@@ -6,7 +6,8 @@ import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { imageHome } from "../../../utils/images";
 
-export default function BannerWin() {
+export default function BannerWin(props) {
+  const {tournamentName, sponsorName, userAvatar, userName} = props;
   const { width } = useWindowDimensions();
   const { biggestEndTour, hotWeekTour } = useSelector(
     (state) => state.tournamentReducer
@@ -52,7 +53,7 @@ export default function BannerWin() {
               height: "100%",
               objectFit: "cover",
             }}
-            src={imageHome.BannerWinAva}
+            src={userAvatar}
           ></img>
         </Box>
         <Box
@@ -79,7 +80,7 @@ export default function BannerWin() {
             }}
           >
             {" "}
-            Ana belle 3333
+            {userName}
           </Typography>
         </Box>
       </Box>
@@ -128,7 +129,7 @@ export default function BannerWin() {
               marginTop: "-8px",
             }}
           >
-            Sponsor by: Samsung
+            Sponsor by: {sponsorName}
           </Typography>
         </Box>
         <Box
@@ -150,12 +151,14 @@ export default function BannerWin() {
               width: "100%",
               position: "relative",
               fontWeight: 800,
+              width: "100%",
               wordWrap: "break-word",
-              textTransform: "uppercase",
+              height: "130px",
+              overflow: "hidden",
               lineHeight: 1.2,
             }}
           >
-            Galaxy Z-Flip 5
+            {tournamentName }
             <Typography
               sx={{
                 fontWeight: 800,
@@ -168,10 +171,12 @@ export default function BannerWin() {
                 WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                 width: "100%",
                 wordWrap: "break-word",
+                height: "130px",
+                overflow: "hidden",
                 lineHeight: 1.2,
               }}
             >
-              Galaxy Z-Flip 5
+            {tournamentName}
             </Typography>
           </Box>
         </Box>
