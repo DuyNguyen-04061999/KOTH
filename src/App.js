@@ -101,12 +101,13 @@ import { detectDevice } from "./utils/detectDevice";
 import {
   CssBaseline,
   ThemeProvider,
-  createMuiTheme,
+  // createMuiTheme,
   createTheme,
 } from "@mui/material";
-import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
+// import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
 import PlayGamePage from "./pages/PlayGamePage";
-import UnityGameComponent from "./components/GameManager/UnityGameComponent";
+// import UnityGameComponent from "./components/GameManager/UnityGameComponent";
+
 function App() {
   useTracking("");
 
@@ -172,15 +173,16 @@ function App() {
 
   useEffect(() => {}, [orientation, startGameCheck]);
 
-  const checkPreAuthRouter = () => {
-    const params = window.location.pathname;
-    const newArr = params.split("/");
-    if (params.includes("tournamentDetail")) {
-      socket?.emit("detailTournament", {
-        tournamentId: newArr.pop(),
-      });
-    }
-  };
+  // const checkPreAuthRouter = () => {
+  //   const params = window.location.pathname;
+  //   const newArr = params.split("/");
+  //   if (params.includes("tournamentDetail")) {
+  //     socket?.emit("detailTournament", {
+  //       tournamentId: newArr.pop(),
+  //     });
+  //   }
+  // };
+
   useEffect(() => {
     if (socket) {
       socket.once("connect", (data) => {});
@@ -209,7 +211,7 @@ function App() {
         socket.emit("listPackage", {
           type: true,
         });
-        checkPreAuthRouter();
+        // checkPreAuthRouter();
       });
 
       socket?.on("getListFriendSuccess", (data) => {
@@ -217,7 +219,7 @@ function App() {
       });
 
       socket?.on("chatSuccess", (data) => {
-        if(token) {
+        if(localStorage.getItem("token")) {
           socket.emit("listFriend");
         }
         store.dispatch(updateChatWorld(data));
@@ -290,7 +292,7 @@ function App() {
           store.dispatch(profileLogoutSuccessFully());
           store.dispatch(paymentLogoutSuccessFully());
           store.dispatch(walletLogoutSuccessFully());
-        } else if (type === "sameAccount" && !startGameCheck) {
+        } else if (type === "sameAccount") {
           toast.warning(message, {
             icon: ({ theme, type }) => (
               <img
@@ -301,7 +303,8 @@ function App() {
             ),
             position: "top-center",
             className:
-              width < 576 ? "warning-background-small" : "warning-background",
+              // width < 576 ? "warning-background-small" : "warning-background",
+              "warning-background"
           });
         }
       });
@@ -461,7 +464,7 @@ function App() {
       });
 
       socket?.on("disconnect", (data) => {
-        if (localStorage.getItem("KE") && !startGameCheck) {
+        if (localStorage.getItem("KE")) {
           socket.emit("login", {
             username: localStorage.getItem("NAME"),
             password: localStorage.getItem("PASS"),
@@ -490,7 +493,8 @@ function App() {
             ),
             position: "top-center",
             className:
-              width < 576 ? "error-background-small" : "error-background",
+              // width < 576 ? "error-background-small" : "error-background",
+              "error-background"
           }
         );
         store.dispatch(updateProfileFail());
@@ -507,7 +511,8 @@ function App() {
           ),
           position: "top-center",
           className:
-            width < 576 ? "warning-background-small" : "warning-background",
+            // width < 576 ? "warning-background-small" : "warning-background",
+            "warning-background"
         });
       });
 
@@ -522,7 +527,8 @@ function App() {
           ),
           position: "top-center",
           className:
-            width < 576 ? "success-background-small" : "success-background",
+            // width < 576 ? "success-background-small" : "success-background",
+            "success-background"
         });
       });
       socket?.on("gameWin", ({ type, value }) => {
@@ -541,7 +547,7 @@ function App() {
       // socket?.off();
       socket?.disconnect();
     };
-  }, [socket, startGameCheck]);
+  }, [socket]);
 
   useEffect(() => {
     const onPageLoad = () => {
