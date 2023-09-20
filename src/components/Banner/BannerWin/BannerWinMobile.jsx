@@ -145,7 +145,6 @@ const BannerWinMobile = () => {
                   fontSize: "30px",
                   color: "white",
                   WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
-                  width: "100%",
                   wordWrap: "break-word",
                   lineHeight: "1.5",
                 }}

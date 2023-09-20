@@ -14,6 +14,7 @@ const BannerTour = () => {
         alignItems: "center",
         justifyContent: "space-between",
         height: "349px",
+        width: "100%",
         background: `url(${imageHome.BannerTourBg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -22,39 +23,9 @@ const BannerTour = () => {
     >
       <Box
         sx={{
-          width: "198px",
-          height: "198px",
-          background: `url(${imageHome.BannerTourNameTour})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          position: "relative",
-          marginTop: "120px",
-          marginRight: "-30px",
-        }}
-      >
-        <Typography
-          sx={{
-            position: "absolute",
-            width: "60%",
-            height: "100%",
-            top: "80%",
-            left: "38%",
-            transform: "translate(-50%,-50%)",
-            textTransform: "uppercase",
-            fontSize: "16px",
-            fontWeight: 700,
-            color: "white",
-          }}
-        >
-          Tournament of the week
-        </Typography>
-      </Box>
-      <Box
-        sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginLeft: "-50px",
         }}
       >
         <Box>
@@ -67,6 +38,18 @@ const BannerTour = () => {
             }}
           >
             Galaxy Quest: Win a Z Flip 5 Galaxy
+          </Typography>
+        </Box>
+        <Box sx={{ marginBottom: "8px" }}>
+          <Typography
+            sx={{
+              color: "white",
+              textTransform: "uppercase",
+              fontSize: "14px",
+              fontWeight: 700,
+            }}
+          >
+            Tournament of the week
           </Typography>
         </Box>
         <Box sx={{ width: "380px", marginBottom: "12px" }}>
@@ -147,14 +130,15 @@ const BannerTour = () => {
           width: "440px",
           height: "100%",
           position: "relative",
-          display: "flex",
+          display: width < 1024 ? "none" : "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginRight: "24px",
         }}
       >
         <Box
           sx={{
-            width: "500px",
+            width: "fit-content",
             height: "200px",
             display: "flex",
             position: "absolute",
