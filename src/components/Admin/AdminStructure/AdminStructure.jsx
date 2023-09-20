@@ -7,13 +7,15 @@ import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminS
 
 const AdminStructure = (props) => {
   const { data } = props;
-  
   return (
-    <Container>
-      <Box sx={{ marginTop: "36px" }}>
+      <Box
+        sx={(theme) => ({
+          marginTop: "36px",
+        })}
+      >
         <NestedTable data={data}></NestedTable>
       </Box>
-    </Container>
+
   );
 };
 
