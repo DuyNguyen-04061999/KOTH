@@ -96,6 +96,7 @@ const AdminPanel = () => {
             border: "2px solid #5474F1",
             borderRadius: "16px",
             display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
             padding: "0 16px",
             marginTop: { xs: "14px" },
@@ -111,7 +112,7 @@ const AdminPanel = () => {
               disableUnderline: true, // <== added this
             }}
             onChange={handleChangeSearch}
-            sx={{ width: { xs: "100%", sm: "260px" } }}
+            sx={{ width: { xs: "100%", sm: "50%" } }}
           />
           <IconButton type="submit" aria-label="search" onClick={handleSubmit}>
             <SearchIcon style={{ fill: "black" }} />
@@ -152,9 +153,8 @@ const AdminPanel = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{marginTop:"80px"}}>
       <DetailAccountDialogComponent/>
-      <Container sx={{ marginTop: "80px" }}>
         <Typography
           sx={{ textAlign: "start",fontWeight: {xs: 700, sm: 600} ,fontSize: {xs: "20px", sm: "24px"} }}
         >
@@ -209,19 +209,20 @@ const AdminPanel = () => {
           {detailAccount && (
             <Grid
               container
-              sx={{
+              sx={(theme)=> ({
                 border: "2px solid #E4E4E4",
                 borderRadius: "16px",
                 marginTop: "24px",
-                display: { xs: "none", sm: "flex" },
-              }}
+                display: { xs: "none", sm: "grid" },
+                gridTemplateColumns: "repeat(8,1fr)",
+                [theme.breakpoints.down("lg")]: {gridTemplateColumns:  "repeat(4,1fr)"}
+              })}
             >
               <Grid
-                sx={{
+                sx={(theme)=> ({
                   padding: "24px",
-                  borderRight: "2px solid #E4E4E4",
-                  flex: 1,
-                }}
+                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
+                })}
               >
                 <Typography
                   sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center"}}
@@ -233,11 +234,10 @@ const AdminPanel = () => {
                 </Typography>
               </Grid>
               <Grid
-                sx={{
+                sx={(theme)=> ({
                   padding: "24px",
-                  borderRight: "2px solid #E4E4E4",
-                  flex: 1,
-                }}
+                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
+                })}
               >
                 <Typography
                   sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
@@ -249,11 +249,10 @@ const AdminPanel = () => {
                 </Typography>
               </Grid>
               <Grid
-                sx={{
+                sx={(theme)=> ({
                   padding: "24px",
-                  borderRight: "2px solid #E4E4E4",
-                  flex: 1,
-                }}
+                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
+                })}
               >
                 <Typography
                   sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
@@ -265,11 +264,10 @@ const AdminPanel = () => {
                 </Typography>
               </Grid>
               <Grid
-                sx={{
+                sx={(theme)=> ({
                   padding: "24px",
-                  borderRight: "2px solid #E4E4E4",
-                  flex: 1,
-                }}
+                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
+                })}
               >
                 <Typography
                   sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
@@ -281,11 +279,10 @@ const AdminPanel = () => {
                 </Typography>
               </Grid>
               <Grid
-                sx={{
+                sx={(theme)=> ({
                   padding: "24px",
-                  borderRight: "2px solid #E4E4E4",
-                  flex: 1,
-                }}
+                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
+                })}
               >
                 <Typography
                   sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
@@ -297,11 +294,10 @@ const AdminPanel = () => {
                 </Typography>
               </Grid>
               <Grid
-                sx={{
+                sx={(theme)=> ({
                   padding: "24px",
-                  borderRight: "2px solid #E4E4E4",
-                  flex: 1,
-                }}
+                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
+                })}
               >
                 <Typography
                   sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
@@ -313,11 +309,10 @@ const AdminPanel = () => {
                 </Typography>
               </Grid>
               <Grid
-                sx={{
+                sx={(theme)=> ({
                   padding: "24px",
-                  borderRight: "2px solid #E4E4E4",
-                  flex: 1,
-                }}
+                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
+                })}
               >
                 <Typography
                   sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
@@ -375,7 +370,6 @@ const AdminPanel = () => {
             </Box>
           )}
         </Box>
-      </Container>
     </Box>
   );
 };

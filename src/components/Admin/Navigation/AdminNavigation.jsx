@@ -47,9 +47,29 @@ const AdminNavigation = (props) => {
     //   link: "/master/provide-ticket",
     // },
     {
-      name: "Admin Structure",
+      name: "Create Distributor",
       icon: "",
       link: "/",
+    },
+    {
+      name: "Manage Distributor",
+      icon: "",
+      link: "/manage-distributor",
+    },
+    {
+      name: "Revenue by Date Range",
+      icon: "",
+      link: "/report",
+    },
+    {
+      name: "Totals",
+      icon: "",
+      link: "/total",
+    },
+    {
+      name: "Setting",
+      icon: "",
+      link: "/setting",
     },
   ];
   const distributorActions = [
@@ -66,9 +86,29 @@ const AdminNavigation = (props) => {
     //   link: "/distributor/provide-ticket",
     // },
     {
-      name: "Admin Structure",
+      name: "Create Agent",
       icon: "",
       link: "/",
+    },
+    {
+      name: "Manage Distributor",
+      icon: "",
+      link: "/manage-distributor",
+    },
+    {
+      name: "Revenue by Date Range",
+      icon: "",
+      link: "/report",
+    },
+    {
+      name: "Totals",
+      icon: "",
+      link: "/total",
+    },
+    {
+      name: "Setting",
+      icon: "",
+      link: "/setting",
     },
   ];
   const subDistributorActions = [
@@ -123,7 +163,7 @@ const AdminNavigation = (props) => {
       : roles?.includes("agent") && agentActions;
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh",borderRight: "2px solid #EEE" }}>
       <Box sx={{ marginTop: "47px", display: "flex", marginLeft: "46px" }}>
         <Box
           className="inp-header mx-3 ps-4 cursor-pointer"
@@ -220,7 +260,7 @@ const AdminNavigation = (props) => {
           </List>
         </nav>
       </Box>
-      {width < 576 && (
+      {width > 576 && (
         <Typography
           className="ms-2"
           sx={{

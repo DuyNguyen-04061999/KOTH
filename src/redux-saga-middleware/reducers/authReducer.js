@@ -191,6 +191,7 @@ const authReducer = (
         isTab: false,
         isUpdateProfile: false,
         userChangeAvatar: "",
+        userPackageId: ""
       };
     case "GET_LEADERBOARD_SUCCESS":
       return { ...state, leaderBoard: payload };

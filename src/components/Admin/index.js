@@ -9,5 +9,5 @@ export {
     CheckMasterComponent,
     CheckDistributorComponent,
     CheckSubDistributorComponent,
-    CheckAgentComponent
+    CheckAgentComponent,
 }

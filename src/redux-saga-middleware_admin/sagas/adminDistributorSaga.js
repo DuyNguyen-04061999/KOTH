@@ -11,7 +11,8 @@ function* createSubDistributorSaga(dataRequest) {
         const res = yield call(adminDistributorService.createSubDistributor, payload)
         if(res && res.status === 200) {
            yield put(createSubDistributorSuccess())
-           alert("Create Sub Distributor Success!")
+        //    alert("Create Sub Distributor Success!")
+           alert("Create Agent Success!")
            yield put(closeCreateDialog());
            window.location.reload();
         } else {
