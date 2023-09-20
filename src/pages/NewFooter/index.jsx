@@ -114,7 +114,7 @@ export default function NewFooter() {
             component={"img"}
             sx={{
               width: width < 576 ? "120px" : "200px",
-              height: width < 576 ? "44px" : "73.333px",
+              height: width < 576 ? "120px" : "200px",
               marginTop: width < 1024 ? "0px" : "64px",
             }}
             src={imageDesktop.LogoCongTy}
