@@ -42,6 +42,7 @@ import {
   clickTabChat,
   closeChatPopup,
   openChatPopup,
+  showBadgeChat,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import {
   clickTabNav,
@@ -126,7 +127,7 @@ export default function Layout(props) {
 
   // const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, tabChat } = useSelector((state) => state.chatReducer);
+  const { chatPopup, tabChat, badgechat,chatWorld } = useSelector((state) => state.chatReducer);
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
 
   const [showChat] = useState(true);
@@ -146,6 +147,10 @@ export default function Layout(props) {
     const socket = _socket;
     setSocket(socket);
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(showBadgeChat(false))
+  },[chatWorld])
 
   useEffect(() => {
     if (
@@ -505,6 +510,7 @@ export default function Layout(props) {
                   backgroundColor: "#68399E",
                   borderRadius: "50%",
                   padding: "3px 8px 6px 8px",
+                  position:"relative"
                 }}
               >
                 <svg
@@ -515,6 +521,7 @@ export default function Layout(props) {
                   viewBox="0 0 20 20"
                   onClick={() => {
                     dispatch(openChatPopup());
+                    dispatch(showBadgeChat(true))
                   }}
                   className="cursor-pointer"
                 >
@@ -527,6 +534,7 @@ export default function Layout(props) {
                     </g>
                   </g>
                 </svg>
+                <div className={badgechat === true ? "" : "badge-chat-des"}></div>
               </Box>
             ) : (
               <Box
