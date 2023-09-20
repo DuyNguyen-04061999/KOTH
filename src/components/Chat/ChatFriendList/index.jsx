@@ -339,7 +339,7 @@ export default function ChatFriendList() {
       <Box
         className="chat-content p-3"
         sx={{
-          overflow: "auto !important",
+          overflow: "hidden scroll !important",
           scrollbarWidth: "thin",
           backgroundColor: "#2e233d",
           "&::-webkit-scrollbar": {

@@ -41,7 +41,7 @@ export default function NewFooter() {
           }}
         >
           <Typography
-            sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px" }}
+            sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px", textAlign:"center" }}
           >
             Support
           </Typography>
@@ -147,7 +147,7 @@ export default function NewFooter() {
             marginBottom: "30px !important",
           }}
         >
-          Copyright © 2023 Play4Promo. All rights reserved. | Version 0.8
+          Copyright © 2023 Play4Promo. All rights reserved. | Version {process.env.REACT_APP_VERSION || "0.0"}
         </Typography>
       </Box>
     </Box>
