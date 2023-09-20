@@ -145,7 +145,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             flexDirection: "column",
           }}
         >
-          <span style={{fontSize:"10px"}}>Sponsor: Play4Promo</span>
+          <span style={{fontSize:"10px"}}>Sponsor:{tourInfo?.tournamentBrand?.brandName}</span>
           <Typography
             sx={{
               ...styleTypography,
