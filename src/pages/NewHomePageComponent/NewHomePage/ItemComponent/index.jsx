@@ -145,6 +145,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             flexDirection: "column",
           }}
         >
+          <span style={{fontSize:"10px"}}>Sponsor: Play4Promo</span>
           <Typography
             sx={{
               ...styleTypography,
@@ -175,7 +176,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width < 576 ? "20px" : "32px",
+              marginTop: width < 576 ? "10px" : "16px",
             }}
           >
             {isLoading ? (
