@@ -7,7 +7,15 @@ import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBan
 import moment from "moment";
 
 const BannerTour = (props) => {
-  const { tournamentName, sponsorName, userAvatar, userName, endTime, userScore } = props;
+  const {
+    tournamentName,
+    sponsorName,
+    userAvatar,
+    userName,
+    endTime,
+    userScore,
+    tourId,
+  } = props;
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   return (
@@ -114,7 +122,7 @@ const BannerTour = (props) => {
           </Box>
           <button
             onClick={() => {
-              navigate("/tournamentDetail/");
+              navigate(`/tournamentDetail/${tourId}`);
             }}
             style={{
               background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",

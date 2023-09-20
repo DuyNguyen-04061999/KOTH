@@ -17,6 +17,7 @@ const BannerTourMobile = (props) => {
     userName,
     endTime,
     userScore,
+    tourId,
   } = props;
   return (
     <Box
@@ -114,7 +115,7 @@ const BannerTourMobile = (props) => {
           </Box>
           <button
             onClick={() => {
-              navigate("/tournamentDetail/");
+              navigate(`/tournamentDetail/${tourId}`);
             }}
             style={{
               background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
