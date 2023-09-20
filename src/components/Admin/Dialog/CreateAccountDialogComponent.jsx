@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Dialog, TextField, Typography } from "@mui/material";
+import { Box, Button, Dialog, FormControl, MenuItem, OutlinedInput, Select, TextField, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const bg = "rgba(228, 228, 228, 0.2967)";
 export default function CreateAccountDialogComponent() {
   const { roles } = useSelector((state) => state.adminAuthReducer);
   const {isCreateEndUser, isCreateAgent} = useSelector((state) => state.adminAgentReducer);
-  const {isCreateSubDistributor} = useSelector(state => state.adminDistributorReducer);
+  const {isCreateSubDistributor, listSub} = useSelector(state => state.adminDistributorReducer);
   const {isCreateDistributor} = useSelector(state => state.adminMasterReducer);
   const userNameInput = useRef("");
   const userNicknameInput = useRef("");
@@ -27,11 +27,17 @@ export default function CreateAccountDialogComponent() {
   const [errorMessage, setErrorMessage] = useState("");
   const { isCreateDialog } = useSelector((state) => state.adminDialogReducer);
   const [isLoading, setIsLoading] = useState(false);
+  const [refAgent, setRefAgent] = useState("")
+
+  const handleChangeAgent = (e) => {
+    setRefAgent(e.target.value)
+  }
 
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(closeCreateDialog());
+    setRefAgent("")
   };
 
   const handleSubmit = (e) => {
@@ -40,6 +46,7 @@ export default function CreateAccountDialogComponent() {
       username: userNameInput.current.value,
       nickName: userNicknameInput.current.value,
       password: passInput.current.value,
+      agent: refAgent || ""
     };
     if (
       !accountInfo.username ||
@@ -105,7 +112,6 @@ export default function CreateAccountDialogComponent() {
   const onFocusCPassInput = () => setFocusedCPassInput(true);
   const onBlurCPassInput = () => setFocusedCPassInput(false);
 
-
   return (
     <Dialog
       open={isCreateDialog}
@@ -152,9 +158,43 @@ export default function CreateAccountDialogComponent() {
           </Box>
         </Box>
         <Box component={"form"} onSubmit={handleSubmit}>
+          {roles.includes("distributor") && (
+            <Box component={"div"} className="rounded" sx={{
+              backgroundColor: bg,
+              border: "2px solid transparent",
+            }}>
+              <Box component={"div"}>
+                <FormControl sx={{ width: "100%" }}>
+                  <Select
+                    sx={{
+                      color: "red !important",
+                      boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }
+                    }}
+                    className="pt-1 pb-1"
+                    labelId="list-agent-label"
+                    id="list-agent"
+                    value={refAgent}
+                    onChange={handleChangeAgent}
+                    input={<OutlinedInput label="Agent" />}
+                    renderValue={(selected) => <Box component={"div"} sx={{
+                      color: "#000 !important"
+                    }}>{selected}</Box>
+                      
+                    }
+                  >
+                    {listSub.map((option, i_o) => (
+                      <MenuItem key={i_o} value={option.account}>
+                        {option.account}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+          )}
           <Box
             component={"div"}
-            className="rounded p-2 ps-3 pe-3 mt-2"
+            className="rounded p-2 ps-3 pe-3 mt-3"
             sx={{
               backgroundColor: bg,
               border: focusedUserName
@@ -303,6 +343,7 @@ export default function CreateAccountDialogComponent() {
               onFocus={onFocusPassInput}
               onBlur={onBlurPassInput}
               placeholder="Login password"
+              autoComplete="Password"
             ></Box>
           </Box>
 
@@ -355,6 +396,7 @@ export default function CreateAccountDialogComponent() {
               onFocus={onFocusCPassInput}
               onBlur={onBlurCPassInput}
               placeholder="Confirm password"
+              autoComplete="Confirm password"
             ></Box>
           </Box>
 
