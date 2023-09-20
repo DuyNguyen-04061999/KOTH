@@ -47,9 +47,29 @@ const AdminNavigation = (props) => {
     //   link: "/master/provide-ticket",
     // },
     {
-      name: "Admin Structure",
+      name: "Create Distributor",
       icon: "",
       link: "/",
+    },
+    {
+      name: "Manage Distributor",
+      icon: "",
+      link: "/manage-distributor",
+    },
+    {
+      name: "Revenue by Date Range",
+      icon: "",
+      link: "/report",
+    },
+    {
+      name: "Totals",
+      icon: "",
+      link: "/total",
+    },
+    {
+      name: "Setting",
+      icon: "",
+      link: "/setting",
     },
   ];
   const distributorActions = [
@@ -66,9 +86,29 @@ const AdminNavigation = (props) => {
     //   link: "/distributor/provide-ticket",
     // },
     {
-      name: "Admin Structure",
+      name: "Create Agent",
       icon: "",
       link: "/",
+    },
+    {
+      name: "Manage Distributor",
+      icon: "",
+      link: "/manage-distributor",
+    },
+    {
+      name: "Revenue by Date Range",
+      icon: "",
+      link: "/report",
+    },
+    {
+      name: "Totals",
+      icon: "",
+      link: "/total",
+    },
+    {
+      name: "Setting",
+      icon: "",
+      link: "/setting",
     },
   ];
   const subDistributorActions = [

@@ -261,6 +261,7 @@ export default function Package() {
                                         //   ? "15px"
                                         //   : "",
                                         "15px",
+                                        mixBlendMode: "difference",
                                     }}
                                     playsInline
                                     muted
@@ -838,6 +839,7 @@ export default function Package() {
                                   //   ? "15px"
                                   //   : "",
                                   "15px",
+                                  mixBlendMode: "difference",
                               }}
                               playsInline
                               muted
