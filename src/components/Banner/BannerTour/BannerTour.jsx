@@ -29,6 +29,7 @@ const BannerTour = () => {
           backgroundPosition: "center",
           position: "relative",
           marginTop: "120px",
+          marginRight: "-30px",
         }}
       >
         <Typography
@@ -49,7 +50,12 @@ const BannerTour = () => {
         </Typography>
       </Box>
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginLeft: "-50px",
+        }}
       >
         <Box>
           <Typography
@@ -138,13 +144,24 @@ const BannerTour = () => {
       </Box>
       <Box
         sx={{
-          background: `url(${imageHome.BannerTourName})`,
-          width: "324px",
-          height: "138px",
+          width: "440px",
+          height: "100%",
           position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Box sx={{ width: "500px", height: "200px", display: "flex" }}>
+        <Box
+          sx={{
+            width: "500px",
+            height: "200px",
+            display: "flex",
+            position: "absolute",
+            top: "8%",
+            zIndex: 100,
+          }}
+        >
           <Box
             sx={{
               width: "140px",
@@ -153,32 +170,85 @@ const BannerTour = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
+              marginTop: "72px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: ":center",
             }}
-          ></Box>
+          >
+            <Box
+              sx={{
+                marginLeft: "8px",
+                marginTop: "-6px",
+                transform: "rotate(-4deg)",
+                textAlign: "center",
+              }}
+            >
+              {" "}
+              <Typography
+                sx={{
+                  textTransform: "uppercase",
+                  color: "#4A8ED7",
+                  fontSize: "16px",
+                  fontWeight: 800,
+                }}
+              >
+                Points
+              </Typography>
+              <Typography
+                sx={{
+                  textTransform: "uppercase",
+                  color: "#FD7E08",
+                  fontSize: "25px",
+                  fontWeight: 800,
+                }}
+              >
+                99999
+              </Typography>{" "}
+            </Box>
+          </Box>
           <Box
             sx={{
-              position: "relative",
-              width: "168px",
-              height: "180px",
-              border: "2px solid #f9d465",
-              overflow: "hidden",
-              marginLeft: "24px",
+              width: useWindowDimensions().width > 1024 ? "168px" : "158px",
+              height: useWindowDimensions().width > 1024 ? "187px" : "177px",
+              border: "2px solid  rgba(246,212,0,1)",
+              boxShadow: "0px 0px 0px 8px #f5c40c",
+              borderRadius: "16px",
+              transform: "rotate(-9.075deg)",
+              marginLeft: "12px",
             }}
           >
             <img
               style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
                 width: "100%",
                 height: "100%",
-                transform: "translate(-50%,-50%)",
                 objectFit: "cover",
               }}
               src={imageHome.BannerWinAva}
             ></img>
           </Box>
-          <Box></Box>
+          <Box
+            sx={{
+              marginLeft: "24px",
+              width: "94px",
+              height: "123px",
+              background: `url(${imageHome.BannerTourTop1})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></Box>
+        </Box>
+        <Box
+          sx={{
+            background: `url(${imageHome.BannerTourName})`,
+            width: "324px",
+            height: "137px",
+            position: "relative",
+            marginTop: "auto",
+            marginBottom: "20px",
+          }}
+        >
           <Typography
             sx={{
               position: "absolute",

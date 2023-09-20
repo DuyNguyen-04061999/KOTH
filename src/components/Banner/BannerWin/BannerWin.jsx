@@ -18,15 +18,15 @@ export default function BannerWin() {
     <Box
       sx={{
         background: `url(${imageHome.BannerWinBg})`,
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat:"no-repeat",
+        backgroundRepeat: "no-repeat",
         width: "100%",
         height: "349px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "0 6%",
+        padding: useWindowDimensions().width > 1024 ? "0 6%" : "0 2%",
       }}
     >
       <Box
@@ -34,47 +34,33 @@ export default function BannerWin() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginLeft: useWindowDimensions().width > 1200 ? "9%" : "4%",
+          marginLeft: useWindowDimensions().width > 1024 ? "9%" : "0",
         }}
       >
         <Box
           sx={{
-            width: "200px",
-            height: "200px",
-            border: "10px solid #f5c500",
+            width: useWindowDimensions().width > 1024 ? "182px" : "158px",
+            height: useWindowDimensions().width > 1024 ? "204px" : "177px",
+            border: "2px solid  rgba(246,212,0,1)",
+            boxShadow: "0px 0px 0px 8px #f5c40c",
             borderRadius: "16px",
           }}
         >
-          <Box
-            sx={{
-              position: "relative",
+          <img
+            style={{
               width: "100%",
               height: "100%",
-              border: "2px solid #f9d465",
-              overflow: "hidden",
+              objectFit: "cover",
             }}
-          >
-            <img
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%,-50%)",
-                width: "105%",
-                height: "105%",
-                objectFit: "cover",
-                borderRadius: "16px",
-              }}
-              src={imageHome.BannerWinAva}
-            ></img>
-          </Box>
+            src={imageHome.BannerWinAva}
+          ></img>
         </Box>
         <Box
           sx={{
             marginTop: "12px",
             border: "2px solid #7C81F2",
             borderRadius: "8px",
-            width: "229px",
+            width: useWindowDimensions().width > 1024 ? "229px" : "200px",
             height: "46px",
             display: "flex",
             flexDirection: "column",
@@ -107,8 +93,8 @@ export default function BannerWin() {
       >
         <Box
           sx={{
-            width: "405px",
-            height: "89px",
+            width: useWindowDimensions().width > 1024 ? "405px" : "300px",
+            height: useWindowDimensions().width > 1024 ? "89px" : "67px",
             backgroundImage: `url(${imageHome.BannerWinBig})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -122,7 +108,7 @@ export default function BannerWin() {
               top: "35%",
               left: "49%",
               transform: "translate(-50%,-50%)",
-              fontSize: "20px",
+              fontSize: useWindowDimensions().width > 1024 ? "20px" : "14px",
               fontWeight: 700,
               textTransform: "uppercase",
               color: "#C52A0E",
@@ -139,7 +125,7 @@ export default function BannerWin() {
               color: "white",
               fontWeight: 700,
               fontSize: "14px",
-              marginTop:"-8px"
+              marginTop: "-8px",
             }}
           >
             Sponsor by: Samsung
@@ -152,59 +138,61 @@ export default function BannerWin() {
             left: "50%",
             transform: "translate(-50%,-50%)",
             zIndex: 10,
-            width:"271px",
-            textTransform:"uppercase"
+            width: "271px",
+            textTransform: "uppercase",
           }}
         >
-          <Typography
+          <Box
             sx={{
               fontSize: "52px",
               color: "transparent",
               WebkitTextStroke: "4px #ED3B14",
               width: "100%",
               position: "relative",
-              fontWeight:800,
+              fontWeight: 800,
               wordWrap: "break-word",
-              textTransform:"uppercase"
+              textTransform: "uppercase",
+              lineHeight: 1.2,
             }}
           >
             Galaxy Z-Flip 5
             <Typography
               sx={{
-                fontWeight:800,
+                fontWeight: 800,
                 position: "absolute",
                 top: "50%",
-                left: "49%",
+                left: "48%",
                 transform: "translate(-50%,-50%)",
                 fontSize: "52px",
                 color: "white",
                 WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                 width: "100%",
-                wordWrap: "break-word"
+                wordWrap: "break-word",
+                lineHeight: 1.2,
               }}
             >
-            Galaxy Z-Flip 5
+              Galaxy Z-Flip 5
             </Typography>
-          </Typography>
+          </Box>
         </Box>
         <Box
           sx={{
-            width: "405px",
-            height: "105px",
+            width: useWindowDimensions().width > 1024 ? "405px" : "300px",
+            height: useWindowDimensions().width > 1024 ? "105px" : "78px",
             background: `url(${imageHome.BannerWinCeleb})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             position: "relative",
             marginTop: "96px",
             marginBottom: "24px",
-            wordWrap: "break-word"
+            wordWrap: "break-word",
           }}
         >
           <Typography
             sx={{
               position: "absolute",
               color: "#FFC56F",
-              fontSize: "19.714px",
+              fontSize:  useWindowDimensions().width > 1024 ? "19.714px" : "14px",
               fontWeight: 700,
               top: "75%",
               left: "50%",

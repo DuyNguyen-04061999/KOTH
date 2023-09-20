@@ -121,7 +121,7 @@ const BannerWinMobile = () => {
               textTransform: "uppercase",
             }}
           >
-            <Typography
+            <Box
               sx={{
                 fontSize: "30px",
                 color: "transparent",
@@ -152,7 +152,7 @@ const BannerWinMobile = () => {
               >
                 Galaxy Z-Flip 5
               </Typography>
-            </Typography>
+            </Box>
           </Box>
           <Box
             sx={{
