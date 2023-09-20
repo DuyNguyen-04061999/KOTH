@@ -276,7 +276,7 @@ export default function NewHomePage() {
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
                         return (
-                          <div key={index} >
+                          <div key={index}>
                             <ItemComponent
                               // key={index}
                               tourInfo={item}
@@ -331,7 +331,7 @@ export default function NewHomePage() {
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
                         return (
-                          <div key={index} >
+                          <div key={index}>
                             <ItemComponent
                               // key={index}
                               tourInfo={item}
