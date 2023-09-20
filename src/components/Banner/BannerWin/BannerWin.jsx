@@ -18,8 +18,9 @@ export default function BannerWin() {
     <Box
       sx={{
         background: `url(${imageHome.BannerWinBg})`,
-        backgroundSize: "cover",
+        backgroundSize: "contain",
         backgroundPosition: "center",
+        backgroundRepeat:"no-repeat",
         width: "100%",
         height: "349px",
         display: "flex",
@@ -62,6 +63,7 @@ export default function BannerWin() {
                 width: "105%",
                 height: "105%",
                 objectFit: "cover",
+                borderRadius: "16px",
               }}
               src={imageHome.BannerWinAva}
             ></img>

@@ -314,6 +314,7 @@ import bannerWinAround from "../assets/images/banners/bannerWin/banner_around.pn
 import bannerWinBgMobile from "../assets/images/banners/bannerWin/mobile/banner_win.png";
 import bannerWinBigMobile from "../assets/images/banners/bannerWin/mobile/1111_111111112.png";
 import bannerWinCelebMobile from "../assets/images/banners/bannerWin/mobile/group_193.png";
+import bannerWinAroundMobile from "../assets/images/banners/bannerWin/mobile/around.png"
 
 
 export const imageHome = {
@@ -347,6 +348,7 @@ export const imageHome = {
   BannerWinBgMobile: bannerWinBgMobile,
   BannerWinBigMobile: bannerWinBigMobile,
   BannerWinCelebMobile: bannerWinCelebMobile,
+  BannerWinAroundMobile: bannerWinAroundMobile,
 };
 
 
