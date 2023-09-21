@@ -125,8 +125,11 @@ export default function SlickSlider(props) {
                       objectFit: "cover",
                     }}
                     component={"img"}
-                    src={item?.tournamentBackground
+                    src={(width < 576 && item?.tournamentBackgroundMobile)
                       ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        item?.tournamentBackgroundMobile
+                      : item?.tournamentBackground ? process.env.REACT_APP_SOCKET_SERVER +
                         "/" +
                         item?.tournamentBackground
                       : getImage(item)}
