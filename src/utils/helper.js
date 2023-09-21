@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const convertToVietnameseWithAccent = (text) => {
     const unicodeTable = {
       'a': 'áàảãạăắằẳẵặâấầẩẫậ',
@@ -55,13 +57,18 @@ function sliceString(str) {
   return str
 }
 
+function formatTimeMothDateYear(time) {
+  return moment(time).format("MM/DD/YYYY hh:mm a")
+}
+
 export {
     convertToVietnameseWithAccent,
     getUniqueID,
     formatMoney,
     getAppType,
     isJson,
-    sliceString
+    sliceString,
+    formatTimeMothDateYear
 }
 
 

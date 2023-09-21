@@ -31,7 +31,7 @@ import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { isJson, sliceString } from "../../../utils/helper";
+import { formatTimeMothDateYear, isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
@@ -442,7 +442,7 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          timeStart
+                          formatTimeMothDateYear(detailTournament?.tournamentStartAt)
                         )}
                       </Typography>
                     </Box>
@@ -490,7 +490,7 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          timeEnd
+                          formatTimeMothDateYear(detailTournament?.tournamentEndAt)
                         )}
                       </Typography>
                     </Box>
