@@ -4,15 +4,18 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
-import { Typography } from "@mui/material";
+import { LinearProgress, Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-
+import { useRef } from "react";
+import { Line } from "rc-progress";
 export default function VideoComponent(props) {
   const { detailTournament, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
   const [second, setSeconds] = useState(null);
+  const [progress, setProgress] = useState(null);
+  const videoRef = useRef(null);
   useEffect(() => {
     let timeInterval = setInterval(() => {
       if (second > 0) {
@@ -23,13 +26,24 @@ export default function VideoComponent(props) {
       clearInterval(timeInterval);
     };
   }, [second]);
+  const showCurrentTime = (id, { current: videoDom }) => {
+    setProgress((videoDom?.currentTime / videoDom?.duration) * 100);
+  };
+  useEffect(() => {
+    videoRef.current.addEventListener("timeupdate", () => {
+      showCurrentTime("", videoRef);
+    });
+  }, []);
+  progress && console.log("progress: ", Math.round(progress));
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
         height: "100%",
+        position: "relative",
       }}
     >
       <Box
@@ -39,10 +53,10 @@ export default function VideoComponent(props) {
           left: "0px",
         }}
       >
-        {" "}
         <video
           autoPlay={true}
           width={"100%"}
+          ref={videoRef}
           playsInline
           muted
           onPlay={() => {
@@ -109,6 +123,26 @@ export default function VideoComponent(props) {
             ></i>
           </Box>
         )}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
+            bottom: "50px",
+          }}
+        >
+          {" "}
+          {progress && (
+            <Line
+              style={{ width: "98%" }}
+              trailWidth={0.5}
+              strokeWidth={0.5}
+              percent={progress}
+              strokeColor="#2db7f5"
+            />
+          )}
+        </Box>
       </Box>
     </Box>
   );
