@@ -12,7 +12,6 @@ export default function VideoComponent(props) {
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
-
   const [second, setSeconds] = useState(null);
   useEffect(() => {
     let timeInterval = setInterval(() => {

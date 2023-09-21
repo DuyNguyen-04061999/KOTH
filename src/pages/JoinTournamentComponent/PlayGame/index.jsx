@@ -134,9 +134,7 @@ export default function PlayGame(props) {
                 src={
                   process.env.REACT_APP_IFRAME_URL +
                   "/play-game-tournament/" +
-                  id +
-                  "/" +
-                  localStorage.getItem("token")
+                  id
                 }
               ></iframe>
             </Box>
