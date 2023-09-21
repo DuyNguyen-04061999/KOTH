@@ -145,9 +145,29 @@ const AdminNavigation = (props) => {
     //   link: "/agent/provide-ticket",
     // },
     {
-      name: "User Manager",
+      name: "Play Management",
       icon: "",
       link: "/",
+    },
+    {
+      name: "Agents Management",
+      icon: "",
+      link: "/manage-distributor",
+    },
+    {
+      name: "Revenue by Date Range",
+      icon: "",
+      link: "/report",
+    },
+    {
+      name: "Totals",
+      icon: "",
+      link: "/total",
+    },
+    {
+      name: "Setting",
+      icon: "",
+      link: "/setting",
     },
   ];
 
