@@ -171,14 +171,14 @@ const BannerTour = (props) => {
               backgroundPosition: "center",
               marginTop: "72px",
               display: "flex",
-              alignItems: "center",
-              justifyContent: ":center",
+              justifyContent:"center",
+              alignItems:"center",
             }}
           >
             <Box
               sx={{
-                marginLeft: "8px",
                 marginTop: "-6px",
+                marginRight:"30px",
                 transform: "rotate(-4deg)",
                 textAlign: "center",
               }}

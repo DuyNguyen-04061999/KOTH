@@ -1455,8 +1455,7 @@ export default function NewHomePage() {
                       hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
                     : images.pool
                 }
-                tourId={biggestEndTour && biggestEndTour?.endTour
-                  && biggestEndTour?.endTour?.id}
+                tourId={hotWeekTour && hotWeekTour?.id}
               />
             )
           ) : isFetching ? (
@@ -1668,8 +1667,7 @@ export default function NewHomePage() {
                     hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
                   : images.pool
               }
-              tourId={biggestEndTour && biggestEndTour?.endTour
-                && biggestEndTour?.endTour?.id}
+              tourId={hotWeekTour && hotWeekTour?.id}
             />
           )}
           <FullListTournament
