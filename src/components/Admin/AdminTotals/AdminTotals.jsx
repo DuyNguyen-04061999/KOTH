@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export default function AdminTotals() {
   const database = [
@@ -56,7 +57,11 @@ export default function AdminTotals() {
             ""
           )}
           <Box sx={{ display: "flex" }}>
-            <ArrowDropUpIcon color="success" />
+            {index === 3 ? (
+                <ArrowDropDownIcon color="error"/>
+            ) : (
+                <ArrowDropUpIcon color="success" />
+            )}
             <Typography color={"green"} sx={{ marginLeft: "0px !important" }}>
               {e?.profit}
             </Typography>
