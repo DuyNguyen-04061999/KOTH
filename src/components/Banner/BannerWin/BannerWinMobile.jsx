@@ -69,7 +69,7 @@ const BannerWinMobile = (props) => {
             fontWeight: 700,
           }}
         >
-          Sponsor by: {sponsorName}
+          Sponsor by: {sponsorName || "Play4Promo"}
         </Typography>
       </Box>
       <Box
@@ -101,7 +101,7 @@ const BannerWinMobile = (props) => {
                 height: "100%",
                 objectFit: "cover",
               }}
-              src={userAvatar}
+              src={userAvatar || imageHome.BannerWinAva}
             ></img>
           </Box>
           <Box>
@@ -114,7 +114,7 @@ const BannerWinMobile = (props) => {
                 marginTop: "8px",
               }}
             >
-              {userName}
+              {userName || "SUPER_"}
             </Typography>
           </Box>
         </Box>
@@ -142,9 +142,10 @@ const BannerWinMobile = (props) => {
                 lineHeight: "1.5",
                 height: "100px",
                 overflow: "hidden",
+                textAlign:"center",
               }}
             >
-              {tournamentName}
+              {tournamentName || "Tournament Name"}
               <Typography
                 sx={{
                   fontWeight: 800,
@@ -159,9 +160,10 @@ const BannerWinMobile = (props) => {
                   lineHeight: "1.5",
                   height: "100px",
                   overflow: "hidden",
+                  textAlign:"center",
                 }}
               >
-                {tournamentName}
+                {tournamentName || "Tournament Name"}
               </Typography>
             </Box>
           </Box>
