@@ -306,6 +306,16 @@ function App() {
               // width < 576 ? "warning-background-small" : "warning-background",
               "warning-background"
           });
+          localStorage.removeItem("NAME");
+          localStorage.removeItem("PASS");
+          localStorage.removeItem("KE");
+          localStorage.removeItem("token");
+          store.dispatch(logoutSuccessFully("logoutSuccess"));
+          store.dispatch(gameLogoutSuccessFully());
+          store.dispatch(chatLogoutSuccessFully());
+          store.dispatch(profileLogoutSuccessFully());
+          store.dispatch(paymentLogoutSuccessFully());
+          store.dispatch(walletLogoutSuccessFully());
         }
       });
 
