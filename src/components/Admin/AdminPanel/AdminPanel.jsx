@@ -1,15 +1,5 @@
-import {
-  Box,
-  Button,
-  Collapse,
-  Container,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Collapse, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import moment from "moment";
@@ -21,6 +11,7 @@ import {
   openProvideDialog,
 } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
+import SearchBar from "../SearchBar/SearchBar";
 
 const AdminPanel = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -29,116 +20,81 @@ const AdminPanel = () => {
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
-
+  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = useState("");
   const { width } = useWindowDimensions();
-  const SearchBar = ({ setSearchQuery }) => {
-    const dispatch = useDispatch();
 
-    const [searchValue, setSearchValue] = useState("");
-    const handleChangeSearch = (e) => {
-      setSearchValue(e?.target?.value);
-    };
+  const handleChangeSearch = (e) => {
+    setSearchValue(e?.target?.value);
+  };
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (searchValue) {
-        if (roles && roles?.length > 0 && roles?.includes("master")) {
-          const listFilter = listDistributor?.filter(
-            (item) =>
-              item?.account === String(searchValue)?.toLowerCase() ||
-              item?.account?.includes(String(searchValue)?.toLowerCase())
-          );
-          if (listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]));
-            if (width < 576) {
-              dispatch(openDetailDialog());
-            }
-          } else {
-            dispatch(updateDetailAccount());
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchValue) {
+      if (roles && roles?.length > 0 && roles?.includes("master")) {
+        const listFilter = listDistributor?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
           }
-        }
-
-        if (roles && roles?.length > 0 && roles?.includes("distributor")) {
-          const listFilter = listSub?.filter(
-            (item) =>
-              item?.account === String(searchValue)?.toLowerCase() ||
-              item?.account?.includes(String(searchValue)?.toLowerCase())
-          );
-          if (listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]));
-            if (width < 576) {
-              dispatch(openDetailDialog());
-            }
-          } else {
-            dispatch(updateDetailAccount());
-          }
-        }
-
-        if (roles && roles?.length > 0 && roles?.includes("sub_distributor")) {
-          const listFilter = listRefs?.filter(
-            (item) =>
-              item?.account === String(searchValue)?.toLowerCase() ||
-              item?.account?.includes(String(searchValue)?.toLowerCase())
-          );
-          if (listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]));
-            if (width < 576) {
-              dispatch(openDetailDialog());
-            }
-          } else {
-            dispatch(updateDetailAccount());
-          }
-        }
-
-        if (roles && roles?.length > 0 && roles?.includes("agent")) {
-          const listFilter = listEndUser?.filter(
-            (item) =>
-              item?.account === String(searchValue)?.toLowerCase() ||
-              item?.account?.includes(String(searchValue)?.toLowerCase())
-          );
-          if (listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]));
-            if (width < 576) {
-              dispatch(openDetailDialog());
-            }
-          } else {
-            dispatch(updateDetailAccount());
-          }
+        } else {
+          dispatch(updateDetailAccount());
         }
       }
-    };
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <Box
-          sx={{
-            border: "2px solid #5474F1",
-            borderRadius: "16px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "0 16px",
-            marginTop: { xs: "14px" },
-          }}
-        >
-          <TextField
-            id="search-bar"
-            className="text"
-            placeholder="Account"
-            variant="standard"
-            value={searchValue}
-            InputProps={{
-              disableUnderline: true, // <== added this
-            }}
-            onChange={handleChangeSearch}
-            sx={{ width: { xs: "100%", sm: "50%" } }}
-          />
-          <IconButton type="submit" aria-label="search" onClick={handleSubmit}>
-            <SearchIcon style={{ fill: "black" }} />
-          </IconButton>
-        </Box>
-      </form>
-    );
+      if (roles && roles?.length > 0 && roles?.includes("distributor")) {
+        const listFilter = listSub?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
+          }
+        } else {
+          dispatch(updateDetailAccount());
+        }
+      }
+
+      if (roles && roles?.length > 0 && roles?.includes("sub_distributor")) {
+        const listFilter = listRefs?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
+          }
+        } else {
+          dispatch(updateDetailAccount());
+        }
+      }
+
+      if (roles && roles?.length > 0 && roles?.includes("agent")) {
+        const listFilter = listEndUser?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
+          }
+        } else {
+          dispatch(updateDetailAccount());
+        }
+      }
+    }
   };
 
   const ProvideTicketSVG = () => {
@@ -160,8 +116,6 @@ const AdminPanel = () => {
     );
   };
 
-  const dispatch = useDispatch();
-
   const handleActive = () => {
     if (detailAccount) {
       dispatch(
@@ -174,7 +128,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <Box sx={{ marginTop: "80px" }}>
+    <Box sx={{ marginTop: "60px" }}>
       <DetailAccountDialogComponent />
       <Typography
         sx={{
@@ -213,7 +167,11 @@ const AdminPanel = () => {
             flexDirection: { xs: "column-reverse", sm: "row" },
           }}
         >
-          <SearchBar></SearchBar>
+          <SearchBar
+            searchValue={searchValue}
+            onChange={handleChangeSearch}
+            onSubmit={handleSubmit}
+          ></SearchBar>
           <Box sx={{ marginLeft: "auto" }}>
             <Button
               children={"Create Account"}

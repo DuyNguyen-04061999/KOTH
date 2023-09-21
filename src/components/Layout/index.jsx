@@ -214,15 +214,7 @@ export default function Layout(props) {
     }
   }, []);
 
-  useEffect(() => {
-    // if (tabChat === true) {
-    //   setBackgroundGlobal("#883AF0");
-    //   setBackgroundPrivate("#261a35");
-    // } else {
-    //   setBackgroundGlobal("#261a35");
-    //   setBackgroundPrivate("#883AF0");
-    // }
-  }, [tabChat]);
+
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
