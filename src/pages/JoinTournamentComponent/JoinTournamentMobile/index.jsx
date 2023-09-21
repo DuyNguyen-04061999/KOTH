@@ -22,7 +22,7 @@ import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { isJson, sliceString } from "../../../utils/helper";
+import { formatTimeMothDateYear, isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -227,10 +227,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 Start
               </Typography>
               <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
-                {moment(detailTournament?.tournamentStartAt).format(
-                  "DD/MM/YYYY"
-                )}
-                -{moment(detailTournament?.tournamentStartAt).format("hh:mm a")}
+                {formatTimeMothDateYear(detailTournament?.tournamentStartAt)}
               </Typography>
             </Box>
             <Box
@@ -245,8 +242,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 Finish
               </Typography>
               <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
-                {moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY")}
-                -{moment(detailTournament?.tournamentEndAt).format("hh:mm a")}
+                {formatTimeMothDateYear(detailTournament?.tournamentEndAt)}
               </Typography>
             </Box>
           </Box>
