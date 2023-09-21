@@ -543,7 +543,7 @@ export default function PlayGame(props) {
                         >
                           <img
                             style={{
-                              width: "85px",
+                              width: "40px",
                               position: "absolute",
                               left: "20px",
                             }}
