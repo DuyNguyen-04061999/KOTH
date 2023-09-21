@@ -1,21 +1,17 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import moment from "moment";
 import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 import DetailAccountDialogComponent from "../Dialog/DetailAccountDialogComponent";
-import { openCreateDialog, openDetailDialog, openProvideDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import {
+  openCreateDialog,
+  openDetailDialog,
+  openProvideDialog,
+} from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
+import SearchBar from "../SearchBar/SearchBar";
 
 const AdminPanel = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -24,102 +20,81 @@ const AdminPanel = () => {
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
-
+  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = useState("");
   const { width } = useWindowDimensions();
-  const SearchBar = ({ setSearchQuery }) => {
-    const dispatch = useDispatch()
 
-    const [searchValue, setSearchValue] = useState("")
-    const handleChangeSearch = (e) => {
-      setSearchValue(e?.target?.value)
-    }
+  const handleChangeSearch = (e) => {
+    setSearchValue(e?.target?.value);
+  };
 
-    const handleSubmit = (e) => {
-      e.preventDefault()
-      if(searchValue) {
-        if(roles && roles?.length > 0 && roles?.includes("master")) {
-          const listFilter = listDistributor?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
-          if(listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]))
-            if(width < 576) {
-              dispatch(openDetailDialog())
-            }
-          } else {
-            dispatch(updateDetailAccount())
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchValue) {
+      if (roles && roles?.length > 0 && roles?.includes("master")) {
+        const listFilter = listDistributor?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
           }
+        } else {
+          dispatch(updateDetailAccount());
         }
-  
-        if(roles && roles?.length > 0 && roles?.includes("distributor")) {
-          const listFilter = listSub?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
-          if(listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]))
-            if(width < 576) {
-              dispatch(openDetailDialog())
-            }
-          } else {
-            dispatch(updateDetailAccount())
-          }
-        }
-  
-        if(roles && roles?.length > 0 && roles?.includes("sub_distributor")) {
-          const listFilter = listRefs?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
-          if(listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]))
-            if(width < 576) {
-              dispatch(openDetailDialog())
-            }
-          } else {
-            dispatch(updateDetailAccount())
-          }
-        }
-  
-        if(roles && roles?.length > 0 && roles?.includes("agent")) {
-          const listFilter = listEndUser?.filter(item => item?.account === String(searchValue)?.toLowerCase() || item?.account?.includes(String(searchValue)?.toLowerCase()))
-          if(listFilter && listFilter?.length > 0) {
-            dispatch(updateDetailAccount(listFilter[0]))
-            if(width < 576) {
-              dispatch(openDetailDialog())
-            }
-          } else {
-            dispatch(updateDetailAccount())
-          }
-        }
-
       }
-      
-    }
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <Box
-          sx={{
-            border: "2px solid #5474F1",
-            borderRadius: "16px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "0 16px",
-            marginTop: { xs: "14px" },
-          }}
-        >
-          <TextField
-            id="search-bar"
-            className="text"
-            placeholder="Account"
-            variant="standard"
-            value={searchValue}
-            InputProps={{
-              disableUnderline: true, // <== added this
-            }}
-            onChange={handleChangeSearch}
-            sx={{ width: { xs: "100%", sm: "50%" } }}
-          />
-          <IconButton type="submit" aria-label="search" onClick={handleSubmit}>
-            <SearchIcon style={{ fill: "black" }} />
-          </IconButton>
-        </Box>
-      </form>
-    )
+      if (roles && roles?.length > 0 && roles?.includes("distributor")) {
+        const listFilter = listSub?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
+          }
+        } else {
+          dispatch(updateDetailAccount());
+        }
+      }
+
+      if (roles && roles?.length > 0 && roles?.includes("sub_distributor")) {
+        const listFilter = listRefs?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
+          }
+        } else {
+          dispatch(updateDetailAccount());
+        }
+      }
+
+      if (roles && roles?.length > 0 && roles?.includes("agent")) {
+        const listFilter = listEndUser?.filter(
+          (item) =>
+            item?.account === String(searchValue)?.toLowerCase() ||
+            item?.account?.includes(String(searchValue)?.toLowerCase())
+        );
+        if (listFilter && listFilter?.length > 0) {
+          dispatch(updateDetailAccount(listFilter[0]));
+          if (width < 576) {
+            dispatch(openDetailDialog());
+          }
+        } else {
+          dispatch(updateDetailAccount());
+        }
+      }
+    }
   };
 
   const ProvideTicketSVG = () => {
@@ -141,26 +116,30 @@ const AdminPanel = () => {
     );
   };
 
-  const dispatch = useDispatch()
-
   const handleActive = () => {
-    if(detailAccount) {
-      dispatch(activeAccount({
-        accountName: detailAccount?.account,
-        active: detailAccount?.status ? 0 : 1
-      }))
+    if (detailAccount) {
+      dispatch(
+        activeAccount({
+          accountName: detailAccount?.account,
+          active: detailAccount?.status ? 0 : 1,
+        })
+      );
     }
-  }
+  };
 
   return (
-    <Box sx={{marginTop:"80px"}}>
-      <DetailAccountDialogComponent/>
-        <Typography
-          sx={{ textAlign: "start",fontWeight: {xs: 700, sm: 600} ,fontSize: {xs: "20px", sm: "24px"} }}
-        >
-          {width < 576
-            ? `${roles?.includes("agent") ? "User Manager" : "Admin Structure"}`
-            : `Welcome
+    <Box sx={{ marginTop: "80px" }}>
+      <DetailAccountDialogComponent />
+      <Typography
+        sx={{
+          textAlign: "start",
+          fontWeight: { xs: 700, sm: 600 },
+          fontSize: { xs: "20px", sm: "24px" },
+        }}
+      >
+        {width < 576
+          ? `${roles?.includes("agent") ? "User Manager" : "Admin Structure"}`
+          : `Welcome
             ${
               roles?.includes("master")
                 ? "Master"
@@ -170,206 +149,284 @@ const AdminPanel = () => {
                 ? "Sub Distributor"
                 : "Agent"
             } Account`}
-        </Typography>
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          border: { xs: "unset", sm: "2px solid #E4E4E4" },
+          borderRadius: "16px",
+          padding: "18px",
+          marginTop: { xs: "-52px", sm: "24px" },
+        }}
+      >
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            border: { xs: "unset", sm: "2px solid #E4E4E4" },
-            borderRadius: "16px",
-            padding: "18px",
-            marginTop: { xs: "-52px", sm: "24px" },
+            justifyContent: "space-between",
+            flexDirection: { xs: "column-reverse", sm: "row" },
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              flexDirection: { xs: "column-reverse", sm: "row" },
-            }}
-          >
-            <SearchBar></SearchBar>
-            <Box sx={{ marginLeft: "auto" }}>
-              <Button
-                children={"Create Account"}
-                onClick={() => dispatch(openCreateDialog())}
-                sx={{
-                  padding: { xs: "4px 14px", sm: "16px 34px" },
-                  backgroundColor: "#355DFF",
-                  borderRadius: { xs: "10px", sm: "16px" },
-                  color: "white",
-                  fontWeight: 700,
-                  fontSize: "14px",
-                  textTransform: "unset",
-                  ":hover": { backgroundColor: "#355DFF" },
-                }}
-              ></Button>
-            </Box>
+          <SearchBar
+            searchValue={searchValue}
+            onChange={handleChangeSearch}
+            onSubmit={handleSubmit}
+          ></SearchBar>
+          <Box sx={{ marginLeft: "auto" }}>
+            <Button
+              children={"Create Account"}
+              onClick={() => dispatch(openCreateDialog())}
+              sx={{
+                padding: { xs: "4px 14px", sm: "16px 34px" },
+                backgroundColor: "#355DFF",
+                borderRadius: { xs: "10px", sm: "16px" },
+                color: "white",
+                fontWeight: 700,
+                fontSize: "14px",
+                textTransform: "unset",
+                ":hover": { backgroundColor: "#355DFF" },
+              }}
+            ></Button>
           </Box>
-          {detailAccount && (
+        </Box>
+        {detailAccount && (
+          <Grid
+            container
+            sx={(theme) => ({
+              border: "2px solid #E4E4E4",
+              borderRadius: "16px",
+              marginTop: "24px",
+              display: { xs: "none", sm: "grid" },
+              gridTemplateColumns: "repeat(8,1fr)",
+              [theme.breakpoints.down("lg")]: {
+                gridTemplateColumns: "repeat(4,1fr)",
+              },
+            })}
+          >
             <Grid
-              container
-              sx={(theme)=> ({
-                border: "2px solid #E4E4E4",
-                borderRadius: "16px",
-                marginTop: "24px",
-                display: { xs: "none", sm: "grid" },
-                gridTemplateColumns: "repeat(8,1fr)",
-                [theme.breakpoints.down("lg")]: {gridTemplateColumns:  "repeat(4,1fr)"}
+              sx={(theme) => ({
+                padding: "24px",
+                [theme.breakpoints.up("lg")]: {
+                  borderRight: "2px solid #E4E4E4",
+                },
               })}
             >
-              <Grid
-                sx={(theme)=> ({
-                  padding: "24px",
-                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
-                })}
-              >
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center"}}
-                >
-                  Account
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
-                  {detailAccount?.account || ""}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={(theme)=> ({
-                  padding: "24px",
-                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
-                })}
-              >
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
-                >
-                  Level
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
-                {detailAccount?.level || ""}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={(theme)=> ({
-                  padding: "24px",
-                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
-                })}
-              >
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
-                >
-                  Revenue
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
-                  _
-                </Typography>
-              </Grid>
-              <Grid
-                sx={(theme)=> ({
-                  padding: "24px",
-                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
-                })}
-              >
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
-                >
-                  Ticket
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
-                  {detailAccount?.ticket || 0}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={(theme)=> ({
-                  padding: "24px",
-                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
-                })}
-              >
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
-                >
-                  RefCode
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
-                  {detailAccount?.ref || ""}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={(theme)=> ({
-                  padding: "24px",
-                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
-                })}
-              >
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
-                >
-                  Register Date
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
-                  {detailAccount?.date ? moment(detailAccount?.date).format('ll') : ""}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={(theme)=> ({
-                  padding: "24px",
-                  [theme.breakpoints.up("lg")]: {borderRight: "2px solid #E4E4E4"}
-                })}
-              >
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
-                >
-                  Amount Account
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "14px",textAlign: "center" }}>
-                  {detailAccount?.amount || 0}
-                </Typography>
-              </Grid>
-              <Grid sx={{ padding: "24px", flex: 1 }}>
-                <Typography
-                  sx={{ fontWeight: 500, fontSize: "12px", color: "#808191",textAlign: "center" }}
-                >
-                  Status
-                </Typography>
-                <Button
-                  onClick={handleActive}
-                  children={detailAccount?.status ? "Active" : "Prohibit"}
-                  sx={{
-                    fontSize: "14px",
-                    borderRadius: "16px",
-                    padding: "2px 16px",
-                    bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
-                    color: "#FFF",
-                    fontWeight: 700,
-                    marginTop: "12px",
-                    textTransform: "unset",
-                    ":hover": {
-                      backgroundColor: detailAccount?.status ? "#355DFF" : "#FF4135",
-                    },
-                  }}
-                />
-              </Grid>
-            </Grid>
-          )}
-          {detailAccount && (
-            <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
-              <Button
-                onClick={() => dispatch(openProvideDialog())}
+              <Typography
                 sx={{
-                  backgroundColor: "#FF9F38",
-                  fontWeight: 700,
-                  fontSize: "14px",
-                  textTransform: "unset",
-                  color: "white",
-                  padding: "8px 24px",
-                  borderRadius: "16px",
-                  ":hover": { backgroundColor: "#FF9F38" },
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
                 }}
               >
-                <ProvideTicketSVG></ProvideTicketSVG>
-                Provide Ticket
-              </Button>
-            </Box>
-          )}
-        </Box>
+                Account
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+              >
+                {detailAccount?.account || ""}
+              </Typography>
+            </Grid>
+            <Grid
+              sx={(theme) => ({
+                padding: "24px",
+                [theme.breakpoints.up("lg")]: {
+                  borderRight: "2px solid #E4E4E4",
+                },
+              })}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
+                }}
+              >
+                Level
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+              >
+                {detailAccount?.level || ""}
+              </Typography>
+            </Grid>
+            <Grid
+              sx={(theme) => ({
+                padding: "24px",
+                [theme.breakpoints.up("lg")]: {
+                  borderRight: "2px solid #E4E4E4",
+                },
+              })}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
+                }}
+              >
+                Revenue
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+              >
+                _
+              </Typography>
+            </Grid>
+            <Grid
+              sx={(theme) => ({
+                padding: "24px",
+                [theme.breakpoints.up("lg")]: {
+                  borderRight: "2px solid #E4E4E4",
+                },
+              })}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
+                }}
+              >
+                Ticket
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+              >
+                {detailAccount?.ticket || 0}
+              </Typography>
+            </Grid>
+            <Grid
+              sx={(theme) => ({
+                padding: "24px",
+                [theme.breakpoints.up("lg")]: {
+                  borderRight: "2px solid #E4E4E4",
+                },
+              })}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
+                }}
+              >
+                RefCode
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+              >
+                {detailAccount?.ref || ""}
+              </Typography>
+            </Grid>
+            <Grid
+              sx={(theme) => ({
+                padding: "24px",
+                [theme.breakpoints.up("lg")]: {
+                  borderRight: "2px solid #E4E4E4",
+                },
+              })}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
+                }}
+              >
+                Register Date
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+              >
+                {detailAccount?.date
+                  ? moment(detailAccount?.date).format("ll")
+                  : ""}
+              </Typography>
+            </Grid>
+            <Grid
+              sx={(theme) => ({
+                padding: "24px",
+                [theme.breakpoints.up("lg")]: {
+                  borderRight: "2px solid #E4E4E4",
+                },
+              })}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
+                }}
+              >
+                Amount Account
+              </Typography>
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+              >
+                {detailAccount?.amount || 0}
+              </Typography>
+            </Grid>
+            <Grid sx={{ padding: "24px", flex: 1 }}>
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  color: "#808191",
+                  textAlign: "center",
+                }}
+              >
+                Status
+              </Typography>
+              <Button
+                onClick={handleActive}
+                children={detailAccount?.status ? "Active" : "Prohibit"}
+                sx={{
+                  fontSize: "14px",
+                  borderRadius: "16px",
+                  padding: "2px 16px",
+                  bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
+                  color: "#FFF",
+                  fontWeight: 700,
+                  marginTop: "12px",
+                  textTransform: "unset",
+                  ":hover": {
+                    backgroundColor: detailAccount?.status
+                      ? "#355DFF"
+                      : "#FF4135",
+                  },
+                }}
+              />
+            </Grid>
+          </Grid>
+        )}
+        {detailAccount && (
+          <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
+            <Button
+              onClick={() => dispatch(openProvideDialog())}
+              sx={{
+                backgroundColor: "#FF9F38",
+                fontWeight: 700,
+                fontSize: "14px",
+                textTransform: "unset",
+                color: "white",
+                padding: "8px 24px",
+                borderRadius: "16px",
+                ":hover": { backgroundColor: "#FF9F38" },
+              }}
+            >
+              <ProvideTicketSVG></ProvideTicketSVG>
+              Provide Ticket
+            </Button>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };
