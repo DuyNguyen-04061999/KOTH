@@ -11,14 +11,21 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const DrawerNavigation = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  
+
   const MenuIconOpenSVG = () => {
     return (
-      <Box sx={{transform: mobileOpen && "rotate(180deg)",width: "40px", height:"40px"}}>
+      <Box
+        sx={{
+          transform: mobileOpen && "rotate(180deg)",
+          width: "40px",
+          height: "40px",
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="22"
@@ -68,12 +75,17 @@ const DrawerNavigation = (props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{height: "100%"}}>
+    <Box sx={{ height: "100%" }}>
       <CssBaseline />
       <AppBar
-        sx={{ display: { sm: "none" }, boxShadow: "unset" }}
-        color="transparent"
-        component="nav"
+        sx={(theme) => ({
+          [theme.breakpoints.up("lg")]: {
+            display: "none",
+          },
+          boxShadow:"unset",
+          backgroundColor:"transparent", 
+          position: "absolute"
+        })}
       >
         <Toolbar>
           <IconButton
@@ -87,7 +99,7 @@ const DrawerNavigation = (props) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <nav style={{height: "100%"}}>
+      <nav style={{ height: "100%" }}>
         <Box>
           <Drawer
             container={container}
@@ -104,21 +116,26 @@ const DrawerNavigation = (props) => {
               },
             }}
           >
-            <Box sx={{position: "relative", height: "100%" }}>
-            <AdminNavigation />
+            <Box sx={{ position: "relative", height: "100%" }}>
+              <AdminNavigation />
               <IconButton
                 color="#000"
                 aria-label="close drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                style={{ position: "fixed", top: 0, right: 0}}
+                style={{ position: "absolute", top: 0, right: 0 }}
               >
                 <MenuIconOpenSVG />
               </IconButton>
             </Box>
           </Drawer>
         </Box>
-        <Box sx={{ display: { xs: "none", sm: "block", height: "100%"} }}>
+        <Box
+          sx={(theme) => ({
+            [theme.breakpoints.down("lg")]: { display: "none" },
+            height: "100%",
+          })}
+        >
           <AdminNavigation />
         </Box>
       </nav>

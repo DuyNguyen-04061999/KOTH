@@ -61,7 +61,7 @@ export default function SlickSlider(props) {
   function getImage(item) {
     const name = item?.tournamentBrand?.brandName || "";
 
-    if (name?.includes("Samsung")) {
+    if (name?.includes("Play 4 Promo")) {
       if (width < 576) return images?.bn5;
       else return images?.bn3;
     } else if (name?.includes("Dr Pepper")) {
@@ -125,7 +125,11 @@ export default function SlickSlider(props) {
                       objectFit: "cover",
                     }}
                     component={"img"}
-                    src={getImage(item)}
+                    src={item?.tournamentBackground
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        item?.tournamentBackground
+                      : getImage(item)}
                   ></Box>
                 </Box>
               );

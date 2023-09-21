@@ -24,166 +24,63 @@ export default function CountDownBannerHot({
   }, [expiryTime]);
   return width < 576 ? (
     <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Box
+      <Typography
         sx={{
-          padding: "4px",
-          borderRadius: "5px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "rgba(139, 31, 207, 0.3)",
+          fontSize: "10px",
+          color: "white",
+          marginLeft: "0px !important",
         }}
       >
-        <Typography
-          sx={{
-            fontSize: "10px",
-            color: "#00CBEF",
-            marginLeft: "0px !important",
-          }}
-        >
-          {days && days}d
-        </Typography>
-      </Box>
+        {days && days}d
+      </Typography>
       <Typography
         sx={{
           fontSize: "4.695px",
-          color: "#00CBEF",
+          color: "white",
           margin: "0px 6px !important",
         }}
       >
         :
       </Typography>
-      <Box
+      <Typography
         sx={{
-          padding: "4px",
-
-          borderRadius: "5px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "rgba(139, 31, 207, 0.3)",
+          fontSize: "10px",
+          color: "white",
+          marginLeft: "0px !important",
         }}
       >
-        <Typography
-          sx={{
-            fontSize: "10px",
-            color: "#00CBEF",
-            marginLeft: "0px !important",
-          }}
-        >
-          {hours && hours}h
-        </Typography>{" "}
-      </Box>{" "}
+        {hours && hours}h
+      </Typography>{" "}
       <Typography
         sx={{
           fontSize: "4.695px",
-          color: "#00CBEF",
+          color: "white",
           margin: "0px 6px !important",
         }}
       >
         :
       </Typography>
-      <Box
+      <Typography
         sx={{
-          padding: "4px",
-          borderRadius: "5px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "rgba(139, 31, 207, 0.3)",
+          fontSize: "10px",
+          color: "white",
+          marginLeft: "0px !important",
         }}
       >
-        <Typography
-          sx={{
-            fontSize: "10px",
-            color: "#00CBEF",
-            marginLeft: "0px !important",
-          }}
-        >
-          {minutes}m
-        </Typography>{" "}
-      </Box>{" "}
+        {minutes}m
+      </Typography>{" "}
     </Box>
   ) : (
     <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Box
+      <Typography
         sx={{
-          padding: "10px 10px",
-          borderRadius: "5px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "rgba(139, 31, 207, 0.3)",
+          fontSize: "20.052px",
+          color: "white",
+          marginLeft: "0px !important",
         }}
       >
-        <Typography
-          sx={{
-            fontSize: "20.052px",
-            color: "#00CBEF",
-            marginLeft: "0px !important",
-          }}
-        >
-          {days && days}d
+        {days && days}d : {hours && hours}h : {minutes && minutes}m
         </Typography>
-      </Box>
-      <Typography
-        sx={{
-          fontSize: "14.037px",
-          color: "#00CBEF",
-          margin: "0px 20px !important",
-        }}
-      >
-        :
-      </Typography>
-      <Box
-        sx={{
-          padding: "10px 10px",
-          borderRadius: "5px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "rgba(139, 31, 207, 0.3)",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: "20.052px",
-            color: "#00CBEF",
-            marginLeft: "0px !important",
-          }}
-        >
-          {hours && hours}h
-        </Typography>{" "}
-      </Box>{" "}
-      <Typography
-        sx={{
-          fontSize: "14.037px",
-          color: "#00CBEF",
-          margin: "0px 20px !important",
-        }}
-      >
-        :
-      </Typography>
-      <Box
-        sx={{
-          padding: "10px 10px",
-          borderRadius: "5px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "rgba(139, 31, 207, 0.3)",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: "20.052px",
-            color: "#00CBEF",
-            marginLeft: "0px !important",
-          }}
-        >
-          {minutes && minutes}m
-        </Typography>{" "}
-      </Box>{" "}
     </Box>
   );
 }
