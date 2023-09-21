@@ -19,6 +19,7 @@ import toastReducer from "../reducers/toastReducer";
 import stripeReducer from "../reducers/stripeReducer";
 import helpcenterReducer from "../reducers/helpcenterReducer";
 import deviceReducer from "../reducers/deviceReducer";
+import videoReducer from "../reducers/videoReducer";
 let rootReducer = combineReducers({
   alertReducer,
   authReducer,
@@ -36,6 +37,7 @@ let rootReducer = combineReducers({
   stripeReducer,
   helpcenterReducer,
   deviceReducer,
+  videoReducer,
 });
 
 const persistConfig = {
