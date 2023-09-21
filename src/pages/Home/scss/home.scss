@@ -163,7 +163,7 @@
           h1 {
             margin-left: 10px;
             color: white;
-            font-family: "NextBold";
+            // 
             margin-bottom: 0px;
             position: relative;
           }
@@ -375,12 +375,12 @@
 }
 
 
-@font-face {
-  font-family: "NextBold";
-  src: local("NextBold"),
-    url("../../../assets/font/CynthoNextBold.otf") format("truetype");
-  font-weight: bold;
-}
+// @font-face {
+//   
+//   src: local("NextBold"),
+//     url("../../../assets/font/CynthoNextBold.otf") format("truetype");
+//   font-weight: bold;
+// }
 
 @property --rotate {
   syntax: "<angle>";
@@ -455,7 +455,7 @@
               h1 {
                 margin-left: 10px;
                 color: white;
-                font-family: "NextBold";
+                // 
                 margin-bottom: 0px;
               }
             }
@@ -476,7 +476,7 @@
   }
   h1.title-text-desktop {
     margin-left: 10px;
-    font-family: "NextBold";
+    
     margin-bottom: 0px;
     color: white;
   }
@@ -575,7 +575,7 @@
               h1 {
                 margin-left: 10px;
                 color: white;
-                font-family: "NextBold";
+                
                 margin-bottom: 0px;
               }
             }
@@ -681,7 +681,7 @@
             h1 {
               margin-left: 10px;
               color: white;
-              font-family: "NextBold";
+              
               margin-bottom: 0px;
             }
           }
@@ -887,7 +887,7 @@
               h1 {
                 margin-left: 10px;
                 color: #00ffe9;
-                font-family: "NextBold";
+                
                 margin-bottom: 0px;
                 box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                   rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -957,7 +957,7 @@
             h1 {
               margin-left: 10px;
               color: #00ffe9;
-              font-family: "NextBold";
+              
               margin-bottom: 0px;
               box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                 rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -1017,7 +1017,7 @@
             h1 {
               margin-left: 10px;
               color: #00ffe9;
-              font-family: "NextBold";
+              
               margin-bottom: 0px;
               box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                 rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -1085,7 +1085,7 @@
             h1 {
               margin-left: 10px;
               color: #00ffe9;
-              font-family: "NextBold";
+              
               margin-bottom: 0px;
               box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                 rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -1156,7 +1156,7 @@
   h1.title-text-desktop {
     margin-left: 10px;
     color: white;
-    font-family: "NextBold";
+    
     margin-bottom: 0px;
   }
 }
@@ -1193,7 +1193,7 @@
 h1.title-text-desktop {
   margin-left: 10px;
   color: white;
-  font-family: "NextBold";
+  
   margin-bottom: 0px;
 }
 

@@ -23,6 +23,13 @@ export const updateChatWorld = (data) => {
   };
 };
 
+export const showBadgeChat = (data) => {
+  return {
+    type: "SHOW_BADGE_CHAT",
+    payload: data
+  }
+}
+
 
 export const updateContacterUsername = (userName, id) => {
   return {
@@ -77,6 +84,7 @@ const chatReducer = (
     chatPopup: true,
     privateChatPopup: false,
     tabChat: true,
+    badgechat: false
   },
   action
 ) => {
@@ -138,6 +146,12 @@ const chatReducer = (
         ...state,
         tabChat: payload,
       };
+    }
+    case "SHOW_BADGE_CHAT" : {
+      return {
+        ...state,
+        badgechat: payload
+      }
     }
 
     case "CHAT_LOGOUT_SUCCESS_FULLT" : {

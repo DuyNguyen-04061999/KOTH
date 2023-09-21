@@ -26,7 +26,6 @@ const Test = styled.input`
   padding: 7px !important;
   color: #9d9ace !important;
   font-weight: 500 !important;
-  font-family: Cyntho Next !important;
   &:focus {
     outline: none;
   }
@@ -120,6 +119,7 @@ export default function ChatGlobal(props) {
           open={openMess}
           sx={{
             maxHeight: checkHeightResponsive(),
+            minHeight: checkHeightResponsive(),
             // "& .MuiDialog-container": {
             //   position: "fixed",
             //   top: "-10px",
@@ -190,6 +190,7 @@ export default function ChatGlobal(props) {
               top: width < 576 ? "-49px" : "-60px",
               right: "0px",
               width: "100%",
+              zIndex:3
             }}
           >
             <Box
@@ -214,7 +215,6 @@ export default function ChatGlobal(props) {
                     <span
                       style={{
                         color: "white",
-                        fontFamily: "Cyntho Next",
                         fontSize: "15px",
                         marginLeft: "10px",
                       }}
@@ -242,7 +242,7 @@ export default function ChatGlobal(props) {
               className="d-flex justify-content-between align-items-center"
               sx={{
                 position: "absolute",
-                bottom: width < 576 ? "0px" : "46px",
+                bottom: width < 576 ? "0px" : "56px",
                 background: "#2E1E38",
                 padding: "12px 20px ",
                 zIndex: "20",
@@ -373,7 +373,6 @@ export default function ChatGlobal(props) {
                     <span
                       style={{
                         color: "white",
-                        fontFamily: "Cyntho Next",
                         fontSize: "15px",
                         marginLeft: "10px",
                       }}

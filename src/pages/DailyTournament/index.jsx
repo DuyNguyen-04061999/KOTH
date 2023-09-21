@@ -23,16 +23,14 @@ import { useEffect } from "react";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
 const theme = createTheme({
-  typography: {
-    fontFamily: "Cyntho Next",
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -43,6 +41,7 @@ export default function DailyTournament() {
   const [selectedDay, setSeDay] = useState(0);
   const [dayList, setDayList] = useState([]);
   const { dailyTournament } = useSelector((state) => state.tournamentReducer);
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -64,7 +63,6 @@ export default function DailyTournament() {
   useEffect(() => {
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [dailyTournament]);
-  // const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -95,7 +93,7 @@ export default function DailyTournament() {
                   fontSize: "24px",
                 }}
               >
-                Daily Tournament
+                Daily tournaments
               </Typography>
               <Box
                 sx={{
@@ -147,6 +145,7 @@ export default function DailyTournament() {
                               width: "20%",
                               marginTop: "50px",
                             }}
+                            key={index}
                           >
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
@@ -183,7 +182,10 @@ export default function DailyTournament() {
                     ?.listTournament?.map((item, index) => {
                       return (
                         index >= 10 && (
-                          <Box sx={{ width: "20%", marginTop: "50px" }}>
+                          <Box
+                            sx={{ width: "20%", marginTop: "50px" }}
+                            key={index}
+                          >
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
                         )
@@ -218,7 +220,7 @@ export default function DailyTournament() {
                   fontSize: "24px",
                 }}
               >
-                Daily Tournament
+                Daily tournaments
               </Typography>
               <Box
                 sx={{
@@ -270,6 +272,7 @@ export default function DailyTournament() {
                               width: "20%",
                               marginTop: "50px",
                             }}
+                            key={index}
                           >
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
@@ -306,7 +309,10 @@ export default function DailyTournament() {
                     ?.listTournament?.map((item, index) => {
                       return (
                         index >= 10 && (
-                          <Box sx={{ width: "20%", marginTop: "50px" }}>
+                          <Box
+                            sx={{ width: "20%", marginTop: "50px" }}
+                            key={index}
+                          >
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
                         )

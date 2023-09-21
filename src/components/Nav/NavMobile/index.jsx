@@ -12,10 +12,14 @@ import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authR
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getAppType } from "../../../utils/helper";
+import { showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 
 export default function NavMobile() {
-  const { token, isLoginDialog } = useSelector((state) => state.authReducer);
-  const { chatWorld } = useSelector((state) => state.chatReducer);
+  const { token } = useSelector((state) => state.authReducer);
+  const { chatWorld , badgechat} = useSelector((state) => state.chatReducer);
+  console.log(badgechat);
+  console.log(chatWorld);
+  // const { device } = useSelector((state) => state.deviceReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const [openMess, setOpenMess] = useState(false);
@@ -32,11 +36,17 @@ export default function NavMobile() {
       setHideNavMobile("block");
     }
   }, [isProfileDialog]);
+
+  useEffect(() => {
+    dispatch(showBadgeChat(false))
+  },[chatWorld])
+
+  const lengthChat = chatWorld.filter((e) => e.messageType === "World")
   const { pathname } = useLocation();
 
   return (
     <>
-      {isLoginDialog === false && width <= 576 && !startGameCheck ? (
+      {!startGameCheck && width < 576 ? (
         <div className="mobile" style={{ display: `${hideNavMobile}` }}>
           {getAppType() === "promote" ? (
             <div className="content_nav">
@@ -228,16 +238,15 @@ export default function NavMobile() {
                       setOpenMess(true);
                       setOpenSearch(false);
                       setOpenMenu(false);
+                      dispatch(showBadgeChat(true))
                     }}
                   >
                     <div>
                       <Badge
-                        badgeContent={`${chatWorld.length}`}
-                        sx={{
-                          ".css-106c1u2-MuiBadge-badge": {
-                            fontSize: "10px",
-                          },
-                        }}
+                        badgeContent={""}
+                        color="error"
+                        // variant="dot"
+                        invisible
                       >
                         <div>
                           <svg
@@ -265,6 +274,7 @@ export default function NavMobile() {
                             Chat
                           </p>
                         </div>
+                        <div className={badgechat === true ? "" : "bage-content"}></div>
                       </Badge>
                     </div>
                   </div>
@@ -437,6 +447,7 @@ export default function NavMobile() {
                     <div>
                       <Badge
                         badgeContent={`${chatWorld.length}`}
+                        color="error"
                         sx={{
                           ".css-106c1u2-MuiBadge-badge": {
                             fontSize: "10px",

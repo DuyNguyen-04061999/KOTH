@@ -20,6 +20,7 @@ import stripeReducer from "../reducers/stripeReducer";
 import helpcenterReducer from "../reducers/helpcenterReducer";
 import deviceReducer from "../reducers/deviceReducer";
 import videoReducer from "../reducers/videoReducer";
+import playgameReducer from "../reducers/playgameReducer";
 let rootReducer = combineReducers({
   alertReducer,
   authReducer,
@@ -38,6 +39,7 @@ let rootReducer = combineReducers({
   helpcenterReducer,
   deviceReducer,
   videoReducer,
+  playgameReducer,
 });
 
 const persistConfig = {

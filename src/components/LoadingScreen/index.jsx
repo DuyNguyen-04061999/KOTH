@@ -11,15 +11,15 @@ import InspirationTTF from "../../assets/font/CynthoNextMedium.otf";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Cyntho Next",
+    
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "@font-face": {
-          fontFamily: "Cyntho Next",
-          src: `url(${InspirationTTF}) format("truetype")`,
-        },
+        // "@font-face": {
+        //   fontFamily: "Cyntho Next",
+        //   src: `url(${InspirationTTF}) format("truetype")`,
+        // },
       },
     },
   },
@@ -41,6 +41,7 @@ export default function LoadingScreen({ loadingProgression }) {
         boxSizing: "border-box",
         paddingBottom: "50px",
         alignItems: "center",
+        position: "absolute",
       }}
     >
       <Typography sx={{ color: "#00E8FF", fontSize: "25px" }}>

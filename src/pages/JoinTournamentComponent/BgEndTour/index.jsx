@@ -28,7 +28,7 @@ export default function BgEndGame() {
       >
         <Typography variant="h4" sx={{  color: "#fff",
             textAlign: "center",
-            fontFamily: "Cyntho Next",
+            
             fontStyle: "normal",
             fontWeight: "700",
             lineHeight: "normal",

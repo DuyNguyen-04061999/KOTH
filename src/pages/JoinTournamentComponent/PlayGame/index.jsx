@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { images, video } from "../../../utils/images";
+import { imageDesktop, images, video } from "../../../utils/images";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -94,17 +94,6 @@ export default function PlayGame(props) {
     dispatch,
     device,
   ]);
-  // useEffect(() => {
-  //   return async () => {
-  //     if (window.confirm("Do you want to quit the game ?")) {
-  //       const element = document.getElementById("play-game-iframe");
-  //       element.remove();
-  //       console.log("Unloaded");
-  //     }
-  //     dispatch(toggleStartGame(false));
-  //   };
-  // }, [dispatch]);
-  console.log("Detailtour: ", detailTournament);
   return (
     <>
       <Box

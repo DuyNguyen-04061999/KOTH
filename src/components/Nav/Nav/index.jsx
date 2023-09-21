@@ -47,6 +47,72 @@ export default function Navbar() {
     }
   }, [isNavTablet, isNav]);
 
+  const [isHoveredHome, setIsHoveredHome] = useState(false);
+  const [isHoveredHot, setIsHoveredHot] = useState(false);
+  const [isHoveredDaly, setIsHoveredDaly] = useState(false);
+  const [isHoveredLong, setIsHoveredLong] = useState(false);
+  const [isHoveredSub, setIsHoveredSub] = useState(false);
+  const [isHoveredHelp, setIsHoveredHelp] = useState(false);
+
+  // Step 3: Add event listeners
+  const handleMouseEnterHome = () => {
+    // Step 4: Update state
+    setIsHoveredHome(true);
+  };
+
+  const handleMouseLeaveHome = () => {
+    // Step 4: Update state
+    setIsHoveredHome(false);
+  };
+
+  const handleMouseEnterHot = () => {
+    // Step 4: Update state
+    setIsHoveredHot(true);
+  };
+
+  const handleMouseLeaveHot = () => {
+    // Step 4: Update state
+    setIsHoveredHot(false);
+  };
+
+  const handleMouseEnterDaly = () => {
+    // Step 4: Update state
+    setIsHoveredDaly(true);
+  };
+
+  const handleMouseLeaveDaly = () => {
+    // Step 4: Update state
+    setIsHoveredDaly(false);
+  };
+  const handleMouseEnterLong = () => {
+    // Step 4: Update state
+    setIsHoveredLong(true);
+  };
+
+  const handleMouseLeaveLong = () => {
+    // Step 4: Update state
+    setIsHoveredLong(false);
+  };
+
+  const handleMouseEnterSub = () => {
+    // Step 4: Update state
+    setIsHoveredSub(true);
+  };
+
+  const handleMouseLeaveSub = () => {
+    // Step 4: Update state
+    setIsHoveredSub(false);
+  };
+
+  const handleMouseEnterHelp = () => {
+    // Step 4: Update state
+    setIsHoveredHelp(true);
+  };
+
+  const handleMouseLeaveHelp = () => {
+    // Step 4: Update state
+    setIsHoveredHelp(false);
+  };
   return (
     <Box className={`nav-section ${tablet}`}>
       <Box
@@ -69,20 +135,27 @@ export default function Navbar() {
           {getAppType() === "promote" ? (
             <Box>
               <Box
+                onMouseEnter={handleMouseEnterHome}
+                onMouseLeave={handleMouseLeaveHome}
                 sx={{
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  transition: "1s ease-out",
+                  boxShadow: isHoveredHome === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                   backgroundColor:
-                    pathname && pathname?.includes("home")
+                    (pathname && pathname?.includes("home")) ||
+                    isHoveredHome === true
                       ? "#7648ED"
                       : "#462A71",
 
                   borderRadius: "5px",
                   color:
-                    (pathname && pathname?.includes("home")) || pathname === "/"
+                    (pathname && pathname?.includes("home")) ||
+                    pathname === "/" ||
+                    isHoveredHome === true
                       ? "white"
                       : "#A89CD7",
                 }}
@@ -92,7 +165,8 @@ export default function Navbar() {
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
                 {(pathname && pathname?.includes("home")) ||
-                pathname === "/" ? (
+                pathname === "/" ||
+                isHoveredHome === true ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -317,15 +391,20 @@ export default function Navbar() {
                 }`}
               >
                 <Box
+                  onMouseEnter={handleMouseEnterHot}
+                  onMouseLeave={handleMouseLeaveHot}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredHot === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("hot-tournament")
+                      (pathname && pathname?.includes("hot-tournament")) ||
+                      isHoveredHot === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -336,7 +415,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("hot-tournament") ? (
+                  {(pathname && pathname?.includes("hot-tournament")) ||
+                  isHoveredHot === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -385,12 +465,13 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("hot-tournament")
+                        (pathname && pathname?.includes("hot-tournament")) ||
+                        isHoveredHot === true
                           ? "white"
                           : "",
                     }}
                   >
-                    Hot tour
+                    Hot
                   </span>
                 </Box>
                 {/* <Box
@@ -460,15 +541,20 @@ export default function Navbar() {
                   </span>
                 </Box> */}
                 <Box
+                  onMouseEnter={handleMouseEnterDaly}
+                  onMouseLeave={handleMouseLeaveDaly}
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredDaly === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                     backgroundColor:
-                      pathname && pathname?.includes("daily-tournament")
+                      (pathname && pathname?.includes("daily-tournament")) ||
+                      isHoveredDaly === true
                         ? "#7648ED"
                         : "transparent",
 
@@ -479,7 +565,8 @@ export default function Navbar() {
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                 >
-                  {pathname && pathname?.includes("daily-tournament") ? (
+                  {(pathname && pathname?.includes("daily-tournament")) ||
+                  isHoveredDaly === true ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
@@ -523,15 +610,111 @@ export default function Navbar() {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       color:
-                        pathname && pathname?.includes("daily-tournament")
+                        (pathname && pathname?.includes("daily-tournament")) ||
+                        isHoveredDaly === true
                           ? "white"
                           : "",
                     }}
                   >
-                    Daily tour
+                    Daily
                   </span>
                 </Box>
                 <Box
+                  onMouseEnter={handleMouseEnterLong}
+                  onMouseLeave={handleMouseLeaveLong}
+                  sx={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: isNav === true ? "flex-start" : "center",
+                    // transition:
+                    //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "1s ease-out",
+                    boxShadow: isHoveredLong === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                    backgroundColor:
+                      (pathname &&
+                        pathname?.includes("week-long-tournament")) ||
+                      isHoveredLong === true
+                        ? "#7648ED"
+                        : "transparent",
+
+                    borderRadius: "5px",
+                  }}
+                  onClick={() => {
+                    navigate("/week-long-tournament");
+                  }}
+                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
+                >
+                  {(pathname && pathname?.includes("week-long-tournament")) ||
+                  isHoveredLong === true ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                      className="p-1 me-1"
+                    >
+                      <g clipPath="url(#clip0_2689_14925)">
+                        <path
+                          fill="#fff"
+                          d="M17.953 6.904a.955.955 0 00-.823-.657l-5.196-.471L9.881.968a.957.957 0 00-1.76 0L6.066 5.776.87 6.247a.958.958 0 00-.544 1.674l3.928 3.444-1.158 5.101A.957.957 0 004.519 17.5L9 14.822l4.48 2.678a.956.956 0 001.424-1.034l-1.158-5.1 3.928-3.445a.958.958 0 00.279-1.017z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2689_14925">
+                          <path fill="#fff" d="M0 0H18V18H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                      className="p-1 me-1"
+                    >
+                      <g clipPath="url(#clip0_3062_17515)">
+                        <path
+                          fill="#A89CD7"
+                          stroke="#A89CD7"
+                          strokeWidth="0.5"
+                          d="M5.017 16.874a.825.825 0 01-.934-.043.907.907 0 01-.33-.916l1.264.959zm-3.894-8.7l3.384 3.097-.999 4.59h0c-.095.44.067.9.424 1.17h0a1.075 1.075 0 001.217.056h0L9 14.683l3.85 2.4s0 0 0 0c.379.238.86.216 1.218-.054.357-.27.52-.73.424-1.169h0l-.999-4.59 3.385-3.097s0 0 0 0c.33-.302.452-.774.319-1.202a1.107 1.107 0 00-.947-.785l-4.468-.423-1.769-4.32h0A1.1 1.1 0 009 .75a1.1 1.1 0 00-1.013.694h0l-1.77 4.32-4.467.423h0a1.109 1.109 0 00-.947.785h0c-.133.429-.01.9.32 1.202 0 0 0 0 0 0zm8.445 5.059h0a1.076 1.076 0 00-1.136 0h0l-3.257 2.032.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-2.88-2.636 3.8-.36h0a1.1 1.1 0 00.913-.691s0 0 0 0L9 2.945l1.49 3.642s0 0 0 0c.156.385.503.654.914.693h0l3.8.36-2.88 2.636a1.16 1.16 0 00-.345 1.103l.846 3.886-3.257-2.032z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_3062_17515">
+                          <path fill="#fff" d="M0 0H18V18H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  )}
+
+                  <span
+                    className="hover-nav"
+                    style={{
+                      display: isNav === true ? "block" : "none",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      color:
+                        (pathname &&
+                          pathname?.includes("week-long-tournament")) ||
+                        isHoveredLong === true
+                          ? "white"
+                          : "",
+                    }}
+                  >
+                    Week-long
+                  </span>
+                </Box>
+                {/* <Box
                   sx={{
                     cursor: "pointer",
                     display: "flex",
@@ -547,7 +730,7 @@ export default function Navbar() {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate("/week-long-tournament");
+                    navigate("/list-game-manager");
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
@@ -614,9 +797,9 @@ export default function Navbar() {
                           : "",
                     }}
                   >
-                    Week-long tour
+                    List Game Manager
                   </span>
-                </Box>
+                </Box> */}
               </Box>
               <hr
                 style={{
@@ -628,14 +811,19 @@ export default function Navbar() {
                 }}
               />
               <Box
+                onMouseEnter={handleMouseEnterSub}
+                onMouseLeave={handleMouseLeaveSub}
                 sx={{
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "flex-start" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                  transition: "1s ease-out",
+                  boxShadow: isHoveredSub === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
                   backgroundColor:
-                    pathname && pathname?.includes("package")
+                    (pathname && pathname?.includes("package")) ||
+                    isHoveredSub === true
                       ? "#7648ED"
                       : "#462A71",
 
@@ -646,7 +834,8 @@ export default function Navbar() {
                 }}
                 className="nav-home pt-2 pb-2 ps-2 mb-3"
               >
-                {pathname && pathname?.includes("package") ? (
+                {(pathname && pathname?.includes("package")) ||
+                isHoveredSub === true ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -695,7 +884,10 @@ export default function Navbar() {
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     color:
-                      pathname && pathname?.includes("package") ? "white" : "",
+                      (pathname && pathname?.includes("package")) ||
+                      isHoveredSub === true
+                        ? "white"
+                        : "",
                   }}
                 >
                   Subscription
@@ -965,38 +1157,68 @@ export default function Navbar() {
           {getAppType() === "promote" ? (
             <Box
               className="cursor-pointer"
+              onMouseEnter={handleMouseEnterHelp}
+              onMouseLeave={handleMouseLeaveHelp}
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
-                transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                transition: "1s ease-out",
                 padding: "8px",
+                boxShadow: isHoveredHelp === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                backgroundColor:
+                  (pathname && pathname?.includes("help-center")) ||
+                  isHoveredHelp === true
+                    ? "#7648ED"
+                    : "#462A71",
+                borderRadius: "5px",
               }}
               onClick={() => {
                 navigate(`/help-center`);
               }}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                fill="none"
-                viewBox="0 0 18 18"
-                className="p-1 me-1"
-              >
-                <g
-                  stroke="#A89CD7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
+              {(pathname && pathname?.includes("help-center")) ||
+              isHoveredHelp === true ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="p-1 me-1"
                 >
-                  <path
-                    strokeMiterlimit="10"
-                    d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
-                  ></path>
-                  <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
-                </g>
-              </svg>
+                  <g>
+                    <path
+                      fill="#fff"
+                      d="M17 2.43H7c-3 0-5 2-5 5v6c0 3 2 5 5 5v2.13c0 .8.89 1.28 1.55.83L13 18.43h4c3 0 5-2 5-5v-6c0-3-2-5-5-5zM12 14.6a.75.75 0 110-1.5.75.75 0 010 1.5zm1.26-4.15c-.39.26-.51.43-.51.71v.21c0 .41-.34.75-.75.75s-.75-.34-.75-.75v-.21c0-1.16.85-1.73 1.17-1.95.37-.25.49-.42.49-.68 0-.5-.41-.91-.91-.91s-.91.41-.91.91c0 .41-.34.75-.75.75s-.75-.34-.75-.75c0-1.33 1.08-2.41 2.41-2.41s2.41 1.08 2.41 2.41c0 1.14-.84 1.71-1.15 1.92z"
+                    ></path>
+                  </g>
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  fill="none"
+                  viewBox="0 0 18 18"
+                  className="p-1 me-1"
+                >
+                  <g
+                    stroke="#A89CD7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                  >
+                    <path
+                      strokeMiterlimit="10"
+                      d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
+                    ></path>
+                    <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
+                  </g>
+                </svg>
+              )}
+
               <span
                 className="hover-nav"
                 style={{
@@ -1008,6 +1230,11 @@ export default function Navbar() {
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
+                  color:
+                    (pathname && pathname?.includes("help-center")) ||
+                    isHoveredHelp === true
+                      ? "#fff"
+                      : "",
                 }}
               >
                 Help Center
