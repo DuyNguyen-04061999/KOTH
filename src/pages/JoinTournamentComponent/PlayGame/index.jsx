@@ -35,7 +35,7 @@ export default function PlayGame(props) {
         setStartGame(false);
       }, 1000);
       setTimeout(() => {
-        dispatch(toggleOpenResultEndGame(JSON?.parse(res?.data)?.score || 0));
+        dispatch(toggleOpenResultEndGame(res?.data ? JSON?.parse(res?.data)?.score : 0));
       }, 1500);
     };
 
@@ -84,6 +84,8 @@ export default function PlayGame(props) {
     dispatch,
     device,
   ]);
+
+  console.log(detailTournament);
   return (
     <>
       <Box
@@ -132,9 +134,9 @@ export default function PlayGame(props) {
                 }}
                 title="Playgame"
                 src={
-                  process.env.REACT_APP_IFRAME_URL +
+                  window.location.origin +
                   "/play-game-tournament/" +
-                  id
+                  id + "/" + detailTournament?.tournamentInfors?.skin?.id
                 }
               ></iframe>
             </Box>

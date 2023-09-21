@@ -195,7 +195,7 @@ const BannerTourMobile = (props) => {
                   fontWeight: 800,
                 }}
               >
-                99999
+                {userScore || 99999}
               </Typography>{" "}
             </Box>
           </Box>
@@ -215,7 +215,7 @@ const BannerTourMobile = (props) => {
                 height: "100%",
                 objectFit: "cover",
               }}
-              src={userAvatar}
+              src={userAvatar || imageHome.BannerWinAva}
             ></img>
           </Box>
           <Box
@@ -259,7 +259,7 @@ const BannerTourMobile = (props) => {
               width: "max-content",
             }}
           >
-            {userName}
+            {userName || "SUPER_"}
           </Typography>
         </Box>
       </Box>
