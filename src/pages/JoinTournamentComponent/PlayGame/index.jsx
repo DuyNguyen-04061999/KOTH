@@ -25,18 +25,34 @@ export default function PlayGame(props) {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
 
+  function isJson(str) {
+      try {
+          JSON.parse(str);
+      } catch (e) {
+          return false;
+      }
+      return true;
+  }
+
   useEffect(() => {
     setSocket(_socket);
   }, []);
 
   useEffect(() => {
     const handler = (res) => {
-      setTimeout(() => {
-        setStartGame(false);
-      }, 1000);
-      setTimeout(() => {
-        dispatch(toggleOpenResultEndGame(res?.data ? JSON?.parse(res?.data)?.score : 0));
-      }, 1500);
+      if(res && res?.data && isJson(res?.data)) {
+        const mD = JSON?.parse(res?.data)
+        const { type, score } = mD
+        if(type && type === "game_tournament") {
+          setTimeout(() => {
+            setStartGame(false);
+          }, 1000);
+          setTimeout(() => {
+            dispatch(toggleOpenResultEndGame(score || 0));
+          }, 1500);
+        }
+      }
+      
     };
 
     window.addEventListener("message", handler);
