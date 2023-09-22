@@ -90,8 +90,10 @@ export default function HotTournament() {
                   appendDot={true}
                   images={
                     width < 576
-                      ? imgHotMobile
-                      : imgHot
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" + imgHotMobile
+                      : process.env.REACT_APP_SOCKET_SERVER +
+                      "/" + imgHot
                   }
                 />
               </Box>
@@ -197,8 +199,10 @@ export default function HotTournament() {
                 appendDot={true}
                 images={
                   width < 576
-                    ? imgHotMobile
-                    : imgHot
+                      ? process.env.process.env.REACT_APP_SOCKET_SERVER +
+                      "/" + imgHotMobile
+                      : process.env.REACT_APP_SOCKET_SERVER +
+                      "/" + imgHot
                 }
               />
             </Box>

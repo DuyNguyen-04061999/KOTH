@@ -126,8 +126,10 @@ export default function WeekLongTour() {
                   appendDot={true}
                   images={
                     width < 576
-                      ? imgHotMobile
-                      : imgHot
+                      ? process.env.process.env.REACT_APP_SOCKET_SERVER +
+                      "/" + imgHotMobile
+                      : process.env.REACT_APP_SOCKET_SERVER +
+                      "/" + imgHot
                   }
                 />
               )}
