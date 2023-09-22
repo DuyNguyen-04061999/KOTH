@@ -17,6 +17,7 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { useState } from "react";
 import { ExpandMoreOutlined } from "@mui/icons-material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -100,21 +101,38 @@ const Setting = () => {
           Settings
         </Box>
         <Box sx={{ marginTop: "60px" }}>
-          <Accordion expanded={expanded} onChange={handleChange}>
+          <Accordion expanded={expanded}>
             <AccordionSummary
+              onClick={handleChange}
               aria-controls="panel1d-content"
               id="panel1d-header"
             >
-              <Typography
+              <Box
                 sx={{
-                  fontSize: "18px",
-                  fontWeight: 500,
-                  lineHeight: "24px",
-                  color: "#11142D",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                Time Zone
-              </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    fontWeight: 500,
+                    lineHeight: "24px",
+                    color: "#11142D",
+                  }}
+                >
+                  Time Zone
+                </Typography>
+                <Box
+                  sx={{
+                    marginLeft: "32px",
+                    width: "336px",
+                    display: width < 768 && "none",
+                  }}
+                >
+                  <SearchBar placeholder="Search" />
+                </Box>
+              </Box>
             </AccordionSummary>
             <AccordionDetails>
               <List sx={{ maxHeight: "220px", overflow: "scroll" }}>
@@ -262,6 +280,7 @@ const Setting = () => {
                     border: "none",
                     outline: "none",
                     marginTop: "12px",
+                    letterSpacing: "2em"
                   }}
                   type="password"
                 />

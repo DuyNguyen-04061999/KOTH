@@ -128,7 +128,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <Box sx={{ marginTop: "60px" }}>
+    <Box sx={{ marginTop: "80px" }}>
       <DetailAccountDialogComponent />
       <Typography
         sx={{
@@ -167,11 +167,13 @@ const AdminPanel = () => {
             flexDirection: { xs: "column-reverse", sm: "row" },
           }}
         >
-          <SearchBar
-            searchValue={searchValue}
-            onChange={handleChangeSearch}
-            onSubmit={handleSubmit}
-          ></SearchBar>
+          <Box sx={{marginTop:"14px"}}>
+            <SearchBar
+              searchValue={searchValue}
+              onChange={handleChangeSearch}
+              onSubmit={handleSubmit}
+            ></SearchBar>
+          </Box>
           <Box sx={{ marginLeft: "auto" }}>
             <Button
               children={"Create Account"}
