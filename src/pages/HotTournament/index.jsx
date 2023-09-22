@@ -39,6 +39,15 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { hotTournament } = useSelector((state) => state.tournamentReducer);
+  console.log(hotTournament);
+
+  const imgHot = hotTournament.map((e) => {
+     return e.tournamentBackground
+  })
+
+  const imgHotMobile = hotTournament.map((e) => {
+    return e.tournamentBackgroundMobile
+ })
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -82,16 +91,8 @@ export default function HotTournament() {
                   appendDot={true}
                   images={
                     width < 576
-                      ? [
-                          images.bannerTournament,
-                          images.bannerTournament1,
-                          images.bannerTournament2,
-                        ]
-                      : [
-                          images.bannerTournament,
-                          images.bannerTournament,
-                          images.bannerTournament,
-                        ]
+                      ? imgHotMobile
+                      : imgHot
                   }
                 />
               </Box>
@@ -120,7 +121,7 @@ export default function HotTournament() {
                   })}
                 </Box>
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   paddingTop: width < 576 ? "24px" : "32px",
                   paddingBottom: width < 576 ? "24px" : "32px",
@@ -136,7 +137,7 @@ export default function HotTournament() {
                     type="video/mp4"
                   />
                 </video>
-              </Box>{" "}
+              </Box>{" "} */}
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
@@ -197,16 +198,8 @@ export default function HotTournament() {
                 appendDot={true}
                 images={
                   width < 576
-                    ? [
-                        images.bannerTournament,
-                        images.bannerTournament1,
-                        images.bannerTournament2,
-                      ]
-                    : [
-                        images.bannerTournament,
-                        images.bannerTournament,
-                        images.bannerTournament,
-                      ]
+                    ? imgHotMobile
+                    : imgHot
                 }
               />
             </Box>
@@ -235,7 +228,7 @@ export default function HotTournament() {
                 })}
               </Box>
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 paddingTop: width < 576 ? "24px" : "32px",
                 paddingBottom: width < 576 ? "24px" : "32px",
@@ -251,7 +244,7 @@ export default function HotTournament() {
                   type="video/mp4"
                 />
               </video>
-            </Box>{" "}
+            </Box>{" "} */}
             <Box
               sx={{
                 marginBottom: width < 576 ? "24px" : "32px",
