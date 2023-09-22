@@ -15,6 +15,7 @@ import { CreateEndUserPage, ProvideEndUserTicketPage } from './pages/Admin/Agent
 import AdminStructure from './components/Admin/AdminStructure/AdminStructure';
 import MainLayout from './pages/Admin/MainLayout';
 import HomePage from './pages/Admin/HomePage';
+import Setting from './pages/Admin/Setting/Setting';
 
 export default function Admin() {
     return (
@@ -47,6 +48,8 @@ export default function Admin() {
                             {/* Agent */}
                             <Route path="/agent/create-end-user" element={<PrivateRouteComponent children={<CreateEndUserPage/>}/>} />
                             <Route path="/agent/provide-ticket" element={<PrivateRouteComponent children={<ProvideEndUserTicketPage/>}/>} />
+                            {/* Setting */}
+                            <Route path="/setting" element={<PrivateRouteComponent children={<Setting/>}/>} />
                             </Route>
                             <Route path="/login" element={<LoginPage/>} />
                             {/* Not Found */}

@@ -160,6 +160,7 @@ const BannerWinMobile = (props) => {
                   lineHeight: "1.5",
                   height: "100px",
                   overflow: "hidden",
+                  textAlign:"center",
                 }}
               >
                 {tournamentName || "Tournament Name"}

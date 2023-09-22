@@ -12,16 +12,19 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { closeDrawerNav, openDrawerNav } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 
 const DrawerNavigation = (props) => {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const { isOpenDrawerNav } = useSelector((state) => state.adminDialogReducer);
+  const dispatch = useDispatch();
 
   const MenuIconOpenSVG = () => {
     return (
       <Box
         sx={{
-          transform: mobileOpen && "rotate(180deg)",
+          transform: isOpenDrawerNav && "rotate(180deg)",
           width: "40px",
           height: "40px",
         }}
@@ -67,8 +70,12 @@ const DrawerNavigation = (props) => {
     );
   };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+  const handleOpenDrawer = () => {
+    dispatch(openDrawerNav());
+  };
+
+  const handleCloseDrawer = () => {
+    dispatch(closeDrawerNav());
   };
 
   const container =
@@ -82,9 +89,9 @@ const DrawerNavigation = (props) => {
           [theme.breakpoints.up("lg")]: {
             display: "none",
           },
-          boxShadow:"unset",
-          backgroundColor:"transparent", 
-          position: "absolute"
+          boxShadow: "unset",
+          backgroundColor: "transparent",
+          position: "absolute",
         })}
       >
         <Toolbar>
@@ -92,7 +99,7 @@ const DrawerNavigation = (props) => {
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={handleDrawerToggle}
+            onClick={handleOpenDrawer}
             sx={{ mr: 1 }}
           >
             <MenuIconOpenSVG />
@@ -104,8 +111,8 @@ const DrawerNavigation = (props) => {
           <Drawer
             container={container}
             variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
+            open={isOpenDrawerNav}
+            onClose={handleCloseDrawer}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
             }}
@@ -122,7 +129,7 @@ const DrawerNavigation = (props) => {
                 color="#000"
                 aria-label="close drawer"
                 edge="start"
-                onClick={handleDrawerToggle}
+                onClick={handleCloseDrawer}
                 style={{ position: "absolute", top: 0, right: 0 }}
               >
                 <MenuIconOpenSVG />

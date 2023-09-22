@@ -367,7 +367,6 @@ export default function ComponentChat() {
                     <span
                       style={{
                         fontWeight: "500 !important",
-                        
                       }}
                     >
                       {e?.messageContent}
@@ -392,16 +391,7 @@ export default function ComponentChat() {
     }
     return height;
   };
-  // const checkWidthResponsive = () => {
-  //   if (width < 576) {
-  //     return "100%";
-  //   } else if (width > 1200) {
-  //     return 351;
-  //   } else if (width > 576 && width < 1199) {
-  //     return 351;
-  //   }
-  //   return height;
-  // };
+
   return (
     <Box
       sx={{
