@@ -124,12 +124,11 @@ export default function WeekLongTour() {
               ) : (
                 <SlickSlider
                   appendDot={true}
+                  type={"tour"}
                   images={
                     width < 576
-                      ? process.env.process.env.REACT_APP_SOCKET_SERVER +
-                      "/" + imgHotMobile
-                      : process.env.REACT_APP_SOCKET_SERVER +
-                      "/" + imgHot
+                      ? imgHotMobile
+                      : imgHot
                   }
                 />
               )}

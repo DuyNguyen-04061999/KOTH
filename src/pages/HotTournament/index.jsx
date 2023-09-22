@@ -87,13 +87,11 @@ export default function HotTournament() {
               >
                 {" "}
                 <SlickSlider
+                  type="tour"
                   appendDot={true}
                   images={
-                    width < 576
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                      "/" + imgHotMobile
-                      : process.env.REACT_APP_SOCKET_SERVER +
-                      "/" + imgHot
+                    width < 576 ? imgHotMobile
+                      : imgHot
                   }
                 />
               </Box>
@@ -196,13 +194,11 @@ export default function HotTournament() {
             >
               {" "}
               <SlickSlider
+                type="tour"
                 appendDot={true}
                 images={
-                  width < 576
-                      ? process.env.process.env.REACT_APP_SOCKET_SERVER +
-                      "/" + imgHotMobile
-                      : process.env.REACT_APP_SOCKET_SERVER +
-                      "/" + imgHot
+                  width < 576 ? imgHotMobile
+                      : imgHot
                 }
               />
             </Box>
