@@ -295,7 +295,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 </Typography>
               </Box>
             </Box>
-            <Typography
+            {/* <Typography
               sx={{
                 fontSize: "14px",
                 fontWeight: "bolder !important",
@@ -307,7 +307,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
               Discount Voucher from {detail?.tournamentInfors?.owner?.brandName}{" "}
               : Valid for purchases of{" "}
               {detail?.tournamentInfors?.owner?.brandName}
-            </Typography>
+            </Typography> */}
             <Box sx={{ marginTop: "20px" }}>
               <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
                 Validity Date:
