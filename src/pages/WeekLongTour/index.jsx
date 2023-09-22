@@ -21,6 +21,7 @@ import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 import BannerLoading from "../../components/LoadingComponent/BannerLoading";
+import SlickSlider from "../../components/SlickSlider";
 const theme = createTheme({
   typography: {
     
@@ -49,7 +50,6 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
-
   useEffect(() => {
     const timeOut = setTimeout(() => {
       if (!isFetchList) {
@@ -60,6 +60,14 @@ export default function WeekLongTour() {
       clearTimeout(timeOut);
     };
   }, [isFetchList]);
+
+  const imgHot = weeklyTournament.map((e) => {
+    return e.tournamentBackground
+ })
+
+ const imgHotMobile = weeklyTournament.map((e) => {
+   return e.tournamentBackgroundMobile
+})
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -114,11 +122,14 @@ export default function WeekLongTour() {
               {isFetching ? (
                 <BannerLoading height={width < 576 ? "106px" : width < 1024  ? "211px" :"375px"} />
               ) : (
-                <Box
-                  component={"img"}
-                  src={images.PurpleBanner}
-                  sx={{ width: "100%" }}
-                ></Box>
+                <SlickSlider
+                  appendDot={true}
+                  images={
+                    width < 576
+                      ? imgHotMobile
+                      : imgHot
+                  }
+                />
               )}
             </Box>
             <Box

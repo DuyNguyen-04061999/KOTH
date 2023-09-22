@@ -318,7 +318,7 @@ export default function Package() {
                                   /> */}
                                   <Box
                                     sx={{
-                                      marginBottom: "20px",
+                                      marginBottom: "0px",
                                     }}
                                   >
                                     <Box
@@ -859,7 +859,7 @@ export default function Package() {
                             </video>
                             <Box
                               sx={{
-                                marginBottom: "20px",
+                                marginBottom: "0px",
                               }}
                             >
                               <Box
