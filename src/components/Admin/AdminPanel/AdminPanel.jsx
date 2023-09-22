@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Collapse, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -167,11 +167,13 @@ const AdminPanel = () => {
             flexDirection: { xs: "column-reverse", sm: "row" },
           }}
         >
-          <SearchBar
-            searchValue={searchValue}
-            onChange={handleChangeSearch}
-            onSubmit={handleSubmit}
-          ></SearchBar>
+          <Box sx={{marginTop:"14px"}}>
+            <SearchBar
+              searchValue={searchValue}
+              onChange={handleChangeSearch}
+              onSubmit={handleSubmit}
+            ></SearchBar>
+          </Box>
           <Box sx={{ marginLeft: "auto" }}>
             <Button
               children={"Create Account"}
@@ -189,7 +191,7 @@ const AdminPanel = () => {
             ></Button>
           </Box>
         </Box>
-        {detailAccount && (
+        <Collapse in={detailAccount !== null}>
           <Grid
             container
             sx={(theme) => ({
@@ -405,7 +407,7 @@ const AdminPanel = () => {
               />
             </Grid>
           </Grid>
-        )}
+        </Collapse>
         {detailAccount && (
           <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
             <Button

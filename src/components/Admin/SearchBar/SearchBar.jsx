@@ -2,7 +2,17 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, IconButton, TextField } from "@mui/material";
 
-const SearchBar = ({ searchValue, onChange, onSubmit }) => {
+const SearchBar = ({
+  searchValue,
+  onChange,
+  onSubmit,
+  placeholder = "ID, Account or Nickname",
+  type = "text",
+}) => {
+  
+  const handleFocus = (e) => {
+    e.stopPropagation();
+  };
   return (
     <form onSubmit={onSubmit}>
       <Box
@@ -13,15 +23,17 @@ const SearchBar = ({ searchValue, onChange, onSubmit }) => {
           justifyContent: "space-between",
           alignItems: "center",
           padding: "0 16px",
-          marginTop: { xs: "14px" },
+          width: "100%",
         }}
       >
         <TextField
+          onClick={handleFocus}
           id="search-bar"
           className="text"
-          placeholder="ID, Account or Nickname"
+          placeholder={placeholder}
           variant="standard"
           value={searchValue}
+          type={type}
           InputProps={{
             disableUnderline: true, // <== added this
           }}
