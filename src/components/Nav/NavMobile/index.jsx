@@ -17,8 +17,6 @@ import { showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReduc
 export default function NavMobile() {
   const { token } = useSelector((state) => state.authReducer);
   const { chatWorld , badgechat} = useSelector((state) => state.chatReducer);
-  console.log(badgechat);
-  console.log(chatWorld);
   // const { device } = useSelector((state) => state.deviceReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isProfileDialog } = useSelector((state) => state.profileReducer);

@@ -287,13 +287,6 @@ import signInCrypto from "../assets/images/signin_crypto.png";
 import EndTourAvatar from "../assets/images/Feedback_Play4promo (1).png";
 import BigTourAvatar from "../assets/images/Feedback_Play4promo.png";
 
-import DummyBanner1 from "../assets/images/banners/dk1.png";
-import DummyBanner2 from "../assets/images/banners/dk2.png";
-import DummyBanner3 from "../assets/images/banners/dk3.png";
-import DummyBanner4 from "../assets/images/banners/mb1.png";
-import DummyBanner5 from "../assets/images/banners/mb2.png";
-import DummyBanner6 from "../assets/images/banners/mb3.png";
-
 import AdminLogo from "../assets/images/lggame.png";
 import bannerWindesk from "../assets/imagesDesktop/bannerwin.png";
 import bannertourDesk from "../assets/imagesDesktop/bannertourDesk.png";
@@ -309,13 +302,19 @@ import bannerTourName from "../assets/images/banners/bannerTour/group_202.png";
 import bannerTourTop1 from "../assets/images/banners/bannerTour/png_file_305_3.png";
 import bannerTourScore from "../assets/images/banners/bannerTour/png_file_306_1.png";
 import bannerTourNameTour from "../assets/images/banners/bannerTour/asset.png";
-import bannerWinAround from "../assets/images/banners/bannerWin/banner_around.png"
+import bannerWinAround from "../assets/images/banners/bannerWin/banner_around.png";
 
 import bannerWinBgMobile from "../assets/images/banners/bannerWin/mobile/banner_win.png";
 import bannerWinBigMobile from "../assets/images/banners/bannerWin/mobile/1111_111111112.png";
 import bannerWinCelebMobile from "../assets/images/banners/bannerWin/mobile/group_193.png";
-import bannerWinAroundMobile from "../assets/images/banners/bannerWin/mobile/around.png"
+import bannerWinAroundMobile from "../assets/images/banners/bannerWin/mobile/around.png";
 
+import DummyBanner1 from "../assets/images/banners/dk1.png";
+import DummyBanner2 from "../assets/images/banners/dk2.png";
+import DummyBanner3 from "../assets/images/banners/dk3.png";
+import DummyBanner4 from "../assets/images/banners/mb1.png";
+import DummyBanner5 from "../assets/images/banners/mb2.png";
+import DummyBanner6 from "../assets/images/banners/mb3.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -350,7 +349,6 @@ export const imageHome = {
   BannerWinCelebMobile: bannerWinCelebMobile,
   BannerWinAroundMobile: bannerWinAroundMobile,
 };
-
 
 export const images = {
   bn1: DummyBanner1,

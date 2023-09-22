@@ -126,6 +126,7 @@ export default function NewHomePage() {
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
+
   useEffect(() => {
     // setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament?.map((item) => item?.timeStart));
@@ -135,6 +136,7 @@ export default function NewHomePage() {
   //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
   //   return distance;
   // };
+  console.log(hotWeekTour);
 
   return (
     <Container
