@@ -197,7 +197,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           >
             <Typography className="fs-4">
               {detailTournament?.tournamentName?.length > 30
-                ? detailTournament?.tournamentName.slice(0, 30) + " ..."
+                ? detailTournament?.tournamentName
                 : detailTournament?.tournamentName}
             </Typography>
             <Typography

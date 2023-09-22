@@ -39,7 +39,6 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { hotTournament } = useSelector((state) => state.tournamentReducer);
-  console.log(hotTournament);
 
   const imgHot = hotTournament.map((e) => {
      return e.tournamentBackground
