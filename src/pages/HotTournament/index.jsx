@@ -215,13 +215,13 @@ export default function HotTournament() {
                 marginBottom: width < 576 ? "24px" : "32px",
               }}
             >
-              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: width < 576 && width < 1200 ? "space-between" : "none" }}>
                 {hotTournament?.map((item, index) => {
                   return (
                     index < 10 && (
                       <Box
                         sx={{
-                          width: "20%",
+                          width:  width < 576 && width < 1200 ? "auto" : "20%",
                           marginTop: "50px",
                           marginRight:
                             width > 576 && width < 1200 ? "100px" : "none",
