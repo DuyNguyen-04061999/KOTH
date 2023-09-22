@@ -154,23 +154,7 @@ export default function DailyTournament() {
                     })}
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  paddingTop: width < 576 ? "24px" : "32px",
-                  paddingBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <video width={"100%"} playsInline muted autoPlay loop={true}>
-                  <source
-                    src={
-                      width < 576
-                        ? video.Promo_Sale_Video_Mobile
-                        : video.Promo_Sale_Video_Desktop
-                    }
-                    type="video/mp4"
-                  />
-                </video>
-              </Box>{" "}
+              
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
@@ -281,23 +265,6 @@ export default function DailyTournament() {
                     })}
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  paddingTop: width < 576 ? "24px" : "32px",
-                  paddingBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <video width={"100%"} playsInline muted autoPlay loop={true}>
-                  <source
-                    src={
-                      width < 576
-                        ? video.Promo_Sale_Video_Mobile
-                        : video.Promo_Sale_Video_Desktop
-                    }
-                    type="video/mp4"
-                  />
-                </video>
-              </Box>{" "}
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",

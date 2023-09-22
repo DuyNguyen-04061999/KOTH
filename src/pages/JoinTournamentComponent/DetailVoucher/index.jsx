@@ -160,9 +160,9 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       textAlign: "start",
                       color: "#BE48ED",
                       maxWidth: "160px",
-                      whiteSpace: "nowrap",
+                      // whiteSpace: "nowrap",
                       overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      // textOverflow: "ellipsis",
                       textTransform: "uppercase",
                       marginTop: "4px"
                     }}
@@ -172,7 +172,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                   </Typography>
                 </Box>
               </Box>
-              <Typography
+              {/* <Typography
                 sx={{
                   fontSize: "14px",
                   fontWeight: "bolder !important",
@@ -184,7 +184,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 Discount Voucher from{" "}
                 {detail?.tournamentInfors?.owner?.brandName} : Valid for
                 purchases of {detail?.tournamentInfors?.owner?.brandName}
-              </Typography>
+              </Typography> */}
               <Box sx={{ marginTop: "20px" }}>
                 <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
                   Validity Date:
@@ -201,7 +201,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 </Typography>
                 <ul
                   style={{
-                    maxHeight: "120px",
+                    maxHeight: "180px",
                     overflow: "auto",
                     listStyleType: "none",
                   }}
@@ -295,7 +295,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 </Typography>
               </Box>
             </Box>
-            <Typography
+            {/* <Typography
               sx={{
                 fontSize: "14px",
                 fontWeight: "bolder !important",
@@ -307,7 +307,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
               Discount Voucher from {detail?.tournamentInfors?.owner?.brandName}{" "}
               : Valid for purchases of{" "}
               {detail?.tournamentInfors?.owner?.brandName}
-            </Typography>
+            </Typography> */}
             <Box sx={{ marginTop: "20px" }}>
               <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
                 Validity Date:
