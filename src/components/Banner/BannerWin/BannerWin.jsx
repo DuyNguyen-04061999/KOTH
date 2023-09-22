@@ -166,7 +166,7 @@ export default function BannerWin(props) {
                 top: "50%",
                 left: "48%",
                 transform: "translate(-50%,-50%)",
-                fontSize: "40px",
+                fontSize: "39px",
                 color: "white",
                 WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                 width: "100%",
