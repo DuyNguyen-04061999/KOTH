@@ -191,7 +191,7 @@ const AdminPanel = () => {
             ></Button>
           </Box>
         </Box>
-        <Collapse in={detailAccount}>
+        <Collapse in={detailAccount !== null}>
           <Grid
             container
             sx={(theme) => ({
