@@ -39,6 +39,22 @@ const BannerTourMobile = (props) => {
           width: "190px",
         }}
       >
+         <Box sx={{
+          padding:"4px",
+          backgroundColor:"#FD9800",
+          borderRadius:"10px",
+          width:"160px"
+         }}>
+          <Typography
+            sx={{
+              fontSize: "10px",
+              color: "white",
+              fontWeight: 700,
+            }}
+          >
+            Tournament of the week
+          </Typography>
+        </Box>
         <Box>
           <Typography
             sx={{
@@ -55,17 +71,7 @@ const BannerTourMobile = (props) => {
               : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
           </Typography>
         </Box>
-        <Box>
-          <Typography
-            sx={{
-              fontSize: "10px",
-              color: "white",
-              fontWeight: 700,
-            }}
-          >
-            Tournament of the week
-          </Typography>
-        </Box>
+       
         <Box sx={{ width: "180px", marginBottom: "12px" }}>
           <Typography
             sx={{
