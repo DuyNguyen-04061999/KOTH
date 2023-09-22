@@ -9,7 +9,7 @@ import { images } from "../../utils/images";
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { width } = useWindowDimensions();
-  const { images: img, appendDot, htmlCode, isHtmlCode, tours, isLoading } = props;
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours, isLoading, type } = props;
 
   const settings = {
     dots: true,
@@ -93,7 +93,8 @@ export default function SlickSlider(props) {
                 objectFit: "cover",
               }}
               component={"img"}
-              src={item}
+              src={type && type === "tour" ?  process.env.REACT_APP_SOCKET_SERVER +
+              "/" + item : item}
             ></Box>
           </Box>
         );
