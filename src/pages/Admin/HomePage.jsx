@@ -12,6 +12,7 @@ import { includes } from "lodash";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
 import { Box, Button } from "@mui/material";
 import { Container } from "react-bootstrap";
+import FilterRevenue from "../../components/Admin/FilterRevenue/FilterRevenue";
 
 const HomePage = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -77,7 +78,7 @@ const HomePage = () => {
   if (!roles.includes("agent"))
     return (
       <Container>
-        <AdminPanel></AdminPanel> <AdminStructure data={data} />{" "}
+        <FilterRevenue></FilterRevenue> <AdminStructure data={data} />{" "}
       </Container>
     );
   if (roles.includes("agent"))
