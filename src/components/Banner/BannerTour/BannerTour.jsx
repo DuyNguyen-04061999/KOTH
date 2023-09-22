@@ -67,7 +67,7 @@ const BannerTour = (props) => {
           <Typography
             sx={{
               width: "100%",
-              fontSize: "80.176px",
+              fontSize: "50px",
               fontWeight: 800,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
