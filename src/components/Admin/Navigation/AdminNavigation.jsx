@@ -11,16 +11,20 @@ import {
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../../utils/images";
 import { makeStyles } from "@mui/styles";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { closeDrawerNav } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 
 const AdminNavigation = (props) => {
   const { width } = useWindowDimensions()
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { roles, ref } = useSelector((state) => state.adminAuthReducer);
+  const { isOpenDrawerNav } = useSelector((state) => state.adminDialogReducer);
+  const dispatch = useDispatch();
+
   const masterActions = [
     // {
     //   name: "Create Distributor",
@@ -182,6 +186,13 @@ const AdminNavigation = (props) => {
       ? subDistributorActions
       : roles?.includes("agent") && agentActions;
 
+  const handleRedirectNav = (action) => {
+    navigate(action?.link);
+    if(isOpenDrawerNav){
+      dispatch(closeDrawerNav());
+    }
+  }
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh",borderRight: "2px solid #EEE" }}>
       <Box sx={{ marginTop: "47px", display: "flex", marginLeft: "46px" }}>
@@ -189,6 +200,9 @@ const AdminNavigation = (props) => {
           className="inp-header mx-3 ps-4 cursor-pointer"
           onClick={() => {
             navigate("/");
+            if(isOpenDrawerNav){
+              dispatch(closeDrawerNav());
+            }
           }}
           component={"img"}
           src={images.adminLogo}
@@ -208,7 +222,7 @@ const AdminNavigation = (props) => {
               listAction?.map((action, i_action) => (
                 <ListItem
                   disablePadding
-                  onClick={() => navigate(action?.link)}
+                  onClick={() => handleRedirectNav(action)}
                   key={i_action}
                   selected={
                     pathname === "/" || pathname === ""

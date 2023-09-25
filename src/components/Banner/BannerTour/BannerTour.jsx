@@ -39,6 +39,23 @@ const BannerTour = (props) => {
           alignItems: "center",
         }}
       >
+        <Box sx={{ 
+          marginBottom: "8px",
+          padding:"6px",
+          backgroundColor:"#FD9800",
+          borderRadius:"10px"
+       }}>
+          <Typography
+            sx={{
+              color: "white",
+              textTransform: "uppercase",
+              fontSize: "14px",
+              fontWeight: 700,
+            }}
+          >
+            Tournament of the week
+          </Typography>
+        </Box>
         <Box>
           <Typography
             sx={{
@@ -51,23 +68,12 @@ const BannerTour = (props) => {
             {tournamentName}
           </Typography>
         </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <Typography
-            sx={{
-              color: "white",
-              textTransform: "uppercase",
-              fontSize: "14px",
-              fontWeight: 700,
-            }}
-          >
-            Tournament of the week
-          </Typography>
-        </Box>
+
         <Box sx={{ width: "380px", marginBottom: "12px" }}>
           <Typography
             sx={{
               width: "100%",
-              fontSize: "80.176px",
+              fontSize: "50px",
               fontWeight: 800,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
@@ -171,15 +177,14 @@ const BannerTour = (props) => {
               backgroundPosition: "center",
               marginTop: "72px",
               display: "flex",
-              justifyContent:"center",
-              alignItems:"center",
-
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Box
               sx={{
                 marginTop: "-6px",
-                marginRight:"30px",
+                marginRight: "30px",
                 transform: "rotate(-4deg)",
                 textAlign: "center",
               }}
