@@ -12,10 +12,11 @@ import { CreateDistributorPage, DatabaseManagerPage, EditDistributorPage, Feedba
 import { CreateSubDistributorPage, EditSubDistributorPage, ListSubDistributorPage, ProvideTicketDistributorPage } from './pages/Admin/Distributor';
 import { CreateAgentPage, DetailSubDistributorPage, ListRefPage, ProvideTicketPage } from './pages/Admin/SubDistributor';
 import { CreateEndUserPage, ProvideEndUserTicketPage } from './pages/Admin/Agent';
-import AdminStructure from './components/Admin/AdminStructure/AdminStructure';
 import MainLayout from './pages/Admin/MainLayout';
 import HomePage from './pages/Admin/HomePage';
 import Setting from './pages/Admin/Setting/Setting';
+import ManageDistributor from './pages/Admin/ManageDistributor/ManageDistributor';
+import Totals from './pages/Admin/Totals/Totals';
 
 export default function Admin() {
     return (
@@ -50,6 +51,8 @@ export default function Admin() {
                             <Route path="/agent/provide-ticket" element={<PrivateRouteComponent children={<ProvideEndUserTicketPage/>}/>} />
                             {/* Setting */}
                             <Route path="/setting" element={<PrivateRouteComponent children={<Setting/>}/>} />
+                            <Route path="/total" element={<PrivateRouteComponent children={<Totals/>}/>} />
+                            <Route path="/manage-distributor" element={<PrivateRouteComponent children={<ManageDistributor/>}/>} />
                             </Route>
                             <Route path="/login" element={<LoginPage/>} />
                             {/* Not Found */}
