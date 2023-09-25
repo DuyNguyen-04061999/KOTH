@@ -75,13 +75,13 @@ const Setting = () => {
   const newPassInput = useRef("");
   const rePassInput = useRef("");
   const dispatch = useDispatch();
-  const {errorChangePassword} = useSelector(state => state.adminAuthReducer)
+  const { errorChangePassword } = useSelector(
+    (state) => state.adminAuthReducer
+  );
 
   useEffect(() => {
-    console.log(errorChangePassword);
     setPasswordError(errorChangePassword);
-  }, [errorChangePassword])
-  
+  }, [errorChangePassword]);
 
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
@@ -96,9 +96,11 @@ const Setting = () => {
     const newPass = newPassInput.current.value;
     const rePass = rePassInput.current.value;
     if (currentPass === "" || newPass === "" || rePass === "") {
-      setPasswordError("Please fill all required fields");
+      setPasswordError("Please fill all required fields !");
     } else if (rePass !== newPass) {
-      setPasswordError("Re-enter password and password is not match");
+      setPasswordError("Re-enter password and password is not match !");
+    } else if (newPass?.length < 9) {
+      setPasswordError("Password must be more than 9 character !");
     } else {
       dispatch(
         changePassword({
