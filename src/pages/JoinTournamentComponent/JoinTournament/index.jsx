@@ -779,8 +779,7 @@ export default function JoinTournament() {
                             }}
                           >
                             {detailTournament?.tournamentName?.length > 30
-                              ? detailTournament?.tournamentName.slice(0, 30) +
-                                " ..."
+                              ? detailTournament?.tournamentName
                               : detailTournament?.tournamentName}
                           </Typography>
                           <Typography
@@ -1415,7 +1414,7 @@ export default function JoinTournament() {
                         >
                           {item
                             ? item
-                            : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper dolor nunc, quis eleifend erat accumsan id. Nulla cursus urna urna, aliquam congue justo luctus vel. Praesent convallis facilisis mauris, id interdum diam condimentum ut. Ut vitae magna fringilla, fringilla diam at, consectetur risus. Nullam ex est, aliquet eu consequat in, laoreet non tellus. Vestibulum eget rutrum mi. Etiam placerat lectus eu finibus sagittis."}
+                            : ""}
                         </Typography>
                       </Box>
                     );

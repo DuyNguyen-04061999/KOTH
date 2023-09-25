@@ -39,6 +39,14 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { hotTournament } = useSelector((state) => state.tournamentReducer);
+
+  const imgHot = hotTournament.map((e) => {
+     return e.tournamentBackground
+  })
+
+  const imgHotMobile = hotTournament.map((e) => {
+    return e.tournamentBackgroundMobile
+ })
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -79,19 +87,11 @@ export default function HotTournament() {
               >
                 {" "}
                 <SlickSlider
+                  type="tour"
                   appendDot={true}
                   images={
-                    width < 576
-                      ? [
-                          images.bannerTournament,
-                          images.bannerTournament1,
-                          images.bannerTournament2,
-                        ]
-                      : [
-                          images.bannerTournament,
-                          images.bannerTournament,
-                          images.bannerTournament,
-                        ]
+                    width < 576 ? imgHotMobile
+                      : imgHot
                   }
                 />
               </Box>
@@ -100,13 +100,13 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+                <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: width < 576 && width < 1200 ? "space-between" : "none" }}>
                   {hotTournament?.map((item, index) => {
                     return (
                       index < 10 && (
                         <Box
                           sx={{
-                            width: "20%",
+                            width: width < 576 && width < 1200 ? "auto" : "20%",
                             marginTop: "50px",
                             marginRight:
                               width > 576 && width < 1200 ? "100px" : "none",
@@ -120,7 +120,7 @@ export default function HotTournament() {
                   })}
                 </Box>
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   paddingTop: width < 576 ? "24px" : "32px",
                   paddingBottom: width < 576 ? "24px" : "32px",
@@ -136,7 +136,7 @@ export default function HotTournament() {
                     type="video/mp4"
                   />
                 </video>
-              </Box>{" "}
+              </Box>{" "} */}
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
@@ -194,19 +194,11 @@ export default function HotTournament() {
             >
               {" "}
               <SlickSlider
+                type="tour"
                 appendDot={true}
                 images={
-                  width < 576
-                    ? [
-                        images.bannerTournament,
-                        images.bannerTournament1,
-                        images.bannerTournament2,
-                      ]
-                    : [
-                        images.bannerTournament,
-                        images.bannerTournament,
-                        images.bannerTournament,
-                      ]
+                  width < 576 ? imgHotMobile
+                      : imgHot
                 }
               />
             </Box>
@@ -215,13 +207,13 @@ export default function HotTournament() {
                 marginBottom: width < 576 ? "24px" : "32px",
               }}
             >
-              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: width < 576 && width < 1200 ? "space-between" : "none" }}>
                 {hotTournament?.map((item, index) => {
                   return (
                     index < 10 && (
                       <Box
                         sx={{
-                          width: "20%",
+                          width:  width < 576 && width < 1200 ? "auto" : "20%",
                           marginTop: "50px",
                           marginRight:
                             width > 576 && width < 1200 ? "100px" : "none",
@@ -235,7 +227,7 @@ export default function HotTournament() {
                 })}
               </Box>
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 paddingTop: width < 576 ? "24px" : "32px",
                 paddingBottom: width < 576 ? "24px" : "32px",
@@ -251,7 +243,7 @@ export default function HotTournament() {
                   type="video/mp4"
                 />
               </video>
-            </Box>{" "}
+            </Box>{" "} */}
             <Box
               sx={{
                 marginBottom: width < 576 ? "24px" : "32px",
