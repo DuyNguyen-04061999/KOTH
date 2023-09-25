@@ -1,16 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AdminStructure from "../../components/Admin/AdminStructure/AdminStructure";
-import UserManager from "../../components/Admin/UserManager/UserManager";
 import { useEffect } from "react";
 import { getListRef } from "../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import { getListDistributor } from "../../redux-saga-middleware_admin/reducers/adminMasterReducer";
 import { getListSub } from "../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListEndUser } from "../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 import { useState } from "react";
-import { includes } from "lodash";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
 import { Box, Button, Container } from "@mui/material";
+import NestedTable from "../../components/Admin/NestedTable/NestedTable";
 
 const HomePage = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -73,19 +71,14 @@ const HomePage = () => {
     }
   }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
-  if (!roles.includes("agent"))
-    return (
-      <Container>
-        <FilterRevenue></FilterRevenue> <AdminStructure data={data} />{" "}
-      </Container>
-    );
-  if (roles.includes("agent"))
-    return (
-      <Container>
-        <AdminPanel></AdminPanel>
-        <UserManager data={data} />
-      </Container>
-    );
+  return (
+    <Container>
+      <AdminPanel></AdminPanel>
+      <Box sx={{ marginTop: "36px" }}>
+        <NestedTable data={data} />{" "}
+      </Box>
+    </Container>
+  );
 };
 
 export default HomePage;
