@@ -316,6 +316,14 @@ import DummyBanner4 from "../assets/images/banners/mb1.png";
 import DummyBanner5 from "../assets/images/banners/mb2.png";
 import DummyBanner6 from "../assets/images/banners/mb3.png";
 
+import NavCreate from "../assets/images/Category.png"
+import NavManage from "../assets/images/Activity.png"
+import NavFilter from "../assets/images/Document.png"
+import NavTotal from "../assets/images/Chart.png"
+import NavSetting from "../assets/images/Setting.png"
+import NavLogout from "../assets/images/Logout.png"
+
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -511,6 +519,15 @@ export const images = {
   bannerLoading: bannerLoading,
   adminLogo: AdminLogo,
 };
+
+export const navigationImages = {
+  navCreate: NavCreate,
+  navManage: NavManage,
+  navFilter: NavFilter,
+  navTotal: NavTotal,
+  navSetting: NavSetting,
+  navLogout: NavLogout
+}
 
 export const images2 = {
   commingsoon2: commingsoon2,
