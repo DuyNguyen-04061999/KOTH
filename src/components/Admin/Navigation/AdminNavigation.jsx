@@ -53,31 +53,37 @@ const AdminNavigation = (props) => {
     {
       name: "Create Distributor",
       icon: navigationImages.navCreate,
+      iconActive: navigationImages.navCreateActive,
       link: "/",
     },
     {
       name: "Manage Distributor",
       icon: navigationImages.navManage,
+      iconActive: navigationImages.navManageActive,
       link: "/manage-distributor",
     },
     {
       name: "Revenue by Date Range",
       icon: navigationImages.navFilter,
+      iconActive: navigationImages.navFilterActive,
       link: "/report",
     },
     {
       name: "Totals",
       icon: navigationImages.navTotal,
+      iconActive: navigationImages.navTotalActive,
       link: "/total",
     },
     {
       name: "Setting",
       icon: navigationImages.navSetting,
+      iconActive: navigationImages.navSettingActive,
       link: "/setting",
     },
     {
       name: "Logout",
       icon: navigationImages.navLogout,
+      iconActive: "",
       link: "/logout",
     },
   ];
@@ -97,31 +103,37 @@ const AdminNavigation = (props) => {
     {
       name: "Create Agent",
       icon: navigationImages.navCreate,
+      iconActive: navigationImages.navCreateActive,
       link: "/",
     },
     {
       name: "Manage Agents",
       icon: navigationImages.navManage,
+      iconActive: navigationImages.navManageActive,
       link: "/manage-distributor",
     },
     {
       name: "Revenue by Date Range",
       icon: navigationImages.navFilter,
+      iconActive: navigationImages.navFilterActive,
       link: "/report",
     },
     {
       name: "Totals",
       icon: navigationImages.navTotal,
+      iconActive: navigationImages.navTotalActive,
       link: "/total",
     },
     {
       name: "Setting",
       icon: navigationImages.navSetting,
+      iconActive: navigationImages.navSettingActive,
       link: "/setting",
     },
     {
       name: "Logout",
       icon: navigationImages.navLogout,
+      iconActive: "",
       link: "/logout",
     },
   ];
@@ -148,6 +160,11 @@ const AdminNavigation = (props) => {
       icon: "",
       link: "/",
     },
+    {
+      name: "Logout",
+      icon: navigationImages.navLogout,
+      link: "/logout",
+    },
   ];
 
   const agentActions = [
@@ -162,31 +179,37 @@ const AdminNavigation = (props) => {
     {
       name: "Play Management",
       icon: navigationImages.navCreate,
+      iconActive: navigationImages.navCreateActive,
       link: "/",
     },
     {
       name: "Agents Management",
       icon: navigationImages.navManage,
+      iconActive: navigationImages.navManageActive,
       link: "/manage-distributor",
     },
     {
       name: "Revenue by Date Range",
       icon: navigationImages.navFilter,
+      iconActive: navigationImages.navFilterActive,
       link: "/report",
     },
     {
       name: "Totals",
       icon: navigationImages.navTotal,
+      iconActive: navigationImages.navTotalActive,
       link: "/total",
     },
     {
       name: "Setting",
       icon: navigationImages.navSetting,
+      iconActive: navigationImages.navSettingActive,
       link: "/setting",
     },
     {
       name: "Logout",
       icon: navigationImages.navLogout,
+      iconActive: "",
       link: "/logout",
     },
   ];
@@ -223,7 +246,7 @@ const AdminNavigation = (props) => {
         borderRight: "2px solid #EEE",
       }}
     >
-      <Box sx={{ marginTop: "42px", display: "flex"}}>
+      <Box sx={{ marginTop: "42px", display: "flex" }}>
         <Box
           className="inp-header mx-3 ps-4 cursor-pointer"
           onClick={() => {
@@ -253,12 +276,11 @@ const AdminNavigation = (props) => {
                     disablePadding
                     onClick={() => handleRedirectNav(action)}
                     key={i_action}
-                    selected={
-                      pathname === "/" || pathname === ""
-                        ? action?.link === "/"
-                        : pathname === action?.link
-                    }
-                    sx={{ borderRadius: "20px", marginTop: "12px" }}
+                    sx={{
+                      borderRadius: "20px",
+                      marginTop: "12px",
+                      background: pathname === action?.link && "#F7F7F7",
+                    }}
                   >
                     <ListItemButton
                       style={{
@@ -268,15 +290,20 @@ const AdminNavigation = (props) => {
                     >
                       <Box
                         component={"img"}
-                        src={action?.icon}
-                        sx={{ marginRight: "16px" }}
+                        src={
+                          pathname === action?.link
+                            ? action?.iconActive
+                            : action?.icon
+                        }
+                        sx={{ marginRight: "16px", marginLeft: "12px" }}
                       ></Box>
                       <ListItemText
                         sx={{
                           "> span": {
                             fontSize: "16px",
                             fontWeight: 600,
-                            color: "#8C8D9B",
+                            color:
+                              pathname === action?.link ? "#355DFF" : "#8C8D9B",
                             fontFamily: "Cyntho Next",
                           },
                         }}

@@ -323,6 +323,13 @@ import NavTotal from "../assets/images/Chart.png"
 import NavSetting from "../assets/images/Setting.png"
 import NavLogout from "../assets/images/Logout.png"
 
+import NavCreateActive from "../assets/images/CategoryActive.png"
+import NavManageActive from "../assets/images/ActivityActive.png"
+import NavFilterActive from "../assets/images/DocumentActive.png"
+import NavTotalActive from "../assets/images/ChartActive.png"
+import NavSettingActive from "../assets/images/SettingActive.png"
+
+
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -526,7 +533,12 @@ export const navigationImages = {
   navFilter: NavFilter,
   navTotal: NavTotal,
   navSetting: NavSetting,
-  navLogout: NavLogout
+  navLogout: NavLogout,
+  navCreateActive: NavCreateActive,
+  navManageActive: NavManageActive,
+  navFilterActive: NavFilterActive,
+  navTotalActive: NavTotalActive,
+  navSettingActive: NavSettingActive,
 }
 
 export const images2 = {
