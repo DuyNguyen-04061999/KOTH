@@ -128,7 +128,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <Box sx={{ marginTop: "80px" }}>
+    <Box sx={{ marginTop: "60px" }}>
       <DetailAccountDialogComponent />
       <Typography
         sx={{
