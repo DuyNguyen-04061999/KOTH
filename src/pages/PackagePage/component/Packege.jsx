@@ -130,7 +130,17 @@ export default function Package() {
           <div className="Package-home pb-5 ">
             <Box className="pt-5 pb-4 text-white">
               {location && location?.pathname?.includes("home") && (
-                <Typography variant="h5">Subscription</Typography>
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: width < 576 ? "14px" : "20px",
+                    fontWeight: "200 !important",
+                    marginLeft: "0px !important",
+                    color: "#fff",
+                  }}
+                >
+                  Subscription
+                </Typography>
               )}
             </Box>
             <Container
@@ -261,7 +271,7 @@ export default function Package() {
                                         //   ? "15px"
                                         //   : "",
                                         "15px",
-                                        mixBlendMode: "difference",
+                                      mixBlendMode: "difference",
                                     }}
                                     playsInline
                                     muted
@@ -271,7 +281,8 @@ export default function Package() {
                                     <source
                                       src={
                                         i?.packageAvatar
-                                          ? process.env.REACT_APP_SOCKET_SERVER +
+                                          ? process.env
+                                              .REACT_APP_SOCKET_SERVER +
                                             "/" +
                                             i?.packageAvatar
                                           : images.free
@@ -382,7 +393,8 @@ export default function Package() {
                                           marginLeft: "4px !important",
                                         }}
                                       >
-                                        {i?.packageFreeTicketTournament} ticket / tournament
+                                        {i?.packageFreeTicketTournament} ticket
+                                        / tournament
                                       </Typography>
                                     </Box>
                                     <Box
@@ -540,9 +552,9 @@ export default function Package() {
                                   )}
                                   <button
                                     onClick={() => {
-                                      if(token === null || token === "") {
-                                        dispatch(toggleLoginDialog())
-                                        return
+                                      if (token === null || token === "") {
+                                        dispatch(toggleLoginDialog());
+                                        return;
                                       }
                                       if (i?.packageName !== "Free") {
                                         if (token) {
@@ -553,14 +565,18 @@ export default function Package() {
                                         console.log("Cannot buy free pack!");
                                       }
                                     }}
-                                    disabled={i?.id === userPackageId ? true : false}
+                                    disabled={
+                                      i?.id === userPackageId ? true : false
+                                    }
                                     style={{
                                       border: "none",
                                       padding: "7px 35px",
                                       borderRadius: "24px",
                                       color: "white",
-                                      background: i?.id === userPackageId ? "Gray" :
-                                        "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                                      background:
+                                        i?.id === userPackageId
+                                          ? "Gray"
+                                          : "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
                                       backdropFilter: " blur(4px)",
                                       width: "100%",
                                       fontSize:
@@ -659,19 +675,18 @@ export default function Package() {
           <div className="Package-home" style={{ marginTop: "48px" }}>
             {location && location?.pathname?.includes("home") && (
               <Typography
-                style={{
-                  color: "white",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "700",
-                  lineHeight: "normal",
+                sx={{
                   textAlign: "start",
+                  fontSize: width < 576 ? "14px" : "20px",
+                  fontWeight: "200 !important",
+                  marginLeft: "0px !important",
+                  color: "#fff",
                 }}
               >
                 Subscription
               </Typography>
             )}
-            <Box style={{ padding: "10px" }} sx={{ marginTop: "24px" }}>
+            <Box style={{ padding: "10px" }} >
               <Box
                 sx={{
                   paddingBottom: "0px",
@@ -839,7 +854,7 @@ export default function Package() {
                                   //   ? "15px"
                                   //   : "",
                                   "15px",
-                                  mixBlendMode: "difference",
+                                mixBlendMode: "difference",
                               }}
                               playsInline
                               muted
@@ -919,7 +934,8 @@ export default function Package() {
                                     marginLeft: "4px !important",
                                   }}
                                 >
-                                  {i?.packageFreeTicketTournament} ticket / tournament
+                                  {i?.packageFreeTicketTournament} ticket /
+                                  tournament
                                 </Typography>
                               </Box>
                               <Box
