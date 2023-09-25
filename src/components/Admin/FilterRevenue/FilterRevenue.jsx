@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
@@ -134,20 +134,89 @@ const FilterRevenue = () => {
           // onSubmit={handleSubmit}
           ></SearchBar>
         </Box>
-        <Box sx={{ marginTop: "42px" }}>
-          <Box></Box>
+        <Box sx={{ marginTop: "42px", marginLeft: width < 1024 ? "" : "90px" }}>
           <Box
             sx={{
-              display: "grid",
+              display: "flex",
+              alignItems: "center",
+              gap: "24px",
+            }}
+          >
+            <Box sx={{ fontSize: "14px", fontWeight: 600, lineHeight: "24px" }}>
+              Period:
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <input
+                placeholder="2022-03-22 15:39:06"
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  lineHeight: "24px",
+                  padding: "7px 17px",
+                  outline: "none",
+                  color: "#9D9D9D",
+                  borderRadius: "16px",
+                  border: "2px solid #5474F1",
+                }}
+              ></input>
+              <Box
+                sx={{
+                  margin: "0px 8px",
+                  color: "#5474F1",
+                  fontSize: "20px",
+                  fontWeight: 600,
+                }}
+              >
+                -
+              </Box>
+              <input
+                placeholder="2022-03-22 15:39:06"
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  lineHeight: "24px",
+                  padding: "7px 17px",
+                  outline: "none",
+                  color: "#9D9D9D",
+                  borderRadius: "16px",
+                  border: "2px solid #5474F1",
+                }}
+              ></input>
+            </Box>
+            <Button
+              sx={{
+                fontSize: "12px",
+                textTransform: "unset",
+                borderRadius: "16px",
+                backgroundColor: "#355DFF",
+                color: "white",
+                fontWeight: 700,
+                height: "38px",
+                width:"120px",
+                ":hover": {
+                  backgroundColor: "#355DFF",
+                  opacity: 0.9,
+                },
+              }}
+            >
+              Search
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              display: width < 768 ? "flex" : "grid",
+              flexDirection: "column",
+              alignItems: "center",
               gridTemplateColumns: "repeat(6,1fr)",
-              width: "61%",
+              width: width < 1024 ? "100%" : "650px",
               gridColumnGap: "20px",
               placeItems: "center",
-              marginLeft: "90px",
+              marginTop: "24px",
             }}
           >
             {listAction?.map((item, index) => (
               <Button
+                key={index}
                 sx={{
                   fontSize: "12px",
                   textTransform: "unset",
