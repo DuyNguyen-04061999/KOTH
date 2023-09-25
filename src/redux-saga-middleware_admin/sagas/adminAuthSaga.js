@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_AUTH_SERVICE } from "../services/adminAuthService";
-import { adminLoginFail, adminLoginSuccess, resetPasswordFail, resetPasswordSuccess } from "../reducers/adminAuthReducer";
+import { adminLoginFail, adminLoginSuccess, changePasswordFail, changePasswordSuccess, resetPasswordFail, resetPasswordSuccess } from "../reducers/adminAuthReducer";
 import { closeResetPassDialog } from "../reducers/adminDialogReducer";
 const adminAuthService = new ADMIN_AUTH_SERVICE();
 
@@ -38,9 +38,26 @@ function* resetPasswordSaga(dataRequest) {
     }
 }
 
+function* changePasswordSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminAuthService.changePassword , payload)
+        if(res && res.status === 200) {
+            yield put(changePasswordSuccess())
+            alert("Change password successfully!")
+            window.location.reload();
+        } else if(res && res.type === "error") {
+            yield put(changePasswordFail(res.message))
+        }
+    } catch (error) {
+            yield put(changePasswordFail(error.message))
+    }
+}
+
 function* adminAuthSaga() {
     yield takeEvery("ADMIN_LOGIN", login)
     yield takeEvery("RESET_PASSWORD", resetPasswordSaga)
+    yield takeEvery("CHANGE_PASSWORD", changePasswordSaga)
 }
 
 export default adminAuthSaga

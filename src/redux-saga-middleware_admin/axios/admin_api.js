@@ -30,8 +30,8 @@ ADMIN_API.interceptors.response.use(
     if (axiosAdmin.isAxiosError(er)) {
       if (er.response) {
         if (er.response.status === 401) {
-          localStorage.removeItem("token_admin");
-          window.location.reload()
+          // localStorage.removeItem("token_admin");
+          // window.location.reload()
         }
 
         if(er.response.status === 403) {
