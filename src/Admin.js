@@ -16,6 +16,7 @@ import AdminStructure from './components/Admin/AdminStructure/AdminStructure';
 import MainLayout from './pages/Admin/MainLayout';
 import HomePage from './pages/Admin/HomePage';
 import Setting from './pages/Admin/Setting/Setting';
+import NotFound from './pages/Admin/NotFound/NotFound';
 
 export default function Admin() {
     return (
@@ -50,10 +51,10 @@ export default function Admin() {
                             <Route path="/agent/provide-ticket" element={<PrivateRouteComponent children={<ProvideEndUserTicketPage/>}/>} />
                             {/* Setting */}
                             <Route path="/setting" element={<PrivateRouteComponent children={<Setting/>}/>} />
+                            <Route path="*" element={<NotFound/>} />
                             </Route>
                             <Route path="/login" element={<LoginPage/>} />
                             {/* Not Found */}
-                            <Route path="*" element={<LoginPage/>} />
                         </Routes>
                     </CustomRouter>
                 </PersistGate>
