@@ -15,6 +15,7 @@ import { CreateEndUserPage, ProvideEndUserTicketPage } from './pages/Admin/Agent
 import MainLayout from './pages/Admin/MainLayout';
 import HomePage from './pages/Admin/HomePage';
 import Setting from './pages/Admin/Setting/Setting';
+import NotFound from './pages/Admin/NotFound/NotFound';
 import Totals from './pages/Admin/Totals/Totals';
 import Revenue from './pages/Admin/Revenue/Revenue';
 import ManageDistributor from './pages/Admin/ManageDistributor/ManageDistributor';
@@ -55,12 +56,10 @@ export default function Admin() {
                             <Route path="/report" element={<PrivateRouteComponent children={<Revenue/>}/>} />
                             <Route path="/total" element={<PrivateRouteComponent children={<Totals/>}/>} />
                             <Route path="/setting" element={<PrivateRouteComponent children={<Setting/>}/>} />
-                            <Route path="/total" element={<PrivateRouteComponent children={<Totals/>}/>} />
-                            <Route path="/manage-distributor" element={<PrivateRouteComponent children={<ManageDistributor/>}/>} />
+                            <Route path="*" element={<NotFound/>} />
                             </Route>
                             <Route path="/login" element={<LoginPage/>} />
                             {/* Not Found */}
-                            <Route path="*" element={<LoginPage/>} />
                         </Routes>
                     </CustomRouter>
                 </PersistGate>
