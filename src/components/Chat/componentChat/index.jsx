@@ -230,7 +230,7 @@ export default function ComponentChat() {
                       e?.messageFromAvatar
                     : ""
                 }
-                sx={{ borderRadius: "18%" }}
+                sx={{ borderRadius: "50%" }}
               />
             </Box>
             <Box className="mx-2">
