@@ -24,8 +24,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
       return prev + num;
     });
   };
-  console.log("Pagination: ", start, end);
-  console.log("Pagination: ", detailTournament?.tournamentResult);
+
   return (
     <Box>
       {width > 576 ? (

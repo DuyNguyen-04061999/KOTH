@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
-import { LinearProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { useRef } from "react";
 import { Line } from "rc-progress";
@@ -35,6 +35,7 @@ export default function VideoComponent(props) {
     });
   }, []);
   progress && console.log("progress: ", Math.round(progress));
+  console.log(detailTournament);
   return (
     <Box
       sx={{
@@ -129,13 +130,18 @@ export default function VideoComponent(props) {
             display: "flex",
             justifyContent: "center",
             position: "absolute",
-            bottom: "50px",
+            bottom:
+              device === "Desktop"
+                ? "50px"
+                : orientation === "portrait"
+                ? "10px"
+                : "100px",
           }}
         >
           {" "}
           {progress && (
             <Line
-              style={{ width: "98%" }}
+              style={{ width: "98%", height: "3px" }}
               trailWidth={0.5}
               strokeWidth={0.5}
               percent={progress}
