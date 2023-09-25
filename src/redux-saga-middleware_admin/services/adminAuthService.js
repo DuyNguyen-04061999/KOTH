@@ -9,4 +9,13 @@ export class ADMIN_AUTH_SERVICE {
         })
         return res
     }
+
+    async resetPassword (dataRequest) {
+        const res = ADMIN_API.post(`/api/admin/authenticate/reset-password`, dataRequest, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        return res
+    }
 }
