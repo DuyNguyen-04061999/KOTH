@@ -11,10 +11,21 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const [top3, setTop3] = useState([]);
   const { width } = useWindowDimensions();
   const { userName } = useSelector((state) => state.authReducer);
-
+  const [start, setStart] = useState(3);
+  const [end, setEnd] = useState(6);
   useEffect(() => {
     setTop3(detailTournament?.tournamentResult?.slice(0, 3));
   }, [detailTournament]);
+  const updatePagination = (num) => {
+    setStart((prev) => {
+      return prev + num;
+    });
+    setEnd((prev) => {
+      return prev + num;
+    });
+  };
+  console.log("Pagination: ", start, end);
+  console.log("Pagination: ", detailTournament?.tournamentResult);
   return (
     <Box>
       {width > 576 ? (
@@ -848,8 +859,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   >
                     {detailTournament?.tournamentResult?.map((item, index) => {
                       return (
-                        index > 2 &&
-                        index < 7 && (
+                        index >= start &&
+                        index <= end && (
                           <Box
                             key={index}
                             sx={{
@@ -999,7 +1010,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                       fontWeight: "lighter !important",
                                     }}
                                   >
-                                    {item?.userNickName}
+                                    You
                                   </Typography>
                                   <Typography
                                     sx={{
@@ -1041,6 +1052,11 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       }}
                     >
                       <button
+                        onClick={() => {
+                          if (start > 3) {
+                            updatePagination(-4);
+                          }
+                        }}
                         style={{
                           background:
                             "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
@@ -1095,6 +1111,14 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           ></Box>
                         </Box>
                         <button
+                          onClick={() => {
+                            if (
+                              start + 4 <
+                              detailTournament?.tournamentResult?.length
+                            ) {
+                              updatePagination(4);
+                            }
+                          }}
                           style={{
                             background:
                               "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
@@ -1841,9 +1865,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   <Box sx={{ padding: "28px 28px 60px 28px" }}>
                     {detailTournament?.tournamentResult?.map((item, index) => {
                       return (
-                        item?.userNickName !== userName &&
-                        index > 2 &&
-                        index < 7 && (
+                        index >= start &&
+                        index <= end && (
                           <Box
                             key={index}
                             sx={{
@@ -1862,7 +1885,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 detailTournament?.tournamentResult?.length - 1
                                   ? "20px"
                                   : "none",
-                                  backgroundColor: "#211D28"
+                              backgroundColor: "#211D28",
                             }}
                           >
                             <Box sx={{ color: "#BFBEED", width: "10%" }}>
@@ -1873,7 +1896,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 display: "flex",
                                 width: "70%",
                                 justifyContent: "flex-start",
-                                backgroundColor: "#211D28"
+                                backgroundColor: "#211D28",
                               }}
                             >
                               <Box
@@ -1946,80 +1969,84 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       })
                       .map((item, index) => {
                         return (
-                          <Box
-                            key={index}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              backgroundColor: "#68399E",
-                              padding: "16px 44px 16px 28px",
-                            }}
-                          >
-                            <Box sx={{ color: "#ffff", width: "10%" }}>
-                              {detailTournament?.tournamentResult
-                                ?.map((item, index) => {
-                                  return item?.userNickName;
-                                })
-                                .indexOf(userName) + 1}
-                            </Box>
+                          index === 0 && (
                             <Box
+                              key={index}
                               sx={{
                                 display: "flex",
-                                width: "70%",
-                                justifyContent: "flex-start",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                backgroundColor: "#68399E",
+                                padding: "16px 44px 16px 28px",
                               }}
                             >
+                              <Box sx={{ color: "#ffff", width: "10%" }}>
+                                {detailTournament?.tournamentResult
+                                  ?.map((item, index) => {
+                                    return item?.userNickName;
+                                  })
+                                  .indexOf(userName) + 1}
+                              </Box>
                               <Box
-                                component={"img"}
-                                src={
-                                  item?.tUser?.userAccount?.accountAvatar
-                                    ? process.env.REACT_APP_SOCKET_SERVER +
-                                      "/" +
-                                      item?.tUser?.userAccount?.accountAvatar
-                                    : images.undefinedAvatar
-                                }
                                 sx={{
-                                  borderRadius: "50%",
-                                  width: "40px",
-                                  height: "40px",
-                                  marginRight: "5px",
+                                  display: "flex",
+                                  width: "70%",
+                                  justifyContent: "flex-start",
                                 }}
-                              ></Box>
-                              <Box>
-                                <Typography
+                              >
+                                <Box
+                                  component={"img"}
+                                  src={
+                                    item?.tUser?.userAccount?.accountAvatar
+                                      ? process.env.REACT_APP_SOCKET_SERVER +
+                                        "/" +
+                                        item?.tUser?.userAccount?.accountAvatar
+                                      : images.undefinedAvatar
+                                  }
                                   sx={{
-                                    textAlign: "start",
-                                    color: "#ffff",
-                                    fontWeight: "lighter !important",
+                                    borderRadius: "50%",
+                                    width: "40px",
+                                    height: "40px",
+                                    marginRight: "5px",
                                   }}
-                                >
-                                  {item?.userNickName}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    textAlign: "start",
-                                    color: "#ffff",
-                                    fontSize: "12px",
-                                    fontWeight: "lighter !important",
-                                    marginTop: "-4px !important",
-                                  }}
-                                >
-                                  {moment(item?.updatedAt).format("DD/MM/YYYY")}
-                                </Typography>
+                                ></Box>
+                                <Box>
+                                  <Typography
+                                    sx={{
+                                      textAlign: "start",
+                                      color: "#ffff",
+                                      fontWeight: "lighter !important",
+                                    }}
+                                  >
+                                    You{" "}
+                                  </Typography>
+                                  <Typography
+                                    sx={{
+                                      textAlign: "start",
+                                      color: "#ffff",
+                                      fontSize: "12px",
+                                      fontWeight: "lighter !important",
+                                      marginTop: "-4px !important",
+                                    }}
+                                  >
+                                    {moment(item?.updatedAt).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box
+                                sx={{
+                                  color: "#fff",
+                                  width: "20%",
+                                  display: "flex",
+                                  justifyContent: "flex-end",
+                                }}
+                              >
+                                {item?.score}
                               </Box>
                             </Box>
-                            <Box
-                              sx={{
-                                color: "#fff",
-                                width: "20%",
-                                display: "flex",
-                                justifyContent: "flex-end",
-                              }}
-                            >
-                              {item?.score}
-                            </Box>
-                          </Box>
+                          )
                         );
                       })}
 
@@ -2033,6 +2060,11 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       }}
                     >
                       <button
+                        onClick={() => {
+                          if (start > 3) {
+                            updatePagination(-4);
+                          }
+                        }}
                         style={{
                           background:
                             "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
@@ -2087,6 +2119,14 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           ></Box>
                         </Box>
                         <button
+                          onClick={() => {
+                            if (
+                              start + 1 <
+                              detailTournament?.tournamentResult?.length
+                            ) {
+                              updatePagination(4);
+                            }
+                          }}
                           style={{
                             background:
                               "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",

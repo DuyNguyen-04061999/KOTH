@@ -2,7 +2,7 @@ import {
   Box,
   CssBaseline,
   Dialog,
-  Grid,
+  // Grid,
   ThemeProvider,
   Typography,
   createTheme,
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import "./index.scss";
 import moment from "moment";
-import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
+// import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import LeaderBoard from "../LeaderBoard/index";
@@ -22,10 +22,10 @@ import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { isJson, sliceString } from "../../../utils/helper";
+import { formatTimeMothDateYear, isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+// import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
   typography: {},
@@ -67,11 +67,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     }
   });
 
-  const { width } = useWindowDimensions();
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
       setFetchT(false);
+    });
+    socket?.on("buyTicketTournamentSuccess", () => {
+      window.location.reload();
     });
     socket?.on("joinTournamentSuccess", (data) => {
       // socket?.emit("detailTournament", {
@@ -93,6 +95,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           tournamentId: data?.id,
         });
       }, 1000);
+      window.location.reload();
     });
     return () => {
       socket?.off("joinTournamentSuccess");
@@ -194,7 +197,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           >
             <Typography className="fs-4">
               {detailTournament?.tournamentName?.length > 30
-                ? detailTournament?.tournamentName.slice(0, 30) + " ..."
+                ? detailTournament?.tournamentName
                 : detailTournament?.tournamentName}
             </Typography>
             <Typography
@@ -204,10 +207,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               }}
             >
               {detailTournament?.tournamentTimeType === "hourly"
-                ? "Hourly Tournament"
+                ? "Hourly tournaments"
                 : detailTournament?.tournamentTimeType === "daily"
-                ? "Daily Tournament"
-                : "Weeklong Tournament"}
+                ? "Daily tournaments"
+                : "Week-long tournaments"}
             </Typography>
           </Box>
           <Box
@@ -224,10 +227,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 Start
               </Typography>
               <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
-                {moment(detailTournament?.tournamentStartAt).format(
-                  "DD/MM/YYYY"
-                )}
-                -{moment(detailTournament?.tournamentStartAt).format("hh:mm a")}
+                {formatTimeMothDateYear(detailTournament?.tournamentStartAt)}
               </Typography>
             </Box>
             <Box
@@ -242,8 +242,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 Finish
               </Typography>
               <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
-                {moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY")}
-                -{moment(detailTournament?.tournamentEndAt).format("hh:mm a")}
+                {formatTimeMothDateYear(detailTournament?.tournamentEndAt)}
               </Typography>
             </Box>
           </Box>
@@ -383,8 +382,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       >
                         Conditions
                       </h6>
-                      <a
-                        href="#"
+                      <span
                         onClick={(e) => {
                           e.preventDefault();
                           setOpenVoucher(true);
@@ -395,7 +393,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         }}
                       >
                         See more
-                      </a>
+                      </span>
                     </Box>
                   </Box>
                 </Box>
@@ -580,10 +578,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           position: "absolute",
                           left: `${index * 25}px`,
                           top: "0px",
-                          zIndex: `${
-                            detailTournament?.tournamentParticipants?.length -
-                            index
-                          }`,
+                          // zIndex: `${
+                          //   detailTournament?.tournamentParticipants?.length -
+                          //   index
+                          // }`,
+                          zIndex: 0,
                         }}
                       >
                         <Box
@@ -619,6 +618,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                                   ? "white"
                                   : "none",
                               fontSize: "12px",
+                              zIndex: 0
                             }}
                           >
                             <Typography
@@ -652,10 +652,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           position: "absolute",
                           top: "0px",
                           left: `${index * 25}px`,
-                          zIndex: `${
-                            detailTournament?.tournamentParticipants?.length -
-                            index
-                          }`,
+                          // zIndex: `${
+                          //   detailTournament?.tournamentParticipants?.length -
+                          //   index
+                          // }`,
+                          zIndex: 0
                         }}
                       >
                         <Box
@@ -724,8 +725,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 fontSize: "11px",
                 height: readMore ? "fit-content" : "100px",
                 overflow: "hidden",
-                transition: 'height 0.5s ease',
-
+                transition: "height 0.5s ease",
               }}
             >
               {detailTournament &&
@@ -767,26 +767,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               justifyContent: "flex-end",
             }}
           >
-            {
-              detailTournament &&
+            {detailTournament &&
               detailTournament?.tournamentInformations &&
               isJson(detailTournament?.tournamentInformations) &&
               JSON.parse(detailTournament?.tournamentInformations) &&
               JSON.parse(detailTournament?.tournamentInformations)?.length >
-                3 && <Typography
-                sx={{
-                  color: "#fff",
-                  fontWeight: "500 !important",
-                  fontSize: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  marginRight: "28px",
-                  marginTop: "10px",
-                }}
-              >
-                {readMore ? "Read less" : "Read more"}
-              </Typography>
-            } 
+                3 && (
+                <Typography
+                  sx={{
+                    color: "#fff",
+                    fontWeight: "500 !important",
+                    fontSize: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    marginRight: "28px",
+                    marginTop: "10px",
+                  }}
+                >
+                  {readMore ? "Read less" : "Read more"}
+                </Typography>
+              )}
           </Box>
           <Box sx={{ padding: "28px 28px 0px 28px" }}>
             <Box
@@ -848,7 +848,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               width: "100%",
               background: "rgba(37, 37, 37, 0.20)",
               // backdropFilter: "blur(2px)",
-              zIndex: "25",
+              zIndex: "28",
             }}
           >
             {!detailTournament?.checkInTournament ? (

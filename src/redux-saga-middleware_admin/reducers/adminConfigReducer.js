@@ -63,6 +63,27 @@ export const provideTicketFail = (data) => {
   }
 }
 
+export const activeAccount = (data) => {
+  return {
+    type: "ACTIVE_ACCOUNT",
+    payload: data
+  }
+}
+
+export const activeAccountSuccess = (data) => {
+  return {
+    type: "ACTIVE_ACCOUNT_SUCCESS",
+    payload: data
+  }
+}
+
+export const activeAccountFail = (data) => {
+  return {
+    type: "ACTIVE_ACCOUNT_FAIL",
+    payload: data
+  }
+}
+
 const adminConfigReducer = (
   state = {
     isFetchConfig: false,
@@ -70,7 +91,8 @@ const adminConfigReducer = (
     listPermission: [],
     listTicket: [],
     isFetchTicket: false,
-    isProvideTicket: false
+    isProvideTicket: false,
+    isActiveAccount: false
   },
   action
 ) => {
@@ -89,6 +111,9 @@ const adminConfigReducer = (
       case "PROVIDE_TICKET": return {...state, isProvideTicket: true}
       case "PROVIDE_TICKET_SUCCESS": return {...state, isProvideTicket: false}
       case "PROVIDE_TICKET_FAIL": return {...state, isProvideTicket: false}
+      case "ACTIVE_ACCOUNT": return {...state, isActiveAccount: true}
+      case "ACTIVE_ACCOUNT_SUCCESS": return {...state, isActiveAccount: false}
+      case "ACTIVE_ACCOUNT_FAIL": return {...state, isActiveAccount: false}
       default:
         return { ...state };
   }

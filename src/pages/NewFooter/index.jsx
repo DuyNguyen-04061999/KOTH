@@ -41,11 +41,11 @@ export default function NewFooter() {
           }}
         >
           <Typography
-            sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px" }}
+            sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px", textAlign:"center" }}
           >
             Support
           </Typography>
-          <Box sx={{ marginTop: width < 1024 ? "24px" : "20px" }}>
+          <Box sx={{ marginTop: width < 1024 ? "24px" : "16px", marginBottom: width < 1024 ? "40px" : "" }}>
             {" "}
             <Box
               sx={{
@@ -114,8 +114,8 @@ export default function NewFooter() {
             component={"img"}
             sx={{
               width: width < 576 ? "120px" : "200px",
-              height: width < 576 ? "44px" : "73.333px",
-              marginTop: width < 1024 ? "30px" : "96.83px",
+              height: width < 576 ? "120px" : "200px",
+              marginTop: width < 1024 ? "0px" : "64px",
             }}
             src={imageDesktop.LogoCongTy}
           ></Box>
@@ -127,6 +127,7 @@ export default function NewFooter() {
             fontSize: width < 576 ? "12px" : "16px",
             lineHeight: "normal",
             marginTop: "20px",
+            textAlign:"center"
           }}
         >
           "Experience the thrill of gaming at Play4Promo, where tournaments,
@@ -142,11 +143,11 @@ export default function NewFooter() {
             fontStyle: "normal",
             fontWeight: "500",
             lineHeight: "normal",
-            marginTop: "80px",
+            marginTop: "64px",
             marginBottom: "30px !important",
           }}
         >
-          Copyright © 2023 Play4Promo. All rights reserved. | Version 0.8
+          Copyright © 2023 Play4Promo. All rights reserved. | Version {process.env.REACT_APP_VERSION || "0.0"}
         </Typography>
       </Box>
     </Box>

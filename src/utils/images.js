@@ -125,9 +125,9 @@ import brandImage from "../assets/imagesHome/brandImage.png";
 import iconMember from "../assets/imagesHome/iconMember.png";
 import PepperBanner from "../assets/images/banner 01 1.png";
 import PepperBannerMobile from "../assets/images/banner 01 2.png";
-import BannerLenovo from "../assets/imagesHome/bannerLenovo.png"
-import BannerAmazon from "../assets/imagesHome/bannerAmazon.png"
-import BannerSteam from "../assets/imagesHome/bannerSteam.png"
+import BannerLenovo from "../assets/imagesHome/bannerLenovo.png";
+import BannerAmazon from "../assets/imagesHome/bannerAmazon.png";
+import BannerSteam from "../assets/imagesHome/bannerSteam.png";
 //------------image2---------------------
 import ava from "../assets/imagesLayout/ava.png";
 import challengegames from "../assets/imagesLayout/Challengegames.png";
@@ -284,15 +284,51 @@ import diamon from "../assets/imagesDesktop/diamon.png";
 import free from "../assets/imagesDesktop/free.png";
 import gold1 from "../assets/imagesDesktop/gold.png";
 import signInCrypto from "../assets/images/signin_crypto.png";
-import EndTourAvatar from "../assets/images/Feedback_Play4promo (1).png"
-import BigTourAvatar from "../assets/images/Feedback_Play4promo.png"
+import EndTourAvatar from "../assets/images/Feedback_Play4promo (1).png";
+import BigTourAvatar from "../assets/images/Feedback_Play4promo.png";
 
-import DummyBanner1 from "../assets/images/banners/dk1.png"
-import DummyBanner2 from "../assets/images/banners/dk2.png"
-import DummyBanner3 from "../assets/images/banners/dk3.png"
-import DummyBanner4 from "../assets/images/banners/mb1.png"
-import DummyBanner5 from "../assets/images/banners/mb2.png"
-import DummyBanner6 from "../assets/images/banners/mb3.png"
+import AdminLogo from "../assets/images/lggame.png";
+import bannerWindesk from "../assets/imagesDesktop/bannerwin.png";
+import bannertourDesk from "../assets/imagesDesktop/bannertourDesk.png";
+import bannertour5 from "../assets/imagesDesktop/bannertour5.png";
+import bannerWinBM from "../assets/imagesDesktop/bannerwinMB.png";
+
+import bannerWinBg from "../assets/images/banners/bannerWin/banner_win.png";
+import bannerWinBig from "../assets/images/banners/bannerWin/1111_111111112.png";
+import bannerWinCeleb from "../assets/images/banners/bannerWin/asset_1@3x_7.png";
+import bannerWinAva from "../assets/images/banners/bannerWin/ca1288e4026ee42a0888026f866c8a61_1.png";
+import bannerTourBg from "../assets/images/banners/bannerTour/banner_tour.png";
+import bannerTourName from "../assets/images/banners/bannerTour/group_202.png";
+import bannerTourTop1 from "../assets/images/banners/bannerTour/png_file_305_3.png";
+import bannerTourScore from "../assets/images/banners/bannerTour/png_file_306_1.png";
+import bannerTourNameTour from "../assets/images/banners/bannerTour/asset.png";
+import bannerWinAround from "../assets/images/banners/bannerWin/banner_around.png";
+
+import bannerWinBgMobile from "../assets/images/banners/bannerWin/mobile/banner_win.png";
+import bannerWinBigMobile from "../assets/images/banners/bannerWin/mobile/1111_111111112.png";
+import bannerWinCelebMobile from "../assets/images/banners/bannerWin/mobile/group_193.png";
+import bannerWinAroundMobile from "../assets/images/banners/bannerWin/mobile/around.png";
+
+import DummyBanner1 from "../assets/images/banners/dk1.png";
+import DummyBanner2 from "../assets/images/banners/dk2.png";
+import DummyBanner3 from "../assets/images/banners/dk3.png";
+import DummyBanner4 from "../assets/images/banners/mb1.png";
+import DummyBanner5 from "../assets/images/banners/mb2.png";
+import DummyBanner6 from "../assets/images/banners/mb3.png";
+
+import NavCreate from "../assets/images/Category.png"
+import NavManage from "../assets/images/Activity.png"
+import NavFilter from "../assets/images/Document.png"
+import NavTotal from "../assets/images/Chart.png"
+import NavSetting from "../assets/images/Setting.png"
+import NavLogout from "../assets/images/Logout.png"
+
+import NavCreateActive from "../assets/images/CategoryActive.png"
+import NavManageActive from "../assets/images/ActivityActive.png"
+import NavFilterActive from "../assets/images/DocumentActive.png"
+import NavTotalActive from "../assets/images/ChartActive.png"
+import NavSettingActive from "../assets/images/SettingActive.png"
+
 
 
 export const imageHome = {
@@ -313,6 +349,20 @@ export const imageHome = {
   Voucher_tournament_mobile: Voucher_tournament_mobile,
   brandImage: brandImage,
   iconMember: iconMember,
+  BannerWinBg: bannerWinBg,
+  BannerWinBig: bannerWinBig,
+  BannerWinCeleb: bannerWinCeleb,
+  BannerWinAva: bannerWinAva,
+  BannerTourBg: bannerTourBg,
+  BannerTourName: bannerTourName,
+  BannerTourTop1: bannerTourTop1,
+  BannerTourScore: bannerTourScore,
+  BannerTourNameTour: bannerTourNameTour,
+  BannerWinAround: bannerWinAround,
+  BannerWinBgMobile: bannerWinBgMobile,
+  BannerWinBigMobile: bannerWinBigMobile,
+  BannerWinCelebMobile: bannerWinCelebMobile,
+  BannerWinAroundMobile: bannerWinAroundMobile,
 };
 
 export const images = {
@@ -474,7 +524,22 @@ export const images = {
   bannerTournamentMobile_1: bannerTournamentMobile_1,
   bannerTournamentMobile_2: bannerTournamentMobile_2,
   bannerLoading: bannerLoading,
+  adminLogo: AdminLogo,
 };
+
+export const navigationImages = {
+  navCreate: NavCreate,
+  navManage: NavManage,
+  navFilter: NavFilter,
+  navTotal: NavTotal,
+  navSetting: NavSetting,
+  navLogout: NavLogout,
+  navCreateActive: NavCreateActive,
+  navManageActive: NavManageActive,
+  navFilterActive: NavFilterActive,
+  navTotalActive: NavTotalActive,
+  navSettingActive: NavSettingActive,
+}
 
 export const images2 = {
   commingsoon2: commingsoon2,
@@ -583,6 +648,10 @@ export const imageDesktop = {
   SmallBanner2: SmallBanner2,
   logoCT: logoCT,
   LogoCongTy: LogoCongTy,
+  bannerWindesk: bannerWindesk,
+  bannertourDesk: bannertourDesk,
+  bannertour5: bannertour5,
+  bannerWinBM: bannerWinBM,
 };
 
 export const imagesV2 = {

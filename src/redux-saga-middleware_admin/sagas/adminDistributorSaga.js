@@ -1,6 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_DISTRIBUTOR_SERVICE } from "../services/adminDistributorService";
 import { createSubDistributorSuccess, createSubDistributorFail, getListSubSuccess, getListSubFail, updateSubSuccess, updateSubFail, deleteSubSuccess, deleteSubFail } from "../reducers/adminDistributorReducer";
+import { closeCreateDialog } from "../reducers/adminDialogReducer";
 
 const adminDistributorService = new ADMIN_DISTRIBUTOR_SERVICE();
 
@@ -10,7 +11,10 @@ function* createSubDistributorSaga(dataRequest) {
         const res = yield call(adminDistributorService.createSubDistributor, payload)
         if(res && res.status === 200) {
            yield put(createSubDistributorSuccess())
-           alert("Create Sub Distributor Success!")
+        //    alert("Create Sub Distributor Success!")
+           alert("Create Agent Success!")
+           yield put(closeCreateDialog());
+           window.location.reload();
         } else {
            yield put(createSubDistributorFail())
         }

@@ -25,10 +25,7 @@ export default function WalletTypePromote(props) {
       <Box
         className="position-relative wallet-type-promote pb-4"
         sx={{
-          backgroundImage: `url(${popup.proWallet})`,
-          backgroundRepeat:"no-repeat",
-          backgroundSize:"cover",
-          backgroundPosition:"center",
+          backgroundColor:"#271C39",
           width: "100%",
           height: "100%",
           overflow: 'auto',
@@ -41,12 +38,13 @@ export default function WalletTypePromote(props) {
           <Box
             sx={{
               width: "100%",
-              height: "100%",
+              height: "100vh",
               // backgroundImage: `url(${popup.proWallet})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
               padding: "25px 25px 0px 25px",
+              overflowY:"auto"
             }}
           >
             <Box

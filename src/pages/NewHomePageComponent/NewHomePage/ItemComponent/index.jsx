@@ -51,10 +51,24 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     fontWeight: "700 !important",
     marginLeft: "0px !important",
   };
+
+  const [isHovered, setIsHovered] = useState(false);
+  // Step 3: Add event listeners
+  const handleMouseEnter = () => {
+    // Step 4: Update state
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    // Step 4: Update state
+    setIsHovered(false);
+  };
   const navigate = useNavigate();
   return (
     <Box
       className="ms-2 me-2"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={() =>
         !isLoading && navigate("/tournamentDetail/" + tourInfo?.id)
       }
@@ -131,6 +145,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             flexDirection: "column",
           }}
         >
+          <span style={{fontSize:"10px"}}>Sponsor:{tourInfo?.tournamentBrand?.brandName}</span>
           <Typography
             sx={{
               ...styleTypography,
@@ -161,7 +176,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width < 576 ? "20px" : "32px",
+              marginTop: width < 576 ? "10px" : "16px",
             }}
           >
             {isLoading ? (
@@ -212,13 +227,16 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         </Box>
       </Box>
       <Box
+        className={isHovered === true ? "hover-card" : ""}
         sx={{
           width: "100%",
           height: width < 576 ? "64px" : "69px",
-          bgcolor: "#C0C0C0",
+          bgcolor:isHovered === true ? "#42285B" : "#C0C0C0",
+          color:isHovered === true ? "white" : "black",
           borderEndEndRadius: "8px",
           borderEndStartRadius: "8px",
           borderTop: "dashed 2px black",
+          transition:"0.3s ease-out"
         }}
       >
         <Box

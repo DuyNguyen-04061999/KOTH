@@ -8,7 +8,7 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { imageHome, images } from "../../../utils/images";
+import { imageDesktop, imageHome, images } from "../../../utils/images";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -30,11 +30,15 @@ import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import ListItemLoading from "../../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
+import {
+  BannerTour,
+  BannerTourMobile,
+  BannerWin,
+  BannerWinMobile,
+} from "../../../components/Banner";
 
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -110,6 +114,7 @@ export default function NewHomePage() {
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
+
   useEffect(() => {
     // setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament?.map((item) => item?.timeStart));
@@ -119,6 +124,8 @@ export default function NewHomePage() {
   //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
   //   return distance;
   // };
+  console.log(hotWeekTour);
+
   return (
     <Container
       maxWidth="lg"
@@ -139,7 +146,16 @@ export default function NewHomePage() {
         backgroundColor: "#1a151e",
       }}
     >
-      {" "}
+      {process.env.REACT_APP_TEST === "test" && (
+        <div
+          className="text-white p-2 ps-3"
+          onClick={() => {
+            navigate("/list-game-manager");
+          }}
+        >
+          Game Manager
+        </div>
+      )}{" "}
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box
@@ -149,6 +165,7 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
+          {" "}
           <Box
             sx={{
               marginBottom: width < 576 ? "24px" : "32px",
@@ -252,7 +269,7 @@ export default function NewHomePage() {
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
                         return (
-                          <div key={index} style={{ width: "174px" }}>
+                          <div key={index}>
                             <ItemComponent
                               // key={index}
                               tourInfo={item}
@@ -307,7 +324,7 @@ export default function NewHomePage() {
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
                         return (
-                          <div key={index} style={{ width: "174px" }}>
+                          <div key={index}>
                             <ItemComponent
                               // key={index}
                               tourInfo={item}
@@ -331,137 +348,158 @@ export default function NewHomePage() {
                 width={"100%"}
               />
             ) : (
-              <Box
-                sx={{
-                  width: "100%",
-                  marginTop: width < 576 ? "24px" : "32px",
-                  marginBottom: width < 576 ? "24px" : "32px",
-                  backgroundImage: `url(${imageHome.banner_win_Mobile})`,
-                  height: "208.612px",
-                  backgroundSize:
-                    width < 576 ? "cover" : width < 1024 ? "contain" : " cover",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  overflow: "hidden",
-                  padding: width > 576 && width < 1024 && "36px 160px",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    position: "relative",
-                    marginRight: "32px",
-                  }}
-                >
-                  <Box sx={{}}>
-                    {" "}
-                    <Box
-                      sx={{
-                        backgroundImage: `url(${imageHome.ringMobile})`,
-                        width: "81px",
-                        height: "81px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: "75px",
-                          height: "75px",
-                          borderRadius: "50%",
-                        }}
-                        src={
-                          biggestEndTour?.bestUser?.tUser?.userAccount
-                            ?.accountAvatar
-                            ? process.env.REACT_APP_SOCKET_SERVER +
-                              "/" +
-                              biggestEndTour?.bestUser?.tUser?.userAccount
-                                ?.accountAvatar
-                            : images.gameHotTournament
-                        }
-                        component={"img"}
-                      ></Box>
-                      <Box
-                        sx={{ position: "absolute", top: "-17px", left: "5px" }}
-                        component={"img"}
-                        src={imageHome.hatMobile}
-                      ></Box>
-                    </Box>
-                    <Typography
-                      sx={{
-                        color: "#fff",
-                        fontSize: "12.035px",
-                        fontWeight: "lighter !important",
-                        paddingTop: "10px",
-                      }}
-                    >
-                      {biggestEndTour?.bestUser?.userNickName || "super_"}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    width: "50%",
-                    display: "flex",
-                    flexDirection: "column",
-                    boxSizing: "border-box",
-                    position: "relative",
-                    justifyContent: "center",
-                    height: "100%",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      color: "#FFDC62",
-                      fontSize: "18px",
-                      marginLeft: "0px !important",
-                      display: "-webkit-box",
-                      WebkitBoxOrient: "vertical",
-                      WebkitLineClamp: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    {String(
-                      biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                    )?.length > 10
-                      ? String(
-                          biggestEndTour?.endTour?.tournamentName ||
-                            "MEGA HOLIC"
-                        )
-                          ?.toUpperCase()
-                          ?.slice(0, 10) + "..." || "MEGA HOLIC"
-                      : String(
-                          biggestEndTour?.endTour?.tournamentName ||
-                            "MEGA HOLIC"
-                        )?.toUpperCase()}
-                  </Typography>
-                  <Box
-                    sx={{
-                      backgroundImage: `url(${imageHome.megaholicMobile})`,
-                      width: `${width / 1.6}px`,
-                      height: "113px",
-                      marginTop: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: width < 576 ? "flex-start" : "center",
-                      padding: "10px 47px",
-                    }}
-                  >
-                    <Typography sx={{ color: "#fff", fontSize: "40px" }}>
-                      {biggestEndTour?.endTour?.tournamentAutoAmount
-                        ? biggestEndTour?.endTour?.tournamentAutoAmount + " $"
-                        : "5000$"}
-                    </Typography>
-                    <Typography sx={{ color: "#fff", fontSize: "9px" }}>
-                      GRAND TOURNAMENT WINNER
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
+              // <Box
+              //   sx={{
+              //     width: "100%",
+              //     marginTop: width < 576 ? "24px" : "32px",
+              //     marginBottom: width < 576 ? "24px" : "32px",
+              //     backgroundImage: `url(${imageHome.banner_win_Mobile})`,
+              //     height: "208.612px",
+              //     backgroundSize:
+              //       width < 576 ? "cover" : width < 1024 ? "contain" : " cover",
+              //     display: "flex",
+              //     justifyContent: "center",
+              //     alignItems: "center",
+              //     overflow: "hidden",
+              //     padding: width > 576 && width < 1024 && "36px 160px",
+              //   }}
+              // >
+              //   <Box
+              //     sx={{
+              //       display: "flex",
+              //       justifyContent: "center",
+              //       alignItems: "center",
+              //       position: "relative",
+              //       marginRight: "32px",
+              //     }}
+              //   >
+              //     <Box sx={{}}>
+              //       {" "}
+              //       <Box
+              //         sx={{
+              //           backgroundImage: `url(${imageHome.ringMobile})`,
+              //           width: "81px",
+              //           height: "81px",
+              //           display: "flex",
+              //           justifyContent: "center",
+              //           alignItems: "center",
+              //         }}
+              //       >
+              //         <Box
+              //           sx={{
+              //             width: "75px",
+              //             height: "75px",
+              //             borderRadius: "50%",
+              //           }}
+              //           src={
+              //             biggestEndTour?.bestUser?.tUser?.userAccount
+              //               ?.accountAvatar
+              //               ? process.env.REACT_APP_SOCKET_SERVER +
+              //                 "/" +
+              //                 biggestEndTour?.bestUser?.tUser?.userAccount
+              //                   ?.accountAvatar
+              //               : images.gameHotTournament
+              //           }
+              //           component={"img"}
+              //         ></Box>
+              //         <Box
+              //           sx={{ position: "absolute", top: "-17px", left: "5px" }}
+              //           component={"img"}
+              //           src={imageHome.hatMobile}
+              //         ></Box>
+              //       </Box>
+              //       <Typography
+              //         sx={{
+              //           color: "#fff",
+              //           fontSize: "12.035px",
+              //           fontWeight: "lighter !important",
+              //           paddingTop: "10px",
+              //         }}
+              //       >
+              //         {biggestEndTour?.bestUser?.userNickName || "super_"}
+              //       </Typography>
+              //     </Box>
+              //   </Box>
+              //   <Box
+              //     sx={{
+              //       width: "50%",
+              //       display: "flex",
+              //       flexDirection: "column",
+              //       boxSizing: "border-box",
+              //       position: "relative",
+              //       justifyContent: "center",
+              //       height: "100%",
+              //     }}
+              //   >
+              //     <Typography
+              //       sx={{
+              //         color: "#FFDC62",
+              //         fontSize: "18px",
+              //         marginLeft: "0px !important",
+              //         display: "-webkit-box",
+              //         WebkitBoxOrient: "vertical",
+              //         WebkitLineClamp: 2,
+              //         overflow: "hidden",
+              //       }}
+              //     >
+              //       {String(
+              //         biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+              //       )?.length > 10
+              //         ? String(
+              //             biggestEndTour?.endTour?.tournamentName ||
+              //               "MEGA HOLIC"
+              //           )
+              //             ?.toUpperCase()
+              //             ?.slice(0, 10) + "..." || "MEGA HOLIC"
+              //         : String(
+              //             biggestEndTour?.endTour?.tournamentName ||
+              //               "MEGA HOLIC"
+              //           )?.toUpperCase()}
+              //     </Typography>
+              //     <Box
+              //       sx={{
+              //         backgroundImage: `url(${imageHome.megaholicMobile})`,
+              //         width: `${width / 1.6}px`,
+              //         height: "113px",
+              //         marginTop: "10px",
+              //         display: "flex",
+              //         flexDirection: "column",
+              //         alignItems: width < 576 ? "flex-start" : "center",
+              //         padding: "10px 47px",
+              //       }}
+              //     >
+              //       <Typography sx={{ color: "#fff", fontSize: "40px" }}>
+              //         {biggestEndTour?.endTour?.tournamentAutoAmount
+              //           ? biggestEndTour?.endTour?.tournamentAutoAmount + " $"
+              //           : "5000$"}
+              //       </Typography>
+              //       <Typography sx={{ color: "#fff", fontSize: "9px" }}>
+              //         GRAND TOURNAMENT WINNER
+              //       </Typography>
+              //     </Box>
+              //   </Box>
+              // </Box>
+              <BannerWinMobile
+                userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+                userAvatar={
+                  biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      biggestEndTour?.bestUser?.tUser?.userAccount
+                        ?.accountAvatar
+                    : imageHome.BannerWinAva
+                }
+                sponsorName={
+                  biggestEndTour && biggestEndTour?.endTour
+                    ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                    : "Samsung"
+                }
+                tournamentName={
+                  biggestEndTour && biggestEndTour?.endTour
+                    ? biggestEndTour?.endTour?.tournamentName
+                    : "Galaxy Z-flip 5"
+                }
+              />
             )
           ) : isFetchList ? (
             <BannerLoading
@@ -469,159 +507,179 @@ export default function NewHomePage() {
               width={"100%"}
             />
           ) : (
-            <Box
-              sx={{
-                width: "100%",
-                marginTop: width < 576 ? "24px" : "32px",
-                marginBottom: width < 576 ? "24px" : "32px",
-                backgroundImage: `url(${images.banner_win_BG})`,
-                height: width < 1024 ? "266.56px" : "348.909px",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                display: "flex",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  height: "400px",
-                  width: width > 576 && width < 1024 ? "fit-content" : "200px",
-                  marginLeft: "0px",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  position: "relative",
-                  boxSizing: "border-box",
-                  paddingLeft: "10px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: width < 1024 ? "135px" : "168px",
-                    height: width < 1024 ? "135px" : "168px",
-                    position: "relative",
-                  }}
-                >
-                  <Box
-                    style={{ border: "4px solid rgba(224, 127, 20,100)" }}
-                    component={"img"}
-                    src={
-                      biggestEndTour?.bestUser?.tUser?.userAccount
-                        ?.accountAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          biggestEndTour?.bestUser?.tUser?.userAccount
-                            ?.accountAvatar
-                        : images.pool
-                    }
-                    sx={{
-                      borderRadius: "50%",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  ></Box>
-                  <Box
-                    component={"img"}
-                    src={images.hatWinner}
-                    sx={{
-                      width: width < 1024 ? "60px" : "81.119px",
-                      height: "auto",
-                      position: "absolute",
-                      left: "2px",
-                      top: "-30px",
-                    }}
-                  ></Box>
-                </Box>
-                <Typography
-                  sx={{
-                    position: "absolute",
-                    // left: "271px",
-                    bottom: width < 1024 ? "80px" : "50px",
-                    color: "#ffff",
-                    fontSize: "33px",
-                    marginLeft: "0px !important",
-                  }}
-                >
-                  {biggestEndTour?.bestUser?.userNickName || "super_"}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  backgroundImage: `url(${imageHome.megaHolicBanner})`,
-                  backgroundSize: "cover",
-                  width: width < 1024 ? "385px" : "504px",
-                  height: width < 1024 ? "212px" : "278px",
-                  position: "relative",
-                  marginRight: "20px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    marginLeft: "0px !important",
-                    color: "#FFDC62",
-                    // fontSize: "30px",
-                    position: "absolute",
-                    top: width < 1024 && width > 576 ? "35px" : "38px",
-                    left: width < 1024 && width > 576 ? "60px" : "90px",
-                    fontSize: width < 1024 && width > 576 ? "20px" : "32px",
-                  }}
-                >
-                  {String(
-                    biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                  )?.length > 10
-                    ? String(
-                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                      )
-                        ?.toUpperCase()
-                        ?.slice(0, 10) + "..." || "MEGA HOLIC"
-                    : String(
-                        biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
-                      )?.toUpperCase()}
-                </Typography>
-                <Typography
-                  sx={{
-                    marginLeft: "0px !important",
-                    color: "#fff",
-                    // fontSize: "88px",
-                    position: "absolute",
-                    top: width < 576 ? "" : width < 1024 ? "85px" : "90px",
-                    left: "2rem",
-                    width: "100%",
-                    fontSize:
-                      width < 576 ? "40px" : width < 1024 ? "50px" : "80px",
-                  }}
-                  className="text-center"
-                >
-                  {biggestEndTour?.endTour?.tournamentAutoAmount
-                    ? biggestEndTour?.endTour?.tournamentAutoAmount + "$"
-                    : "5000$"}
-                </Typography>
-                <Typography
-                  sx={{
-                    marginLeft:
-                      width < 1024 && width > 576
-                        ? "-5px !important"
-                        : "0px !important",
-                    fontSize: width < 1024 && width > 576 ? "12px" : "15px",
-                    color: "#ffff",
-                    position: "absolute",
-                    top: width > 576 && width < 1024 ? "165px" : "214px",
-                    left: width > 576 && width < 1024 ? "164px" : "212px",
-                    height: "20px",
-                    maxWidth: "191pxpx",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  GRAND TOURNAMENT WINNER
-                </Typography>
-              </Box>
-            </Box>
+            // <Box
+            //   sx={{
+            //     width: "100%",
+            //     marginTop: width < 576 ? "24px" : "32px",
+            //     marginBottom: width < 576 ? "24px" : "32px",
+            //     backgroundImage: `url(${images.banner_win_BG})`,
+            //     height: width < 1024 ? "266.56px" : "348.909px",
+            //     backgroundSize: "cover",
+            //     backgroundRepeat: "no-repeat",
+            //     backgroundPosition: "center",
+            //     display: "flex",
+            //     justifyContent: "space-evenly",
+            //     alignItems: "center",
+            //   }}
+            // >
+            //   <Box
+            //     sx={{
+            //       height: "400px",
+            //       width: width > 576 && width < 1024 ? "fit-content" : "200px",
+            //       marginLeft: "0px",
+            //       backgroundRepeat: "no-repeat",
+            //       backgroundPosition: "center",
+            //       display: "flex",
+            //       flexDirection: "column",
+            //       justifyContent: "center",
+            //       position: "relative",
+            //       boxSizing: "border-box",
+            //       paddingLeft: "10px",
+            //     }}
+            //   >
+            //     <Box
+            //       sx={{
+            //         width: width < 1024 ? "135px" : "168px",
+            //         height: width < 1024 ? "135px" : "168px",
+            //         position: "relative",
+            //       }}
+            //     >
+            //       <Box
+            //         style={{ border: "4px solid rgba(224, 127, 20,100)" }}
+            //         component={"img"}
+            //         src={
+            //           biggestEndTour?.bestUser?.tUser?.userAccount
+            //             ?.accountAvatar
+            //             ? process.env.REACT_APP_SOCKET_SERVER +
+            //               "/" +
+            //               biggestEndTour?.bestUser?.tUser?.userAccount
+            //                 ?.accountAvatar
+            //             : images.pool
+            //         }
+            //         sx={{
+            //           borderRadius: "50%",
+            //           width: "100%",
+            //           height: "100%",
+            //         }}
+            //       ></Box>
+            //       <Box
+            //         component={"img"}
+            //         src={images.hatWinner}
+            //         sx={{
+            //           width: width < 1024 ? "60px" : "81.119px",
+            //           height: "auto",
+            //           position: "absolute",
+            //           left: "2px",
+            //           top: "-30px",
+            //         }}
+            //       ></Box>
+            //     </Box>
+            //     <Typography
+            //       sx={{
+            //         position: "absolute",
+            //         // left: "271px",
+            //         bottom: width < 1024 ? "80px" : "50px",
+            //         color: "#ffff",
+            //         fontSize: "33px",
+            //         marginLeft: "0px !important",
+            //       }}
+            //     >
+            //       {biggestEndTour?.bestUser?.userNickName || "super_"}
+            //     </Typography>
+            //   </Box>
+            //   <Box
+            //     sx={{
+            //       backgroundImage: `url(${imageHome.megaHolicBanner})`,
+            //       backgroundSize: "cover",
+            //       width: width < 1024 ? "385px" : "504px",
+            //       height: width < 1024 ? "212px" : "278px",
+            //       position: "relative",
+            //       marginRight: "20px",
+            //     }}
+            //   >
+            //     <Typography
+            //       sx={{
+            //         marginLeft: "0px !important",
+            //         color: "#FFDC62",
+            //         // fontSize: "30px",
+            //         position: "absolute",
+            //         top: width < 1024 && width > 576 ? "35px" : "38px",
+            //         left: width < 1024 && width > 576 ? "60px" : "90px",
+            //         fontSize: width < 1024 && width > 576 ? "20px" : "32px",
+            //       }}
+            //     >
+            //       {String(
+            //         biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+            //       )?.length > 10
+            //         ? String(
+            //             biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+            //           )
+            //             ?.toUpperCase()
+            //             ?.slice(0, 10) + "..." || "MEGA HOLIC"
+            //         : String(
+            //             biggestEndTour?.endTour?.tournamentName || "MEGA HOLIC"
+            //           )?.toUpperCase()}
+            //     </Typography>
+            //     <Typography
+            //       sx={{
+            //         marginLeft: "0px !important",
+            //         color: "#fff",
+            //         // fontSize: "88px",
+            //         position: "absolute",
+            //         top: width < 576 ? "" : width < 1024 ? "85px" : "90px",
+            //         left: "2rem",
+            //         width: "100%",
+            //         fontSize:
+            //           width < 576 ? "40px" : width < 1024 ? "50px" : "80px",
+            //       }}
+            //       className="text-center"
+            //     >
+            //       {biggestEndTour?.endTour?.tournamentAutoAmount
+            //         ? biggestEndTour?.endTour?.tournamentAutoAmount + "$"
+            //         : "5000$"}
+            //     </Typography>
+            //     <Typography
+            //       sx={{
+            //         marginLeft:
+            //           width < 1024 && width > 576
+            //             ? "-5px !important"
+            //             : "0px !important",
+            //         fontSize: width < 1024 && width > 576 ? "12px" : "15px",
+            //         color: "#ffff",
+            //         position: "absolute",
+            //         top: width > 576 && width < 1024 ? "165px" : "214px",
+            //         left: width > 576 && width < 1024 ? "164px" : "212px",
+            //         height: "20px",
+            //         maxWidth: "191pxpx",
+            //         overflow: "hidden",
+            //         textOverflow: "ellipsis",
+            //         whiteSpace: "nowrap",
+            //       }}
+            //     >
+            //       GRAND TOURNAMENT WINNER
+            //     </Typography>
+            //   </Box>
+            // </Box>
+            <BannerWin
+              userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+              userAvatar={
+                biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  : imageHome.BannerWinAva
+              }
+              sponsorName={
+                biggestEndTour && biggestEndTour?.endTour
+                  ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                  : "Samsung"
+              }
+              tournamentName={
+                biggestEndTour && biggestEndTour?.endTour
+                  ? biggestEndTour?.endTour?.tournamentName
+                  : "Galaxy Z-flip 5"
+              }
+            />
           )}
           {/* Brief List Tournament */}
           {/* <Box
@@ -787,7 +845,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Daily Tournaments
+                  Daily tournaments
                 </Typography>
               </Box>
               <Box
@@ -1227,7 +1285,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Week-long tournament{" "}
+                  Week-long tournaments{" "}
                 </Typography>
               </Box>
               <Box
@@ -1361,179 +1419,34 @@ export default function NewHomePage() {
                 <BannerLoading height={width < 576 ? "214px" : "363px"} />
               </Box>
             ) : (
-              <Box
-                sx={{
-                  marginTop: width < 576 ? "48px" : "32px",
-                  marginBottom: width < 576 ? "0px" : "32px",
-                  backgroundImage: `url(${imageHome.bannerTop1Mobile})`,
-                  width: "100%",
-                  height: "210px",
-                  backgroundSize: "cover",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxSizing: "border-box",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "80px",
-                    height: "80px",
-                    borderRadius: "50%",
-                    backgroundColor: "#0687C9",
-                    position: "relative",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      borderRadius: "50%",
-                      width: "80px",
-                      height: "80px",
-                      position: "absolute",
-                      top: "-3px",
-                      left: "-2px",
-                    }}
-                    src={
-                      hotWeekTour &&
-                      hotWeekTour?.bestUser &&
-                      hotWeekTour?.bestUser?.tUser &&
-                      hotWeekTour?.bestUser?.tUser?.userAccount &&
+              <BannerTourMobile
+                tournamentName={
+                  hotWeekTour && hotWeekTour?.tournamentName
+                    ? hotWeekTour?.tournamentName
+                    : "Galaxy Z-flip 5"
+                }
+                sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+                userName={
+                  hotWeekTour &&
+                  hotWeekTour?.bestUser &&
+                  hotWeekTour?.bestUser?.tUser &&
+                  hotWeekTour?.bestUser?.tUser?.userName
+                }
+                endTime={hotWeekTour?.tournamentEndAt}
+                userScore={hotWeekTour?.bestUser?.score}
+                userAvatar={
+                  hotWeekTour &&
+                  hotWeekTour?.bestUser &&
+                  hotWeekTour?.bestUser?.tUser &&
+                  hotWeekTour?.bestUser?.tUser?.userAccount &&
+                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
                       hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          hotWeekTour?.bestUser?.tUser?.userAccount
-                            ?.accountAvatar
-                        : images.pool
-                    }
-                    component={"img"}
-                  ></Box>{" "}
-                  <Box
-                    sx={{
-                      width: "60px",
-                      height: "auto",
-                      position: "absolute",
-                      top: "-40px",
-                      left: "-19px",
-                    }}
-                    component={"img"}
-                    src={imageHome.top1Icon}
-                  ></Box>
-                </Box>
-                <Box sx={{ paddingLeft: "20px" }}>
-                  <Typography
-                    sx={{
-                      color: "#FFDC62",
-                      textAlign: "start",
-                      fontSize: "10px",
-                      marginLeft: "0px !important",
-                    }}
-                  >
-                    TOURNAMENT OF THE WEEK
-                  </Typography>
-                  <Box className="name-tour-mobile">
-                    <Typography
-                      sx={{
-                        fontSize: "22px",
-                        textAlign: "start",
-                      }}
-                    >
-                      {String(hotWeekTour?.tournamentName)?.length > 10
-                        ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
-                          "..."
-                        : String(hotWeekTour?.tournamentName)}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: "flex" }}>
-                    <Box
-                      sx={{ width: "23px", height: "auto" }}
-                      component={"img"}
-                      src={
-                        hotWeekTour &&
-                        hotWeekTour?.tournamentBrand &&
-                        hotWeekTour?.tournamentBrand?.brandAvatar
-                          ? process.env.REACT_APP_SOCKET_SERVER +
-                            "/" +
-                            hotWeekTour?.tournamentBrand?.brandAvatar
-                          : imageHome.brandAvatar
-                      }
-                    ></Box>
-                    <Box
-                      sx={{
-                        width: "0.729px",
-                        backgroundColor: "#371972",
-                        margin: "0px 12px 0px 12px",
-                      }}
-                    ></Box>
-                    <CountDownBannerHot
-                      expiryTime={moment(hotWeekTour?.tournamentEndAt)}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      backgroundColor: "rgba(139, 31, 207, 0.30)",
-                      borderRadius: "5px",
-                      marginTop: "15px",
-                      padding: "4px 5px",
-                      width: `${width / 2.1}px`,
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Typography
-                        sx={{
-                          color: "#00CBEF",
-                          textAlign: "start",
-                          fontSize: "8px",
-                          marginLeft: "0px !important",
-                          marginRight: "5px",
-                        }}
-                      >
-                        Get
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: "#FAA515",
-                          textAlign: "start",
-                          fontSize: "10.062px",
-                          marginLeft: "0px !important",
-                          marginRight: "5px",
-                        }}
-                      >
-                        ${hotWeekTour?.tournamentAutoAmount}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: "#00CBEF",
-                          textAlign: "start",
-                          fontSize: "8px",
-                          marginLeft: "0px !important",
-                        }}
-                      >
-                        gift
-                      </Typography>
-                    </Box>
-                    <button
-                      onClick={() => {
-                        navigate("/tournamentDetail/" + hotWeekTour?.id);
-                      }}
-                      style={{
-                        background:
-                          "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-                        outline: "none",
-                        border: "none",
-                        borderRadius: "5px",
-                        color: "#fff",
-                        padding: `2.683px ${width / 16}px`,
-                        fontSize: "10px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Play now
-                    </button>
-                  </Box>
-                </Box>
-              </Box>
+                    : images.pool
+                }
+                tourId={hotWeekTour && hotWeekTour?.id}
+              />
             )
           ) : isFetchList ? (
             <BannerLoading
@@ -1541,182 +1454,211 @@ export default function NewHomePage() {
               width={"100%"}
             />
           ) : (
-            <Box
-              sx={{
-                marginTop: width < 576 ? "24px" : "32px",
-                marginBottom: width < 576 ? "24px" : "32px",
-                backgroundImage: `url(${
-                  width < 576
-                    ? imageHome.bannerTop1Mobile
-                    : imageHome.bannerTop1
-                })`,
-                width: "100%",
-                height: "348.909px",
-                backgroundSize: "cover",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                boxSizing: "border-box",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "210px",
-                  height: "max-content",
-                  borderRadius: "50%",
-                  position: "relative",
-                  marginLeft: width < 1024 && "32px",
-                }}
-              >
-                <Box
-                  sx={{
-                    borderRadius: "50%",
-                    width: 576 < width && 1024 > width ? "150px" : "210px",
-                    height: 576 < width && 1024 > width ? "150px" : "210px",
-                    boxShadow: "4px 4px 0px 3px rgba(6,135,201,1)",
-                  }}
-                  src={
-                    hotWeekTour &&
-                    hotWeekTour?.bestUser &&
-                    hotWeekTour?.bestUser?.tUser &&
-                    hotWeekTour?.bestUser?.tUser?.userAccount &&
+            // <Box
+            //   sx={{
+            //     marginTop: width < 576 ? "24px" : "32px",
+            //     marginBottom: width < 576 ? "24px" : "32px",
+            //     backgroundImage: `url(${
+            //       width < 576
+            //         ? imageHome.bannerTop1Mobile
+            //         : imageHome.bannerTop1
+            //     })`,
+            //     width: "100%",
+            //     height: "348.909px",
+            //     backgroundSize: "cover",
+            //     display: "flex",
+            //     alignItems: "center",
+            //     justifyContent: "space-evenly",
+            //     boxSizing: "border-box",
+            //   }}
+            // >
+            //   <Box
+            //     sx={{
+            //       width: "210px",
+            //       height: "max-content",
+            //       borderRadius: "50%",
+            //       position: "relative",
+            //       marginLeft: width < 1024 && "32px",
+            //     }}
+            //   >
+            //     <Box
+            //       sx={{
+            //         borderRadius: "50%",
+            //         width: 576 < width && 1024 > width ? "150px" : "210px",
+            //         height: 576 < width && 1024 > width ? "150px" : "210px",
+            //         boxShadow: "4px 4px 0px 3px rgba(6,135,201,1)",
+            //       }}
+            //       src={
+            //         hotWeekTour &&
+            //         hotWeekTour?.bestUser &&
+            //         hotWeekTour?.bestUser?.tUser &&
+            //         hotWeekTour?.bestUser?.tUser?.userAccount &&
+            //         hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+            //           ? process.env.REACT_APP_SOCKET_SERVER +
+            //             "/" +
+            //             hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+            //           : images.pool
+            //       }
+            //       component={"img"}
+            //     ></Box>
+            //     <Box
+            //       sx={{
+            //         width: "140px",
+            //         height: "auto",
+            //         position: "absolute",
+            //         top: 576 < width && 1024 > width ? "-80px" : "-50px",
+            //         left: 576 < width && 1024 > width ? "-40px" : "-76px",
+            //       }}
+            //       component={"img"}
+            //       src={imageHome.top1Icon}
+            //     ></Box>
+            //   </Box>
+            //   <Box sx={{ paddingLeft: "50px" }}>
+            //     <Typography
+            //       sx={{
+            //         color: "#FFDC62",
+            //         textAlign: "start",
+            //         fontSize: "16.042px",
+            //         marginLeft: "0px !important",
+            //       }}
+            //     >
+            //       TOURNAMENT OF THE WEEK
+            //     </Typography>
+            //     <Box className="name-tour">
+            //       <Typography
+            //         sx={{
+            //           fontSize: "50px",
+            //           textAlign: "start",
+            //         }}
+            //       >
+            //         {String(hotWeekTour?.tournamentName)?.length > 10
+            //           ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
+            //             "..."
+            //           : String(hotWeekTour?.tournamentName)}
+            //       </Typography>
+            //     </Box>
+            //     <Box sx={{ display: "flex" }}>
+            //       <Box
+            //         sx={{ width: "60px", height: "auto" }}
+            //         component={"img"}
+            //         src={
+            //           hotWeekTour &&
+            //           hotWeekTour?.tournamentBrand &&
+            //           hotWeekTour?.tournamentBrand?.brandAvatar
+            //             ? process.env.REACT_APP_SOCKET_SERVER +
+            //               "/" +
+            //               hotWeekTour?.tournamentBrand?.brandAvatar
+            //             : imageHome.brandAvatar
+            //         }
+            //       ></Box>
+            //       <Box
+            //         sx={{
+            //           width: "2.027px",
+            //           backgroundColor: "#371972",
+            //           margin: "0px 12px 0px 12px",
+            //         }}
+            //       ></Box>
+            //       <CountDownBannerHot
+            //         expiryTime={moment(hotWeekTour?.tournamentEndAt)}
+            //       />
+            //     </Box>
+            //     <Box
+            //       sx={{
+            //         backgroundColor: "rgba(139, 31, 207, 0.30)",
+            //         borderRadius: "5px",
+            //         marginTop: "35px",
+            //         padding: "10.026px 14.037px",
+            //         width: width < 1024 ? "310px" : "420px",
+            //         display: "flex",
+            //         justifyContent: "space-between",
+            //       }}
+            //     >
+            //       <Box sx={{ display: "flex", alignItems: "center" }}>
+            //         <Typography
+            //           sx={{
+            //             color: "#00CBEF",
+            //             textAlign: "start",
+            //             fontSize: "20px",
+            //             marginLeft: "0px !important",
+            //             marginRight: "5px",
+            //           }}
+            //         >
+            //           Get
+            //         </Typography>
+            //         <Typography
+            //           sx={{
+            //             color: "#FAA515",
+            //             textAlign: "start",
+            //             fontSize: "30.078px",
+            //             marginLeft: "0px !important",
+            //             marginRight: "5px",
+            //           }}
+            //         >
+            //           ${hotWeekTour?.tournamentAutoAmount}
+            //         </Typography>
+            //         <Typography
+            //           sx={{
+            //             color: "#00CBEF",
+            //             textAlign: "start",
+            //             fontSize: "20px",
+            //             marginLeft: "0px !important",
+            //           }}
+            //         >
+            //           gift
+            //         </Typography>
+            //       </Box>
+            //       <button
+            //         onClick={() => {
+            //           if (hotWeekTour?.id) {
+            //             navigate("/tournamentDetail/" + hotWeekTour?.id);
+            //           }
+            //         }}
+            //         style={{
+            //           background:
+            //             "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+            //           outline: "none",
+            //           border: "none",
+            //           borderRadius: "5px",
+            //           color: "#fff",
+            //           padding: "0px 60px",
+            //           fontSize: width < 1024 ? "12px" : "16px",
+            //           cursor: "pointer",
+            //         }}
+            //       >
+            //         Play now
+            //       </button>
+            //     </Box>
+            //   </Box>
+            // </Box>
+            // <BannerTop1 />
+            <BannerTour
+              tournamentName={
+                hotWeekTour && hotWeekTour?.tournamentName
+                  ? hotWeekTour?.tournamentName
+                  : "Galaxy Z-flip 5"
+              }
+              sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+              userName={
+                hotWeekTour &&
+                hotWeekTour?.bestUser &&
+                hotWeekTour?.bestUser?.tUser &&
+                hotWeekTour?.bestUser?.tUser?.userName
+              }
+              endTime={hotWeekTour?.tournamentEndAt}
+              userScore={hotWeekTour?.bestUser?.score}
+              userAvatar={
+                hotWeekTour &&
+                hotWeekTour?.bestUser &&
+                hotWeekTour?.bestUser?.tUser &&
+                hotWeekTour?.bestUser?.tUser?.userAccount &&
+                hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
                     hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      : images.pool
-                  }
-                  component={"img"}
-                ></Box>
-                <Box
-                  sx={{
-                    width: "140px",
-                    height: "auto",
-                    position: "absolute",
-                    top: 576 < width && 1024 > width ? "-80px" : "-50px",
-                    left: 576 < width && 1024 > width ? "-40px" : "-76px",
-                  }}
-                  component={"img"}
-                  src={imageHome.top1Icon}
-                ></Box>
-              </Box>
-              <Box sx={{ paddingLeft: "50px" }}>
-                <Typography
-                  sx={{
-                    color: "#FFDC62",
-                    textAlign: "start",
-                    fontSize: "16.042px",
-                    marginLeft: "0px !important",
-                  }}
-                >
-                  TOURNAMENT OF THE WEEK
-                </Typography>
-                <Box className="name-tour">
-                  <Typography
-                    sx={{
-                      fontSize: "50px",
-                      textAlign: "start",
-                    }}
-                  >
-                    {String(hotWeekTour?.tournamentName)?.length > 10
-                      ? String(hotWeekTour?.tournamentName)?.slice(0, 10) +
-                        "..."
-                      : String(hotWeekTour?.tournamentName)}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: "flex" }}>
-                  <Box
-                    sx={{ width: "60px", height: "auto" }}
-                    component={"img"}
-                    src={
-                      hotWeekTour &&
-                      hotWeekTour?.tournamentBrand &&
-                      hotWeekTour?.tournamentBrand?.brandAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          hotWeekTour?.tournamentBrand?.brandAvatar
-                        : imageHome.brandAvatar
-                    }
-                  ></Box>
-                  <Box
-                    sx={{
-                      width: "2.027px",
-                      backgroundColor: "#371972",
-                      margin: "0px 12px 0px 12px",
-                    }}
-                  ></Box>
-                  <CountDownBannerHot
-                    expiryTime={moment(hotWeekTour?.tournamentEndAt)}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    backgroundColor: "rgba(139, 31, 207, 0.30)",
-                    borderRadius: "5px",
-                    marginTop: "35px",
-                    padding: "10.026px 14.037px",
-                    width: width < 1024 ? "310px" : "420px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography
-                      sx={{
-                        color: "#00CBEF",
-                        textAlign: "start",
-                        fontSize: "20px",
-                        marginLeft: "0px !important",
-                        marginRight: "5px",
-                      }}
-                    >
-                      Get
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#FAA515",
-                        textAlign: "start",
-                        fontSize: "30.078px",
-                        marginLeft: "0px !important",
-                        marginRight: "5px",
-                      }}
-                    >
-                      ${hotWeekTour?.tournamentAutoAmount}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#00CBEF",
-                        textAlign: "start",
-                        fontSize: "20px",
-                        marginLeft: "0px !important",
-                      }}
-                    >
-                      gift
-                    </Typography>
-                  </Box>
-                  <button
-                    onClick={() => {
-                      if (hotWeekTour?.id) {
-                        navigate("/tournamentDetail/" + hotWeekTour?.id);
-                      }
-                    }}
-                    style={{
-                      background:
-                        "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-                      outline: "none",
-                      border: "none",
-                      borderRadius: "5px",
-                      color: "#fff",
-                      padding: "0px 60px",
-                      fontSize: width < 1024 ? "12px" : "16px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Play now
-                  </button>
-                </Box>
-              </Box>
-            </Box>
+                  : images.pool
+              }
+              tourId={hotWeekTour && hotWeekTour?.id}
+            />
           )}
           <FullListTournament
             type={type}

@@ -1,4 +1,3 @@
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const setTabHelpCenter = (data) => {
   return {

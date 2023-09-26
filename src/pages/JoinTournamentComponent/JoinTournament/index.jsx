@@ -2,7 +2,7 @@ import {
   Box,
   Container,
   CssBaseline,
-  Grid,
+  // Grid,
   Skeleton,
   ThemeProvider,
   Typography,
@@ -13,6 +13,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { images } from "../../../utils/images";
 import {
+  // useNavigate,
   // useNavigate,
   useParams,
 } from "react-router-dom";
@@ -30,13 +31,14 @@ import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { isJson, sliceString } from "../../../utils/helper";
+import { formatTimeMothDateYear, isJson, sliceString } from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import PlayGame from "../PlayGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
 
 const theme = createTheme({
   typography: {},
@@ -69,6 +71,9 @@ export default function JoinTournament() {
   };
   const screen = useFullScreenHandle();
   const [minLength, setMinLength] = useState(0);
+  useEffect(() => {
+    dispatch(updateDetailTour(detailTournament));
+  }, [detailTournament, dispatch]);
   const timeEnd =
     moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
     " " +
@@ -104,6 +109,9 @@ export default function JoinTournament() {
       setDetailTournament(data);
       setFetchT(false);
     });
+    socket?.on("buyTicketTournamentSuccess", () => {
+      window.location.reload();
+    });
     socket?.on("joinTournamentSuccess", (data) => {
       // socket?.emit("detailTournament", {
       //   tournamentId: data?.id,
@@ -124,6 +132,7 @@ export default function JoinTournament() {
           tournamentId: data?.id,
         });
       }, 1000);
+      window.location.reload();
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       dispatch(toggleStartGame(true));
@@ -175,7 +184,12 @@ export default function JoinTournament() {
       }
     }
   }, [detailTournament, width]);
-
+  // useEffect(() => {
+  //   if (!window.location.hash.includes("#reloaded")) {
+  //     window.location.href += "#reloaded";
+  //     window.location.reload();
+  //   }
+  // }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -255,9 +269,11 @@ export default function JoinTournament() {
                       width: "100%",
                       alignItems: "flex-end",
                     }}
+                    className="btn-conteiner"
                   >
                     {!detailTournament?.checkInTournament ? (
                       <button
+                        className="button-join-hover"
                         onClick={() => {
                           if (token) {
                             socket?.emit("joinTournament", {
@@ -287,8 +303,12 @@ export default function JoinTournament() {
                         Join
                       </button>
                     ) : (
-                      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                      <Box
+                        sx={{ display: "flex", justifyContent: "flex-end" }}
+                        className="btn-conteiner"
+                      >
                         <button
+                          className="button-join-hover"
                           onClick={() => {
                             socket?.emit("startGameInTournament", {
                               tournamentId: id,
@@ -310,6 +330,7 @@ export default function JoinTournament() {
                           Play
                         </button>
                         <button
+                          className="button-join-hover"
                           onClick={handleClickOpen}
                           style={{
                             padding: `0px ${parseFloat(width / 45)}px`,
@@ -317,7 +338,8 @@ export default function JoinTournament() {
                             border: "none",
                             outline: "none",
                             height: "40px",
-                            background: "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
+                            background:
+                              "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
                             color: "white",
                             display: "flex",
                             alignItems: "center",
@@ -408,7 +430,7 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          timeStart
+                          formatTimeMothDateYear(detailTournament?.tournamentStartAt)
                         )}
                       </Typography>
                     </Box>
@@ -456,7 +478,7 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          timeEnd
+                          formatTimeMothDateYear(detailTournament?.tournamentEndAt)
                         )}
                       </Typography>
                     </Box>
@@ -745,8 +767,7 @@ export default function JoinTournament() {
                             }}
                           >
                             {detailTournament?.tournamentName?.length > 30
-                              ? detailTournament?.tournamentName.slice(0, 30) +
-                                " ..."
+                              ? detailTournament?.tournamentName
                               : detailTournament?.tournamentName}
                           </Typography>
                           <Typography
@@ -758,10 +779,10 @@ export default function JoinTournament() {
                             }}
                           >
                             {detailTournament?.tournamentTimeType === "hourly"
-                              ? "Hourly Tournament"
+                              ? "Hourly tournaments"
                               : detailTournament?.tournamentTimeType === "daily"
-                              ? "Daily Tournament"
-                              : "Weeklong Tournament"}
+                              ? "Daily tournaments"
+                              : "Week-long tournaments"}
                           </Typography>
                         </>
                       )}
@@ -1096,7 +1117,7 @@ export default function JoinTournament() {
                                 >
                                   Conditions
                                 </h6>
-                                <a
+                                <span
                                   href="#"
                                   onClick={(e) => {
                                     e.preventDefault();
@@ -1111,7 +1132,7 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   See more
-                                </a>
+                                </span>
                               </Box>
                             </Box>
                           </Box>
@@ -1381,7 +1402,7 @@ export default function JoinTournament() {
                         >
                           {item
                             ? item
-                            : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper dolor nunc, quis eleifend erat accumsan id. Nulla cursus urna urna, aliquam congue justo luctus vel. Praesent convallis facilisis mauris, id interdum diam condimentum ut. Ut vitae magna fringilla, fringilla diam at, consectetur risus. Nullam ex est, aliquet eu consequat in, laoreet non tellus. Vestibulum eget rutrum mi. Etiam placerat lectus eu finibus sagittis."}
+                            : ""}
                         </Typography>
                       </Box>
                     );

@@ -44,6 +44,7 @@ export default function DailyTournament() {
   const [selectedDay, setSeDay] = useState(0);
   const [dayList, setDayList] = useState([]);
   const { dailyTournament } = useSelector((state) => state.tournamentReducer);
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -51,19 +52,6 @@ export default function DailyTournament() {
     color: "#fff",
   };
   const dispatch = useDispatch();
-
-  const [isFetching, setIsFetching] = useState(true);
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      if (!isFetchList) {
-        setIsFetching(false);
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [isFetchList]);
 
   useEffect(() => {
     if (isFetchList) {
@@ -78,7 +66,6 @@ export default function DailyTournament() {
   useEffect(() => {
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [dailyTournament]);
-  // const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -109,7 +96,7 @@ export default function DailyTournament() {
                   fontSize: "24px",
                 }}
               >
-                Daily Tournament
+                Daily tournaments
               </Typography>
               <Box
                 sx={{
@@ -118,7 +105,7 @@ export default function DailyTournament() {
                 }}
               >
                 {" "}
-                {isFetching ? (
+                {isFetchList ? (
                   <BannerLoading height={375} />
                 ) : (
                   <Box
@@ -155,7 +142,7 @@ export default function DailyTournament() {
                     gridRowGap: "16px",
                   }}
                 >
-                  {isFetching ? (
+                  {isFetchList ? (
                     <ListItemLoading />
                   ) : dailyTournament &&
                     dailyTournament?.length > 0 &&
@@ -180,27 +167,7 @@ export default function DailyTournament() {
                   )}
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  paddingTop: width < 576 ? "24px" : "32px",
-                  paddingBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                {isFetching ? (
-                  <BannerLoading height={520} />
-                ) : (
-                  <video width={"100%"} playsInline muted autoPlay loop={true}>
-                    <source
-                      src={
-                        width < 576
-                          ? video.Promo_Sale_Video_Mobile
-                          : video.Promo_Sale_Video_Desktop
-                      }
-                      type="video/mp4"
-                    />
-                  </video>
-                )}
-              </Box>{" "}
+              
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
@@ -250,7 +217,7 @@ export default function DailyTournament() {
                   fontSize: "24px",
                 }}
               >
-                Daily Tournament
+                Daily tournaments
               </Typography>
               <Box
                 sx={{
@@ -313,23 +280,6 @@ export default function DailyTournament() {
               </Box>
               <Box
                 sx={{
-                  paddingTop: width < 576 ? "24px" : "32px",
-                  paddingBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <video width={"100%"} playsInline muted autoPlay loop={true}>
-                  <source
-                    src={
-                      width < 576
-                        ? video.Promo_Sale_Video_Mobile
-                        : video.Promo_Sale_Video_Desktop
-                    }
-                    type="video/mp4"
-                  />
-                </video>
-              </Box>{" "}
-              <Box
-                sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
@@ -339,7 +289,10 @@ export default function DailyTournament() {
                     ?.listTournament?.map((item, index) => {
                       return (
                         index >= 10 && (
-                          <Box sx={{ width: "20%", marginTop: "50px" }} key={index}>
+                          <Box
+                            sx={{ width: "20%", marginTop: "50px" }}
+                            key={index}
+                          >
                             <ItemComponent tourInfo={item} countdown={true} />
                           </Box>
                         )
