@@ -37,7 +37,7 @@ const adminRevenueReducer = (
     case "GET_TOTAL":
       return { ...state, isFetchTotal: true };
     case "GET_TOTAL_SUCCESS":
-      return { ...state, isFetchTotal: false, listTotal: payload?.data || [] };
+      return { ...state, isFetchTotal: false, listTotal: payload?.data?.data || [] };
     case "GET_TOTAL_FAIL":
       return { ...state, isFetchTotal: false };
     default:

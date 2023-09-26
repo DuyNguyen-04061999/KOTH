@@ -4,14 +4,6 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export default function AdminTotals(props) {
   const { data } = props;
-  let listTotal = [];
-  if (data) {
-    for (const item in data) {
-      listTotal.push({ name: data[item] });
-    }
-  }
-
-  console.log(listTotal);
 
   return (
     <>
@@ -23,7 +15,7 @@ export default function AdminTotals(props) {
           gap: "32px",
         }}
       >
-        {listTotal?.map((item, index) => (
+        {data && data?.map((item, index) => (
           <Box
             key={index}
             sx={{
@@ -34,10 +26,10 @@ export default function AdminTotals(props) {
               backgroundColor: "#FFF",
               display: "flex",
               alignItems: "center",
-              padding: "20px 10px",
+              padding: "40px 20px",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between",width:"100%"}}>
               <Box
                 sx={{
                   marginRight: "6px",
@@ -45,21 +37,22 @@ export default function AdminTotals(props) {
                   fontWeight: 500,
                   lineHeight: "24px",
                   fontFamily: "Cyntho Next",
+                  textTransform:"capitalize"
                 }}
               >
-                {item.name}
+                {item.type}
               </Box>
               <Box
                 sx={{
-                  fontSize: "20px",
-                  fontWeight: 500,
+                  fontSize: "24px",
+                  fontWeight: 700,
                   lineHeight: "32px",
                 }}
               >
-                {item.number}
+                {item.count}
               </Box>
             </Box>
-            <Box
+            {/* <Box
               sx={{ display: "flex", alignItems: "center", marginLeft: "auto" }}
             >
               {item.profit > 0 ? (
@@ -79,7 +72,7 @@ export default function AdminTotals(props) {
                   </Box>
                 </Box>
               )}
-            </Box>
+            </Box> */}
           </Box>
         ))}
       </Box>
