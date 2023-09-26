@@ -71,11 +71,63 @@ const ManageDistributor = () => {
     }
   }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
+  const [headerList, setHeaderList] = useState([
+    
+  ])
+
+  useEffect(() => {
+    if(roles?.includes("master")) {
+      setHeaderList([
+        "",
+        "ID",
+        "Account",
+        "Nickname",
+        "Manager",
+        "Agents",
+        "Players",
+        "Revenue",
+        "Register Date",
+        "Last Login",
+        "Time Zone"
+      ])
+    }
+
+    if(roles?.includes("distributor")) {
+      setHeaderList([
+        "",
+        "ID",
+        "Account",
+        "Nickname",
+        "Give Permission",
+        "Code/Link",
+        "Manager",
+        "Players",
+        "Revenue By",
+        "Revenue",
+        "Register Date",
+        "Last Login",
+        "Time Zone"
+      ])
+    }
+
+    if(roles?.includes("agent")) {
+      setHeaderList([
+        "ID",
+        "Account",
+        "Nickname",
+        "Manager",
+        "Players",
+        "Revenue",
+      ])
+    }
+     
+  }, [roles])
+
   return (
     <Container>
       <AdminPanel></AdminPanel>
       <Box sx={{ marginTop: "36px" }}>
-        <NestedTable data={data} />{" "}
+        <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
     </Container>
   );

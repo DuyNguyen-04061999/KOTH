@@ -60,7 +60,7 @@ const AdminNavigation = (props) => {
       name: "Manage Distributor",
       icon: navigationImages.navManage,
       iconActive: navigationImages.navManageActive,
-      link: "/manage-distributor",
+      link: "/manage",
     },
     {
       name: "Revenue by Date Range",
@@ -110,7 +110,7 @@ const AdminNavigation = (props) => {
       name: "Manage Agents",
       icon: navigationImages.navManage,
       iconActive: navigationImages.navManageActive,
-      link: "/manage-distributor",
+      link: "/manage",
     },
     {
       name: "Revenue by Date Range",
@@ -186,7 +186,7 @@ const AdminNavigation = (props) => {
       name: "Agents Management",
       icon: navigationImages.navManage,
       iconActive: navigationImages.navManageActive,
-      link: "/manage-distributor",
+      link: "/manage",
     },
     {
       name: "Revenue by Date Range",

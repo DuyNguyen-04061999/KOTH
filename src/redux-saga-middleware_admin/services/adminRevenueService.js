@@ -5,12 +5,10 @@ export class ADMIN_REVENUE_SERVICE {
     const res = ADMIN_API.get(
       `/api/admin/revenue/totals`,
       {
-        token: localStorage.getItem("token_admin"),
-        ...dataRequest,
-      },
-      {
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,
+          "authorization": `Bearer ${localStorage.getItem("token_admin")}`,
         },
       }
     );

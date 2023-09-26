@@ -15,11 +15,12 @@ const Totals = () => {
 
   useEffect(() => {
     dispatch(getTotal());
-  }, [dispatch]);
+  }, [dispatch, roles]);
 
   useEffect(() => {
+    console.log(123);
     setData(listTotal);
-  }, [listTotal]);
+  }, [roles, listTotal]);
 
   return (
     <Container>
