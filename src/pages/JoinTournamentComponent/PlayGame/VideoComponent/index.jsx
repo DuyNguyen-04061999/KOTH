@@ -8,34 +8,49 @@ import { Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { useRef } from "react";
 import { Line } from "rc-progress";
+import ReactPlayer from "react-player";
+import "./index.scss";
 export default function VideoComponent(props) {
   const { detailTournament, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
   const [second, setSeconds] = useState(null);
-  const [progress, setProgress] = useState(null);
   const videoRef = useRef(null);
+  // useEffect(() => {
+  //   let timeInterval = setInterval(() => {
+  //     if (second > 0) {
+  //       setSeconds(second - 1);
+  //     }
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(timeInterval);
+  //   };
+  // }, [second]);
+
   useEffect(() => {
-    let timeInterval = setInterval(() => {
-      if (second > 0) {
-        setSeconds(second - 1);
-      }
-    }, 1000);
-    return () => {
-      clearInterval(timeInterval);
-    };
-  }, [second]);
-  const showCurrentTime = (id, { current: videoDom }) => {
-    setProgress((videoDom?.currentTime / videoDom?.duration) * 100);
-  };
-  useEffect(() => {
-    videoRef.current.addEventListener("timeupdate", () => {
-      showCurrentTime("", videoRef);
-    });
+    if (videoRef && videoRef.current) {
+      var supposedCurrentTime = 0;
+      var video = document.getElementById("videoAd");
+      videoRef?.current?.addEventListener("timeupdate", () => {
+        setSeconds(7 - Math.round(videoRef.current?.currentTime));
+
+        video.controls = true;
+        if (!videoRef.current?.seeking) {
+          supposedCurrentTime = videoRef.current?.currentTime;
+        }
+      });
+      videoRef?.current?.addEventListener("seeking", function () {
+        if (videoRef.current?.seeking) {
+          var delta = videoRef.current?.currentTime - supposedCurrentTime;
+          if (Math.abs(delta) > 0.01) {
+            videoRef.current.currentTime = supposedCurrentTime;
+          }
+        }
+      });
+    }
   }, []);
-  progress && console.log("progress: ", Math.round(progress));
-  console.log(detailTournament);
+
   return (
     <Box
       sx={{
@@ -55,11 +70,11 @@ export default function VideoComponent(props) {
         }}
       >
         <video
-          autoPlay={true}
+          id="videoAd"
           width={"100%"}
           ref={videoRef}
-          playsInline
-          muted
+          playsInline={true}
+          controls={true}
           onPlay={() => {
             setSeconds(7);
           }}
@@ -81,9 +96,8 @@ export default function VideoComponent(props) {
         {second !== null && (
           <Box
             onClick={() => {
-              if (second === 0) {
+              if (second <= 0) {
                 setVideoGame(false);
-
                 setSeconds(null);
               }
             }}
@@ -94,7 +108,7 @@ export default function VideoComponent(props) {
                   orientation === "portrait")
                   ? "absolute"
                   : "fixed",
-              top: width < 576 ? "70%" : "80%",
+              top: width < 576 ? "50%" : "80%",
               right: "20px",
               display: "flex",
               alignItems: "center",
@@ -112,7 +126,7 @@ export default function VideoComponent(props) {
                 fontSize: width < 576 ? "10px !important" : "14px",
               }}
             >
-              {second !== 0 ? `You can skip Ads after ${second}s` : "Skip Ads"}
+              {second > 0 ? `You can skip Ads after ${second}s` : "Skip Ads"}
             </Typography>
             <i
               style={{
@@ -137,18 +151,7 @@ export default function VideoComponent(props) {
                 ? "10px"
                 : "100px",
           }}
-        >
-          {" "}
-          {progress && (
-            <Line
-              style={{ width: "98%", height: "3px" }}
-              trailWidth={0.5}
-              strokeWidth={0.5}
-              percent={progress}
-              strokeColor="#2db7f5"
-            />
-          )}
-        </Box>
+        ></Box>
       </Box>
     </Box>
   );
