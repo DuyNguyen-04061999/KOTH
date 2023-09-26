@@ -42,15 +42,10 @@ export default function ChatWorldList() {
   }, []);
 
   useEffect(() => {
-    let timeOut = 0;
     if (chatWorld) {
-      timeOut = setTimeout(() => setIsFetching(false), 1000);
+      setIsFetching(false);
     }
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, []);
-
+  }, [chatWorld]);
 
   const handleClick = (event, userName) => {
     setUserName(userName);

@@ -65,18 +65,6 @@ export default function NewHomePage() {
     "Sun",
   ]);
   const [selectedDay, setSeDay] = useState(0);
-  const [isFetching, setIsFetching] = useState(true);
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      if (!isFetchList) {
-        setIsFetching(false);
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [isFetchList]);
 
   const {
     dailyTournament,
@@ -166,7 +154,7 @@ export default function NewHomePage() {
               marginBottom: width < 576 ? "24px" : "32px",
             }}
           >
-            {isFetching ? (
+            {isFetchList ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -259,7 +247,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading></ListItemLoading>
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
@@ -314,7 +302,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading></ListItemLoading>
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
@@ -337,7 +325,7 @@ export default function NewHomePage() {
             </div>
           </Box>{" "}
           {width < 576 ? (
-            isFetching ? (
+            isFetchList ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -475,7 +463,7 @@ export default function NewHomePage() {
                 </Box>
               </Box>
             )
-          ) : isFetching ? (
+          ) : isFetchList ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}
@@ -855,7 +843,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : dailyTournament &&
                       dailyTournament?.length > 0 &&
@@ -916,7 +904,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : dailyTournament &&
                       dailyTournament?.length > 0 &&
@@ -1284,7 +1272,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : weeklyTournament && weeklyTournament?.length > 0 ? (
                       weeklyTournament?.map((item, index) => {
@@ -1339,7 +1327,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : weeklyTournament && weeklyTournament?.length > 0 ? (
                       weeklyTournament?.map((item, index) => {
@@ -1363,7 +1351,7 @@ export default function NewHomePage() {
           </Box>{" "}
           {/* Banner Top1 */}
           {width < 576 ? (
-            isFetching ? (
+            isFetchList ? (
               <Box
                 sx={{
                   marginTop: width < 576 ? "48px" : "32px",
@@ -1547,7 +1535,7 @@ export default function NewHomePage() {
                 </Box>
               </Box>
             )
-          ) : isFetching ? (
+          ) : isFetchList ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}
