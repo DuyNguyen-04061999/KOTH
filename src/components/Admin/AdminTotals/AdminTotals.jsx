@@ -1,84 +1,87 @@
 import { Box, Typography } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-export default function AdminTotals() {
-  const database = [
-    { name: "Distributor", number: 25, profit: "+2.73%" },
-    { name: "Agents", number: "30.000", profit: "-2.73%" },
-    { name: "Player", number: 20, profit: "-2.73%" },
-    { name: "Revenue", number: "25,000,00", profit: "-2.73%" },
-  ];
+export default function AdminTotals(props) {
+  const { data } = props;
+  let listTotal = [];
+  if (data) {
+    for (const item in data) {
+      listTotal.push({ name: data[item] });
+    }
+  }
 
-  const CreateDatabase = database.map((e, index) => {
-    return (
-      <Box
-        key={index}
-        sx={{
-          width: 250,
-          height: 112,
-          padding: "20px 20px 20px 20px",
-          marginLeft: "10px",
-          marginRight: "10px",
-          backgroundColor: "white",
-          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-          borderRadius: "24px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          //   "&:hover": {
-          //     backgroundColor: "black",
-          //     opacity: [0.9, 0.8, 0.7],
-          //   },
-        }}
-      >
-        <Typography sx={{ fontWeight: "600" }}>{e?.name}</Typography>
-        {index !== 3 ? (
-          <Typography
-            sx={{ marginRight: "20px", fontWeight: "600", fontSize: "18px" }}
-          >
-            {e?.number}
-          </Typography>
-        ) : (
-          ""
-        )}
-        <Box
-          sx={{
-            marginLeft: index === 3 ? "20px" : "",
-          }}
-        >
-          {index === 3 ? (
-            <Typography
-              sx={{ marginLeft: "20px", fontWeight: "600", fontSize: "18px" }}
-            >
-              ${e.number}
-            </Typography>
-          ) : (
-            ""
-          )}
-          <Box sx={{ display: "flex" }}>
-            {index === 3 ? (
-                <ArrowDropDownIcon color="error"/>
-            ) : (
-                <ArrowDropUpIcon color="success" />
-            )}
-            <Typography color={"green"} sx={{ marginLeft: "0px !important" }}>
-              {e?.profit}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    );
-  });
+  console.log(listTotal);
 
   return (
     <>
       <Box
         sx={{
           display: "flex",
+          alignItems: "center",
+          marginTop: "64px",
+          gap: "32px",
         }}
       >
-        {CreateDatabase}
+        {listTotal?.map((item, index) => (
+          <Box
+            key={index}
+            sx={{
+              boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.25)",
+              width: "25%",
+              height: "112px",
+              borderRadius: "24px",
+              backgroundColor: "#FFF",
+              display: "flex",
+              alignItems: "center",
+              padding: "20px 10px",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  marginRight: "6px",
+                  fontSize: "16px",
+                  fontWeight: 500,
+                  lineHeight: "24px",
+                  fontFamily: "Cyntho Next",
+                }}
+              >
+                {item.name}
+              </Box>
+              <Box
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 500,
+                  lineHeight: "32px",
+                }}
+              >
+                {item.number}
+              </Box>
+            </Box>
+            <Box
+              sx={{ display: "flex", alignItems: "center", marginLeft: "auto" }}
+            >
+              {item.profit > 0 ? (
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ArrowDropUpIcon sx={{ color: "#4FBF67" }}></ArrowDropUpIcon>
+                  <Box sx={{ color: "#4FBF67", fontWeight: 700 }}>
+                    +{item?.profit}%
+                  </Box>
+                </Box>
+              ) : (
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ArrowDropDownIcon
+                    sx={{ color: "#FF7A68" }}
+                  ></ArrowDropDownIcon>
+                  <Box sx={{ color: "#FF7A68", fontWeight: 700 }}>
+                    {item?.profit}%
+                  </Box>
+                </Box>
+              )}
+            </Box>
+          </Box>
+        ))}
       </Box>
     </>
   );

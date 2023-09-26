@@ -90,7 +90,7 @@ const FilterRevenue = () => {
   // };
 
   return (
-    <Box sx={{ marginTop: "80px" }}>
+    <Box sx={{ marginTop: "40px" }}>
       <Typography
         sx={{
           textAlign: "start",

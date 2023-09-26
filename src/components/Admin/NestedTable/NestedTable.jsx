@@ -72,7 +72,7 @@ const NestedTable = (props) => {
       <TableContainer
         sx={{
           width: "100%",
-          maxHeight: { xs: "70vh", sm: "440px" },
+          maxHeight: { xs: "70vh", sm: "50vh" },
           borderRadius: 0,
           "& .MuiTableCell-root": {
             borderWidth: "none",
@@ -145,6 +145,9 @@ const NestedTable = (props) => {
                     color: "#808191",
                     display: index === 0 ?  { xs: "none", sm: "table-cell" } : index > 4 && width <576 ? "none" : "table-cell",
                     maxWidth: "unset",
+                    backgroundColor:"#F7F7F7",
+                    textAlign:"center",
+                    fontWeight:500
                   }}
                   key={index}
                   children={item}

@@ -13,6 +13,12 @@ const SearchBar = ({
   const handleFocus = (e) => {
     e.stopPropagation();
   };
+
+  const handleClickSubmit = (e) =>{
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
   return (
     <form onSubmit={onSubmit}>
       <Box
