@@ -7,6 +7,7 @@ import { getListDistributor } from "../../../redux-saga-middleware_admin/reducer
 import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { width } from "@mui/system";
 
 const Revenue = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -14,7 +15,8 @@ const Revenue = () => {
   const { listSub, listSubRef } = useSelector((state) => state.adminDistributorReducer);
   
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
-  const { listEndUser } = useSelector((state) => state.adminAgentReducer);
+  const { listEndUser, listAR } = useSelector((state) => state.adminAgentReducer);
+  console.log(listAR);
   const [data, setData] = useState([]);
 
   const dispatch = useDispatch();
@@ -125,10 +127,10 @@ const Revenue = () => {
 
   return (
     <Container>
-      <FilterRevenue />
-      <Box sx={{ marginTop: "36px" }}>
+      {width > 576 && (<FilterRevenue />)}
+      <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />
-        {listSubRef && listSubRef?.length > 0 && (
+        {roles?.includes("distributor") && listSubRef && listSubRef?.length > 0 && (
           <>
             <Box component={"div"} className="mb-2 mt-2">
               <Typography sx={{
@@ -136,6 +138,16 @@ const Revenue = () => {
               }}>Referrals</Typography>
             </Box>
             <NestedTable headerList={headerList} data={listSubRef} />
+          </>
+        )}
+        {roles?.includes("agent") && listAR && listAR?.length > 0 && (
+          <>
+            <Box component={"div"} className="mb-2 mt-2">
+              <Typography sx={{
+                fontWeight: 600
+              }}>Referrals</Typography>
+            </Box>
+            <NestedTable headerList={headerList} data={listAR} />
           </>
         )}
       </Box>

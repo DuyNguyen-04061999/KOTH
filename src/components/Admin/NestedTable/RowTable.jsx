@@ -109,7 +109,7 @@ export const RowTable = (props) => {
     }))
     dispatch(openGivePerDialog())
   }
-
+console.log(headers);
   return (
     <React.Fragment>
       <TableRow
@@ -246,6 +246,18 @@ export const RowTable = (props) => {
                   />
                 </StyledTableCell>
               );
+              else if (item.toLowerCase() === "time zone") 
+                return (
+                  <StyledTableCell
+                    key={index}
+                    sx={{
+                      display: { xs: "none", sm: "table-cell" },
+                      textAlign: "center",
+                    }}
+                  >
+                    Chicago TMZ
+                  </StyledTableCell>
+              );
               else if (item.toLowerCase() === "give permission" && row?.givePermission) return (
                 <StyledTableCell
                   key={index}
@@ -308,6 +320,7 @@ export const RowTable = (props) => {
               return (
                 <StyledTableCell key={index}>
                   <Box sx={{ textAlign: "center" }}>
+                    {/* {moment(row[`${trimAndCamelCase(item)}`], true)?.isValid() ? moment(row[`${trimAndCamelCase(item)}`])?.format("MM/DD/YYYY HH:mm") : row[`${trimAndCamelCase(item)}`]} */}
                     {row[`${trimAndCamelCase(item)}`]}
                   </Box>
                 </StyledTableCell>

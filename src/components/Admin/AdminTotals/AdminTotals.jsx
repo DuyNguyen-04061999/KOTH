@@ -1,9 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function AdminTotals(props) {
   const { data } = props;
+
+  const { width } = useWindowDimensions()
 
   return (
     <>
@@ -13,6 +16,7 @@ export default function AdminTotals(props) {
           alignItems: "center",
           marginTop: "64px",
           gap: "32px",
+          flexWrap: width < 576 ? "wrap" : "nowrap"
         }}
       >
         {data && data?.map((item, index) => (
@@ -20,7 +24,7 @@ export default function AdminTotals(props) {
             key={index}
             sx={{
               boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.25)",
-              width: "25%",
+              width: width < 576 ? "100%" : "25%",
               height: "112px",
               borderRadius: "24px",
               backgroundColor: "#FFF",

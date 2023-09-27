@@ -114,7 +114,8 @@ const adminAgentReducer = (
     isFetchEndUser: false,
     listEndUser: [],
     isUpdateEndUser: false,
-    isDeleteEndUser: false
+    isDeleteEndUser: false,
+    listAR: []
   },
   action
 ) => {
@@ -137,7 +138,7 @@ const adminAgentReducer = (
       case "CREATE_END_USER_SUCCESS": return {...state, isCreateEndUser: false, newEndUser: payload}
       case "CREATE_END_USER_FAIL": return {...state, isCreateEndUser: false}
       case "GET_LIST_END_USER": return {...state, isFetchEndUser: true}
-      case "GET_LIST_END_USER_SUCCESS": return {...state, isFetchEndUser: false, listEndUser: payload?.list || []}
+      case "GET_LIST_END_USER_SUCCESS": return {...state, isFetchEndUser: false, listEndUser: payload?.list || [], listAR: payload?.listAR || []}
       case "GET_LIST_END_USER_FAIL": return {...state, isFetchEndUser: false}
       default:
         return { ...state };
