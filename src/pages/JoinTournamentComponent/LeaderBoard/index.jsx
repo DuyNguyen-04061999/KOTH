@@ -9,10 +9,17 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const [top3, setTop3] = useState([]);
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const { userName } = useSelector((state) => state.authReducer);
   const [start, setStart] = useState(3);
   const [end, setEnd] = useState(6);
+  useEffect(() => {
+    if (height > 820) {
+      setEnd(6);
+    } else {
+      setEnd(5);
+    }
+  }, [height]);
   useEffect(() => {
     setTop3(detailTournament?.tournamentResult?.slice(0, 3));
   }, [detailTournament]);
@@ -24,8 +31,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
       return prev + num;
     });
   };
-  console.log("Pagination: ", start, end);
-  console.log("Pagination: ", detailTournament?.tournamentResult);
   return (
     <Box>
       {width > 576 ? (
@@ -123,7 +128,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               >
                 {top3 &&
                   top3[1] &&
-                  moment(top3[1]?.updatedAt).format("DD/MM/YYYY")}
+                  moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
               </Typography>
               <Typography
                 className="textReward"
@@ -220,7 +225,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               >
                 {top3 &&
                   top3[0] &&
-                  moment(top3[0]?.updatedAt).format("DD/MM/YYYY")}
+                  moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
               </Typography>
               <Typography
                 className="textReward"
@@ -315,7 +320,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               >
                 {top3 &&
                   top3[2] &&
-                  moment(top3[2]?.updatedAt).format("DD/MM/YYYY")}{" "}
+                  moment(top3[2]?.updatedAt).format("MM/DD/YYYY")}{" "}
               </Typography>
               <Typography
                 className="textReward"
@@ -398,7 +403,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 marginTop: "-4px !important",
                               }}
                             >
-                              {moment(item?.updatedAt).format("DD/MM/YYYY")}
+                              {moment(item?.updatedAt).format("MM/DD/YYYY")}
                             </Typography>
                           </Box>
                         </Box>
@@ -493,7 +498,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               marginTop: "-4px !important",
                             }}
                           >
-                            {moment(item?.updatedAt).format("DD/MM/YYYY")}
+                            {moment(item?.updatedAt).format("MM/DD/YYYY")}
                           </Typography>
                         </Box>
                       </Box>
@@ -509,8 +514,111 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       </Box>
                     </Box>
                   );
-                })}
+                })}{" "}
+            {detailTournament?.tournamentResult
+              ?.filter((n) => {
+                return n?.userNickName === userName;
+              })
+              .map((item, index) => {
+                return (
+                  index === 0 && (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "16px",
+                        paddingRight: "16px",
+                        paddingBottom: "10px",
+                        paddingTop: "10px",
+                        backgroundColor: "#68399E",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          color: "#ffff",
+                          width: "10%",
+                          display: "flex",
+                          justifyContent: "center",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 64}px`
+                              : "14px",
+                        }}
+                      >
+                        {detailTournament?.tournamentResult
+                          ?.map((item, index) => {
+                            return item?.userNickName;
+                          })
+                          .indexOf(userName) + 1}
+                      </Box>
+                      <Box sx={{ display: "flex", width: "70%" }}>
+                        <Box
+                          component={"img"}
+                          src={
+                            item?.tUser?.userAccount?.accountAvatar
+                              ? process.env.REACT_APP_SOCKET_SERVER +
+                                "/" +
+                                item?.tUser?.userAccount?.accountAvatar
+                              : images.undefinedAvatar
+                          }
+                          sx={{
+                            borderRadius: "50%",
+                            width:
+                              576 < width && width < 1200 ? width / 24 : "40px",
+                            height:
+                              576 < width && width < 1200 ? width / 24 : "40px",
+                            marginRight: "5px",
+                          }}
+                        ></Box>
+                        <Box>
+                          <Typography
+                            sx={{
+                              textAlign: "start",
+                              color: "#ffff",
+                              fontWeight: "lighter !important",
+                              fontSize:
+                                576 < width && width < 1200
+                                  ? `${width / 64}px`
+                                  : "16px",
+                            }}
+                          >
+                            You
+                          </Typography>
+                          <Typography
+                            sx={{
+                              textAlign: "start",
+                              color: "#ffff",
+                              fontSize:
+                                576 < width && width < 1200
+                                  ? `${width / 66}px`
+                                  : "14px",
+                              fontWeight: "lighter !important",
+                              marginTop: "-4px !important",
+                            }}
+                          >
+                            {moment(item?.updatedAt).format("MM/DD/YYYY")}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box
+                        sx={{
+                          color: "#fff",
+                          width: "20%",
+                          display: "flex",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        {item?.score}
+                      </Box>
+                    </Box>
+                  )
+                );
+              })}
           </Box>
+
           <Dialog
             onClose={handleOnClose}
             sx={{
@@ -645,7 +753,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       >
                         {top3 &&
                           top3[1] &&
-                          moment(top3[1]?.updatedAt).format("DD/MM/YYYY")}
+                          moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
                       </Typography>
                       <Typography
                         className="textReward"
@@ -740,7 +848,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       >
                         {top3 &&
                           top3[0] &&
-                          moment(top3[0]?.updatedAt).format("DD/MM/YYYY")}
+                          moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
                       </Typography>
                       <Typography
                         className="textReward"
@@ -833,7 +941,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       >
                         {top3 &&
                           top3[2] &&
-                          moment(top3[2]?.updatedAt).format("DD/MM/YYYY")}{" "}
+                          moment(top3[2]?.updatedAt).format("MM/DD/YYYY")}{" "}
                       </Typography>
                       <Typography
                         className="textReward"
@@ -926,7 +1034,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                     marginTop: "-4px !important",
                                   }}
                                 >
-                                  {moment(item?.updatedAt).format("DD/MM/YYYY")}
+                                  {moment(item?.updatedAt).format("MM/DD/YYYY")}
                                 </Typography>
                               </Box>
                             </Box>
@@ -1022,7 +1130,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                     }}
                                   >
                                     {moment(item?.updatedAt).format(
-                                      "DD/MM/YYYY"
+                                      "MM/DD/YYYY"
                                     )}
                                   </Typography>
                                 </Box>
@@ -1252,7 +1360,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               >
                 {top3 &&
                   top3[1] &&
-                  moment(top3[1]?.updatedAt).format("DD/MM/YYYY")}
+                  moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
               </Typography>
               <Typography
                 className="textReward"
@@ -1345,7 +1453,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               >
                 {top3 &&
                   top3[0] &&
-                  moment(top3[0]?.updatedAt).format("DD/MM/YYYY")}
+                  moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
               </Typography>
               <Typography
                 className="textReward"
@@ -1436,7 +1544,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               >
                 {top3 &&
                   top3[2] &&
-                  moment(top3[2]?.updatedAt).format("DD/MM/YYYY")}{" "}
+                  moment(top3[2]?.updatedAt).format("MM/DD/YYYY")}{" "}
               </Typography>
               <Typography
                 className="textReward"
@@ -1454,7 +1562,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
             </Box>
           </Box>
           {/* Brief Leader Board */}
-          <Box sx={{ padding: "28px 28px 60px 28px" }}>
+          <Box sx={{ padding: "28px 28px 0px 28px" }}>
             {detailTournament?.tournamentResult?.length > 0 ? (
               detailTournament?.tournamentResult?.map((item, index) => {
                 return (
@@ -1466,7 +1574,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        marginBottom: "28px",
+                        marginBottom: index !== 5 ? "28px" : "0px",
                         paddingRight: "16px",
                         borderBottom:
                           index !== 5
@@ -1518,7 +1626,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               marginTop: "-4px !important",
                             }}
                           >
-                            {moment(item?.updatedAt).format("DD/MM/YYYY")}
+                            {moment(item?.updatedAt).format("MM/DD/YYYY")}
                           </Typography>
                         </Box>
                       </Box>
@@ -1540,7 +1648,97 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               <></>
             )}
           </Box>
-          <Dialog sx={{ zIndex: "1311" }} open={open} fullScreen={true}>
+          <Box sx={{ padding: "0px 0px 100px 0px" }}>
+            {detailTournament?.tournamentResult
+              ?.filter((n) => {
+                return n?.userNickName === userName;
+              })
+              .map((item, index) => {
+                return (
+                  index === 0 && (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: "#68399E",
+                        padding: "16px 44px 16px 28px",
+                      }}
+                    >
+                      <Box sx={{ color: "#ffff", width: "10%" }}>
+                        {detailTournament?.tournamentResult
+                          ?.map((item, index) => {
+                            return item?.userNickName;
+                          })
+                          .indexOf(userName) + 1}
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "70%",
+                          justifyContent: "flex-start",
+                        }}
+                      >
+                        <Box
+                          component={"img"}
+                          src={
+                            item?.tUser?.userAccount?.accountAvatar
+                              ? process.env.REACT_APP_SOCKET_SERVER +
+                                "/" +
+                                item?.tUser?.userAccount?.accountAvatar
+                              : images.undefinedAvatar
+                          }
+                          sx={{
+                            borderRadius: "50%",
+                            width: "40px",
+                            height: "40px",
+                            marginRight: "5px",
+                          }}
+                        ></Box>
+                        <Box>
+                          <Typography
+                            sx={{
+                              textAlign: "start",
+                              color: "#ffff",
+                              fontWeight: "lighter !important",
+                            }}
+                          >
+                            You{" "}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              textAlign: "start",
+                              color: "#ffff",
+                              fontSize: "12px",
+                              fontWeight: "lighter !important",
+                              marginTop: "-4px !important",
+                            }}
+                          >
+                            {moment(item?.updatedAt).format("MM/DD/YYYY")}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box
+                        sx={{
+                          color: "#fff",
+                          width: "20%",
+                          display: "flex",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        {item?.score}
+                      </Box>
+                    </Box>
+                  )
+                );
+              })}
+          </Box>
+          <Dialog
+            sx={{ zIndex: "1311", backgroundColor: "#211D28" }}
+            open={open}
+            fullScreen={true}
+          >
             <Box
               sx={{ backgroundColor: "#211D28", width: "100%", height: "100%" }}
             >
@@ -1657,7 +1855,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       >
                         {top3 &&
                           top3[1] &&
-                          moment(top3[1]?.updatedAt).format("DD/MM/YYYY")}
+                          moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
                       </Typography>
                       <Typography
                         className="textReward"
@@ -1752,7 +1950,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       >
                         {top3 &&
                           top3[0] &&
-                          moment(top3[0]?.updatedAt).format("DD/MM/YYYY")}
+                          moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
                       </Typography>
                       <Typography
                         className="textReward"
@@ -1845,7 +2043,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       >
                         {top3 &&
                           top3[2] &&
-                          moment(top3[2]?.updatedAt).format("DD/MM/YYYY")}{" "}
+                          moment(top3[2]?.updatedAt).format("MM/DD/YYYY")}{" "}
                       </Typography>
                       <Typography
                         className="textReward"
@@ -1862,7 +2060,12 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       </Typography>
                     </Box>
                   </Box>
-                  <Box sx={{ padding: "28px 28px 60px 28px" }}>
+                  <Box
+                    sx={{
+                      padding: "28px 28px 148px 28px",
+                      backgroundColor: "#211D28",
+                    }}
+                  >
                     {detailTournament?.tournamentResult?.map((item, index) => {
                       return (
                         index >= start &&
@@ -1873,18 +2076,14 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                              marginBottom: "20px",
+                              marginBottom: `20px`,
                               paddingRight: "16px",
                               borderBottom:
                                 index !==
                                 detailTournament?.tournamentResult?.length - 1
                                   ? "1px solid rgba(151, 151, 151, 0.40)"
                                   : "none",
-                              paddingBottom:
-                                index !==
-                                detailTournament?.tournamentResult?.length - 1
-                                  ? "20px"
-                                  : "none",
+                              paddingBottom: "20px",
                               backgroundColor: "#211D28",
                             }}
                           >
@@ -1934,7 +2133,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                     marginTop: "-4px !important",
                                   }}
                                 >
-                                  {moment(item?.updatedAt).format("DD/MM/YYYY")}
+                                  {moment(item?.updatedAt).format("MM/DD/YYYY")}
                                 </Typography>
                               </Box>
                             </Box>
@@ -2030,7 +2229,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                     }}
                                   >
                                     {moment(item?.updatedAt).format(
-                                      "DD/MM/YYYY"
+                                      "MM/DD/YYYY"
                                     )}
                                   </Typography>
                                 </Box>
@@ -2061,8 +2260,14 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     >
                       <button
                         onClick={() => {
-                          if (start > 3) {
-                            updatePagination(-4);
+                          if (height > 820) {
+                            if (start > 3) {
+                              updatePagination(-4);
+                            }
+                          } else {
+                            if (start > 3) {
+                              updatePagination(-3);
+                            }
                           }
                         }}
                         style={{
@@ -2110,7 +2315,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               fontSize: "12px",
                             }}
                           >
-                            20
+                            {end >
+                            detailTournament?.tournamentResult?.length - 1
+                              ? detailTournament?.tournamentResult?.length
+                              : end + 1}
                           </Typography>
                           <Box
                             sx={{ width: "12px" }}
@@ -2120,11 +2328,20 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                         </Box>
                         <button
                           onClick={() => {
-                            if (
-                              start + 1 <
-                              detailTournament?.tournamentResult?.length
-                            ) {
-                              updatePagination(4);
+                            if (height > 820) {
+                              if (
+                                start + 4 <
+                                detailTournament?.tournamentResult?.length
+                              ) {
+                                updatePagination(4);
+                              }
+                            } else {
+                              if (
+                                start + 3 <
+                                detailTournament?.tournamentResult?.length
+                              ) {
+                                updatePagination(3);
+                              }
                             }
                           }}
                           style={{
