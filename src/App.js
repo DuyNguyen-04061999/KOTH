@@ -2,7 +2,7 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
@@ -106,6 +106,7 @@ import {
 } from "@mui/material";
 // import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
 import PlayGamePage from "./pages/PlayGamePage";
+import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
 
 function App() {
@@ -219,7 +220,7 @@ function App() {
       });
 
       socket?.on("chatSuccess", (data) => {
-        if(localStorage.getItem("token")) {
+        if (localStorage.getItem("token")) {
           socket.emit("listFriend");
         }
         store.dispatch(updateChatWorld(data));
@@ -304,7 +305,7 @@ function App() {
             position: "top-center",
             className:
               // width < 576 ? "warning-background-small" : "warning-background",
-              "warning-background"
+              "warning-background",
           });
           localStorage.removeItem("NAME");
           localStorage.removeItem("PASS");
@@ -504,7 +505,7 @@ function App() {
             position: "top-center",
             className:
               // width < 576 ? "error-background-small" : "error-background",
-              "error-background"
+              "error-background",
           }
         );
         store.dispatch(updateProfileFail());
@@ -522,7 +523,7 @@ function App() {
           position: "top-center",
           className:
             // width < 576 ? "warning-background-small" : "warning-background",
-            "warning-background"
+            "warning-background",
         });
       });
 
@@ -538,7 +539,7 @@ function App() {
           position: "top-center",
           className:
             // width < 576 ? "success-background-small" : "success-background",
-            "success-background"
+            "success-background",
         });
       });
       socket?.on("gameWin", ({ type, value }) => {
@@ -619,6 +620,21 @@ function App() {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  // This will run one time after the component mounts
+  useEffect(() => {
+    document.onreadystatechange = function () {
+      // Check if the page has already loaded
+      if (document.readyState === "complete") {
+        setIsLoading(false);
+      } else {
+        window.addEventListener("load", () => setIsLoading(false));
+      }
+    };
+    return () => window.removeEventListener("load", () => setIsLoading(false));
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -629,7 +645,9 @@ function App() {
                 <Route
                   path="/home"
                   element={
-                    getAppType() === "promote" ? (
+                    isLoading ? (
+                      <PageLoading />
+                    ) : getAppType() === "promote" ? (
                       <NewHomePageComponent />
                     ) : (
                       <HomePage />
@@ -653,14 +671,23 @@ function App() {
                   path="/tournamentDetail/:id"
                   element={<JoinTournamentComponent />}
                 />
-                <Route path="/hot-tournament" element={<HotTournament />} />
+                <Route
+                  path="/hot-tournament"
+                  element={isLoading ? <PageLoading /> : <HotTournament />}
+                />
                 {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
-                <Route path="/daily-tournament" element={<DailyTournament />} />
+                <Route
+                  path="/daily-tournament"
+                  element={isLoading ? <PageLoading /> : <DailyTournament />}
+                />
                 <Route
                   path="/week-long-tournament"
-                  element={<WeekLongTour />}
+                  element={isLoading ? <PageLoading /> : <WeekLongTour />}
                 />
-                <Route path="/help-center" element={<FAQPage />} />
+                <Route
+                  path="/help-center"
+                  element={isLoading ? <PageLoading /> : <FAQPage />}
+                />
                 <Route path="/loadingscreen" element={<LoadingScreen />} />
                 <Route path="/new-home" element={<NewHomePageComponent />} />
                 <Route path="/countdowntimer" element={<CountDownTimer />} />
@@ -685,7 +712,10 @@ function App() {
                   element={<DeleteSkinPage />}
                 />
                 {getAppType() === "promote" && (
-                  <Route path="packages" element={<PackagePage />}></Route>
+                  <Route
+                    path="packages"
+                    element={isLoading ? <PageLoading /> : <PackagePage />}
+                  ></Route>
                 )}
                 <Route
                   path="transactions/:id"
