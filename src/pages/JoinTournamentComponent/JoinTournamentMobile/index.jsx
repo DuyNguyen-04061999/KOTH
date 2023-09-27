@@ -224,7 +224,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
-                Start
+                Start date
               </Typography>
               <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
                 {formatTimeMothDateYear(detailTournament?.tournamentStartAt)}
@@ -239,7 +239,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
             ></Box>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
-                Finish
+                End date
               </Typography>
               <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
                 {formatTimeMothDateYear(detailTournament?.tournamentEndAt)}
@@ -329,7 +329,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           color: "#525252",
                         }}
                       >
-                        Sponsor by
+                        Sponsored  by
                       </h6>
                       <span
                         style={{
@@ -352,7 +352,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           color: "#525252",
                         }}
                       >
-                        Validity date
+                        Valid by
                       </h6>
                       <span
                         style={{

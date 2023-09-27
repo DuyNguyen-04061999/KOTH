@@ -1297,7 +1297,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Week-long tournaments{" "}
+                  Weeklong tournaments{" "}
                 </Typography>
               </Box>
               <Box

@@ -2002,7 +2002,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
                           }}
                           value={"weekly"}
                         >
-                          Week-long Tour
+                          Weeklong Tour
                         </MenuItem>
                         <MenuItem
                           sx={{

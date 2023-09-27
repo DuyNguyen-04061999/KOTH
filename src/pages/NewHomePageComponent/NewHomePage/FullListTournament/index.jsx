@@ -132,7 +132,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
               ? "Hourly tournaments"
               : type === "daily"
               ? "Daily tournament"
-              : "Week-long tournaments"}
+              : "Weeklong tournaments"}
           </Typography>
         </Box>
         <Box sx={{ width: "100%", height: "auto", padding: "20px" }}>
