@@ -4,8 +4,8 @@ import { Skeleton } from "@mui/material";
 
 const BannerLoading = (props) => {
   const {
-    width,
-    height,
+    width="100%",
+    height= "fit-content",
     animation = "pulse",
     bgColor = "white",
     variant = "rectangular",

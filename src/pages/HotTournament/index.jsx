@@ -12,13 +12,17 @@ import {
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import SlickSlider from "../../components/SlickSlider";
 import { images, video } from "../../utils/images";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
+import { useState } from "react";
+import { getHotTour } from "../../redux-saga-middleware/reducers/tournamentReducer";
+import { useEffect } from "react";
+import BannerLoading from "../../components/LoadingComponent/BannerLoading";
+import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -39,14 +43,34 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { hotTournament } = useSelector((state) => state.tournamentReducer);
+  const [isFetchList, setIsFetchList] = useState(true);
+  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
 
-  const imgHot = hotTournament.map((e) => {
-     return e.tournamentBackground
-  })
+  useEffect(() => {
+    if (isFetchList) {
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "hot",
+      });
+      setIsFetchList(false);
+    }
+  }, [dispatch, isFetchList]);
 
-  const imgHotMobile = hotTournament.map((e) => {
-    return e.tournamentBackgroundMobile
- })
+  useEffect(() => {
+    if (hotTournament) {
+      setData(hotTournament);
+    }
+  }, [hotTournament]);
+
+  const imgHot = data?.map((e) => {
+    return e.tournamentBackground;
+  });
+
+  const imgHotMobile = data?.map((e) => {
+    return e.tournamentBackgroundMobile;
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -86,38 +110,53 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                <SlickSlider
-                  type="tour"
-                  appendDot={true}
-                  images={
-                    width < 576 ? imgHotMobile
-                      : imgHot
-                  }
-                />
+                {isFetchList ? (
+                  <BannerLoading height={363} />
+                ) : (
+                  <SlickSlider
+                    type="tour"
+                    appendDot={true}
+                    images={width < 576 ? imgHotMobile : imgHot}
+                  />
+                )}
               </Box>
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: width < 576 && width < 1200 ? "space-between" : "none" }}>
-                  {hotTournament?.map((item, index) => {
-                    return (
-                      index < 10 && (
-                        <Box
-                          sx={{
-                            width: width < 576 && width < 1200 ? "auto" : "20%",
-                            marginTop: "50px",
-                            marginRight:
-                              width > 576 && width < 1200 ? "100px" : "none",
-                          }}
-                          key={index}
-                        >
-                          <ItemComponent tourInfo={item} countdown={true} />
-                        </Box>
-                      )
-                    );
-                  })}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent:
+                      width < 576 && width < 1200 ? "space-between" : "none",
+                  }}
+                >
+                  {isFetchList ? (
+                    <ListItemLoading />
+                  ) : data?.length ? (
+                    data?.map((item, index) => {
+                      return (
+                        index < 10 && (
+                          <Box
+                            sx={{
+                              width:
+                                width < 576 && width < 1200 ? "auto" : "20%",
+                              marginTop: "50px",
+                              marginRight:
+                                width > 576 && width < 1200 ? "100px" : "none",
+                            }}
+                            key={index}
+                          >
+                            <ItemComponent tourInfo={item} countdown={true} />
+                          </Box>
+                        )
+                      );
+                    })
+                  ) : (
+                    <ListEmpty />
+                  )}
                 </Box>
               </Box>
               {/* <Box
@@ -143,7 +182,7 @@ export default function HotTournament() {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {hotTournament?.map((item, index) => {
+                  {data?.map((item, index) => {
                     return (
                       index >= 10 && (
                         <Box
@@ -161,73 +200,88 @@ export default function HotTournament() {
             </Container>
           ) : (
             <Container
-            maxWidth="lg"
-            sx={{
-              paddingLeft:
-                width < 576
-                  ? "24px !important"
-                  : width < 1024
-                  ? "42px !important"
-                  : "0px !important",
-              paddingRight:
-                width < 576
-                  ? "24px !important"
-                  : width < 1024
-                  ? "32px !important"
-                  : "0px !important",
-              paddingTop: width < 576 ? "24px !important" : "50px !important",
-            }}
-          >
-            <Typography
+              maxWidth="lg"
               sx={{
-                ...typographyStyle,
-                fontSize: "24px",
+                paddingLeft:
+                  width < 576
+                    ? "24px !important"
+                    : width < 1024
+                    ? "42px !important"
+                    : "0px !important",
+                paddingRight:
+                  width < 576
+                    ? "24px !important"
+                    : width < 1024
+                    ? "32px !important"
+                    : "0px !important",
+                paddingTop: width < 576 ? "24px !important" : "50px !important",
               }}
             >
-              Hot Tournament
-            </Typography>
-            <Box
-              sx={{
-                marginBottom: width < 576 ? "24px" : "32px",
-                marginTop: width < 576 ? "24px" : "32px",
-              }}
-            >
-              {" "}
-              <SlickSlider
-                type="tour"
-                appendDot={true}
-                images={
-                  width < 576 ? imgHotMobile
-                      : imgHot
-                }
-              />
-            </Box>
-            <Box
-              sx={{
-                marginBottom: width < 576 ? "24px" : "32px",
-              }}
-            >
-              <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: width < 576 && width < 1200 ? "space-between" : "none" }}>
-                {hotTournament?.map((item, index) => {
-                  return (
-                    index < 10 && (
-                      <Box
-                        sx={{
-                          width:  width < 576 && width < 1200 ? "auto" : "20%",
-                          marginTop: "50px",
-                          marginRight:
-                            width > 576 && width < 1200 ? "100px" : "none",
-                        }}
-                        key={index}
-                      >
-                        <ItemComponent tourInfo={item} countdown={true} />
-                      </Box>
-                    )
-                  );
-                })}
+              <Typography
+                sx={{
+                  ...typographyStyle,
+                  fontSize: "24px",
+                }}
+              >
+                Hot Tournament
+              </Typography>
+              <Box
+                sx={{
+                  marginBottom: width < 576 ? "24px" : "32px",
+                  marginTop: width < 576 ? "24px" : "32px",
+                }}
+              >
+                {" "}
+                {isFetchList ? (
+                  <BannerLoading height={208} />
+                ) : (
+                  <SlickSlider
+                    type="tour"
+                    appendDot={true}
+                    images={width < 576 ? imgHotMobile : imgHot}
+                  />
+                )}
               </Box>
-            </Box>
-            {/* <Box
+              <Box
+                sx={{
+                  marginBottom: width < 576 ? "24px" : "32px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent:
+                      width < 576 && width < 1200 ? "space-between" : "none",
+                  }}
+                >
+                  {isFetchList ? (
+                    <ListItemLoading />
+                  ) : data?.length ? (
+                    data?.map((item, index) => {
+                      return (
+                        index < 10 && (
+                          <Box
+                            sx={{
+                              width:
+                                width < 576 && width < 1200 ? "auto" : "20%",
+                              marginTop: "50px",
+                              marginRight:
+                                width > 576 && width < 1200 ? "100px" : "none",
+                            }}
+                            key={index}
+                          >
+                            <ItemComponent tourInfo={item} countdown={true} />
+                          </Box>
+                        )
+                      );
+                    })
+                  ) : (
+                    <ListEmpty />
+                  )}
+                </Box>
+              </Box>
+              {/* <Box
               sx={{
                 paddingTop: width < 576 ? "24px" : "32px",
                 paddingBottom: width < 576 ? "24px" : "32px",
@@ -244,28 +298,28 @@ export default function HotTournament() {
                 />
               </video>
             </Box>{" "} */}
-            <Box
-              sx={{
-                marginBottom: width < 576 ? "24px" : "32px",
-              }}
-            >
-              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                {hotTournament?.map((item, index) => {
-                  return (
-                    index >= 10 && (
-                      <Box
-                        sx={{ width: "20%", marginTop: "50px" }}
-                        key={index}
-                      >
-                        <ItemComponent tourInfo={item} countdown={true} />
-                      </Box>
-                    )
-                  );
-                })}
+              <Box
+                sx={{
+                  marginBottom: width < 576 ? "24px" : "32px",
+                }}
+              >
+                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+                  {data?.map((item, index) => {
+                    return (
+                      index >= 10 && (
+                        <Box
+                          sx={{ width: "20%", marginTop: "50px" }}
+                          key={index}
+                        >
+                          <ItemComponent tourInfo={item} countdown={true} />
+                        </Box>
+                      )
+                    );
+                  })}
+                </Box>
               </Box>
-            </Box>
-            <NewFooter />
-          </Container>
+              <NewFooter />
+            </Container>
           )
         }
         type="Home"

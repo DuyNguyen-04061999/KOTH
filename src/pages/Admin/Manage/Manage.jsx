@@ -1,16 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getListRef } from "../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
-import { getListDistributor } from "../../redux-saga-middleware_admin/reducers/adminMasterReducer";
-import { getListSub } from "../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
-import { getListEndUser } from "../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 import { useState } from "react";
-import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
-import { Box, Button, Container } from "@mui/material";
-import NestedTable from "../../components/Admin/NestedTable/NestedTable";
+import { Box, Container } from "@mui/material";
+import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
+import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import AdminPanel from "../../../components/Admin/AdminPanel/AdminPanel";
+import NestedTable from "../../../components/Admin/NestedTable/NestedTable";
 
-const HomePage = () => {
+const ManageDistributor = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
   const { listDistributor } = useSelector((state) => state.adminMasterReducer);
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
@@ -71,13 +71,12 @@ const HomePage = () => {
     }
   }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
-  const [headerList, setHeaderList] = useState([
-    
-  ])
+  const [headerList, setHeaderList] = useState([]);
 
   useEffect(() => {
-    if(roles?.includes("master")) {
+    if (roles?.includes("master")) {
       setHeaderList([
+        "",
         "ID",
         "Account",
         "Nick Name",
@@ -87,11 +86,13 @@ const HomePage = () => {
         "Revenue",
         "Register Date",
         "Last Login",
-      ])
+        "Time Zone",
+      ]);
     }
 
-    if(roles?.includes("distributor")) {
+    if (roles?.includes("distributor")) {
       setHeaderList([
+        "",
         "ID",
         "Account",
         "Nick Name",
@@ -99,24 +100,25 @@ const HomePage = () => {
         "Code/Link",
         "Manager",
         "Players",
+        "Revenue By",
         "Revenue",
         "Register Date",
         "Last Login",
-      ])
+        "Time Zone",
+      ]);
     }
 
-    if(roles?.includes("agent")) {
+    if (roles?.includes("agent")) {
       setHeaderList([
         "ID",
         "Account",
-        "Revenue",
+        "Nick Name",
         "Manager",
-        "Register Date",
-        "Last Login",
-      ])
+        "Players",
+        "Revenue",
+      ]);
     }
-     
-  }, [roles])
+  }, [roles]);
 
   return (
     <Container>
@@ -128,4 +130,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default ManageDistributor;

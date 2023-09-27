@@ -3,7 +3,7 @@ import React from 'react'
 import BackIcon from "@mui/icons-material/ArrowBack"
 import useWindowDimensions from '../../../utils/useWindowDimensions'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeDetailDialog, openProvideDialog } from '../../../redux-saga-middleware_admin/reducers/adminDialogReducer'
+import { closeDetailDialog, openProvideDialog, openResetPassDialog } from '../../../redux-saga-middleware_admin/reducers/adminDialogReducer'
 import { updateDetailAccount } from '../../../redux-saga-middleware_admin/reducers/adminReducer'
 import moment from 'moment'
 import { activeAccount } from '../../../redux-saga-middleware_admin/reducers/adminConfigReducer'
@@ -265,7 +265,7 @@ export default function DetailAccountDialogComponent() {
                                 Provide Ticket
                             </Typography>
                         </Box>
-                        {/* <Box component={"div"} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
+                        <Box component={"div"} onClick={() => dispatch(openResetPassDialog())} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
                             borderRadius: "7.618px",
                             maxWidth: width/4,
                             boxShadow: "1px 20px 25px 5px #E4E4E4"
@@ -329,7 +329,7 @@ export default function DetailAccountDialogComponent() {
                             }}>
                                 Reset Password
                             </Typography>
-                        </Box> */}
+                        </Box>
                     </Box>
                 </Box>
             )}
