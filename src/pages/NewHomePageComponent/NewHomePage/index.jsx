@@ -116,14 +116,10 @@ export default function NewHomePage() {
   }, [dispatch, isFetchList]);
 
   useEffect(() => {
-    // setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
-  // const calculateDistance = (x, y, x1, y1) => {
-  //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
-  //   return distance;
-  // };
+
   console.log(hotWeekTour);
 
   return (

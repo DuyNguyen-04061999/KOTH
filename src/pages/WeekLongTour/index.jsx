@@ -41,7 +41,6 @@ export default function WeekLongTour() {
   const { width } = useWindowDimensions();
   // const [itemOffset, setItemOffSet] = useState(1);
   const [isFetchList, setIsFetchList] = useState(true);
-  const [isFetching, setIsFetching] = useState(true);
 
   const typographyStyle = {
     textAlign: "start",
@@ -50,16 +49,6 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      if (!isFetchList) {
-        setIsFetching(false);
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [isFetchList]);
 
   const imgHot = weeklyTournament.map((e) => {
     return e.tournamentBackground
@@ -119,8 +108,8 @@ export default function WeekLongTour() {
               }}
             >
               {" "}
-              {isFetching ? (
-                <BannerLoading height={width < 576 ? "106px" : width < 1024  ? "211px" :"375px"} />
+              {isFetchList ? (
+                <BannerLoading height={width < 576 ? "208px" : width < 1024  ? "211px" :"375px"} />
               ) : (
                 <SlickSlider
                   appendDot={true}
@@ -152,7 +141,7 @@ export default function WeekLongTour() {
                   minHeight: "577.88px",
                 }}
               >
-                {isFetching ? (
+                {isFetchList ? (
                   <ListItemLoading itemCount={5}/>
                 ) : weeklyTournament ? (
                   weeklyTournament
@@ -170,7 +159,7 @@ export default function WeekLongTour() {
               </Box>
             </Box>
 
-            {!isFetching && weeklyTournament?.length > 0 && (
+            {!isFetchList && weeklyTournament?.length > 0 && (
               <PaginatedItems
                 pageCount={Math.ceil(weeklyTournament.length / 10)}
                 changeOffSet={(value) => {

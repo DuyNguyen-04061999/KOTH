@@ -167,7 +167,7 @@ export default function DailyTournament() {
                   )}
                 </Box>
               </Box>
-              
+
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
@@ -226,11 +226,15 @@ export default function DailyTournament() {
                 }}
               >
                 {" "}
-                <Box
-                  component={"img"}
-                  src={images.PurpleBanner}
-                  sx={{ width: "100%" }}
-                ></Box>
+                {isFetchList ? (
+                  <BannerLoading height={107}/>
+                ) : (
+                  <Box
+                    component={"img"}
+                    src={images.PurpleBanner}
+                    sx={{ width: "100%" }}
+                  ></Box>
+                )}
               </Box>
               <Box>
                 <SliderTime

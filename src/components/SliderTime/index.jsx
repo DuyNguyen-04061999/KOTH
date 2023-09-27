@@ -37,6 +37,7 @@ export default function SliderTime({
               justifyContent: "center",
               transition: "0.3s",
               cursor: "pointer",
+              textAlign:"center"
             }}
           >
             <Typography
