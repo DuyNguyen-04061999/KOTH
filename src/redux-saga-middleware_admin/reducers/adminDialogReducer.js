@@ -56,12 +56,27 @@ export const closeDrawerNav = (data) => {
   };
 };
 
+export const openResetPassDialog = (data) => {
+  return {
+    type: "OPEN_RESET_PASS_DIALOG",
+    payload: data
+  }
+}
+
+export const closeResetPassDialog = (data) => {
+  return {
+    type: "CLOSE_RESET_PASS_DIALOG",
+    payload: data
+  }
+}
+
 const adminDialogReducer = (
   state = {
     isCreateDialog: false,
     isProvideDialog: false,
     isDetailDialog: false,
     isOpenDrawerNav: false,
+    isResetPassDialog: false
   },
   action
 ) => {
@@ -81,10 +96,12 @@ const adminDialogReducer = (
       return { ...state, isDetailDialog: true };
     case "CLOSE_DETAIL_DIALOG":
       return { ...state, isDetailDialog: false };
-      case "OPEN_DRAWER_NAV":
-        return { ...state, isOpenDrawerNav: true };
-      case "CLOSE_DRAWER_NAV":
-        return { ...state, isOpenDrawerNav: false };
+    case "OPEN_DRAWER_NAV":
+      return { ...state, isOpenDrawerNav: true };
+    case "CLOSE_DRAWER_NAV":
+      return { ...state, isOpenDrawerNav: false };
+    case "OPEN_RESET_PASS_DIALOG": return {...state, isResetPassDialog: true}
+    case "CLOSE_RESET_PASS_DIALOG": return {...state, isResetPassDialog: false}
     default:
       return { ...state };
   }
