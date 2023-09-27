@@ -622,16 +622,12 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  // This will run one time after the component mounts
   useEffect(() => {
-    document.onreadystatechange = function () {
-      // Check if the page has already loaded
-      if (document.readyState === "complete") {
-        setIsLoading(false);
-      } else {
-        window.addEventListener("load", () => setIsLoading(false));
-      }
-    };
+    if (document.readyState === "complete") {
+      setIsLoading(false);
+    } else {
+      window.addEventListener("load", () => setIsLoading(false));
+    }
     return () => window.removeEventListener("load", () => setIsLoading(false));
   }, []);
 
