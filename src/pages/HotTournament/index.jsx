@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
+import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
   typography: {},
   components: {
@@ -45,6 +46,7 @@ export default function HotTournament() {
   const { hotTournament } = useSelector((state) => state.tournamentReducer);
   const [isFetchList, setIsFetchList] = useState(true);
   const [data, setData] = useState([]);
+  const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -70,7 +72,7 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-
+  console.log(data);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -138,7 +140,8 @@ export default function HotTournament() {
                   ) : data?.length ? (
                     data?.map((item, index) => {
                       return (
-                        index < 10 && (
+                        index >= itemOffSet &&
+                        index <= itemOffSet + 9 && (
                           <Box
                             sx={{
                               width:
@@ -159,43 +162,14 @@ export default function HotTournament() {
                   )}
                 </Box>
               </Box>
-              {/* <Box
-                sx={{
-                  paddingTop: width < 576 ? "24px" : "32px",
-                  paddingBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <video width={"100%"} playsInline muted autoPlay loop={true}>
-                  <source
-                    src={
-                      width < 576
-                        ? video.Promo_Sale_Video_Mobile
-                        : video.Promo_Sale_Video_Desktop
-                    }
-                    type="video/mp4"
-                  />
-                </video>
-              </Box>{" "} */}
-              <Box
-                sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {data?.map((item, index) => {
-                    return (
-                      index >= 10 && (
-                        <Box
-                          sx={{ width: "20%", marginTop: "50px" }}
-                          key={index}
-                        >
-                          <ItemComponent tourInfo={item} countdown={true} />
-                        </Box>
-                      )
-                    );
-                  })}
-                </Box>
-              </Box>
+              {!isFetchList && data?.length > 0 && (
+                <PaginatedItems
+                  pageCount={Math.ceil(data.length / 10)}
+                  changeOffSet={(value) => {
+                    setItemOffSet((value - 1) * 10);
+                  }}
+                />
+              )}
               <NewFooter />
             </Container>
           ) : (
@@ -251,8 +225,6 @@ export default function HotTournament() {
                   sx={{
                     display: "flex",
                     flexWrap: "wrap",
-                    justifyContent:
-                      width < 576 && width < 1200 ? "space-between" : "none",
                   }}
                 >
                   {isFetchList ? (
@@ -260,7 +232,8 @@ export default function HotTournament() {
                   ) : data?.length ? (
                     data?.map((item, index) => {
                       return (
-                        index < 10 && (
+                        index >= itemOffSet &&
+                        index <= itemOffSet + 9 && (
                           <Box
                             sx={{
                               width:
@@ -281,43 +254,14 @@ export default function HotTournament() {
                   )}
                 </Box>
               </Box>
-              {/* <Box
-              sx={{
-                paddingTop: width < 576 ? "24px" : "32px",
-                paddingBottom: width < 576 ? "24px" : "32px",
-              }}
-            >
-              <video width={"100%"} playsInline muted autoPlay loop={true}>
-                <source
-                  src={
-                    width < 576
-                      ? video.Promo_Sale_Video_Mobile
-                      : video.Promo_Sale_Video_Desktop
-                  }
-                  type="video/mp4"
+              {!isFetchList && data?.length > 0 && (
+                <PaginatedItems
+                  pageCount={Math.ceil(data.length / 10)}
+                  changeOffSet={(value) => {
+                    setItemOffSet((value - 1) * 10);
+                  }}
                 />
-              </video>
-            </Box>{" "} */}
-              <Box
-                sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {data?.map((item, index) => {
-                    return (
-                      index >= 10 && (
-                        <Box
-                          sx={{ width: "20%", marginTop: "50px" }}
-                          key={index}
-                        >
-                          <ItemComponent tourInfo={item} countdown={true} />
-                        </Box>
-                      )
-                    );
-                  })}
-                </Box>
-              </Box>
+              )}
               <NewFooter />
             </Container>
           )

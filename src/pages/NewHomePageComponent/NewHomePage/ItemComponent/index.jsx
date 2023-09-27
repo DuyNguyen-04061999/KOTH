@@ -38,11 +38,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const [days, setDay] = useState(null);
   const [seconds, setSeconds] = useState(null);
   useEffect(() => {
-      let countdownDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
-      let timeNow = new Date().getTime();
-      setHour(CalculateDistance(countdownDate, timeNow).hours);
-      setMinute(CalculateDistance(countdownDate, timeNow).minutes);
-      setDay(CalculateDistance(countdownDate, timeNow).days);
+    let countdownDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
+    let timeNow = new Date().getTime();
+    setHour(CalculateDistance(countdownDate, timeNow).hours);
+    setMinute(CalculateDistance(countdownDate, timeNow).minutes);
+    setDay(CalculateDistance(countdownDate, timeNow).days);
   }, [tourInfo]);
 
   const styleTypography = {
@@ -145,7 +145,9 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             flexDirection: "column",
           }}
         >
-          <span style={{fontSize:"10px"}}>Sponsor:{tourInfo?.tournamentBrand?.brandName}</span>
+          <span style={{ fontSize: "10px" }}>
+            Sponsor:{tourInfo?.tournamentBrand?.brandName}
+          </span>
           <Typography
             sx={{
               ...styleTypography,
@@ -231,12 +233,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         sx={{
           width: "100%",
           height: width < 576 ? "64px" : "69px",
-          bgcolor:isHovered === true ? "#42285B" : "#C0C0C0",
-          color:isHovered === true ? "white" : "black",
+          bgcolor: isHovered === true ? "#42285B" : "#C0C0C0",
+          color: isHovered === true ? "white" : "black",
           borderEndEndRadius: "8px",
           borderEndStartRadius: "8px",
           borderTop: "dashed 2px black",
-          transition:"0.3s ease-out"
+          transition: "0.3s ease-out",
         }}
       >
         <Box

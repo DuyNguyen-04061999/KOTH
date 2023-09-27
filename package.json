@@ -41,6 +41,7 @@
     "node-sass": "^8.0.0",
     "prop-types": "^15.8.1",
     "pusher-js": "^8.0.1",
+    "rc-progress": "^3.5.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-device-detect": "^2.2.3",
