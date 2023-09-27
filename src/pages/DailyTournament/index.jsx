@@ -22,6 +22,9 @@ import { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
+import BannerLoading from "../../components/LoadingComponent/BannerLoading";
+import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 const theme = createTheme({
   typography: {},
   components: {
@@ -102,11 +105,15 @@ export default function DailyTournament() {
                 }}
               >
                 {" "}
-                <Box
-                  component={"img"}
-                  src={images.PurpleBanner}
-                  sx={{ width: "100%" }}
-                ></Box>
+                {isFetchList ? (
+                  <BannerLoading height={375} />
+                ) : (
+                  <Box
+                    component={"img"}
+                    src={images.PurpleBanner}
+                    sx={{ width: "100%" }}
+                  ></Box>
+                )}
               </Box>
               <Box>
                 <SliderTime
@@ -135,26 +142,32 @@ export default function DailyTournament() {
                     gridRowGap: "16px",
                   }}
                 >
-                  {dailyTournament
-                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-                    ?.listTournament?.map((item, index) => {
-                      return (
-                        index < 10 && (
-                          <Box
-                            sx={{
-                              width: "20%",
-                              marginTop: "50px",
-                            }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })}
+                  {isFetchList ? (
+                    <ListItemLoading />
+                  ) : dailyTournament &&
+                    dailyTournament?.length > 0 &&
+                    dailyTournament?.filter(
+                      (n) => n.timeStart === dayList[selectedDay]
+                    )[0]?.listTournament?.length !== 0 ? (
+                    dailyTournament
+                      ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+                      ?.listTournament?.map((item, index) => {
+                        return (
+                          <div style={{ marginTop: "50px" }} key={index}>
+                            <ItemComponent
+                              key={index}
+                              countdown={true}
+                              tourInfo={item}
+                            />
+                          </div>
+                        );
+                      })
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               </Box>
-              
+
               <Box
                 sx={{
                   marginBottom: width < 576 ? "24px" : "32px",
@@ -213,11 +226,15 @@ export default function DailyTournament() {
                 }}
               >
                 {" "}
-                <Box
-                  component={"img"}
-                  src={images.PurpleBanner}
-                  sx={{ width: "100%" }}
-                ></Box>
+                {isFetchList ? (
+                  <BannerLoading height={107}/>
+                ) : (
+                  <Box
+                    component={"img"}
+                    src={images.PurpleBanner}
+                    sx={{ width: "100%" }}
+                  ></Box>
+                )}
               </Box>
               <Box>
                 <SliderTime
