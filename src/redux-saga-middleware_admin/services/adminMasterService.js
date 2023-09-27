@@ -32,11 +32,11 @@ export class ADMIN_MASTER_SERVICE {
           queryParams.push(`endTime=${endTime}`);
         }
     
-        if (dataRequest.account !== null && dataRequest.account !== undefined) {
+        if (dataRequest.account !== null && dataRequest.account !== undefined && account) {
           queryParams.push(`account=${account}`);
         }
     
-        if (dataRequest.type !== null && dataRequest.type !== undefined) {
+        if (dataRequest.type !== null && dataRequest.type !== undefined && type) {
           queryParams.push(`type=${type}`);
         }
     

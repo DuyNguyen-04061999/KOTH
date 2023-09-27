@@ -19,6 +19,8 @@ import {
   trimAndCamelCase,
 } from "../../../utils/Admin/helper";
 import { ElectricalServices } from "@mui/icons-material";
+import { openGivePerDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { updateDataAgents } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 
 const MinusIconSVG = () => {
   return (
@@ -99,6 +101,14 @@ export const RowTable = (props) => {
   const handleUpdate = () => {
     dispatch(updateDetailAccount(row));
   };
+
+  const handleGive = () => {
+    dispatch(updateDataAgents({
+      list: row?.agents || [],
+      account: row?.account || null
+    }))
+    dispatch(openGivePerDialog())
+  }
 
   return (
     <React.Fragment>
@@ -209,7 +219,7 @@ export const RowTable = (props) => {
         )} */}
         {headers &&
           headers?.map((item, index) => {
-            if (item === "")
+            if (item === "" && row?.action) 
               return (
                 <StyledTableCell
                   key={index}
@@ -234,6 +244,35 @@ export const RowTable = (props) => {
                       },
                     }}
                   />
+                </StyledTableCell>
+              );
+              else if (item.toLowerCase() === "give permission" && row?.givePermission) return (
+                <StyledTableCell
+                  key={index}
+                  sx={{
+                    display: { xs: "none", sm: "table-cell" },
+                    textAlign: "center",
+                  }}
+                >
+                  {row?.agents && row?.agents?.length > 0 && (
+                    <Button
+                      onClick={handleGive}
+                      children={"Give"}
+                      sx={{
+                        fontSize: "14px",
+                        borderRadius: "16px",
+                        padding: "2px 16px",
+                        bgcolor: "#355DFF",
+                        color: "#FFF",
+                        fontWeight: 700,
+                        textTransform: "unset",
+                        ":hover": {
+                          backgroundColor: "#355DFF",
+                        },
+                      }}
+                    />
+                  )}
+                  
                 </StyledTableCell>
               );
             else if (item.toLowerCase() === "account")
