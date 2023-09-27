@@ -1,6 +1,6 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, IconButton, TextField } from "@mui/material";
+import { Box, FormControl, IconButton, TextField } from "@mui/material";
 
 const SearchBar = ({
   searchValue,
@@ -8,14 +8,14 @@ const SearchBar = ({
   onSubmit,
   placeholder = "ID, Account or Nickname",
   type = "text",
+  width = "365px",
 }) => {
-  
   const handleFocus = (e) => {
     e.stopPropagation();
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <FormControl sx={{ width: width }} onSubmit={onSubmit}>
       <Box
         sx={{
           border: "2px solid #5474F1",
@@ -23,7 +23,7 @@ const SearchBar = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "0 16px",
+          padding: "0 4px 0 16px",
           width: "100%",
         }}
       >
@@ -45,7 +45,7 @@ const SearchBar = ({
           <SearchIcon style={{ fill: "black" }} />
         </IconButton>
       </Box>
-    </form>
+    </FormControl>
   );
 };
 export default SearchBar;

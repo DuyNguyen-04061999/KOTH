@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useRef } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import moment from "moment";
+import { useState } from "react";
+import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { trimAndCamelCase } from "../../../utils/Admin/helper";
 
 const FilterRevenue = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
   const { width } = useWindowDimensions();
+  const [errorSearchTime, setErrorSearchTime] = useState("");
+  const [selectedType, setSelectedType] = useState(0);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [activeType, setActiveType] = useState(null);
   const listAction = [
     "Today",
     "Yesterday",
@@ -15,11 +24,72 @@ const FilterRevenue = () => {
     "This month",
     "Last month",
   ];
+  const [accountInput, setAccountInput] = useState("");
+  const startTimeInput = useRef(null);
+  const endTimeInput = useRef(null);
+  const dispatch = useDispatch();
 
-  const handleClickSubmit = (e) =>{
+  const handleSearchTime = (e) => {
+    let startTime = "";
+    let endTime = "";
+    if (!startTimeInput.current.value || !endTimeInput.current.value) {
+      setErrorSearchTime("Please fill all required fields");
+    } else {
+      startTime = new Date(startTimeInput.current.value);
+      endTime = new Date(endTimeInput.current.value);
+      setActiveType(null)
+      setSelectedType(0)
+      setStartTime(startTime);
+      setEndTime(endTime);
+      if (startTime > endTime) {
+        setErrorSearchTime("End Date must be greater than Start Date");
+      } else {
+        setErrorSearchTime("");
+        dispatch(
+          getListDistributor({
+            startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+            endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+            account: accountInput,
+            type: selectedType,
+          })
+        );
+      }
+    }
+  };
+
+  const handleClickSearchName = (e) => {
     e.stopPropagation();
     e.preventDefault();
-  }
+    dispatch(
+      getListDistributor({
+        startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+        endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+        account: accountInput || null,
+        type: selectedType || null,
+      })
+    );
+  };
+
+  const handleActionQuery = (item, index) => {
+    setSelectedType(index + 1);
+    setActiveType(index);
+    setStartTime('');
+    setEndTime('');
+    startTimeInput.current.value = '';
+    endTimeInput.current.value = '';
+    dispatch(
+      getListDistributor({
+        startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+        endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+        account: accountInput || null,
+        type: index + 1 || null,
+      })
+    );
+  };
+
+  const handleChangeSearch = (e) => {
+    setAccountInput(e?.target?.value);
+  };
 
   // const handleChangeSearch = (e) => {
   //   setSearchValue(e?.target?.value);
@@ -134,9 +204,9 @@ const FilterRevenue = () => {
           }}
         >
           <SearchBar
-          // searchValue={searchValue}
-          // onChange={handleChangeSearch}
-          // onSubmit={handleClickSubmit}
+            searchValue={accountInput}
+            onChange={handleChangeSearch}
+            onSubmit={handleClickSearchName}
           ></SearchBar>
         </Box>
         <Box sx={{ marginTop: "42px", marginLeft: width < 1024 ? "" : "90px" }}>
@@ -151,7 +221,10 @@ const FilterRevenue = () => {
               Period:
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <input
+              <Box
+                component={"input"}
+                ref={startTimeInput}
+                type="date"
                 placeholder="2022-03-22 15:39:06"
                 style={{
                   fontSize: "14px",
@@ -159,11 +232,11 @@ const FilterRevenue = () => {
                   lineHeight: "24px",
                   padding: "7px 17px",
                   outline: "none",
-                  color: "#9D9D9D",
                   borderRadius: "16px",
+                  width: "240px",
                   border: "2px solid #5474F1",
                 }}
-              ></input>
+              ></Box>
               <Box
                 sx={{
                   margin: "0px 8px",
@@ -174,7 +247,10 @@ const FilterRevenue = () => {
               >
                 -
               </Box>
-              <input
+              <Box
+                ref={endTimeInput}
+                component={"input"}
+                type="date"
                 placeholder="2022-03-22 15:39:06"
                 style={{
                   fontSize: "14px",
@@ -182,11 +258,11 @@ const FilterRevenue = () => {
                   lineHeight: "24px",
                   padding: "7px 17px",
                   outline: "none",
-                  color: "#9D9D9D",
                   borderRadius: "16px",
                   border: "2px solid #5474F1",
+                  width: "240px",
                 }}
-              ></input>
+              ></Box>
             </Box>
             <Button
               sx={{
@@ -197,15 +273,21 @@ const FilterRevenue = () => {
                 color: "white",
                 fontWeight: 700,
                 height: "38px",
-                width:"120px",
+                width: "120px",
                 ":hover": {
                   backgroundColor: "#355DFF",
                   opacity: 0.9,
                 },
               }}
+              onClick={handleSearchTime}
             >
               Search
             </Button>
+            {errorSearchTime && (
+              <Box sx={{ fontSize: "14px", color: "red" }}>
+                {errorSearchTime}
+              </Box>
+            )}
           </Box>
           <Box
             sx={{
@@ -221,6 +303,7 @@ const FilterRevenue = () => {
           >
             {listAction?.map((item, index) => (
               <Button
+                onClick={() => handleActionQuery(item, index)}
                 key={index}
                 sx={{
                   fontSize: "12px",
@@ -235,6 +318,8 @@ const FilterRevenue = () => {
                     backgroundColor: "#355DFF",
                     opacity: 0.9,
                   },
+                  transform: activeType === index && "scale(1.1)",
+                  border: activeType === index && "2px solid black",
                 }}
               >
                 {item}

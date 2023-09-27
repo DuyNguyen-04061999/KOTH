@@ -18,6 +18,7 @@ const Revenue = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log(123);
     if (roles && roles?.length && roles[0]) {
       switch (roles[0]) {
         case "master": {
