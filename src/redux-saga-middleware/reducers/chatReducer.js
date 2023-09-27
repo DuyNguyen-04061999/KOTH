@@ -67,6 +67,13 @@ export const clickTabChat = (data) => {
   };
 };
 
+export const setBadgeChat = (data) => {
+  return {
+    type: "SET_BADGE_CHAT" ,
+    payload: data
+  }
+}
+
 export const chatLogoutSuccessFully = (data) => {
   return {
     type: "CHAT_LOGOUT_SUCCESS_FULLT",
@@ -148,6 +155,13 @@ const chatReducer = (
       };
     }
     case "SHOW_BADGE_CHAT" : {
+      return {
+        ...state,
+        badgechat: payload
+      }
+    }
+
+    case "SET_BADGE_CHAT" : {
       return {
         ...state,
         badgechat: payload
