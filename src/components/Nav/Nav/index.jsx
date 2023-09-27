@@ -711,7 +711,7 @@ export default function Navbar() {
                           : "",
                     }}
                   >
-                    Week-long
+                    Weeklong
                   </span>
                 </Box>
                 {/* <Box

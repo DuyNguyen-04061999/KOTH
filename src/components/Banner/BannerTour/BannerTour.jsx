@@ -97,7 +97,7 @@ const BannerTour = (props) => {
               fontWeight: 700,
             }}
           >
-            Sponsor by: {sponsorName}
+            Sponsored  by: {sponsorName}
           </Typography>
         </Box>
         <Box

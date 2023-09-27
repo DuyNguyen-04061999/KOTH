@@ -485,7 +485,7 @@ export default function PlayGame(props) {
                             color: "#525252",
                           }}
                         >
-                          Sponsor by
+                          Sponsored by
                         </h6>
                         <span
                           style={{
@@ -513,7 +513,7 @@ export default function PlayGame(props) {
                             color: "#525252",
                           }}
                         >
-                          Validity date
+                          Valid by
                         </h6>
                         <span
                           style={{
