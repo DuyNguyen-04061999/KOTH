@@ -145,11 +145,12 @@ const NestedTable = (props) => {
                   sx={{
                     color: "#808191",
                     display:
-                      index === 0
-                        ? { xs: "none", sm: "table-cell" }
-                        : index > 4 && width < 576
-                        ? "none"
-                        : "table-cell",
+                      // index === 0
+                      //   ? { xs: "none", sm: "table-cell" }
+                      //   : index > 4 && width < 576
+                      //   ? "none"
+                      //   : "table-cell",
+                      "table-cell",
                     maxWidth: "unset",
                     backgroundColor: "#F7F7F7",
                     textAlign: "center",

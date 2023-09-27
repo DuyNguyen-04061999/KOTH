@@ -7,6 +7,8 @@ import moment from "moment";
 import { useState } from "react";
 import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
 import { trimAndCamelCase } from "../../../utils/Admin/helper";
+import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 
 const FilterRevenue = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -45,14 +47,42 @@ const FilterRevenue = () => {
         setErrorSearchTime("End Date must be greater than Start Date");
       } else {
         setErrorSearchTime("");
-        dispatch(
-          getListDistributor({
-            startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-            endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-            account: accountInput,
-            type: selectedType,
-          })
-        );
+        if (roles && roles?.length && roles[0]) {
+          switch (roles[0]) {
+            case "master": {
+              dispatch(
+                getListDistributor({
+                  startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+                  endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+                  account: accountInput,
+                  type: 0,
+                })
+              );
+              break;
+            }
+            case "distributor": {
+              dispatch(getListSub({
+                startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+                endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+                account: accountInput,
+                type: 0,
+              }));
+              break;
+            }
+            case "agent": {
+              dispatch(getListEndUser({
+                startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+                endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+                account: accountInput,
+                type: 0,
+              }));
+              break;
+            }
+            default: {
+              break;
+            }
+          }
+        }
       }
     }
   };
@@ -60,14 +90,42 @@ const FilterRevenue = () => {
   const handleClickSearchName = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    dispatch(
-      getListDistributor({
-        startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-        endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-        account: accountInput || null,
-        type: selectedType || null,
-      })
-    );
+    if (roles && roles?.length && roles[0]) {
+      switch (roles[0]) {
+        case "master": {
+          dispatch(
+            getListDistributor({
+              startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+              endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+              account: accountInput,
+              type: selectedType,
+            })
+          );
+          break;
+        }
+        case "distributor": {
+          dispatch(getListSub({
+            startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+            endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+            account: accountInput,
+            type: selectedType,
+          }));
+          break;
+        }
+        case "agent": {
+          dispatch(getListEndUser({
+            startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+            endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+            account: accountInput,
+            type: selectedType,
+          }));
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
   };
 
   const handleActionQuery = (item, index) => {
@@ -77,14 +135,42 @@ const FilterRevenue = () => {
     setEndTime('');
     startTimeInput.current.value = '';
     endTimeInput.current.value = '';
-    dispatch(
-      getListDistributor({
-        startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-        endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-        account: accountInput || null,
-        type: index + 1 || null,
-      })
-    );
+    if (roles && roles?.length && roles[0]) {
+      switch (roles[0]) {
+        case "master": {
+          dispatch(
+            getListDistributor({
+              // startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+              // endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+              account: accountInput,
+              type: index + 1,
+            })
+          );
+          break;
+        }
+        case "distributor": {
+          dispatch(getListSub({
+            // startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+            // endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+            account: accountInput,
+            type: index + 1,
+          }));
+          break;
+        }
+        case "agent": {
+          dispatch(getListEndUser({
+            // startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+            // endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+            account: accountInput,
+            type: index + 1,
+          }));
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
   };
 
   const handleChangeSearch = (e) => {

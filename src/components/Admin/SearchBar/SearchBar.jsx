@@ -6,7 +6,7 @@ const SearchBar = ({
   searchValue,
   onChange,
   onSubmit,
-  placeholder = "ID, Account or Nickname",
+  placeholder = "Account",
   type = "text",
   width = "365px",
 }) => {

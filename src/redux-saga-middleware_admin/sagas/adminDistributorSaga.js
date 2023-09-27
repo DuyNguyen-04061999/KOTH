@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADMIN_DISTRIBUTOR_SERVICE } from "../services/adminDistributorService";
-import { createSubDistributorSuccess, createSubDistributorFail, getListSubSuccess, getListSubFail, updateSubSuccess, updateSubFail, deleteSubSuccess, deleteSubFail } from "../reducers/adminDistributorReducer";
+import { createSubDistributorSuccess, createSubDistributorFail, getListSubSuccess, getListSubFail, updateSubSuccess, updateSubFail, deleteSubSuccess, deleteSubFail, givePermissionSuccess, givePermissionFail } from "../reducers/adminDistributorReducer";
 import { closeCreateDialog } from "../reducers/adminDialogReducer";
 
 const adminDistributorService = new ADMIN_DISTRIBUTOR_SERVICE();
@@ -28,9 +28,9 @@ function* getListSubSaga(dataRequest) {
     try {
         const { payload } = dataRequest;
         const res = yield call(adminDistributorService.getListSubDistributor, payload)
-        const { list } = res?.data?.data
+        const { list, listReferrals } = res?.data?.data
         if(res && res.status === 200) {
-          yield put(getListSubSuccess({ list }))
+          yield put(getListSubSuccess({ list, listSubRef: listReferrals || []}))
         } else {
           yield put(getListSubFail())
         }
@@ -75,11 +75,31 @@ function* deleteSubSaga(dataRequest) {
     }
 }
 
+function* givePermissionSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminDistributorService.givePermission, payload)
+        if(res && res.status === 200) {
+          yield put(givePermissionSuccess())
+          alert("Give permission Success!")
+          setTimeout(() => {
+           window.location.reload()
+          }, 1000)
+        } else {
+          yield put(givePermissionFail())
+        }
+        
+    } catch (error) {
+        yield put(givePermissionFail())
+    }
+}
+
 function* adminDistributorSaga() {
     yield takeEvery("CREATE_SUB_DISTRIBUTOR", createSubDistributorSaga)
     yield takeEvery("GET_LIST_SUB", getListSubSaga)
     yield takeEvery("UPDATE_SUB", updateSubSaga)
     yield takeEvery("DELETE_SUB", deleteSubSaga)
+    yield takeEvery("GIVE_PERMISSION", givePermissionSaga)
 }
 
 export default adminDistributorSaga

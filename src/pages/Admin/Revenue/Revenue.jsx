@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import FilterRevenue from "../../../components/Admin/FilterRevenue/FilterRevenue";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import NestedTable from "../../../components/Admin/NestedTable/NestedTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
 import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { width } from "@mui/system";
 
 const Revenue = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
   const { listDistributor } = useSelector((state) => state.adminMasterReducer);
-  const { listSub } = useSelector((state) => state.adminDistributorReducer);
+  const { listSub, listSubRef } = useSelector((state) => state.adminDistributorReducer);
+  
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
-  const { listEndUser } = useSelector((state) => state.adminAgentReducer);
+  const { listEndUser, listAR } = useSelector((state) => state.adminAgentReducer);
+  console.log(listAR);
   const [data, setData] = useState([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(123);
     if (roles && roles?.length && roles[0]) {
       switch (roles[0]) {
         case "master": {
@@ -125,9 +127,29 @@ const Revenue = () => {
 
   return (
     <Container>
-      <FilterRevenue />
-      <Box sx={{ marginTop: "36px" }}>
+      {width > 576 && (<FilterRevenue />)}
+      <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />
+        {roles?.includes("distributor") && listSubRef && listSubRef?.length > 0 && (
+          <>
+            <Box component={"div"} className="mb-2 mt-2">
+              <Typography sx={{
+                fontWeight: 600
+              }}>Referrals</Typography>
+            </Box>
+            <NestedTable headerList={headerList} data={listSubRef} />
+          </>
+        )}
+        {roles?.includes("agent") && listAR && listAR?.length > 0 && (
+          <>
+            <Box component={"div"} className="mb-2 mt-2">
+              <Typography sx={{
+                fontWeight: 600
+              }}>Referrals</Typography>
+            </Box>
+            <NestedTable headerList={headerList} data={listAR} />
+          </>
+        )}
       </Box>
     </Container>
   );

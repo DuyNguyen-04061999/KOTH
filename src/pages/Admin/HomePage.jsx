@@ -95,7 +95,6 @@ const HomePage = () => {
         "ID",
         "Account",
         "Nick Name",
-        "Give Permission",
         "Code/Link",
         "Manager",
         "Players",

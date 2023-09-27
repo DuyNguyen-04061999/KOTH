@@ -9,6 +9,7 @@ import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminS
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 import AdminPanel from "../../../components/Admin/AdminPanel/AdminPanel";
 import NestedTable from "../../../components/Admin/NestedTable/NestedTable";
+import { width } from "@mui/system";
 
 const ManageDistributor = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -110,6 +111,7 @@ const ManageDistributor = () => {
 
     if (roles?.includes("agent")) {
       setHeaderList([
+        "",
         "ID",
         "Account",
         "Nick Name",
@@ -122,8 +124,8 @@ const ManageDistributor = () => {
 
   return (
     <Container>
-      <AdminPanel></AdminPanel>
-      <Box sx={{ marginTop: "36px" }}>
+      {width > 576 && <AdminPanel></AdminPanel>}
+      <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
     </Container>

@@ -168,15 +168,16 @@ const Setting = () => {
                     display: width < 768 && "none",
                   }}
                 >
-                  <SearchBar
+                  {/* <SearchBar
                     placeholder="Search"
                     onChange={handleChangeSearch}
                     onSubmit={handleSearchTimeZone}
-                  />
+                  /> */}
+                  <Typography>Chicago (UTC/GMT -5 hours) - Default</Typography>
                 </Box>
               </Box>
             </AccordionSummary>
-            <AccordionDetails>
+            {/* <AccordionDetails>
               <List sx={{ maxHeight: "220px", overflow: "scroll" }}>
                 {americanTimeZones?.map((item, index) => (
                   <ListItem
@@ -246,7 +247,7 @@ const Setting = () => {
                   Confirm
                 </Button>
               </Box>
-            </AccordionDetails>
+            </AccordionDetails> */}
           </Accordion>
         </Box>
         <Box
@@ -322,6 +323,7 @@ const Setting = () => {
                     letterSpacing: "0.3em",
                   }}
                   type="password"
+                  autoComplete="Current Password"
                   ref={currentPassInput}
                 />
               </Box>
@@ -366,6 +368,7 @@ const Setting = () => {
                     letterSpacing: "0.3em",
                   }}
                   type="password"
+                  autoComplete="New Password"
                   ref={newPassInput}
                 />
               </Box>
@@ -410,6 +413,7 @@ const Setting = () => {
                     letterSpacing: "0.3em",
                   }}
                   type="password"
+                  autoComplete="Confirm Password"
                   ref={rePassInput}
                 />
               </Box>
