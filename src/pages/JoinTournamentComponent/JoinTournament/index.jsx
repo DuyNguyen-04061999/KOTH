@@ -421,7 +421,7 @@ export default function JoinTournament() {
                           marginLeft: "0px !important",
                         }}
                       >
-                        Start
+                        Start date
                       </Typography>
                       <Typography
                         sx={{
@@ -469,7 +469,7 @@ export default function JoinTournament() {
                           marginLeft: "0px !important",
                         }}
                       >
-                        Finish
+                        End date
                       </Typography>
                       <Typography
                         sx={{
@@ -794,7 +794,7 @@ export default function JoinTournament() {
                               ? "Hourly tournaments"
                               : detailTournament?.tournamentTimeType === "daily"
                               ? "Daily tournaments"
-                              : "Week-long tournaments"}
+                              : "Weeklong tournaments"}
                           </Typography>
                         </>
                       )}
@@ -1072,7 +1072,7 @@ export default function JoinTournament() {
                                     color: "#525252",
                                   }}
                                 >
-                                  Sponsor by
+                                  Sponsored  by
                                 </h6>
                                 <span
                                   style={{
@@ -1102,7 +1102,7 @@ export default function JoinTournament() {
                                     color: "#525252",
                                   }}
                                 >
-                                  Validity date
+                                  Valid by
                                 </h6>
                                 <span
                                   style={{

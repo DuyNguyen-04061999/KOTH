@@ -183,7 +183,7 @@ function SimpleDialog(props) {
                         id="login_username"
                         type="text"
                         value={username}
-                        placeholder="User Name"
+                        placeholder="Username"
                         autoComplete="username"
                         onChange={handleChangeUsername}
                         sx={{
@@ -407,7 +407,7 @@ function SimpleDialog(props) {
                           id="login_username"
                           type="text"
                           value={username}
-                          placeholder="User Name"
+                          placeholder="Username"
                           autoComplete="username"
                           onChange={handleChangeUsername}
                           sx={{

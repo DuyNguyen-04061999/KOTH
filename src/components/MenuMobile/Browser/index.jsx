@@ -730,7 +730,7 @@ export default function Browser(props) {
                           : "",
                     }}
                   >
-                    Week-long
+                    Weeklong
                   </span>
                 </Box>
               </Box>

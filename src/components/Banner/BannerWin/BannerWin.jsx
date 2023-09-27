@@ -129,7 +129,7 @@ export default function BannerWin(props) {
               marginTop: "-8px",
             }}
           >
-            Sponsor by: {sponsorName}
+            Sponsored by: {sponsorName}
           </Typography>
         </Box>
         <Box
