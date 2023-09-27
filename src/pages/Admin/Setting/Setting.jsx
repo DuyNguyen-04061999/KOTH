@@ -133,7 +133,7 @@ const Setting = () => {
             fontSize: "24px",
             fontWeight: 600,
             lineHeight: "16px",
-            marginTop: "60px",
+            marginTop: "40px",
           }}
         >
           Settings

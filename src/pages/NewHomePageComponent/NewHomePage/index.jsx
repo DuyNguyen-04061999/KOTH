@@ -136,7 +136,6 @@ export default function NewHomePage() {
   //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
   //   return distance;
   // };
-  console.log(hotWeekTour);
 
   return (
     <Container
@@ -223,12 +222,13 @@ export default function NewHomePage() {
                   sx={{
                     textAlign: "start",
                     fontSize: width < 576 ? "14px" : "20px",
-                    fontWeight: "700 !important",
+                    fontWeight: "200 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
                   }}
                 >
-                  HOT TOURNAMENTS{" "}
+                  {/* HOT TOURNAMENTS{" "} */}
+                  Hot tournaments
                 </Typography>
               </Box>
               <Box

@@ -12,11 +12,12 @@ import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authR
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getAppType } from "../../../utils/helper";
-import { showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReducer";
+import { setBadgeChat, showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 
 export default function NavMobile() {
   const { token } = useSelector((state) => state.authReducer);
-  const { chatWorld , badgechat} = useSelector((state) => state.chatReducer);
+  const { chatWorld, badgechat } = useSelector((state) => state.chatReducer);
+  console.log(badgechat);
   // const { device } = useSelector((state) => state.deviceReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
@@ -35,11 +36,11 @@ export default function NavMobile() {
     }
   }, [isProfileDialog]);
 
-  useEffect(() => {
-    dispatch(showBadgeChat(false))
-  },[chatWorld])
+  // useEffect(() => {
+  //   dispatch(setBadgeChat(false));
+  // }, [chatWorld]);
 
-  const lengthChat = chatWorld.filter((e) => e.messageType === "World")
+  const lengthChat = chatWorld.filter((e) => e.messageType === "World");
   const { pathname } = useLocation();
 
   return (
@@ -232,14 +233,15 @@ export default function NavMobile() {
                     style={{
                       backgroundColor: "unset",
                     }}
-                    onClick={() => {
-                      setOpenMess(true);
-                      setOpenSearch(false);
-                      setOpenMenu(false);
-                      dispatch(showBadgeChat(true))
-                    }}
                   >
-                    <div>
+                    <div
+                      onClick={() => {
+                        setOpenMess(true);
+                        setOpenSearch(false);
+                        setOpenMenu(false);
+                        dispatch(showBadgeChat(true));
+                      }}
+                    >
                       <Badge
                         badgeContent={""}
                         color="error"
@@ -272,7 +274,9 @@ export default function NavMobile() {
                             Chat
                           </p>
                         </div>
-                        <div className={badgechat === true ? "" : "bage-content"}></div>
+                        <div
+                          className={badgechat === false ? "bage-content" : ""}
+                        ></div>
                       </Badge>
                     </div>
                   </div>
