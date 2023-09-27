@@ -67,8 +67,6 @@ const NestedTable = (props) => {
 
   const { width } = useWindowDimensions();
 
-  console.log(headerList);
-
   return (
     <Box sx={{}}>
       <TableContainer

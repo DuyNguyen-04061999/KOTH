@@ -78,7 +78,7 @@ const Revenue = () => {
       setHeaderList([
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Manager",
         "Agents",
         "Players",
@@ -93,7 +93,7 @@ const Revenue = () => {
       setHeaderList([
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Manager",
         "Players",
         "Revenue",
@@ -108,7 +108,7 @@ const Revenue = () => {
       setHeaderList([
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Manager",
         "Players",
         "Revenue",

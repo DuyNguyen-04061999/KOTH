@@ -71,33 +71,31 @@ const ManageDistributor = () => {
     }
   }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
-  const [headerList, setHeaderList] = useState([
-    
-  ])
+  const [headerList, setHeaderList] = useState([]);
 
   useEffect(() => {
-    if(roles?.includes("master")) {
+    if (roles?.includes("master")) {
       setHeaderList([
         "",
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Manager",
         "Agents",
         "Players",
         "Revenue",
         "Register Date",
         "Last Login",
-        "Time Zone"
-      ])
+        "Time Zone",
+      ]);
     }
 
-    if(roles?.includes("distributor")) {
+    if (roles?.includes("distributor")) {
       setHeaderList([
         "",
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Give Permission",
         "Code/Link",
         "Manager",
@@ -106,22 +104,21 @@ const ManageDistributor = () => {
         "Revenue",
         "Register Date",
         "Last Login",
-        "Time Zone"
-      ])
+        "Time Zone",
+      ]);
     }
 
-    if(roles?.includes("agent")) {
+    if (roles?.includes("agent")) {
       setHeaderList([
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Manager",
         "Players",
         "Revenue",
-      ])
+      ]);
     }
-     
-  }, [roles])
+  }, [roles]);
 
   return (
     <Container>

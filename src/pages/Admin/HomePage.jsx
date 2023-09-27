@@ -80,7 +80,7 @@ const HomePage = () => {
       setHeaderList([
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Manager",
         "Agents",
         "Players",
@@ -94,7 +94,7 @@ const HomePage = () => {
       setHeaderList([
         "ID",
         "Account",
-        "Nickname",
+        "Nick Name",
         "Give Permission",
         "Code/Link",
         "Manager",

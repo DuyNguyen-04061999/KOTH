@@ -16,6 +16,7 @@ import { useLocation } from "react-router";
 import {
   checkRouteIsCreate,
   checkRouteIsManage,
+  trimAndCamelCase,
 } from "../../../utils/Admin/helper";
 import { ElectricalServices } from "@mui/icons-material";
 
@@ -71,12 +72,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 13,
     border: "none",
     padding: "10px 0px",
+    maxWidth: "100px",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
     border: "none",
     fontWeight: 500,
     lineHeight: "16px",
+    maxWidth: "150px",
+    overflow: "scroll",
   },
   ":first-child": {
     color: "red",
@@ -91,7 +95,7 @@ export const RowTable = (props) => {
   const { detailAccount } = useSelector((state) => state.adminReducer_);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  console.log(row);
+
   const handleUpdate = () => {
     dispatch(updateDetailAccount(row));
   };
@@ -208,7 +212,11 @@ export const RowTable = (props) => {
             if (item === "")
               return (
                 <StyledTableCell
-                  sx={{ display: { xs: "none", sm: "table-cell" } }}
+                  key={index}
+                  sx={{
+                    display: { xs: "none", sm: "table-cell" },
+                    textAlign: "center",
+                  }}
                 >
                   <Button
                     onClick={handleUpdate}
@@ -230,7 +238,7 @@ export const RowTable = (props) => {
               );
             else if (item.toLowerCase() === "account")
               return (
-                <StyledTableCell className="text-center">
+                <StyledTableCell key={index} sx={{ textAlign: "center" }}>
                   <Box
                     sx={{
                       marginLeft: {
@@ -239,34 +247,30 @@ export const RowTable = (props) => {
                       },
                       display: "flex",
                       alignItems: "center",
+                      textAlign: "center",
                     }}
                   >
                     {row &&
-                    row?.child &&
-                    row?.child?.length > 0 &&
-                    !checkRouteIsCreate(pathname) ? (
-                      <IconButton
-                        style={{ width: "34px", height: "34px" }}
-                        onClick={() => setOpen(!open)}
-                      >
-                        {!open ? <AddIconSVG /> : <MinusIconSVG />}
-                      </IconButton>
-                    ) : (
-                      <Box
-                        sx={{
-                          width: "34px",
-                          height: "34px",
-                        }}
-                      ></Box>
-                    )}
+                      row?.child &&
+                      row?.child?.length > 0 &&
+                      !checkRouteIsCreate(pathname) && (
+                        <IconButton
+                          style={{ width: "34px", height: "34px" }}
+                          onClick={() => setOpen(!open)}
+                        >
+                          {!open ? <AddIconSVG /> : <MinusIconSVG />}
+                        </IconButton>
+                      )}
                     {row.account}
                   </Box>
                 </StyledTableCell>
               );
             else
               return (
-                <StyledTableCell className="text-center">
-                  {row[`${item?.toLowerCase()}`]}
+                <StyledTableCell key={index}>
+                  <Box sx={{ textAlign: "center" }}>
+                    {row[`${trimAndCamelCase(item)}`]}
+                  </Box>
                 </StyledTableCell>
               );
           })}

@@ -16,6 +16,11 @@ const FilterRevenue = () => {
     "Last month",
   ];
 
+  const handleClickSubmit = (e) =>{
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
   // const handleChangeSearch = (e) => {
   //   setSearchValue(e?.target?.value);
   // };
@@ -131,7 +136,7 @@ const FilterRevenue = () => {
           <SearchBar
           // searchValue={searchValue}
           // onChange={handleChangeSearch}
-          // onSubmit={handleSubmit}
+          // onSubmit={handleClickSubmit}
           ></SearchBar>
         </Box>
         <Box sx={{ marginTop: "42px", marginLeft: width < 1024 ? "" : "90px" }}>
