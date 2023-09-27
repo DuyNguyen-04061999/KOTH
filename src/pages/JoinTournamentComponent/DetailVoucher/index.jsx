@@ -134,7 +134,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       textAlign: "start",
                     }}
                   >
-                    Sponsor by
+                    Sponsored by
                     <Typography
                       component={"span"}
                       sx={{
@@ -187,7 +187,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
               </Typography> */}
               <Box sx={{ marginTop: "20px" }}>
                 <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-                  Validity Date:
+                Valid by:
                 </Typography>
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
                   {moment(
@@ -273,7 +273,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                     textAlign: "start",
                   }}
                 >
-                  Sponsor by {detail?.tournamentInfors?.owner?.brandName || ""}
+                  Sponsored  by {detail?.tournamentInfors?.owner?.brandName || ""}
                 </Typography>
                 {/* <Box
                   sx={{ width: "50px" }}
@@ -310,7 +310,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
             </Typography> */}
             <Box sx={{ marginTop: "20px" }}>
               <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-                Validity Date:
+              Valid by:
               </Typography>
               <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
                 {moment(
