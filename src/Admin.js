@@ -18,7 +18,7 @@ import Setting from './pages/Admin/Setting/Setting';
 import NotFound from './pages/Admin/NotFound/NotFound';
 import Totals from './pages/Admin/Totals/Totals';
 import Revenue from './pages/Admin/Revenue/Revenue';
-import ManageDistributor from './pages/Admin/ManageDistributor/ManageDistributor';
+import Manage from './pages/Admin/Manage/Manage';
 
 export default function Admin() {
     return (
@@ -52,7 +52,7 @@ export default function Admin() {
                             <Route path="/agent/provide-ticket" element={<PrivateRouteComponent children={<ProvideEndUserTicketPage/>}/>} /> */}
                             {/* Setting */}
                             <Route index element={<PrivateRouteComponent children={<HomePage/>}/>} />
-                            <Route path="/manage-distributor" element={<PrivateRouteComponent children={<ManageDistributor/>}/>} />
+                            <Route path="/manage" element={<PrivateRouteComponent children={<Manage/>}/>} />
                             <Route path="/report" element={<PrivateRouteComponent children={<Revenue/>}/>} />
                             <Route path="/total" element={<PrivateRouteComponent children={<Totals/>}/>} />
                             <Route path="/setting" element={<PrivateRouteComponent children={<Setting/>}/>} />

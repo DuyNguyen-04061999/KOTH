@@ -23,8 +23,10 @@ function* createDistributorSaga(dataRequest) {
 }
 
 function* getListDistributorSaga(dataRequest) {
+    console.log(1232113);
     try {
         const { payload } = dataRequest;
+        console.log(payload);
         const res = yield call(adminMasterService.getListDistributor, payload)
         const { list } = res?.data?.data
         if(res && res.status === 200) {

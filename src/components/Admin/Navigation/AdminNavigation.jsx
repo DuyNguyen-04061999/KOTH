@@ -16,6 +16,7 @@ import { images, navigationImages } from "../../../utils/images";
 import { makeStyles } from "@mui/styles";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { closeDrawerNav } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 
 const AdminNavigation = (props) => {
   const { width } = useWindowDimensions();
@@ -60,7 +61,7 @@ const AdminNavigation = (props) => {
       name: "Manage Distributor",
       icon: navigationImages.navManage,
       iconActive: navigationImages.navManageActive,
-      link: "/manage-distributor",
+      link: "/manage",
     },
     {
       name: "Revenue by Date Range",
@@ -110,7 +111,7 @@ const AdminNavigation = (props) => {
       name: "Manage Agents",
       icon: navigationImages.navManage,
       iconActive: navigationImages.navManageActive,
-      link: "/manage-distributor",
+      link: "/manage",
     },
     {
       name: "Revenue by Date Range",
@@ -186,7 +187,7 @@ const AdminNavigation = (props) => {
       name: "Agents Management",
       icon: navigationImages.navManage,
       iconActive: navigationImages.navManageActive,
-      link: "/manage-distributor",
+      link: "/manage",
     },
     {
       name: "Revenue by Date Range",
@@ -230,6 +231,7 @@ const AdminNavigation = (props) => {
       localStorage.removeItem("token_admin");
       window.open("/", "_self");
     } else {
+      dispatch(updateDetailAccount())
       navigate(action?.link);
     }
     if (isOpenDrawerNav) {
