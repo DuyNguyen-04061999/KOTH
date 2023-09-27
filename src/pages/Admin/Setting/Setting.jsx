@@ -4,12 +4,10 @@ import {
   Container,
   List,
   ListItem,
-  ListItemButton,
-  ListItemText,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
@@ -18,6 +16,8 @@ import { useState } from "react";
 import { ExpandMoreOutlined } from "@mui/icons-material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
+import { useDispatch, useSelector } from "react-redux";
+import { changePassword } from "../../../redux-saga-middleware_admin/reducers/adminAuthReducer";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -69,7 +69,19 @@ const Setting = () => {
     "UTC -5	CDT	Central Daylight Time",
     "UTC -4	EDT	Eastern Daylight Time",
   ]);
+  const [passwordError, setPasswordError] = useState("");
   const { width } = useWindowDimensions();
+  const currentPassInput = useRef("");
+  const newPassInput = useRef("");
+  const rePassInput = useRef("");
+  const dispatch = useDispatch();
+  const { errorChangePassword } = useSelector(
+    (state) => state.adminAuthReducer
+  );
+
+  useEffect(() => {
+    setPasswordError(errorChangePassword);
+  }, [errorChangePassword]);
 
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
@@ -80,11 +92,37 @@ const Setting = () => {
 
   const handleChangePassword = (e) => {
     e.preventDefault();
+    const currentPass = currentPassInput.current.value;
+    const newPass = newPassInput.current.value;
+    const rePass = rePassInput.current.value;
+    if (currentPass === "" || newPass === "" || rePass === "") {
+      setPasswordError("Please fill all required fields !");
+    } else if (rePass !== newPass) {
+      setPasswordError("Re-enter password and password is not match !");
+    } else if (newPass?.length < 9) {
+      setPasswordError("Password must be more than 9 character !");
+    } else {
+      dispatch(
+        changePassword({
+          currentPass: currentPass,
+          password: newPass,
+        })
+      );
+      setPasswordError("");
+    }
   };
 
   const handleConfirmTimeZone = (e) => {
     e.preventDefault();
     console.log(americanTimeZones[selectedIndex]);
+  };
+
+  const handleSearchTimeZone = (e) => {
+    e.preventDefault();
+  };
+
+  const handleChangeSearch = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -130,7 +168,11 @@ const Setting = () => {
                     display: width < 768 && "none",
                   }}
                 >
-                  <SearchBar placeholder="Search" />
+                  <SearchBar
+                    placeholder="Search"
+                    onChange={handleChangeSearch}
+                    onSubmit={handleSearchTimeZone}
+                  />
                 </Box>
               </Box>
             </AccordionSummary>
@@ -229,7 +271,6 @@ const Setting = () => {
           <Box
             component={"form"}
             sx={{ padding: "28px", borderTop: "2px solid #E4E4E4" }}
-            onSubmit={handleChangePassword}
           >
             <Box
               sx={{
@@ -269,20 +310,19 @@ const Setting = () => {
                 >
                   Current Password
                 </Box>
-                <TextField
-                  InputProps={{
-                    disableUnderline: true, // <== added this
-                  }}
+                <Box
+                  component={"input"}
                   variant="standard"
                   sx={{
                     fontSize: "16px",
                     width: "100%",
                     border: "none",
                     outline: "none",
-                    marginTop: "12px",
-                    letterSpacing: "2em"
+                    marginTop: "20px",
+                    letterSpacing: "0.3em",
                   }}
                   type="password"
+                  ref={currentPassInput}
                 />
               </Box>
               <Box
@@ -314,19 +354,19 @@ const Setting = () => {
                 >
                   New Password
                 </Box>
-                <TextField
-                  InputProps={{
-                    disableUnderline: true, // <== added this
-                  }}
+                <Box
+                  component={"input"}
                   variant="standard"
                   sx={{
                     fontSize: "16px",
                     width: "100%",
                     border: "none",
                     outline: "none",
-                    marginTop: "12px",
+                    marginTop: "20px",
+                    letterSpacing: "0.3em",
                   }}
                   type="password"
+                  ref={newPassInput}
                 />
               </Box>
               <Box
@@ -358,20 +398,23 @@ const Setting = () => {
                 >
                   Password
                 </Box>
-                <TextField
-                  InputProps={{
-                    disableUnderline: true, // <== added this
-                  }}
+                <Box
+                  component={"input"}
                   variant="standard"
                   sx={{
                     fontSize: "16px",
                     width: "100%",
                     border: "none",
                     outline: "none",
-                    marginTop: "12px",
+                    marginTop: "20px",
+                    letterSpacing: "0.3em",
                   }}
                   type="password"
+                  ref={rePassInput}
                 />
+              </Box>
+              <Box>
+                <p style={{ color: "red" }}>{passwordError}</p>
               </Box>
               <Button
                 type="submit"
@@ -391,6 +434,7 @@ const Setting = () => {
                   },
                   padding: "12px 0",
                 }}
+                onClick={handleChangePassword}
               >
                 Change Password
               </Button>
