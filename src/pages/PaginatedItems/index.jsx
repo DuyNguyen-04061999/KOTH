@@ -2,15 +2,22 @@ import { Box, Pagination, PaginationItem, Typography } from "@mui/material";
 import React from "react";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { makeStyles } from "@mui/styles";
 
 export default function PaginatedItems({ changeOffSet, pageCount }) {
   const { width } = useWindowDimensions();
+  const useStyles = makeStyles(() => ({
+    ul: {
+      "& .MuiPaginationItem-root": {
+        color: "#fff",
+      },
+    },
+  }));
+  const classes = useStyles();
   return width < 576 ? (
     <Box
       sx={{
-        position: "fixed",
         bottom: "0px",
-        backgroundColor: "#251F41",
         padding: "20px 12px",
         width: "100%",
         display: "flex",
@@ -19,24 +26,12 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
     >
       {" "}
       <Pagination
-        defaultPage={6}
         siblingCount={0}
         onChange={(e, value) => {
           changeOffSet(value);
         }}
-        sx={{
-          "& .css-1xnf3w-MuiButtonBase-root-MuiPaginationItem-root": {
-            color: "#fff",
-          },
-          "& .css-1ynb6jz-MuiPaginationItem-root": {
-            color: "#fff",
-          },
-          "& .css-1xnf3w-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
-            {
-              backgroundColor: "#5A5A5A",
-            },
-        }}
-        shape="rounded"
+        classes={{ ul: classes.ul }}
+        color="secondary"
         renderItem={(item) => (
           <PaginationItem
             components={{
@@ -119,22 +114,12 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
       }}
     >
       <Pagination
+        siblingCount={0}
+        classes={{ ul: classes.ul }}
         onChange={(e, value) => {
           changeOffSet(value);
         }}
-        sx={{
-          "& .css-1xnf3w-MuiButtonBase-root-MuiPaginationItem-root": {
-            color: "#fff",
-          },
-          "& .css-1ynb6jz-MuiPaginationItem-root": {
-            color: "#fff",
-          },
-          "& .css-1xnf3w-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
-            {
-              backgroundColor: "#5A5A5A",
-            },
-        }}
-        shape="rounded"
+        color="secondary"
         renderItem={(item) => (
           <PaginationItem
             components={{

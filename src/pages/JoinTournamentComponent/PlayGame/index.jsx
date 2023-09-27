@@ -184,14 +184,13 @@ export default function PlayGame(props) {
                       }
                 }
                 title="Playgame"
-                // src={
-                //   window.location.origin +
-                //   "/play-game-tournament/" +
-                //   id +
-                //   "/" +
-                //   detailTournament?.tournamentInfors?.skin?.id
-                // }
-                src="https://play4promo.com/play-game-tournament/15/2"
+                src={
+                  window.location.origin +
+                  "/play-game-tournament/" +
+                  id +
+                  "/" +
+                  detailTournament?.tournamentInfors?.skin?.id
+                }
               ></iframe>{" "}
               {checkLockScreen() && (
                 <Dialog
