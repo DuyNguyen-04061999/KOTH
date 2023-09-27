@@ -66,6 +66,34 @@ export default function DialogProfile(props) {
             <Typography component={"h3"} className="mt-2 fs-3 text-bold">
               {userNameProfile}
             </Typography>
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="15"
+                fill="none"
+                viewBox="0 0 13 10"
+              >
+                <path
+                  fill="#FB3"
+                  d="M3.615 4.766c.152-.28.293-.534.43-.79.63-1.17 1.259-2.342 1.887-3.515.125-.234.245-.465.55-.461.305.004.42.242.544.474.704 1.316 1.41 2.632 2.117 3.948.055.104.115.206.187.338.098-.044.191-.081.28-.127.852-.432 1.705-.863 2.554-1.301.22-.114.433-.175.644-.006.227.18.213.426.157.686l-1.16 5.402c-.099.461-.24.586-.688.586H1.795c-.42 0-.55-.103-.644-.545C.765 7.621.375 5.786.01 3.948c-.037-.183.045-.44.157-.592.147-.197.386-.153.602-.042.933.48 1.87.954 2.847 1.452z"
+                ></path>
+              </svg>
+              <Typography sx={{ color: "#f8bd40" }}>VIP</Typography>
+            </Box>
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Typography sx={{ color: "white" }}>
+                Remaining days: 27
+              </Typography>
+            </Box>
             {token &&
               userNameProfile !== userName &&
               (checkExistInFriendList() === false ? (
@@ -83,11 +111,11 @@ export default function DialogProfile(props) {
                     display: "flex",
                     cursor: "pointer",
                     alignItems: "center",
-                    justifyContent: "space-between"
+                    justifyContent: "space-between",
                   }}
                 >
                   <PersonAddAlt1 />
-                  <Typography sx={{fontSize: "14px"}}>Add Friend</Typography>
+                  <Typography sx={{ fontSize: "14px" }}>Add Friend</Typography>
                 </Box>
               ) : (
                 <Box
@@ -104,11 +132,11 @@ export default function DialogProfile(props) {
                     display: "flex",
                     cursor: "pointer",
                     alignItems: "center",
-                    justifyContent: "space-between"
+                    justifyContent: "space-between",
                   }}
                 >
-                  <PersonRemove/>
-                  <Typography sx={{ fontSize: "14px"}}>
+                  <PersonRemove />
+                  <Typography sx={{ fontSize: "14px" }}>
                     Delete Friend
                   </Typography>
                 </Box>
@@ -361,9 +389,11 @@ export default function DialogProfile(props) {
                               />
                             ),
                             position: "top-center",
-                            
+
                             className:
-                              width < 576 ? "success-background-small" : "success-background",
+                              width < 576
+                                ? "success-background-small"
+                                : "success-background",
                           });
                         }}
                       />
