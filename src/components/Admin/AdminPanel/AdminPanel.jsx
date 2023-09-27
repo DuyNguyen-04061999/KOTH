@@ -13,6 +13,8 @@ import {
 } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import SearchBar from "../SearchBar/SearchBar";
+import { checkRouteIsManage } from "../../../utils/Admin/helper";
+import { useLocation } from "react-router";
 
 const AdminPanel = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -24,6 +26,7 @@ const AdminPanel = () => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const { width } = useWindowDimensions();
+  const { pathname } = useLocation();
 
   const handleChangeSearch = (e) => {
     setSearchValue(e?.target?.value);
@@ -191,14 +194,19 @@ const AdminPanel = () => {
             flexDirection: { xs: "column-reverse", sm: "row" },
           }}
         >
-          <Box sx={{marginTop:"14px"}}>
+          <Box sx={{ marginTop: "14px" }}>
             <SearchBar
               searchValue={searchValue}
               onChange={handleChangeSearch}
               onSubmit={handleSubmit}
             ></SearchBar>
           </Box>
-          <Box sx={{ marginLeft: "auto" }}>
+          <Box
+            sx={{
+              marginLeft: "auto",
+              display: checkRouteIsManage(pathname) && "none",
+            }}
+          >
             <Button
               children={"Create Account"}
               onClick={() => dispatch(openCreateDialog())}
@@ -223,7 +231,7 @@ const AdminPanel = () => {
               borderRadius: "16px",
               marginTop: "24px",
               display: { xs: "none", sm: "grid" },
-              gridTemplateColumns: "repeat(8,1fr)",
+              gridTemplateColumns: checkRouteIsManage(pathname) ? "repeat(8,1fr)" : "repeat(7,1fr)",
               [theme.breakpoints.down("lg")]: {
                 gridTemplateColumns: "repeat(4,1fr)",
               },
@@ -248,7 +256,11 @@ const AdminPanel = () => {
                 Account
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.account || ""}
               </Typography>
@@ -272,7 +284,11 @@ const AdminPanel = () => {
                 Level
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.level || ""}
               </Typography>
@@ -293,10 +309,14 @@ const AdminPanel = () => {
                   textAlign: "center",
                 }}
               >
-                Revenue
+                Balance
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 _
               </Typography>
@@ -320,7 +340,12 @@ const AdminPanel = () => {
                 Ticket
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                  color: "#FF7A68",
+                }}
               >
                 {detailAccount?.ticket || 0}
               </Typography>
@@ -344,7 +369,11 @@ const AdminPanel = () => {
                 RefCode
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.ref || ""}
               </Typography>
@@ -368,7 +397,11 @@ const AdminPanel = () => {
                 Register Date
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.date
                   ? moment(detailAccount?.date).format("ll")
@@ -379,7 +412,7 @@ const AdminPanel = () => {
               sx={(theme) => ({
                 padding: "24px",
                 [theme.breakpoints.up("lg")]: {
-                  borderRight: "2px solid #E4E4E4",
+                  borderRight: checkRouteIsManage(pathname) && "2px solid #E4E4E4",
                 },
               })}
             >
@@ -394,45 +427,52 @@ const AdminPanel = () => {
                 Amount Account
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                  color: "#3DBAA2",
+                }}
               >
                 {detailAccount?.amount || 0}
               </Typography>
             </Grid>
-            <Grid sx={{ padding: "24px", flex: 1 }}>
-              <Typography
-                sx={{
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  color: "#808191",
-                  textAlign: "center",
-                }}
-              >
-                Status
-              </Typography>
-              <Button
-                onClick={handleActive}
-                children={detailAccount?.status ? "Active" : "Prohibit"}
-                sx={{
-                  fontSize: "14px",
-                  borderRadius: "16px",
-                  padding: "2px 16px",
-                  bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
-                  color: "#FFF",
-                  fontWeight: 700,
-                  marginTop: "12px",
-                  textTransform: "unset",
-                  ":hover": {
-                    backgroundColor: detailAccount?.status
-                      ? "#355DFF"
-                      : "#FF4135",
-                  },
-                }}
-              />
-            </Grid>
+            {checkRouteIsManage(pathname) && (
+              <Grid sx={{ padding: "24px", flex: 1 }}>
+                <Typography
+                  sx={{
+                    fontWeight: 500,
+                    fontSize: "12px",
+                    color: "#808191",
+                    textAlign: "center",
+                  }}
+                >
+                  Status
+                </Typography>
+                <Button
+                  onClick={handleActive}
+                  children={detailAccount?.status ? "Active" : "Prohibit"}
+                  sx={{
+                    fontSize: "14px",
+                    borderRadius: "16px",
+                    padding: "2px 16px",
+                    bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
+                    color: "#FFF",
+                    fontWeight: 700,
+                    marginTop: "12px",
+                    textTransform: "unset",
+                    ":hover": {
+                      backgroundColor: detailAccount?.status
+                        ? "#355DFF"
+                        : "#FF4135",
+                    },
+                  }}
+                />
+              </Grid>
+            )}
           </Grid>
         </Collapse>
-        {detailAccount && (
+        {detailAccount && checkRouteIsManage(pathname) && (
           <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
             <Button
               onClick={() => dispatch(openProvideDialog())}
