@@ -7,8 +7,8 @@ import { video } from "../../../../utils/images";
 import { Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { useRef } from "react";
-import { Line } from "rc-progress";
-import ReactPlayer from "react-player";
+// import { Line } from "rc-progress";
+// import ReactPlayer from "react-player";
 import "./index.scss";
 export default function VideoComponent(props) {
   const { detailTournament, setVideoGame } = props;
