@@ -70,13 +70,28 @@ export const closeResetPassDialog = (data) => {
   }
 }
 
+export const openGivePerDialog = (data) => {
+  return {
+    type: "OPEN_GIVE_PER_DIALOG",
+    payload: data
+  }
+}
+
+export const closeGivePerDialog = (data) => {
+  return {
+    type: "CLOSE_GIVE_PER_DIALOG",
+    payload: data
+  }
+}
+
 const adminDialogReducer = (
   state = {
     isCreateDialog: false,
     isProvideDialog: false,
     isDetailDialog: false,
     isOpenDrawerNav: false,
-    isResetPassDialog: false
+    isResetPassDialog: false,
+    isGivePerDialog: false
   },
   action
 ) => {
@@ -102,6 +117,8 @@ const adminDialogReducer = (
       return { ...state, isOpenDrawerNav: false };
     case "OPEN_RESET_PASS_DIALOG": return {...state, isResetPassDialog: true}
     case "CLOSE_RESET_PASS_DIALOG": return {...state, isResetPassDialog: false}
+    case "OPEN_GIVE_PER_DIALOG": return {...state, isGivePerDialog: true}
+    case "CLOSE_GIVE_PER_DIALOG": return {...state, isGivePerDialog: false}
     default:
       return { ...state };
   }
