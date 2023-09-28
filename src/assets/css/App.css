@@ -137,3 +137,6 @@ input::-webkit-inner-spin-button {
   /* padding: 6px !important; */
   height: 100% !important;
 }
+html {
+  scroll-behavior: smooth;
+}
