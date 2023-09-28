@@ -124,7 +124,7 @@ const ManageDistributor = () => {
 
   return (
     <Container>
-      {width > 576 && <AdminPanel></AdminPanel>}
+      <AdminPanel></AdminPanel>
       <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>

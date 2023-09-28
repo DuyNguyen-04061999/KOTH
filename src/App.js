@@ -6,8 +6,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
-import { useEffect, useState } from "react";
-import FAQPage from "./pages/HelpCenter";
+import { lazy, useEffect, useState } from "react";
 import CountDownTimer from "./components/CountDownTimer";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
@@ -16,7 +15,6 @@ import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
 import JoinTournamentComponent from "./pages/JoinTournamentComponent";
-
 import {
   getLeaderBoardSuccess,
   getNavTablet,
@@ -80,7 +78,6 @@ import {
 } from "./redux-saga-middleware/reducers/appReducer";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 // import AlertComponent from "./components/Alert/AlertComponent";
-import PackagePage from "./pages/PackagePage";
 import NewHomePageComponent from "./pages/NewHomePageComponent";
 import { ToastContainer, toast } from "react-toastify";
 import { images } from "./utils/images";
@@ -107,10 +104,18 @@ import {
 // import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
 import PlayGamePage from "./pages/PlayGamePage";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
+import { Suspense } from "react";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
-
+const LazyNewHomePage = lazy(()=> import("./pages/NewHomePageComponent"))
+const LazyPackage = lazy(() => import("./pages/PackagePage"));
+const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
+const LazyJoinTour = lazy(() => import("./pages/JoinTournamentComponent"));
+const LazyHotTour = lazy(()=> import("./pages/HotTournament"));
+const LazyDailyTour = lazy(()=> import("./pages/DailyTournament"));
+const LazyWeekTour = lazy(()=> import("./pages/WeekLongTour"));
 function App() {
-  useTracking("");
+  
+  useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
   const [socket] = useState(_socket);
   const { token } = store.getState().authReducer;
@@ -640,17 +645,15 @@ function App() {
               <Routes>
                 <Route
                   path="/home"
-                  element={
-                    isLoading ? (
-                      <PageLoading />
-                    ) : getAppType() === "promote" ? (
-                      <NewHomePageComponent />
+                  element={ getAppType() === "promote" ? (
+                      <Suspense fallback={<PageLoading />}>
+                        <LazyNewHomePage />
+                      </Suspense>
                     ) : (
                       <HomePage />
                     )
                   }
                 >
-                  <Route path="/home" element={<HomePage />} />
                 </Route>
                 <Route path="/gamelobby/:id" element={<GameLobby />} />
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
@@ -658,31 +661,50 @@ function App() {
                   path="/selectroom/:id"
                   element={<SelectRoomContainer />}
                 />
-                {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
                 <Route
                   path="/testsocketAPI"
                   element={<TestSocketFriendAPI />}
                 />
                 <Route
                   path="/tournamentDetail/:id"
-                  element={<JoinTournamentComponent />}
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyJoinTour />
+                    </Suspense>
+                  }
                 />
                 <Route
                   path="/hot-tournament"
-                  element={isLoading ? <PageLoading /> : <HotTournament />}
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyHotTour />
+                    </Suspense>
+                  }
                 />
                 {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
                 <Route
                   path="/daily-tournament"
-                  element={isLoading ? <PageLoading /> : <DailyTournament />}
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyDailyTour />
+                    </Suspense>
+                  }
                 />
                 <Route
                   path="/week-long-tournament"
-                  element={isLoading ? <PageLoading /> : <WeekLongTour />}
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyWeekTour />
+                    </Suspense>
+                  }
                 />
                 <Route
                   path="/help-center"
-                  element={isLoading ? <PageLoading /> : <FAQPage />}
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyHelpCenter />
+                    </Suspense>
+                  }
                 />
                 <Route path="/loadingscreen" element={<LoadingScreen />} />
                 <Route path="/new-home" element={<NewHomePageComponent />} />
@@ -710,7 +732,11 @@ function App() {
                 {getAppType() === "promote" && (
                   <Route
                     path="packages"
-                    element={isLoading ? <PageLoading /> : <PackagePage />}
+                    element={
+                      <Suspense fallback={<PageLoading />}>
+                        <LazyPackage />
+                      </Suspense>
+                    }
                   ></Route>
                 )}
                 <Route
