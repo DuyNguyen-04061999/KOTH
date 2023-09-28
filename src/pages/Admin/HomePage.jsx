@@ -9,6 +9,7 @@ import { useState } from "react";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
 import { Box, Button, Container } from "@mui/material";
 import NestedTable from "../../components/Admin/NestedTable/NestedTable";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 const HomePage = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -17,6 +18,7 @@ const HomePage = () => {
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
   const [data, setData] = useState([]);
+  const { width } = useWindowDimensions();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -71,51 +73,62 @@ const HomePage = () => {
     }
   }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
-  const [headerList, setHeaderList] = useState([
-    
-  ])
+  const [headerList, setHeaderList] = useState([]);
 
   useEffect(() => {
-    if(roles?.includes("master")) {
-      setHeaderList([
-        "ID",
-        "Account",
-        "Nick Name",
-        "Manager",
-        "Agents",
-        "Players",
-        "Revenue",
-        "Register Date",
-        "Last Login",
-      ])
-    }
+    if (width > 576) {
+      if (roles?.includes("master")) {
+        setHeaderList([
+          "ID",
+          "Account",
+          "Nick Name",
+          "Manager",
+          "Agents",
+          "Players",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+        ]);
+      }
 
-    if(roles?.includes("distributor")) {
-      setHeaderList([
-        "ID",
-        "Account",
-        "Nick Name",
-        "Code/Link",
-        "Manager",
-        "Players",
-        "Revenue",
-        "Register Date",
-        "Last Login",
-      ])
-    }
+      if (roles?.includes("distributor")) {
+        setHeaderList([
+          "ID",
+          "Account",
+          "Nick Name",
+          "Code/Link",
+          "Manager",
+          "Players",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+        ]);
+      }
 
-    if(roles?.includes("agent")) {
-      setHeaderList([
-        "ID",
-        "Account",
-        "Revenue",
-        "Manager",
-        "Register Date",
-        "Last Login",
-      ])
+      if (roles?.includes("agent")) {
+        setHeaderList([
+          "ID",
+          "Account",
+          "Revenue",
+          "Manager",
+          "Register Date",
+          "Last Login",
+        ]);
+      }
+    } else {
+      if (roles?.includes("master")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+
+      if (roles?.includes("distributor")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+
+      if (roles?.includes("agent")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
     }
-     
-  }, [roles])
+  }, [roles]);
 
   return (
     <Container>

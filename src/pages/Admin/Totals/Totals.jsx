@@ -24,7 +24,7 @@ const Totals = () => {
 
   return (
     <Container>
-      <Box sx={{ marginTop: "40px" }}>
+      <Box sx={{ marginTop: "60px" }}>
         <Typography
           sx={{
             textAlign: "start",
