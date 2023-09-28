@@ -53,6 +53,7 @@ import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
+import TicketCheckOut from "../Dialog/TicketCheckOut";
 // import { getAppType } from "../../utils/helper";
 
 const drawerWidth = 310;
@@ -299,6 +300,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
       <PopUpReward />

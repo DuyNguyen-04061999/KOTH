@@ -106,6 +106,7 @@ import {
 } from "@mui/material";
 // import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
 import PlayGamePage from "./pages/PlayGamePage";
+import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
 
 function App() {
@@ -511,6 +512,7 @@ function App() {
       });
 
       socket?.on("warning", (data) => {
+        store.dispatch(showToast(data))
         toast.warning(data, {
           icon: ({ theme, type }) => (
             <img

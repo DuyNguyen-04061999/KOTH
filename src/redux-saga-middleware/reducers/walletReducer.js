@@ -86,7 +86,8 @@ const walletReducer = (
     }
     case "TOGGLE_METAMASK_DIALOG": return {...state, isMetamaskDialog: !state.isMetamaskDialog}
     case "SAVE_TRANSACTION_DATA": return {...state, transactionData: payload?.transactionData, depositData: payload?.depositData}
-    case "TOGGLE_CHECK_WALLET" : return {...state, isCheckWallet: true, typeWallet:payload?.type}
+    case "TOGGLE_CHECK_WALLET" : 
+    return {...state, isCheckWallet: !state.isCheckWallet, typeWallet:payload?.type}
     case "CLOSE_CHECK_WALLET" : return {...state, isCheckWallet: false}
     default:
       return state;
