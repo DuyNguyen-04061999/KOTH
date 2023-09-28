@@ -9,7 +9,8 @@ import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminS
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 import AdminPanel from "../../../components/Admin/AdminPanel/AdminPanel";
 import NestedTable from "../../../components/Admin/NestedTable/NestedTable";
-import { width } from "@mui/system";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import DetailAccountDialogComponent from "../../../components/Admin/Dialog/DetailAccountDialogComponent";
 
 const ManageDistributor = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -18,6 +19,8 @@ const ManageDistributor = () => {
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
   const [data, setData] = useState([]);
+
+  const { width } = useWindowDimensions()
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -124,7 +127,7 @@ const ManageDistributor = () => {
 
   return (
     <Container>
-      {width > 576 && <AdminPanel></AdminPanel>}
+      {width > 576 ? <AdminPanel></AdminPanel> : <DetailAccountDialogComponent/>}
       <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>

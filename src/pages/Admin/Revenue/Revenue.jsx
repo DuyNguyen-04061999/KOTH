@@ -7,7 +7,7 @@ import { getListDistributor } from "../../../redux-saga-middleware_admin/reducer
 import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
-import { width } from "@mui/system";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const Revenue = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -16,7 +16,7 @@ const Revenue = () => {
   
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser, listAR } = useSelector((state) => state.adminAgentReducer);
-  console.log(listAR);
+  const { width } = useWindowDimensions()
   const [data, setData] = useState([]);
 
   const dispatch = useDispatch();
