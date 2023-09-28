@@ -70,7 +70,6 @@ export default function VideoComponent(props) {
         }}
       >
         <video
-          id="videoAd"
           width={"100%"}
           ref={videoRef}
           playsInline={true}
