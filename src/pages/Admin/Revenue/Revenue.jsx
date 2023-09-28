@@ -127,7 +127,7 @@ const Revenue = () => {
 
   return (
     <Container>
-      {width > 576 && (<FilterRevenue />)}
+      <FilterRevenue />
       <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />
         {roles?.includes("distributor") && listSubRef && listSubRef?.length > 0 && (
