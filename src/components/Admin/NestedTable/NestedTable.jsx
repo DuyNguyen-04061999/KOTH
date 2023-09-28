@@ -65,9 +65,6 @@ const NestedTable = (props) => {
     setPage(0);
   };
 
-  const { width } = useWindowDimensions();
-
-
   return (
     <Box sx={{}}>
       <TableContainer
@@ -230,7 +227,7 @@ const NestedTable = (props) => {
           sx={{
             width: "100%",
             height: "105px",
-            position: "absolute",
+            position: "fixed",
             bottom: 0,
             right: 0,
             left: 0,
