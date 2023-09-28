@@ -96,7 +96,7 @@ export default function WeekLongTour() {
                 fontSize: "24px",
               }}
             >
-              Week Long Tournament
+              Weeklong Tournament
             </Typography>
             <Box
               sx={{
@@ -155,7 +155,7 @@ export default function WeekLongTour() {
                       );
                     })
                 ) : (
-                  <ListEmpty />
+                  <ListEmpty textData={"weeklong"} />
                 )}
               </Box>
             </Box>
