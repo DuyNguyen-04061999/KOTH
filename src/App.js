@@ -105,6 +105,7 @@ import {
 import PlayGamePage from "./pages/PlayGamePage";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import { Suspense } from "react";
+import ChangeLog from "./pages/ChangeLog/ChangeLog";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
 const LazyNewHomePage = lazy(()=> import("./pages/NewHomePageComponent"))
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -706,6 +707,7 @@ function App() {
                     </Suspense>
                   }
                 />
+                <Route path="/changelog" element={<ChangeLog />} />
                 <Route path="/loadingscreen" element={<LoadingScreen />} />
                 <Route path="/new-home" element={<NewHomePageComponent />} />
                 <Route path="/countdowntimer" element={<CountDownTimer />} />
