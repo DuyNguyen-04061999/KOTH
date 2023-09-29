@@ -20,7 +20,7 @@ const ManageDistributor = () => {
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
   const [data, setData] = useState([]);
 
-  const { width } = useWindowDimensions()
+  const { width } = useWindowDimensions();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -78,7 +78,7 @@ const ManageDistributor = () => {
   const [headerList, setHeaderList] = useState([]);
 
   useEffect(() => {
-    if(width > 576){
+    if (width > 576) {
       if (roles?.includes("master")) {
         setHeaderList([
           "",
@@ -94,7 +94,7 @@ const ManageDistributor = () => {
           "Time Zone",
         ]);
       }
-  
+
       if (roles?.includes("distributor")) {
         setHeaderList([
           "",
@@ -112,7 +112,7 @@ const ManageDistributor = () => {
           "Time Zone",
         ]);
       }
-  
+
       if (roles?.includes("agent")) {
         setHeaderList([
           "",
@@ -124,38 +124,25 @@ const ManageDistributor = () => {
           "Revenue",
         ]);
       }
-    }
-    else {
+    } else {
       if (roles?.includes("master")) {
-        setHeaderList([
-          "Account",
-          "Level",
-          "Balance",
-        ]);
+        setHeaderList(["Account", "Level", "Balance"]);
       }
-  
+
       if (roles?.includes("distributor")) {
-        setHeaderList([
-          "Account",
-          "Level",
-          "Balance",
-        ]);
+        setHeaderList(["Account", "Level", "Balance"]);
       }
-  
+
       if (roles?.includes("agent")) {
-        setHeaderList([
-          "Account",
-          "Level",
-          "Balance",
-        ]);
+        setHeaderList(["Account", "Level", "Balance"]);
       }
     }
   }, [roles]);
 
   return (
     <Container>
-      <AdminPanel></AdminPanel> : <DetailAccountDialogComponent/>
-      <Box sx={{ marginTop: "50px" }}>
+      <AdminPanel></AdminPanel> <DetailAccountDialogComponent />
+      <Box sx={{ marginTop: "40px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
     </Container>

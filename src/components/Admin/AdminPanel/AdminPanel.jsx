@@ -208,7 +208,9 @@ const AdminPanel = () => {
           <Box
             sx={{
               marginLeft: "auto",
-              display: checkRouteIsManage(pathname) && "none",
+              display:
+                (checkRouteIsManage(pathname) && "none") ||
+                (roles?.includes("agent") && "none"),
             }}
           >
             <Button
