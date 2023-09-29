@@ -120,7 +120,7 @@ export default function NewHomePage() {
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
 
-  console.log(hotWeekTour);
+  console.log("weeklyTournament: ", weeklyTournament);
 
   return (
     <Container
@@ -919,7 +919,7 @@ export default function NewHomePage() {
                           );
                         })
                     ) : (
-                      <ListEmpty textData={"daily"}/>
+                      <ListEmpty textData={"daily"} />
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -980,7 +980,7 @@ export default function NewHomePage() {
                           );
                         })
                     ) : (
-                      <ListEmpty textData={"daily"}/>
+                      <ListEmpty textData={"daily"} />
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -1342,7 +1342,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty textData={"weeklong"}/>
+                      <ListEmpty textData={"weeklong"} />
                     )}
                   </ScrollingCarousel>
                 </div>

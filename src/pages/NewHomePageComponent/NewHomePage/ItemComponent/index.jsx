@@ -226,15 +226,10 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               >
                 {isLoading ? (
                   <Skeleton variant="text" width={20} />
-                ) : tourInfo?.tournamentQuantity !== 0 ? (
-                  tourInfo?.tournamentQuantity
+                ) : tourInfo?.users?.length !== 0 ? (
+                  tourInfo?.users?.length
                 ) : (
-                  <InfinityIcon
-                    sx={{
-                      width: 15,
-                      height: 15,
-                    }}
-                  />
+                  "0"
                 )}
               </Typography>
             </Box>
