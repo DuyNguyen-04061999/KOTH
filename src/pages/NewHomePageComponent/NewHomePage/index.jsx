@@ -276,7 +276,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty></ListEmpty>
+                      <ListEmpty textData={"hot"}></ListEmpty>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -331,7 +331,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty></ListEmpty>
+                      <ListEmpty textData={"hot"}></ListEmpty>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -919,7 +919,7 @@ export default function NewHomePage() {
                           );
                         })
                     ) : (
-                      <ListEmpty />
+                      <ListEmpty textData={"daily"}/>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -980,7 +980,7 @@ export default function NewHomePage() {
                           );
                         })
                     ) : (
-                      <ListEmpty />
+                      <ListEmpty textData={"daily"}/>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -1342,7 +1342,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty />
+                      <ListEmpty textData={"weeklong"}/>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -1397,7 +1397,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty></ListEmpty>
+                      <ListEmpty textData={"weeklong"}></ListEmpty>
                     )}
                   </ScrollingCarousel>
                 </div>

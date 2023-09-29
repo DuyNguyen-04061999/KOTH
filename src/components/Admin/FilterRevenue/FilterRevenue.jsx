@@ -39,8 +39,8 @@ const FilterRevenue = () => {
     } else {
       startTime = new Date(startTimeInput.current.value);
       endTime = new Date(endTimeInput.current.value);
-      setActiveType(null)
-      setSelectedType(0)
+      setActiveType(null);
+      setSelectedType(0);
       setStartTime(startTime);
       setEndTime(endTime);
       if (startTime > endTime) {
@@ -52,7 +52,9 @@ const FilterRevenue = () => {
             case "master": {
               dispatch(
                 getListDistributor({
-                  startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+                  startTime: startTime
+                    ? startTime.toLocaleDateString("en-US")
+                    : null,
                   endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
                   account: accountInput,
                   type: 0,
@@ -61,21 +63,29 @@ const FilterRevenue = () => {
               break;
             }
             case "distributor": {
-              dispatch(getListSub({
-                startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-                endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-                account: accountInput,
-                type: 0,
-              }));
+              dispatch(
+                getListSub({
+                  startTime: startTime
+                    ? startTime.toLocaleDateString("en-US")
+                    : null,
+                  endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+                  account: accountInput,
+                  type: 0,
+                })
+              );
               break;
             }
             case "agent": {
-              dispatch(getListEndUser({
-                startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-                endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-                account: accountInput,
-                type: 0,
-              }));
+              dispatch(
+                getListEndUser({
+                  startTime: startTime
+                    ? startTime.toLocaleDateString("en-US")
+                    : null,
+                  endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+                  account: accountInput,
+                  type: 0,
+                })
+              );
               break;
             }
             default: {
@@ -95,7 +105,9 @@ const FilterRevenue = () => {
         case "master": {
           dispatch(
             getListDistributor({
-              startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+              startTime: startTime
+                ? startTime.toLocaleDateString("en-US")
+                : null,
               endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
               account: accountInput,
               type: selectedType,
@@ -104,21 +116,29 @@ const FilterRevenue = () => {
           break;
         }
         case "distributor": {
-          dispatch(getListSub({
-            startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-            endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-            account: accountInput,
-            type: selectedType,
-          }));
+          dispatch(
+            getListSub({
+              startTime: startTime
+                ? startTime.toLocaleDateString("en-US")
+                : null,
+              endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+              account: accountInput,
+              type: selectedType,
+            })
+          );
           break;
         }
         case "agent": {
-          dispatch(getListEndUser({
-            startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-            endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-            account: accountInput,
-            type: selectedType,
-          }));
+          dispatch(
+            getListEndUser({
+              startTime: startTime
+                ? startTime.toLocaleDateString("en-US")
+                : null,
+              endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+              account: accountInput,
+              type: selectedType,
+            })
+          );
           break;
         }
         default: {
@@ -131,10 +151,10 @@ const FilterRevenue = () => {
   const handleActionQuery = (item, index) => {
     setSelectedType(index + 1);
     setActiveType(index);
-    setStartTime('');
-    setEndTime('');
-    startTimeInput.current.value = '';
-    endTimeInput.current.value = '';
+    setStartTime("");
+    setEndTime("");
+    startTimeInput.current.value = "";
+    endTimeInput.current.value = "";
     if (roles && roles?.length && roles[0]) {
       switch (roles[0]) {
         case "master": {
@@ -149,21 +169,25 @@ const FilterRevenue = () => {
           break;
         }
         case "distributor": {
-          dispatch(getListSub({
-            // startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-            // endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-            account: accountInput,
-            type: index + 1,
-          }));
+          dispatch(
+            getListSub({
+              // startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+              // endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+              account: accountInput,
+              type: index + 1,
+            })
+          );
           break;
         }
         case "agent": {
-          dispatch(getListEndUser({
-            // startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
-            // endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
-            account: accountInput,
-            type: index + 1,
-          }));
+          dispatch(
+            getListEndUser({
+              // startTime: startTime ? startTime.toLocaleDateString("en-US") : null,
+              // endTime: endTime ? endTime.toLocaleDateString("en-US") : null,
+              account: accountInput,
+              type: index + 1,
+            })
+          );
           break;
         }
         default: {
@@ -279,7 +303,7 @@ const FilterRevenue = () => {
           border: { xs: "unset", sm: "2px solid #E4E4E4" },
           borderRadius: "16px",
           padding: "18px",
-          marginTop: { xs: "-52px", sm: "24px" },
+          marginTop: { xs: "0px", sm: "24px" },
         }}
       >
         <Box
@@ -293,20 +317,33 @@ const FilterRevenue = () => {
             searchValue={accountInput}
             onChange={handleChangeSearch}
             onSubmit={handleClickSearchName}
+            width={width < 576 ? "100%" : "365px"}
           ></SearchBar>
         </Box>
-        <Box sx={{ marginTop: "42px", marginLeft: width < 1024 ? "" : "90px" }}>
+        <Box
+          sx={{
+            marginTop: width < 576 ? "12px" : "42px",
+            marginLeft: width < 1024 ? "" : "90px",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               gap: "24px",
+              flexDirection: width < 576 && "column",
             }}
           >
             <Box sx={{ fontSize: "14px", fontWeight: 600, lineHeight: "24px" }}>
               Period:
             </Box>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: width < 576 && "column",
+              }}
+            >
               <Box
                 component={"input"}
                 ref={startTimeInput}
@@ -377,12 +414,14 @@ const FilterRevenue = () => {
           </Box>
           <Box
             sx={{
-              display: width < 768 ? "flex" : "grid",
+              display: "grid",
               flexDirection: "column",
               alignItems: "center",
-              gridTemplateColumns: "repeat(6,1fr)",
+              gridTemplateColumns:
+                width < 576 ? "repeat(3,1fr)" : "repeat(6,1fr)",
               width: width < 1024 ? "100%" : "650px",
               gridColumnGap: "20px",
+              gridRowGap: "20px",
               placeItems: "center",
               marginTop: "24px",
             }}

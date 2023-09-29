@@ -3,7 +3,8 @@ import FolderOffIcon from "@mui/icons-material/FolderOff";
 import { Box, Typography } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
-const ListEmpty = () => {
+const ListEmpty = (props) => {
+  const {textData} = props
   const { width } = useWindowDimensions();
   return (
     <Box
@@ -58,7 +59,7 @@ const ListEmpty = () => {
         </g>
       </svg>
       <Typography className="text-center" sx={{ fontSize: "14px", marginTop: "12px", color:"#979797", lineHeight:"14px", letterSpacing:"0.8px" }}>
-        No hot tournaments available
+        No {textData} tournaments available
       </Typography>{" "}
       <Typography className="text-center" sx={{ fontSize: "14px", marginTop: "4px", color:"#979797",lineHeight:"14px", letterSpacing:"0.8px" }}>
       at the moment

@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import moment from "moment";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
+import "./index.scss";
 
 // const theme = createTheme({
 //   typography: {
@@ -154,26 +155,38 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               overflow: "hidden",
               color: "#000",
               fontSize: "14px",
-              fontStyle: "normal",
               fontWeight: "500",
               lineHeight: "normal",
-              height: "30px",
-              maxHeight: "45px",
-              minHeight: "36px",
+              height: "32px",
+              maxHeight: "42px",
+              minHeight: "32px",
               width: "100%",
             }}
+            className="tour-info"
           >
             {isLoading ? (
               <>
                 <Skeleton variant="text" />
                 <Skeleton variant="text" />
               </>
-            ) : tourInfo?.tournamentName.length > 30 ? (
-              tourInfo?.tournamentName.slice(0, 30) + " ..."
             ) : (
               tourInfo?.tournamentName
             )}
           </Typography>
+          <Box
+            sx={{
+              position: "absolute",
+              width: "max-content",
+              background: "rgba(0,0,0,0.23)",
+              borderRadius: "16px",
+              fontSize: "12px",
+              padding: "6px",
+              color: "white",
+            }}
+            className="more-info"
+          >
+            {tourInfo?.tournamentName}
+          </Box>
           <Box
             sx={{
               display: "flex",

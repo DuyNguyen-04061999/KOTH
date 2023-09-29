@@ -83,6 +83,7 @@ const BannerTour = (props) => {
               lineHeight: "0.9",
               height: "140px",
               overflow: "hidden",
+              textAlign:"center"
             }}
           >
             {tournamentName}
@@ -228,6 +229,7 @@ const BannerTour = (props) => {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+                borderRadius:"10px"
               }}
               src={userAvatar}
             ></img>

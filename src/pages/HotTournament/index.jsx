@@ -158,7 +158,7 @@ export default function HotTournament() {
                       );
                     })
                   ) : (
-                    <ListEmpty />
+                    <ListEmpty textData={"hot"}/>
                   )}
                 </Box>
               </Box>
@@ -250,7 +250,7 @@ export default function HotTournament() {
                       );
                     })
                   ) : (
-                    <ListEmpty />
+                    <ListEmpty textData={"hot"} />
                   )}
                 </Box>
               </Box>
