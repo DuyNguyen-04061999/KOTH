@@ -26,7 +26,32 @@ export class ADMIN_AGENT_SERVICE {
     }
 
     async getListEndUser (dataRequest) {
-        const res = ADMIN_API.get(`/api/admin/agent/refs`, {
+        let finalQueryString = ""
+        if(dataRequest) {
+            const { startTime, endTime, account, type } = dataRequest;
+            const queryParams = [];
+
+            if (dataRequest.startTime !== null && dataRequest.startTime !== undefined) {
+            queryParams.push(`startTime=${startTime}`);
+            }
+        
+            if (dataRequest.endTime !== null && dataRequest.endTime !== undefined) {
+            queryParams.push(`endTime=${endTime}`);
+            }
+        
+            if (dataRequest.account !== null && dataRequest.account !== undefined) {
+            queryParams.push(`account=${account}`);
+            }
+        
+            if (dataRequest.type !== null && dataRequest.type !== undefined) {
+            queryParams.push(`type=${type}`);
+            }
+        
+            const queryString = queryParams.join("&");
+        
+            finalQueryString = queryParams.length > 0 ? `?${queryString}` : "";
+        }
+        const res = ADMIN_API.get(`/api/admin/agent/refs` + finalQueryString, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token_admin")}`,

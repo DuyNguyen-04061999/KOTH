@@ -18,6 +18,7 @@ import styled from "styled-components";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useDispatch, useSelector } from "react-redux";
 import { openDetailDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { useLocation } from "react-router";
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
   [`&.${tableHeadClasses.root}`]: {
@@ -36,10 +37,22 @@ const StyleTable = styled(Table)(({ theme }) => ({
 }));
 
 const NestedTable = (props) => {
-  const { data } = props;
+  const {
+    data,
+    headerList = [
+      "",
+      "Account",
+      "Level",
+      "Revenue",
+      "Ticket",
+      "Ref Code",
+      "Date",
+      "Amount Account",
+      "Status",
+    ],
+  } = props;
   const { detailAccount } = useSelector((state) => state.adminReducer_);
   const dispatch = useDispatch();
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -52,14 +65,12 @@ const NestedTable = (props) => {
     setPage(0);
   };
 
-  const { width } = useWindowDimensions();
-
   return (
-    <Box sx={{position: "relative" }}>
+    <Box sx={{}}>
       <TableContainer
         sx={{
           width: "100%",
-          maxHeight: { xs: "70vh", sm: "440px"},
+          maxHeight: { xs: "70vh", sm: "50vh" },
           borderRadius: 0,
           "& .MuiTableCell-root": {
             borderWidth: "none",
@@ -68,23 +79,12 @@ const NestedTable = (props) => {
         style={{ boxShadow: "unset" }}
         component={Paper}
       >
-        <StyleTable
-          stickyHeader
-          sx={{  }}
-          aria-label="collapsible table"
-        >
+        <StyleTable stickyHeader sx={{}} aria-label="collapsible table">
           <StyledTableHead>
             <TableRow>
               {/* <TableCell style={{color: "#808191",}}/> */}
-              {width > 576 && (
-                <TableCell
-                  sx={{
-                    display: { xs: "none", sm: "table-cell" },
-                    maxWidth: "unset",
-                  }}
-                  style={{ color: "#808191" }}
-                  children=" "
-                />
+              {/* {width > 576 && (
+                <TableCell sx={{}} style={{ color: "#808191" }} children=" " />
               )}
               <TableCell
                 sx={{ width: "100px" }}
@@ -135,10 +135,28 @@ const NestedTable = (props) => {
                   style={{ color: "#808191" }}
                   children="Status"
                 />
-              )}
-              {/* {
-                Object.keys(data[0])?.map((element,index) => (<TableCell key={index} align="right">{element}</TableCell>))
-            } */}
+              )} */}
+              {headerList?.map((item, index) => (
+                <TableCell
+                  className="text-center"
+                  sx={{
+                    color: "#808191",
+                    display:
+                      // index === 0
+                      //   ? { xs: "none", sm: "table-cell" }
+                      //   : index > 4 && width < 576
+                      //   ? "none"
+                      //   : "table-cell",
+                      "table-cell",
+                    maxWidth: "unset",
+                    backgroundColor: "#F7F7F7",
+                    textAlign: "center",
+                    fontWeight: 500,
+                  }}
+                  key={index}
+                  children={item}
+                />
+              ))}
             </TableRow>
           </StyledTableHead>
           <TableBody>
@@ -147,6 +165,7 @@ const NestedTable = (props) => {
                 key={row.account + index}
                 index={index}
                 row={row}
+                headers={headerList}
                 children={
                   row.child && (
                     <>
@@ -155,6 +174,7 @@ const NestedTable = (props) => {
                           key={row.account + _index}
                           row={row}
                           index={_index}
+                          headers={headerList}
                           children={
                             row.child && (
                               <>
@@ -162,6 +182,7 @@ const NestedTable = (props) => {
                                   <RowTable
                                     key={row.account + __index}
                                     index={__index}
+                                    headers={headerList}
                                     row={row}
                                     children={
                                       row.child && (
@@ -170,6 +191,7 @@ const NestedTable = (props) => {
                                             <RowTable
                                               key={row.account + ___index}
                                               index={___index}
+                                              headers={headerList}
                                               row={row}
                                             />
                                           ))}
@@ -205,8 +227,10 @@ const NestedTable = (props) => {
           sx={{
             width: "100%",
             height: "105px",
-            position: "absolute",
+            position: "fixed",
             bottom: 0,
+            right: 0,
+            left: 0,
             zIndex: 10,
             background: "rgba(233, 233, 233, 0.80)",
             borderRadius: "20px 20px 0px 0px",

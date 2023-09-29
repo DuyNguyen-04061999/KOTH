@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import moment from "moment";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
+import "./index.scss";
 
 // const theme = createTheme({
 //   typography: {
@@ -38,11 +39,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const [days, setDay] = useState(null);
   const [seconds, setSeconds] = useState(null);
   useEffect(() => {
-      let countdownDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
-      let timeNow = new Date().getTime();
-      setHour(CalculateDistance(countdownDate, timeNow).hours);
-      setMinute(CalculateDistance(countdownDate, timeNow).minutes);
-      setDay(CalculateDistance(countdownDate, timeNow).days);
+    let countdownDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
+    let timeNow = new Date().getTime();
+    setHour(CalculateDistance(countdownDate, timeNow).hours);
+    setMinute(CalculateDistance(countdownDate, timeNow).minutes);
+    setDay(CalculateDistance(countdownDate, timeNow).days);
   }, [tourInfo]);
 
   const styleTypography = {
@@ -145,33 +146,47 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             flexDirection: "column",
           }}
         >
-          <span style={{fontSize:"10px"}}>Sponsor:{tourInfo?.tournamentBrand?.brandName}</span>
+          <span style={{ fontSize: "10px" }}>
+            Sponsor:{tourInfo?.tournamentBrand?.brandName}
+          </span>
           <Typography
             sx={{
               ...styleTypography,
               overflow: "hidden",
               color: "#000",
               fontSize: "14px",
-              fontStyle: "normal",
               fontWeight: "500",
               lineHeight: "normal",
-              height: "30px",
-              maxHeight: "45px",
-              minHeight: "36px",
+              height: "32px",
+              maxHeight: "42px",
+              minHeight: "32px",
               width: "100%",
             }}
+            className="tour-info"
           >
             {isLoading ? (
               <>
                 <Skeleton variant="text" />
                 <Skeleton variant="text" />
               </>
-            ) : tourInfo?.tournamentName.length > 30 ? (
-              tourInfo?.tournamentName.slice(0, 30) + " ..."
             ) : (
               tourInfo?.tournamentName
             )}
           </Typography>
+          <Box
+            sx={{
+              position: "absolute",
+              width: "max-content",
+              background: "rgba(0,0,0,0.23)",
+              borderRadius: "16px",
+              fontSize: "12px",
+              padding: "6px",
+              color: "white",
+            }}
+            className="more-info"
+          >
+            {tourInfo?.tournamentName}
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -211,15 +226,10 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               >
                 {isLoading ? (
                   <Skeleton variant="text" width={20} />
-                ) : tourInfo?.tournamentQuantity !== 0 ? (
-                  tourInfo?.tournamentQuantity
+                ) : tourInfo?.users?.length !== 0 ? (
+                  tourInfo?.users?.length
                 ) : (
-                  <InfinityIcon
-                    sx={{
-                      width: 15,
-                      height: 15,
-                    }}
-                  />
+                  "0"
                 )}
               </Typography>
             </Box>
@@ -231,12 +241,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         sx={{
           width: "100%",
           height: width < 576 ? "64px" : "69px",
-          bgcolor:isHovered === true ? "#42285B" : "#C0C0C0",
-          color:isHovered === true ? "white" : "black",
+          bgcolor: isHovered === true ? "#42285B" : "#C0C0C0",
+          color: isHovered === true ? "white" : "black",
           borderEndEndRadius: "8px",
           borderEndStartRadius: "8px",
           borderTop: "dashed 2px black",
-          transition:"0.3s ease-out"
+          transition: "0.3s ease-out",
         }}
       >
         <Box

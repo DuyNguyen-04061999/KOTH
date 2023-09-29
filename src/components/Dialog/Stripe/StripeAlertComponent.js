@@ -137,7 +137,7 @@ export default function StripeAlertComponent() {
             fontSize: "14px",
           }}
         >
-          After a successful payment, the customer return to your websites.
+          Payment Successful. Your payment has been successfully processed.
         </Box>
       </Box>
       )}

@@ -10,9 +10,8 @@ stages:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - echo "$(env | grep "REACT_APP_")" > env.text
+    - echo "$(env | grep "^REACT_APP_")" > env.text
     - cat env.text | while read line; do echo -n " --build-arg $line" >> ci/docker_build.sh; done
-    - cat env.text
     - chmod +x ci/docker_build.sh
     - ./ci/docker_build.sh
       #- docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
@@ -25,14 +24,14 @@ stages:
 build-crypto:
   <<: *build
   only:
-    - staging
+    - develop
   environment:
     name: crypto
 
 build-promote:
   <<: *build
   only:
-    - staging
+    - develop
   environment:
     name: promote
 
@@ -45,6 +44,7 @@ build-play4promo-prod:
 
 .deploy: &deploy
   stage: deploy
+  when: manual
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
   script:
     - gcloud components update kubectl
@@ -57,14 +57,14 @@ build-play4promo-prod:
 deploy-crypto:
   <<: *deploy
   only:
-    - staging
+    - develop
   environment:
     name: crypto
 
 deploy-promote:
   <<: *deploy
   only:
-    - staging
+    - develop
   environment:
     name: promote
 
@@ -88,6 +88,7 @@ deploy-promote_production:
     name: play4promo-prod
   only:
     - main
+  when: manual
   script:
     - gcloud components update kubectl
     - gcloud auth activate-service-account --key-file $PROD_SERVICE_ACCOUNT

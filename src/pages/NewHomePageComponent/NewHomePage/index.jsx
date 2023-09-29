@@ -69,18 +69,6 @@ export default function NewHomePage() {
     "Sun",
   ]);
   const [selectedDay, setSeDay] = useState(0);
-  const [isFetching, setIsFetching] = useState(true);
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      if (!isFetchList) {
-        setIsFetching(false);
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [isFetchList]);
 
   const {
     dailyTournament,
@@ -128,15 +116,11 @@ export default function NewHomePage() {
   }, [dispatch, isFetchList]);
 
   useEffect(() => {
-    // setHourList(hourlyTournament?.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
-  // const calculateDistance = (x, y, x1, y1) => {
-  //   let distance = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
-  //   return distance;
-  // };
-  console.log(hotWeekTour);
+
+  console.log("weeklyTournament: ", weeklyTournament);
 
   return (
     <Container
@@ -183,7 +167,7 @@ export default function NewHomePage() {
               marginBottom: width < 576 ? "24px" : "32px",
             }}
           >
-            {isFetching ? (
+            {isFetchList ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -223,12 +207,13 @@ export default function NewHomePage() {
                   sx={{
                     textAlign: "start",
                     fontSize: width < 576 ? "14px" : "20px",
-                    fontWeight: "700 !important",
+                    fontWeight: "200 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
                   }}
                 >
-                  HOT TOURNAMENTS{" "}
+                  {/* HOT TOURNAMENTS{" "} */}
+                  Hot tournaments
                 </Typography>
               </Box>
               <Box
@@ -276,7 +261,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading></ListItemLoading>
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
@@ -291,7 +276,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty></ListEmpty>
+                      <ListEmpty textData={"hot"}></ListEmpty>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -331,7 +316,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading></ListItemLoading>
                     ) : hotTournament && hotTournament?.length > 0 ? (
                       hotTournament?.map((item, index) => {
@@ -346,7 +331,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty></ListEmpty>
+                      <ListEmpty textData={"hot"}></ListEmpty>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -354,7 +339,7 @@ export default function NewHomePage() {
             </div>
           </Box>{" "}
           {width < 576 ? (
-            isFetching ? (
+            isFetchList ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -513,7 +498,7 @@ export default function NewHomePage() {
                 }
               />
             )
-          ) : isFetching ? (
+          ) : isFetchList ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}
@@ -913,7 +898,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : dailyTournament &&
                       dailyTournament?.length > 0 &&
@@ -934,7 +919,7 @@ export default function NewHomePage() {
                           );
                         })
                     ) : (
-                      <ListEmpty />
+                      <ListEmpty textData={"daily"} />
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -974,7 +959,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : dailyTournament &&
                       dailyTournament?.length > 0 &&
@@ -995,7 +980,7 @@ export default function NewHomePage() {
                           );
                         })
                     ) : (
-                      <ListEmpty />
+                      <ListEmpty textData={"daily"} />
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -1297,7 +1282,7 @@ export default function NewHomePage() {
                     color: "#fff",
                   }}
                 >
-                  Week-long tournaments{" "}
+                  Weeklong tournaments{" "}
                 </Typography>
               </Box>
               <Box
@@ -1342,7 +1327,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : weeklyTournament && weeklyTournament?.length > 0 ? (
                       weeklyTournament?.map((item, index) => {
@@ -1357,7 +1342,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty />
+                      <ListEmpty textData={"weeklong"} />
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -1397,7 +1382,7 @@ export default function NewHomePage() {
                 // </Slider>
                 <div className="scrolling-carousel-example1-container">
                   <ScrollingCarousel>
-                    {isFetching ? (
+                    {isFetchList ? (
                       <ListItemLoading />
                     ) : weeklyTournament && weeklyTournament?.length > 0 ? (
                       weeklyTournament?.map((item, index) => {
@@ -1412,7 +1397,7 @@ export default function NewHomePage() {
                         );
                       })
                     ) : (
-                      <ListEmpty></ListEmpty>
+                      <ListEmpty textData={"weeklong"}></ListEmpty>
                     )}
                   </ScrollingCarousel>
                 </div>
@@ -1421,7 +1406,7 @@ export default function NewHomePage() {
           </Box>{" "}
           {/* Banner Top1 */}
           {width < 576 ? (
-            isFetching ? (
+            isFetchList ? (
               <Box
                 sx={{
                   marginTop: width < 576 ? "48px" : "32px",
@@ -1460,7 +1445,7 @@ export default function NewHomePage() {
                 tourId={hotWeekTour && hotWeekTour?.id}
               />
             )
-          ) : isFetching ? (
+          ) : isFetchList ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}

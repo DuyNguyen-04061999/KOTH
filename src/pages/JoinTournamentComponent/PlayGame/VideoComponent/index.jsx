@@ -6,30 +6,58 @@ import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
 import { Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-
+import { useRef } from "react";
+// import { Line } from "rc-progress";
+// import ReactPlayer from "react-player";
+import "./index.scss";
 export default function VideoComponent(props) {
   const { detailTournament, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
   const [second, setSeconds] = useState(null);
+  const videoRef = useRef(null);
+  // useEffect(() => {
+  //   let timeInterval = setInterval(() => {
+  //     if (second > 0) {
+  //       setSeconds(second - 1);
+  //     }
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(timeInterval);
+  //   };
+  // }, [second]);
+
   useEffect(() => {
-    let timeInterval = setInterval(() => {
-      if (second > 0) {
-        setSeconds(second - 1);
-      }
-    }, 1000);
-    return () => {
-      clearInterval(timeInterval);
-    };
-  }, [second]);
+    if (videoRef && videoRef.current) {
+      var supposedCurrentTime = 0;
+      videoRef?.current?.addEventListener("timeupdate", () => {
+        setSeconds(7 - Math.round(videoRef.current?.currentTime));
+
+        if (!videoRef.current?.seeking) {
+          supposedCurrentTime = videoRef.current?.currentTime;
+        }
+      });
+      videoRef?.current?.addEventListener("seeking", function () {
+        if (videoRef.current?.seeking) {
+          var delta = videoRef.current?.currentTime - supposedCurrentTime;
+          if (Math.abs(delta) > 0.01) {
+            videoRef.current.currentTime = supposedCurrentTime;
+          }
+        }
+      });
+    }
+  }, []);
+
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
         height: "100%",
+        position: "relative",
       }}
     >
       <Box
@@ -39,12 +67,11 @@ export default function VideoComponent(props) {
           left: "0px",
         }}
       >
-        {" "}
         <video
-          autoPlay={true}
           width={"100%"}
-          playsInline
-          muted
+          ref={videoRef}
+          playsInline={true}
+          controls={true}
           onPlay={() => {
             setSeconds(7);
           }}
@@ -66,9 +93,8 @@ export default function VideoComponent(props) {
         {second !== null && (
           <Box
             onClick={() => {
-              if (second === 0) {
+              if (second <= 0) {
                 setVideoGame(false);
-
                 setSeconds(null);
               }
             }}
@@ -79,7 +105,7 @@ export default function VideoComponent(props) {
                   orientation === "portrait")
                   ? "absolute"
                   : "fixed",
-              top: width < 576 ? "70%" : "80%",
+              top: width < 576 ? "50%" : "80%",
               right: "20px",
               display: "flex",
               alignItems: "center",
@@ -97,7 +123,7 @@ export default function VideoComponent(props) {
                 fontSize: width < 576 ? "10px !important" : "14px",
               }}
             >
-              {second !== 0 ? `You can skip Ads after ${second}s` : "Skip Ads"}
+              {second > 0 ? `You can skip Ads after ${second}s` : "Skip Ads"}
             </Typography>
             <i
               style={{
@@ -109,6 +135,20 @@ export default function VideoComponent(props) {
             ></i>
           </Box>
         )}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
+            bottom:
+              device === "Desktop"
+                ? "50px"
+                : orientation === "portrait"
+                ? "10px"
+                : "100px",
+          }}
+        ></Box>
       </Box>
     </Box>
   );

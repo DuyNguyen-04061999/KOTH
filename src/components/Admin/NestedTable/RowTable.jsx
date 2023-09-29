@@ -12,6 +12,15 @@ import { Button } from "@mui/material";
 import moment from "moment/moment";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
+import { useLocation } from "react-router";
+import {
+  checkRouteIsCreate,
+  checkRouteIsManage,
+  trimAndCamelCase,
+} from "../../../utils/Admin/helper";
+import { ElectricalServices } from "@mui/icons-material";
+import { openGivePerDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { updateDataAgents } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 
 const MinusIconSVG = () => {
   return (
@@ -33,8 +42,8 @@ const MinusIconSVG = () => {
       <circle cx="8" cy="8" r="8" fill="#3DB9A1"></circle>
       <rect width="10" height="2" x="3" y="7" fill="#fff" rx="1"></rect>
     </svg>
-  )
-} 
+  );
+};
 
 const AddIconSVG = () => {
   return (
@@ -54,8 +63,8 @@ const AddIconSVG = () => {
         d="M8.023 12.472c-.72.012-1.197-.444-1.27-1.211-.054-.641.127-1.483-.213-1.862-.292-.323-1.175-.105-1.794-.149-.77-.056-1.223-.543-1.211-1.266.012-.722.47-1.17 1.257-1.225.616-.042 1.459.147 1.786-.179.326-.326.133-1.17.17-1.787.055-.784.514-1.242 1.229-1.252.754-.012 1.216.461 1.274 1.297.043.611-.118 1.414.207 1.778.275.31 1.119.11 1.71.143.837.047 1.31.513 1.299 1.268-.012.755-.488 1.184-1.341 1.23-.589.032-1.39-.14-1.71.17-.32.312-.14 1.116-.172 1.709-.036.849-.472 1.325-1.221 1.336z"
       ></path>
     </svg>
-  )
-} 
+  );
+};
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -70,7 +79,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 12,
     border: "none",
     fontWeight: 500,
-    lineHeight: "16px"
+    lineHeight: "16px",
+    maxWidth: "150px",
+    overflow: "scroll",
   },
   ":first-child": {
     color: "red",
@@ -79,62 +90,102 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export const RowTable = (props) => {
-  const { row, children, index } = props;
+  const { row, children, index, headers } = props;
   const [open, setOpen] = useState(false);
   const { width } = useWindowDimensions();
   const { detailAccount } = useSelector((state) => state.adminReducer_);
-
-  const dispatch = useDispatch()
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
   const handleUpdate = () => {
-    dispatch(updateDetailAccount(row))
-  }
+    dispatch(updateDetailAccount(row));
+  };
 
+  const handleGive = () => {
+    dispatch(updateDataAgents({
+      list: row?.agents || [],
+      account: row?.account || null
+    }))
+    dispatch(openGivePerDialog())
+  }
+console.log(headers);
   return (
     <React.Fragment>
-      <TableRow onClick={() => {
-        if(width < 576 && row?.action) {
-          dispatch(updateDetailAccount(row))
-        }
-      }} sx={{
-        ".MuiTableCell-root": {
-          borderBottom: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
-          borderTop: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
-        },
-        borderBottom: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
-        borderTop: detailAccount && detailAccount?.account === row?.account ? "2px solid #355DFF" : "none",
-      }} style={{backgroundColor: index % 2 !== 0 && "#F7F7F7",borderRadius: "5px"}}>
-        {row.action && width > 576 ? (
-          <StyledTableCell sx={{display: {xs: "none", sm: "table-cell"}, }}>
-            <Button onClick={handleUpdate} children={"Update"} sx={{
-              fontSize: "14px" ,borderRadius: "16px",padding:"2px 16px",bgcolor: "#355DFF", color: "#FFF", fontWeight: 700, textTransform: "unset",
-            ":hover": {
-              backgroundColor: '#355DFF'
-            },
-          }}/></StyledTableCell>
-        ) : (
-          <StyledTableCell  sx={{display: {xs: "none", sm: "table-cell"}}}>
-
+      <TableRow
+        onClick={() => {
+          if (width < 576 && row?.action) {
+            dispatch(updateDetailAccount(row));
+          }
+        }}
+        sx={{
+          ".MuiTableCell-root": checkRouteIsManage(pathname) && {
+            borderBottom:
+              detailAccount && detailAccount?.account === row?.account
+                ? "2px solid #355DFF"
+                : "none",
+            borderTop:
+              detailAccount && detailAccount?.account === row?.account
+                ? "2px solid #355DFF"
+                : "none",
+          },
+          borderBottom:
+            detailAccount && detailAccount?.account === row?.account
+              ? "2px solid #355DFF"
+              : "none",
+          borderTop:
+            detailAccount && detailAccount?.account === row?.account
+              ? "2px solid #355DFF"
+              : "none",
+        }}
+        style={{
+          backgroundColor: index % 2 !== 0 && "#F7F7F7",
+          borderRadius: "5px",
+        }}
+      >
+        {/* {row.action && width > 576 && checkRouteIsManage(pathname) ? (
+          <StyledTableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+            <Button
+              onClick={handleUpdate}
+              children={"Update"}
+              sx={{
+                fontSize: "14px",
+                borderRadius: "16px",
+                padding: "2px 16px",
+                bgcolor: "#355DFF",
+                color: "#FFF",
+                fontWeight: 700,
+                textTransform: "unset",
+                ":hover": {
+                  backgroundColor: "#355DFF",
+                },
+              }}
+            />
           </StyledTableCell>
+        ) : (
+          <StyledTableCell
+            sx={{ display: { xs: "none", sm: "table-cell" } }}
+          ></StyledTableCell>
         )}
         <StyledTableCell className="text-center">
           <Box
             sx={{
-              marginLeft: {xs: row?.levelRole*1, sm: row?.levelRole*2},
+              marginLeft: { xs: row?.levelRole * 1, sm: row?.levelRole * 2 },
               display: "flex",
               alignItems: "center",
-
             }}
           >
-            {row && row?.child && row?.child?.length > 0 ? (
-              <IconButton style={{width: "34px", height: "34px"}} onClick={() => setOpen(!open)}>
+            {row && row?.child && row?.child?.length > 0 && !checkRouteIsCreate(pathname) ? (
+              <IconButton
+                style={{ width: "34px", height: "34px" }}
+                onClick={() => setOpen(!open)}
+              >
                 {!open ? <AddIconSVG /> : <MinusIconSVG />}
-
               </IconButton>
             ) : (
               <Box
                 sx={{
-                  width: "34px", height: "34px"
+                  width: "34px",
+                  height: "34px",
                 }}
               ></Box>
             )}
@@ -143,24 +194,137 @@ export const RowTable = (props) => {
         </StyledTableCell>
         <StyledTableCell className="text-center">{row.level}</StyledTableCell>
         <StyledTableCell className="text-center">
-          {/* {row.commission} */}{"-"}
+          {"-"}
         </StyledTableCell>
         <StyledTableCell className="text-center">{row.ticket}</StyledTableCell>
-        
+
         {width > 576 && (
           <StyledTableCell className="text-center">{row.ref}</StyledTableCell>
         )}
-        {
-          width > 576 && (
-            <StyledTableCell className="text-center">{moment(row.date).format('ll')}</StyledTableCell>
-          )
-        }
         {width > 576 && (
-          <StyledTableCell className="text-center" sx={{color: "#3DBAA2"}}>{row.amount}</StyledTableCell>
+          <StyledTableCell className="text-center">
+            {moment(row.date).format("ll")}
+          </StyledTableCell>
         )}
         {width > 576 && (
-          <StyledTableCell className="text-center">{row.status ? "Active" : "Prohibit"}</StyledTableCell>
+          <StyledTableCell className="text-center" sx={{ color: "#3DBAA2" }}>
+            {row.amount}
+          </StyledTableCell>
         )}
+        {width > 576 && (
+          <StyledTableCell className="text-center">
+            {row.status ? "Active" : "Prohibit"}
+          </StyledTableCell>
+        )} */}
+        {headers &&
+          headers?.map((item, index) => {
+            if (item === "" && row?.action) 
+              return (
+                <StyledTableCell
+                  key={index}
+                  sx={{
+                    display: { xs: "none", sm: "table-cell" },
+                    textAlign: "center",
+                  }}
+                >
+                  <Button
+                    onClick={handleUpdate}
+                    children={"Update"}
+                    sx={{
+                      fontSize: "14px",
+                      borderRadius: "16px",
+                      padding: "2px 16px",
+                      bgcolor: "#355DFF",
+                      color: "#FFF",
+                      fontWeight: 700,
+                      textTransform: "unset",
+                      ":hover": {
+                        backgroundColor: "#355DFF",
+                      },
+                    }}
+                  />
+                </StyledTableCell>
+              );
+              else if (item.toLowerCase() === "time zone") 
+                return (
+                  <StyledTableCell
+                    key={index}
+                    sx={{
+                      display: { xs: "none", sm: "table-cell" },
+                      textAlign: "center",
+                    }}
+                  >
+                    Chicago TMZ
+                  </StyledTableCell>
+              );
+              else if (item.toLowerCase() === "give permission" && row?.givePermission) return (
+                <StyledTableCell
+                  key={index}
+                  sx={{
+                    display: { xs: "none", sm: "table-cell" },
+                    textAlign: "center",
+                  }}
+                >
+                  {row?.agents && row?.agents?.length > 0 && (
+                    <Button
+                      onClick={handleGive}
+                      children={"Give"}
+                      sx={{
+                        fontSize: "14px",
+                        borderRadius: "16px",
+                        padding: "2px 16px",
+                        bgcolor: "#355DFF",
+                        color: "#FFF",
+                        fontWeight: 700,
+                        textTransform: "unset",
+                        ":hover": {
+                          backgroundColor: "#355DFF",
+                        },
+                      }}
+                    />
+                  )}
+                  
+                </StyledTableCell>
+              );
+            else if (item.toLowerCase() === "account")
+              return (
+                <StyledTableCell key={index} sx={{ textAlign: "center" }}>
+                  <Box
+                    sx={{
+                      marginLeft: {
+                        xs: row?.levelRole * 1,
+                        sm: row?.levelRole * 2,
+                      },
+                      display: "flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    {row &&
+                      row?.child &&
+                      row?.child?.length > 0 &&
+                      !checkRouteIsCreate(pathname) && (
+                        <IconButton
+                          style={{ width: "34px", height: "34px" }}
+                          onClick={() => setOpen(!open)}
+                        >
+                          {!open ? <AddIconSVG /> : <MinusIconSVG />}
+                        </IconButton>
+                      )}
+                    {row.account}
+                  </Box>
+                </StyledTableCell>
+              );
+            else
+              return (
+                <StyledTableCell key={index}>
+                  <Box sx={{ textAlign: "center" }}>
+                    {/* {moment(row[`${trimAndCamelCase(item)}`], true)?.isValid() ? moment(row[`${trimAndCamelCase(item)}`])?.format("MM/DD/YYYY HH:mm") : row[`${trimAndCamelCase(item)}`]} */}
+                    {row[`${trimAndCamelCase(item)}`]}
+                  </Box>
+                </StyledTableCell>
+              );
+          })}
       </TableRow>
       {open && children}
     </React.Fragment>

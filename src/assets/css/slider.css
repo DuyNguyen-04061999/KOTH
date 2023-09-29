@@ -1,7 +1,7 @@
 .slider {
     grid-area: sidebar;
     height: 100%;
-    background-color:   #21232d;
+    /* background-color:   #21232d; */
     color: #f7f7f7;
     overflow-y: auto;
 }

@@ -11,11 +11,12 @@ body {
   overscroll-behavior: none;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  background-color: #1a151e !important;
 }
 
 html,
 body {
-  background-color: #221527;
+  /* background-color: #221527; */
   overscroll-behavior-y: contain;
 }
 
@@ -52,6 +53,5 @@ code {
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  -webkit-text-fill-color: white;
   transition: background-color 5000s ease-in-out 0s;
 }

@@ -69,7 +69,7 @@ const BannerWinMobile = (props) => {
             fontWeight: 700,
           }}
         >
-          Sponsor by: {sponsorName || "Play4Promo"}
+          Sponsored  by: {sponsorName || "Play4Promo"}
         </Typography>
       </Box>
       <Box

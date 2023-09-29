@@ -2,12 +2,11 @@ import "./assets/css/App.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux-saga-middleware/config/configRedux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { CustomRouter, history } from "./components/Router";
 import HomePage from "./pages/Home";
 import GameLobby from "./pages/GamePlay";
-import { useEffect, useState } from "react";
-import FAQPage from "./pages/HelpCenter";
+import { lazy, useEffect, useState } from "react";
 import CountDownTimer from "./components/CountDownTimer";
 import UploadPage from "./pages/GameManager/UploadPage";
 import GamePage from "./pages/GameManager/GamePage";
@@ -16,7 +15,6 @@ import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
 import JoinTournamentComponent from "./pages/JoinTournamentComponent";
-
 import {
   getLeaderBoardSuccess,
   getNavTablet,
@@ -80,7 +78,6 @@ import {
 } from "./redux-saga-middleware/reducers/appReducer";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 // import AlertComponent from "./components/Alert/AlertComponent";
-import PackagePage from "./pages/PackagePage";
 import NewHomePageComponent from "./pages/NewHomePageComponent";
 import { ToastContainer, toast } from "react-toastify";
 import { images } from "./utils/images";
@@ -106,10 +103,19 @@ import {
 } from "@mui/material";
 // import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
 import PlayGamePage from "./pages/PlayGamePage";
+import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
+import { Suspense } from "react";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
-
+const LazyNewHomePage = lazy(()=> import("./pages/NewHomePageComponent"))
+const LazyPackage = lazy(() => import("./pages/PackagePage"));
+const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
+const LazyJoinTour = lazy(() => import("./pages/JoinTournamentComponent"));
+const LazyHotTour = lazy(()=> import("./pages/HotTournament"));
+const LazyDailyTour = lazy(()=> import("./pages/DailyTournament"));
+const LazyWeekTour = lazy(()=> import("./pages/WeekLongTour"));
 function App() {
-  useTracking("");
+  
+  useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
   const [socket] = useState(_socket);
   const { token } = store.getState().authReducer;
@@ -219,7 +225,7 @@ function App() {
       });
 
       socket?.on("chatSuccess", (data) => {
-        if(localStorage.getItem("token")) {
+        if (localStorage.getItem("token")) {
           socket.emit("listFriend");
         }
         store.dispatch(updateChatWorld(data));
@@ -304,7 +310,7 @@ function App() {
             position: "top-center",
             className:
               // width < 576 ? "warning-background-small" : "warning-background",
-              "warning-background"
+              "warning-background",
           });
           localStorage.removeItem("NAME");
           localStorage.removeItem("PASS");
@@ -504,7 +510,7 @@ function App() {
             position: "top-center",
             className:
               // width < 576 ? "error-background-small" : "error-background",
-              "error-background"
+              "error-background",
           }
         );
         store.dispatch(updateProfileFail());
@@ -522,7 +528,7 @@ function App() {
           position: "top-center",
           className:
             // width < 576 ? "warning-background-small" : "warning-background",
-            "warning-background"
+            "warning-background",
         });
       });
 
@@ -538,7 +544,7 @@ function App() {
           position: "top-center",
           className:
             // width < 576 ? "success-background-small" : "success-background",
-            "success-background"
+            "success-background",
         });
       });
       socket?.on("gameWin", ({ type, value }) => {
@@ -619,6 +625,17 @@ function App() {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (document.readyState === "complete") {
+      setIsLoading(false);
+    } else {
+      window.addEventListener("load", () => setIsLoading(false));
+    }
+    return () => window.removeEventListener("load", () => setIsLoading(false));
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -628,15 +645,15 @@ function App() {
               <Routes>
                 <Route
                   path="/home"
-                  element={
-                    getAppType() === "promote" ? (
-                      <NewHomePageComponent />
+                  element={ getAppType() === "promote" ? (
+                      <Suspense fallback={<PageLoading />}>
+                        <LazyNewHomePage />
+                      </Suspense>
                     ) : (
                       <HomePage />
                     )
                   }
                 >
-                  <Route path="/home" element={<HomePage />} />
                 </Route>
                 <Route path="/gamelobby/:id" element={<GameLobby />} />
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
@@ -644,23 +661,51 @@ function App() {
                   path="/selectroom/:id"
                   element={<SelectRoomContainer />}
                 />
-                {/* <Route path="/luckywheel" element={<LuckySpinComponent />} /> */}
                 <Route
                   path="/testsocketAPI"
                   element={<TestSocketFriendAPI />}
                 />
                 <Route
                   path="/tournamentDetail/:id"
-                  element={<JoinTournamentComponent />}
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyJoinTour />
+                    </Suspense>
+                  }
                 />
-                <Route path="/hot-tournament" element={<HotTournament />} />
+                <Route
+                  path="/hot-tournament"
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyHotTour />
+                    </Suspense>
+                  }
+                />
                 {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
-                <Route path="/daily-tournament" element={<DailyTournament />} />
+                <Route
+                  path="/daily-tournament"
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyDailyTour />
+                    </Suspense>
+                  }
+                />
                 <Route
                   path="/week-long-tournament"
-                  element={<WeekLongTour />}
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyWeekTour />
+                    </Suspense>
+                  }
                 />
-                <Route path="/help-center" element={<FAQPage />} />
+                <Route
+                  path="/help-center"
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyHelpCenter />
+                    </Suspense>
+                  }
+                />
                 <Route path="/loadingscreen" element={<LoadingScreen />} />
                 <Route path="/new-home" element={<NewHomePageComponent />} />
                 <Route path="/countdowntimer" element={<CountDownTimer />} />
@@ -685,7 +730,14 @@ function App() {
                   element={<DeleteSkinPage />}
                 />
                 {getAppType() === "promote" && (
-                  <Route path="packages" element={<PackagePage />}></Route>
+                  <Route
+                    path="packages"
+                    element={
+                      <Suspense fallback={<PageLoading />}>
+                        <LazyPackage />
+                      </Suspense>
+                    }
+                  ></Route>
                 )}
                 <Route
                   path="transactions/:id"

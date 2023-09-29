@@ -1,16 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AdminStructure from "../../components/Admin/AdminStructure/AdminStructure";
-import UserManager from "../../components/Admin/UserManager/UserManager";
 import { useEffect } from "react";
 import { getListRef } from "../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import { getListDistributor } from "../../redux-saga-middleware_admin/reducers/adminMasterReducer";
 import { getListSub } from "../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListEndUser } from "../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 import { useState } from "react";
-import { includes } from "lodash";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
 import { Box, Button, Container } from "@mui/material";
+import NestedTable from "../../components/Admin/NestedTable/NestedTable";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 const HomePage = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -19,6 +18,7 @@ const HomePage = () => {
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
   const [data, setData] = useState([]);
+  const { width } = useWindowDimensions();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -73,19 +73,71 @@ const HomePage = () => {
     }
   }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
-  if (!roles.includes("agent"))
-    return (
-      <Container>
-        <AdminPanel></AdminPanel> <AdminStructure data={data} />{" "}
-      </Container>
-    );
-  if (roles.includes("agent"))
-    return (
-      <Container>
-        <AdminPanel></AdminPanel>
-        <UserManager data={data} />
-      </Container>
-    );
+  const [headerList, setHeaderList] = useState([]);
+
+  useEffect(() => {
+    if (width > 576) {
+      if (roles?.includes("master")) {
+        setHeaderList([
+          "ID",
+          "Account",
+          "Nick Name",
+          "Manager",
+          "Agents",
+          "Players",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+        ]);
+      }
+
+      if (roles?.includes("distributor")) {
+        setHeaderList([
+          "ID",
+          "Account",
+          "Nick Name",
+          "Code/Link",
+          "Manager",
+          "Players",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+        ]);
+      }
+
+      if (roles?.includes("agent")) {
+        setHeaderList([
+          "ID",
+          "Account",
+          "Revenue",
+          "Manager",
+          "Register Date",
+          "Last Login",
+        ]);
+      }
+    } else {
+      if (roles?.includes("master")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+
+      if (roles?.includes("distributor")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+
+      if (roles?.includes("agent")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+    }
+  }, [roles]);
+
+  return (
+    <Container>
+      <AdminPanel></AdminPanel>
+      <Box sx={{ marginTop: "36px" }}>
+        <NestedTable headerList={headerList} data={data} />{" "}
+      </Box>
+    </Container>
+  );
 };
 
 export default HomePage;

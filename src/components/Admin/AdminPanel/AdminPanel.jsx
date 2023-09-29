@@ -9,9 +9,12 @@ import {
   openCreateDialog,
   openDetailDialog,
   openProvideDialog,
+  openResetPassDialog,
 } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import SearchBar from "../SearchBar/SearchBar";
+import { checkRouteIsManage } from "../../../utils/Admin/helper";
+import { useLocation } from "react-router";
 
 const AdminPanel = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -23,6 +26,7 @@ const AdminPanel = () => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const { width } = useWindowDimensions();
+  const { pathname } = useLocation();
 
   const handleChangeSearch = (e) => {
     setSearchValue(e?.target?.value);
@@ -116,6 +120,29 @@ const AdminPanel = () => {
     );
   };
 
+  const ResetPasswordSVG = () => {
+    return (
+      <Box sx={{ marginRight: "10px" }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="15"
+          height="15"
+          fill="none"
+          viewBox="0 0 15 15"
+        >
+          <path
+            fill="#fff"
+            d="M12.516 3.09c0-.296-.003-.522 0-.748.01-.46.329-.8.758-.804.43-.004.767.335.77.79.008.795.01 1.589 0 2.383a1.01 1.01 0 01-.616.942 1.005 1.005 0 01-.388.078c-.802.016-1.605.014-2.407 0a.749.749 0 01-.754-.774c.005-.43.32-.741.771-.753.233-.006.467 0 .766 0-.1-.127-.155-.206-.219-.274-1.513-1.658-3.38-2.288-5.542-1.715-2.17.577-3.54 2.043-3.969 4.256a5.43 5.43 0 005.604 6.486c1.995-.09 3.508-1.056 4.524-2.782.147-.248.32-.447.618-.487.299-.04.562.061.738.316.19.274.183.563.024.853a6.93 6.93 0 01-2.858 2.826C6.05 15.963.796 13.287.105 8.475-.452 4.581 2.379.921 6.268.534c2.408-.24 4.423.563 6.052 2.348l.196.208z"
+          ></path>
+          <path
+            fill="#fff"
+            d="M7.019 10.794c-.555-.024-1.111-.04-1.665-.075-.703-.044-1.21-.508-1.253-1.21a21.929 21.929 0 01-.006-1.961c.013-.457.236-.811.624-1.065a.355.355 0 00.131-.236c.03-.3.018-.603.055-.9.084-.693.61-1.24 1.308-1.298a10.208 10.208 0 011.687 0c.667.054 1.19.597 1.283 1.264.04.297.032.602.055.9.007.082.028.203.084.235.582.328.703.885.718 1.473.014.546-.004 1.093-.055 1.637-.061.663-.564 1.125-1.245 1.155-.572.025-1.149.005-1.72.005l-.001.076zm-1.13-4.545h2.313c-.013-.26-.013-.505-.041-.747-.028-.241-.178-.414-.427-.423-.453-.018-.908-.02-1.36 0-.274.01-.425.196-.451.463-.022.222-.023.45-.033.705l-.002.002z"
+          ></path>
+        </svg>
+      </Box>
+    );
+  };
+
   const handleActive = () => {
     if (detailAccount) {
       dispatch(
@@ -128,7 +155,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <Box sx={{ marginTop: "80px" }}>
+    <Box sx={{ marginTop: "60px" }}>
       <DetailAccountDialogComponent />
       <Typography
         sx={{
@@ -157,7 +184,10 @@ const AdminPanel = () => {
           border: { xs: "unset", sm: "2px solid #E4E4E4" },
           borderRadius: "16px",
           padding: "18px",
-          marginTop: { xs: "-52px", sm: "24px" },
+          marginTop: {
+            xs: checkRouteIsManage(pathname) ? "0px" : "-52px",
+            sm: "24px",
+          },
         }}
       >
         <Box
@@ -167,14 +197,22 @@ const AdminPanel = () => {
             flexDirection: { xs: "column-reverse", sm: "row" },
           }}
         >
-          <Box sx={{marginTop:"14px"}}>
+          <Box sx={{ marginTop: "14px" }}>
             <SearchBar
               searchValue={searchValue}
               onChange={handleChangeSearch}
               onSubmit={handleSubmit}
+              width={width < 576 ? "100%" : "365px"}
             ></SearchBar>
           </Box>
-          <Box sx={{ marginLeft: "auto" }}>
+          <Box
+            sx={{
+              marginLeft: "auto",
+              display:
+                (checkRouteIsManage(pathname) && "none") ||
+                (roles?.includes("agent") && "none"),
+            }}
+          >
             <Button
               children={"Create Account"}
               onClick={() => dispatch(openCreateDialog())}
@@ -199,7 +237,9 @@ const AdminPanel = () => {
               borderRadius: "16px",
               marginTop: "24px",
               display: { xs: "none", sm: "grid" },
-              gridTemplateColumns: "repeat(8,1fr)",
+              gridTemplateColumns: checkRouteIsManage(pathname)
+                ? "repeat(8,1fr)"
+                : "repeat(7,1fr)",
               [theme.breakpoints.down("lg")]: {
                 gridTemplateColumns: "repeat(4,1fr)",
               },
@@ -224,7 +264,11 @@ const AdminPanel = () => {
                 Account
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.account || ""}
               </Typography>
@@ -248,7 +292,11 @@ const AdminPanel = () => {
                 Level
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.level || ""}
               </Typography>
@@ -269,10 +317,14 @@ const AdminPanel = () => {
                   textAlign: "center",
                 }}
               >
-                Revenue
+                Balance
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 _
               </Typography>
@@ -296,7 +348,12 @@ const AdminPanel = () => {
                 Ticket
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                  color: "#FF7A68",
+                }}
               >
                 {detailAccount?.ticket || 0}
               </Typography>
@@ -320,7 +377,11 @@ const AdminPanel = () => {
                 RefCode
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.ref || ""}
               </Typography>
@@ -344,7 +405,11 @@ const AdminPanel = () => {
                 Register Date
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
               >
                 {detailAccount?.date
                   ? moment(detailAccount?.date).format("ll")
@@ -355,7 +420,8 @@ const AdminPanel = () => {
               sx={(theme) => ({
                 padding: "24px",
                 [theme.breakpoints.up("lg")]: {
-                  borderRight: "2px solid #E4E4E4",
+                  borderRight:
+                    checkRouteIsManage(pathname) && "2px solid #E4E4E4",
                 },
               })}
             >
@@ -370,45 +436,52 @@ const AdminPanel = () => {
                 Amount Account
               </Typography>
               <Typography
-                sx={{ fontWeight: 600, fontSize: "14px", textAlign: "center" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textAlign: "center",
+                  color: "#3DBAA2",
+                }}
               >
                 {detailAccount?.amount || 0}
               </Typography>
             </Grid>
-            <Grid sx={{ padding: "24px", flex: 1 }}>
-              <Typography
-                sx={{
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  color: "#808191",
-                  textAlign: "center",
-                }}
-              >
-                Status
-              </Typography>
-              <Button
-                onClick={handleActive}
-                children={detailAccount?.status ? "Active" : "Prohibit"}
-                sx={{
-                  fontSize: "14px",
-                  borderRadius: "16px",
-                  padding: "2px 16px",
-                  bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
-                  color: "#FFF",
-                  fontWeight: 700,
-                  marginTop: "12px",
-                  textTransform: "unset",
-                  ":hover": {
-                    backgroundColor: detailAccount?.status
-                      ? "#355DFF"
-                      : "#FF4135",
-                  },
-                }}
-              />
-            </Grid>
+            {checkRouteIsManage(pathname) && (
+              <Grid sx={{ padding: "24px", flex: 1 }}>
+                <Typography
+                  sx={{
+                    fontWeight: 500,
+                    fontSize: "12px",
+                    color: "#808191",
+                    textAlign: "center",
+                  }}
+                >
+                  Status
+                </Typography>
+                <Button
+                  onClick={handleActive}
+                  children={detailAccount?.status ? "Active" : "Prohibit"}
+                  sx={{
+                    fontSize: "14px",
+                    borderRadius: "16px",
+                    padding: "2px 16px",
+                    bgcolor: detailAccount?.status ? "#355DFF" : "#FF4135",
+                    color: "#FFF",
+                    fontWeight: 700,
+                    marginTop: "12px",
+                    textTransform: "unset",
+                    ":hover": {
+                      backgroundColor: detailAccount?.status
+                        ? "#355DFF"
+                        : "#FF4135",
+                    },
+                  }}
+                />
+              </Grid>
+            )}
           </Grid>
         </Collapse>
-        {detailAccount && (
+        {detailAccount && checkRouteIsManage(pathname) && (
           <Box sx={{ display: { xs: "none", sm: "flex" }, marginTop: "24px" }}>
             <Button
               onClick={() => dispatch(openProvideDialog())}
@@ -418,13 +491,30 @@ const AdminPanel = () => {
                 fontSize: "14px",
                 textTransform: "unset",
                 color: "white",
-                padding: "8px 24px",
+                padding: "8px 30px",
                 borderRadius: "16px",
                 ":hover": { backgroundColor: "#FF9F38" },
               }}
             >
               <ProvideTicketSVG></ProvideTicketSVG>
               Provide Ticket
+            </Button>
+            <Button
+              onClick={() => dispatch(openResetPassDialog())}
+              sx={{
+                backgroundColor: "#3DBAA2",
+                fontWeight: 700,
+                fontSize: "14px",
+                textTransform: "unset",
+                color: "white",
+                padding: "8px 30px",
+                borderRadius: "16px",
+                ":hover": { backgroundColor: "#3DBAA2" },
+              }}
+              className="ms-4"
+            >
+              <ResetPasswordSVG></ResetPasswordSVG>
+              Reset Password
             </Button>
           </Box>
         )}
