@@ -78,56 +78,83 @@ const ManageDistributor = () => {
   const [headerList, setHeaderList] = useState([]);
 
   useEffect(() => {
-    if (roles?.includes("master")) {
-      setHeaderList([
-        "",
-        "ID",
-        "Account",
-        "Nick Name",
-        "Manager",
-        "Agents",
-        "Players",
-        "Revenue",
-        "Register Date",
-        "Last Login",
-        "Time Zone",
-      ]);
+    if(width > 576){
+      if (roles?.includes("master")) {
+        setHeaderList([
+          "",
+          "ID",
+          "Account",
+          "Nick Name",
+          "Manager",
+          "Agents",
+          "Players",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+          "Time Zone",
+        ]);
+      }
+  
+      if (roles?.includes("distributor")) {
+        setHeaderList([
+          "",
+          "ID",
+          "Account",
+          "Nick Name",
+          "Give Permission",
+          "Code/Link",
+          "Manager",
+          "Players",
+          "Revenue By",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+          "Time Zone",
+        ]);
+      }
+  
+      if (roles?.includes("agent")) {
+        setHeaderList([
+          "",
+          "ID",
+          "Account",
+          "Nick Name",
+          "Manager",
+          "Players",
+          "Revenue",
+        ]);
+      }
     }
-
-    if (roles?.includes("distributor")) {
-      setHeaderList([
-        "",
-        "ID",
-        "Account",
-        "Nick Name",
-        "Give Permission",
-        "Code/Link",
-        "Manager",
-        "Players",
-        "Revenue By",
-        "Revenue",
-        "Register Date",
-        "Last Login",
-        "Time Zone",
-      ]);
-    }
-
-    if (roles?.includes("agent")) {
-      setHeaderList([
-        "",
-        "ID",
-        "Account",
-        "Nick Name",
-        "Manager",
-        "Players",
-        "Revenue",
-      ]);
+    else {
+      if (roles?.includes("master")) {
+        setHeaderList([
+          "Account",
+          "Level",
+          "Balance",
+        ]);
+      }
+  
+      if (roles?.includes("distributor")) {
+        setHeaderList([
+          "Account",
+          "Level",
+          "Balance",
+        ]);
+      }
+  
+      if (roles?.includes("agent")) {
+        setHeaderList([
+          "Account",
+          "Level",
+          "Balance",
+        ]);
+      }
     }
   }, [roles]);
 
   return (
     <Container>
-      {width > 576 ? <AdminPanel></AdminPanel> : <DetailAccountDialogComponent/>}
+      <AdminPanel></AdminPanel> : <DetailAccountDialogComponent/>
       <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>

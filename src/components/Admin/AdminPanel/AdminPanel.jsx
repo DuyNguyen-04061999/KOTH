@@ -184,7 +184,10 @@ const AdminPanel = () => {
           border: { xs: "unset", sm: "2px solid #E4E4E4" },
           borderRadius: "16px",
           padding: "18px",
-          marginTop: { xs: "-52px", sm: "24px" },
+          marginTop: {
+            xs: checkRouteIsManage(pathname) ? "0px" : "-52px",
+            sm: "24px",
+          },
         }}
       >
         <Box
@@ -199,6 +202,7 @@ const AdminPanel = () => {
               searchValue={searchValue}
               onChange={handleChangeSearch}
               onSubmit={handleSubmit}
+              width={width < 576 ? "100%" : "365px"}
             ></SearchBar>
           </Box>
           <Box
@@ -231,7 +235,9 @@ const AdminPanel = () => {
               borderRadius: "16px",
               marginTop: "24px",
               display: { xs: "none", sm: "grid" },
-              gridTemplateColumns: checkRouteIsManage(pathname) ? "repeat(8,1fr)" : "repeat(7,1fr)",
+              gridTemplateColumns: checkRouteIsManage(pathname)
+                ? "repeat(8,1fr)"
+                : "repeat(7,1fr)",
               [theme.breakpoints.down("lg")]: {
                 gridTemplateColumns: "repeat(4,1fr)",
               },
@@ -412,7 +418,8 @@ const AdminPanel = () => {
               sx={(theme) => ({
                 padding: "24px",
                 [theme.breakpoints.up("lg")]: {
-                  borderRight: checkRouteIsManage(pathname) && "2px solid #E4E4E4",
+                  borderRight:
+                    checkRouteIsManage(pathname) && "2px solid #E4E4E4",
                 },
               })}
             >

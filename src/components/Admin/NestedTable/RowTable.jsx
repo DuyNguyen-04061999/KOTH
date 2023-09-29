@@ -74,7 +74,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 13,
     border: "none",
     padding: "10px 0px",
-    maxWidth: "100px",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,

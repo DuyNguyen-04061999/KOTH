@@ -63,7 +63,6 @@ export default function DailyTournament() {
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
-  console.log("itemOffSet:", itemOffSet);
   useEffect(() => {
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [dailyTournament]);

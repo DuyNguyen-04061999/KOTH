@@ -15,6 +15,7 @@ import CountDownBannerHot from "../../CountDownBannerHot";
 import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../../../components/LoadingComponent/ListEmpty";
+import PaginatedItems from "../../../PaginatedItems";
 
 export default function FullListTournament({ handleOnClose, open, type }) {
   const {
@@ -31,7 +32,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
   const [selectedDay, setSeDay] = useState(0);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const [itemOffset, setItemOffSet] = useState(1);
+  const [itemOffSet, setItemOffSet] = useState(0);
   const [tourList, setTourList] = useState([]);
   useEffect(() => {
     if (isFetchList) {
@@ -376,33 +377,45 @@ export default function FullListTournament({ handleOnClose, open, type }) {
           ) : tourList?.length ? (
             <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
               {tourList?.map((item, index) => {
-                return index % 2 === 0 ? (
-                  <Box
-                    onClick={() => navigate("/tournamentDetail/" + item?.id)}
-                    key={index}
-                    sx={{
-                      boxSizing: "border-box",
-                      marginTop: "24px",
-                    }}
-                  >
-                    <ItemComponent countdown={true} tourInfo={item} />
-                  </Box>
-                ) : (
-                  <Box
-                    onClick={() => navigate("/tournamentDetail/" + item?.id)}
-                    key={index}
-                    sx={{
-                      boxSizing: "border-box",
-                      marginTop: "24px",
-                    }}
-                  >
-                    <ItemComponent countdown={true} tourInfo={item} />
-                  </Box>
+                return (
+                  index >= itemOffSet &&
+                  index <= itemOffSet + 9 &&
+                  (index % 2 === 0 ? (
+                    <Box
+                      onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                      key={index}
+                      sx={{
+                        boxSizing: "border-box",
+                        marginTop: "24px",
+                      }}
+                    >
+                      <ItemComponent countdown={true} tourInfo={item} />
+                    </Box>
+                  ) : (
+                    <Box
+                      onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                      key={index}
+                      sx={{
+                        boxSizing: "border-box",
+                        marginTop: "24px",
+                      }}
+                    >
+                      <ItemComponent countdown={true} tourInfo={item} />
+                    </Box>
+                  ))
                 );
               })}
             </Box>
           ) : (
             <ListEmpty />
+          )}
+          {!isFetchList && (
+            <PaginatedItems
+              pageCount={Math.ceil(tourList.length / 10)}
+              changeOffSet={(value) => {
+                setItemOffSet((value - 1) * 10);
+              }}
+            />
           )}
         </Box>
       </Box>
