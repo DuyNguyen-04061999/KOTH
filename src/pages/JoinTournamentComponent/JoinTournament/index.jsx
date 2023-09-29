@@ -31,7 +31,11 @@ import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { formatTimeMothDateYear, isJson, sliceString } from "../../../utils/helper";
+import {
+  formatTimeMothDateYear,
+  isJson,
+  sliceString,
+} from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
@@ -190,6 +194,7 @@ export default function JoinTournament() {
   //     window.location.reload();
   //   }
   // }, []);
+  console.log("detailTournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -430,7 +435,9 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          formatTimeMothDateYear(detailTournament?.tournamentStartAt)
+                          formatTimeMothDateYear(
+                            detailTournament?.tournamentStartAt
+                          )
                         )}
                       </Typography>
                     </Box>
@@ -478,7 +485,9 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          formatTimeMothDateYear(detailTournament?.tournamentEndAt)
+                          formatTimeMothDateYear(
+                            detailTournament?.tournamentEndAt
+                          )
                         )}
                       </Typography>
                     </Box>
@@ -1060,7 +1069,7 @@ export default function JoinTournament() {
                                     color: "#525252",
                                   }}
                                 >
-                                  Sponsored  by
+                                  Sponsored by
                                 </h6>
                                 <span
                                   style={{
@@ -1400,9 +1409,7 @@ export default function JoinTournament() {
                                 : "16px",
                           }}
                         >
-                          {item
-                            ? item
-                            : ""}
+                          {item ? item : ""}
                         </Typography>
                       </Box>
                     );

@@ -7,7 +7,7 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { images } from "../../../utils/images";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +30,8 @@ import {
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import GamePreview from "./GamePreview";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
@@ -54,6 +56,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [openVoucher, setOpenVoucher] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const { id } = useParams();
+  const { width } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   const typographyStyle = {
     textAlign: "start",
@@ -112,6 +115,29 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     dispatch(toggleBuyTicket(true));
   };
   const navigate = useNavigate();
+  let anchorSelector = 'a[href^="#"]';
+
+  // Collect all such anchor links
+  let anchorList = document.querySelectorAll(anchorSelector);
+
+  // Iterate through each of the links
+  anchorList.forEach((link) => {
+    link.onclick = function (e) {
+      // Prevent scrolling if the
+      // hash value is blank
+      e.preventDefault();
+
+      // Get the destination to scroll to
+      // using the hash property
+      let destination = document.querySelector(this.hash);
+
+      // Scroll to the destination using
+      // scrollIntoView method
+      destination.scrollIntoView({
+        behavior: "smooth",
+      });
+    };
+  });
   return (
     <>
       {fetchT ? (
@@ -482,6 +508,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 }
               />
               <Box sx={{ padding: "28px 28px 0px 28px" }}>
+                <a
+                  href="#GamePreview"
+                  style={{
+                    width: "100%",
+                    padding: "8px 0px",
+                    backgroundColor: "#AB3FEF",
+                    fontSize: `${width / 26}px`,
+                    borderRadius: "8px",
+                    color: "#ffff",
+                    border: "none",
+                    outline: "none",
+                    textDecoration: "none",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  Game Tutorial
+                </a>
+              </Box>
+              <Box sx={{ padding: "28px 28px 0px 28px" }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                   <Typography
                     sx={{
@@ -805,6 +851,18 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       {readMore ? "Read less" : "Read more"}
                     </Typography>
                   )}
+              </Box>
+              <Box sx={{ padding: "28px 28px 0px 28px" }}>
+                <Box
+                  sx={{
+                    height: "1px",
+                    backgroundColor: "rgba(151, 151, 151, 0.40)",
+                    width: "100%",
+                  }}
+                ></Box>
+              </Box>
+              <Box id="GamePreview">
+                <GamePreview />
               </Box>
               <Box sx={{ padding: "28px 28px 0px 28px" }}>
                 <Box
