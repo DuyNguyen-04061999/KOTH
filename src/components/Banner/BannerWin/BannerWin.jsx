@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { imageHome } from "../../../utils/images";
 
 export default function BannerWin(props) {
-  const {tournamentName, sponsorName, userAvatar, userName} = props;
+  const { tournamentName, sponsorName, userAvatar, userName } = props;
   const { width } = useWindowDimensions();
   const { biggestEndTour, hotWeekTour } = useSelector(
     (state) => state.tournamentReducer
@@ -153,12 +153,13 @@ export default function BannerWin(props) {
               fontWeight: 800,
               width: "100%",
               wordWrap: "break-word",
-              height: "130px",
               overflow: "hidden",
               lineHeight: 1.2,
+              textAlign: "center",
+              maxHeight: "100px",
             }}
           >
-            {tournamentName }
+            {tournamentName}
             <Typography
               sx={{
                 fontWeight: 800,
@@ -171,12 +172,13 @@ export default function BannerWin(props) {
                 WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                 width: "100%",
                 wordWrap: "break-word",
-                height: "130px",
                 overflow: "hidden",
                 lineHeight: 1.2,
+                textAlign: "center",
+                maxHeight: "100px",
               }}
             >
-            {tournamentName}
+              {tournamentName}
             </Typography>
           </Box>
         </Box>
@@ -197,7 +199,8 @@ export default function BannerWin(props) {
             sx={{
               position: "absolute",
               color: "#FFC56F",
-              fontSize:  useWindowDimensions().width > 1024 ? "19.714px" : "14px",
+              fontSize:
+                useWindowDimensions().width > 1024 ? "19.714px" : "14px",
               fontWeight: 700,
               top: "75%",
               left: "50%",

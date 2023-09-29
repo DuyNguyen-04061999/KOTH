@@ -83,6 +83,7 @@ const BannerTour = (props) => {
               lineHeight: "0.9",
               height: "140px",
               overflow: "hidden",
+              textAlign:"center"
             }}
           >
             {tournamentName}
