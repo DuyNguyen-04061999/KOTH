@@ -34,13 +34,6 @@ export default function GamePreview() {
           <Box component={"img"} src={images.GamePreview3}></Box>
         </Box>
       </ScrollingCarousel>
-      <Dialog open={true} sx={{ zIndex: "100000" }}>
-        <Box
-          sx={{ width: "", height: "" }}
-          component={"img"}
-          src={images.GamePreview3}
-        ></Box>
-      </Dialog>
     </Box>
   );
 }
