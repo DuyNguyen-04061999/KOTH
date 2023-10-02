@@ -103,6 +103,7 @@ import {
 } from "@mui/material";
 // import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
 import PlayGamePage from "./pages/PlayGamePage";
+import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import { Suspense } from "react";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
@@ -518,6 +519,7 @@ function App() {
       });
 
       socket?.on("warning", (data) => {
+        store.dispatch(showToast(data))
         toast.warning(data, {
           icon: ({ theme, type }) => (
             <img

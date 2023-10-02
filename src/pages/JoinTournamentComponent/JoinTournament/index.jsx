@@ -22,7 +22,11 @@ import { useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  saveBoughtTournament,
+  saveIdTournament,
+  toggleBuyTicket
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import JoinTournamentMobile from "../JoinTournamentMobile";
 import LeaderBoard from "../LeaderBoard";
 import DetailVoucher from "../DetailVoucher";
@@ -156,6 +160,12 @@ export default function JoinTournament() {
     startGame,
     dispatch,
   ]);
+
+  useEffect(() => {
+    dispatch(saveBoughtTournament(detailTournament?.bought))
+    dispatch(saveIdTournament(detailTournament?.id))
+  }, [detailTournament]);
+
   useEffect(() => {
     if (width > 1200) {
       if (

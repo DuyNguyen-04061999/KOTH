@@ -29,11 +29,12 @@ const toastReducer = (
     case REHYDRATE:
       return { ...state };
     case "SHOW_TOAST":
+      console.log(payload);
       return {
         ...state,
-        isShowToast: true,
-        messageToast: payload.message,
-        typeToast: payload.type,
+        // isShowToast: true,
+        messageToast: payload.type,
+        // typeToast: payload.type,
       };
     case "HIDE_TOAST":
       return {
