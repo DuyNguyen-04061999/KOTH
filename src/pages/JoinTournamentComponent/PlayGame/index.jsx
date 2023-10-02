@@ -16,7 +16,7 @@ import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
-  const { device, deviceType } = useSelector((state) => state.deviceReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [continueGame, setContinueGame] = useState(false);

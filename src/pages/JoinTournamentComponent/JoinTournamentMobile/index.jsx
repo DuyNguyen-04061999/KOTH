@@ -923,7 +923,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   padding: "28px 28px 28px 28px",
                   width: "100%",
                   background: "rgba(37, 37, 37, 0.20)",
-                  // backdropFilter: "blur(2px)",
+                  backdropFilter: "blur(2px)",
                   zIndex: "28",
                 }}
               >

@@ -43,6 +43,7 @@ import PlayGame from "../PlayGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
+import GamePreview from "../JoinTournamentMobile/GamePreview";
 
 const theme = createTheme({
   typography: {},
@@ -78,17 +79,17 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
-  const timeEnd =
-    moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
-    " " +
-    "- " +
-    moment(detailTournament?.tournamentEndAt).format("hh:mm a");
+  // const timeEnd =
+  //   moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
+  //   " " +
+  //   "- " +
+  //   moment(detailTournament?.tournamentEndAt).format("hh:mm a");
 
-  const timeStart =
-    moment(detailTournament?.tournamentStartAt).format("DD/MM/YYYY") +
-    " " +
-    "- " +
-    moment(detailTournament?.tournamentStartAt).format("hh:mm a");
+  // const timeStart =
+  //   moment(detailTournament?.tournamentStartAt).format("DD/MM/YYYY") +
+  //   " " +
+  //   "- " +
+  //   moment(detailTournament?.tournamentStartAt).format("hh:mm a");
 
   useEffect(() => {
     setSocket(_socket);
@@ -1417,6 +1418,7 @@ export default function JoinTournament() {
                 )
               )}
             </Box>
+            <GamePreview />
           </Container>
         ) : (
           <>
