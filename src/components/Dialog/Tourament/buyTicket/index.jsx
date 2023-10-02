@@ -186,7 +186,7 @@ export default function BuyTicket(props) {
                       }}
                     >
                       {/* {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"} */}
-                      0.5 ${" "}
+                      0.99 ${" "}
                     </Typography>
                   </Box>
                   <Box sx={{ marginTop: "20px" }}>
@@ -293,7 +293,7 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          0.5 ${" "}
+                          0.99 ${" "}
                         </Typography>
                       </Box>
                     </Box>

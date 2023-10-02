@@ -34,7 +34,7 @@ export default function TicketCheckOut() {
     const [socket, setSocket] = useState(null);
     const [ticketBuy, setTicketBuy] = useState([]);
     const [sl,setSl] = useState(1)
-    const [goldTicket,setGoldTicket] = useState(0.99)
+    const [goldTicket,setGoldTicket] = useState(0.5)
     const [totalGold,setTotalGold] = useState(sl * goldTicket)
 
     const  handleChangeValue = (e) => {
@@ -60,6 +60,7 @@ export default function TicketCheckOut() {
     }, [socket]);
     return (<>
         <Dialog
+            fullScreen={width < 576}
             sx={{
                 "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
                     borderRadius: "11px !important",
@@ -226,7 +227,7 @@ export default function TicketCheckOut() {
                             }}
                         >
                             <Box sx={{color: "white"}}>
-                                <Typography className="mb-1">Subscription Pack</Typography>
+                                {typeWallet === "subscription" ? (<Typography className="mb-1">Subscription Pack</Typography>) : (<Typography className="mb-1">Ticket</Typography> )}
                                 <Typography sx={{color: "gray"}} variant="body2">
                                     {typeWallet === "subscription" ? "$19.99" : `$${goldTicket}`}
                                 </Typography>
@@ -306,7 +307,7 @@ export default function TicketCheckOut() {
                     />
                     <Box>
                         <Typography className="text-white mb-2">Voucher</Typography>
-                        <Box>
+                        <Box className={"d-flex"}>
                             <input type="text" className="input_voucher"/>
                             <Button
                                 sx={{
@@ -343,12 +344,12 @@ export default function TicketCheckOut() {
                             display: "flex", justifyContent: "space-between", alignItems: "center", color: "white",
                         }}
                     >
-                        <Typography>Your curent</Typography>
+                        {typeWallet === "buyTicket" ? (<Typography>Your curent balance</Typography>) : (<Typography>Your curent balance</Typography>)}
                         {typeWallet === "subscription" ? (<Typography>${formatMoney(Number.parseFloat(userGold)) - 19.99}</Typography>) : (<Typography>$ {formatMoney(Number.parseFloat(userGold)) - (sl * goldTicket)}</Typography>)}
                     </Box>
                     <Box>
                         <Grid container columnSpacing={2}>
-                            <Grid item md={6}>
+                            <Grid item xs={6} md={6}>
                                 <Button
                                     onClick={() => {
                                         dispatch(toggleCheckWallet())
@@ -356,7 +357,7 @@ export default function TicketCheckOut() {
                                     sx={{
                                         background: "transparent",
                                         border: "2px solid #7848ED",
-                                        padding: "12px 52px",
+                                        padding: width < 576 ? "12px 34px" : "12px 52px",
                                         borderRadius: "8px",
                                         color: "#7848ED",
                                         width: "100%",
@@ -366,43 +367,22 @@ export default function TicketCheckOut() {
                                     Cancel
                                 </Button>
                             </Grid>
-                            <Grid item md={6}>
-                                <Button
+                            <Grid item xs={6} md={6}>
+                                {typeWallet === "subscription" ? (<Button
                                     onClick={() => {
-                                        if (typeWallet === "subscription") {
+                                        if (userGold < 19.99) {
+                                            dispatch(toggleCheckWallet())
+                                            dispatch(toggleWalletDialog());
+                                            // dispatch(toggleBuyTicket());
+                                        } else {
                                             socket.emit("buyPackage", {
                                                 packageId: idPackage,
                                             });
-                                            if (messageToast === "Your gold not enough!") {
-                                                dispatch(toggleCheckWallet());
-                                                dispatch(toggleWalletDialog());
-                                            }
-                                        }
-                                        if (typeWallet === "buyTicket") {
-                                            if (!boughtTour) {
-                                                socket?.emit("buyPackage", {
-                                                    price: 0.5,
-                                                    tournamentId: idTour,
-                                                    packageId: ticketBuy?.id,
-                                                });
-                                            } else {
-                                                socket?.emit("buyPackage", {
-                                                    price: 0.5,
-                                                    tournamentId: idTour,
-                                                    packageId: ticketBuy?.id,
-                                                });
-                                            }
-                                            if (messageToast === "Your gold not enough!") {
-
-                                                dispatch(toggleCheckWallet())
-                                                dispatch(toggleWalletDialog());
-                                                // dispatch(toggleBuyTicket());
-                                            }
                                         }
                                     }}
                                     sx={{
                                         background: "linear-gradient(0deg, #7848ED 0%, #7848ED 100%), linear-gradient(180deg, #893BF1 0%, #7947EE 100%)",
-                                        padding: "12px 52px",
+                                        padding: width < 576 ? "12px 34px" : "12px 52px",
                                         borderRadius: "8px",
                                         color: "white",
                                         width: "100%",
@@ -411,7 +391,39 @@ export default function TicketCheckOut() {
                                     }}
                                 >
                                     Place Order
-                                </Button>
+                                </Button>) : (
+                                    <Button
+                                        onClick={() => {
+                                            if (userGold < 0.99*sl) {
+                                                dispatch(toggleCheckWallet())
+                                                dispatch(toggleWalletDialog());
+                                            } else if (!boughtTour) {
+                                                    socket?.emit("buyPackage", {
+                                                        quantity: sl,
+                                                        tournamentId: idTour,
+                                                        packageId: ticketBuy?.id,
+                                                    });
+                                                } else {
+                                                    socket?.emit("buyPackage", {
+                                                        quantity: sl,
+                                                        tournamentId: idTour,
+                                                        packageId: ticketBuy?.id,
+                                                    });
+                                                }
+                                        }}
+                                        sx={{
+                                            background: "linear-gradient(0deg, #7848ED 0%, #7848ED 100%), linear-gradient(180deg, #893BF1 0%, #7947EE 100%)",
+                                            padding: width < 576 ? "12px 34px" : "12px 52px",
+                                            borderRadius: "8px",
+                                            color: "white",
+                                            width: "100%",
+                                            fontWeight: "200 !important",
+                                            textTransform: "none",
+                                        }}
+                                    >
+                                        Place Order
+                                    </Button>
+                                )}
                             </Grid>
                         </Grid>
                     </Box>
