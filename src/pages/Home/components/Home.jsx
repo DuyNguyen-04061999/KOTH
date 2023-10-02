@@ -575,7 +575,9 @@ export default function Home() {
                   </Grid>
                 </div>
               </div>
-            ) : (<></>)}
+            ) : (
+              <></>
+            )}
             <Box
               className="leaderboard"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
@@ -836,7 +838,7 @@ export default function Home() {
                 </Box>
               </Box>
             </Box>
-            {getAppType() === "promote" ? (<Package />) : (<></>)}
+            {getAppType() === "promote" ? <Package /> : <></>}
           </Container>
         </Box>
       ) : (
@@ -1250,7 +1252,7 @@ export default function Home() {
           <div className="container">
             <hr style={{ border: "1px solid #462556" }} />
           </div>
-          {getAppType() === "promote" ? (<Package />) : (<></>)}
+          {getAppType() === "promote" ? <Package /> : <></>}
           {/* <Box className="footer mb-5">
             <Box className="footer-content" sx={{ marginBottom: "100px" }}>
               <img className="logo-footer" src={images2.logo_text} alt="..." />
