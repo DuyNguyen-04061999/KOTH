@@ -48,7 +48,7 @@ const AccordionSummary = styled((props) => (
   "& .MuiAccordionSummary-content": {
     marginLeft: theme.spacing(1),
   },
-  padding: "11px 24px",
+  padding: useWindowDimensions().width < 576 ? "1px 20px" : "11px 24px",
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
@@ -133,12 +133,15 @@ const Setting = () => {
             fontSize: "24px",
             fontWeight: 600,
             lineHeight: "16px",
-            marginTop: "40px",
+            marginTop: width < 576 ? "81px" : "56px",
           }}
         >
           Settings
         </Box>
-        <Box sx={{ marginTop: "60px" }}>
+        <Box sx={{marginTop:"32px"}}>
+          <SearchBar placeholder="Search" width="100%" />
+        </Box>
+        <Box sx={{ marginTop: width < 576 ? "20px" : "60px" }}>
           <Accordion expanded={expanded}>
             <AccordionSummary
               onClick={handleChange}
@@ -252,7 +255,7 @@ const Setting = () => {
         </Box>
         <Box
           sx={{
-            marginTop: "60px",
+            marginTop: width < 576 ? "20px" : "60px",
             borderRadius: "16px",
             overflow: "hidden",
             border: `2px solid #E4E4E4`,
@@ -263,7 +266,7 @@ const Setting = () => {
               fontSize: "18px",
               fontWeight: 500,
               lineHeight: "24px",
-              padding: "23px 37px",
+              padding: width < 576 ? "13px 37px" : "23px 37px",
               backgroundColor: "#F7F7F7",
             }}
           >
@@ -278,7 +281,7 @@ const Setting = () => {
                 display: width < 1024 ? "flex" : "grid",
                 flexDirection: "column",
                 gridTemplateColumns: "repeat(3,1fr)",
-                gridRowGap: "36px",
+                gridRowGap: width < 576 ? "12px"  : "36px",
                 gridColumnGap: "48px",
               }}
             >
@@ -287,7 +290,7 @@ const Setting = () => {
                   border: "2px solid #355DFF",
                   borderRadius: "12px",
                   backgroundColor: "#fff",
-                  padding: "14px 18px",
+                  padding: width < 576 ? "0px 18px" : "14px 18px",
                   position: "relative",
                   display: "flex",
                   alignItems: "center",
@@ -304,7 +307,7 @@ const Setting = () => {
                     lineHeight: "16px",
                     textTransform: "uppercase",
                     position: "absolute",
-                    top: "16px",
+                    top: width < 576 ? "6px" : "16px",
                     left: "20px",
                     letterSpacing: "0.9px",
                   }}
@@ -332,7 +335,7 @@ const Setting = () => {
                   border: "2px solid #355DFF",
                   borderRadius: "12px",
                   backgroundColor: "#fff",
-                  padding: "14px 18px",
+                  padding: width < 576 ? "0px 18px" : "14px 18px",
                   position: "relative",
                   display: "flex",
                   alignItems: "center",
@@ -349,7 +352,7 @@ const Setting = () => {
                     lineHeight: "16px",
                     textTransform: "uppercase",
                     position: "absolute",
-                    top: "16px",
+                    top: width < 576 ? "6px" : "16px",
                     left: "20px",
                     letterSpacing: "0.9px",
                   }}
@@ -377,7 +380,7 @@ const Setting = () => {
                   border: "2px solid #355DFF",
                   borderRadius: "12px",
                   backgroundColor: "#fff",
-                  padding: "14px 18px",
+                  padding: width < 576 ? "0px 18px" : "14px 18px",
                   position: "relative",
                   display: "flex",
                   alignItems: "center",
@@ -394,7 +397,7 @@ const Setting = () => {
                     lineHeight: "16px",
                     textTransform: "uppercase",
                     position: "absolute",
-                    top: "16px",
+                    top: width < 576 ? "6px" : "16px",
                     left: "20px",
                     letterSpacing: "0.9px",
                   }}
@@ -417,8 +420,10 @@ const Setting = () => {
                   ref={rePassInput}
                 />
               </Box>
-              <Box>
-                <p style={{ color: "red" }}>{passwordError}</p>
+              <Box sx={{ display: passwordError ? "block" : "none" }}>
+                <p style={{ color: "red", fontSize: width < 576 && "12px" }}>
+                  {passwordError}
+                </p>
               </Box>
               <Button
                 type="submit"
