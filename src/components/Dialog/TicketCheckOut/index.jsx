@@ -345,7 +345,7 @@ export default function TicketCheckOut() {
                         }}
                     >
                         {typeWallet === "buyTicket" ? (<Typography>Your curent balance</Typography>) : (<Typography>Your curent balance</Typography>)}
-                        {typeWallet === "subscription" ? (<Typography>${formatMoney(Number.parseFloat(userGold)) - 19.99}</Typography>) : (<Typography>$ {formatMoney(Number.parseFloat(userGold)) - (sl * goldTicket)}</Typography>)}
+                        {typeWallet === "subscription" ? (<Typography>${formatMoney(Number.parseFloat(userGold)) - 19.99}</Typography>) : (<Typography>$ {formatMoney(Number.parseFloat(userGold - Number(sl) * Number(goldTicket)))}</Typography>)}
                     </Box>
                     <Box>
                         <Grid container columnSpacing={2}>
