@@ -23,9 +23,7 @@ import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../components/SlickSlider";
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -41,8 +39,7 @@ export default function WeekLongTour() {
   const { width } = useWindowDimensions();
   // const [itemOffset, setItemOffSet] = useState(1);
   const [isFetchList, setIsFetchList] = useState(true);
-  const [isFetching, setIsFetching] = useState(true);
-
+  const [itemOffSet, setItemOffSet] = useState(0);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -50,24 +47,14 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      if (!isFetchList) {
-        setIsFetching(false);
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [isFetchList]);
 
   const imgHot = weeklyTournament.map((e) => {
-    return e.tournamentBackground
- })
+    return e.tournamentBackground;
+  });
 
- const imgHotMobile = weeklyTournament.map((e) => {
-   return e.tournamentBackgroundMobile
-})
+  const imgHotMobile = weeklyTournament.map((e) => {
+    return e.tournamentBackgroundMobile;
+  });
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -109,7 +96,7 @@ export default function WeekLongTour() {
                 fontSize: "24px",
               }}
             >
-              Week Long Tournament
+              Weeklong Tournament
             </Typography>
             <Box
               sx={{
@@ -119,17 +106,17 @@ export default function WeekLongTour() {
               }}
             >
               {" "}
-              {isFetching ? (
-                <BannerLoading height={width < 576 ? "106px" : width < 1024  ? "211px" :"375px"} />
+              {isFetchList ? (
+                <BannerLoading
+                  height={
+                    width < 576 ? "208px" : width < 1024 ? "211px" : "375px"
+                  }
+                />
               ) : (
                 <SlickSlider
                   appendDot={true}
                   type={"tour"}
-                  images={
-                    width < 576
-                      ? imgHotMobile
-                      : imgHot
-                  }
+                  images={width < 576 ? imgHotMobile : imgHot}
                 />
               )}
             </Box>
@@ -152,29 +139,32 @@ export default function WeekLongTour() {
                   minHeight: "577.88px",
                 }}
               >
-                {isFetching ? (
-                  <ListItemLoading itemCount={5}/>
+                {isFetchList ? (
+                  <ListItemLoading itemCount={5} />
                 ) : weeklyTournament ? (
                   weeklyTournament
                     // ?.slice(itemOffset, itemOffset + 10)
                     ?.map((item, index) => {
                       return (
-                        <Box key={index}>
-                          <ItemComponent tourInfo={item} countdown={true} />
-                        </Box>
+                        index >= itemOffSet &&
+                        index <= itemOffSet + 9 && (
+                          <Box key={index}>
+                            <ItemComponent tourInfo={item} countdown={true} />
+                          </Box>
+                        )
                       );
                     })
                 ) : (
-                  <ListEmpty />
+                  <ListEmpty textData={"weeklong"} />
                 )}
               </Box>
             </Box>
 
-            {!isFetching && weeklyTournament?.length > 0 && (
+            {!isFetchList && weeklyTournament?.length > 0 && (
               <PaginatedItems
                 pageCount={Math.ceil(weeklyTournament.length / 10)}
                 changeOffSet={(value) => {
-                  // setItemOffSet(((value - 1) * 10) % weeklyTournament.length);
+                  setItemOffSet((value - 1) * 10);
                 }}
               />
             )}

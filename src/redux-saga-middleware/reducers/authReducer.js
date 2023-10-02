@@ -135,6 +135,7 @@ const authReducer = (
     userPackageId: "",
     isDropdownNav: true,
     isNavTablet: true,
+    uPack:{}
   },
   action
 ) => {
@@ -154,6 +155,7 @@ const authReducer = (
         userRole: payload?.role,
         userId: payload?.id,
         userPackageId: payload.userPackageId,
+        uPack: payload.uPack
       };
     }
     case "REMOVE_TOKEN":

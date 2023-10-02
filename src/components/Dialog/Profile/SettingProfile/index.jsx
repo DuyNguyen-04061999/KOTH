@@ -44,12 +44,15 @@ export default function SettingProfile({ closePopup }) {
   }
 
   useEffect(() => {
-    if (fName === "" || lName === "" || checkEmailFormat(emailAddress) === false) {
-      setValidEmailSetting("Invalid Email Address")
-      console.log(validEmailSetting);
+    if (fName === "" || lName === "" ) {
       setDisable(true);
       return
-    } else {
+    } else if (checkEmailFormat(emailAddress) === false) {
+      setValidEmailSetting("Invalid Email Address")
+      setDisable(true);
+    }
+    
+    else {
       setDisable(false);
       setValidEmailSetting("")
     }

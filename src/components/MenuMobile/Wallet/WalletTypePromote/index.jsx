@@ -1,6 +1,6 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { popup } from "../../../../utils/images";
+import { images, popup } from "../../../../utils/images";
 import "./index.scss";
 // import FullScreenDialog from "../../../FullScreenDialog";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,8 @@ import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeRedu
 import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { formatMoney, getAppType } from "../../../../utils/helper";
 import { useState } from "react";
-import {toggleCheckWallet, toggleWalletDialog} from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { toggleWalletDialog} from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { toast } from "react-toastify";
 
 export default function WalletTypePromote(props) {
   const { handleClose } = props;
@@ -20,6 +21,8 @@ export default function WalletTypePromote(props) {
   const [typePayment, setTypePayment] = useState("stripe");
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
+
+  
 
   return (
     <>
@@ -430,7 +433,7 @@ export default function WalletTypePromote(props) {
                 style={{ borderRadius: "50px", marginTop: "6px" }}
                 readOnly
                 onClick={() => {
-                  setAgree(!agree);
+                  setAgree(true);
                 }}
                 checked={agree}
               />
@@ -463,8 +466,8 @@ export default function WalletTypePromote(props) {
               </Box>
             </Box>
             <Box>
-              <button
-                style={{
+              <Button
+                sx={{
                   color: "white",
                   width: "100%",
                   height: "45px",
@@ -477,16 +480,52 @@ export default function WalletTypePromote(props) {
                   marginBottom:"30px"
                 }}
                 onClick={() => {
-                  if (!agree) {
-                    dispatch(showAlert("warning", "Please agree policy!"));
+                  if (agree === false) {
+                    toast.warning("Please agree policy!", {
+                      icon: ({ theme, type }) => (
+                        <img
+                          style={{ width: "20px", marginRight: "10px" }}
+                          alt="..."
+                          src={images.WarningIcon}
+                        />
+                      ),
+                      position: "top-center",
+                      className:
+                        // width < 576 ? "warning-background-small" : "warning-background",
+                        "warning-background"
+                    });
                     return;
                   }
                   if (!amount || amount < 0) {
-                    dispatch(showAlert("warning", "Please enter amount"));
+                    toast.warning("Please enter amount", {
+                      icon: ({ theme, type }) => (
+                        <img
+                          style={{ width: "20px", marginRight: "10px" }}
+                          alt="..."
+                          src={images.WarningIcon}
+                        />
+                      ),
+                      position: "top-center",
+                      className:
+                        // width < 576 ? "warning-background-small" : "warning-background",
+                        "warning-background"
+                    });
                   } else if (typePayment === "stripe" && currency === "USD") {
                     dispatch(getStripe(Number.parseFloat(amount)));
                   } else {
-                    dispatch(showAlert("warning", "Updating...!"));
+                    toast.warning("Updating...!", {
+                      icon: ({ theme, type }) => (
+                        <img
+                          style={{ width: "20px", marginRight: "10px" }}
+                          alt="..."
+                          src={images.WarningIcon}
+                        />
+                      ),
+                      position: "top-center",
+                      className:
+                        // width < 576 ? "warning-background-small" : "warning-background",
+                        "warning-background"
+                    });
                   }
                 }}
               >
@@ -501,7 +540,7 @@ export default function WalletTypePromote(props) {
                 >
                   Continue
                 </Typography>
-              </button>
+              </Button>
             </Box>
           </Box>
         ) : (

@@ -7,7 +7,7 @@ import AdminNavigation from "../../components/Admin/Navigation/AdminNavigation";
 import DrawerNavigation from "../../components/Admin/Navigation/DrawerNavigation";
 import CreateAccountDialogComponent from "../../components/Admin/Dialog/CreateAccountDialogComponent";
 import ProvideTicketDialogComponent from "../../components/Admin/Dialog/ProvideTicketDialogComponent";
-import { ResetPasswordDialogComponent } from "../../components/Admin/Dialog";
+import { GivePermissionDialogComponent, ResetPasswordDialogComponent } from "../../components/Admin/Dialog";
 
 const MainContentRoot = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
@@ -36,6 +36,7 @@ export default function MainLayout() {
       <CreateAccountDialogComponent />
       <ProvideTicketDialogComponent />
       <ResetPasswordDialogComponent/>
+      <GivePermissionDialogComponent/>
       <Box sx={{height: "100vh"}}>
         {" "}
         <Box

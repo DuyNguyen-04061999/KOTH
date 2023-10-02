@@ -9,6 +9,8 @@ import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminS
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 import AdminPanel from "../../../components/Admin/AdminPanel/AdminPanel";
 import NestedTable from "../../../components/Admin/NestedTable/NestedTable";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import DetailAccountDialogComponent from "../../../components/Admin/Dialog/DetailAccountDialogComponent";
 
 const ManageDistributor = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -17,6 +19,8 @@ const ManageDistributor = () => {
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
   const { listEndUser } = useSelector((state) => state.adminAgentReducer);
   const [data, setData] = useState([]);
+
+  const { width } = useWindowDimensions();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -71,11 +75,75 @@ const ManageDistributor = () => {
     }
   }, [roles, listDistributor, listEndUser, listSub, listRefs]);
 
+  const [headerList, setHeaderList] = useState([]);
+
+  useEffect(() => {
+    if (width > 576) {
+      if (roles?.includes("master")) {
+        setHeaderList([
+          "",
+          "ID",
+          "Account",
+          "Nick Name",
+          "Manager",
+          "Agents",
+          "Players",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+          "Time Zone",
+        ]);
+      }
+
+      if (roles?.includes("distributor")) {
+        setHeaderList([
+          "",
+          "ID",
+          "Account",
+          "Nick Name",
+          "Give Permission",
+          "Code/Link",
+          "Manager",
+          "Players",
+          "Revenue By",
+          "Revenue",
+          "Register Date",
+          "Last Login",
+          "Time Zone",
+        ]);
+      }
+
+      if (roles?.includes("agent")) {
+        setHeaderList([
+          "",
+          "ID",
+          "Account",
+          "Nick Name",
+          "Manager",
+          "Players",
+          "Revenue",
+        ]);
+      }
+    } else {
+      if (roles?.includes("master")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+
+      if (roles?.includes("distributor")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+
+      if (roles?.includes("agent")) {
+        setHeaderList(["Account", "Level", "Balance"]);
+      }
+    }
+  }, [roles]);
+
   return (
     <Container>
-      <AdminPanel></AdminPanel>
-      <Box sx={{ marginTop: "36px" }}>
-        <NestedTable data={data} />{" "}
+      <AdminPanel></AdminPanel> <DetailAccountDialogComponent />
+      <Box sx={{ marginTop: "40px" }}>
+        <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
     </Container>
   );

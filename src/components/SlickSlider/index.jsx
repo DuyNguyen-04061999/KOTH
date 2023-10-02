@@ -5,12 +5,22 @@ import { useState } from "react";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import { useNavigate } from "react-router-dom";
 import { images } from "../../utils/images";
+import { useSelector } from "react-redux";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
+  const { device } = useSelector((state) => state.deviceReducer);
   const { width } = useWindowDimensions();
-  const { images: img, appendDot, htmlCode, isHtmlCode, tours, isLoading, type } = props;
-
+  const {
+    images: img,
+    appendDot,
+    htmlCode,
+    isHtmlCode,
+    tours,
+    isLoading,
+    type,
+  } = props;
+  console.log("device: ", device);
   const settings = {
     dots: true,
     arrows: false,
@@ -93,8 +103,11 @@ export default function SlickSlider(props) {
                 objectFit: "cover",
               }}
               component={"img"}
-              src={type && type === "tour" ?  process.env.REACT_APP_SOCKET_SERVER +
-              "/" + item : item}
+              src={
+                type && type === "tour"
+                  ? process.env.REACT_APP_SOCKET_SERVER + "/" + item
+                  : item
+              }
             ></Box>
           </Box>
         );
@@ -126,14 +139,17 @@ export default function SlickSlider(props) {
                       objectFit: "cover",
                     }}
                     component={"img"}
-                    src={(width < 576 && item?.tournamentBackgroundMobile)
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        item?.tournamentBackgroundMobile
-                      : item?.tournamentBackground ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        item?.tournamentBackground
-                      : getImage(item)}
+                    src={
+                      width < 576 && item?.tournamentBackgroundMobile
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          item?.tournamentBackgroundMobile
+                        : item?.tournamentBackground
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          item?.tournamentBackground
+                        : getImage(item)
+                    }
                   ></Box>
                 </Box>
               );

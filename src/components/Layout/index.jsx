@@ -42,6 +42,7 @@ import {
   clickTabChat,
   closeChatPopup,
   openChatPopup,
+  setBadgeChat,
   showBadgeChat,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import {
@@ -149,9 +150,9 @@ export default function Layout(props) {
     setSocket(socket);
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(showBadgeChat(false))
-  },[chatWorld])
+  // useEffect(() => {
+  //   dispatch(setBadgeChat(false))
+  // },[chatWorld])
 
   useEffect(() => {
     if (

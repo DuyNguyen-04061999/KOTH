@@ -35,7 +35,11 @@ import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { formatTimeMothDateYear, isJson, sliceString } from "../../../utils/helper";
+import {
+  formatTimeMothDateYear,
+  isJson,
+  sliceString,
+} from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
@@ -43,6 +47,7 @@ import PlayGame from "../PlayGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
+import GamePreview from "../JoinTournamentMobile/GamePreview";
 
 const theme = createTheme({
   typography: {},
@@ -69,7 +74,6 @@ export default function JoinTournament() {
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
-  const [isFetching, setIsFetching] = useState(true);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
@@ -79,17 +83,17 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
-  const timeEnd =
-    moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
-    " " +
-    "- " +
-    moment(detailTournament?.tournamentEndAt).format("hh:mm a");
+  // const timeEnd =
+  //   moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
+  //   " " +
+  //   "- " +
+  //   moment(detailTournament?.tournamentEndAt).format("hh:mm a");
 
-  const timeStart =
-    moment(detailTournament?.tournamentStartAt).format("DD/MM/YYYY") +
-    " " +
-    "- " +
-    moment(detailTournament?.tournamentStartAt).format("hh:mm a");
+  // const timeStart =
+  //   moment(detailTournament?.tournamentStartAt).format("DD/MM/YYYY") +
+  //   " " +
+  //   "- " +
+  //   moment(detailTournament?.tournamentStartAt).format("hh:mm a");
 
   useEffect(() => {
     setSocket(_socket);
@@ -108,17 +112,6 @@ export default function JoinTournament() {
       });
     }
   });
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      if (!fetchT) {
-        setIsFetching(false);
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [fetchT]);
 
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
@@ -212,6 +205,7 @@ export default function JoinTournament() {
   //     window.location.reload();
   //   }
   // }, []);
+  console.log("detailTournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -231,7 +225,7 @@ export default function JoinTournament() {
                 height: "auto",
               }}
             >
-              {isFetching ? (
+              {fetchT ? (
                 <BannerLoading width={"100%"} height={"340px"} />
               ) : (
                 <Box
@@ -431,7 +425,7 @@ export default function JoinTournament() {
                           marginLeft: "0px !important",
                         }}
                       >
-                        Start
+                        Start date
                       </Typography>
                       <Typography
                         sx={{
@@ -446,13 +440,15 @@ export default function JoinTournament() {
                           minWidth: "155px",
                         }}
                       >
-                        {isFetching ? (
+                        {fetchT ? (
                           <Skeleton
                             variant="text"
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          formatTimeMothDateYear(detailTournament?.tournamentStartAt)
+                          formatTimeMothDateYear(
+                            detailTournament?.tournamentStartAt
+                          )
                         )}
                       </Typography>
                     </Box>
@@ -479,7 +475,7 @@ export default function JoinTournament() {
                           marginLeft: "0px !important",
                         }}
                       >
-                        Finish
+                        End date
                       </Typography>
                       <Typography
                         sx={{
@@ -494,13 +490,15 @@ export default function JoinTournament() {
                           minWidth: "155px",
                         }}
                       >
-                        {isFetching ? (
+                        {fetchT ? (
                           <Skeleton
                             variant="text"
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          formatTimeMothDateYear(detailTournament?.tournamentEndAt)
+                          formatTimeMothDateYear(
+                            detailTournament?.tournamentEndAt
+                          )
                         )}
                       </Typography>
                     </Box>
@@ -771,7 +769,7 @@ export default function JoinTournament() {
                         marginBottom: "30px",
                       }}
                     >
-                      {isFetching ? (
+                      {fetchT ? (
                         <ParagraphLoading
                           lines={1}
                           width={"100%"}
@@ -804,7 +802,7 @@ export default function JoinTournament() {
                               ? "Hourly tournaments"
                               : detailTournament?.tournamentTimeType === "daily"
                               ? "Daily tournaments"
-                              : "Week-long tournaments"}
+                              : "Weeklong tournaments"}
                           </Typography>
                         </>
                       )}
@@ -992,7 +990,7 @@ export default function JoinTournament() {
                         </div>
                       </div>
                     </Box> */}
-                    {isFetching ? (
+                    {fetchT ? (
                       <Skeleton
                         width={"100%"}
                         height={"147px"}
@@ -1082,7 +1080,7 @@ export default function JoinTournament() {
                                     color: "#525252",
                                   }}
                                 >
-                                  Sponsor by
+                                  Sponsored by
                                 </h6>
                                 <span
                                   style={{
@@ -1112,7 +1110,7 @@ export default function JoinTournament() {
                                     color: "#525252",
                                   }}
                                 >
-                                  Validity date
+                                  Valid by
                                 </h6>
                                 <span
                                   style={{
@@ -1248,7 +1246,7 @@ export default function JoinTournament() {
                       marginTop: "16px",
                     }}
                   >
-                    {isFetching ? (
+                    {fetchT ? (
                       <Box
                         sx={{
                           width: "100%",
@@ -1352,7 +1350,7 @@ export default function JoinTournament() {
                       setCurrentResult(false);
                     }}
                     detailTournament={detailTournament}
-                    isFetching={isFetching}
+                    isFetching={fetchT}
                   />
                 </Box>
               </Box>
@@ -1390,7 +1388,7 @@ export default function JoinTournament() {
               >
                 Informations
               </Box>
-              {isFetching ? (
+              {fetchT ? (
                 <ParagraphLoading />
               ) : (
                 detailTournament &&
@@ -1422,9 +1420,7 @@ export default function JoinTournament() {
                                 : "16px",
                           }}
                         >
-                          {item
-                            ? item
-                            : ""}
+                          {item ? item : ""}
                         </Typography>
                       </Box>
                     );
@@ -1432,6 +1428,7 @@ export default function JoinTournament() {
                 )
               )}
             </Box>
+            <GamePreview />
           </Container>
         ) : (
           <>

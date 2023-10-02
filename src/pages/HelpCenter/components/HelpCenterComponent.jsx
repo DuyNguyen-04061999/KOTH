@@ -11,11 +11,10 @@ import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import moment from "moment/moment";
+import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -32,7 +31,7 @@ const HelpCenterComponent = () => {
     const array = document.split(/\d\./);
     return array;
   };
-  const { tabHelpCenter, listFAQPromote } = useSelector(
+  const { tabHelpCenter, listFAQPromote, isFetching } = useSelector(
     (state) => state.helpcenterReducer
   );
   const dispatch = useDispatch();
@@ -144,50 +143,61 @@ const HelpCenterComponent = () => {
                   overflowY: "auto",
                 }}
               >
-                <h4 style={{ fontSize: "16px" }}>
-                  {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqTitle}
-                </h4>
-                <p style={{ fontSize: "14px", textAlign: "start" }}>
-                  {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqDesc}
-                </p>
-                {listFAQ?.length &&
-                  listFAQ?.map((item, index) => (
-                    <TabPanel value={tabHelpCenter} key={index} index={index}>
-                      {item?.FAQPromoteData?.map((item, index) => (
-                        <Box key={index}>
-                          <h6
-                            style={{
-                              margin: "20px 0px",
-                              fontWeight: "bold",
-                              color: "#fff",
-                              fontSize: "12px",
-                            }}
-                          >
-                            {item?.faqQuestion}
-                          </h6>
+                {isFetching ? (
+                  <ParagraphLoading lines={10} />
+                ) : (
+                  <>
+                    {" "}
+                    <h4 style={{ fontSize: "16px" }}>
+                      {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqTitle}
+                    </h4>
+                    <p style={{ fontSize: "14px", textAlign: "start" }}>
+                      {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqDesc}
+                    </p>
+                    {listFAQ?.length &&
+                      listFAQ?.map((item, index) => (
+                        <TabPanel
+                          value={tabHelpCenter}
+                          key={index}
+                          index={index}
+                        >
+                          {item?.FAQPromoteData?.map((item, index) => (
+                            <Box key={index}>
+                              <h6
+                                style={{
+                                  margin: "20px 0px",
+                                  fontWeight: "bold",
+                                  color: "#fff",
+                                  fontSize: "12px",
+                                }}
+                              >
+                                {item?.faqQuestion}
+                              </h6>
+                              <p
+                                style={{
+                                  fontSize: "12px",
+                                  fontWeight: "lighter !important",
+                                  margin: "10px 0px",
+                                  color: "#fff",
+                                  textAlign: "start",
+                                }}
+                              >
+                                {item?.faqAnswer.replace(/(\d+\.) /g, "<br>")}
+                              </p>
+                            </Box>
+                          ))}
                           <p
                             style={{
-                              fontSize: "12px",
-                              fontWeight: "lighter !important",
-                              margin: "10px 0px",
-                              color: "#fff",
-                              textAlign: "start",
+                              margin: "20px 0px",
+                              fontSize: "10px",
                             }}
-                          >
-                            {item?.faqAnswer.replace(/(\d+\.) /g, "<br>")}
-                          </p>
-                        </Box>
+                          >{`Last Updated: [${moment(item?.updatedAt).format(
+                            "MMM Do YY"
+                          )}]`}</p>
+                        </TabPanel>
                       ))}
-                      <p
-                        style={{
-                          margin: "20px 0px",
-                          fontSize: "10px",
-                        }}
-                      >{`Last Updated: [${moment(item?.updatedAt).format(
-                        "MMM Do YY"
-                      )}]`}</p>
-                    </TabPanel>
-                  ))}
+                  </>
+                )}
               </Box>
             </Box>
           </Container>
@@ -270,51 +280,62 @@ const HelpCenterComponent = () => {
                     padding: "13px 24px",
                   }}
                 >
-                  <h4 style={{ fontSize: "20px" }}>
-                    {listFAQ?.length && listFAQ[tabHelpCenter]?.faqTitle}
-                  </h4>
-                  <p style={{ fontSize: "14px", textAlign: "start" }}>
-                    {listFAQ?.length && listFAQ[tabHelpCenter]?.faqDesc}
-                  </p>
-                  {listFAQ?.length &&
-                    listFAQ?.map((item, index) => (
-                      <TabPanel key={index} value={tabHelpCenter} index={index}>
-                        {item?.FAQPromoteData?.map((item, index) => (
-                          <Box key={index}>
-                            <h6
-                              style={{
-                                fontSize: "20px",
-                                textAlign: "start",
-                                margin: "24px 0px",
-                                color: "#fff",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {item?.faqQuestion}
-                            </h6>
+                  {isFetching ? (
+                    <ParagraphLoading lines={10} />
+                  ) : (
+                    <>
+                      {" "}
+                      <h4 style={{ fontSize: "20px" }}>
+                        {listFAQ?.length && listFAQ[tabHelpCenter]?.faqTitle}
+                      </h4>
+                      <p style={{ fontSize: "14px", textAlign: "start" }}>
+                        {listFAQ?.length && listFAQ[tabHelpCenter]?.faqDesc}
+                      </p>
+                      {listFAQ?.length &&
+                        listFAQ?.map((item, index) => (
+                          <TabPanel
+                            key={index}
+                            value={tabHelpCenter}
+                            index={index}
+                          >
+                            {item?.FAQPromoteData?.map((item, index) => (
+                              <Box key={index}>
+                                <h6
+                                  style={{
+                                    fontSize: "20px",
+                                    textAlign: "start",
+                                    margin: "24px 0px",
+                                    color: "#fff",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {item?.faqQuestion}
+                                </h6>
+                                <p
+                                  style={{
+                                    fontSize: "14px",
+                                    textAlign: "start",
+                                    marginTop: "12px",
+                                    color: "#fff",
+                                  }}
+                                >
+                                  {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
+                                </p>
+                              </Box>
+                            ))}
                             <p
                               style={{
+                                margin: "36px 0px",
                                 fontSize: "14px",
                                 textAlign: "start",
-                                marginTop: "12px",
-                                color: "#fff",
                               }}
-                            >
-                              {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
-                            </p>
-                          </Box>
+                            >{`Last Updated: [${moment(item?.updatedAt).format(
+                              "MMM Do YY"
+                            )}]`}</p>
+                          </TabPanel>
                         ))}
-                        <p
-                          style={{
-                            margin: "36px 0px",
-                            fontSize: "14px",
-                            textAlign: "start",
-                          }}
-                        >{`Last Updated: [${moment(item?.updatedAt).format(
-                          "MMM Do YY"
-                        )}]`}</p>
-                      </TabPanel>
-                    ))}
+                    </>
+                  )}
                 </Box>
               </Box>
             </Box>

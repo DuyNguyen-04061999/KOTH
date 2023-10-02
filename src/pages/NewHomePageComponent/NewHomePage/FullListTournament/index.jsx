@@ -12,10 +12,19 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import ItemComponent from "../ItemComponent";
 import CountDownBannerHot from "../../CountDownBannerHot";
+import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
+import ListItemLoading from "../../../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../../../components/LoadingComponent/ListEmpty";
+import PaginatedItems from "../../../PaginatedItems";
 
 export default function FullListTournament({ handleOnClose, open, type }) {
-  const { dailyTournament, weeklyTournament, hourlyTournament, hotTournament, hotWeekTour } =
-    useSelector((state) => state.tournamentReducer);
+  const {
+    dailyTournament,
+    weeklyTournament,
+    hourlyTournament,
+    hotTournament,
+    hotWeekTour,
+  } = useSelector((state) => state.tournamentReducer);
   const [isFetchList, setIsFetchList] = useState(true);
   const [hourList, setHourList] = useState([]);
   const [selectedHour, setSeHour] = useState(0);
@@ -23,7 +32,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
   const [selectedDay, setSeDay] = useState(0);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const [itemOffset, setItemOffSet] = useState(1);
+  const [itemOffSet, setItemOffSet] = useState(0);
   const [tourList, setTourList] = useState([]);
   useEffect(() => {
     if (isFetchList) {
@@ -132,29 +141,33 @@ export default function FullListTournament({ handleOnClose, open, type }) {
               ? "Hourly tournaments"
               : type === "daily"
               ? "Daily tournament"
-              : "Week-long tournaments"}
+              : "Weeklong tournaments"}
           </Typography>
         </Box>
         <Box sx={{ width: "100%", height: "auto", padding: "20px" }}>
           {type === "hot" && (
             <Box sx={{ marginBottom: width < 576 ? "24px" : "32px" }}>
               {" "}
-              <SlickSlider
-                appendDot={true}
-                images={
-                  width < 576
-                    ? [
-                        images.bannerTournament,
-                        images.bannerTournament1,
-                        images.bannerTournament2,
-                      ]
-                    : [
-                        images.BannerHomePageDesktop,
-                        images.BannerHomePageDesktop,
-                        images.BannerHomePageDesktop,
-                      ]
-                }
-              />
+              {isFetchList ? (
+                <BannerLoading height={208} />
+              ) : (
+                <SlickSlider
+                  appendDot={true}
+                  images={
+                    width < 576
+                      ? [
+                          images.bannerTournament,
+                          images.bannerTournament1,
+                          images.bannerTournament2,
+                        ]
+                      : [
+                          images.BannerHomePageDesktop,
+                          images.BannerHomePageDesktop,
+                          images.BannerHomePageDesktop,
+                        ]
+                  }
+                />
+              )}
             </Box>
           )}
           {type === "week-long" && (
@@ -190,9 +203,17 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                     top: "-3px",
                     left: "-2px",
                   }}
-                  src={hotWeekTour && hotWeekTour?.bestUser && hotWeekTour?.bestUser?.tUser && 
-                    hotWeekTour?.bestUser?.tUser?.userAccount && hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar 
-                    ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar : images.pool}
+                  src={
+                    hotWeekTour &&
+                    hotWeekTour?.bestUser &&
+                    hotWeekTour?.bestUser?.tUser &&
+                    hotWeekTour?.bestUser?.tUser?.userAccount &&
+                    hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                      : images.pool
+                  }
                   component={"img"}
                 ></Box>{" "}
                 <Box
@@ -227,8 +248,15 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                   <Box
                     sx={{ width: "23px", height: "auto" }}
                     component={"img"}
-                    src={hotWeekTour && hotWeekTour?.tournamentBrand && hotWeekTour?.tournamentBrand?.brandAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER + "/" + hotWeekTour?.tournamentBrand?.brandAvatar : imageHome.brandAvatar}
+                    src={
+                      hotWeekTour &&
+                      hotWeekTour?.tournamentBrand &&
+                      hotWeekTour?.tournamentBrand?.brandAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          hotWeekTour?.tournamentBrand?.brandAvatar
+                        : imageHome.brandAvatar
+                    }
                   ></Box>
                   <Box
                     sx={{
@@ -237,7 +265,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                       margin: "0px 12px 0px 12px",
                     }}
                   ></Box>
-                   <CountDownBannerHot
+                  <CountDownBannerHot
                     expiryTime={moment(hotWeekTour?.tournamentEndAt)}
                   />
                 </Box>
@@ -342,33 +370,53 @@ export default function FullListTournament({ handleOnClose, open, type }) {
               />
             </Box>
           )}
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr"}} >
-            {tourList?.map((item, index) => {
-              return index % 2 === 0 ? (
-                <Box
-                  onClick={() => navigate("/tournamentDetail/" + item?.id)}
-                  key={index}
-                  sx={{
-                    boxSizing: "border-box",
-                    marginTop: "24px",
-                  }}
-                >
-                  <ItemComponent countdown={true} tourInfo={item} />
-                </Box>
-              ) : (
-                <Box
-                  onClick={() => navigate("/tournamentDetail/" + item?.id)}
-                  key={index}
-                  sx={{
-                    boxSizing: "border-box",
-                    marginTop: "24px",
-                  }}
-                >
-                  <ItemComponent countdown={true} tourInfo={item} />
-                </Box>
-              );
-            })}
-          </Box>
+          {isFetchList ? (
+            <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+              <ListItemLoading />
+            </Box>
+          ) : tourList?.length ? (
+            <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+              {tourList?.map((item, index) => {
+                return (
+                  index >= itemOffSet &&
+                  index <= itemOffSet + 9 &&
+                  (index % 2 === 0 ? (
+                    <Box
+                      onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                      key={index}
+                      sx={{
+                        boxSizing: "border-box",
+                        marginTop: "24px",
+                      }}
+                    >
+                      <ItemComponent countdown={true} tourInfo={item} />
+                    </Box>
+                  ) : (
+                    <Box
+                      onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                      key={index}
+                      sx={{
+                        boxSizing: "border-box",
+                        marginTop: "24px",
+                      }}
+                    >
+                      <ItemComponent countdown={true} tourInfo={item} />
+                    </Box>
+                  ))
+                );
+              })}
+            </Box>
+          ) : (
+            <ListEmpty />
+          )}
+          {!isFetchList && (
+            <PaginatedItems
+              pageCount={Math.ceil(tourList.length / 10)}
+              changeOffSet={(value) => {
+                setItemOffSet((value - 1) * 10);
+              }}
+            />
+          )}
         </Box>
       </Box>
     </Dialog>

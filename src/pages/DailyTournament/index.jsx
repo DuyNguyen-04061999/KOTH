@@ -22,6 +22,10 @@ import { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
+import BannerLoading from "../../components/LoadingComponent/BannerLoading";
+import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
+import ListEmpty from "../../components/LoadingComponent/ListEmpty";
+import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
   typography: {},
   components: {
@@ -41,7 +45,7 @@ export default function DailyTournament() {
   const [selectedDay, setSeDay] = useState(0);
   const [dayList, setDayList] = useState([]);
   const { dailyTournament } = useSelector((state) => state.tournamentReducer);
-  const { detailTournament } = useSelector((state) => state.playgameReducer);
+  const [itemOffSet, setItemOffSet] = useState(0);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -59,7 +63,6 @@ export default function DailyTournament() {
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
-
   useEffect(() => {
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [dailyTournament]);
@@ -102,11 +105,15 @@ export default function DailyTournament() {
                 }}
               >
                 {" "}
-                <Box
-                  component={"img"}
-                  src={images.PurpleBanner}
-                  sx={{ width: "100%" }}
-                ></Box>
+                {isFetchList ? (
+                  <BannerLoading height={375} />
+                ) : (
+                  <Box
+                    component={"img"}
+                    src={images.PurpleBanner}
+                    sx={{ width: "100%" }}
+                  ></Box>
+                )}
               </Box>
               <Box>
                 <SliderTime
@@ -135,48 +142,46 @@ export default function DailyTournament() {
                     gridRowGap: "16px",
                   }}
                 >
-                  {dailyTournament
-                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-                    ?.listTournament?.map((item, index) => {
-                      return (
-                        index < 10 && (
-                          <Box
-                            sx={{
-                              width: "20%",
-                              marginTop: "50px",
-                            }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })}
+                  {isFetchList ? (
+                    <ListItemLoading />
+                  ) : dailyTournament &&
+                    dailyTournament?.length > 0 &&
+                    dailyTournament?.filter(
+                      (n) => n.timeStart === dayList[selectedDay]
+                    )[0]?.listTournament?.length !== 0 ? (
+                    dailyTournament
+                      ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
+                      ?.listTournament?.map((item, index) => {
+                        return (
+                          index >= itemOffSet &&
+                          index <= itemOffSet + 9 && (
+                            <div style={{ marginTop: "50px" }} key={index}>
+                              <ItemComponent
+                                key={index}
+                                countdown={true}
+                                tourInfo={item}
+                              />
+                            </div>
+                          )
+                        );
+                      })
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               </Box>
-              
-              <Box
-                sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {dailyTournament
-                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-                    ?.listTournament?.map((item, index) => {
-                      return (
-                        index >= 10 && (
-                          <Box
-                            sx={{ width: "20%", marginTop: "50px" }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })}
-                </Box>
-              </Box>
+              {!isFetchList && (
+                <PaginatedItems
+                  pageCount={Math.ceil(
+                    dailyTournament?.filter(
+                      (n) => n.timeStart === dayList[selectedDay]
+                    )[0]?.listTournament?.length / 10
+                  )}
+                  changeOffSet={(value) => {
+                    setItemOffSet((value - 1) * 10);
+                  }}
+                />
+              )}
               <NewFooter />
             </Container>
           ) : (
@@ -213,11 +218,15 @@ export default function DailyTournament() {
                 }}
               >
                 {" "}
-                <Box
-                  component={"img"}
-                  src={images.PurpleBanner}
-                  sx={{ width: "100%" }}
-                ></Box>
+                {isFetchList ? (
+                  <BannerLoading height={107} />
+                ) : (
+                  <Box
+                    component={"img"}
+                    src={images.PurpleBanner}
+                    sx={{ width: "100%" }}
+                  ></Box>
+                )}
               </Box>
               <Box>
                 <SliderTime
@@ -250,7 +259,8 @@ export default function DailyTournament() {
                     ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
                     ?.listTournament?.map((item, index) => {
                       return (
-                        index < 10 && (
+                        index >= itemOffSet &&
+                        index <= itemOffSet + 9 && (
                           <Box
                             sx={{
                               width: "20%",
@@ -265,28 +275,18 @@ export default function DailyTournament() {
                     })}
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {dailyTournament
-                    ?.filter((n) => n.timeStart === dayList[selectedDay])[0]
-                    ?.listTournament?.map((item, index) => {
-                      return (
-                        index >= 10 && (
-                          <Box
-                            sx={{ width: "20%", marginTop: "50px" }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })}
-                </Box>
-              </Box>
+              {!isFetchList && (
+                <PaginatedItems
+                  pageCount={Math.ceil(
+                    dailyTournament?.filter(
+                      (n) => n.timeStart === dayList[selectedDay]
+                    )[0]?.listTournament?.length / 10
+                  )}
+                  changeOffSet={(value) => {
+                    setItemOffSet((value - 1) * 10);
+                  }}
+                />
+              )}
               <NewFooter />
             </Container>
           )
