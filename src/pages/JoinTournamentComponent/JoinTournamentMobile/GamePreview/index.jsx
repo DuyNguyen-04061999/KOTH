@@ -39,9 +39,10 @@ export default function GamePreview() {
         Game Preview
       </Typography>
       <ScrollingCarousel>
-        {[1, 2, 3, 4, 5].map((item) => {
+        {[1, 2, 3, 4, 5].map((item, index) => {
           return (
             <Box
+              key={index}
               sx={{
                 boxSizing: "border-box",
                 padding: "8px",
@@ -76,8 +77,8 @@ export default function GamePreview() {
           src={images.GamePreview1}
         ></Box> */}
         <Slider {...settings}>
-          {[1, 2, 3, 4, 5, 6, 7]?.map((item) => {
-            return <Box component={"img"} src={images.GamePreview1}></Box>;
+          {[1, 2, 3, 4, 5, 6, 7]?.map((item, index) => {
+            return <Box key={index} component={"img"} src={images.GamePreview1}></Box>;
           })}
         </Slider>
       </Dialog>
