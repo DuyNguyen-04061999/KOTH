@@ -10,6 +10,7 @@ import { formatMoney, getAppType } from "../../../../utils/helper";
 import { useState } from "react";
 import { toggleWalletDialog} from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { toast } from "react-toastify";
+import AnimButton from "../../../AnimButton";
 
 export default function WalletTypePromote(props) {
   const { handleClose } = props;
@@ -22,7 +23,55 @@ export default function WalletTypePromote(props) {
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
 
-  
+  const handleContinue = () => {
+    if (agree === false) {
+      toast.warning("Please agree policy!", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.WarningIcon}
+          />
+        ),
+        position: "top-center",
+        className:
+          // width < 576 ? "warning-background-small" : "warning-background",
+          "warning-background"
+      });
+      return;
+    }
+    if (!amount || amount < 0) {
+      toast.warning("Please enter amount", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.WarningIcon}
+          />
+        ),
+        position: "top-center",
+        className:
+          // width < 576 ? "warning-background-small" : "warning-background",
+          "warning-background"
+      });
+    } else if (typePayment === "stripe" && currency === "USD") {
+      dispatch(getStripe(Number.parseFloat(amount)));
+    } else {
+      toast.warning("Updating...!", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.WarningIcon}
+          />
+        ),
+        position: "top-center",
+        className:
+          // width < 576 ? "warning-background-small" : "warning-background",
+          "warning-background"
+      });
+    }
+  }
 
   return (
     <>
@@ -466,81 +515,12 @@ export default function WalletTypePromote(props) {
               </Box>
             </Box>
             <Box>
-              <Button
-                sx={{
-                  color: "white",
-                  width: "100%",
-                  height: "45px",
-                  borderRadius: "7px",
-                  border: "none",
-                  outline: "none",
-                  fontWeight: "bolder",
-                  backgroundImage: "linear-gradient(#893aef,#7547ee)",
-                  fontSize: "15px",
-                  marginBottom:"30px"
-                }}
-                onClick={() => {
-                  if (agree === false) {
-                    toast.warning("Please agree policy!", {
-                      icon: ({ theme, type }) => (
-                        <img
-                          style={{ width: "20px", marginRight: "10px" }}
-                          alt="..."
-                          src={images.WarningIcon}
-                        />
-                      ),
-                      position: "top-center",
-                      className:
-                        // width < 576 ? "warning-background-small" : "warning-background",
-                        "warning-background"
-                    });
-                    return;
-                  }
-                  if (!amount || amount < 0) {
-                    toast.warning("Please enter amount", {
-                      icon: ({ theme, type }) => (
-                        <img
-                          style={{ width: "20px", marginRight: "10px" }}
-                          alt="..."
-                          src={images.WarningIcon}
-                        />
-                      ),
-                      position: "top-center",
-                      className:
-                        // width < 576 ? "warning-background-small" : "warning-background",
-                        "warning-background"
-                    });
-                  } else if (typePayment === "stripe" && currency === "USD") {
-                    dispatch(getStripe(Number.parseFloat(amount)));
-                  } else {
-                    toast.warning("Updating...!", {
-                      icon: ({ theme, type }) => (
-                        <img
-                          style={{ width: "20px", marginRight: "10px" }}
-                          alt="..."
-                          src={images.WarningIcon}
-                        />
-                      ),
-                      position: "top-center",
-                      className:
-                        // width < 576 ? "warning-background-small" : "warning-background",
-                        "warning-background"
-                    });
-                  }
-                }}
-              >
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "14px",
-                    marginLeft: "0px !important",
-                    
-                  }}
-                >
-                  Continue
-                </Typography>
-              </Button>
+              <AnimButton 
+                text={"CONTINUE"}
+                onClick={handleContinue}
+                type={"primary"}
+              />
+              
             </Box>
           </Box>
         ) : (
