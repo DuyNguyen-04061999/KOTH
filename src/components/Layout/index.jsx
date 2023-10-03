@@ -55,6 +55,7 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
+import ForgetPassword from "../Dialog/ForgetPassword";
 // import { getAppType } from "../../utils/helper";
 
 const drawerWidth = 310;
@@ -129,7 +130,9 @@ export default function Layout(props) {
 
   // const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, tabChat, badgechat,chatWorld } = useSelector((state) => state.chatReducer);
+  const { chatPopup, tabChat, badgechat, chatWorld } = useSelector(
+    (state) => state.chatReducer
+  );
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
 
   const [showChat] = useState(true);
@@ -215,8 +218,6 @@ export default function Layout(props) {
     if (history.action === "POP") {
     }
   }, []);
-
-
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -304,6 +305,7 @@ export default function Layout(props) {
       <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
+      <ForgetPassword />
       <PopUpReward />
       <DialogProfile
         open={isProfileDialog}
@@ -413,8 +415,11 @@ export default function Layout(props) {
                     ></image>
                   </defs>
                 </svg> */}
-                <img src={imageDesktop.LogoCongTy} alt="logocty" 
-                width={40} height={40}
+                <img
+                  src={imageDesktop.LogoCongTy}
+                  alt="logocty"
+                  width={40}
+                  height={40}
                 />
               </div>
             </div>
@@ -508,7 +513,7 @@ export default function Layout(props) {
                   backgroundColor: "#68399E",
                   borderRadius: "50%",
                   padding: "3px 8px 6px 8px",
-                  position:"relative"
+                  position: "relative",
                 }}
               >
                 <svg
@@ -519,7 +524,7 @@ export default function Layout(props) {
                   viewBox="0 0 20 20"
                   onClick={() => {
                     dispatch(openChatPopup());
-                    dispatch(showBadgeChat(true))
+                    dispatch(showBadgeChat(true));
                   }}
                   className="cursor-pointer"
                 >
@@ -532,7 +537,9 @@ export default function Layout(props) {
                     </g>
                   </g>
                 </svg>
-                <div className={badgechat === true ? "" : "badge-chat-des"}></div>
+                <div
+                  className={badgechat === true ? "" : "badge-chat-des"}
+                ></div>
               </Box>
             ) : (
               <Box
@@ -709,7 +716,7 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
-                        zIndex:2
+                        zIndex: 2,
                       }}
                     >
                       Global
@@ -781,26 +788,29 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
-                        zIndex:2
+                        zIndex: 2,
                       }}
                     >
                       Private
                     </span>
                   </div>
                 </div>
-                <div style={{
-                  position:"absolute",
-                  top:15,
-                  left:15,
-                  width:140,
-                  height:30,
-                  borderRadius: "5px 5px 5px 5px",
-                  padding: "6px",
-                  background:"#883AF0",
-                  transform:tabChat === true ? "translate(0px)" :'translate(140px)',
-                  zIndex:1,
-                  transition:"0.3s ease-out"
-                }}></div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 15,
+                    left: 15,
+                    width: 140,
+                    height: 30,
+                    borderRadius: "5px 5px 5px 5px",
+                    padding: "6px",
+                    background: "#883AF0",
+                    transform:
+                      tabChat === true ? "translate(0px)" : "translate(140px)",
+                    zIndex: 1,
+                    transition: "0.3s ease-out",
+                  }}
+                ></div>
               </div>
             </Box>
             <Box component="div" hidden={!showChat}>
