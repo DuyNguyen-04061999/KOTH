@@ -205,7 +205,7 @@ function App() {
   useEffect(() => {
     if (socket) {
       socket?.once("connect", (data) => {});
-      socket?.on("loginSuccess", (mess, token, key, user, userPackageId) => {
+      socket?.on("loginSuccess", (mess, token, key, user, userPackageId, uPack) => {
         store.dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
         store.dispatch(
           saveDataLogin({
@@ -216,7 +216,7 @@ function App() {
             role: user?.userRole,
             id: user?.id,
             userPackageId: userPackageId,
-            uPack:uPack
+            uPack: uPack
           })
         );
 
