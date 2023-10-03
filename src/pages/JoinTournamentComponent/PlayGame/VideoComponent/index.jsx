@@ -31,11 +31,9 @@ export default function VideoComponent(props) {
   useEffect(() => {
     if (videoRef && videoRef.current) {
       var supposedCurrentTime = 0;
-      var video = document.getElementById("videoAd");
       videoRef?.current?.addEventListener("timeupdate", () => {
         setSeconds(7 - Math.round(videoRef.current?.currentTime));
 
-        video.controls = true;
         if (!videoRef.current?.seeking) {
           supposedCurrentTime = videoRef.current?.currentTime;
         }

@@ -24,7 +24,7 @@ const Totals = () => {
 
   return (
     <Container>
-      <Box sx={{ marginTop: "60px" }}>
+      <Box sx={{ marginTop: "56px" }}>
         <Typography
           sx={{
             textAlign: "start",
@@ -33,7 +33,7 @@ const Totals = () => {
           }}
         >
           {width < 576
-            ? `${roles?.includes("agent") ? "User Manager" : "Admin Structure"}`
+            ? `Total`
             : `Welcome
             ${
               roles?.includes("master")

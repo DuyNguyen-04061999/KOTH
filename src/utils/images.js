@@ -262,7 +262,6 @@ import goldleaderboard from "../assets/imagesLayout/popup/Gold.png";
 import bg01 from "../assets/imagesLayout/popup/bg01.png";
 import packageicon from "../assets/imagesLayout/popup/Group.svg";
 import walletopen from "../assets/imagesLayout/popup/walletopen.png";
-import coin2 from "../assets/imagesLayout/popup/coin2.png";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 import crown from "../assets/imagesLayout/popup/crown.svg";
 import heart from "../assets/imagesLayout/popup/heart.svg";
@@ -286,6 +285,9 @@ import gold1 from "../assets/imagesDesktop/gold.png";
 import signInCrypto from "../assets/images/signin_crypto.png";
 import EndTourAvatar from "../assets/images/Feedback_Play4promo (1).png";
 import BigTourAvatar from "../assets/images/Feedback_Play4promo.png";
+import GamePreview3 from "../assets/images/GamePreview3.png";
+import GamePreview2 from "../assets/images/GamePreview2.png";
+import GamePreview1 from "../assets/images/GamePreview1.png";
 
 import AdminLogo from "../assets/images/lggame.png";
 import bannerWindesk from "../assets/imagesDesktop/bannerwin.png";
@@ -316,20 +318,18 @@ import DummyBanner4 from "../assets/images/banners/mb1.png";
 import DummyBanner5 from "../assets/images/banners/mb2.png";
 import DummyBanner6 from "../assets/images/banners/mb3.png";
 
-import NavCreate from "../assets/images/Category.png"
-import NavManage from "../assets/images/Activity.png"
-import NavFilter from "../assets/images/Document.png"
-import NavTotal from "../assets/images/Chart.png"
-import NavSetting from "../assets/images/Setting.png"
-import NavLogout from "../assets/images/Logout.png"
+import NavCreate from "../assets/images/Category.png";
+import NavManage from "../assets/images/Activity.png";
+import NavFilter from "../assets/images/Document.png";
+import NavTotal from "../assets/images/Chart.png";
+import NavSetting from "../assets/images/Setting.png";
+import NavLogout from "../assets/images/Logout.png";
 
-import NavCreateActive from "../assets/images/CategoryActive.png"
-import NavManageActive from "../assets/images/ActivityActive.png"
-import NavFilterActive from "../assets/images/DocumentActive.png"
-import NavTotalActive from "../assets/images/ChartActive.png"
-import NavSettingActive from "../assets/images/SettingActive.png"
-
-
+import NavCreateActive from "../assets/images/CategoryActive.png";
+import NavManageActive from "../assets/images/ActivityActive.png";
+import NavFilterActive from "../assets/images/DocumentActive.png";
+import NavTotalActive from "../assets/images/ChartActive.png";
+import NavSettingActive from "../assets/images/SettingActive.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -525,6 +525,9 @@ export const images = {
   bannerTournamentMobile_2: bannerTournamentMobile_2,
   bannerLoading: bannerLoading,
   adminLogo: AdminLogo,
+  GamePreview1: GamePreview1,
+  GamePreview2: GamePreview2,
+  GamePreview3: GamePreview3,
 };
 
 export const navigationImages = {
@@ -539,7 +542,7 @@ export const navigationImages = {
   navFilterActive: NavFilterActive,
   navTotalActive: NavTotalActive,
   navSettingActive: NavSettingActive,
-}
+};
 
 export const images2 = {
   commingsoon2: commingsoon2,
@@ -614,7 +617,6 @@ export const popup = {
   ticket: ticket,
   packageicon: packageicon,
   walletopen: walletopen,
-  coin2: coin2,
   proWallet: proWallet,
   crown: crown,
   heart: heart,

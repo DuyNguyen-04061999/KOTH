@@ -22,7 +22,11 @@ import { useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  saveBoughtTournament,
+  saveIdTournament,
+  toggleBuyTicket
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import JoinTournamentMobile from "../JoinTournamentMobile";
 import LeaderBoard from "../LeaderBoard";
 import DetailVoucher from "../DetailVoucher";
@@ -31,7 +35,11 @@ import GameInTournament from "../GameInTournament";
 import BgEndGame from "../BgEndTour";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { formatTimeMothDateYear, isJson, sliceString } from "../../../utils/helper";
+import {
+  formatTimeMothDateYear,
+  isJson,
+  sliceString,
+} from "../../../utils/helper";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
@@ -39,6 +47,7 @@ import PlayGame from "../PlayGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
+import GamePreview from "../JoinTournamentMobile/GamePreview";
 
 const theme = createTheme({
   typography: {},
@@ -74,17 +83,17 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
-  const timeEnd =
-    moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
-    " " +
-    "- " +
-    moment(detailTournament?.tournamentEndAt).format("hh:mm a");
+  // const timeEnd =
+  //   moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
+  //   " " +
+  //   "- " +
+  //   moment(detailTournament?.tournamentEndAt).format("hh:mm a");
 
-  const timeStart =
-    moment(detailTournament?.tournamentStartAt).format("DD/MM/YYYY") +
-    " " +
-    "- " +
-    moment(detailTournament?.tournamentStartAt).format("hh:mm a");
+  // const timeStart =
+  //   moment(detailTournament?.tournamentStartAt).format("DD/MM/YYYY") +
+  //   " " +
+  //   "- " +
+  //   moment(detailTournament?.tournamentStartAt).format("hh:mm a");
 
   useEffect(() => {
     setSocket(_socket);
@@ -151,6 +160,12 @@ export default function JoinTournament() {
     startGame,
     dispatch,
   ]);
+
+  useEffect(() => {
+    dispatch(saveBoughtTournament(detailTournament?.bought))
+    dispatch(saveIdTournament(detailTournament?.id))
+  }, [detailTournament]);
+
   useEffect(() => {
     if (width > 1200) {
       if (
@@ -190,6 +205,7 @@ export default function JoinTournament() {
   //     window.location.reload();
   //   }
   // }, []);
+  console.log("detailTournament: ", detailTournament);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -430,7 +446,9 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          formatTimeMothDateYear(detailTournament?.tournamentStartAt)
+                          formatTimeMothDateYear(
+                            detailTournament?.tournamentStartAt
+                          )
                         )}
                       </Typography>
                     </Box>
@@ -478,7 +496,9 @@ export default function JoinTournament() {
                             sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                           />
                         ) : (
-                          formatTimeMothDateYear(detailTournament?.tournamentEndAt)
+                          formatTimeMothDateYear(
+                            detailTournament?.tournamentEndAt
+                          )
                         )}
                       </Typography>
                     </Box>
@@ -1060,7 +1080,7 @@ export default function JoinTournament() {
                                     color: "#525252",
                                   }}
                                 >
-                                  Sponsored  by
+                                  Sponsored by
                                 </h6>
                                 <span
                                   style={{
@@ -1400,9 +1420,7 @@ export default function JoinTournament() {
                                 : "16px",
                           }}
                         >
-                          {item
-                            ? item
-                            : ""}
+                          {item ? item : ""}
                         </Typography>
                       </Box>
                     );
@@ -1410,6 +1428,7 @@ export default function JoinTournament() {
                 )
               )}
             </Box>
+            <GamePreview />
           </Container>
         ) : (
           <>

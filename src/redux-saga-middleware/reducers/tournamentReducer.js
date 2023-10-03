@@ -155,6 +155,20 @@ export const toggleOpenResultEndGame = (data) => {
   };
 };
 
+export  const saveIdTournament = (data) => {
+  return {
+    type: "SAVE_ID_TOURNAMENT",
+    payload : data
+  }
+}
+
+export  const saveBoughtTournament = (data) => {
+  return {
+    type: "SAVE_BOUGHT_TOURNAMENT",
+    payload : data
+  }
+}
+
 const tournamentReducer = (
   state = {
     //success=true&&fail=false --> success, fail=true&&success=false --> fail, success=false && fail=false --> Loading
@@ -179,6 +193,8 @@ const tournamentReducer = (
     threeBrandTour: [],
     isResultEndGame: false,
     endGameScore: 0,
+    idTour:'',
+    boughtTour:'',
     //--------------------------------------
   },
   action
@@ -307,6 +323,16 @@ const tournamentReducer = (
         isResultEndGame: !state.isResultEndGame,
         endGameScore: payload || 0,
       };
+    case "SAVE_ID_TOURNAMENT" :
+      return  {
+        ...state,
+        idTour: payload
+      }
+    case "SAVE_BOUGHT_TOURNAMENT" :
+      return  {
+        ...state,
+        boughtTour: payload
+      }
     default:
       return { ...state };
   }

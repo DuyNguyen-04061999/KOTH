@@ -15,6 +15,7 @@ import { useState } from "react";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import InspirationTTF from "../../../../assets/font/CynthoNextRegular.otf";
+import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 
 const theme = createTheme({
   components: {
@@ -185,7 +186,7 @@ export default function BuyTicket(props) {
                       }}
                     >
                       {/* {!bought ? ticketBuy?.packagePrice + "$" : "2.99$"} */}
-                      0.5 ${" "}
+                      0.99 ${" "}
                     </Typography>
                   </Box>
                   <Box sx={{ marginTop: "20px" }}>
@@ -292,7 +293,7 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          0.5 ${" "}
+                          0.99 ${" "}
                         </Typography>
                       </Box>
                     </Box>
@@ -312,19 +313,20 @@ export default function BuyTicket(props) {
             </Box>
             <button
               onClick={() => {
-                if (!bought) {
-                  socket?.emit("buyPackage", {
-                    price: 0.5,
-                    tournamentId: tournamentId,
-                    packageId: ticketBuy?.id,
-                  });
-                } else {
-                  socket?.emit("buyPackage", {
-                    price: 0.5,
-                    tournamentId: tournamentId,
-                    packageId: ticketBuy?.id,
-                  });
-                }
+                dispatch(toggleCheckWallet({type: "buyTicket"}))
+                // if (!bought) {
+                //   socket?.emit("buyPackage", {
+                //     price: 0.5,
+                //     tournamentId: tournamentId,
+                //     packageId: ticketBuy?.id,
+                //   });
+                // } else {
+                //   socket?.emit("buyPackage", {
+                //     price: 0.5,
+                //     tournamentId: tournamentId,
+                //     packageId: ticketBuy?.id,
+                //   });
+                // }
                 handleClose();
               }}
               style={{
