@@ -119,6 +119,13 @@ export const toggleForgetPass = (data) => {
   };
 };
 
+export const toggleShareTour = (data) => {
+  return {
+    type: "TOGGLE_SHARE_TOUR",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -143,6 +150,7 @@ const authReducer = (
     isNavTablet: true,
     uPack: {},
     forgetPassDialog: false,
+    isShare: false,
   },
   action
 ) => {
@@ -217,6 +225,8 @@ const authReducer = (
       return { ...state, isNavTablet: payload };
     case "TOGGLE_FORGOT_PASS_DIALOG":
       return { ...state, forgetPassDialog: payload };
+    case "TOGGLE_SHARE_TOUR":
+      return { ...state, isShare: true };
     default:
       return state;
   }
