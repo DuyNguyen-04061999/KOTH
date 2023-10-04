@@ -20,7 +20,7 @@ export default function SlickSlider(props) {
     isLoading,
     type,
   } = props;
-  console.log("device: ", device);
+  
   const settings = {
     dots: true,
     arrows: false,
@@ -128,7 +128,6 @@ export default function SlickSlider(props) {
                 >
                   <Box
                     onClick={() => {
-                      // console.log("item", item);
                       navigate(`/tournamentDetail/${item?.id}`);
                     }}
                     sx={{

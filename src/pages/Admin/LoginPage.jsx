@@ -43,8 +43,6 @@ export default function LoginPage() {
     }
   };
 
-  console.log("login-page");
-
   const tokenAdmin = localStorage.getItem("token_admin")
 
   return (

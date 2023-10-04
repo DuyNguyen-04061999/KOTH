@@ -30,7 +30,7 @@ export default function ForgetPassword() {
   useEffect(() => {
     setIsTab(true);
   }, [forgetPassDialog]);
-  console.log("OTP: ", isTab);
+  
   return (
     <Dialog
       onClose={() => {
@@ -337,7 +337,7 @@ export default function ForgetPassword() {
           <button
             onClick={() => {
               if (otp.toString().length === 6) {
-                console.log(otp);
+                
               }
             }}
             style={{

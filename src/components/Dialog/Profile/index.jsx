@@ -33,7 +33,7 @@ export default function DialogProfile(props) {
   const { id, email, refCode, phone, userNameProfile, avatarUrl } = useSelector(
     (state) => state.profileReducer
   );
-  console.log(uPack);
+  
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -48,8 +48,6 @@ export default function DialogProfile(props) {
     }
     return false;
   };
-
-  console.log(userNameProfile);
 
   const renderUserInfo = () => {
     return (

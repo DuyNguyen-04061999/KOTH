@@ -32,7 +32,7 @@ export default function ChatWorldList() {
   const { chatWorld, friendList, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
-  console.log(chatWorld);
+  
   const { userName, token } = useSelector((state) => state.authReducer);
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();

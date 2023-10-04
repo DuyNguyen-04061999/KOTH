@@ -122,7 +122,7 @@ export default function PlayGame(props) {
     }
     return false;
   };
-  console.log(detailTournament);
+
   return (
     <>
       <Box

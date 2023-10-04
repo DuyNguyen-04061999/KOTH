@@ -52,7 +52,6 @@ export default function GamePreview() {
               <Box
                 onClick={() => {
                   setOpen(true);
-                  console.log("hello");
                 }}
                 component={"img"}
                 src={images.GamePreview1}
