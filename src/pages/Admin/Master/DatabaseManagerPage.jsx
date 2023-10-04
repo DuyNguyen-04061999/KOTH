@@ -8,9 +8,6 @@ export default function DatabaseManagerPage() {
     const dispatch = useDispatch()
     const { listTable } = useSelector(state => state.adminMasterReducer)
 
-    console.log(listTable);
-
-
     useEffect(() => {
         dispatch(getListTable())
     }, [dispatch])

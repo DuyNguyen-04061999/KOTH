@@ -109,7 +109,7 @@ export default function TicketCheckOut() {
   }, [socket]);
   useEffect(() => {
     socket?.on("buyPackageSuccess", (data) => {
-      console.log(data);
+      
     });
   }, [socket]);
   return (

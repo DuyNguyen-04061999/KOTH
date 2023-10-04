@@ -108,7 +108,7 @@ export const RowTable = (props) => {
     }))
     dispatch(openGivePerDialog())
   }
-console.log(headers);
+
   return (
     <React.Fragment>
       <TableRow

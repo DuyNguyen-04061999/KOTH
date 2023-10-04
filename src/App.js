@@ -106,6 +106,7 @@ import PlayGamePage from "./pages/PlayGamePage";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import { Suspense } from "react";
+import ChangeLog from "./pages/ChangeLog/ChangeLog";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
 const LazyNewHomePage = lazy(()=> import("./pages/NewHomePageComponent"))
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -118,10 +119,21 @@ function App() {
   
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
-  const [socket] = useState(_socket);
   const { token } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
   const { orientation } = store.getState().gameReducer;
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    if(window.location.pathname  === "/changelog"){
+      setSocket(null);
+    }
+    else{
+      const socket = _socket;
+      setSocket(socket);
+    }
+  }, [_socket]);
+  
 
   const { width } = useWindowDimensions();
 
@@ -135,7 +147,7 @@ function App() {
 
   useEffect(() => {
     if (!token) {
-      socket.emit("listMessageGlobal");
+      socket?.emit("listMessageGlobal");
     }
   });
   useEffect(() => {});
@@ -192,8 +204,8 @@ function App() {
 
   useEffect(() => {
     if (socket) {
-      socket.once("connect", (data) => {});
-      socket?.on("loginSuccess", (mess, token, key, user, userPackageId,uPack) => {
+      socket?.once("connect", (data) => {});
+      socket?.on("loginSuccess", (mess, token, key, user, userPackageId, uPack) => {
         store.dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
         store.dispatch(
           saveDataLogin({
@@ -204,7 +216,7 @@ function App() {
             role: user?.userRole,
             id: user?.id,
             userPackageId: userPackageId,
-            uPack:uPack
+            uPack: uPack
           })
         );
 
@@ -212,11 +224,11 @@ function App() {
         // localStorage.setItem("PASS", password);
         localStorage.setItem("KE", key);
         localStorage.setItem("token", token);
-        // socket.emit("listMessage");
-        socket.emit("listFriend");
-        socket.emit("getTransaction");
-        // socket.emit("leaveAllRoom");
-        socket.emit("listPackage", {
+        // socket?.emit("listMessage");
+        socket?.emit("listFriend");
+        socket?.emit("getTransaction");
+        // socket?.emit("leaveAllRoom");
+        socket?.emit("listPackage", {
           type: true,
         });
         // checkPreAuthRouter();
@@ -228,7 +240,7 @@ function App() {
 
       socket?.on("chatSuccess", (data) => {
         if (localStorage.getItem("token")) {
-          socket.emit("listFriend");
+          socket?.emit("listFriend");
         }
         store.dispatch(updateChatWorld(data));
       });
@@ -260,7 +272,7 @@ function App() {
           position: "top-center",
           className: "success-background",
         });
-        socket.emit("listFriend");
+        socket?.emit("listFriend");
         store.dispatch(deleteFriendSuccesFully("success"));
       });
 
@@ -483,7 +495,7 @@ function App() {
 
       socket?.on("disconnect", (data) => {
         if (localStorage.getItem("KE")) {
-          socket.emit("login", {
+          socket?.emit("login", {
             username: localStorage.getItem("NAME"),
             password: localStorage.getItem("PASS"),
             key: localStorage.getItem("KE"),
@@ -572,7 +584,7 @@ function App() {
     const onPageLoad = () => {
       store.dispatch(getListGame());
       if (localStorage.getItem("KE")) {
-        socket.emit("login", {
+        socket?.emit("login", {
           username: localStorage.getItem("NAME"),
           password: localStorage.getItem("PASS"),
           key: localStorage.getItem("KE"),
@@ -709,6 +721,7 @@ function App() {
                     </Suspense>
                   }
                 />
+                <Route path="/change-log" element={<ChangeLog />} />
                 <Route path="/loadingscreen" element={<LoadingScreen />} />
                 <Route path="/new-home" element={<NewHomePageComponent />} />
                 <Route path="/countdowntimer" element={<CountDownTimer />} />

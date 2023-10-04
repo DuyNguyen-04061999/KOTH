@@ -120,8 +120,6 @@ export default function NewHomePage() {
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
 
-  console.log("weeklyTournament: ", weeklyTournament);
-
   return (
     <Container
       maxWidth="lg"
