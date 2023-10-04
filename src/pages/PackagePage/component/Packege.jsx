@@ -564,7 +564,7 @@ export default function Package() {
                                           dispatch(getIdPackage(i?.id));
                                         }
                                       } else {
-                                        console.log("Cannot buy free pack!");
+                                        
                                       }
                                     }}
                                     disabled={
@@ -1094,7 +1094,7 @@ export default function Package() {
                                     dispatch(getIdPackage(i?.id));
                                   }
                                 } else {
-                                  console.log("Cannot buy free pack!");
+                                  
                                 }
                               }}
                               disabled={i?.id === userPackageId ? true : false}

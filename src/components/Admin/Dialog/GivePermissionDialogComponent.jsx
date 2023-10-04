@@ -9,7 +9,6 @@ export default function GivePermissionDialogComponent() {
 
     const { isGivePerDialog } = useSelector(state => state.adminDialogReducer)
     const { listDataAgents, accountAgent } = useSelector(state => state.adminDistributorReducer)
-    console.log(listDataAgents, "list");
 
     const handleClose = () => {
         dispatch(closeGivePerDialog())

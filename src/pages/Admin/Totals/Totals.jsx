@@ -18,7 +18,6 @@ const Totals = () => {
   }, [dispatch, roles]);
 
   useEffect(() => {
-    console.log(123);
     setData(listTotal);
   }, [roles, listTotal]);
 

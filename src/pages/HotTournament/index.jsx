@@ -72,7 +72,7 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-  console.log(data);
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

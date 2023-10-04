@@ -205,7 +205,7 @@ export default function JoinTournament() {
   //     window.location.reload();
   //   }
   // }, []);
-  console.log("detailTournament: ", detailTournament);
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />

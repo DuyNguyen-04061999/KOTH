@@ -20,7 +20,7 @@ const Revenue = () => {
   const { listEndUser, listAR } = useSelector(
     (state) => state.adminAgentReducer
   );
-  console.log(listAR);
+  
   const [data, setData] = useState([]);
 
   const dispatch = useDispatch();

@@ -17,8 +17,6 @@ export default function ListRefPage() {
   }, [dispatch]);
   const { height } = useWindowDimensions();
 
-  console.log(listRefs);
-
   return (
     <Container fixed>
       {permissions &&

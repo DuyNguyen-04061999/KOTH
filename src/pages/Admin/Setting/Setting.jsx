@@ -114,7 +114,6 @@ const Setting = () => {
 
   const handleConfirmTimeZone = (e) => {
     e.preventDefault();
-    console.log(americanTimeZones[selectedIndex]);
   };
 
   const handleSearchTimeZone = (e) => {

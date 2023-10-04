@@ -73,7 +73,7 @@ export default function PlayGamePage() {
       setFetchT(false);
     });
   }, [socket]);
-  console.log("detail: ", detailTournament?.id);
+  
   const checkLockScreen = () => {
     if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
       if (
