@@ -112,6 +112,8 @@ import ticketIconTournament from "../assets/images/ticketIconTournament.png";
 import voucher_tour from "../assets/images/voucher_tour.png";
 import Voucher_Brand from "../assets/images/Voucher_Brand.png";
 import samsungBrand from "../assets/images/samsungBrand.png";
+import userIcon from "../assets/images/userIcon.png";
+import phoneIcon from "../assets/images/phoneIcon.png";
 import closeVoucher from "../assets/images/closeVoucher.png";
 import PurpleBanner from "../assets/images/PurpleBanner.png";
 import bannerTournamentMobile from "../assets/images/bannerTournamentMobile.png";
@@ -528,6 +530,8 @@ export const images = {
   GamePreview1: GamePreview1,
   GamePreview2: GamePreview2,
   GamePreview3: GamePreview3,
+  userIcon: userIcon,
+  phoneIcon: phoneIcon,
 };
 
 export const navigationImages = {
