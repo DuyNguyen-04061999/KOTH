@@ -222,7 +222,7 @@ export default function JoinTournament() {
   //     window.location.reload();
   //   }
   // }, []);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -305,11 +305,13 @@ export default function JoinTournament() {
                     className="btn-conteiner"
                   >
                     {!detailTournament?.checkInTournament ? (
-                      <AnimButton 
-                        onClick={handleJoinTour}
-                        text={"Join"}
-                        type={"primary"}
-                      />
+                      <Box sx={{width:"150px"}}>
+                        <AnimButton
+                          onClick={handleJoinTour}
+                          text={"Join"}
+                          type={"primary"}
+                        />
+                      </Box>
                     ) : (
                       <Box
                         sx={{ display: "flex", justifyContent: "flex-end" }}

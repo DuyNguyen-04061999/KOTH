@@ -231,6 +231,9 @@ function App() {
         socket?.emit("listPackage", {
           type: true,
         });
+        socket?.emit("getDetailProfile", {
+          username: user?.userName,
+        });
         // checkPreAuthRouter();
       });
 

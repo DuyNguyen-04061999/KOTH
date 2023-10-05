@@ -122,7 +122,7 @@ export default function PlayGame(props) {
     }
     return false;
   };
-
+  console.log("DEtail: ", detailTournament);
   return (
     <>
       <Box
@@ -167,6 +167,7 @@ export default function PlayGame(props) {
                     ? {
                         width: "100%",
                         height: "800px",
+                        background: "black",
                       }
                     : {
                         position: "fixed",
@@ -185,11 +186,13 @@ export default function PlayGame(props) {
                 }
                 title="Playgame"
                 src={
-                  process.env.REACT_APP_ENV === "development" ? "http://localhost:3000/play-game-tournament/87/4" : (window.location.origin +
-                  "/play-game-tournament/" +
-                  id +
-                  "/" +
-                  detailTournament?.tournamentInfors?.skin?.id)
+                  process.env.REACT_APP_ENV === "development"
+                    ? "http://localhost:3000/play-game-tournament/87/4"
+                    : window.location.origin +
+                      "/play-game-tournament/" +
+                      id +
+                      "/" +
+                      detailTournament?.tournamentInfors?.skin?.id
                 }
               ></iframe>{" "}
               {checkLockScreen() && (
