@@ -58,7 +58,7 @@ export default function DailyTournament() {
     if (isFetchList) {
       dispatch({
         type: "CALL_LIST_TOURNAMENT",
-        payload: "day",
+        payload: "daily",
       });
       setIsFetchList(false);
     }

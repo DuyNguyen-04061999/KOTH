@@ -113,7 +113,11 @@ export default function JoinTournament() {
       });
     }
   });
-
+  useEffect(() => {
+    socket?.emit("detailTournament", {
+      tournamentId: id,
+    });
+  }, [token, id, socket]);
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
@@ -222,7 +226,7 @@ export default function JoinTournament() {
   //     window.location.reload();
   //   }
   // }, []);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> <ResultEndGame />
@@ -305,7 +309,7 @@ export default function JoinTournament() {
                     className="btn-conteiner"
                   >
                     {!detailTournament?.checkInTournament ? (
-                      <AnimButton 
+                      <AnimButton
                         onClick={handleJoinTour}
                         text={"Join"}
                         type={"primary"}
