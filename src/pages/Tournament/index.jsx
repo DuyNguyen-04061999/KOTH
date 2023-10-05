@@ -264,7 +264,7 @@ export default function Tournament() {
         </Grid>
       );
     } else {
-      return <></>;
+      return <Box key={index}></Box>;
     }
   });
   return (
