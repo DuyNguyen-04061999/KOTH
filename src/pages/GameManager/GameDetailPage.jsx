@@ -25,7 +25,10 @@ export default function GameDetailPage() {
   return (
     <Fragment>
       {!fetchGame && game ? (
-        <UnityGameComponent GameFiles={game?.GameFiles} type={"test"}/>
+        <UnityGameComponent
+          gameScreenType={game?.gameScreenType}
+          GameFiles={game?.GameFiles}
+        />
       ) : (
         <>Loading</>
       )}

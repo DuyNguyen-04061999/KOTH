@@ -7,6 +7,7 @@ import LoadingScreen from "../LoadingScreen";
 import { toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
 
 export default function UnityGameComponent(props) {
+  const { device } = useSelector((state) => state.deviceReducer);
   const navigate = useNavigate();
   const {
     GameFiles,
@@ -23,6 +24,7 @@ export default function UnityGameComponent(props) {
     unPauseGame,
     fmod,
     videoGame,
+    gameScreenType,
   } = props;
 
   const { width, height } = useWindowDimensions();
@@ -187,22 +189,16 @@ export default function UnityGameComponent(props) {
         />
       )}
       <Unity
-        style={
-          type && type === "test"
-            ? {
-                width,
-                height,
-              }
-            : {
-                width: isFullScreen ? width : cwidth ? cwidth : "100%",
-                minWidth: "100%",
-                height: isFullScreen ? "100%" : cheight ? cheight : "100%",
-                position: isFullScreen ? "fixed" : "none",
-                top: isFullScreen ? 0 : "none",
-                left: isFullScreen ? 0 : "none",
-                zIndex: isFullScreen ? 2000 : "none",
-              }
-        }
+        style={{
+          width: !gameScreenType && device === "Desktop" ? "40%" : "100%",
+          minWidth: !gameScreenType && device === "Desktop" ? "40%" : "100%",
+          height: "100%",
+
+          position: isFullScreen || true ? "fixed" : "none",
+          top: isFullScreen ? 0 : "none",
+          left: !gameScreenType && device === "Desktop" ? "30%" : "none",
+          zIndex: isFullScreen ? 2000 : "none",
+        }}
         unityProvider={unityProvider}
         ref={unityRef}
       />
