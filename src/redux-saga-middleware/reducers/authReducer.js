@@ -226,7 +226,7 @@ const authReducer = (
     case "TOGGLE_FORGOT_PASS_DIALOG":
       return { ...state, forgetPassDialog: payload };
     case "TOGGLE_SHARE_TOUR":
-      return { ...state, isShare: true };
+      return { ...state, isShare: !state.isShare };
     default:
       return state;
   }
