@@ -169,6 +169,13 @@ export default function DailyTournament() {
                     <></>
                   )}
                 </Box>
+                {dailyTournament &&
+                  dailyTournament?.length > 0 &&
+                  dailyTournament?.filter(
+                    (n) => n.timeStart === dayList[selectedDay]
+                  )[0]?.listTournament?.length === 0 && (
+                    <ListEmpty textData={"daily"} />
+                  )}
               </Box>
               {!isFetchList && (
                 <PaginatedItems
