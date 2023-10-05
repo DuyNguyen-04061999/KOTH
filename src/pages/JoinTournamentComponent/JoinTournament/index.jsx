@@ -113,7 +113,11 @@ export default function JoinTournament() {
       });
     }
   });
-
+  useEffect(() => {
+    socket?.emit("detailTournament", {
+      tournamentId: id,
+    });
+  }, [token, id, socket]);
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
