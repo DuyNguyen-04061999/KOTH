@@ -74,6 +74,23 @@ export default function AnimButton(props) {
           {text}
         </button>
       );
+    } else if (type === "Join") {
+      return (
+        <button
+        className="anim-btn"
+        style={{
+          backgroundColor: "transparent",
+          color: "#7848ED",
+          padding: "10px 30px",
+          borderRadius: "8px",
+          border: "2px solid #7848ED",
+          width: "auto",
+        }}
+        onClick={onClick}
+      >
+        {text}
+      </button>
+      )
     }
   };
 
