@@ -7,6 +7,7 @@ import LoadingScreen from "../LoadingScreen";
 import { toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
 
 export default function UnityGameComponent(props) {
+  const { device } = useSelector((state) => state.deviceReducer);
   const navigate = useNavigate();
   const {
     GameFiles,
@@ -23,6 +24,7 @@ export default function UnityGameComponent(props) {
     unPauseGame,
     fmod,
     videoGame,
+    gameScreenType,
   } = props;
 
   const { width, height } = useWindowDimensions();
@@ -177,7 +179,32 @@ export default function UnityGameComponent(props) {
       window.removeEventListener("popstate", onBeforeUnload);
     };
   }, [dispatch, unload, fmod]);
+  const [devicePixelRatio, setDevicePixelRatio] = useState(
+    window.devicePixelRatio
+  );
 
+  useEffect(
+    function () {
+      // A function which will update the device pixel ratio of the Unity
+      // Application to match the device pixel ratio of the browser.
+      const updateDevicePixelRatio = function () {
+        setDevicePixelRatio(window.devicePixelRatio);
+      };
+      // A media matcher which watches for changes in the device pixel ratio.
+      const mediaMatcher = window.matchMedia(
+        `screen and (resolution: ${devicePixelRatio}dppx)`
+      );
+      // Adding an event listener to the media matcher which will update the
+      // device pixel ratio of the Unity Application when the device pixel
+      // ratio changes.
+      mediaMatcher.addEventListener("change", updateDevicePixelRatio);
+      return function () {
+        // Removing the event listener when the component unmounts.
+        mediaMatcher.removeEventListener("change", updateDevicePixelRatio);
+      };
+    },
+    [devicePixelRatio]
+  );
   return (
     <Fragment>
       {!isLoaded && !videoGame && (
@@ -187,24 +214,19 @@ export default function UnityGameComponent(props) {
         />
       )}
       <Unity
-        style={
-          type && type === "test"
-            ? {
-                width,
-                height,
-              }
-            : {
-                width: isFullScreen ? width : cwidth ? cwidth : "100%",
-                minWidth: "100%",
-                height: isFullScreen ? "100%" : cheight ? cheight : "100%",
-                position: isFullScreen ? "fixed" : "none",
-                top: isFullScreen ? 0 : "none",
-                left: isFullScreen ? 0 : "none",
-                zIndex: isFullScreen ? 2000 : "none",
-              }
-        }
+        style={{
+          width: !gameScreenType && device === "Desktop" ? "40%" : "100%",
+          minWidth: !gameScreenType && device === "Desktop" ? "40%" : "100%",
+          height: "100%",
+
+          position: isFullScreen || true ? "fixed" : "none",
+          top: isFullScreen ? 0 : "none",
+          left: !gameScreenType && device === "Desktop" ? "30%" : "none",
+          zIndex: isFullScreen ? 2000 : "none",
+        }}
         unityProvider={unityProvider}
         ref={unityRef}
+        devicePixelRatio={devicePixelRatio}
       />
     </Fragment>
   );
