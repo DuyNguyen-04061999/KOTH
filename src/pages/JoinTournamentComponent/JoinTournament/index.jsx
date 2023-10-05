@@ -25,7 +25,7 @@ import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import {
   saveBoughtTournament,
   saveIdTournament,
-  toggleBuyTicket
+  toggleBuyTicket,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import JoinTournamentMobile from "../JoinTournamentMobile";
 import LeaderBoard from "../LeaderBoard";
@@ -48,6 +48,7 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
+import AnimButton from "../../../components/AnimButton";
 
 const theme = createTheme({
   typography: {},
@@ -161,9 +162,25 @@ export default function JoinTournament() {
     dispatch,
   ]);
 
+  const handlePlayTour = () => {
+    socket?.emit("startGameInTournament", {
+      tournamentId: id,
+    });
+  };
+
+  const handleJoinTour = () => {
+    if (token) {
+      socket?.emit("joinTournament", {
+        tournamentId: detailTournament?.id,
+      });
+    } else {
+      dispatch(toggleLoginDialog());
+    }
+  };
+
   useEffect(() => {
-    dispatch(saveBoughtTournament(detailTournament?.bought))
-    dispatch(saveIdTournament(detailTournament?.id))
+    dispatch(saveBoughtTournament(detailTournament?.bought));
+    dispatch(saveIdTournament(detailTournament?.id));
   }, [detailTournament]);
 
   useEffect(() => {
@@ -288,81 +305,27 @@ export default function JoinTournament() {
                     className="btn-conteiner"
                   >
                     {!detailTournament?.checkInTournament ? (
-                      <button
-                        className="button-join-hover"
-                        onClick={() => {
-                          if (token) {
-                            socket?.emit("joinTournament", {
-                              tournamentId: detailTournament?.id,
-                            });
-                          } else {
-                            dispatch(toggleLoginDialog());
-                          }
-                        }}
-                        style={{
-                          padding: `0px ${
-                            576 < width && width < 1200
-                              ? "70"
-                              : parseFloat(width / 28)
-                          }px`,
-                          height: "40px",
-                          borderRadius: "5px",
-                          border: "none",
-                          outline: "none",
-                          background: "linear-gradient(#7440E9,#A345FB)",
-                          color: "white",
-                          fontSize: `${
-                            576 < width && width < 1200 ? "15px" : "18px"
-                          }`,
-                        }}
-                      >
-                        Join
-                      </button>
+                      <AnimButton 
+                        onClick={handleJoinTour}
+                        text={"Join"}
+                        type={"primary"}
+                      />
                     ) : (
                       <Box
                         sx={{ display: "flex", justifyContent: "flex-end" }}
                         className="btn-conteiner"
                       >
-                        <button
-                          className="button-join-hover"
-                          onClick={() => {
-                            socket?.emit("startGameInTournament", {
-                              tournamentId: id,
-                            });
-                          }}
-                          style={{
-                            padding: `0px ${parseFloat(width / 28)}px`,
-                            borderRadius: "5px",
-                            border: "none",
-                            outline: "none",
-                            height: "40px",
-                            background: "linear-gradient(#7440E9,#A345FB)",
-                            color: "white",
-                            marginRight: `${width / 128}px`,
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          Play
-                        </button>
-                        <button
-                          className="button-join-hover"
+                        <AnimButton
+                          onClick={handlePlayTour}
+                          type={"highlight"}
+                          text={"Play"}
+                        />
+
+                        <AnimButton
                           onClick={handleClickOpen}
-                          style={{
-                            padding: `0px ${parseFloat(width / 45)}px`,
-                            borderRadius: "5px",
-                            border: "none",
-                            outline: "none",
-                            height: "40px",
-                            background:
-                              "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
-                            color: "white",
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          Buy Ticket
-                        </button>
+                          text={"Buy Ticket"}
+                          type={"primary"}
+                        />
                       </Box>
                     )}
                   </Box>

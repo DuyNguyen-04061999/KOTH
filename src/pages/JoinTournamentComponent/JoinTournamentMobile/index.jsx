@@ -33,6 +33,7 @@ import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLo
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GamePreview from "./GamePreview";
 import ShareTour from "../../../components/Dialog/ShareTour";
+import AnimButton from "../../../components/AnimButton";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
@@ -75,7 +76,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       });
     }
   });
+  const handlePlayTour = () => {
+    socket?.emit("startGameInTournament", {
+      tournamentId: id,
+    });
+  };
 
+  const handleJoinTour = () => {
+    if (token) {
+      socket?.emit("joinTournament", {
+        tournamentId: detailTournament?.id,
+      });
+    } else {
+      dispatch(toggleLoginDialog());
+    }
+  };
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
@@ -975,64 +990,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 }}
               >
                 {!detailTournament?.checkInTournament ? (
-                  <button
-                    onClick={() => {
-                      if (token) {
-                        socket?.emit("joinTournament", {
-                          tournamentId: detailTournament?.id,
-                        });
-                      } else {
-                        dispatch(toggleLoginDialog());
-                      }
-                    }}
-                    style={{
-                      padding: "8px 0px",
-                      width: "100%",
-                      borderRadius: "6px",
-                      background:
-                        "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
-                      color: "#ffff",
-                      fontWeight: "lighter !important",
-                      border: "none",
-                      outline: "none",
-                    }}
-                  >
-                    Join
-                  </button>
+                  <AnimButton
+                    onClick={handleJoinTour}
+                    text={"Join"}
+                    type={"primary"}
+                  />
                 ) : (
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <button
-                      onClick={handleOnClickStartGame}
-                      style={{
-                        padding: "8px 0px",
-                        borderRadius: "5px",
-                        border: "none",
-                        outline: "none",
-                        width: "45%",
-                        background:
-                          "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
-                        color: "white",
-                      }}
-                    >
-                      Play
-                    </button>
-                    <button
+                    <AnimButton
+                      onClick={handlePlayTour}
+                      type={"highlight"}
+                      text={"Play"}
+                    />
+
+                    <AnimButton
                       onClick={handleClickOpen}
-                      style={{
-                        borderRadius: "5px",
-                        border: "none",
-                        outline: "none",
-                        background:
-                          "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
-                        color: "white",
-                        padding: "8px 0px",
-                        width: "45%",
-                      }}
-                    >
-                      Buy Ticket
-                    </button>
+                      text={"Buy Ticket"}
+                      type={"primary"}
+                    />
                   </Box>
                 )}
               </Box>
