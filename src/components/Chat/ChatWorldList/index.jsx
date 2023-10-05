@@ -32,7 +32,7 @@ export default function ChatWorldList() {
   const { chatWorld, friendList, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
-  
+
   const { userName, token } = useSelector((state) => state.authReducer);
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
@@ -294,55 +294,76 @@ export default function ChatWorldList() {
                   />
                 </Box>
                 <Box className="mx-2" sx={{ borderRadius: "5px" }}>
-                  <Box className="d-flex justify-content-start align-items-center">
-                    <span
-                      style={{
-                        color: "#7C81F2",
-                        borderRadius: "5px",
-                        fontWeight: "500 !important",
-
-                        letterSpacing: "0.5px",
+                  <Box className="d-flex justify-content-between align-items-center">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
                       }}
                     >
                       <span
                         style={{
+                          color: "#7C81F2",
+                          borderRadius: "5px",
                           fontWeight: "500 !important",
 
                           letterSpacing: "0.5px",
                         }}
                       >
-                        {e?.messageFromName}
-                      </span>
-                    </span>
-                    {e.checkFrom === true ? (
-                      <Box
-                        sx={{
-                          borderRadius: "8px",
-                          backgroundColor: "#FFBB33",
-                          color: "white",
-                          marginLeft: "5px",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: "12px",
-                            marginLeft: "0px !important",
-                            paddingRight: "5px",
-                            paddingLeft: "5px",
+                        <span
+                          style={{
+                            fontWeight: "500 !important",
+
+                            letterSpacing: "0.5px",
                           }}
                         >
-                          VIP
-                        </Typography>
-                      </Box>
-                    ) : (
-                      ""
-                    )}
+                          {e?.messageFromName}
+                        </span>
+                      </span>
+                      {e.checkFrom === true ? (
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            backgroundColor: "#FFBB33",
+                            color: "white",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: "12px",
+                              marginLeft: "0px !important",
+                              paddingRight: "5px",
+                              paddingLeft: "5px",
+                            }}
+                          >
+                            VIP
+                          </Typography>
+                        </Box>
+                      ) : (
+                        ""
+                      )}
+                    </Box>
+                    <span
+                      style={{
+                        color: "white",
+                        marginLeft: "15px",
+                        fontSize: "10px",
+                        fontWeight: "500 !important",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      {" "}
+                      {e?.updatedAt &&
+                        moment(e?.updatedAt).format("H:mm a")}{" "}
+                    </span>{" "}
                   </Box>
                   <Box
                     sx={{
                       background: "#443565",
                       width: "fit-content",
-                      maxWidth: width < 576 ? width - 100 : 215,
+                      maxWidth: width < 576 ? width - 100 : 200,
                       fontSize: "14px",
                       fontWeight: "500",
                       wordWrap: "break-word",
@@ -462,21 +483,6 @@ export default function ChatWorldList() {
                       )}
                     </div>
                   </Box>
-                </Box>
-                <Box>
-                  {" "}
-                  <span
-                    style={{
-                      color: "white",
-                      marginLeft: "15px",
-                      fontSize: "10px",
-                      fontWeight: "500 !important",
-                      letterSpacing: "0.5px",
-                    }}
-                  >
-                    {" "}
-                    {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}{" "}
-                  </span>{" "}
                 </Box>
               </Box>
             )}

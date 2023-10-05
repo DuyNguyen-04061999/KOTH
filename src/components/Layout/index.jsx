@@ -56,6 +56,7 @@ import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
 import ForgetPassword from "../Dialog/ForgetPassword";
+import ShareTour from "../Dialog/ShareTour";
 // import { getAppType } from "../../utils/helper";
 
 const drawerWidth = 310;
@@ -306,6 +307,7 @@ export default function Layout(props) {
       <StripeAlertComponent />
       <MetaMaskDialog />
       <ForgetPassword />
+      <ShareTour />
       <PopUpReward />
       <DialogProfile
         open={isProfileDialog}
