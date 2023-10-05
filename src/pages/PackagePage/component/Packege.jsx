@@ -1090,7 +1090,7 @@ export default function Package() {
                               onClick={() => {
                                 if (i?.packageName !== "Free") {
                                   if (token) {
-                                    dispatch(toggleDialogConfirm());
+                                    dispatch(toggleCheckWallet({type: "subscription"}));
                                     dispatch(getIdPackage(i?.id));
                                   }
                                 } else {
