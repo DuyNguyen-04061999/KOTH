@@ -1,12 +1,10 @@
-import { Box, Typography } from "@mui/material";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Box } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function AdminTotals(props) {
   const { data } = props;
   const { width } = useWindowDimensions()
-
+  console.log(data);
   return (
     <>
       <Box
