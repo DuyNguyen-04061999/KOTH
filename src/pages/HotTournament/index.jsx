@@ -43,6 +43,7 @@ export default function HotTournament() {
     marginLeft: "0px !important",
     color: "#fff",
   };
+  const { device } = useSelector((state) => state.deviceReducer);
   const { hotTournament } = useSelector((state) => state.tournamentReducer);
   const [isFetchList, setIsFetchList] = useState(true);
   const [data, setData] = useState([]);
@@ -72,26 +73,27 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-  
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout
+        type="Home"
         children={
           width > 576 ? (
             <Container
               maxWidth="lg"
               sx={{
                 paddingLeft:
-                  width < 576
+                  device === "Mobile"
                     ? "24px !important"
-                    : width < 1024
+                    : device === "Tablet"
                     ? "42px !important"
                     : "0px !important",
                 paddingRight:
-                  width < 576
+                  device === "Mobile"
                     ? "24px !important"
-                    : width < 1024
+                    : device === "Tablet"
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
@@ -158,7 +160,7 @@ export default function HotTournament() {
                       );
                     })
                   ) : (
-                    <ListEmpty textData={"hot"}/>
+                    <ListEmpty textData={"hot"} />
                   )}
                 </Box>
               </Box>
@@ -266,7 +268,6 @@ export default function HotTournament() {
             </Container>
           )
         }
-        type="Home"
       />
     </ThemeProvider>
   );

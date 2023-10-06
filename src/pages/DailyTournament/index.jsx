@@ -45,6 +45,7 @@ export default function DailyTournament() {
   const [selectedDay, setSeDay] = useState(0);
   const [dayList, setDayList] = useState([]);
   const { dailyTournament } = useSelector((state) => state.tournamentReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
   const [itemOffSet, setItemOffSet] = useState(0);
   const typographyStyle = {
     textAlign: "start",
@@ -76,15 +77,15 @@ export default function DailyTournament() {
               maxWidth="lg"
               sx={{
                 paddingLeft:
-                  width < 576
+                  device === "Mobile"
                     ? "24px !important"
-                    : width < 1024
+                    : device === "Tablet"
                     ? "42px !important"
                     : "0px !important",
                 paddingRight:
-                  width < 576
+                  device === "Mobile"
                     ? "24px !important"
-                    : width < 1024
+                    : device === "Tablet"
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
