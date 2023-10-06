@@ -243,7 +243,7 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          {moment(dataTime || new Date())?.format("HH:mm")}
+                          {moment(dataTime || new Date())?.format("HH:mm")} PM
                         </Typography>
                       </Box>
                     </Box>
