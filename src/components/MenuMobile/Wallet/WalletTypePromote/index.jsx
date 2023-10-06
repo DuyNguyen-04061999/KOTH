@@ -83,7 +83,6 @@ export default function WalletTypePromote(props) {
           overflow: 'auto',
           minHeight: width < 576 ? "100vh" : "unset",
           maxHeight: width < 576 ? "unset" : height - 100,
-          overflowY:height > 650 ? "auto" : "scroll"
         }}
       >
         {/* <FullScreenDialog /> */}
@@ -96,7 +95,7 @@ export default function WalletTypePromote(props) {
               backgroundSize: "cover",
               backgroundPosition: "center",
               padding: "25px 25px 25px 25px",
-              overflowY:height > 650 ? "auto" : "scroll"
+              overflow:"auto"
             }}
           >
               <Box sx={{
