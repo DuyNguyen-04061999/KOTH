@@ -1457,7 +1457,7 @@ export default function DialogWallet(props) {
         }}
         TransitionComponent={Transition}
         sx={{
-          zIndex: 1303,
+          zIndex: 1323,
           "& .MuiPaper-root-MuiDialog-paper": {
             overflowY: "hidden",
             backgroundColor: "white",
