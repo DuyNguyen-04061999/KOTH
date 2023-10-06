@@ -390,9 +390,11 @@ export default function JoinTournament() {
                   height: parseFloat(width / 18.8),
                   boxSizing: parseFloat(width / 43.63),
                   //66 43.6
-                  padding: "27px 32px",
+                  padding: "27px 10px",
                   display: "flex",
                   justifyContent: "space-between",
+                  position:"relative",
+                  zIndex:5
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -472,7 +474,7 @@ export default function JoinTournament() {
                       width: "1px",
                       height: "100%",
                       background: "rgba(151, 151, 151, 0.40)",
-                      margin: "0px 32px",
+                      margin: "0px 6px",
                     }}
                   ></Box>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -522,7 +524,7 @@ export default function JoinTournament() {
                       width: "1px",
                       height: "100%",
                       background: "rgba(151, 151, 151, 0.40)",
-                      margin: "0px 32px",
+                      margin: "0px 6px",
                     }}
                   ></Box>
                   <Box sx={{ display: "flex", alignItems: "center" }}>

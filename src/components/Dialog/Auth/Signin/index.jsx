@@ -38,7 +38,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
 import Gold from "../../../Gold/Gold";
-import { getAppType } from "../../../../utils/helper";
+import { getAppType, sliceString } from "../../../../utils/helper";
 // import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { toast } from "react-toastify";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -913,9 +913,17 @@ export default function Dialoglg() {
                     justifyContent={"center"}
                     alignItems={"center"}
                   >
-                    <Typography sx={{ fontSize: "12px" }}>
+                    <p
+                      style={{
+                        width:"65px",
+                        fontSize: "12px",
+                        textOverflow: "ellipsis",
+                        marginLeft: "1px !important",
+                        overflow:"hidden",
+                      }}
+                    >
                       {userName}
-                    </Typography>
+                    </p>
                     {uPack !== null ? (
                       <Box
                         display={"flex"}
