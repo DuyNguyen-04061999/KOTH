@@ -353,7 +353,7 @@ export default function TicketCheckOut() {
                         width: "30px",
                         height: "30px",
                         "&:hover": {
-                          backgroundColor: "gray",
+                          backgroundColor: "#7848ED",
                         },
                       }}
                     >
