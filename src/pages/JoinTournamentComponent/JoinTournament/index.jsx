@@ -40,7 +40,10 @@ import {
   isJson,
   sliceString,
 } from "../../../utils/helper";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  toggleLoginDialog,
+  toggleShareTour,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import PlayGame from "../PlayGame";
@@ -309,7 +312,7 @@ export default function JoinTournament() {
                     className="btn-conteiner"
                   >
                     {!detailTournament?.checkInTournament ? (
-                      <Box sx={{width:"150px"}}>
+                      <Box sx={{ width: "150px" }}>
                         <AnimButton
                           onClick={handleJoinTour}
                           text={"Join"}
@@ -336,9 +339,13 @@ export default function JoinTournament() {
                     )}
                   </Box>
                   <Box
+                    onClick={() => {
+                      dispatch(toggleShareTour());
+                    }}
+                    className="cursor-pointer"
                     sx={{
                       width: "80px",
-                      padding: "2px 5px",
+                      padding: "5px 10px",
                       position: "absolute",
                       right: "10px",
                       top: "10px",
@@ -350,19 +357,28 @@ export default function JoinTournament() {
                       backdropFilter: " blur(12.5px)",
                     }}
                   >
-                    <Typography
-                      sx={{
-                        color: "#ffff",
-                        marginRight: "2px",
-                        marginTop: "5px",
-                      }}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="13"
+                      fill="none"
+                      viewBox="0 0 15 13"
                     >
-                      {detailTournament?.turnCountLeft || 0}
+                      <g>
+                        <g>
+                          <path
+                            fill="#fff"
+                            d="M7.363 3.812c.056-.839.088-1.64.176-2.438.032-.267.146-.518.327-.717.225-.232.54-.17.81.004a18.133 18.133 0 015.313 5.24.699.699 0 01-.006.631c-1.407 2.091-3.151 3.85-5.28 5.21-.58.371-1.12.089-1.17-.615-.062-.832-.12-1.67-.151-2.5-.012-.283-.119-.371-.385-.403-2.21-.264-4.166.718-5.276 2.662-.264.458-.496.933-.791 1.366a.657.657 0 01-.534.243c-.135-.021-.34-.284-.333-.432.055-1.24.005-2.511.263-3.711.574-2.612 2.96-4.458 5.628-4.54.458-.012.912 0 1.41 0z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
+                    <Typography
+                      className="text-white"
+                      sx={{ fontWeight: "700", fontSize: "14px" }}
+                    >
+                      Share
                     </Typography>
-                    <Box
-                      component={"img"}
-                      src={images.ticketIconTournament}
-                    ></Box>
                   </Box>
                 </Box>
               )}
@@ -380,6 +396,85 @@ export default function JoinTournament() {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box>
+                      <Typography
+                        sx={{
+                          color: "#ffff",
+                          textAlign: "start",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 62.5}px`
+                              : `18px`,
+                          letterSpacing: "0.7px",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        My Ticket
+                      </Typography>
+                      <Box
+                        sx={{
+                          color: "#fff",
+                          textAlign: "start",
+                          fontSize:
+                            576 < width && width < 1200
+                              ? `${width / 76}px`
+                              : "14px",
+                          fontWeight: "lighter !important",
+                          marginLeft: "0px !important",
+                          minWidth: "100px",
+                        }}
+                      >
+                        {fetchT ? (
+                          <Skeleton
+                            variant="text"
+                            sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
+                          />
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              alignItems: "center",
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="26"
+                              height="16"
+                              fill="none"
+                              viewBox="0 0 26 16"
+                            >
+                              <g>
+                                <g>
+                                  <path
+                                    fill="#AB3FEF"
+                                    d="M18.644 15.881H1.368c-.87 0-.95-.077-.95-.948 0-1.53.01-3.059-.008-4.586-.003-.555.119-.884.752-.943.775-.073 1.323-.772 1.334-1.535a1.542 1.542 0 00-.36-1.027 1.497 1.497 0 00-.944-.52C.555 6.237.396 5.927.407 5.33.437 3.8.424 2.272.414.744.414.224.627 0 1.146 0c5.715.007 11.43.01 17.144.006.097 0 .194.016.351.03 0 .808.006 1.588 0 2.366 0 .387.055.744.515.752.46.01.52-.371.519-.743V.014c1.788 0 3.511-.015 5.234.023.165 0 .46.332.464.516.037 1.714.024 3.43.023 5.145 0 .476-.344.532-.704.598-1.029.193-1.595 1.104-1.277 2.054.208.62.656 1.01 1.296 1.066.525.047.699.299.695.8a467.48 467.48 0 000 4.897c0 .415-.084.762-.58.764-1.686.008-3.372 0-5.149 0v-2.055c0-.185.059-.41-.022-.549-.122-.214-.343-.371-.52-.552-.163.2-.451.39-.465.6-.06.822-.026 1.648-.026 2.56zM7.339 11.077c.014.517.47.744.966.372.969-.719 1.878-.885 2.87-.053.186.157.643.229.803.106.16-.123.252-.574.174-.814-.401-1.232-.097-2.178.929-2.944a.87.87 0 00.26-.731c-.04-.169-.403-.372-.61-.372-1.322.05-2.028-.633-2.388-1.86-.066-.22-.385-.511-.575-.502-.19.008-.488.306-.561.533-.354 1.2-1.036 1.903-2.34 1.804a.542.542 0 00-.179.039c-.572.147-.708.546-.315.991.325.372.707.69 1.01 1.076.144.202.215.449.2.698-.042.559-.158 1.107-.245 1.657zm11.306-5.263c0 .351-.056.715.022 1.046.049.207.291.496.465.507.173.012.488-.275.502-.45.058-.72.058-1.441 0-2.16-.014-.182-.318-.477-.488-.475-.17.003-.432.284-.488.487-.07.33-.012.696-.013 1.045zm1.02 4.214c0-.35.06-.715-.023-1.043-.05-.2-.326-.477-.488-.471-.163.006-.462.301-.476.496a12.95 12.95 0 000 2.097c.016.19.304.358.467.535.177-.184.45-.344.508-.563.077-.328.012-.696.012-1.047v-.004z"
+                                  ></path>
+                                </g>
+                              </g>
+                            </svg>
+                            <Typography
+                              sx={{
+                                color: "#ffff",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {detailTournament?.turnCountLeft || 0}
+                            </Typography>
+                          </Box>
+                        )}
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "1px",
+                      height: "100%",
+                      background: "rgba(151, 151, 151, 0.40)",
+                      margin: "0px 32px",
+                    }}
+                  ></Box>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <Box>
                       <Typography
