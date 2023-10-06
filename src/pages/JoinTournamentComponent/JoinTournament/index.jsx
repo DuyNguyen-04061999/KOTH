@@ -1424,6 +1424,7 @@ export default function JoinTournament() {
               bought={detailTournament?.bought}
               id={id}
               dataTime={detailTournament?.tournamentEndAt}
+              nameTour={detailTournament?.tournamentName}
             />
             <DetailVoucher
               open={openVoucher}
@@ -1509,6 +1510,7 @@ export default function JoinTournament() {
               bought={detailTournament?.bought}
               id={id}
               dataTime={detailTournament?.tournamentEndAt}
+              nameTour={detailTournament?.tournamentName}
             />
           </>
         )
