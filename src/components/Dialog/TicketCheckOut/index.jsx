@@ -54,7 +54,7 @@ export default function TicketCheckOut() {
   const [socket, setSocket] = useState(null);
   const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
-  const [goldTicket, setGoldTicket] = useState(0.5);
+  const [goldTicket, setGoldTicket] = useState(0.99);
   const [totalGold, setTotalGold] = useState(sl * goldTicket);
 
   const handleChangeValue = (e) => {
@@ -334,7 +334,10 @@ export default function TicketCheckOut() {
                           : true
                       }
                       onClick={() => {
-                        setSl(sl - 1);
+                        if(sl <= 1) {
+                        } else {
+                          setSl(sl - 1);
+                        }
                       }}
                       sx={{
                         color: "white",
@@ -350,7 +353,7 @@ export default function TicketCheckOut() {
                         width: "30px",
                         height: "30px",
                         "&:hover": {
-                          backgroundColor: "gray",
+                          backgroundColor: "#7848ED",
                         },
                       }}
                     >
@@ -359,9 +362,9 @@ export default function TicketCheckOut() {
                     <input
                       type="number"
                       className="input_check"
-                      max={9}
+                      max={4}
                       min={1}
-                      disabled={typeWallet === "subscription"}
+                      disabled={typeWallet === "subscription" || typeWallet === "buyTicket"}
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor:
@@ -377,7 +380,10 @@ export default function TicketCheckOut() {
                       variant="contained"
                       disabled={typeWallet === "subscription"}
                       onClick={() => {
-                        setSl(sl + 1);
+                        if(sl > 3) {
+                        } else {
+                          setSl(sl + 1);
+                        }
                         // setTotalGold(sl * goldTicket)
                       }}
                       sx={{
@@ -494,7 +500,7 @@ export default function TicketCheckOut() {
                 <Grid item xs={6} md={6}>
                   <AnimButton
                     onClick={cancelButton}
-                    text={"cancel"}
+                    text={"Cancel"}
                     type={"ghost"}
                   />
                 </Grid>

@@ -144,7 +144,10 @@ export default function Navbar() {
                   justifyContent: isNav === true ? "flex-start" : "center",
                   // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                   transition: "1s ease-out",
-                  boxShadow: isHoveredHome === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                  boxShadow:
+                    isHoveredHome === true
+                      ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED"
+                      : "",
                   backgroundColor:
                     (pathname && pathname?.includes("home")) ||
                     isHoveredHome === true
@@ -401,7 +404,10 @@ export default function Navbar() {
                     // transition:
                     //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "1s ease-out",
-                    boxShadow: isHoveredHot === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                    boxShadow:
+                      isHoveredHot === true
+                        ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED"
+                        : "",
                     backgroundColor:
                       (pathname && pathname?.includes("hot-tournament")) ||
                       isHoveredHot === true
@@ -551,7 +557,10 @@ export default function Navbar() {
                     // transition:
                     //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "1s ease-out",
-                    boxShadow: isHoveredDaly === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                    boxShadow:
+                      isHoveredDaly === true
+                        ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED"
+                        : "",
                     backgroundColor:
                       (pathname && pathname?.includes("daily-tournament")) ||
                       isHoveredDaly === true
@@ -630,7 +639,10 @@ export default function Navbar() {
                     // transition:
                     //   "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "1s ease-out",
-                    boxShadow: isHoveredLong === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                    boxShadow:
+                      isHoveredLong === true
+                        ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED"
+                        : "",
                     backgroundColor:
                       (pathname &&
                         pathname?.includes("week-long-tournament")) ||
@@ -820,7 +832,10 @@ export default function Navbar() {
                   justifyContent: isNav === true ? "flex-start" : "center",
                   // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                   transition: "1s ease-out",
-                  boxShadow: isHoveredSub === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                  boxShadow:
+                    isHoveredSub === true
+                      ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED"
+                      : "",
                   backgroundColor:
                     (pathname && pathname?.includes("package")) ||
                     isHoveredSub === true
@@ -1166,7 +1181,10 @@ export default function Navbar() {
                 // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                 transition: "1s ease-out",
                 padding: "8px",
-                boxShadow: isHoveredHelp === true ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED" : "",
+                boxShadow:
+                  isHoveredHelp === true
+                    ? "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED"
+                    : "",
                 backgroundColor:
                   (pathname && pathname?.includes("help-center")) ||
                   isHoveredHelp === true

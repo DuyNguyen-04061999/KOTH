@@ -47,6 +47,7 @@ export default function WeekLongTour() {
     color: "#fff",
   };
   const { weeklyTournament } = useSelector((state) => state.tournamentReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
 
   const imgHot = weeklyTournament.map((e) => {
     return e.tournamentBackground;
@@ -73,15 +74,15 @@ export default function WeekLongTour() {
           maxWidth="lg"
           sx={{
             paddingLeft:
-              width < 576
+              device === "Mobile"
                 ? "24px !important"
-                : width < 1024
+                : device === "Tablet"
                 ? "42px !important"
                 : "0px !important",
             paddingRight:
-              width < 576
+              device === "Mobile"
                 ? "24px !important"
-                : width < 1024
+                : device === "Tablet"
                 ? "32px !important"
                 : "0px !important",
             paddingTop: width < 576 ? "24px !important" : "50px !important",

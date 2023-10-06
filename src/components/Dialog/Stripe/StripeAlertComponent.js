@@ -67,6 +67,10 @@ export default function StripeAlertComponent() {
               height="18"
               fill="none"
               viewBox="0 0 18 18"
+              onClick={() => {
+                navigate("/");
+                dispatch(toggleAlertStripeProcess());
+              }}
             >
               <path
                 fill="#997D24"
