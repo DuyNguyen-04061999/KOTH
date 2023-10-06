@@ -26,10 +26,10 @@ p {
   text-align: center;
 }
 
-.width-tablet{
-  width: 230px;
-  transition: all ease 1s;
-}
+// .width-tablet{
+//   width: 230px;
+//   transition: all ease 1s;
+// }
 
 .btn-sign-in {
   position: relative;
@@ -110,7 +110,6 @@ p {
 .luckySpinIncon2 {
   animation: spin2 2s linear infinite;
 }
-
 
 @keyframes spin {
   0% {
@@ -198,8 +197,6 @@ p {
 //     }
 //   }
 // }
-
-
 
 .dropdown-content {
   /* ... Other styles ... */

@@ -128,8 +128,6 @@ export default function Layout(props) {
   const { token, isNav, resetInputValue, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
-
-  // const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, tabChat, badgechat, chatWorld } = useSelector(
     (state) => state.chatReducer
@@ -190,11 +188,11 @@ export default function Layout(props) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  useEffect(() => {
-    if (width < 1024 && width > 576) {
-      dispatch(clickTabNav(false));
-    }
-  }, [width, dispatch]);
+  // useEffect(() => {
+  //   if (width < 1024 && width > 576) {
+  //     dispatch(clickTabNav(false));
+  //   }
+  // }, [width, dispatch]);
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -349,7 +347,7 @@ export default function Layout(props) {
           }}
           // className="pt-1 pb-2"
         >
-          {width < 1024 && width > 576 ? (
+          {device === "Tablet" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -366,7 +364,7 @@ export default function Layout(props) {
           ) : (
             ""
           )}
-          {width > 1023 ? (
+          {device === "Desktop" ? (
             <div className="d-flex align-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -566,7 +564,7 @@ export default function Layout(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {width < 1200 && width > 576 && !startGameCheck ? (
+      {device === "Tablet" && !startGameCheck ? (
         <div
           className="when-active"
           style={{ display: isNav === true ? "block" : "none" }}
@@ -579,12 +577,12 @@ export default function Layout(props) {
           <Grid
             item
             sm={1}
-            md={isNav === true ? 1.6 : 0.6}
-            lg={isNav === true ? 1.9 : 0.6}
+            md={isNav === true && device === "Desktop" ? 1.6 : 0.6}
+            lg={isNav === true && device === "Desktop" ? 1.9 : 0.6}
             position={"relative"}
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
-              position: isNavTablet === false ? "sticky" : "relative",
+              position: "relative",
               zIndex: width < 1200 ? "1034" : "0",
               width: "400px !important",
               "& .MuiGrid-item": {
@@ -603,8 +601,8 @@ export default function Layout(props) {
           item
           xs={12}
           sm={11}
-          md={isNav === true ? 10.4 : 11.4}
-          lg={isNav === true ? 10.1 : 11.4}
+          md={isNav === true && device === "Desktop" ? 10.4 : 11.4}
+          lg={isNav === true && device === "Desktop" ? 10.1 : 11.4}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",
