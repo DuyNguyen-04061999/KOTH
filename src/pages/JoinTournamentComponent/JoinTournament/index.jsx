@@ -171,7 +171,7 @@ export default function JoinTournament() {
       tournamentId: id,
     });
   };
-
+  console.log(detailTournament);
   const handleJoinTour = () => {
     if (token) {
       socket?.emit("joinTournament", {
@@ -1328,6 +1328,7 @@ export default function JoinTournament() {
               tournamentId={detailTournament?.id}
               bought={detailTournament?.bought}
               id={id}
+              dataTime={detailTournament?.tournamentEndAt}
             />
             <DetailVoucher
               open={openVoucher}
@@ -1412,6 +1413,7 @@ export default function JoinTournament() {
               tournamentId={detailTournament?.id}
               bought={detailTournament?.bought}
               id={id}
+              dataTime={detailTournament?.tournamentEndAt}
             />
           </>
         )

@@ -500,7 +500,7 @@ export default function TicketCheckOut() {
                 <Grid item xs={6} md={6}>
                   <AnimButton
                     onClick={cancelButton}
-                    text={"cancel"}
+                    text={"Cancel"}
                     type={"ghost"}
                   />
                 </Grid>

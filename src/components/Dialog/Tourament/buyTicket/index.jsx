@@ -16,6 +16,7 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import InspirationTTF from "../../../../assets/font/CynthoNextRegular.otf";
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { formatTimeMothDateYear } from "../../../../utils/helper";
 
 const theme = createTheme({
   components: {
@@ -37,11 +38,10 @@ export default function BuyTicket(props) {
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  const { bought, tournamentId } = props;
+  const { bought, tournamentId, dataTime } = props;
   const handleClose = () => {
     dispatch(toggleBuyTicket(false));
   };
-
   useEffect(() => {
     if (socket && ticketBuy) {
     }
@@ -53,6 +53,7 @@ export default function BuyTicket(props) {
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -216,7 +217,7 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          29-01-2023
+                          {formatTimeMothDateYear(dataTime)}
                         </Typography>
                       </Box>
                       <Box sx={{ width: "40%" }}>
@@ -259,7 +260,7 @@ export default function BuyTicket(props) {
                             textAlign: "start",
                           }}
                         >
-                          3 ticket
+                          1 ticket
                         </Typography>
                         <Typography
                           sx={{
@@ -270,7 +271,7 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          3 gameplay{" "}
+                          1 gameplay{" "}
                         </Typography>
                       </Box>
                       <Box sx={{ width: "40%" }}>
