@@ -108,7 +108,7 @@ export const RowTable = (props) => {
     }))
     dispatch(openGivePerDialog())
   }
-console.log(headers);
+
   return (
     <React.Fragment>
       <TableRow
@@ -118,7 +118,7 @@ console.log(headers);
           }
         }}
         sx={{
-          ".MuiTableCell-root": checkRouteIsManage(pathname) && {
+          ".MuiTableCell-root": checkRouteIsManage(pathname) || checkRouteIsCreate(pathname) && {
             borderBottom:
               detailAccount && detailAccount?.account === row?.account
                 ? "2px solid #355DFF"

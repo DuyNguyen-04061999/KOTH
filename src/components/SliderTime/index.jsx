@@ -20,39 +20,41 @@ export default function SliderTime({
 
   return (
     <Slider {...settings}>
-      {list && list?.length > 0 && list?.map((item, index) => {
-        return (
-          <Box
-            key={index}
-            onClick={() => {
-              updateSelectedIndex(index);
-            }}
-            sx={{
-              borderBottom: `1px solid ${
-                index === selectedItem ? "#50A0FC" : "#39353E"
-              } !important`,
-              marginTop: "16px",
-              paddingBottom: "8px",
-              display: "flex",
-              justifyContent: "center",
-              transition: "0.3s",
-              cursor: "pointer",
-              textAlign:"center"
-            }}
-          >
-            <Typography
+      {list &&
+        list?.length > 0 &&
+        list?.map((item, index) => {
+          return (
+            <Box
+              key={index}
+              onClick={() => {
+                updateSelectedIndex(index);
+              }}
               sx={{
-                fontSize: width < 576 ? "12px" : "16px",
-                color: index === selectedItem ? "#50A0FC" : "#ffff",
-                fontWeight: "lighter !important",
-                marginLeft: "0px !important",
+                borderBottom: `1px solid ${
+                  index === selectedItem ? "#50A0FC" : "#39353E"
+                } !important`,
+                marginTop: "16px",
+                paddingBottom: "8px",
+                display: "flex",
+                justifyContent: "center",
+                transition: "0.3s",
+                cursor: "pointer",
+                textAlign: "center",
               }}
             >
-              {type === "day" ? item?.slice(0, 3) : item}
-            </Typography>
-          </Box>
-        );
-      })}
+              <Typography
+                sx={{
+                  fontSize: width < 576 ? "12px" : "16px",
+                  color: index === selectedItem ? "#50A0FC" : "#ffff",
+                  fontWeight: "lighter !important",
+                  marginLeft: "0px !important",
+                }}
+              >
+                {type === "day" ? item?.slice(0, 3) : item}
+              </Typography>
+            </Box>
+          );
+        })}
     </Slider>
   );
 }

@@ -12,7 +12,7 @@ export default function ListSubDistributorPage() {
     const dispatch = useDispatch()
     const { listSub } = useSelector(state => state.adminDistributorReducer)
     const navigate = useNavigate()
-console.log(listSub);
+
     useEffect(() => {
         dispatch(getListSub())
     }, [dispatch])

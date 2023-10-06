@@ -1,0 +1,22 @@
+.input_check{
+    width: 60px;
+    height: 30px;
+    border: none;
+    border-radius: none;
+    color: white;
+    text-align: center;
+    &:focus {
+        outline: none;
+    }
+}
+.input_voucher{
+    width: 280px;
+    height: 46px;
+    background-color:#181223 ;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    &:focus {
+        outline: none;
+    }
+}

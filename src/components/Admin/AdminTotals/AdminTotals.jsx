@@ -1,22 +1,20 @@
-import { Box, Typography } from "@mui/material";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Box } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function AdminTotals(props) {
   const { data } = props;
-
   const { width } = useWindowDimensions()
-
+  console.log(data);
   return (
     <>
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
-          marginTop: "64px",
+          marginTop: "30px",
           gap: "32px",
-          flexWrap: width < 576 ? "wrap" : "nowrap"
+          flexWrap: width < 576 ? "wrap" : "nowrap",
+          padding: width < 576 && "0 18px"
         }}
       >
         {data && data?.map((item, index) => (

@@ -18,6 +18,8 @@ import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReduc
 import { PersonAddAlt1 } from "@mui/icons-material";
 import UserChatLoading from "../../LoadingComponent/UserChatLoading";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
+import Typography from "@mui/material/Typography";
+
 const EndMessagetoend = styled.div`
   margin-bottom: 30px;
 `;
@@ -30,6 +32,7 @@ export default function ChatWorldList() {
   const { chatWorld, friendList, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
+
   const { userName, token } = useSelector((state) => state.authReducer);
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
@@ -40,7 +43,7 @@ export default function ChatWorldList() {
   const [roomId, setRoomId] = useState(0);
   useEffect(() => {
     endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [worldMessage,chatPopup]);
+  }, [worldMessage, chatPopup]);
 
   useEffect(() => {
     setWorldMessage(chatWorld);
@@ -84,7 +87,6 @@ export default function ChatWorldList() {
     setAnchorEl(null);
   };
   const { height, width } = useWindowDimensions();
-
 
   // const checkExistInArray = (membersInRoom, userName) => {
   //   return membersInRoom?.filter((n) => {
@@ -292,46 +294,76 @@ export default function ChatWorldList() {
                   />
                 </Box>
                 <Box className="mx-2" sx={{ borderRadius: "5px" }}>
-                  <Box className="d-flex justify-content-start align-items-center">
-                    <span
-                      style={{
-                        color: "#7C81F2",
-                        borderRadius: "5px",
-                        fontWeight: "500 !important",
-
-                        letterSpacing: "0.5px",
+                  <Box className="d-flex justify-content-between align-items-center">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
                       }}
                     >
                       <span
                         style={{
+                          color: "#7C81F2",
+                          borderRadius: "5px",
                           fontWeight: "500 !important",
 
                           letterSpacing: "0.5px",
                         }}
                       >
-                        {e?.messageFromName}
-                      </span>
-                    </span>
-                    <Box>
-                      <span
-                        style={{
-                          color: "white",
-                          marginLeft: "15px",
-                          fontSize: "10px",
-                          fontWeight: "500 !important",
+                        <span
+                          style={{
+                            fontWeight: "500 !important",
 
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
+                            letterSpacing: "0.5px",
+                          }}
+                        >
+                          {e?.messageFromName}
+                        </span>
                       </span>
+                      {e.checkFrom === true ? (
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            backgroundColor: "#FFBB33",
+                            color: "white",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: "12px",
+                              marginLeft: "0px !important",
+                              paddingRight: "5px",
+                              paddingLeft: "5px",
+                            }}
+                          >
+                            VIP
+                          </Typography>
+                        </Box>
+                      ) : (
+                        ""
+                      )}
                     </Box>
+                    <span
+                      style={{
+                        color: "white",
+                        marginLeft: "15px",
+                        fontSize: "10px",
+                        fontWeight: "500 !important",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      {" "}
+                      {e?.updatedAt &&
+                        moment(e?.updatedAt).format("H:mm a")}{" "}
+                    </span>{" "}
                   </Box>
                   <Box
                     sx={{
                       background: "#443565",
                       width: "fit-content",
-                      maxWidth: width < 576 ? width - 100 : 215,
+                      maxWidth: width < 576 ? width - 100 : 200,
                       fontSize: "14px",
                       fontWeight: "500",
                       wordWrap: "break-word",
@@ -471,118 +503,118 @@ export default function ChatWorldList() {
   };
 
   return (
-      <Box
-        className="chat-content"
+    <Box
+      className="chat-content"
+      sx={{
+        maxHeight: checkHeightResponsive(),
+        minHeight: checkHeightResponsive(),
+        overflow: "auto ",
+        overflowX: "hidden",
+        overflowY: "scroll",
+        backgroundColor: "#2e233d",
+        scrollbarWidth: "thin",
+        "&::-webkit-scrollbar": {
+          width: "0rem",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "#f1f1f1",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#888",
+        },
+        "&::-webkit-scrollbar-thumb:hover": {
+          background: "#555",
+        },
+      }}
+    >
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+        disableScrollLock={true}
         sx={{
-          maxHeight: checkHeightResponsive(),
-          minHeight: checkHeightResponsive(),
-          overflow: "auto ",
-          overflowX: "hidden",
-          overflowY: "scroll",
-          backgroundColor: "#2e233d",
-          scrollbarWidth: "thin",
-          "&::-webkit-scrollbar": {
-            width: "0rem",
-          },
-          "&::-webkit-scrollbar-track": {
-            background: "#f1f1f1",
-          },
-          "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "#888",
-          },
-          "&::-webkit-scrollbar-thumb:hover": {
-            background: "#555",
-          },
+          ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
         }}
       >
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
+        <MenuItem
+          onClick={() => {
+            dispatch(toggleProfileDialog(true));
+            if (token === null || token === "") {
+              socket?.emit("getDetailProfileNoAuth", {
+                username: messagefromName,
+              });
+            } else {
+              socket?.emit("getDetailProfile", {
+                username: messagefromName,
+              });
+            }
+            handleClose();
           }}
-          disableScrollLock={true}
           sx={{
-            ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
+            padding: "5px",
           }}
         >
-          <MenuItem
-            onClick={() => {
-              dispatch(toggleProfileDialog(true));
-              if (token === null || token === "") {
-                socket?.emit("getDetailProfileNoAuth", {
-                  username: messagefromName,
-                });
-              } else {
-                socket?.emit("getDetailProfile", {
-                  username: messagefromName,
-                });
-              }
-              handleClose();
-            }}
+          <Box
+            className="p-1 text-white"
             sx={{
-              padding: "5px",
+              background: "linear-gradient(180deg, #843ff0, #7748ed)",
+              width: "100%",
+              fontWeight: "bold",
+              borderRadius: "4px",
             }}
           >
-            <Box
-              className="p-1 text-white"
+            <AddFriendIcon className="me-1 pb-1" />
+            <span>View Profile</span>
+          </Box>
+        </MenuItem>
+        {token &&
+          (checkExistInFriendList() === true ? (
+            <MenuItem
               sx={{
-                background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                width: "100%",
-                fontWeight: "bold",
-                borderRadius: "4px",
+                padding: "5px",
               }}
             >
-              <AddFriendIcon className="me-1 pb-1" />
-              <span>View Profile</span>
-            </Box>
-          </MenuItem>
-          {token &&
-            (checkExistInFriendList() === true ? (
-              <MenuItem
+              <Box
+                className="p-1 text-white cursor-pointer"
+                onClick={handleDeleteFriend}
                 sx={{
-                  padding: "5px",
+                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                  width: "100%",
+                  fontWeight: "bold",
+                  borderRadius: "4px",
                 }}
               >
-                <Box
-                  className="p-1 text-white cursor-pointer"
-                  onClick={handleDeleteFriend}
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "100%",
-                    fontWeight: "bold",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <DeleteFriendIcon className="me-2 pb-1" />
-                  <span> Delete Friend</span>
-                </Box>
-              </MenuItem>
-            ) : (
-              <MenuItem
+                <DeleteFriendIcon className="me-2 pb-1" />
+                <span> Delete Friend</span>
+              </Box>
+            </MenuItem>
+          ) : (
+            <MenuItem
+              sx={{
+                padding: "5px",
+              }}
+            >
+              <Box
+                onClick={handleAddFriend}
+                className="p-1 text-white"
                 sx={{
-                  padding: "5px",
+                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                  width: "100%",
+                  borderRadius: "4px",
                 }}
               >
-                <Box
-                  onClick={handleAddFriend}
-                  className="p-1 text-white"
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "100%",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <PersonAddAlt1 className="me-2 pb-1" />
-                  Add Friend
-                </Box>
-              </MenuItem>
-            ))}
-        </Menu>
-          {renderChat}
-          <span ref={endOfMessageRef}></span>
-      </Box>
+                <PersonAddAlt1 className="me-2 pb-1" />
+                Add Friend
+              </Box>
+            </MenuItem>
+          ))}
+      </Menu>
+      {renderChat}
+      <span ref={endOfMessageRef}></span>
+    </Box>
   );
 }

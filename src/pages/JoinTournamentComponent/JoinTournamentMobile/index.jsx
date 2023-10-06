@@ -27,11 +27,13 @@ import {
   isJson,
   sliceString,
 } from "../../../utils/helper";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { toggleLoginDialog, toggleShareTour } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toast } from "react-toastify";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GamePreview from "./GamePreview";
+import ShareTour from "../../../components/Dialog/ShareTour";
+import AnimButton from "../../../components/AnimButton";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
@@ -74,7 +76,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       });
     }
   });
+  const handlePlayTour = () => {
+    socket?.emit("startGameInTournament", {
+      tournamentId: id,
+    });
+  };
 
+  const handleJoinTour = () => {
+    if (token) {
+      socket?.emit("joinTournament", {
+        tournamentId: detailTournament?.id,
+      });
+    } else {
+      dispatch(toggleLoginDialog());
+    }
+  };
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
@@ -204,7 +220,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 {detailTournament?.tournamentStatus === 2 && <BgEndGame />}
                 <Box
                   component={"div"}
-                  className="position-absolute d-flex ps-2 pe-2 pt-1 pb-1 rounded text-white"
+                  className="position-absolute d-flex ps-2 pe-2 pt-2 pb-2 rounded text-white"
                   sx={{
                     color: "#fff",
                     right: 10,
@@ -212,19 +228,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     background: "#8A3AF1",
                   }}
                 >
-                  <Typography
-                    sx={{
-                      color: "#ffff",
-                      marginRight: "2px",
-                      marginTop: "5px",
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="18"
+                    fill="none"
+                    viewBox="0 0 20 18"
+                    onClick={() => {
+                      dispatch(toggleShareTour())
                     }}
                   >
-                    {detailTournament?.turnCountLeft || 0}
-                  </Typography>
-                  <Box
-                    component={"img"}
-                    src={images.ticketIconTournament}
-                  ></Box>
+                    <g fill="#fff">
+                      <path d="M12.609 3.375c.056-.843.088-1.649.177-2.449.032-.269.146-.52.328-.72.226-.234.542-.171.815.004a18.216 18.216 0 015.336 5.264.7.7 0 01-.006.634c-1.413 2.1-3.165 3.867-5.304 5.234-.583.372-1.125.088-1.177-.618a72.832 72.832 0 01-.15-2.512c-.012-.285-.12-.373-.387-.405-2.22-.265-4.186.72-5.3 2.674-.265.46-.499.938-.795 1.373a.662.662 0 01-.537.243c-.136-.02-.341-.285-.334-.433.055-1.247.005-2.523.265-3.729.576-2.623 2.973-4.477 5.653-4.56.46-.012.916 0 1.416 0z"></path>
+                      <path d="M.678 8.994c0-1.702.058-3.438.25-5.148C1.133 2.03 2.705.52 4.532.396c2.084-.14 4.173-.193 6.26-.265.559-.02.6.05.573.618 0 .089-.015.177-.01.265.02.388-.134.541-.546.542-1.457.005-2.914.035-4.37.088a18.08 18.08 0 00-1.89.177c-1.226.163-2.126 1.16-2.277 2.51a41.821 41.821 0 000 9.383c.165 1.457 1.086 2.394 2.544 2.552 3.106.337 6.24.337 9.345 0 1.46-.157 2.385-1.085 2.556-2.539.093-.789.154-1.582.192-2.375.016-.335.103-.588.37-.801.24-.192.44-.429.676-.633.092-.06.192-.11.297-.145.045.114.132.231.127.342a130.22 130.22 0 01-.177 2.996 9.28 9.28 0 01-.177 1.355c-.39 1.75-1.752 2.976-3.669 3.196a41.42 41.42 0 01-9.778-.01C2.436 17.389 1.08 15.93.854 13.756c-.073-.706-.15-1.406-.176-2.11C.648 10.76.67 9.877.67 8.994h.007z"></path>
+                    </g>
+                  </svg>
                 </Box>
               </Box>
               <Box
@@ -259,6 +277,50 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   marginTop: "20px",
                 }}
               >
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
+                    My Ticket
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="22"
+                      height="12"
+                      fill="none"
+                      viewBox="0 0 26 16"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            fill="#AB3FEF"
+                            d="M18.644 15.881H1.368c-.87 0-.95-.077-.95-.948 0-1.53.01-3.059-.008-4.586-.003-.555.119-.884.752-.943.775-.073 1.323-.772 1.334-1.535a1.542 1.542 0 00-.36-1.027 1.497 1.497 0 00-.944-.52C.555 6.237.396 5.927.407 5.33.437 3.8.424 2.272.414.744.414.224.627 0 1.146 0c5.715.007 11.43.01 17.144.006.097 0 .194.016.351.03 0 .808.006 1.588 0 2.366 0 .387.055.744.515.752.46.01.52-.371.519-.743V.014c1.788 0 3.511-.015 5.234.023.165 0 .46.332.464.516.037 1.714.024 3.43.023 5.145 0 .476-.344.532-.704.598-1.029.193-1.595 1.104-1.277 2.054.208.62.656 1.01 1.296 1.066.525.047.699.299.695.8a467.48 467.48 0 000 4.897c0 .415-.084.762-.58.764-1.686.008-3.372 0-5.149 0v-2.055c0-.185.059-.41-.022-.549-.122-.214-.343-.371-.52-.552-.163.2-.451.39-.465.6-.06.822-.026 1.648-.026 2.56zM7.339 11.077c.014.517.47.744.966.372.969-.719 1.878-.885 2.87-.053.186.157.643.229.803.106.16-.123.252-.574.174-.814-.401-1.232-.097-2.178.929-2.944a.87.87 0 00.26-.731c-.04-.169-.403-.372-.61-.372-1.322.05-2.028-.633-2.388-1.86-.066-.22-.385-.511-.575-.502-.19.008-.488.306-.561.533-.354 1.2-1.036 1.903-2.34 1.804a.542.542 0 00-.179.039c-.572.147-.708.546-.315.991.325.372.707.69 1.01 1.076.144.202.215.449.2.698-.042.559-.158 1.107-.245 1.657zm11.306-5.263c0 .351-.056.715.022 1.046.049.207.291.496.465.507.173.012.488-.275.502-.45.058-.72.058-1.441 0-2.16-.014-.182-.318-.477-.488-.475-.17.003-.432.284-.488.487-.07.33-.012.696-.013 1.045zm1.02 4.214c0-.35.06-.715-.023-1.043-.05-.2-.326-.477-.488-.471-.163.006-.462.301-.476.496a12.95 12.95 0 000 2.097c.016.19.304.358.467.535.177-.184.45-.344.508-.563.077-.328.012-.696.012-1.047v-.004z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
+                    <Typography
+                      sx={{
+                        color: "#ffff",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {detailTournament?.turnCountLeft || 0}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    width: "1px",
+                    height: "40px",
+                    backgroundColor: "rgba(151, 151, 151, 0.40)",
+                  }}
+                ></Box>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
                     Start date
@@ -923,69 +985,31 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   padding: "28px 28px 28px 28px",
                   width: "100%",
                   background: "rgba(37, 37, 37, 0.20)",
-                  // backdropFilter: "blur(2px)",
+                  backdropFilter: "blur(2px)",
                   zIndex: "28",
                 }}
               >
                 {!detailTournament?.checkInTournament ? (
-                  <button
-                    onClick={() => {
-                      if (token) {
-                        socket?.emit("joinTournament", {
-                          tournamentId: detailTournament?.id,
-                        });
-                      } else {
-                        dispatch(toggleLoginDialog());
-                      }
-                    }}
-                    style={{
-                      padding: "8px 0px",
-                      width: "100%",
-                      borderRadius: "6px",
-                      background:
-                        "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
-                      color: "#ffff",
-                      fontWeight: "lighter !important",
-                      border: "none",
-                      outline: "none",
-                    }}
-                  >
-                    Join
-                  </button>
+                  <AnimButton
+                    onClick={handleJoinTour}
+                    text={"Join"}
+                    type={"primary"}
+                  />
                 ) : (
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <button
-                      onClick={handleOnClickStartGame}
-                      style={{
-                        padding: "8px 0px",
-                        borderRadius: "5px",
-                        border: "none",
-                        outline: "none",
-                        width: "45%",
-                        background:
-                          "linear-gradient(180deg, #9D39F1 0%, #BF48ED 100%)",
-                        color: "white",
-                      }}
-                    >
-                      Play
-                    </button>
-                    <button
+                    <AnimButton
+                      onClick={handlePlayTour}
+                      type={"highlight"}
+                      text={"Play"}
+                    />
+
+                    <AnimButton
                       onClick={handleClickOpen}
-                      style={{
-                        borderRadius: "5px",
-                        border: "none",
-                        outline: "none",
-                        background:
-                          "linear-gradient(180deg, #8A3AF1 0%, #7648ED 100%)",
-                        color: "white",
-                        padding: "8px 0px",
-                        width: "45%",
-                      }}
-                    >
-                      Buy Ticket
-                    </button>
+                      text={"Buy Ticket"}
+                      type={"primary"}
+                    />
                   </Box>
                 )}
               </Box>

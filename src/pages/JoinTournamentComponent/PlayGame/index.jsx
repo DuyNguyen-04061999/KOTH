@@ -16,7 +16,7 @@ import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
-  const { device, deviceType } = useSelector((state) => state.deviceReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [continueGame, setContinueGame] = useState(false);
@@ -122,7 +122,7 @@ export default function PlayGame(props) {
     }
     return false;
   };
-  console.log(detailTournament);
+  console.log("DEtail: ", detailTournament);
   return (
     <>
       <Box
@@ -167,6 +167,7 @@ export default function PlayGame(props) {
                     ? {
                         width: "100%",
                         height: "800px",
+                        background: "black",
                       }
                     : {
                         position: "fixed",
@@ -185,11 +186,13 @@ export default function PlayGame(props) {
                 }
                 title="Playgame"
                 src={
-                  window.location.origin +
-                  "/play-game-tournament/" +
-                  id +
-                  "/" +
-                  detailTournament?.tournamentInfors?.skin?.id
+                  process.env.REACT_APP_ENV === "development"
+                    ? "http://localhost:3000/play-game-tournament/87/4"
+                    : window.location.origin +
+                      "/play-game-tournament/" +
+                      id +
+                      "/" +
+                      detailTournament?.tournamentInfors?.skin?.id
                 }
               ></iframe>{" "}
               {checkLockScreen() && (

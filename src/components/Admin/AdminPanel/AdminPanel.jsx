@@ -155,7 +155,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <Box sx={{ marginTop: "60px" }}>
+    <Box sx={{ marginTop: "56px" }}>
       <DetailAccountDialogComponent />
       <Typography
         sx={{
@@ -165,7 +165,14 @@ const AdminPanel = () => {
         }}
       >
         {width < 576
-          ? `${roles?.includes("agent") ? "User Manager" : "Admin Structure"}`
+          ? `${
+              roles?.includes("agent")
+                ? "Play Management"
+                : roles?.includes("master")
+                ? "Create Distributor"
+                : roles?.includes("distributor")
+                ? "Create Agent" : ""
+            }`
           : `Welcome
             ${
               roles?.includes("master")
@@ -183,9 +190,15 @@ const AdminPanel = () => {
           flexDirection: "column",
           border: { xs: "unset", sm: "2px solid #E4E4E4" },
           borderRadius: "16px",
-          padding: "18px",
+          padding: {
+            xs: "0px",
+            sm: "18px",
+          },
           marginTop: {
-            xs: checkRouteIsManage(pathname) ? "0px" : "-52px",
+            xs:
+              checkRouteIsManage(pathname) || roles.includes("agent")
+                ? "0px"
+                : "-32px",
             sm: "24px",
           },
         }}
@@ -197,7 +210,7 @@ const AdminPanel = () => {
             flexDirection: { xs: "column-reverse", sm: "row" },
           }}
         >
-          <Box sx={{ marginTop: "14px" }}>
+          <Box sx={{ marginTop: "12px" }}>
             <SearchBar
               searchValue={searchValue}
               onChange={handleChangeSearch}

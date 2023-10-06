@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const ListEmpty = (props) => {
-  const {textData} = props
+  const { textData } = props;
   const { width } = useWindowDimensions();
   return (
     <Box
@@ -58,11 +58,29 @@ const ListEmpty = (props) => {
           ></path>
         </g>
       </svg>
-      <Typography className="text-center" sx={{ fontSize: "14px", marginTop: "12px", color:"#979797", lineHeight:"14px", letterSpacing:"0.8px" }}>
+      <Typography
+        className="text-center"
+        sx={{
+          fontSize: "14px",
+          marginTop: "12px",
+          color: "#979797",
+          lineHeight: "14px",
+          letterSpacing: "0.8px",
+        }}
+      >
         No {textData} tournaments available
       </Typography>{" "}
-      <Typography className="text-center" sx={{ fontSize: "14px", marginTop: "4px", color:"#979797",lineHeight:"14px", letterSpacing:"0.8px" }}>
-      at the moment
+      <Typography
+        className="text-center"
+        sx={{
+          fontSize: "14px",
+          marginTop: "4px",
+          color: "#979797",
+          lineHeight: "14px",
+          letterSpacing: "0.8px",
+        }}
+      >
+        at the moment
       </Typography>
     </Box>
   );

@@ -2,7 +2,10 @@
     outline: none !important;
     border: 1px solid #853eed !important;
  }
-
+.wallet-type-promote{
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
  span{
     font-weight: 500;
  }

@@ -112,6 +112,8 @@ import ticketIconTournament from "../assets/images/ticketIconTournament.png";
 import voucher_tour from "../assets/images/voucher_tour.png";
 import Voucher_Brand from "../assets/images/Voucher_Brand.png";
 import samsungBrand from "../assets/images/samsungBrand.png";
+import userIcon from "../assets/images/userIcon.png";
+import phoneIcon from "../assets/images/phoneIcon.png";
 import closeVoucher from "../assets/images/closeVoucher.png";
 import PurpleBanner from "../assets/images/PurpleBanner.png";
 import bannerTournamentMobile from "../assets/images/bannerTournamentMobile.png";
@@ -262,7 +264,6 @@ import goldleaderboard from "../assets/imagesLayout/popup/Gold.png";
 import bg01 from "../assets/imagesLayout/popup/bg01.png";
 import packageicon from "../assets/imagesLayout/popup/Group.svg";
 import walletopen from "../assets/imagesLayout/popup/walletopen.png";
-import coin2 from "../assets/imagesLayout/popup/coin2.png";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
 import crown from "../assets/imagesLayout/popup/crown.svg";
 import heart from "../assets/imagesLayout/popup/heart.svg";
@@ -529,6 +530,8 @@ export const images = {
   GamePreview1: GamePreview1,
   GamePreview2: GamePreview2,
   GamePreview3: GamePreview3,
+  userIcon: userIcon,
+  phoneIcon: phoneIcon,
 };
 
 export const navigationImages = {
@@ -618,7 +621,6 @@ export const popup = {
   ticket: ticket,
   packageicon: packageicon,
   walletopen: walletopen,
-  coin2: coin2,
   proWallet: proWallet,
   crown: crown,
   heart: heart,

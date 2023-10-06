@@ -38,13 +38,29 @@ export const saveTransactionData = (data) => {
   }
 }
 
+export const toggleCheckWallet =(data) => {
+  return {
+    type: "TOGGLE_CHECK_WALLET",
+    payload: data
+  }
+}
+
+export const closeCheckWallet =(data) => {
+  return {
+    type: "CLOSE_CHECK_WALLET",
+    payload: data
+  }
+}
+
 const walletReducer = (
   state = {
     isWalletDialog: false,
     isTransactionDialog: false,
     isMetamaskDialog: false,
     transactionData: null,
-    depositData: null
+    depositData: null,
+    isCheckWallet:false,
+    typeWallet:""
   },
   action
 ) => {
@@ -70,6 +86,9 @@ const walletReducer = (
     }
     case "TOGGLE_METAMASK_DIALOG": return {...state, isMetamaskDialog: !state.isMetamaskDialog}
     case "SAVE_TRANSACTION_DATA": return {...state, transactionData: payload?.transactionData, depositData: payload?.depositData}
+    case "TOGGLE_CHECK_WALLET" : 
+    return {...state, isCheckWallet: !state.isCheckWallet, typeWallet:payload?.type}
+    case "CLOSE_CHECK_WALLET" : return {...state, isCheckWallet: false}
     default:
       return state;
   }

@@ -31,6 +31,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
       return prev + num;
     });
   };
+
   return (
     <Box>
       {width > 576 ? (
@@ -1210,7 +1211,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               fontSize: "12px",
                             }}
                           >
-                            20
+                            {start && Math.round(start / 4)}
                           </Typography>
                           <Box
                             sx={{ width: "12px" }}
@@ -2315,10 +2316,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               fontSize: "12px",
                             }}
                           >
-                            {end >
-                            detailTournament?.tournamentResult?.length - 1
-                              ? detailTournament?.tournamentResult?.length
-                              : end + 1}
+                            {start && Math.round(start / 4)}
                           </Typography>
                           <Box
                             sx={{ width: "12px" }}

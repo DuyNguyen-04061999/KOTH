@@ -54,6 +54,9 @@ import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
+import TicketCheckOut from "../Dialog/TicketCheckOut";
+import ForgetPassword from "../Dialog/ForgetPassword";
+import ShareTour from "../Dialog/ShareTour";
 // import { getAppType } from "../../utils/helper";
 
 const drawerWidth = 310;
@@ -125,10 +128,10 @@ export default function Layout(props) {
   const { token, isNav, resetInputValue, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
-
-  // const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, tabChat, badgechat,chatWorld } = useSelector((state) => state.chatReducer);
+  const { chatPopup, tabChat, badgechat, chatWorld } = useSelector(
+    (state) => state.chatReducer
+  );
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
 
   const [showChat] = useState(true);
@@ -185,11 +188,11 @@ export default function Layout(props) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  useEffect(() => {
-    if (width < 1024 && width > 576) {
-      dispatch(clickTabNav(false));
-    }
-  }, [width, dispatch]);
+  // useEffect(() => {
+  //   if (width < 1024 && width > 576) {
+  //     dispatch(clickTabNav(false));
+  //   }
+  // }, [width, dispatch]);
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -214,8 +217,6 @@ export default function Layout(props) {
     if (history.action === "POP") {
     }
   }, []);
-
-
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -300,8 +301,11 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
+      <ForgetPassword />
+      <ShareTour />
       <PopUpReward />
       <DialogProfile
         open={isProfileDialog}
@@ -343,7 +347,7 @@ export default function Layout(props) {
           }}
           // className="pt-1 pb-2"
         >
-          {width < 1024 && width > 576 ? (
+          {device === "Tablet" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -360,7 +364,7 @@ export default function Layout(props) {
           ) : (
             ""
           )}
-          {width > 1023 ? (
+          {device === "Desktop" ? (
             <div className="d-flex align-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -411,8 +415,11 @@ export default function Layout(props) {
                     ></image>
                   </defs>
                 </svg> */}
-                <img src={imageDesktop.LogoCongTy} alt="logocty" 
-                width={40} height={40}
+                <img
+                  src={imageDesktop.LogoCongTy}
+                  alt="logocty"
+                  width={40}
+                  height={40}
                 />
               </div>
             </div>
@@ -506,7 +513,7 @@ export default function Layout(props) {
                   backgroundColor: "#68399E",
                   borderRadius: "50%",
                   padding: "3px 8px 6px 8px",
-                  position:"relative"
+                  position: "relative",
                 }}
               >
                 <svg
@@ -517,7 +524,7 @@ export default function Layout(props) {
                   viewBox="0 0 20 20"
                   onClick={() => {
                     dispatch(openChatPopup());
-                    dispatch(showBadgeChat(true))
+                    dispatch(showBadgeChat(true));
                   }}
                   className="cursor-pointer"
                 >
@@ -530,7 +537,9 @@ export default function Layout(props) {
                     </g>
                   </g>
                 </svg>
-                <div className={badgechat === true ? "" : "badge-chat-des"}></div>
+                <div
+                  className={badgechat === true ? "" : "badge-chat-des"}
+                ></div>
               </Box>
             ) : (
               <Box
@@ -555,7 +564,7 @@ export default function Layout(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {width < 1200 && width > 576 && !startGameCheck ? (
+      {device === "Tablet" && !startGameCheck ? (
         <div
           className="when-active"
           style={{ display: isNav === true ? "block" : "none" }}
@@ -568,12 +577,12 @@ export default function Layout(props) {
           <Grid
             item
             sm={1}
-            md={isNav === true ? 1.6 : 0.6}
-            lg={isNav === true ? 1.9 : 0.6}
+            md={isNav === true && device === "Desktop" ? 1.6 : 0.6}
+            lg={isNav === true && device === "Desktop" ? 1.9 : 0.6}
             position={"relative"}
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
-              position: isNavTablet === false ? "sticky" : "relative",
+              position: "relative",
               zIndex: width < 1200 ? "1034" : "0",
               width: "400px !important",
               "& .MuiGrid-item": {
@@ -592,8 +601,8 @@ export default function Layout(props) {
           item
           xs={12}
           sm={11}
-          md={isNav === true ? 10.4 : 11.4}
-          lg={isNav === true ? 10.1 : 11.4}
+          md={isNav === true && device === "Desktop" ? 10.4 : 11.4}
+          lg={isNav === true && device === "Desktop" ? 10.1 : 11.4}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",
@@ -707,7 +716,7 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
-                        zIndex:2
+                        zIndex: 2,
                       }}
                     >
                       Global
@@ -779,26 +788,29 @@ export default function Layout(props) {
                         fontWeight: "700",
                         fontSize: "12px",
                         letterSpacing: "1px",
-                        zIndex:2
+                        zIndex: 2,
                       }}
                     >
                       Private
                     </span>
                   </div>
                 </div>
-                <div style={{
-                  position:"absolute",
-                  top:15,
-                  left:15,
-                  width:140,
-                  height:30,
-                  borderRadius: "5px 5px 5px 5px",
-                  padding: "6px",
-                  background:"#883AF0",
-                  transform:tabChat === true ? "translate(0px)" :'translate(140px)',
-                  zIndex:1,
-                  transition:"0.3s ease-out"
-                }}></div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 15,
+                    left: 15,
+                    width: 140,
+                    height: 30,
+                    borderRadius: "5px 5px 5px 5px",
+                    padding: "6px",
+                    background: "#883AF0",
+                    transform:
+                      tabChat === true ? "translate(0px)" : "translate(140px)",
+                    zIndex: 1,
+                    transition: "0.3s ease-out",
+                  }}
+                ></div>
               </div>
             </Box>
             <Box component="div" hidden={!showChat}>

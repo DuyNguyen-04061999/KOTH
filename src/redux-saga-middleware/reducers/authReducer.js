@@ -112,6 +112,19 @@ export const getNavTablet = (data) => {
     payload: data,
   };
 };
+export const toggleForgetPass = (data) => {
+  return {
+    type: "TOGGLE_FORGOT_PASS_DIALOG",
+    payload: data,
+  };
+};
+
+export const toggleShareTour = (data) => {
+  return {
+    type: "TOGGLE_SHARE_TOUR",
+    payload: data,
+  };
+};
 
 const authReducer = (
   state = {
@@ -135,6 +148,9 @@ const authReducer = (
     userPackageId: "",
     isDropdownNav: true,
     isNavTablet: true,
+    uPack: {},
+    forgetPassDialog: false,
+    isShare: false,
   },
   action
 ) => {
@@ -154,6 +170,7 @@ const authReducer = (
         userRole: payload?.role,
         userId: payload?.id,
         userPackageId: payload.userPackageId,
+        uPack: payload.uPack,
       };
     }
     case "REMOVE_TOKEN":
@@ -191,7 +208,7 @@ const authReducer = (
         isTab: false,
         isUpdateProfile: false,
         userChangeAvatar: "",
-        userPackageId: ""
+        userPackageId: "",
       };
     case "GET_LEADERBOARD_SUCCESS":
       return { ...state, leaderBoard: payload };
@@ -206,6 +223,10 @@ const authReducer = (
       return { ...state, isDropdownNav: !state.isDropdownNav };
     case "GET_NAV_TABLET":
       return { ...state, isNavTablet: payload };
+    case "TOGGLE_FORGOT_PASS_DIALOG":
+      return { ...state, forgetPassDialog: payload };
+    case "TOGGLE_SHARE_TOUR":
+      return { ...state, isShare: !state.isShare };
     default:
       return state;
   }

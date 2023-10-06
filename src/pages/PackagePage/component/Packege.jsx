@@ -21,6 +21,7 @@ import {
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { useLocation } from "react-router-dom";
+import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walletReducer";
 
 export default function Package() {
   const { width } = useWindowDimensions();
@@ -558,11 +559,12 @@ export default function Package() {
                                       }
                                       if (i?.packageName !== "Free") {
                                         if (token) {
-                                          dispatch(toggleDialogConfirm());
+                                          // dispatch(toggleDialogConfirm());
+                                          dispatch(toggleCheckWallet({type: "subscription"}))
                                           dispatch(getIdPackage(i?.id));
                                         }
                                       } else {
-                                        console.log("Cannot buy free pack!");
+                                        
                                       }
                                     }}
                                     disabled={
@@ -1088,11 +1090,11 @@ export default function Package() {
                               onClick={() => {
                                 if (i?.packageName !== "Free") {
                                   if (token) {
-                                    dispatch(toggleDialogConfirm());
+                                    dispatch(toggleCheckWallet({type: "subscription"}));
                                     dispatch(getIdPackage(i?.id));
                                   }
                                 } else {
-                                  console.log("Cannot buy free pack!");
+                                  
                                 }
                               }}
                               disabled={i?.id === userPackageId ? true : false}
