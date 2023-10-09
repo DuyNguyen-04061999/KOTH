@@ -280,10 +280,10 @@ function SimpleDialog(props) {
                       </Box>
                     </FormControl>
                     <Typography
-                      // onClick={() => {
-                      //   dispatch(toggleLoginDialog());
-                      //   dispatch(toggleForgetPass(true));
-                      // }}
+                      onClick={() => {
+                        dispatch(toggleLoginDialog());
+                        dispatch(toggleForgetPass(true));
+                      }}
                       sx={{
                         color: "#7848ED",
                         textAlign: "end",
@@ -513,10 +513,10 @@ function SimpleDialog(props) {
                       </FormControl>
                       <Box className="d-flex justify-content-end">
                         <Box
-                          // onClick={() => {
-                          //   dispatch(toggleLoginDialog());
-                          //   dispatch(toggleForgetPass(true));
-                          // }}
+                          onClick={() => {
+                            dispatch(toggleLoginDialog());
+                            dispatch(toggleForgetPass(true));
+                          }}
                           sx={{
                             color: "#7671ba",
                             cursor: "pointer",
