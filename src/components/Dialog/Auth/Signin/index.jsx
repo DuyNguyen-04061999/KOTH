@@ -847,7 +847,7 @@ export default function Dialoglg() {
                 <Box
                   sx={{
                     backgroundColor: "#68399E",
-                    width: "100px",
+                    width: "110px",
                     display: "flex",
                     borderRadius: "20px",
                   }}

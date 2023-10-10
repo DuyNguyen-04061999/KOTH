@@ -207,7 +207,28 @@ export default function AnimButton(props) {
           </button>
         </Box>
       );
-    }
+    } else if (type === "dislable") {
+      return (
+        <Box>
+          <button
+            style={{
+              backgroundColor: "#979797",
+              color: "white",
+              padding: "12px 30px",
+              borderRadius: "8px",
+              width: "100%",
+              fontWeight: "700",
+              border:"none"
+            }}
+            onClick={onClick}
+          >
+            <span>
+              {text}
+            </span>
+          </button>
+        </Box>
+      );
+    } 
   };
 
   return (

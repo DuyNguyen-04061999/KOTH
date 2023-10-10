@@ -10,7 +10,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
-  const { firstName, lastName, email, phone } = useSelector(
+  const { firstName, lastName, email, phone,  } = useSelector(
     (state) => state.profileReducer
   );
   const [socket, setSocket] = useState(null);
@@ -20,6 +20,7 @@ export default function SettingProfile({ closePopup }) {
   }, []);
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
+  const [nName,setNname] = useState("")
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
@@ -45,7 +46,7 @@ export default function SettingProfile({ closePopup }) {
   }
 
   useEffect(() => {
-    if (fName === "" || lName === "") {
+    if (fName === "" || lName === "" || nName < 6 || nName > 15 || phone === "" || nName === "") {
       setDisable(true);
       return;
     } else if (checkEmailFormat(emailAddress) === false) {
@@ -55,7 +56,7 @@ export default function SettingProfile({ closePopup }) {
       setDisable(false);
       setValidEmailSetting("");
     }
-  }, [fName, lName, emailAddress, checkEmailFormat()]);
+  }, [fName, lName, emailAddress, checkEmailFormat(),nName, phone]);
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
@@ -67,6 +68,7 @@ export default function SettingProfile({ closePopup }) {
           lastName: lName,
           email: emailAddress,
           phone: phoneNumber,
+          nickName:nName
         });
         dispatch(updateProfile());
         closePopup();
@@ -77,6 +79,7 @@ export default function SettingProfile({ closePopup }) {
           email: emailAddress,
           phone: phoneNumber,
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
+          nickName:nName
         });
         dispatch(updateProfile());
         closePopup();
@@ -89,12 +92,59 @@ export default function SettingProfile({ closePopup }) {
       <>
         <Box>
           <Box
-            flexDirection={"column"}
-            className="d-flex position-relative align-items-center"
           >
             <AvatarPicker handleChangeImage={handleImageChange} />
           </Box>
           <Box component={"form"} className="mt-2" onSubmit={handleSubmit}>
+          <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#757ae5",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Nickname
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#181223",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  type="text"
+                  onChange={(e) => {
+                    setNname(e.target.value);
+                  }}
+                  value={nName}
+                  placeholder="Enter Your Nickname"
+                  sx={{
+                    "&:before": {
+                      borderBottom: " 0px solid !important ",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    color: "white",
+                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                      padding: "0px !important",
+                    },
+                  }}
+                />
+              </FormControl>
+            </Box>
             <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
@@ -241,7 +291,7 @@ export default function SettingProfile({ closePopup }) {
                   }}
                 />{" "}
                 {""}
-                <span className="text-danger">{validEmailSetting}</span>
+                {/* <span className="text-danger">{validEmailSetting}</span> */}
               </FormControl>
             </Box>
             <Box className="Phone mb-3 d-flex flex-column align-items-start">
@@ -301,7 +351,7 @@ export default function SettingProfile({ closePopup }) {
             </Box>
             <Box className="ps-2 w-100">
               {disable === true ? (
-                <AnimButton type={"primary"} text={"Update Profile"} />
+                <AnimButton type={"dislable"} text={"Update Profile"} />
               ) : (
                 <AnimButton
                   type={"primary"}
