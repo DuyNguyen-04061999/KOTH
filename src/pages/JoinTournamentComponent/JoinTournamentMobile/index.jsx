@@ -484,6 +484,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             Conditions
                           </h6>
                           <span
+                            className="cursor-pointer"
                             onClick={(e) => {
                               e.preventDefault();
                               setOpenVoucher(true);

@@ -1204,6 +1204,7 @@ export default function JoinTournament() {
                                   Conditions
                                 </h6>
                                 <span
+                                  className="cursor-pointer"
                                   href="#"
                                   onClick={(e) => {
                                     e.preventDefault();
