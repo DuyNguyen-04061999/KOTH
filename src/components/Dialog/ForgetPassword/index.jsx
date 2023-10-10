@@ -30,7 +30,7 @@ export default function ForgetPassword() {
   useEffect(() => {
     setIsTab(true);
   }, [forgetPassDialog]);
-  
+
   return (
     <Dialog
       onClose={() => {
@@ -100,7 +100,7 @@ export default function ForgetPassword() {
                 color: "#979797",
                 textAlign: "center",
                 fontSize: device === "Mobile" ? `${width / 27}px` : "16px",
-                marginTop: device === "Desktop" ? "20px" : "0px",
+                marginTop: device === "Desktop" ? "12px" : "0px",
               }}
             >
               A code will be sent to your number to verify that it belongs to
@@ -337,7 +337,6 @@ export default function ForgetPassword() {
           <button
             onClick={() => {
               if (otp.toString().length === 6) {
-                
               }
             }}
             style={{
