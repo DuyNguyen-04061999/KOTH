@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import LoadingEffect from "../../../LoadingComponent";
+import AnimButton from "../../../AnimButton";
 
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
-  const { firstName, lastName, email, phone } = useSelector(
+  const { firstName, lastName, email, phone,  } = useSelector(
     (state) => state.profileReducer
   );
   const [socket, setSocket] = useState(null);
@@ -19,10 +20,11 @@ export default function SettingProfile({ closePopup }) {
   }, []);
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
+  const [nName,setNname] = useState("")
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
-  const [phoneNumber,setPhoneNumber] = useState(phone)
+  const [phoneNumber, setPhoneNumber] = useState(phone);
   const [disable, setDisable] = useState(true);
   const [validEmailSetting, setValidEmailSetting] = useState("");
   const handleSubmit = (e) => {
@@ -44,19 +46,17 @@ export default function SettingProfile({ closePopup }) {
   }
 
   useEffect(() => {
-    if (fName === "" || lName === "" ) {
+    if (fName === "" || lName === "" || nName < 6 || nName > 15 || phone === "" || nName === "") {
       setDisable(true);
-      return
+      return;
     } else if (checkEmailFormat(emailAddress) === false) {
-      setValidEmailSetting("Invalid Email Address")
+      setValidEmailSetting("Invalid Email Address");
       setDisable(true);
-    }
-    
-    else {
+    } else {
       setDisable(false);
-      setValidEmailSetting("")
+      setValidEmailSetting("");
     }
-  }, [fName, lName, emailAddress, checkEmailFormat()]);
+  }, [fName, lName, emailAddress, checkEmailFormat(),nName, phone]);
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
@@ -67,7 +67,8 @@ export default function SettingProfile({ closePopup }) {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
-          phone:phoneNumber,
+          phone: phoneNumber,
+          nickName:nName
         });
         dispatch(updateProfile());
         closePopup();
@@ -76,8 +77,9 @@ export default function SettingProfile({ closePopup }) {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
-          phone:phoneNumber,
+          phone: phoneNumber,
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
+          nickName:nName
         });
         dispatch(updateProfile());
         closePopup();
@@ -90,12 +92,59 @@ export default function SettingProfile({ closePopup }) {
       <>
         <Box>
           <Box
-            flexDirection={"column"}
-            className="d-flex position-relative align-items-center"
           >
             <AvatarPicker handleChangeImage={handleImageChange} />
           </Box>
           <Box component={"form"} className="mt-2" onSubmit={handleSubmit}>
+          <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#757ae5",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Nickname
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#181223",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  type="text"
+                  onChange={(e) => {
+                    setNname(e.target.value);
+                  }}
+                  value={nName}
+                  placeholder="Enter Your Nickname"
+                  sx={{
+                    "&:before": {
+                      borderBottom: " 0px solid !important ",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    color: "white",
+                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                      padding: "0px !important",
+                    },
+                  }}
+                />
+              </FormControl>
+            </Box>
             <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
@@ -242,7 +291,7 @@ export default function SettingProfile({ closePopup }) {
                   }}
                 />{" "}
                 {""}
-                <span className="text-danger">{validEmailSetting}</span>
+                {/* <span className="text-danger">{validEmailSetting}</span> */}
               </FormControl>
             </Box>
             <Box className="Phone mb-3 d-flex flex-column align-items-start">
@@ -297,40 +346,20 @@ export default function SettingProfile({ closePopup }) {
             </Box>
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
-            {disable === true ? (
-              <button
-                className="text-white p-2"
-                type="submit"
-                style={{
-                  width: "50%",
-                  border: "none",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
-                  background: "#6f6683",
-                  cursor: "unset",
-                }}
-              >
-                Update Profile
-              </button>
-            ) : (
-              <button
-                className="text-white p-2"
-                type="submit"
-                style={{
-                  width: "50%",
-                  border: "none",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
-                  background:
-                    "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                }}
-                onClick={() => {
-                  sendUpdateProfile();
-                }}
-              >
-                Update Profile
-              </button>
-            )}
+            <Box className="pe-2 w-100">
+              <AnimButton type={"ghost"} text={"Cancel"} onClick={closePopup} />
+            </Box>
+            <Box className="ps-2 w-100">
+              {disable === true ? (
+                <AnimButton type={"dislable"} text={"Update Profile"} />
+              ) : (
+                <AnimButton
+                  type={"primary"}
+                  text={"Update Profile"}
+                  onClick={sendUpdateProfile}
+                />
+              )}
+            </Box>
           </Box>{" "}
         </Box>
       </>
