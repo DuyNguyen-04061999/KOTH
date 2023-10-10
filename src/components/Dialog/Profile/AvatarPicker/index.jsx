@@ -104,9 +104,9 @@ export const AvatarPicker = (props) => {
               alignItems: "center",
             }}
           >
-            <Box className="text-danger mt-1 mb-1" component={"div"}>
+            {/* <Box className="text-danger mt-1 mb-1" component={"div"}>
                 {"The image's size must be < 1 MB"}
-            </Box>
+            </Box> */}
             <button
               onClick={showOpenFileDialog}
               style={{
@@ -136,6 +136,7 @@ export const AvatarPicker = (props) => {
                 width: "100px",
                 height: "100px",
                 borderRadius: "50%",
+                border: "4px solid #FD9E0F"
               }}
             />
              

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import LoadingEffect from "../../../LoadingComponent";
+import AnimButton from "../../../AnimButton";
 
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
@@ -22,7 +23,7 @@ export default function SettingProfile({ closePopup }) {
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
-  const [phoneNumber,setPhoneNumber] = useState(phone)
+  const [phoneNumber, setPhoneNumber] = useState(phone);
   const [disable, setDisable] = useState(true);
   const [validEmailSetting, setValidEmailSetting] = useState("");
   const handleSubmit = (e) => {
@@ -44,17 +45,15 @@ export default function SettingProfile({ closePopup }) {
   }
 
   useEffect(() => {
-    if (fName === "" || lName === "" ) {
+    if (fName === "" || lName === "") {
       setDisable(true);
-      return
+      return;
     } else if (checkEmailFormat(emailAddress) === false) {
-      setValidEmailSetting("Invalid Email Address")
+      setValidEmailSetting("Invalid Email Address");
       setDisable(true);
-    }
-    
-    else {
+    } else {
       setDisable(false);
-      setValidEmailSetting("")
+      setValidEmailSetting("");
     }
   }, [fName, lName, emailAddress, checkEmailFormat()]);
 
@@ -67,7 +66,7 @@ export default function SettingProfile({ closePopup }) {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
-          phone:phoneNumber,
+          phone: phoneNumber,
         });
         dispatch(updateProfile());
         closePopup();
@@ -76,7 +75,7 @@ export default function SettingProfile({ closePopup }) {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
-          phone:phoneNumber,
+          phone: phoneNumber,
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
         });
         dispatch(updateProfile());
@@ -297,40 +296,20 @@ export default function SettingProfile({ closePopup }) {
             </Box>
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
-            {disable === true ? (
-              <button
-                className="text-white p-2"
-                type="submit"
-                style={{
-                  width: "50%",
-                  border: "none",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
-                  background: "#6f6683",
-                  cursor: "unset",
-                }}
-              >
-                Update Profile
-              </button>
-            ) : (
-              <button
-                className="text-white p-2"
-                type="submit"
-                style={{
-                  width: "50%",
-                  border: "none",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
-                  background:
-                    "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                }}
-                onClick={() => {
-                  sendUpdateProfile();
-                }}
-              >
-                Update Profile
-              </button>
-            )}
+            <Box className="pe-2 w-100">
+              <AnimButton type={"ghost"} text={"Cancel"} onClick={closePopup} />
+            </Box>
+            <Box className="ps-2 w-100">
+              {disable === true ? (
+                <AnimButton type={"primary"} text={"Update Profile"} />
+              ) : (
+                <AnimButton
+                  type={"primary"}
+                  text={"Update Profile"}
+                  onClick={sendUpdateProfile}
+                />
+              )}
+            </Box>
           </Box>{" "}
         </Box>
       </>
