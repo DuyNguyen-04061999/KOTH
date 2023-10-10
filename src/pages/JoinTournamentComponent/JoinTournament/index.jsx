@@ -79,6 +79,8 @@ export default function JoinTournament() {
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
   const dispatch = useDispatch();
+  const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
@@ -188,7 +190,7 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(saveBoughtTournament(detailTournament?.bought));
     dispatch(saveIdTournament(detailTournament?.id));
-  }, [detailTournament]);
+  }, [detailTournament, dispatch]);
 
   useEffect(() => {
     if (width > 1200) {
@@ -393,8 +395,8 @@ export default function JoinTournament() {
                   padding: "27px 10px",
                   display: "flex",
                   justifyContent: "space-between",
-                  position:"relative",
-                  zIndex:5
+                  position: "relative",
+                  zIndex: 5,
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -410,6 +412,10 @@ export default function JoinTournament() {
                               : `18px`,
                           letterSpacing: "0.7px",
                           marginLeft: "0px !important",
+                          minWidth:
+                            device === "Desktop" || orientation === "landscape"
+                              ? "100px"
+                              : "none",
                         }}
                       >
                         My Ticket
@@ -424,7 +430,6 @@ export default function JoinTournament() {
                               : "14px",
                           fontWeight: "lighter !important",
                           marginLeft: "0px !important",
-                          minWidth: "100px",
                         }}
                       >
                         {fetchT ? (
@@ -442,7 +447,7 @@ export default function JoinTournament() {
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="26"
+                              width="20"
                               height="16"
                               fill="none"
                               viewBox="0 0 26 16"
@@ -459,7 +464,10 @@ export default function JoinTournament() {
                             <Typography
                               sx={{
                                 color: "#ffff",
-                                fontSize: "14px",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 76}px`
+                                    : "14px",
                               }}
                             >
                               {detailTournament?.turnCountLeft || 0}
@@ -489,6 +497,10 @@ export default function JoinTournament() {
                               : `18px`,
                           letterSpacing: "0.7px",
                           marginLeft: "0px !important",
+                          minWidth:
+                            device === "Desktop" || orientation === "landscape"
+                              ? "155px"
+                              : "none",
                         }}
                       >
                         Start date
@@ -501,9 +513,8 @@ export default function JoinTournament() {
                             576 < width && width < 1200
                               ? `${width / 76}px`
                               : "14px",
-                          fontWeight: "lighter !important",
+                          fontWeight: "500 !important",
                           marginLeft: "0px !important",
-                          minWidth: "155px",
                         }}
                       >
                         {fetchT ? (
@@ -553,7 +564,6 @@ export default function JoinTournament() {
                               : "14px",
                           fontWeight: "500 !important",
                           marginLeft: "0px !important",
-                          minWidth: "155px",
                         }}
                       >
                         {fetchT ? (
@@ -576,7 +586,15 @@ export default function JoinTournament() {
                     alignItems: "center",
                   }}
                 >
-                  <Box sx={{ marginRight: `${parseFloat(width / 75)}px` }}>
+                  <Box
+                    sx={{
+                      marginRight: `${
+                        device === "Desktop" || orientation === "landscape"
+                          ? parseFloat(width / 75)
+                          : parseFloat(width / 20)
+                      }px`,
+                    }}
+                  >
                     <Typography
                       sx={{
                         color: "#fff",
@@ -617,8 +635,7 @@ export default function JoinTournament() {
                         (parseFloat(width / 42.67) + parseFloat(width / 384)) *
                         minLength
                       }px`,
-                      height:
-                        parseFloat(width / 42.67) + parseFloat(width / 384),
+                      height: "34px",
                     }}
                   >
                     {detailTournament?.tournamentParticipants?.map(
@@ -688,12 +705,12 @@ export default function JoinTournament() {
                                           .length > 5
                                           ? "white"
                                           : "none",
-                                      fontSize: "12px",
+                                      fontSize: "10px",
                                     }}
                                   >
                                     {detailTournament?.tournamentParticipants
                                       ?.length > 5 &&
-                                      `+ ${
+                                      `+${
                                         detailTournament?.tournamentParticipants
                                           ?.length - 5
                                       }`}

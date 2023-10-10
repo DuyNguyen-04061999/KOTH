@@ -7,8 +7,6 @@ import { video } from "../../../../utils/images";
 import { Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { useRef } from "react";
-// import { Line } from "rc-progress";
-// import ReactPlayer from "react-player";
 import "./index.scss";
 export default function VideoComponent(props) {
   const { detailTournament, setVideoGame } = props;
@@ -17,16 +15,6 @@ export default function VideoComponent(props) {
   const { width } = useWindowDimensions();
   const [second, setSeconds] = useState(null);
   const videoRef = useRef(null);
-  // useEffect(() => {
-  //   let timeInterval = setInterval(() => {
-  //     if (second > 0) {
-  //       setSeconds(second - 1);
-  //     }
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(timeInterval);
-  //   };
-  // }, [second]);
 
   useEffect(() => {
     if (videoRef && videoRef.current) {
@@ -68,6 +56,7 @@ export default function VideoComponent(props) {
         }}
       >
         <video
+          autoPlay={true}
           width={"100%"}
           ref={videoRef}
           playsInline={true}
@@ -135,20 +124,6 @@ export default function VideoComponent(props) {
             ></i>
           </Box>
         )}
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            position: "absolute",
-            bottom:
-              device === "Desktop"
-                ? "50px"
-                : orientation === "portrait"
-                ? "10px"
-                : "100px",
-          }}
-        ></Box>
       </Box>
     </Box>
   );
