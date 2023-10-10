@@ -1,19 +1,43 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
+import { Box } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import { Box, Typography } from "@mui/material";
-import "./index.scss";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import "./index.scss";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
     (state) => state.tournamentReducer
   );
+  const { token } = useSelector(
+    (state) => state.authReducer
+  );
+  const [socket, setSocket] = useState(null)
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(window.location.pathname  === "/changelog"){
+      setSocket(null);
+    }
+    else{
+      const socket = _socket;
+      setSocket(socket);
+    }
+  }, []);
+
+  const { id } = useParams()
+
   const handleClose = () => {
     dispatch(toggleOpenResultEndGame());
-    window.location.reload();
+    if (token) {
+      socket?.emit("detailTournament", {
+        tournamentId: id,
+      });
+    }
   };
 
   return (
@@ -79,7 +103,11 @@ export default function ResultEndGame() {
                 <button
                   onClick={() => {
                     dispatch(toggleOpenResultEndGame());
-                    window.location.reload();
+                    if (token) {
+                      socket?.emit("detailTournament", {
+                        tournamentId: id,
+                      });
+                    }
                   }}
                   className="btnResult btn__continue"
                 >

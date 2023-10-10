@@ -1,26 +1,22 @@
-import * as React from "react";
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableRow, { tableRowClasses } from "@mui/material/TableRow";
-import styled from "styled-components";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import TableRow from "@mui/material/TableRow";
+import * as React from "react";
 import { useState } from "react";
-import { Button } from "@mui/material";
-import moment from "moment/moment";
 import { useDispatch, useSelector } from "react-redux";
-import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 import { useLocation } from "react-router";
+import styled from "styled-components";
+import { openGivePerDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { updateDataAgents } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 import {
   checkRouteIsCreate,
   checkRouteIsManage,
   trimAndCamelCase,
 } from "../../../utils/Admin/helper";
-import { ElectricalServices } from "@mui/icons-material";
-import { openGivePerDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import { updateDataAgents } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const MinusIconSVG = () => {
   return (
@@ -118,7 +114,7 @@ export const RowTable = (props) => {
           }
         }}
         sx={{
-          ".MuiTableCell-root": checkRouteIsManage(pathname) || checkRouteIsCreate(pathname) && {
+          ".MuiTableCell-root": (checkRouteIsManage(pathname) || checkRouteIsCreate(pathname)) && {
             borderBottom:
               detailAccount && detailAccount?.account === row?.account
                 ? "2px solid #355DFF"

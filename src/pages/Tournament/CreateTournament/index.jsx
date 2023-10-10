@@ -32,9 +32,6 @@ import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer"
 import { LoadingButton } from "@mui/lab";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 export default function CreateTournament({ createTour, handleOnClose, type }) {
-  const { isCreateTournamentSuccess, isCreateTournamentFail } = useSelector(
-    (state) => state.tournamentReducer
-  );
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
   const videoRef = useRef(null);

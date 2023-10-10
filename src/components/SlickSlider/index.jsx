@@ -1,15 +1,12 @@
 import { Box } from "@mui/material";
-import React from "react";
-import Slider from "react-slick";
-import { useState } from "react";
-import useWindowDimensions from "../../utils/useWindowDimensions";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
 import { images } from "../../utils/images";
-import { useSelector } from "react-redux";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
-  const { device } = useSelector((state) => state.deviceReducer);
   const { width } = useWindowDimensions();
   const {
     images: img,
@@ -17,7 +14,6 @@ export default function SlickSlider(props) {
     htmlCode,
     isHtmlCode,
     tours,
-    isLoading,
     type,
   } = props;
   

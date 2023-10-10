@@ -1,25 +1,24 @@
+import { PersonAddAlt1, PersonRemove } from "@mui/icons-material";
+import LeftIcon from "@mui/icons-material/ArrowBackIos";
+import CloseIcon from "@mui/icons-material/Close";
 import {
-  Dialog,
   Box,
-  Slide,
-  Typography,
+  Dialog,
   FormControl,
   Input,
+  Slide,
+  Typography,
 } from "@mui/material";
-import { forwardRef, useEffect, useState } from "react";
-import { images } from "../../../utils/images";
-import "./index.scss";
-import CloseIcon from "@mui/icons-material/Close";
-import LeftIcon from "@mui/icons-material/ArrowBackIos";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import copy from "copy-to-clipboard";
-import SettingProfile from "./SettingProfile";
-import { useDispatch, useSelector } from "react-redux";
+import { forwardRef, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
-import { PersonAddAlt1, PersonRemove } from "@mui/icons-material";
-import { ToastContainer, toast } from "react-toastify";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
+import SettingProfile from "./SettingProfile";
+import "./index.scss";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -27,7 +26,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function DialogProfile(props) {
   const { width, height } = useWindowDimensions();
-  const dispatch = useDispatch();
+  
   const { open, handleShowProfile } = props;
   const { userName, token, uPack } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);

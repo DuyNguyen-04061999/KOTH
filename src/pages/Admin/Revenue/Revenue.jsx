@@ -137,7 +137,7 @@ const Revenue = () => {
         setHeaderList(["Account", "Level", "Balance"]);
       }
     }
-  }, [roles]);
+  }, [roles, width]);
 
   return (
     <Container>

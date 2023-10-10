@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import { Container } from "react-bootstrap";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -27,10 +26,6 @@ const theme = createTheme({
   },
 });
 const HelpCenterComponent = () => {
-  const splitToArray = (document) => {
-    const array = document.split(/\d\./);
-    return array;
-  };
   const { tabHelpCenter, listFAQPromote, isFetching } = useSelector(
     (state) => state.helpcenterReducer
   );

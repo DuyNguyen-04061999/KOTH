@@ -1,12 +1,12 @@
+import { Box, FormControl, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Box, Typography, FormControl, Input } from "@mui/material";
-import AvatarPicker from "../AvatarPicker";
-import _socket from "../../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "../../../../redux-saga-middleware/reducers/authReducer";
+import _socket from "../../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
-import LoadingEffect from "../../../LoadingComponent";
+import { updateProfile } from "../../../../redux-saga-middleware/reducers/authReducer";
 import AnimButton from "../../../AnimButton";
+import LoadingEffect from "../../../LoadingComponent";
+import AvatarPicker from "../AvatarPicker";
 
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
@@ -26,7 +26,7 @@ export default function SettingProfile({ closePopup }) {
   const [emailAddress, setEmailAddress] = useState(email);
   const [phoneNumber, setPhoneNumber] = useState(phone);
   const [disable, setDisable] = useState(true);
-  const [validEmailSetting, setValidEmailSetting] = useState("");
+  // const [validEmailSetting, setValidEmailSetting] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -50,13 +50,13 @@ export default function SettingProfile({ closePopup }) {
       setDisable(true);
       return;
     } else if (checkEmailFormat(emailAddress) === false) {
-      setValidEmailSetting("Invalid Email Address");
+      // setValidEmailSetting("Invalid Email Address");
       setDisable(true);
     } else {
       setDisable(false);
-      setValidEmailSetting("");
+      // setValidEmailSetting("");
     }
-  }, [fName, lName, emailAddress, checkEmailFormat(),nName, phone]);
+  }, [fName, lName, emailAddress,nName, phone]);
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {

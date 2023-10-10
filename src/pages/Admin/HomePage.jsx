@@ -7,7 +7,7 @@ import { getListSub } from "../../redux-saga-middleware_admin/reducers/adminDist
 import { getListEndUser } from "../../redux-saga-middleware_admin/reducers/adminAgentReducer";
 import { useState } from "react";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
-import { Box, Button, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import NestedTable from "../../components/Admin/NestedTable/NestedTable";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
@@ -128,7 +128,7 @@ const HomePage = () => {
         setHeaderList(["Account", "Level", "Balance"]);
       }
     }
-  }, [roles]);
+  }, [roles, width]);
 
   return (
     <Container>

@@ -8,8 +8,6 @@ const BannerWinMobile = (props) => {
     sponsorName,
     userAvatar,
     userName,
-    endTime,
-    userScore,
   } = props;
   return (
     <Box
@@ -96,6 +94,7 @@ const BannerWinMobile = (props) => {
             }}
           >
             <img
+              alt="..."
               style={{
                 width: "100%",
                 height: "100%",

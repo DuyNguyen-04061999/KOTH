@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import moment from "moment";
-import InfinityIcon from "@mui/icons-material/AllInclusive";
 import "./index.scss";
 
 // const theme = createTheme({
@@ -37,7 +36,6 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
   const [days, setDay] = useState(null);
-  const [seconds, setSeconds] = useState(null);
   useEffect(() => {
     let countdownDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
     let timeNow = new Date().getTime();

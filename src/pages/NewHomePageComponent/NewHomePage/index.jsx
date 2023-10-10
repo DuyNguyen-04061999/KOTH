@@ -2,14 +2,12 @@ import {
   Box,
   Container,
   CssBaseline,
-  Skeleton,
   ThemeProvider,
   Typography,
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { imageDesktop, imageHome, images } from "../../../utils/images";
-import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
+import { imageHome, images } from "../../../utils/images";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
@@ -21,8 +19,6 @@ import FullListTournament from "./FullListTournament";
 import { getAppType } from "../../../utils/helper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment/moment";
-import CountDownBannerHot from "../CountDownBannerHot";
 import NewFooter from "../../NewFooter";
 import ItemComponent from "./ItemComponent";
 import "./index.scss";

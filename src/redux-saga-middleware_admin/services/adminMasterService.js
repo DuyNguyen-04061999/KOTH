@@ -1,4 +1,4 @@
-import { data } from "jquery";
+// import { data } from "jquery";
 import { ADMIN_API } from "../axios/admin_api";
 
 export class ADMIN_MASTER_SERVICE {

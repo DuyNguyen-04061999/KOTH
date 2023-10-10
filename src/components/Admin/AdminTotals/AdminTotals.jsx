@@ -4,7 +4,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function AdminTotals(props) {
   const { data } = props;
   const { width } = useWindowDimensions()
-  console.log(data);
+  
   return (
     <>
       <Box

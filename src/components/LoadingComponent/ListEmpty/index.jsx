@@ -1,11 +1,9 @@
-import React from "react";
-import FolderOffIcon from "@mui/icons-material/FolderOff";
 import { Box, Typography } from "@mui/material";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+import React from "react";
 
 const ListEmpty = (props) => {
   const { textData } = props;
-  const { width } = useWindowDimensions();
+
   return (
     <Box
       className="pt-4 pb-4 rounded"

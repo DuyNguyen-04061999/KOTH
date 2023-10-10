@@ -1,6 +1,5 @@
-import React from "react";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Skeleton } from "@mui/material";
+import React from "react";
 
 const BannerLoading = (props) => {
   const {
