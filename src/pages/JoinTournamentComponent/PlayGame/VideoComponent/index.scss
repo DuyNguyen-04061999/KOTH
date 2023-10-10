@@ -3,3 +3,6 @@ video::-webkit-media-controls-panel {
   display: flex !important;
   visibility: visible !important;
 }
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
