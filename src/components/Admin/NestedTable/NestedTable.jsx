@@ -7,18 +7,16 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   tableClasses,
-  tableHeadClasses,
+  tableHeadClasses
 } from "@mui/material";
-import React, { useState } from "react";
-import { RowTable } from "./RowTable";
-import styled from "styled-components";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import { openDetailDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import { useLocation } from "react-router";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { RowTable } from "./RowTable";
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
   [`&.${tableHeadClasses.root}`]: {
@@ -53,17 +51,7 @@ const NestedTable = (props) => {
   } = props;
   const { detailAccount } = useSelector((state) => state.adminReducer_);
   const dispatch = useDispatch();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   return (
     <Box sx={{}}>

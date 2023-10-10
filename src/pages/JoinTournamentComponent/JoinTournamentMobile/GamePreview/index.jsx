@@ -5,12 +5,10 @@ import React, { useState } from "react";
 import { images } from "../../../../utils/images";
 import { useSelector } from "react-redux";
 import "./index.scss";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import Slider from "react-slick";
 export default function GamePreview() {
   const { device } = useSelector((state) => state.deviceReducer);
   const [open, setOpen] = useState(false);
-  const { width } = useWindowDimensions();
   const settings = {
     dots: true,
     arrows: false,

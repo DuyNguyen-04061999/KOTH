@@ -1,47 +1,31 @@
-import { useDispatch, useSelector } from "react-redux";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import {
   Box,
   Button,
   Dialog,
   Grid,
-  Input,
-  TextField,
-  Typography,
+  Typography
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   closeCheckWallet,
   toggleCheckWallet,
   toggleWalletDialog,
 } from "../../../redux-saga-middleware/reducers/walletReducer";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { popup } from "../../../utils/images";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import { styled } from "@mui/material/styles";
-import "./index.scss";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { useEffect, useState } from "react";
 import { formatMoney } from "../../../utils/helper";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
-
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: "white",
-  backgroundColor: "gray",
-  borderRadius: "0px",
-  padding: "2px",
-  minWidth: "auto",
-  "&:hover": {
-    backgroundColor: "gray",
-  },
-}));
+import "./index.scss";
 
 export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet } = useSelector(
     (state) => state.walletReducer
   );
-  const { messageToast } = useSelector((state) => state.toastReducer);
-  const { isDialogConfirm, idPackage } = useSelector(
+  
+  const { idPackage } = useSelector(
     (state) => state.authReducer
   );
   const { userGold } = useSelector((state) => state.authReducer);
@@ -54,8 +38,7 @@ export default function TicketCheckOut() {
   const [socket, setSocket] = useState(null);
   const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
-  const [goldTicket, setGoldTicket] = useState(0.99);
-  const [totalGold, setTotalGold] = useState(sl * goldTicket);
+  const [goldTicket] = useState(0.99);
 
   const handleChangeValue = (e) => {
     setSl(e.target.value);

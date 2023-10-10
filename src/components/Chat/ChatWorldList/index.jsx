@@ -1,28 +1,22 @@
-import { Avatar, Box } from "@mui/material";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import moment from "moment";
-import "./index.scss";
-import { useEffect, useRef, useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { PersonAddAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
-import { images } from "../../../utils/images";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
-import { useNavigate } from "react-router-dom";
-import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
-import { PersonAddAlt1 } from "@mui/icons-material";
-import UserChatLoading from "../../LoadingComponent/UserChatLoading";
-import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
+import { Avatar, Box } from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-
-const EndMessagetoend = styled.div`
-  margin-bottom: 30px;
-`;
+import moment from "moment";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
+import "./index.scss";
 export default function ChatWorldList() {
   const endOfMessageRef = useRef(null);
   const [worldMessage, setWorldMessage] = useState([]);

@@ -1,7 +1,6 @@
 import React from "react";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-import { images280423_l } from "../../utils/images280423_l";
 import { formatMoney } from "../../utils/helper";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function Gold(props) {
   const { value } = props;

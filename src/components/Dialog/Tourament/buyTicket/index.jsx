@@ -6,18 +6,15 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import React from "react";
-import { images } from "../../../../utils/images";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleBuyTicket } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
-import { useEffect } from "react";
-import { useState } from "react";
-import _socket from "../../../../redux-saga-middleware/config/socket";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import InspirationTTF from "../../../../assets/font/CynthoNextRegular.otf";
-import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
-import { formatTimeMothDateYear, sliceString } from "../../../../utils/helper";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../../../redux-saga-middleware/config/socket";
+import { toggleBuyTicket } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
+import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { sliceString } from "../../../../utils/helper";
+import { images } from "../../../../utils/images";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 const theme = createTheme({
   components: {
@@ -39,7 +36,7 @@ export default function BuyTicket(props) {
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  const { bought, tournamentId, dataTime, nameTour } = props;
+  const { dataTime, nameTour } = props;
   const handleClose = () => {
     dispatch(toggleBuyTicket(false));
   };
@@ -54,8 +51,6 @@ export default function BuyTicket(props) {
     const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
     setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
   }, [listPackage, setSocket, setTicketBuy]);
-
-  console.log(dataTime);
 
   return (
     <ThemeProvider theme={theme}>

@@ -8,17 +8,14 @@ import React, {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Unity, useUnityContext } from "react-unity-webgl";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-import LoadingScreen from "../LoadingScreen";
 import { toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
+import LoadingScreen from "../LoadingScreen";
 
 export default function UnityGameComponent(props) {
   const { device } = useSelector((state) => state.deviceReducer);
   const navigate = useNavigate();
   const {
     GameFiles,
-    cwidth,
-    cheight,
     tournamentId,
     gameId,
     isFullScreen,
@@ -33,7 +30,6 @@ export default function UnityGameComponent(props) {
     gameScreenType,
   } = props;
 
-  const { width, height } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   function getLoaderJs(data) {

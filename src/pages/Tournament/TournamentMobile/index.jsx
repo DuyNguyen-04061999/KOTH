@@ -8,8 +8,6 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { images } from "../../../utils/images";
-import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
-import InspirationTTF1 from "../../../assets/font/CynthoNextBold.otf";
 import SlickSlider from "../../../components/SlickSlider";
 const theme = createTheme({
   typography: {

@@ -1,19 +1,9 @@
-import { useSelector } from "react-redux";
-import CountDownBannerHot from "../../../pages/NewHomePageComponent/index";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import moment from "moment/moment";
 import { Box, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { imageHome } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function BannerWin(props) {
   const { tournamentName, sponsorName, userAvatar, userName } = props;
-  const { width } = useWindowDimensions();
-  const { biggestEndTour, hotWeekTour } = useSelector(
-    (state) => state.tournamentReducer
-  );
-
-  const navigate = useNavigate();
 
   return (
     <Box
@@ -48,6 +38,7 @@ export default function BannerWin(props) {
           }}
         >
           <img
+            alt="..."
             style={{
               width: "100%",
               height: "100%",
@@ -151,7 +142,6 @@ export default function BannerWin(props) {
               width: "100%",
               position: "relative",
               fontWeight: 800,
-              width: "100%",
               wordWrap: "break-word",
               overflow: "hidden",
               lineHeight: 1.2,

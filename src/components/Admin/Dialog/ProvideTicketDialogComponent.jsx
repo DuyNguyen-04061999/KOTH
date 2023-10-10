@@ -1,25 +1,23 @@
-import React, { useRef, useState } from "react";
-import { Box, Button, Dialog, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { LoadingButton } from "@mui/lab";
+import { Box, Dialog, Typography } from "@mui/material";
+import { MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { MobileDatePicker, MobileTimePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeProvideDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import {
   getListTicket,
   provideTicket,
 } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
-import { useEffect } from "react";
-import { LoadingButton } from "@mui/lab";
+import { closeProvideDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 
 const bg = "rgba(228, 228, 228, 0.2967)";
 // const borderRadius = 12
 
 export default function ProvideTicketDialogComponent(props) {
-  const { account, customerTicket, availableTicket } = props;
   const { roles } = useSelector((state) => state.adminAuthReducer);
   const { isProvideDialog } = useSelector((state) => state.adminDialogReducer);
   const { detailAccount } = useSelector((state) => state.adminReducer_);

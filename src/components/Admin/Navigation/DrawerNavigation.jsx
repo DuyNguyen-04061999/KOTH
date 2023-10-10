@@ -1,22 +1,18 @@
-import React from "react";
-import { useState } from "react";
-import AdminNavigation from "./AdminNavigation";
 import {
   AppBar,
   Box,
-  Button,
   CssBaseline,
   Drawer,
   IconButton,
-  Toolbar,
-  Typography,
+  Toolbar
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   closeDrawerNav,
   openDrawerNav,
 } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import AdminNavigation from "./AdminNavigation";
 
 const DrawerNavigation = (props) => {
   const { window } = props;

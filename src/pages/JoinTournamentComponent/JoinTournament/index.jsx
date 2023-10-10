@@ -1,3 +1,4 @@
+import InfinityIcon from "@mui/icons-material/AllInclusive";
 import {
   Box,
   Container,
@@ -8,50 +9,49 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
+import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { getFontSizeDependOnWidth } from "../../../utils/config";
-import { images } from "../../../utils/images";
+import { useFullScreenHandle } from "react-full-screen";
+import { useDispatch, useSelector } from "react-redux";
 import {
   // useNavigate,
   // useNavigate,
   useParams,
 } from "react-router-dom";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { useFullScreenHandle } from "react-full-screen";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment/moment";
+import { toast } from "react-toastify";
+import AnimButton from "../../../components/AnimButton";
+import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
+import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
+import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
+import {
+  toggleLoginDialog,
+  toggleShareTour,
+} from "../../../redux-saga-middleware/reducers/authReducer";
+import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
 import {
   saveBoughtTournament,
   saveIdTournament,
   toggleBuyTicket,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import JoinTournamentMobile from "../JoinTournamentMobile";
-import LeaderBoard from "../LeaderBoard";
-import DetailVoucher from "../DetailVoucher";
-import "./index.scss";
-import GameInTournament from "../GameInTournament";
-import BgEndGame from "../BgEndTour";
-import ResultEndGame from "../../../components/Dialog/ResultEndGame";
-import InfinityIcon from "@mui/icons-material/AllInclusive";
+import { getFontSizeDependOnWidth } from "../../../utils/config";
 import {
   formatTimeMothDateYear,
   isJson,
   sliceString,
 } from "../../../utils/helper";
-import {
-  toggleLoginDialog,
-  toggleShareTour,
-} from "../../../redux-saga-middleware/reducers/authReducer";
-import { toast } from "react-toastify";
-import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
-import PlayGame from "../PlayGame";
-import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
-import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
-import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import BgEndGame from "../BgEndTour";
+import DetailVoucher from "../DetailVoucher";
+import GameInTournament from "../GameInTournament";
+import JoinTournamentMobile from "../JoinTournamentMobile";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
-import AnimButton from "../../../components/AnimButton";
+import LeaderBoard from "../LeaderBoard";
+import PlayGame from "../PlayGame";
+import "./index.scss";
 
 const theme = createTheme({
   typography: {},
@@ -129,7 +129,12 @@ export default function JoinTournament() {
       setFetchT(false);
     });
     socket?.on("buyTicketTournamentSuccess", () => {
-      window.location.reload();
+      // window.location.reload();
+      if (token) {
+        socket?.emit("detailTournament", {
+          tournamentId: id,
+        });
+      }
     });
     socket?.on("joinTournamentSuccess", (data) => {
       // socket?.emit("detailTournament", {
@@ -146,12 +151,11 @@ export default function JoinTournament() {
         position: "top-center",
         className: "success-background",
       });
-      setTimeout(() => {
+      if(token) {
         socket?.emit("detailTournament", {
-          tournamentId: data?.id,
+          tournamentId: id,
         });
-      }, 1000);
-      window.location.reload();
+      }
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
       dispatch(toggleStartGame(true));
@@ -169,6 +173,8 @@ export default function JoinTournament() {
     screen,
     startGame,
     dispatch,
+    id,
+    token
   ]);
 
   const handlePlayTour = () => {
@@ -176,7 +182,7 @@ export default function JoinTournament() {
       tournamentId: id,
     });
   };
-  console.log(detailTournament);
+  
   const handleJoinTour = () => {
     if (token) {
       socket?.emit("joinTournament", {
@@ -1221,6 +1227,7 @@ export default function JoinTournament() {
                                   Conditions
                                 </h6>
                                 <span
+                                  className="cursor-pointer"
                                   href="#"
                                   onClick={(e) => {
                                     e.preventDefault();

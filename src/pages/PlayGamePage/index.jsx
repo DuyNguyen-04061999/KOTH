@@ -1,4 +1,4 @@
-import { Box, Dialog, Skeleton, Typography } from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import UnityGameComponent from "../../components/GameManager/UnityGameComponent";
@@ -11,10 +11,6 @@ import { getFontSizeTitleDependOnWidth } from "../../utils/config";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useCallback } from "react";
-import GameInTournament from "../JoinTournamentComponent/GameInTournament";
-import ParagraphLoading from "../../components/LoadingComponent/ParagraphLoading";
-import { sliceString } from "../../utils/helper";
-import moment from "moment";
 
 export default function PlayGamePage() {
   const { token } = useSelector((state) => state.authReducer);
@@ -30,7 +26,7 @@ export default function PlayGamePage() {
   const [expand, setExpand] = useState(false);
   const [pauseGame, setPauseGame] = useState(false);
   const [unPauseGame, setUnPauseGame] = useState(false);
-  const [isFetching, setIsFetching] = useState(true);
+  // const [isFetching, setIsFetching] = useState(true);
   const reportChange = useCallback(
     (state, handle) => {
       if (handle === screen) {
@@ -44,7 +40,7 @@ export default function PlayGamePage() {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       if (!fetchT) {
-        setIsFetching(false);
+        // setIsFetching(false);
       }
     }, 1000);
     return () => {

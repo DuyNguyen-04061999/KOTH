@@ -542,6 +542,7 @@ export default function PlayGame(props) {
                           Conditions
                         </h6>
                         <span
+                          className="cursor-pointer"
                           href="#"
                           style={{
                             color: "#0096FF",

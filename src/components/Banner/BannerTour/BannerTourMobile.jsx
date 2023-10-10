@@ -1,18 +1,17 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
-import { imageHome } from "../../../utils/images";
-import { useNavigate } from "react-router";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
 import moment from "moment";
+import React from "react";
+import { useNavigate } from "react-router";
+import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
+import { imageHome } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const BannerTourMobile = (props) => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
   const {
     tournamentName,
-    sponsorName,
     userAvatar,
     userName,
     endTime,
@@ -216,6 +215,7 @@ const BannerTourMobile = (props) => {
             }}
           >
             <img
+              alt="..."
               style={{
                 width: "100%",
                 height: "100%",

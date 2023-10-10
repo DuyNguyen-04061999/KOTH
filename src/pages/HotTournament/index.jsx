@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import InspirationTTF from "../../assets/font/CynthoNextMedium.otf";
 import {
   Box,
   Container,
@@ -11,12 +10,10 @@ import {
 } from "@mui/material";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import SlickSlider from "../../components/SlickSlider";
-import { images, video } from "../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import NewFooter from "../NewFooter";
 import { useState } from "react";
-import { getHotTour } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import { useEffect } from "react";
 import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../components/LoadingComponent/ItemLoading";

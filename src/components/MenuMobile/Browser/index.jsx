@@ -1,16 +1,16 @@
-import { Dialog, Box, Slide, Typography } from "@mui/material";
+import { Box, Dialog, Slide, Typography } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { images } from "../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
   showDropdown,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
-import _socket from "../../../redux-saga-middleware/config/socket";
 import { getAppType } from "../../../utils/helper";
+import { images } from "../../../utils/images";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -107,7 +107,6 @@ export default function Browser(props) {
                       (pathname && pathname?.includes("home")) || pathname === "/"
                         ? "white"
                         : "#A89CD7",
-                    borderRadius: "5px",
                   }}
                   onClick={() => {
                     navigate(`/home`);

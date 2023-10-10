@@ -1,28 +1,24 @@
-import React from "react";
 import {
   Box,
-  Divider,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
-  Typography,
+  Typography
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/Inbox";
-import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { images, navigationImages } from "../../../utils/images";
-import { makeStyles } from "@mui/styles";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { useLocation, useNavigate } from "react-router-dom";
 import { closeDrawerNav } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
+import { images, navigationImages } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const AdminNavigation = (props) => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { roles, ref } = useSelector((state) => state.adminAuthReducer);
+  const { roles } = useSelector((state) => state.adminAuthReducer);
   const { isOpenDrawerNav } = useSelector((state) => state.adminDialogReducer);
   const dispatch = useDispatch();
 

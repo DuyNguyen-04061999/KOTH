@@ -1,20 +1,23 @@
-import "./assets/css/App.css";
-import { Provider } from "react-redux";
-import { store, persistor } from "./redux-saga-middleware/config/configRedux";
-import { PersistGate } from "redux-persist/lib/integration/react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { CustomRouter, history } from "./components/Router";
-import HomePage from "./pages/Home";
-import GameLobby from "./pages/GamePlay";
 import { lazy, useEffect, useState } from "react";
-import CountDownTimer from "./components/CountDownTimer";
-import UploadPage from "./pages/GameManager/UploadPage";
-import GamePage from "./pages/GameManager/GamePage";
+import { Provider } from "react-redux";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import "./assets/css/App.css";
+import CountDownTimer from "./components/CountDownTimer";
+import { CustomRouter, history } from "./components/Router";
+import TestSocketFriendAPI from "./components/TestSocket";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
+import GamePage from "./pages/GameManager/GamePage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
-import JoinTournamentComponent from "./pages/JoinTournamentComponent";
+import UploadPage from "./pages/GameManager/UploadPage";
+import GameLobby from "./pages/GamePlay";
+import HomePage from "./pages/Home";
+import TypeGamePage from "./pages/TypeGame";
+import { persistor, store } from "./redux-saga-middleware/config/configRedux";
+import _socket from "./redux-saga-middleware/config/socket";
+import { showAlert } from "./redux-saga-middleware/reducers/alertReducer";
 import {
   getLeaderBoardSuccess,
   getNavTablet,
@@ -26,7 +29,6 @@ import {
   updateProfileSuccess,
   updateUserGold,
 } from "./redux-saga-middleware/reducers/authReducer";
-import TestSocketFriendAPI from "./components/TestSocket";
 import {
   chatLogoutSuccessFully,
   pushChatWorld,
@@ -34,12 +36,18 @@ import {
   updateChatWorld,
   updateFriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
-import { showAlert } from "./redux-saga-middleware/reducers/alertReducer";
 import {
-  deleteFriendSuccesFully,
-  profileLogoutSuccessFully,
-  saveDataProfile,
-} from "./redux-saga-middleware/reducers/profileReducer";
+  addGameLog,
+  changeOrientation,
+  gameLogoutSuccessFully,
+  getGameLog,
+  getListGame,
+  getListGameByType,
+  storeFavoriteGame,
+  updateListDisLikeGame,
+  updateListLikeGame,
+  updateReward,
+} from "./redux-saga-middleware/reducers/gameReducer";
 import {
   getDepostiData,
   getWithdrawData,
@@ -48,65 +56,53 @@ import {
   updateWithDraw,
 } from "./redux-saga-middleware/reducers/paymentReducer";
 import {
-  addGameLog,
-  changeOrientation,
-  gameLogoutSuccessFully,
-  getGameLog,
-  getListGame,
-  storeFavoriteGame,
-  updateListDisLikeGame,
-  updateListLikeGame,
-  updateReward,
-} from "./redux-saga-middleware/reducers/gameReducer";
-import TypeGamePage from "./pages/TypeGame";
-import { getListGameByType } from "./redux-saga-middleware/reducers/gameReducer";
-import _socket from "./redux-saga-middleware/config/socket";
+  deleteFriendSuccesFully,
+  profileLogoutSuccessFully,
+  saveDataProfile,
+} from "./redux-saga-middleware/reducers/profileReducer";
 // import LuckySpinComponent from "./components/EdittedLuckySpin/LuckySpinComponent";
-import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
+import SelectRoomContainer from "./pages/SelectRoomContainer";
+import Tournament from "./pages/Tournament";
+import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
+import {
+  getListBet,
+  getListPackage,
+} from "./redux-saga-middleware/reducers/appReducer";
 import {
   addMoreSpinHistory,
   addMoretotalAmount,
   updateCountEveryDay,
   updateRewardHistory,
 } from "./redux-saga-middleware/reducers/luckyWheelReducer";
+import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
 import { useTracking } from "./utils/useTracking";
-import SelectRoomContainer from "./pages/SelectRoomContainer";
-import Tournament from "./pages/Tournament";
-import {
-  getListBet,
-  getListPackage,
-} from "./redux-saga-middleware/reducers/appReducer";
-import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 // import AlertComponent from "./components/Alert/AlertComponent";
-import NewHomePageComponent from "./pages/NewHomePageComponent";
 import { ToastContainer, toast } from "react-toastify";
+import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
+import NewHomePageComponent from "./pages/NewHomePageComponent";
+import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import useWindowDimensions from "./utils/useWindowDimensions";
-import { getAppType } from "./utils/helper";
-import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
-import HotTournament from "./pages/HotTournament";
 // import HourlyTournament from "./pages/HourlyTournament";
-import DailyTournament from "./pages/DailyTournament";
-import WeekLongTour from "./pages/WeekLongTour";
-import LoadingScreen from "./components/LoadingScreen";
-import {
-  updateDevice,
-  updateDeviceType,
-} from "./redux-saga-middleware/reducers/deviceReducer";
-import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
-import { detectDevice } from "./utils/detectDevice";
 import {
   CssBaseline,
   ThemeProvider,
   // createMuiTheme,
   createTheme,
 } from "@mui/material";
+import LoadingScreen from "./components/LoadingScreen";
+import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
+import {
+  updateDevice,
+  updateDeviceType,
+} from "./redux-saga-middleware/reducers/deviceReducer";
+import { detectDevice } from "./utils/detectDevice";
 // import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
+import { Suspense } from "react";
+import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
+import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import PlayGamePage from "./pages/PlayGamePage";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
-import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
-import { Suspense } from "react";
-import ChangeLog from "./pages/ChangeLog/ChangeLog";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
 const LazyNewHomePage = lazy(()=> import("./pages/NewHomePageComponent"))
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -132,7 +128,7 @@ function App() {
       const socket = _socket;
       setSocket(socket);
     }
-  }, [_socket]);
+  }, []);
   
 
   const { width } = useWindowDimensions();
@@ -642,17 +638,6 @@ function App() {
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
     },
   });
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (document.readyState === "complete") {
-      setIsLoading(false);
-    } else {
-      window.addEventListener("load", () => setIsLoading(false));
-    }
-    return () => window.removeEventListener("load", () => setIsLoading(false));
-  }, []);
 
   return (
     <ThemeProvider theme={theme}>

@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { images } from "../../../utils/images";
-import InspirationTTF from "../../../assets/font/CynthoNextSemiBold.otf";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import moment from "moment";
 import { sliceString } from "../../../utils/helper";

@@ -2,16 +2,13 @@ import {
   Box,
   Button,
   Container,
-  List,
-  ListItem,
-  TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
+// import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { useState } from "react";
 import { ExpandMoreOutlined } from "@mui/icons-material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -51,24 +48,9 @@ const AccordionSummary = styled((props) => (
   padding: useWindowDimensions().width < 576 ? "1px 20px" : "11px 24px",
 }));
 
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "2px solid rgba(0, 0, 0, .125)",
-}));
-
 const Setting = () => {
   const [expanded, setExpanded] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(1);
-  const [americanTimeZones, setAmericanTimeZones] = useState([
-    "UTC -10: HST Hawaii Standard Time",
-    "UTC -9	HDT	Hawaii-Aleutian Daylight Time",
-    "UTC -8	AKDT	Alaska Daylight Time",
-    "UTC -7	PDT	Pacific Daylight Time",
-    "UTC -7	MST	Mountain Standard Time",
-    "UTC -6	MDT	Mountain Daylight Time",
-    "UTC -5	CDT	Central Daylight Time",
-    "UTC -4	EDT	Eastern Daylight Time",
-  ]);
+  // const [selectedIndex, setSelectedIndex] = useState(1);
   const [passwordError, setPasswordError] = useState("");
   const { width } = useWindowDimensions();
   const currentPassInput = useRef("");
@@ -83,9 +65,9 @@ const Setting = () => {
     setPasswordError(errorChangePassword);
   }, [errorChangePassword]);
 
-  const handleListItemClick = (index) => {
-    setSelectedIndex(index);
-  };
+  // const handleListItemClick = (index) => {
+  //   setSelectedIndex(index);
+  // };
   const handleChange = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -112,17 +94,17 @@ const Setting = () => {
     }
   };
 
-  const handleConfirmTimeZone = (e) => {
-    e.preventDefault();
-  };
+  // const handleConfirmTimeZone = (e) => {
+  //   e.preventDefault();
+  // };
 
-  const handleSearchTimeZone = (e) => {
-    e.preventDefault();
-  };
+  // const handleSearchTimeZone = (e) => {
+  //   e.preventDefault();
+  // };
 
-  const handleChangeSearch = (e) => {
-    e.preventDefault();
-  };
+  // const handleChangeSearch = (e) => {
+  //   e.preventDefault();
+  // };
 
   return (
     <Container>
