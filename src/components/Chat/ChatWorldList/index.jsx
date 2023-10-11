@@ -1,4 +1,5 @@
 import { PersonAddAlt1 } from "@mui/icons-material";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Avatar, Box } from "@mui/material";
@@ -9,6 +10,7 @@ import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
@@ -17,16 +19,21 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 import "./index.scss";
+const EndMessagetoend = styled.div`
+  margin-bottom: 30px;
+`;
 export default function ChatWorldList() {
-  const endOfMessageRef = useRef(null);
+  const chatBox = useRef(null);
   const [worldMessage, setWorldMessage] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [messagefromName, setMessFromName] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [showScrollToBottomButton, setShowScrollToBottomButton] =
+    useState(true);
   const { chatWorld, friendList, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
-
+  const endOfMessageRef = useRef(null);
   const { userName, token } = useSelector((state) => state.authReducer);
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
@@ -35,9 +42,21 @@ export default function ChatWorldList() {
   const [socket, setSocket] = useState(null);
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
+  const [chatLength, setChatLength] = useState(0);
+
   useEffect(() => {
-    endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [worldMessage, chatPopup]);
+    if (chatWorld) {
+      setChatLength(chatWorld?.length);
+    }
+  }, [chatWorld]);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  }
 
   useEffect(() => {
     setWorldMessage(chatWorld);
@@ -82,6 +101,39 @@ export default function ChatWorldList() {
   };
   const { height, width } = useWindowDimensions();
 
+  const isScrolledToBottom = () => {
+    if (chatBox.current) {
+      const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
+      return scrollTop + clientHeight + 100 >= scrollHeight;
+    }
+    return true;
+  };
+
+  const handleScroll = () => {
+    setShowScrollToBottomButton(!isScrolledToBottom());
+  };
+
+  const scrollToBottom = () => {
+    if (chatBox.current) {
+      chatBox.current.style.scrollBehavior = "smooth";
+      chatBox.current.scrollTop = chatBox.current.scrollHeight;
+      setShowScrollToBottomButton(false);
+    }
+  };
+
+  useEffect(() => {
+    if (chatBox.current) {
+      chatBox.current.addEventListener("scroll", handleScroll);
+    }
+
+    // Clean up the event listener
+    return () => {
+      if (chatBox.current) {
+        chatBox.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   // const checkExistInArray = (membersInRoom, userName) => {
   //   return membersInRoom?.filter((n) => {
   //     return n.username === userName && n.owner === 0;
@@ -107,6 +159,7 @@ export default function ChatWorldList() {
       gameId: gameId,
     });
   };
+
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -497,118 +550,153 @@ export default function ChatWorldList() {
   };
 
   return (
-    <Box
-      className="chat-content"
-      sx={{
-        maxHeight: checkHeightResponsive(),
-        minHeight: checkHeightResponsive(),
-        overflow: "auto ",
-        overflowX: "hidden",
-        overflowY: "scroll",
-        backgroundColor: "#2e233d",
-        scrollbarWidth: "thin",
-        "&::-webkit-scrollbar": {
-          width: "0rem",
-        },
-        "&::-webkit-scrollbar-track": {
-          background: "#f1f1f1",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "#888",
-        },
-        "&::-webkit-scrollbar-thumb:hover": {
-          background: "#555",
-        },
-      }}
-    >
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-        disableScrollLock={true}
+    <Box sx={{ position: "relative" }}>
+      <Box
+        ref={chatBox}
+        className="chat-content"
         sx={{
-          ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
+          maxHeight: checkHeightResponsive(),
+          minHeight: checkHeightResponsive(),
+          overflow: "auto",
+          backgroundColor: "#2e233d",
+          scrollbarWidth: "thin",
+          paddingBottom: "20px",
+
+          "&::-webkit-scrollbar": {
+            width: "0rem",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#f1f1f1",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#888",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#555",
+          },
         }}
       >
-        <MenuItem
-          onClick={() => {
-            dispatch(toggleProfileDialog(true));
-            if (token === null || token === "") {
-              socket?.emit("getDetailProfileNoAuth", {
-                username: messagefromName,
-              });
-            } else {
-              socket?.emit("getDetailProfile", {
-                username: messagefromName,
-              });
-            }
-            handleClose();
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
           }}
+          disableScrollLock={true}
           sx={{
-            padding: "5px",
+            ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
           }}
         >
-          <Box
-            className="p-1 text-white"
+          <MenuItem
+            onClick={() => {
+              dispatch(toggleProfileDialog(true));
+              if (token === null || token === "") {
+                socket?.emit("getDetailProfileNoAuth", {
+                  username: messagefromName,
+                });
+              } else {
+                socket?.emit("getDetailProfile", {
+                  username: messagefromName,
+                });
+              }
+              handleClose();
+            }}
             sx={{
-              background: "linear-gradient(180deg, #843ff0, #7748ed)",
-              width: "100%",
-              fontWeight: "bold",
-              borderRadius: "4px",
+              padding: "5px",
             }}
           >
-            <AddFriendIcon className="me-1 pb-1" />
-            <span>View Profile</span>
-          </Box>
-        </MenuItem>
-        {token &&
-          (checkExistInFriendList() === true ? (
-            <MenuItem
+            <Box
+              className="p-1 text-white"
               sx={{
-                padding: "5px",
+                background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                width: "100%",
+                fontWeight: "bold",
+                borderRadius: "4px",
               }}
             >
-              <Box
-                className="p-1 text-white cursor-pointer"
-                onClick={handleDeleteFriend}
+              <AddFriendIcon className="me-1 pb-1" />
+              <span>View Profile</span>
+            </Box>
+          </MenuItem>
+          {token &&
+            (checkExistInFriendList() === true ? (
+              <MenuItem
                 sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  fontWeight: "bold",
-                  borderRadius: "4px",
+                  padding: "5px",
                 }}
               >
-                <DeleteFriendIcon className="me-2 pb-1" />
-                <span> Delete Friend</span>
-              </Box>
-            </MenuItem>
-          ) : (
-            <MenuItem
-              sx={{
-                padding: "5px",
-              }}
-            >
-              <Box
-                onClick={handleAddFriend}
-                className="p-1 text-white"
+                <Box
+                  className="p-1 text-white cursor-pointer"
+                  onClick={handleDeleteFriend}
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    fontWeight: "bold",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <DeleteFriendIcon className="me-2 pb-1" />
+                  <span> Delete Friend</span>
+                </Box>
+              </MenuItem>
+            ) : (
+              <MenuItem
                 sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  borderRadius: "4px",
+                  padding: "5px",
                 }}
               >
-                <PersonAddAlt1 className="me-2 pb-1" />
-                Add Friend
-              </Box>
-            </MenuItem>
-          ))}
-      </Menu>
-      {renderChat}
-      <span ref={endOfMessageRef}></span>
+                <Box
+                  onClick={handleAddFriend}
+                  className="p-1 text-white"
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <PersonAddAlt1 className="me-2 pb-1" />
+                  Add Friend
+                </Box>
+              </MenuItem>
+            ))}
+        </Menu>
+        {renderChat}
+        <span ref={endOfMessageRef}></span>
+      </Box>
+      {showScrollToBottomButton && (
+        <ScrollToBottom onClick={() => scrollToBottom()} />
+      )}
     </Box>
   );
 }
+
+const ScrollToBottom = ({ onClick }) => {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        bottom: 0,
+        left: "50%",
+        transform: "translate(-50%,-50%)",
+        backgroundColor: "rgb(255,255,255,0.8)",
+        width: "max-content",
+        display: "flex",
+        alignItems: "center",
+        padding: "6px",
+        borderRadius: "24px",
+        cursor: "pointer",
+        ":hover": {
+          backgroundColor: "rgb(255,255,255,1)",
+        },
+      }}
+      onClick={onClick}
+    >
+      <ArrowDownwardIcon sx={{ fontSize: "20px", color: "black" }} />
+      <Typography sx={{ fontSize: "12px", color: "black" }}>
+        Scroll to bottom
+      </Typography>
+    </Box>
+  );
+};

@@ -1,20 +1,19 @@
-import { Box, Dialog, Menu, MenuItem } from "@mui/material";
-import { useState } from "react";
-import { inpChat } from "../../../utils/cssFrom";
-import styled from "styled-components";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { images280423_l } from "../../../utils/images280423_l";
-import { useEffect } from "react";
-import ComponentChat from "../componentChat";
-import InviteGameDialog from "../../Dialog/Invitegame/InviteGame";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
-import { images, popup } from "../../../utils/images";
-import _socket from "../../../redux-saga-middleware/config/socket";
+import { Box, Dialog, Menu, MenuItem } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { inpChat } from "../../../utils/cssFrom";
+import { images, popup } from "../../../utils/images";
+import { images280423_l } from "../../../utils/images280423_l";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import InviteGameDialog from "../../Dialog/Invitegame/InviteGame";
+import ComponentChat from "../componentChat";
 
-const Test = styled.input`
+const ChatRoot = styled.input`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,6 +48,7 @@ export default function ChatGlobal(props) {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
   useEffect(() => {
     if (token === null || token === "") {
       setChatF("");
@@ -190,7 +190,7 @@ export default function ChatGlobal(props) {
               top: width < 576 ? "-49px" : "-60px",
               right: "0px",
               width: "100%",
-              zIndex:3
+              zIndex: 3,
             }}
           >
             <Box
@@ -257,7 +257,7 @@ export default function ChatGlobal(props) {
                   e.preventDefault();
                 }}
               >
-                <Test
+                <ChatRoot
                   type="text"
                   value={chatF}
                   id="sendmessages"
@@ -419,7 +419,7 @@ export default function ChatGlobal(props) {
                   e.preventDefault();
                 }}
               >
-                <Test
+                <ChatRoot
                   type="text"
                   value={chatF}
                   id="sendmessages"
