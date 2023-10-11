@@ -18,9 +18,9 @@ export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
+  const { chatPopup } = useSelector((state) => state.chatReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [continueGame, setContinueGame] = useState(false);
-  // const [isLoaded, setIsLoaded] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -122,7 +122,6 @@ export default function PlayGame(props) {
     }
     return false;
   };
-  console.log("DEtail: ", detailTournament);
   return (
     <>
       <Box
@@ -151,128 +150,145 @@ export default function PlayGame(props) {
             zIndex: isFullScreen ? "5005" : "none",
           }}
         >
-          {detailTournament?.tournamentVideo && videoGame ? (
-            <VideoComponent
-              detailTournament={detailTournament}
-              setVideoGame={(data) => {
-                setVideoGame(data);
-              }}
-            />
-          ) : (
-            <Box>
-              <iframe
-                allow="fullscreen"
-                style={
-                  device === "Desktop"
-                    ? {
-                        width: "100%",
-                        height: "800px",
-                        background: "black",
-                      }
-                    : {
-                        position: "fixed",
-                        top: "0",
-                        left: "0",
-                        bottom: "0",
-                        right: "0",
-                        width: "100%",
-                        height: "100%",
-                        border: "none",
-                        margin: "0",
-                        padding: "0",
-                        overflow: "hidden",
-                        zIndex: "999999",
-                      }
-                }
-                title="Playgame"
-                src={
-                  process.env.REACT_APP_ENV === "development"
-                    ? "http://localhost:3000/play-game-tournament/87/4"
-                    : window.location.origin +
-                      "/play-game-tournament/" +
-                      id +
-                      "/" +
-                      detailTournament?.tournamentInfors?.skin?.id
-                }
-              ></iframe>{" "}
-              {checkLockScreen() && (
-                <Dialog
-                  sx={{ zIndex: "100000000" }}
-                  fullScreen={true}
-                  open={true}
-                >
-                  {continueGame === true ? (
+          <Box
+            sx={{
+              position: "relative",
+              height: videoGame ? (chatPopup ? "600px" : "700px") : "800px",
+            }}
+          >
+            {" "}
+            <Box sx={{ position: "absolute" }}>
+              {" "}
+              {detailTournament?.tournamentVideo && videoGame && (
+                <VideoComponent
+                  detailTournament={detailTournament}
+                  setVideoGame={(data) => {
+                    setVideoGame(data);
+                  }}
+                />
+              )}
+            </Box>
+            <iframe
+              allow="fullscreen"
+              style={
+                device === "Desktop"
+                  ? {
+                      width: "100%",
+                      height: videoGame ? "700px" : "800px",
+                      background: "black",
+                      visibility: videoGame ? "hidden" : "visible",
+                    }
+                  : {
+                      position: "fixed",
+                      top: "0",
+                      left: "0",
+                      bottom: "0",
+                      right: "0",
+                      width: "100%",
+                      height: "100%",
+                      border: "none",
+                      margin: "0",
+                      padding: "0",
+                      overflow: "hidden",
+                      zIndex: "999999",
+                      visibility: videoGame ? "hidden" : "visible",
+                    }
+              }
+              title="Playgame"
+              src={
+                process.env.REACT_APP_ENV === "development"
+                  ? "http://192.168.1.195:3000/play-game-tournament/87/4"
+                  : window.location.origin +
+                    "/play-game-tournament/" +
+                    id +
+                    "/" +
+                    detailTournament?.tournamentInfors?.skin?.id
+              }
+            ></iframe>{" "}
+            {checkLockScreen() && (
+              <Dialog
+                sx={{ zIndex: "100000000" }}
+                fullScreen={true}
+                open={true}
+              >
+                {continueGame === true ? (
+                  <Box
+                    sx={{
+                      backgroundColor: "#1c191e",
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
                     <Box
                       sx={{
-                        backgroundColor: "#1c191e",
+                        backgroundColor: "#37285c",
                         display: "flex",
-                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "56px",
                         width: "100%",
-                        height: "100%",
+                        boxSizing: "border-box",
+                        padding: "10px",
+                        color: "white",
                       }}
                     >
+                      <img
+                        style={{
+                          width: getFontSizeTitleDependOnWidth(width),
+                          height: getFontSizeTitleDependOnWidth(width),
+                        }}
+                        alt="..."
+                        src={images.BackButtonLobby}
+                      />
+                      <Typography>Tournament</Typography>
+                    </Box>
+                    <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
                       <Box
+                        onClick={() => {
+                          setContinueGame(false);
+                        }}
                         sx={{
-                          backgroundColor: "#37285c",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                          height: "56px",
                           width: "100%",
-                          boxSizing: "border-box",
-                          padding: "10px",
-                          color: "white",
+                          height: "280px",
+                          backgroundColor: "#423965",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        <img
-                          style={{
-                            width: getFontSizeTitleDependOnWidth(width),
-                            height: getFontSizeTitleDependOnWidth(width),
-                          }}
-                          alt="..."
-                          src={images.BackButtonLobby}
-                        />
-                        <Typography>Tournament</Typography>
-                      </Box>
-                      <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
                         <Box
-                          onClick={() => {
-                            setContinueGame(false);
-                          }}
                           sx={{
-                            width: "100%",
-                            height: "280px",
-                            backgroundColor: "#423965",
+                            width: `${parseFloat(width / 2.6)}px`,
+                            height: "40px",
+                            background: "linear-gradient(#9c39f1,#c049ed)",
+                            borderRadius: "25px",
                             display: "flex",
-                            justifyContent: "center",
+                            justifyContent: "space-between",
                             alignItems: "center",
+                            padding: "0px 10px 0px 5px",
                           }}
                         >
-                          <Box
-                            sx={{
-                              width: `${parseFloat(width / 2.6)}px`,
-                              height: "40px",
-                              background: "linear-gradient(#9c39f1,#c049ed)",
-                              borderRadius: "25px",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "0px 10px 0px 5px",
-                            }}
-                          >
-                            <Typography sx={{ color: "white" }}>
-                              Continue
-                            </Typography>
-                            <img
-                              width={width / 18}
-                              src={images.conitnuePlayButton}
-                              alt="..."
-                            />
-                          </Box>
+                          <Typography sx={{ color: "white" }}>
+                            Continue
+                          </Typography>
+                          <img
+                            width={width / 18}
+                            src={images.conitnuePlayButton}
+                            alt="..."
+                          />
                         </Box>
                       </Box>
                     </Box>
-                  ) : (
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
                     <Box
                       sx={{
                         width: "100%",
@@ -283,62 +299,55 @@ export default function PlayGame(props) {
                         sx={{
                           width: "100%",
                           height: "100%",
+                          backgroundColor: "#423965",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        <Box
-                          sx={{
-                            width: "100%",
-                            height: "100%",
-                            backgroundColor: "#423965",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          {" "}
-                          <Box sx={{}}>
-                            <Box
-                              sx={{ width: "200px", height: "200px" }}
-                              component={"img"}
-                              src={images.RotateScreen}
-                            ></Box>
-                            <Typography
-                              sx={{ color: "white", marginTop: "20px" }}
-                            >
-                              Rotate Your Screen
-                            </Typography>
-                          </Box>
+                        {" "}
+                        <Box sx={{}}>
+                          <Box
+                            sx={{ width: "200px", height: "200px" }}
+                            component={"img"}
+                            src={images.RotateScreen}
+                          ></Box>
+                          <Typography
+                            sx={{ color: "white", marginTop: "20px" }}
+                          >
+                            Rotate Your Screen
+                          </Typography>
                         </Box>
                       </Box>
-                      <Box
-                        onClick={() => {
-                          setContinueGame(true);
-                        }}
-                        sx={{
-                          position: "fixed",
-                          top: "40%",
-                          width: "90px",
-                          height: "40px",
-                          display: "flex",
-                          padding: "10px",
-                          alignItems: "center",
-                          backgroundImage: "linear-gradient(#6844de,#8c39ff)",
-                          borderRadius: "0px 50px 50px 0px",
-                        }}
-                      >
-                        <Box
-                          sx={{ width: "20px", height: "20px" }}
-                          component={"img"}
-                          src={images.BackButtonLobby}
-                        ></Box>
-                        <Typography sx={{ color: "white" }}>Lobby</Typography>
-                      </Box>
                     </Box>
-                  )}
-                </Dialog>
-              )}
-            </Box>
-          )}
+                    <Box
+                      onClick={() => {
+                        setContinueGame(true);
+                      }}
+                      sx={{
+                        position: "fixed",
+                        top: "40%",
+                        width: "90px",
+                        height: "40px",
+                        display: "flex",
+                        padding: "10px",
+                        alignItems: "center",
+                        backgroundImage: "linear-gradient(#6844de,#8c39ff)",
+                        borderRadius: "0px 50px 50px 0px",
+                      }}
+                    >
+                      <Box
+                        sx={{ width: "20px", height: "20px" }}
+                        component={"img"}
+                        src={images.BackButtonLobby}
+                      ></Box>
+                      <Typography sx={{ color: "white" }}>Lobby</Typography>
+                    </Box>
+                  </Box>
+                )}
+              </Dialog>
+            )}
+          </Box>
         </Box>
         {device === "Desktop" && (
           <Box

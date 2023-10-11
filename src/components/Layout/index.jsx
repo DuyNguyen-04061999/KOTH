@@ -47,7 +47,7 @@ import {
   clickTabChat,
   closeChatPopup,
   openChatPopup,
-  showBadgeChat
+  showBadgeChat,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import ForgetPassword from "../Dialog/ForgetPassword";
@@ -292,6 +292,7 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
+  console.log("abc: ", chatPopup);
   return (
     <Box
       className="tong"
