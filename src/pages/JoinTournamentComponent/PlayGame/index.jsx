@@ -13,6 +13,7 @@ import moment from "moment";
 import { sliceString } from "../../../utils/helper";
 import VideoComponent from "./VideoComponent";
 import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
@@ -50,6 +51,7 @@ export default function PlayGame(props) {
           }, 1000);
           setTimeout(() => {
             dispatch(toggleOpenResultEndGame(score || 0));
+            dispatch(toggleStartGame(false));
           }, 1500);
         }
       }
@@ -176,7 +178,7 @@ export default function PlayGame(props) {
                       width: "100%",
                       height: videoGame ? "700px" : "800px",
                       background: "black",
-                      visibility: videoGame ? "hidden" : "visible",
+                      display: videoGame ? "none" : "block",
                     }
                   : {
                       position: "fixed",
@@ -191,21 +193,21 @@ export default function PlayGame(props) {
                       padding: "0",
                       overflow: "hidden",
                       zIndex: "999999",
-                      visibility: videoGame ? "hidden" : "visible",
+                      display: videoGame ? "none" : "block",
                     }
               }
               title="Playgame"
               src={
                 process.env.REACT_APP_ENV === "development"
-                  ? "http://192.168.1.195:3000/play-game-tournament/87/4"
+                  ? "http://localhost:3000/play-game-tournament/87/4"
                   : window.location.origin +
                     "/play-game-tournament/" +
                     id +
                     "/" +
                     detailTournament?.tournamentInfors?.skin?.id
               }
-            ></iframe>{" "}
-            {checkLockScreen() && (
+            ></iframe>
+            {checkLockScreen() && !videoGame && (
               <Dialog
                 sx={{ zIndex: "100000000" }}
                 fullScreen={true}

@@ -20,7 +20,10 @@ import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
-import { toggleLoginDialog, toggleShareTour } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  toggleLoginDialog,
+  toggleShareTour,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   formatTimeMothDateYear,
@@ -33,6 +36,7 @@ import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import GamePreview from "./GamePreview";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
@@ -244,7 +248,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     fill="none"
                     viewBox="0 0 20 18"
                     onClick={() => {
-                      dispatch(toggleShareTour())
+                      dispatch(toggleShareTour());
                     }}
                   >
                     <g fill="#fff">

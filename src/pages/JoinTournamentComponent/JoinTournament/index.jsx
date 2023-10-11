@@ -73,7 +73,7 @@ export default function JoinTournament() {
   const [detailTournament, setDetailTournament] = useState({});
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
-  const [videoGame, setVideoGame] = useState(false);
+  const [videoGame, setVideoGame] = useState(false || true);
   const { token } = useSelector((state) => state.authReducer);
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
@@ -151,7 +151,7 @@ export default function JoinTournament() {
         position: "top-center",
         className: "success-background",
       });
-      if(token) {
+      if (token) {
         socket?.emit("detailTournament", {
           tournamentId: id,
         });
@@ -174,7 +174,7 @@ export default function JoinTournament() {
     startGame,
     dispatch,
     id,
-    token
+    token,
   ]);
 
   const handlePlayTour = () => {
@@ -182,7 +182,7 @@ export default function JoinTournament() {
       tournamentId: id,
     });
   };
-  
+
   const handleJoinTour = () => {
     if (token) {
       socket?.emit("joinTournament", {

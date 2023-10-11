@@ -292,7 +292,7 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-  console.log("abc: ", chatPopup);
+  console.log("startGameCheck: ", startGameCheck);
   return (
     <Box
       className="tong"
@@ -564,7 +564,10 @@ export default function Layout(props) {
                 minWidth: "400px !important",
                 width: "400px !important",
               },
-              display: startGameCheck && device === "Tablet" ? "none" : "block",
+              display:
+                startGameCheck && (device === "Tablet" || device === "Mobile")
+                  ? "none"
+                  : "block",
             }}
           >
             <Navbar />
