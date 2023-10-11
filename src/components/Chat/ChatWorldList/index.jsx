@@ -42,10 +42,21 @@ export default function ChatWorldList() {
   const [socket, setSocket] = useState(null);
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
+  const [chatLength, setChatLength] = useState(0);
 
-  // useEffect(() => {
-  //   endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [worldMessage, chatPopup]);
+  useEffect(() => {
+    if (chatWorld) {
+      setChatLength(chatWorld?.length);
+    }
+  }, [chatWorld]);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  }
 
   useEffect(() => {
     setWorldMessage(chatWorld);
@@ -93,25 +104,19 @@ export default function ChatWorldList() {
   const isScrolledToBottom = () => {
     if (chatBox.current) {
       const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
-      if (
-        scrollTop + clientHeight >= scrollHeight &&
-        !showScrollToBottomButton
-      ) {
-        return true;
-      } else return false;
+      return scrollTop + clientHeight + 100 >= scrollHeight;
     }
-    return;
+    return true; // Default to true if chatBox is not available
   };
-
-  console.log(showScrollToBottomButton);
 
   const handleScroll = () => {
     setShowScrollToBottomButton(!isScrolledToBottom());
   };
 
   const scrollToBottom = () => {
-    if (chatBox.current && endOfMessageRef.current) {
-      endOfMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    if (chatBox.current) {
+      chatBox.current.style.scrollBehavior = "smooth";
+      chatBox.current.scrollTop = chatBox.current.scrollHeight;
       setShowScrollToBottomButton(false);
     }
   };
