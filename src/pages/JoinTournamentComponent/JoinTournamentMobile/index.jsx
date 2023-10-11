@@ -20,7 +20,10 @@ import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
-import { toggleLoginDialog, toggleShareTour } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  toggleLoginDialog,
+  toggleShareTour,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   formatTimeMothDateYear,
@@ -36,7 +39,9 @@ import GamePreview from "./GamePreview";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
-  typography: {},
+  typography: {
+    marginLeft: "0px !important",
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -50,6 +55,7 @@ const theme = createTheme({
 });
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
+  console.log(detailTournament);
   const [fetchT, setFetchT] = useState(true);
   const [socket, setSocket] = useState(null);
   const [currentResult, setCurrentResult] = useState(false);
@@ -244,7 +250,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     fill="none"
                     viewBox="0 0 20 18"
                     onClick={() => {
-                      dispatch(toggleShareTour())
+                      dispatch(toggleShareTour());
                     }}
                   >
                     <g fill="#fff">
@@ -281,55 +287,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 component={"div"}
                 className="d-flex justify-content-between "
                 sx={{
-                  paddingLeft: "30px",
-                  paddingRight: "30px",
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
                   marginTop: "20px",
                 }}
               >
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
-                    My Ticket
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="22"
-                      height="12"
-                      fill="none"
-                      viewBox="0 0 26 16"
-                    >
-                      <g>
-                        <g>
-                          <path
-                            fill="#AB3FEF"
-                            d="M18.644 15.881H1.368c-.87 0-.95-.077-.95-.948 0-1.53.01-3.059-.008-4.586-.003-.555.119-.884.752-.943.775-.073 1.323-.772 1.334-1.535a1.542 1.542 0 00-.36-1.027 1.497 1.497 0 00-.944-.52C.555 6.237.396 5.927.407 5.33.437 3.8.424 2.272.414.744.414.224.627 0 1.146 0c5.715.007 11.43.01 17.144.006.097 0 .194.016.351.03 0 .808.006 1.588 0 2.366 0 .387.055.744.515.752.46.01.52-.371.519-.743V.014c1.788 0 3.511-.015 5.234.023.165 0 .46.332.464.516.037 1.714.024 3.43.023 5.145 0 .476-.344.532-.704.598-1.029.193-1.595 1.104-1.277 2.054.208.62.656 1.01 1.296 1.066.525.047.699.299.695.8a467.48 467.48 0 000 4.897c0 .415-.084.762-.58.764-1.686.008-3.372 0-5.149 0v-2.055c0-.185.059-.41-.022-.549-.122-.214-.343-.371-.52-.552-.163.2-.451.39-.465.6-.06.822-.026 1.648-.026 2.56zM7.339 11.077c.014.517.47.744.966.372.969-.719 1.878-.885 2.87-.053.186.157.643.229.803.106.16-.123.252-.574.174-.814-.401-1.232-.097-2.178.929-2.944a.87.87 0 00.26-.731c-.04-.169-.403-.372-.61-.372-1.322.05-2.028-.633-2.388-1.86-.066-.22-.385-.511-.575-.502-.19.008-.488.306-.561.533-.354 1.2-1.036 1.903-2.34 1.804a.542.542 0 00-.179.039c-.572.147-.708.546-.315.991.325.372.707.69 1.01 1.076.144.202.215.449.2.698-.042.559-.158 1.107-.245 1.657zm11.306-5.263c0 .351-.056.715.022 1.046.049.207.291.496.465.507.173.012.488-.275.502-.45.058-.72.058-1.441 0-2.16-.014-.182-.318-.477-.488-.475-.17.003-.432.284-.488.487-.07.33-.012.696-.013 1.045zm1.02 4.214c0-.35.06-.715-.023-1.043-.05-.2-.326-.477-.488-.471-.163.006-.462.301-.476.496a12.95 12.95 0 000 2.097c.016.19.304.358.467.535.177-.184.45-.344.508-.563.077-.328.012-.696.012-1.047v-.004z"
-                          ></path>
-                        </g>
-                      </g>
-                    </svg>
-                    <Typography
-                      sx={{
-                        color: "#ffff",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {detailTournament?.turnCountLeft || 0}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    width: "1px",
-                    height: "40px",
-                    backgroundColor: "rgba(151, 151, 151, 0.40)",
-                  }}
-                ></Box>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <Typography sx={{ ...typographyStyle, fontSize: "14px" }}>
                     Start date
@@ -354,6 +316,82 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   <Typography sx={{ ...typographyStyle, fontSize: "10px" }}>
                     {formatTimeMothDateYear(detailTournament?.tournamentEndAt)}
                   </Typography>
+                </Box>
+              </Box>
+              <Box
+                component={"div"}
+                className="d-flex flex-column"
+                sx={{
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
+                  marginTop: "20px",
+                }}
+              >
+                <Box display={"flex"} color={"white"} className="mb-2">
+                  <Typography sx={{ marginLeft: "0px !important" }}>
+                    Maximum Extra
+                  </Typography>
+                  {!detailTournament?.checkInTournament ? (
+                    ""
+                  ) : (
+                    <Typography sx={{ marginLeft: "0px !important" }}>
+                      : {detailTournament?.playedTurn}/{detailTournament?.maxPlay}
+                    </Typography>
+                  )}
+                </Box>
+                <Box color={"white"}>
+                  {!detailTournament?.checkInTournament ? (
+                    <Typography
+                      variant="body2"
+                      sx={{ marginLeft: "0px !important" }}
+                    >
+                      The highest number of available Extras in the current
+                      Promotion.
+                    </Typography>
+                  ) : (
+                    <Box
+                      display={"flex"}
+                      flexDirection={"column"}
+                      color={"white "}
+                    >
+                      <Box display={"flex"} alignItems={"center"}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          viewBox="0 0 10 10"
+                        >
+                          <path
+                            fill="#BE48ED"
+                            fillRule="evenodd"
+                            d="M3.796.6a2.787 2.787 0 01-.248.2c-.149.1-.316.169-.492.204a2.853 2.853 0 01-.316.034c-.4.032-.601.048-.768.107a1.357 1.357 0 00-.828.827c-.059.167-.075.368-.107.768a2.851 2.851 0 01-.034.316A1.36 1.36 0 01.8 3.55a2.787 2.787 0 01-.2.247c-.26.306-.39.46-.467.62-.176.37-.176.8 0 1.17.077.16.207.312.468.618.104.122.156.183.2.248.1.149.168.316.203.492.015.077.022.157.034.316.032.4.048.601.107.768a1.356 1.356 0 00.828.828c.167.059.367.075.768.107.16.012.24.019.316.034.176.035.343.104.492.204.065.043.126.095.248.2.306.26.459.39.619.467.37.176.8.176 1.17 0 .16-.077.313-.207.619-.468.122-.104.183-.156.248-.2.149-.1.316-.168.492-.203.077-.015.157-.022.316-.034.4-.032.601-.048.768-.107a1.356 1.356 0 00.828-.828c.059-.167.075-.367.107-.768.012-.16.019-.24.034-.316.035-.176.104-.343.204-.492.043-.065.095-.126.2-.248.26-.306.39-.459.467-.619.176-.37.176-.8 0-1.17-.077-.16-.207-.313-.468-.619a2.785 2.785 0 01-.2-.247c-.1-.15-.169-.317-.203-.493a2.861 2.861 0 01-.034-.316c-.032-.4-.048-.6-.107-.768a1.356 1.356 0 00-.828-.827c-.167-.06-.367-.075-.768-.107a2.851 2.851 0 01-.316-.034A1.356 1.356 0 016.452.8a2.866 2.866 0 01-.248-.2C5.898.34 5.745.21 5.585.133a1.357 1.357 0 00-1.17 0c-.16.076-.313.207-.619.467zm3.12 2.485a.407.407 0 010 .575L3.66 6.916a.407.407 0 11-.575-.575L6.34 3.086a.407.407 0 01.575 0zm-.017 3.272a.543.543 0 11-1.085 0 .543.543 0 011.085 0zm-3.255-2.17a.542.542 0 100-1.085.542.542 0 000 1.085z"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                        <Typography>Extra: </Typography>
+                        <Typography>{detailTournament?.extras?.normal}</Typography>
+                      </Box>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          viewBox="0 0 10 10"
+                        >
+                          <path
+                            fill="#BE48ED"
+                            fillRule="evenodd"
+                            d="M3.796.6a2.787 2.787 0 01-.248.2c-.149.1-.316.169-.492.204a2.853 2.853 0 01-.316.034c-.4.032-.601.048-.768.107a1.357 1.357 0 00-.828.827c-.059.167-.075.368-.107.768a2.851 2.851 0 01-.034.316A1.36 1.36 0 01.8 3.55a2.787 2.787 0 01-.2.247c-.26.306-.39.46-.467.62-.176.37-.176.8 0 1.17.077.16.207.312.468.618.104.122.156.183.2.248.1.149.168.316.203.492.015.077.022.157.034.316.032.4.048.601.107.768a1.356 1.356 0 00.828.828c.167.059.367.075.768.107.16.012.24.019.316.034.176.035.343.104.492.204.065.043.126.095.248.2.306.26.459.39.619.467.37.176.8.176 1.17 0 .16-.077.313-.207.619-.468.122-.104.183-.156.248-.2.149-.1.316-.168.492-.203.077-.015.157-.022.316-.034.4-.032.601-.048.768-.107a1.356 1.356 0 00.828-.828c.059-.167.075-.367.107-.768.012-.16.019-.24.034-.316.035-.176.104-.343.204-.492.043-.065.095-.126.2-.248.26-.306.39-.459.467-.619.176-.37.176-.8 0-1.17-.077-.16-.207-.313-.468-.619a2.785 2.785 0 01-.2-.247c-.1-.15-.169-.317-.203-.493a2.861 2.861 0 01-.034-.316c-.032-.4-.048-.6-.107-.768a1.356 1.356 0 00-.828-.827c-.167-.06-.367-.075-.768-.107a2.851 2.851 0 01-.316-.034A1.356 1.356 0 016.452.8a2.866 2.866 0 01-.248-.2C5.898.34 5.745.21 5.585.133a1.357 1.357 0 00-1.17 0c-.16.076-.313.207-.619.467zm3.39 3.332a.407.407 0 00-.574-.575L4.186 5.782l-.798-.798a.407.407 0 00-.575.575l1.085 1.085a.407.407 0 00.575 0l2.714-2.712z"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                        <Typography>Promotion Extra: </Typography>
+                        <Typography>{detailTournament?.extras?.promo}</Typography>
+                      </Box>
+                    </Box>
+                  )}
                 </Box>
               </Box>
               <Box className="d-flex p-2 ps-3 pe-3" sx={{ marginTop: "16px" }}>
