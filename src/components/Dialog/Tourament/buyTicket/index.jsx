@@ -72,14 +72,13 @@ export default function BuyTicket(props) {
         >
           <Box
             sx={{
-              backgroundColor: "#42285B",
               height: "44px",
               width: "100%",
               boxSizing: "border-box",
               padding: "5px 20px",
               display: "flex",
               alignItems: "center",
-              justifyContent: width > 576 ? "space-between" : "none",
+              justifyContent: width > 576 ? "flex-end" : "none",
             }}
           >
             {width < 576 && (
@@ -92,15 +91,7 @@ export default function BuyTicket(props) {
                 src={images.BackButtonLobby}
               ></Box>
             )}
-            <Typography
-              sx={{
-                color: "#ffff",
-                textAlign: "start",
-                fontWeight: "lighter !important",
-              }}
-            >
-              Buy Ticket
-            </Typography>
+
             {width > 576 && (
               <Box
                 onClick={handleClose}
@@ -109,6 +100,19 @@ export default function BuyTicket(props) {
                 src={images.closeButton}
               ></Box>
             )}
+          </Box>
+          <Box display={"flex"} justifyContent={"center"}>
+            <Typography
+              sx={{
+                color: "#ffff",
+                textAlign: "start",
+                fontWeight: "lighter !important",
+                fontSize:"20px",
+                marginLeft:"0px !important"
+              }}
+            >
+              Buy Extra
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -132,13 +136,42 @@ export default function BuyTicket(props) {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
+                position: "relative",
               }}
             >
               <Box
-                sx={{ width: "100%", height: "auto", borderRadius: "16px" }}
-                component={"img"}
-                src={images.bannerbuyticket}
-              ></Box>
+                sx={{
+                  width: width < 576 ? "100%" : "290px",
+                  height: "178px",
+                  borderRadius: "16px",
+                  backgroundImage: `url(${images.bannerbuyticket})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "Center",
+                }}
+              >
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  alignItems={"center"}
+                  color={"white"}
+                >
+                  <Typography
+                    sx={{ fontSize: "30px", marginLeft: "0px !important" }}
+                  >
+                    1 EXTRA
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: "30px", marginLeft: "0px !important" }}
+                  >
+                    $ 0.99
+                  </Typography>
+                </Box>
+              </Box>
+
               <Box
                 sx={{
                   width: "100%",
@@ -214,7 +247,6 @@ export default function BuyTicket(props) {
                             marginTop: "5px",
                           }}
                         >
-                          
                           {moment(dataTime || new Date())?.format("MM/DD/YYYY")}
                         </Typography>
                       </Box>
