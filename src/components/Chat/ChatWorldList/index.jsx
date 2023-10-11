@@ -29,7 +29,7 @@ export default function ChatWorldList() {
   const [messagefromName, setMessFromName] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
-    useState(false);
+    useState(true);
   const { chatWorld, friendList, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
@@ -106,7 +106,7 @@ export default function ChatWorldList() {
       const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
       return scrollTop + clientHeight + 100 >= scrollHeight;
     }
-    return true; // Default to true if chatBox is not available
+    return true;
   };
 
   const handleScroll = () => {
