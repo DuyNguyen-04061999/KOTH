@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { imageDesktop } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function NewFooter() {
   const { width } = useWindowDimensions();
@@ -15,7 +15,6 @@ export default function NewFooter() {
     color: "#fff",
   };
 
-  const { tabHelpCenter } = useSelector((state) => state.helpcenterReducer);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();

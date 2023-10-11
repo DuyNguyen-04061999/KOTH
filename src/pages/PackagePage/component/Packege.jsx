@@ -16,10 +16,10 @@ import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
 import {
   getIdPackage,
-  toggleDialogConfirm,
+  // toggleDialogConfirm,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
-import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
+// import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { useLocation } from "react-router-dom";
 import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walletReducer";
 
@@ -30,9 +30,9 @@ export default function Package() {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   // const [bgFree, setBgFree] = useState("#A361EE");
-  const [bgDiamond, setBgDiamond] = useState("#A361EE");
-  const [bgGold, setBgGold] = useState("transparent");
-  const [activePop, setAcivePop] = useState(1);
+  // const [bgDiamond, setBgDiamond] = useState("#A361EE");
+  // const [bgGold, setBgGold] = useState("transparent");
+  // const [activePop, setAcivePop] = useState(1);
   const [item, setItem] = useState([]);
   useEffect(() => {
     const socket = _socket;
@@ -105,7 +105,7 @@ export default function Package() {
       (item) => item?.packageName === "Subscription"
     );
     setItem(itemPackage);
-  }, [activePop, listPackage]);
+  }, [listPackage]);
 
   const theme = createTheme({
     typography: {},

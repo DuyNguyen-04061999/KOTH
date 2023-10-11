@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
+import moment from "moment";
 import React from "react";
-import { imageHome } from "../../../utils/images";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useNavigate } from "react-router-dom";
 import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
-import moment from "moment";
+import { imageHome } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const BannerTour = (props) => {
   const {
@@ -225,6 +225,7 @@ const BannerTour = (props) => {
             }}
           >
             <img
+              alt="..."
               style={{
                 width: "100%",
                 height: "100%",

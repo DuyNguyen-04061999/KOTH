@@ -1,27 +1,17 @@
-import React, { useRef } from "react";
-import SearchBar from "../SearchBar/SearchBar";
+import { ExpandMoreOutlined } from "@mui/icons-material";
 import {
   Box,
   Button,
-  Collapse,
-  FormControl,
-  Hidden,
-  Menu,
-  TextField,
-  Typography,
+  Typography
 } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import moment from "moment";
-import { useState } from "react";
-import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
-import { trimAndCamelCase } from "../../../utils/Admin/helper";
-import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
-import { Dropdown, MenuButton, MenuItem } from "@mui/base";
-import { ExpandMoreOutlined } from "@mui/icons-material";
-import { CSVLink, CSVDownload } from "react-csv";
-import { useEffect } from "react";
+import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import SearchBar from "../SearchBar/SearchBar";
 
 const FilterRevenue = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -85,7 +75,6 @@ const FilterRevenue = () => {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [activeType, setActiveType] = useState(null);
-  const [isOpenDropdown, setIsOpenDropdown] = useState(true);
   const listAction = [
     "Today",
     "Yesterday",

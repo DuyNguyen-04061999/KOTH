@@ -1,17 +1,14 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import InspirationTTF from "../../assets/font/CynthoNextMedium.otf";
 import {
   Box,
   Container,
   CssBaseline,
-  Skeleton,
   ThemeProvider,
   Typography,
   createTheme,
 } from "@mui/material";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { images } from "../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";

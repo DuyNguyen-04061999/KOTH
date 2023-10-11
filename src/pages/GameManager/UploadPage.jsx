@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { envs } from '../../utils/envs';
 import _ from 'lodash'
-import JSZip from "jszip";
-import DeleteIcon from '@mui/icons-material/Delete'
+// import JSZip from "jszip";
+// import DeleteIcon from '@mui/icons-material/Delete'
 
 export default function UploadPage() {
   const [uploadItem, setUploadItem] = useState([]);
-  const [uploadAsset, setUploadAsset] = useState([]);
-  const [contentZip, setContentZip] = useState("");
-  const [listSkin, setListSkin] = useState([])
+  const [uploadAsset] = useState([]);
+  const [contentZip] = useState("");
+  const [listSkin] = useState([])
   const [screen, setScreen] = useState(false);
   const [fmod, setFmod] = useState(false);
 
@@ -77,21 +77,21 @@ export default function UploadPage() {
     setUploadItem(files)
   }
 
-  const handleSelectedAsset = (e) => {
-      const files = Array.from(e.target.files);
-      setUploadAsset(files)
-      const zip = new JSZip();
+  // const handleSelectedAsset = (e) => {
+  //     const files = Array.from(e.target.files);
+  //     setUploadAsset(files)
+  //     const zip = new JSZip();
 
-      files.forEach((file) => {
-        zip.file(file.webkitRelativePath, file);
-      });
-      zip
-        .generateAsync({ type: "blob" })
-        .then(function (content) {
-          setContentZip([...contentZip, content])
-        })
-        .catch((e) => console.log(e));
-  };
+  //     files.forEach((file) => {
+  //       zip.file(file.webkitRelativePath, file);
+  //     });
+  //     zip
+  //       .generateAsync({ type: "blob" })
+  //       .then(function (content) {
+  //         setContentZip([...contentZip, content])
+  //       })
+  //       .catch((e) => console.log(e));
+  // };
 
   const handleChangeScreen = (event) => {
     setScreen(event.target.value);

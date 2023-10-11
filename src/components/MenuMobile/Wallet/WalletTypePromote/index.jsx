@@ -1,29 +1,27 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
+import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { images, popup } from "../../../../utils/images";
 import "./index.scss";
 // import FullScreenDialog from "../../../FullScreenDialog";
-import { useDispatch, useSelector } from "react-redux";
-import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
-import { formatMoney, getAppType } from "../../../../utils/helper";
 import { useEffect, useState } from "react";
-import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
+import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { formatMoney, getAppType } from "../../../../utils/helper";
 import AnimButton from "../../../AnimButton";
 
 export default function WalletTypePromote(props) {
-  const { handleClose } = props;
   const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
   const { userGold } = useSelector((state) => state.authReducer);
-  const [activeColor, setActveColor] = useState("");
+  // const [activeColor, setActveColor] = useState("");
   const [amount, setAmount] = useState("");
   const [typePayment, setTypePayment] = useState("stripe");
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
   const [bgInput,setBgInput] = useState("gray")
-  console.log(amount);
+  
   const handleContinue = () => {
     if (agree === false) {
       toast.warning("Please agree policy!", {
@@ -485,7 +483,7 @@ export default function WalletTypePromote(props) {
                     right: 20,
                   }}
                   onClick={() => {
-                    setActveColor("activewl");
+                    // setActveColor("activewl");
                     setTypePayment("stripe");
                   }}
                 />

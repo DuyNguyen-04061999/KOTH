@@ -18,7 +18,7 @@ import {
   getHottestWeekTourSuccess,
   getThreeBrandTourSuccess,
 } from "../reducers/tournamentReducer";
-import { showAlert } from "../reducers/alertReducer";
+// import { showAlert } from "../reducers/alertReducer";
 const tournamentService = new TournamentService();
 
 function* postTournamentCreate(dataRequest) {

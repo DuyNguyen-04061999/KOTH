@@ -1,4 +1,7 @@
+import { Close, SyncAlt } from "@mui/icons-material";
+import GameLogIcon from "@mui/icons-material/List";
 import {
+  AvatarGroup,
   // Badge,
   Box,
   Dialog,
@@ -7,42 +10,37 @@ import {
   Input,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import { AvatarGroup } from "@mui/material";
-import { images, sign } from "../../../../utils/images";
-import "./index.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import DialogProfile from "../../Profile";
-import Signup from "../Signup";
-import { images260423_l } from "../../../../utils/images260423_l";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { useState } from "react";
-import MenuChat from "../../../MenuMobile/Chat";
-import GameLogIcon from "@mui/icons-material/List";
-import { Close, SyncAlt } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
   removeToken,
   toggleForgetPass,
   toggleLoginDialog,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
-import _socket from "../../../../redux-saga-middleware/config/socket";
-import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
-import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
-import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import {
   clickTabChat,
   closeChatPopup,
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
-import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
+import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
+import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
+import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { getAppType } from "../../../../utils/helper";
+import { images, sign } from "../../../../utils/images";
+import { images260423_l } from "../../../../utils/images260423_l";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import Gold from "../../../Gold/Gold";
-import { getAppType, sliceString } from "../../../../utils/helper";
+import MenuChat from "../../../MenuMobile/Chat";
+import DialogProfile from "../../Profile";
+import Signup from "../Signup";
+import "./index.scss";
 // import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
-import { toast } from "react-toastify";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { toast } from "react-toastify";
 import AnimButton from "../../../AnimButton";
 
 function SimpleDialog(props) {
@@ -643,16 +641,13 @@ export default function Dialoglg() {
     dispatch(clickTabChat(true));
   };
   const { width } = useWindowDimensions();
-  const location = useLocation();
-
-  const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseEnter = () => {
-    setIsHovering(true);
+    
   };
 
   const handleMouseLeave = () => {
-    setIsHovering(false);
+    
   };
 
   return (

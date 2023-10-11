@@ -7,33 +7,32 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { images } from "../../../utils/images";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import "./index.scss";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { images } from "../../../utils/images";
+import "./index.scss";
 // import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
-import LeaderBoard from "../LeaderBoard/index";
-import DetailVoucher from "../DetailVoucher";
-import GameInTournament from "../GameInTournament";
-import BgEndGame from "../BgEndTour";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
+import { toast } from "react-toastify";
+import AnimButton from "../../../components/AnimButton";
+import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
+import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
+import { toggleLoginDialog, toggleShareTour } from "../../../redux-saga-middleware/reducers/authReducer";
+import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   formatTimeMothDateYear,
   isJson,
   sliceString,
 } from "../../../utils/helper";
-import { toggleLoginDialog, toggleShareTour } from "../../../redux-saga-middleware/reducers/authReducer";
-import { toast } from "react-toastify";
-import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import BgEndGame from "../BgEndTour";
+import DetailVoucher from "../DetailVoucher";
+import GameInTournament from "../GameInTournament";
+import LeaderBoard from "../LeaderBoard/index";
 import GamePreview from "./GamePreview";
-import ShareTour from "../../../components/Dialog/ShareTour";
-import AnimButton from "../../../components/AnimButton";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const theme = createTheme({
@@ -97,7 +96,12 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       setFetchT(false);
     });
     socket?.on("buyTicketTournamentSuccess", () => {
-      window.location.reload();
+      // window.location.reload();
+      if (token) {
+        socket?.emit("detailTournament", {
+          tournamentId: id,
+        });
+      }
     });
     socket?.on("joinTournamentSuccess", (data) => {
       // socket?.emit("detailTournament", {
@@ -114,17 +118,22 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
         position: "top-center",
         className: "success-background",
       });
-      setTimeout(() => {
+      // setTimeout(() => {
+      //   socket?.emit("detailTournament", {
+      //     tournamentId: data?.id,
+      //   });
+      // }, 1000);
+      // window.location.reload();
+      if (token) {
         socket?.emit("detailTournament", {
-          tournamentId: data?.id,
+          tournamentId: id,
         });
-      }, 1000);
-      window.location.reload();
+      }
     });
     return () => {
       socket?.off("joinTournamentSuccess");
     };
-  }, [socket]);
+  }, [socket, token, id]);
 
   const dispatch = useDispatch();
   const handleClickOpen = () => {
@@ -484,6 +493,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             Conditions
                           </h6>
                           <span
+                            className="cursor-pointer"
                             onClick={(e) => {
                               e.preventDefault();
                               setOpenVoucher(true);

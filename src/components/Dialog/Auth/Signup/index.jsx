@@ -1,16 +1,14 @@
-import { Box, Button, FormControl, Input, Typography } from "@mui/material";
-import { useState } from "react";
-import "./index.scss";
-import { sign } from "../../../../utils/images";
-import _socket from "../../../../redux-saga-middleware/config/socket";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { Box, FormControl, Input, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../../../redux-saga-middleware/config/socket";
+import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { sign } from "../../../../utils/images";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
+import "./index.scss";
 
 export default function Signup(props) {
   const { handleTab } = props;
@@ -26,7 +24,7 @@ export default function Signup(props) {
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
   const { width } = useWindowDimensions();
-  const [passSai, setPassSai] = useState(false);
+  // const [passSai, setPassSai] = useState(false);
   const [socket, setSocket] = useState(null);
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
@@ -59,15 +57,47 @@ export default function Signup(props) {
     return regex.test(input);
   }
 
-  function containsSpecialCharacters(input) {
-    const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{6,15}$/; // Define your special character pattern
-    return regex.test(input);
-  }
+  // function containsSpecialCharacters(input) {
+  //   const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{6,15}$/; // Define your special character pattern
+  //   return regex.test(input);
+  // }
 
   function checkEmailFormat(email) {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
   }
+
+  
+
+  const handleSubmitSignUp = (e) => {
+    e.preventDefault();
+    sendRegister();
+  };
+  // console.log(passSai);
+  //------------------------------------------------------------------
+  const [textC_pass, setTextC_pass] = useState("");
+  const [textUserName, setTextUserName] = useState("");
+  const [validEmail, setValidEmail] = useState("");
+  const [characterPass, setCharacterPass] = useState(false);
+  const [passOneNumber, setPassOneNumber] = useState(false);
+  const [passOneLetter, setPassOneLetter] = useState(false);
+  const [hasUppercase, setHasUppercase] = useState(false);
+  const handleChangePass = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    // Check if the password contains at least one uppercase character
+    const specialCharacterRegex = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/;
+    const containsSpecialCharacter = specialCharacterRegex.test(newPassword);
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const isPasswordValid = newPassword.length >= 6;
+    const containsUppercase = uppercaseRegex.test(newPassword);
+    const containNumber = numberRegex.test(newPassword);
+    setHasUppercase(containsUppercase);
+    setCharacterPass(isPasswordValid);
+    setPassOneNumber(containNumber);
+    setPassOneLetter(containsSpecialCharacter);
+  };
 
   useEffect(() => {
     if (
@@ -90,38 +120,8 @@ export default function Signup(props) {
     } else {
       setDisabledBtn(false);
     }
-  }, [username, password, c_password, email]);
-
-  const handleSubmitSignUp = (e) => {
-    e.preventDefault();
-    sendRegister();
-  };
-  // console.log(passSai);
-  //------------------------------------------------------------------
-  const [textC_pass, setTextC_pass] = useState("");
-  const [textUserName, setTextUserName] = useState("");
-  const [validEmail, setValidEmail] = useState("");
-  const [characterPass, setCharacterPass] = useState(false);
-  const [passOneNumber, setPassOneNumber] = useState(false);
-  const [passOneLetter, setPassOneLetter] = useState(false);
-  const [hasUppercase, setHasUppercase] = useState(false);
-  const handleChangePass = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    // Check if the password contains at least one uppercase character
-    const specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-=|]/;
-    const containsSpecialCharacter = specialCharacterRegex.test(newPassword);
-    const uppercaseRegex = /[A-Z]/;
-    const numberRegex = /[0-9]/;
-    const isPasswordValid = newPassword.length >= 6;
-    const containsUppercase = uppercaseRegex.test(newPassword);
-    const containNumber = numberRegex.test(newPassword);
-    setHasUppercase(containsUppercase);
-    setCharacterPass(isPasswordValid);
-    setPassOneNumber(containNumber);
-    setPassOneLetter(containsSpecialCharacter);
-  };
-
+  }, [username, password, c_password, email, characterPass, gender, hasUppercase, passOneLetter, passOneNumber]);
+  
   useEffect(() => {
     if (password && password.length >= 6) {
       setCharacterPass(true);
@@ -144,19 +144,19 @@ export default function Signup(props) {
 
   const sendRegister = () => {
     if (isAlphanumeric(username) === false) {
-      setPassSai(true);
+      // setPassSai(true);
       setTextUserName("Account name should contain only letters and numbers");
       return;
     } else if (c_password !== password) {
-      setPassSai(true);
+      // setPassSai(true);
       setTextC_pass("Password does not match");
       return;
     } else if (checkEmailFormat(email) === false) {
-      setPassSai(true);
+      // setPassSai(true);
       setValidEmail("Invalid Email Address");
       return;
     } else {
-      setPassSai(false);
+      // setPassSai(false);
       socket?.emit("register", {
         username: username,
         password: password,
@@ -561,7 +561,7 @@ export default function Signup(props) {
             autoComplete="new-password"
             onChange={(e) => {
               if (password !== c_password) {
-                setPassSai(true);
+                // setPassSai(true);
               }
               setC_password(e.target.value);
             }}

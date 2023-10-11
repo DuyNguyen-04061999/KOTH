@@ -254,7 +254,7 @@
 
 .btn-conteiner {
   display: flex;
-  justify-content: center;
+  justify-content: "flex-end";
   --color-text: #ffffff;
   --color-background: linear-gradient(
     0deg,

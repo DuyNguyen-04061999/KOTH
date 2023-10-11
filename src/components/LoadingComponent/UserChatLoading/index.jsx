@@ -5,7 +5,6 @@ const UserChatLoading = (props) => {
   const {
     bgColor = "rgba(255,255,255,0.5)",
     animation = "pulse",
-    ...other
   } = props;
   return (
     <Box sx={{ display: "flex", alignItems: "center", padding: "10px" }}>

@@ -1,15 +1,15 @@
-import React, { useRef } from "react";
+import { Avatar, Badge } from "@mui/material";
 import List from "@mui/material/List";
-import t from "prop-types";
 import { makeStyles } from "@mui/styles";
-import { Avatar, Badge, Box } from "@mui/material";
+import t from "prop-types";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   closeLoading,
   openLoading,
 } from "../../../../redux-saga-middleware/reducers/loadingReducer";
 import { images } from "../../../../utils/images";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import AnimButton from "../../../AnimButton";
 
 const useStyles = makeStyles((theme) => ({

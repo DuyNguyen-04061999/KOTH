@@ -1,24 +1,23 @@
-import { Box, Drawer, Grid } from "@mui/material";
-import { styled as muiStyled } from "@mui/material/styles";
-import React, { useState } from "react";
+import { AvatarGroup, Box, Drawer, Grid } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import { AvatarGroup } from "@mui/material";
-import "slick-carousel/slick/slick.css";
+import { styled as muiStyled } from "@mui/material/styles";
+import React, { useState } from "react";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import { imageDesktop } from "../../utils/images";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-import { imageDesktop } from "../../utils/images";
 // import { inpChat } from "../../utils/cssFrom";
-import styled from "styled-components";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import history from "../Router/history";
 import { useEffect } from "react";
-import MenuWallet from "../MenuMobile/Wallet";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { images280423_l } from "../../utils/images280423_l";
-import ChatWorldList from "../Chat/ChatWorldList";
 import ChatFriendList from "../Chat/ChatFriendList";
+import ChatWorldList from "../Chat/ChatWorldList";
+import MenuWallet from "../MenuMobile/Wallet";
+import history from "../Router/history";
 // import ComponentChat from "../Chat/componentChat";
 // import { imageChat } from "../../utils/imagesChat";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
@@ -27,36 +26,35 @@ import GameLogDialog from "../Dialog/GameLog/GameLog";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 // import { Search } from "@mui/icons-material";
-import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
-import _socket from "../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../redux-saga-middleware/config/socket";
+import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
-import DialogProfile from "../Dialog/Profile";
 import {
   closeTransactionDialog,
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
-import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
+import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
+import DialogProfile from "../Dialog/Profile";
 // import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
-import {
-  clickTabChat,
-  closeChatPopup,
-  openChatPopup,
-  setBadgeChat,
-  showBadgeChat,
-} from "../../redux-saga-middleware/reducers/chatReducer";
+import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
+import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTabNav,
   toggleLoginDialog,
 } from "../../redux-saga-middleware/reducers/authReducer";
-import MetaMaskDialog from "../Dialog/MetaMask";
-import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
-import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
-import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
+import {
+  clickTabChat,
+  closeChatPopup,
+  openChatPopup,
+  showBadgeChat
+} from "../../redux-saga-middleware/reducers/chatReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
-import TicketCheckOut from "../Dialog/TicketCheckOut";
 import ForgetPassword from "../Dialog/ForgetPassword";
+import MetaMaskDialog from "../Dialog/MetaMask";
 import ShareTour from "../Dialog/ShareTour";
+import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
+import TicketCheckOut from "../Dialog/TicketCheckOut";
 // import { getAppType } from "../../utils/helper";
 
 const drawerWidth = 310;
@@ -131,7 +129,7 @@ export default function Layout(props) {
     (state) => state.authReducer
   );
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, tabChat, badgechat, chatWorld } = useSelector(
+  const { chatPopup, tabChat, badgechat } = useSelector(
     (state) => state.chatReducer
   );
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
@@ -165,7 +163,7 @@ export default function Layout(props) {
       router?.includes("tournamentDetail") &&
       startGameCheck
     ) {
-      window.location.reload();
+      // window.location.reload();
     }
   }, [router, startGameCheck]);
   useEffect(() => {

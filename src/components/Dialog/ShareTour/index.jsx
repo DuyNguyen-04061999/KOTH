@@ -2,31 +2,14 @@ import { Box, Dialog, FormControl, Input, Typography } from "@mui/material";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "../../../utils/images";
-import { useLocation, useParams } from "react-router-dom";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 import { useState } from "react";
 import {
-  EmailShareButton,
   FacebookShareButton,
-  HatenaShareButton,
-  InstapaperShareButton,
-  LineShareButton,
-  LinkedinShareButton,
-  LivejournalShareButton,
-  MailruShareButton,
-  OKShareButton,
-  PinterestShareButton,
-  PocketShareButton,
   RedditShareButton,
   TelegramShareButton,
-  TumblrShareButton,
   TwitterShareButton,
-  ViberShareButton,
-  VKShareButton,
-  WhatsappShareButton,
-  WorkplaceShareButton,
 } from "react-share";
 import { toggleShareTour } from "../../../redux-saga-middleware/reducers/authReducer";
 
@@ -34,7 +17,6 @@ export default function ShareTour() {
   const { width, height } = useWindowDimensions();
   const { isShare } = useSelector((state) => state.authReducer);
   const { refCode } = useSelector((state) => state.profileReducer);
-  const location = useLocation();
   const currentUrl = window.location.href;
   const copyref = `${currentUrl}?refcode=${refCode}`;
   const [copySuccess, setCopySuccess] = useState(false);
