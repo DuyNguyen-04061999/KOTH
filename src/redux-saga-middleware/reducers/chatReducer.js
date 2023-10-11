@@ -26,10 +26,9 @@ export const updateChatWorld = (data) => {
 export const showBadgeChat = (data) => {
   return {
     type: "SHOW_BADGE_CHAT",
-    payload: data
-  }
-}
-
+    payload: data,
+  };
+};
 
 export const updateContacterUsername = (userName, id) => {
   return {
@@ -69,17 +68,17 @@ export const clickTabChat = (data) => {
 
 export const setBadgeChat = (data) => {
   return {
-    type: "SET_BADGE_CHAT" ,
-    payload: data
-  }
-}
+    type: "SET_BADGE_CHAT",
+    payload: data,
+  };
+};
 
 export const chatLogoutSuccessFully = (data) => {
   return {
     type: "CHAT_LOGOUT_SUCCESS_FULLT",
-    payload:data
-  }
-}
+    payload: data,
+  };
+};
 
 const chatReducer = (
   state = {
@@ -91,7 +90,7 @@ const chatReducer = (
     chatPopup: true,
     privateChatPopup: false,
     tabChat: true,
-    badgechat: false
+    badgechat: false,
   },
   action
 ) => {
@@ -100,8 +99,7 @@ const chatReducer = (
     case "PUSH_CHAT_WORLD": {
       return {
         ...state,
-        chatWorld: payload 
-        && payload?.length > 0 ? payload?.reverse() : [],
+        chatWorld: payload && payload?.length > 0 ? payload?.reverse() : [],
       };
     }
     case "UPDATE_CONTACTER_USERNAME": {
@@ -154,21 +152,21 @@ const chatReducer = (
         tabChat: payload,
       };
     }
-    case "SHOW_BADGE_CHAT" : {
+    case "SHOW_BADGE_CHAT": {
       return {
         ...state,
-        badgechat: payload
-      }
+        badgechat: payload,
+      };
     }
 
-    case "SET_BADGE_CHAT" : {
+    case "SET_BADGE_CHAT": {
       return {
         ...state,
-        badgechat: payload
-      }
+        badgechat: payload,
+      };
     }
 
-    case "CHAT_LOGOUT_SUCCESS_FULLT" : {
+    case "CHAT_LOGOUT_SUCCESS_FULLT": {
       return {
         ...state,
         friendList: [],
@@ -178,7 +176,7 @@ const chatReducer = (
         chatPopup: false,
         privateChatPopup: false,
         tabChat: true,
-      }
+      };
     }
     default:
       return { ...state };

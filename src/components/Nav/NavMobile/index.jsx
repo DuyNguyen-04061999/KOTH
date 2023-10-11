@@ -17,7 +17,7 @@ import "./index.scss";
 export default function NavMobile() {
   const { token } = useSelector((state) => state.authReducer);
   const { chatWorld, badgechat } = useSelector((state) => state.chatReducer);
-  
+
   // const { device } = useSelector((state) => state.deviceReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isProfileDialog } = useSelector((state) => state.profileReducer);

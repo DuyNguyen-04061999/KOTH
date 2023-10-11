@@ -47,7 +47,7 @@ import {
   clickTabChat,
   closeChatPopup,
   openChatPopup,
-  showBadgeChat
+  showBadgeChat,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import ForgetPassword from "../Dialog/ForgetPassword";
@@ -292,6 +292,7 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
+  console.log("startGameCheck: ", startGameCheck);
   return (
     <Box
       className="tong"
@@ -563,7 +564,10 @@ export default function Layout(props) {
                 minWidth: "400px !important",
                 width: "400px !important",
               },
-              display: startGameCheck && device === "Tablet" ? "none" : "block",
+              display:
+                startGameCheck && (device === "Tablet" || device === "Mobile")
+                  ? "none"
+                  : "block",
             }}
           >
             <Navbar />
