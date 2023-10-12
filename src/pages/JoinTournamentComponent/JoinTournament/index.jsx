@@ -579,13 +579,13 @@ export default function JoinTournament() {
                           />
                         ) : (
                           <Box>
-                            <Typography sx={{fontSize:"12px"}}>
+                            <Typography sx={{ fontSize: "12px" }}>
                               {moment(
                                 detailTournament?.tournamentStartAt ||
                                   new Date()
                               )?.format("MM/DD/YYYY")}
                             </Typography>
-                            <Typography sx={{fontSize:"12px"}}>
+                            <Typography sx={{ fontSize: "12px" }}>
                               {moment(
                                 detailTournament?.tournamentStartAt ||
                                   new Date()
@@ -639,16 +639,14 @@ export default function JoinTournament() {
                           />
                         ) : (
                           <Box>
-                            <Typography sx={{fontSize:"12px"}}>
+                            <Typography sx={{ fontSize: "12px" }}>
                               {moment(
-                                detailTournament?.tournamentEndAt ||
-                                  new Date()
+                                detailTournament?.tournamentEndAt || new Date()
                               )?.format("MM/DD/YYYY")}
                             </Typography>
-                            <Typography sx={{fontSize:"12px"}}>
+                            <Typography sx={{ fontSize: "12px" }}>
                               {moment(
-                                detailTournament?.tournamentEndAt ||
-                                  new Date()
+                                detailTournament?.tournamentEndAt || new Date()
                               )?.format("HH:mm")}
                             </Typography>
                           </Box>
