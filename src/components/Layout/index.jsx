@@ -596,7 +596,12 @@ export default function Layout(props) {
           <Main
             open={chatPopup}
             sx={{
-              marginRight: isNavTablet === false ? "0" : "",
+              marginRight:
+                device === "Tablet" ||
+                (device === "Mobile" && orientation === "landscape") ||
+                (device === "Desktop" && width < 1200)
+                  ? "0"
+                  : "",
             }}
           >
             {children}
