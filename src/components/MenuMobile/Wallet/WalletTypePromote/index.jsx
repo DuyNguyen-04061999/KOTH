@@ -299,12 +299,6 @@ export default function WalletTypePromote(props) {
                       <option value="USD" style={{ color: "#642CDA" }}>
                         USD
                       </option>
-                      <option value="DOGE" style={{ color: "#642CDA" }}>
-                        DOGE
-                      </option>
-                      <option value="EURO" style={{ color: "#642CDA" }}>
-                        EURO
-                      </option>
                     </select>
                   </form>
                 </Grid>
