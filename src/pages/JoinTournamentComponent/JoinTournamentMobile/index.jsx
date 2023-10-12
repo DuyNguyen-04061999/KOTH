@@ -56,7 +56,6 @@ const theme = createTheme({
 });
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
-  console.log(detailTournament);
   const [fetchT, setFetchT] = useState(true);
   const [socket, setSocket] = useState(null);
   const [currentResult, setCurrentResult] = useState(false);
@@ -336,7 +335,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     ""
                   ) : (
                     <Typography sx={{ marginLeft: "0px !important" }}>
-                      : {detailTournament?.playedTurn}/{detailTournament?.maxPlay}
+                      : {detailTournament?.playedTurn}/
+                      {detailTournament?.maxPlay}
                     </Typography>
                   )}
                 </Box>
@@ -371,7 +371,9 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           ></path>
                         </svg>
                         <Typography>Extra: </Typography>
-                        <Typography>{detailTournament?.extras?.normal}</Typography>
+                        <Typography>
+                          {detailTournament?.extras?.normal}
+                        </Typography>
                       </Box>
                       <Box display={"flex"} alignItems={"center"}>
                         <svg
@@ -389,7 +391,9 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           ></path>
                         </svg>
                         <Typography>Promotion Extra: </Typography>
-                        <Typography>{detailTournament?.extras?.promo}</Typography>
+                        <Typography>
+                          {detailTournament?.extras?.promo}
+                        </Typography>
                       </Box>
                     </Box>
                   )}

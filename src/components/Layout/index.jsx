@@ -38,7 +38,10 @@ import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import DialogProfile from "../Dialog/Profile";
 // import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
-import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
+import {
+  changeRouter,
+  toggleStartGame,
+} from "../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTabNav,
   toggleLoginDialog,
@@ -292,7 +295,9 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-  console.log("startGameCheck: ", startGameCheck);
+  useEffect(() => {
+    dispatch(toggleStartGame(false));
+  }, [location.pathname, dispatch]);
   return (
     <Box
       className="tong"
@@ -558,7 +563,7 @@ export default function Layout(props) {
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: "relative",
-              zIndex: width < 1200 ? "1034" : "0",
+              zIndex: width < 1200 ? "10" : "0",
               width: "400px !important",
               "& .MuiGrid-item": {
                 minWidth: "400px !important",
