@@ -1,12 +1,14 @@
-import { Box, Dialog, Typography } from '@mui/material'
-import React from 'react'
 import BackIcon from "@mui/icons-material/ArrowBack"
-import useWindowDimensions from '../../../utils/useWindowDimensions'
-import { useDispatch, useSelector } from 'react-redux'
-import { closeDetailDialog, openProvideDialog, openResetPassDialog } from '../../../redux-saga-middleware_admin/reducers/adminDialogReducer'
-import { updateDetailAccount } from '../../../redux-saga-middleware_admin/reducers/adminReducer'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from "@mui/icons-material/Edit"
+import { Box, Dialog, Typography } from '@mui/material'
 import moment from 'moment'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { activeAccount } from '../../../redux-saga-middleware_admin/reducers/adminConfigReducer'
+import { closeDetailDialog, openConfirmDialog, openProvideDialog, openResetPassDialog, openUpdateAccountDialog } from '../../../redux-saga-middleware_admin/reducers/adminDialogReducer'
+import { updateDetailAccount } from '../../../redux-saga-middleware_admin/reducers/adminReducer'
+import useWindowDimensions from '../../../utils/useWindowDimensions'
 
 export default function DetailAccountDialogComponent() {
     const { width } = useWindowDimensions()
@@ -26,6 +28,14 @@ export default function DetailAccountDialogComponent() {
             active: detailAccount?.status ? 0 : 1
           }))
         }
+      }
+
+      const handleDeleteAccount = () => {
+        dispatch(openConfirmDialog("delete-account"))
+      }
+
+      const handleUpdateNickName = () => {
+        dispatch(openUpdateAccountDialog())
       }
 
     return (
@@ -328,6 +338,46 @@ export default function DetailAccountDialogComponent() {
                                 lineHeight: "normal"
                             }}>
                                 Reset Password
+                            </Typography>
+                        </Box>
+                        <Box component={"div"} onClick={handleDeleteAccount} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
+                            borderRadius: "7.618px",
+                            maxWidth: width/4,
+                            boxShadow: "1px 20px 25px 5px #E4E4E4"
+                        }}>
+                            <DeleteIcon sx={{
+                                fontSize: 46,
+                                color: '#fc3c3c'
+                            }}/>
+                            <Typography className='mt-2' sx={{
+                                color: "#11142D",
+                                textAlign: "center",
+                                fontSize: "12px",
+                                fontStyle: "normal",
+                                fontWeight: 700,
+                                lineHeight: "normal"
+                            }}>
+                                Delete Account
+                            </Typography>
+                        </Box>
+                        <Box component={"div"} onClick={handleUpdateNickName} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
+                            borderRadius: "7.618px",
+                            maxWidth: width/4,
+                            boxShadow: "1px 20px 25px 5px #E4E4E4"
+                        }}>
+                            <EditIcon sx={{
+                                fontSize: 46,
+                                color: '#ebb43d'
+                            }}/>
+                            <Typography className='mt-2' sx={{
+                                color: "#11142D",
+                                textAlign: "center",
+                                fontSize: "12px",
+                                fontStyle: "normal",
+                                fontWeight: 700,
+                                lineHeight: "normal"
+                            }}>
+                                Update Nick Name
                             </Typography>
                         </Box>
                     </Box>
