@@ -53,7 +53,7 @@ const BannerTour = (props) => {
               fontWeight: 700,
             }}
           >
-            Tournament of the week
+            Promotion of the week
           </Typography>
         </Box>
         <Box>

@@ -1,18 +1,12 @@
-import {
-  Box,
-  Skeleton,
-  Typography,
-  // createTheme
-} from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import React from "react";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 // import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
-import { imageHome } from "../../../../utils/images";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
-import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
+import { imageHome } from "../../../../utils/images";
 import "./index.scss";
 
 // const theme = createTheme({
@@ -36,12 +30,24 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
   const [days, setDay] = useState(null);
+  const [checkType, setCheckType] = useState(null);
+  let countEndDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
+  let countStartDate = new Date(moment(tourInfo?.tournamentStartAt)).getTime();
+  let timeNow = new Date().getTime();
   useEffect(() => {
-    let countdownDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
-    let timeNow = new Date().getTime();
-    setHour(CalculateDistance(countdownDate, timeNow).hours);
-    setMinute(CalculateDistance(countdownDate, timeNow).minutes);
-    setDay(CalculateDistance(countdownDate, timeNow).days);
+    if (countStartDate > timeNow) {
+      setHour(CalculateDistance(countStartDate, timeNow).hours);
+      setMinute(CalculateDistance(countStartDate, timeNow).minutes);
+      setDay(CalculateDistance(countStartDate, timeNow).days);
+      setCheckType(1);
+    } else if (countStartDate < timeNow && countEndDate > timeNow) {
+      setHour(CalculateDistance(countEndDate, timeNow).hours);
+      setMinute(CalculateDistance(countEndDate, timeNow).minutes);
+      setDay(CalculateDistance(countEndDate, timeNow).days);
+      setCheckType(2);
+    } else if (tourInfo?.tournamentStatus === 2 || countEndDate < timeNow) {
+      setCheckType(3);
+    }
   }, [tourInfo]);
 
   const styleTypography = {
@@ -52,16 +58,15 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   };
 
   const [isHovered, setIsHovered] = useState(false);
-  // Step 3: Add event listeners
+
   const handleMouseEnter = () => {
-    // Step 4: Update state
     setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    // Step 4: Update state
     setIsHovered(false);
   };
+
   const navigate = useNavigate();
   return (
     <Box
@@ -77,6 +82,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         flexDirection: "column",
         width: width < 576 ? "155px" : "184px",
         cursor: isLoading ? "auto" : "pointer",
+        fontFamily: "Cyntho Next",
       }}
     >
       <Box
@@ -118,27 +124,42 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             variant="rectangular"
           />
         ) : (
-          <Box
-            sx={{
-              maxHeight: width < 576 ? "156px" : "184px",
-              minHeight: width < 576 ? "156px" : "184px",
-              width: "100%",
-              objectFit: "cover",
-            }}
-            component={"img"}
-            src={
-              tourInfo?.tournamentAvatar
-                ? process.env.REACT_APP_SOCKET_SERVER +
-                  "/" +
-                  tourInfo?.tournamentAvatar
-                : imageHome.brandImage
-            }
-          ></Box>
+          <>
+            <Box
+              sx={{
+                maxHeight: width < 576 ? "156px" : "184px",
+                minHeight: width < 576 ? "156px" : "184px",
+                width: "100%",
+                objectFit: "cover",
+                position:"relative",
+                overflow:"hidden"
+              }}
+              component={"img"}
+              src={
+                tourInfo?.tournamentAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    tourInfo?.tournamentAvatar
+                  : imageHome.brandImage
+              }
+            ></Box>
+            <Box
+              sx={{
+                width: "100%",
+                maxHeight: width < 576 ? "156px" : "184px",
+                minHeight: width < 576 ? "156px" : "184px",
+                position: "absolute",
+                top:0,
+                backgroundColor: "rgba(0,0,0,0.6)",
+                display:checkType === 3 ? "block" : "none"
+              }}
+            />
+          </>
         )}
         <Box
           sx={{
             marginTop: "8px",
-            padding: "0px 8px",
+            padding: "0px 12px",
             display: "flex",
             justifyContent: countdown ? "space-between" : "flex-end",
             flexDirection: "column",
@@ -168,7 +189,26 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 <Skeleton variant="text" />
               </>
             ) : (
-              tourInfo?.tournamentName
+              <>
+                <Box
+                  sx={{
+                    display:
+                      tourInfo?.tournamentVip === 1 ? "inline-block" : "none",
+                    padding: "2px 6px",
+                    backgroundColor: "#FB3",
+                    marginRight: "4px",
+                    borderRadius: "8px",
+                    color: "white",
+                    fontWeight: 700,
+                    fontSize: "12px",
+                  }}
+                >
+                  VIP
+                </Box>
+                <span style={{ fontFamily: "Cyntho Next" }}>
+                  {tourInfo?.tournamentName}
+                </span>
+              </>
             )}
           </Typography>
           <Box
@@ -189,30 +229,46 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width < 576 ? "10px" : "16px",
+              marginTop: width < 576 ? "6px" : "10px",
             }}
           >
-            {isLoading ? (
-              <Skeleton variant="text" width={120} />
-            ) : (
-              countdown && (
-                <Typography
-                  sx={{
-                    ...styleTypography,
-                    fontSize: width < 576 ? "12px" : "14px",
-                    color: "#5747EA",
-                    fontWeight: "700 !important",
-                    minWidth: "100px",
-                  }}
-                >
-                  {`${days}d:${hours}h:${minutes}m`}
-                </Typography>
-              )
-            )}
+            <Box>
+              <Box
+                sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "130%" }}
+              >
+                {checkType === 1
+                  ? "Start at: "
+                  : checkType === 2
+                  ? "End at: "
+                  : "Winner: "}
+              </Box>
+              {isLoading ? (
+                <Skeleton variant="text" width={120} />
+              ) : (
+                countdown && (
+                  <Typography
+                    sx={{
+                      ...styleTypography,
+                      fontSize: width < 576 ? "12px" : "14px",
+                      color: "#5747EA",
+                      fontWeight: "700 !important",
+                      minWidth: "100px",
+                      fontFamily: "Cyntho Next",
+                    }}
+                  >
+                    {checkType !== 3
+                      ? `${days}d:${hours}h:${minutes}m`
+                      : tourInfo?.tScores &&
+                        tourInfo?.tScores[0]?.tUser &&
+                        tourInfo?.tScores[0]?.tUser?.userName}
+                  </Typography>
+                )
+              )}
+            </Box>
 
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Box
-                sx={{ width: "14px", height: "14px", marginRight: "5px" }}
+                sx={{ width: "20px", height: "20px", marginRight: "8px" }}
                 component={"img"}
                 src={imageHome.iconMember}
               ></Box>
@@ -220,6 +276,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 sx={{
                   ...styleTypography,
                   fontSize: width < 576 ? "12px" : "14px",
+                  fontFamily: "Cyntho Next",
                 }}
               >
                 {isLoading ? (
@@ -296,6 +353,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 maxHeight: "1rem",
                 whiteSpace: "nowrap",
                 maxWidth: "100px",
+                fontFamily: "Cyntho Next",
               }}
             >
               {isLoading ? (

@@ -1,23 +1,28 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import TournamentService from "../services/tournamentService";
+import { call, put, takeEvery } from "redux-saga/effects";
 import {
   createTournamentFail,
   createTournamentSuccess,
-  getBrandTournamentFail,
-  getBrandTournamentSuccess,
   getBiggestEndTourRedux,
   getBrandTourSuccess,
+  getBrandTournamentFail,
+  getBrandTournamentSuccess,
   getDailyTour,
+  getEndedTour,
   getHotTour,
+  getHottestWeekTourSuccess,
   getHourlyTour,
   getListGameForTournamentFail,
   getListGameForTournamentSuccess,
+  getOngoingTour,
   getSkinForTournamentFail,
   getSkinForTournamentSuccess,
-  getWeeklyTour,
-  getHottestWeekTourSuccess,
+  getStandardTour,
   getThreeBrandTourSuccess,
+  getUpcomingTour,
+  getVipTour,
+  getWeeklyTour,
 } from "../reducers/tournamentReducer";
+import TournamentService from "../services/tournamentService";
 // import { showAlert } from "../reducers/alertReducer";
 const tournamentService = new TournamentService();
 
@@ -49,7 +54,17 @@ function* getListTour(dataRequest) {
       yield put(getHourlyTour(res.data));
     } else if (payload === "hot") {
       yield put(getHotTour(res.data));
-    }
+    } else if (payload === "vip") {
+      yield put(getVipTour(res.data));
+    } else if (payload === "standard") {
+      yield put(getStandardTour(res.data));
+    } else if (payload === "ongoing") {
+      yield put(getOngoingTour(res.data));
+    }else if (payload === "upcoming") {
+      yield put(getUpcomingTour(res.data));
+    } else if (payload === "ended") {
+      yield put(getEndedTour(res.data));
+    } 
   } catch (error) {
     console.log(error);
   }

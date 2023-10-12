@@ -66,7 +66,7 @@ const ListEmpty = (props) => {
           letterSpacing: "0.8px",
         }}
       >
-        No {textData} tournaments available
+        No {textData} promotions available
       </Typography>{" "}
       <Typography
         className="text-center"
