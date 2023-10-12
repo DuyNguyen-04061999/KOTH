@@ -16,12 +16,13 @@ export default function WalletTypePromote(props) {
   const dispatch = useDispatch();
   const { userGold } = useSelector((state) => state.authReducer);
   // const [activeColor, setActveColor] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [typePayment, setTypePayment] = useState("stripe");
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
-  const [bgInput,setBgInput] = useState("gray")
-  
+  const [bgInput, setBgInput] = useState("gray");
+  const [textRed,setTextRed] = useState("")
+
   const handleContinue = () => {
     if (agree === false) {
       toast.warning("Please agree policy!", {
@@ -73,12 +74,19 @@ export default function WalletTypePromote(props) {
   };
 
   useEffect(() => {
-    if(amount === "") {
-      setBgInput("red")
+    if (amount === "") {
+      setBgInput("red");
     } else {
-      setBgInput("gray")
+      setBgInput("gray");
     }
-  },[amount])
+  }, [amount]);
+
+  const handleKeyPress = (event) => {
+    // Allow digits (0-9) and backspace (keyCode 8)
+    if (event.key === "+" || event.key === "-") {
+      event.preventDefault();
+    }
+};
 
   return (
     <>
@@ -301,7 +309,11 @@ export default function WalletTypePromote(props) {
                   </form>
                 </Grid>
                 <Grid item xs={7}>
-                  <form action="" className="d-flex flex-column" style={{position:"relative"}}>
+                  <form
+                    action=""
+                    className="d-flex flex-column"
+                    style={{ position: "relative" }}
+                  >
                     <Typography
                       variant="subtitle1"
                       className="text-white pb-2"
@@ -315,25 +327,31 @@ export default function WalletTypePromote(props) {
                     </Typography>
                     <input
                       type="number"
-                      placeholder="Enter amount"
                       className="walletPromote"
-                      // value={amount}
+                      min="0"
+                      onKeyPress={handleKeyPress}
+                      value={amount}
                       onChange={(e) => setAmount(e?.target?.value)}
                       style={{
                         borderRadius: "7px",
                         border: `1px solid ${bgInput}`,
                         height: "40px",
                         fontSize: "15px",
-                        background: "transparent",
+                        background: "#181223",
                         paddingLeft: "10px",
                         color: "white",
                       }}
                     />
-                    <Box sx={{
-                      position:"absolute",
-                      top:37,
-                      right:8
-                    }}>
+                    {amount === 0 || amount === "" ? (
+                      <span className="text-danger">Please enter the amount.</span>
+                    ) : ("")}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 37,
+                        right: 8,
+                      }}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="10"
@@ -375,11 +393,11 @@ export default function WalletTypePromote(props) {
                   }}
                 >
                   {userGold &&
-                    userGold > 0 &&
-                    formatMoney(
-                      Number.parseFloat(userGold + Number.parseFloat(amount))
-                    )}{" "}
-                  USD
+                    userGold > 0 ?  formatMoney(
+                      Number.parseFloat(amount === "" ? 0 : amount)
+                    ) : 0
+                  } 
+                   USD
                 </Typography>
               </Box>
               <Box
@@ -404,12 +422,7 @@ export default function WalletTypePromote(props) {
                     fontWeight: "lighter !important",
                   }}
                 >
-                  {userGold &&
-                    userGold > 0 &&
-                    formatMoney(
-                      Number.parseFloat(userGold + Number.parseFloat(amount))
-                    )}{" "}
-                  USD
+                  $ 1-1000
                 </Typography>
               </Box>
               <Box className="text-white d-flex justify-content-between">
@@ -425,11 +438,11 @@ export default function WalletTypePromote(props) {
                   variant="body2"
                   sx={{ fontWeight: "lighter !important" }}
                 >
-                  {userGold &&
-                    userGold > 0 &&
+                  {
+                    userGold > 0 ?
                     formatMoney(
-                      Number.parseFloat(userGold + Number.parseFloat(amount))
-                    )}{" "}
+                      Number.parseFloat(userGold + Number.parseFloat(amount === "" ? 0 : amount))
+                    ) : 0}{" "}
                   USD
                 </Typography>
               </Box>
@@ -516,8 +529,8 @@ export default function WalletTypePromote(props) {
                     fontWeight: "lighter !important",
                     fontSize: "14px",
                     marginLeft: "0px !important",
+                    color:agree === false ? "red" : "white"
                   }}
-                  className="text-white"
                 >
                   I agree with Interchain{" "}
                   <span
@@ -534,18 +547,15 @@ export default function WalletTypePromote(props) {
               </Box>
             </Box>
             <Box>
-             {amount === "" || agree === false ? (
-              <AnimButton 
-                type={"dislable"}
-                text={"CONTINUE"}
-              />
-             ) : (
-               <AnimButton
-               text={"CONTINUE"}
-               onClick={handleContinue}
-               type={"primary"}
-             />
-             )}
+              {amount === "" || agree === false ? (
+                <AnimButton type={"dislable"} text={"CONTINUE"} />
+              ) : (
+                <AnimButton
+                  text={"CONTINUE"}
+                  onClick={handleContinue}
+                  type={"primary"}
+                />
+              )}
             </Box>
           </Box>
         ) : (

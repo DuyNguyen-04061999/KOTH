@@ -336,7 +336,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     ""
                   ) : (
                     <Typography sx={{ marginLeft: "0px !important" }}>
-                      : {detailTournament?.playedTurn}/{detailTournament?.maxPlay}
+                      : {detailTournament?.boughtToday}/{detailTournament?.maxPlay}
                     </Typography>
                   )}
                 </Box>
