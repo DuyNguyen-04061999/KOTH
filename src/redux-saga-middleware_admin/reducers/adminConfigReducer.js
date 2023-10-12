@@ -84,6 +84,48 @@ export const activeAccountFail = (data) => {
   }
 }
 
+export const deleteAccount = (data) => {
+  return {
+    type: "DELETE_ACCOUNT",
+    payload: data
+  }
+}
+
+export const deleteAccountSuccess = (data) => {
+  return {
+    type: "DELETE_ACCOUNT_SUCCESS",
+    payload: data
+  }
+}
+
+export const deleteAccountFail = (data) => {
+  return {
+    type: "DELETE_ACCOUNT_FAIL",
+    payload: data
+  }
+}
+
+export const updateAccount = (data) => {
+  return {
+    type: "UPDATE_ACCOUNT",
+    payload: data
+  }
+}
+
+export const updateAccountSuccess = (data) => {
+  return {
+    type: "UPDATE_ACCOUNT_SUCCESS",
+    payload: data
+  }
+}
+
+export const updateAccountFail = (data) => {
+  return {
+    type: "UPDATE_ACCOUNT_FAIL",
+    payload: data
+  }
+}
+
 const adminConfigReducer = (
   state = {
     isFetchConfig: false,
@@ -92,7 +134,9 @@ const adminConfigReducer = (
     listTicket: [],
     isFetchTicket: false,
     isProvideTicket: false,
-    isActiveAccount: false
+    isActiveAccount: false,
+    isDeleteAccount: false,
+    isUpdateAccount: false
   },
   action
 ) => {
@@ -114,6 +158,12 @@ const adminConfigReducer = (
       case "ACTIVE_ACCOUNT": return {...state, isActiveAccount: true}
       case "ACTIVE_ACCOUNT_SUCCESS": return {...state, isActiveAccount: false}
       case "ACTIVE_ACCOUNT_FAIL": return {...state, isActiveAccount: false}
+      case "DELETE_ACCOUNT": return {...state, isDeleteAccount: true}
+      case "DELETE_ACCOUNT_SUCCESS": return {...state, isDeleteAccount: false}
+      case "DELETE_ACCOUNT_FAIL": return {...state, isDeleteAccount: false}
+      case "UPDATE_ACCOUNT": return {...state, isUpdateAccount: true }
+      case "UPDATE_ACCOUNT_SUCCESS": return {...state, isUpdateAccount: false }
+      case "UPDATE_ACCOUNT_FAIL": return {...state, isUpdateAccount: false }
       default:
         return { ...state };
   }

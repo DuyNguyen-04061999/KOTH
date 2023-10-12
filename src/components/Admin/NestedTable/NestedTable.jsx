@@ -52,7 +52,6 @@ const NestedTable = (props) => {
   const { detailAccount } = useSelector((state) => state.adminReducer_);
   const dispatch = useDispatch();
 
-
   return (
     <Box sx={{}}>
       <TableContainer

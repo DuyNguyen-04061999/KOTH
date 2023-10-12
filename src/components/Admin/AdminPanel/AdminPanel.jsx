@@ -1,23 +1,30 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Collapse, Grid, Typography } from "@mui/material";
+import moment from "moment";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import moment from "moment";
-import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
-import DetailAccountDialogComponent from "../Dialog/DetailAccountDialogComponent";
+import { useLocation } from "react-router";
+import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import {
+  openConfirmDialog,
   openCreateDialog,
   openDetailDialog,
   openProvideDialog,
   openResetPassDialog,
+  openUpdateAccountDialog,
 } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
-import SearchBar from "../SearchBar/SearchBar";
+import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 import { checkRouteIsManage } from "../../../utils/Admin/helper";
-import { useLocation } from "react-router";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import DetailAccountDialogComponent from "../Dialog/DetailAccountDialogComponent";
+import SearchBar from "../SearchBar/SearchBar";
 
 const AdminPanel = () => {
-  const { roles } = useSelector((state) => state.adminAuthReducer);
+  const { roles, ref } = useSelector((state) => state.adminAuthReducer);
   const { detailAccount } = useSelector((state) => state.adminReducer_);
   const { listDistributor } = useSelector((state) => state.adminMasterReducer);
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
@@ -36,6 +43,11 @@ const AdminPanel = () => {
     e.preventDefault();
     if (searchValue) {
       if (roles && roles?.length > 0 && roles?.includes("master")) {
+        dispatch(
+          getListDistributor({
+            account: searchValue,
+          })
+        );
         const listFilter = listDistributor?.filter(
           (item) =>
             item?.account === String(searchValue)?.toLowerCase() ||
@@ -52,6 +64,11 @@ const AdminPanel = () => {
       }
 
       if (roles && roles?.length > 0 && roles?.includes("distributor")) {
+        dispatch(
+          getListSub({
+            account: searchValue,
+          })
+        );
         const listFilter = listSub?.filter(
           (item) =>
             item?.account === String(searchValue)?.toLowerCase() ||
@@ -84,6 +101,11 @@ const AdminPanel = () => {
       }
 
       if (roles && roles?.length > 0 && roles?.includes("agent")) {
+        dispatch(
+          getListEndUser({
+            account: searchValue,
+          })
+        );
         const listFilter = listEndUser?.filter(
           (item) =>
             item?.account === String(searchValue)?.toLowerCase() ||
@@ -154,36 +176,49 @@ const AdminPanel = () => {
     }
   };
 
+  const handleDeleteAccount = () => {
+    dispatch(openConfirmDialog("delete-account"))
+  }
+
+  const handleUpdateNickName = () => {
+    dispatch(openUpdateAccountDialog())
+  }
+
   return (
     <Box sx={{ marginTop: "56px" }}>
       <DetailAccountDialogComponent />
-      <Typography
-        sx={{
-          textAlign: "start",
-          fontWeight: { xs: 700, sm: 600 },
-          fontSize: { xs: "20px", sm: "24px" },
-        }}
-      >
-        {width < 576
-          ? `${
-              roles?.includes("agent")
-                ? "Play Management"
-                : roles?.includes("master")
-                ? "Create Distributor"
-                : roles?.includes("distributor")
-                ? "Create Agent" : ""
-            }`
-          : `Welcome
-            ${
-              roles?.includes("master")
-                ? "Master"
-                : roles?.includes("distributor")
-                ? "Distributor"
-                : roles?.includes("sub_distributor")
-                ? "Sub Distributor"
-                : "Agent"
-            } Account`}
-      </Typography>
+      <Box component={"div"} className="d-flex justify-content-between">
+        <Typography
+          sx={{
+            textAlign: "start",
+            fontWeight: { xs: 700, sm: 600 },
+            fontSize: { xs: "20px", sm: "24px" },
+          }}
+        >
+          {width < 576
+            ? `${
+                roles?.includes("agent")
+                  ? "Play Management"
+                  : roles?.includes("master")
+                  ? "Create Distributor"
+                  : roles?.includes("distributor")
+                  ? "Create Agent" : ""
+              }`
+            : `Welcome
+              ${
+                roles?.includes("master")
+                  ? "Master"
+                  : roles?.includes("distributor")
+                  ? "Distributor"
+                  : roles?.includes("sub_distributor")
+                  ? "Sub Distributor"
+                  : "Agent"
+              } Account`}
+        </Typography>
+        <Typography>
+          {ref}
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: "flex",
@@ -330,7 +365,7 @@ const AdminPanel = () => {
                   textAlign: "center",
                 }}
               >
-                Balance
+                Revenue
               </Typography>
               <Typography
                 sx={{
@@ -339,7 +374,7 @@ const AdminPanel = () => {
                   textAlign: "center",
                 }}
               >
-                _
+                {detailAccount?.revenue || 0}
               </Typography>
             </Grid>
             <Grid
@@ -425,7 +460,7 @@ const AdminPanel = () => {
                 }}
               >
                 {detailAccount?.date
-                  ? moment(detailAccount?.date).format("ll")
+                  ? moment(detailAccount?.date).format("MM/DD/YYYY HH:mm")
                   : ""}
               </Typography>
             </Grid>
@@ -528,6 +563,40 @@ const AdminPanel = () => {
             >
               <ResetPasswordSVG></ResetPasswordSVG>
               Reset Password
+            </Button>
+            <Button
+              onClick={handleDeleteAccount}
+              sx={{
+                backgroundColor: "#fc3c3c",
+                fontWeight: 700,
+                fontSize: "14px",
+                textTransform: "unset",
+                color: "white",
+                padding: "8px 30px",
+                borderRadius: "16px",
+                ":hover": { backgroundColor: "#fc3c3c" },
+              }}
+              className="ms-4"
+            >
+              <DeleteIcon sx={{ fontSize: 16 }} className='me-2'/>
+              Delete Account
+            </Button>
+            <Button
+              onClick={handleUpdateNickName}
+              sx={{
+                backgroundColor: "#ebb43d",
+                fontWeight: 700,
+                fontSize: "14px",
+                textTransform: "unset",
+                color: "white",
+                padding: "8px 30px",
+                borderRadius: "16px",
+                ":hover": { backgroundColor: "#ebb43d" },
+              }}
+              className="ms-4"
+            >
+              <EditIcon sx={{ fontSize: 16 }} className='me-2'/>
+              Update Nick Name
             </Button>
           </Box>
         )}

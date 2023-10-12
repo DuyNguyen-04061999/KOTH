@@ -48,7 +48,7 @@ export default function Navbar() {
   }, [isNavTablet, isNav]);
 
   return (
-    <Box className={`nav-section ${tablet}`}>
+    <Box className={`nav-section1 ${tablet}`}>
       <Box
         sx={{
           backgroundColor: "#2e233d",

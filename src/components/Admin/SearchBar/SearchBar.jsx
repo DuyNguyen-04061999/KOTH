@@ -1,12 +1,12 @@
-import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, FormControl, IconButton, TextField } from "@mui/material";
+import React from "react";
 
 const SearchBar = ({
   searchValue,
   onChange,
   onSubmit,
-  placeholder = "Account",
+  placeholder = "Account, ID, Nick Name",
   type = "text",
   width = "365px",
 }) => {

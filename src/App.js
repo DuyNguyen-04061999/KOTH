@@ -650,7 +650,6 @@ function App() {
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
     },
   });
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>

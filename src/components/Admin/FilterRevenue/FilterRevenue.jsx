@@ -14,7 +14,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import SearchBar from "../SearchBar/SearchBar";
 
 const FilterRevenue = () => {
-  const { roles } = useSelector((state) => state.adminAuthReducer);
+  const { roles, ref } = useSelector((state) => state.adminAuthReducer);
   const { listDistributor } = useSelector((state) => state.adminMasterReducer);
   const { listSub } = useSelector((state) => state.adminDistributorReducer);
   const { listRefs } = useSelector((state) => state.adminSubDistributorReducer);
@@ -334,26 +334,31 @@ const FilterRevenue = () => {
   
   return (
     <Box sx={{ marginTop: "56px" }}>
-      <Typography
-        sx={{
-          textAlign: "start",
-          fontWeight: { xs: 700, sm: 600 },
-          fontSize: { xs: "20px", sm: "24px" },
-        }}
-      >
-        {width < 576
-          ? `Revenue By Date Range`
-          : `Welcome
-            ${
-              roles?.includes("master")
-                ? "Master"
-                : roles?.includes("distributor")
-                ? "Distributor"
-                : roles?.includes("sub_distributor")
-                ? "Sub Distributor"
-                : "Agent"
-            } Account`}
-      </Typography>
+      <Box component={"div"} className="d-flex justify-content-between">
+        <Typography
+          sx={{
+            textAlign: "start",
+            fontWeight: { xs: 700, sm: 600 },
+            fontSize: { xs: "20px", sm: "24px" },
+          }}
+        >
+          {width < 576
+            ? `Revenue By Date Range`
+            : `Welcome
+              ${
+                roles?.includes("master")
+                  ? "Master"
+                  : roles?.includes("distributor")
+                  ? "Distributor"
+                  : roles?.includes("sub_distributor")
+                  ? "Sub Distributor"
+                  : "Agent"
+              } Account`}
+        </Typography>
+        <Typography>
+          {ref}
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: "flex",

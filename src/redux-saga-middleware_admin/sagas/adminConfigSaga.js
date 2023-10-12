@@ -1,7 +1,7 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
-import { activeAccountFail, activeAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess } from "../reducers/adminConfigReducer";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { activeAccountFail, activeAccountSuccess, deleteAccountFail, deleteAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess, updateAccountFail, updateAccountSuccess } from "../reducers/adminConfigReducer";
 import { closeProvideDialog } from "../reducers/adminDialogReducer";
+import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
 const adminConfigService = new ADMIN_CONFIG_SERVICE();
 
 function* getConfigSaga(dataRequest) {
@@ -71,11 +71,45 @@ function* activeAccountSaga(dataRequest) {
     }
 }
 
+function* deleteAccountSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminConfigService.deleteAccount, payload)
+        if(res && res.status === 200) {
+            yield put(deleteAccountSuccess())
+           window.location.reload()
+        } else {
+            yield put(deleteAccountFail())
+        }
+        
+    } catch (error) {
+        yield put(deleteAccountFail())
+    }
+}
+
+function* updateAccountSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminConfigService.updateAccount, payload)
+        if(res && res.status === 200) {
+            yield put(updateAccountSuccess())
+           window.location.reload()
+        } else {
+            yield put(updateAccountFail())
+        }
+        
+    } catch (error) {
+        yield put(updateAccountFail())
+    }
+}
+
 function* adminAuthSaga() {
     yield takeEvery("GET_CONFIG", getConfigSaga)
     yield takeEvery("GET_LIST_TICKET", getTicketSaga)
     yield takeEvery("PROVIDE_TICKET", provideTicketSaga)
     yield takeEvery("ACTIVE_ACCOUNT", activeAccountSaga)
+    yield takeEvery("DELETE_ACCOUNT", deleteAccountSaga)
+    yield takeEvery("UPDATE_ACCOUNT", updateAccountSaga)
 }
 
 export default adminAuthSaga
