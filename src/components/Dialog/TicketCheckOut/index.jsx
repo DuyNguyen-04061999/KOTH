@@ -57,6 +57,7 @@ export default function TicketCheckOut() {
       socket.emit("buyPackage", {
         packageId: idPackage,
       });
+      dispatch(toggleCheckWallet())
     }
   };
 
@@ -70,12 +71,15 @@ export default function TicketCheckOut() {
         tournamentId: idTour,
         packageId: ticketBuy?.id,
       });
+      dispatch(toggleCheckWallet());
     } else {
       socket?.emit("buyPackage", {
         quantity: sl,
         tournamentId: idTour,
         packageId: ticketBuy?.id,
       });
+      dispatch(toggleCheckWallet());
+
     }
   };
 
