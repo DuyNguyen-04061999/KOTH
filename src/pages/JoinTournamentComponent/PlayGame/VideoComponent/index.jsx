@@ -99,7 +99,7 @@ export default function VideoComponent(props) {
               display: "flex",
               alignItems: "center",
               padding: "10px",
-              backgroundColor: "#000",
+              backgroundColor: second > 0 ? "rgba(0,0,0,30%)" : "#000",
               border: "2px solid #ffff",
               cursor: "pointer",
               zIndex: "1000000000000",
