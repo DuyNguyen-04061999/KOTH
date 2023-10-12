@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
 import { Box } from "@mui/material";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getConfigs } from "../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import { Outlet } from "react-router-dom";
+import { getConfigs } from "../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 // import AdminNavigation from "../../components/Admin/Navigation/AdminNavigation";
-import DrawerNavigation from "../../components/Admin/Navigation/DrawerNavigation";
+import { ConfirmDialogComponent, GivePermissionDialogComponent, ResetPasswordDialogComponent, UpdateAccountDialogComponent } from "../../components/Admin/Dialog";
 import CreateAccountDialogComponent from "../../components/Admin/Dialog/CreateAccountDialogComponent";
 import ProvideTicketDialogComponent from "../../components/Admin/Dialog/ProvideTicketDialogComponent";
-import { GivePermissionDialogComponent, ResetPasswordDialogComponent } from "../../components/Admin/Dialog";
+import DrawerNavigation from "../../components/Admin/Navigation/DrawerNavigation";
+import useWindowDimensionsAdmin from "../../utils/useWindowDimensionsAdmin";
 
 // const MainContentRoot = styled("div")(({ theme }) => ({
 //   [theme.breakpoints.up("md")]: {
@@ -23,6 +24,8 @@ export default function MainLayout() {
     dispatch(getConfigs());
   }, [dispatch]);
 
+  const { width } = useWindowDimensionsAdmin()
+
   return (
     <Box
       sx={{
@@ -36,6 +39,8 @@ export default function MainLayout() {
       <ProvideTicketDialogComponent />
       <ResetPasswordDialogComponent/>
       <GivePermissionDialogComponent/>
+      <UpdateAccountDialogComponent/>
+      <ConfirmDialogComponent/>
       <Box sx={{height: "100vh"}}>
         {" "}
         <Box

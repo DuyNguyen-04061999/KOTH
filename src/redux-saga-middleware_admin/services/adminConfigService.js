@@ -47,4 +47,29 @@ export class ADMIN_CONFIG_SERVICE {
         })
         return res
     }
+
+    async deleteAccount (dataRequest) {
+        const res = ADMIN_API.post(`/api/admin/configs/delete-account`, {
+            token: localStorage.getItem("token_admin"),
+            ...dataRequest
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        return res
+    }
+
+    
+    async updateAccount (dataRequest) {
+        const res = ADMIN_API.post(`/api/admin/configs/update-account`, {
+            token: localStorage.getItem("token_admin"),
+            ...dataRequest
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        return res
+    }
 }
