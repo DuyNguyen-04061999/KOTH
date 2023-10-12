@@ -437,7 +437,7 @@ export default function JoinTournament() {
                               color: "white",
                             }}
                           >
-                            : {detailTournament?.playedTurn}/
+                            : {detailTournament?.boughtToday}/
                             {detailTournament?.maxPlay}
                           </Typography>
                         )}
