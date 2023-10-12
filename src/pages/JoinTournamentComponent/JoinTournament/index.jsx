@@ -71,7 +71,6 @@ export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
   const [detailTournament, setDetailTournament] = useState({});
-  console.log(detailTournament);
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
   const [videoGame, setVideoGame] = useState(false || true);

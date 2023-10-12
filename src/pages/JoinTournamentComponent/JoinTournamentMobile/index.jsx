@@ -56,7 +56,6 @@ const theme = createTheme({
 });
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
-  console.log(detailTournament);
   const [fetchT, setFetchT] = useState(true);
   const [socket, setSocket] = useState(null);
   const [currentResult, setCurrentResult] = useState(false);
