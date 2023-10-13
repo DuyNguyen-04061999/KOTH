@@ -51,13 +51,13 @@ export default function HotTournament() {
         type: "CALL_LIST_TOURNAMENT",
         payload: "ended",
       });
-      setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
 
   useEffect(() => {
     if (endedTournament) {
       setData(endedTournament);
+      setIsFetchList(false);
     }
   }, [endedTournament]);
 
@@ -128,10 +128,9 @@ export default function HotTournament() {
               >
                 <Box
                   sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent:
-                      width < 576 && width < 1200 ? "space-between" : "none",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(5,1fr)",
+                    gridRowGap: "50px",
                   }}
                 >
                   {isFetchList ? (
@@ -145,7 +144,6 @@ export default function HotTournament() {
                             sx={{
                               width:
                                 width < 576 && width < 1200 ? "auto" : "20%",
-                              marginTop: "50px",
                               marginRight:
                                 width > 576 && width < 1200 ? "100px" : "none",
                             }}
@@ -237,7 +235,7 @@ export default function HotTournament() {
                             sx={{
                               width:
                                 width < 576 && width < 1200 ? "auto" : "20%",
-                              marginTop: "50px",
+                              marginTop: "42px",
                               marginRight:
                                 width > 576 && width < 1200 ? "100px" : "none",
                             }}

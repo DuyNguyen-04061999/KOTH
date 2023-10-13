@@ -131,8 +131,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 minHeight: width < 576 ? "156px" : "184px",
                 width: "100%",
                 objectFit: "cover",
-                position:"relative",
-                overflow:"hidden"
+                position: "relative",
+                overflow: "hidden",
               }}
               component={"img"}
               src={
@@ -149,9 +149,9 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 maxHeight: width < 576 ? "156px" : "184px",
                 minHeight: width < 576 ? "156px" : "184px",
                 position: "absolute",
-                top:0,
+                top: 0,
                 backgroundColor: "rgba(0,0,0,0.6)",
-                display:checkType === 3 ? "block" : "none"
+                display: checkType === 3 ? "block" : "none",
               }}
             />
           </>
@@ -229,17 +229,21 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width < 576 ? "2px" : "10px",
+              marginTop: width < 576 ? "2px" : "4px",
             }}
           >
             <Box>
               <Box
-                sx={{ fontSize: width > 576 ? "14px" : "10px", fontWeight: 500, lineHeight: "130%" }}
+                sx={{
+                  fontSize: width > 576 ? "14px" : "10px",
+                  fontWeight: 500,
+                  lineHeight: "130%",
+                }}
               >
                 {checkType === 1
                   ? "Start at: "
                   : checkType === 2
-                  ? "End at: "
+                  ? "End in: "
                   : "Winner: "}
               </Box>
               {isLoading ? (
@@ -249,7 +253,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                   <Typography
                     sx={{
                       ...styleTypography,
-                      fontSize: width < 576 ? "12px" : "14px",
+                      fontSize: width < 576 ? "12px" : "16px",
                       color: "#5747EA",
                       fontWeight: "700",
                       minWidth: "100px",
@@ -266,9 +270,19 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               )}
             </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-end",
+                marginBottom: "2px",
+              }}
+            >
               <Box
-                sx={{ width: "20px", height: "20px", marginRight: "8px" }}
+                sx={{
+                  width: width > 576 ? "20px" : "16px",
+                  height: width > 576 ? "20px" : "16px",
+                  marginRight: width > 576 ? "8px" : "4px",
+                }}
                 component={"img"}
                 src={imageHome.iconMember}
               ></Box>

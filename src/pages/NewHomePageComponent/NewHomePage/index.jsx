@@ -127,13 +127,24 @@ export default function NewHomePage() {
       dispatch({
         type: "GET_THREE_BRAND_TOUR",
       });
-      setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
 
   useEffect(() => {
     setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
+
+  useEffect(() => {
+    if (
+      hotTournament?.length > 0 &&
+      ongoingTournament?.length > 0 &&
+      upcomingTournament?.length > 0 &&
+      endedTournament?.length > 0
+    ) {
+      setIsFetchList(false);
+    }
+  }, [hotTournament, ongoingTournament, upcomingTournament, endedTournament]);
+
   const navigate = useNavigate();
 
   return (
@@ -220,7 +231,7 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "24px",
+                    fontSize: width < 576 ? "16px" : "24px",
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
@@ -768,7 +779,7 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "24px",
+                    fontSize: width < 576 ? "16px" : "24px",
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
@@ -1202,7 +1213,7 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "24px",
+                    fontSize: width < 576 ? "16px" : "24px",
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
@@ -1511,7 +1522,7 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "24px",
+                    fontSize: width < 576 ? "16px" : "24px",
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
