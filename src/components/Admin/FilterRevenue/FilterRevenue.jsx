@@ -1,9 +1,11 @@
 import { ExpandMoreOutlined } from "@mui/icons-material";
+import CopyIcon from "@mui/icons-material/CopyAll";
 import {
   Box,
   Button,
   Typography
 } from "@mui/material";
+import copy from "copy-to-clipboard";
 import React, { useEffect, useRef, useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
@@ -331,7 +333,11 @@ const FilterRevenue = () => {
   //   }
   // };
   
-  
+  const handleCopyRef = () => {
+    copy(ref)
+    alert("Copy ref code successfully!")
+  }
+
   return (
     <Box sx={{ marginTop: "56px" }}>
       <Box component={"div"} className="d-flex justify-content-between">
@@ -355,9 +361,12 @@ const FilterRevenue = () => {
                   : "Agent"
               } Account`}
         </Typography>
-        <Typography>
-          {ref}
-        </Typography>
+        {roles?.includes("agent") ? (
+            <Typography>
+              <CopyIcon className="ms-2 me-2" onClick={handleCopyRef}/>
+              {ref}
+            </Typography>
+          ) : ""}
       </Box>
       <Box
         sx={{
