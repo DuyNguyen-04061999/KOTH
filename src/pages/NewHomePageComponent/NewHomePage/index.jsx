@@ -42,36 +42,36 @@ const theme = createTheme({
   },
 });
 export default function NewHomePage() {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   // const [promotion, setPromotion] = useState(true);
   // const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
   const [isFetchList, setIsFetchList] = useState(true);
-  const [type, setType] = useState("");
+  // const [type, setType] = useState("");
   // const [hourList, setHourList] = useState([]);
   // const [selectedHour, setSeHour] = useState(0);
-  const [dayList, setDayList] = useState([
-    "Mon",
-    "Tus",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-    "Sun",
-  ]);
-  const [selectedDay, setSeDay] = useState(0);
+  // const [dayList, setDayList] = useState([
+  //   "Mon",
+  //   "Tus",
+  //   "Wed",
+  //   "Thu",
+  //   "Fri",
+  //   "Sat",
+  //   "Sun",
+  // ]);
+  // const [selectedDay, setSeDay] = useState(0);
 
   const {
     dailyTournament,
-    weeklyTournament,
+    // weeklyTournament,
     hourlyTournament,
     hotTournament,
     biggestEndTour,
     // brandTour,
     hotWeekTour,
     threeBrandTour,
-    vipTournament,
-    standardTournament,
+    // vipTournament,
+    // standardTournament,
     ongoingTournament,
     upcomingTournament,
     endedTournament,
@@ -131,7 +131,7 @@ export default function NewHomePage() {
   }, [dispatch, isFetchList]);
 
   useEffect(() => {
-    setDayList(dailyTournament?.map((item) => item?.timeStart));
+    // setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
 
   useEffect(() => {

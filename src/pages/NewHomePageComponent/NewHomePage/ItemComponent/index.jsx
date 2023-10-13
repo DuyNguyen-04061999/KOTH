@@ -48,7 +48,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     } else if (tourInfo?.tournamentStatus === 2 || countEndDate < timeNow) {
       setCheckType(3);
     }
-  }, [tourInfo]);
+  }, [tourInfo, countEndDate, countStartDate, timeNow]);
 
   const styleTypography = {
     textAlign: "start",
@@ -400,7 +400,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 ? "See More"
                 : tourInfo?.tournamentStatus === 1
                 ? "Play Now"
-                : ""}
+                : "See More"}
             </button>
           </Box>
         </Box>

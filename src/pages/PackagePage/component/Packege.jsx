@@ -134,7 +134,7 @@ export default function Package() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "20px",
+                    fontSize: width < 576 ? "14px" : "24px",
                     fontWeight: "200 !important",
                     marginLeft: "0px !important",
                     color: "#fff",

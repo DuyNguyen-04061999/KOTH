@@ -29,7 +29,7 @@ export default function ChatWorldList() {
   const [isFetching, setIsFetching] = useState(true);
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
     useState(true);
-  const { chatWorld, friendList, chatPopup } = useSelector(
+  const { chatWorld, friendList } = useSelector(
     (state) => state.chatReducer
   );
   const endOfMessageRef = useRef(null);
