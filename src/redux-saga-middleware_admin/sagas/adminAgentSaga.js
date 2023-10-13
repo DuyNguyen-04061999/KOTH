@@ -1,7 +1,8 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import { ADMIN_AGENT_SERVICE } from "../services/adminAgentService";
-import { createAgentFail, createAgentSuccess, createEndUserSuccess, deleteAgentFail, deleteAgentSuccess,getListEndUserSuccess, getListEndUserFail,updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { createAgentFail, createAgentSuccess, createEndUserSuccess, deleteAgentFail, deleteAgentSuccess, getListEndUserFail, getListEndUserSuccess, updateAgentFail, updateAgentSuccess } from "../reducers/adminAgentReducer";
+import { showToastNotify } from "../reducers/adminAlertReducer";
 import { closeCreateDialog } from "../reducers/adminDialogReducer";
+import { ADMIN_AGENT_SERVICE } from "../services/adminAgentService";
 
 const adminAgentService = new ADMIN_AGENT_SERVICE();
 
@@ -11,15 +12,16 @@ function* createAgent(dataRequest) {
         const res = yield call(adminAgentService.createAgent, payload)
         if(res && res.status === 200) {
            yield put(createAgentSuccess())
-           alert("Create Agent Success!");
-           window.location.reload();
+            yield put(showToastNotify({ type: "success", message: "Create Agent Successfully!" }))
            yield put(closeCreateDialog());
         } else {
            yield put(createAgentFail())
+           yield put(showToastNotify({ type: "error", message: "Create Agent failed!" }))
         }
         
     } catch (error) {
         yield put(createAgentFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Create Agent failed!" }))
     }
 }
 
@@ -47,13 +49,15 @@ function* updateAgent(dataRequest) {
         const res = yield call(adminAgentService.updateAgent, payload)
         if(res && res.status === 200) {
            yield put(updateAgentSuccess())
-           alert("Update Agent Success!")
+           yield put(showToastNotify({ type: "success", message: "Update Agent Successfully" }))
         } else {
            yield put(updateAgentFail())
+           yield put(showToastNotify({ type: "error", message: "Update Agent failed" }))
         }
         
     } catch (error) {
         yield put(updateAgentFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Update Agent failed" }))
     }
 }
 
@@ -63,13 +67,15 @@ function* deleteAgent(dataRequest) {
         const res = yield call(adminAgentService.deleteAgent, payload)
         if(res && res.status === 200) {
            yield put(deleteAgentSuccess())
-           alert("Delete Agent Success!")
+           yield put(showToastNotify({ type: "success", message: "Delete Agent Successfully" }))
         } else {
            yield put(deleteAgentFail())
+           yield put(showToastNotify({ type: "error", message: "Delete Agent failed" }))
         }
         
     } catch (error) {
         yield put(deleteAgentFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Delete Agent failed" }))
     }
 }
 
@@ -80,15 +86,17 @@ function* createEndUser(dataRequest) {
         const res = yield call(adminAgentService.createEndUser, payload)
         if(res && res.status === 200) {
            yield put(createEndUserSuccess())
-           alert("Create End User Success!")
-           window.location.reload();
+           yield put(showToastNotify({ type: "success", message: "Create End User Successfully" }))
+           yield put(getListEndUser())
            yield put(closeCreateDialog());
         } else {
            yield put(createAgentFail())
+           yield put(showToastNotify({ type: "error", message: "Create End User Failed" }))
         }
         
     } catch (error) {
         yield put(createAgentFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Create End User Failed" }))
     }
 }
 

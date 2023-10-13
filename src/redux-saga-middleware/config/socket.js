@@ -1,7 +1,11 @@
 import io from "socket.io-client";
 
 let _socket = null
-if (window.location.pathname !== "/change-log") {
+if (window.location.pathname !== "/change-log" && (
+  window?.location?.host?.split('.')[0] 
+            && window?.location?.host?.split('.')?.length > 0 
+            && window?.location?.host?.split('.')[0] !== "admin"
+)) {
    _socket = io(process.env.REACT_APP_END_POINT, {
     reconnection: true,
     reconnectionDelay: 1000,

@@ -62,6 +62,7 @@ const NestedTable = (props) => {
           "& .MuiTableCell-root": {
             borderWidth: "none",
           },
+          overflowX: "auto"
         }}
         style={{ boxShadow: "unset" }}
         component={Paper}

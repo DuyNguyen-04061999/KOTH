@@ -4,17 +4,19 @@ import {
   Container,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef } from "react";
-import { styled } from "@mui/material/styles";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import { styled } from "@mui/material/styles";
+import React, { useEffect, useRef } from "react";
 // import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { useState } from "react";
 import { ExpandMoreOutlined } from "@mui/icons-material";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { changePassword } from "../../../redux-saga-middleware_admin/reducers/adminAuthReducer";
+import { updateAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -106,6 +108,23 @@ const Setting = () => {
   //   e.preventDefault();
   // };
 
+  const { roles, ref } = useSelector((state) => state.adminAuthReducer);
+  const [newRefcode, setNewRefcode] = useState("")
+
+  const handleChangeRefcode = (e) => {
+    e.preventDefault();
+    if(!newRefcode) {
+      dispatch(showToastNotify({ type: "warning", message: "Enter new refcode!" }))
+      return
+    }  else if (/\s/.test(newRefcode)) {
+      dispatch(showToastNotify({ type: "warning", message: "Refcode invalid!" }))
+      return
+    } else {
+      dispatch(updateAccount({ newRefcode }))
+      setNewRefcode("")
+    }
+  }
+  
   return (
     <Container>
       <Box>
@@ -431,6 +450,158 @@ const Setting = () => {
             </Box>
           </Box>
         </Box>
+
+        {roles && roles?.includes("agent") && (
+          <Box
+            sx={{
+              marginTop: width < 576 ? "20px" : "60px",
+              borderRadius: "16px",
+              overflow: "hidden",
+              border: `2px solid #E4E4E4`,
+            }}
+            className="mb-2"
+          >
+            <Box
+              sx={{
+                fontSize: "18px",
+                fontWeight: 500,
+                lineHeight: "24px",
+                padding: width < 576 ? "13px 37px" : "23px 37px",
+                backgroundColor: "#F7F7F7",
+              }}
+            >
+              Change Refcode
+            </Box>
+            <Box
+              component={"form"}
+              sx={{ padding: "28px", borderTop: "2px solid #E4E4E4" }}
+            >
+              <Box
+                sx={{
+                  display: width < 1024 ? "flex" : "grid",
+                  flexDirection: "column",
+                  gridTemplateColumns: "repeat(3,1fr)",
+                  gridRowGap: width < 576 ? "12px"  : "36px",
+                  gridColumnGap: "48px",
+                }}
+              >
+                <Box
+                  sx={{
+                    border: "2px solid #355DFF",
+                    borderRadius: "12px",
+                    backgroundColor: "#fff",
+                    padding: width < 576 ? "0px 18px" : "14px 18px",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      color: "#808191",
+                      fontFeatureSettings: "'clig' off, 'liga' off",
+                      fontFamily: "Cyntho Next",
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      lineHeight: "16px",
+                      textTransform: "uppercase",
+                      position: "absolute",
+                      top: width < 576 ? "6px" : "16px",
+                      left: "20px",
+                      letterSpacing: "0.9px",
+                    }}
+                  >
+                    Current Refcode
+                  </Box>
+                  <Box
+                    component={"input"}
+                    variant="standard"
+                    sx={{
+                      fontSize: "16px",
+                      width: "100%",
+                      border: "none",
+                      outline: "none",
+                      marginTop: "20px",
+                      letterSpacing: "0.3em",
+                    }}
+                    type="text"
+                    disabled
+                    value={ref}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    border: "2px solid #355DFF",
+                    borderRadius: "12px",
+                    backgroundColor: "#fff",
+                    padding: width < 576 ? "0px 18px" : "14px 18px",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      color: "#808191",
+                      fontFeatureSettings: "'clig' off, 'liga' off",
+                      fontFamily: "Cyntho Next",
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      lineHeight: "16px",
+                      textTransform: "uppercase",
+                      position: "absolute",
+                      top: width < 576 ? "6px" : "16px",
+                      left: "20px",
+                      letterSpacing: "0.9px",
+                    }}
+                  >
+                    New Refcode
+                  </Box>
+                  <Box
+                    component={"input"}
+                    variant="standard"
+                    sx={{
+                      fontSize: "16px",
+                      width: "100%",
+                      border: "none",
+                      outline: "none",
+                      marginTop: "20px",
+                      letterSpacing: "0.3em",
+                    }}
+                    type="text"
+                    autoComplete="New Refcode"
+                    value={newRefcode}
+                    onChange={(e) => setNewRefcode(e?.target?.value)}
+                  />
+                </Box>
+                <Button
+                  type="submit"
+                  sx={{
+                    backgroundColor: "#355DFF",
+                    color: "white",
+                    borderRadius: "12px",
+                    fontSize: "14px",
+                    fontFamily: "Cyntho Next",
+                    fontWeight: 700,
+                    textTransform: "unset",
+                    gridColumnStart: 3,
+                    gridColumnEnd: 4,
+                    ":hover": {
+                      backgroundColor: "#355DFF",
+                      opacity: 0.9,
+                    },
+                    padding: "12px 0",
+                  }}
+                  onClick={handleChangeRefcode}
+                >
+                  Update Refcode
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+        )}
       </Box>
     </Container>
   );

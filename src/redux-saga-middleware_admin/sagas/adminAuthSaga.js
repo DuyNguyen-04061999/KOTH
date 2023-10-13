@@ -1,7 +1,8 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import { ADMIN_AUTH_SERVICE } from "../services/adminAuthService";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { showToastNotify } from "../reducers/adminAlertReducer";
 import { adminLoginFail, adminLoginSuccess, changePasswordFail, changePasswordSuccess, resetPasswordFail, resetPasswordSuccess } from "../reducers/adminAuthReducer";
 import { closeResetPassDialog } from "../reducers/adminDialogReducer";
+import { ADMIN_AUTH_SERVICE } from "../services/adminAuthService";
 const adminAuthService = new ADMIN_AUTH_SERVICE();
 
 function* login(dataRequest) {
@@ -13,10 +14,12 @@ function* login(dataRequest) {
             localStorage.setItem("token_admin", token)
             yield put(adminLoginSuccess({ roles, permissions, ref }))
         } else {
+            yield put(showToastNotify({ type: "error", message: "Authenticated failed!" }))
             yield put(adminLoginFail())
         }
         
     } catch (error) {
+        yield put(showToastNotify({ type: "error", message: error?.message || "Authenticated failed!" }))
         yield put(adminLoginFail())
     }
 }
@@ -30,10 +33,12 @@ function* resetPasswordSaga(dataRequest) {
             yield put(resetPasswordSuccess())
             yield put(closeResetPassDialog())
         } else {
+            yield put(showToastNotify({ type: "error", message: "Reset password failed!" }))
             yield put(resetPasswordFail())
         }
         
     } catch (error) {
+        yield put(showToastNotify({ type: "error", message: error?.message || "Reset password failed!" }))
         yield put(resetPasswordFail())
     }
 }
@@ -47,9 +52,11 @@ function* changePasswordSaga(dataRequest) {
             alert("Change password successfully!")
             window.location.reload();
         } else if(res && res.type === "error") {
+            yield put(showToastNotify({ type: "error", message: "Change password failed!" }))
             yield put(changePasswordFail(res.message))
         }
     } catch (error) {
+            yield put(showToastNotify({ type: "error", message: error?.message || "Change password failed!" }))
             yield put(changePasswordFail(error.message))
     }
 }
