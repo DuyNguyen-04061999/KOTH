@@ -542,14 +542,14 @@ export default function Layout(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {device === "Tablet" && !startGameCheck ? (
+      {/* {device === "Tablet" && !startGameCheck ? (
         <div
           className="when-active"
           style={{ display: isNav === true ? "block" : "none" }}
         ></div>
       ) : (
         ""
-      )}
+      )} */}
       <Grid container>
         {device === "Desktop" ||
         device === "Tablet" ||
