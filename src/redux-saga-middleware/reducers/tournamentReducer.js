@@ -54,6 +54,38 @@ export const getHotTour = (data) => {
     payload: data,
   };
 };
+export const getVipTour = (data) => {
+  return {
+    type: "GET_LIST_VIP_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getStandardTour = (data) => {
+  return {
+    type: "GET_LIST_STANDARD_TOURNAMENT",
+    payload: data,
+  };
+};
+export const getOngoingTour = (data) => {
+  return {
+    type: "GET_LIST_ONGOING_TOURNAMENT",
+    payload: data,
+  };
+};
+export const getUpcomingTour = (data) => {
+  return {
+    type: "GET_LIST_UPCOMING_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getEndedTour = (data) => {
+  return {
+    type: "GET_LIST_ENDED_TOURNAMENT",
+    payload: data,
+  };
+};
 export const getWeeklyTour = (data) => {
   return {
     type: "GET_LIST_WEEKLY_TOURNAMENT",
@@ -155,19 +187,19 @@ export const toggleOpenResultEndGame = (data) => {
   };
 };
 
-export  const saveIdTournament = (data) => {
+export const saveIdTournament = (data) => {
   return {
     type: "SAVE_ID_TOURNAMENT",
-    payload : data
-  }
-}
+    payload: data,
+  };
+};
 
-export  const saveBoughtTournament = (data) => {
+export const saveBoughtTournament = (data) => {
   return {
     type: "SAVE_BOUGHT_TOURNAMENT",
-    payload : data
-  }
-}
+    payload: data,
+  };
+};
 
 const tournamentReducer = (
   state = {
@@ -181,6 +213,11 @@ const tournamentReducer = (
     weeklyTournament: [],
     hourlyTournament: [],
     hotTournament: [],
+    vipTournament: [],
+    standardTournament: [],
+    ongoingTournament: [],
+    upcomingTournament: [],
+    endedTournament: [],
     gameForTournament: [],
     isFecthGameForTournament: false,
     skinTournament: [],
@@ -193,8 +230,8 @@ const tournamentReducer = (
     threeBrandTour: [],
     isResultEndGame: false,
     endGameScore: 0,
-    idTour:'',
-    boughtTour:'',
+    idTour: "",
+    boughtTour: "",
     //--------------------------------------
   },
   action
@@ -249,6 +286,31 @@ const tournamentReducer = (
         ...state,
         weeklyTournament: payload,
       };
+      case "GET_LIST_VIP_TOURNAMENT":
+        return {
+          ...state,
+          vipTournament: payload,
+        };
+      case "GET_LIST_STANDARD_TOURNAMENT":
+        return {
+          ...state,
+          standardTournament: payload,
+        };
+      case "GET_LIST_ONGOING_TOURNAMENT":
+        return {
+          ...state,
+          ongoingTournament: payload,
+        };
+      case "GET_LIST_UPCOMING_TOURNAMENT":
+        return {
+          ...state,
+          upcomingTournament: payload,
+        };
+        case "GET_LIST_ENDED_TOURNAMENT":
+          return {
+            ...state,
+            endedTournament: payload,
+          };
     case "GET_LIST_GAME_FOR_TOURNAMENT":
       return {
         ...state,
@@ -323,16 +385,16 @@ const tournamentReducer = (
         isResultEndGame: !state.isResultEndGame,
         endGameScore: payload || 0,
       };
-    case "SAVE_ID_TOURNAMENT" :
-      return  {
+    case "SAVE_ID_TOURNAMENT":
+      return {
         ...state,
-        idTour: payload
-      }
-    case "SAVE_BOUGHT_TOURNAMENT" :
-      return  {
+        idTour: payload,
+      };
+    case "SAVE_BOUGHT_TOURNAMENT":
+      return {
         ...state,
-        boughtTour: payload
-      }
+        boughtTour: payload,
+      };
     default:
       return { ...state };
   }
