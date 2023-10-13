@@ -6,6 +6,7 @@ import {
   // Grid,
   Skeleton,
   ThemeProvider,
+  Tooltip,
   Typography,
   createTheme,
 } from "@mui/material";
@@ -52,6 +53,7 @@ import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
+import { withStyles } from "@mui/styles";
 
 const theme = createTheme({
   typography: {},
@@ -66,6 +68,13 @@ const theme = createTheme({
     },
   },
 });
+
+const BgWithTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white"
+  }
+})(Tooltip);
 
 export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
@@ -429,7 +438,41 @@ export default function JoinTournament() {
                           Maximum Extra
                         </Typography>
                         {!detailTournament?.checkInTournament ? (
-                          ""
+                          <BgWithTooltip
+                            title="Extra: A player can participate in a promotion up to 5 times. Share the promotion with friends to earn an extra play for each new sign-up through your link."
+                            placement="right"
+                            sx={{
+                              backgroundColor:"white",
+                              color:"red"
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              fill="none"
+                              viewBox="0 0 20 20"
+                              className="ms-1"
+                            >
+                              <g>
+                                <path
+                                  stroke="#fff"
+                                  strokeWidth="1.5"
+                                  d="M10.001 18.335a8.333 8.333 0 100-16.667 8.333 8.333 0 000 16.667z"
+                                ></path>
+                                <path
+                                  stroke="#fff"
+                                  strokeLinecap="round"
+                                  strokeWidth="1.5"
+                                  d="M10 14.168v-5"
+                                ></path>
+                                <path
+                                  fill="#fff"
+                                  d="M10.001 5.833a.833.833 0 110 1.667.833.833 0 010-1.667z"
+                                ></path>
+                              </g>
+                            </svg>
+                          </BgWithTooltip>
                         ) : (
                           <Typography
                             sx={{
@@ -470,7 +513,7 @@ export default function JoinTournament() {
                             {!detailTournament?.checkInTournament ? (
                               <Typography
                                 variant="body2"
-                                sx={{ marginLeft: "0px !important" }}
+                                sx={{ marginLeft: "0px !important", maxWidth:"250px" }}
                               >
                                 The highest number of available Extras in the
                                 current Promotion.
@@ -537,7 +580,7 @@ export default function JoinTournament() {
                       width: "1px",
                       height: "100%",
                       background: "rgba(151, 151, 151, 0.40)",
-                      margin: "0px 6px",
+                      margin: "0px 15px",
                     }}
                   ></Box>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -552,10 +595,10 @@ export default function JoinTournament() {
                               : `18px`,
                           letterSpacing: "0.7px",
                           marginLeft: "0px !important",
-                          minWidth:
-                            device === "Desktop" || orientation === "landscape"
-                              ? "155px"
-                              : "none",
+                          // minWidth:
+                          //   device === "Desktop" || orientation === "landscape"
+                          //     ? "155px"
+                          //     : "none",
                         }}
                       >
                         Start date
@@ -601,7 +644,7 @@ export default function JoinTournament() {
                       width: "1px",
                       height: "100%",
                       background: "rgba(151, 151, 151, 0.40)",
-                      margin: "0px 6px",
+                      margin: "0px 15px",
                     }}
                   ></Box>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
