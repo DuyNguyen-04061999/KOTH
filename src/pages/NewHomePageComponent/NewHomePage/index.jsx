@@ -136,10 +136,10 @@ export default function NewHomePage() {
 
   useEffect(() => {
     if (
-      hotTournament?.length > 0 &&
-      ongoingTournament?.length > 0 &&
-      upcomingTournament?.length > 0 &&
-      endedTournament?.length > 0
+      hotTournament &&
+      ongoingTournament &&
+      upcomingTournament &&
+      endedTournament
     ) {
       setIsFetchList(false);
     }
