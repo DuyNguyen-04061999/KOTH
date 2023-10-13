@@ -46,7 +46,12 @@ export default function NewHomePage() {
   // const [promotion, setPromotion] = useState(true);
   // const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
-  const [isFetchList, setIsFetchList] = useState(true);
+  const [isFetchListHot, setIsFetchListHot] = useState(true);
+  const [isFetchListVip, setIsFetchListVip] = useState(true);
+  const [isFetchListStandard, setIsFetchListStandard] = useState(true);
+  const [isFetchListOngoing, setIsFetchListOngoing] = useState(true);
+  const [isFetchListUpcoming, setIsFetchListUpcoming] = useState(true);
+  const [isFetchListEnded, setIsFetchListEnded] = useState(true);
   // const [type, setType] = useState("");
   // const [hourList, setHourList] = useState([]);
   // const [selectedHour, setSeHour] = useState(0);
@@ -78,70 +83,72 @@ export default function NewHomePage() {
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "weekly",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hot",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hourly",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "vip",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "standard",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "ongoing",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "upcoming",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "ended",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "daily",
-      });
-      dispatch({
-        type: "CALL_BIGGEST_END_TOUR",
-      });
-      dispatch({
-        type: "CALL_BRAND_TOUR",
-      });
-      dispatch({
-        type: "GET_HOTTEST_WEEK_TOUR",
-      });
-      dispatch({
-        type: "GET_THREE_BRAND_TOUR",
-      });
-    }
-  }, [dispatch, isFetchList]);
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "weekly",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "hot",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "hourly",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "vip",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "standard",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "ongoing",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "upcoming",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "ended",
+    });
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "daily",
+    });
+    dispatch({
+      type: "CALL_BIGGEST_END_TOUR",
+    });
+    dispatch({
+      type: "CALL_BRAND_TOUR",
+    });
+    dispatch({
+      type: "GET_HOTTEST_WEEK_TOUR",
+    });
+    dispatch({
+      type: "GET_THREE_BRAND_TOUR",
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     // setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
 
   useEffect(() => {
-    if (
-      hotTournament &&
-      ongoingTournament &&
-      upcomingTournament &&
-      endedTournament
-    ) {
-      setIsFetchList(false);
+    if (hotTournament) {
+      setIsFetchListHot(false);
+    }
+    if (ongoingTournament) {
+      setIsFetchListOngoing(false);
+    }
+    if (upcomingTournament) {
+      setIsFetchListUpcoming(false);
+    }
+    if (endedTournament) {
+      setIsFetchListEnded(false);
     }
   }, [hotTournament, ongoingTournament, upcomingTournament, endedTournament]);
 
@@ -192,7 +199,7 @@ export default function NewHomePage() {
               marginBottom: width < 576 ? "24px" : "32px",
             }}
           >
-            {isFetchList ? (
+            {isFetchListHot ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -275,13 +282,13 @@ export default function NewHomePage() {
             <Box sx={{ paddingTop: width < 576 ? "24px" : "32px" }}>
               <ListPromotion
                 listData={hotTournament}
-                loadingState={isFetchList}
+                loadingState={isFetchListHot}
                 typePromo={"hot"}
               />
             </Box>
           </Box>{" "}
           {width < 576 ? (
-            isFetchList ? (
+            isFetchListHot ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -440,7 +447,7 @@ export default function NewHomePage() {
                 }
               />
             )
-          ) : isFetchList ? (
+          ) : isFetchListHot ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}
@@ -818,7 +825,7 @@ export default function NewHomePage() {
             <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               <ListPromotion
                 listData={ongoingTournament}
-                loadingState={isFetchList}
+                loadingState={isFetchListOngoing}
               />
             </Box>
 
@@ -1252,13 +1259,13 @@ export default function NewHomePage() {
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               <ListPromotion
                 listData={upcomingTournament}
-                loadingState={isFetchList}
+                loadingState={isFetchListUpcoming}
               />
             </Box>
           </Box>{" "}
           {/* Banner Top1 */}
           {width < 576 ? (
-            isFetchList ? (
+            isFetchListHot ? (
               <Box
                 sx={{
                   marginTop: width < 576 ? "48px" : "32px",
@@ -1297,7 +1304,7 @@ export default function NewHomePage() {
                 tourId={hotWeekTour && hotWeekTour?.id}
               />
             )
-          ) : isFetchList ? (
+          ) : isFetchListHot ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}
@@ -1561,7 +1568,7 @@ export default function NewHomePage() {
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               <ListPromotion
                 listData={endedTournament}
-                loadingState={isFetchList}
+                loadingState={isFetchListEnded}
               />
             </Box>
           </Box>{" "}
