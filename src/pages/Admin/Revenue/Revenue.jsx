@@ -126,15 +126,15 @@ const Revenue = () => {
       }
     } else {
       if (roles?.includes("master")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
 
       if (roles?.includes("distributor")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
     }
   }, [roles, width]);
