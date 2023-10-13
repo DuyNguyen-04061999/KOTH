@@ -29,25 +29,30 @@ export default function SlickSlider(props) {
     beforeChange: (prev, next) => {
       setIndex(next);
     },
-    appendDots: (dots) => (
-      <Box
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          bottom: appendDot ? "0px" : "-20px",
-          position: "absolute",
-          padding: "5px",
-          height: width > 576 ? "20px" : "15px",
-          backgroundColor: appendDot ? "rgba(0, 0, 0, 0.24)" : "none",
-          backdropFilter: appendDot ? "blur(2px)" : "none",
-          marginBottom: "0px",
-          width: "100%",
-        }}
-      >
-        {dots}
-      </Box>
-    ),
+    appendDots: (dots) => {
+      if(dots?.length >= 10){
+        dots = dots?.slice(0,5);
+      }
+      return (
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            bottom: appendDot ? "0px" : "-20px",
+            position: "absolute",
+            padding: "5px",
+            height: width > 576 ? "20px" : "15px",
+            backgroundColor: appendDot ? "rgba(0, 0, 0, 0.24)" : "none",
+            backdropFilter: appendDot ? "blur(2px)" : "none",
+            marginBottom: "0px",
+            width: "100%",
+          }}
+        >
+          {dots}
+        </Box>
+      )
+    },
     customPaging: (i) => (
       <div
         style={{

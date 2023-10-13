@@ -107,7 +107,7 @@ export default function BannerWin(props) {
               width: "max-content",
             }}
           >
-            Big Tournament Winner
+            Big Promotion Winner
           </Typography>
         </Box>
         <Box>

@@ -7,31 +7,26 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { imageHome, images } from "../../../utils/images";
 import SlickSlider from "../../../components/SlickSlider";
+import { imageHome, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
 // import Draggable from "react-draggable";
 import { useNavigate } from "react-router-dom";
-import SliderTime from "../../../components/SliderTime";
-import FullListTournament from "./FullListTournament";
 // import CountDownTournament from "../CountDownTournament";
-import { getAppType } from "../../../utils/helper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import NewFooter from "../../NewFooter";
-import ItemComponent from "./ItemComponent";
-import "./index.scss";
-import { ScrollingCarousel } from "@trendyol-js/react-carousel";
-import ListItemLoading from "../../../components/LoadingComponent/ItemLoading";
-import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
-import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import {
   BannerTour,
   BannerTourMobile,
   BannerWin,
   BannerWinMobile,
 } from "../../../components/Banner";
+import ListPromotion from "../../../components/ListPromotion/ListPromotion";
+import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
+import { getAppType } from "../../../utils/helper";
+import NewFooter from "../../NewFooter";
+import "./index.scss";
 
 const theme = createTheme({
   typography: {},
@@ -75,6 +70,11 @@ export default function NewHomePage() {
     // brandTour,
     hotWeekTour,
     threeBrandTour,
+    vipTournament,
+    standardTournament,
+    ongoingTournament,
+    upcomingTournament,
+    endedTournament,
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -93,6 +93,26 @@ export default function NewHomePage() {
       });
       dispatch({
         type: "CALL_LIST_TOURNAMENT",
+        payload: "vip",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "standard",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "ongoing",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "upcoming",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
+        payload: "ended",
+      });
+      dispatch({
+        type: "CALL_LIST_TOURNAMENT",
         payload: "daily",
       });
       dispatch({
@@ -107,13 +127,24 @@ export default function NewHomePage() {
       dispatch({
         type: "GET_THREE_BRAND_TOUR",
       });
-      setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
 
   useEffect(() => {
     setDayList(dailyTournament?.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
+
+  useEffect(() => {
+    if (
+      hotTournament?.length > 0 &&
+      ongoingTournament?.length > 0 &&
+      upcomingTournament?.length > 0 &&
+      endedTournament?.length > 0
+    ) {
+      setIsFetchList(false);
+    }
+  }, [hotTournament, ongoingTournament, upcomingTournament, endedTournament]);
+
   const navigate = useNavigate();
 
   return (
@@ -189,7 +220,7 @@ export default function NewHomePage() {
           </Box>
           <Box
             sx={{
-              marginTop: width < 576 ? "24px" : "32px",
+              marginTop: width < 576 ? "24px" : "64px",
               display: "flex",
               flexDirection: "column",
               marginBottom: width < 576 ? "24px" : "32px",
@@ -200,24 +231,21 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "20px",
-                    fontWeight: "200 !important",
+                    fontSize: width < 576 ? "16px" : "24px",
+                    fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
                   }}
                 >
                   {/* HOT TOURNAMENTS{" "} */}
-                  Hot tournaments
+                  Hot promotion
                 </Typography>
               </Box>
               <Box
                 onClick={() => {
-                  if (width > 576) {
-                    navigate("/hot-tournament");
-                  } else {
-                    setOpen(true);
-                    setType("hot");
-                  }
+                  navigate("/hot-promotion");
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -227,6 +255,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    fontFamily: "Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -243,94 +272,13 @@ export default function NewHomePage() {
                 ></Box>
               </Box>
             </Box>
-            <div style={{ paddingTop: width < 576 ? "24px" : "32px" }}>
-              {width < 576 ? (
-                // <Slider
-                //   dots={false}
-                //   slidesToShow={2.05}
-                //   arrows={false}
-                //   slidesToScroll={2}
-                //   infinite={false}
-                // >
-                // </Slider>
-                <div className="scrolling-carousel-example1-container">
-                  <ScrollingCarousel>
-                    {isFetchList ? (
-                      <ListItemLoading></ListItemLoading>
-                    ) : hotTournament && hotTournament?.length > 0 ? (
-                      hotTournament?.map((item, index) => {
-                        return (
-                          <div key={index}>
-                            <ItemComponent
-                              // key={index}
-                              tourInfo={item}
-                              countdown={true}
-                            />
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <ListEmpty textData={"hot"}></ListEmpty>
-                    )}
-                  </ScrollingCarousel>
-                </div>
-              ) : (
-                // <Slider
-                // dots={false}
-                // slidesToShow={5}
-                // arrows={false}
-                // slidesToScroll={5}
-                // infinite={false}
-                // responsive={[
-                //   {
-                //     breakpoint: 1024,
-                //     settings: {
-                //       slidesToShow: 3,
-                //       slidesToScroll: 3,
-                //     }
-                //   },
-                //   {
-                //     breakpoint: 600,
-                //     settings: {
-                //       slidesToShow: 2,
-                //       slidesToScroll: 2,
-                //       initialSlide: 2
-                //     }
-                //   },
-                //   {
-                //     breakpoint: 480,
-                //     settings: {
-                //       slidesToShow: 1,
-                //       slidesToScroll: 1
-                //     }
-                //   }
-                // ]}
-                // >
-
-                // </Slider>
-                <div className="scrolling-carousel-example1-container">
-                  <ScrollingCarousel>
-                    {isFetchList ? (
-                      <ListItemLoading></ListItemLoading>
-                    ) : hotTournament && hotTournament?.length > 0 ? (
-                      hotTournament?.map((item, index) => {
-                        return (
-                          <div key={index}>
-                            <ItemComponent
-                              // key={index}
-                              tourInfo={item}
-                              countdown={true}
-                            />
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <ListEmpty textData={"hot"}></ListEmpty>
-                    )}
-                  </ScrollingCarousel>
-                </div>
-              )}
-            </div>
+            <Box sx={{ paddingTop: width < 576 ? "24px" : "32px" }}>
+              <ListPromotion
+                listData={hotTournament}
+                loadingState={isFetchList}
+                typePromo={"hot"}
+              />
+            </Box>
           </Box>{" "}
           {width < 576 ? (
             isFetchList ? (
@@ -342,7 +290,7 @@ export default function NewHomePage() {
               // <Box
               //   sx={{
               //     width: "100%",
-              //     marginTop: width < 576 ? "24px" : "32px",
+              //     marginTop: width < 576 ? "24px" : "64px",
               //     marginBottom: width < 576 ? "24px" : "32px",
               //     backgroundImage: `url(${imageHome.banner_win_Mobile})`,
               //     height: "208.612px",
@@ -501,7 +449,7 @@ export default function NewHomePage() {
             // <Box
             //   sx={{
             //     width: "100%",
-            //     marginTop: width < 576 ? "24px" : "32px",
+            //     marginTop: width < 576 ? "24px" : "64px",
             //     marginBottom: width < 576 ? "24px" : "32px",
             //     backgroundImage: `url(${images.banner_win_BG})`,
             //     height: width < 1024 ? "266.56px" : "348.909px",
@@ -675,7 +623,7 @@ export default function NewHomePage() {
           {/* Brief List Tournament */}
           {/* <Box
             sx={{
-              marginTop: width < 576 ? "24px" : "32px",
+              marginTop: width < 576 ? "24px" : "64px",
               display: "flex",
               flexDirection: "column",
               marginBottom: width < 576 ? "24px" : "32px",
@@ -712,6 +660,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    fontFamily:"Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -802,7 +751,7 @@ export default function NewHomePage() {
             className="cursor-pointer"
             onClick={() => navigate("/week-long-tournament")}
             sx={{
-              marginTop: width < 576 ? "24px" : "32px",
+              marginTop: width < 576 ? "24px" : "64px",
               marginBottom: width < 576 ? "24px" : "32px",
             }}
           >
@@ -819,7 +768,7 @@ export default function NewHomePage() {
           </Box> */}
           <Box
             sx={{
-              marginTop: width < 576 ? "24px" : "32px",
+              marginTop: width < 576 ? "24px" : "64px",
               display: "flex",
               flexDirection: "column",
               marginBottom: width < 576 ? "24px" : "32px",
@@ -830,23 +779,20 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "20px",
-                    fontWeight: "200 !important",
+                    fontSize: width < 576 ? "16px" : "24px",
+                    fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
                   }}
                 >
-                  Daily tournaments
+                  Ongoing promotion
                 </Typography>
               </Box>
               <Box
                 onClick={() => {
-                  if (width > 576) {
-                    navigate("/daily-tournament");
-                  } else {
-                    setOpen(true);
-                    setType("daily");
-                  }
+                  navigate("/ongoing-promotion");
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -856,6 +802,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    fontFamily: "Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -868,18 +815,14 @@ export default function NewHomePage() {
                 ></Box>
               </Box>
             </Box>
-            <Box>
-              <SliderTime
-                updateSelectedIndex={(index) => {
-                  setSeDay(index);
-                }}
-                selectedItem={selectedDay}
-                list={dayList}
-                type={"day"}
+            <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
+              <ListPromotion
+                listData={ongoingTournament}
+                loadingState={isFetchList}
               />
             </Box>
 
-            <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
+            {/* <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               {width < 576 ? (
                 // <Slider
                 //   dots={false}
@@ -979,12 +922,12 @@ export default function NewHomePage() {
                   </ScrollingCarousel>
                 </div>
               )}
-            </Box>
+            </Box> */}
           </Box>{" "}
           {/* Brief information */}
           {/* <Box
             sx={{
-              marginTop: width < 576 ? "24px" : "32px",
+              marginTop: width < 576 ? "24px" : "64px",
               marginBottom: width < 576 ? "24px" : "32px",
             }}
           >
@@ -1259,7 +1202,7 @@ export default function NewHomePage() {
           {/* ------------------------ */}
           <Box
             sx={{
-              marginTop: width < 576 ? "24px" : "32px",
+              marginTop: width < 576 ? "24px" : "64px",
               marginBottom: width < 576 ? "24px" : "32px",
               display: "flex",
               flexDirection: "column",
@@ -1270,23 +1213,20 @@ export default function NewHomePage() {
                 <Typography
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "20px",
-                    fontWeight: "200 !important",
+                    fontSize: width < 576 ? "16px" : "24px",
+                    fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
                   }}
                 >
-                  Weeklong tournaments{" "}
+                  Upcoming promotion{" "}
                 </Typography>
               </Box>
               <Box
                 onClick={() => {
-                  if (width > 576) {
-                    navigate("/week-long-tournament");
-                  } else {
-                    setOpen(true);
-                    setType("week-long");
-                  }
+                  navigate("/upcoming-promotion");
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -1296,6 +1236,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
+                    fontFamily: "Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -1309,93 +1250,10 @@ export default function NewHomePage() {
               </Box>
             </Box>
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
-              {width < 576 ? (
-                // <Slider
-                //   dots={false}
-                //   slidesToShow={2.05}
-                //   arrows={false}
-                //   slidesToScroll={2}
-                //   infinite={false}
-                // >
-
-                // </Slider>
-                <div className="scrolling-carousel-example1-container">
-                  <ScrollingCarousel>
-                    {isFetchList ? (
-                      <ListItemLoading />
-                    ) : weeklyTournament && weeklyTournament?.length > 0 ? (
-                      weeklyTournament?.map((item, index) => {
-                        return (
-                          <div key={index}>
-                            <ItemComponent
-                              key={index}
-                              countdown={true}
-                              tourInfo={item}
-                            />
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <ListEmpty textData={"weeklong"} />
-                    )}
-                  </ScrollingCarousel>
-                </div>
-              ) : (
-                // <Slider
-                //   dots={false}
-                //   slidesToShow={5}
-                //   arrows={false}
-                //   slidesToScroll={5}
-                //   infinite={false}
-                //   responsive={[
-                //     {
-                //       breakpoint: 1024,
-                //       settings: {
-                //         slidesToShow: 3,
-                //         slidesToScroll: 3,
-                //       }
-                //     },
-                //     {
-                //       breakpoint: 600,
-                //       settings: {
-                //         slidesToShow: 2,
-                //         slidesToScroll: 2,
-                //         initialSlide: 2
-                //       }
-                //     },
-                //     {
-                //       breakpoint: 480,
-                //       settings: {
-                //         slidesToShow: 1,
-                //         slidesToScroll: 1
-                //       }
-                //     }
-                //   ]}
-                // >
-
-                // </Slider>
-                <div className="scrolling-carousel-example1-container">
-                  <ScrollingCarousel>
-                    {isFetchList ? (
-                      <ListItemLoading />
-                    ) : weeklyTournament && weeklyTournament?.length > 0 ? (
-                      weeklyTournament?.map((item, index) => {
-                        return (
-                          <div key={index}>
-                            <ItemComponent
-                              key={index}
-                              countdown={true}
-                              tourInfo={item}
-                            />
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <ListEmpty textData={"weeklong"}></ListEmpty>
-                    )}
-                  </ScrollingCarousel>
-                </div>
-              )}
+              <ListPromotion
+                listData={upcomingTournament}
+                loadingState={isFetchList}
+              />
             </Box>
           </Box>{" "}
           {/* Banner Top1 */}
@@ -1447,7 +1305,7 @@ export default function NewHomePage() {
           ) : (
             // <Box
             //   sx={{
-            //     marginTop: width < 576 ? "24px" : "32px",
+            //     marginTop: width < 576 ? "24px" : "64px",
             //     marginBottom: width < 576 ? "24px" : "32px",
             //     backgroundImage: `url(${
             //       width < 576
@@ -1651,13 +1509,62 @@ export default function NewHomePage() {
               tourId={hotWeekTour && hotWeekTour?.id}
             />
           )}
-          <FullListTournament
-            type={type}
-            open={open}
-            handleOnClose={() => {
-              setOpen(false);
+          <Box
+            sx={{
+              marginTop: width < 576 ? "24px" : "64px",
+              marginBottom: width < 576 ? "24px" : "32px",
+              display: "flex",
+              flexDirection: "column",
             }}
-          />
+          >
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: width < 576 ? "16px" : "24px",
+                    fontWeight: "700 !important",
+                    marginLeft: "0px !important",
+                    color: "#fff",
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
+                  }}
+                >
+                  Ended promotion{" "}
+                </Typography>
+              </Box>
+              <Box
+                onClick={() => {
+                  navigate("/ended-promotion");
+                }}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: width < 576 ? "12px" : "16px",
+                    fontWeight: "200 !important",
+                    color: "#BE48ED",
+                    fontFamily: "Cyntho Next",
+                    cursor: "pointer",
+                  }}
+                >
+                  View All
+                </Typography>
+                <Box
+                  sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
+                  component={"img"}
+                  src={images.viewAllButton}
+                ></Box>
+              </Box>
+            </Box>
+            <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
+              <ListPromotion
+                listData={endedTournament}
+                loadingState={isFetchList}
+              />
+            </Box>
+          </Box>{" "}
           {getAppType() === "promote" ? <Package /> : <></>}
           <NewFooter />
           {/* {promotion && width < 576 && (
