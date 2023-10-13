@@ -1,7 +1,8 @@
+import CheckIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
 import { Box, Dialog, FormControl, MenuItem, OutlinedInput, Select, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createAgent,
@@ -27,6 +28,10 @@ export default function CreateAccountDialogComponent() {
   const { isCreateDialog } = useSelector((state) => state.adminDialogReducer);
   const [isLoading, setIsLoading] = useState(false);
   const [refAgent, setRefAgent] = useState("")
+  const [checkPasswordLength, setCheckPasswordLength] = useState(false)
+  const [checkPasswordLetter, setCheckPasswordLetter] = useState(false)
+  const [checkPasswordDigit, setCheckPasswordDigit] = useState(false)
+  const [checkPasswordUpper, setCheckPasswordUpper] = useState(false)
 
   const handleChangeAgent = (e) => {
     setRefAgent(e.target.value)
@@ -47,6 +52,15 @@ export default function CreateAccountDialogComponent() {
       password: passInput.current.value,
       agent: refAgent || ""
     };
+    
+    if (!checkPasswordLength || !checkPasswordDigit || !checkPasswordLetter || !checkPasswordUpper) {
+      setErrorMessage({
+        type: "confirm-password",
+        message: "The password incorrect format",
+      });
+      return;
+    } 
+
     if (
       !accountInfo.username ||
       !accountInfo.nickName || !accountInfo.password ||
@@ -58,11 +72,12 @@ export default function CreateAccountDialogComponent() {
       });
       return;
     }
-    if (accountInfo.password !== cPassInput.current.value) {
+     if (accountInfo.password !== cPassInput.current.value) {
       setErrorMessage({
         type: "confirm-password",
         message: "The confirm password does not match",
       });
+      return;
     } else {
       if(isCreateAgent || isCreateEndUser || isCreateSubDistributor || isCreateDistributor){
         setIsLoading(true)
@@ -110,6 +125,37 @@ export default function CreateAccountDialogComponent() {
   const [focusedCPassInput, setFocusedCPassInput] = useState(false);
   const onFocusCPassInput = () => setFocusedCPassInput(true);
   const onBlurCPassInput = () => setFocusedCPassInput(false);
+  const [password, setPassword] = useState("")
+
+  useEffect(() => {
+    const special = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/;
+    const upper = /[A-Z]/;
+    const digit = /[0-9]/;
+    if(special.test(password)) {
+      setCheckPasswordLetter(true)
+    } else {
+      setCheckPasswordLetter(false)
+    }
+
+    if(upper.test(password)) {
+      setCheckPasswordUpper(true)
+    } else {
+      setCheckPasswordUpper(false)
+    }
+
+    if(digit.test(password)) {
+      setCheckPasswordDigit(true)
+    } else {
+      setCheckPasswordDigit(false)
+    }
+
+    if(password && password?.length >= 6) {
+      setCheckPasswordLength(true)
+    } else {
+      setCheckPasswordLength(false)
+    }
+
+  }, [password])
 
   return (
     <Dialog
@@ -341,11 +387,33 @@ export default function CreateAccountDialogComponent() {
               }}
               onFocus={onFocusPassInput}
               onBlur={onBlurPassInput}
+              value={password}
+              onChange={(e) => setPassword(e?.target?.value)}
               placeholder="Login password"
               autoComplete="Password"
             ></Box>
           </Box>
-
+          <Box component={"div"} className="rounded p-2 ps-3 pe-3 mt-3"
+            sx={{
+              backgroundColor: bg,
+            }}>
+              <Box component={"div"} className="d-flex">
+                <CheckIcon sx={{ fontSize: 16, color: checkPasswordLength ? "#0AD149" : "#A1ADA5" }}/>
+                <Typography sx={{ fontSize: 12, color: checkPasswordLength ? "#0AD149" : "#A1ADA5" }}>Password must be at least 6 characters.</Typography>
+              </Box>
+              <Box component={"div"} className="d-flex">
+                <CheckIcon sx={{ fontSize: 16, color: checkPasswordLetter ? "#0AD149" : "#A1ADA5" }}/>
+                <Typography sx={{ fontSize: 12, color: checkPasswordLetter ? "#0AD149" : "#A1ADA5" }}>Password must have at least one none letter.</Typography>
+              </Box>
+              <Box component={"div"} className="d-flex">
+                <CheckIcon sx={{ fontSize: 16, color: checkPasswordDigit ? "#0AD149" : "#A1ADA5" }}/>
+                <Typography sx={{ fontSize: 12, color: checkPasswordDigit ? "#0AD149" : "#A1ADA5" }}>Password must have at least one digit ("0-9").</Typography>
+              </Box>
+              <Box component={"div"} className="d-flex">
+                <CheckIcon sx={{ fontSize: 16, color: checkPasswordUpper ? "#0AD149" : "#A1ADA5" }}/>
+                <Typography sx={{ fontSize: 12, color: checkPasswordUpper ? "#0AD149" : "#A1ADA5" }}>Password must have at least one upper case.</Typography>
+              </Box>
+          </Box>
           <Box
             component={"div"}
             className="rounded p-2 ps-3 pe-3 mt-3"
