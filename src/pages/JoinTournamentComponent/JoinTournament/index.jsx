@@ -158,7 +158,9 @@ export default function JoinTournament() {
       }
     });
     socket?.on("startGameInTournamentSuccess", (data) => {
-      dispatch(toggleStartGame(true));
+      if (device === "Mobile" || device === "Tablet") {
+        dispatch(toggleStartGame(true));
+      }
       setStartGame(true);
       setVideoGame(true);
     });
@@ -175,6 +177,7 @@ export default function JoinTournament() {
     dispatch,
     id,
     token,
+    device,
   ]);
 
   const handlePlayTour = () => {
