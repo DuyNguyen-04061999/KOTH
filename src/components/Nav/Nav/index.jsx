@@ -504,7 +504,7 @@ export default function Navbar() {
                     background: "white",
                     borderColor: "white",
                     height: "1px",
-                    width: "70%",
+                    width:isNav ? "70%"  :"",
                   }}
                 />
                 <Box

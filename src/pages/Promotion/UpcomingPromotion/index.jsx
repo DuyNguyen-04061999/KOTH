@@ -39,7 +39,9 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { upcomingTournament } = useSelector((state) => state.tournamentReducer);
+  const { upcomingTournament } = useSelector(
+    (state) => state.tournamentReducer
+  );
   const [isFetchList, setIsFetchList] = useState(true);
   const [data, setData] = useState([]);
   const [itemOffSet, setItemOffSet] = useState(0);
@@ -98,11 +100,11 @@ export default function HotTournament() {
                 sx={{
                   ...typographyStyle,
                   fontSize: "36px",
-                  fontFamily:"Cyntho Next",
-                  fontWeight: 700
+                  fontFamily: "Cyntho Next",
+                  fontWeight: 700,
                 }}
               >
-                Hot Promotion
+                Upcoming Promotion
               </Typography>
               <Box
                 sx={{
@@ -196,7 +198,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                Hot Tournament
+                Upcoming Promotion
               </Typography>
               <Box
                 sx={{

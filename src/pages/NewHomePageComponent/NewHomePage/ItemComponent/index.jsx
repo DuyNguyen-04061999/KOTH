@@ -168,7 +168,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           <span style={{ fontSize: "10px" }}>
             Sponsor:{tourInfo?.tournamentBrand?.brandName}
           </span>
-          <Typography
+          <Box
             sx={{
               ...styleTypography,
               overflow: "hidden",
@@ -210,7 +210,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 </span>
               </>
             )}
-          </Typography>
+          </Box>
           <Box
             sx={{
               position: "absolute",
@@ -229,12 +229,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: width < 576 ? "6px" : "10px",
+              marginTop: width < 576 ? "2px" : "10px",
             }}
           >
             <Box>
               <Box
-                sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "130%" }}
+                sx={{ fontSize: width > 576 ? "14px" : "10px", fontWeight: 500, lineHeight: "130%" }}
               >
                 {checkType === 1
                   ? "Start at: "
@@ -251,7 +251,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                       ...styleTypography,
                       fontSize: width < 576 ? "12px" : "14px",
                       color: "#5747EA",
-                      fontWeight: "700 !important",
+                      fontWeight: "700",
                       minWidth: "100px",
                       fontFamily: "Cyntho Next",
                     }}

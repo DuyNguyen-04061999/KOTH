@@ -74,7 +74,7 @@ export default function NewHomePage() {
     standardTournament,
     ongoingTournament,
     upcomingTournament,
-    endedTournament
+    endedTournament,
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -224,8 +224,8 @@ export default function NewHomePage() {
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
-                    lineHeight:"130%",
-                    fontFamily:"Cyntho Next"
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
                   }}
                 >
                   {/* HOT TOURNAMENTS{" "} */}
@@ -234,12 +234,7 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  if (width > 576) {
-                    navigate("/hot-promotion");
-                  } else {
-                    setOpen(true);
-                    setType("hot");
-                  }
+                  navigate("/hot-promotion");
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -249,7 +244,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
-                    fontFamily:"Cyntho Next",
+                    fontFamily: "Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -777,8 +772,8 @@ export default function NewHomePage() {
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
-                    lineHeight:"130%",
-                    fontFamily:"Cyntho Next"
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
                   }}
                 >
                   Ongoing promotion
@@ -786,12 +781,7 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  if (width > 576) {
-                    navigate("/daily-tournament");
-                  } else {
-                    setOpen(true);
-                    setType("daily");
-                  }
+                  navigate("/ongoing-promotion");
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -801,7 +791,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
-                    fontFamily:"Cyntho Next",
+                    fontFamily: "Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -815,7 +805,10 @@ export default function NewHomePage() {
               </Box>
             </Box>
             <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
-            <ListPromotion listData={ongoingTournament} loadingState={isFetchList}/>
+              <ListPromotion
+                listData={ongoingTournament}
+                loadingState={isFetchList}
+              />
             </Box>
 
             {/* <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
@@ -1213,8 +1206,8 @@ export default function NewHomePage() {
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
-                    lineHeight:"130%",
-                    fontFamily:"Cyntho Next"
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
                   }}
                 >
                   Upcoming promotion{" "}
@@ -1222,12 +1215,7 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  if (width > 576) {
-                    navigate("/upcoming-promotion");
-                  } else {
-                    setOpen(true);
-                    setType("week-long");
-                  }
+                  navigate("/upcoming-promotion");
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -1237,7 +1225,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
-                    fontFamily:"Cyntho Next",
+                    fontFamily: "Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -1251,7 +1239,10 @@ export default function NewHomePage() {
               </Box>
             </Box>
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
-              <ListPromotion listData={upcomingTournament} loadingState={isFetchList} />
+              <ListPromotion
+                listData={upcomingTournament}
+                loadingState={isFetchList}
+              />
             </Box>
           </Box>{" "}
           {/* Banner Top1 */}
@@ -1524,8 +1515,8 @@ export default function NewHomePage() {
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
-                    lineHeight:"130%",
-                    fontFamily:"Cyntho Next"
+                    lineHeight: "130%",
+                    fontFamily: "Cyntho Next",
                   }}
                 >
                   Ended promotion{" "}
@@ -1533,12 +1524,7 @@ export default function NewHomePage() {
               </Box>
               <Box
                 onClick={() => {
-                  if (width > 576) {
-                    navigate("/ended-promotion");
-                  } else {
-                    setOpen(true);
-                    setType("week-long");
-                  }
+                  navigate("/ended-promotion");
                 }}
                 sx={{ display: "flex", alignItems: "center" }}
               >
@@ -1548,7 +1534,7 @@ export default function NewHomePage() {
                     fontSize: width < 576 ? "12px" : "16px",
                     fontWeight: "200 !important",
                     color: "#BE48ED",
-                    fontFamily:"Cyntho Next",
+                    fontFamily: "Cyntho Next",
                     cursor: "pointer",
                   }}
                 >
@@ -1562,7 +1548,10 @@ export default function NewHomePage() {
               </Box>
             </Box>
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
-              <ListPromotion listData={endedTournament} loadingState={isFetchList} />
+              <ListPromotion
+                listData={endedTournament}
+                loadingState={isFetchList}
+              />
             </Box>
           </Box>{" "}
           {getAppType() === "promote" ? <Package /> : <></>}

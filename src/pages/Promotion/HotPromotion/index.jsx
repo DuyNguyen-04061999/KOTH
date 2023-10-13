@@ -196,7 +196,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                Hot Tournament
+                Hot Promotion
               </Typography>
               <Box
                 sx={{

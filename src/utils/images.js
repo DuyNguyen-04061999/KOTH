@@ -354,6 +354,8 @@ import NavStandardActive from "../assets/images/navbar/standardActive.png";
 import NavUpcomingActive from "../assets/images/navbar/upcomingActive.png";
 import NavVipActive from "../assets/images/navbar/vipActive.png";
 
+import BtnBack from "../assets/images/btnback.png";
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -682,6 +684,7 @@ export const sign = {
   up03: up03,
   up04: up04,
   up05: up05,
+  btnBack: BtnBack
 };
 
 export const video = {
