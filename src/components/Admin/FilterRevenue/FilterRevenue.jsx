@@ -1,5 +1,6 @@
 import { ExpandMoreOutlined } from "@mui/icons-material";
 import CopyIcon from "@mui/icons-material/CopyAll";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
@@ -10,6 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -84,6 +86,7 @@ const FilterRevenue = () => {
     "Last week",
     "This month",
     "Last month",
+    "Reset"
   ];
   const [accountInput, setAccountInput] = useState("");
   const startTimeInput = useRef(null);
@@ -208,6 +211,40 @@ const FilterRevenue = () => {
   };
 
   const handleActionQuery = (item, index) => {
+    if(item === "Reset") {
+      setActiveType(null)
+      setSelectedType(0)
+      setStartTime(null)
+      setEndTime(null)
+      startTimeInput.current.value = ""
+      endTimeInput.current.value = ""
+      if (roles && roles?.length && roles[0]) {
+        switch (roles[0]) {
+          case "master": {
+            dispatch(
+              getListDistributor()
+            );
+            break;
+          }
+          case "distributor": {
+            dispatch(
+              getListSub()
+            );
+            break;
+          }
+          case "agent": {
+            dispatch(
+              getListEndUser()
+            );
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+      return
+    }
     setSelectedType(index + 1);
     setActiveType(index);
     setStartTime("");
@@ -335,7 +372,7 @@ const FilterRevenue = () => {
   
   const handleCopyRef = () => {
     copy(ref)
-    alert("Copy ref code successfully!")
+    dispatch(showToastNotify({ type: "success", message: "Copy ref code successfully!" }))
   }
 
   return (
@@ -560,7 +597,27 @@ const FilterRevenue = () => {
                   Excel
                 </Button>
               </CSVLink>;
-
+                {width < 576 && (
+                  <Button
+                    onClick={() => handleActionQuery("Reset", 0)}
+                    sx={{
+                      fontSize: "12px",
+                      textTransform: "unset",
+                      borderRadius: "16px",
+                      backgroundColor: "#fc3c3c",
+                      color: "white",
+                      fontWeight: 700,
+                      height: "32px",
+                      ":hover": {
+                        backgroundColor: "#fc3c3c",
+                        opacity: 0.9,
+                      },
+                      transform: "scale(1.1)",
+                    }}
+                  >
+                    Reset
+                  </Button>
+                )}
             </Box>
           </Box>
           {errorSearchTime && (
@@ -591,25 +648,46 @@ const FilterRevenue = () => {
                     fontSize: "12px",
                     textTransform: "unset",
                     borderRadius: "16px",
-                    backgroundColor: "#355DFF",
+                    backgroundColor: item === "Reset" ? "#fc3c3c" : "#355DFF",
                     color: "white",
                     fontWeight: 700,
                     height: "32px",
                     width: "100%",
                     ":hover": {
-                      backgroundColor: "#355DFF",
+                      backgroundColor: item === "Reset" ? "#fc3c3c" : "#355DFF",
                       opacity: 0.9,
                     },
                     transform: activeType === index && "scale(1.1)",
                     border: activeType === index && "2px solid black",
                   }}
                 >
-                  {item}
+                  {item === "Reset" ? <DeleteIcon/> : item}
                 </Button>
               ))}
             </Box>
           ) : (
-            <></>
+            <>
+              {/* <Button
+                  onClick={() => handleActionQuery("Reset", 0)}
+                  className="mt-2"
+                  sx={{
+                    fontSize: "12px",
+                    textTransform: "unset",
+                    borderRadius: "16px",
+                    backgroundColor: "#fc3c3c",
+                    color: "white",
+                    fontWeight: 700,
+                    height: "32px",
+                    ":hover": {
+                      backgroundColor: "#fc3c3c",
+                      opacity: 0.9,
+                    },
+                    transform: "scale(1.1)",
+                  }}
+                >
+                  Reset
+                </Button> */}
+            </>
           )}
         </Box>
       </Box>

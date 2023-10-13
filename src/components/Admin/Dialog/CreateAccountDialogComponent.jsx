@@ -203,39 +203,44 @@ export default function CreateAccountDialogComponent() {
           </Box>
         </Box>
         <Box component={"form"} onSubmit={handleSubmit}>
-          {roles.includes("distributor") && (
-            <Box component={"div"} className="rounded" sx={{
-              backgroundColor: bg,
-              border: "2px solid transparent",
-            }}>
-              <Box component={"div"}>
-                <FormControl sx={{ width: "100%" }}>
-                  <Select
-                    sx={{
-                      color: "red !important",
-                      boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }
-                    }}
-                    className="pt-1 pb-1"
-                    labelId="list-agent-label"
-                    id="list-agent"
-                    value={refAgent}
-                    onChange={handleChangeAgent}
-                    input={<OutlinedInput label="Agent" />}
-                    renderValue={(selected) => <Box component={"div"} sx={{
-                      color: "#000 !important"
-                    }}>{selected}</Box>
-                      
-                    }
-                  >
-                    {listSub.map((option, i_o) => (
-                      <MenuItem key={i_o} value={option.account}>
-                        {option.account}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+          {roles?.includes("distributor") && (
+            <>
+              <Box component={"div"} className="mb-2">Other agent ref</Box>
+              <Box component={"div"} className="rounded" sx={{
+                backgroundColor: bg,
+                border: "2px solid transparent",
+              }}>
+                
+                <Box component={"div"}>
+                  <FormControl sx={{ width: "100%" }}>
+                    <Select
+                      sx={{
+                        color: "red !important",
+                        boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }
+                      }}
+                      className="pt-1 pb-1"
+                      labelId="list-agent-label"
+                      id="list-agent"
+                      value={refAgent}
+                      onChange={handleChangeAgent}
+                      input={<OutlinedInput label="Agent" />}
+                      renderValue={(selected) => <Box component={"div"} sx={{
+                        color: "#000 !important"
+                      }}>{selected}</Box>
+                        
+                      }
+                    >
+                      {listSub.map((option, i_o) => (
+                        <MenuItem key={i_o} value={option.account}>
+                          {option.account}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Box>
-            </Box>
+            </>
+            
           )}
           <Box
             component={"div"}

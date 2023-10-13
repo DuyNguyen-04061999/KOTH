@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import {
   openConfirmDialog,
@@ -188,7 +189,7 @@ const AdminPanel = () => {
 
   const handleCopyRef = () => {
     copy(ref)
-    alert("Copy ref code successfully!")
+    dispatch(showToastNotify({ type: "success", message: "Copy ref code successfully!" }))
   }
 
   return (
