@@ -1,7 +1,7 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import { ADMIN_MASTER_SERVICE } from "../services/adminMasterService";
-import { createDistributorFail, createDistributorSuccess, deleteDistributorFail, deleteDistributorSuccess, getDetailDistributorFail, getDetailDistributorSuccess, getListDistributorFail, getListDistributorSuccess, getListTableFail, getListTableSuccess, updateDistributorFail, updateDistributorSuccess } from "../reducers/adminMasterReducer";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { closeCreateDialog } from "../reducers/adminDialogReducer";
+import { createDistributorFail, createDistributorSuccess, deleteDistributorFail, deleteDistributorSuccess, getDetailDistributorFail, getDetailDistributorSuccess, getListDistributorFail, getListDistributorSuccess, getListTableFail, getListTableSuccess, updateDistributorFail, updateDistributorSuccess } from "../reducers/adminMasterReducer";
+import { ADMIN_MASTER_SERVICE } from "../services/adminMasterService";
 const adminMasterService = new ADMIN_MASTER_SERVICE();
 
 function* createDistributorSaga(dataRequest) {
@@ -23,10 +23,8 @@ function* createDistributorSaga(dataRequest) {
 }
 
 function* getListDistributorSaga(dataRequest) {
-    console.log(1232113);
     try {
         const { payload } = dataRequest;
-        console.log(payload);
         const res = yield call(adminMasterService.getListDistributor, payload)
         const { list } = res?.data?.data
         if(res && res.status === 200) {

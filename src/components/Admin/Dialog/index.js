@@ -1,13 +1,11 @@
+import ConfirmDialogComponent from "./ConfirmDialogComponent";
 import CreateAccountDialogComponent from "./CreateAccountDialogComponent";
-import ProvideTicketDialogComponent from "./ProvideTicketDialogComponent";
 import DetailAccountDialogComponent from "./DetailAccountDialogComponent";
-import ResetPasswordDialogComponent from "./ResetPasswordDialogComponent";
 import GivePermissionDialogComponent from "./GivePermissionDialogComponent";
+import ProvideTicketDialogComponent from "./ProvideTicketDialogComponent";
+import ResetPasswordDialogComponent from "./ResetPasswordDialogComponent";
+import UpdateAccountDialogComponent from "./UpdateAccountDialogComponent";
 
 export {
-    CreateAccountDialogComponent,
-    ProvideTicketDialogComponent,
-    DetailAccountDialogComponent,
-    ResetPasswordDialogComponent,
-    GivePermissionDialogComponent
-}
+    ConfirmDialogComponent, CreateAccountDialogComponent, DetailAccountDialogComponent, GivePermissionDialogComponent, ProvideTicketDialogComponent, ResetPasswordDialogComponent, UpdateAccountDialogComponent
+};

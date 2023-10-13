@@ -49,7 +49,7 @@ export default function GameInTournament(props) {
                   fontSize: "12px",
                 }}
               >
-                Game for tournament
+                Game for promotion
               </Typography>
             </Box>
           ) : (

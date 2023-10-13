@@ -1,6 +1,6 @@
 import { lazy, useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "./assets/css/App.css";
@@ -104,15 +104,14 @@ import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import PlayGamePage from "./pages/PlayGamePage";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 // import UnityGameComponent from "./components/GameManager/UnityGameComponent";
-const LazyNewHomePage = lazy(()=> import("./pages/NewHomePageComponent"))
+const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
 const LazyJoinTour = lazy(() => import("./pages/JoinTournamentComponent"));
-const LazyHotTour = lazy(()=> import("./pages/HotTournament"));
-const LazyDailyTour = lazy(()=> import("./pages/DailyTournament"));
-const LazyWeekTour = lazy(()=> import("./pages/WeekLongTour"));
+const LazyHotTour = lazy(() => import("./pages/HotTournament"));
+const LazyDailyTour = lazy(() => import("./pages/DailyTournament"));
+const LazyWeekTour = lazy(() => import("./pages/WeekLongTour"));
 function App() {
-  
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
   const { token } = store.getState().authReducer;
@@ -121,15 +120,13 @@ function App() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    if(window.location.pathname  === "/changelog"){
+    if (window.location.pathname === "/changelog") {
       setSocket(null);
-    }
-    else{
+    } else {
       const socket = _socket;
       setSocket(socket);
     }
   }, []);
-  
 
   const { width } = useWindowDimensions();
 
@@ -201,37 +198,42 @@ function App() {
   useEffect(() => {
     if (socket) {
       socket?.once("connect", (data) => {});
-      socket?.on("loginSuccess", (mess, token, key, user, userPackageId, uPack) => {
-        store.dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
-        store.dispatch(
-          saveDataLogin({
-            token: token,
-            username: user?.userName,
-            gold: user?.userGold,
-            avatar: user?.userAccount?.accountAvatar,
-            role: user?.userRole,
-            id: user?.id,
-            userPackageId: userPackageId,
-            uPack: uPack
-          })
-        );
+      socket?.on(
+        "loginSuccess",
+        (mess, token, key, user, userPackageId, uPack) => {
+          store.dispatch(
+            updateCountEveryDay(user?.userCountSpin?.countEveryday)
+          );
+          store.dispatch(
+            saveDataLogin({
+              token: token,
+              username: user?.userName,
+              gold: user?.userGold,
+              avatar: user?.userAccount?.accountAvatar,
+              role: user?.userRole,
+              id: user?.id,
+              userPackageId: userPackageId,
+              uPack: uPack,
+            })
+          );
 
-        localStorage.setItem("NAME", user.userName);
-        // localStorage.setItem("PASS", password);
-        localStorage.setItem("KE", key);
-        localStorage.setItem("token", token);
-        // socket?.emit("listMessage");
-        socket?.emit("listFriend");
-        socket?.emit("getTransaction");
-        // socket?.emit("leaveAllRoom");
-        socket?.emit("listPackage", {
-          type: true,
-        });
-        socket?.emit("getDetailProfile", {
-          username: user?.userName,
-        });
-        // checkPreAuthRouter();
-      });
+          localStorage.setItem("NAME", user.userName);
+          // localStorage.setItem("PASS", password);
+          localStorage.setItem("KE", key);
+          localStorage.setItem("token", token);
+          // socket?.emit("listMessage");
+          socket?.emit("listFriend");
+          socket?.emit("getTransaction");
+          // socket?.emit("leaveAllRoom");
+          socket?.emit("listPackage", {
+            type: true,
+          });
+          socket?.emit("getDetailProfile", {
+            username: user?.userName,
+          });
+          // checkPreAuthRouter();
+        }
+      );
 
       socket?.on("getListFriendSuccess", (data) => {
         store.dispatch(pushfriendList(data));
@@ -530,7 +532,7 @@ function App() {
       });
 
       socket?.on("warning", (data) => {
-        store.dispatch(showToast(data))
+        store.dispatch(showToast(data));
         toast.warning(data, {
           icon: ({ theme, type }) => (
             <img
@@ -638,7 +640,6 @@ function App() {
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
     },
   });
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -648,7 +649,8 @@ function App() {
               <Routes>
                 <Route
                   path="/home"
-                  element={ getAppType() === "promote" ? (
+                  element={
+                    getAppType() === "promote" ? (
                       <Suspense fallback={<PageLoading />}>
                         <LazyNewHomePage />
                       </Suspense>
@@ -656,8 +658,7 @@ function App() {
                       <HomePage />
                     )
                   }
-                >
-                </Route>
+                ></Route>
                 <Route path="/gamelobby/:id" element={<GameLobby />} />
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route

@@ -167,6 +167,7 @@ const DrawerNavigation = (props) => {
           sx={(theme) => ({
             [theme.breakpoints.down("lg")]: { display: "none" },
             height: "100%",
+            
           })}
         >
           <AdminNavigation />
