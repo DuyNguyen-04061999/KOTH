@@ -1,7 +1,7 @@
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Box, Dialog, Menu, MenuItem } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -40,10 +40,11 @@ export default function ChatGlobal(props) {
   const [openGame, setOpenGame] = useState(false);
   const [showChat] = useState(true);
   const dispatch = useDispatch();
-  const [chatF, setChatF] = useState("");
+  const chatInput = useRef("");
   const { contacter } = useSelector((state) => state.chatReducer);
   const { token } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);
+  
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -51,32 +52,29 @@ export default function ChatGlobal(props) {
 
   useEffect(() => {
     if (token === null || token === "") {
-      setChatF("");
+      chatInput.current.value = "";
     }
   }, [token]);
 
-  const handleChangeChat = (e) => {
-    setChatF(e.target.value);
-  };
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === "Enter" && chatF) {
+    if (e.key === "Enter" && chatInput.current) {
       socket?.emit("chat", {
         type: "Private",
         toId: contacter.id,
-        content: chatF,
+        content: chatInput.current.value,
       });
-      setChatF("");
     }
   };
+
   const handleSendMessage = () => {
-    if (chatF !== "") {
+    if (chatInput.current.value !== "") {
       socket?.emit("chat", {
         type: "Private",
         toId: contacter.id,
-        content: chatF,
+        content: chatInput.current.value,
       });
 
-      setChatF("");
+      chatInput.current.value = "";
     }
   };
   const checkHeightResponsive = () => {
@@ -259,9 +257,8 @@ export default function ChatGlobal(props) {
               >
                 <ChatRoot
                   type="text"
-                  value={chatF}
+                  ref={chatInput}
                   id="sendmessages"
-                  onChange={handleChangeChat}
                   onKeyDown={handleOnKeyDownEnter}
                   style={inpChat()}
                   placeholder="Type your messages..."
@@ -421,9 +418,8 @@ export default function ChatGlobal(props) {
               >
                 <ChatRoot
                   type="text"
-                  value={chatF}
+                  ref={chatInput}
                   id="sendmessages"
-                  onChange={handleChangeChat}
                   onKeyDown={handleOnKeyDownEnter}
                   style={inpChat()}
                   placeholder="Type your messages..."
