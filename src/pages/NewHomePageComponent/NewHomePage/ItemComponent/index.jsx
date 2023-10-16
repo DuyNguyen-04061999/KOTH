@@ -244,10 +244,14 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                   ? "Start at: "
                   : checkType === 2
                   ? "End in: "
-                  : "Winner: "}
+                  : checkType === 3  ? "Winner: " : ""} 
               </Box>
               {isLoading ? (
-                <Skeleton variant="text" width={120} />
+                <Skeleton
+                  variant="text"
+                  sx={{ marginTop: "-4px" }}
+                  width={90}
+                />
               ) : (
                 countdown && (
                   <Typography
@@ -261,7 +265,10 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                     }}
                   >
                     {checkType !== 3
-                      ? `${days}d:${hours}h:${minutes}m`
+                      ? days !== null &&
+                        hours !== null &&
+                        minutes !== null &&
+                        `${days}d:${hours}h:${minutes}m`
                       : tourInfo?.tScores &&
                         tourInfo?.tScores[0]?.tUser &&
                         tourInfo?.tScores[0]?.tUser?.userName}
@@ -269,7 +276,6 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 )
               )}
             </Box>
-
             <Box
               sx={{
                 display: "flex",

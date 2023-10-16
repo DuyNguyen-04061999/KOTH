@@ -48,15 +48,45 @@ export const getHourlyTour = (data) => {
     payload: data,
   };
 };
+
 export const getHotTour = (data) => {
   return {
     type: "GET_LIST_HOT_TOURNAMENT",
     payload: data,
   };
 };
+
+export const getHotTourSuccess = (data) => {
+  return {
+    type: "GET_LIST_HOT_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getHotTourFail = (data) => {
+  return {
+    type: "GET_LIST_HOT_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
+
 export const getVipTour = (data) => {
   return {
     type: "GET_LIST_VIP_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getVipTourSuccess = (data) => {
+  return {
+    type: "GET_LIST_VIP_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getVipTourFail = (data) => {
+  return {
+    type: "GET_LIST_VIP_TOURNAMENT_FAIL",
     payload: data,
   };
 };
@@ -67,15 +97,59 @@ export const getStandardTour = (data) => {
     payload: data,
   };
 };
+
+export const getStandardTourSuccess = (data) => {
+  return {
+    type: "GET_LIST_STANDARD_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getStandardTourFail = (data) => {
+  return {
+    type: "GET_LIST_STANDARD_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
+
 export const getOngoingTour = (data) => {
   return {
     type: "GET_LIST_ONGOING_TOURNAMENT",
     payload: data,
   };
 };
+
+export const getOngoingTourSuccess = (data) => {
+  return {
+    type: "GET_LIST_ONGOING_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getOngoingTourFail = (data) => {
+  return {
+    type: "GET_LIST_ONGOING_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
+
 export const getUpcomingTour = (data) => {
   return {
     type: "GET_LIST_UPCOMING_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getUpcomingTourSuccess = (data) => {
+  return {
+    type: "GET_LIST_UPCOMING_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getUpcomingTourFail = (data) => {
+  return {
+    type: "GET_LIST_UPCOMING_TOURNAMENT_FAIL",
     payload: data,
   };
 };
@@ -86,15 +160,42 @@ export const getEndedTour = (data) => {
     payload: data,
   };
 };
+
+export const getEndedTourSuccess = (data) => {
+  return {
+    type: "GET_LIST_ENDED_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getEndedTourFail = (data) => {
+  return {
+    type: "GET_LIST_ENDED_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
+
 export const getWeeklyTour = (data) => {
   return {
     type: "GET_LIST_WEEKLY_TOURNAMENT",
     payload: data,
   };
 };
-export const getBiggestEndTourRedux = (data) => {
+export const getBiggestEndTour = (data) => {
   return {
-    type: "GET_BIGGEST_SUCCESS",
+    type: "GET_BIGGEST_TOUR",
+    payload: data,
+  };
+};
+export const getBiggestEndTourSuccess = (data) => {
+  return {
+    type: "GET_BIGGEST_TOUR_SUCCESS",
+    payload: data,
+  };
+};
+export const getBiggestEndTourFail = (data) => {
+  return {
+    type: "GET_BIGGEST_TOUR_FAIL",
     payload: data,
   };
 };
@@ -209,6 +310,12 @@ const tournamentReducer = (
     tournamentRes: [],
     isTournamentShow: false,
     isBuyTicket: false,
+    isFetchHot: true,
+    isFetchVip: true,
+    isFetchStandard: true,
+    isFetchOngoing: true,
+    isFetchUpcoming: true,
+    isFetchEnded: true,
     dailyTournament: [],
     weeklyTournament: [],
     hourlyTournament: [],
@@ -225,9 +332,12 @@ const tournamentReducer = (
     listBrand: [],
     isFecthBrand: false,
     biggestEndTour: [],
+    isFetchBiggestTour: true,
     brandTour: [],
     hotWeekTour: [],
     threeBrandTour: [],
+    isFetchThreeTour: true,
+    isFetchHotWeek: true,
     isResultEndGame: false,
     endGameScore: 0,
     idTour: "",
@@ -269,7 +379,18 @@ const tournamentReducer = (
     case "GET_LIST_HOT_TOURNAMENT":
       return {
         ...state,
+        isFetchHot: true,
+      };
+    case "GET_LIST_HOT_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
         hotTournament: payload,
+        isFetchHot: false,
+      };
+    case "GET_LIST_HOT_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFetchHot: false,
       };
     case "GET_LIST_DAILY_TOURNAMENT":
       return {
@@ -286,31 +407,86 @@ const tournamentReducer = (
         ...state,
         weeklyTournament: payload,
       };
-      case "GET_LIST_VIP_TOURNAMENT":
-        return {
-          ...state,
-          vipTournament: payload,
-        };
-      case "GET_LIST_STANDARD_TOURNAMENT":
-        return {
-          ...state,
-          standardTournament: payload,
-        };
-      case "GET_LIST_ONGOING_TOURNAMENT":
-        return {
-          ...state,
-          ongoingTournament: payload,
-        };
-      case "GET_LIST_UPCOMING_TOURNAMENT":
-        return {
-          ...state,
-          upcomingTournament: payload,
-        };
-        case "GET_LIST_ENDED_TOURNAMENT":
-          return {
-            ...state,
-            endedTournament: payload,
-          };
+    case "GET_LIST_VIP_TOURNAMENT":
+      return {
+        ...state,
+        isFetchVip: true,
+      };
+    case "GET_LIST_VIP_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        vipTournament: payload,
+        isFetchVip: false,
+      };
+    case "GET_LIST_VIP_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFetchVip: false,
+      };
+    case "GET_LIST_STANDARD_TOURNAMENT":
+      return {
+        ...state,
+        isFetchStandard: true,
+      };
+    case "GET_LIST_STANDARD_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        standardTournament: payload,
+        isFetchStandard: false,
+      };
+    case "GET_LIST_STANDARD_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFetchStandard: false,
+      };
+    case "GET_LIST_ONGOING_TOURNAMENT":
+      return {
+        ...state,
+        isFetchOngoing: true,
+      };
+    case "GET_LIST_ONGOING_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        ongoingTournament: payload,
+        isFetchOngoing: false,
+      };
+    case "GET_LIST_ONGOING_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFetchOngoing: false,
+      };
+    case "GET_LIST_UPCOMING_TOURNAMENT":
+      return {
+        ...state,
+        isFetchUpcoming: true,
+      };
+    case "GET_LIST_UPCOMING_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        upcomingTournament: payload,
+        isFetchUpcoming: false,
+      };
+    case "GET_LIST_UPCOMING_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFetchUpcoming: false,
+      };
+    case "GET_LIST_ENDED_TOURNAMENT":
+      return {
+        ...state,
+        isFetchEnded: true,
+      };
+    case "GET_LIST_ENDED_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        endedTournament: payload,
+        isFetchEnded: false,
+      };
+    case "GET_LIST_ENDED_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFetchEnded: false,
+      };
     case "GET_LIST_GAME_FOR_TOURNAMENT":
       return {
         ...state,
@@ -359,10 +535,21 @@ const tournamentReducer = (
         ...state,
         isFecthBrand: false,
       };
-    case "GET_BIGGEST_SUCCESS":
+    case "GET_BIGGEST_TOUR":
       return {
         ...state,
+        isFetchBiggestTour: true,
+      };
+    case "GET_BIGGEST_TOUR_SUCCESS":
+      return {
+        ...state,
+        isFetchBiggestTour: false,
         biggestEndTour: payload,
+      };
+    case "GET_BIGGEST_TOUR_FAIL":
+      return {
+        ...state,
+        isFetchBiggestTour: false,
       };
     case "GET_BRAND_TOUR_SUCCESS":
       return {
@@ -372,11 +559,13 @@ const tournamentReducer = (
     case "GET_HOTTEST_WEEK_TOUR_SUCCESS":
       return {
         ...state,
+        isFetchHotWeek: false,
         hotWeekTour: payload,
       };
     case "GET_THREE_BRAND_TOUR_SUCCESS":
       return {
         ...state,
+        isFetchThreeTour: false,
         threeBrandTour: payload,
       };
     case "TOGGLE_OPEN_RESULT_END_GAME":

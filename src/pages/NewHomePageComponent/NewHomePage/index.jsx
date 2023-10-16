@@ -6,7 +6,7 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import SlickSlider from "../../../components/SlickSlider";
 import { imageHome, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -46,12 +46,6 @@ export default function NewHomePage() {
   // const [promotion, setPromotion] = useState(true);
   // const [startPoint, setstartPoint] = useState(null);
   const { width } = useWindowDimensions();
-  const [isFetchListHot, setIsFetchListHot] = useState(true);
-  const [isFetchListVip, setIsFetchListVip] = useState(true);
-  const [isFetchListStandard, setIsFetchListStandard] = useState(true);
-  const [isFetchListOngoing, setIsFetchListOngoing] = useState(true);
-  const [isFetchListUpcoming, setIsFetchListUpcoming] = useState(true);
-  const [isFetchListEnded, setIsFetchListEnded] = useState(true);
   // const [type, setType] = useState("");
   // const [hourList, setHourList] = useState([]);
   // const [selectedHour, setSeHour] = useState(0);
@@ -67,19 +61,22 @@ export default function NewHomePage() {
   // const [selectedDay, setSeDay] = useState(0);
 
   const {
-    dailyTournament,
-    // weeklyTournament,
-    hourlyTournament,
+    // dailyTournament,
+    // hourlyTournament,
     hotTournament,
     biggestEndTour,
-    // brandTour,
     hotWeekTour,
     threeBrandTour,
-    // vipTournament,
-    // standardTournament,
     ongoingTournament,
     upcomingTournament,
     endedTournament,
+    isFetchThreeTour,
+    isFetchHotWeek,
+    isFetchBiggestTour,
+    isFetchHot,
+    isFetchOngoing,
+    isFetchUpcoming,
+    isFetchEnded
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -123,7 +120,7 @@ export default function NewHomePage() {
       type: "CALL_BIGGEST_END_TOUR",
     });
     dispatch({
-      type: "CALL_BRAND_TOUR",
+      type: "GET_BIGGEST_TOUR",
     });
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",
@@ -133,24 +130,9 @@ export default function NewHomePage() {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    // setDayList(dailyTournament?.map((item) => item?.timeStart));
-  }, [hourlyTournament, dailyTournament]);
-
-  useEffect(() => {
-    if (hotTournament) {
-      setIsFetchListHot(false);
-    }
-    if (ongoingTournament) {
-      setIsFetchListOngoing(false);
-    }
-    if (upcomingTournament) {
-      setIsFetchListUpcoming(false);
-    }
-    if (endedTournament) {
-      setIsFetchListEnded(false);
-    }
-  }, [hotTournament, ongoingTournament, upcomingTournament, endedTournament]);
+  // useEffect(() => {
+  //   // setDayList(dailyTournament?.map((item) => item?.timeStart));
+  // }, [hourlyTournament, dailyTournament]);
 
   const navigate = useNavigate();
 
@@ -199,7 +181,7 @@ export default function NewHomePage() {
               marginBottom: width < 576 ? "24px" : "32px",
             }}
           >
-            {isFetchListHot ? (
+            {isFetchThreeTour ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -282,13 +264,13 @@ export default function NewHomePage() {
             <Box sx={{ paddingTop: width < 576 ? "24px" : "32px" }}>
               <ListPromotion
                 listData={hotTournament}
-                loadingState={isFetchListHot}
+                loadingState={isFetchHot}
                 typePromo={"hot"}
               />
             </Box>
           </Box>{" "}
           {width < 576 ? (
-            isFetchListHot ? (
+            isFetchBiggestTour ? (
               <BannerLoading
                 height={width < 576 ? "214px" : "363px"}
                 width={"100%"}
@@ -447,7 +429,7 @@ export default function NewHomePage() {
                 }
               />
             )
-          ) : isFetchListHot ? (
+          ) : isFetchBiggestTour ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}
@@ -825,7 +807,8 @@ export default function NewHomePage() {
             <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
               <ListPromotion
                 listData={ongoingTournament}
-                loadingState={isFetchListOngoing}
+                loadingState={isFetchOngoing}
+                typePromo={"ongoing"}
               />
             </Box>
 
@@ -1259,13 +1242,14 @@ export default function NewHomePage() {
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               <ListPromotion
                 listData={upcomingTournament}
-                loadingState={isFetchListUpcoming}
+                loadingState={isFetchUpcoming}
+                typePromo={"upcoming"}
               />
             </Box>
           </Box>{" "}
           {/* Banner Top1 */}
           {width < 576 ? (
-            isFetchListHot ? (
+            isFetchHotWeek ? (
               <Box
                 sx={{
                   marginTop: width < 576 ? "48px" : "32px",
@@ -1304,7 +1288,7 @@ export default function NewHomePage() {
                 tourId={hotWeekTour && hotWeekTour?.id}
               />
             )
-          ) : isFetchListHot ? (
+          ) : isFetchHotWeek ? (
             <BannerLoading
               height={width < 576 ? "214px" : "363px"}
               width={"100%"}
@@ -1568,7 +1552,8 @@ export default function NewHomePage() {
             <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               <ListPromotion
                 listData={endedTournament}
-                loadingState={isFetchListEnded}
+                loadingState={isFetchEnded}
+                typePromo={"ended"}
               />
             </Box>
           </Box>{" "}
