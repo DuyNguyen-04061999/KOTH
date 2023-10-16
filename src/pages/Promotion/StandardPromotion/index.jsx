@@ -40,7 +40,7 @@ export default function HotTournament() {
   const { standardTournament, isFetchStandard } = useSelector(
     (state) => state.tournamentReducer
   );
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
@@ -107,7 +107,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchStandard ? (
+                {isFetchStandard || data === null ? (
                   <BannerLoading height={363} />
                 ) : (
                   <SlickSlider
@@ -129,7 +129,7 @@ export default function HotTournament() {
                   typePromo={"standard"}
                 />
               </Box>
-              {!isFetchStandard && data?.length > 0 && (
+              {!isFetchStandard && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
@@ -173,7 +173,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchStandard ? (
+                {isFetchStandard || data === null ? (
                   <BannerLoading height={208} />
                 ) : (
                   <SlickSlider
@@ -195,7 +195,7 @@ export default function HotTournament() {
                   typePromo={"standard"}
                 />
               </Box>
-              {!isFetchStandard && data?.length > 0 && (
+              {!isFetchStandard && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {

@@ -11,7 +11,6 @@ const ListPromotion = (props) => {
   const { width } = useWindowDimensions();
   const { listData, loadingState, typePromo, itemOffSet = 0, itemQuantity = 12 } = props;
   const { pathname } = useLocation();
-  console.log(listData);
   if (pathname.includes("home") || pathname === "/") {
     return (
       <Box>
@@ -106,7 +105,7 @@ const ListPromotion = (props) => {
   } else
     return (
       <Box>
-        {loadingState ? (
+        {loadingState || listData === null ? (
           <Box
             sx={{
               display: width < 576 ? "flex" : "grid",

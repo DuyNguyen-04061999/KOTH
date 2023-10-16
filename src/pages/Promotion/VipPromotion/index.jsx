@@ -40,7 +40,7 @@ export default function HotTournament() {
   const { vipTournament, isFetchVip } = useSelector(
     (state) => state.tournamentReducer
   );
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
@@ -57,7 +57,6 @@ export default function HotTournament() {
     }
   }, [vipTournament]);
 
-  console.log(data);
 
   const imgHot = data?.map((e) => {
     return e.tournamentBackground;
@@ -66,8 +65,6 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-
-  console.log(data?.length);
 
   return (
     <ThemeProvider theme={theme}>
@@ -111,7 +108,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchVip ? (
+                {isFetchVip || data === null ? (
                   <BannerLoading height={363} />
                 ) : (
                   <SlickSlider
@@ -133,7 +130,7 @@ export default function HotTournament() {
                   typePromo={"vip"}
                 />
               </Box>
-              {!isFetchVip && data?.length > 0 && (
+              {!isFetchVip && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
@@ -177,7 +174,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchVip ? (
+                {isFetchVip || data === null ? (
                   <BannerLoading height={208} />
                 ) : (
                   <SlickSlider
@@ -199,7 +196,7 @@ export default function HotTournament() {
                   typePromo={"vip"}
                 />
               </Box>
-              {!isFetchVip && data?.length > 0 && (
+              {!isFetchVip && (data !== null && data?.length > 0) &&(
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {

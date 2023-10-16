@@ -38,7 +38,7 @@ export default function HotTournament() {
   };
   const { device } = useSelector((state) => state.deviceReducer);
   const { hotTournament, isFetchHot } = useSelector((state) => state.tournamentReducer);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
@@ -106,7 +106,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchHot ? (
+                {isFetchHot || data === null ? (
                   <BannerLoading height={363} />
                 ) : (
                   <SlickSlider
@@ -128,7 +128,7 @@ export default function HotTournament() {
                   typePromo={"hot"}
                 />
               </Box>
-              {!isFetchHot && data?.length > 0 && (
+              {!isFetchHot && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
@@ -172,7 +172,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchHot ? (
+                {isFetchHot || data === null ? (
                   <BannerLoading height={208} />
                 ) : (
                   <SlickSlider
@@ -194,7 +194,7 @@ export default function HotTournament() {
                   typePromo={"hot"}
                 />
               </Box>
-              {!isFetchHot && data?.length > 0 && (
+              {!isFetchHot && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {

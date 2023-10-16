@@ -37,8 +37,10 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { endedTournament,isFetchEnded } = useSelector((state) => state.tournamentReducer);
-  const [data, setData] = useState([]);
+  const { endedTournament, isFetchEnded } = useSelector(
+    (state) => state.tournamentReducer
+  );
+  const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
@@ -105,7 +107,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchEnded ? (
+                {isFetchEnded || data === null ? (
                   <BannerLoading height={363} />
                 ) : (
                   <SlickSlider
@@ -120,9 +122,14 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <ListPromotion listData={data} loadingState={isFetchEnded} typePromo={"ended"} itemOffSet={itemOffSet}/>
+                <ListPromotion
+                  listData={data}
+                  loadingState={isFetchEnded}
+                  typePromo={"ended"}
+                  itemOffSet={itemOffSet}
+                />
               </Box>
-              {!isFetchEnded && data?.length > 0 && (
+              {!isFetchEnded && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
@@ -166,7 +173,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchEnded ? (
+                {isFetchEnded || data === null ? (
                   <BannerLoading height={208} />
                 ) : (
                   <SlickSlider
@@ -188,7 +195,7 @@ export default function HotTournament() {
                   typePromo={"ended"}
                 />
               </Box>
-              {!isFetchEnded && data?.length > 0 && (
+              {!isFetchEnded && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {

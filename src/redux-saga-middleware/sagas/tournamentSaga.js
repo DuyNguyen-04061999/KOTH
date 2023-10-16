@@ -33,7 +33,7 @@ import {
   getVipTour,
   getVipTourFail,
   getVipTourSuccess,
-  getWeeklyTour
+  getWeeklyTour,
 } from "../reducers/tournamentReducer";
 import TournamentService from "../services/tournamentService";
 // import { showAlert } from "../reducers/alertReducer";
@@ -69,7 +69,7 @@ function* getListTour(dataRequest) {
       yield put(getHotTour());
       if (res.status === 200) {
         yield put(getHotTourSuccess(res.data));
-      } else if(res.data) {
+      } else {
         yield put(getHotTourFail());
       }
     } else if (payload === "vip") {
@@ -164,8 +164,7 @@ function* getBiggesstEndTour() {
     const res = yield call(tournamentService.callBiggestEndTour);
     if (res.status === 200) {
       yield put(getBiggestEndTourSuccess(res.data));
-    }
-    else {
+    } else {
       yield put(getBiggestEndTourFail());
     }
   } catch (error) {
