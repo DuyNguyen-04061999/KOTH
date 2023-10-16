@@ -200,7 +200,7 @@ export default function JoinTournament() {
     if(detailTournament?.tournamentVip !== 0 &&  uPack === null) {
       dispatch(toggleTournamentShow())
     }
-    if (token) {
+    else if (token) {
       socket?.emit("joinTournament", {
         tournamentId: detailTournament?.id,
       });
