@@ -18,6 +18,7 @@ import {
   getIdPackage,
   // toggleDialogConfirm,
   toggleLoginDialog,
+  toggleSubscriptionDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 // import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { useLocation } from "react-router-dom";
@@ -129,9 +130,10 @@ export default function Package() {
         <DialogConfirm />
         {width > 576 ? (
           <div className="Package-home pb-5 ">
-            <Box className="pt-5 pb-4 text-white">
+            <Box className="text-white">
               {location && location?.pathname?.includes("home") && (
                 <Typography
+                  className="pt-5 pb-4"
                   sx={{
                     textAlign: "start",
                     fontSize: width < 576 ? "14px" : "20px",
@@ -151,7 +153,7 @@ export default function Package() {
               }}
             >
               <Box>
-                <Box sx={{ paddingBottom: "50px" }}>
+                <Box>
                   <Box
                     sx={{
                       display: "flex",
@@ -1092,6 +1094,7 @@ export default function Package() {
                                   if (token) {
                                     dispatch(toggleCheckWallet({type: "subscription"}));
                                     dispatch(getIdPackage(i?.id));
+                                    dispatch(toggleSubscriptionDialog())
                                   }
                                 } else {
                                   

@@ -35,6 +35,7 @@ import {
   saveBoughtTournament,
   saveIdTournament,
   toggleBuyTicket,
+  toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import {
@@ -71,7 +72,6 @@ export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
   const [detailTournament, setDetailTournament] = useState({});
-  console.log(detailTournament);
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
   const [videoGame, setVideoGame] = useState(false || true);
@@ -185,8 +185,8 @@ export default function JoinTournament() {
   };
 
   const handleJoinTour = () => {
-    if (uPack === null) {
-      console.log(123);
+    if(detailTournament?.tournamentVip !== 0 &&  uPack === null) {
+      dispatch(toggleTournamentShow())
     }
     if (token) {
       socket?.emit("joinTournament", {
