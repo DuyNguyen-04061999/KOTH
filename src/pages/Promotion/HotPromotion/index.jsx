@@ -43,11 +43,10 @@ export default function HotTournament() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hot",
-      });
-  
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "hot",
+    });
   }, [dispatch]);
 
   useEffect(() => {

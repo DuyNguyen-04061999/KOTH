@@ -9,7 +9,13 @@ import ListEmpty from "../LoadingComponent/ListEmpty";
 
 const ListPromotion = (props) => {
   const { width } = useWindowDimensions();
-  const { listData, loadingState, typePromo, itemOffSet = 0, itemQuantity = 12 } = props;
+  const {
+    listData,
+    loadingState,
+    typePromo,
+    itemOffSet = 0,
+    itemQuantity = 12,
+  } = props;
   const { pathname } = useLocation();
   if (pathname.includes("home") || pathname === "/") {
     return (
@@ -81,7 +87,7 @@ const ListPromotion = (props) => {
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
               {loadingState ? (
-                  <ListItemLoading></ListItemLoading>
+                <ListItemLoading></ListItemLoading>
               ) : listData && listData?.length > 0 ? (
                 listData?.map((item, index) => {
                   return (
