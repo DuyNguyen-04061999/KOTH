@@ -1,6 +1,6 @@
 import { lazy, useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "./assets/css/App.css";
@@ -108,9 +108,19 @@ const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
 const LazyJoinTour = lazy(() => import("./pages/JoinTournamentComponent"));
-const LazyHotTour = lazy(() => import("./pages/HotTournament"));
-const LazyDailyTour = lazy(() => import("./pages/DailyTournament"));
-const LazyWeekTour = lazy(() => import("./pages/WeekLongTour"));
+const LazyHotPromo = lazy(() => import("./pages/Promotion/HotPromotion"));
+const LazyVipPromo = lazy(() => import("./pages/Promotion/VipPromotion"));
+const LazyStandardPromo = lazy(() =>
+  import("./pages/Promotion/StandardPromotion")
+);
+const LazyOngoingPromo = lazy(() =>
+  import("./pages/Promotion/OngoingPromotion")
+);
+const LazyUpcomingPromo = lazy(() =>
+  import("./pages/Promotion/UpcomingPromotion")
+);
+const LazyEndedPromo = lazy(() => import("./pages/Promotion/EndedPromotion"));
+
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
@@ -678,27 +688,51 @@ function App() {
                   }
                 />
                 <Route
-                  path="/hot-tournament"
+                  path="/hot-promotion"
                   element={
                     <Suspense fallback={<PageLoading />}>
-                      <LazyHotTour />
+                      <LazyHotPromo />
                     </Suspense>
                   }
                 />
                 {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
                 <Route
-                  path="/daily-tournament"
+                  path="/vip-promotion"
                   element={
                     <Suspense fallback={<PageLoading />}>
-                      <LazyDailyTour />
+                      <LazyVipPromo />
                     </Suspense>
                   }
                 />
                 <Route
-                  path="/week-long-tournament"
+                  path="/standard-promotion"
                   element={
                     <Suspense fallback={<PageLoading />}>
-                      <LazyWeekTour />
+                      <LazyStandardPromo />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/ongoing-promotion"
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyOngoingPromo />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/upcoming-promotion"
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyUpcomingPromo />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/ended-promotion"
+                  element={
+                    <Suspense fallback={<PageLoading />}>
+                      <LazyEndedPromo />
                     </Suspense>
                   }
                 />

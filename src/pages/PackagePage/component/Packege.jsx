@@ -7,19 +7,19 @@ import {
   createTheme,
 } from "@mui/material";
 // import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useEffect, useState } from "react";
-import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
-import { images } from "../../../utils/images";
-import "../scss/index.scss";
-import DialogConfirm from "./DialogConfirm";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   getIdPackage,
   // toggleDialogConfirm,
   toggleLoginDialog,
   toggleSubscriptionDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import "../scss/index.scss";
+import DialogConfirm from "./DialogConfirm";
 // import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
 import { useLocation } from "react-router-dom";
 import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walletReducer";
@@ -136,7 +136,7 @@ export default function Package() {
                   className="pt-5 pb-4"
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "20px",
+                    fontSize: width < 576 ? "14px" : "24px",
                     fontWeight: "200 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
@@ -396,8 +396,8 @@ export default function Package() {
                                           marginLeft: "4px !important",
                                         }}
                                       >
-                                        {i?.packageFreeTicketTournament} ticket
-                                        / tournament
+                                        {i?.packageFreeTicketTournament} extras
+                                        / promotion
                                       </Typography>
                                     </Box>
                                     <Box
@@ -549,7 +549,7 @@ export default function Package() {
                                               : "12px",
                                         }}
                                       >
-                                        /month
+                                        / month
                                       </Typography>
                                     </Box>
                                   )}
@@ -562,11 +562,14 @@ export default function Package() {
                                       if (i?.packageName !== "Free") {
                                         if (token) {
                                           // dispatch(toggleDialogConfirm());
-                                          dispatch(toggleCheckWallet({type: "subscription"}))
+                                          dispatch(
+                                            toggleCheckWallet({
+                                              type: "subscription",
+                                            })
+                                          );
                                           dispatch(getIdPackage(i?.id));
                                         }
                                       } else {
-                                        
                                       }
                                     }}
                                     disabled={
@@ -690,7 +693,7 @@ export default function Package() {
                 Subscription
               </Typography>
             )}
-            <Box style={{ padding: "10px" }} >
+            <Box style={{ padding: "10px" }}>
               <Box
                 sx={{
                   paddingBottom: "0px",
@@ -1092,12 +1095,15 @@ export default function Package() {
                               onClick={() => {
                                 if (i?.packageName !== "Free") {
                                   if (token) {
-                                    dispatch(toggleCheckWallet({type: "subscription"}));
+                                    dispatch(
+                                      toggleCheckWallet({
+                                        type: "subscription",
+                                      })
+                                    );
                                     dispatch(getIdPackage(i?.id));
                                     dispatch(toggleSubscriptionDialog())
                                   }
                                 } else {
-                                  
                                 }
                               }}
                               disabled={i?.id === userPackageId ? true : false}

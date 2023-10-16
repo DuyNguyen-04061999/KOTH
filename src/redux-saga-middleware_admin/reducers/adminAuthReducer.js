@@ -63,6 +63,13 @@ export const changePasswordFail = (data) => {
   };
 };
 
+export const updateNewRef = (data) => {
+  return {
+    type: "UPDATE_NEW_REF",
+    payload: data,
+  };
+};
+
 const adminAuthReducer = (
   state = {
     isLogin: false,
@@ -114,6 +121,7 @@ const adminAuthReducer = (
         isChangePassword: false,
         errorChangePassword: payload,
       };
+      case "UPDATE_NEW_REF": return {...state, ref: payload || ""}
     default:
       return { ...state };
   }

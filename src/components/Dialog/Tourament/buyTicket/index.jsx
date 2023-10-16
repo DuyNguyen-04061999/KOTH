@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import { toggleBuyTicket } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
-import { sliceString } from "../../../../utils/helper";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { CalculateDistance } from "../../../CountDownTimer/utils/CalculateDistance";
@@ -39,19 +38,12 @@ export default function BuyTicket(props) {
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  const { dataTime, nameTour } = props;
+  const { dataTime } = props;
   //-------------
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
-  const [days, setDay] = useState(null);
+  // const [days, setDay] = useState(null);
 
-  useEffect(() => {
-    let countdownDate = new Date(moment(lastMomentOfToday)).getTime();
-    let timeNow = new Date().getTime();
-    setHour(CalculateDistance(countdownDate, timeNow).hours);
-    setMinute(CalculateDistance(countdownDate, timeNow).minutes);
-    setDay(CalculateDistance(countdownDate, timeNow).days);
-  }, []);
 
   const getLastMomentOfToday = () => {
     const today = new Date();
@@ -60,6 +52,15 @@ export default function BuyTicket(props) {
   };
 
   const lastMomentOfToday = getLastMomentOfToday();
+
+  useEffect(() => {
+    let countdownDate = new Date(moment(lastMomentOfToday)).getTime();
+    let timeNow = new Date().getTime();
+    setHour(CalculateDistance(countdownDate, timeNow).hours);
+    setMinute(CalculateDistance(countdownDate, timeNow).minutes);
+    // setDay(CalculateDistance(countdownDate, timeNow).days);
+  }, [lastMomentOfToday]);
+  
   //-------------
   const handleClose = () => {
     dispatch(toggleBuyTicket(false));

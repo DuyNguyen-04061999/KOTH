@@ -1,23 +1,41 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import TournamentService from "../services/tournamentService";
+import { call, put, takeEvery } from "redux-saga/effects";
 import {
   createTournamentFail,
   createTournamentSuccess,
+  getBiggestEndTourFail,
+  getBiggestEndTourSuccess,
+  getBrandTourSuccess,
   getBrandTournamentFail,
   getBrandTournamentSuccess,
-  getBiggestEndTourRedux,
-  getBrandTourSuccess,
   getDailyTour,
+  getEndedTour,
+  getEndedTourFail,
+  getEndedTourSuccess,
   getHotTour,
+  getHotTourFail,
+  getHotTourSuccess,
+  getHottestWeekTourSuccess,
   getHourlyTour,
   getListGameForTournamentFail,
   getListGameForTournamentSuccess,
+  getOngoingTour,
+  getOngoingTourFail,
+  getOngoingTourSuccess,
   getSkinForTournamentFail,
   getSkinForTournamentSuccess,
-  getWeeklyTour,
-  getHottestWeekTourSuccess,
+  getStandardTour,
+  getStandardTourFail,
+  getStandardTourSuccess,
   getThreeBrandTourSuccess,
+  getUpcomingTour,
+  getUpcomingTourFail,
+  getUpcomingTourSuccess,
+  getVipTour,
+  getVipTourFail,
+  getVipTourSuccess,
+  getWeeklyTour
 } from "../reducers/tournamentReducer";
+import TournamentService from "../services/tournamentService";
 // import { showAlert } from "../reducers/alertReducer";
 const tournamentService = new TournamentService();
 
@@ -48,7 +66,47 @@ function* getListTour(dataRequest) {
     } else if (payload === "hourly") {
       yield put(getHourlyTour(res.data));
     } else if (payload === "hot") {
-      yield put(getHotTour(res.data));
+      yield put(getHotTour());
+      if (res.status === 200) {
+        yield put(getHotTourSuccess(res.data));
+      } else if(res.data) {
+        yield put(getHotTourFail());
+      }
+    } else if (payload === "vip") {
+      yield put(getVipTour());
+      if (res.status === 200) {
+        yield put(getVipTourSuccess(res.data));
+      } else {
+        yield put(getVipTourFail());
+      }
+    } else if (payload === "standard") {
+      yield put(getStandardTour());
+      if (res.status === 200) {
+        yield put(getStandardTourSuccess(res.data));
+      } else {
+        yield put(getStandardTourFail());
+      }
+    } else if (payload === "ongoing") {
+      yield put(getOngoingTour());
+      if (res.status === 200) {
+        yield put(getOngoingTourSuccess(res.data));
+      } else {
+        yield put(getOngoingTourFail());
+      }
+    } else if (payload === "upcoming") {
+      yield put(getUpcomingTour());
+      if (res.status === 200) {
+        yield put(getUpcomingTourSuccess(res.data));
+      } else {
+        yield put(getUpcomingTourFail());
+      }
+    } else if (payload === "ended") {
+      yield put(getEndedTour());
+      if (res.status === 200) {
+        yield put(getEndedTourSuccess(res.data));
+      } else {
+        yield put(getEndedTourFail());
+      }
     }
   } catch (error) {
     console.log(error);
@@ -105,10 +163,14 @@ function* getBiggesstEndTour() {
   try {
     const res = yield call(tournamentService.callBiggestEndTour);
     if (res.status === 200) {
-      yield put(getBiggestEndTourRedux(res.data));
+      yield put(getBiggestEndTourSuccess(res.data));
+    }
+    else {
+      yield put(getBiggestEndTourFail());
     }
   } catch (error) {
     console.log(error);
+    yield put(getBiggestEndTourFail());
   }
 }
 function* getBrandTour() {
@@ -142,7 +204,7 @@ function* getThreeBrandTour() {
   }
 }
 function* tournamentSaga() {
-  yield takeEvery("CALL_BIGGEST_END_TOUR", getBiggesstEndTour);
+  yield takeEvery("GET_BIGGEST_TOUR", getBiggesstEndTour);
   yield takeEvery("CALL_BRAND_TOUR", getBrandTour);
   yield takeEvery("CREATE_TOURNAMENT", postTournamentCreate);
   yield takeEvery("CALL_LIST_TOURNAMENT", getListTour);

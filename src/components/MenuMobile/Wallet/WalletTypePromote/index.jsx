@@ -21,7 +21,7 @@ export default function WalletTypePromote(props) {
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
   const [bgInput, setBgInput] = useState("gray");
-  const [textRed,setTextRed] = useState("")
+  // const [textRed,setTextRed] = useState("")
 
   const handleContinue = () => {
     if (agree === false) {

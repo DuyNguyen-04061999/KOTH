@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
@@ -300,12 +299,12 @@ export const RowTable = (props) => {
                       row?.child &&
                       row?.child?.length > 0 &&
                       !checkRouteIsCreate(pathname) && (
-                        <IconButton
-                          style={{ width: "34px", height: "34px" }}
+                        <Box
+                          sx={{ width: "34px", height: "34px",display:"flex",alignItems:"center",cursor: "pointer" }}
                           onClick={() => setOpen(!open)}
                         >
                           {!open ? <AddIconSVG /> : <MinusIconSVG />}
-                        </IconButton>
+                        </Box>
                       )}
                     {row.account}
                   </Box>

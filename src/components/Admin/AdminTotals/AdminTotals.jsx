@@ -51,7 +51,7 @@ export default function AdminTotals(props) {
                   lineHeight: "32px",
                 }}
               >
-                {item.type === 'revenue' ? `${item.count}` : item.count}
+                {item?.type === "Master Revenue" || item?.type === "System Revenue" || item?.type === "revenue" ? "$" : ""} {item.type === 'revenue' ? `${item.count}` : item.count} 
               </Box>
             </Box>
             {/* <Box

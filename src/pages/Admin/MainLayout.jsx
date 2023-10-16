@@ -8,7 +8,6 @@ import { ConfirmDialogComponent, GivePermissionDialogComponent, ResetPasswordDia
 import CreateAccountDialogComponent from "../../components/Admin/Dialog/CreateAccountDialogComponent";
 import ProvideTicketDialogComponent from "../../components/Admin/Dialog/ProvideTicketDialogComponent";
 import DrawerNavigation from "../../components/Admin/Navigation/DrawerNavigation";
-import useWindowDimensionsAdmin from "../../utils/useWindowDimensionsAdmin";
 
 // const MainContentRoot = styled("div")(({ theme }) => ({
 //   [theme.breakpoints.up("md")]: {
@@ -23,8 +22,6 @@ export default function MainLayout() {
   useEffect(() => {
     dispatch(getConfigs());
   }, [dispatch]);
-
-  const { width } = useWindowDimensionsAdmin()
 
   return (
     <Box

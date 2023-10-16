@@ -55,7 +55,7 @@ const BannerWinMobile = (props) => {
               textTransform: "uppercase",
             }}
           >
-            Big Tournament Winner
+            Big Promotion Winner
           </Typography>
         </Box>
         <Typography

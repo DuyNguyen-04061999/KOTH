@@ -1,5 +1,4 @@
 import { PersonAddAlt1 } from "@mui/icons-material";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Avatar, Box } from "@mui/material";
@@ -30,7 +29,7 @@ export default function ChatWorldList() {
   const [isFetching, setIsFetching] = useState(true);
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
     useState(true);
-  const { chatWorld, friendList, chatPopup } = useSelector(
+  const { chatWorld, friendList } = useSelector(
     (state) => state.chatReducer
   );
   const endOfMessageRef = useRef(null);
@@ -42,21 +41,10 @@ export default function ChatWorldList() {
   const [socket, setSocket] = useState(null);
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
-  const [chatLength, setChatLength] = useState(0);
 
   useEffect(() => {
-    if (chatWorld) {
-      setChatLength(chatWorld?.length);
-    }
-  }, [chatWorld]);
-
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    }, [value]);
-    return ref.current;
-  }
+    endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [worldMessage]);
 
   useEffect(() => {
     setWorldMessage(chatWorld);
@@ -99,6 +87,7 @@ export default function ChatWorldList() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const { height, width } = useWindowDimensions();
 
   const isScrolledToBottom = () => {
@@ -114,9 +103,8 @@ export default function ChatWorldList() {
   };
 
   const scrollToBottom = () => {
-    if (chatBox.current) {
-      chatBox.current.style.scrollBehavior = "smooth";
-      chatBox.current.scrollTop = chatBox.current.scrollHeight;
+    if (endOfMessageRef.current) {
+      endOfMessageRef.current.scrollIntoView({ behavior: "smooth" });
       setShowScrollToBottomButton(false);
     }
   };
@@ -677,26 +665,40 @@ const ScrollToBottom = ({ onClick }) => {
     <Box
       sx={{
         position: "absolute",
-        bottom: 0,
-        left: "50%",
+        bottom: "4px",
+        right: "4px",
         transform: "translate(-50%,-50%)",
-        backgroundColor: "rgb(255,255,255,0.8)",
-        width: "max-content",
+        backgroundColor: "rgba(120, 72, 237, 1)",
+        width: "36px",
+        height: "36px",
         display: "flex",
         alignItems: "center",
-        padding: "6px",
+        justifyContent: "center",
         borderRadius: "24px",
         cursor: "pointer",
         ":hover": {
-          backgroundColor: "rgb(255,255,255,1)",
+          backgroundColor: "rgba(120, 72, 237, 1)",
         },
+        boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.40)",
       }}
       onClick={onClick}
     >
-      <ArrowDownwardIcon sx={{ fontSize: "20px", color: "black" }} />
-      <Typography sx={{ fontSize: "12px", color: "black" }}>
-        Scroll to bottom
-      </Typography>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        fill="none"
+        viewBox="0 0 14 14"
+      >
+        <path
+          fill="#fff"
+          d="M6.97 11.143c.1-.095.189-.176.273-.26C8.822 9.295 10.4 7.708 11.976 6.12c.342-.346.734-.464 1.181-.313.73.245.941 1.18.4 1.75-.461.483-.94.95-1.411 1.423l-4.313 4.335c-.578.582-1.151.579-1.733-.006L.35 7.527c-.377-.377-.453-.88-.211-1.315a1.021 1.021 0 011.194-.5c.217.075.414.2.575.366a1082.8 1082.8 0 014.788 4.803c.085.089.17.167.273.262z"
+        ></path>
+        <path
+          fill="#fff"
+          d="M6.94 5.428c.133-.128.221-.21.307-.295L11.98.375c.341-.346.733-.461 1.181-.31.69.235.925 1.11.463 1.676-.056.067-.123.13-.185.193L7.833 7.57c-.578.58-1.152.577-1.734-.008L.422 1.856C.066 1.496-.02.983.196.57A1.007 1.007 0 011.342.033c.242.069.463.2.64.38 1.572 1.56 3.131 3.138 4.693 4.706.086.088.16.187.264.309z"
+        ></path>
+      </svg>
     </Box>
   );
 };

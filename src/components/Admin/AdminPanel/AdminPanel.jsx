@@ -1,11 +1,14 @@
+import CopyIcon from "@mui/icons-material/CopyAll";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Collapse, Grid, Typography } from "@mui/material";
+import copy from "copy-to-clipboard";
 import moment from "moment";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import {
   openConfirmDialog,
@@ -184,6 +187,11 @@ const AdminPanel = () => {
     dispatch(openUpdateAccountDialog())
   }
 
+  const handleCopyRef = () => {
+    copy(ref)
+    dispatch(showToastNotify({ type: "success", message: "Copy ref code successfully!" }))
+  }
+
   return (
     <Box sx={{ marginTop: "56px" }}>
       <DetailAccountDialogComponent />
@@ -215,9 +223,12 @@ const AdminPanel = () => {
                   : "Agent"
               } Account`}
         </Typography>
-        <Typography>
-          {ref}
-        </Typography>
+          {roles?.includes("agent") ? (
+            <Typography>
+              <CopyIcon className="ms-2 me-2" onClick={handleCopyRef}/>
+              {ref}
+            </Typography>
+          ) : ""}
       </Box>
       <Box
         sx={{
