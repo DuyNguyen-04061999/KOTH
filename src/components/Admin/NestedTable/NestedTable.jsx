@@ -7,6 +7,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   tableClasses,
   tableHeadClasses
@@ -51,6 +52,21 @@ const NestedTable = (props) => {
   } = props;
   const { detailAccount } = useSelector((state) => state.adminReducer_);
   const dispatch = useDispatch();
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }
 
   return (
     <Box sx={{}}>
@@ -148,7 +164,15 @@ const NestedTable = (props) => {
             </TableRow>
           </StyledTableHead>
           <TableBody>
-            {data.map((row, index) => (
+            {emptyRows > 0 && (
+              <tr style={{ height: 41 * emptyRows }}>
+                <td colSpan={3} aria-hidden />
+              </tr>
+            )}
+            {(rowsPerPage > 0
+            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : data
+          ).map((row, index) => (
               <RowTable
                 key={row.account + index}
                 index={index}
@@ -201,15 +225,15 @@ const NestedTable = (props) => {
           </TableBody>
         </StyleTable>
       </TableContainer>
-      {/* <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 15]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      /> */}
+      />
       {detailAccount && (
         <Box
           sx={{
@@ -231,7 +255,7 @@ const NestedTable = (props) => {
           {detailAccount && (
             <Button
               onClick={() => {
-                if (detailAccount) {
+                if (detailAccount && window.location.pathname?.includes("manage")) {
                   dispatch(openDetailDialog());
                 }
               }}

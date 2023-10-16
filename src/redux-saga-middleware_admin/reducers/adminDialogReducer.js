@@ -112,6 +112,20 @@ export const closeUpdateAccountDialog = (data) => {
   }
 }
 
+export const openRefcodeNotify = (data) => {
+  return {
+    type: "OPEN_REF_CODE_NOTIFY",
+    payload: data
+  }
+}
+
+export const closeRefcodeNotify = (data) => {
+  return {
+    type: "CLOSE_REF_CODE_NOTIFY",
+    payload: data
+  }
+}
+
 const adminDialogReducer = (
   state = {
     isCreateDialog: false,
@@ -122,7 +136,10 @@ const adminDialogReducer = (
     isGivePerDialog: false,
     isConfirmDialog: false,
     isUpdateAccountDialog: false,
-    typeConfirm: ""
+    typeConfirm: "",
+    isRefcodeDialog : false,
+    typeRefcode: "error",
+    messageRefcode: ""
   },
   action
 ) => {
@@ -154,6 +171,8 @@ const adminDialogReducer = (
     case "CLOSE_CONFIRM_DIALOG":  return {...state, isConfirmDialog: false, typeConfirm: ""}
     case "OPEN_UPDATE_ACCOUNT_DIALOG": return {...state, isUpdateAccountDialog: true}
     case "CLOSE_UPDATE_ACCOUNT_DIALOG": return {...state, isUpdateAccountDialog: false}
+    case "OPEN_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: true, typeRefcode: payload?.type || "", messageRefcode: payload?.message || ""}
+    case "CLOSE_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: false, typeRefcode: "", messageRefcode: ""}
     default:
       return { ...state };
   }

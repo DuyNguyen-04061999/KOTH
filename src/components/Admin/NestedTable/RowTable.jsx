@@ -61,28 +61,31 @@ const AddIconSVG = () => {
   );
 };
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#fff",
-    color: "#7c81f3",
-    fontWeight: "bolder",
-    fontSize: 13,
-    border: "none",
-    padding: "10px 0px",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 12,
-    border: "none",
-    fontWeight: 500,
-    lineHeight: "16px",
-    maxWidth: "150px",
-    overflow: "scroll",
-  },
-  ":first-child": {
-    color: "red",
-    paddingLeft: "10px !important",
-  },
-}));
+const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
+  
+  return ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: "#fff",
+      color: "#7c81f3",
+      fontWeight: "bolder",
+      fontSize: 13,
+      border: "none",
+      padding: "10px 0px",
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 12,
+      border: "none",
+      fontWeight: 500,
+      lineHeight: "16px",
+      maxWidth: "150px",
+      overflow: "scroll",
+    },
+    ":first-child": {
+      color: "red",
+      paddingLeft: "10px !important",
+    },
+  })
+});
 
 export const RowTable = (props) => {
   const { row, children, index, headers } = props;
@@ -108,7 +111,7 @@ export const RowTable = (props) => {
     <React.Fragment>
       <TableRow
         onClick={() => {
-          if (width < 576 && row?.action) {
+          if (width < 576 && row?.action && window.location.pathname?.includes("manage")) {
             dispatch(updateDetailAccount(row));
           }
         }}
@@ -137,80 +140,6 @@ export const RowTable = (props) => {
           borderRadius: "5px",
         }}
       >
-        {/* {row.action && width > 576 && checkRouteIsManage(pathname) ? (
-          <StyledTableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-            <Button
-              onClick={handleUpdate}
-              children={"Update"}
-              sx={{
-                fontSize: "14px",
-                borderRadius: "16px",
-                padding: "2px 16px",
-                bgcolor: "#355DFF",
-                color: "#FFF",
-                fontWeight: 700,
-                textTransform: "unset",
-                ":hover": {
-                  backgroundColor: "#355DFF",
-                },
-              }}
-            />
-          </StyledTableCell>
-        ) : (
-          <StyledTableCell
-            sx={{ display: { xs: "none", sm: "table-cell" } }}
-          ></StyledTableCell>
-        )}
-        <StyledTableCell className="text-center">
-          <Box
-            sx={{
-              marginLeft: { xs: row?.levelRole * 1, sm: row?.levelRole * 2 },
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {row && row?.child && row?.child?.length > 0 && !checkRouteIsCreate(pathname) ? (
-              <IconButton
-                style={{ width: "34px", height: "34px" }}
-                onClick={() => setOpen(!open)}
-              >
-                {!open ? <AddIconSVG /> : <MinusIconSVG />}
-              </IconButton>
-            ) : (
-              <Box
-                sx={{
-                  width: "34px",
-                  height: "34px",
-                }}
-              ></Box>
-            )}
-            {row.account}
-          </Box>
-        </StyledTableCell>
-        <StyledTableCell className="text-center">{row.level}</StyledTableCell>
-        <StyledTableCell className="text-center">
-          {"-"}
-        </StyledTableCell>
-        <StyledTableCell className="text-center">{row.ticket}</StyledTableCell>
-
-        {width > 576 && (
-          <StyledTableCell className="text-center">{row.ref}</StyledTableCell>
-        )}
-        {width > 576 && (
-          <StyledTableCell className="text-center">
-            {moment(row.date).format("ll")}
-          </StyledTableCell>
-        )}
-        {width > 576 && (
-          <StyledTableCell className="text-center" sx={{ color: "#3DBAA2" }}>
-            {row.amount}
-          </StyledTableCell>
-        )}
-        {width > 576 && (
-          <StyledTableCell className="text-center">
-            {row.status ? "Active" : "Prohibit"}
-          </StyledTableCell>
-        )} */}
         {headers &&
           headers?.map((item, index) => {
             if (item === "" && row?.action) 
@@ -258,6 +187,9 @@ export const RowTable = (props) => {
                   sx={{
                     display: { xs: "none", sm: "table-cell" },
                     textAlign: "center",
+                  }}
+                  style={{
+                    background: "red"
                   }}
                 >
                   {row?.agents && row?.agents?.length > 0 && (

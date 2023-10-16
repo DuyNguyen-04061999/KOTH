@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { showToastNotify } from '../../redux-saga-middleware_admin/reducers/adminAlertReducer';
 import { adminLogin } from '../../redux-saga-middleware_admin/reducers/adminAuthReducer';
+import "./admin.css";
 
 function Copyright(props) {
   return (

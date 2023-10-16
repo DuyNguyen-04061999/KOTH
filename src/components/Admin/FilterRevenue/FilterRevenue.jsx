@@ -1,9 +1,9 @@
 import { ExpandMoreOutlined } from "@mui/icons-material";
 import CopyIcon from "@mui/icons-material/CopyAll";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
+  Collapse,
   Typography
 } from "@mui/material";
 import copy from "copy-to-clipboard";
@@ -16,6 +16,44 @@ import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminD
 import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import SearchBar from "../SearchBar/SearchBar";
+
+const ResetSVG = () => {
+  return (
+    <Box sx={{
+      marginRight: "10px"
+    }}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="17"
+        fill="none"
+        viewBox="0 0 14 17"
+      >
+        <path
+          fill="#fff"
+          d="M6.265 4.903l.605 1.55c.074.166.138.335.193.508.026.099-.004.213-.008.322-.105-.024-.232-.02-.31-.078-.652-.49-1.294-.99-1.94-1.486a1333.47 1333.47 0 00-2.189-1.683c-.272-.21-.27-.294.009-.508C3.974 2.49 5.325 1.454 6.676.422c.102-.077.257-.085.386-.125-.008.138.016.288-.03.412-.243.647-.505 1.286-.787 2 2.595-.1 4.745.732 6.33 2.789.938 1.217 1.391 2.614 1.424 4.145.064 2.962-1.909 5.731-4.746 6.686a6.997 6.997 0 01-7.895-2.477c-1.8-2.454-1.705-5.607-.335-7.742l1.8 1.084c-.707 1.254-.883 2.563-.471 3.932.325 1.085.974 1.943 1.896 2.591 1.74 1.222 4.202 1.115 5.827-.245 1.736-1.45 2.275-3.801 1.334-5.807-.9-1.913-2.902-3.064-5.144-2.762z"
+        ></path>
+      </svg>
+    </Box>
+  )
+}
+
+const CheckBlueSvg = () => {
+  return (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="14"
+        fill="none"
+        viewBox="0 0 16 14"
+      >
+        <path
+          fill="#355DFF"
+          d="M5.59 8.6l-3.2-3.2-2.4 2.4 5.6 5.6L15.99 3 13.59.6l-8 8z"
+        ></path>
+      </svg>
+  )
+}
 
 const FilterRevenue = () => {
   const { roles, ref } = useSelector((state) => state.adminAuthReducer);
@@ -79,6 +117,8 @@ const FilterRevenue = () => {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [activeType, setActiveType] = useState(null);
+  const [isDropDownPeriod, setIsDropdownPeriod] = useState(false)
+
   const listAction = [
     "Today",
     "Yesterday",
@@ -86,7 +126,7 @@ const FilterRevenue = () => {
     "Last week",
     "This month",
     "Last month",
-    "Reset"
+    // "Reset"
   ];
   const [accountInput, setAccountInput] = useState("");
   const startTimeInput = useRef(null);
@@ -216,6 +256,7 @@ const FilterRevenue = () => {
       setSelectedType(0)
       setStartTime(null)
       setEndTime(null)
+      setAccountInput("")
       startTimeInput.current.value = ""
       endTimeInput.current.value = ""
       if (roles && roles?.length && roles[0]) {
@@ -527,6 +568,7 @@ const FilterRevenue = () => {
                       backgroundColor: "#355DFF",
                     },
                   }}
+                  onClick={() => setIsDropdownPeriod(!isDropDownPeriod)}
                 >
                   <Box
                     sx={{
@@ -535,17 +577,31 @@ const FilterRevenue = () => {
                       lineHeight: "24px",
                     }}
                   >
-                    Today
+                    {listAction[activeType] || "Select period"}
                   </Box>
                   <ExpandMoreOutlined />
                 </Button>
-                {/* <Collapse sx={{position:"relative"}} in={isOpenDropdown}>
-                  <Box sx={{ position: "absolute", zIndex: 10, backgroundColor:"white", width:"100%", marginTop:""}}>
-                    <Box>Profile</Box>
-                    <Box>Language settings</Box>
-                    <Box>Log out</Box>
+                <Collapse sx={{position:"relative"}} in={isDropDownPeriod}>
+                  <Box sx={{ 
+                    position: "absolute", 
+                    zIndex: 10, 
+                    backgroundColor: "white", 
+                    width: "100%", marginTop:"",
+                    boxShadow: "1px 20px 25px 5px #E4E4E4"
+                  }} className="rounded">
+                    {listAction && listAction?.map((action, i_action) => (
+                      <Box component={"div"} className="p-2 ps-4 d-flex" key={i_action} onClick={() => {
+                        handleActionQuery(action, i_action)
+                        setIsDropdownPeriod(false)
+                      }}>
+                        <Box sx={{ 
+                          minWidth: "25px"
+                         }}>{listAction[activeType] === action ? <CheckBlueSvg/> : ""}</Box> 
+                        <Typography>{action}</Typography>
+                      </Box>
+                    ))}
                   </Box>
-                </Collapse> */}
+                </Collapse>
               </Box>
             </Box>
             <Box
@@ -578,7 +634,7 @@ const FilterRevenue = () => {
               </Button>
              
               <CSVLink data={csvData} filename={roles && roles?.length && roles[0] ? `revenue_${roles[0]}_${new Date().getTime()}` : `revenue_${new Date().getTime()}`}> 
-                <Button
+                {roles && !roles?.includes("agent") && <Button
                   sx={{
                     fontSize: "12px",
                     textTransform: "unset",
@@ -596,6 +652,7 @@ const FilterRevenue = () => {
                 >
                   Excel
                 </Button>
+              }
               </CSVLink>;
                 {width < 576 && (
                   <Button
@@ -604,18 +661,21 @@ const FilterRevenue = () => {
                       fontSize: "12px",
                       textTransform: "unset",
                       borderRadius: "16px",
-                      backgroundColor: "#fc3c3c",
+                      backgroundColor: "#3DBAA2",
                       color: "white",
                       fontWeight: 700,
                       height: "32px",
                       ":hover": {
-                        backgroundColor: "#fc3c3c",
+                        backgroundColor: "#3DBAA2",
                         opacity: 0.9,
                       },
                       transform: "scale(1.1)",
                     }}
                   >
-                    Reset
+                    <Box className="d-flex ps-1 pe-2">
+                      <ResetSVG/>
+                      Reset
+                    </Box>
                   </Button>
                 )}
             </Box>
@@ -627,7 +687,14 @@ const FilterRevenue = () => {
           )}
           {width > 576 ? (
             <Box
+              component={"div"}
+              className="d-flex justify-content-between p-2 rounded mt-3 flex-wrap"
               sx={{
+                background: "#F7F7F7"
+              }}
+              
+            >
+              <Box component={"div"} sx={{
                 display: "grid",
                 flexDirection: "column",
                 alignItems: "center",
@@ -637,33 +704,62 @@ const FilterRevenue = () => {
                 gridColumnGap: "20px",
                 gridRowGap: "20px",
                 placeItems: "center",
-                marginTop: "24px",
-              }}
-            >
-              {listAction?.map((item, index) => (
+               
+                
+              }} className="mb-2">
+                {listAction?.map((item, index) => (
+                  <Button
+                    onClick={() => handleActionQuery(item, index)}
+                    key={index}
+                    sx={{
+                      fontSize: "12px",
+                      textTransform: "unset",
+                      borderRadius: "16px",
+                      backgroundColor: item === "Reset" ? "#3DBAA2" : "#355DFF",
+                      color: "white",
+                      fontWeight: 700,
+                      height: "32px",
+                      width: "100%",
+                      ":hover": {
+                        backgroundColor: item === "Reset" ? "#3DBAA2" : "#355DFF",
+                        opacity: 0.9,
+                      },
+                      transform: activeType === index && "scale(1.1)",
+                      border: activeType === index && "2px solid black",
+                    }}
+                  >
+                    {item === "Reset" ? <Box className="d-flex">
+                    <ResetSVG/>
+                      Reset
+                    </Box> : item}
+                  </Button>
+                ))}
+              </Box>
+              <Box component={"div"} className="d-flex justify-content-center align-items-center">
                 <Button
-                  onClick={() => handleActionQuery(item, index)}
-                  key={index}
-                  sx={{
-                    fontSize: "12px",
-                    textTransform: "unset",
-                    borderRadius: "16px",
-                    backgroundColor: item === "Reset" ? "#fc3c3c" : "#355DFF",
-                    color: "white",
-                    fontWeight: 700,
-                    height: "32px",
-                    width: "100%",
-                    ":hover": {
-                      backgroundColor: item === "Reset" ? "#fc3c3c" : "#355DFF",
-                      opacity: 0.9,
-                    },
-                    transform: activeType === index && "scale(1.1)",
-                    border: activeType === index && "2px solid black",
-                  }}
-                >
-                  {item === "Reset" ? <DeleteIcon/> : item}
+                    onClick={() => handleActionQuery('Reset', 0)}
+                    sx={{
+                      fontSize: "12px",
+                      textTransform: "unset",
+                      borderRadius: "16px",
+                      backgroundColor: "#3DBAA2",
+                      color: "white",
+                      fontWeight: 700,
+                      height: "32px",
+                      width: "100%",
+                      ":hover": {
+                        backgroundColor: "#3DBAA2",
+                        opacity: 0.9,
+                      },
+                      transform: "scale(1.1)",
+                    }}
+                  >
+                    <Box className="d-flex ps-3 pe-3">
+                      <ResetSVG/>
+                      Reset
+                    </Box>
                 </Button>
-              ))}
+              </Box>
             </Box>
           ) : (
             <>
