@@ -411,7 +411,7 @@ export default function Navbar() {
                   {pathname && pathname?.includes("vip-promotion") ? (
                     <Box
                       component={"img"}
-                      src={navbar.navHotActive}
+                      src={navbar.navVipActive}
                       sx={{ width: "18px", height: "18px", marginRight: "8px" }}
                     />
                   ) : (
