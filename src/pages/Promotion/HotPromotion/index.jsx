@@ -37,17 +37,18 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { hotTournament, isFetchHot } = useSelector((state) => state.tournamentReducer);
+  const { hotTournament, isFetchHot } = useSelector(
+    (state) => state.tournamentReducer
+  );
   const [data, setData] = useState([]);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hot",
-      });
-  
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "hot",
+    });
   }, [dispatch]);
 
   useEffect(() => {
