@@ -12,11 +12,14 @@ import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gam
 import { getAppType } from "../../../utils/helper";
 import { images, navbar } from "../../../utils/images";
 import "../Nav/Nav.scss";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { height } = useWindowDimensions();
+
   // const { width } = useWindowDimensions();
   const [tablet, setTablet] = useState("");
   const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
@@ -48,12 +51,12 @@ export default function Navbar() {
   }, [isNavTablet, isNav]);
 
   return (
-    <Box className={`nav-section1 ${tablet}`}>
+    <Box style={{ height: `100%` }} className={`nav-section1 ${tablet}`}>
       <Box
         sx={{
           backgroundColor: "#2e233d",
           color: "#9485b8",
-          height: "96vh",
+          height: `100%`,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -62,8 +65,10 @@ export default function Navbar() {
           paddingLeft: isNav === true ? "25px" : "7px",
           paddingRight: isNav === true ? "25px" : "7px",
           transition: " all ease 1s",
+          overflow: "auto",
+          paddingTop: "60px",
         }}
-        className="pt-3 pb-3 nav-animate"
+        className="nav-animate"
       >
         <Box className="mt-3">
           {getAppType() === "promote" ? (
@@ -300,7 +305,7 @@ export default function Navbar() {
                     background: "white",
                     borderColor: "white",
                     height: "1px",
-                    width:isNav ? "70%"  :"",
+                    width: isNav ? "70%" : "",
                   }}
                 />
                 {/* <Box
@@ -453,9 +458,9 @@ export default function Navbar() {
                         : "#A89CD7",
                     padding: "10px",
                     boxShadow:
-                    pathname && pathname?.includes("standard-promotion")
-                      ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                      : "",
+                      pathname && pathname?.includes("standard-promotion")
+                        ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
+                        : "",
                     ":hover": {
                       backgroundColor: "#7648ED",
                       boxShadow:
@@ -504,7 +509,7 @@ export default function Navbar() {
                     background: "white",
                     borderColor: "white",
                     height: "1px",
-                    width:isNav ? "70%"  :"",
+                    width: isNav ? "70%" : "",
                   }}
                 />
                 <Box
