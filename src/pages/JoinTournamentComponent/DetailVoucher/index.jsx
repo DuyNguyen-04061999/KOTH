@@ -12,9 +12,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import moment from "moment";
 import { sliceString } from "../../../utils/helper";
 const theme = createTheme({
-  typography: {
-    
-  },
+  typography: {},
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -140,7 +138,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                         fontSize: "16px",
                         marginLeft: "0px !important",
                         textAlign: "start",
-                        textTransform: "uppercase"
+                        textTransform: "uppercase",
                       }}
                     >
                       {" "}
@@ -163,7 +161,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       overflow: "hidden",
                       // textOverflow: "ellipsis",
                       textTransform: "uppercase",
-                      marginTop: "4px"
+                      marginTop: "4px",
                     }}
                   >
                     {detail?.tournamentInfors?.rewardInfors?.rewardTicketName ||
@@ -186,7 +184,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
               </Typography> */}
               <Box sx={{ marginTop: "20px" }}>
                 <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-                Valid by:
+                  Valid by:
                 </Typography>
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
                   {moment(
@@ -272,7 +270,8 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                     textAlign: "start",
                   }}
                 >
-                  Sponsored  by {detail?.tournamentInfors?.owner?.brandName || ""}
+                  Sponsored by{" "}
+                  {detail?.tournamentInfors?.owner?.brandName || ""}
                 </Typography>
                 {/* <Box
                   sx={{ width: "50px" }}
@@ -282,15 +281,14 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 ></Box> */}
                 <Typography
                   sx={{
-                    fontSize: "26px",
+                    fontSize: "medium",
                     marginLeft: "0px !important",
                     textAlign: "start",
                     color: "#BE48ED",
                   }}
                 >
-                  {sliceString(
-                    detail?.tournamentInfors?.rewardInfors?.rewardTicketName
-                  ) || "Discount 10%"}
+                  {detail?.tournamentInfors?.rewardInfors?.rewardTicketName ||
+                    "Discount 10%"}
                 </Typography>
               </Box>
             </Box>
@@ -309,9 +307,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
             </Typography> */}
             <Box sx={{ marginTop: "20px" }}>
               <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-              Valid by:
-              </Typography>
-              <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                Valid by:{" "}
                 {moment(
                   detail?.tournamentInfors?.rewardInfors?.rewardValidityDate
                 )?.format("DD-MM-YYYY") || "01-08-2023 - 29-08-2023"}

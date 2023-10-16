@@ -36,6 +36,7 @@ import {
   saveBoughtTournament,
   saveIdTournament,
   toggleBuyTicket,
+  toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import {
@@ -83,7 +84,7 @@ export default function JoinTournament() {
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
   const [videoGame, setVideoGame] = useState(false || true);
-  const { token } = useSelector((state) => state.authReducer);
+  const { token, uPack } = useSelector((state) => state.authReducer);
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
@@ -196,7 +197,10 @@ export default function JoinTournament() {
   };
 
   const handleJoinTour = () => {
-    if (token) {
+    if(detailTournament?.tournamentVip !== 0 &&  uPack === null) {
+      dispatch(toggleTournamentShow())
+    }
+    else if (token) {
       socket?.emit("joinTournament", {
         tournamentId: detailTournament?.id,
       });
@@ -947,6 +951,7 @@ export default function JoinTournament() {
                   </Box>
                 </Box>
               </Box>
+
               {/* Information Reward */}
               <Box
                 sx={{
@@ -963,6 +968,31 @@ export default function JoinTournament() {
                     width: width < 1024 ? "320px" : "433px",
                   }}
                 >
+                  {detailTournament?.tournamentVip !== 0 ? (
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28"
+                        height="19"
+                        fill="none"
+                        viewBox="0 0 28 19"
+                      >
+                        <path
+                          fill="#FB3"
+                          d="M8.008 9.056c.317-.533.608-1.014.892-1.5 1.31-2.225 2.616-4.452 3.92-6.68.26-.445.51-.883 1.143-.876.632.008.87.46 1.129.9 1.463 2.5 2.928 5.001 4.397 7.502.115.197.239.391.39.642.202-.083.396-.155.58-.241 1.77-.821 3.54-1.64 5.304-2.473.456-.216.9-.331 1.338-.011.47.342.444.81.327 1.304a9061.53 9061.53 0 00-2.41 10.264c-.205.875-.497 1.113-1.429 1.113H4.23c-.873 0-1.143-.195-1.338-1.035C2.089 14.479 1.28 10.993.518 7.502c-.075-.348.094-.836.326-1.126.306-.375.803-.29 1.25-.08 1.939.912 3.884 1.813 5.914 2.76z"
+                        ></path>
+                      </svg>
+                      <Typography
+                        sx={{
+                          color: "#FFBB33",
+                        }}
+                      >
+                        VIP Promotion
+                      </Typography>
+                    </Box>
+                  ) : (
+                    ""
+                  )}
                   <Box>
                     <Box
                       sx={{
@@ -1197,7 +1227,7 @@ export default function JoinTournament() {
                     {fetchT ? (
                       <Skeleton
                         width={"100%"}
-                        height={"147px"}
+                        height={"auto"}
                         variant="rounded"
                         sx={{
                           marginTop: "24px",
@@ -1209,7 +1239,7 @@ export default function JoinTournament() {
                         sx={{
                           bgcolor: "white",
                           width: "100%",
-                          height: "147px",
+                          height: "auto",
                           marginTop: "24px",
                           position: "relative",
                           display: "flex",
@@ -1230,10 +1260,10 @@ export default function JoinTournament() {
                                 color: "#BE48ED",
                                 fontSize:
                                   576 < width && width < 1200 ? "18px" : "16px",
-                                maxHeight: "24px",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
+                                // maxHeight: "24px",
+                                // overflow: "hidden",
+                                // textOverflow: "ellipsis",
+                                // whiteSpace: "nowrap",
                               }}
                             >
                               {" "}
@@ -1496,7 +1526,6 @@ export default function JoinTournament() {
                     )}
                   </Box>
                 </Box>
-
                 <Box
                   sx={{
                     flexGrow: 576 < width && width < 1200 ? "none" : "1",
