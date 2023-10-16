@@ -1,6 +1,4 @@
 import CopyIcon from "@mui/icons-material/CopyAll";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Collapse, Grid, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import moment from "moment";
@@ -167,6 +165,50 @@ const AdminPanel = () => {
       </Box>
     );
   };
+
+  const EditSVG = () => {
+    return <Box sx={{
+      marginRight: "10px"
+    }}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="15"
+        height="15"
+        fill="none"
+        viewBox="0 0 15 15"
+      >
+        <path
+          fill="#fff"
+          d="M7.454 3.244l3.898 3.953c-.062.03-.18.061-.256.14a2244.487 2244.487 0 00-6.23 6.24c-.407.41-.856.66-1.436.703-.669.05-1.332.162-2 .21-.951.066-1.472-.498-1.366-1.44.083-.728.137-1.459.262-2.178.055-.314.188-.672.405-.89C2.95 7.73 5.196 5.501 7.454 3.244zM12.03 6.371L8.19 2.533c.535-.542 1.06-1.125 1.64-1.65.6-.54 1.462-.488 2.043.076.582.564 1.16 1.141 1.725 1.724.564.584.618 1.466.065 2.068-.52.57-1.095 1.09-1.633 1.62z"
+        ></path>
+      </svg>
+    </Box>
+  }
+
+  const DeleteSVG = () => {
+    return (
+      <Box sx={{
+        marginRight: "10px"
+      }}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="15"
+        fill="none"
+        viewBox="0 0 14 15"
+      >
+        <path
+          fill="#fff"
+          d="M7.88 14.498H4.351c-.77 0-1.54.004-2.312 0-1.209-.01-2.11-1.062-1.976-2.266.118-1.074.219-2.151.295-3.23.098-1.353 1.276-2.508 2.606-2.495.16 0 .37.063.468.178.424.487.971.723 1.582.788.989.104 1.937.015 2.661-.803a.598.598 0 01.414-.163c.812.01 1.48.338 2.046.992-1.671.284-2.852 1.163-3.375 2.752-.534 1.6-.086 3.003 1.118 4.247zM5.562 6.5c-1.77 0-3.012-1.24-3.012-3.005C2.55 1.75 3.792.5 5.537.5c1.77 0 3.013 1.235 3.013 3 0 1.75-1.243 2.996-2.988 3z"
+        ></path>
+        <path
+          fill="#fff"
+          d="M10.545 14.498A2.998 2.998 0 019.42 8.723a3 3 0 011.149-.224c1.64.003 2.984 1.36 2.98 3.01a3.003 3.003 0 01-3.003 2.99zm0-3.5c-.312 0-.625-.003-.937 0-.342.006-.56.2-.563.493-.003.293.215.503.55.506.633.006 1.267.006 1.901 0 .334-.003.554-.215.549-.507-.005-.293-.225-.486-.566-.491-.305-.006-.617 0-.93 0h-.004z"
+        ></path>
+      </svg>
+      </Box>
+    )
+  }
 
   const handleActive = () => {
     if (detailAccount) {
@@ -576,38 +618,38 @@ const AdminPanel = () => {
               Reset Password
             </Button>
             <Button
-              onClick={handleDeleteAccount}
-              sx={{
-                backgroundColor: "#fc3c3c",
-                fontWeight: 700,
-                fontSize: "14px",
-                textTransform: "unset",
-                color: "white",
-                padding: "8px 30px",
-                borderRadius: "16px",
-                ":hover": { backgroundColor: "#fc3c3c" },
-              }}
-              className="ms-4"
-            >
-              <DeleteIcon sx={{ fontSize: 16 }} className='me-2'/>
-              Delete Account
-            </Button>
-            <Button
               onClick={handleUpdateNickName}
               sx={{
-                backgroundColor: "#ebb43d",
+                backgroundColor: "#4FBF67",
                 fontWeight: 700,
                 fontSize: "14px",
                 textTransform: "unset",
                 color: "white",
                 padding: "8px 30px",
                 borderRadius: "16px",
-                ":hover": { backgroundColor: "#ebb43d" },
+                ":hover": { backgroundColor: "#4FBF67" },
               }}
               className="ms-4"
             >
-              <EditIcon sx={{ fontSize: 16 }} className='me-2'/>
-              Update Nick Name
+              <EditSVG/>
+              Edit Nick Name
+            </Button>
+            <Button
+              onClick={handleDeleteAccount}
+              sx={{
+                backgroundColor: "#FF7A68",
+                fontWeight: 700,
+                fontSize: "14px",
+                textTransform: "unset",
+                color: "white",
+                padding: "8px 30px",
+                borderRadius: "16px",
+                ":hover": { backgroundColor: "#FF7A68" },
+              }}
+              className="ms-4"
+            >
+              <DeleteSVG/>
+              Delete
             </Button>
           </Box>
         )}
