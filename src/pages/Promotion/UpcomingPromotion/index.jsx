@@ -9,13 +9,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../../components/Layout";
+import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
-import ListItemLoading from "../../../components/LoadingComponent/ItemLoading";
-import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
-import ItemComponent from "../../NewHomePageComponent/NewHomePage/ItemComponent";
 import PaginatedItems from "../../PaginatedItems";
 const theme = createTheme({
   typography: {},
@@ -39,27 +37,23 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { upcomingTournament } = useSelector(
+  const { upcomingTournament, isFetchUpcoming } = useSelector(
     (state) => state.tournamentReducer
   );
-  const [isFetchList, setIsFetchList] = useState(true);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "upcoming",
-      });
-    }
-  }, [dispatch, isFetchList]);
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "upcoming",
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     if (upcomingTournament) {
       setData(upcomingTournament);
-      setIsFetchList(false);
     }
   }, [upcomingTournament]);
 
@@ -113,7 +107,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchList ? (
+                {isFetchUpcoming || data === null ? (
                   <BannerLoading height={363} />
                 ) : (
                   <SlickSlider
@@ -128,40 +122,14 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(5,1fr)",
-                    gridRowGap: "50px",
-                  }}
-                >
-                  {isFetchList ? (
-                    <ListItemLoading />
-                  ) : data?.length ? (
-                    data?.map((item, index) => {
-                      return (
-                        index >= itemOffSet &&
-                        index <= itemOffSet + 9 && (
-                          <Box
-                            sx={{
-                              width:
-                                width < 576 && width < 1200 ? "auto" : "20%",
-                              marginRight:
-                                width > 576 && width < 1200 ? "100px" : "none",
-                            }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })
-                  ) : (
-                    <ListEmpty textData={"hot"} />
-                  )}
-                </Box>
+                <ListPromotion
+                  listData={data}
+                  loadingState={isFetchUpcoming}
+                  itemOffSet={itemOffSet}
+                  typePromo={"upcoming"}
+                />
               </Box>
-              {!isFetchList && data?.length > 0 && (
+              {!isFetchUpcoming && data !== null && data?.length > 0 && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
@@ -205,7 +173,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchList ? (
+                {isFetchUpcoming || data === null ? (
                   <BannerLoading height={208} />
                 ) : (
                   <SlickSlider
@@ -220,40 +188,14 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {isFetchList ? (
-                    <ListItemLoading />
-                  ) : data?.length ? (
-                    data?.map((item, index) => {
-                      return (
-                        index >= itemOffSet &&
-                        index <= itemOffSet + 9 && (
-                          <Box
-                            sx={{
-                              width:
-                                width < 576 && width < 1200 ? "auto" : "20%",
-                              marginTop: "42px",
-                              marginRight:
-                                width > 576 && width < 1200 ? "100px" : "none",
-                            }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })
-                  ) : (
-                    <ListEmpty textData={"hot"} />
-                  )}
-                </Box>
+                <ListPromotion
+                  listData={data}
+                  loadingState={isFetchUpcoming}
+                  itemOffSet={itemOffSet}
+                  typePromo={"upcoming"}
+                />
               </Box>
-              {!isFetchList && data?.length > 0 && (
+              {!isFetchUpcoming && data !== null && data?.length > 0 && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {

@@ -9,13 +9,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../../components/Layout";
+import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
-import ListItemLoading from "../../../components/LoadingComponent/ItemLoading";
-import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
 import SlickSlider from "../../../components/SlickSlider";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
-import ItemComponent from "../../NewHomePageComponent/NewHomePage/ItemComponent";
 import PaginatedItems from "../../PaginatedItems";
 const theme = createTheme({
   typography: {},
@@ -39,25 +37,23 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { standardTournament } = useSelector((state) => state.tournamentReducer);
-  const [isFetchList, setIsFetchList] = useState(true);
-  const [data, setData] = useState([]);
+  const { standardTournament, isFetchStandard } = useSelector(
+    (state) => state.tournamentReducer
+  );
+  const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "standard",
-      });
-    }
-  }, [dispatch, isFetchList]);
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "standard",
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     if (standardTournament) {
       setData(standardTournament);
-      setIsFetchList(false);
     }
   }, [standardTournament]);
 
@@ -98,8 +94,8 @@ export default function HotTournament() {
                 sx={{
                   ...typographyStyle,
                   fontSize: "36px",
-                  fontFamily:"Cyntho Next",
-                  fontWeight: 700
+                  fontFamily: "Cyntho Next",
+                  fontWeight: 700,
                 }}
               >
                 Standard Promotion
@@ -111,7 +107,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchList ? (
+                {isFetchStandard || data === null ? (
                   <BannerLoading height={363} />
                 ) : (
                   <SlickSlider
@@ -126,40 +122,14 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(5,1fr)",
-                    gridRowGap: "50px",
-                  }}
-                >
-                  {isFetchList ? (
-                    <ListItemLoading />
-                  ) : data?.length ? (
-                    data?.map((item, index) => {
-                      return (
-                        index >= itemOffSet &&
-                        index <= itemOffSet + 9 && (
-                          <Box
-                            sx={{
-                              width:
-                                width < 576 && width < 1200 ? "auto" : "20%",
-                              marginRight:
-                                width > 576 && width < 1200 ? "100px" : "none",
-                            }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })
-                  ) : (
-                    <ListEmpty textData={"hot"} />
-                  )}
-                </Box>
+                <ListPromotion
+                  listData={data}
+                  loadingState={isFetchStandard}
+                  itemOffSet={itemOffSet}
+                  typePromo={"standard"}
+                />
               </Box>
-              {!isFetchList && data?.length > 0 && (
+              {!isFetchStandard && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
@@ -203,7 +173,7 @@ export default function HotTournament() {
                 }}
               >
                 {" "}
-                {isFetchList ? (
+                {isFetchStandard || data === null ? (
                   <BannerLoading height={208} />
                 ) : (
                   <SlickSlider
@@ -218,40 +188,14 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {isFetchList ? (
-                    <ListItemLoading />
-                  ) : data?.length ? (
-                    data?.map((item, index) => {
-                      return (
-                        index >= itemOffSet &&
-                        index <= itemOffSet + 9 && (
-                          <Box
-                            sx={{
-                              width:
-                                width < 576 && width < 1200 ? "auto" : "20%",
-                              marginTop: "42px",
-                              marginRight:
-                                width > 576 && width < 1200 ? "100px" : "none",
-                            }}
-                            key={index}
-                          >
-                            <ItemComponent tourInfo={item} countdown={true} />
-                          </Box>
-                        )
-                      );
-                    })
-                  ) : (
-                    <ListEmpty textData={"hot"} />
-                  )}
-                </Box>
+                <ListPromotion
+                  listData={data}
+                  loadingState={isFetchStandard}
+                  itemOffSet={itemOffSet}
+                  typePromo={"standard"}
+                />
               </Box>
-              {!isFetchList && data?.length > 0 && (
+              {!isFetchStandard && (data !== null && data?.length > 0) && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {

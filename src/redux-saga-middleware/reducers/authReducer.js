@@ -126,6 +126,13 @@ export const toggleShareTour = (data) => {
   };
 };
 
+export const toggleSubscriptionDialog = (data) => {
+  return {
+    type: "TOGGLE_SUBSCRIPTION_DIALOG",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -151,6 +158,7 @@ const authReducer = (
     uPack: {},
     forgetPassDialog: false,
     isShare: false,
+    isSubscription: false,
   },
   action
 ) => {
@@ -227,6 +235,8 @@ const authReducer = (
       return { ...state, forgetPassDialog: payload };
     case "TOGGLE_SHARE_TOUR":
       return { ...state, isShare: !state.isShare };
+    case "TOGGLE_SUBSCRIPTION_DIALOG":
+      return { ...state, isSubscription: !state.isSubscription };
     default:
       return state;
   }
