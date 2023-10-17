@@ -37,7 +37,9 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { hotTournament, isFetchHot } = useSelector((state) => state.tournamentReducer);
+  const { hotTournament, isFetchHot } = useSelector(
+    (state) => state.tournamentReducer
+  );
   const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
@@ -127,8 +129,10 @@ export default function HotTournament() {
                   typePromo={"hot"}
                 />
               </Box>
-              {!isFetchHot && (data !== null && data?.length > 0) && (
+              {!isFetchHot && data !== null && data?.length > 0 && (
                 <PaginatedItems
+                  count={data.length}
+                  page={itemOffSet}
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
                     setItemOffSet((value - 1) * 10);
@@ -193,8 +197,10 @@ export default function HotTournament() {
                   typePromo={"hot"}
                 />
               </Box>
-              {!isFetchHot && (data !== null && data?.length > 0) && (
+              {!isFetchHot && data !== null && data?.length > 0 && (
                 <PaginatedItems
+                  count={data.length}
+                  page={itemOffSet}
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
                     setItemOffSet((value - 1) * 10);

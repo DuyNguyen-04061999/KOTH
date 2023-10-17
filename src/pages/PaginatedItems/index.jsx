@@ -18,7 +18,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
     <Box
       sx={{
         bottom: "0px",
-        padding: "20px 12px",
+        padding: "20px 5px",
         width: "100%",
         display: "flex",
         justifyContent: "center",
@@ -42,24 +42,18 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
                     color: "#fff",
                     alignItems: "center",
                     backgroundColor: "#7648ED",
-                    width: "72px",
+                    width: "32px",
                     height: "32px",
                     borderRadius: "5px",
                     justifyContent: "center",
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: "lighter !important",
-                      marginRight: "8px",
-                      fontSize: "14px",
-                      marginLeft: "0px !important",
-                    }}
-                  >
-                    Next
-                  </Typography>
                   <Box
-                    sx={{ width: "8px", height: "12px" }}
+                    sx={{
+                      width: "8px",
+                      height: "12px",
+                      marginRight: "0px !important",
+                    }}
                     component={"img"}
                     src={images.NextButtonPagination}
                   ></Box>
@@ -72,7 +66,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
                     color: "#fff",
                     alignItems: "center",
                     backgroundColor: "#BF48ED",
-                    width: "72px",
+                    width: "32px",
                     height: "32px",
                     borderRadius: "5px",
                     justifyContent: "center",
@@ -80,20 +74,12 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
                 >
                   {" "}
                   <Box
-                    sx={{ width: "12px", marginRight: "5px" }}
+                    sx={{
+                      width: "12px",
+                    }}
                     component={"img"}
                     src={images.BackButtonLobby}
                   ></Box>
-                  <Typography
-                    sx={{
-                      fontWeight: "lighter !important",
-                      marginRight: "8px",
-                      fontSize: "14px",
-                      marginLeft: "0px !important",
-                    }}
-                  >
-                    Back
-                  </Typography>
                 </Box>
               ),
             }}
