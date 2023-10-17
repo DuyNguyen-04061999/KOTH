@@ -1,4 +1,4 @@
-import { AvatarGroup, Box, Drawer, Grid } from "@mui/material";
+import { AvatarGroup, Box, Grid } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { styled as muiStyled } from "@mui/material/styles";
@@ -38,13 +38,11 @@ import {
   changeRouter,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
-import {
-  clickTabNav
-} from "../../redux-saga-middleware/reducers/authReducer";
+import { clickTabNav } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
   openChatPopup,
-  showBadgeChat
+  showBadgeChat,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
@@ -52,12 +50,10 @@ import ForgetPassword from "../Dialog/ForgetPassword";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import ShareTour from "../Dialog/ShareTour";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
+import SubscriptionDialog from "../Dialog/Subscription";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
-import SubscriptionDialog from "../Dialog/Subscription";
 // import { getAppType } from "../../utils/helper";
-
-const drawerWidth = 310;
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -92,7 +88,10 @@ const AppBar = muiStyled(MuiAppBar, {
   }),
 }));
 
+const drawerWidth = 310;
+
 export default function Layout(props) {
+  console.log("Re-render");
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const { isWalletDialog, isTransactionDialog } = useSelector(
     (state) => state.walletReducer
@@ -559,27 +558,7 @@ export default function Layout(props) {
           </Main>
         </Grid>
       </Grid>
-      <Drawer
-        // hidden={startGameCheck && width < 1200}
-        sx={{
-          width: drawerWidth,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            zIndex: 1033,
-            overflowY: "unset",
-            backgroundColor: "unset",
-            borderLeftWidth: "none",
-            display: "flex",
-            justifyContent: "flex-start",
-            borderLeft: "none",
-          },
-        }}
-        open={chatPopup && !startGameCheck}
-        variant="persistent"
-        anchor="right"
-      >
-        <ChatDrawer />
-      </Drawer>
+      <ChatDrawer />
     </Box>
   );
 }
