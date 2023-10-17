@@ -335,7 +335,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     ""
                   ) : (
                     <Typography sx={{ marginLeft: "0px !important" }}>
-                      : {detailTournament?.boughtToday}/{detailTournament?.maxPlay}
+                      : {detailTournament?.boughtToday}/
+                      {detailTournament?.maxPlay}
                     </Typography>
                   )}
                 </Box>
@@ -1059,7 +1060,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
 
                     <AnimButton
                       onClick={handleClickOpen}
-                      text={"Buy Ticket"}
+                      text={"Buy Extra"}
                       type={"primary"}
                     />
                   </Box>

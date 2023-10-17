@@ -82,7 +82,7 @@ export default function BuyTicket(props) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Dialog
-        sx={{ zIndex: "1321",  }}
+        sx={{ zIndex: "1321", "& .MuiDialog-paper" : {backgroundColor:"#211D28"}  }}
         open={isBuyTicket}
         onClose={handleClose}
         fullScreen={width < 576 ? true : false}
@@ -94,7 +94,7 @@ export default function BuyTicket(props) {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            maxWidth:"410px !important"
+            maxWidth:width > 576 ? "410px !important" : "100%"
           }}
         >
           <Box

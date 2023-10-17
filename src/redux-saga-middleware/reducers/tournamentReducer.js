@@ -287,6 +287,12 @@ export const toggleOpenResultEndGame = (data) => {
     payload: data,
   };
 };
+export const toggleCloseResultEndGame = (data) => {
+  return {
+    type: "TOGGLE_CLOSE_RESULT_END_GAME",
+    payload: data,
+  };
+};
 
 export const saveIdTournament = (data) => {
   return {
@@ -571,8 +577,14 @@ const tournamentReducer = (
     case "TOGGLE_OPEN_RESULT_END_GAME":
       return {
         ...state,
-        isResultEndGame: !state.isResultEndGame,
+        isResultEndGame: true,
         endGameScore: payload || 0,
+      };
+    case "TOGGLE_CLOSE_RESULT_END_GAME":
+      return {
+        ...state,
+        isResultEndGame: false,
+        endGameScore: 0,
       };
     case "SAVE_ID_TOURNAMENT":
       return {
