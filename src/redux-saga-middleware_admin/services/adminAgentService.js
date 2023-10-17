@@ -50,6 +50,22 @@ export class ADMIN_AGENT_SERVICE {
             const queryString = queryParams.join("&");
         
             finalQueryString = queryParams.length > 0 ? `?${queryString}` : "";
+
+            if(!window.location.pathname?.includes("report")) {
+                if(finalQueryString) {
+                  finalQueryString =  finalQueryString + "&revenue=1"
+                } else {
+                  finalQueryString = finalQueryString + "?revenue=1"
+                }
+            }
+        } else {
+            if(!window.location.pathname?.includes("report")) {
+                if(finalQueryString) {
+                  finalQueryString =  finalQueryString + "&revenue=1"
+                } else {
+                  finalQueryString = finalQueryString + "?revenue=1"
+                }
+            }
         }
         const res = ADMIN_API.get(`/api/admin/agent/refs` + finalQueryString, {
             headers: {

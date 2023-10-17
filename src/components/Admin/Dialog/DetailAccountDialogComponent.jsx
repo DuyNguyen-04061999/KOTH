@@ -112,6 +112,7 @@ const RegisterDateIcon = () => {
 export default function DetailAccountDialogComponent() {
     const { width } = useWindowDimensions()
     const { isDetailDialog } = useSelector((state) => state.adminDialogReducer);
+    const { roles } = useSelector((state) => state.adminAuthReducer);
     const { detailAccount } = useSelector((state) => state.adminReducer_);
     const dispatch = useDispatch()
 
@@ -309,200 +310,206 @@ export default function DetailAccountDialogComponent() {
                                 Provide Ticket
                             </Typography>
                         </Box>
-                        <Box component={"div"} onClick={() => dispatch(openResetPassDialog())} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
-                            borderRadius: "7.618px",
-                            maxWidth: width/4,
-                            boxShadow: "1px 20px 25px 5px #E4E4E4"
-                        }}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="48"
-                                height="48"
-                                fill="none"
-                                viewBox="0 0 48 48"
-                                >
-                                <ellipse
-                                    cx="23.902"
-                                    cy="23.865"
-                                    fill="url(#paint0_linear_3518_62928)"
-                                    rx="23.39"
-                                    ry="23.376"
-                                ></ellipse>
-                                <mask
-                                    id="mask0_3518_62928"
-                                    style={{ maskType: "luminance" }}
+                        {!roles?.includes("agent") && (
+                            <Box component={"div"} onClick={() => dispatch(openResetPassDialog())} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
+                                borderRadius: "7.618px",
+                                maxWidth: width/4,
+                                boxShadow: "1px 20px 25px 5px #E4E4E4"
+                            }}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
                                     width="48"
                                     height="48"
-                                    x="0"
-                                    y="0"
-                                    maskUnits="userSpaceOnUse"
-                                >
-                                    <ellipse
-                                    cx="23.902"
-                                    cy="23.865"
-                                    fill="#fff"
-                                    rx="23.39"
-                                    ry="23.376"
-                                    ></ellipse>
-                                </mask>
-                                <g fill="#fff" mask="url(#mask0_3518_62928)">
-                                    <path d="M30.138 19.058c0-.322-.003-.568 0-.814.01-.5.357-.87.825-.874.468-.005.834.364.838.86.008.864.01 1.727 0 2.591a1.097 1.097 0 01-1.092 1.11c-.873.017-1.747.015-2.62 0a.814.814 0 01-.82-.842c.006-.467.35-.806.84-.82.253-.005.507 0 .833 0-.11-.137-.169-.223-.238-.297-1.646-1.804-3.679-2.49-6.03-1.866-2.36.628-3.85 2.222-4.317 4.63a5.906 5.906 0 006.096 7.055c2.17-.096 3.816-1.148 4.922-3.025.16-.27.347-.486.672-.53.325-.043.611.066.803.344.206.298.2.612.025.927a7.539 7.539 0 01-3.108 3.074c-4.663 2.48-10.379-.43-11.13-5.665-.606-4.236 2.474-8.217 6.704-8.639 2.62-.26 4.812.612 6.584 2.554.053.058.107.114.213.227z"></path>
-                                    <path d="M24.158 27.439c-.604-.027-1.208-.045-1.811-.082-.765-.048-1.317-.553-1.363-1.316-.043-.708-.028-1.423-.007-2.134.014-.497.257-.882.68-1.158a.386.386 0 00.142-.257c.032-.326.02-.656.06-.98.091-.753.663-1.348 1.423-1.412.61-.05 1.224-.05 1.835 0 .725.06 1.295.65 1.396 1.376.044.323.034.655.06.979.007.09.03.221.09.255.634.358.766.964.782 1.603.015.595-.005 1.19-.06 1.78-.067.722-.614 1.225-1.355 1.257-.622.027-1.25.006-1.872.006v.082zm-1.23-4.945h2.517c-.015-.282-.015-.55-.045-.812-.03-.263-.193-.45-.464-.461-.493-.02-.988-.02-1.48 0-.298.011-.462.213-.49.505-.024.24-.025.489-.036.766l-.002.002z"></path>
-                                </g>
-                                <defs>
-                                    <linearGradient
-                                    id="paint0_linear_3518_62928"
-                                    x1="-22.878"
-                                    x2="23.873"
-                                    y1="23.865"
-                                    y2="70.645"
-                                    gradientUnits="userSpaceOnUse"
+                                    fill="none"
+                                    viewBox="0 0 48 48"
                                     >
-                                    <stop stopColor="#B5E2E0"></stop>
-                                    <stop offset="1" stopColor="#3DBAA2"></stop>
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                            <Typography className='mt-2' sx={{
-                                color: "#11142D",
-                                textAlign: "center",
-                                fontSize: "12px",
-                                fontStyle: "normal",
-                                fontWeight: 700,
-                                lineHeight: "normal"
+                                    <ellipse
+                                        cx="23.902"
+                                        cy="23.865"
+                                        fill="url(#paint0_linear_3518_62928)"
+                                        rx="23.39"
+                                        ry="23.376"
+                                    ></ellipse>
+                                    <mask
+                                        id="mask0_3518_62928"
+                                        style={{ maskType: "luminance" }}
+                                        width="48"
+                                        height="48"
+                                        x="0"
+                                        y="0"
+                                        maskUnits="userSpaceOnUse"
+                                    >
+                                        <ellipse
+                                        cx="23.902"
+                                        cy="23.865"
+                                        fill="#fff"
+                                        rx="23.39"
+                                        ry="23.376"
+                                        ></ellipse>
+                                    </mask>
+                                    <g fill="#fff" mask="url(#mask0_3518_62928)">
+                                        <path d="M30.138 19.058c0-.322-.003-.568 0-.814.01-.5.357-.87.825-.874.468-.005.834.364.838.86.008.864.01 1.727 0 2.591a1.097 1.097 0 01-1.092 1.11c-.873.017-1.747.015-2.62 0a.814.814 0 01-.82-.842c.006-.467.35-.806.84-.82.253-.005.507 0 .833 0-.11-.137-.169-.223-.238-.297-1.646-1.804-3.679-2.49-6.03-1.866-2.36.628-3.85 2.222-4.317 4.63a5.906 5.906 0 006.096 7.055c2.17-.096 3.816-1.148 4.922-3.025.16-.27.347-.486.672-.53.325-.043.611.066.803.344.206.298.2.612.025.927a7.539 7.539 0 01-3.108 3.074c-4.663 2.48-10.379-.43-11.13-5.665-.606-4.236 2.474-8.217 6.704-8.639 2.62-.26 4.812.612 6.584 2.554.053.058.107.114.213.227z"></path>
+                                        <path d="M24.158 27.439c-.604-.027-1.208-.045-1.811-.082-.765-.048-1.317-.553-1.363-1.316-.043-.708-.028-1.423-.007-2.134.014-.497.257-.882.68-1.158a.386.386 0 00.142-.257c.032-.326.02-.656.06-.98.091-.753.663-1.348 1.423-1.412.61-.05 1.224-.05 1.835 0 .725.06 1.295.65 1.396 1.376.044.323.034.655.06.979.007.09.03.221.09.255.634.358.766.964.782 1.603.015.595-.005 1.19-.06 1.78-.067.722-.614 1.225-1.355 1.257-.622.027-1.25.006-1.872.006v.082zm-1.23-4.945h2.517c-.015-.282-.015-.55-.045-.812-.03-.263-.193-.45-.464-.461-.493-.02-.988-.02-1.48 0-.298.011-.462.213-.49.505-.024.24-.025.489-.036.766l-.002.002z"></path>
+                                    </g>
+                                    <defs>
+                                        <linearGradient
+                                        id="paint0_linear_3518_62928"
+                                        x1="-22.878"
+                                        x2="23.873"
+                                        y1="23.865"
+                                        y2="70.645"
+                                        gradientUnits="userSpaceOnUse"
+                                        >
+                                        <stop stopColor="#B5E2E0"></stop>
+                                        <stop offset="1" stopColor="#3DBAA2"></stop>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <Typography className='mt-2' sx={{
+                                    color: "#11142D",
+                                    textAlign: "center",
+                                    fontSize: "12px",
+                                    fontStyle: "normal",
+                                    fontWeight: 700,
+                                    lineHeight: "normal"
+                                }}>
+                                    Reset Password
+                                </Typography>
+                            </Box>
+                        )}
+                        {!roles?.includes("agent") && (
+                            <Box component={"div"} onClick={handleUpdateNickName} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
+                                borderRadius: "7.618px",
+                                maxWidth: width/4,
+                                boxShadow: "1px 20px 25px 5px #E4E4E4"
                             }}>
-                                Reset Password
-                            </Typography>
-                        </Box>
-                        <Box component={"div"} onClick={handleUpdateNickName} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
-                            borderRadius: "7.618px",
-                            maxWidth: width/4,
-                            boxShadow: "1px 20px 25px 5px #E4E4E4"
-                        }}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="47"
-                                height="48"
-                                fill="none"
-                                viewBox="0 0 47 48"
-                                >
-                                <ellipse
-                                    cx="23.39"
-                                    cy="23.865"
-                                    fill="url(#paint0_linear_4861_67581)"
-                                    rx="23.39"
-                                    ry="23.376"
-                                ></ellipse>
-                                <mask
-                                    id="mask0_4861_67581"
-                                    style={{ maskType: "luminance" }}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
                                     width="47"
                                     height="48"
-                                    x="0"
-                                    y="0"
-                                    maskUnits="userSpaceOnUse"
-                                >
-                                    <ellipse
-                                    cx="23.39"
-                                    cy="23.865"
-                                    fill="#fff"
-                                    rx="23.39"
-                                    ry="23.376"
-                                    ></ellipse>
-                                </mask>
-                                <g fill="#fff" mask="url(#mask0_4861_67581)">
-                                    <path d="M24.404 20.244l3.897 3.953c-.061.03-.18.061-.255.14a2248.59 2248.59 0 00-6.231 6.24c-.407.41-.855.66-1.436.703-.669.05-1.332.162-2 .21-.951.066-1.472-.498-1.365-1.44.082-.727.136-1.459.262-2.178.054-.314.187-.672.404-.89 2.22-2.252 4.465-4.481 6.724-6.738zM28.98 23.371l-3.84-3.838c.534-.542 1.06-1.125 1.639-1.65.6-.54 1.462-.488 2.044.076.581.564 1.16 1.141 1.725 1.724.564.584.617 1.466.065 2.068-.52.57-1.095 1.09-1.634 1.62z"></path>
-                                </g>
-                                <defs>
-                                    <linearGradient
-                                    id="paint0_linear_4861_67581"
-                                    x1="-23.39"
-                                    x2="23.361"
-                                    y1="23.865"
-                                    y2="70.645"
-                                    gradientUnits="userSpaceOnUse"
+                                    fill="none"
+                                    viewBox="0 0 47 48"
                                     >
-                                    <stop stopColor="#B5E2B9"></stop>
-                                    <stop offset="1" stopColor="#4FBF67"></stop>
-                                    </linearGradient>
-                                </defs>
-                                </svg>
-                            <Typography className='mt-2' sx={{
-                                color: "#11142D",
-                                textAlign: "center",
-                                fontSize: "12px",
-                                fontStyle: "normal",
-                                fontWeight: 700,
-                                lineHeight: "normal"
+                                    <ellipse
+                                        cx="23.39"
+                                        cy="23.865"
+                                        fill="url(#paint0_linear_4861_67581)"
+                                        rx="23.39"
+                                        ry="23.376"
+                                    ></ellipse>
+                                    <mask
+                                        id="mask0_4861_67581"
+                                        style={{ maskType: "luminance" }}
+                                        width="47"
+                                        height="48"
+                                        x="0"
+                                        y="0"
+                                        maskUnits="userSpaceOnUse"
+                                    >
+                                        <ellipse
+                                        cx="23.39"
+                                        cy="23.865"
+                                        fill="#fff"
+                                        rx="23.39"
+                                        ry="23.376"
+                                        ></ellipse>
+                                    </mask>
+                                    <g fill="#fff" mask="url(#mask0_4861_67581)">
+                                        <path d="M24.404 20.244l3.897 3.953c-.061.03-.18.061-.255.14a2248.59 2248.59 0 00-6.231 6.24c-.407.41-.855.66-1.436.703-.669.05-1.332.162-2 .21-.951.066-1.472-.498-1.365-1.44.082-.727.136-1.459.262-2.178.054-.314.187-.672.404-.89 2.22-2.252 4.465-4.481 6.724-6.738zM28.98 23.371l-3.84-3.838c.534-.542 1.06-1.125 1.639-1.65.6-.54 1.462-.488 2.044.076.581.564 1.16 1.141 1.725 1.724.564.584.617 1.466.065 2.068-.52.57-1.095 1.09-1.634 1.62z"></path>
+                                    </g>
+                                    <defs>
+                                        <linearGradient
+                                        id="paint0_linear_4861_67581"
+                                        x1="-23.39"
+                                        x2="23.361"
+                                        y1="23.865"
+                                        y2="70.645"
+                                        gradientUnits="userSpaceOnUse"
+                                        >
+                                        <stop stopColor="#B5E2B9"></stop>
+                                        <stop offset="1" stopColor="#4FBF67"></stop>
+                                        </linearGradient>
+                                    </defs>
+                                    </svg>
+                                <Typography className='mt-2' sx={{
+                                    color: "#11142D",
+                                    textAlign: "center",
+                                    fontSize: "12px",
+                                    fontStyle: "normal",
+                                    fontWeight: 700,
+                                    lineHeight: "normal"
+                                }}>
+                                    Nick Name
+                                </Typography>
+                            </Box>
+                        )}
+                        {!roles?.includes("agent") && (
+                            <Box component={"div"} onClick={handleDeleteAccount} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
+                                borderRadius: "7.618px",
+                                maxWidth: width/4,
+                                boxShadow: "1px 20px 25px 5px #E4E4E4"
                             }}>
-                                Nick Name
-                            </Typography>
-                        </Box>
-                        <Box component={"div"} onClick={handleDeleteAccount} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
-                            borderRadius: "7.618px",
-                            maxWidth: width/4,
-                            boxShadow: "1px 20px 25px 5px #E4E4E4"
-                        }}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="47"
-                                height="47"
-                                fill="none"
-                                viewBox="0 0 47 47"
-                                >
-                                <ellipse
-                                    cx="23.39"
-                                    cy="23.376"
-                                    fill="url(#paint0_linear_4861_67592)"
-                                    rx="23.39"
-                                    ry="23.376"
-                                ></ellipse>
-                                <mask
-                                    id="mask0_4861_67592"
-                                    style={{ maskType: "luminance" }}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
                                     width="47"
                                     height="47"
-                                    x="0"
-                                    y="0"
-                                    maskUnits="userSpaceOnUse"
-                                >
-                                    <ellipse
-                                    cx="23.39"
-                                    cy="23.376"
-                                    fill="#fff"
-                                    rx="23.39"
-                                    ry="23.376"
-                                    ></ellipse>
-                                </mask>
-                                <g fill="#fff" mask="url(#mask0_4861_67592)">
-                                    <path d="M24.828 30.498h-3.527c-.77 0-1.54.004-2.312 0-1.209-.01-2.11-1.062-1.976-2.266.118-1.074.219-2.151.296-3.23.097-1.354 1.275-2.508 2.606-2.495.159 0 .37.063.468.178.423.487.97.723 1.58.788.99.104 1.938.015 2.662-.803a.598.598 0 01.414-.163c.812.01 1.481.338 2.046.992-1.671.284-2.852 1.163-3.375 2.752-.533 1.6-.086 3.003 1.118 4.247zM22.512 22.5c-1.77 0-3.012-1.24-3.012-3.005 0-1.745 1.242-2.995 2.986-2.995 1.77 0 3.013 1.235 3.013 3 0 1.75-1.242 2.995-2.987 3z"></path>
-                                    <path d="M27.494 30.498a2.999 2.999 0 11.023-5.999c1.64.003 2.984 1.36 2.98 3.01a3.003 3.003 0 01-3.003 2.99zm0-3.5c-.312 0-.625-.003-.937 0-.342.006-.56.2-.563.493-.003.293.215.503.55.506.633.006 1.267.006 1.901 0 .334-.003.554-.215.55-.507-.006-.292-.226-.486-.567-.491-.304-.006-.617 0-.93 0h-.004z"></path>
-                                </g>
-                                <defs>
-                                    <linearGradient
-                                    id="paint0_linear_4861_67592"
-                                    x1="-23.39"
-                                    x2="23.361"
-                                    y1="23.376"
-                                    y2="70.156"
-                                    gradientUnits="userSpaceOnUse"
+                                    fill="none"
+                                    viewBox="0 0 47 47"
                                     >
-                                    <stop stopColor="#E2B5BD"></stop>
-                                    <stop offset="1" stopColor="#FF7A68"></stop>
-                                    </linearGradient>
-                                </defs>
-                                </svg>
-                            <Typography className='mt-2' sx={{
-                                color: "#11142D",
-                                textAlign: "center",
-                                fontSize: "12px",
-                                fontStyle: "normal",
-                                fontWeight: 700,
-                                lineHeight: "normal"
-                            }}>
-                                Delete Account
-                            </Typography>
-                        </Box>
+                                    <ellipse
+                                        cx="23.39"
+                                        cy="23.376"
+                                        fill="url(#paint0_linear_4861_67592)"
+                                        rx="23.39"
+                                        ry="23.376"
+                                    ></ellipse>
+                                    <mask
+                                        id="mask0_4861_67592"
+                                        style={{ maskType: "luminance" }}
+                                        width="47"
+                                        height="47"
+                                        x="0"
+                                        y="0"
+                                        maskUnits="userSpaceOnUse"
+                                    >
+                                        <ellipse
+                                        cx="23.39"
+                                        cy="23.376"
+                                        fill="#fff"
+                                        rx="23.39"
+                                        ry="23.376"
+                                        ></ellipse>
+                                    </mask>
+                                    <g fill="#fff" mask="url(#mask0_4861_67592)">
+                                        <path d="M24.828 30.498h-3.527c-.77 0-1.54.004-2.312 0-1.209-.01-2.11-1.062-1.976-2.266.118-1.074.219-2.151.296-3.23.097-1.354 1.275-2.508 2.606-2.495.159 0 .37.063.468.178.423.487.97.723 1.58.788.99.104 1.938.015 2.662-.803a.598.598 0 01.414-.163c.812.01 1.481.338 2.046.992-1.671.284-2.852 1.163-3.375 2.752-.533 1.6-.086 3.003 1.118 4.247zM22.512 22.5c-1.77 0-3.012-1.24-3.012-3.005 0-1.745 1.242-2.995 2.986-2.995 1.77 0 3.013 1.235 3.013 3 0 1.75-1.242 2.995-2.987 3z"></path>
+                                        <path d="M27.494 30.498a2.999 2.999 0 11.023-5.999c1.64.003 2.984 1.36 2.98 3.01a3.003 3.003 0 01-3.003 2.99zm0-3.5c-.312 0-.625-.003-.937 0-.342.006-.56.2-.563.493-.003.293.215.503.55.506.633.006 1.267.006 1.901 0 .334-.003.554-.215.55-.507-.006-.292-.226-.486-.567-.491-.304-.006-.617 0-.93 0h-.004z"></path>
+                                    </g>
+                                    <defs>
+                                        <linearGradient
+                                        id="paint0_linear_4861_67592"
+                                        x1="-23.39"
+                                        x2="23.361"
+                                        y1="23.376"
+                                        y2="70.156"
+                                        gradientUnits="userSpaceOnUse"
+                                        >
+                                        <stop stopColor="#E2B5BD"></stop>
+                                        <stop offset="1" stopColor="#FF7A68"></stop>
+                                        </linearGradient>
+                                    </defs>
+                                    </svg>
+                                <Typography className='mt-2' sx={{
+                                    color: "#11142D",
+                                    textAlign: "center",
+                                    fontSize: "12px",
+                                    fontStyle: "normal",
+                                    fontWeight: 700,
+                                    lineHeight: "normal"
+                                }}>
+                                    Delete Account
+                                </Typography>
+                            </Box>
+                        )}
                     </Box>
                 </Box>
             )}

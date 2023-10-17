@@ -4,3 +4,8 @@ input:-webkit-autofill,
  input:-webkit-autofill:active{
     -webkit-text-fill-color: #000;
  }
+
+ ::-webkit-scrollbar {
+   width: 0px;
+   height: 0px;
+ }

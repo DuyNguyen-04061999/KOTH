@@ -19,6 +19,7 @@ import {
 import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
 import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
+import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import { checkRouteIsManage } from "../../../utils/Admin/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailAccountDialogComponent from "../Dialog/DetailAccountDialogComponent";
@@ -38,6 +39,32 @@ const AdminPanel = () => {
 
   const handleChangeSearch = (e) => {
     setSearchValue(e?.target?.value);
+    dispatch(updateDetailAccount(null))
+    if(e?.target?.value === "") {
+      if (roles && roles?.length && roles[0]) {
+        switch (roles[0]) {
+          case "master": {
+            dispatch(getListDistributor());
+            break;
+          }
+          case "distributor": {
+            dispatch(getListSub());
+            break;
+          }
+          case "sub_distributor": {
+            dispatch(getListRef());
+            break;
+          }
+          case "agent": {
+            dispatch(getListEndUser());
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -600,57 +627,63 @@ const AdminPanel = () => {
               <ProvideTicketSVG></ProvideTicketSVG>
               Provide Ticket
             </Button>
-            <Button
-              onClick={() => dispatch(openResetPassDialog())}
-              sx={{
-                backgroundColor: "#3DBAA2",
-                fontWeight: 700,
-                fontSize: "14px",
-                textTransform: "unset",
-                color: "white",
-                padding: "8px 30px",
-                borderRadius: "16px",
-                ":hover": { backgroundColor: "#3DBAA2" },
-              }}
-              className="ms-4"
-            >
-              <ResetPasswordSVG></ResetPasswordSVG>
-              Reset Password
-            </Button>
-            <Button
-              onClick={handleUpdateNickName}
-              sx={{
-                backgroundColor: "#4FBF67",
-                fontWeight: 700,
-                fontSize: "14px",
-                textTransform: "unset",
-                color: "white",
-                padding: "8px 30px",
-                borderRadius: "16px",
-                ":hover": { backgroundColor: "#4FBF67" },
-              }}
-              className="ms-4"
-            >
-              <EditSVG/>
-              Edit Nick Name
-            </Button>
-            <Button
-              onClick={handleDeleteAccount}
-              sx={{
-                backgroundColor: "#FF7A68",
-                fontWeight: 700,
-                fontSize: "14px",
-                textTransform: "unset",
-                color: "white",
-                padding: "8px 30px",
-                borderRadius: "16px",
-                ":hover": { backgroundColor: "#FF7A68" },
-              }}
-              className="ms-4"
-            >
-              <DeleteSVG/>
-              Delete
-            </Button>
+            {!roles?.includes("agent") && (
+              <Button
+                onClick={() => dispatch(openResetPassDialog())}
+                sx={{
+                  backgroundColor: "#3DBAA2",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  textTransform: "unset",
+                  color: "white",
+                  padding: "8px 30px",
+                  borderRadius: "16px",
+                  ":hover": { backgroundColor: "#3DBAA2" },
+                }}
+                className="ms-4"
+              >
+                <ResetPasswordSVG></ResetPasswordSVG>
+                Reset Password
+              </Button>
+            )}
+            {!roles?.includes("agent") && (
+              <Button
+                onClick={handleUpdateNickName}
+                sx={{
+                  backgroundColor: "#4FBF67",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  textTransform: "unset",
+                  color: "white",
+                  padding: "8px 30px",
+                  borderRadius: "16px",
+                  ":hover": { backgroundColor: "#4FBF67" },
+                }}
+                className="ms-4"
+              >
+                <EditSVG/>
+                Edit Nick Name
+              </Button>
+            )}
+            {!roles?.includes("agent") && (
+              <Button
+                onClick={handleDeleteAccount}
+                sx={{
+                  backgroundColor: "#FF7A68",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  textTransform: "unset",
+                  color: "white",
+                  padding: "8px 30px",
+                  borderRadius: "16px",
+                  ":hover": { backgroundColor: "#FF7A68" },
+                }}
+                className="ms-4"
+              >
+                <DeleteSVG/>
+                Delete
+              </Button>
+            )}
           </Box>
         )}
       </Box>

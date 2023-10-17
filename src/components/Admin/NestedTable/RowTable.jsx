@@ -81,7 +81,7 @@ const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
       overflow: "scroll",
     },
     ":first-child": {
-      color: "red",
+      color: "#fc3c3c",
       paddingLeft: "10px !important",
     },
   })
@@ -189,7 +189,7 @@ export const RowTable = (props) => {
                     textAlign: "center",
                   }}
                   style={{
-                    background: "red"
+                    
                   }}
                 >
                   {row?.agents && row?.agents?.length > 0 && (
@@ -225,6 +225,10 @@ export const RowTable = (props) => {
                       display: "flex",
                       alignItems: "center",
                       textAlign: "center",
+                      justifyContent:row &&
+                      row?.child &&
+                      row?.child?.length > 0 &&
+                      !checkRouteIsCreate(pathname) ? "unset" : "center"
                     }}
                   >
                     {row &&

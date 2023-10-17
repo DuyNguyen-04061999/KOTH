@@ -408,7 +408,7 @@ const Setting = () => {
                     letterSpacing: "0.9px",
                   }}
                 >
-                  Password
+                  Re-enter New Password
                 </Box>
                 <Box
                   component={"input"}

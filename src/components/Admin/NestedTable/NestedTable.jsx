@@ -78,6 +78,12 @@ const NestedTable = (props) => {
           "& .MuiTableCell-root": {
             borderWidth: "none",
           },
+          "::-webkit-scrollbar": {
+            height: "5px",
+          },
+          "::webkit-scrollbar-thumb": {
+            
+          },
           overflowX: "auto"
         }}
         style={{ boxShadow: "unset" }}
@@ -86,60 +92,6 @@ const NestedTable = (props) => {
         <StyleTable stickyHeader sx={{}} aria-label="collapsible table">
           <StyledTableHead>
             <TableRow>
-              {/* <TableCell style={{color: "#808191",}}/> */}
-              {/* {width > 576 && (
-                <TableCell sx={{}} style={{ color: "#808191" }} children=" " />
-              )}
-              <TableCell
-                sx={{ width: "100px" }}
-                style={{ color: "#808191" }}
-                children="Account"
-                className="text-center"
-              />
-              <TableCell
-                sx={{ maxWidth: "unset" }}
-                style={{ color: "#808191" }}
-                children="Level "
-                className="text-center"
-              />
-              <TableCell
-                className="text-center"
-                style={{ color: "#808191" }}
-                children="Revenue"
-              />
-              <TableCell
-                className="text-center"
-                style={{ color: "#808191" }}
-                children="Ticket"
-              />
-              {width > 576 && (
-                <TableCell
-                  className="text-center"
-                  style={{ color: "#808191" }}
-                  children="Ref Code"
-                />
-              )}
-              {width > 576 && (
-                <TableCell
-                  className="text-center"
-                  style={{ color: "#808191" }}
-                  children="Date"
-                />
-              )}
-              {width > 576 && (
-                <TableCell
-                  style={{ color: "#808191" }}
-                  children="Amount Account"
-                  className="text-center"
-                />
-              )}
-              {width > 576 && (
-                <TableCell
-                  className="text-center"
-                  style={{ color: "#808191" }}
-                  children="Status"
-                />
-              )} */}
               {headerList?.map((item, index) => (
                 <TableCell
                   className="text-center"
