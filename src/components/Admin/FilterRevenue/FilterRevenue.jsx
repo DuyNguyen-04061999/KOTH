@@ -14,6 +14,8 @@ import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/ad
 import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
 import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
+import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import SearchBar from "../SearchBar/SearchBar";
 
@@ -336,6 +338,32 @@ const FilterRevenue = () => {
 
   const handleChangeSearch = (e) => {
     setAccountInput(e?.target?.value);
+    dispatch(updateDetailAccount(null))
+    if(e?.target?.value === "") {
+      if (roles && roles?.length && roles[0]) {
+        switch (roles[0]) {
+          case "master": {
+            dispatch(getListDistributor());
+            break;
+          }
+          case "distributor": {
+            dispatch(getListSub());
+            break;
+          }
+          case "sub_distributor": {
+            dispatch(getListRef());
+            break;
+          }
+          case "agent": {
+            dispatch(getListEndUser());
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
   };
 
   // const handleChangeSearch = (e) => {

@@ -9,10 +9,10 @@ function* login(dataRequest) {
     try {
         const { payload } = dataRequest;
         const res = yield call(adminAuthService.login, payload)
-        const { token, roles, permissions, ref } = res?.data?.data
+        const { token, roles, permissions, ref, name } = res?.data?.data
         if(res && res.status === 200) {
             localStorage.setItem("token_admin", token)
-            yield put(adminLoginSuccess({ roles, permissions, ref }))
+            yield put(adminLoginSuccess({ roles, permissions, ref, name }))
         } else {
             yield put(showToastNotify({ type: "error", message: "Authenticated failed!" }))
             yield put(adminLoginFail())

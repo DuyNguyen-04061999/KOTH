@@ -107,6 +107,7 @@ export default function CreateAccountDialogComponent() {
       }
       setErrorMessage("");
       setIsLoading(false);
+      setPassword("")
     }
   };
 

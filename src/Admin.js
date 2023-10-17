@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { PersistGate } from "redux-persist/lib/integration/react";
@@ -21,9 +21,41 @@ import NotFound from './pages/Admin/NotFound/NotFound';
 import Revenue from './pages/Admin/Revenue/Revenue';
 import Setting from './pages/Admin/Setting/Setting';
 import Totals from './pages/Admin/Totals/Totals';
+import _socket from './redux-saga-middleware/config/socket';
 import { hideToastNotify } from './redux-saga-middleware_admin/reducers/adminAlertReducer';
+import { getListSub } from './redux-saga-middleware_admin/reducers/adminDistributorReducer';
 
 export default function Admin() {
+    const [socket, setSocket] = useState(null);
+    useEffect(() => {
+        const socket = _socket;
+        setSocket(socket);
+    }, []);
+
+    useEffect(() => {
+        const { name, roles } = storeAdmin.getState().adminAuthReducer;
+        if (socket) {
+            socket?.once("connect", (data) => {});
+            socket?.on(`admin_${name}`, () => {
+                if (roles && roles?.length && roles[0]) {
+                    switch (roles[0]) {
+                      case "distributor": {
+                        storeAdmin.dispatch(getListSub());
+                        break;
+                      }
+                      default: {
+                        break;
+                      }
+                    }
+                  }
+            })
+        }
+
+        return () => {
+            socket?.disconnect();
+        };
+    }, [socket])
+
     return (
         <ErrorBoundary>
             <Provider store={storeAdmin}>

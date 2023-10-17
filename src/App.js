@@ -27,6 +27,7 @@ import {
   toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
+  updateSubPackageId,
   updateUserGold,
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
@@ -575,6 +576,10 @@ function App() {
       });
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
+      });
+
+      socket?.on("buySubscriptionSuccess", (id) => {
+        store.dispatch(updateSubPackageId(id));
       });
 
       socket?.on("gameDefeated", ({ type, value }) => {

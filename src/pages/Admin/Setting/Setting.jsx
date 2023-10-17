@@ -17,6 +17,7 @@ import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
 import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { changePassword } from "../../../redux-saga-middleware_admin/reducers/adminAuthReducer";
 import { updateAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
+import { openRefcodeNotify } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const Accordion = styled((props) => (
@@ -121,9 +122,11 @@ const Setting = () => {
       dispatch(showToastNotify({ type: "warning", message: "Refcode invalid !" }))
       return
     } else if (newRefcode?.length > 30) {
-      dispatch(showToastNotify({ type: "warning", message: "Refcode too long !" }))
+      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too long ! Maximum 30 characters" }))
+      // dispatch(showToastNotify({ type: "warning", message: "Refcode too long !" }))
     } else if (newRefcode?.length < 15) {
-      dispatch(showToastNotify({ type: "warning", message: "Refcode too short !" }))
+      // dispatch(showToastNotify({ type: "warning", message: "Refcode too short !" }))
+      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too short ! Minimum 15 characters" }))
     } else {
       dispatch(updateAccount({ newRefcode }))
       setNewRefcode("")
@@ -408,7 +411,7 @@ const Setting = () => {
                     letterSpacing: "0.9px",
                   }}
                 >
-                  Password
+                  Re-enter New Password
                 </Box>
                 <Box
                   component={"input"}
@@ -563,7 +566,9 @@ const Setting = () => {
                       letterSpacing: "0.9px",
                     }}
                   >
-                    New Refcode
+                    New Refcode <Box component={"span"} className="text-danger">
+                      {"("} Min 15 - Max 30 Characters {")"}
+                    </Box>
                   </Box>
                   <Box
                     component={"input"}

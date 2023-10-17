@@ -3,9 +3,10 @@ import { getListEndUser } from "../reducers/adminAgentReducer";
 import { showToastNotify } from "../reducers/adminAlertReducer";
 import { updateNewRef } from "../reducers/adminAuthReducer";
 import { activeAccountFail, activeAccountSuccess, deleteAccountFail, deleteAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess, updateAccountFail, updateAccountSuccess } from "../reducers/adminConfigReducer";
-import { closeProvideDialog, openRefcodeNotify } from "../reducers/adminDialogReducer";
+import { closeProvideDialog, closeUpdateAccountDialog, openRefcodeNotify } from "../reducers/adminDialogReducer";
 import { getListSub } from "../reducers/adminDistributorReducer";
 import { getListDistributor } from "../reducers/adminMasterReducer";
+import { updateDetailAccount, updateDetailAccountAfterChangeNickname, updateDetailAccountAfterChangeStatus } from "../reducers/adminReducer";
 import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
 const adminConfigService = new ADMIN_CONFIG_SERVICE();
 
@@ -72,6 +73,7 @@ function* provideTicketSaga(dataRequest) {
 function* activeAccountSaga(dataRequest) {
     try {
         const { payload } = dataRequest;
+        
         const res = yield call(adminConfigService.activeAccount, payload)
         const { role } = res?.data
         if(res && res.status === 200) {
@@ -83,7 +85,8 @@ function* activeAccountSaga(dataRequest) {
             } else if (role === "Agent") {
                 yield put(getListEndUser())
             }
-            yield put(showToastNotify({ type: "success", message: "Active account successfully" }))
+            yield put(showToastNotify({ type: "success", message: payload?.active ? "Active account successfully" : "The account has been prohibited" }))
+            yield put(updateDetailAccountAfterChangeStatus(payload?.active || 0))
         } else {
             yield put(activeAccountFail())
             yield put(showToastNotify({ type: "error", message: "Active account failed" }))
@@ -110,6 +113,7 @@ function* deleteAccountSaga(dataRequest) {
             } else if (role === "Agent") {
                 yield put(getListEndUser())
             }
+            yield put(updateDetailAccount(null))
         } else {
             yield put(deleteAccountFail())
             yield put(showToastNotify({ type: "error", message: "Delete account failed" }))
@@ -135,6 +139,10 @@ function* updateAccountSaga(dataRequest) {
                     yield put(getListSub())
                 } else if (role === "Agent") {
                     yield put(getListEndUser())
+                }
+                if(payload?.newNickName) {
+                    yield put(closeUpdateAccountDialog())
+                    yield put(updateDetailAccountAfterChangeNickname(payload?.newNickName))
                 }
                 yield put(showToastNotify({ type: "success", message: "Update account successfully" }))
             } else {
