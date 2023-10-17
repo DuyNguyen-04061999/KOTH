@@ -18,7 +18,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function Browser(props) {
   const { open, handleShowMenu } = props;
-  const { token, isNav, isDropdownNav } = useSelector(
+  const { token , isDropdownNav } = useSelector(
     (state) => state.authReducer
   );
   const dispatch = useDispatch();
@@ -287,7 +287,7 @@ export default function Browser(props) {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "space-between" : "center",
+                    justifyContent: "space-between",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
@@ -320,7 +320,7 @@ export default function Browser(props) {
                     <span
                       className="hover-nav"
                       style={{
-                        display: isNav === true ? "block" : "none",
+                        display: "block",
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
@@ -385,7 +385,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                       backgroundColor:
@@ -427,7 +427,7 @@ export default function Browser(props) {
                     <span
                       className="hover-nav"
                       style={{
-                        display: isNav === true ? "block" : "none",
+                        display: "block",
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
@@ -449,7 +449,7 @@ export default function Browser(props) {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
@@ -497,7 +497,7 @@ export default function Browser(props) {
                   <span
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
+                      display:"block",
                       cursor: "pointer",
                       fontWeight: "700",
                       fontSize: "15px",
@@ -524,7 +524,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                       backgroundColor:
@@ -567,7 +567,7 @@ export default function Browser(props) {
                     <span
                       className="hover-nav"
                       style={{
-                        display: isNav === true ? "block" : "none",
+                        display: "block",
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
@@ -585,7 +585,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                       backgroundColor:
@@ -629,7 +629,7 @@ export default function Browser(props) {
                     <span
                       className="hover-nav"
                       style={{
-                        display: isNav === true ? "block" : "none",
+                        display: "block",
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
@@ -656,7 +656,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                       backgroundColor:
@@ -699,7 +699,7 @@ export default function Browser(props) {
                     <span
                       className="hover-nav"
                       style={{
-                        display: isNav === true ? "block" : "none",
+                        display: "block",
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
@@ -717,7 +717,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                       backgroundColor:
@@ -760,7 +760,7 @@ export default function Browser(props) {
                     <span
                       className="hover-nav"
                       style={{
-                        display: isNav === true ? "block" : "none",
+                        display: "block",
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
@@ -778,7 +778,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                       backgroundColor:
@@ -821,7 +821,7 @@ export default function Browser(props) {
                     <span
                       className="hover-nav"
                       style={{
-                        display: isNav === true ? "block" : "none",
+                        display: "block",
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
@@ -1035,7 +1035,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     }}
