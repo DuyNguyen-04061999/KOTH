@@ -149,7 +149,7 @@ export default function CreateAccountDialogComponent() {
       setCheckPasswordDigit(false)
     }
 
-    if(password && password?.length >= 6) {
+    if(password && password?.length >= 8) {
       setCheckPasswordLength(true)
     } else {
       setCheckPasswordLength(false)
@@ -404,7 +404,7 @@ export default function CreateAccountDialogComponent() {
             }}>
               <Box component={"div"} className="d-flex">
                 <CheckIcon sx={{ fontSize: 16, color: checkPasswordLength ? "#0AD149" : "#A1ADA5" }}/>
-                <Typography sx={{ fontSize: 12, color: checkPasswordLength ? "#0AD149" : "#A1ADA5" }}>Password must be at least 6 characters.</Typography>
+                <Typography sx={{ fontSize: 12, color: checkPasswordLength ? "#0AD149" : "#A1ADA5" }}>Password must be at least 8 characters.</Typography>
               </Box>
               <Box component={"div"} className="d-flex">
                 <CheckIcon sx={{ fontSize: 16, color: checkPasswordLetter ? "#0AD149" : "#A1ADA5" }}/>

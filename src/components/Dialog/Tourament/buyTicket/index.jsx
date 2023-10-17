@@ -34,7 +34,6 @@ const theme = createTheme({
 export default function BuyTicket(props) {
   const { isBuyTicket } = useSelector((state) => state.tournamentReducer);
   const { listPackage } = useSelector((state) => state.appReducer);
-  
   const [ticketBuy, setTicketBuy] = useState([]);
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();

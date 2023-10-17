@@ -53,6 +53,8 @@ import MetaMaskDialog from "../Dialog/MetaMask";
 import ShareTour from "../Dialog/ShareTour";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
+import TouramentShow from "../Dialog/Tourament/showBuy";
+import SubscriptionDialog from "../Dialog/Subscription";
 // import { getAppType } from "../../utils/helper";
 
 const drawerWidth = 310;
@@ -260,6 +262,8 @@ export default function Layout(props) {
       <ForgetPassword />
       <ShareTour />
       <PopUpReward />
+      <SubscriptionDialog />
+      <TouramentShow />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {

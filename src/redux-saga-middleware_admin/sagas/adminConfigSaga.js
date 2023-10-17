@@ -3,7 +3,7 @@ import { getListEndUser } from "../reducers/adminAgentReducer";
 import { showToastNotify } from "../reducers/adminAlertReducer";
 import { updateNewRef } from "../reducers/adminAuthReducer";
 import { activeAccountFail, activeAccountSuccess, deleteAccountFail, deleteAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess, updateAccountFail, updateAccountSuccess } from "../reducers/adminConfigReducer";
-import { closeProvideDialog } from "../reducers/adminDialogReducer";
+import { closeProvideDialog, openRefcodeNotify } from "../reducers/adminDialogReducer";
 import { getListSub } from "../reducers/adminDistributorReducer";
 import { getListDistributor } from "../reducers/adminMasterReducer";
 import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
@@ -122,13 +122,12 @@ function* deleteAccountSaga(dataRequest) {
 }
 
 function* updateAccountSaga(dataRequest) {
+    const { payload } = dataRequest;
     try {
-        const { payload } = dataRequest;
         const res = yield call(adminConfigService.updateAccount, payload)
-        const { role } = res?.data
+        const { role, message } = res?.data
         if(res && res.status === 200) {
             yield put(updateAccountSuccess())
-            yield put(showToastNotify({ type: "success", message: "Update account successfully" }))
             if(!payload?.newRefcode) {
                 if(role === "Master") {
                     yield put(getListDistributor())
@@ -137,18 +136,32 @@ function* updateAccountSaga(dataRequest) {
                 } else if (role === "Agent") {
                     yield put(getListEndUser())
                 }
+                yield put(showToastNotify({ type: "success", message: "Update account successfully" }))
             } else {
-                yield put(updateNewRef(payload?.newRefcode))
+                if(payload?.newRefcode) {
+                    yield put(openRefcodeNotify({ type: "success" }))
+                    yield put(updateNewRef(payload?.newRefcode))
+                } else {
+                    
+                }
             }
             
         } else {
             yield put(updateAccountFail())
-            yield put(showToastNotify({ type: "error", message: "Update account failed" }))
+            if(payload?.newRefcode) {
+                yield put(openRefcodeNotify({ type: "error", message: message || "" }))
+            } else {
+                yield put(showToastNotify({ type: "error", message: "Update account failed" }))
+            }
         }
         
     } catch (error) {
         yield put(updateAccountFail())
-        yield put(showToastNotify({ type: "error", message: error?.message || "Update account failed" }))
+        if(payload?.newRefcode) {
+            yield put(openRefcodeNotify({ type: "error", message: error?.message }))
+        } else {
+            yield put(showToastNotify({ type: "error", message: error?.message || "Update account failed" }))
+        }
     }
 }
 

@@ -12,6 +12,7 @@ import React, { useEffect, useRef } from "react";
 import { ExpandMoreOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import RefcodeDialogComponent from "../../../components/Admin/Dialog/RefcodeDialogComponent";
 import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
 import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { changePassword } from "../../../redux-saga-middleware_admin/reducers/adminAuthReducer";
@@ -114,11 +115,15 @@ const Setting = () => {
   const handleChangeRefcode = (e) => {
     e.preventDefault();
     if(!newRefcode) {
-      dispatch(showToastNotify({ type: "warning", message: "Enter new refcode!" }))
+      dispatch(showToastNotify({ type: "warning", message: "Enter new refcode !" }))
       return
     }  else if (/\s/.test(newRefcode)) {
-      dispatch(showToastNotify({ type: "warning", message: "Refcode invalid!" }))
+      dispatch(showToastNotify({ type: "warning", message: "Refcode invalid !" }))
       return
+    } else if (newRefcode?.length > 30) {
+      dispatch(showToastNotify({ type: "warning", message: "Refcode too long !" }))
+    } else if (newRefcode?.length < 15) {
+      dispatch(showToastNotify({ type: "warning", message: "Refcode too short !" }))
     } else {
       dispatch(updateAccount({ newRefcode }))
       setNewRefcode("")
@@ -128,6 +133,7 @@ const Setting = () => {
   return (
     <Container>
       <Box>
+        <RefcodeDialogComponent/>
         <Box
           sx={{
             fontSize: "24px",
