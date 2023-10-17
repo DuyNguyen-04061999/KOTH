@@ -1,11 +1,13 @@
 import io from "socket.io-client";
 
 let _socket = null
-if (window.location.pathname !== "/change-log" && (
-  window?.location?.host?.split('.')[0] 
-            && window?.location?.host?.split('.')?.length > 0 
-            && window?.location?.host?.split('.')[0] !== "admin"
-)) {
+if (window.location.pathname !== "/change-log" 
+// && (
+//   window?.location?.host?.split('.')[0] 
+//             && window?.location?.host?.split('.')?.length > 0 
+//             && window?.location?.host?.split('.')[0] !== "admin"
+// )
+) {
    _socket = io(process.env.REACT_APP_END_POINT, {
     reconnection: true,
     reconnectionDelay: 1000,
@@ -16,7 +18,12 @@ if (window.location.pathname !== "/change-log" && (
     secure: true,
     rejectUnauthorized: false,
     forceNew: true,
-    timeout: 60000,
+    timeout: 
+    (
+        window?.location?.host?.split('.')[0] 
+                  && window?.location?.host?.split('.')?.length > 0 
+                  && window?.location?.host?.split('.')[0] !== "admin"
+      ) ? 60000 : 300000,
     auth: {
       token: localStorage?.getItem("token"), // Provide the authentication token here
     },
