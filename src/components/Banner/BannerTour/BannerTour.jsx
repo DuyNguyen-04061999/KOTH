@@ -39,12 +39,14 @@ const BannerTour = (props) => {
           alignItems: "center",
         }}
       >
-        <Box sx={{ 
-          marginBottom: "8px",
-          padding:"6px",
-          backgroundColor:"#FD9800",
-          borderRadius:"10px"
-       }}>
+        <Box
+          sx={{
+            marginBottom: "8px",
+            padding: "6px",
+            backgroundColor: "#FD9800",
+            borderRadius: "10px",
+          }}
+        >
           <Typography
             sx={{
               color: "white",
@@ -83,7 +85,7 @@ const BannerTour = (props) => {
               lineHeight: "0.9",
               height: "140px",
               overflow: "hidden",
-              textAlign:"center"
+              textAlign: "center",
             }}
           >
             {tournamentName}
@@ -98,7 +100,7 @@ const BannerTour = (props) => {
               fontWeight: 700,
             }}
           >
-            Sponsored  by: {sponsorName}
+            Sponsored by: {sponsorName}
           </Typography>
         </Box>
         <Box
@@ -230,7 +232,7 @@ const BannerTour = (props) => {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius:"10px"
+                borderRadius: "10px",
               }}
               src={userAvatar}
             ></img>

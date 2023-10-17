@@ -5,34 +5,34 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  toggleCloseResultEndGame,
+  toggleOpenResultEndGame,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import "./index.scss";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
     (state) => state.tournamentReducer
   );
-  const { token } = useSelector(
-    (state) => state.authReducer
-  );
-  const [socket, setSocket] = useState(null)
+  const { token } = useSelector((state) => state.authReducer);
+  const [socket, setSocket] = useState(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(window.location.pathname  === "/changelog"){
+    if (window.location.pathname === "/changelog") {
       setSocket(null);
-    }
-    else{
+    } else {
       const socket = _socket;
       setSocket(socket);
     }
   }, []);
 
-  const { id } = useParams()
+  const { id } = useParams();
 
   const handleClose = () => {
-    dispatch(toggleOpenResultEndGame());
+    dispatch(toggleCloseResultEndGame());
     if (token) {
       socket?.emit("detailTournament", {
         tournamentId: id,
@@ -101,14 +101,7 @@ export default function ResultEndGame() {
               </div>
               <div className="summary__cta">
                 <button
-                  onClick={() => {
-                    dispatch(toggleOpenResultEndGame());
-                    if (token) {
-                      socket?.emit("detailTournament", {
-                        tournamentId: id,
-                      });
-                    }
-                  }}
+                  onClick={handleClose}
                   className="btnResult btn__continue"
                 >
                   Continue

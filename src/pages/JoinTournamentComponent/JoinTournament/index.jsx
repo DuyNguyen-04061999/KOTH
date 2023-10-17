@@ -1424,7 +1424,7 @@ export default function JoinTournament() {
                         <Box
                           sx={{
                             width: "35%",
-                            height: "100%",
+                            height: "auto",
                             borderLeft: "dashed 1px #0D0804",
                             borderRadius: "0px 8px 8px 0px",
                           }}
