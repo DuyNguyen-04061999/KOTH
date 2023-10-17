@@ -44,7 +44,7 @@ export default function ChatGlobal(props) {
   const { contacter } = useSelector((state) => state.chatReducer);
   const { token } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);
-  
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -52,31 +52,32 @@ export default function ChatGlobal(props) {
 
   useEffect(() => {
     if (token === null || token === "") {
-      chatInput.current.value = "";
+      chatInput.current.reset();
     }
   }, [token]);
 
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === "Enter" && chatInput.current) {
+    if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
       socket?.emit("chat", {
         type: "Private",
         toId: contacter.id,
-        content: chatInput.current.value,
+        content: chatInput.current.childNodes[0].value,
       });
+      chatInput.current.reset();
     }
   };
 
   const handleSendMessage = () => {
-    if (chatInput.current.value !== "") {
+    if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
       socket?.emit("chat", {
         type: "Private",
         toId: contacter.id,
-        content: chatInput.current.value,
+        content: chatInput.current.childNodes[0].value,
       });
-
-      chatInput.current.value = "";
+      chatInput.current.reset();
     }
   };
+
   const checkHeightResponsive = () => {
     if (width < 576) {
       return height - 119;
@@ -247,6 +248,7 @@ export default function ChatGlobal(props) {
               }}
             >
               <Box
+                ref={chatInput}
                 component={"form"}
                 sx={{
                   width: "100%",
@@ -257,7 +259,6 @@ export default function ChatGlobal(props) {
               >
                 <ChatRoot
                   type="text"
-                  ref={chatInput}
                   id="sendmessages"
                   onKeyDown={handleOnKeyDownEnter}
                   style={inpChat()}
