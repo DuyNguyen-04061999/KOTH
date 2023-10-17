@@ -73,8 +73,8 @@ const theme = createTheme({
 const BgWithTooltip = withStyles({
   tooltip: {
     color: "black",
-    backgroundColor: "white"
-  }
+    backgroundColor: "white",
+  },
 })(Tooltip);
 
 export default function JoinTournament() {
@@ -197,10 +197,9 @@ export default function JoinTournament() {
   };
 
   const handleJoinTour = () => {
-    if(detailTournament?.tournamentVip !== 0 &&  uPack === null) {
-      dispatch(toggleTournamentShow())
-    }
-    else if (token) {
+    if (detailTournament?.tournamentVip !== 0 && uPack === null) {
+      dispatch(toggleTournamentShow());
+    } else if (token) {
       socket?.emit("joinTournament", {
         tournamentId: detailTournament?.id,
       });
@@ -449,8 +448,8 @@ export default function JoinTournament() {
                             title="Extra: A player can participate in a promotion up to 5 times. Share the promotion with friends to earn an extra play for each new sign-up through your link."
                             placement="right"
                             sx={{
-                              backgroundColor:"white",
-                              color:"red"
+                              backgroundColor: "white",
+                              color: "red",
                             }}
                           >
                             <svg
@@ -520,7 +519,10 @@ export default function JoinTournament() {
                             {!detailTournament?.checkInTournament ? (
                               <Typography
                                 variant="body2"
-                                sx={{ marginLeft: "0px !important", maxWidth:"250px" }}
+                                sx={{
+                                  marginLeft: "0px !important",
+                                  maxWidth: "250px",
+                                }}
                               >
                                 The highest number of available Extras in the
                                 current Promotion.
@@ -1395,7 +1397,7 @@ export default function JoinTournament() {
                         <Box
                           sx={{
                             width: "35%",
-                            height: "100%",
+                            height: "auto",
                             borderLeft: "dashed 1px #0D0804",
                             borderRadius: "0px 8px 8px 0px",
                           }}

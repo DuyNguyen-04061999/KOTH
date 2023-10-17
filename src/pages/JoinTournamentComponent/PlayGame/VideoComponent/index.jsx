@@ -94,7 +94,7 @@ export default function VideoComponent(props) {
                   orientation === "portrait")
                   ? "absolute"
                   : "fixed",
-              top: width < 576 ? "50%" : "80%",
+              top: width < 576 ? "60%" : "80%",
               right: "20px",
               display: "flex",
               alignItems: "center",
