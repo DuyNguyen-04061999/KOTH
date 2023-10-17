@@ -526,7 +526,7 @@ export default function WalletTypePromote(props) {
                     color:agree === false ? "red" : "white"
                   }}
                 >
-                  I agree with Interchain{" "}
+                  I agree with Play4promo{" "}
                   <span
                     style={{
                       color: "#A57FF6",
