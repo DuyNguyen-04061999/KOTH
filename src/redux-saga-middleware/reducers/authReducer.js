@@ -133,6 +133,13 @@ export const toggleSubscriptionDialog = (data) => {
   };
 };
 
+export const updateSubPackageId = (data) => {
+  return {
+    type: "UPDATE_SUB_PACKAGE_ID",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -237,6 +244,7 @@ const authReducer = (
       return { ...state, isShare: !state.isShare };
     case "TOGGLE_SUBSCRIPTION_DIALOG":
       return { ...state, isSubscription: !state.isSubscription };
+      case "UPDATE_SUB_PACKAGE_ID": return {...state, userPackageId: payload || ""}
     default:
       return state;
   }
