@@ -12,8 +12,11 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-input:-webkit-autofill {
-  -webkit-text-fill-color: #fff;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff !important;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

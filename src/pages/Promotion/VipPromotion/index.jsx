@@ -57,7 +57,6 @@ export default function HotTournament() {
     }
   }, [vipTournament]);
 
-
   const imgHot = data?.map((e) => {
     return e.tournamentBackground;
   });
@@ -130,7 +129,7 @@ export default function HotTournament() {
                   typePromo={"vip"}
                 />
               </Box>
-              {!isFetchVip && (data !== null && data?.length > 0) && (
+              {!isFetchVip && data !== null && data?.length > 0 && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
@@ -196,7 +195,7 @@ export default function HotTournament() {
                   typePromo={"vip"}
                 />
               </Box>
-              {!isFetchVip && (data !== null && data?.length > 0) &&(
+              {!isFetchVip && data !== null && data?.length > 0 && (
                 <PaginatedItems
                   pageCount={Math.ceil(data.length / 10)}
                   changeOffSet={(value) => {
