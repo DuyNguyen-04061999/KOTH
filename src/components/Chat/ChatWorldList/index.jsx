@@ -93,9 +93,12 @@ export default function ChatWorldList() {
   const isScrolledToBottom = () => {
     if (chatBox.current) {
       const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
-      return scrollTop + clientHeight + 100 >= scrollHeight;
+      if(scrollTop + clientHeight + 100 >= scrollHeight){
+        return true;
+      } 
+      else return false;
     }
-    return true;
+    return false;
   };
 
   const handleScroll = () => {
@@ -104,8 +107,8 @@ export default function ChatWorldList() {
 
   const scrollToBottom = () => {
     if (endOfMessageRef.current) {
-      endOfMessageRef.current.scrollIntoView({ behavior: "smooth" });
-      setShowScrollToBottomButton(false);
+      endOfMessageRef.current.scrollIntoView();
+      chatBox.current.removeEventListener("scroll", handleScroll);
     }
   };
 
@@ -543,6 +546,7 @@ export default function ChatWorldList() {
         ref={chatBox}
         className="chat-content"
         sx={{
+          "scrollBehavior": "smooth",
           maxHeight: checkHeightResponsive(),
           minHeight: checkHeightResponsive(),
           overflow: "auto",

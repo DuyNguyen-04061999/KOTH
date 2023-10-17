@@ -59,24 +59,25 @@ const ChatDrawer = () => {
   }, [dispatch]);
 
   const handleOnKeyDown = (e) => {
-    if (e.key === "Enter" && chatInput.current?.value?.trim() !== "") {
+    if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
+      console.log(chatInput);
       socket?.emit("chat", {
         type: "World",
         toId: 0,
-        content: chatInput.current.value,
+        content: chatInput.current.childNodes[0].value,
       });
-      chatInput.current.value = "";
+      chatInput.current.reset();
     }
   };
 
   const handleOnClickSendMessage = () => {
-    if (chatInput.current?.value?.trim() !== "") {
+    if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
       socket?.emit("chat", {
         type: "World",
         toId: 0,
-        content: chatInput.current.value,
+        content: chatInput.current.childNodes[0].value,
       });
-      chatInput.current.value = "";
+      chatInput.current.reset();
     }
   };
 
@@ -274,14 +275,14 @@ const ChatDrawer = () => {
               sx={{
                 width: "100%",
               }}
+              ref={chatInput}
             >
               <Test
                 style={{ fontSize: "13px" }}
                 type="text"
-                ref={chatInput}
                 id="sendmessages"
                 onKeyDown={handleOnKeyDown}
-                placeholder="Type your message... "
+                placeholder="Type your messages... "
               />
             </Box>
             <Box
