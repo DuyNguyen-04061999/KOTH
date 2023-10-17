@@ -11,7 +11,7 @@ export default function AnimButton(props) {
           style={{
             backgroundColor: "#7848ED",
             color: "white",
-            padding: "10px 20px",
+            padding: "12px 20px",
             borderRadius: "8px",
             border: "0px solid",
             width: "100%",
@@ -47,7 +47,7 @@ export default function AnimButton(props) {
           style={{
             backgroundColor: "#BE48ED",
             color: "white",
-            padding: "10px 40px",
+            padding: "12px 40px",
             borderRadius: "8px",
             border: " 0px solid",
             width: "100%",

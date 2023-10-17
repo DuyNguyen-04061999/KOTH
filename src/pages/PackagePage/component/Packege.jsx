@@ -568,6 +568,7 @@ export default function Package() {
                                             })
                                           );
                                           dispatch(getIdPackage(i?.id));
+                                          dispatch(toggleSubscriptionDialog())
                                         }
                                       } else {
                                       }
@@ -716,46 +717,6 @@ export default function Package() {
                       justifyContent: "space-around",
                     }}
                   >
-                    {/* <Box
-                    onClick={handleClickFree}
-                    sx={{
-                      padding: "0px 35px",
-                      margin: "4px",
-                      background: bgFree,
-                      borderRadius: "20px",
-                      color: "white",
-                    }}
-                  >
-                    Free
-                  </Box> */}
-                    {/* <Box
-                      onClick={handleClickDiamond}
-                      sx={{
-                        padding: "0px 20px",
-                        margin: "4px",
-                        background: bgDiamond,
-                        borderRadius: "20px",
-                        color: "white",
-                        width: "50%",
-                        textAlign: "center",
-                      }}
-                    >
-                      Diamond
-                    </Box>
-                    <Box
-                      onClick={handleClickGold}
-                      sx={{
-                        padding: "0px 35px",
-                        margin: "4px",
-                        background: bgGold,
-                        borderRadius: "20px",
-                        color: "white",
-                        width: "50%",
-                        textAlign: "center",
-                      }}
-                    >
-                      Gold
-                    </Box> */}
                   </Box>
                 </Box>
               </Box>
@@ -1101,7 +1062,6 @@ export default function Package() {
                                       })
                                     );
                                     dispatch(getIdPackage(i?.id));
-                                    dispatch(toggleSubscriptionDialog())
                                   }
                                 } else {
                                 }
