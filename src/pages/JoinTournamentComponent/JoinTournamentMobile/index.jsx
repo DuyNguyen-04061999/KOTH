@@ -1098,7 +1098,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   bottom: "0px",
                   padding: "28px 28px 28px 28px",
                   width: "100%",
-                  background: "rgba(37, 37, 37, 0.20)",
+                  background: detailTournament?.tournamentStatus === 2 ? "" : "rgba(37, 37, 37, 0.20)",
                   backdropFilter: detailTournament?.tournamentStatus === 2 ? "" : "blur(2px)",
                   zIndex: "28",
                 }}
