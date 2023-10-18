@@ -1037,6 +1037,7 @@ export default function Package() {
                                     })
                                   );
                                   dispatch(getIdPackage(i?.id));
+                                  dispatch(toggleSubscriptionDialog(false));
                                 }
                               } else {
                               }

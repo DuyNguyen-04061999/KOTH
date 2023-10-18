@@ -378,10 +378,12 @@ export default function PlayGame(props) {
                         576 < width && width < 1200
                           ? `${width / 42}px`
                           : "28px",
+                      width: "480px",
+                      wordBreak: "break-all",
                     }}
                   >
-                    {detailTournament?.tournamentName?.length > 30
-                      ? detailTournament?.tournamentName.slice(0, 30) + " ..."
+                    {detailTournament?.tournamentName?.length > 50
+                      ? detailTournament?.tournamentName.slice(0, 50) + " ..."
                       : detailTournament?.tournamentName}
                   </Typography>
                   <Typography
@@ -392,10 +394,10 @@ export default function PlayGame(props) {
                     }}
                   >
                     {detailTournament?.tournamentTimeType === "hourly"
-                      ? "Hourly Tournament"
+                      ? "Hourly Promotion"
                       : detailTournament?.tournamentTimeType === "daily"
-                      ? "Daily Tournament"
-                      : "Weeklong Tournament"}
+                      ? "Daily Promotion"
+                      : "Weeklong Promotion"}
                   </Typography>
                 </>
               </Box>

@@ -356,6 +356,7 @@ import NavVipActive from "../assets/images/navbar/vipActive.png";
 
 import BtnBack from "../assets/images/btnback.png";
 import bannerendtour from '../assets/images/bannerendtour.png'
+import bannerendmobile from "../assets/images/bannerendmobile.png"
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -578,7 +579,8 @@ export const images = {
   GamePreview3: GamePreview3,
   userIcon: userIcon,
   phoneIcon: phoneIcon,
-  bannerendtour:bannerendtour
+  bannerendtour:bannerendtour,
+  bannerendmobile:bannerendmobile
 };
 
 export const navigationImages = {
