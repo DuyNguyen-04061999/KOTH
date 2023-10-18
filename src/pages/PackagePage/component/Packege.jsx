@@ -568,7 +568,7 @@ export default function Package() {
                                             })
                                           );
                                           dispatch(getIdPackage(i?.id));
-                                          dispatch(toggleSubscriptionDialog())
+                                          dispatch(toggleSubscriptionDialog());
                                         }
                                       } else {
                                       }
@@ -716,8 +716,7 @@ export default function Package() {
                       width: "100%",
                       justifyContent: "space-around",
                     }}
-                  >
-                  </Box>
+                  ></Box>
                 </Box>
               </Box>
               <Box
@@ -902,8 +901,8 @@ export default function Package() {
                                     marginLeft: "4px !important",
                                   }}
                                 >
-                                  {i?.packageFreeTicketTournament} ticket /
-                                  tournament
+                                  {i?.packageFreeTicketTournament} extras /
+                                  promotions
                                 </Typography>
                               </Box>
                               <Box
