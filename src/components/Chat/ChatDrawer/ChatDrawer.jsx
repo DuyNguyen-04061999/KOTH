@@ -1,6 +1,6 @@
 import { Box, Drawer } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -58,25 +58,36 @@ const ChatDrawer = () => {
   }, [dispatch]);
 
   const handleOnKeyDown = (e) => {
-    if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
-      console.log(chatInput);
-      socket?.emit("chat", {
-        type: "World",
-        toId: 0,
-        content: chatInput.current.childNodes[0].value,
-      });
-      chatInput.current.reset();
+    if (chatInput.current) {
+      if (
+        e.key === "Enter" &&
+        chatInput.current.childNodes[0].value &&
+        chatInput.current.childNodes[0].value.trim() !== ""
+      ) {
+        socket?.emit("chat", {
+          type: "World",
+          toId: 0,
+          content: chatInput.current.childNodes[0].value,
+        });
+        chatInput.current.reset();
+      }
     }
   };
   const handleOnClickSendMessage = () => {
-    if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
-      socket?.emit("chat", {
-        type: "World",
-        toId: 0,
-        content: chatInput.current.childNodes[0].value,
-      });
-      chatInput.current.reset();
-    }
+      if (chatInput.current) {
+        if (
+          chatInput.current.childNodes[0] &&
+          chatInput.current.childNodes[0].value &&
+          chatInput.current.childNodes[0].value.trim() !== ""
+        ) {
+          socket?.emit("chat", {
+            type: "World",
+            toId: 0,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        }
+      }
   };
 
   return ReactDOM.createPortal(
@@ -294,11 +305,11 @@ const ChatDrawer = () => {
                 sx={{
                   width: "100%",
                 }}
+                ref={chatInput}
               >
                 <Test
                   style={{ fontSize: "13px" }}
                   type="text"
-                  ref={chatInput}
                   id="sendmessages"
                   onKeyDown={handleOnKeyDown}
                   placeholder="Type your message... "
