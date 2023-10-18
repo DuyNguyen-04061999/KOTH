@@ -4,19 +4,15 @@ import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { useSelector } from "react-redux";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
+  const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
-  const {
-    images: img,
-    appendDot,
-    htmlCode,
-    isHtmlCode,
-    tours,
-    type,
-  } = props;
-  
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type } = props;
+
   const settings = {
     dots: true,
     arrows: false,
@@ -30,8 +26,8 @@ export default function SlickSlider(props) {
       setIndex(next);
     },
     appendDots: (dots) => {
-      if(dots?.length >= 10){
-        dots = dots?.slice(0,5);
+      if (dots?.length >= 10) {
+        dots = dots?.slice(0, 5);
       }
       return (
         <Box
@@ -51,7 +47,7 @@ export default function SlickSlider(props) {
         >
           {dots}
         </Box>
-      )
+      );
     },
     customPaging: (i) => (
       <div
@@ -140,7 +136,9 @@ export default function SlickSlider(props) {
                     }}
                     component={"img"}
                     src={
-                      width < 576 && item?.tournamentBackgroundMobile
+                      (device === "Mobile" ||
+                        (device === "Tablet" && orientation === "portrait")) &&
+                      item?.tournamentBackgroundMobile
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
                           item?.tournamentBackgroundMobile

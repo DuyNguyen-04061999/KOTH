@@ -82,7 +82,6 @@ export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
   const [detailTournament, setDetailTournament] = useState({});
-  console.log(detailTournament);
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
   const [videoGame, setVideoGame] = useState(false || true);
@@ -353,7 +352,7 @@ export default function JoinTournament() {
 
                         <AnimButton
                           onClick={handleClickOpen}
-                          text={"Buy Ticket"}
+                          text={"Buy Extra"}
                           type={"primary"}
                         />
                       </Box>
@@ -1053,20 +1052,6 @@ export default function JoinTournament() {
                               ? detailTournament?.tournamentName
                               : detailTournament?.tournamentName}
                           </Typography>
-                          <Typography
-                            sx={{
-                              margin: "0px !important",
-                              fontSize:
-                                576 < width && width < 1200 ? "12px" : "14px",
-                              fontWeight: "lighter !important",
-                            }}
-                          >
-                            {detailTournament?.tournamentTimeType === "hourly"
-                              ? "Hourly tournaments"
-                              : detailTournament?.tournamentTimeType === "daily"
-                              ? "Daily tournaments"
-                              : "Weeklong tournaments"}
-                          </Typography>
                         </>
                       )}
                     </Box>
@@ -1500,7 +1485,7 @@ export default function JoinTournament() {
                       marginTop: "36px",
                     }}
                   >
-                    Game for tournament
+                    Game for promotion
                   </Typography>
 
                   <Box
@@ -1693,7 +1678,7 @@ export default function JoinTournament() {
                 )
               )}
             </Box>
-            <GamePreview />
+            {/* <GamePreview /> */}
           </Container>
         ) : (
           <>
