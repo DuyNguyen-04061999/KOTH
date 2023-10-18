@@ -1,8 +1,8 @@
 import { Box, Pagination, PaginationItem, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import React from "react";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { makeStyles } from "@mui/styles";
 
 export default function PaginatedItems({ changeOffSet, pageCount }) {
   const { width } = useWindowDimensions();
@@ -18,7 +18,6 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
     <Box
       sx={{
         bottom: "0px",
-        padding: "20px 5px",
         width: "100%",
         display: "flex",
         justifyContent: "center",

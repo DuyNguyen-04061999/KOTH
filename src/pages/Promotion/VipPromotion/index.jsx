@@ -8,10 +8,12 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BannerTourMobile } from "../../../components/Banner";
 import Layout from "../../../components/Layout";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
@@ -43,11 +45,27 @@ export default function HotTournament() {
   const [data, setData] = useState(null);
   const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
+  const [itemQuantity, setItemQuantity] = useState(0);
+  const { hotWeekTour, isFetchHotWeek } = useSelector(
+    (state) => state.tournamentReducer
+  );
+
+  useEffect(() => {
+    if (width > 576) {
+      setItemQuantity(12);
+    }
+    if (width < 576) {
+      setItemQuantity(5);
+    }
+  }, [width]);
 
   useEffect(() => {
     dispatch({
       type: "CALL_LIST_TOURNAMENT",
       payload: "vip",
+    });
+    dispatch({
+      type: "GET_HOTTEST_WEEK_TOUR",
     });
   }, [dispatch]);
 
@@ -127,16 +145,19 @@ export default function HotTournament() {
                   loadingState={isFetchVip}
                   itemOffSet={itemOffSet}
                   typePromo={"vip"}
+                  itemQuantity={itemQuantity}
                 />
               </Box>
-              {!isFetchVip && data !== null && data?.length > 0 && (
-                <PaginatedItems
-                  pageCount={Math.ceil(data.length / 10)}
-                  changeOffSet={(value) => {
-                    setItemOffSet((value - 1) * 10);
-                  }}
-                />
-              )}
+              <Box sx={{ margin: "36px 0px"}}>
+                {!isFetchVip && data !== null && data?.length > 0 && (
+                  <PaginatedItems
+                    pageCount={Math.ceil(data.length / itemQuantity)}
+                    changeOffSet={(value) => {
+                      setItemOffSet((value - 1) * itemQuantity);
+                    }}
+                  />
+                )}
+              </Box>
               <NewFooter />
             </Container>
           ) : (
@@ -193,16 +214,61 @@ export default function HotTournament() {
                   loadingState={isFetchVip}
                   itemOffSet={itemOffSet}
                   typePromo={"vip"}
+                  itemQuantity={itemQuantity}
                 />
               </Box>
-              {!isFetchVip && data !== null && data?.length > 0 && (
-                <PaginatedItems
-                  pageCount={Math.ceil(data.length / 10)}
-                  changeOffSet={(value) => {
-                    setItemOffSet((value - 1) * 10);
-                  }}
-                />
-              )}
+              <Box
+                sx={{
+                  marginTop: "48px",
+                  marginBottom: "0px",
+                }}
+              >
+                {isFetchHotWeek ? (
+                  <Box>
+                    <BannerLoading height={"214px"} />
+                  </Box>
+                ) : (
+                  <BannerTourMobile
+                    tournamentName={
+                      hotWeekTour && hotWeekTour?.tournamentName
+                        ? hotWeekTour?.tournamentName
+                        : "Galaxy Z-flip 5"
+                    }
+                    sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+                    userName={
+                      hotWeekTour &&
+                      hotWeekTour?.bestUser &&
+                      hotWeekTour?.bestUser?.tUser &&
+                      hotWeekTour?.bestUser?.tUser?.userName
+                    }
+                    endTime={hotWeekTour?.tournamentEndAt}
+                    userScore={hotWeekTour?.bestUser?.score}
+                    userAvatar={
+                      hotWeekTour &&
+                      hotWeekTour?.bestUser &&
+                      hotWeekTour?.bestUser?.tUser &&
+                      hotWeekTour?.bestUser?.tUser?.userAccount &&
+                      hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          hotWeekTour?.bestUser?.tUser?.userAccount
+                            ?.accountAvatar
+                        : images.pool
+                    }
+                    tourId={hotWeekTour && hotWeekTour?.id}
+                  />
+                )}
+              </Box>
+              <Box sx={{ margin: "36px 0px"}}>
+                {!isFetchVip && data !== null && data?.length > 0 && (
+                  <PaginatedItems
+                    pageCount={Math.ceil(data.length / itemQuantity)}
+                    changeOffSet={(value) => {
+                      setItemOffSet((value - 1) * itemQuantity);
+                    }}
+                  />
+                )}
+              </Box>
               <NewFooter />
             </Container>
           )
