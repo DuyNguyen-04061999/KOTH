@@ -1,6 +1,6 @@
 import { Box, Drawer } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -14,6 +14,7 @@ import ChatWorldList from "../ChatWorldList";
 const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-start",
   paddingTop: "54px",
+  fontFamily: "Cyntho Next",
 }));
 
 const Test = styled.input`
@@ -58,7 +59,11 @@ const ChatDrawer = () => {
   }, [dispatch]);
 
   const handleOnKeyDown = (e) => {
-    if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
+    if (
+      e.key === "Enter" &&
+      chatInput.current.childNodes[0].value &&
+      chatInput.current.childNodes[0].value.trim() !== ""
+    ) {
       console.log(chatInput);
       socket?.emit("chat", {
         type: "World",
@@ -69,7 +74,10 @@ const ChatDrawer = () => {
     }
   };
   const handleOnClickSendMessage = () => {
-    if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+    if (
+      chatInput.current.childNodes[0].value &&
+      chatInput.current.childNodes[0].value.trim() !== ""
+    ) {
       socket?.emit("chat", {
         type: "World",
         toId: 0,

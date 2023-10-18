@@ -1,15 +1,15 @@
 import { Box } from "@mui/material";
-import "./index.scss";
 import styled from "styled-components";
+import "./index.scss";
 // import { Search } from "@mui/icons-material";
-import { images } from "../../../utils/images";
-import ChatGlobal from "../ChatGlobal";
-import { useEffect, useState } from "react";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateContacterUsername } from "../../../redux-saga-middleware/reducers/chatReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import ChatGlobal from "../ChatGlobal";
 
 const Test = styled.input`
   display: flex;
@@ -22,6 +22,7 @@ const Test = styled.input`
   padding: 10px 20px !important;
   color: #fff !important;
   font-weight: lighter !important;
+  font-family:"Cyntho Next";
   &:focus {
     outline: none;
   }
