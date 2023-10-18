@@ -17,7 +17,7 @@ export default function TouramentShow() {
   };
 
   const openSubscription = () => {
-    dispatch(toggleSubscriptionDialog())
+    dispatch(toggleSubscriptionDialog(true))
     dispatch(toggleTournamentShow(false));
   }
 
