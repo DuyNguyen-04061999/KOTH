@@ -885,8 +885,9 @@ export default function Dialoglg() {
                     flexDirection={"column"}
                     justifyContent={"center"}
                     alignItems={"center"}
+                    sx={{marginLeft:"-5px"}}
                   >
-                    <p
+                    <Typography
                       style={{
                         width: "65px",
                         fontSize: "12px",
@@ -896,7 +897,7 @@ export default function Dialoglg() {
                       }}
                     >
                       {userName}
-                    </p>
+                    </Typography>
                     {uPack !== null ? (
                       <Box
                         display={"flex"}
