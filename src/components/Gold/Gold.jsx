@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import React from "react";
 import { formatMoney } from "../../utils/helper";
 import useWindowDimensions from "../../utils/useWindowDimensions";
@@ -62,7 +63,7 @@ export default function Gold(props) {
             </g>
           </g>
         </svg>
-        <p
+        <Typography
           style={{
             color: width > 576 ? "#FB3" : "#FB3",
             fontSize: "15px",
@@ -74,7 +75,7 @@ export default function Gold(props) {
           {value &&
             Number.parseFloat(value) > 0 &&
             formatMoney(Number.parseFloat(value).toString().slice(0, 9))}
-        </p>
+        </Typography>
       </div>
     </div>
   );

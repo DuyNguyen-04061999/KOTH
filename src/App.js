@@ -652,9 +652,14 @@ function App() {
 
   const theme = createTheme({
     typography: {
+      marginLeft:"0px !important",
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
-    },
+    },    
+    button: {
+      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+    }, 
   });
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>

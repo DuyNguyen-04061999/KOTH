@@ -16,6 +16,7 @@ const ListPromotion = (props) => {
     itemOffSet = 0,
     itemQuantity = 12,
   } = props;
+
   const { pathname } = useLocation();
   if (pathname.includes("home") || pathname === "/") {
     return (
@@ -31,7 +32,7 @@ const ListPromotion = (props) => {
           // </Slider>
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-              {loadingState ? (
+              {loadingState || listData === null ? (
                 <ListItemLoading></ListItemLoading>
               ) : listData && listData?.length > 0 ? (
                 listData?.map((item, index) => {
@@ -86,7 +87,7 @@ const ListPromotion = (props) => {
           // </Slider>
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-              {loadingState ? (
+              {loadingState && listData === null ? (
                 <ListItemLoading></ListItemLoading>
               ) : listData && listData?.length > 0 ? (
                 listData?.map((item, index) => {
@@ -111,48 +112,77 @@ const ListPromotion = (props) => {
   } else
     return (
       <Box>
-        {loadingState || listData === null ? (
-          <Box
-            sx={{
-              display: width < 576 ? "flex" : "grid",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-              gridRowGap: "50px",
-            }}
-          >
-            <ListItemLoading></ListItemLoading>
-          </Box>
-        ) : listData && listData?.length > 0 ? (
-          <Box
-            sx={{
-              display: width < 576 ? "flex" : "grid",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-              gridRowGap: "50px",
-            }}
-          >
-            {listData?.map((item, index) => {
-              return (
-                index >= itemOffSet &&
-                index <= itemOffSet + itemQuantity - 1 && (
-                  <Box
-                    sx={{
-                      width: width < 576 && width < 1200 ? "auto" : "20%",
-                      marginRight:
-                        width > 576 && width < 1200 ? "100px" : "none",
-                    }}
-                    key={index}
-                  >
-                    <ItemComponent tourInfo={item} countdown={true} />
-                  </Box>
-                )
-              );
-            })}
+        {width < 576 ? (
+          <Box className="scrolling-carousel-example1-container">
+            <ScrollingCarousel>
+              {loadingState || listData === null ? (
+                <ListItemLoading></ListItemLoading>
+              ) : listData && listData?.length > 0 ? (
+                listData?.map((item, index) => {
+                  return (
+                    index >= itemOffSet &&
+                    index <= itemOffSet + itemQuantity - 1 && (
+                      <Box key={index}>
+                        <ItemComponent
+                          // key={index}
+                          tourInfo={item}
+                          countdown={true}
+                        />
+                      </Box>
+                    )
+                  );
+                })
+              ) : (
+                <ListEmpty textData={typePromo}></ListEmpty>
+              )}
+            </ScrollingCarousel>
           </Box>
         ) : (
-          <ListEmpty textData={typePromo} />
+          <Box>
+            {loadingState || listData === null ? (
+              <Box
+                sx={{
+                  display: width < 576 ? "flex" : "grid",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                  gridRowGap: "50px",
+                }}
+              >
+                <ListItemLoading></ListItemLoading>
+              </Box>
+            ) : listData && listData?.length > 0 ? (
+              <Box
+                sx={{
+                  display: width < 576 ? "flex" : "grid",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                  gridRowGap: "50px",
+                }}
+              >
+                {listData?.map((item, index) => {
+                  return (
+                    index >= itemOffSet &&
+                    index <= itemOffSet + itemQuantity - 1 && (
+                      <Box
+                        sx={{
+                          width: width < 576 && width < 1200 ? "auto" : "20%",
+                          marginRight:
+                            width > 576 && width < 1200 ? "100px" : "none",
+                        }}
+                        key={index}
+                      >
+                        <ItemComponent tourInfo={item} countdown={true} />
+                      </Box>
+                    )
+                  );
+                })}
+              </Box>
+            ) : (
+              <ListEmpty textData={typePromo} />
+            )}
+          </Box>
         )}
       </Box>
     );

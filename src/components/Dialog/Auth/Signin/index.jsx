@@ -18,8 +18,7 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
   removeToken,
-  toggleForgetPass,
-  toggleLoginDialog,
+  toggleLoginDialog
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   clickTabChat,
@@ -885,8 +884,9 @@ export default function Dialoglg() {
                     flexDirection={"column"}
                     justifyContent={"center"}
                     alignItems={"center"}
+                    sx={{marginLeft:"-5px"}}
                   >
-                    <p
+                    <Typography
                       style={{
                         width: "65px",
                         fontSize: "12px",
@@ -898,7 +898,7 @@ export default function Dialoglg() {
                       {userName?.length > 10
                         ? userName.slice(0, 10) + "..."
                         : userName}
-                    </p>
+                    </Typography>
                     {uPack !== null ? (
                       <Box
                         display={"flex"}

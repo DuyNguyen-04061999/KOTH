@@ -2,13 +2,10 @@ import InfinityIcon from "@mui/icons-material/AllInclusive";
 import {
   Box,
   Container,
-  CssBaseline,
   // Grid,
   Skeleton,
-  ThemeProvider,
   Tooltip,
   Typography,
-  createTheme,
 } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
@@ -41,33 +38,15 @@ import {
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
-import {
-  isJson,
-  sliceString
-} from "../../../utils/helper";
+import { isJson, sliceString } from "../../../utils/helper";
 import { imageHome, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import JoinTournamentMobile from "../JoinTournamentMobile";
-import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
-
-const theme = createTheme({
-  typography: {},
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        // "@font-face": {
-        //   fontFamily: "Cyntho Next",
-        //   src: `url(${InspirationTTF}) format("truetype")`,
-        // },
-      },
-    },
-  },
-});
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -250,8 +229,8 @@ export default function JoinTournament() {
   // }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline /> <ResultEndGame />
+    <>
+      <ResultEndGame />
       {!startGame ? (
         width > 576 ? (
           <Container
@@ -398,28 +377,43 @@ export default function JoinTournament() {
               )}
               {/* Partipants */}
               {detailTournament?.tournamentStatus === 2 ? (
-                <Box sx={{
-                  backgroundImage:`url(${images.bannerendtour})`,
-                  backgroundRepeat:"no-repeat",
-                  backgroundPosition:"center",
-                  backgroundSize:"cover",
-                  width:"100%",
-                  height:"130px",
-                  borderRadius:"5px",
-                  marginTop:"34px",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center",
-                  flexDirection:"row"
-                }}>
-                  <Box sx={{
-                    width:"500px",
-                    wordWrap:"break-word",
-                    color:"white",
-                    fontSize:"30px",
-                    fontWeight:"700",
-                    textShadow:"#F25957 2px 4px 5px"
-                  }}>THIS PROMOTION HAS ENDED! CONGRATS WINNER: <span style={{color:"#FFDF4A", fontWeight:"700", fontSize:"32px"}}>{biggestEndTour?.bestUser?.userNickName || "super_"}</span></Box>
+                <Box
+                  sx={{
+                    backgroundImage: `url(${images.bannerendtour})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    width: "100%",
+                    height: "130px",
+                    borderRadius: "5px",
+                    marginTop: "34px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "500px",
+                      wordWrap: "break-word",
+                      color: "white",
+                      fontSize: "30px",
+                      fontWeight: "700",
+                      textShadow: "#F25957 2px 4px 5px",
+                    }}
+                  >
+                    THIS PROMOTION HAS ENDED! CONGRATS WINNER:{" "}
+                    <span
+                      style={{
+                        color: "#FFDF4A",
+                        fontWeight: "700",
+                        fontSize: "32px",
+                      }}
+                    >
+                      {biggestEndTour?.bestUser?.userNickName || "super_"}
+                    </span>
+                  </Box>
                 </Box>
               ) : (
                 <Box
@@ -439,7 +433,13 @@ export default function JoinTournament() {
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <Box>
-                        <Box display={"flex"} alignItems={"center"}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "190px",
+                          }}
+                        >
                           <Typography
                             sx={{
                               color: "#ffff",
@@ -455,7 +455,8 @@ export default function JoinTournament() {
                                 orientation === "landscape"
                                   ? "100px"
                                   : "none",
-                            }}
+                              fontWeight: "700",
+                          }}
                           >
                             Maximum Extra
                           </Typography>
@@ -538,6 +539,8 @@ export default function JoinTournament() {
                                   sx={{
                                     marginLeft: "0px !important",
                                     maxWidth: "250px",
+                                    color: "#979797",
+                                    fontSize: "12px",
                                   }}
                                 >
                                   The highest number of available Extras in the
@@ -617,16 +620,17 @@ export default function JoinTournament() {
                             fontSize:
                               576 < width && width < 1200
                                 ? `${width / 62.5}px`
-                                : `18px`,
+                                : `20px`,
                             letterSpacing: "0.7px",
                             marginLeft: "0px !important",
+                            fontWeight: "700",
                             // minWidth:
                             //   device === "Desktop" || orientation === "landscape"
                             //     ? "155px"
                             //     : "none",
                           }}
                         >
-                          Start date
+                          Start
                         </Typography>
                         <Box
                           sx={{
@@ -647,13 +651,23 @@ export default function JoinTournament() {
                             />
                           ) : (
                             <Box>
-                              <Typography sx={{ fontSize: "12px" }}>
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  marginLeft: "0px !important"
+                                }}
+                              >
                                 {moment(
                                   detailTournament?.tournamentStartAt ||
                                     new Date()
                                 )?.format("MM/DD/YYYY")}
                               </Typography>
-                              <Typography sx={{ fontSize: "12px" }}>
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  marginLeft: "0px !important",
+                               }}
+                              >
                                 {moment(
                                   detailTournament?.tournamentStartAt ||
                                     new Date()
@@ -684,9 +698,10 @@ export default function JoinTournament() {
                                 : "18px",
                             letterSpacing: "0.7px",
                             marginLeft: "0px !important",
+                            fontWeight: "700"
                           }}
                         >
-                          End date
+                          Finish
                         </Typography>
                         <Box
                           sx={{
@@ -707,13 +722,23 @@ export default function JoinTournament() {
                             />
                           ) : (
                             <Box>
-                              <Typography sx={{ fontSize: "12px" }}>
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  marginLeft: "0px !important",
+                               }}
+                              >
                                 {moment(
                                   detailTournament?.tournamentEndAt ||
                                     new Date()
                                 )?.format("MM/DD/YYYY")}
                               </Typography>
-                              <Typography sx={{ fontSize: "12px" }}>
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  marginLeft: "0px !important",
+                              }}
+                              >
                                 {moment(
                                   detailTournament?.tournamentEndAt ||
                                     new Date()
@@ -740,6 +765,7 @@ export default function JoinTournament() {
                         }px`,
                       }}
                     >
+                      
                       <Typography
                         sx={{
                           color: "#fff",
@@ -1263,11 +1289,10 @@ export default function JoinTournament() {
                           }}
                         >
                           <Box>
-                            <h5
+                            <Typography
                               style={{
                                 color: "#BE48ED",
-                                fontSize:
-                                  576 < width && width < 1200 ? "18px" : "16px",
+                                fontSize: "20.27px",
                                 // maxHeight: "24px",
                                 // overflow: "hidden",
                                 // textOverflow: "ellipsis",
@@ -1277,20 +1302,20 @@ export default function JoinTournament() {
                               {" "}
                               {detailTournament?.tournamentInfors?.rewardInfors
                                 ?.rewardTitle || "SS Z-Flip 5 free voucher"}
-                            </h5>
+                            </Typography>
                           </Box>
                           <Box
                             sx={{
                               display: "flex",
                               alignItems: "center",
                               // justifyContent: "space-between",
-                              marginTop: "15.2px",
+                              marginTop: "8px",
                             }}
                           >
                             <Box>
                               <Box>
                                 {" "}
-                                <h6
+                                <Typography
                                   style={{
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
@@ -1298,8 +1323,8 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   Recipient
-                                </h6>
-                                <span
+                                </Typography>
+                                <Typography
                                   style={{
                                     fontSize:
                                       576 < width && width < 1200
@@ -1311,11 +1336,11 @@ export default function JoinTournament() {
                                     detailTournament?.tournamentInfors
                                       ?.rewardInfors?.rewardRecipient
                                   ) || "Recipient"}
-                                </span>
+                                </Typography>
                               </Box>
                               <Box sx={{ marginTop: "7.6px" }}>
                                 {" "}
-                                <h6
+                                <Typography
                                   style={{
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
@@ -1323,8 +1348,8 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   Sponsored by
-                                </h6>
-                                <span
+                                </Typography>
+                                <Typography
                                   style={{
                                     fontSize:
                                       576 < width && width < 1200
@@ -1334,7 +1359,7 @@ export default function JoinTournament() {
                                 >
                                   {detailTournament?.tournamentInfors?.owner
                                     ?.brandName || "Samsung"}
-                                </span>
+                                </Typography>
                               </Box>
                             </Box>
                             <Box
@@ -1345,7 +1370,7 @@ export default function JoinTournament() {
                               {" "}
                               <Box>
                                 {" "}
-                                <h6
+                                <Typography
                                   style={{
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
@@ -1353,8 +1378,8 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   Valid by
-                                </h6>
-                                <span
+                                </Typography>
+                                <Typography
                                   style={{
                                     fontSize:
                                       576 < width && width < 1200
@@ -1366,11 +1391,11 @@ export default function JoinTournament() {
                                     detailTournament?.tournamentInfors
                                       ?.rewardInfors?.rewardValidityDate
                                   )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                                </span>
+                                </Typography>
                               </Box>
                               <Box sx={{ marginTop: "7.6px" }}>
                                 {" "}
-                                <h6
+                                <Typography
                                   style={{
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
@@ -1378,8 +1403,8 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   Conditions
-                                </h6>
-                                <span
+                                </Typography>
+                                <Typography
                                   className="cursor-pointer"
                                   href="#"
                                   onClick={(e) => {
@@ -1395,7 +1420,7 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   See more
-                                </span>
+                                </Typography>
                               </Box>
                             </Box>
                           </Box>
@@ -1705,6 +1730,6 @@ export default function JoinTournament() {
           }}
         />
       )}
-    </ThemeProvider>
+    </>
   );
 }
