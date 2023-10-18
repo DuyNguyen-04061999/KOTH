@@ -14,6 +14,7 @@ import ChatWorldList from "../ChatWorldList";
 const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-start",
   paddingTop: "54px",
+  fontFamily: "Cyntho Next",
 }));
 
 const Test = styled.input`

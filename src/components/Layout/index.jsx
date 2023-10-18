@@ -91,7 +91,6 @@ const AppBar = muiStyled(MuiAppBar, {
 const drawerWidth = 310;
 
 export default function Layout(props) {
-  console.log("Re-render");
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const { isWalletDialog, isTransactionDialog } = useSelector(
     (state) => state.walletReducer
@@ -514,11 +513,11 @@ export default function Layout(props) {
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: "relative",
               zIndex: width < 1200 ? "1024" : "0",
-              width: "400px !important",
-              "& .MuiGrid-item": {
-                minWidth: "400px !important",
-                width: "400px !important",
-              },
+              // width: "400px !important",
+              // "& .MuiGrid-item": {
+              //   minWidth: "400px !important",
+              //   width: "400px !important",
+              // },
               display:
                 startGameCheck && (device === "Tablet" || device === "Mobile")
                   ? "none"

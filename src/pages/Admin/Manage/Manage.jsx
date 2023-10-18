@@ -103,7 +103,7 @@ const ManageDistributor = () => {
           "Code/Link",
           "Manager",
           "Players",
-          "Revenue By",
+          "Referred By",
           "Revenue",
           "Register Date",
           "Last Login",
