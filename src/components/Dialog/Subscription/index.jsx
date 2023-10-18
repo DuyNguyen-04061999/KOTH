@@ -6,7 +6,6 @@ import { useEffect } from "react";
 
 export default function SubscriptionDialog() {
   const { isSubscription } = useSelector((state) => state.authReducer);
-  const { isCheckWallet } = useSelector((state) => state.walletReducer);
 
   const dispatch = useDispatch();
 
@@ -14,11 +13,6 @@ export default function SubscriptionDialog() {
     dispatch(toggleSubscriptionDialog(false));
   };
 
-  useEffect(() => {
-    if (isCheckWallet === true) {
-      dispatch(toggleSubscriptionDialog(false));
-    }
-  },[isCheckWallet]);
 
   return (
     <>
