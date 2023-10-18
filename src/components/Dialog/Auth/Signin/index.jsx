@@ -278,7 +278,7 @@ function SimpleDialog(props) {
                         )}
                       </Box>
                     </FormControl>
-                    <Typography
+                    {/* <Typography
                       onClick={() => {
                         dispatch(toggleLoginDialog());
                         dispatch(toggleForgetPass(true));
@@ -292,7 +292,7 @@ function SimpleDialog(props) {
                       }}
                     >
                       Forgot password?
-                    </Typography>
+                    </Typography> */}
                     <Box className="d-flex justify-content-end mt-4">
                       {/* <Box
                         sx={{
@@ -511,7 +511,7 @@ function SimpleDialog(props) {
                         </Box>
                       </FormControl>
                       <Box className="d-flex justify-content-end">
-                        <Box
+                        {/* <Box
                           onClick={() => {
                             dispatch(toggleLoginDialog());
                             dispatch(toggleForgetPass(true));
@@ -524,7 +524,7 @@ function SimpleDialog(props) {
                           }}
                         >
                           Forgot Password ?
-                        </Box>
+                        </Box> */}
                       </Box>
                       <Box className="d-flex justify-content-center">
                         <AnimButton
@@ -590,7 +590,7 @@ function SimpleDialog(props) {
                       zIndex: "100",
                       top: "20px",
                       right: "20px",
-                      cursor:"pointer"
+                      cursor: "pointer",
                     }}
                     onClick={handleClose}
                   ></Box>
@@ -841,13 +841,7 @@ export default function Dialoglg() {
                 : "d-flex align-items-center user-name"
             }
           >
-            <Dropdown
-            // hidden={
-            //   width < 576 &&
-            //   location &&
-            //   location?.pathname?.includes("packages")
-            // }
-            >
+            <Dropdown>
               <Dropdown.Toggle
                 style={{
                   backgroundColor: "unset",
@@ -895,7 +889,9 @@ export default function Dialoglg() {
                         overflow: "hidden",
                       }}
                     >
-                      {userName}
+                      {userName?.length > 10
+                        ? userName.slice(0, 10) + "..."
+                        : userName}
                     </p>
                     {uPack !== null ? (
                       <Box
@@ -960,6 +956,8 @@ export default function Dialoglg() {
                               ? "4px solid #FD9E0F"
                               : "4px solid #FD9E0F",
                           borderRadius: 50,
+                          width: width < 576 ? "50px" : "100px",
+                          height: width < 576 ? "50px" : "100px",
                         }}
                         alt="Remy Sharp1"
                         src={
@@ -969,8 +967,6 @@ export default function Dialoglg() {
                               userAvatar
                             : images.undefinedAvatar
                         }
-                        height={"100px"}
-                        width={"100px"}
                         className="ava-signin"
                       />
                     )}
