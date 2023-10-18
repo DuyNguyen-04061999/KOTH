@@ -325,7 +325,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         fontSize: "20px",
                         fontWeight: "700",
                         textShadow: "#F25957 2px 4px 5px",
-                        paddingBottom:"10px"
+                        paddingBottom: "10px",
                       }}
                     >
                       THIS PROMOTION HAS ENDED! CONGRATS WINNER:{" "}
@@ -1099,16 +1099,20 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   padding: "28px 28px 28px 28px",
                   width: "100%",
                   background: "rgba(37, 37, 37, 0.20)",
-                  backdropFilter: "blur(2px)",
+                  backdropFilter: detailTournament?.tournamentStatus === 2 ? "" : "blur(2px)",
                   zIndex: "28",
                 }}
               >
                 {!detailTournament?.checkInTournament ? (
-                  <AnimButton
-                    onClick={handleJoinTour}
-                    text={"Join"}
-                    type={"primary"}
-                  />
+                  detailTournament?.tournamentStatus === 2 ? (
+                    ""
+                  ) : (
+                    <AnimButton
+                      onClick={handleJoinTour}
+                      text={"Join"}
+                      type={"primary"}
+                    />
+                  )
                 ) : (
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}

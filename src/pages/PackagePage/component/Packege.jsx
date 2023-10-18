@@ -31,7 +31,6 @@ export default function Package() {
     (state) => state.authReducer
   );
   const dispatch = useDispatch();
-  console.log(isSubscription);
   const [socket, setSocket] = useState(null);
   // const [bgFree, setBgFree] = useState("#A361EE");
   // const [bgDiamond, setBgDiamond] = useState("#A361EE");
@@ -428,7 +427,6 @@ export default function Package() {
                                       if (i?.packageName !== "Free") {
                                         if (token) {
                                           // dispatch(toggleDialogConfirm());
-                                          console.log(123);
                                           dispatch(
                                             toggleCheckWallet({
                                               type: "subscription",

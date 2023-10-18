@@ -29,7 +29,6 @@ const toastReducer = (
     case REHYDRATE:
       return { ...state };
     case "SHOW_TOAST":
-      console.log(payload);
       return {
         ...state,
         // isShowToast: true,
