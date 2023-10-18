@@ -57,13 +57,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   useEffect(() => {
     setSocket(_socket);
   }, []);
+  
   useEffect(() => {
-    if (token && fetchT) {
+    socket?.emit("detailTournament", {
+      tournamentId: id,
+    });
+  }, [socket, id]);
+
+  useEffect(() => {
+    if(token) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
     }
-  });
+  }, [socket, id, token]);
+
   const handlePlayTour = () => {
     socket?.emit("startGameInTournament", {
       tournamentId: id,

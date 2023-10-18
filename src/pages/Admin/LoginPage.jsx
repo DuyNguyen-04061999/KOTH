@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { showToastNotify } from '../../redux-saga-middleware_admin/reducers/adminAlertReducer';
 import { adminLogin } from '../../redux-saga-middleware_admin/reducers/adminAuthReducer';
-import "./admin.css";
+import "./login.css";
 
 function Copyright(props) {
   return (
@@ -107,6 +107,15 @@ export default function LoginPage() {
                 name="username"
                 autoComplete='username'
                 autoFocus
+                className='login'
+                sx={{
+                  ".MuiInputBase-input:-webkit-autofill": {
+                    WebkitTextFillColor: "#000 !important"
+                  },
+                  ".MuiInputBase-input:hover": {
+                    WebkitTextFillColor: "#000 !important"
+                  }
+                }}
               />
               <TextField
                 margin="normal"
@@ -117,6 +126,15 @@ export default function LoginPage() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                className='login'
+                sx={{
+                  ".MuiInputBase-input:-webkit-autofill": {
+                    WebkitTextFillColor: "#000 !important"
+                  },
+                  ".MuiInputBase-input:hover": {
+                    WebkitTextFillColor: "#000 !important"
+                  }
+                }}
               />
               <Button
                 type="submit"

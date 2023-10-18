@@ -44,7 +44,6 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import JoinTournamentMobile from "../JoinTournamentMobile";
-import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
@@ -96,23 +95,19 @@ export default function JoinTournament() {
   }, []);
 
   useEffect(() => {
-    if (
-      ((token && fetchT) || (!token && fetchT)) &&
-      id &&
-      id !== undefined &&
-      id !== "undefined" &&
-      (typeof id === "string" || typeof id === "number")
-    ) {
+    socket?.emit("detailTournament", {
+      tournamentId: id,
+    });
+  }, [id, socket]);
+  
+  useEffect(() => {
+    if(token) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
     }
-  });
-  useEffect(() => {
-    socket?.emit("detailTournament", {
-      tournamentId: id,
-    });
-  }, [token, id, socket]);
+  }, [id, socket, token]);
+
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);

@@ -1,16 +1,13 @@
 import { Box, Dialog, Typography } from "@mui/material";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import UnityGameComponent from "../../components/GameManager/UnityGameComponent";
-import { useState } from "react";
-import { useEffect } from "react";
 import _socket from "../../redux-saga-middleware/config/socket";
-import { useSelector } from "react-redux";
-import { imageDesktop, images } from "../../utils/images";
 import { getFontSizeTitleDependOnWidth } from "../../utils/config";
+import { imageDesktop, images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { useCallback } from "react";
 
 export default function PlayGamePage() {
   const { token } = useSelector((state) => state.authReducer);
@@ -51,18 +48,11 @@ export default function PlayGamePage() {
     setSocket(_socket);
   }, []);
   useEffect(() => {
-    if (
-      ((token && fetchT) || (!token && fetchT)) &&
-      id &&
-      id !== undefined &&
-      id !== "undefined" &&
-      (typeof id === "string" || typeof id === "number")
-    ) {
-      socket?.emit("detailTournament", {
-        tournamentId: id,
-      });
-    }
-  });
+    socket?.emit("detailTournament", {
+      tournamentId: id,
+    });
+  }, [socket, id]);
+  
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);
