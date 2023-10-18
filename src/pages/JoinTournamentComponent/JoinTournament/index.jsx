@@ -10,6 +10,7 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import { useFullScreenHandle } from "react-full-screen";
@@ -21,6 +22,7 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
+import { BannerWin } from "../../../components/Banner";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -40,13 +42,11 @@ import {
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import {
-  formatTimeMothDateYear,
   isJson,
-  sliceString,
+  sliceString
 } from "../../../utils/helper";
 import { imageHome, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import BgEndGame from "../BgEndTour";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import JoinTournamentMobile from "../JoinTournamentMobile";
@@ -54,8 +54,6 @@ import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
-import { withStyles } from "@mui/styles";
-import { BannerWin } from "../../../components/Banner";
 
 const theme = createTheme({
   typography: {},
@@ -119,23 +117,19 @@ export default function JoinTournament() {
   }, []);
 
   useEffect(() => {
-    if (
-      ((token && fetchT) || (!token && fetchT)) &&
-      id &&
-      id !== undefined &&
-      id !== "undefined" &&
-      (typeof id === "string" || typeof id === "number")
-    ) {
+    socket?.emit("detailTournament", {
+      tournamentId: id,
+    });
+  }, [id, socket]);
+  
+  useEffect(() => {
+    if(token) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
     }
-  });
-  useEffect(() => {
-    socket?.emit("detailTournament", {
-      tournamentId: id,
-    });
-  }, [token, id, socket]);
+  }, [id, socket, token]);
+
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       setDetailTournament(data);

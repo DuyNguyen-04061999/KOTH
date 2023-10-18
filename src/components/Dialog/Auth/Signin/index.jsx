@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
@@ -648,12 +648,18 @@ export default function Dialoglg() {
 
   const handleCloseProfile = () => {};
 
+  const { id } = useParams();
+
   const logout = () => {
     socket?.emit("logout");
-    navigate("/home");
     dispatch(closeChatPopup());
     dispatch(removeToken());
     dispatch(clickTabChat(true));
+    if(window.location.pathname?.includes("tournamentDetail")) {
+      socket?.emit("detailTournament", {
+        tournamentId: id,
+      });
+    }
   };
   const { width } = useWindowDimensions();
   const location = useLocation();
