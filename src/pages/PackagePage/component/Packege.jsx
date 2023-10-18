@@ -27,7 +27,9 @@ import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walle
 export default function Package() {
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.appReducer);
-  const { token, userPackageId } = useSelector((state) => state.authReducer);
+  const { token, userPackageId, isSubscription } = useSelector(
+    (state) => state.authReducer
+  );
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   // const [bgFree, setBgFree] = useState("#A361EE");
@@ -162,14 +164,6 @@ export default function Package() {
                       justifyContent: "space-around",
                     }}
                   >
-                    {/* {listPackage
-                      ?.filter(
-                        (item) =>
-                          item?.packageName !== "Ticket Play" &&
-                          item?.packageName !== "Merchant" &&
-                          item?.packageName !== "Free"
-                      )
-                      ?.map((i, index) => { */}
                     {listPackage
                       ?.filter((item) => item?.packageName === "Subscription")
                       ?.map((i, index) => {
@@ -179,34 +173,14 @@ export default function Package() {
                             sx={{
                               background:
                                 "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)",
-                              // i?.packageName === "Free"
-                              //   ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
-                              //   : "" || i?.packageName === "Diamond"
-                              //   ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
-                              //   : "" || i?.packageName === "Gold"
-                              //   ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
-                              //   : "",
                               padding: "14px 14px 14px 14px",
                               borderRadius: "24px",
                               display: "flex",
                               alignItems: "center",
                               flexDirection: "column",
                               position: "relative",
-                              // border:"5px solid",
-                              // borderImageSlice:"1",
-                              // borderWidth:"5px",
-                              // borderImageSource:"linear-gradient(to bottom, #743ad5, #d53a9d)"
                             }}
-                            className={
-                              // i?.packageName === "Free"
-                              //   ? "gradient-border-rounded"
-                              //   : "" || i?.packageName === "Diamond"
-                              //   ? "gradient-border-rounded1"
-                              //   : "" || i?.packageName === "Gold"
-                              //   ? "gradient-border-rounded2"
-                              //   : ""
-                              "gradient-border-rounded1"
-                            }
+                            className={"gradient-border-rounded1"}
                           >
                             <Typography
                               variant="h5"
@@ -216,13 +190,6 @@ export default function Package() {
                                 marginTop: "5px",
                                 marginBottom: "15px",
                                 color: "white",
-                                // i?.packageName === "Free"
-                                //   ? "#383B80"
-                                //   : "" || i?.packageName === "Diamond"
-                                //   ? "white"
-                                //   : "" || i?.packageName === "Gold"
-                                //   ? "black"
-                                //   : "",
                               }}
                             >
                               {i?.packageName} Pack
@@ -267,13 +234,7 @@ export default function Package() {
                                     style={{
                                       marginBottom:
                                         i?.packageName === "Free" ? "15px" : "",
-                                      marginTop:
-                                        // i?.packageName === "Gold"
-                                        //   ? "15px"
-                                        //   : "" || i?.packageName === "Diamond"
-                                        //   ? "15px"
-                                        //   : "",
-                                        "15px",
+                                      marginTop: "15px",
                                       mixBlendMode: "difference",
                                     }}
                                     playsInline
@@ -293,43 +254,6 @@ export default function Package() {
                                       type="video/mp4"
                                     />
                                   </video>
-                                  {/* <video
-                                    autoPlay
-                                    // src={
-                                    //   i?.packageName === "Free"
-                                    //     ? images.free
-                                    //     : "" || i?.packageName === "Diamond"
-                                    //     ? images.diamon
-                                    //     : "" || i?.packageName === "Gold"
-                                    //     ? images.gold1
-                                    //     : ""
-                                    // }
-                                    src={
-                                      i?.packageAvatar
-                                        ? process.env.REACT_APP_END_POINT +
-                                          "/" +
-                                          i?.packageAvatar
-                                        : images.free
-                                    }
-                                    width={
-                                      width < 1200 && width > 576 ? 130 : 200
-                                    }
-                                    height={
-                                      width < 1200 && width > 576 ? 130 : 200
-                                    }
-                                    alt=""
-                                    style={{
-                                      marginBottom:
-                                        i?.packageName === "Free" ? "15px" : "",
-                                      marginTop:
-                                        // i?.packageName === "Gold"
-                                        //   ? "15px"
-                                        //   : "" || i?.packageName === "Diamond"
-                                        //   ? "15px"
-                                        //   : "",
-                                        "15px"
-                                    }}
-                                  /> */}
                                   <Box
                                     sx={{
                                       marginBottom: "0px",
@@ -440,65 +364,6 @@ export default function Package() {
                                           : `Reducing ${i?.packageReduceWatchAds}s time of ads`}
                                       </Typography>
                                     </Box>
-                                    {/* <Box
-                                    sx={{
-                                      display: "flex",
-                                      justifyContent: "flex-start",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    {i?.packageCountLuckySpin === 0 ? (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 16 16"
-                                      >
-                                        <g>
-                                          <path
-                                            fill="#F05153"
-                                            d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
-                                          ></path>
-                                          <g fill="#fff">
-                                            <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
-                                            <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
-                                          </g>
-                                        </g>
-                                      </svg>
-                                    ) : (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                      >
-                                        <g>
-                                          <path
-                                            fill="#14C58A"
-                                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                          ></path>
-                                          <path
-                                            fill="#fff"
-                                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                          ></path>
-                                        </g>
-                                      </svg>
-                                    )}
-                                    <Typography
-                                      variant="body1"
-                                      sx={{
-                                        fontSize: "17px",
-                                        color: "white",
-                                        
-                                        fontWeight: "500 !important",
-                                      }}
-                                    >
-                                      {i?.packageCountLuckySpin}Times for lucky
-                                      spin
-                                    </Typography>
-                                  </Box> */}
                                   </Box>
                                   {i?.packagePrice === 0 ? (
                                     <Box
@@ -568,7 +433,9 @@ export default function Package() {
                                             })
                                           );
                                           dispatch(getIdPackage(i?.id));
-                                          dispatch(toggleSubscriptionDialog())
+                                          dispatch(
+                                            toggleSubscriptionDialog(false)
+                                          );
                                         }
                                       } else {
                                       }
@@ -716,8 +583,7 @@ export default function Package() {
                       width: "100%",
                       justifyContent: "space-around",
                     }}
-                  >
-                  </Box>
+                  ></Box>
                 </Box>
               </Box>
               <Box
@@ -902,8 +768,8 @@ export default function Package() {
                                     marginLeft: "4px !important",
                                   }}
                                 >
-                                  {i?.packageFreeTicketTournament} ticket /
-                                  tournament
+                                  {i?.packageFreeTicketTournament} extras /
+                                  promotions
                                 </Typography>
                               </Box>
                               <Box
@@ -1062,6 +928,7 @@ export default function Package() {
                                       })
                                     );
                                     dispatch(getIdPackage(i?.id));
+                                    dispatch(toggleSubscriptionDialog(false));
                                   }
                                 } else {
                                 }

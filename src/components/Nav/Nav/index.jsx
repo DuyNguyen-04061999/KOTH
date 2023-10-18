@@ -12,13 +12,11 @@ import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gam
 import { getAppType } from "../../../utils/helper";
 import { images, navbar } from "../../../utils/images";
 import "../Nav/Nav.scss";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { height } = useWindowDimensions();
 
   // const { width } = useWindowDimensions();
   const [tablet, setTablet] = useState("");
@@ -374,7 +372,7 @@ export default function Navbar() {
                     Hourly tour
                   </Typography>
                 </Box> */}
-                <Box
+                {/* <Box
                   sx={{
                     cursor: "pointer",
                     display: "flex",
@@ -511,7 +509,7 @@ export default function Navbar() {
                     height: "1px",
                     width: isNav ? "70%" : "",
                   }}
-                />
+                /> */}
                 <Box
                   sx={{
                     cursor: "pointer",

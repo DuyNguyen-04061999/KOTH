@@ -18,9 +18,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function Browser(props) {
   const { open, handleShowMenu } = props;
-  const { token , isDropdownNav } = useSelector(
-    (state) => state.authReducer
-  );
+  const { token, isDropdownNav } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
@@ -519,7 +517,7 @@ export default function Browser(props) {
                       height: "1px",
                     }}
                   />
-                  <Box
+                  {/* <Box
                     sx={{
                       cursor: "pointer",
                       display: "flex",
@@ -650,7 +648,7 @@ export default function Browser(props) {
                       borderColor: "white",
                       height: "1px",
                     }}
-                  />
+                  /> */}
                   <Box
                     sx={{
                       cursor: "pointer",

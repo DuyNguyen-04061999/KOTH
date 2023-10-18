@@ -13,7 +13,7 @@ const BannerWinMobile = (props) => {
     <Box
       sx={{
         width: "100%",
-        height: "208px",
+        height: "218px",
         background: `url(${imageHome.BannerWinBgMobile})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -82,6 +82,7 @@ const BannerWinMobile = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            marginLeft:"10px"
           }}
         >
           <Box
@@ -133,7 +134,7 @@ const BannerWinMobile = (props) => {
                 fontSize: "30px",
                 color: "transparent",
                 WebkitTextStroke: "4px #ED3B14",
-                width: "100%",
+                width: "150px",
                 position: "relative",
                 fontWeight: 800,
                 wordWrap: "break-word",
