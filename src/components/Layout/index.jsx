@@ -91,7 +91,6 @@ const AppBar = muiStyled(MuiAppBar, {
 const drawerWidth = 310;
 
 export default function Layout(props) {
-  console.log("Re-render");
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const { isWalletDialog, isTransactionDialog } = useSelector(
     (state) => state.walletReducer
