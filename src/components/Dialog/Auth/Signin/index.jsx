@@ -720,7 +720,7 @@ export default function Dialoglg() {
               <Box
                 variant="standard"
                 sx={{
-                  minWidth: "auto",
+                  maxWidth: "115px",
                   position: "relative",
                   display: "flex",
                   flexDirection: "row",

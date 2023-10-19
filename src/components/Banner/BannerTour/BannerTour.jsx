@@ -144,6 +144,7 @@ const BannerTour = (props) => {
               fontSize: width < 1024 ? "12px" : "16px",
               cursor: "pointer",
               fontWeight: 600,
+              width: width < 576 ?  "70px" : "auto"
             }}
           >
             Play now

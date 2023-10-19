@@ -155,7 +155,7 @@ export default function BannerWin(props) {
                 fontWeight: 800,
                 position: "absolute",
                 top: "50%",
-                left: "48%",
+                left: "50%",
                 transform: "translate(-50%,-50%)",
                 fontSize: "35px",
                 color: "white",
