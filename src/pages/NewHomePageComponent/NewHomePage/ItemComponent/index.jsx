@@ -9,44 +9,28 @@ import { CalculateDistance } from "../../../../components/CountDownTimer/utils/C
 import { imageHome } from "../../../../utils/images";
 import "./index.scss";
 
-// const theme = createTheme({
-//   typography: {
-//     fontFamily: "Cyntho Next",
-//   },
-//   components: {
-//     MuiCssBaseline: {
-//       styleOverrides: {
-//         "@font-face": {
-//           fontFamily: "Cyntho Next",
-//           src: `url(${InspirationTTF}) format("truetype")`,
-//         },
-//       },
-//     },
-//   },
-// });
 
 export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const { width } = useWindowDimensions();
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
   const [days, setDay] = useState(null);
-  const [checkType, setCheckType] = useState(null);
   let countEndDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
   let countStartDate = new Date(moment(tourInfo?.tournamentStartAt)).getTime();
   let timeNow = new Date().getTime();
   useEffect(() => {
-    if (countStartDate > timeNow) {
+    if (tourInfo?.tournamentStatus === 0) {
       setHour(CalculateDistance(countStartDate, timeNow).hours);
       setMinute(CalculateDistance(countStartDate, timeNow).minutes);
       setDay(CalculateDistance(countStartDate, timeNow).days);
-      setCheckType(1);
-    } else if (countStartDate < timeNow && countEndDate > timeNow) {
+    } else if (tourInfo?.tournamentStatus === 1) {
       setHour(CalculateDistance(countEndDate, timeNow).hours);
       setMinute(CalculateDistance(countEndDate, timeNow).minutes);
       setDay(CalculateDistance(countEndDate, timeNow).days);
-      setCheckType(2);
-    } else if (tourInfo?.tournamentStatus === 2 || countEndDate < timeNow) {
-      setCheckType(3);
+    } else if (tourInfo?.tournamentStatus === 2) {
+      setHour(null);
+      setMinute(null);
+      setDay(null);
     }
   }, [tourInfo, countEndDate, countStartDate, timeNow]);
 
@@ -56,6 +40,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     fontWeight: "700 !important",
     marginLeft: "0px !important",
   };
+
+  console.log(tourInfo);
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -150,7 +136,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 position: "absolute",
                 top: 0,
                 backgroundColor: "rgba(0,0,0,0.6)",
-                display: checkType === 3 ? "block" : "none",
+                display: tourInfo?.tournamentStatus === 2 ? "block" : "none",
               }}
             />
           </>
@@ -239,11 +225,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                   lineHeight: "130%",
                 }}
               >
-                {checkType === 1
+                {tourInfo?.tournamentStatus === 0
                   ? "Start at: "
-                  : checkType === 2
+                  : tourInfo?.tournamentStatus === 1
                   ? "End in: "
-                  : checkType === 3  ? "Winner: " : ""} 
+                  : tourInfo?.tournamentStatus === 2  ? "Winner: " : ""} 
               </Box>
               {isLoading ? (
                 <Skeleton
@@ -263,7 +249,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                       fontFamily: "Cyntho Next",
                     }}
                   >
-                    {checkType !== 3
+                    {tourInfo?.tournamentStatus !== 2
                       ? days !== null &&
                         hours !== null &&
                         minutes !== null &&
