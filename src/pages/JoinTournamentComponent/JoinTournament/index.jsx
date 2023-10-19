@@ -229,6 +229,14 @@ export default function JoinTournament() {
   //     window.location.reload();
   //   }
   // }, []);
+  useEffect(() => {
+    dispatch({
+      type: "CALL_BIGGEST_END_TOUR",
+    });
+    dispatch({
+      type: "GET_BIGGEST_TOUR",
+    });
+  },[dispatch])
 
   return (
     <>

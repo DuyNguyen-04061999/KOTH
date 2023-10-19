@@ -66,7 +66,6 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-
   const navigate = useNavigate();
   return (
     <Box
