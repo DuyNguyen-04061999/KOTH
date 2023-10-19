@@ -294,7 +294,7 @@ export default function TicketCheckOut() {
                   {typeWallet === "subscription" ? (
                     <Typography className="mb-1">Subscription Pack</Typography>
                   ) : (
-                    <Typography className="mb-1">Ticket</Typography>
+                    <Typography className="mb-1">Extra</Typography>
                   )}
                   <Typography sx={{ color: "gray" }} variant="body2">
                     {typeWallet === "subscription"
