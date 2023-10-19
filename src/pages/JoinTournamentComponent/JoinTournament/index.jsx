@@ -19,7 +19,6 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
-import { BannerWin } from "../../../components/Banner";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -39,7 +38,7 @@ import {
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
-import { imageHome, images } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
@@ -59,6 +58,7 @@ export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
   const [detailTournament, setDetailTournament] = useState({});
+  
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
   const [videoGame, setVideoGame] = useState(false || true);
@@ -259,27 +259,28 @@ export default function JoinTournament() {
               {fetchT ? (
                 <BannerLoading width={"100%"} height={"340px"} />
               ) : detailTournament?.tournamentStatus === 2 ? (
-                <BannerWin
-                  userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                  userAvatar={
-                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        biggestEndTour?.bestUser?.tUser?.userAccount
-                          ?.accountAvatar
-                      : imageHome.BannerWinAva
-                  }
-                  sponsorName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                      : "Samsung"
-                  }
-                  tournamentName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentName
-                      : "Galaxy Z-flip 5"
-                  }
-                />
+                // <BannerWin
+                //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+                //   userAvatar={
+                //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                //       ? process.env.REACT_APP_SOCKET_SERVER +
+                //         "/" +
+                //         biggestEndTour?.bestUser?.tUser?.userAccount
+                //           ?.accountAvatar
+                //       : imageHome.BannerWinAva
+                //   }
+                //   sponsorName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                //       : "Samsung"
+                //   }
+                //   tournamentName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentName
+                //       : "Galaxy Z-flip 5"
+                //   }
+                // />
+                <></>
               ) : (
                 <Box
                   sx={{
@@ -663,7 +664,8 @@ export default function JoinTournament() {
                               <Typography
                                 sx={{
                                   fontSize: "12px",
-                                  marginLeft: "0px !important"
+                                  marginLeft: "0px !important",
+                                  textAlign: "left"
                                 }}
                               >
                                 {moment(
@@ -675,10 +677,84 @@ export default function JoinTournament() {
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
+                                  textAlign: "left"
                                }}
                               >
                                 {moment(
                                   detailTournament?.tournamentStartAt ||
+                                    new Date()
+                                )?.format("HH:mm")}
+                              </Typography>
+                            </Box>
+                          )}
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "1px",
+                        height: "100%",
+                        background: "rgba(151, 151, 151, 0.40)",
+                        margin: "0px 15px",
+                      }}
+                    ></Box>
+                    <Box sx={{ display: "flex" }}>
+                      <Box>
+                        <Typography
+                          sx={{
+                            color: "#ffff",
+                            textAlign: "start",
+                            fontSize:
+                              576 < width && width < 1200
+                                ? `${width / 62.5}px`
+                                : "18px",
+                            letterSpacing: "0.7px",
+                            marginLeft: "0px !important",
+                            fontWeight: "700"
+                          }}
+                        >
+                          End
+                        </Typography>
+                        <Box
+                          sx={{
+                            color: "#fff",
+                            textAlign: "start",
+                            fontSize:
+                              576 < width && width < 1200
+                                ? `${width / 76}px`
+                                : "14px",
+                            fontWeight: "500 !important",
+                            marginLeft: "0px !important",
+                          }}
+                        >
+                          {fetchT ? (
+                            <Skeleton
+                              variant="text"
+                              sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
+                            />
+                          ) : (
+                            <Box>
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  marginLeft: "0px !important",
+                                  textAlign: "left"
+                               }}
+                              >
+                                {moment(
+                                  detailTournament?.tournamentEndAt ||
+                                    new Date()
+                                )?.format("MM/DD/YYYY")}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  marginLeft: "0px !important",
+                                  textAlign: "left"
+                              }}
+                              >
+                                {moment(
+                                  detailTournament?.tournamentEndAt ||
                                     new Date()
                                 )?.format("HH:mm")}
                               </Typography>
@@ -710,7 +786,7 @@ export default function JoinTournament() {
                             fontWeight: "700"
                           }}
                         >
-                          Finish
+                          Played
                         </Typography>
                         <Box
                           sx={{
@@ -735,23 +811,19 @@ export default function JoinTournament() {
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
+                                  textAlign: "left"
                                }}
                               >
-                                {moment(
-                                  detailTournament?.tournamentEndAt ||
-                                    new Date()
-                                )?.format("MM/DD/YYYY")}
+                                {detailTournament?.currentPlayed || 0}
                               </Typography>
                               <Typography
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
-                              }}
+                                  textAlign: "left"
+                               }}
                               >
-                                {moment(
-                                  detailTournament?.tournamentEndAt ||
-                                    new Date()
-                                )?.format("HH:mm")}
+                                {"Your played turn"}
                               </Typography>
                             </Box>
                           )}

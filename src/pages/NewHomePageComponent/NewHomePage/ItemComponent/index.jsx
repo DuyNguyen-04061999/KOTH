@@ -41,8 +41,6 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     marginLeft: "0px !important",
   };
 
-  console.log(tourInfo);
-
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {

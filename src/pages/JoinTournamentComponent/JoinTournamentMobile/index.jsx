@@ -11,13 +11,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { imageHome, images } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import "./index.scss";
 // import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
-import { BannerWinMobile } from "../../../components/Banner";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
 import {
@@ -26,9 +25,8 @@ import {
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
-  formatTimeMothDateYear,
   isJson,
-  sliceString,
+  sliceString
 } from "../../../utils/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
@@ -203,27 +201,28 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               </Box>
               {/* BackgroundMobile */}
               {detailTournament?.tournamentStatus === 2 ? (
-                <BannerWinMobile
-                  userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                  userAvatar={
-                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        biggestEndTour?.bestUser?.tUser?.userAccount
-                          ?.accountAvatar
-                      : imageHome.BannerWinAva
-                  }
-                  sponsorName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                      : "Samsung"
-                  }
-                  tournamentName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentName
-                      : "Galaxy Z-flip 5"
-                  }
-                />
+                // <BannerWinMobile
+                //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+                //   userAvatar={
+                //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                //       ? process.env.REACT_APP_SOCKET_SERVER +
+                //         "/" +
+                //         biggestEndTour?.bestUser?.tUser?.userAccount
+                //           ?.accountAvatar
+                //       : imageHome.BannerWinAva
+                //   }
+                //   sponsorName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                //       : "Samsung"
+                //   }
+                //   tournamentName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentName
+                //       : "Galaxy Z-flip 5"
+                //   }
+                // />
+                <></>
               ) : (
                 <Box
                   sx={{
@@ -341,6 +340,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "space-between",
                   paddingLeft: "20px",
                   paddingRight: "20px",
                   marginTop: "20px",
@@ -350,8 +350,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    marginRight: "32px",
-                    width: "40%",
+                    width: "35%",
                   }}
                 >
                   <Typography
@@ -364,9 +363,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     Start
                   </Typography>
                   <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {formatTimeMothDateYear(
-                      detailTournament?.tournamentStartAt
-                    )}
+                  {moment(
+                      detailTournament?.tournamentStartAt ||
+                        new Date()
+                    )?.format("MM/DD/YYYY")}
+                  </Typography>
+                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+                    {moment(
+                      detailTournament?.tournamentStartAt ||
+                        new Date()
+                    )?.format("HH:mm a")}
                   </Typography>
                 </Box>
                 <Box
@@ -374,15 +380,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     width: "1px",
                     height: "40px",
                     backgroundColor: "rgba(151, 151, 151, 0.40)",
-                    marginRight: "32px",
                   }}
                 ></Box>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "40%",
+                    width: "35%",
                   }}
+                  className="ps-3"
+
                 >
                   <Typography
                     sx={{
@@ -391,11 +398,58 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       fontWeight: "700",
                     }}
                   >
-                    Finish
+                    End
                   </Typography>
                   <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {formatTimeMothDateYear(detailTournament?.tournamentEndAt)}
+                  {moment(
+                      detailTournament?.tournamentEndAt ||
+                        new Date()
+                    )?.format("MM/DD/YYYY")}
                   </Typography>
+                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+                  {moment(
+                      detailTournament?.tournamentEndAt ||
+                        new Date()
+                    )?.format("HH:mm a")}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    width: "1px",
+                    height: "40px",
+                    backgroundColor: "rgba(151, 151, 151, 0.40)",
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "20%",
+                  }}
+                  className="ps-3"
+                >
+                  <Typography
+                    sx={{
+                      ...typographyStyle,
+                      fontSize: "14px",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Played
+                  </Typography>
+                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+                    {detailTournament?.currentPlayed || 0}
+                  </Typography>
+                  <Typography
+                      sx={{
+                        fontSize: "12px",
+                        marginLeft: "0px !important",
+                        textAlign: "left"
+                      }}
+                      className="text-white"
+                    >
+                      {"-"}
+                    </Typography>
                 </Box>
               </Box>
               <Box

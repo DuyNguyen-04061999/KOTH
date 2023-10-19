@@ -1,18 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './setup/reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./assets/css/index.css"
+import React from 'react';
+import DocumentMeta from 'react-document-meta';
+import ReactDOM from 'react-dom/client';
 import Admin from './Admin';
+import App from './App';
+import "./assets/css/index.css";
+import reportWebVitals from './setup/reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const meta = {
+    meta: {
+      name: process.env.REACT_APP_URL_DOMAIN === "api.play4promote.com" ? {
+        robots: "noindex"
+      } : {}
+    }
+  };
+  
 root.render(
     <>
+        <DocumentMeta {...meta}>
         {
             window?.location?.host?.split('.')[0] 
             && window?.location?.host?.split('.')?.length > 0 
             && window?.location?.host?.split('.')[0] === "admin" ? <Admin/> : <App/>}
+        </DocumentMeta>
     </>
 );
 

@@ -136,10 +136,11 @@ export default function BannerWin(props) {
         >
           <Box
             sx={{
-              fontSize: "32px",
-              color: "transparent",
+              fontSize: "38px",
+              WebkitTextStroke: "0.1px #f5c40c",
               color: " #ED3B14",
               width: "100%",
+              fontFamily: "Cyntho Next",
               position: "relative",
               fontWeight: "800 !important",
               wordWrap: "break-word",
