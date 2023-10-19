@@ -399,9 +399,10 @@ export default function NewHomePage() {
                   ? biggestEndTour?.endTour?.tournamentBrand?.brandName
                   : "Samsung"
               }
-              tournamentName={
+              rewardName={
                 biggestEndTour && biggestEndTour?.endTour
-                  ? biggestEndTour?.endTour?.tournamentName
+                  ? biggestEndTour?.endTour?.rewardTournament &&
+                    biggestEndTour?.endTour?.rewardTournament?.rewardTitle
                   : "Galaxy Z-flip 5"
               }
             />
@@ -579,9 +580,10 @@ export default function NewHomePage() {
                 ? biggestEndTour?.endTour?.tournamentBrand?.brandName
                 : "Samsung"
             }
-            tournamentName={
+            rewardName={
               biggestEndTour && biggestEndTour?.endTour
-                ? biggestEndTour?.endTour?.tournamentName
+                ? biggestEndTour?.endTour?.rewardTournament &&
+                  biggestEndTour?.endTour?.rewardTournament?.rewardTitle
                 : "Galaxy Z-flip 5"
             }
           />
@@ -1242,6 +1244,13 @@ export default function NewHomePage() {
                   ? hotWeekTour?.tournamentName
                   : "Galaxy Z-flip 5"
               }
+              rewardName={
+                hotWeekTour &&
+                hotWeekTour?.rewardTournament &&
+                hotWeekTour?.rewardTournament?.rewardTitle
+                  ? hotWeekTour?.rewardTournament?.rewardTitle
+                  : ""
+              }
               sponsorName={hotWeekTour?.tournamentBrand?.brandName}
               userName={
                 hotWeekTour &&
@@ -1449,32 +1458,39 @@ export default function NewHomePage() {
           // </Box>
           // <BannerTop1 />
           <BannerTour
-            tournamentName={
-              hotWeekTour && hotWeekTour?.tournamentName
-                ? hotWeekTour?.tournamentName
-                : "Galaxy Z-flip 5"
-            }
-            sponsorName={hotWeekTour?.tournamentBrand?.brandName}
-            userName={
-              hotWeekTour &&
-              hotWeekTour?.bestUser &&
-              hotWeekTour?.bestUser?.tUser &&
-              hotWeekTour?.bestUser?.tUser?.userName
-            }
-            endTime={hotWeekTour?.tournamentEndAt}
-            userScore={hotWeekTour?.bestUser?.score}
-            userAvatar={
-              hotWeekTour &&
-              hotWeekTour?.bestUser &&
-              hotWeekTour?.bestUser?.tUser &&
-              hotWeekTour?.bestUser?.tUser?.userAccount &&
-              hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                ? process.env.REACT_APP_SOCKET_SERVER +
-                  "/" +
-                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                : images.pool
-            }
-            tourId={hotWeekTour && hotWeekTour?.id}
+          tournamentName={
+            hotWeekTour && hotWeekTour?.tournamentName
+              ? hotWeekTour?.tournamentName
+              : "Galaxy Z-flip 5"
+          }
+          rewardName={
+            hotWeekTour &&
+            hotWeekTour?.rewardTournament &&
+            hotWeekTour?.rewardTournament?.rewardTitle
+              ? hotWeekTour?.rewardTournament?.rewardTitle
+              : ""
+          }
+          sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+          userName={
+            hotWeekTour &&
+            hotWeekTour?.bestUser &&
+            hotWeekTour?.bestUser?.tUser &&
+            hotWeekTour?.bestUser?.tUser?.userName
+          }
+          endTime={hotWeekTour?.tournamentEndAt}
+          userScore={hotWeekTour?.bestUser?.score}
+          userAvatar={
+            hotWeekTour &&
+            hotWeekTour?.bestUser &&
+            hotWeekTour?.bestUser?.tUser &&
+            hotWeekTour?.bestUser?.tUser?.userAccount &&
+            hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+              ? process.env.REACT_APP_SOCKET_SERVER +
+                "/" +
+                hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+              : images.pool
+          }
+          tourId={hotWeekTour && hotWeekTour?.id}
           />
         )}
         <Box

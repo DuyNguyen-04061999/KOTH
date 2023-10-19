@@ -3,7 +3,7 @@ import { imageHome } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function BannerWin(props) {
-  const { tournamentName, sponsorName, userAvatar, userName } = props;
+  const { rewardName, sponsorName, userAvatar, userName } = props;
 
   return (
     <Box
@@ -136,28 +136,28 @@ export default function BannerWin(props) {
         >
           <Box
             sx={{
-              fontSize: "40px",
+              fontSize: "32px",
               color: "transparent",
-              WebkitTextStroke: "4px #ED3B14",
+              color: " #ED3B14",
               width: "100%",
               position: "relative",
-              fontWeight: 800,
+              fontWeight: "800 !important",
               wordWrap: "break-word",
               overflow: "hidden",
               lineHeight: 1.2,
               textAlign: "center",
-              maxHeight: "100px",
+              maxHeight: "80px",
             }}
           >
-            {tournamentName}
-            <span
-              style={{
+            {rewardName}
+            {/* <Typography
+              sx={{
                 fontWeight: 800,
                 position: "absolute",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%,-50%)",
-                fontSize: "39px",
+                fontSize: "35px",
                 color: "white",
                 WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                 width: "100%",
@@ -165,11 +165,11 @@ export default function BannerWin(props) {
                 overflow: "hidden",
                 lineHeight: 1.2,
                 textAlign: "center",
-                maxHeight: "100px",
+                maxHeight: "80px",
               }}
             >
-              {tournamentName}
-            </span>
+              {rewardName}
+            </Typography> */}
           </Box>
         </Box>
         <Box
