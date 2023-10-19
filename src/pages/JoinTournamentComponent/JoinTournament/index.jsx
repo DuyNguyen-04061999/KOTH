@@ -152,6 +152,7 @@ export default function JoinTournament() {
 
     return () => {
       socket?.off("joinTournamentSuccess");
+      socket?.off("buyTicketTournamentSuccess");
     };
   }, [
     socket,
