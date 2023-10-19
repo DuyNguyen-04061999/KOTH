@@ -424,7 +424,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "20%",
+                    width: "25%",
                   }}
                   className="ps-3"
                 >
@@ -435,20 +435,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       fontWeight: "700",
                     }}
                   >
-                    Played
+                    Plays:
                   </Typography>
                   <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {detailTournament?.currentPlayed || 0}
+                    {detailTournament?.currentPlayed || 0} / {detailTournament?.maxPlay}
                   </Typography>
                   <Typography
                       sx={{
                         fontSize: "12px",
                         marginLeft: "0px !important",
-                        textAlign: "left"
+                        textAlign: "left",
+                        color: "#979797 !important"
                       }}
                       className="text-white"
                     >
-                      {"-"}
+                      {"Play count"}
                     </Typography>
                 </Box>
               </Box>
@@ -770,7 +771,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   }
                 />
               </Box>
-              <Box sx={{ padding: "28px 28px 0px 28px" }}>
+              {/* <Box sx={{ padding: "28px 28px 0px 28px" }}>
                 <a
                   href="#GamePreview"
                   style={{
@@ -789,7 +790,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 >
                   Game Tutorial
                 </a>
-              </Box>
+              </Box> */}
               <Box sx={{ padding: "28px 28px 0px 28px" }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                   <Typography
@@ -1115,7 +1116,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     </Typography>
                   )}
               </Box>
-              <Box sx={{ padding: "28px 28px 0px 28px" }}>
+              {/* <Box sx={{ padding: "28px 28px 0px 28px" }}>
                 <Box
                   sx={{
                     height: "1px",
@@ -1123,7 +1124,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     width: "100%",
                   }}
                 ></Box>
-              </Box>
+              </Box> */}
               {/* <Box id="GamePreview">
                 <GamePreview />
               </Box> */}

@@ -139,7 +139,8 @@ export default function VideoComponent(props) {
             ></i>
           </Box>
         )}
-        <Box component={"div"} className="mt-3 p-2">
+        {width < 576 && (
+          <Box component={"div"} className="mt-3 p-2">
             <Box component={"div"} className="d-flex align-items-center">
               <WarningIcon/>
               <Typography sx={{
@@ -162,6 +163,7 @@ export default function VideoComponent(props) {
               </Typography>
             </Box>
         </Box>
+        )}
       </Box>
       
     </Box>
