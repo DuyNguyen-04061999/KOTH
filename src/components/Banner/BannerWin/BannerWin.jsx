@@ -150,12 +150,12 @@ export default function BannerWin(props) {
             }}
           >
             {tournamentName}
-            <Typography
-              sx={{
+            <span
+              style={{
                 fontWeight: 800,
                 position: "absolute",
                 top: "50%",
-                left: "48%",
+                left: "50%",
                 transform: "translate(-50%,-50%)",
                 fontSize: "39px",
                 color: "white",
@@ -169,7 +169,7 @@ export default function BannerWin(props) {
               }}
             >
               {tournamentName}
-            </Typography>
+            </span>
           </Box>
         </Box>
         <Box
