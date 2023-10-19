@@ -136,12 +136,12 @@ export default function BannerWin(props) {
         >
           <Box
             sx={{
-              fontSize: "36px",
+              fontSize: "32px",
               color: "transparent",
-              WebkitTextStroke: "4px #ED3B14",
+              color: " #ED3B14",
               width: "100%",
               position: "relative",
-              fontWeight: 800,
+              fontWeight: "800 !important",
               wordWrap: "break-word",
               overflow: "hidden",
               lineHeight: 1.2,
@@ -150,7 +150,7 @@ export default function BannerWin(props) {
             }}
           >
             {rewardName}
-            <Typography
+            {/* <Typography
               sx={{
                 fontWeight: 800,
                 position: "absolute",
@@ -169,7 +169,7 @@ export default function BannerWin(props) {
               }}
             >
               {rewardName}
-            </Typography>
+            </Typography> */}
           </Box>
         </Box>
         <Box
