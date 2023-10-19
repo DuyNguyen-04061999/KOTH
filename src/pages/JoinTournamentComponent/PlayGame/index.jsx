@@ -1,19 +1,17 @@
 import { Box, Dialog, Typography } from "@mui/material";
-import React from "react";
-import { useState } from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { images } from "../../../utils/images";
-import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import GameInTournament from "../GameInTournament";
-import moment from "moment";
-import { sliceString } from "../../../utils/helper";
-import VideoComponent from "./VideoComponent";
-import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
+import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
+import { sliceString } from "../../../utils/helper";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import GameInTournament from "../GameInTournament";
+import VideoComponent from "./VideoComponent";
 
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
@@ -380,13 +378,14 @@ export default function PlayGame(props) {
                           : "28px",
                       width: "480px",
                       wordBreak: "break-all",
+                      textAlign: "left"
                     }}
                   >
                     {detailTournament?.tournamentName?.length > 50
                       ? detailTournament?.tournamentName.slice(0, 50) + " ..."
                       : detailTournament?.tournamentName}
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     sx={{
                       margin: "0px !important",
                       fontSize: 576 < width && width < 1200 ? "12px" : "14px",
@@ -398,7 +397,7 @@ export default function PlayGame(props) {
                       : detailTournament?.tournamentTimeType === "daily"
                       ? "Daily Promotion"
                       : "Weeklong Promotion"}
-                  </Typography>
+                  </Typography> */}
                 </>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>

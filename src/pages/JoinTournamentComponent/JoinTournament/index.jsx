@@ -786,7 +786,7 @@ export default function JoinTournament() {
                             fontWeight: "700"
                           }}
                         >
-                          Played
+                          Plays:
                         </Typography>
                         <Box
                           sx={{
@@ -814,16 +814,17 @@ export default function JoinTournament() {
                                   textAlign: "left"
                                }}
                               >
-                                {detailTournament?.currentPlayed || 0}
+                                {detailTournament?.currentPlayed || 0} / {detailTournament?.maxPlay}
                               </Typography>
                               <Typography
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
-                                  textAlign: "left"
+                                  textAlign: "left",
+                                  color: "#979797"
                                }}
                               >
-                                {"Your played turn"}
+                                {"Player's play count"}
                               </Typography>
                             </Box>
                           )}
@@ -1147,6 +1148,7 @@ export default function JoinTournament() {
                                 576 < width && width < 1200
                                   ? `${width / 42}px`
                                   : "28px",
+                                textAlign: "left"
                             }}
                           >
                             {detailTournament?.tournamentName?.length > 30

@@ -105,7 +105,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       : images.bannerwin
                   }
                 ></Box>
-                <Box className="ms-2">
+                <Box className="ms-2 mt-2">
                   <Typography
                     sx={{
                       fontSize: "12px",
@@ -117,10 +117,9 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                     <Typography
                       component={"span"}
                       sx={{
-                        fontSize: "16px",
+                        fontSize: "14px",
                         marginLeft: "0px !important",
                         textAlign: "start",
-                        textTransform: "uppercase",
                       }}
                     >
                       {" "}
@@ -134,7 +133,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                   ></Box> */}
                   <Typography
                     sx={{
-                      fontSize: "16px",
+                      fontSize: "14px",
                       marginLeft: "0px !important",
                       textAlign: "start",
                       color: "#BE48ED",
@@ -164,14 +163,14 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 {detail?.tournamentInfors?.owner?.brandName} : Valid for
                 purchases of {detail?.tournamentInfors?.owner?.brandName}
               </Typography> */}
-              <Box sx={{ marginTop: "20px" }}>
-                <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
+              <Box sx={{ marginTop: "20px" }} className="d-flex align-items-center">
+                <Typography sx={{ textAlign: "start", fontSize: "14px" }}>
                   Valid by:
                 </Typography>
-                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                <Typography sx={{ textAlign: "start", fontSize: "13px", fontWeight: 600 }}>
                   {moment(
                     detail?.tournamentInfors?.rewardInfors?.rewardValidityDate
-                  )?.format("DD-MM-YYYY") || "01-08-2023 - 29-08-2023"}
+                  )?.format("MM/DD/YYYY") || "01-08-2023 - 29-08-2023"}
                 </Typography>
               </Box>
               <Box sx={{ marginTop: "12px" }}>
