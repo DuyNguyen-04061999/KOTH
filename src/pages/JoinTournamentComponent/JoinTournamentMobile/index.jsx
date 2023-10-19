@@ -391,11 +391,49 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       fontWeight: "700",
                     }}
                   >
-                    Finish
+                    End
                   </Typography>
                   <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
                     {formatTimeMothDateYear(detailTournament?.tournamentEndAt)}
                   </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    width: "1px",
+                    height: "40px",
+                    backgroundColor: "rgba(151, 151, 151, 0.40)",
+                    marginRight: "32px",
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "40%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      ...typographyStyle,
+                      fontSize: "14px",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Played
+                  </Typography>
+                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+                    {detailTournament?.currentPlayed || 0}
+                  </Typography>
+                  <Typography
+                      sx={{
+                        fontSize: "12px",
+                        marginLeft: "0px !important",
+                        textAlign: "left"
+                      }}
+                      className="text-white"
+                    >
+                      {"-"}
+                    </Typography>
                 </Box>
               </Box>
               <Box
