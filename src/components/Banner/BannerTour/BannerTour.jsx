@@ -9,6 +9,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 const BannerTour = (props) => {
   const {
     tournamentName,
+    rewardName,
     sponsorName,
     userAvatar,
     userName,
@@ -75,7 +76,7 @@ const BannerTour = (props) => {
           <Typography
             sx={{
               width: "100%",
-              fontSize: "50px",
+              fontSize: "42px",
               fontWeight: 800,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
@@ -83,12 +84,12 @@ const BannerTour = (props) => {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               lineHeight: "0.9",
-              height: "140px",
+              height: "120px",
               overflow: "hidden",
               textAlign: "center",
             }}
           >
-            {tournamentName}
+            {rewardName}
           </Typography>
         </Box>
         <Box sx={{ marginBottom: "8px" }}>

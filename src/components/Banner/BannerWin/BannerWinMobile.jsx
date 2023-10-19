@@ -4,7 +4,7 @@ import { imageHome } from "../../../utils/images";
 
 const BannerWinMobile = (props) => {
   const {
-    tournamentName,
+    rewardName,
     sponsorName,
     userAvatar,
     userName,
@@ -131,7 +131,7 @@ const BannerWinMobile = (props) => {
           >
             <Box
               sx={{
-                fontSize: "30px",
+                fontSize: "24px",
                 color: "transparent",
                 WebkitTextStroke: "4px #ED3B14",
                 width: "150px",
@@ -145,15 +145,15 @@ const BannerWinMobile = (props) => {
                 textAlign:"center",
               }}
             >
-              {tournamentName || "Tournament Name"}
+              {rewardName || "Reward Name"}
               <Typography
                 sx={{
                   fontWeight: 800,
                   position: "absolute",
                   top: "50%",
-                  left: "49%",
+                  left: "46%",
                   transform: "translate(-50%,-50%)",
-                  fontSize: "30px",
+                  fontSize: "23px",
                   color: "white",
                   WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                   wordWrap: "break-word",
@@ -161,9 +161,10 @@ const BannerWinMobile = (props) => {
                   height: "100px",
                   overflow: "hidden",
                   textAlign:"center",
+                  width: "150px",
                 }}
               >
-                {tournamentName || "Tournament Name"}
+                {rewardName || "Tournament Name"}
               </Typography>
             </Box>
           </Box>
