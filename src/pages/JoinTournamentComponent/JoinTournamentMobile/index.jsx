@@ -426,7 +426,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   {!detailTournament?.checkInTournament ? (
                     ""
                   ) : (
-                    <Typography sx={{ marginLeft: "0px !important" }}>
+                    <Typography sx={{ marginLeft: "0px !important", color:"white" }}>
                       : {detailTournament?.boughtToday}/
                       {detailTournament?.maxPlay}
                     </Typography>
