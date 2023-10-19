@@ -12,6 +12,7 @@ const BannerTourMobile = (props) => {
   const { width } = useWindowDimensions();
   const {
     tournamentName,
+    rewardName,
     userAvatar,
     userName,
     endTime,
@@ -57,7 +58,7 @@ const BannerTourMobile = (props) => {
         <Box>
           <Typography
             sx={{
-              fontSize: "14px",
+              fontSize: "12px",
               color: "white",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -75,7 +76,7 @@ const BannerTourMobile = (props) => {
           <Typography
             sx={{
               width: "100%",
-              fontSize: "37.238px",
+              fontSize: "24px",
               fontWeight: 800,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
@@ -87,8 +88,8 @@ const BannerTourMobile = (props) => {
               overflow: "hidden",
             }}
           >
-            {tournamentName
-              ? tournamentName
+            {rewardName
+              ? rewardName
               : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
           </Typography>
         </Box>
