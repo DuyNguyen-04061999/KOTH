@@ -1,12 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import {
-  Box,
-  Button,
-  Dialog,
-  Grid,
-  Typography
-} from "@mui/material";
+import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -24,10 +18,8 @@ export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet } = useSelector(
     (state) => state.walletReducer
   );
-  
-  const { idPackage } = useSelector(
-    (state) => state.authReducer
-  );
+
+  const { idPackage } = useSelector((state) => state.authReducer);
   const { userGold } = useSelector((state) => state.authReducer);
   const { boughtTour, idTour } = useSelector(
     (state) => state.tournamentReducer
@@ -39,7 +31,7 @@ export default function TicketCheckOut() {
   const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
   const [goldTicket] = useState(0.99);
-
+  const [disablePlaceOrder, setDisablePlaceOrder] = useState(false);
   const handleChangeValue = (e) => {
     setSl(e.target.value);
   };
@@ -49,22 +41,27 @@ export default function TicketCheckOut() {
   };
 
   const btnSubscription = () => {
+    setDisablePlaceOrder(true);
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
+      setDisablePlaceOrder(false);
       // dispatch(toggleBuyTicket());
     } else {
       socket.emit("buyPackage", {
         packageId: idPackage,
       });
-      dispatch(toggleCheckWallet())
+      dispatch(toggleCheckWallet());
+      setDisablePlaceOrder(false);
     }
   };
 
   const btnBuyTicket = () => {
+    setDisablePlaceOrder(true);
     if (userGold < 0.99 * sl) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
+      setDisablePlaceOrder(false);
     } else if (!boughtTour) {
       socket?.emit("buyPackage", {
         quantity: sl,
@@ -72,6 +69,7 @@ export default function TicketCheckOut() {
         packageId: ticketBuy?.id,
       });
       dispatch(toggleCheckWallet());
+      setDisablePlaceOrder(false);
     } else {
       socket?.emit("buyPackage", {
         quantity: sl,
@@ -79,7 +77,7 @@ export default function TicketCheckOut() {
         packageId: ticketBuy?.id,
       });
       dispatch(toggleCheckWallet());
-
+      setDisablePlaceOrder(false);
     }
   };
 
@@ -95,9 +93,7 @@ export default function TicketCheckOut() {
     setSocket(socket);
   }, [socket]);
   useEffect(() => {
-    socket?.on("buyPackageSuccess", (data) => {
-      
-    });
+    socket?.on("buyPackageSuccess", (data) => {});
   }, [socket]);
   return (
     <>
@@ -321,7 +317,7 @@ export default function TicketCheckOut() {
                           : true
                       }
                       onClick={() => {
-                        if(sl <= 1) {
+                        if (sl <= 1) {
                         } else {
                           setSl(sl - 1);
                         }
@@ -351,7 +347,10 @@ export default function TicketCheckOut() {
                       className="input_check"
                       max={4}
                       min={1}
-                      disabled={typeWallet === "subscription" || typeWallet === "buyTicket"}
+                      disabled={
+                        typeWallet === "subscription" ||
+                        typeWallet === "buyTicket"
+                      }
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor:
@@ -367,7 +366,7 @@ export default function TicketCheckOut() {
                       variant="contained"
                       disabled={typeWallet === "subscription"}
                       onClick={() => {
-                        if(sl > 3) {
+                        if (sl > 3) {
                         } else {
                           setSl(sl + 1);
                         }
@@ -497,11 +496,13 @@ export default function TicketCheckOut() {
                       type={"primary"}
                       onClick={btnSubscription}
                       text={"Place Order"}
+                      disable={disablePlaceOrder}
                     />
                   ) : (
                     <AnimButton
                       onClick={btnBuyTicket}
                       text={"Place Order"}
+                      disable={disablePlaceOrder}
                       type={"primary"}
                     />
                   )}

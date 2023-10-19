@@ -86,7 +86,7 @@ export default function WalletTypePromote(props) {
     if (event.key === "+" || event.key === "-") {
       event.preventDefault();
     }
-};
+  };
 
   return (
     <>
@@ -304,6 +304,7 @@ export default function WalletTypePromote(props) {
                 </Grid>
                 <Grid item xs={7}>
                   <form
+                    onSubmit={(event) => event.preventDefault()}
                     action=""
                     className="d-flex flex-column"
                     style={{ position: "relative" }}
@@ -337,8 +338,12 @@ export default function WalletTypePromote(props) {
                       }}
                     />
                     {amount === 0 || amount === "" ? (
-                      <span className="text-danger">Please enter the amount.</span>
-                    ) : ("")}
+                      <span className="text-danger">
+                        Please enter the amount.
+                      </span>
+                    ) : (
+                      ""
+                    )}
                     <Box
                       sx={{
                         position: "absolute",
@@ -386,12 +391,10 @@ export default function WalletTypePromote(props) {
                     fontWeight: "lighter !important",
                   }}
                 >
-                  {userGold &&
-                    userGold > 0 ?  formatMoney(
-                      Number.parseFloat(amount === "" ? 0 : amount)
-                    ) : 0
-                  } 
-                   USD
+                  {userGold && userGold > 0
+                    ? formatMoney(Number.parseFloat(amount === "" ? 0 : amount))
+                    : 0}
+                  USD
                 </Typography>
               </Box>
               <Box
@@ -432,11 +435,14 @@ export default function WalletTypePromote(props) {
                   variant="body2"
                   sx={{ fontWeight: "lighter !important" }}
                 >
-                  {
-                    userGold > 0 ?
-                    formatMoney(
-                      Number.parseFloat(userGold + Number.parseFloat(amount === "" ? 0 : amount))
-                    ) : 0}{" "}
+                  {userGold > 0
+                    ? formatMoney(
+                        Number.parseFloat(
+                          userGold +
+                            Number.parseFloat(amount === "" ? 0 : amount)
+                        )
+                      )
+                    : 0}{" "}
                   USD
                 </Typography>
               </Box>
@@ -523,7 +529,7 @@ export default function WalletTypePromote(props) {
                     fontWeight: "lighter !important",
                     fontSize: "14px",
                     marginLeft: "0px !important",
-                    color:agree === false ? "red" : "white"
+                    color: agree === false ? "red" : "white",
                   }}
                 >
                   I agree with Play4promo{" "}

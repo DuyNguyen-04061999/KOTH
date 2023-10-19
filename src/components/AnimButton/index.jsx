@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import "./index.scss";
 
 export default function AnimButton(props) {
-  const { text, onClick, type } = props;
+  const { text, onClick, type, disable = false } = props;
   const renderButtonWithType = () => {
     if (type === "primary") {
       return (
@@ -18,6 +18,7 @@ export default function AnimButton(props) {
             fontWeight: "700",
           }}
           onClick={onClick}
+          disabled={disable}
         >
           {text}
         </button>
@@ -36,6 +37,8 @@ export default function AnimButton(props) {
             fontWeight: "700",
           }}
           onClick={onClick}
+          disabled={disable}
+
         >
           {text}
         </button>
@@ -56,6 +59,8 @@ export default function AnimButton(props) {
             fontWeight: "700",
           }}
           onClick={onClick}
+          disabled={disable}
+
         >
           {text}
         </button>
@@ -74,6 +79,8 @@ export default function AnimButton(props) {
             fontWeight: "700",
           }}
           onClick={onClick}
+          disabled={disable}
+
         >
           {text}
         </button>
@@ -92,6 +99,7 @@ export default function AnimButton(props) {
             fontWeight: "700",
           }}
           onClick={onClick}
+          disabled={disable}
         >
           {text}
         </button>
@@ -111,6 +119,8 @@ export default function AnimButton(props) {
               border:"none"
             }}
             onClick={onClick}
+          disabled={disable}
+
           >
             <span>
               {text}
@@ -166,6 +176,8 @@ export default function AnimButton(props) {
               border:"none"
             }}
             onClick={onClick}
+          disabled={disable}
+
           >
             <span>
               {text}
@@ -221,6 +233,8 @@ export default function AnimButton(props) {
               border:"none"
             }}
             onClick={onClick}
+          disabled={disable}
+
           >
             <span>
               {text}
