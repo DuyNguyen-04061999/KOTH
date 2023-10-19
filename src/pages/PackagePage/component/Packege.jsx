@@ -739,7 +739,7 @@ export default function Package() {
                     <Typography
                       variant="h5"
                       sx={{
-                        fontSize: "27px",
+                        fontSize: "20px",
                         marginTop: "5px",
                         marginBottom: "15px !important",
                         color:
@@ -751,6 +751,7 @@ export default function Package() {
                           //   ? "black"
                           //   : "",
                           "white",
+                          textOverflow:"ellipsis"
                       }}
                     >
                       {i?.packageName} Pack

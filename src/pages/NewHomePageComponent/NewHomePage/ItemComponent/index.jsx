@@ -360,7 +360,9 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               }
             ></Box>
           )}
-          <Box>
+          <Box sx={{
+            marginLeft:"5px"
+          }}>
             <Typography
               sx={{
                 ...styleTypography,
