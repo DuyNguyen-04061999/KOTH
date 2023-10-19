@@ -26,9 +26,8 @@ import {
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
-  formatTimeMothDateYear,
   isJson,
-  sliceString,
+  sliceString
 } from "../../../utils/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
@@ -341,6 +340,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "space-between",
                   paddingLeft: "20px",
                   paddingRight: "20px",
                   marginTop: "20px",
@@ -350,8 +350,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    marginRight: "32px",
-                    width: "40%",
+                    width: "35%",
                   }}
                 >
                   <Typography
@@ -364,9 +363,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     Start
                   </Typography>
                   <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {formatTimeMothDateYear(
-                      detailTournament?.tournamentStartAt
-                    )}
+                  {moment(
+                      detailTournament?.tournamentStartAt ||
+                        new Date()
+                    )?.format("MM/DD/YYYY")}
+                  </Typography>
+                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+                    {moment(
+                      detailTournament?.tournamentStartAt ||
+                        new Date()
+                    )?.format("HH:mm a")}
                   </Typography>
                 </Box>
                 <Box
@@ -374,15 +380,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     width: "1px",
                     height: "40px",
                     backgroundColor: "rgba(151, 151, 151, 0.40)",
-                    marginRight: "32px",
                   }}
                 ></Box>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "40%",
+                    width: "35%",
                   }}
+                  className="ps-3"
+
                 >
                   <Typography
                     sx={{
@@ -394,7 +401,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     End
                   </Typography>
                   <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {formatTimeMothDateYear(detailTournament?.tournamentEndAt)}
+                  {moment(
+                      detailTournament?.tournamentEndAt ||
+                        new Date()
+                    )?.format("MM/DD/YYYY")}
+                  </Typography>
+                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+                  {moment(
+                      detailTournament?.tournamentEndAt ||
+                        new Date()
+                    )?.format("HH:mm a")}
                   </Typography>
                 </Box>
                 <Box
@@ -402,15 +418,15 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     width: "1px",
                     height: "40px",
                     backgroundColor: "rgba(151, 151, 151, 0.40)",
-                    marginRight: "32px",
                   }}
                 ></Box>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "40%",
+                    width: "20%",
                   }}
+                  className="ps-3"
                 >
                   <Typography
                     sx={{
