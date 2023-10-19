@@ -5,7 +5,6 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function Gold(props) {
   const { value } = props;
-
   const { width } = useWindowDimensions();
   return (
     <div
@@ -74,7 +73,7 @@ export default function Gold(props) {
         >
           {value &&
             Number.parseFloat(value) > 0 &&
-            formatMoney(Number.parseFloat(value).toString().slice(0, 9))}
+            formatMoney(Number.parseFloat(value).toString().slice(13))}
         </Typography>
       </div>
     </div>
