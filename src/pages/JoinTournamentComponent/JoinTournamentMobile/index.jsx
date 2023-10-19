@@ -11,13 +11,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { imageHome, images } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import "./index.scss";
 // import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
-import { BannerWinMobile } from "../../../components/Banner";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
 import {
@@ -202,27 +201,28 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               </Box>
               {/* BackgroundMobile */}
               {detailTournament?.tournamentStatus === 2 ? (
-                <BannerWinMobile
-                  userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                  userAvatar={
-                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        biggestEndTour?.bestUser?.tUser?.userAccount
-                          ?.accountAvatar
-                      : imageHome.BannerWinAva
-                  }
-                  sponsorName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                      : "Samsung"
-                  }
-                  tournamentName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentName
-                      : "Galaxy Z-flip 5"
-                  }
-                />
+                // <BannerWinMobile
+                //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+                //   userAvatar={
+                //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                //       ? process.env.REACT_APP_SOCKET_SERVER +
+                //         "/" +
+                //         biggestEndTour?.bestUser?.tUser?.userAccount
+                //           ?.accountAvatar
+                //       : imageHome.BannerWinAva
+                //   }
+                //   sponsorName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                //       : "Samsung"
+                //   }
+                //   tournamentName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentName
+                //       : "Galaxy Z-flip 5"
+                //   }
+                // />
+                <></>
               ) : (
                 <Box
                   sx={{

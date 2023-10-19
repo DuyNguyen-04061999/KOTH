@@ -19,7 +19,6 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
-import { BannerWin } from "../../../components/Banner";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -39,7 +38,7 @@ import {
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
-import { imageHome, images } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
@@ -59,7 +58,7 @@ export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
   const [detailTournament, setDetailTournament] = useState({});
-  console.log(detailTournament);
+  
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
   const [videoGame, setVideoGame] = useState(false || true);
@@ -260,27 +259,28 @@ export default function JoinTournament() {
               {fetchT ? (
                 <BannerLoading width={"100%"} height={"340px"} />
               ) : detailTournament?.tournamentStatus === 2 ? (
-                <BannerWin
-                  userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                  userAvatar={
-                    biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        biggestEndTour?.bestUser?.tUser?.userAccount
-                          ?.accountAvatar
-                      : imageHome.BannerWinAva
-                  }
-                  sponsorName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                      : "Samsung"
-                  }
-                  tournamentName={
-                    biggestEndTour && biggestEndTour?.endTour
-                      ? biggestEndTour?.endTour?.tournamentName
-                      : "Galaxy Z-flip 5"
-                  }
-                />
+                // <BannerWin
+                //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
+                //   userAvatar={
+                //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                //       ? process.env.REACT_APP_SOCKET_SERVER +
+                //         "/" +
+                //         biggestEndTour?.bestUser?.tUser?.userAccount
+                //           ?.accountAvatar
+                //       : imageHome.BannerWinAva
+                //   }
+                //   sponsorName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
+                //       : "Samsung"
+                //   }
+                //   tournamentName={
+                //     biggestEndTour && biggestEndTour?.endTour
+                //       ? biggestEndTour?.endTour?.tournamentName
+                //       : "Galaxy Z-flip 5"
+                //   }
+                // />
+                <></>
               ) : (
                 <Box
                   sx={{

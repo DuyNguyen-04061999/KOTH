@@ -72,8 +72,8 @@ export default function Gold(props) {
           }}
         >
           {value &&
-            Number.parseFloat(value) > 0 &&
-            formatMoney(Number.parseFloat(value).toString().slice(13))}
+            Number.parseFloat(value) > 0 && Number.parseFloat(value) < 100000 ?
+            formatMoney(Number.parseFloat(value)) : Number.parseFloat(value) > 100000 ? "100,000+" : 0}
         </Typography>
       </div>
     </div>
