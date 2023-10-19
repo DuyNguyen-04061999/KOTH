@@ -878,8 +878,8 @@ export default function Package() {
                                   marginLeft: "4px !important",
                                 }}
                               >
-                                {i?.packageFreeTicketTournament} ticket /
-                                tournament
+                                {i?.packageFreeTicketTournament} extras /
+                                promotion
                               </Typography>
                             </Box>
                             <Box
