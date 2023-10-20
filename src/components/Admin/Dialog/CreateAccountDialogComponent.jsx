@@ -158,6 +158,13 @@ export default function CreateAccountDialogComponent() {
 
   }, [password])
 
+  useEffect(() => {
+    setPassword("")
+    if(userNicknameInput && userNicknameInput?.current) {
+      userNicknameInput.current.value = ""
+    }
+  }, [])
+
   return (
     <Dialog
       open={isCreateDialog}
@@ -178,7 +185,9 @@ export default function CreateAccountDialogComponent() {
         },
       }}
     >
-      <Box component={"div"} className="p-2 ps-4 pe-4">
+      <Box component={"div"} className="p-2 ps-4 pe-4" sx={{
+        overflow: "auto"
+      }}>
         <Box
           component={"div"}
           className="d-flex justify-content-between mt-4 mb-5"
@@ -203,7 +212,7 @@ export default function CreateAccountDialogComponent() {
             <CloseIcon onClick={handleClose} sx={{cursor: "pointer"}} />
           </Box>
         </Box>
-        <Box component={"form"} onSubmit={handleSubmit}>
+        <Box component={"form"} autoComplete="off" onSubmit={handleSubmit}>
           {roles?.includes("distributor") && (
             <>
               <Box component={"div"} className="mb-2">Other agent ref</Box>
@@ -317,7 +326,7 @@ export default function CreateAccountDialogComponent() {
                   marginLeft: "0px !important",
                 }}
               >
-                NICKNAME
+                ACCOUNT NICKNAME
               </Typography>
             </Box>
             <Box
@@ -341,7 +350,7 @@ export default function CreateAccountDialogComponent() {
               }}
               onFocus={onFocusNicknameInput}
               onBlur={onBlurNicknameInput}
-              placeholder="User nickname"
+              placeholder="Account nick name"
             ></Box>
           </Box>
 
@@ -368,7 +377,7 @@ export default function CreateAccountDialogComponent() {
                   marginLeft: "0px !important",
                 }}
               >
-                LOGIN PASSWORD
+                LOGIN ACCOUNT PASSWORD
               </Typography>
             </Box>
             <Box
@@ -395,8 +404,8 @@ export default function CreateAccountDialogComponent() {
               onBlur={onBlurPassInput}
               value={password}
               onChange={(e) => setPassword(e?.target?.value)}
-              placeholder="Login password"
-              autoComplete="Password"
+              placeholder="Login Account password"
+              autoComplete="New-Password"
             ></Box>
           </Box>
           <Box component={"div"} className="rounded p-2 ps-3 pe-3 mt-3"

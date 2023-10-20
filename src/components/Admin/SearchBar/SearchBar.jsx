@@ -39,7 +39,15 @@ const SearchBar = ({
             disableUnderline: true, // <== added this
           }}
           onChange={onChange}
-          sx={{ width: "100%" }}
+          sx={{ 
+            width: "100%",
+            ".MuiInputBase-input:-webkit-autofill": {
+              WebkitTextFillColor: "#000 !important"
+            },
+            ".MuiInputBase-input:hover": {
+              WebkitTextFillColor: "#000 !important"
+            }
+          }}
         />
         <IconButton type="submit" aria-label="search" onClick={onSubmit}>
           <SearchIcon style={{ fill: "black" }} />
