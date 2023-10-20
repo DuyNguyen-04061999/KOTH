@@ -28,7 +28,6 @@ import {
   isJson,
   sliceString
 } from "../../../utils/helper";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
@@ -36,7 +35,6 @@ import LeaderBoard from "../LeaderBoard/index";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
-  const { biggestEndTour } = useSelector((state) => state.tournamentReducer);
   const [fetchT, setFetchT] = useState(true);
   const [socket, setSocket] = useState(null);
   const [currentResult, setCurrentResult] = useState(false);
@@ -44,7 +42,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [openVoucher, setOpenVoucher] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const { id } = useParams();
-  const { width } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   const typographyStyle = {
     textAlign: "start",
@@ -327,7 +324,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           fontSize: "22px",
                         }}
                       >
-                        {biggestEndTour?.bestUser?.userNickName || "super_"}
+                        {detailTournament?.bestUser || ""}
                       </span>
                     </Box>
                   </Box>
