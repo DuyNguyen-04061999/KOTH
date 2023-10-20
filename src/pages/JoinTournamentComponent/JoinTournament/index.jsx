@@ -47,8 +47,6 @@ import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
 
-const breakPoint = 816
-
 const BgWithTooltip = withStyles({
   tooltip: {
     color: "black",
@@ -455,11 +453,11 @@ export default function JoinTournament() {
                     position: "relative",
                     zIndex: 5,
                   }}
-                  className={width <= breakPoint ? "flex-wrap" : ""}
+                  
                 >
-                  {width > breakPoint && (
+                  {width && (
                     <Box sx={{ display: "flex", alignItems: "center" }} 
-                    className={width <= breakPoint ? "flex-wrap" : ""}
+                    
   
                     >
                       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -851,14 +849,13 @@ export default function JoinTournament() {
                       </Box>
                     </Box>
                   )}
-                  {width > breakPoint && (
+                  {width && (
                     <Box
                     sx={{
                       display: "flex",
                       alignItems: "center",
                       flexDirection: width < 1200 ? "column" : "",
                     }}
-                    className={width <= breakPoint ? "mt-2" : ""}
                   >
                     <Box
                       sx={{
@@ -1246,7 +1243,6 @@ export default function JoinTournament() {
                   paddingTop: "36px",
                   width: "100%",
                 }}
-                className={width <= breakPoint ? "flex-wrap" : ""}
               >
                 <Box
                   sx={{
@@ -1806,7 +1802,7 @@ export default function JoinTournament() {
                     )}
                   </Box>
                 </Box>
-                {width > breakPoint && (
+                {width && (
                   <Box
                   sx={{
                     flexGrow: 576 < width && width < 1200 ? "none" : "1",
