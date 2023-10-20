@@ -106,8 +106,8 @@ export default function ChatWorldList() {
   };
 
   const scrollToBottom = () => {
-    if (endOfMessageRef.current) {
-      endOfMessageRef.current.scrollIntoView();
+    if (chatBox.current) {
+      chatBox.current.scrollTo(0, chatBox.current.scrollHeight);
       chatBox.current.removeEventListener("scroll", handleScroll);
     }
   };
