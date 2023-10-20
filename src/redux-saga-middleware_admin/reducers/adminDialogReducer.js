@@ -84,6 +84,48 @@ export const closeGivePerDialog = (data) => {
   }
 }
 
+export const openConfirmDialog = (data) => {
+  return {
+    type: "OPEN_CONFIRM_DIALOG",
+    payload: data
+  }
+}
+
+export const closeConfirmDialog = (data) => {
+  return {
+    type: "CLOSE_CONFIRM_DIALOG",
+    payload: data
+  }
+}
+
+export const openUpdateAccountDialog = (data) => {
+  return {
+    type: "OPEN_UPDATE_ACCOUNT_DIALOG",
+    payload: data
+  }
+}
+
+export const closeUpdateAccountDialog = (data) => {
+  return {
+    type: "CLOSE_UPDATE_ACCOUNT_DIALOG",
+    payload: data
+  }
+}
+
+export const openRefcodeNotify = (data) => {
+  return {
+    type: "OPEN_REF_CODE_NOTIFY",
+    payload: data
+  }
+}
+
+export const closeRefcodeNotify = (data) => {
+  return {
+    type: "CLOSE_REF_CODE_NOTIFY",
+    payload: data
+  }
+}
+
 const adminDialogReducer = (
   state = {
     isCreateDialog: false,
@@ -91,11 +133,17 @@ const adminDialogReducer = (
     isDetailDialog: false,
     isOpenDrawerNav: false,
     isResetPassDialog: false,
-    isGivePerDialog: false
+    isGivePerDialog: false,
+    isConfirmDialog: false,
+    isUpdateAccountDialog: false,
+    typeConfirm: "",
+    isRefcodeDialog : false,
+    typeRefcode: "error",
+    messageRefcode: ""
   },
   action
 ) => {
-  const { type } = action;
+  const { type, payload } = action;
   switch (type) {
     case REHYDRATE:
       return { ...state };
@@ -119,6 +167,12 @@ const adminDialogReducer = (
     case "CLOSE_RESET_PASS_DIALOG": return {...state, isResetPassDialog: false}
     case "OPEN_GIVE_PER_DIALOG": return {...state, isGivePerDialog: true}
     case "CLOSE_GIVE_PER_DIALOG": return {...state, isGivePerDialog: false}
+    case "OPEN_CONFIRM_DIALOG":  return {...state, isConfirmDialog: true, typeConfirm: payload || ""}
+    case "CLOSE_CONFIRM_DIALOG":  return {...state, isConfirmDialog: false, typeConfirm: ""}
+    case "OPEN_UPDATE_ACCOUNT_DIALOG": return {...state, isUpdateAccountDialog: true}
+    case "CLOSE_UPDATE_ACCOUNT_DIALOG": return {...state, isUpdateAccountDialog: false}
+    case "OPEN_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: true, typeRefcode: payload?.type || "", messageRefcode: payload?.message || ""}
+    case "CLOSE_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: false, typeRefcode: "", messageRefcode: ""}
     default:
       return { ...state };
   }

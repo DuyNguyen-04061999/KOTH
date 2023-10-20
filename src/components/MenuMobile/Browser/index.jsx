@@ -1,16 +1,16 @@
-import { Dialog, Box, Slide, Typography } from "@mui/material";
+import { Box, Dialog, Slide, Typography } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { images } from "../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
   showDropdown,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
-import _socket from "../../../redux-saga-middleware/config/socket";
 import { getAppType } from "../../../utils/helper";
+import { images, navbar } from "../../../utils/images";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -18,7 +18,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function Browser(props) {
   const { open, handleShowMenu } = props;
-  const { token, isNav, isDropdownNav } = useSelector((state) => state.authReducer);
+  const { token, isDropdownNav } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
@@ -28,8 +28,8 @@ export default function Browser(props) {
     setSocket(socket);
   }, []);
 
-  const location = useLocation()
-  const {pathname} = location
+  const location = useLocation();
+  const { pathname } = location;
 
   const toggleDropdownMobile = () => {
     dispatch(showDropdown(false));
@@ -59,35 +59,42 @@ export default function Browser(props) {
           }}
         >
           {/* ------------------------ */}
-          <Box className="menu-back" sx={{
-              display:"flex",
-              color:"white",
-              alignItems:"center",
-              backgroundColor:"#42285B",
-              padding:"10px"
+          <Box
+            className="menu-back"
+            sx={{
+              display: "flex",
+              color: "white",
+              alignItems: "center",
+              backgroundColor: "#42285B",
+              padding: "10px",
             }}
-              onClick={() => {
-                handleShowMenu()
+            onClick={() => {
+              handleShowMenu();
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="13"
+              height="20"
+              fill="none"
+              viewBox="0 0 13 20"
+            >
+              <path
+                fill="#fff"
+                d="M10.4 0L13 2.5 5.2 10l7.8 7.5-2.6 2.5L0 10 10.4 0z"
+              ></path>
+            </svg>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "500 !important",
+                marginLeft: "10px !important",
               }}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="13"
-                height="20"
-                fill="none"
-                viewBox="0 0 13 20"
-              >
-                <path
-                  fill="#fff"
-                  d="M10.4 0L13 2.5 5.2 10l7.8 7.5-2.6 2.5L0 10 10.4 0z"
-                ></path>
-              </svg>
-              <Typography variant="h5" sx={{
-                fontWeight:"500 !important",
-                marginLeft:"10px !important"
-              }}>Menu</Typography>
-            </Box>
-          <Box className="pb-5" sx={{padding:1.5}}>
+              Menu
+            </Typography>
+          </Box>
+          <Box className="pb-5" sx={{ padding: 1.5 }}>
             <Box>
               <Box className="text-white">
                 <Box
@@ -97,39 +104,46 @@ export default function Browser(props) {
                     alignItems: "center",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                      backgroundColor:
+                    backgroundColor:
                       pathname && pathname?.includes("home")
                         ? "#7648ED"
                         : "#462A71",
-  
+
                     borderRadius: "5px",
                     color:
-                      (pathname && pathname?.includes("home")) || pathname === "/"
+                      (pathname && pathname?.includes("/home")) ||
+                      pathname === "/"
                         ? "white"
                         : "#A89CD7",
-                    borderRadius: "5px",
                   }}
                   onClick={() => {
                     navigate(`/home`);
-                    handleShowMenu()
+                    handleShowMenu();
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g>
-                      <path
-                        fill="#fff"
-                        d="M15.03 5.116l-4.32-3.022c-1.177-.825-2.985-.78-4.117.097L2.835 5.124c-.75.585-1.342 1.785-1.342 2.73v5.175A3.473 3.473 0 004.958 16.5h8.085a3.466 3.466 0 003.465-3.465V7.951c0-1.012-.653-2.257-1.478-2.835zm-5.467 8.385a.567.567 0 01-.563.563.567.567 0 01-.562-.563v-2.25c0-.307.255-.562.562-.562.308 0 .563.255.563.562v2.25z"
-                      ></path>
-                    </g>
-                  </svg>
+                  {(pathname && pathname?.includes("home")) ||
+                  pathname === "/" ? (
+                    <Box
+                      component={"img"}
+                      src={navbar.navHomeActive}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "12px",
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      component={"img"}
+                      src={navbar.navHome}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "12px",
+                      }}
+                    />
+                  )}
                   <span
                     className="hover-nav"
                     style={{
@@ -208,7 +222,7 @@ export default function Browser(props) {
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate(`/tournaments`);
+                    navigate(`/promotions`);
                   }}
                 >
                   <svg
@@ -267,269 +281,188 @@ export default function Browser(props) {
                 </Box> */}
                 {/* -------------------------------------------- */}
                 <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "space-between" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    pathname && pathname?.includes("asdasfsd")
-                      ? "#7648ED"
-                      : "#462A71",
-
-                  borderRadius: "5px",
-                }}
-                onClick={toggleDropdownMobile}
-                className="nav-home pt-2 pb-2 ps-2 mb-3"
-              >
-                <Box
                   sx={{
+                    cursor: "pointer",
                     display: "flex",
-                    flexDirection: "row",
                     alignItems: "center",
+                    justifyContent: "space-between",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    backgroundColor:
+                      pathname && pathname?.includes("asdasfsd")
+                        ? "#7648ED"
+                        : "#462A71",
+                    borderRadius: "5px",
+                    color: "#A89CD7",
                   }}
+                  onClick={toggleDropdownMobile}
+                  className="nav-home pt-2 pb-2 ps-2 mb-3"
                 >
-                  {pathname && pathname?.includes("week") ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="p-1 me-1"
-                    >
-                      <path
-                        stroke="#A89CD7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M12.15 16.5v2.1"
-                      ></path>
-                      <path
-                        stroke="#A89CD7"
-                        strokeMiterlimit="10"
-                        strokeWidth="1.5"
-                        d="M7.15 22h10v-1c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v1z"
-                      ></path>
-                      <path
-                        stroke="#A89CD7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M6.15 22h12M12 16c-3.87 0-7-3.13-7-7V6c0-2.21 1.79-4 4-4h6c2.21 0 4 1.79 4 4v3c0 3.87-3.13 7-7 7z"
-                      ></path>
-                      <path
-                        stroke="#A89CD7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M5.47 11.65c-.75-.24-1.41-.68-1.93-1.2-.9-1-1.5-2.2-1.5-3.6s1.1-2.5 2.5-2.5h.65c-.2.46-.3.97-.3 1.5v3c0 1 .21 1.94.58 2.8zm13.06 0c.75-.24 1.41-.68 1.93-1.2.9-1 1.5-2.2 1.5-3.6s-1.1-2.5-2.5-2.5h-.65c.2.46.3.97.3 1.5v3c0 1-.21 1.94-.58 2.8z"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="p-1 me-1"
-                    >
-                      <path
-                        stroke="#A89CD7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M12.15 16.5v2.1"
-                      ></path>
-                      <path
-                        stroke="#A89CD7"
-                        strokeMiterlimit="10"
-                        strokeWidth="1.5"
-                        d="M7.15 22h10v-1c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v1z"
-                      ></path>
-                      <path
-                        stroke="#A89CD7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M6.15 22h12M12 16c-3.87 0-7-3.13-7-7V6c0-2.21 1.79-4 4-4h6c2.21 0 4 1.79 4 4v3c0 3.87-3.13 7-7 7z"
-                      ></path>
-                      <path
-                        stroke="#A89CD7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M5.47 11.65c-.75-.24-1.41-.68-1.93-1.2-.9-1-1.5-2.2-1.5-3.6s1.1-2.5 2.5-2.5h.65c-.2.46-.3.97-.3 1.5v3c0 1 .21 1.94.58 2.8zm13.06 0c.75-.24 1.41-.68 1.93-1.2.9-1 1.5-2.2 1.5-3.6s-1.1-2.5-2.5-2.5h-.65c.2.46.3.97.3 1.5v3c0 1-.21 1.94-.58 2.8z"
-                      ></path>
-                    </svg>
-                  )}
-                  <span
-                    className="hover-nav"
-                    style={{
-                      display: isNav === true ? "block" : "none",
-                      cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: "15px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      width: "100%",
                     }}
                   >
-                    Tournament
-                  </span>
-                  <Box sx={{marginLeft: "8px", marginRight: "6px"}}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      fill="none"
-                      viewBox="0 0 14 14"
+                    <Box
+                      component={"img"}
+                      src={navbar.navPromotion}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "12px",
+                      }}
+                    />
+                    <span
+                      className="hover-nav"
                       style={{
-                        transform:
-                          isDropdownNav === true
-                            ? "rotate(0deg)"
-                            : "rotate(-88deg)",
-                        transition: "all 0.3s",
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "5px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
                       }}
                     >
-                      <g clipPath="url(#clip0_2059_14801)">
-                        <g>
+                      Promotion
+                    </span>
+                    <Box sx={{ marginLeft: "auto", marginRight: "24px" }}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                        style={{
+                          transform:
+                            isDropdownNav === true
+                              ? "rotate(0deg)"
+                              : "rotate(-88deg)",
+                          transition: "all 0.3s",
+                        }}
+                      >
+                        <g clipPath="url(#clip0_2059_14801)">
                           <g>
-                            <path
-                              fill="#A89CD7"
-                              d="M6.997 8.348l5.238-5.237a.76.76 0 01.541-.223.76.76 0 01.542.223l.458.46a.76.76 0 01.224.54.76.76 0 01-.224.542L7.54 10.89a.76.76 0 01-.543.223.76.76 0 01-.543-.223l-6.23-6.23A.76.76 0 010 4.117a.76.76 0 01.224-.541l.458-.46a.767.767 0 011.083 0l5.232 5.232z"
-                            ></path>
+                            <g>
+                              <path
+                                fill="#A89CD7"
+                                d="M6.997 8.348l5.238-5.237a.76.76 0 01.541-.223.76.76 0 01.542.223l.458.46a.76.76 0 01.224.54.76.76 0 01-.224.542L7.54 10.89a.76.76 0 01-.543.223.76.76 0 01-.543-.223l-6.23-6.23A.76.76 0 010 4.117a.76.76 0 01.224-.541l.458-.46a.767.767 0 011.083 0l5.232 5.232z"
+                              ></path>
+                            </g>
                           </g>
                         </g>
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_2059_14801">
-                          <path
-                            fill="#fff"
-                            d="M0 0H14V14H0z"
-                            transform="matrix(0 -1 -1 0 14 14)"
-                          ></path>
-                        </clipPath>
-                      </defs>
-                    </svg>
+                        <defs>
+                          <clipPath id="clip0_2059_14801">
+                            <path
+                              fill="#fff"
+                              d="M0 0H14V14H0z"
+                              transform="matrix(0 -1 -1 0 14 14)"
+                            ></path>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: isDropdownNav === true ? "block" : "none",
-                  // height: isDropdownNav === true ? "220px" : "0px",
-                  transition: "all 0.5s",
-                }}
-                className={`dropdown-content ${
-                  isDropdownNav === true ? "show" : ""
-                }`}
-              >
                 <Box
                   sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    backgroundColor:
-                      pathname && pathname?.includes("hot-tournament")
-                        ? "#7648ED"
-                        : "transparent",
-
-                    borderRadius: "5px",
+                    display: isDropdownNav === true ? "block" : "none",
+                    // height: isDropdownNav === true ? "220px" : "0px",
+                    transition: "all 0.5s",
                   }}
-                  onClick={() => {
-                    navigate("/hot-tournament");
-                  }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
+                  className={`dropdown-content ${
+                    isDropdownNav === true ? "show" : ""
+                  }`}
                 >
-                  {pathname && pathname?.includes("hot-tournament") ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                      className="p-1 me-1"
-                    >
-                      <g clipPath="url(#clip0_2061_8161)">
-                        <path
-                          fill="#fff"
-                          d="M13.967 5.763a.527.527 0 00-.836.136c-.263.512-.597.981-.99 1.397.039-.3.058-.602.058-.905 0-.58-.077-1.178-.23-1.776A7.135 7.135 0 008.336.06a.527.527 0 00-.768.427 6.055 6.055 0 01-2.524 4.456l-.058.042c-.04.029-.077.057-.112.08a7.185 7.185 0 00-2.213 2.552 7.052 7.052 0 00-.56 5.03A7.122 7.122 0 009 18c3.931 0 7.13-3.198 7.13-7.13a7.07 7.07 0 00-2.162-5.107z"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_2061_8161">
-                          <path fill="#fff" d="M0 0H18V18H0z"></path>
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                      className="p-1 me-1"
-                    >
-                      <g>
-                        <path
-                          fill="#9B8DCA"
-                          stroke="#9B8DCA"
-                          strokeWidth="0.5"
-                          d="M7.546 1.413c-.113 1.518-.853 2.894-2.025 3.78h0l-.042.032a10.28 10.28 0 01-.009.007h0a2.22 2.22 0 01-.085.064h0a.787.787 0 00-.02.015h-.001a6.55 6.55 0 00-1.923 2.35h0a6.804 6.804 0 00-.49 4.64h0c.707 2.905 3.189 4.949 6.05 4.949 3.458 0 6.249-2.968 6.249-6.587 0-1.787-.67-3.462-1.89-4.715h0l-.603-.198s0 0 0 0a.696.696 0 00-.505.384h0c-.093.19-.196.373-.31.548 0 0 0 0 0 0 0-.538-.068-1.089-.201-1.638h0C11.3 3.233 10.143 1.697 8.56.833m-1.015.58l.25.019m-.25-.019l.25.019m-.25-.019a.721.721 0 01.35-.57h0a.673.673 0 01.666-.01m-.767.599c-.118 1.586-.892 3.03-2.123 3.96l2.35-4.333m-.227.373a.471.471 0 01.227-.373m.54-.226l-.12.22m.12-.22s0 0 0 0l-.12.22m0 0a.423.423 0 00-.42.006m.42-.007c1.517.829 2.631 2.305 3.056 4.05L8.022 1.06M6.301 6.384h0l-.003.002A5.122 5.122 0 004.68 8.308a5.333 5.333 0 00-.383 3.641l2.004-5.565zm0 0l.039-.03m-.04.03l-.152-.198.041-.032.151.2m0 0s0 0 0 0m0 0h0m0 0a6.588 6.588 0 002.405-3.676 5.191 5.191 0 011.65 2.717c.107.437.16.87.16 1.286a5.39 5.39 0 01-.316 1.81M6.34 6.354l3.899 2.139m0 0s0 0 0 0l.236.083-.236-.083zm0 0a.736.736 0 00.208.801h0m-.208-.801l.208.801m0 0c.232.2.563.222.819.052h0m-.82-.052l.82.052m0 0a6.425 6.425 0 001.696-1.664 5.3 5.3 0 01.9 2.982c0 2.852-2.194 5.15-4.862 5.15-2.207 0-4.147-1.58-4.703-3.864l6.969-2.604z"
-                        ></path>
-                      </g>
-                    </svg>
-                  )}
-
-                  <span
-                    className="hover-nav"
-                    style={{
-                      display: isNav === true ? "block" : "none",
+                  <Box
+                    sx={{
                       cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: "15px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      transition:
+                        "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                      backgroundColor:
+                        pathname && pathname?.includes("hot-promotion")
+                          ? "#7648ED"
+                          : "transparent",
+                      borderRadius: "5px",
                       color:
-                        pathname && pathname?.includes("hot-tournament")
+                        pathname && pathname?.includes("/hot-promotion")
                           ? "white"
-                          : "",
+                          : "#A89CD7",
                     }}
+                    onClick={() => {
+                      navigate("/hot-promotion");
+                    }}
+                    className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                   >
-                    Hot
-                  </span>
-                </Box>
-                {/* <Box
+                    {pathname && pathname?.includes("hot-promotion") ? (
+                      <Box
+                        component={"img"}
+                        src={navbar.navHotActive}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component={"img"}
+                        src={navbar.navHot}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    )}
+                    <span
+                      className="hover-nav"
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "5px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        color:
+                          pathname && pathname?.includes("hot-promotion")
+                            ? "white"
+                            : "",
+                      }}
+                    >
+                      Hot
+                    </span>
+                  </Box>
+                  {/* <Box
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     backgroundColor:
-                      pathname && pathname?.includes("hourly-tournament")
+                      pathname && pathname?.includes("hourly-promotion")
                         ? "#7648ED"
                         : "transparent",
 
                     borderRadius: "5px",
                   }}
                   onClick={() => {
-                    navigate("/hourly-tournament");
+                    navigate("/hourly-promotion");
                   }}
                   className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                 >
-                  {pathname && pathname?.includes("hourly-tournament") ? (
+                  {pathname && pathname?.includes("hourly-promotion") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -562,7 +495,7 @@ export default function Browser(props) {
                   <span
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
+                      display:"block",
                       cursor: "pointer",
                       fontWeight: "700",
                       fontSize: "15px",
@@ -575,165 +508,331 @@ export default function Browser(props) {
                     Hourly tour
                   </span>
                 </Box> */}
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    backgroundColor:
-                      pathname && pathname?.includes("daily-tournament")
-                        ? "#7648ED"
-                        : "transparent",
-
-                    borderRadius: "5px",
-                  }}
-                  onClick={() => {
-                    navigate("/daily-tournament");
-                  }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
-                >
-                  {pathname && pathname?.includes("daily-tournament") ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                      className="p-1 me-1"
-                    >
-                      <g fill="#fff">
-                        <path d="M13.5 2.715V1.8a.9.9 0 10-1.8 0v.9H9.9v-.9a.9.9 0 00-1.8 0v.9H6.3v-.9a.9.9 0 00-1.8 0v.915A3.731 3.731 0 00.916 6.3h16.171a3.731 3.731 0 00-3.585-3.585z"></path>
-                        <path d="M.9 8.1v5.26a3.746 3.746 0 003.742 3.74h8.717a3.746 3.746 0 003.741-3.74V8.1H.9z"></path>
-                      </g>
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      className="p-1 me-1"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                    >
-                      <g>
-                        <path
-                          fill="#A89CD7"
-                          d="M13.5 1.815V1.8a.9.9 0 10-1.8 0H9.9a.9.9 0 00-1.8 0H6.3a.9.9 0 00-1.8 0v.015A3.738 3.738 0 00.9 5.54v7.818A3.746 3.746 0 004.642 17.1h8.717a3.746 3.746 0 003.741-3.74V5.54a3.738 3.738 0 00-3.6-3.725zM2.7 5.54a1.936 1.936 0 011.8-1.926.9.9 0 101.8-.015h1.8a.9.9 0 101.8 0h1.8a.9.9 0 001.8.015 1.936 1.936 0 011.8 1.926v.76H2.7v-.76zm10.66 9.76H4.641A1.943 1.943 0 012.7 13.358V8.1h12.6v5.26a1.944 1.944 0 01-1.94 1.94z"
-                        ></path>
-                      </g>
-                    </svg>
-                  )}
-
-                  <span
-                    className="hover-nav"
+                  <hr
                     style={{
-                      display: isNav === true ? "block" : "none",
-                      cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: "15px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      color:
-                        pathname && pathname?.includes("daily-tournament")
-                          ? "white"
-                          : "",
+                      color: "white",
+                      border: "2",
+                      background: "white",
+                      borderColor: "white",
+                      height: "1px",
                     }}
+                  />
+                  {/* <Box
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      transition:
+                        "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                      backgroundColor:
+                        pathname && pathname?.includes("vip-promotion")
+                          ? "#7648ED"
+                          : "transparent",
+                      color:
+                        pathname && pathname?.includes("vip-promotion")
+                          ? "white"
+                          : "#A89CD7",
+                      borderRadius: "5px",
+                    }}
+                    onClick={() => {
+                      navigate("/vip-promotion");
+                    }}
+                    className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >
-                    Daily
-                  </span>
-                </Box>
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    backgroundColor:
-                      pathname && pathname?.includes("week-long-tournament")
-                        ? "#7648ED"
-                        : "transparent",
+                    {pathname && pathname?.includes("vip-promotion") ? (
+                      <Box
+                        component={"img"}
+                        src={navbar.navVipActive}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component={"img"}
+                        src={navbar.navVip}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    )}
 
-                    borderRadius: "5px",
-                  }}
-                  onClick={() => {
-                    navigate("/week-long-tournament");
-                  }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
-                >
-                  {pathname && pathname?.includes("week-long-tournament") ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                      className="p-1 me-1"
+                    <span
+                      className="hover-nav"
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "5px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                      }}
                     >
-                      <g clipPath="url(#clip0_2689_14925)">
-                        <path
-                          fill="#fff"
-                          d="M17.953 6.904a.955.955 0 00-.823-.657l-5.196-.471L9.881.968a.957.957 0 00-1.76 0L6.066 5.776.87 6.247a.958.958 0 00-.544 1.674l3.928 3.444-1.158 5.101A.957.957 0 004.519 17.5L9 14.822l4.48 2.678a.956.956 0 001.424-1.034l-1.158-5.1 3.928-3.445a.958.958 0 00.279-1.017z"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_2689_14925">
-                          <path fill="#fff" d="M0 0H18V18H0z"></path>
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  ) : (
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g clipPath="url(#clip0_3062_17515)">
-                      <path
-                        fill="#A89CD7"
-                        stroke="#A89CD7"
-                        strokeWidth="0.5"
-                        d="M5.017 16.874a.825.825 0 01-.934-.043.907.907 0 01-.33-.916l1.264.959zm-3.894-8.7l3.384 3.097-.999 4.59h0c-.095.44.067.9.424 1.17h0a1.075 1.075 0 001.217.056h0L9 14.683l3.85 2.4s0 0 0 0c.379.238.86.216 1.218-.054.357-.27.52-.73.424-1.169h0l-.999-4.59 3.385-3.097s0 0 0 0c.33-.302.452-.774.319-1.202a1.107 1.107 0 00-.947-.785l-4.468-.423-1.769-4.32h0A1.1 1.1 0 009 .75a1.1 1.1 0 00-1.013.694h0l-1.77 4.32-4.467.423h0a1.109 1.109 0 00-.947.785h0c-.133.429-.01.9.32 1.202 0 0 0 0 0 0zm8.445 5.059h0a1.076 1.076 0 00-1.136 0h0l-3.257 2.032.845-3.887s0 0 0 0a1.159 1.159 0 00-.345-1.103l-2.88-2.636 3.8-.36h0a1.1 1.1 0 00.913-.691s0 0 0 0L9 2.945l1.49 3.642s0 0 0 0c.156.385.503.654.914.693h0l3.8.36-2.88 2.636a1.16 1.16 0 00-.345 1.103l.846 3.886-3.257-2.032z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_3062_17515">
-                        <path fill="#fff" d="M0 0H18V18H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  )}
-
-                  <span
-                    className="hover-nav"
-                    style={{
-                      display: isNav === true ? "block" : "none",
+                      VIP
+                    </span>
+                  </Box>
+                  <Box
+                    sx={{
                       cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: "15px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      transition:
+                        "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                      backgroundColor:
+                        pathname && pathname?.includes("standard-promotion")
+                          ? "#7648ED"
+                          : "transparent",
+
+                      borderRadius: "5px",
                       color:
-                        pathname && pathname?.includes("week-long-tournament")
+                        pathname && pathname?.includes("standard-promotion")
                           ? "white"
-                          : "",
+                          : "#A89CD7",
                     }}
+                    onClick={() => {
+                      navigate("/standard-promotion");
+                    }}
+                    className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                   >
-                    Weeklong
-                  </span>
+                    {pathname && pathname?.includes("standard-promotion") ? (
+                      <Box
+                        component={"img"}
+                        src={navbar.navStandardActive}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component={"img"}
+                        src={navbar.navStandard}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    )}
+
+                    <span
+                      className="hover-nav"
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "5px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                      }}
+                    >
+                      Standard
+                    </span>
+                  </Box>
+                  <hr
+                    style={{
+                      color: "white",
+                      border: "2",
+                      background: "white",
+                      borderColor: "white",
+                      height: "1px",
+                    }}
+                  /> */}
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      transition:
+                        "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                      backgroundColor:
+                        pathname && pathname?.includes("ongoing-promotion")
+                          ? "#7648ED"
+                          : "transparent",
+                      color:
+                        pathname && pathname?.includes("ongoing-promotion")
+                          ? "white"
+                          : "#A89CD7",
+                      borderRadius: "5px",
+                    }}
+                    onClick={() => {
+                      navigate("/ongoing-promotion");
+                    }}
+                    className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
+                  >
+                    {pathname && pathname?.includes("ongoing-promotion") ? (
+                      <Box
+                        component={"img"}
+                        src={navbar.navOngoingActive}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component={"img"}
+                        src={navbar.navOngoing}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    )}
+
+                    <span
+                      className="hover-nav"
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "5px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                      }}
+                    >
+                      Ongoing
+                    </span>
+                  </Box>
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      transition:
+                        "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                      backgroundColor:
+                        pathname && pathname?.includes("upcoming-promotion")
+                          ? "#7648ED"
+                          : "transparent",
+                      color:
+                        pathname && pathname?.includes("upcoming-promotion")
+                          ? "white"
+                          : "#A89CD7",
+                      borderRadius: "5px",
+                    }}
+                    onClick={() => {
+                      navigate("/upcoming-promotion");
+                    }}
+                    className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
+                  >
+                    {pathname && pathname?.includes("upcoming-promotion") ? (
+                      <Box
+                        component={"img"}
+                        src={navbar.navUpcomingActive}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component={"img"}
+                        src={navbar.navUpcoming}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    )}
+
+                    <span
+                      className="hover-nav"
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "5px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                      }}
+                    >
+                      Upcoming
+                    </span>
+                  </Box>
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      transition:
+                        "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                      backgroundColor:
+                        pathname && pathname?.includes("ended-promotion")
+                          ? "#7648ED"
+                          : "transparent",
+                      color:
+                        pathname && pathname?.includes("ended-promotion")
+                          ? "white"
+                          : "#A89CD7",
+                      borderRadius: "5px",
+                    }}
+                    onClick={() => {
+                      navigate("/ended-promotion");
+                    }}
+                    className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
+                  >
+                    {pathname && pathname?.includes("ended-promotion") ? (
+                      <Box
+                        component={"img"}
+                        src={navbar.navEndedActive}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component={"img"}
+                        src={navbar.navEnded}
+                        sx={{
+                          width: "20px",
+                          height: "20px",
+                          marginRight: "12px",
+                        }}
+                      />
+                    )}
+
+                    <span
+                      className="hover-nav"
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "5px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                      }}
+                    >
+                      Ended
+                    </span>
+                  </Box>
                 </Box>
-              </Box>
                 {/* ----------------------------------------------- */}
                 <Box
                   className="cursor-pointer pt-2 pb-2 ps-2 mb-3"
@@ -742,32 +841,41 @@ export default function Browser(props) {
                     alignItems: "center",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    backgroundColor: "#462A71",
+                    backgroundColor:
+                      pathname && pathname?.includes("packages")
+                        ? "#7648ED"
+                        : "#462A71",
                     borderRadius: "5px",
+                    color:
+                      pathname && pathname?.includes("packages")
+                        ? "white"
+                        : "#A89CD7",
                   }}
                   onClick={() => {
                     navigate(`/packages`);
                   }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                    >
-                      <path d="M2.377 5.58L9 9.413l6.577-3.81M9 16.208V9.405"></path>
-                      <path d="M7.447 1.86L3.442 4.088c-.907.502-1.65 1.762-1.65 2.797v4.238c0 1.035.743 2.295 1.65 2.797l4.005 2.228c.855.472 2.258.472 3.113 0l4.005-2.228c.908-.502 1.65-1.762 1.65-2.797V6.885c0-1.035-.742-2.295-1.65-2.797L10.56 1.86c-.863-.48-2.258-.48-3.113 0z"></path>
-                      <path d="M12.75 9.93V7.185l-7.118-4.11"></path>
-                    </g>
-                  </svg>
+                  {pathname && pathname?.includes("packages") ? (
+                    <Box
+                      component={"img"}
+                      src={navbar.navPackageActive}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "12px",
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      component={"img"}
+                      src={navbar.navPackage}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "12px",
+                      }}
+                    />
+                  )}
                   {/* <img
               src={popup.packageicon}
               alt="..."
@@ -925,7 +1033,7 @@ export default function Browser(props) {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: isNav === true ? "flex-start" : "center",
+                      justifyContent: "flex-start",
                       transition:
                         "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     }}
@@ -971,32 +1079,36 @@ export default function Browser(props) {
                     alignItems: "center",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    color:
+                      pathname && pathname?.includes("help-center")
+                        ? "white"
+                        : "#A89CD7",
                   }}
                   onClick={() => {
                     navigate(`/help-center`);
                   }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                    className="p-1 me-1"
-                  >
-                    <g
-                      stroke="#A89CD7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                    >
-                      <path
-                        strokeMiterlimit="10"
-                        d="M12.75 13.822h-3l-3.338 2.22a.75.75 0 01-1.162-.622v-1.598c-2.25 0-3.75-1.5-3.75-3.75v-4.5c0-2.25 1.5-3.75 3.75-3.75h7.5c2.25 0 3.75 1.5 3.75 3.75v4.5c0 2.25-1.5 3.75-3.75 3.75z"
-                      ></path>
-                      <path d="M9 8.52v-.158c0-.51.315-.78.63-.997.307-.21.615-.48.615-.975 0-.69-.555-1.245-1.245-1.245-.69 0-1.245.555-1.245 1.245m1.241 3.922h.008"></path>
-                    </g>
-                  </svg>
+                  {pathname && pathname?.includes("help-center") ? (
+                    <Box
+                      component={"img"}
+                      src={navbar.navHelpCenterActive}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "12px",
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      component={"img"}
+                      src={navbar.navHelpCenter}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "12px",
+                      }}
+                    />
+                  )}
                   {/* <img
               src={popup.faq}
               alt="..."

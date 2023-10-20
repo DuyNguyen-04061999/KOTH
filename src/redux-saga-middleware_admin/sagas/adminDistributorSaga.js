@@ -1,7 +1,8 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import { ADMIN_DISTRIBUTOR_SERVICE } from "../services/adminDistributorService";
-import { createSubDistributorSuccess, createSubDistributorFail, getListSubSuccess, getListSubFail, updateSubSuccess, updateSubFail, deleteSubSuccess, deleteSubFail, givePermissionSuccess, givePermissionFail } from "../reducers/adminDistributorReducer";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { showToastNotify } from "../reducers/adminAlertReducer";
 import { closeCreateDialog } from "../reducers/adminDialogReducer";
+import { createSubDistributorFail, createSubDistributorSuccess, deleteSubFail, deleteSubSuccess, getListSub, getListSubFail, getListSubSuccess, givePermissionFail, givePermissionSuccess, updateSubFail, updateSubSuccess } from "../reducers/adminDistributorReducer";
+import { ADMIN_DISTRIBUTOR_SERVICE } from "../services/adminDistributorService";
 
 const adminDistributorService = new ADMIN_DISTRIBUTOR_SERVICE();
 
@@ -11,16 +12,17 @@ function* createSubDistributorSaga(dataRequest) {
         const res = yield call(adminDistributorService.createSubDistributor, payload)
         if(res && res.status === 200) {
            yield put(createSubDistributorSuccess())
-        //    alert("Create Sub Distributor Success!")
-           alert("Create Agent Success!")
+           yield put(showToastNotify({ type: "success", message: "Create Agent Successfully!" }))
+           yield put(getListSub())
            yield put(closeCreateDialog());
-           window.location.reload();
         } else {
+           yield put(showToastNotify({ type: "error", message: "Create Agent failed!" }))
            yield put(createSubDistributorFail())
         }
         
     } catch (error) {
         yield put(createSubDistributorFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Create Agent failed!" }))
     }
 }
 
@@ -46,13 +48,16 @@ function* updateSubSaga(dataRequest) {
         const res = yield call(adminDistributorService.updateSubDistributor, payload)
         if(res && res.status === 200) {
           yield put(updateSubSuccess())
-          alert("Update Sub Distributor Success!")
+          yield put(showToastNotify({ type: "success", message: "Update agent successfully" }))
+          yield put(getListSub())
         } else {
           yield put(updateSubFail())
+          yield put(showToastNotify({ type: "error", message: "Update agent failed" }))
         }
         
     } catch (error) {
         yield put(updateSubFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Update agent failed" }))
     }
 }
 
@@ -62,16 +67,16 @@ function* deleteSubSaga(dataRequest) {
         const res = yield call(adminDistributorService.deleteSubDistributor, payload)
         if(res && res.status === 200) {
           yield put(deleteSubSuccess())
-          alert("Delete Sub Distributor Success!")
-          setTimeout(() => {
-           window.location.reload()
-          }, 1000)
+          yield put(showToastNotify({ type: "success", message: "Delete agent successfully" }))
+          yield put(getListSub())
         } else {
           yield put(deleteSubFail())
+          yield put(showToastNotify({ type: "error", message: "Delete agent failed" }))
         }
         
     } catch (error) {
         yield put(deleteSubFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Delete agent failed" }))
     }
 }
 
@@ -81,16 +86,16 @@ function* givePermissionSaga(dataRequest) {
         const res = yield call(adminDistributorService.givePermission, payload)
         if(res && res.status === 200) {
           yield put(givePermissionSuccess())
-          alert("Give permission Success!")
-          setTimeout(() => {
-           window.location.reload()
-          }, 1000)
+          yield put(showToastNotify({ type: "success", message: "Give permission successfully" }))
+          yield put(getListSub())
         } else {
           yield put(givePermissionFail())
+          yield put(showToastNotify({ type: "error", message: "Give permission failed" }))
         }
         
     } catch (error) {
         yield put(givePermissionFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Give permission failed" }))
     }
 }
 

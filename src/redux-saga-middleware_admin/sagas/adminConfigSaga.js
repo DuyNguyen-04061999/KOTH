@@ -1,7 +1,13 @@
-import { takeEvery, call, put } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { getListEndUser } from "../reducers/adminAgentReducer";
+import { showToastNotify } from "../reducers/adminAlertReducer";
+import { updateNewRef } from "../reducers/adminAuthReducer";
+import { activeAccountFail, activeAccountSuccess, deleteAccountFail, deleteAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess, updateAccountFail, updateAccountSuccess } from "../reducers/adminConfigReducer";
+import { closeProvideDialog, closeUpdateAccountDialog, openRefcodeNotify } from "../reducers/adminDialogReducer";
+import { getListSub } from "../reducers/adminDistributorReducer";
+import { getListDistributor } from "../reducers/adminMasterReducer";
+import { updateDetailAccount, updateDetailAccountAfterChangeNickname, updateDetailAccountAfterChangeStatus } from "../reducers/adminReducer";
 import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
-import { activeAccountFail, activeAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess } from "../reducers/adminConfigReducer";
-import { closeProvideDialog } from "../reducers/adminDialogReducer";
 const adminConfigService = new ADMIN_CONFIG_SERVICE();
 
 function* getConfigSaga(dataRequest) {
@@ -41,33 +47,129 @@ function* provideTicketSaga(dataRequest) {
     try {
         const { payload } = dataRequest;
         const res = yield call(adminConfigService.provideTicket, payload)
+        const { role } = res?.data
         if(res && res.status === 200) {
             yield put(provideTicketSuccess())
-           alert("Provide Ticket success");
+            yield put(showToastNotify({ type: "success", message: "Provide ticket successfully" }))
+            if(role === "Master") {
+                yield put(getListDistributor())
+            } else if (role === "Distributor") {
+                yield put(getListSub())
+            } else if (role === "Agent") {
+                yield put(getListEndUser())
+            }
            yield put(closeProvideDialog());
-           window.location.reload();
         } else {
             yield put(provideTicketFail())
+            yield put(showToastNotify({ type: "error", message: "Provide ticket failed" }))
         }
         
     } catch (error) {
         yield put(provideTicketFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Provide ticket failed" }))
     }
 }
 
 function* activeAccountSaga(dataRequest) {
     try {
         const { payload } = dataRequest;
+        
         const res = yield call(adminConfigService.activeAccount, payload)
+        const { role } = res?.data
         if(res && res.status === 200) {
             yield put(activeAccountSuccess())
-           window.location.reload()
+            if(role === "Master") {
+                yield put(getListDistributor())
+            } else if (role === "Distributor") {
+                yield put(getListSub())
+            } else if (role === "Agent") {
+                yield put(getListEndUser())
+            }
+            yield put(showToastNotify({ type: "success", message: payload?.active ? "Active account successfully" : "The account has been prohibited" }))
+            yield put(updateDetailAccountAfterChangeStatus(payload?.active || 0))
         } else {
             yield put(activeAccountFail())
+            yield put(showToastNotify({ type: "error", message: "Active account failed" }))
         }
         
     } catch (error) {
         yield put(activeAccountFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Active account failed" }))
+    }
+}
+
+function* deleteAccountSaga(dataRequest) {
+    try {
+        const { payload } = dataRequest;
+        const res = yield call(adminConfigService.deleteAccount, payload)
+        const { role } = res?.data
+        if(res && res.status === 200) {
+            yield put(deleteAccountSuccess())
+            yield put(showToastNotify({ type: "success", message: "Delete account successfully" }))
+            if(role === "Master") {
+                yield put(getListDistributor())
+            } else if (role === "Distributor") {
+                yield put(getListSub())
+            } else if (role === "Agent") {
+                yield put(getListEndUser())
+            }
+            yield put(updateDetailAccount(null))
+        } else {
+            yield put(deleteAccountFail())
+            yield put(showToastNotify({ type: "error", message: "Delete account failed" }))
+        }
+        
+    } catch (error) {
+        yield put(deleteAccountFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Delete account failed" }))
+    }
+}
+
+function* updateAccountSaga(dataRequest) {
+    const { payload } = dataRequest;
+    try {
+        const res = yield call(adminConfigService.updateAccount, payload)
+        const { role, message } = res?.data
+        if(res && res.status === 200) {
+            yield put(updateAccountSuccess())
+            if(!payload?.newRefcode) {
+                if(role === "Master") {
+                    yield put(getListDistributor())
+                } else if (role === "Distributor") {
+                    yield put(getListSub())
+                } else if (role === "Agent") {
+                    yield put(getListEndUser())
+                }
+                if(payload?.newNickName) {
+                    yield put(closeUpdateAccountDialog())
+                    yield put(updateDetailAccountAfterChangeNickname(payload?.newNickName))
+                }
+                yield put(showToastNotify({ type: "success", message: "Update account successfully" }))
+            } else {
+                if(payload?.newRefcode) {
+                    yield put(openRefcodeNotify({ type: "success" }))
+                    yield put(updateNewRef(payload?.newRefcode))
+                } else {
+                    
+                }
+            }
+            
+        } else {
+            yield put(updateAccountFail())
+            if(payload?.newRefcode) {
+                yield put(openRefcodeNotify({ type: "error", message: message || "" }))
+            } else {
+                yield put(showToastNotify({ type: "error", message: "Update account failed" }))
+            }
+        }
+        
+    } catch (error) {
+        yield put(updateAccountFail())
+        if(payload?.newRefcode) {
+            yield put(openRefcodeNotify({ type: "error", message: error?.message }))
+        } else {
+            yield put(showToastNotify({ type: "error", message: error?.message || "Update account failed" }))
+        }
     }
 }
 
@@ -76,6 +178,8 @@ function* adminAuthSaga() {
     yield takeEvery("GET_LIST_TICKET", getTicketSaga)
     yield takeEvery("PROVIDE_TICKET", provideTicketSaga)
     yield takeEvery("ACTIVE_ACCOUNT", activeAccountSaga)
+    yield takeEvery("DELETE_ACCOUNT", deleteAccountSaga)
+    yield takeEvery("UPDATE_ACCOUNT", updateAccountSaga)
 }
 
 export default adminAuthSaga

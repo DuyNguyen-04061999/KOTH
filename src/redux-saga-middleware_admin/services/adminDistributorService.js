@@ -38,6 +38,22 @@ export class ADMIN_DISTRIBUTOR_SERVICE {
             const queryString = queryParams.join("&");
         
             finalQueryString = queryParams.length > 0 ? `?${queryString}` : "";
+
+            if(!window.location.pathname?.includes("report")) {
+                if(finalQueryString) {
+                  finalQueryString =  finalQueryString + "&revenue=1"
+                } else {
+                  finalQueryString = finalQueryString + "?revenue=1"
+                }
+            }
+        } else {
+            if(!window.location.pathname?.includes("report")) {
+                if(finalQueryString) {
+                    finalQueryString =  finalQueryString + "&revenue=1"
+                } else {
+                    finalQueryString = finalQueryString + "?revenue=1"
+                }
+            }
         }
         
         const res = ADMIN_API.get(`/api/admin/distributor/list-sub-distributor` + finalQueryString, {

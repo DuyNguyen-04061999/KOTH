@@ -1,15 +1,16 @@
-import React, { useRef } from "react";
+import { Avatar, Badge } from "@mui/material";
 import List from "@mui/material/List";
-import t from "prop-types";
 import { makeStyles } from "@mui/styles";
-import { Avatar, Badge, Box } from "@mui/material";
+import t from "prop-types";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   closeLoading,
   openLoading,
 } from "../../../../redux-saga-middleware/reducers/loadingReducer";
 import { images } from "../../../../utils/images";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+import AnimButton from "../../../AnimButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,12 +84,11 @@ export const AvatarPicker = (props) => {
   };
 
   return (
-    <List data-testid={"image-upload"}>
+    <List data-testid={"image-upload"} sx={{paddingBottom:"0px !important", paddingTop:"0px !important"}}>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          margin: "20px 10px",
         }}
       >
         <div className={classes.root}>
@@ -104,10 +104,15 @@ export const AvatarPicker = (props) => {
               alignItems: "center",
             }}
           >
-            <Box className="text-danger mt-1 mb-1" component={"div"}>
+            {/* <Box className="text-danger mt-1 mb-1" component={"div"}>
                 {"The image's size must be < 1 MB"}
-            </Box>
-            <button
+            </Box> */}
+            <AnimButton 
+              type={"primary"}
+              text={"Update Avatar"}
+              onClick={showOpenFileDialog}
+            />
+            {/* <button
               onClick={showOpenFileDialog}
               style={{
                 border: "0px solid",
@@ -122,7 +127,7 @@ export const AvatarPicker = (props) => {
               }}
             >
               Update Avatar
-            </button>
+            </button> */}
             
             <Avatar
               src={
@@ -136,6 +141,8 @@ export const AvatarPicker = (props) => {
                 width: "100px",
                 height: "100px",
                 borderRadius: "50%",
+                border: "4px solid #FD9E0F", 
+                marginBottom:"15px"
               }}
             />
              

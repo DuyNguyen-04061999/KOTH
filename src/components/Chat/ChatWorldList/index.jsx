@@ -1,38 +1,38 @@
-import { Avatar, Box } from "@mui/material";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import moment from "moment";
-import "./index.scss";
-import { useEffect, useRef, useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { PersonAddAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
-import { images } from "../../../utils/images";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
-import { useNavigate } from "react-router-dom";
-import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
-import { PersonAddAlt1 } from "@mui/icons-material";
-import UserChatLoading from "../../LoadingComponent/UserChatLoading";
-import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
+import { Avatar, Box } from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-
+import moment from "moment";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
+import "./index.scss";
 const EndMessagetoend = styled.div`
   margin-bottom: 30px;
 `;
 export default function ChatWorldList() {
-  const endOfMessageRef = useRef(null);
+  const chatBox = useRef(null);
   const [worldMessage, setWorldMessage] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [messagefromName, setMessFromName] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
-  const { chatWorld, friendList, chatPopup } = useSelector(
+  const [showScrollToBottomButton, setShowScrollToBottomButton] =
+    useState(true);
+  const { chatWorld, friendList } = useSelector(
     (state) => state.chatReducer
   );
-
+  const endOfMessageRef = useRef(null);
   const { userName, token } = useSelector((state) => state.authReducer);
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
@@ -41,9 +41,10 @@ export default function ChatWorldList() {
   const [socket, setSocket] = useState(null);
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
+
   useEffect(() => {
     endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [worldMessage, chatPopup]);
+  }, [worldMessage]);
 
   useEffect(() => {
     setWorldMessage(chatWorld);
@@ -86,7 +87,43 @@ export default function ChatWorldList() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const { height, width } = useWindowDimensions();
+
+  const isScrolledToBottom = () => {
+    if (chatBox.current) {
+      const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
+      if(scrollTop + clientHeight + 100 >= scrollHeight){
+        return true;
+      } 
+      else return false;
+    }
+    return false;
+  };
+
+  const handleScroll = () => {
+    setShowScrollToBottomButton(!isScrolledToBottom());
+  };
+
+  const scrollToBottom = () => {
+    if (endOfMessageRef.current) {
+      endOfMessageRef.current.scrollIntoView();
+      chatBox.current.removeEventListener("scroll", handleScroll);
+    }
+  };
+
+  useEffect(() => {
+    if (chatBox.current) {
+      chatBox.current.addEventListener("scroll", handleScroll);
+    }
+
+    // Clean up the event listener
+    return () => {
+      if (chatBox.current) {
+        chatBox.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
 
   // const checkExistInArray = (membersInRoom, userName) => {
   //   return membersInRoom?.filter((n) => {
@@ -113,6 +150,7 @@ export default function ChatWorldList() {
       gameId: gameId,
     });
   };
+
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -503,118 +541,168 @@ export default function ChatWorldList() {
   };
 
   return (
-    <Box
-      className="chat-content"
-      sx={{
-        maxHeight: checkHeightResponsive(),
-        minHeight: checkHeightResponsive(),
-        overflow: "auto ",
-        overflowX: "hidden",
-        overflowY: "scroll",
-        backgroundColor: "#2e233d",
-        scrollbarWidth: "thin",
-        "&::-webkit-scrollbar": {
-          width: "0rem",
-        },
-        "&::-webkit-scrollbar-track": {
-          background: "#f1f1f1",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "#888",
-        },
-        "&::-webkit-scrollbar-thumb:hover": {
-          background: "#555",
-        },
-      }}
-    >
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-        disableScrollLock={true}
+    <Box sx={{ position: "relative" }}>
+      <Box
+        ref={chatBox}
+        className="chat-content"
         sx={{
-          ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
+          "scrollBehavior": "smooth",
+          maxHeight: checkHeightResponsive(),
+          minHeight: checkHeightResponsive(),
+          overflow: "auto",
+          backgroundColor: "#2e233d",
+          scrollbarWidth: "thin",
+          paddingBottom: "20px",
+
+          "&::-webkit-scrollbar": {
+            width: "0rem",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#f1f1f1",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#888",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#555",
+          },
         }}
       >
-        <MenuItem
-          onClick={() => {
-            dispatch(toggleProfileDialog(true));
-            if (token === null || token === "") {
-              socket?.emit("getDetailProfileNoAuth", {
-                username: messagefromName,
-              });
-            } else {
-              socket?.emit("getDetailProfile", {
-                username: messagefromName,
-              });
-            }
-            handleClose();
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
           }}
+          disableScrollLock={true}
           sx={{
-            padding: "5px",
+            ".MuiMenu-paper": { backgroundColor: "#2d224a !important" },
           }}
         >
-          <Box
-            className="p-1 text-white"
+          <MenuItem
+            onClick={() => {
+              dispatch(toggleProfileDialog(true));
+              if (token === null || token === "") {
+                socket?.emit("getDetailProfileNoAuth", {
+                  username: messagefromName,
+                });
+              } else {
+                socket?.emit("getDetailProfile", {
+                  username: messagefromName,
+                });
+              }
+              handleClose();
+            }}
             sx={{
-              background: "linear-gradient(180deg, #843ff0, #7748ed)",
-              width: "100%",
-              fontWeight: "bold",
-              borderRadius: "4px",
+              padding: "5px",
             }}
           >
-            <AddFriendIcon className="me-1 pb-1" />
-            <span>View Profile</span>
-          </Box>
-        </MenuItem>
-        {token &&
-          (checkExistInFriendList() === true ? (
-            <MenuItem
+            <Box
+              className="p-1 text-white"
               sx={{
-                padding: "5px",
+                background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                width: "100%",
+                fontWeight: "bold",
+                borderRadius: "4px",
               }}
             >
-              <Box
-                className="p-1 text-white cursor-pointer"
-                onClick={handleDeleteFriend}
+              <AddFriendIcon className="me-1 pb-1" />
+              <span>View Profile</span>
+            </Box>
+          </MenuItem>
+          {token &&
+            (checkExistInFriendList() === true ? (
+              <MenuItem
                 sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  fontWeight: "bold",
-                  borderRadius: "4px",
+                  padding: "5px",
                 }}
               >
-                <DeleteFriendIcon className="me-2 pb-1" />
-                <span> Delete Friend</span>
-              </Box>
-            </MenuItem>
-          ) : (
-            <MenuItem
-              sx={{
-                padding: "5px",
-              }}
-            >
-              <Box
-                onClick={handleAddFriend}
-                className="p-1 text-white"
+                <Box
+                  className="p-1 text-white cursor-pointer"
+                  onClick={handleDeleteFriend}
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    fontWeight: "bold",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <DeleteFriendIcon className="me-2 pb-1" />
+                  <span> Delete Friend</span>
+                </Box>
+              </MenuItem>
+            ) : (
+              <MenuItem
                 sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  borderRadius: "4px",
+                  padding: "5px",
                 }}
               >
-                <PersonAddAlt1 className="me-2 pb-1" />
-                Add Friend
-              </Box>
-            </MenuItem>
-          ))}
-      </Menu>
-      {renderChat}
-      <span ref={endOfMessageRef}></span>
+                <Box
+                  onClick={handleAddFriend}
+                  className="p-1 text-white"
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <PersonAddAlt1 className="me-2 pb-1" />
+                  Add Friend
+                </Box>
+              </MenuItem>
+            ))}
+        </Menu>
+        {renderChat}
+        <span ref={endOfMessageRef}></span>
+      </Box>
+      {showScrollToBottomButton && (
+        <ScrollToBottom onClick={() => scrollToBottom()} />
+      )}
     </Box>
   );
 }
+
+const ScrollToBottom = ({ onClick }) => {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        bottom: "4px",
+        right: "4px",
+        transform: "translate(-50%,-50%)",
+        backgroundColor: "rgba(120, 72, 237, 1)",
+        width: "36px",
+        height: "36px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: "24px",
+        cursor: "pointer",
+        ":hover": {
+          backgroundColor: "rgba(120, 72, 237, 1)",
+        },
+        boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.40)",
+      }}
+      onClick={onClick}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        fill="none"
+        viewBox="0 0 14 14"
+      >
+        <path
+          fill="#fff"
+          d="M6.97 11.143c.1-.095.189-.176.273-.26C8.822 9.295 10.4 7.708 11.976 6.12c.342-.346.734-.464 1.181-.313.73.245.941 1.18.4 1.75-.461.483-.94.95-1.411 1.423l-4.313 4.335c-.578.582-1.151.579-1.733-.006L.35 7.527c-.377-.377-.453-.88-.211-1.315a1.021 1.021 0 011.194-.5c.217.075.414.2.575.366a1082.8 1082.8 0 014.788 4.803c.085.089.17.167.273.262z"
+        ></path>
+        <path
+          fill="#fff"
+          d="M6.94 5.428c.133-.128.221-.21.307-.295L11.98.375c.341-.346.733-.461 1.181-.31.69.235.925 1.11.463 1.676-.056.067-.123.13-.185.193L7.833 7.57c-.578.58-1.152.577-1.734-.008L.422 1.856C.066 1.496-.02.983.196.57A1.007 1.007 0 011.342.033c.242.069.463.2.64.38 1.572 1.56 3.131 3.138 4.693 4.706.086.088.16.187.264.309z"
+        ></path>
+      </svg>
+    </Box>
+  );
+};

@@ -2,22 +2,23 @@ import {
   Box,
   Button,
   Container,
-  List,
-  ListItem,
-  TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef } from "react";
-import { styled } from "@mui/material/styles";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { useState } from "react";
+import { styled } from "@mui/material/styles";
+import React, { useEffect, useRef } from "react";
+// import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { ExpandMoreOutlined } from "@mui/icons-material";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import RefcodeDialogComponent from "../../../components/Admin/Dialog/RefcodeDialogComponent";
+import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { changePassword } from "../../../redux-saga-middleware_admin/reducers/adminAuthReducer";
+import { updateAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
+import { openRefcodeNotify } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -51,24 +52,9 @@ const AccordionSummary = styled((props) => (
   padding: useWindowDimensions().width < 576 ? "1px 20px" : "11px 24px",
 }));
 
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "2px solid rgba(0, 0, 0, .125)",
-}));
-
 const Setting = () => {
   const [expanded, setExpanded] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(1);
-  const [americanTimeZones, setAmericanTimeZones] = useState([
-    "UTC -10: HST Hawaii Standard Time",
-    "UTC -9	HDT	Hawaii-Aleutian Daylight Time",
-    "UTC -8	AKDT	Alaska Daylight Time",
-    "UTC -7	PDT	Pacific Daylight Time",
-    "UTC -7	MST	Mountain Standard Time",
-    "UTC -6	MDT	Mountain Daylight Time",
-    "UTC -5	CDT	Central Daylight Time",
-    "UTC -4	EDT	Eastern Daylight Time",
-  ]);
+  // const [selectedIndex, setSelectedIndex] = useState(1);
   const [passwordError, setPasswordError] = useState("");
   const { width } = useWindowDimensions();
   const currentPassInput = useRef("");
@@ -83,9 +69,9 @@ const Setting = () => {
     setPasswordError(errorChangePassword);
   }, [errorChangePassword]);
 
-  const handleListItemClick = (index) => {
-    setSelectedIndex(index);
-  };
+  // const handleListItemClick = (index) => {
+  //   setSelectedIndex(index);
+  // };
   const handleChange = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -112,21 +98,45 @@ const Setting = () => {
     }
   };
 
-  const handleConfirmTimeZone = (e) => {
-    e.preventDefault();
-  };
+  // const handleConfirmTimeZone = (e) => {
+  //   e.preventDefault();
+  // };
 
-  const handleSearchTimeZone = (e) => {
-    e.preventDefault();
-  };
+  // const handleSearchTimeZone = (e) => {
+  //   e.preventDefault();
+  // };
 
-  const handleChangeSearch = (e) => {
-    e.preventDefault();
-  };
+  // const handleChangeSearch = (e) => {
+  //   e.preventDefault();
+  // };
 
+  const { roles, ref } = useSelector((state) => state.adminAuthReducer);
+  const [newRefcode, setNewRefcode] = useState("")
+
+  const handleChangeRefcode = (e) => {
+    e.preventDefault();
+    if(!newRefcode) {
+      dispatch(showToastNotify({ type: "warning", message: "Enter new refcode !" }))
+      return
+    }  else if (/\s/.test(newRefcode)) {
+      dispatch(showToastNotify({ type: "warning", message: "Refcode invalid !" }))
+      return
+    } else if (newRefcode?.length > 30) {
+      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too long ! Maximum 30 characters" }))
+      // dispatch(showToastNotify({ type: "warning", message: "Refcode too long !" }))
+    } else if (newRefcode?.length < 15) {
+      // dispatch(showToastNotify({ type: "warning", message: "Refcode too short !" }))
+      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too short ! Minimum 15 characters" }))
+    } else {
+      dispatch(updateAccount({ newRefcode }))
+      setNewRefcode("")
+    }
+  }
+  
   return (
     <Container>
       <Box>
+        <RefcodeDialogComponent/>
         <Box
           sx={{
             fontSize: "24px",
@@ -401,7 +411,7 @@ const Setting = () => {
                     letterSpacing: "0.9px",
                   }}
                 >
-                  Password
+                  Re-enter New Password
                 </Box>
                 <Box
                   component={"input"}
@@ -449,6 +459,160 @@ const Setting = () => {
             </Box>
           </Box>
         </Box>
+
+        {roles && roles?.includes("agent") && (
+          <Box
+            sx={{
+              marginTop: width < 576 ? "20px" : "60px",
+              borderRadius: "16px",
+              overflow: "hidden",
+              border: `2px solid #E4E4E4`,
+            }}
+            className="mb-2"
+          >
+            <Box
+              sx={{
+                fontSize: "18px",
+                fontWeight: 500,
+                lineHeight: "24px",
+                padding: width < 576 ? "13px 37px" : "23px 37px",
+                backgroundColor: "#F7F7F7",
+              }}
+            >
+              Change Refcode
+            </Box>
+            <Box
+              component={"form"}
+              sx={{ padding: "28px", borderTop: "2px solid #E4E4E4" }}
+            >
+              <Box
+                sx={{
+                  display: width < 1024 ? "flex" : "grid",
+                  flexDirection: "column",
+                  gridTemplateColumns: "repeat(3,1fr)",
+                  gridRowGap: width < 576 ? "12px"  : "36px",
+                  gridColumnGap: "48px",
+                }}
+              >
+                <Box
+                  sx={{
+                    border: "2px solid #355DFF",
+                    borderRadius: "12px",
+                    backgroundColor: "#fff",
+                    padding: width < 576 ? "0px 18px" : "14px 18px",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      color: "#808191",
+                      fontFeatureSettings: "'clig' off, 'liga' off",
+                      fontFamily: "Cyntho Next",
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      lineHeight: "16px",
+                      textTransform: "uppercase",
+                      position: "absolute",
+                      top: width < 576 ? "6px" : "16px",
+                      left: "20px",
+                      letterSpacing: "0.9px",
+                    }}
+                  >
+                    Current Refcode
+                  </Box>
+                  <Box
+                    component={"input"}
+                    variant="standard"
+                    sx={{
+                      fontSize: "16px",
+                      width: "100%",
+                      border: "none",
+                      outline: "none",
+                      marginTop: "20px",
+                      letterSpacing: "0.3em",
+                    }}
+                    type="text"
+                    disabled
+                    value={ref}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    border: "2px solid #355DFF",
+                    borderRadius: "12px",
+                    backgroundColor: "#fff",
+                    padding: width < 576 ? "0px 18px" : "14px 18px",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      color: "#808191",
+                      fontFeatureSettings: "'clig' off, 'liga' off",
+                      fontFamily: "Cyntho Next",
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      lineHeight: "16px",
+                      textTransform: "uppercase",
+                      position: "absolute",
+                      top: width < 576 ? "6px" : "16px",
+                      left: "20px",
+                      letterSpacing: "0.9px",
+                    }}
+                  >
+                    New Refcode <Box component={"span"} className="text-danger">
+                      {"("} Min 15 - Max 30 Characters {")"}
+                    </Box>
+                  </Box>
+                  <Box
+                    component={"input"}
+                    variant="standard"
+                    sx={{
+                      fontSize: "16px",
+                      width: "100%",
+                      border: "none",
+                      outline: "none",
+                      marginTop: "20px",
+                      letterSpacing: "0.3em",
+                    }}
+                    type="text"
+                    autoComplete="New Refcode"
+                    value={newRefcode}
+                    onChange={(e) => setNewRefcode(e?.target?.value)}
+                  />
+                </Box>
+                <Button
+                  type="submit"
+                  sx={{
+                    backgroundColor: "#355DFF",
+                    color: "white",
+                    borderRadius: "12px",
+                    fontSize: "14px",
+                    fontFamily: "Cyntho Next",
+                    fontWeight: 700,
+                    textTransform: "unset",
+                    gridColumnStart: 3,
+                    gridColumnEnd: 4,
+                    ":hover": {
+                      backgroundColor: "#355DFF",
+                      opacity: 0.9,
+                    },
+                    padding: "12px 0",
+                  }}
+                  onClick={handleChangeRefcode}
+                >
+                  Update Refcode
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+        )}
       </Box>
     </Container>
   );

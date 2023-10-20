@@ -1,26 +1,18 @@
 import { Box } from "@mui/material";
-import React from "react";
-import Slider from "react-slick";
-import { useState } from "react";
-import useWindowDimensions from "../../utils/useWindowDimensions";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
 import { images } from "../../utils/images";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 import { useSelector } from "react-redux";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
-  const {
-    images: img,
-    appendDot,
-    htmlCode,
-    isHtmlCode,
-    tours,
-    isLoading,
-    type,
-  } = props;
-  
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type } = props;
+
   const settings = {
     dots: true,
     arrows: false,
@@ -33,25 +25,30 @@ export default function SlickSlider(props) {
     beforeChange: (prev, next) => {
       setIndex(next);
     },
-    appendDots: (dots) => (
-      <Box
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          bottom: appendDot ? "0px" : "-20px",
-          position: "absolute",
-          padding: "5px",
-          height: width > 576 ? "20px" : "15px",
-          backgroundColor: appendDot ? "rgba(0, 0, 0, 0.24)" : "none",
-          backdropFilter: appendDot ? "blur(2px)" : "none",
-          marginBottom: "0px",
-          width: "100%",
-        }}
-      >
-        {dots}
-      </Box>
-    ),
+    appendDots: (dots) => {
+      if (dots?.length >= 10) {
+        dots = dots?.slice(0, 5);
+      }
+      return (
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            bottom: appendDot ? "0px" : "-20px",
+            position: "absolute",
+            padding: "5px",
+            height: width > 576 ? "20px" : "15px",
+            backgroundColor: appendDot ? "rgba(0, 0, 0, 0.24)" : "none",
+            backdropFilter: appendDot ? "blur(2px)" : "none",
+            marginBottom: "0px",
+            width: "100%",
+          }}
+        >
+          {dots}
+        </Box>
+      );
+    },
     customPaging: (i) => (
       <div
         style={{
@@ -139,7 +136,9 @@ export default function SlickSlider(props) {
                     }}
                     component={"img"}
                     src={
-                      width < 576 && item?.tournamentBackgroundMobile
+                      (device === "Mobile" ||
+                        (device === "Tablet" && orientation === "portrait")) &&
+                      item?.tournamentBackgroundMobile
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
                           item?.tournamentBackgroundMobile

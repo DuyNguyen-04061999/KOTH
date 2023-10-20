@@ -1,49 +1,25 @@
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Box,
-  Button,
-  Dialog,
-  Grid,
-  Input,
-  TextField,
-  Typography,
-} from "@mui/material";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   closeCheckWallet,
   toggleCheckWallet,
   toggleWalletDialog,
 } from "../../../redux-saga-middleware/reducers/walletReducer";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { popup } from "../../../utils/images";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import { styled } from "@mui/material/styles";
-import "./index.scss";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { useEffect, useState } from "react";
 import { formatMoney } from "../../../utils/helper";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
-
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: "white",
-  backgroundColor: "gray",
-  borderRadius: "0px",
-  padding: "2px",
-  minWidth: "auto",
-  "&:hover": {
-    backgroundColor: "gray",
-  },
-}));
+import "./index.scss";
 
 export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet } = useSelector(
     (state) => state.walletReducer
   );
-  const { messageToast } = useSelector((state) => state.toastReducer);
-  const { isDialogConfirm, idPackage } = useSelector(
-    (state) => state.authReducer
-  );
+
+  const { idPackage } = useSelector((state) => state.authReducer);
   const { userGold } = useSelector((state) => state.authReducer);
   const { boughtTour, idTour } = useSelector(
     (state) => state.tournamentReducer
@@ -54,9 +30,8 @@ export default function TicketCheckOut() {
   const [socket, setSocket] = useState(null);
   const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
-  const [goldTicket, setGoldTicket] = useState(0.99);
-  const [totalGold, setTotalGold] = useState(sl * goldTicket);
-
+  const [goldTicket] = useState(0.99);
+  const [disablePlaceOrder, setDisablePlaceOrder] = useState(false);
   const handleChangeValue = (e) => {
     setSl(e.target.value);
   };
@@ -66,33 +41,43 @@ export default function TicketCheckOut() {
   };
 
   const btnSubscription = () => {
+    setDisablePlaceOrder(true);
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
+      setDisablePlaceOrder(false);
       // dispatch(toggleBuyTicket());
     } else {
       socket.emit("buyPackage", {
         packageId: idPackage,
       });
+      dispatch(toggleCheckWallet());
+      setDisablePlaceOrder(false);
     }
   };
 
   const btnBuyTicket = () => {
+    setDisablePlaceOrder(true);
     if (userGold < 0.99 * sl) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
+      setDisablePlaceOrder(false);
     } else if (!boughtTour) {
       socket?.emit("buyPackage", {
         quantity: sl,
         tournamentId: idTour,
         packageId: ticketBuy?.id,
       });
+      dispatch(toggleCheckWallet());
+      setDisablePlaceOrder(false);
     } else {
       socket?.emit("buyPackage", {
         quantity: sl,
         tournamentId: idTour,
         packageId: ticketBuy?.id,
       });
+      dispatch(toggleCheckWallet());
+      setDisablePlaceOrder(false);
     }
   };
 
@@ -108,9 +93,7 @@ export default function TicketCheckOut() {
     setSocket(socket);
   }, [socket]);
   useEffect(() => {
-    socket?.on("buyPackageSuccess", (data) => {
-      
-    });
+    socket?.on("buyPackageSuccess", (data) => {});
   }, [socket]);
   return (
     <>
@@ -307,7 +290,7 @@ export default function TicketCheckOut() {
                   {typeWallet === "subscription" ? (
                     <Typography className="mb-1">Subscription Pack</Typography>
                   ) : (
-                    <Typography className="mb-1">Ticket</Typography>
+                    <Typography className="mb-1">Extra</Typography>
                   )}
                   <Typography sx={{ color: "gray" }} variant="body2">
                     {typeWallet === "subscription"
@@ -334,7 +317,7 @@ export default function TicketCheckOut() {
                           : true
                       }
                       onClick={() => {
-                        if(sl <= 1) {
+                        if (sl <= 1) {
                         } else {
                           setSl(sl - 1);
                         }
@@ -364,7 +347,10 @@ export default function TicketCheckOut() {
                       className="input_check"
                       max={4}
                       min={1}
-                      disabled={typeWallet === "subscription" || typeWallet === "buyTicket"}
+                      disabled={
+                        typeWallet === "subscription" ||
+                        typeWallet === "buyTicket"
+                      }
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor:
@@ -380,7 +366,7 @@ export default function TicketCheckOut() {
                       variant="contained"
                       disabled={typeWallet === "subscription"}
                       onClick={() => {
-                        if(sl > 3) {
+                        if (sl > 3) {
                         } else {
                           setSl(sl + 1);
                         }
@@ -510,11 +496,13 @@ export default function TicketCheckOut() {
                       type={"primary"}
                       onClick={btnSubscription}
                       text={"Place Order"}
+                      disable={disablePlaceOrder}
                     />
                   ) : (
                     <AnimButton
                       onClick={btnBuyTicket}
                       text={"Place Order"}
+                      disable={disablePlaceOrder}
                       type={"primary"}
                     />
                   )}

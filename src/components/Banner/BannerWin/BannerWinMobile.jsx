@@ -4,18 +4,16 @@ import { imageHome } from "../../../utils/images";
 
 const BannerWinMobile = (props) => {
   const {
-    tournamentName,
+    rewardName,
     sponsorName,
     userAvatar,
     userName,
-    endTime,
-    userScore,
   } = props;
   return (
     <Box
       sx={{
         width: "100%",
-        height: "208px",
+        height: "218px",
         background: `url(${imageHome.BannerWinBgMobile})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -57,7 +55,7 @@ const BannerWinMobile = (props) => {
               textTransform: "uppercase",
             }}
           >
-            Big Tournament Winner
+            Big Promotion Winner
           </Typography>
         </Box>
         <Typography
@@ -84,6 +82,7 @@ const BannerWinMobile = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            marginLeft:"10px"
           }}
         >
           <Box
@@ -96,6 +95,7 @@ const BannerWinMobile = (props) => {
             }}
           >
             <img
+              alt="..."
               style={{
                 width: "100%",
                 height: "100%",
@@ -131,10 +131,10 @@ const BannerWinMobile = (props) => {
           >
             <Box
               sx={{
-                fontSize: "30px",
+                fontSize: "24px",
                 color: "transparent",
                 WebkitTextStroke: "4px #ED3B14",
-                width: "100%",
+                width: "150px",
                 position: "relative",
                 fontWeight: 800,
                 wordWrap: "break-word",
@@ -145,15 +145,15 @@ const BannerWinMobile = (props) => {
                 textAlign:"center",
               }}
             >
-              {tournamentName || "Tournament Name"}
+              {rewardName || "Reward Name"}
               <Typography
                 sx={{
                   fontWeight: 800,
                   position: "absolute",
                   top: "50%",
-                  left: "49%",
+                  left: "46%",
                   transform: "translate(-50%,-50%)",
-                  fontSize: "30px",
+                  fontSize: "23px",
                   color: "white",
                   WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                   wordWrap: "break-word",
@@ -161,9 +161,10 @@ const BannerWinMobile = (props) => {
                   height: "100px",
                   overflow: "hidden",
                   textAlign:"center",
+                  width: "150px",
                 }}
               >
-                {tournamentName || "Tournament Name"}
+                {rewardName || "Tournament Name"}
               </Typography>
             </Box>
           </Box>

@@ -1,7 +1,8 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import { ADMIN_MASTER_SERVICE } from "../services/adminMasterService";
-import { createDistributorFail, createDistributorSuccess, deleteDistributorFail, deleteDistributorSuccess, getDetailDistributorFail, getDetailDistributorSuccess, getListDistributorFail, getListDistributorSuccess, getListTableFail, getListTableSuccess, updateDistributorFail, updateDistributorSuccess } from "../reducers/adminMasterReducer";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { showToastNotify } from "../reducers/adminAlertReducer";
 import { closeCreateDialog } from "../reducers/adminDialogReducer";
+import { createDistributorFail, createDistributorSuccess, deleteDistributorFail, deleteDistributorSuccess, getDetailDistributorFail, getDetailDistributorSuccess, getListDistributor, getListDistributorFail, getListDistributorSuccess, getListTableFail, getListTableSuccess, updateDistributorFail, updateDistributorSuccess } from "../reducers/adminMasterReducer";
+import { ADMIN_MASTER_SERVICE } from "../services/adminMasterService";
 const adminMasterService = new ADMIN_MASTER_SERVICE();
 
 function* createDistributorSaga(dataRequest) {
@@ -10,23 +11,23 @@ function* createDistributorSaga(dataRequest) {
         const res = yield call(adminMasterService.createDistributor, payload)
         if(res && res.status === 200) {
            yield put(createDistributorSuccess())
-           alert("Create Distributor Success!")
+           yield put(showToastNotify({ type: "success", message: "Create Distributor Successfully!" }))
            yield put(closeCreateDialog());
-           window.location.reload();
+           yield put(getListDistributor());
         } else {
+           yield put(showToastNotify({ type: "error", message: "Create Distributor Failed!" }))
            yield put(createDistributorFail())
         }
         
     } catch (error) {
+        yield put(showToastNotify({ type: "error", message: error?.message || "Create Distributor Failed!" }))
         yield put(createDistributorFail())
     }
 }
 
 function* getListDistributorSaga(dataRequest) {
-    console.log(1232113);
     try {
         const { payload } = dataRequest;
-        console.log(payload);
         const res = yield call(adminMasterService.getListDistributor, payload)
         const { list } = res?.data?.data
         if(res && res.status === 200) {
@@ -62,12 +63,15 @@ function* updateDistributorSaga(dataRequest) {
         const res = yield call(adminMasterService.updateDistributor, payload)
         if(res && res.status === 200) {
            yield put(updateDistributorSuccess())
-           alert("Update Distributor Success!")
+           yield put(showToastNotify({ type: "success", message: "Update distributor successfully!" }))
+           yield put(getListDistributor())
         } else {
-           yield put(updateDistributorFail())
+            yield put(showToastNotify({ type: "error", message: "Update distributor Failed!" }))
+            yield put(updateDistributorFail())
         }
         
     } catch (error) {
+        yield put(showToastNotify({ type: "error", message: error?.message || "Update distributor Failed!" }))
         yield put(updateDistributorFail())
     }
 }
@@ -78,16 +82,16 @@ function* deleteDistributorSaga(dataRequest) {
         const res = yield call(adminMasterService.deleteDistributor, payload)
         if(res && res.status === 200) {
            yield put(deleteDistributorSuccess())
-           alert("Delete Distributor Success!")
-           setTimeout(() => {
-            window.location.reload()
-           }, 1000)
+           yield put(showToastNotify({ type: "success", message: "Delete distributor successfully!" }))
+           yield put(getListDistributor())
         } else {
            yield put(deleteDistributorFail())
+           yield put(showToastNotify({ type: "error", message: "Delete distributor failed!" }))
         }
         
     } catch (error) {
         yield put(deleteDistributorFail())
+        yield put(showToastNotify({ type: "error", message: error?.message || "Delete distributor failed!" }))
     }
 }
 

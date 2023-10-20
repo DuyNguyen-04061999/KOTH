@@ -7,18 +7,17 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
+  Typography,
   tableClasses,
-  tableHeadClasses,
+  tableHeadClasses
 } from "@mui/material";
-import React, { useState } from "react";
-import { RowTable } from "./RowTable";
-import styled from "styled-components";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import { openDetailDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import { useLocation } from "react-router";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { RowTable } from "./RowTable";
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
   [`&.${tableHeadClasses.root}`]: {
@@ -35,6 +34,87 @@ const StyleTable = styled(Table)(({ theme }) => ({
     overflow: "scroll",
   },
 }));
+
+const BackIcon = () => {
+  return (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="17"
+        height="12"
+        fill="none"
+        viewBox="0 0 17 12"
+      >
+        <path
+          stroke="#336AEA"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M16 6H1M6 1L1 6l5 5"
+        ></path>
+      </svg>
+  )
+}
+
+const NextIcon = () => {
+  return (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="17"
+        height="12"
+        fill="none"
+        viewBox="0 0 17 12"
+      >
+        <path
+          stroke="#fff"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M1 6h15M11 1l5 5-5 5"
+        ></path>
+      </svg>
+  )
+}
+
+const CustomPagination = (props) => {
+  const { page, totalPage, onChangePage } = props
+
+  return (
+    <Box component={"div"} className="d-flex justify-content-between mb-2 mt-3">
+      <Box component={"div"}></Box>
+      <Box component={"div"}>
+        <Box component={"div"} className="d-flex">
+            <Box onClick={() => page > 0 ? onChangePage(page - 1) : false} component={"div"} className="rounded p-2 d-flex justify-content-center cursor-pointer" sx={{
+              border: "1px solid #336AEA",
+              width: 30,
+              height: 30
+            }}><BackIcon/></Box>
+            <Box onClick={() => page < totalPage - 1 ? onChangePage(page + 1) : false} component={"div"} className="rounded p-2 d-flex justify-content-center align-items-center ms-3 cursor-pointer" sx={{
+              background: "#336AEA",
+              height: 30,
+            }}>
+              <Typography className="me-2 text-white" sx={{ fontSize: 12 }}>Next Page</Typography>
+              <NextIcon/>
+            </Box>
+        </Box>
+      </Box>
+      <Box component={"div"}>
+        <Box component={"div"} className="d-flex align-items-center">
+            <Typography sx={{
+              color: "#808191",
+              fontSize: 12
+            }}>Page</Typography>
+            <Box component={"div"} className="ps-3 pe-3 ms-2 me-2 rounded" sx={{
+              border: "1.5px solid #C8C8C8",
+            }}>{page + 1 || 0}</Box>
+            <Typography sx={{
+              color: "#808191",
+              fontSize: 12
+            }}>of {totalPage || 0}</Typography>
+        </Box>
+      </Box>
+    </Box>
+  )
+}
 
 const NestedTable = (props) => {
   const {
@@ -53,17 +133,25 @@ const NestedTable = (props) => {
   } = props;
   const { detailAccount } = useSelector((state) => state.adminReducer_);
   const dispatch = useDispatch();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage] = React.useState(10);
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // }
+
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // }
+
+  const onChangePage = (page) => {
+    setPage(page)
+  }
 
   return (
     <Box sx={{}}>
@@ -75,6 +163,13 @@ const NestedTable = (props) => {
           "& .MuiTableCell-root": {
             borderWidth: "none",
           },
+          "::-webkit-scrollbar": {
+            height: "5px",
+          },
+          "::webkit-scrollbar-thumb": {
+            
+          },
+          overflowX: "auto"
         }}
         style={{ boxShadow: "unset" }}
         component={Paper}
@@ -82,60 +177,6 @@ const NestedTable = (props) => {
         <StyleTable stickyHeader sx={{}} aria-label="collapsible table">
           <StyledTableHead>
             <TableRow>
-              {/* <TableCell style={{color: "#808191",}}/> */}
-              {/* {width > 576 && (
-                <TableCell sx={{}} style={{ color: "#808191" }} children=" " />
-              )}
-              <TableCell
-                sx={{ width: "100px" }}
-                style={{ color: "#808191" }}
-                children="Account"
-                className="text-center"
-              />
-              <TableCell
-                sx={{ maxWidth: "unset" }}
-                style={{ color: "#808191" }}
-                children="Level "
-                className="text-center"
-              />
-              <TableCell
-                className="text-center"
-                style={{ color: "#808191" }}
-                children="Revenue"
-              />
-              <TableCell
-                className="text-center"
-                style={{ color: "#808191" }}
-                children="Ticket"
-              />
-              {width > 576 && (
-                <TableCell
-                  className="text-center"
-                  style={{ color: "#808191" }}
-                  children="Ref Code"
-                />
-              )}
-              {width > 576 && (
-                <TableCell
-                  className="text-center"
-                  style={{ color: "#808191" }}
-                  children="Date"
-                />
-              )}
-              {width > 576 && (
-                <TableCell
-                  style={{ color: "#808191" }}
-                  children="Amount Account"
-                  className="text-center"
-                />
-              )}
-              {width > 576 && (
-                <TableCell
-                  className="text-center"
-                  style={{ color: "#808191" }}
-                  children="Status"
-                />
-              )} */}
               {headerList?.map((item, index) => (
                 <TableCell
                   className="text-center"
@@ -160,7 +201,15 @@ const NestedTable = (props) => {
             </TableRow>
           </StyledTableHead>
           <TableBody>
-            {data.map((row, index) => (
+            {emptyRows > 0 && (
+              <tr style={{ height: 41 * emptyRows }}>
+                <td colSpan={3} aria-hidden />
+              </tr>
+            )}
+            {(rowsPerPage > 0
+            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : data
+          ).map((row, index) => (
               <RowTable
                 key={row.account + index}
                 index={index}
@@ -214,14 +263,21 @@ const NestedTable = (props) => {
         </StyleTable>
       </TableContainer>
       {/* <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[]}
+        
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage={""}
       /> */}
+      <CustomPagination 
+        onChangePage={onChangePage} 
+        page={page}
+        totalPage={Math.round(Number(data.length/rowsPerPage))}
+      />
       {detailAccount && (
         <Box
           sx={{
@@ -243,7 +299,7 @@ const NestedTable = (props) => {
           {detailAccount && (
             <Button
               onClick={() => {
-                if (detailAccount) {
+                if (detailAccount && window.location.pathname?.includes("manage")) {
                   dispatch(openDetailDialog());
                 }
               }}

@@ -1,4 +1,7 @@
+import { Close, SyncAlt } from "@mui/icons-material";
+import GameLogIcon from "@mui/icons-material/List";
 import {
+  AvatarGroup,
   // Badge,
   Box,
   Dialog,
@@ -7,42 +10,37 @@ import {
   Input,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import { AvatarGroup } from "@mui/material";
-import { images, sign } from "../../../../utils/images";
-import "./index.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import DialogProfile from "../../Profile";
-import Signup from "../Signup";
-import { images260423_l } from "../../../../utils/images260423_l";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { useState } from "react";
-import MenuChat from "../../../MenuMobile/Chat";
-import GameLogIcon from "@mui/icons-material/List";
-import { Close, SyncAlt } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
   removeToken,
-  toggleForgetPass,
-  toggleLoginDialog,
+  toggleLoginDialog
 } from "../../../../redux-saga-middleware/reducers/authReducer";
-import _socket from "../../../../redux-saga-middleware/config/socket";
-import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
-import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
-import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import {
   clickTabChat,
   closeChatPopup,
 } from "../../../../redux-saga-middleware/reducers/chatReducer";
-import { getFontSizeButtonDependOnWidth } from "../../../../utils/config";
+import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
+import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
+import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { getAppType } from "../../../../utils/helper";
+import { images, sign } from "../../../../utils/images";
+import { images260423_l } from "../../../../utils/images260423_l";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import Gold from "../../../Gold/Gold";
-import { getAppType, sliceString } from "../../../../utils/helper";
+import MenuChat from "../../../MenuMobile/Chat";
+import DialogProfile from "../../Profile";
+import Signup from "../Signup";
+import "./index.scss";
 // import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
-import { toast } from "react-toastify";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { toast } from "react-toastify";
+import AnimButton from "../../../AnimButton";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -279,11 +277,11 @@ function SimpleDialog(props) {
                         )}
                       </Box>
                     </FormControl>
-                    <Typography
-                      // onClick={() => {
-                      //   dispatch(toggleLoginDialog());
-                      //   dispatch(toggleForgetPass(true));
-                      // }}
+                    {/* <Typography
+                      onClick={() => {
+                        dispatch(toggleLoginDialog());
+                        dispatch(toggleForgetPass(true));
+                      }}
                       sx={{
                         color: "#7848ED",
                         textAlign: "end",
@@ -293,7 +291,7 @@ function SimpleDialog(props) {
                       }}
                     >
                       Forgot password?
-                    </Typography>
+                    </Typography> */}
                     <Box className="d-flex justify-content-end mt-4">
                       {/* <Box
                         sx={{
@@ -512,11 +510,11 @@ function SimpleDialog(props) {
                         </Box>
                       </FormControl>
                       <Box className="d-flex justify-content-end">
-                        <Box
-                          // onClick={() => {
-                          //   dispatch(toggleLoginDialog());
-                          //   dispatch(toggleForgetPass(true));
-                          // }}
+                        {/* <Box
+                          onClick={() => {
+                            dispatch(toggleLoginDialog());
+                            dispatch(toggleForgetPass(true));
+                          }}
                           sx={{
                             color: "#7671ba",
                             cursor: "pointer",
@@ -525,55 +523,14 @@ function SimpleDialog(props) {
                           }}
                         >
                           Forgot Password ?
-                        </Box>
+                        </Box> */}
                       </Box>
                       <Box className="d-flex justify-content-center">
-                        <div className="btn-conteiner">
-                          <button onClick={sendLogin} className="btn-content">
-                            <span
-                              style={{
-                                fontSize: getFontSizeButtonDependOnWidth(width),
-                              }}
-                              className="btn-title"
-                            >
-                              SIGN IN
-                            </span>
-                            <span className="icon-arrow">
-                              <svg
-                                width="30px"
-                                height="40px"
-                                viewBox="0 0 66 43"
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                              >
-                                <g
-                                  id="arrow"
-                                  stroke="none"
-                                  strokeWidth="1"
-                                  fill="none"
-                                  fillRule="evenodd"
-                                >
-                                  <path
-                                    id="arrow-icon-one"
-                                    d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z"
-                                    fill="#FFFFFF"
-                                  ></path>
-                                  <path
-                                    id="arrow-icon-two"
-                                    d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z"
-                                    fill="#FFFFFF"
-                                  ></path>
-                                  <path
-                                    id="arrow-icon-three"
-                                    d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z"
-                                    fill="#FFFFFF"
-                                  ></path>
-                                </g>
-                              </svg>
-                            </span>
-                          </button>
-                        </div>
+                        <AnimButton
+                          type={"Signin"}
+                          text={"Sign In"}
+                          onClick={sendLogin}
+                        />
                       </Box>
                       <Box className="d-flex justify-content-center mt-4">
                         <Box
@@ -608,6 +565,7 @@ function SimpleDialog(props) {
                     backgroundColor: "#19133e",
                     color: "white",
                     height: "100%",
+                    position: "relative",
                   }}
                 >
                   <img
@@ -621,6 +579,20 @@ function SimpleDialog(props) {
                     height={"100%"}
                     style={{ backgroundColor: "#3a2b6d" }}
                   />
+                  <Box
+                    component={"img"}
+                    src={sign.btnBack}
+                    sx={{
+                      width: "20px",
+                      height: "20px",
+                      position: "absolute",
+                      zIndex: "100",
+                      top: "20px",
+                      right: "20px",
+                      cursor: "pointer",
+                    }}
+                    onClick={handleClose}
+                  ></Box>
                 </Box>
               ) : null}
             </Grid>
@@ -675,12 +647,18 @@ export default function Dialoglg() {
 
   const handleCloseProfile = () => {};
 
+  const { id } = useParams();
+
   const logout = () => {
     socket?.emit("logout");
-    navigate("/home");
     dispatch(closeChatPopup());
     dispatch(removeToken());
     dispatch(clickTabChat(true));
+    if(window.location.pathname?.includes("tournamentDetail")) {
+      socket?.emit("detailTournament", {
+        tournamentId: id,
+      });
+    }
   };
   const { width } = useWindowDimensions();
   const location = useLocation();
@@ -742,7 +720,7 @@ export default function Dialoglg() {
               <Box
                 variant="standard"
                 sx={{
-                  minWidth: "auto",
+                  maxWidth: "115px",
                   position: "relative",
                   display: "flex",
                   flexDirection: "row",
@@ -868,13 +846,7 @@ export default function Dialoglg() {
                 : "d-flex align-items-center user-name"
             }
           >
-            <Dropdown
-            // hidden={
-            //   width < 576 &&
-            //   location &&
-            //   location?.pathname?.includes("packages")
-            // }
-            >
+            <Dropdown>
               <Dropdown.Toggle
                 style={{
                   backgroundColor: "unset",
@@ -887,7 +859,7 @@ export default function Dialoglg() {
                 <Box
                   sx={{
                     backgroundColor: "#68399E",
-                    width: "100px",
+                    width: "110px",
                     display: "flex",
                     borderRadius: "20px",
                   }}
@@ -895,7 +867,7 @@ export default function Dialoglg() {
                   <img
                     style={{
                       borderRadius: 50,
-                      border: "2px solid #68399E",
+                      border: "2px solid #FD9E0F",
                     }}
                     alt="Remy Sharp"
                     src={
@@ -912,18 +884,21 @@ export default function Dialoglg() {
                     flexDirection={"column"}
                     justifyContent={"center"}
                     alignItems={"center"}
+                    sx={{marginLeft:"-5px"}}
                   >
-                    <p
+                    <Typography
                       style={{
-                        width:"65px",
+                        width: "65px",
                         fontSize: "12px",
                         textOverflow: "ellipsis",
                         marginLeft: "1px !important",
-                        overflow:"hidden",
+                        overflow: "hidden",
                       }}
                     >
-                      {userName}
-                    </p>
+                      {userName?.length > 10
+                        ? userName.slice(0, 10) + "..."
+                        : userName}
+                    </Typography>
                     {uPack !== null ? (
                       <Box
                         display={"flex"}
@@ -971,6 +946,7 @@ export default function Dialoglg() {
                       <img
                         style={{
                           borderRadius: 50,
+                          border: "4px solid #FD9E0F",
                         }}
                         alt="Remy Sharp"
                         src={images.undefinedAvatar}
@@ -983,9 +959,11 @@ export default function Dialoglg() {
                         style={{
                           border:
                             width && width > 576
-                              ? "3px solid #9771df"
-                              : "2px solid rgb(189 124 223)",
+                              ? "4px solid #FD9E0F"
+                              : "4px solid #FD9E0F",
                           borderRadius: 50,
+                          width: width < 576 ? "50px" : "100px",
+                          height: width < 576 ? "50px" : "100px",
                         }}
                         alt="Remy Sharp1"
                         src={
@@ -995,14 +973,15 @@ export default function Dialoglg() {
                               userAvatar
                             : images.undefinedAvatar
                         }
-                        height={"100px"}
-                        width={"100px"}
                         className="ava-signin"
                       />
                     )}
                   </Box>
                   <Box display={"flex"} justifyContent={"center"}>
-                    <Typography variant="h4" className="text-white ps-2">
+                    <Typography
+                      sx={{ fontWeight: "700", fontSize: "24px" }}
+                      className="text-white ps-2"
+                    >
                       {userName}
                     </Typography>
                   </Box>
@@ -1035,7 +1014,13 @@ export default function Dialoglg() {
                       justifyContent={"center"}
                       alignItems={"center"}
                     >
-                      <Typography sx={{ color: "white" }}>
+                      <Typography
+                        sx={{
+                          color: "white",
+                          fontSize: "15px",
+                          fontWeight: "300",
+                        }}
+                      >
                         Remaining days: {uPack.remain}
                       </Typography>
                     </Box>
@@ -1072,31 +1057,24 @@ export default function Dialoglg() {
                           width="22"
                           height="22"
                           fill="none"
-                          viewBox="0 0 16 16"
-                          className="me-2"
+                          viewBox="0 0 15 16"
                         >
                           <g
-                            stroke="#fff"
+                            stroke="#A89CD7"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth="1.5"
-                            clipPath="url(#clip0_2061_6420)"
                           >
-                            <path d="M12.027 9.034c-.28.273-.44.666-.4 1.086.06.72.72 1.247 1.44 1.247h1.266v.793a2.512 2.512 0 01-2.506 2.507H4.173a2.512 2.512 0 01-2.506-2.507V7.674a2.512 2.512 0 012.506-2.507h7.654a2.512 2.512 0 012.506 2.507v.96h-1.346c-.374 0-.714.146-.96.4z"></path>
-                            <path d="M1.667 8.273V5.227c0-.794.486-1.5 1.226-1.78l5.294-2A1.267 1.267 0 019.9 2.633v2.534M4.667 8h4.666m5.706 1.313v1.374a.684.684 0 01-.666.68h-1.307c-.72 0-1.38-.527-1.44-1.247-.04-.42.12-.813.4-1.087.247-.253.587-.4.96-.4h1.387a.684.684 0 01.666.68z"></path>
+                            <path d="M11.275 8.969a1.255 1.255 0 00-.375 1.019c.056.675.675 1.168 1.35 1.168h1.188v.744a2.355 2.355 0 01-2.35 2.35H3.913a2.355 2.355 0 01-2.35-2.35V7.694a2.355 2.355 0 012.35-2.35h7.175a2.355 2.355 0 012.35 2.35v.9h-1.263c-.35 0-.669.137-.9.375z"></path>
+                            <path d="M1.563 8.257V5.4a1.78 1.78 0 011.15-1.668l4.962-1.875a1.187 1.187 0 011.606 1.112v2.375M4.375 8H8.75m5.35 1.232v1.287a.642.642 0 01-.626.638H12.25c-.675 0-1.293-.494-1.35-1.17a1.255 1.255 0 01.375-1.018c.232-.237.55-.375.9-.375h1.3c.35.013.625.294.625.638z"></path>
                           </g>
-                          <defs>
-                            <clipPath id="clip0_2061_6420">
-                              <path fill="#fff" d="M0 0H16V16H0z"></path>
-                            </clipPath>
-                          </defs>
                         </svg>
                         <button
                           className="btn-logout"
                           style={{
-                            fontWeight: "500",
-                            marginRight: "20px",
-                            color: "white",
+                            fontWeight: "700",
+                            color: "#A89CD7",
+                            letterSpacing: "0.5px",
                           }}
                         >
                           Wallet
@@ -1123,25 +1101,24 @@ export default function Dialoglg() {
                           width="22"
                           height="22"
                           fill="none"
-                          viewBox="0 0 16 16"
-                          className="me-2"
+                          viewBox="0 0 15 16"
                         >
                           <g>
                             <path
-                              stroke="#fff"
+                              stroke="#A89CD7"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                               strokeWidth="1.5"
-                              d="M8.107 7.247a1.213 1.213 0 00-.22 0A2.947 2.947 0 015.04 4.293c0-1.633 1.32-2.96 2.96-2.96a2.957 2.957 0 11.107 5.914zm-3.334 2.46c-1.613 1.08-1.613 2.84 0 3.913 1.834 1.227 4.84 1.227 6.674 0 1.613-1.08 1.613-2.84 0-3.913-1.827-1.22-4.834-1.22-6.674 0z"
+                              d="M7.603 7.294a1.136 1.136 0 00-.206 0 2.763 2.763 0 01-2.669-2.769A2.773 2.773 0 017.503 1.75a2.772 2.772 0 11.1 5.544zM4.478 9.6c-1.512 1.013-1.512 2.663 0 3.67 1.719 1.15 4.538 1.15 6.256 0 1.513-1.013 1.513-2.663 0-3.67-1.712-1.143-4.53-1.143-6.256 0z"
                             ></path>
                           </g>
                         </svg>
                         <button
                           className="btn-logout"
                           style={{
-                            fontWeight: "500",
-                            marginRight: "20px",
-                            color: "white",
+                            fontWeight: "700",
+                            color: "#A89CD7",
+                            letterSpacing: "0.5px",
                           }}
                         >
                           User Info
@@ -1210,8 +1187,6 @@ export default function Dialoglg() {
                   onClick={logout}
                   className="log-out"
                   sx={{
-                    backgroundColor:
-                      isHovering === true ? "#462A71 !important" : "",
                     margin: " 5px 15px",
                   }}
                   onMouseEnter={handleMouseEnter}
@@ -1220,18 +1195,18 @@ export default function Dialoglg() {
                   <Dropdown.Item style={{ paddingLeft: "5px" }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="22"
-                      height="22"
+                      width="20"
+                      height="20"
                       fill="none"
-                      viewBox="0 0 18 18"
+                      viewBox="0 0 14 14"
                     >
                       <g>
                         <g>
                           <path
-                            fill="#fff"
-                            fillRule="evenodd"
-                            d="M8.424.667a3.7 3.7 0 013.696 3.697v.776a.625.625 0 01-1.25 0v-.776a2.449 2.449 0 00-2.446-2.447H4.36a2.448 2.448 0 00-2.444 2.447v9.274a2.448 2.448 0 002.444 2.446h4.072a2.44 2.44 0 002.437-2.437v-.786a.625.625 0 011.25 0v.786a3.691 3.691 0 01-3.687 3.687H4.36a3.7 3.7 0 01-3.694-3.696V4.364A3.7 3.7 0 014.361.667h4.063zm6.733 5.462l2.44 2.429a.63.63 0 01.06.068l-.06-.068a.61.61 0 01.181.386.56.56 0 01.003.056l-.004.052-.002.033v.004L17.78 9a.63.63 0 01-.19.448l-2.434 2.425a.622.622 0 01-.883-.002.625.625 0 01.001-.883l1.367-1.363h-8.52a.625.625 0 010-1.25h8.522l-1.369-1.361a.624.624 0 11.882-.885z"
-                            clipRule="evenodd"
+                            fill="#A89CD7"
+                            stroke="#A89CD7"
+                            strokeWidth="0.2"
+                            d="M11.188 4.775h0l1.83 1.822s0 0 0 0c.027.027.05.056.071.087h.001a.65.65 0 01.025.042m-1.927-1.95l1.896 2.182m-1.896-2.183a.568.568 0 10-.802.806h0l.854.85m-.052-1.656l.052 1.656m1.875.295a.476.476 0 01.019.037v.001h0l.014.031m-.033-.069s0 0 0 0l-.087.049.088-.048s0 0 0 0zm.033.07l.015.044v.001l.009.034m-.024-.08s0 0 0 0l-.094.037.094-.036s0 0 0 0zm.024.08l.008.044v.002h0l.003.028m-.011-.074s0 0 0 0l-.098.022.098-.021s0 0 0 0zm.011.074l-.1.009m.1-.009v-.001l-.1.01m.1-.009a.494.494 0 01.003.051m-.102-.042a.417.417 0 01.002.038l.1.004m0 0v.008h0a.564.564 0 01-.005.067v.002h0L13.185 7zm-.243.336a.489.489 0 00.063-.075l-7.915-.73a.469.469 0 000 .938h6.249l-.1.1m1.703-.233l-1.825 1.818m1.825-1.818l.07.072.121-.172s0 0 0 0a.465.465 0 01-.018.037v.002a.688.688 0 01-.044.066h0a.596.596 0 01-.058.066h0l-.07-.07zm-1.825 1.818a.467.467 0 01-.663 0 .469.469 0 01.001-.663l.925-.922h-.142m-.121 1.585l.07.071s0 0 0 0a.567.567 0 01-.804-.002.569.569 0 01.002-.803s0 0 0 0l.853-.851m-.121 1.585l.122-2.723m0 1.138H5.09a.569.569 0 010-1.138h6.15m1.944.577h0l-.1-.008.1.008zm0 0l-.004.052.004-.052zM8.94 3.522A2.876 2.876 0 006.068.65H3.02A2.875 2.875 0 00.15 3.523v6.955a2.874 2.874 0 002.87 2.872h3.054a2.869 2.869 0 002.866-2.865v-.59a.569.569 0 00-1.137 0v.59a1.73 1.73 0 01-1.729 1.728H3.021a1.736 1.736 0 01-1.733-1.735V3.523c0-.958.777-1.736 1.733-1.736h3.046c.957 0 1.736.778 1.736 1.736v.582a.569.569 0 001.137 0v-.583z"
                           ></path>
                         </g>
                       </g>
@@ -1239,9 +1214,10 @@ export default function Dialoglg() {
                     <button
                       className="btn-logout"
                       style={{
-                        fontWeight: "500",
-                        color: "white",
+                        fontWeight: "700",
+                        color: "#A89CD7",
                         marginBottom: "10px",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       Logout

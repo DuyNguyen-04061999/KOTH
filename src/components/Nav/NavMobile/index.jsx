@@ -1,23 +1,23 @@
 import { Badge } from "@mui/material";
 import { useEffect, useState } from "react";
-import { popup } from "../../../utils/images";
-import "./index.scss";
-import MenuChat from "../../MenuMobile/Chat";
-import MenuBrowser from "../../MenuMobile/Browser";
-import MenuSearch from "../../MenuMobile/Search";
-import { useLocation, useNavigate } from "react-router-dom";
-import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReducer";
+import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { getAppType } from "../../../utils/helper";
-import { setBadgeChat, showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReducer";
+import { popup } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import MenuBrowser from "../../MenuMobile/Browser";
+import MenuChat from "../../MenuMobile/Chat";
+import MenuSearch from "../../MenuMobile/Search";
+import "./index.scss";
 
 export default function NavMobile() {
   const { token } = useSelector((state) => state.authReducer);
   const { chatWorld, badgechat } = useSelector((state) => state.chatReducer);
-  
+
   // const { device } = useSelector((state) => state.deviceReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
@@ -40,7 +40,6 @@ export default function NavMobile() {
   //   dispatch(setBadgeChat(false));
   // }, [chatWorld]);
 
-  const lengthChat = chatWorld.filter((e) => e.messageType === "World");
   const { pathname } = useLocation();
 
   return (

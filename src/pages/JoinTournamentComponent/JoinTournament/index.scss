@@ -140,10 +140,9 @@ h6 {
   }
 }
 
-
 .btn-conteiner {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   --color-text: #ffffff;
   --color-background: linear-gradient(
     0deg,
@@ -154,16 +153,14 @@ h6 {
   --color-shadow: rgba(138, 57, 240, 1);
 }
 
-
-
-.button-join-hover{
+.button-join-hover {
   &:hover {
     transition: 0.5s;
-  -webkit-animation: btn-content 1s;
-  animation: btn-content 1s;
-  outline: 0.1em solid transparent;
-  outline-offset: 0.2em;
-  box-shadow: 0 0 0.4em 0 $black;
+    -webkit-animation: btn-content 1s;
+    animation: btn-content 1s;
+    outline: 0.1em solid transparent;
+    outline-offset: 0.2em;
+    box-shadow: 0 0 0.4em 0 $black;
   }
 }
 
@@ -180,7 +177,6 @@ h6 {
     64px 0 0 1px $black, 68px 0 0 1px $black, 72px 0 0 1px $black,
     74px 0 0 1px $black, 77px 0 0 1px $black, 81px 0 0 1px $black;
 }
-
 
 @-webkit-keyframes btn-content {
   0% {

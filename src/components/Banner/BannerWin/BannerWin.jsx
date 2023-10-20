@@ -1,19 +1,9 @@
-import { useSelector } from "react-redux";
-import CountDownBannerHot from "../../../pages/NewHomePageComponent/index";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import moment from "moment/moment";
 import { Box, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { imageHome } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function BannerWin(props) {
-  const { tournamentName, sponsorName, userAvatar, userName } = props;
-  const { width } = useWindowDimensions();
-  const { biggestEndTour, hotWeekTour } = useSelector(
-    (state) => state.tournamentReducer
-  );
-
-  const navigate = useNavigate();
+  const { rewardName, sponsorName, userAvatar, userName } = props;
 
   return (
     <Box
@@ -48,6 +38,7 @@ export default function BannerWin(props) {
           }}
         >
           <img
+            alt="..."
             style={{
               width: "100%",
               height: "100%",
@@ -116,7 +107,7 @@ export default function BannerWin(props) {
               width: "max-content",
             }}
           >
-            Big Tournament Winner
+            Big Promotion Winner
           </Typography>
         </Box>
         <Box>
@@ -145,29 +136,29 @@ export default function BannerWin(props) {
         >
           <Box
             sx={{
-              fontSize: "40px",
-              color: "transparent",
-              WebkitTextStroke: "4px #ED3B14",
+              fontSize: "38px",
+              WebkitTextStroke: "0.1px #f5c40c",
+              color: " #ED3B14",
               width: "100%",
+              fontFamily: "Cyntho Next",
               position: "relative",
-              fontWeight: 800,
-              width: "100%",
+              fontWeight: "800 !important",
               wordWrap: "break-word",
               overflow: "hidden",
               lineHeight: 1.2,
               textAlign: "center",
-              maxHeight: "100px",
+              maxHeight: "80px",
             }}
           >
-            {tournamentName}
-            <Typography
+            {rewardName}
+            {/* <Typography
               sx={{
                 fontWeight: 800,
                 position: "absolute",
                 top: "50%",
-                left: "48%",
+                left: "50%",
                 transform: "translate(-50%,-50%)",
-                fontSize: "39px",
+                fontSize: "35px",
                 color: "white",
                 WebkitTextStroke: "2px rgba(251, 176, 21, 1)  ",
                 width: "100%",
@@ -175,11 +166,11 @@ export default function BannerWin(props) {
                 overflow: "hidden",
                 lineHeight: 1.2,
                 textAlign: "center",
-                maxHeight: "100px",
+                maxHeight: "80px",
               }}
             >
-              {tournamentName}
-            </Typography>
+              {rewardName}
+            </Typography> */}
           </Box>
         </Box>
         <Box

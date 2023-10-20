@@ -1,16 +1,14 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useState } from "react";
 import { Box, Container } from "@mui/material";
-import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
-import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
-import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
-import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AdminPanel from "../../../components/Admin/AdminPanel/AdminPanel";
-import NestedTable from "../../../components/Admin/NestedTable/NestedTable";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailAccountDialogComponent from "../../../components/Admin/Dialog/DetailAccountDialogComponent";
+import NestedTable from "../../../components/Admin/NestedTable/NestedTable";
+import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const ManageDistributor = () => {
   const { roles } = useSelector((state) => state.adminAuthReducer);
@@ -105,7 +103,7 @@ const ManageDistributor = () => {
           "Code/Link",
           "Manager",
           "Players",
-          "Revenue By",
+          "Referred By",
           "Revenue",
           "Register Date",
           "Last Login",
@@ -126,18 +124,18 @@ const ManageDistributor = () => {
       }
     } else {
       if (roles?.includes("master")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
 
       if (roles?.includes("distributor")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
     }
-  }, [roles]);
+  }, [roles, width]);
 
   return (
     <Container>

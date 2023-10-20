@@ -1,14 +1,12 @@
-import React from "react";
+import { Box, Container } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getListRef } from "../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
-import { getListDistributor } from "../../redux-saga-middleware_admin/reducers/adminMasterReducer";
-import { getListSub } from "../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
-import { getListEndUser } from "../../redux-saga-middleware_admin/reducers/adminAgentReducer";
-import { useState } from "react";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
-import { Box, Button, Container } from "@mui/material";
 import NestedTable from "../../components/Admin/NestedTable/NestedTable";
+import { getListEndUser } from "../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { getListSub } from "../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListDistributor } from "../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { getListRef } from "../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
 const HomePage = () => {
@@ -117,18 +115,18 @@ const HomePage = () => {
       }
     } else {
       if (roles?.includes("master")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
 
       if (roles?.includes("distributor")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Account", "Level", "Balance"]);
+        setHeaderList(["Account", "Level", "Revenue"]);
       }
     }
-  }, [roles]);
+  }, [roles, width]);
 
   return (
     <Container>

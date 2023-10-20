@@ -1,41 +1,38 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import {
   Edit,
-  RemoveCircle,
-  RemoveCircleOutlineOutlined,
   RemoveOutlined,
 } from "@mui/icons-material";
 import { Card } from "react-bootstrap";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const DeleteSkinPage = () => {
   const game = useParams();
-  const { token } = useSelector((state) => state.authReducer);
+  // const { token } = useSelector((state) => state.authReducer);
   const [skins, setSkins] = useState([]);
-  const [fetchSkin, setFetchSkin] = useState(false);
-  const navigate = useNavigate();
+  // const [fetchSkin, setFetchSkin] = useState(false);
 
   useEffect(() => {
     const getListSkinGame = async () => {
       try {
-        setFetchSkin(true);
+        // setFetchSkin(true);
         const response = await axios.get(
           process.env.REACT_APP_END_POINT + `/api/games/${game.id}/skins/`
         );
         if (response?.data || response?.status === 200) {
           setSkins(response?.data);
-          setFetchSkin(false);
+          // setFetchSkin(false);
         }
       } catch (error) {
         console.log(error);
-        setFetchSkin(false);
+        // setFetchSkin(false);
       }
     };
     getListSkinGame();
-  }, []);
+  }, [game.id]);
 
   const handleDeleteSkin = async (id) => {
     try {

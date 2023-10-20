@@ -1,15 +1,28 @@
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
-import { Typography } from "@mui/material";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { useRef } from "react";
-// import { Line } from "rc-progress";
-// import ReactPlayer from "react-player";
 import "./index.scss";
+
+const WarningIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      fill="none"
+      viewBox="0 0 12 12"
+    >
+      <path
+        fill="#F3D886"
+        d="M6.01 11.367c1.374 0 2.749.004 4.125 0 .977-.005 1.678-.58 1.841-1.505.078-.437-.043-.835-.25-1.217-.907-1.665-1.81-3.331-2.709-5-.473-.875-.953-1.747-1.419-2.625C7.251.366 6.723-.005 5.985 0c-.729.005-1.244.377-1.59 1.021C3.019 3.572 1.64 6.121.259 8.668c-.446.825-.307 1.685.348 2.264.365.324.801.436 1.278.436 1.375-.002 2.75-.002 4.124 0zM5.294 5.37V3.674c0-.48.284-.79.711-.786.415.004.693.311.694.779.002 1.122.002 2.245 0 3.366 0 .471-.295.798-.71.792-.409-.006-.692-.323-.695-.785-.003-.556 0-1.113 0-1.671zm0 3.866a.708.708 0 01.708-.65.702.702 0 01.695.662.708.708 0 01-.707.65.702.702 0 01-.696-.661v-.001z"
+      ></path>
+    </svg>
+  )
+}
+
 export default function VideoComponent(props) {
   const { detailTournament, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
@@ -17,16 +30,6 @@ export default function VideoComponent(props) {
   const { width } = useWindowDimensions();
   const [second, setSeconds] = useState(null);
   const videoRef = useRef(null);
-  // useEffect(() => {
-  //   let timeInterval = setInterval(() => {
-  //     if (second > 0) {
-  //       setSeconds(second - 1);
-  //     }
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(timeInterval);
-  //   };
-  // }, [second]);
 
   useEffect(() => {
     if (videoRef && videoRef.current) {
@@ -68,6 +71,7 @@ export default function VideoComponent(props) {
         }}
       >
         <video
+          autoPlay={true}
           width={"100%"}
           ref={videoRef}
           playsInline={true}
@@ -105,12 +109,12 @@ export default function VideoComponent(props) {
                   orientation === "portrait")
                   ? "absolute"
                   : "fixed",
-              top: width < 576 ? "50%" : "80%",
+              top: width < 576 ? "35%" : "80%",
               right: "20px",
               display: "flex",
               alignItems: "center",
               padding: "10px",
-              backgroundColor: "#000",
+              backgroundColor: second > 0 ? "rgba(0,0,0,30%)" : "#000",
               border: "2px solid #ffff",
               cursor: "pointer",
               zIndex: "1000000000000",
@@ -135,21 +139,33 @@ export default function VideoComponent(props) {
             ></i>
           </Box>
         )}
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            position: "absolute",
-            bottom:
-              device === "Desktop"
-                ? "50px"
-                : orientation === "portrait"
-                ? "10px"
-                : "100px",
-          }}
-        ></Box>
+        {width < 576 && (
+          <Box component={"div"} className="mt-3 p-2">
+            <Box component={"div"} className="d-flex align-items-center">
+              <WarningIcon/>
+              <Typography sx={{
+                color: "#F3D886",
+                fontWeight: "600"
+              }} className="ms-2">
+                Causion
+              </Typography>
+            </Box>
+            <Box className="text-center">
+              <Typography sx={{
+                color: "#F3D886",
+                textAlign: "left",
+                marginLeft: "0px !important",
+                fontSize: "12px"
+              }}>
+                If you are using an iPhone with the iOS 16 operating system or higher, there may be instances where you cannot access the game. If an error notification appear when you are loading the game and cannot access it, please close the browser and reopen it. 
+                Your extras will not be lost when you close the browser. 
+                We apologize for any inconvenience
+              </Typography>
+            </Box>
+        </Box>
+        )}
       </Box>
+      
     </Box>
   );
 }

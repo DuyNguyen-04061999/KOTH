@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { imageDesktop } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 export default function NewFooter() {
   const { width } = useWindowDimensions();
@@ -15,7 +15,6 @@ export default function NewFooter() {
     color: "#fff",
   };
 
-  const { tabHelpCenter } = useSelector((state) => state.helpcenterReducer);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -41,11 +40,20 @@ export default function NewFooter() {
           }}
         >
           <Typography
-            sx={{ color: "#ffff", fontSize: width < 576 ? "16px" : "25px", textAlign:"center" }}
+            sx={{
+              color: "#ffff",
+              fontSize: width < 576 ? "16px" : "25px",
+              textAlign: "center",
+            }}
           >
             Support
           </Typography>
-          <Box sx={{ marginTop: width < 1024 ? "24px" : "16px", marginBottom: width < 1024 ? "40px" : "" }}>
+          <Box
+            sx={{
+              marginTop: width < 1024 ? "24px" : "16px",
+              marginBottom: width < 1024 ? "40px" : "",
+            }}
+          >
             {" "}
             <Box
               sx={{
@@ -127,10 +135,10 @@ export default function NewFooter() {
             fontSize: width < 576 ? "12px" : "16px",
             lineHeight: "normal",
             marginTop: "20px",
-            textAlign:"center"
+            textAlign: "center",
           }}
         >
-          "Experience the thrill of gaming at Play4Promo, where tournaments,
+          "Experience the thrill of gaming at Play4Promo, where promotions,
           gameplay, and your dedication unlock exciting voucher rewards. Our
           policies guarantee a seamless and rewarding voucher redemption process
           for an enhanced gaming journey."
@@ -147,7 +155,8 @@ export default function NewFooter() {
             marginBottom: "30px !important",
           }}
         >
-          Copyright © 2023 Play4Promo. All rights reserved. | Version {process.env.REACT_APP_VERSION || "0.0"}
+          Copyright © 2023 Play4Promo. All rights reserved. | Version{" "}
+          {process.env.REACT_APP_VERSION || "0.0"}
         </Typography>
       </Box>
     </Box>

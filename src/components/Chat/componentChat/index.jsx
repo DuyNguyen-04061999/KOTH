@@ -1,13 +1,12 @@
-import { useRef, useState } from "react";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { useEffect } from "react";
-import { Box, Avatar, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import moment from "moment";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { images } from "../../../utils/images";
+import { useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
-import { useNavigate } from "react-router-dom";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ComponentChat() {
   const bottomRef = useRef(null);
@@ -16,6 +15,9 @@ export default function ComponentChat() {
   const { chatWorld, contacter, chatPopup } = useSelector(
     (state) => state.chatReducer
   );
+  const [showScrollToBottomButton, setShowScrollToBottomButton] =
+    useState(true);
+  const chatBox = useRef(null);
 
   const { width, height } = useWindowDimensions();
   const { userName } = useSelector((state) => state.authReducer);
@@ -24,6 +26,41 @@ export default function ComponentChat() {
   const [roomId] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isScrolledToBottom = () => {
+    if (chatBox.current) {
+      const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
+      if (scrollTop + clientHeight + 100 >= scrollHeight) {
+        return true;
+      } else return false;
+    }
+    return false;
+  };
+
+  const handleScroll = () => {
+    setShowScrollToBottomButton(!isScrolledToBottom());
+  };
+
+  const scrollToBottom = () => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView();
+      chatBox.current.removeEventListener("scroll", handleScroll);
+    }
+  };
+
+  useEffect(() => {
+    if (chatBox.current) {
+      chatBox.current.addEventListener("scroll", handleScroll);
+    }
+
+    // Clean up the event listener
+    return () => {
+      if (chatBox.current) {
+        chatBox.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [friendMessages, chatPopup]);
@@ -209,7 +246,6 @@ export default function ComponentChat() {
                       width: "100%",
                       wordWrap: "break-word",
                       fontWeight: "500 !important",
-                      
                     }}
                   >
                     {e?.messageContent}
@@ -240,7 +276,6 @@ export default function ComponentChat() {
                     color: "#7C81F2",
                     borderRadius: "5px",
                     fontWeight: "500 !important",
-                    
                   }}
                 >
                   <b style={{}}>{e?.messageFromName}</b>
@@ -252,7 +287,6 @@ export default function ComponentChat() {
                       marginLeft: "15px",
                       fontSize: "10px",
                       fontWeight: "500 !important",
-                      
                     }}
                   >
                     {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
@@ -394,7 +428,9 @@ export default function ComponentChat() {
 
   return (
     <Box
+      ref={chatBox}
       sx={{
+        scrollBehavior: "smooth",
         minHeight: checkHeightResponsive(),
         maxHeight: checkHeightResponsive(),
         // minWidth: checkWidthResponsive(),
@@ -417,8 +453,54 @@ export default function ComponentChat() {
         },
       }}
     >
+      {showScrollToBottomButton && (
+        <ScrollToBottom onClick={() => scrollToBottom()} />
+      )}
       {renderChat}
       <span ref={bottomRef}></span>
     </Box>
   );
 }
+
+const ScrollToBottom = ({ onClick }) => {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        bottom: "120px",
+        right: "4px",
+        transform: "translate(-50%,-50%)",
+        backgroundColor: "rgba(120, 72, 237, 1)",
+        width: "36px",
+        height: "36px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: "24px",
+        cursor: "pointer",
+        ":hover": {
+          backgroundColor: "rgba(120, 72, 237, 1)",
+        },
+        boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.40)",
+      }}
+      onClick={onClick}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        fill="none"
+        viewBox="0 0 14 14"
+      >
+        <path
+          fill="#fff"
+          d="M6.97 11.143c.1-.095.189-.176.273-.26C8.822 9.295 10.4 7.708 11.976 6.12c.342-.346.734-.464 1.181-.313.73.245.941 1.18.4 1.75-.461.483-.94.95-1.411 1.423l-4.313 4.335c-.578.582-1.151.579-1.733-.006L.35 7.527c-.377-.377-.453-.88-.211-1.315a1.021 1.021 0 011.194-.5c.217.075.414.2.575.366a1082.8 1082.8 0 014.788 4.803c.085.089.17.167.273.262z"
+        ></path>
+        <path
+          fill="#fff"
+          d="M6.94 5.428c.133-.128.221-.21.307-.295L11.98.375c.341-.346.733-.461 1.181-.31.69.235.925 1.11.463 1.676-.056.067-.123.13-.185.193L7.833 7.57c-.578.58-1.152.577-1.734-.008L.422 1.856C.066 1.496-.02.983.196.57A1.007 1.007 0 011.342.033c.242.069.463.2.64.38 1.572 1.56 3.131 3.138 4.693 4.706.086.088.16.187.264.309z"
+        ></path>
+      </svg>
+    </Box>
+  );
+};

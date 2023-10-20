@@ -1,14 +1,15 @@
 import { Box, Typography } from "@mui/material";
+import moment from "moment";
 import React from "react";
-import { imageHome } from "../../../utils/images";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useNavigate } from "react-router-dom";
 import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
-import moment from "moment";
+import { imageHome } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const BannerTour = (props) => {
   const {
     tournamentName,
+    rewardName,
     sponsorName,
     userAvatar,
     userName,
@@ -39,12 +40,14 @@ const BannerTour = (props) => {
           alignItems: "center",
         }}
       >
-        <Box sx={{ 
-          marginBottom: "8px",
-          padding:"6px",
-          backgroundColor:"#FD9800",
-          borderRadius:"10px"
-       }}>
+        <Box
+          sx={{
+            marginBottom: "8px",
+            padding: "6px",
+            backgroundColor: "#FD9800",
+            borderRadius: "10px",
+          }}
+        >
           <Typography
             sx={{
               color: "white",
@@ -53,7 +56,7 @@ const BannerTour = (props) => {
               fontWeight: 700,
             }}
           >
-            Tournament of the week
+            Promotion of the week
           </Typography>
         </Box>
         <Box>
@@ -73,7 +76,7 @@ const BannerTour = (props) => {
           <Typography
             sx={{
               width: "100%",
-              fontSize: "50px",
+              fontSize: "42px",
               fontWeight: 800,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
@@ -81,12 +84,12 @@ const BannerTour = (props) => {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               lineHeight: "0.9",
-              height: "140px",
+              height: "120px",
               overflow: "hidden",
-              textAlign:"center"
+              textAlign: "center",
             }}
           >
-            {tournamentName}
+            {rewardName}
           </Typography>
         </Box>
         <Box sx={{ marginBottom: "8px" }}>
@@ -98,7 +101,7 @@ const BannerTour = (props) => {
               fontWeight: 700,
             }}
           >
-            Sponsored  by: {sponsorName}
+            Sponsored by: {sponsorName}
           </Typography>
         </Box>
         <Box
@@ -141,6 +144,7 @@ const BannerTour = (props) => {
               fontSize: width < 1024 ? "12px" : "16px",
               cursor: "pointer",
               fontWeight: 600,
+              width: width < 576 ?  "70px" : "auto"
             }}
           >
             Play now
@@ -225,11 +229,12 @@ const BannerTour = (props) => {
             }}
           >
             <img
+              alt="..."
               style={{
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius:"10px"
+                borderRadius: "10px",
               }}
               src={userAvatar}
             ></img>

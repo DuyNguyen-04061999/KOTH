@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import InspirationTTF from "../../assets/font/CynthoNextMedium.otf";
 import {
   Box,
   Container,
@@ -13,7 +12,6 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 import {
   //  imageDesktop,
   images,
-  video,
 } from "../../utils/images";
 import SliderTime from "../../components/SliderTime";
 import { useState } from "react";

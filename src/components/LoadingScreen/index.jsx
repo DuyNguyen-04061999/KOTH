@@ -1,29 +1,10 @@
 import {
   Box,
-  CssBaseline,
-  ThemeProvider,
-  Typography,
-  createTheme,
+  Typography
 } from "@mui/material";
 import React from "react";
 import { images } from "../../utils/images";
-import InspirationTTF from "../../assets/font/CynthoNextMedium.otf";
 
-const theme = createTheme({
-  typography: {
-    
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        // "@font-face": {
-        //   fontFamily: "Cyntho Next",
-        //   src: `url(${InspirationTTF}) format("truetype")`,
-        // },
-      },
-    },
-  },
-});
 export default function LoadingScreen({ loadingProgression }) {
   return (
     <Box

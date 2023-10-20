@@ -1,32 +1,13 @@
 import {
   Box,
-  CssBaseline,
   Dialog,
-  ThemeProvider,
-  Typography,
-  createTheme,
+  Typography
 } from "@mui/material";
+import moment from "moment";
 import React from "react";
 import { images } from "../../../utils/images";
-import InspirationTTF from "../../../assets/font/CynthoNextSemiBold.otf";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import moment from "moment";
-import { sliceString } from "../../../utils/helper";
-const theme = createTheme({
-  typography: {
-    
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        // "@font-face": {
-        //   fontFamily: "Cyntho Next",
-        //   src: `url(${InspirationTTF}) format("truetype")`,
-        // },
-      },
-    },
-  },
-});
+
 
 function isJson(str) {
   try {
@@ -46,9 +27,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
     color: "#fff",
   };
   return (
-    <ThemeProvider theme={theme}>
-      {" "}
-      <CssBaseline />
+
       <Dialog
         fullScreen={width < 576 ? true : false}
         PaperProps={{
@@ -126,7 +105,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       : images.bannerwin
                   }
                 ></Box>
-                <Box className="ms-2">
+                <Box className="ms-2 mt-2">
                   <Typography
                     sx={{
                       fontSize: "12px",
@@ -138,10 +117,9 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                     <Typography
                       component={"span"}
                       sx={{
-                        fontSize: "16px",
+                        fontSize: "14px",
                         marginLeft: "0px !important",
                         textAlign: "start",
-                        textTransform: "uppercase"
                       }}
                     >
                       {" "}
@@ -155,7 +133,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                   ></Box> */}
                   <Typography
                     sx={{
-                      fontSize: "16px",
+                      fontSize: "14px",
                       marginLeft: "0px !important",
                       textAlign: "start",
                       color: "#BE48ED",
@@ -164,7 +142,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                       overflow: "hidden",
                       // textOverflow: "ellipsis",
                       textTransform: "uppercase",
-                      marginTop: "4px"
+                      marginTop: "4px",
                     }}
                   >
                     {detail?.tournamentInfors?.rewardInfors?.rewardTicketName ||
@@ -185,14 +163,14 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 {detail?.tournamentInfors?.owner?.brandName} : Valid for
                 purchases of {detail?.tournamentInfors?.owner?.brandName}
               </Typography> */}
-              <Box sx={{ marginTop: "20px" }}>
-                <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-                Valid by:
+              <Box sx={{ marginTop: "20px" }} className="d-flex align-items-center">
+                <Typography sx={{ textAlign: "start", fontSize: "14px" }}>
+                  Valid by:
                 </Typography>
-                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                <Typography sx={{ textAlign: "start", fontSize: "13px", fontWeight: 600 }}>
                   {moment(
                     detail?.tournamentInfors?.rewardInfors?.rewardValidityDate
-                  )?.format("DD-MM-YYYY") || "01-08-2023 - 29-08-2023"}
+                  )?.format("MM/DD/YYYY") || "01-08-2023 - 29-08-2023"}
                 </Typography>
               </Box>
               <Box sx={{ marginTop: "12px" }}>
@@ -273,7 +251,8 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                     textAlign: "start",
                   }}
                 >
-                  Sponsored  by {detail?.tournamentInfors?.owner?.brandName || ""}
+                  Sponsored by{" "}
+                  {detail?.tournamentInfors?.owner?.brandName || ""}
                 </Typography>
                 {/* <Box
                   sx={{ width: "50px" }}
@@ -283,15 +262,14 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
                 ></Box> */}
                 <Typography
                   sx={{
-                    fontSize: "26px",
+                    fontSize: "medium",
                     marginLeft: "0px !important",
                     textAlign: "start",
                     color: "#BE48ED",
                   }}
                 >
-                  {sliceString(
-                    detail?.tournamentInfors?.rewardInfors?.rewardTicketName
-                  ) || "Discount 10%"}
+                  {detail?.tournamentInfors?.rewardInfors?.rewardTicketName ||
+                    "Discount 10%"}
                 </Typography>
               </Box>
             </Box>
@@ -310,9 +288,7 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
             </Typography> */}
             <Box sx={{ marginTop: "20px" }}>
               <Typography sx={{ textAlign: "start", fontSize: "16px" }}>
-              Valid by:
-              </Typography>
-              <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                Valid by:{" "}
                 {moment(
                   detail?.tournamentInfors?.rewardInfors?.rewardValidityDate
                 )?.format("DD-MM-YYYY") || "01-08-2023 - 29-08-2023"}
@@ -358,6 +334,5 @@ export default function DetailVoucher({ open, handleOnClose, detail }) {
           </Box>
         )}
       </Dialog>
-    </ThemeProvider>
   );
 }

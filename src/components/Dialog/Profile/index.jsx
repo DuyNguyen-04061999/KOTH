@@ -1,24 +1,24 @@
+import { PersonAddAlt1, PersonRemove } from "@mui/icons-material";
+import LeftIcon from "@mui/icons-material/ArrowBackIos";
+import CloseIcon from "@mui/icons-material/Close";
 import {
-  Dialog,
   Box,
-  Slide,
-  Typography,
+  Dialog,
   FormControl,
   Input,
+  Slide,
+  Typography,
 } from "@mui/material";
-import { forwardRef, useEffect, useState } from "react";
-import { images } from "../../../utils/images";
-import "./index.scss";
-import CloseIcon from "@mui/icons-material/Close";
-import LeftIcon from "@mui/icons-material/ArrowBackIos";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import copy from "copy-to-clipboard";
-import SettingProfile from "./SettingProfile";
-import { useDispatch, useSelector } from "react-redux";
+import { forwardRef, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
-import { PersonAddAlt1, PersonRemove } from "@mui/icons-material";
-import { ToastContainer, toast } from "react-toastify";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import AnimButton from "../../AnimButton";
+import SettingProfile from "./SettingProfile";
+import "./index.scss";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -26,14 +26,14 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function DialogProfile(props) {
   const { width, height } = useWindowDimensions();
-  const dispatch = useDispatch();
+  
   const { open, handleShowProfile } = props;
   const { userName, token, uPack } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
   const { id, email, refCode, phone, userNameProfile, avatarUrl } = useSelector(
     (state) => state.profileReducer
   );
-  
+
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -49,6 +49,10 @@ export default function DialogProfile(props) {
     return false;
   };
 
+  const setTabEdit = () => {
+    setTab(1);
+  };
+
   const renderUserInfo = () => {
     return (
       <Box sx={{ height: "100%" }}>
@@ -62,9 +66,16 @@ export default function DialogProfile(props) {
                   : images.undefinedAvatar
               }
               width={95}
-              style={{ borderRadius: "50%", height: "95px" }}
+              style={{
+                borderRadius: "50%",
+                height: "95px",
+                border: "4px solid #FD9E0F",
+              }}
             />
-            <Typography component={"h3"} className="mt-2 fs-3 text-bold">
+            <Typography
+              className="mt-2 fs-3"
+              sx={{ fontWeight: "700", fontSize: "24px" }}
+            >
               {userNameProfile}
             </Typography>
             {userNameProfile === userName && token && (
@@ -102,7 +113,13 @@ export default function DialogProfile(props) {
                     justifyContent={"center"}
                     alignItems={"center"}
                   >
-                    <Typography sx={{ color: "white" }}>
+                    <Typography
+                      sx={{
+                        color: "white",
+                        fontSize: "15px",
+                        fontWeight: "300",
+                      }}
+                    >
                       Remaining days: {uPack.remain}
                     </Typography>
                   </Box>
@@ -159,33 +176,6 @@ export default function DialogProfile(props) {
                 </Box>
               ))}
           </Box>
-          {userNameProfile === userName && token && (
-            <Box
-              className="position-absolute p-1"
-              sx={{
-                top: 0,
-                right: 0,
-                cursor: "pointer",
-              }}
-            >
-              <button
-                className="edit-button"
-                onClick={() => {
-                  setTab(1);
-                }}
-              >
-                <i className="fa-sharp fa-solid fa-pen edit-svgIcon"></i>
-              </button>
-
-              {/* <img
-                src={images.editbutton}
-                alt=""
-                onClick={() => {
-                  setTab(1);
-                }}
-              /> */}
-            </Box>
-          )}
         </Box>
         <Box>
           <Box component={"form"} className="mt-2">
@@ -417,6 +407,20 @@ export default function DialogProfile(props) {
                     </Box>
                   </FormControl>
                 </Box>
+                {userNameProfile === userName && token && (
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      marginTop: "40px",
+                    }}
+                  >
+                    <AnimButton
+                      text={"Edit"}
+                      type={"primary"}
+                      onClick={setTabEdit}
+                    />
+                  </Box>
+                )}
               </Box>
             )}
           </Box>
@@ -463,15 +467,12 @@ export default function DialogProfile(props) {
               height: height > 800 ? "auto" : "auto",
             }}
           >
-            <Box
-              className="box-head"
-              p={1}
-              display={"flex"}
-              justifyContent={"space-between"}
-              sx={{ backgroundColor: "#38285b" }}
-            >
-              <Box display={"flex"} alignItems={"center"}>
-                {tab === 1 && (
+            <Box sx={{
+              display:"flex",
+              justifyContent:tab === 1 ? "space-between" : "flex-end",
+              padding:"15px"
+            }}>
+              {tab === 1 && (
                   <LeftIcon
                     className="cursor-pointer"
                     sx={{
@@ -482,10 +483,6 @@ export default function DialogProfile(props) {
                     }}
                   />
                 )}
-                <h4 className="text-white">
-                  {tab === 0 ? "User information" : "Profile Setting"}
-                </h4>
-              </Box>
               <CloseIcon
                 style={{
                   color: "#fff",
@@ -496,6 +493,15 @@ export default function DialogProfile(props) {
                   handleShowProfile();
                 }}
               />
+            </Box>
+            <Box
+              className="box-head"
+            >
+              <Box>
+                <h4 className="text-white text-center">
+                  {tab === 0 ? "User information" : "Profile Setting"}
+                </h4>
+              </Box>
             </Box>
             <Box className="box-body text-white" sx={{ height: "100%" }}>
               {tab === 0 ? (

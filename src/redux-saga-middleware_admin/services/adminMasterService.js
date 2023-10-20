@@ -1,4 +1,4 @@
-import { data } from "jquery";
+// import { data } from "jquery";
 import { ADMIN_API } from "../axios/admin_api";
 
 export class ADMIN_MASTER_SERVICE {
@@ -40,9 +40,27 @@ export class ADMIN_MASTER_SERVICE {
           queryParams.push(`type=${type}`);
         }
     
+        
         const queryString = queryParams.join("&");
     
         finalQueryString = queryParams.length > 0 ? `?${queryString}` : "";
+
+        if(!window.location.pathname?.includes("report")) {
+          if(finalQueryString) {
+            finalQueryString =  finalQueryString + "&revenue=1"
+          } else {
+            finalQueryString = finalQueryString + "?revenue=1"
+          }
+        }
+
+    } else {
+      if(!window.location.pathname?.includes("report")) {
+        if(finalQueryString) {
+          finalQueryString =  finalQueryString + "&revenue=1"
+        } else {
+          finalQueryString = finalQueryString + "?revenue=1"
+        }
+      }
     }
     
     const res = ADMIN_API.get(

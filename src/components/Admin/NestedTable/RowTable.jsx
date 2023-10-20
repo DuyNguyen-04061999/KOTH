@@ -1,26 +1,21 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableRow, { tableRowClasses } from "@mui/material/TableRow";
-import styled from "styled-components";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { useState } from "react";
 import { Button } from "@mui/material";
-import moment from "moment/moment";
+import Box from "@mui/material/Box";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import * as React from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 import { useLocation } from "react-router";
+import styled from "styled-components";
+import { openGivePerDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { updateDataAgents } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
 import {
   checkRouteIsCreate,
   checkRouteIsManage,
   trimAndCamelCase,
 } from "../../../utils/Admin/helper";
-import { ElectricalServices } from "@mui/icons-material";
-import { openGivePerDialog } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import { updateDataAgents } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const MinusIconSVG = () => {
   return (
@@ -66,28 +61,31 @@ const AddIconSVG = () => {
   );
 };
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#fff",
-    color: "#7c81f3",
-    fontWeight: "bolder",
-    fontSize: 13,
-    border: "none",
-    padding: "10px 0px",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 12,
-    border: "none",
-    fontWeight: 500,
-    lineHeight: "16px",
-    maxWidth: "150px",
-    overflow: "scroll",
-  },
-  ":first-child": {
-    color: "red",
-    paddingLeft: "10px !important",
-  },
-}));
+const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
+  
+  return ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: "#fff",
+      color: "#7c81f3",
+      fontWeight: "bolder",
+      fontSize: 13,
+      border: "none",
+      padding: "10px 0px",
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 12,
+      border: "none",
+      fontWeight: 500,
+      lineHeight: "16px",
+      maxWidth: "150px",
+      overflow: "scroll",
+    },
+    ":first-child": {
+      color: "#fc3c3c",
+      paddingLeft: "10px !important",
+    },
+  })
+});
 
 export const RowTable = (props) => {
   const { row, children, index, headers } = props;
@@ -113,12 +111,12 @@ export const RowTable = (props) => {
     <React.Fragment>
       <TableRow
         onClick={() => {
-          if (width < 576 && row?.action) {
+          if (width < 576 && row?.action && window.location.pathname?.includes("manage")) {
             dispatch(updateDetailAccount(row));
           }
         }}
         sx={{
-          ".MuiTableCell-root": checkRouteIsManage(pathname) || checkRouteIsCreate(pathname) && {
+          ".MuiTableCell-root": (checkRouteIsManage(pathname) || checkRouteIsCreate(pathname)) && {
             borderBottom:
               detailAccount && detailAccount?.account === row?.account
                 ? "2px solid #355DFF"
@@ -142,80 +140,6 @@ export const RowTable = (props) => {
           borderRadius: "5px",
         }}
       >
-        {/* {row.action && width > 576 && checkRouteIsManage(pathname) ? (
-          <StyledTableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
-            <Button
-              onClick={handleUpdate}
-              children={"Update"}
-              sx={{
-                fontSize: "14px",
-                borderRadius: "16px",
-                padding: "2px 16px",
-                bgcolor: "#355DFF",
-                color: "#FFF",
-                fontWeight: 700,
-                textTransform: "unset",
-                ":hover": {
-                  backgroundColor: "#355DFF",
-                },
-              }}
-            />
-          </StyledTableCell>
-        ) : (
-          <StyledTableCell
-            sx={{ display: { xs: "none", sm: "table-cell" } }}
-          ></StyledTableCell>
-        )}
-        <StyledTableCell className="text-center">
-          <Box
-            sx={{
-              marginLeft: { xs: row?.levelRole * 1, sm: row?.levelRole * 2 },
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {row && row?.child && row?.child?.length > 0 && !checkRouteIsCreate(pathname) ? (
-              <IconButton
-                style={{ width: "34px", height: "34px" }}
-                onClick={() => setOpen(!open)}
-              >
-                {!open ? <AddIconSVG /> : <MinusIconSVG />}
-              </IconButton>
-            ) : (
-              <Box
-                sx={{
-                  width: "34px",
-                  height: "34px",
-                }}
-              ></Box>
-            )}
-            {row.account}
-          </Box>
-        </StyledTableCell>
-        <StyledTableCell className="text-center">{row.level}</StyledTableCell>
-        <StyledTableCell className="text-center">
-          {"-"}
-        </StyledTableCell>
-        <StyledTableCell className="text-center">{row.ticket}</StyledTableCell>
-
-        {width > 576 && (
-          <StyledTableCell className="text-center">{row.ref}</StyledTableCell>
-        )}
-        {width > 576 && (
-          <StyledTableCell className="text-center">
-            {moment(row.date).format("ll")}
-          </StyledTableCell>
-        )}
-        {width > 576 && (
-          <StyledTableCell className="text-center" sx={{ color: "#3DBAA2" }}>
-            {row.amount}
-          </StyledTableCell>
-        )}
-        {width > 576 && (
-          <StyledTableCell className="text-center">
-            {row.status ? "Active" : "Prohibit"}
-          </StyledTableCell>
-        )} */}
         {headers &&
           headers?.map((item, index) => {
             if (item === "" && row?.action) 
@@ -264,6 +188,9 @@ export const RowTable = (props) => {
                     display: { xs: "none", sm: "table-cell" },
                     textAlign: "center",
                   }}
+                  style={{
+                    
+                  }}
                 >
                   {row?.agents && row?.agents?.length > 0 && (
                     <Button
@@ -298,18 +225,22 @@ export const RowTable = (props) => {
                       display: "flex",
                       alignItems: "center",
                       textAlign: "center",
+                      justifyContent:row &&
+                      row?.child &&
+                      row?.child?.length > 0 &&
+                      !checkRouteIsCreate(pathname) ? "unset" : "center"
                     }}
                   >
                     {row &&
                       row?.child &&
                       row?.child?.length > 0 &&
                       !checkRouteIsCreate(pathname) && (
-                        <IconButton
-                          style={{ width: "34px", height: "34px" }}
+                        <Box
+                          sx={{ width: "34px", height: "34px",display:"flex",alignItems:"center",cursor: "pointer" }}
                           onClick={() => setOpen(!open)}
                         >
                           {!open ? <AddIconSVG /> : <MinusIconSVG />}
-                        </IconButton>
+                        </Box>
                       )}
                     {row.account}
                   </Box>

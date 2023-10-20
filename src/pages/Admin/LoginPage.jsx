@@ -1,18 +1,20 @@
-import * as React from 'react';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { CircularProgress } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux'
-import { adminLogin } from '../../redux-saga-middleware_admin/reducers/adminAuthReducer';
-import { CircularProgress } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { showToastNotify } from '../../redux-saga-middleware_admin/reducers/adminAlertReducer';
+import { adminLogin } from '../../redux-saga-middleware_admin/reducers/adminAuthReducer';
+import "./login.css";
 
 function Copyright(props) {
   return (
@@ -35,6 +37,17 @@ export default function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    if(!data.get("username")) {
+      dispatch(showToastNotify({ type: "warning", message: "Please enter username" }))
+      return
+    }
+
+    if(!data.get("password")) {
+      dispatch(showToastNotify({ type: "warning", message: "Please enter password" }))
+      return
+    }
+
     if(!isLogin) {
       dispatch(adminLogin({
         username: data.get('username'),
@@ -94,6 +107,15 @@ export default function LoginPage() {
                 name="username"
                 autoComplete='username'
                 autoFocus
+                className='login'
+                sx={{
+                  ".MuiInputBase-input:-webkit-autofill": {
+                    WebkitTextFillColor: "#000 !important"
+                  },
+                  ".MuiInputBase-input:hover": {
+                    WebkitTextFillColor: "#000 !important"
+                  }
+                }}
               />
               <TextField
                 margin="normal"
@@ -104,6 +126,15 @@ export default function LoginPage() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                className='login'
+                sx={{
+                  ".MuiInputBase-input:-webkit-autofill": {
+                    WebkitTextFillColor: "#000 !important"
+                  },
+                  ".MuiInputBase-input:hover": {
+                    WebkitTextFillColor: "#000 !important"
+                  }
+                }}
               />
               <Button
                 type="submit"

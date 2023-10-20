@@ -1,18 +1,18 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
-import { imageHome } from "../../../utils/images";
-import { useNavigate } from "react-router";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
 import moment from "moment";
+import React from "react";
+import { useNavigate } from "react-router";
+import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
+import { imageHome } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const BannerTourMobile = (props) => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
   const {
     tournamentName,
-    sponsorName,
+    rewardName,
     userAvatar,
     userName,
     endTime,
@@ -52,13 +52,13 @@ const BannerTourMobile = (props) => {
               fontWeight: 700,
             }}
           >
-            Tournament of the week
+            Promotion of the week
           </Typography>
         </Box>
         <Box>
           <Typography
             sx={{
-              fontSize: "14px",
+              fontSize: "12px",
               color: "white",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -76,7 +76,7 @@ const BannerTourMobile = (props) => {
           <Typography
             sx={{
               width: "100%",
-              fontSize: "37.238px",
+              fontSize: "24px",
               fontWeight: 800,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
@@ -88,8 +88,8 @@ const BannerTourMobile = (props) => {
               overflow: "hidden",
             }}
           >
-            {tournamentName
-              ? tournamentName
+            {rewardName
+              ? rewardName
               : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
           </Typography>
         </Box>
@@ -216,6 +216,7 @@ const BannerTourMobile = (props) => {
             }}
           >
             <img
+              alt="..."
               style={{
                 width: "100%",
                 height: "100%",

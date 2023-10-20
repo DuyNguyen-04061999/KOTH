@@ -63,6 +63,13 @@ export const changePasswordFail = (data) => {
   };
 };
 
+export const updateNewRef = (data) => {
+  return {
+    type: "UPDATE_NEW_REF",
+    payload: data,
+  };
+};
+
 const adminAuthReducer = (
   state = {
     isLogin: false,
@@ -72,6 +79,7 @@ const adminAuthReducer = (
     isResetPassword: false,
     isChangePassword: false,
     errorChangePassword: "",
+    name: ""
   },
   action
 ) => {
@@ -79,12 +87,13 @@ const adminAuthReducer = (
   switch (type) {
     case REHYDRATE:
       const { adminAuthReducer } = payload || {};
-      const { permissions, roles, ref } = adminAuthReducer || {};
+      const { permissions, roles, ref, name } = adminAuthReducer || {};
       return {
         ...state,
         permissions: permissions || [],
         roles: roles || [],
         ref: ref || "",
+        name: name || ""
       };
     case "ADMIN_LOGIN":
       return { ...state, isLogin: true };
@@ -95,6 +104,7 @@ const adminAuthReducer = (
         roles: payload?.roles || [],
         permissions: payload?.permissions || [],
         ref: payload?.ref || "",
+        name: payload?.name || ""
       };
     case "ADMIN_LOGIN_FAIL":
       return { ...state, isLogin: false };
@@ -114,6 +124,7 @@ const adminAuthReducer = (
         isChangePassword: false,
         errorChangePassword: payload,
       };
+      case "UPDATE_NEW_REF": return {...state, ref: payload || ""}
     default:
       return { ...state };
   }
