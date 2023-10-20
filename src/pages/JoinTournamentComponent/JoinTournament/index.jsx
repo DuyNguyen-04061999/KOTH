@@ -58,7 +58,7 @@ export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(true);
   const [detailTournament, setDetailTournament] = useState({});
-  
+
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
   const [videoGame, setVideoGame] = useState(false || true);
@@ -99,9 +99,9 @@ export default function JoinTournament() {
       tournamentId: id,
     });
   }, [id, socket]);
-  
+
   useEffect(() => {
-    if(token) {
+    if (token) {
       socket?.emit("detailTournament", {
         tournamentId: id,
       });
@@ -235,7 +235,7 @@ export default function JoinTournament() {
     dispatch({
       type: "GET_BIGGEST_TOUR",
     });
-  },[dispatch])
+  }, [dispatch]);
 
   return (
     <>
@@ -466,7 +466,7 @@ export default function JoinTournament() {
                                   ? "100px"
                                   : "none",
                               fontWeight: "700",
-                          }}
+                            }}
                           >
                             Maximum Extra
                           </Typography>
@@ -551,6 +551,7 @@ export default function JoinTournament() {
                                     maxWidth: "250px",
                                     color: "#979797",
                                     fontSize: "12px",
+                                    textAlign: "start",
                                   }}
                                 >
                                   The highest number of available Extras in the
@@ -665,7 +666,7 @@ export default function JoinTournament() {
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
-                                  textAlign: "left"
+                                  textAlign: "left",
                                 }}
                               >
                                 {moment(
@@ -677,8 +678,8 @@ export default function JoinTournament() {
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
-                                  textAlign: "left"
-                               }}
+                                  textAlign: "left",
+                                }}
                               >
                                 {moment(
                                   detailTournament?.tournamentStartAt ||
@@ -710,7 +711,7 @@ export default function JoinTournament() {
                                 : "18px",
                             letterSpacing: "0.7px",
                             marginLeft: "0px !important",
-                            fontWeight: "700"
+                            fontWeight: "700",
                           }}
                         >
                           End
@@ -738,8 +739,8 @@ export default function JoinTournament() {
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
-                                  textAlign: "left"
-                               }}
+                                  textAlign: "left",
+                                }}
                               >
                                 {moment(
                                   detailTournament?.tournamentEndAt ||
@@ -750,8 +751,8 @@ export default function JoinTournament() {
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
-                                  textAlign: "left"
-                              }}
+                                  textAlign: "left",
+                                }}
                               >
                                 {moment(
                                   detailTournament?.tournamentEndAt ||
@@ -783,7 +784,7 @@ export default function JoinTournament() {
                                 : "18px",
                             letterSpacing: "0.7px",
                             marginLeft: "0px !important",
-                            fontWeight: "700"
+                            fontWeight: "700",
                           }}
                         >
                           Plays:
@@ -811,18 +812,19 @@ export default function JoinTournament() {
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
-                                  textAlign: "left"
-                               }}
+                                  textAlign: "left",
+                                }}
                               >
-                                {detailTournament?.currentPlayed || 0} / {detailTournament?.maxPlay}
+                                {detailTournament?.currentPlayed || 0} /{" "}
+                                {detailTournament?.maxPlay}
                               </Typography>
                               <Typography
                                 sx={{
                                   fontSize: "12px",
                                   marginLeft: "0px !important",
                                   textAlign: "left",
-                                  color: "#979797"
-                               }}
+                                  color: "#979797",
+                                }}
                               >
                                 {"Player's play count"}
                               </Typography>
@@ -836,6 +838,7 @@ export default function JoinTournament() {
                     sx={{
                       display: "flex",
                       alignItems: "center",
+                      flexDirection: width < 1200 ? "column" : "",
                     }}
                   >
                     <Box
@@ -847,7 +850,6 @@ export default function JoinTournament() {
                         }px`,
                       }}
                     >
-                      
                       <Typography
                         sx={{
                           color: "#fff",
@@ -896,7 +898,138 @@ export default function JoinTournament() {
                         (item, index) => {
                           return detailTournament?.tournamentParticipants
                             ?.length > 5 ? (
-                            index < 5 &&
+                            width > 1200 && index < 5 ? (
+                              index === 0 ? (
+                                <Box
+                                  key={index}
+                                  sx={{
+                                    width:
+                                      576 < width && width < 1200
+                                        ? "36px"
+                                        : parseFloat(width / 42.67) +
+                                          parseFloat(width / 384),
+                                    height:
+                                      576 < width && width < 1200
+                                        ? "36px"
+                                        : parseFloat(width / 42.67) +
+                                          parseFloat(width / 384),
+                                    backgroundColor: "#1D1329",
+                                    borderRadius: "50%",
+                                    boxSizing: "border-box",
+                                    padding:
+                                      576 < width && width < 1200
+                                        ? "3px"
+                                        : `${parseFloat(width / 384)}px`,
+                                    position: "absolute",
+                                    right: "0px",
+                                    top: "0px",
+                                    zIndex: `${
+                                      detailTournament?.tournamentParticipants
+                                        ?.length - index
+                                    }`,
+                                  }}
+                                >
+                                  <Box
+                                    sx={{
+                                      width: "100%",
+                                      height: "100%",
+                                      borderRadius: "50%",
+                                      position: "relative",
+                                      backgroundImage: `url(${
+                                        item?.userAccount?.accountAvatar
+                                          ? process.env
+                                              .REACT_APP_SOCKET_SERVER +
+                                            "/" +
+                                            item?.userAccount?.accountAvatar
+                                          : images.undefinedAvatar
+                                      })`,
+                                      backgroundSize: "cover",
+                                      backgroundPosition: "center",
+                                    }}
+                                  >
+                                    <Box
+                                      sx={{
+                                        position: "absolute",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        width: "100%",
+                                        height: "100%",
+                                        borderRadius: "50%",
+                                        backgroundColor: "rgba(7,7,7,0.5)",
+                                        color:
+                                          detailTournament
+                                            ?.tournamentParticipants.length > 5
+                                            ? "white"
+                                            : "none",
+                                        fontSize: "10px",
+                                      }}
+                                    >
+                                      {detailTournament?.tournamentParticipants
+                                        ?.length > 5 &&
+                                        `+${
+                                          detailTournament
+                                            ?.tournamentParticipants?.length - 5
+                                        }`}
+                                    </Box>
+                                  </Box>
+                                </Box>
+                              ) : (
+                                <Box
+                                  key={index}
+                                  sx={{
+                                    width:
+                                      576 < width && width < 1200
+                                        ? "36px"
+                                        : parseFloat(width / 42.67) +
+                                          parseFloat(width / 384),
+                                    height:
+                                      576 < width && width < 1200
+                                        ? "36px"
+                                        : parseFloat(width / 42.67) +
+                                          parseFloat(width / 384),
+                                    backgroundColor: "#1D1329",
+                                    borderRadius: "50%",
+                                    boxSizing: "border-box",
+                                    padding: `${parseFloat(width / 384)}px`,
+                                    position: "absolute",
+                                    right:
+                                      576 < width && width < 1200
+                                        ? `${index * 25}px`
+                                        : `${
+                                            (parseFloat(width / 42.67) +
+                                              parseFloat(width / 384)) *
+                                              index -
+                                            index * (10 + index * 1.5)
+                                          }px`,
+                                    top: "0px",
+                                    zIndex: `${
+                                      detailTournament?.tournamentParticipants
+                                        ?.length - index
+                                    }`,
+                                  }}
+                                >
+                                  <Box
+                                    component={"img"}
+                                    src={
+                                      item?.userAccount?.accountAvatar
+                                        ? process.env.REACT_APP_SOCKET_SERVER +
+                                          "/" +
+                                          item?.userAccount?.accountAvatar
+                                        : images.undefinedAvatar
+                                    }
+                                    sx={{
+                                      width: "100%",
+                                      height: "100%",
+                                      flexDirection:"column",
+                                      borderRadius: "50%",
+                                    }}
+                                  ></Box>
+                                </Box>
+                              )
+                            ) : (
+                              width > 576 &&
+                              index < 4 &&
                               (index === 0 ? (
                                 <Box
                                   key={index}
@@ -1024,6 +1157,7 @@ export default function JoinTournament() {
                                   ></Box>
                                 </Box>
                               ))
+                            )
                           ) : (
                             <Box
                               key={index}
@@ -1148,7 +1282,7 @@ export default function JoinTournament() {
                                 576 < width && width < 1200
                                   ? `${width / 42}px`
                                   : "28px",
-                                textAlign: "left"
+                              textAlign: "left",
                             }}
                           >
                             {detailTournament?.tournamentName?.length > 30
@@ -1380,6 +1514,7 @@ export default function JoinTournament() {
                                 // overflow: "hidden",
                                 // textOverflow: "ellipsis",
                                 // whiteSpace: "nowrap",
+                                textAlign:"start"
                               }}
                             >
                               {" "}
@@ -1403,6 +1538,7 @@ export default function JoinTournament() {
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
                                     color: "#525252",
+                                    textAlign: "start",
                                   }}
                                 >
                                   Recipient
@@ -1413,6 +1549,7 @@ export default function JoinTournament() {
                                       576 < width && width < 1200
                                         ? "12px"
                                         : "14px",
+                                    textAlign: "start",
                                   }}
                                 >
                                   {sliceString(
@@ -1428,6 +1565,7 @@ export default function JoinTournament() {
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
                                     color: "#525252",
+                                    textAlign: "start",
                                   }}
                                 >
                                   Sponsored by
@@ -1438,6 +1576,7 @@ export default function JoinTournament() {
                                       576 < width && width < 1200
                                         ? "12px"
                                         : "14px",
+                                    textAlign: "start",
                                   }}
                                 >
                                   {detailTournament?.tournamentInfors?.owner
@@ -1458,6 +1597,7 @@ export default function JoinTournament() {
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
                                     color: "#525252",
+                                    textAlign: "start",
                                   }}
                                 >
                                   Valid by
@@ -1468,6 +1608,7 @@ export default function JoinTournament() {
                                       576 < width && width < 1200
                                         ? "12px"
                                         : "14px",
+                                    textAlign: "start",
                                   }}
                                 >
                                   {moment(
@@ -1483,6 +1624,7 @@ export default function JoinTournament() {
                                     fontSize: "10px",
                                     marginBottom: "0px !important",
                                     color: "#525252",
+                                    textAlign: "start",
                                   }}
                                 >
                                   Conditions
@@ -1500,6 +1642,7 @@ export default function JoinTournament() {
                                       576 < width && width < 1024
                                         ? "12px"
                                         : "14px",
+                                    textAlign: "start",
                                   }}
                                 >
                                   See more
