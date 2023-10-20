@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import React from "react";
 import { useLocation } from "react-router-dom";
@@ -113,30 +113,52 @@ const ListPromotion = (props) => {
     return (
       <Box>
         {width < 576 ? (
-          <Box className="scrolling-carousel-example1-container">
-            <ScrollingCarousel>
-              {loadingState || listData === null ? (
+          // <Box className="scrolling-carousel-example1-container">
+          //   <ScrollingCarousel>
+          //     {loadingState || listData === null ? (
+          //       <ListItemLoading></ListItemLoading>
+          //     ) : listData && listData?.length > 0 ? (
+          //       listData?.map((item, index) => {
+          //         return (
+          //           index >= itemOffSet &&
+          //           index <= itemOffSet + itemQuantity - 1 && (
+          //             <Box key={index}>
+          //               <ItemComponent
+          //                 // key={index}
+          //                 tourInfo={item}
+          //                 countdown={true}
+          //               />
+          //             </Box>
+          //           )
+          //         );
+          //       })
+          //     ) : (
+          //       <ListEmpty textData={typePromo}></ListEmpty>
+          //     )}
+          //   </ScrollingCarousel>
+          // </Box>
+          <Grid container rowSpacing={2}>
+             {loadingState || listData === null ? (
                 <ListItemLoading></ListItemLoading>
               ) : listData && listData?.length > 0 ? (
                 listData?.map((item, index) => {
                   return (
                     index >= itemOffSet &&
                     index <= itemOffSet + itemQuantity - 1 && (
-                      <Box key={index}>
+                      <Grid item xs={6} key={index}>
                         <ItemComponent
                           // key={index}
                           tourInfo={item}
                           countdown={true}
                         />
-                      </Box>
+                      </Grid>
                     )
                   );
                 })
               ) : (
                 <ListEmpty textData={typePromo}></ListEmpty>
               )}
-            </ScrollingCarousel>
-          </Box>
+          </Grid>
         ) : (
           <Box>
             {loadingState || listData === null ? (
