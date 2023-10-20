@@ -1,17 +1,17 @@
 import { Box, Dialog, FormControl, Input, Typography } from "@mui/material";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { useDispatch, useSelector } from "react-redux";
-import { images } from "../../../utils/images";
 import copy from "copy-to-clipboard";
-import { toast } from "react-toastify";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   FacebookShareButton,
   RedditShareButton,
   TelegramShareButton,
   TwitterShareButton,
 } from "react-share";
+import { toast } from "react-toastify";
 import { toggleShareTour } from "../../../redux-saga-middleware/reducers/authReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ShareTour() {
   const { width, height } = useWindowDimensions();
@@ -48,6 +48,7 @@ export default function ShareTour() {
         // maxWidth="2000px !important"
         maxWidth={"md"}
         open={isShare}
+        onClose={handleClose}
       >
         <Box
           sx={{
