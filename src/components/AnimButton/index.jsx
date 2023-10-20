@@ -30,10 +30,10 @@ export default function AnimButton(props) {
           style={{
             backgroundColor: "#7848ED",
             color: "white",
-            padding: "10px 30px",
+            padding: "12px 0px",
             borderRadius: "8px",
             border: " 0px solid",
-            width: "100%",
+            width: "125px",
             fontWeight: "700",
           }}
           onClick={onClick}
