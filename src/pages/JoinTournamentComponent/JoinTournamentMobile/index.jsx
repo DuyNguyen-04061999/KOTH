@@ -592,7 +592,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       }}
                     >
                       <Box>
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
                           {" "}
                           <Typography
                             style={{
@@ -619,6 +619,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
+                            alignItems:"flex-start"
                           }}
                         >
                           {" "}
@@ -643,7 +644,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       </Box>
                       <Box>
                         {" "}
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
                           {" "}
                           <Typography
                             style={{
@@ -670,6 +671,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
+                            alignItems:"flex-start"
                           }}
                         >
                           {" "}
