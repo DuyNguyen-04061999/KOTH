@@ -55,7 +55,7 @@ export default function HotTournament() {
       setItemQuantity(12);
     }
     if (width < 576) {
-      setItemQuantity(5);
+      setItemQuantity(4);
     }
   }, [width]);
 

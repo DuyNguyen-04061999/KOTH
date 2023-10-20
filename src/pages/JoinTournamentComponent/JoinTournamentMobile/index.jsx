@@ -589,13 +589,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       }}
                     >
                       <Box>
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
                           {" "}
                           <Typography
                             style={{
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Recipient
@@ -603,6 +604,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           <Typography
                             style={{
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             {sliceString(
@@ -616,6 +618,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
+                            alignItems:"flex-start"
                           }}
                         >
                           {" "}
@@ -624,6 +627,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Sponsored by
@@ -631,6 +635,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           <Typography
                             style={{
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             {detailTournament?.tournamentInfors?.owner
@@ -640,13 +645,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       </Box>
                       <Box>
                         {" "}
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
                           {" "}
                           <Typography
                             style={{
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Valid by
@@ -654,6 +660,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           <Typography
                             style={{
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             {moment(
@@ -667,6 +674,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
+                            alignItems:"flex-start"
                           }}
                         >
                           {" "}
@@ -675,6 +683,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Conditions
@@ -688,6 +697,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             style={{
                               color: "#0096FF",
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             See more

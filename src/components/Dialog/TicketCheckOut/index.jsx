@@ -4,6 +4,7 @@ import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   closeCheckWallet,
   toggleCheckWallet,
@@ -45,15 +46,15 @@ export default function TicketCheckOut() {
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
-      setDisablePlaceOrder(false);
       // dispatch(toggleBuyTicket());
     } else {
       socket.emit("buyPackage", {
         packageId: idPackage,
       });
       dispatch(toggleCheckWallet());
-      setDisablePlaceOrder(false);
     }
+    setDisablePlaceOrder(false);
+    dispatch(toggleBuyTicket(false));
   };
 
   const btnBuyTicket = () => {
@@ -61,7 +62,6 @@ export default function TicketCheckOut() {
     if (userGold < 0.99 * sl) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
-      setDisablePlaceOrder(false);
     } else if (!boughtTour) {
       socket?.emit("buyPackage", {
         quantity: sl,
@@ -69,7 +69,6 @@ export default function TicketCheckOut() {
         packageId: ticketBuy?.id,
       });
       dispatch(toggleCheckWallet());
-      setDisablePlaceOrder(false);
     } else {
       socket?.emit("buyPackage", {
         quantity: sl,
@@ -77,8 +76,9 @@ export default function TicketCheckOut() {
         packageId: ticketBuy?.id,
       });
       dispatch(toggleCheckWallet());
-      setDisablePlaceOrder(false);
     }
+    setDisablePlaceOrder(false);
+    dispatch(toggleBuyTicket(false));
   };
 
   useEffect(() => {

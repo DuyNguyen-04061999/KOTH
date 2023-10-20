@@ -9,7 +9,6 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ComponentChat() {
-  const bottomRef = useRef(null);
   const [friendMessages, setFriendMess] = useState([]);
 
   const { chatWorld, contacter, chatPopup } = useSelector(
@@ -42,8 +41,8 @@ export default function ComponentChat() {
   };
 
   const scrollToBottom = () => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView();
+    if (chatBox.current) {
+      chatBox.current.scrollTo(0, chatBox.current.scrollHeight);
       chatBox.current.removeEventListener("scroll", handleScroll);
     }
   };
@@ -62,7 +61,7 @@ export default function ComponentChat() {
   }, []);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    chatBox?.current?.scrollTo(0, chatBox.current.scrollHeight);
   }, [friendMessages, chatPopup]);
   useEffect(() => {
     const socket = _socket;
@@ -457,7 +456,6 @@ export default function ComponentChat() {
         <ScrollToBottom onClick={() => scrollToBottom()} />
       )}
       {renderChat}
-      <span ref={bottomRef}></span>
     </Box>
   );
 }
@@ -467,7 +465,7 @@ const ScrollToBottom = ({ onClick }) => {
     <Box
       sx={{
         position: "absolute",
-        bottom: "120px",
+        bottom: useWindowDimensions().width < 576 ? "80px" : "120px",
         right: "4px",
         transform: "translate(-50%,-50%)",
         backgroundColor: "rgba(120, 72, 237, 1)",
