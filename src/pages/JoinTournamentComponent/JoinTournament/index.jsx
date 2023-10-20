@@ -336,7 +336,7 @@ export default function JoinTournament() {
                         <AnimButton
                           onClick={handleClickOpen}
                           text={"Buy Extra"}
-                          type={"primary"}
+                          type={"loadding"}
                         />
                       </Box>
                     )}
