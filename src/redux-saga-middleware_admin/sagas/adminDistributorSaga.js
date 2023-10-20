@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { showToastNotify } from "../reducers/adminAlertReducer";
 import { closeCreateDialog } from "../reducers/adminDialogReducer";
-import { createSubDistributorFail, createSubDistributorSuccess, deleteSubFail, deleteSubSuccess, getListSub, getListSubFail, getListSubSuccess, givePermissionFail, givePermissionSuccess, updateSubFail, updateSubSuccess } from "../reducers/adminDistributorReducer";
+import { createSubDistributorFail, createSubDistributorSuccess, deleteSubFail, deleteSubSuccess, getListSub, getListSubFail, getListSubSuccess, givePermissionFail, givePermissionSuccess, updateListAgentAfterActive, updateSubFail, updateSubSuccess } from "../reducers/adminDistributorReducer";
 import { ADMIN_DISTRIBUTOR_SERVICE } from "../services/adminDistributorService";
 
 const adminDistributorService = new ADMIN_DISTRIBUTOR_SERVICE();
@@ -84,10 +84,12 @@ function* givePermissionSaga(dataRequest) {
     try {
         const { payload } = dataRequest;
         const res = yield call(adminDistributorService.givePermission, payload)
+        const { listA } = res?.data?.data || []
         if(res && res.status === 200) {
           yield put(givePermissionSuccess())
           yield put(showToastNotify({ type: "success", message: "Give permission successfully" }))
           yield put(getListSub())
+          yield put(updateListAgentAfterActive(listA || []))
         } else {
           yield put(givePermissionFail())
           yield put(showToastNotify({ type: "error", message: "Give permission failed" }))

@@ -3,9 +3,10 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { sign } from "../../../../utils/images";
+import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
@@ -71,7 +72,25 @@ export default function Signup(props) {
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    sendRegister();
+    if(disabledBtn) {
+      toast.warning(
+          "Inputs required!",
+        {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.WarningIcon}
+            />
+          ),
+          position: "top-center",
+          className:
+            "warning-background",
+        }
+      );
+    } else {
+      sendRegister();
+    }
   };
   // console.log(passSai);
   //------------------------------------------------------------------
@@ -790,6 +809,7 @@ export default function Signup(props) {
               <AnimButton 
                 type={"Dislable"}
                 text={"Sign Up"}
+                onClick={handleSubmitSignUp}
               />
             ) : (
              <AnimButton 

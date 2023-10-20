@@ -126,6 +126,13 @@ export const updateAccountFail = (data) => {
   }
 }
 
+export const updateListTicketAfterProvide = (data) => {
+  return {
+    type: "UPDATE_LIST_TICKET_AFTER_PROVIDE",
+    payload: data
+  }
+}
+
 const adminConfigReducer = (
   state = {
     isFetchConfig: false,
@@ -164,6 +171,12 @@ const adminConfigReducer = (
       case "UPDATE_ACCOUNT": return {...state, isUpdateAccount: true }
       case "UPDATE_ACCOUNT_SUCCESS": return {...state, isUpdateAccount: false }
       case "UPDATE_ACCOUNT_FAIL": return {...state, isUpdateAccount: false }
+      case "UPDATE_LIST_TICKET_AFTER_PROVIDE": {
+        var indexToRemove = 0;
+        var numberToRemove = payload || 0;
+        state.listTicket?.splice(indexToRemove, numberToRemove);
+        return {...state, listTicket: state.listTicket || [] }
+      }
       default:
         return { ...state };
   }

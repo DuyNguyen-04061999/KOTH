@@ -112,6 +112,13 @@ export const givePermissionFail = (data) => {
   }
 }
 
+export const updateListAgentAfterActive = (data) => {
+  return {
+    type: "UPDATE_LIST_AGENT_AFTER_ACTIVE",
+    payload: data
+  }
+}
+
 const adminDistributorReducer = (
   state = {
     isCreateSubDistributor: false,
@@ -149,6 +156,7 @@ const adminDistributorReducer = (
       case "GIVE_PERMISSION": return {...state, isGivePermission: true}
       case "GIVE_PERMISSION_SUCCESS": return {...state, isGivePermission: false}
       case "GIVE_PERMISSION_FAIL": return {...state, isGivePermission: false}
+      case "UPDATE_LIST_AGENT_AFTER_ACTIVE": return {...state, listDataAgents: payload || []}
       default:
         return { ...state };
   }
