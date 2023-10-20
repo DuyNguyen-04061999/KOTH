@@ -71,7 +71,6 @@ export default function JoinTournament() {
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
-  const { biggestEndTour } = useSelector((state) => state.tournamentReducer);
   const handleClickOpen = () => {
     dispatch(toggleBuyTicket(true));
   };
@@ -80,6 +79,8 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
+
+  
   // const timeEnd =
   //   moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
   //   " " +
@@ -436,7 +437,7 @@ export default function JoinTournament() {
                         fontSize: "32px",
                       }}
                     >
-                      {biggestEndTour?.bestUser?.userNickName || "super_"}
+                      {detailTournament?.bestUser || ""}
                     </span>
                   </Box>
                 </Box>
