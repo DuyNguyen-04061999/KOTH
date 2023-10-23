@@ -751,7 +751,7 @@ export default function Package() {
                           //   ? "black"
                           //   : "",
                           "white",
-                          textOverflow:"ellipsis"
+                        textOverflow: "ellipsis",
                       }}
                     >
                       {i?.packageName} Pack
@@ -1040,7 +1040,10 @@ export default function Package() {
                                   dispatch(getIdPackage(i?.id));
                                   dispatch(toggleSubscriptionDialog(false));
                                 }
-                              } else {
+                              }
+                              if (token === null || token === "") {
+                                dispatch(toggleLoginDialog());
+                                return;
                               }
                             }}
                             disabled={i?.id === userPackageId ? true : false}

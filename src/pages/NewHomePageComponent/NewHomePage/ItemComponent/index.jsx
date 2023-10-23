@@ -94,7 +94,6 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         sx={{
           width: "100%",
           height: width < 576 ? "244px" : "291px",
-          bgcolor: "white",
           borderStartStartRadius: "8px",
           overflow: "hidden",
           borderStartEndRadius: "8px",
@@ -141,11 +140,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         )}
         <Box
           sx={{
-            marginTop: "8px",
-            padding: "0px 12px",
+            // marginTop: "8px",
+            padding: "7px 12px",
             display: "flex",
             justifyContent: countdown ? "space-between" : "flex-end",
             flexDirection: "column",
+            backgroundColor:"white"
           }}
         >
           <span style={{ fontSize: "10px" }}>

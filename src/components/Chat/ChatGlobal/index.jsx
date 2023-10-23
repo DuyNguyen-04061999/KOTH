@@ -57,24 +57,28 @@ export default function ChatGlobal(props) {
   }, [token]);
 
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
-      socket?.emit("chat", {
-        type: "Private",
-        toId: contacter.id,
-        content: chatInput.current.childNodes[0].value,
-      });
-      chatInput.current.reset();
+    if(chatInput?.current){
+      if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
+        socket?.emit("chat", {
+          type: "Private",
+          toId: contacter.id,
+          content: chatInput.current.childNodes[0].value,
+        });
+        chatInput.current.reset();
+      }
     }
   };
 
   const handleSendMessage = () => {
-    if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
-      socket?.emit("chat", {
-        type: "Private",
-        toId: contacter.id,
-        content: chatInput.current.childNodes[0].value,
-      });
-      chatInput.current.reset();
+    if(chatInput?.current){
+      if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+        socket?.emit("chat", {
+          type: "Private",
+          toId: contacter.id,
+          content: chatInput.current.childNodes[0].value,
+        });
+        chatInput.current.reset();
+      }
     }
   };
 
@@ -416,10 +420,10 @@ export default function ChatGlobal(props) {
                 onSubmit={(e) => {
                   e.preventDefault();
                 }}
+                ref={chatInput}
               >
                 <ChatRoot
                   type="text"
-                  ref={chatInput}
                   id="sendmessages"
                   onKeyDown={handleOnKeyDownEnter}
                   style={inpChat()}

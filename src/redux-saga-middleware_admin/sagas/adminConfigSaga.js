@@ -2,11 +2,11 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { getListEndUser } from "../reducers/adminAgentReducer";
 import { showToastNotify } from "../reducers/adminAlertReducer";
 import { updateNewRef } from "../reducers/adminAuthReducer";
-import { activeAccountFail, activeAccountSuccess, deleteAccountFail, deleteAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess, updateAccountFail, updateAccountSuccess } from "../reducers/adminConfigReducer";
+import { activeAccountFail, activeAccountSuccess, deleteAccountFail, deleteAccountSuccess, getConfigsFail, getConfigsSuccess, getListTicketFail, getListTicketSuccess, provideTicketFail, provideTicketSuccess, updateAccountFail, updateAccountSuccess, updateListTicketAfterProvide } from "../reducers/adminConfigReducer";
 import { closeProvideDialog, closeUpdateAccountDialog, openRefcodeNotify } from "../reducers/adminDialogReducer";
 import { getListSub } from "../reducers/adminDistributorReducer";
 import { getListDistributor } from "../reducers/adminMasterReducer";
-import { updateDetailAccount, updateDetailAccountAfterChangeNickname, updateDetailAccountAfterChangeStatus } from "../reducers/adminReducer";
+import { updateDetailAccount, updateDetailAccountAfterChangeNickname, updateDetailAccountAfterChangeStatus, updateDetailAccountAfterProvideTicket } from "../reducers/adminReducer";
 import { ADMIN_CONFIG_SERVICE } from "../services/adminConfigService";
 const adminConfigService = new ADMIN_CONFIG_SERVICE();
 
@@ -46,6 +46,7 @@ function* getTicketSaga(dataRequest) {
 function* provideTicketSaga(dataRequest) {
     try {
         const { payload } = dataRequest;
+        const { quantity } = payload
         const res = yield call(adminConfigService.provideTicket, payload)
         const { role } = res?.data
         if(res && res.status === 200) {
@@ -57,6 +58,10 @@ function* provideTicketSaga(dataRequest) {
                 yield put(getListSub())
             } else if (role === "Agent") {
                 yield put(getListEndUser())
+            }
+            if(role !== "master") {
+                yield put(updateDetailAccountAfterProvideTicket(quantity))
+                yield put(updateListTicketAfterProvide(quantity))
             }
            yield put(closeProvideDialog());
         } else {

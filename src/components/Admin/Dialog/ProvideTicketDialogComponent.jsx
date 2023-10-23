@@ -63,6 +63,7 @@ export default function ProvideTicketDialogComponent(props) {
     } else {
       dispatch(provideTicket(provideTicketInfo));
       setErrorMessage("");
+      setTicketQuantity(0)
     }
   };
 

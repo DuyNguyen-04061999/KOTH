@@ -152,6 +152,7 @@ const Revenue = () => {
                 <Typography
                   sx={{
                     fontWeight: 600,
+                    textAlign: "left"
                   }}
                 >
                   Referrals
@@ -166,6 +167,7 @@ const Revenue = () => {
               <Typography
                 sx={{
                   fontWeight: 600,
+                  textAlign: "left"
                 }}
               >
                 Referrals

@@ -502,7 +502,7 @@ export default function Layout(props) {
       <Grid container>
         {device === "Desktop" ||
         device === "Tablet" ||
-        (device === "Mobile" && orientation === "landscape") ? (
+        (device === "Mobile" && orientation === "landscape" && width > 576) ? (
           <Grid
             item
             sm={1}

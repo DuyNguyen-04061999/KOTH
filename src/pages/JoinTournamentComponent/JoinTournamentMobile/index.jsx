@@ -28,7 +28,6 @@ import {
   isJson,
   sliceString
 } from "../../../utils/helper";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
@@ -36,7 +35,6 @@ import LeaderBoard from "../LeaderBoard/index";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
-  const { biggestEndTour } = useSelector((state) => state.tournamentReducer);
   const [fetchT, setFetchT] = useState(true);
   const [socket, setSocket] = useState(null);
   const [currentResult, setCurrentResult] = useState(false);
@@ -44,7 +42,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [openVoucher, setOpenVoucher] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const { id } = useParams();
-  const { width } = useWindowDimensions();
   const { token } = useSelector((state) => state.authReducer);
   const typographyStyle = {
     textAlign: "start",
@@ -327,7 +324,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           fontSize: "22px",
                         }}
                       >
-                        {biggestEndTour?.bestUser?.userNickName || "super_"}
+                        {detailTournament?.bestUser || ""}
                       </span>
                     </Box>
                   </Box>
@@ -592,13 +589,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       }}
                     >
                       <Box>
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
                           {" "}
                           <Typography
                             style={{
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Recipient
@@ -606,6 +604,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           <Typography
                             style={{
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             {sliceString(
@@ -619,6 +618,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
+                            alignItems:"flex-start"
                           }}
                         >
                           {" "}
@@ -627,6 +627,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Sponsored by
@@ -634,6 +635,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           <Typography
                             style={{
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             {detailTournament?.tournamentInfors?.owner
@@ -643,13 +645,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       </Box>
                       <Box>
                         {" "}
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
                           {" "}
                           <Typography
                             style={{
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Valid by
@@ -657,6 +660,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           <Typography
                             style={{
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             {moment(
@@ -670,6 +674,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
+                            alignItems:"flex-start"
                           }}
                         >
                           {" "}
@@ -678,6 +683,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                               fontSize: "10px",
                               marginBottom: "0px !important",
                               color: "#525252",
+                              textAlign: "start",
                             }}
                           >
                             Conditions
@@ -691,6 +697,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             style={{
                               color: "#0096FF",
                               fontSize: "12px",
+                              textAlign: "start",
                             }}
                           >
                             See more
