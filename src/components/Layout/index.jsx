@@ -126,7 +126,6 @@ export default function Layout(props) {
   // useEffect(() => {
   //   dispatch(setBadgeChat(false))
   // },[chatWorld])
-
   useEffect(() => {
     if (
       router &&
@@ -512,7 +511,7 @@ export default function Layout(props) {
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: "relative",
-              zIndex: width < 1200 ? "1024" : "0",
+              zIndex: "1024",
               // width: "400px !important",
               // "& .MuiGrid-item": {
               //   minWidth: "400px !important",

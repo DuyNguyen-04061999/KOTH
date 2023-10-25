@@ -9,10 +9,7 @@ import { useNavigate } from "react-router-dom";
 // import CountDownTournament from "../CountDownTournament";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BannerTour,
-  BannerTourMobile
-} from "../../../components/Banner";
+import { BannerTour, BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import { getAppType } from "../../../utils/helper";
@@ -122,7 +119,7 @@ export default function NewHomePage() {
           width < 576
             ? "24px !important"
             : 767 <= width <= 1280
-            ? "32px !important"
+            ? "50px !important"
             : "0px !important",
         paddingRight:
           width < 576
@@ -1458,39 +1455,39 @@ export default function NewHomePage() {
           // </Box>
           // <BannerTop1 />
           <BannerTour
-          tournamentName={
-            hotWeekTour && hotWeekTour?.tournamentName
-              ? hotWeekTour?.tournamentName
-              : "Galaxy Z-flip 5"
-          }
-          rewardName={
-            hotWeekTour &&
-            hotWeekTour?.rewardTournament &&
-            hotWeekTour?.rewardTournament?.rewardTitle
-              ? hotWeekTour?.rewardTournament?.rewardTitle
-              : ""
-          }
-          sponsorName={hotWeekTour?.tournamentBrand?.brandName}
-          userName={
-            hotWeekTour &&
-            hotWeekTour?.bestUser &&
-            hotWeekTour?.bestUser?.tUser &&
-            hotWeekTour?.bestUser?.tUser?.userName
-          }
-          endTime={hotWeekTour?.tournamentEndAt}
-          userScore={hotWeekTour?.bestUser?.score}
-          userAvatar={
-            hotWeekTour &&
-            hotWeekTour?.bestUser &&
-            hotWeekTour?.bestUser?.tUser &&
-            hotWeekTour?.bestUser?.tUser?.userAccount &&
-            hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-              ? process.env.REACT_APP_SOCKET_SERVER +
-                "/" +
-                hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-              : images.pool
-          }
-          tourId={hotWeekTour && hotWeekTour?.id}
+            tournamentName={
+              hotWeekTour && hotWeekTour?.tournamentName
+                ? hotWeekTour?.tournamentName
+                : "Galaxy Z-flip 5"
+            }
+            rewardName={
+              hotWeekTour &&
+              hotWeekTour?.rewardTournament &&
+              hotWeekTour?.rewardTournament?.rewardTitle
+                ? hotWeekTour?.rewardTournament?.rewardTitle
+                : ""
+            }
+            sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+            userName={
+              hotWeekTour &&
+              hotWeekTour?.bestUser &&
+              hotWeekTour?.bestUser?.tUser &&
+              hotWeekTour?.bestUser?.tUser?.userName
+            }
+            endTime={hotWeekTour?.tournamentEndAt}
+            userScore={hotWeekTour?.bestUser?.score}
+            userAvatar={
+              hotWeekTour &&
+              hotWeekTour?.bestUser &&
+              hotWeekTour?.bestUser?.tUser &&
+              hotWeekTour?.bestUser?.tUser?.userAccount &&
+              hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                ? process.env.REACT_APP_SOCKET_SERVER +
+                  "/" +
+                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                : images.pool
+            }
+            tourId={hotWeekTour && hotWeekTour?.id}
           />
         )}
         <Box
