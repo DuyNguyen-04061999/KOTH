@@ -374,7 +374,7 @@ export default function Package() {
                                       }}
                                     >
                                       {i?.packageFreeTicketTournament} extras /
-                                      promotion
+                                      Promotion
                                     </Typography>
                                   </Box>
                                   <Box
@@ -879,7 +879,7 @@ export default function Package() {
                                 }}
                               >
                                 {i?.packageFreeTicketTournament} extras /
-                                promotion
+                                Promotion
                               </Typography>
                             </Box>
                             <Box

@@ -138,7 +138,7 @@ export default function NewFooter() {
             textAlign: "center",
           }}
         >
-          "Experience the thrill of gaming at Play4Promo, where promotions,
+          "Experience the thrill of gaming at Play4Promo, where Promotions,
           gameplay, and your dedication unlock exciting voucher rewards. Our
           policies guarantee a seamless and rewarding voucher redemption process
           for an enhanced gaming journey."
