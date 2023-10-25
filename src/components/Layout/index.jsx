@@ -126,7 +126,6 @@ export default function Layout(props) {
   // useEffect(() => {
   //   dispatch(setBadgeChat(false))
   // },[chatWorld])
-  console.log("device: ", device);
   useEffect(() => {
     if (
       router &&
