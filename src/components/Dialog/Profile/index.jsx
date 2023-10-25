@@ -327,7 +327,7 @@ export default function DialogProfile(props) {
                     />
                   </FormControl>
                 </Box>
-                <Box
+                {/* <Box
                   className="ref-code d-flex flex-column align-items-start mb-3"
                   position={"relative"}
                 >
@@ -406,7 +406,7 @@ export default function DialogProfile(props) {
                       />
                     </Box>
                   </FormControl>
-                </Box>
+                </Box> */}
                 {userNameProfile === userName && token && (
                   <Box
                     sx={{
