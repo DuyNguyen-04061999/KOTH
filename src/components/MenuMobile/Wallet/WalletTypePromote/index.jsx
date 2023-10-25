@@ -10,6 +10,7 @@ import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeRedu
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney, getAppType } from "../../../../utils/helper";
 import AnimButton from "../../../AnimButton";
+import { useNavigate } from "react-router";
 
 export default function WalletTypePromote(props) {
   const { width, height } = useWindowDimensions();
@@ -22,6 +23,7 @@ export default function WalletTypePromote(props) {
   const [agree, setAgree] = useState(false);
   const [bgInput, setBgInput] = useState("gray");
   // const [textRed,setTextRed] = useState("")
+  const navigate = useNavigate();
 
   const handleContinue = () => {
     if (agree === false) {
@@ -86,6 +88,15 @@ export default function WalletTypePromote(props) {
     if (event.key === "+" || event.key === "-") {
       event.preventDefault();
     }
+  };
+
+  const navigateFooter = (value) => {
+    dispatch({
+      type: "SET_TAB_HELPCENTER",
+      payload: value,
+    });
+    navigate("/help-center");
+    dispatch(toggleWalletDialog());
   };
 
   return (
@@ -172,7 +183,7 @@ export default function WalletTypePromote(props) {
                     marginLeft: "0px !important",
                   }}
                 >
-                  My wallet
+                  Current Balance
                 </Typography>
                 <Box
                   sx={{
@@ -382,7 +393,7 @@ export default function WalletTypePromote(props) {
                     fontWeight: "lighter !important",
                   }}
                 >
-                  Amount
+                  Deposit Amount
                 </Typography>
                 <Typography
                   variant="body2"
@@ -429,7 +440,7 @@ export default function WalletTypePromote(props) {
                     fontWeight: "lighter !important",
                   }}
                 >
-                  Total payment
+                  Updated Balance
                 </Typography>
                 <Typography
                   variant="body2"
@@ -534,6 +545,8 @@ export default function WalletTypePromote(props) {
                 >
                   I agree with Play4promo{" "}
                   <span
+                    className="cursor-pointer"
+                    onClick={() => navigateFooter(1)}
                     style={{
                       color: "#A57FF6",
                       fontSize: "14px",

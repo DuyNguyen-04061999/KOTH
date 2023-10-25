@@ -491,7 +491,7 @@ export default function JoinTournament() {
                             </Typography>
                             {!detailTournament?.checkInTournament ? (
                               <BgWithTooltip
-                                title="Extra: A player can participate in a promotion up to 5 times. Share the promotion with friends to earn an extra play for each new sign-up through your link."
+                                title="Extra: A player can participate in a Promotion up to 5 times. Share the Promotion with friends to earn an extra play for each new sign-up through your link."
                                 placement="right"
                                 sx={{
                                   backgroundColor: "white",
@@ -1747,7 +1747,7 @@ export default function JoinTournament() {
                       marginTop: "36px",
                     }}
                   >
-                    Game for promotion
+                    Game for Promotion
                   </Typography>
 
                   <Box
