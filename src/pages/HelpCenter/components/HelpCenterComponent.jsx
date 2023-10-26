@@ -14,6 +14,7 @@ const HelpCenterComponent = () => {
   const { tabHelpCenter, listFAQPromote, isFetching } = useSelector(
     (state) => state.helpcenterReducer
   );
+  const { device } = useSelector((state) => state.deviceReducer);
   const dispatch = useDispatch();
   const [listFAQ, setListFAQ] = useState([]);
 
@@ -59,11 +60,11 @@ const HelpCenterComponent = () => {
       </div>
     );
   }
-  if (width < 576 || width < 1024) {
+  if (device === "Mobile" || device === "Tablet") {
     return (
       <Container
         style={{
-          padding: width < 576 ? "16px 24px 24px 24px" : "16px 24px 24px 42px",
+          padding: width < 576 ? "16px 24px 24px 24px" : "16px 24px 24px 50px",
         }}
       >
         <Box sx={{ margin: "16px 0px 32px 0px" }}>
