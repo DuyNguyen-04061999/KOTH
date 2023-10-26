@@ -532,8 +532,7 @@ export default function JoinTournament() {
                                   color: "white",
                                 }}
                               >
-                                : {detailTournament?.boughtToday}/
-                                {detailTournament?.maxPlay}
+                                : {detailTournament?.boughtToday}
                               </Typography>
                             )}
                           </Box>
@@ -830,7 +829,7 @@ export default function JoinTournament() {
                                     textAlign: "left"
                                  }}
                                 >
-                                  {detailTournament?.currentPlayed || 0} / {detailTournament?.maxPlay}
+                                  {detailTournament?.currentPlayed || 0}
                                 </Typography>
                                 <Typography
                                   sx={{
