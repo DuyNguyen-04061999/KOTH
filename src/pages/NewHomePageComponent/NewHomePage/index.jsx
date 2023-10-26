@@ -34,7 +34,6 @@ export default function NewHomePage() {
   //   "Sun",
   // ]);
   // const [selectedDay, setSeDay] = useState(0);
-
   const {
     // dailyTournament,
     // hourlyTournament,

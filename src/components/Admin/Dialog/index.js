@@ -5,7 +5,6 @@ import GivePermissionDialogComponent from "./GivePermissionDialogComponent";
 import ProvideTicketDialogComponent from "./ProvideTicketDialogComponent";
 import ResetPasswordDialogComponent from "./ResetPasswordDialogComponent";
 import UpdateAccountDialogComponent from "./UpdateAccountDialogComponent";
-
+import ScanQRCodeDialogComponent from "./ScanQRCodeDialogComponent"
 export {
-    ConfirmDialogComponent, CreateAccountDialogComponent, DetailAccountDialogComponent, GivePermissionDialogComponent, ProvideTicketDialogComponent, ResetPasswordDialogComponent, UpdateAccountDialogComponent
-};
+    ConfirmDialogComponent, CreateAccountDialogComponent, DetailAccountDialogComponent, GivePermissionDialogComponent, ProvideTicketDialogComponent, ResetPasswordDialogComponent, UpdateAccountDialogComponent,ScanQRCodeDialogComponent};

@@ -126,6 +126,20 @@ export const closeRefcodeNotify = (data) => {
   }
 }
 
+export const openScanQRCode = (data) => {
+  return {
+    type: "OPEN_SCAN_QR_CODE",
+    payload: data
+  }
+}
+
+export const closeScanQRCode = (data) => {
+  return {
+    type: "CLOSE_SCAN_QR_CODE",
+    payload: data
+  }
+}
+
 const adminDialogReducer = (
   state = {
     isCreateDialog: false,
@@ -139,7 +153,8 @@ const adminDialogReducer = (
     typeConfirm: "",
     isRefcodeDialog : false,
     typeRefcode: "error",
-    messageRefcode: ""
+    messageRefcode: "",
+    isOpenQRCode:false,
   },
   action
 ) => {
@@ -171,6 +186,8 @@ const adminDialogReducer = (
     case "CLOSE_CONFIRM_DIALOG":  return {...state, isConfirmDialog: false, typeConfirm: ""}
     case "OPEN_UPDATE_ACCOUNT_DIALOG": return {...state, isUpdateAccountDialog: true}
     case "CLOSE_UPDATE_ACCOUNT_DIALOG": return {...state, isUpdateAccountDialog: false}
+    case "OPEN_SCAN_QR_CODE": return {...state, isOpenQRCode: true}
+    case "CLOSE_SCAN_QR_CODE": return {...state, isOpenQRCode: false}
     case "OPEN_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: true, typeRefcode: payload?.type || "", messageRefcode: payload?.message || ""}
     case "CLOSE_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: false, typeRefcode: "", messageRefcode: ""}
     default:
