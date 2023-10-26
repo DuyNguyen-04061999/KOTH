@@ -140,6 +140,13 @@ export const updateSubPackageId = (data) => {
   };
 };
 
+export const addRefCodeRegister = (data) => {
+  return {
+    type: "ADD_REF_CODE_REGISTER",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -166,6 +173,7 @@ const authReducer = (
     forgetPassDialog: false,
     isShare: false,
     isSubscription: false,
+    refCodeRegister: "",
   },
   action
 ) => {
@@ -207,6 +215,8 @@ const authReducer = (
       };
     case "UPDATE_PROFILE_FAIL":
       return { ...state, isUpdateProfile: false, userChangeAvatar: "" };
+    case "ADD_REF_CODE_REGISTER":
+      return { ...state, refCodeRegister: payload };
     case "CLICK_TAB_NAV":
       return { ...state, isNav: payload };
     case "LOGOUT_SUCCESS_FULLY":
@@ -243,8 +253,9 @@ const authReducer = (
     case "TOGGLE_SHARE_TOUR":
       return { ...state, isShare: !state.isShare };
     case "TOGGLE_SUBSCRIPTION_DIALOG":
-      return { ...state, isSubscription: payload};
-      case "UPDATE_SUB_PACKAGE_ID": return {...state, userPackageId: payload || ""}
+      return { ...state, isSubscription: payload };
+    case "UPDATE_SUB_PACKAGE_ID":
+      return { ...state, userPackageId: payload || "" };
     default:
       return state;
   }
