@@ -129,7 +129,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
 
   const dispatch = useDispatch();
   const handleClickOpen = () => {
-    dispatch(toggleBuyTicket(true));
+    // dispatch(toggleBuyTicket(true));
   };
   const navigate = useNavigate();
   let anchorSelector = 'a[href^="#"]';

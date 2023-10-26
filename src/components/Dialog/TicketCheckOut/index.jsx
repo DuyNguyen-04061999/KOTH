@@ -54,7 +54,6 @@ export default function TicketCheckOut() {
       dispatch(toggleCheckWallet());
     }
     setDisablePlaceOrder(false);
-    dispatch(toggleBuyTicket(false));
   };
 
   const btnBuyTicket = () => {

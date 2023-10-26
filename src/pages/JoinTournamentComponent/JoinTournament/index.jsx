@@ -34,6 +34,7 @@ import {
   saveBoughtTournament,
   saveIdTournament,
   toggleBuyTicket,
+  toggleExtra,
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
@@ -47,6 +48,7 @@ import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
 import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walletReducer";
+import NotificationExtra from "../../../components/Dialog/NotificationExtra";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -168,9 +170,14 @@ export default function JoinTournament() {
   ]);
 
   const handlePlayTour = () => {
-    socket?.emit("startGameInTournament", {
-      tournamentId: id,
-    });
+    if (detailTournament?.extras?.normal === 0) {
+      dispatch(toggleExtra())
+      return;
+    } else {
+      socket?.emit("startGameInTournament", {
+        tournamentId: id,
+      });
+    } 
   };
 
   const handleJoinTour = () => {
@@ -179,7 +186,7 @@ export default function JoinTournament() {
     } else if (token) {
       socket?.emit("joinTournament", {
         tournamentId: detailTournament?.id,
-      });
+      }); 
     } else {
       dispatch(toggleLoginDialog());
     }
@@ -254,6 +261,7 @@ export default function JoinTournament() {
   return (
     <>
       <ResultEndGame />
+      <NotificationExtra />
       {!startGame ? (
         width > 576 ? (
           <Container
@@ -734,92 +742,19 @@ export default function JoinTournament() {
                           </Box>
                         </Box>
                       </Box>
-                      {/* <Box
-                        sx={{
-                          width: "1px",
-                          height: "100%",
-                          background: "rgba(151, 151, 151, 0.40)",
-                          margin: "0px 15px",
-                        }}
-                      ></Box>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Box>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              textAlign: "start",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 62.5}px`
-                                  : "18px",
-                              letterSpacing: "0.7px",
-                              marginLeft: "0px !important",
-                              fontWeight: "700",
-                            }}
-                          >
-                            Plays:
-                          </Typography>
-                          <Box
-                            sx={{
-                              color: "#fff",
-                              textAlign: "start",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 76}px`
-                                  : "14px",
-                              fontWeight: "500 !important",
-                              marginLeft: "0px !important",
-                            }}
-                          >
-                            {fetchT ? (
-                              <Skeleton
-                                variant="text"
-                                sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
-                              />
-                            ) : (
-                              <Box>
-                                <Typography
-                                  sx={{
-                                    fontSize: "12px",
-                                    marginLeft: "0px !important",
-                                    textAlign: "left",
-                                  }}
-                                >
-                                  {detailTournament?.currentPlayed || 0} /{" "}
-                                  {detailTournament?.maxPlay}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    fontSize: "12px",
-                                    marginLeft: "0px !important",
-                                    textAlign: "left",
-                                    color: "#979797",
-                                  }}
-                                >
-                                  {"Player's play count"}
-                                </Typography>
-                              </Box>
-                            )}
-                          </Box>
-                        </Box>
-                      </Box> */}
-                    </Box>
-                  )}
-                  {width && (
-                    <Box>
-                      <Box
-                        sx={{
-                          width: "1px",
-                          height: "100%",
-                          background: "rgba(151, 151, 151, 0.40)",
-                          margin: "0px 25px",
-                        }}
-                      ></Box>
                     </Box>
                   )}
                   {width && (
                     <Box display={"flex"}>
                       <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Box
+                          sx={{
+                            width: "1px",
+                            height: "100%",
+                            background: "rgba(151, 151, 151, 0.40)",
+                            margin: "0px 25px",
+                          }}
+                        ></Box>
                         <Box>
                           <Box display={"flex"} alignItems={"center"}>
                             <svg
@@ -873,7 +808,7 @@ export default function JoinTournament() {
                                 sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                               />
                             ) : (
-                              <Box>
+                              <Box display={"flex"} alignItems={"baseline"}>
                                 <Typography
                                   sx={{
                                     fontSize: "12px",
@@ -886,10 +821,11 @@ export default function JoinTournament() {
                                       new Date()
                                   )?.format("MM/DD/YYYY")}
                                 </Typography>
+                                <Typography>-</Typography>
                                 <Typography
                                   sx={{
                                     fontSize: "12px",
-                                    marginLeft: "0px !important",
+                                    // marginLeft: "0px !important",
                                     textAlign: "left",
                                   }}
                                 >
@@ -905,21 +841,18 @@ export default function JoinTournament() {
                       </Box>
                     </Box>
                   )}
-                  {width && (
-                    <Box>
-                      <Box
-                        sx={{
-                          width: "1px",
-                          height: "100%",
-                          background: "rgba(151, 151, 151, 0.40)",
-                          margin: "0px 25px",
-                        }}
-                      ></Box>
-                    </Box>
-                  )}
+
                   {width && (
                     <Box display={"flex"}>
                       <Box sx={{ display: "flex" }}>
+                        <Box
+                          sx={{
+                            width: "1px",
+                            height: "100%",
+                            background: "rgba(151, 151, 151, 0.40)",
+                            margin: "0px 25px",
+                          }}
+                        ></Box>
                         <Box>
                           <Box display={"flex"} alignItems={"center"}>
                             <svg
@@ -976,7 +909,7 @@ export default function JoinTournament() {
                                 sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
                               />
                             ) : (
-                              <Box>
+                              <Box display={"flex"} alignItems={"baseline"}>
                                 <Typography
                                   sx={{
                                     fontSize: "12px",
@@ -989,10 +922,11 @@ export default function JoinTournament() {
                                       new Date()
                                   )?.format("MM/DD/YYYY")}
                                 </Typography>
+                                <Typography>-</Typography>
                                 <Typography
                                   sx={{
                                     fontSize: "12px",
-                                    marginLeft: "0px !important",
+                                    // marginLeft: "0px !important",
                                     textAlign: "left",
                                   }}
                                 >
@@ -1009,7 +943,13 @@ export default function JoinTournament() {
                     </Box>
                   )}
                   {width && (
-                    <Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: width < 1200 ? "column" : "",
+                      }}
+                    >
                       <Box
                         sx={{
                           width: "1px",
@@ -1018,16 +958,6 @@ export default function JoinTournament() {
                           margin: "0px 25px",
                         }}
                       ></Box>
-                    </Box>
-                  )} 
-                  {width && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        flexDirection: width < 1200 ? "column" : "",
-                      }}
-                    >
                       <Box
                         sx={{
                           marginRight: `${
@@ -1044,6 +974,9 @@ export default function JoinTournament() {
                               576 < width && width < 1200
                                 ? `${width / 62.5}px`
                                 : "18px",
+                            letterSpacing: "0.7px",
+                            // marginLeft: "0px !important",
+                            fontWeight: "700",
                           }}
                         >
                           Participants

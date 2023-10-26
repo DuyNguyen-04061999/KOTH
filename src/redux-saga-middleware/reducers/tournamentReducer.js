@@ -308,6 +308,13 @@ export const saveBoughtTournament = (data) => {
   };
 };
 
+export const toggleExtra = (data) => {
+  return {
+    type : "TOGGLE_EXTRA",
+    payload:data
+  }
+}
+
 const tournamentReducer = (
   state = {
     //success=true&&fail=false --> success, fail=true&&success=false --> fail, success=false && fail=false --> Loading
@@ -348,6 +355,7 @@ const tournamentReducer = (
     endGameScore: 0,
     idTour: "",
     boughtTour: "",
+    isExtra:false
     //--------------------------------------
   },
   action
@@ -596,6 +604,11 @@ const tournamentReducer = (
         ...state,
         boughtTour: payload,
       };
+    case "TOGGLE_EXTRA" : 
+    return {
+      ...state,
+      isExtra: !state.isExtra
+    }
     default:
       return { ...state };
   }
