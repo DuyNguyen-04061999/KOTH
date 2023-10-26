@@ -435,7 +435,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     Plays:
                   </Typography>
                   <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {detailTournament?.currentPlayed || 0} / {detailTournament?.maxPlay}
+                    {detailTournament?.currentPlayed || 0}
                   </Typography>
                   <Typography
                       sx={{
@@ -479,8 +479,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     ""
                   ) : (
                     <Typography sx={{ marginLeft: "0px !important", color:"white" }}>
-                      : {detailTournament?.boughtToday}/
-                      {detailTournament?.maxPlay}
+                      : {detailTournament?.boughtToday}
                     </Typography>
                   )}
                 </Box>
