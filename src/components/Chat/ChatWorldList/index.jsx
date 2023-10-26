@@ -290,7 +290,7 @@ export default function ChatWorldList() {
                           }}
                         >
                           {e?.updatedAt &&
-                            moment(e?.updatedAt).format("H:mm a")}
+                            moment(e?.updatedAt).format("LT")}
                         </span>
                       </Box>
                       <Box
@@ -394,7 +394,7 @@ export default function ChatWorldList() {
                     >
                       {" "}
                       {e?.updatedAt &&
-                        moment(e?.updatedAt).format("H:mm a")}{" "}
+                        moment(e?.updatedAt).format("LT")}{" "}
                     </span>{" "}
                   </Box>
                   <Box
