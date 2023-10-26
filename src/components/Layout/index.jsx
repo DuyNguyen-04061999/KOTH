@@ -229,7 +229,7 @@ export default function Layout(props) {
   const location = useLocation();
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
-  const refCodeURL= query?.get("refCode");
+  const refCodeURL= query?.get("refcode");
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
@@ -246,7 +246,7 @@ export default function Layout(props) {
   useEffect(() => {
     const checkRefCode =() =>{
       if (refCodeURL) {
-        const refCode = query?.get("refCode").split("refCode").join();
+        const refCode = query?.get("refcode").split("refcode").join();
         console.log(refCode)
         dispatch(addRefCodeRegister(refCode));
         if(!isLoginDialog){

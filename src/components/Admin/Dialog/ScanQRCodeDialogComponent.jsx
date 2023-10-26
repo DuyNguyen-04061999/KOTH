@@ -1,19 +1,19 @@
 import CloseIcon from "@mui/icons-material/Close";
-import {Box, Dialog, Typography} from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import copy from "copy-to-clipboard";
 import QRCode from "qrcode.react";
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {showToastNotify} from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
-import {closeScanQRCode} from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import {images} from "../../../utils/images";
+import { useDispatch, useSelector } from "react-redux";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
+import { closeScanQRCode } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ScanQRCodeDialogComponent(props) {
     const {refCode} = props;
     const location = window.location.host.replace("admin.", "");
-    const urlRedirect = `https://${location}/home?refCode=${refCode}`;
+    const urlRedirect = `https://${location}/home?refcode=${refCode}`;
     const {isOpenQRCode} = useSelector((state) => state.adminDialogReducer);
     const dispatch = useDispatch();
     const {width} = useWindowDimensions();
