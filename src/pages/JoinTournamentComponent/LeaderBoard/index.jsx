@@ -1649,7 +1649,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               <></>
             )}
           </Box>
-          <Box sx={{ padding: "0px 0px 100px 0px" }}>
+          <Box sx={{ padding: "0px 0px 50px 0px" }}>
             {detailTournament?.tournamentResult
               ?.filter((n) => {
                 return n?.userNickName === userName;
