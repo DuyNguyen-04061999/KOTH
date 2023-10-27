@@ -17,8 +17,8 @@ const FlipCountDownItem = ({distance}) => {
                     textShadow: "0px 30px 21px rgba(17, 20, 45, 0.71)",
                 }}
                 digitBlockStyle={{
-                    width: width < 576 ? "30px" : "70px",
-                    height: width < 576 ? "30px" : "70px",
+                    width: width < 576 ?  `${width / 20}px` : "70px",
+                    height: width < 576 ? `${width / 20}px` : "70px",
                     fontSize: width < 576 ? "20px" : "40px",
                     fontWeight: 800,
                     backgroundColor: "#6e0aa1",
