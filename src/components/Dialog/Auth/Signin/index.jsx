@@ -660,7 +660,8 @@ export default function Dialoglg() {
       });
     }
   };
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
+  
   const location = useLocation();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -840,13 +841,18 @@ export default function Dialoglg() {
           )}
           <Box
             component={"div"}
+            sx={{
+              
+            }}
             className={
               width && width > 576
                 ? "d-flex align-items-center user-name"
                 : "d-flex align-items-center user-name"
             }
           >
-            <Dropdown>
+            <Dropdown sx={{
+              
+            }}>
               <Dropdown.Toggle
                 style={{
                   backgroundColor: "unset",
@@ -933,6 +939,8 @@ export default function Dialoglg() {
                   backgroundColor: "#2e2249",
                   width: "max-content",
                   padding: "0px",
+                  overflow: height < 500 ? "auto" : "unset",
+                  maxHeight: height < 500 ? 250 : "unset"
                 }}
               >
                 <Box marginBottom={"20px"}>

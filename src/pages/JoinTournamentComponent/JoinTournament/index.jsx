@@ -487,7 +487,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                             }}
                             >
-                              Maximum Extra
+                              Extra : {detailTournament?.boughtToday}
                             </Typography>
                             {!detailTournament?.checkInTournament ? (
                               <BgWithTooltip
@@ -532,7 +532,7 @@ export default function JoinTournament() {
                                   color: "white",
                                 }}
                               >
-                                : {detailTournament?.boughtToday}
+                                
                               </Typography>
                             )}
                           </Box>
@@ -597,7 +597,7 @@ export default function JoinTournament() {
                                         ></path>
                                       </svg>
                                       <Typography sx={{ fontSize: "12px" }}>
-                                        Extra:{" "}
+                                        Free Extra:{" "}
                                       </Typography>
                                       <Typography sx={{ fontSize: "12px" }}>
                                         {detailTournament?.extras?.normal}
@@ -778,74 +778,7 @@ export default function JoinTournament() {
                           </Box>
                         </Box>
                       </Box>
-                      <Box
-                        sx={{
-                          width: "1px",
-                          height: "100%",
-                          background: "rgba(151, 151, 151, 0.40)",
-                          margin: "0px 15px",
-                        }}
-                      ></Box>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Box>
-                          <Typography
-                            sx={{
-                              color: "#ffff",
-                              textAlign: "start",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 62.5}px`
-                                  : "18px",
-                              letterSpacing: "0.7px",
-                              marginLeft: "0px !important",
-                              fontWeight: "700"
-                            }}
-                          >
-                            Plays:
-                          </Typography>
-                          <Box
-                            sx={{
-                              color: "#fff",
-                              textAlign: "start",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 76}px`
-                                  : "14px",
-                              fontWeight: "500 !important",
-                              marginLeft: "0px !important",
-                            }}
-                          >
-                            {fetchT ? (
-                              <Skeleton
-                                variant="text"
-                                sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
-                              />
-                            ) : (
-                              <Box>
-                                <Typography
-                                  sx={{
-                                    fontSize: "12px",
-                                    marginLeft: "0px !important",
-                                    textAlign: "left"
-                                 }}
-                                >
-                                  {detailTournament?.currentPlayed || 0}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    fontSize: "12px",
-                                    marginLeft: "0px !important",
-                                    textAlign: "left",
-                                    color: "#979797"
-                                 }}
-                                >
-                                  {"Player's play count"}
-                                </Typography>
-                              </Box>
-                            )}
-                          </Box>
-                        </Box>
-                      </Box>
+                      
                     </Box>
                   )}
                   {width && (

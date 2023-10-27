@@ -48,7 +48,7 @@ const ChatDrawer = () => {
   const { token, resetInputValue } = useSelector((state) => state.authReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   useEffect(() => {
-    if (resetInputValue === "logoutSuccess") {
+    if (resetInputValue === "logoutSuccess" && chatInput && chatInput.current) {
       chatInput.current.value = "";
     }
   }, [resetInputValue]);
