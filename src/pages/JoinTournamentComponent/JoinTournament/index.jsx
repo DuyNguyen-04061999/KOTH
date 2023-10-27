@@ -95,31 +95,31 @@ export default function JoinTournament() {
     setSocket(_socket);
   }, []);
   useEffect(() => {
-    socket?.emit("detailTournament", {
-      tournamentId: id,
-    });
+    // socket?.emit("detailTournament", {
+    //   tournamentId: id,
+    // });
   }, [id, socket]);
 
   useEffect(() => {
+    // if (token) {
+    //   socket?.emit("detailTournament", {
+    //     tournamentId: id,
+    //   });
+    // }
+  }, [id, socket, token]);
+  useEffect(() => {
     if (token) {
-      socket?.emit("detailTournament", {
-        tournamentId: id,
+      dispatch({
+        type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
+        payload: id,
+      });
+    } else {
+      dispatch({
+        type: "GET_DETAIL_PROMOTION_INFO",
+        payload: id,
       });
     }
-  }, [id, socket, token]);
-  // useEffect(() => {
-  //   if (token) {
-  //     dispatch({
-  //       type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
-  //       payload: id,
-  //     });
-  //   } else {
-  //     dispatch({
-  //       type: "GET_DETAIL_PROMOTION_INFO",
-  //       payload: id,
-  //     });
-  //   }
-  // }, [token, id, dispatch]);
+  }, [token, id, dispatch]);
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
       dispatch(updateDetailTour(data));
