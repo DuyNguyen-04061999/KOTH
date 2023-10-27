@@ -1,11 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import promotionService from "../services/promotionService";
 import { updateDetailTour } from "../reducers/playgameReducer";
+import promotionService from "../services/promotionService";
 const PromotionService = new promotionService();
 function* getPromotionDetail(dataRequest) {
   try {
     const { payload } = dataRequest;
-    const data = yield call(PromotionService.callDetailPromotion, payload);
+    const res = yield call(PromotionService.callDetailPromotion, payload);
+    const { data } = res
     if (data) {
       yield put(updateDetailTour(data));
     }
@@ -14,7 +15,8 @@ function* getPromotionDetail(dataRequest) {
 function* getPromotionDetailToken(dataRequest) {
   try {
     const { payload } = dataRequest;
-    const data = yield call(PromotionService.callDetailPromotionToken, payload);
+    const res = yield call(PromotionService.callDetailPromotionToken, payload);
+    const { data } = res
     if (data) {
       yield put(updateDetailTour(data));
     }
