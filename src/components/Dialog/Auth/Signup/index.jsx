@@ -186,7 +186,7 @@ export default function Signup(props) {
         password: password,
         email: email,
         phone: phone,
-        ref: ref,
+        ref: refCodeRegister ? refCodeRegister : ref,
         c_password: c_password,
         gender: gender,
       });
@@ -787,7 +787,7 @@ export default function Signup(props) {
             onChange={(e) => {
               setRef(e.target.value);
             }}
-            readonly={refCodeRegister}
+            readOnly={refCodeRegister !== ''}
             value={refCodeRegister ? refCodeRegister : ref}
             sx={{
               "&:before": {
