@@ -1060,7 +1060,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       width: "100%",
                       display: "flex",
                       flexDirection: "column",
-                      position: "absolute",
                       bottom: "0px",
                     }}
                   >
