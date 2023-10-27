@@ -95,17 +95,17 @@ export default function JoinTournament() {
     setSocket(_socket);
   }, []);
   useEffect(() => {
-    socket?.emit("detailTournament", {
-      tournamentId: id,
-    });
+    // socket?.emit("detailTournament", {
+    //   tournamentId: id,
+    // });
   }, [id, socket]);
 
   useEffect(() => {
-    if (token) {
-      socket?.emit("detailTournament", {
-        tournamentId: id,
-      });
-    }
+    // if (token) {
+    //   socket?.emit("detailTournament", {
+    //     tournamentId: id,
+    //   });
+    // }
   }, [id, socket, token]);
   useEffect(() => {
     if (token) {
@@ -121,10 +121,10 @@ export default function JoinTournament() {
     }
   }, [token, id, dispatch]);
   useEffect(() => {
-    // socket?.on("detailTournamentSuccess", (data) => {
-    //   setDetailTournament(data);
-    //   setFetchT(false);
-    // });
+    socket?.on("detailTournamentSuccess", (data) => {
+      dispatch(updateDetailTour(data));
+      setFetchT(false);
+    });
     socket?.on("buyTicketTournamentSuccess", () => {
       // window.location.reload();
       if (token) {
@@ -495,7 +495,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              Extra : {detailTournament?.boughtToday}
+                              Extra
                             </Typography>
                             {!detailTournament?.checkInTournament ? (
                               <BgWithTooltip

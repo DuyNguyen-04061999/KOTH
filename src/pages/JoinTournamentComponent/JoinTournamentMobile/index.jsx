@@ -444,7 +444,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     ""
                   ) : (
                     <Typography sx={{ marginLeft: "0px !important", color:"white" }}>
-                      : {detailTournament?.boughtToday}
+                      
                     </Typography>
                   )}
                 </Box>
