@@ -358,6 +358,8 @@ import BtnBack from "../assets/images/btnback.png";
 import bannerendtour from '../assets/images/bannerendtour.png'
 import bannerendmobile from "../assets/images/bannerendmobile.png"
 
+import bgBannerCountDown from  "../assets/images/banners/bg_banner_countdown.png"
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -390,6 +392,7 @@ export const imageHome = {
   BannerWinBigMobile: bannerWinBigMobile,
   BannerWinCelebMobile: bannerWinCelebMobile,
   BannerWinAroundMobile: bannerWinAroundMobile,
+  BGBannerCountDown:bgBannerCountDown,
 };
 
 export const navbar = {
