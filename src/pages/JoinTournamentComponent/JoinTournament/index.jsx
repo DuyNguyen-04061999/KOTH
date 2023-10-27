@@ -107,24 +107,24 @@ export default function JoinTournament() {
       });
     }
   }, [id, socket, token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch({
+  //       type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
+  //       payload: id,
+  //     });
+  //   } else {
+  //     dispatch({
+  //       type: "GET_DETAIL_PROMOTION_INFO",
+  //       payload: id,
+  //     });
+  //   }
+  // }, [token, id, dispatch]);
   useEffect(() => {
-    if (token) {
-      dispatch({
-        type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
-        payload: id,
-      });
-    } else {
-      dispatch({
-        type: "GET_DETAIL_PROMOTION_INFO",
-        payload: id,
-      });
-    }
-  }, [token, id, dispatch]);
-  useEffect(() => {
-    // socket?.on("detailTournamentSuccess", (data) => {
-    //   setDetailTournament(data);
-    //   setFetchT(false);
-    // });
+    socket?.on("detailTournamentSuccess", (data) => {
+      dispatch(updateDetailTour(data));
+      setFetchT(false);
+    });
     socket?.on("buyTicketTournamentSuccess", () => {
       // window.location.reload();
       if (token) {
@@ -495,7 +495,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              Extra : {detailTournament?.boughtToday}
+                              Extra
                             </Typography>
                             {!detailTournament?.checkInTournament ? (
                               <BgWithTooltip
