@@ -598,7 +598,9 @@ function App() {
 
   useEffect(() => {
     const onPageLoad = () => {
-      store.dispatch(getListGame());
+      if(getAppType() !== "promote") {
+        store.dispatch(getListGame());
+      }
       if (localStorage.getItem("KE")) {
         socket?.emit("login", {
           username: localStorage.getItem("NAME"),
@@ -628,7 +630,9 @@ function App() {
   }, [socket, token]);
 
   useEffect(() => {
-    store.dispatch(getListBet());
+    if(getAppType() !== "promote") {
+      store.dispatch(getListBet());
+    }
   });
   //Detect device
   const getMobileOS = () => {

@@ -347,7 +347,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "35%",
+                    width: "45%",
                   }}
                 >
                   <Typography
@@ -359,18 +359,20 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   >
                     Start
                   </Typography>
-                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                  {moment(
-                      detailTournament?.tournamentStartAt ||
-                        new Date()
-                    )?.format("MM/DD/YYYY")}
-                  </Typography>
-                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
+                  <Box className="d-flex" component={"div"}>
+                    <Typography className="me-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
                     {moment(
-                      detailTournament?.tournamentStartAt ||
-                        new Date()
-                    )?.format("HH:mm a")}
-                  </Typography>
+                        detailTournament?.tournamentStartAt ||
+                          new Date()
+                      )?.format("MM/DD/YYYY")}
+                    </Typography>
+                    <Typography className="ms-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
+                      {moment(
+                        detailTournament?.tournamentStartAt ||
+                          new Date()
+                      )?.format("HH:mm a")}
+                    </Typography>
+                  </Box>
                 </Box>
                 <Box
                   sx={{
@@ -383,7 +385,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    width: "35%",
+                    width: "45%",
                   }}
                   className="ps-3"
 
@@ -397,57 +399,20 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   >
                     End
                   </Typography>
-                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                  {moment(
-                      detailTournament?.tournamentEndAt ||
-                        new Date()
-                    )?.format("MM/DD/YYYY")}
-                  </Typography>
-                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                  {moment(
-                      detailTournament?.tournamentEndAt ||
-                        new Date()
-                    )?.format("HH:mm a")}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    width: "1px",
-                    height: "40px",
-                    backgroundColor: "rgba(151, 151, 151, 0.40)",
-                  }}
-                ></Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "25%",
-                  }}
-                  className="ps-3"
-                >
-                  <Typography
-                    sx={{
-                      ...typographyStyle,
-                      fontSize: "14px",
-                      fontWeight: "700",
-                    }}
-                  >
-                    Plays:
-                  </Typography>
-                  <Typography sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {detailTournament?.currentPlayed || 0} / {detailTournament?.maxPlay}
-                  </Typography>
-                  <Typography
-                      sx={{
-                        fontSize: "12px",
-                        marginLeft: "0px !important",
-                        textAlign: "left",
-                        color: "#979797 !important"
-                      }}
-                      className="text-white"
-                    >
-                      {"Play count"}
+                  <Box className="d-flex" component={"div"}>
+                    <Typography className="me-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
+                    {moment(
+                        detailTournament?.tournamentEndAt ||
+                          new Date()
+                      )?.format("MM/DD/YYYY")}
                     </Typography>
+                    <Typography className="ms-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
+                    {moment(
+                        detailTournament?.tournamentEndAt ||
+                          new Date()
+                      )?.format("HH:mm a")}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
               <Box
@@ -473,14 +438,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       fontSize: "14px",
                     }}
                   >
-                    Maximum Extra
+                    Extra
                   </Typography>
                   {!detailTournament?.checkInTournament ? (
                     ""
                   ) : (
                     <Typography sx={{ marginLeft: "0px !important", color:"white" }}>
-                      : {detailTournament?.boughtToday}/
-                      {detailTournament?.maxPlay}
+                      
                     </Typography>
                   )}
                 </Box>
@@ -513,7 +477,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             clipRule="evenodd"
                           ></path>
                         </svg>
-                        <Typography>Extra: </Typography>
+                        <Typography>Free Extra: </Typography>
                         <Typography>
                           {detailTournament?.extras?.normal}
                         </Typography>

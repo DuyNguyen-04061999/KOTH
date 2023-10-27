@@ -1,13 +1,16 @@
 import { API } from "../axios/api";
 
+import { PROMOTION_API } from "../axios/promotionApi";
+
 class TournamentService {
   async callCreateTournament(dataRequest) {
     const res = await API.post("/api/tournaments/create", dataRequest);
     return res;
   }
+
   async callListTournament(dataRequest) {
-    const res = await API.get(
-      `/api/tournaments/list-tournament?typeTournament=${dataRequest}`,
+    const res = await PROMOTION_API.get(
+      `/api/promotions/list-promotion?typeTournament=${dataRequest}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +32,7 @@ class TournamentService {
     return res;
   }
   async callBiggestEndTour() {
-    const res = await API.get("/api/tournaments/biggest-prize-end-tour");
+    const res = await PROMOTION_API.get("/api/promotions/biggest-end-promotion");
     return res;
   }
   async callBrandTour() {
@@ -37,12 +40,24 @@ class TournamentService {
     return res;
   }
   async callHottestWeekTour() {
-    const res = await API.get("/api/tournaments/hottest-week-tour");
+    const res = await PROMOTION_API.get("/api/promotions/hottest-week-promotion");
     return res;
   }
   async callThreeBrandTour() {
-    const res = await API.get("/api/tournaments/three-brand-tour");
+    const res = await PROMOTION_API.get("/api/promotions/three-brand-promotion");
     return res;
+  }
+
+  async detailPromotion (dataRequest) {
+    const { id } = dataRequest
+    const res = await API.get(`/api/promotions/detail/${id}`, 
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return res
   }
 }
 

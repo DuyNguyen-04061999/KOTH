@@ -50,7 +50,7 @@ export default function GameInTournament(props) {
                   color:"#7C81F2"
                 }}
               >
-                Game for promotion
+                Game for Promotion
               </Typography>
             </Box>
           ) : (

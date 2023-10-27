@@ -38,7 +38,7 @@ import {
   changeRouter,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
-import { clickTabNav } from "../../redux-saga-middleware/reducers/authReducer";
+import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
   openChatPopup,
@@ -105,7 +105,7 @@ export default function Layout(props) {
     (state) => state.chatReducer
   );
   const { router, startGameCheck } = useSelector((state) => state.appReducer);
-
+  const { isLoginDialog, refCodeRegister } = useSelector((state) => state.authReducer);
   const { children } = props;
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
@@ -126,7 +126,6 @@ export default function Layout(props) {
   // useEffect(() => {
   //   dispatch(setBadgeChat(false))
   // },[chatWorld])
-
   useEffect(() => {
     if (
       router &&
@@ -230,6 +229,7 @@ export default function Layout(props) {
   const location = useLocation();
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
+  const refCodeURL= query?.get("refcode");
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
@@ -242,6 +242,22 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
+
+  useEffect(() => {
+    const checkRefCode =() =>{
+      if (refCodeURL) {
+        const refCode = query?.get("refcode").split("refcode").join();
+        console.log(refCode)
+        dispatch(addRefCodeRegister(refCode));
+        if(!isLoginDialog){
+          dispatch(clickTab(true));
+          dispatch(toggleLoginDialog(true));
+        }
+      }
+    }
+    checkRefCode();
+  }, [refCodeURL, dispatch]);
+
   useEffect(() => {
     dispatch(toggleStartGame(false));
   }, [location.pathname, dispatch]);
@@ -512,7 +528,7 @@ export default function Layout(props) {
             sx={{
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: "relative",
-              zIndex: width < 1200 ? "1024" : "0",
+              zIndex: "1024",
               // width: "400px !important",
               // "& .MuiGrid-item": {
               //   minWidth: "400px !important",

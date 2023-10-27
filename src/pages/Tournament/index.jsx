@@ -590,7 +590,7 @@ export default function Tournament() {
                   3.1 The User may promote and market their tournaments within
                   the guidelines and rules set forth by the Platform.
                   <br />
-                  3.2 The User shall ensure that any promotional or marketing
+                  3.2 The User shall ensure that any Promotional or marketing
                   materials used for the tournaments comply with all applicable
                   laws and regulations.
                   <br />

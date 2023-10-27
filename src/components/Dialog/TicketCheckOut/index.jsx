@@ -54,7 +54,7 @@ export default function TicketCheckOut() {
       dispatch(toggleCheckWallet());
     }
     setDisablePlaceOrder(false);
-    dispatch(toggleBuyTicket(false));
+    // dispatch(toggleBuyTicket(false));
   };
 
   const btnBuyTicket = () => {
@@ -78,7 +78,7 @@ export default function TicketCheckOut() {
       dispatch(toggleCheckWallet());
     }
     setDisablePlaceOrder(false);
-    dispatch(toggleBuyTicket(false));
+    // dispatch(toggleBuyTicket(false));
   };
 
   useEffect(() => {
