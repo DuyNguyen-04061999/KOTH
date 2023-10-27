@@ -149,8 +149,9 @@ export default function JoinTournament() {
         className: "success-background",
       });
       if (token) {
-        socket?.emit("detailTournament", {
-          tournamentId: id,
+        dispatch({
+          type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
+          payload: id,
         });
       }
     });
