@@ -13,13 +13,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const { userName } = useSelector((state) => state.authReducer);
   const [start, setStart] = useState(3);
   const [end, setEnd] = useState(6);
-  useEffect(() => {
-    if (height > 820) {
-      setEnd(6);
-    } else {
-      setEnd(5);
-    }
-  }, [height]);
+
   useEffect(() => {
     setTop3(detailTournament?.tournamentResult?.slice(0, 3));
   }, [detailTournament]);
@@ -385,12 +379,15 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               marginRight: "5px",
                             }}
                           ></Box>
-                          <Box>
+                          <Box sx={{width:"70%"}}>
                             <Typography
                               sx={{
                                 textAlign: "start",
                                 color: "#BFBEED",
                                 fontWeight: "lighter !important",
+                                  maxWidth: "100%",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis"
                               }}
                             >
                               {item?.userNickName}
@@ -624,7 +621,9 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
             onClose={handleOnClose}
             sx={{
               zIndex: "1311",
-              // backgroundColor:"#211d28"
+              ".MuiDialog-paper": {
+                backgroundColor:"#211d28 !important",
+              }
             }}
             open={open}
           >
@@ -649,7 +648,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   display: "flex",
                   alignItems: "center",
                   boxSizing: "border-box",
-                  padding: "0px 12px",
+                  padding: "12px",
                   justifyContent: "space-between",
                 }}
               >
@@ -963,7 +962,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     sx={{
                       padding: "28px 28px 0px 28px",
                       overflow: "auto",
-                      height: "500px",
+                      height: "max-content",
                     }}
                   >
                     {detailTournament?.tournamentResult?.map((item, index) => {
