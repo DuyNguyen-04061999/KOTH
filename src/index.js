@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const meta = {
     meta: {
-      name: process.env.REACT_APP_URL_DOMAIN === "api.play4promote.com" ? {
+      name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
         robots: "noindex"
       } : {}
     }

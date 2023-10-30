@@ -147,7 +147,7 @@ export default function VideoComponent(props) {
                 }}
                 className="ms-2"
               >
-                Causion
+                Caution
               </Typography>
             </Box>
             <Box className="text-center">

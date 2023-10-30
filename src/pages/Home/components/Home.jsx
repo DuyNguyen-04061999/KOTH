@@ -1,36 +1,35 @@
-import React, { useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import SliderLayout from "../../../components/Slider/index";
-import { images, images2, imagesV2, popup } from "../../../utils/images";
-import "../scss/home.scss";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
-import { images270423_l } from "../../../utils/images270423_l";
-import Carousel from "../../../components/SlickReact";
-import Slider from "react-slick";
-import { images280423_l } from "../../../utils/images280423_l";
-import SliderFree from "../../../components/SliderFree";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getListGame } from "../../../redux-saga-middleware/reducers/gameReducer";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
+import Carousel from "../../../components/SlickReact";
+import SliderLayout from "../../../components/Slider/index";
+import SliderFree from "../../../components/SliderFree";
+import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { formatMoney, getAppType } from "../../../utils/helper";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { getListGame } from "../../../redux-saga-middleware/reducers/gameReducer";
+import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import {
   getFontSizeDependOnWidth,
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
-import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
-import moment from "moment";
+import { formatMoney, getAppType } from "../../../utils/helper";
+import { images, images2, imagesV2, popup } from "../../../utils/images";
+import { images270423_l } from "../../../utils/images270423_l";
+import { images280423_l } from "../../../utils/images280423_l";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 import Package from "../../PackagePage/component/Packege";
+import "../scss/home.scss";
 
 export default function Home() {
   const { width } = useWindowDimensions();
@@ -49,7 +48,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    dispatch(getListGame());
+    if(getAppType() !== "promote") {
+      dispatch(getListGame());
+    }
     socket?.emit("getLeaderBoard", {
       type: "gold",
     });
