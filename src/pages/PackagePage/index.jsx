@@ -1,10 +1,10 @@
-import Layout from "../../components/Layout";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import { getAppType } from "../../utils/helper";
 import { Package } from "./component";
 
 export default function PackagePage () {
     return (
-        <Layout 
+        <MainLayout 
             children={
                 <>
                     {getAppType() === "promote" ? (<Package />) : (<></>)}

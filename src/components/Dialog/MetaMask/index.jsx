@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Box, Dialog, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleMetaMaskDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
-import imagesMetamask from "../../../utils/imagesMetamask";
-import QRCode from "react-qr-code";
 import CloseIcon from "@mui/icons-material/Close";
+import { Box, Dialog, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import {
   browserName,
-  // browserVersion
 } from "react-device-detect";
-import useWindowDimensions from "../../../utils/useWindowDimensions.js";
+import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
+import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { toggleMetaMaskDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
+import imagesMetamask from "../../../utils/imagesMetamask";
+import useWindowDimensions from "../../../utils/useWindowDimensions.js";
 
 export default function MetaMaskDialog() {
   const { isMetamaskDialog, depositData } = useSelector(
@@ -109,7 +109,7 @@ export default function MetaMaskDialog() {
     }
   };
 
-  return (
+  return ReactDOM.createPortal(
     <Dialog
       open={isMetamaskDialog}
       PaperProps={{
@@ -310,6 +310,6 @@ export default function MetaMaskDialog() {
           <Box className="text-white text-center mb-4">Qr Code Expired !</Box>
         )}
       </Box>
-    </Dialog>
+    </Dialog>, document.body
   );
 }

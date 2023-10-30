@@ -91,7 +91,6 @@ export default function Signup(props) {
   //------------------------------------------------------------------
   const [textC_pass, setTextC_pass] = useState("");
   const [textUserName, setTextUserName] = useState("");
-  const [validEmail, setValidEmail] = useState("");
   const [characterPass, setCharacterPass] = useState(false);
   const [passOneNumber, setPassOneNumber] = useState(false);
   const [passOneLetter, setPassOneLetter] = useState(false);
@@ -153,9 +152,6 @@ export default function Signup(props) {
     if (c_password === password) {
       setTextC_pass("");
     }
-    if (checkEmailFormat(email) === true) {
-      setValidEmail("");
-    }
   }, [
     c_password,
     email,
@@ -176,8 +172,7 @@ export default function Signup(props) {
       setTextC_pass("Password does not match");
       return;
     } else if (checkEmailFormat(email) === false) {
-      // setPassSai(true);
-      setValidEmail("Invalid Email Address");
+      
       return;
     } else {
       // setPassSai(false);
