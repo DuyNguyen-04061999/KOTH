@@ -643,7 +643,7 @@ export default function PlayGame(props) {
                     576 < width && width < 1200 ? `${width / 42}px` : "18px",
                 }}
               >
-                Game for tournament
+                Game for promotion
               </Typography>
 
               <Box
