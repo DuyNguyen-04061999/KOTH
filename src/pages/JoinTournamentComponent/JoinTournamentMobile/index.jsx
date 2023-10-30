@@ -72,6 +72,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       tournamentId: id,
     });
   };
+  
 
   const handleJoinTour = () => {
     if (token) {
@@ -1154,10 +1155,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 sx={{
                   position: "fixed",
                   bottom: "0px",
-                  padding: "28px 28px 28px 28px",
+                  padding: "28px",
                   width: "100%",
                   background: detailTournament?.tournamentStatus === 2 ? "" : "rgba(37, 37, 37, 0.20)",
                   backdropFilter: detailTournament?.tournamentStatus === 2 ? "" : "blur(2px)",
+                  display: detailTournament?.tournamentStatus === 2 ? "none" : "block",
                   zIndex: "28",
                 }}
               >

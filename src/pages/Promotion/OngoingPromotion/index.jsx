@@ -1,11 +1,4 @@
-import {
-  Box,
-  Container,
-  CssBaseline,
-  ThemeProvider,
-  Typography,
-  createTheme,
-} from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BannerTourMobile } from "../../../components/Banner";
@@ -17,19 +10,7 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-const theme = createTheme({
-  typography: {},
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        // "@font-face": {
-        //   fontFamily: "Cyntho Next",
-        //   src: `url(${InspirationTTF}) format("truetype")`,
-        // },
-      },
-    },
-  },
-});
+
 export default function HotTournament() {
   const { width } = useWindowDimensions();
   const typographyStyle = {
@@ -51,10 +32,13 @@ export default function HotTournament() {
   );
 
   useEffect(() => {
+    if(width) {
+      setItemOffSet(0)
+    }
+
     if (width > 576) {
       setItemQuantity(12);
-    }
-    if (width < 576) {
+    } else {
       setItemQuantity(4);
     }
   }, [width]);
@@ -84,8 +68,7 @@ export default function HotTournament() {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <MainLayout
         type="Home"
         children={
@@ -148,7 +131,7 @@ export default function HotTournament() {
                   typePromo={"ongoing"}
                 />
               </Box>
-              <Box sx={{ margin: "36px 0px"}}>
+              <Box sx={{ margin: "36px 0px" }}>
                 {!isFetchOngoing && data !== null && data?.length > 0 && (
                   <PaginatedItems
                     pageCount={Math.ceil(data.length / itemQuantity)}
@@ -259,7 +242,7 @@ export default function HotTournament() {
                   />
                 )}
               </Box>
-              <Box sx={{ margin: "36px 0px"}}>
+              <Box sx={{ margin: "36px 0px" }}>
                 {!isFetchOngoing && data !== null && data?.length > 0 && (
                   <PaginatedItems
                     pageCount={Math.ceil(data.length / itemQuantity)}
@@ -274,6 +257,6 @@ export default function HotTournament() {
           )
         }
       />
-    </ThemeProvider>
+    </>
   );
 }
