@@ -11,15 +11,15 @@ const FlipCountDownItem = ({distance}) => {
                 to={distance && distance}
                 labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
                 labelStyle={{
-                    fontSize: width < 576 ? "8px" : "16px",
+                    fontSize:width < 1024 ? "2vw" : "1vw",
                     fontWeight: 500,
                     textTransform: 'uppercase',
                     textShadow: "0px 30px 21px rgba(17, 20, 45, 0.71)",
                 }}
                 digitBlockStyle={{
-                    width: width < 576 ?  `${width / 20}px` : "70px",
-                    height: width < 576 ? `${width / 20}px` : "70px",
-                    fontSize: width < 576 ? "20px" : "40px",
+                    width: width < 1024 ? "6.5vw" :"4vw",
+                    height: width < 1024 ? "6.5vw" : "4vw",
+                    fontSize:width < 1024 ? "5vw" :"3vw",
                     fontWeight: 800,
                     backgroundColor: "#6e0aa1",
                     textShadow: "0px 30px 21px rgba(17, 20, 45, 0.71)"
