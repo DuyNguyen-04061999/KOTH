@@ -1,7 +1,6 @@
 import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
-import React from "react";
 import '@leenguyen/react-flip-clock-countdown/dist/index.css';
-import {Box} from "@mui/material";
+import React from "react";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
 const FlipCountDownItem = ({distance}) => {

@@ -2,9 +2,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   closeCheckWallet,
   toggleCheckWallet,
@@ -95,7 +95,7 @@ export default function TicketCheckOut() {
   useEffect(() => {
     socket?.on("buyPackageSuccess", (data) => {});
   }, [socket]);
-  return (
+  return ReactDOM.createPortal(
     <>
       <Dialog
         fullScreen={width < 576}
@@ -512,6 +512,6 @@ export default function TicketCheckOut() {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>, document.body
   );
 }

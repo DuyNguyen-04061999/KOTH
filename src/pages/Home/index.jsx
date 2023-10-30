@@ -1,8 +1,8 @@
 import React from "react";
 
+import MainLayout from "../../components/MainLayout/MainLayout";
 import Home from "./components/Home";
-import Layout from "../../components/Layout";
 
 export default function HomePage() {
-  return <Layout children={<Home />} type="Home" />;
+  return <MainLayout children={<Home />} type="Home" />;
 }

@@ -1,5 +1,4 @@
-import {ExpandMoreOutlined} from "@mui/icons-material";
-import CopyIcon from "@mui/icons-material/CopyAll";
+import { ExpandMoreOutlined } from "@mui/icons-material";
 import {
     Box,
     Button,
@@ -7,19 +6,19 @@ import {
     Typography
 } from "@mui/material";
 import copy from "copy-to-clipboard";
-import React, {useEffect, useRef, useState} from "react";
-import {CSVLink} from "react-csv";
-import {useDispatch, useSelector} from "react-redux";
-import {getListEndUser} from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
-import {showToastNotify} from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
-import {getListSub} from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
-import {getListDistributor} from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
-import {updateDetailAccount} from "../../../redux-saga-middleware_admin/reducers/adminReducer";
-import {getListRef} from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
+import React, { useEffect, useRef, useState } from "react";
+import { CSVLink } from "react-csv";
+import { useDispatch, useSelector } from "react-redux";
+import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
+import { openScanQRCode } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
+import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { ScanQRCodeDialogComponent } from "../Dialog";
 import SearchBar from "../SearchBar/SearchBar";
-import {openScanQRCode} from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import {ScanQRCodeDialogComponent} from "../Dialog";
 
 const ResetSVG = () => {
     return (

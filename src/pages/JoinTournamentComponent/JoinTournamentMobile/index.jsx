@@ -284,7 +284,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               {detailTournament?.tournamentStatus === 2 ? (
                 <Box
                   sx={{
-                    fontWeight: "500 !important",
                     fontSize: "12px",
                     color: "#7C81F2",
                     fontWeight: "700",

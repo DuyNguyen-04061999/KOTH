@@ -1,16 +1,16 @@
 import React from "react";
-import Layout from "../../components/Layout";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import JoinTournament from "./JoinTournament";
 export default function JoinTournamentComponent() {
   return (
     <>
-      <Layout
+      <MainLayout
         children={
           <>
             <JoinTournament />
           </>
         }
-      ></Layout>
+      ></MainLayout>
     </>
   );
 }

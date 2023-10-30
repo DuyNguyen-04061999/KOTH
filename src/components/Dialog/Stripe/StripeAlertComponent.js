@@ -1,5 +1,6 @@
 import { Box, Dialog } from "@mui/material";
 import React from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleAlertStripeProcess } from "../../../redux-saga-middleware/reducers/stripeReducer";
@@ -13,7 +14,7 @@ export default function StripeAlertComponent() {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
 
-  return (
+  return ReactDOM.createPortal(
     <Dialog
       open={isAlertDialog}
       onClose={() => {
@@ -145,6 +146,6 @@ export default function StripeAlertComponent() {
         </Box>
       </Box>
       )}
-    </Dialog>
+    </Dialog>, document.body
   );
 }

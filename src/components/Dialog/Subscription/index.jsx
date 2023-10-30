@@ -1,8 +1,8 @@
 import { Box, Dialog, Typography } from "@mui/material";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSubscriptionDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { Package } from "../../../pages/PackagePage/component";
-import { useEffect } from "react";
+import { toggleSubscriptionDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 
 export default function SubscriptionDialog() {
   const { isSubscription } = useSelector((state) => state.authReducer);
@@ -14,7 +14,7 @@ export default function SubscriptionDialog() {
   };
 
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <Dialog
         open={isSubscription}
@@ -62,6 +62,6 @@ export default function SubscriptionDialog() {
         </Box>
         <Package />
       </Dialog>
-    </>
+    </>, document.body
   );
 }

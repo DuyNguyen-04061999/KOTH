@@ -4,13 +4,13 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import UnityGameComponent from "../../components/GameManager/UnityGameComponent";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import _socket from "../../redux-saga-middleware/config/socket";
 import { getFontSizeTitleDependOnWidth } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function PlayGamePage() {
-  const { token } = useSelector((state) => state.authReducer);
   const [fetchT, setFetchT] = useState(true);
   const [socket, setSocket] = useState(null);
   const [continueGame, setContinueGame] = useState(false);
@@ -131,7 +131,8 @@ export default function PlayGamePage() {
     );
   };
   return detailTournament?.id ? (
-    <Box>
+    <MainLayout children={
+      <Box>
       {detailTournament && (
         <Box>
           <Box>
@@ -360,6 +361,7 @@ export default function PlayGamePage() {
         </Dialog>
       )}
     </Box>
+    }/>
   ) : (
     <></>
   );

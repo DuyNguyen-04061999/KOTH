@@ -1,3 +1,6 @@
+import DropDownIcon from "@mui/icons-material/ArrowDropDown";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   CircularProgress,
@@ -10,14 +13,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import CloseIcon from "@mui/icons-material/Close";
-import SearchIcon from "@mui/icons-material/Search";
-import DropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleInviteGameDialog } from "../../../redux-saga-middleware/reducers/chatReducer";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { toggleInviteGameDialog } from "../../../redux-saga-middleware/reducers/chatReducer";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function InviteGameDialog() {
   const { width } = useWindowDimensions();
@@ -46,7 +47,7 @@ export default function InviteGameDialog() {
       />
     );
   };
-  return (
+  return ReactDOM.createPortal(
     <Dialog
       open={isInviteGameDialog}
       onClose={() => {
@@ -353,7 +354,7 @@ export default function InviteGameDialog() {
           </Box>
         </Box>
       </Box>
-    </Dialog>
+    </Dialog>, document.body
   );
 }
  
