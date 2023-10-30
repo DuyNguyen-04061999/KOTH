@@ -69,6 +69,13 @@ export default function HotTournament() {
     }
   }, [width]);
 
+    useEffect(() => {
+        if (width) {
+            setItemOffSet(0);
+        }
+
+    }, [width]);
+
   useEffect(() => {
     if (endedTournament) {
       setData(endedTournament);

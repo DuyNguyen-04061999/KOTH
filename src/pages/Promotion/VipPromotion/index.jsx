@@ -59,6 +59,13 @@ export default function HotTournament() {
     }
   }, [width]);
 
+    useEffect(() => {
+        if (width) {
+            setItemOffSet(0);
+        }
+
+    }, [width]);
+
   useEffect(() => {
     dispatch({
       type: "CALL_LIST_TOURNAMENT",
