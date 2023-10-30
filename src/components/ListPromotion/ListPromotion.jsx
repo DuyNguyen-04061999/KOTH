@@ -17,6 +17,9 @@ const ListPromotion = (props) => {
     itemQuantity = 12,
   } = props;
 
+  console.log("Page",itemOffSet);
+  console.log("Quantity",itemQuantity);
+
   const { pathname } = useLocation();
   if (pathname.includes("home") || pathname === "/") {
     return (
