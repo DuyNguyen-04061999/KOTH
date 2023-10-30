@@ -621,7 +621,9 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
             onClose={handleOnClose}
             sx={{
               zIndex: "1311",
-              // backgroundColor:"#211d28"
+              ".MuiDialog-paper": {
+                backgroundColor:"#211d28 !important",
+              }
             }}
             open={open}
           >
@@ -646,7 +648,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   display: "flex",
                   alignItems: "center",
                   boxSizing: "border-box",
-                  padding: "0px 12px",
+                  padding: "12px",
                   justifyContent: "space-between",
                 }}
               >
