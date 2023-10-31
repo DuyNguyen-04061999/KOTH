@@ -16,52 +16,38 @@ export default function GameInTournament(props) {
         }}
         className={width < 576 ? "" : "rounded"}
       >
+       {width < 576 ? (
+         <Typography
+         variant="body1"
+         sx={{
+           fontWeight: "700 !important",
+           fontSize: "14px",
+           textAlign: "left",
+           color: "white",
+           marginLeft:"0px !important",
+           marginTop:"10px"
+         }}
+       >
+         Game for promotion
+       </Typography>
+       ) :("")}
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: width < 576 ? "center" : "start",
             color: "white",
+           
           }}
         >
-          {width < 576 ? (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                color: "white",
-              }}
-            >
-              <Typography
-                sx={{
-                  // fontFamily: "Cyntho !important",
-                  fontWeight: "700 !important",
-                  fontSize: "20px",
-                }}
-              >
-                {game?.gameName || "Game Name"}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  fontWeight: "500 !important",
-                  fontSize: "12px",
-                  color:"#7C81F2"
-                }}
-              >
-                Game for Promotion
-              </Typography>
-            </Box>
-          ) : (
-            ""
-          )}
           <Box
             sx={{
               display: "flex",
+              flexDirection: width < 576 ? "column" : "row",
               alignItems: "center",
               justifyContent: "center",
-              padding: "20px",
+              marginTop:"10px",
+              padding:width < 576 ? "0px" : "15px 10px 15px 10px"
             }}
           >
             <img
@@ -73,8 +59,18 @@ export default function GameInTournament(props) {
               alt="..."
               width={576 < width && width < 1200 ? width / 14 : 120}
               height={576 < width && width < 1200 ? width / 14 : 120}
-              style={{ borderRadius: "10px" }}
+              style={{ borderRadius: "10px", marginBottom:"5px" }}
             />
+            {width < 576 ? (<Typography
+              sx={{
+                // fontFamily: "Cyntho !important",
+                fontWeight: "700 !important",
+                fontSize: "20px",
+                color: "#7C81F2",
+              }}
+            >
+              {game?.gameName || "Game Name"}
+            </Typography>) : ("")}
             {width > 576 && (
               <Typography
                 sx={{
