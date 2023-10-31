@@ -3,14 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleExtra } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { Box, Dialog, Typography } from "@mui/material";
 import AnimButton from "../../AnimButton";
+import { useNavigate } from "react-router-dom";
 
 export default function NotificationExtra(props) {
   const { isExtra } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleClose = () => {
     dispatch(toggleExtra());
   };
+
+  const handleConfrim = () => { 
+    navigate('/packages')
+  }
+
   return (
     <>
       <Dialog
@@ -68,7 +75,7 @@ export default function NotificationExtra(props) {
                 width: "100%",
               }}
             >
-              <AnimButton type={"ghost"} text={"No"} />
+              <AnimButton type={"ghost"} text={"No"} onClick={handleClose} />
             </Box>
             <Box
               sx={{
@@ -76,7 +83,7 @@ export default function NotificationExtra(props) {
                 marginLeft: "20px",
               }}
             >
-              <AnimButton type={"primary"} text={"Confirm"} />
+              <AnimButton type={"primary"} text={"Confirm"} onClick={handleConfrim}  />
             </Box>
           </Box>
           <Box

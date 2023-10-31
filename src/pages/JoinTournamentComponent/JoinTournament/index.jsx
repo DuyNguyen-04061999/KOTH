@@ -88,7 +88,7 @@ export default function JoinTournament() {
   const navigate = useNavigate();
 
   const handleClickOpen = () => {
-    dispatch(toggleCheckWallet({ type: "buyTicket" }));
+    navigate("/packages")
   };
   const screen = useFullScreenHandle();
   const [minLength, setMinLength] = useState(0);

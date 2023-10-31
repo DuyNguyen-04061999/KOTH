@@ -607,6 +607,7 @@ export default function Dialoglg() {
     userAvatar,
     isUpdateProfile,
     uPack,
+    promotionExtra
   } = useSelector((state) => state.authReducer);
   useEffect(() => {}, [isUpdateProfile]);
 
@@ -740,7 +741,7 @@ export default function Dialoglg() {
                       </g>
                     </g>
                   </svg>
-                  <Typography sx={{color:"#f5a128"}}>10</Typography>
+                  <Typography sx={{color:"#f5a128"}}>{promotionExtra}</Typography>
                 </Box>
               </Box>
             </Box>
@@ -812,7 +813,7 @@ export default function Dialoglg() {
                     </g>
                   </g>
                 </svg>
-                <Typography sx={{color:"#f5a128"}}>10</Typography>
+                <Typography sx={{color:"#f5a128"}}>{promotionExtra}</Typography>
               </Box>
             </Box>
           </Box>
@@ -915,7 +916,7 @@ export default function Dialoglg() {
                 <Box
                   sx={{
                     backgroundColor: "#68399E",
-                    width: "110px",
+                    width: width < 576 ? "auto" : "110px",
                     display: "flex",
                     borderRadius: "20px",
                   }}
@@ -935,52 +936,54 @@ export default function Dialoglg() {
                     width={34}
                     className="ava-signin"
                   />
-                  <Box
-                    display={"flex"}
-                    flexDirection={"column"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    sx={{ marginLeft: "-5px" }}
-                  >
-                    <Typography
-                      style={{
-                        width: "65px",
-                        fontSize: "12px",
-                        textOverflow: "ellipsis",
-                        marginLeft: "1px !important",
-                        overflow: "hidden",
-                      }}
-                    >
-                      {userName?.length > 10
-                        ? userName.slice(0, 10) + "..."
-                        : userName}
-                    </Typography>
-                    {uPack !== null ? (
-                      <Box
-                        display={"flex"}
-                        justifyContent={"center"}
-                        alignItems={"center"}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="13"
-                          height="10"
-                          fill="none"
-                          viewBox="0 0 13 10"
-                        >
-                          <path
-                            fill="#FB3"
-                            d="M3.615 4.766c.152-.28.293-.534.43-.79.63-1.17 1.259-2.342 1.887-3.515.125-.234.245-.465.55-.461.305.004.42.242.544.474.704 1.316 1.41 2.632 2.117 3.948.055.104.115.206.187.338.098-.044.191-.081.28-.127.852-.432 1.705-.863 2.554-1.301.22-.114.433-.175.644-.006.227.18.213.426.157.686l-1.16 5.402c-.099.461-.24.586-.688.586H1.795c-.42 0-.55-.103-.644-.545C.765 7.621.375 5.786.01 3.948c-.037-.183.045-.44.157-.592.147-.197.386-.153.602-.042.933.48 1.87.954 2.847 1.452z"
-                          ></path>
-                        </svg>
-                        <Typography sx={{ color: "#f8bd40", fontSize: "10px" }}>
-                          VIP
-                        </Typography>
-                      </Box>
-                    ) : (
-                      ""
-                    )}
-                  </Box>
+                 {width < 576 ? ("") : (
+                   <Box
+                   display={"flex"}
+                   flexDirection={"column"}
+                   justifyContent={"center"}
+                   alignItems={"center"}
+                   sx={{ marginLeft: "-5px" }}
+                 >
+                   <Typography
+                     style={{
+                       width: "65px",
+                       fontSize: "12px",
+                       textOverflow: "ellipsis",
+                       marginLeft: "1px !important",
+                       overflow: "hidden",
+                     }}
+                   >
+                     {userName?.length > 10
+                       ? userName.slice(0, 10) + "..."
+                       : userName}
+                   </Typography>
+                   {uPack !== null ? (
+                     <Box
+                       display={"flex"}
+                       justifyContent={"center"}
+                       alignItems={"center"}
+                     >
+                       <svg
+                         xmlns="http://www.w3.org/2000/svg"
+                         width="13"
+                         height="10"
+                         fill="none"
+                         viewBox="0 0 13 10"
+                       >
+                         <path
+                           fill="#FB3"
+                           d="M3.615 4.766c.152-.28.293-.534.43-.79.63-1.17 1.259-2.342 1.887-3.515.125-.234.245-.465.55-.461.305.004.42.242.544.474.704 1.316 1.41 2.632 2.117 3.948.055.104.115.206.187.338.098-.044.191-.081.28-.127.852-.432 1.705-.863 2.554-1.301.22-.114.433-.175.644-.006.227.18.213.426.157.686l-1.16 5.402c-.099.461-.24.586-.688.586H1.795c-.42 0-.55-.103-.644-.545C.765 7.621.375 5.786.01 3.948c-.037-.183.045-.44.157-.592.147-.197.386-.153.602-.042.933.48 1.87.954 2.847 1.452z"
+                         ></path>
+                       </svg>
+                       <Typography sx={{ color: "#f8bd40", fontSize: "10px" }}>
+                         VIP
+                       </Typography>
+                     </Box>
+                   ) : (
+                     ""
+                   )}
+                 </Box>
+                 )}
                 </Box>
                 {/* )} */}
               </Dropdown.Toggle>
