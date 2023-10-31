@@ -353,7 +353,7 @@ export default function WalletTypePromote(props) {
                         Please enter the amount.
                       </span>
                     ) : (
-                      ""
+                      "" 
                     )}
                     <Box
                       sx={{
