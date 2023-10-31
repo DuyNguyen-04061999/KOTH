@@ -15,6 +15,7 @@ import Layout from "./components/Layout";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
+import ToastNotification from "./components/Toast/ToastNotification";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
@@ -33,7 +34,7 @@ import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
-import { showAlert } from "./redux-saga-middleware/reducers/alertReducer";
+import { hideToastNotification, showAlert } from "./redux-saga-middleware/reducers/alertReducer";
 import {
   getListBet,
   getListPackage,
@@ -152,6 +153,7 @@ function App() {
       socket?.emit("listMessageGlobal");
     }
   });
+  
   useEffect(() => {});
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
@@ -290,18 +292,6 @@ function App() {
         const { type, message } = data;
 
         if (type === "logout") {
-          // console.log("Message: ", message);
-          // toast.success(message, {
-          //   icon: ({ theme, type }) => (
-          //     <img
-          //       style={{ width: "20px", marginRight: "10px" }}
-          //       alt="..."
-          //       src={images.successIcon}
-          //     />
-          //   ),
-          //   position: "top-center",
-          //   className: "success-background",
-          // });
           localStorage.removeItem("NAME");
           localStorage.removeItem("PASS");
           localStorage.removeItem("KE");
@@ -323,7 +313,6 @@ function App() {
             ),
             position: "top-center",
             className:
-              // width < 576 ? "warning-background-small" : "warning-background",
               "warning-background",
           });
           localStorage.removeItem("NAME");
@@ -406,6 +395,7 @@ function App() {
         store.dispatch(updateWithDraw(data));
         store.dispatch(showAlert("success", "Withdraw successfully!"));
       });
+
       socket?.on("storeSpinHistorySuccess", (data, left, userGold) => {
         store.dispatch(addMoretotalAmount(data?.rhValue));
         store.dispatch(updateCountEveryDay(left));
@@ -794,7 +784,11 @@ function App() {
                 autoClose={1000}
                 position="top-center"
                 draggable={false}
+                onClick={() => {
+                  store.dispatch(hideToastNotification())
+              }}
               />
+              <ToastNotification/>
             </CustomRouter>
           </PersistGate>
         </Provider>
