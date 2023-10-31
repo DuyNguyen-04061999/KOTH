@@ -671,6 +671,7 @@ export default function Dialoglg() {
             borderRadius: width > 576 ? "5px !important" : "20px !important",
           }}
         >
+          
           {width < 576 ? (
             <Box
               sx={{

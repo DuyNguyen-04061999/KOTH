@@ -253,8 +253,8 @@ export default function Layout(props) {
             minHeight: "48px !important",
             paddingTop: "9px",
             paddingBottom: "10px",
-            paddingLeft: "18px",
-            paddingRight: "18px",
+            paddingLeft: device === "Mobile" ?  "0px" : "18px",
+            paddingRight: device === "Mobile" ?  "0px" : "18px",
           }}
         >
           {device === "Tablet" ||

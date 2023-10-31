@@ -52,7 +52,7 @@ export default function TicketCheckOut() {
       });
       dispatch(toggleCheckWallet());
     }
-    // dispatch(toggleBuyTicket(false));
+    // setDisablePlaceOrder(false);
   };
 
   const btnBuyTicket = (event) => {
@@ -73,6 +73,7 @@ export default function TicketCheckOut() {
       });
       dispatch(toggleCheckWallet());
     }
+    // setDisablePlaceOrder(false);
     // dispatch(toggleBuyTicket(false));
   };
 
