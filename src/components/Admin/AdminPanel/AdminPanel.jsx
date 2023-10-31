@@ -1,13 +1,12 @@
-import CopyIcon from "@mui/icons-material/CopyAll";
-import {Box, Button, Collapse, Grid, Typography} from "@mui/material";
+import { Box, Button, Collapse, Grid, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import moment from "moment";
-import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useLocation} from "react-router";
-import {getListEndUser} from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
-import {showToastNotify} from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
-import {activeAccount} from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router";
+import { getListEndUser } from "../../../redux-saga-middleware_admin/reducers/adminAgentReducer";
+import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
+import { activeAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 import {
     openConfirmDialog,
     openCreateDialog,
@@ -16,15 +15,15 @@ import {
     openResetPassDialog, openScanQRCode,
     openUpdateAccountDialog,
 } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
-import {getListSub} from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
-import {getListDistributor} from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
-import {updateDetailAccount} from "../../../redux-saga-middleware_admin/reducers/adminReducer";
-import {getListRef} from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
-import {checkRouteIsManage} from "../../../utils/Admin/helper";
+import { getListSub } from "../../../redux-saga-middleware_admin/reducers/adminDistributorReducer";
+import { getListDistributor } from "../../../redux-saga-middleware_admin/reducers/adminMasterReducer";
+import { updateDetailAccount } from "../../../redux-saga-middleware_admin/reducers/adminReducer";
+import { getListRef } from "../../../redux-saga-middleware_admin/reducers/adminSubDistributorReducer";
+import { checkRouteIsManage } from "../../../utils/Admin/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import DetailAccountDialogComponent from "../Dialog/DetailAccountDialogComponent";
-import SearchBar from "../SearchBar/SearchBar";
 import ScanQRCodeDialogComponent from "../Dialog/ScanQRCodeDialogComponent";
+import SearchBar from "../SearchBar/SearchBar";
 
 const AdminPanel = () => {
     const {roles, ref} = useSelector((state) => state.adminAuthReducer);

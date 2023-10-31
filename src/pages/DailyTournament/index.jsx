@@ -1,5 +1,3 @@
-import React from "react";
-import Layout from "../../components/Layout";
 import {
   Box,
   Container,
@@ -8,21 +6,21 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import useWindowDimensions from "../../utils/useWindowDimensions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import SliderTime from "../../components/SliderTime";
 import {
   //  imageDesktop,
   images,
 } from "../../utils/images";
-import SliderTime from "../../components/SliderTime";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 // import { useNavigate } from "react-router-dom";
-import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
-import NewFooter from "../NewFooter";
 import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
+import MainLayout from "../../components/MainLayout/MainLayout";
+import NewFooter from "../NewFooter";
+import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
   typography: {},
@@ -68,7 +66,7 @@ export default function DailyTournament() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout
+      <MainLayout
         children={
           width > 576 ? (
             <Container

@@ -9,7 +9,6 @@ import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
@@ -18,9 +17,7 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 import "./index.scss";
-const EndMessagetoend = styled.div`
-  margin-bottom: 30px;
-`;
+
 export default function ChatWorldList() {
   const chatBox = useRef(null);
   const [worldMessage, setWorldMessage] = useState([]);
@@ -113,14 +110,16 @@ export default function ChatWorldList() {
   };
 
   useEffect(() => {
-    if (chatBox.current) {
-      chatBox.current.addEventListener("scroll", handleScroll);
+    let chatCurrent  = chatBox.current
+
+    if (chatCurrent) {
+      chatCurrent.addEventListener("scroll", handleScroll);
     }
 
     // Clean up the event listener
     return () => {
-      if (chatBox.current) {
-        chatBox.current.removeEventListener("scroll", handleScroll);
+      if (chatCurrent) {
+        chatCurrent.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);

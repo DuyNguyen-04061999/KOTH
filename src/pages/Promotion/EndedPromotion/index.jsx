@@ -9,9 +9,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BannerTourMobile } from "../../../components/Banner";
-import Layout from "../../../components/Layout";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
+import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -69,6 +69,13 @@ export default function HotTournament() {
     }
   }, [width]);
 
+    useEffect(() => {
+        if (width) {
+            setItemOffSet(0);
+        }
+
+    }, [width]);
+
   useEffect(() => {
     if (endedTournament) {
       setData(endedTournament);
@@ -86,7 +93,7 @@ export default function HotTournament() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout
+      <MainLayout
         type="Home"
         children={
           width > 576 ? (

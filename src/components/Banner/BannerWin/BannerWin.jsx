@@ -4,6 +4,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function BannerWin(props) {
   const { rewardName, sponsorName, userAvatar, userName } = props;
+  const { width } = useWindowDimensions()
 
   return (
     <Box
@@ -17,7 +18,7 @@ export default function BannerWin(props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: useWindowDimensions().width > 1024 ? "0 6%" : "0 2%",
+        padding: width > 1024 ? "0 6%" : "0 2%",
       }}
     >
       <Box
@@ -25,13 +26,13 @@ export default function BannerWin(props) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginLeft: useWindowDimensions().width > 1024 ? "9%" : "0",
+          marginLeft: width > 1024 ? "9%" : "0",
         }}
       >
         <Box
           sx={{
-            width: useWindowDimensions().width > 1024 ? "182px" : "158px",
-            height: useWindowDimensions().width > 1024 ? "204px" : "177px",
+            width: width > 1024 ? "182px" : "158px",
+            height: width > 1024 ? "204px" : "177px",
             border: "2px solid  rgba(246,212,0,1)",
             boxShadow: "0px 0px 0px 8px #f5c40c",
             borderRadius: "16px",
@@ -52,7 +53,7 @@ export default function BannerWin(props) {
             marginTop: "12px",
             border: "2px solid #7C81F2",
             borderRadius: "8px",
-            width: useWindowDimensions().width > 1024 ? "229px" : "200px",
+            width: width > 1024 ? "229px" : "200px",
             height: "46px",
             display: "flex",
             flexDirection: "column",
@@ -85,8 +86,8 @@ export default function BannerWin(props) {
       >
         <Box
           sx={{
-            width: useWindowDimensions().width > 1024 ? "405px" : "300px",
-            height: useWindowDimensions().width > 1024 ? "89px" : "67px",
+            width: width > 1024 ? "405px" : "300px",
+            height: width > 1024 ? "89px" : "67px",
             backgroundImage: `url(${imageHome.BannerWinBig})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -100,7 +101,7 @@ export default function BannerWin(props) {
               top: "35%",
               left: "49%",
               transform: "translate(-50%,-50%)",
-              fontSize: useWindowDimensions().width > 1024 ? "20px" : "14px",
+              fontSize: width > 1024 ? "20px" : "14px",
               fontWeight: 700,
               textTransform: "uppercase",
               color: "#C52A0E",
@@ -175,8 +176,8 @@ export default function BannerWin(props) {
         </Box>
         <Box
           sx={{
-            width: useWindowDimensions().width > 1024 ? "405px" : "300px",
-            height: useWindowDimensions().width > 1024 ? "105px" : "78px",
+            width: width > 1024 ? "405px" : "300px",
+            height: width > 1024 ? "105px" : "78px",
             background: `url(${imageHome.BannerWinCeleb})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -191,7 +192,7 @@ export default function BannerWin(props) {
               position: "absolute",
               color: "#FFC56F",
               fontSize:
-                useWindowDimensions().width > 1024 ? "19.714px" : "14px",
+                width > 1024 ? "19.714px" : "14px",
               fontWeight: 700,
               top: "75%",
               left: "50%",

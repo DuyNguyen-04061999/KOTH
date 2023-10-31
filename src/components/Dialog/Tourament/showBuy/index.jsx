@@ -1,16 +1,14 @@
 import { Box, Dialog } from "@mui/material";
 import React from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toggleSubscriptionDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { toggleTournamentShow } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 import AnimButton from "../../../AnimButton";
-import { toggleSubscriptionDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 
 export default function TouramentShow() {
   const { isTournamentShow } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
-  const handleClickOpen = () => {
-    dispatch(toggleTournamentShow(true));
-  };
 
   const handleClose = () => {
     dispatch(toggleTournamentShow(false));
@@ -21,7 +19,7 @@ export default function TouramentShow() {
     dispatch(toggleTournamentShow(false));
   }
 
-  return (
+  return ReactDOM.createPortal(
     <Box>
       <Dialog
         open={isTournamentShow}
@@ -86,6 +84,6 @@ export default function TouramentShow() {
           </Box> 
         </Box>
       </Dialog>
-    </Box>
+    </Box>, document.body
   );
 }

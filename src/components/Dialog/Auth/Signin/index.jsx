@@ -1,5 +1,7 @@
 import { Close, SyncAlt } from "@mui/icons-material";
 import GameLogIcon from "@mui/icons-material/List";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   AvatarGroup,
   // Badge,
@@ -12,8 +14,10 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
@@ -31,16 +35,12 @@ import { getAppType } from "../../../../utils/helper";
 import { images, sign } from "../../../../utils/images";
 import { images260423_l } from "../../../../utils/images260423_l";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import AnimButton from "../../../AnimButton";
 import Gold from "../../../Gold/Gold";
 import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 import Signup from "../Signup";
 import "./index.scss";
-// import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { toast } from "react-toastify";
-import AnimButton from "../../../AnimButton";
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -102,7 +102,7 @@ function SimpleDialog(props) {
       // dispatch(toggleLoginDialog());
     }
   };
-  return (
+  return ReactDOM.createPortal(
     <>
       {width < 576 ? (
         <Dialog
@@ -277,30 +277,7 @@ function SimpleDialog(props) {
                         )}
                       </Box>
                     </FormControl>
-                    {/* <Typography
-                      onClick={() => {
-                        dispatch(toggleLoginDialog());
-                        dispatch(toggleForgetPass(true));
-                      }}
-                      sx={{
-                        color: "#7848ED",
-                        textAlign: "end",
-                        marginTop: "10px",
-                        fontWeight: "600",
-                        fontSize: "12px",
-                      }}
-                    >
-                      Forgot password?
-                    </Typography> */}
                     <Box className="d-flex justify-content-end mt-4">
-                      {/* <Box
-                        sx={{
-                          color: "#7671ba",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Forgot Password ?
-                      </Box> */}
                     </Box>
                     <Box className="d-flex justify-content-center">
                       <button
@@ -599,12 +576,11 @@ function SimpleDialog(props) {
           </Grid>
         </Dialog>
       )}
-    </>
+    </>, document.body
   );
 }
 
 export default function Dialoglg() {
-  const navigate = useNavigate();
   const [openMess, setOpenMess] = useState(false);
   const [socket, setSocket] = useState(null);
   const [transData, setTransData] = useState([]);
@@ -662,17 +638,6 @@ export default function Dialoglg() {
   };
   const { width, height } = useWindowDimensions();
 
-  const location = useLocation();
-
-  const [isHovering, setIsHovering] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovering(false);
-  };
 
   return (
     <div className="dialog">
@@ -925,34 +890,6 @@ export default function Dialoglg() {
                 </Box>
               </Box>
 
-              {/* {token && (
-              <div
-                className="btn-wallet"
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "9px 22px",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  backgroundImage: "linear-gradient( #7548ed , #893bf1)",
-                }}
-                onClick={() => {
-                  if (!token) {
-                    dispatch(toggleLoginDialog());
-                  } else {
-                    dispatch(toggleWalletDialog());
-                  }
-                }}
-              >
-                <i
-                  style={{ marginRight: "6px" }}
-                  className="fa-solid fa-wallet"
-                ></i>
-                <span style={{ fontSize: "13px" }}>Wallet</span>
-              </div>
-            )} */}
             </Box>
           )}
           <Box
@@ -1309,8 +1246,6 @@ export default function Dialoglg() {
                   sx={{
                     margin: " 5px 15px",
                   }}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
                 >
                   <Dropdown.Item style={{ paddingLeft: "5px" }}>
                     <svg

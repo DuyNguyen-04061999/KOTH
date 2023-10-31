@@ -2,9 +2,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   closeCheckWallet,
   toggleCheckWallet,
@@ -14,7 +14,6 @@ import { formatMoney } from "../../../utils/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import "./index.scss";
-import ReactDOM from "react-dom"
 
 export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet,goldCombo,totalExtra } = useSelector(
@@ -33,7 +32,6 @@ export default function TicketCheckOut() {
   const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
   const [goldTicket] = useState(0.99);
-  const [disablePlaceOrder, setDisablePlaceOrder] = useState(false);
   const handleChangeValue = (e) => {
     setSl(e.target.value);
   };
@@ -42,8 +40,8 @@ export default function TicketCheckOut() {
     dispatch(toggleCheckWallet());
   };
 
-  const btnSubscription = () => {
-    setDisablePlaceOrder(true);
+  const btnSubscription = (event) => {
+      event.currentTarget.disabled = true;
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
@@ -54,12 +52,11 @@ export default function TicketCheckOut() {
       });
       dispatch(toggleCheckWallet());
     }
-    setDisablePlaceOrder(false);
     // dispatch(toggleBuyTicket(false));
   };
 
-  const btnBuyTicket = () => {
-    setDisablePlaceOrder(true);
+  const btnBuyTicket = (event) => {
+      event.currentTarget.disabled = true;
     if (userGold < 0.99 * sl) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
@@ -76,7 +73,6 @@ export default function TicketCheckOut() {
       });
       dispatch(toggleCheckWallet());
     }
-    setDisablePlaceOrder(false);
     // dispatch(toggleBuyTicket(false));
   };
 
@@ -542,13 +538,11 @@ export default function TicketCheckOut() {
                       type={"primary"}
                       onClick={btnSubscription}
                       text={"Place Order"}
-                      disable={disablePlaceOrder}
                     />
                   ) : (
                     <AnimButton
                       onClick={btnBuyTicket}
                       text={"Place Order"}
-                      disable={disablePlaceOrder}
                       type={"primary"}
                     />
                   )}

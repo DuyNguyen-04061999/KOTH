@@ -1,10 +1,10 @@
 import React from "react";
-import Layout from "../../components/Layout";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import { TypeGame } from "./components";
 
 export default function TypeGamePage() {
   return (
-    <Layout
+    <MainLayout
       children={
         <>
           <TypeGame />

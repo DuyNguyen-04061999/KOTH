@@ -1,6 +1,3 @@
-import React, { useEffect } from "react";
-import Layout from "../../components/Layout";
-import InspirationTTF from "../../assets/font/CynthoNextMedium.otf";
 import {
   Box,
   Container,
@@ -9,16 +6,16 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-import { imageDesktop, images, video } from "../../utils/images";
-import SliderTime from "../../components/SliderTime";
-import { useState } from "react";
-import CountDownTournament from "../NewHomePageComponent/CountDownTournament";
-import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import MainLayout from "../../components/MainLayout/MainLayout";
+import SliderTime from "../../components/SliderTime";
+import { images, video } from "../../utils/images";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 import NewFooter from "../NewFooter";
+import CountDownTournament from "../NewHomePageComponent/CountDownTournament";
+import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 const theme = createTheme({
   typography: {
     
@@ -64,9 +61,9 @@ export default function HourlyTournament() {
   }, [hourlyTournament]);
   const [hourList, setHourList] = useState([]);
   const [selectedHour, setSeHour] = useState(0);
-  const navigate = useNavigate();
+  
   return (
-    <Layout
+    <MainLayout
       children={
         width > 576 ? (
           <Container

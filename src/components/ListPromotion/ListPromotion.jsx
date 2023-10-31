@@ -52,39 +52,6 @@ const ListPromotion = (props) => {
             </ScrollingCarousel>
           </Box>
         ) : (
-          // <Slider
-          // dots={false}
-          // slidesToShow={5}
-          // arrows={false}
-          // slidesToScroll={5}
-          // infinite={false}
-          // responsive={[
-          //   {
-          //     breakpoint: 1024,
-          //     settings: {
-          //       slidesToShow: 3,
-          //       slidesToScroll: 3,
-          //     }
-          //   },
-          //   {
-          //     breakpoint: 600,
-          //     settings: {
-          //       slidesToShow: 2,
-          //       slidesToScroll: 2,
-          //       initialSlide: 2
-          //     }
-          //   },
-          //   {
-          //     breakpoint: 480,
-          //     settings: {
-          //       slidesToShow: 1,
-          //       slidesToScroll: 1
-          //     }
-          //   }
-          // ]}
-          // >
-
-          // </Slider>
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
               {loadingState && listData === null ? (
@@ -113,30 +80,6 @@ const ListPromotion = (props) => {
     return (
       <Box>
         {width < 576 ? (
-          // <Box className="scrolling-carousel-example1-container">
-          //   <ScrollingCarousel>
-          //     {loadingState || listData === null ? (
-          //       <ListItemLoading></ListItemLoading>
-          //     ) : listData && listData?.length > 0 ? (
-          //       listData?.map((item, index) => {
-          //         return (
-          //           index >= itemOffSet &&
-          //           index <= itemOffSet + itemQuantity - 1 && (
-          //             <Box key={index}>
-          //               <ItemComponent
-          //                 // key={index}
-          //                 tourInfo={item}
-          //                 countdown={true}
-          //               />
-          //             </Box>
-          //           )
-          //         );
-          //       })
-          //     ) : (
-          //       <ListEmpty textData={typePromo}></ListEmpty>
-          //     )}
-          //   </ScrollingCarousel>
-          // </Box>
           <Grid container rowSpacing={2}>
              {loadingState || listData === null ? (
                 <ListItemLoading></ListItemLoading>
