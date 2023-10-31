@@ -14,12 +14,13 @@ import { formatMoney } from "../../../utils/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import "./index.scss";
+import ReactDOM from "react-dom"
 
 export default function TicketCheckOut() {
-  const { isCheckWallet, typeWallet } = useSelector(
+  const { isCheckWallet, typeWallet,goldCombo,totalExtra } = useSelector(
     (state) => state.walletReducer
   );
-
+    console.log(isCheckWallet, "checkWallet");
   const { idPackage } = useSelector((state) => state.authReducer);
   const { userGold } = useSelector((state) => state.authReducer);
   const { boughtTour, idTour } = useSelector(
@@ -48,7 +49,7 @@ export default function TicketCheckOut() {
       dispatch(toggleWalletDialog());
       // dispatch(toggleBuyTicket());
     } else {
-      socket.emit("buyPackage", {
+      socket.emit("buyNewPackage", {
         packageId: idPackage,
       });
       dispatch(toggleCheckWallet());
@@ -63,17 +64,15 @@ export default function TicketCheckOut() {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
     } else if (!boughtTour) {
-      socket?.emit("buyPackage", {
-        quantity: sl,
-        tournamentId: idTour,
-        packageId: ticketBuy?.id,
+      socket?.emit("buyNewPackage", {
+        packageId: idPackage,
+
       });
       dispatch(toggleCheckWallet());
     } else {
-      socket?.emit("buyPackage", {
-        quantity: sl,
-        tournamentId: idTour,
-        packageId: ticketBuy?.id,
+      socket?.emit("buyNewPackage", {
+        packageId: idPackage,
+
       });
       dispatch(toggleCheckWallet());
     }
@@ -93,11 +92,13 @@ export default function TicketCheckOut() {
     setSocket(socket);
   }, [socket]);
   useEffect(() => {
-    socket?.on("buyPackageSuccess", (data) => {});
+    socket?.on("buyNewPackageSuccessfully", (data) => {});
   }, [socket]);
-  return (
+
+  return ReactDOM.createPortal(
     <>
       <Dialog
+        open={isCheckWallet}
         fullScreen={width < 576}
         sx={{
           "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
@@ -106,8 +107,7 @@ export default function TicketCheckOut() {
           zIndex: "1320",
         }}
         maxWidth="2000px !important"
-        onClose={() => dispatch(closeCheckWallet())}
-        open={isCheckWallet}
+        onClose={() => dispatch(toggleCheckWallet())}
       >
         <Box
           sx={{
@@ -331,7 +331,7 @@ export default function TicketCheckOut() {
                           fontSize: "14px",
                         }}
                       >
-                        Total Extra: 5 Extra
+                        Total Extra: {totalExtra * sl} Extra
                       </Typography>
                     </Box>
                   )}
@@ -341,7 +341,7 @@ export default function TicketCheckOut() {
                   <Typography sx={{ color: "#BE48ED", textAlign:"end" }} variant="body2">
                     {typeWallet === "subscription"
                       ? "$19.99"
-                      : `$${goldTicket}`}
+                      : `$${goldCombo}`}
                   </Typography>
                   </Box>
                   <Box
@@ -492,7 +492,7 @@ export default function TicketCheckOut() {
               {typeWallet === "combo1" || typeWallet === "combo2" ? (
                 <Typography sx={{ color: "#BF48ED" }}>
                   {" "}
-                  ${formatMoney(Number.parseFloat(sl * goldTicket))}
+                  ${formatMoney(Number.parseFloat(sl * goldCombo))}
                 </Typography>
               ) : (
                 <Typography sx={{ color: "#BF48ED" }}>$ 19.99</Typography>
@@ -521,7 +521,7 @@ export default function TicketCheckOut() {
                   ${" "}
                   {formatMoney(
                     Number.parseFloat(
-                      userGold - Number(sl) * Number(goldTicket)
+                      userGold - Number(sl) * Number(goldCombo)
                     )
                   )}
                 </Typography>
@@ -558,6 +558,7 @@ export default function TicketCheckOut() {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>,
+    document.body
   );
 }

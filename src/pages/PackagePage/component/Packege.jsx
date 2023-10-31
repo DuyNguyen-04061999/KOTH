@@ -21,7 +21,6 @@ import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 export default function Package() {
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.appReducer);
-  console.log(listPackage);
   const { token, userPackageId } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -202,7 +201,7 @@ export default function Package() {
                             variant="h5"
                             sx={{
                               fontSize:
-                                width < 1200 && width > 576 ? "20px" : "27px",
+                                width < 1200 && width > 576 ? "20px" : "24px",
                               marginTop: "5px",
                               marginBottom: "15px",
                               color: "white",
@@ -216,7 +215,7 @@ export default function Package() {
                               backgroundColor: "#0F041D",
                               display: "flex",
                               flexDirection: "column",
-                              alignItems: "start",
+                              alignItems: "center",
                               borderRadius: "15px",
                               width: "100%",
                               height: "auto",
@@ -337,7 +336,7 @@ export default function Package() {
                                       }}
                                     >
                                       {i?.packageFreeTicketTournament} extras /
-                                      Promotion
+                                      Days
                                     </Typography>
                                   </Box>
                                   <Box
@@ -377,7 +376,7 @@ export default function Package() {
                                     >
                                       {i?.packageReduceWatchAds === 0
                                         ? "No watching ads"
-                                        : `Reducing ${i?.packageReduceWatchAds}s time of ads`}
+                                        : `Expiration 30 days`}
                                     </Typography>
                                   </Box>
                                 </Box>
@@ -449,7 +448,7 @@ export default function Package() {
                                           })
                                         );
                                         dispatch(getIdPackage(i?.id));
-                                        dispatch(toggleSubscriptionDialog());
+                                        // dispatch(toggleSubscriptionDialog());
                                       }
                                     } else {
                                     }
@@ -460,18 +459,18 @@ export default function Package() {
                                   style={{
                                     border: "none",
                                     padding: "7px 35px",
-                                    borderRadius: "24px",
+                                    borderRadius: "7px",
                                     color: "white",
                                     background:
                                       i?.id === userPackageId
                                         ? "Gray"
-                                        : "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                                        : "#9747FF",
                                     backdropFilter: " blur(4px)",
                                     width: "100%",
                                     fontSize:
                                       width < 1200 && width > 576
                                         ? "14px"
-                                        : "18px",
+                                        : "16px",
                                     marginTop: "5px",
                                   }}
                                 >
@@ -643,7 +642,7 @@ export default function Package() {
                             variant="h5"
                             sx={{
                               fontSize:
-                                width < 1200 && width > 576 ? "20px" : "27px",
+                                width < 1200 && width > 576 ? "20px" : "24px",
                               marginTop: "5px",
                               marginBottom: "15px",
                               color: "white",
@@ -664,10 +663,10 @@ export default function Package() {
                               backgroundColor: "#0F041D",
                               display: "flex",
                               flexDirection: "column",
-                              alignItems: "start",
+                              alignItems: "center",
                               borderRadius: "15px",
                               width: "100%",
-                              height: "auto",
+                              height: "auto", 
                               border: "none",
                               padding:
                                 width < 1200 && width > 576 ? "10px" : "25px",
@@ -942,10 +941,12 @@ export default function Package() {
                                         dispatch(
                                           toggleCheckWallet({
                                             type: "combo1",
+                                            gold:0.99,
+                                            total: 5
                                           })
                                         );
                                         dispatch(getIdPackage(i?.id));
-                                        dispatch(toggleSubscriptionDialog());
+                                        // dispatch(toggleSubscriptionDialog());
                                       }
                                     } else {
                                       if (token) {
@@ -953,10 +954,12 @@ export default function Package() {
                                         dispatch(
                                           toggleCheckWallet({
                                             type: "combo2",
+                                            gold:3.96,
+                                            total: 20
                                           })
                                         );
                                         dispatch(getIdPackage(i?.id));
-                                        dispatch(toggleSubscriptionDialog());
+                                        // dispatch(toggleSubscriptionDialog());
                                       }
                                     }
                                   }}
@@ -966,18 +969,18 @@ export default function Package() {
                                   style={{
                                     border: "none",
                                     padding: "7px 35px",
-                                    borderRadius: "24px",
+                                    borderRadius: "7px",
                                     color: "white",
                                     background:
                                       i?.id === userPackageId
                                         ? "Gray"
-                                        : "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                                        : "#9747FF",
                                     backdropFilter: " blur(4px)",
                                     width: "100%",
                                     fontSize:
                                       width < 1200 && width > 576
                                         ? "14px"
-                                        : "18px",
+                                        : "16px",
                                     marginTop: "5px",
                                   }}
                                 >
@@ -1324,7 +1327,7 @@ export default function Package() {
                                   >
                                     {i?.packageReduceWatchAds === 0
                                       ? "No watching ads"
-                                      : `Reducing ${i?.packageReduceWatchAds}s time of ads`}
+                                      : `Expiration 30 days`}
                                   </Typography>
                                 </Box>
                                 {/* <Box
@@ -1445,7 +1448,7 @@ export default function Package() {
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      dispatch(toggleSubscriptionDialog(false));
+                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 1"){
@@ -1453,10 +1456,12 @@ export default function Package() {
                                       dispatch(
                                         toggleCheckWallet({
                                           type: "combo1",
+                                          gold:0.99,
+                                          total: 5
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      dispatch(toggleSubscriptionDialog(false));
+                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 2"){
@@ -1464,10 +1469,12 @@ export default function Package() {
                                       dispatch(
                                         toggleCheckWallet({
                                           type: "combo2",
+                                          gold:3.96,
+                                          total: 20
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      dispatch(toggleSubscriptionDialog(false));
+                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if (token === null || token === "") {
@@ -1800,7 +1807,7 @@ export default function Package() {
                                   >
                                     {i?.packageReduceWatchAds === 0
                                       ? "No watching ads"
-                                      : `Reducing ${i?.packageReduceWatchAds}s time of ads`}
+                                      : `Expiration 30 days`}
                                   </Typography>
                                 </Box>
                                 {/* <Box
@@ -1921,7 +1928,7 @@ export default function Package() {
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      dispatch(toggleSubscriptionDialog(false));
+                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 1") {
@@ -1929,10 +1936,12 @@ export default function Package() {
                                       dispatch(
                                         toggleCheckWallet({
                                           type: "combo1",
+                                          gold:0.99,
+                                          total: 5
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      dispatch(toggleSubscriptionDialog(false));
+                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 2") {
@@ -1940,10 +1949,12 @@ export default function Package() {
                                       dispatch(
                                         toggleCheckWallet({
                                           type: "combo2",
+                                          gold:3.96,
+                                          total:20
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      dispatch(toggleSubscriptionDialog(false));
+                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if (token === null || token === "") {

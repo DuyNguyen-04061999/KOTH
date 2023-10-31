@@ -211,7 +211,8 @@ function App() {
       socket?.once("connect", (data) => {});
       socket?.on(
         "loginSuccess",
-        (mess, token, key, user, userPackageId, uPack) => {
+        (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
+          console.log(promotionExtra);
           store.dispatch(
             updateCountEveryDay(user?.userCountSpin?.countEveryday)
           );
@@ -225,6 +226,7 @@ function App() {
               id: user?.id,
               userPackageId: userPackageId,
               uPack: uPack,
+              promotionExtra:promotionExtra
             })
           );
 
