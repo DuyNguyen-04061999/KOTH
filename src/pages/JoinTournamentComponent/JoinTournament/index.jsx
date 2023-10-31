@@ -2,11 +2,11 @@ import InfinityIcon from "@mui/icons-material/AllInclusive";
 import {
   Box,
   Container,
+  Dialog,
   // Grid,
   Skeleton,
   Tooltip,
   Typography,
-  Dialog,
 } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
@@ -21,6 +21,7 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
+import NotificationExtra from "../../../components/Dialog/NotificationExtra";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -35,23 +36,19 @@ import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playga
 import {
   saveBoughtTournament,
   saveIdTournament,
-  toggleBuyTicket,
   toggleExtra,
-  toggleTournamentShow,
+  toggleTournamentShow
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import NewFooter from "../../NewFooter";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
-import JoinTournamentMobile from "../JoinTournamentMobile";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
-import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walletReducer";
-import NotificationExtra from "../../../components/Dialog/NotificationExtra";
-import NewFooter from "../../NewFooter";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -70,7 +67,6 @@ const typographyStyle = {
 export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
   const [fetchT, setFetchT] = useState(false);
-  // const [detailTournament, setDetailTournament] = useState({});
 
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
@@ -96,64 +92,30 @@ export default function JoinTournament() {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
 
-  // const timeEnd =
-  //   moment(detailTournament?.tournamentEndAt).format("DD/MM/YYYY") +
-  //   " " +
-  //   "- " +
-  //   moment(detailTournament?.tournamentEndAt).format("hh:mm a");
-
-  // const timeStart =
-  //   moment(detailTournament?.tournamentStartAt).format("DD/MM/YYYY") +
-  //   " " +
-  //   "- " +
-  //   moment(detailTournament?.tournamentStartAt).format("hh:mm a");
-
   useEffect(() => {
     setSocket(_socket);
   }, []);
   useEffect(() => {
-    // socket?.emit("detailTournament", {
-    //   tournamentId: id,
-    // });
+    socket?.emit("detailNewTournament", {
+      tournamentId: id,
+    });
   }, [id, socket]);
 
   useEffect(() => {
-    // if (token) {
-    //   socket?.emit("detailTournament", {
-    //     tournamentId: id,
-    //   });
-    // }
-  }, [id, socket, token]);
-  useEffect(() => {
     if (token) {
-      dispatch({
-        type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
-        payload: id,
-      });
-    } else {
-      dispatch({
-        type: "GET_DETAIL_PROMOTION_INFO",
-        payload: id,
+      socket?.emit("detailNewTournament", {
+        tournamentId: id,
       });
     }
-  }, [token, id, dispatch]);
+  }, [id, socket, token]);
+
   useEffect(() => {
-    socket?.on("detailTournamentSuccess", (data) => {
+    socket?.on("detailNewTournamentSuccess", (data) => {
       dispatch(updateDetailTour(data));
       setFetchT(false);
     });
-    socket?.on("buyTicketTournamentSuccess", () => {
-      // window.location.reload();
-      if (token) {
-        socket?.emit("detailTournament", {
-          tournamentId: id,
-        });
-      }
-    });
-    socket?.on("joinTournamentSuccess", (data) => {
-      // socket?.emit("detailTournament", {
-      //   tournamentId: data?.id,
-      // });
+
+    socket?.on("joinNewTournamentSuccess", (data) => {
       toast.success("Join Tournament Successfully", {
         icon: ({ theme, type }) => (
           <img
@@ -166,13 +128,12 @@ export default function JoinTournament() {
         className: "success-background",
       });
       if (token) {
-        dispatch({
-          type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
-          payload: id,
+        socket?.emit("detailNewTournament", {
+          tournamentId: id,
         });
       }
     });
-    socket?.on("startGameInTournamentSuccess", (data) => {
+    socket?.on("startGameInNewTournamentSuccess", (data) => {
       if (device === "Mobile" || device === "Tablet") {
         dispatch(toggleStartGame(true));
       }
@@ -181,8 +142,7 @@ export default function JoinTournament() {
     });
 
     return () => {
-      socket?.off("joinTournamentSuccess");
-      socket?.off("buyTicketTournamentSuccess");
+      socket?.off("joinNewTournamentSuccess");
     };
   }, [
     socket,
@@ -201,7 +161,7 @@ export default function JoinTournament() {
       dispatch(toggleExtra());
       return;
     } else {
-      socket?.emit("startGameInTournament", {
+      socket?.emit("startGameInNewTournament", {
         tournamentId: id,
       });
     }
@@ -211,7 +171,7 @@ export default function JoinTournament() {
     if (detailTournament?.tournamentVip !== 0 && uPack === null) {
       dispatch(toggleTournamentShow());
     } else if (token) {
-      socket?.emit("joinTournament", {
+      socket?.emit("joinNewTournament", {
         tournamentId: detailTournament?.id,
       });
     } else {
@@ -257,12 +217,7 @@ export default function JoinTournament() {
       }
     }
   }, [detailTournament, width]);
-  // useEffect(() => {
-  //   if (!window.location.hash.includes("#reloaded")) {
-  //     window.location.href += "#reloaded";
-  //     window.location.reload();
-  //   }
-  // }, []);
+
   useEffect(() => {
     dispatch({
       type: "CALL_BIGGEST_END_TOUR",
@@ -300,7 +255,6 @@ export default function JoinTournament() {
           >
             <Box
               sx={{
-                // backgroundColor: "white",
                 width: "100%",
                 height: "auto",
               }}
@@ -308,27 +262,6 @@ export default function JoinTournament() {
               {fetchT ? (
                 <BannerLoading width={"100%"} height={"340px"} />
               ) : detailTournament?.tournamentStatus === 2 ? (
-                // <BannerWin
-                //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                //   userAvatar={
-                //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                //       ? process.env.REACT_APP_SOCKET_SERVER +
-                //         "/" +
-                //         biggestEndTour?.bestUser?.tUser?.userAccount
-                //           ?.accountAvatar
-                //       : imageHome.BannerWinAva
-                //   }
-                //   sponsorName={
-                //     biggestEndTour && biggestEndTour?.endTour
-                //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                //       : "Samsung"
-                //   }
-                //   tournamentName={
-                //     biggestEndTour && biggestEndTour?.endTour
-                //       ? biggestEndTour?.endTour?.tournamentName
-                //       : "Galaxy Z-flip 5"
-                //   }
-                // />
                 <></>
               ) : (
                 <Box
@@ -553,190 +486,7 @@ export default function JoinTournament() {
                                 </g>
                               </svg>
                             </BgWithTooltip>
-                            {/* {!detailTournament?.checkInTournament ? (
-                              <BgWithTooltip
-                                title="Extra: A player can participate in a Promotion up to 5 times. Share the Promotion with friends to earn an extra play for each new sign-up through your link."
-                                placement="right"
-                                sx={{
-                                  backgroundColor: "white",
-                                  color: "red",
-                                }}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="none"
-                                  viewBox="0 0 20 20"
-                                  className="ms-1"
-                                >
-                                  <g>
-                                    <path
-                                      stroke="#fff"
-                                      strokeWidth="1.5"
-                                      d="M10.001 18.335a8.333 8.333 0 100-16.667 8.333 8.333 0 000 16.667z"
-                                    ></path>
-                                    <path
-                                      stroke="#fff"
-                                      strokeLinecap="round"
-                                      strokeWidth="1.5"
-                                      d="M10 14.168v-5"
-                                    ></path>
-                                    <path
-                                      fill="#fff"
-                                      d="M10.001 5.833a.833.833 0 110 1.667.833.833 0 010-1.667z"
-                                    ></path>
-                                  </g>
-                                </svg>
-                              </BgWithTooltip>
-                            ) : (
-                              <Typography
-                                sx={{
-                                  marginLeft: "0px !important",
-                                  color: "white",
-                                }}
-                              >
-                                
-                              </Typography>
-                            )} */}
                           </Box>
-                          {/* <Box
-                            sx={{
-                              color: "#fff",
-                              textAlign: "start",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 76}px`
-                                  : "14px",
-                              fontWeight: "lighter !important",
-                              marginLeft: "0px !important",
-                            }}
-                          >
-                            {fetchT ? (
-                              <Skeleton
-                                variant="text"
-                                sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
-                              />
-                            ) : (
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="none"
-                                  viewBox="0 0 10 10"
-                                >
-                                  <path
-                                    fill="#BE48ED"
-                                    fillRule="evenodd"
-                                    d="M3.796.6a2.787 2.787 0 01-.248.2c-.149.1-.316.169-.492.204a2.853 2.853 0 01-.316.034c-.4.032-.601.048-.768.107a1.357 1.357 0 00-.828.827c-.059.167-.075.368-.107.768a2.851 2.851 0 01-.034.316A1.36 1.36 0 01.8 3.55a2.787 2.787 0 01-.2.247c-.26.306-.39.46-.467.62-.176.37-.176.8 0 1.17.077.16.207.312.468.618.104.122.156.183.2.248.1.149.168.316.203.492.015.077.022.157.034.316.032.4.048.601.107.768a1.356 1.356 0 00.828.828c.167.059.367.075.768.107.16.012.24.019.316.034.176.035.343.104.492.204.065.043.126.095.248.2.306.26.459.39.619.467.37.176.8.176 1.17 0 .16-.077.313-.207.619-.468.122-.104.183-.156.248-.2.149-.1.316-.168.492-.203.077-.015.157-.022.316-.034.4-.032.601-.048.768-.107a1.356 1.356 0 00.828-.828c.059-.167.075-.367.107-.768.012-.16.019-.24.034-.316.035-.176.104-.343.204-.492.043-.065.095-.126.2-.248.26-.306.39-.459.467-.619.176-.37.176-.8 0-1.17-.077-.16-.207-.313-.468-.619a2.785 2.785 0 01-.2-.247c-.1-.15-.169-.317-.203-.493a2.861 2.861 0 01-.034-.316c-.032-.4-.048-.6-.107-.768a1.356 1.356 0 00-.828-.827c-.167-.06-.367-.075-.768-.107a2.851 2.851 0 01-.316-.034A1.356 1.356 0 016.452.8a2.866 2.866 0 01-.248-.2C5.898.34 5.745.21 5.585.133a1.357 1.357 0 00-1.17 0c-.16.076-.313.207-.619.467zm3.12 2.485a.407.407 0 010 .575L3.66 6.916a.407.407 0 11-.575-.575L6.34 3.086a.407.407 0 01.575 0zm-.017 3.272a.543.543 0 11-1.085 0 .543.543 0 011.085 0zm-3.255-2.17a.542.542 0 100-1.085.542.542 0 000 1.085z"
-                                    clipRule="evenodd"
-                                  ></path>
-                                </svg>
-                                <Typography
-                                  sx={{
-                                    color: "#ffff",
-                                    textAlign: "start",
-                                    fontSize:
-                                      576 < width && width < 1200
-                                        ? `${width / 62.5}px`
-                                        : `18px`,
-                                    letterSpacing: "0.7px",
-                                    // marginLeft: "0px !important",
-                                    minWidth:
-                                      device === "Desktop" ||
-                                      orientation === "landscape"
-                                        ? "100px"
-                                        : "none",
-                                    fontWeight: "700",
-                                  }}
-                                >
-                                  Free Extra:
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    fontSize: "16px",
-                                    color: "white",
-                                    fontWeight: "700",
-                                  }}
-                                >
-                                  {detailTournament?.extras?.promo}
-                                </Typography>
-                                {!detailTournament?.checkInTournament ? (
-                                  <Typography
-                                    variant="body2"
-                                    sx={{
-                                      marginLeft: "0px !important",
-                                      maxWidth: "250px",
-                                      color: "#979797",
-                                      fontSize: "12px",
-                                      textAlign: "left",
-                                    }}
-                                  >
-                                    The highest number of available Extras in
-                                    the current Promotion.
-                                  </Typography>
-                                ) : (
-                                  <Box
-                                    display={"flex"}
-                                    flexDirection={"column"}
-                                    color={"white "}
-                                  >
-                                    <Box display={"flex"} alignItems={"center"}>
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="10"
-                                        height="10"
-                                        fill="none"
-                                        viewBox="0 0 10 10"
-                                      >
-                                        <path
-                                          fill="#BE48ED"
-                                          fillRule="evenodd"
-                                          d="M3.796.6a2.787 2.787 0 01-.248.2c-.149.1-.316.169-.492.204a2.853 2.853 0 01-.316.034c-.4.032-.601.048-.768.107a1.357 1.357 0 00-.828.827c-.059.167-.075.368-.107.768a2.851 2.851 0 01-.034.316A1.36 1.36 0 01.8 3.55a2.787 2.787 0 01-.2.247c-.26.306-.39.46-.467.62-.176.37-.176.8 0 1.17.077.16.207.312.468.618.104.122.156.183.2.248.1.149.168.316.203.492.015.077.022.157.034.316.032.4.048.601.107.768a1.356 1.356 0 00.828.828c.167.059.367.075.768.107.16.012.24.019.316.034.176.035.343.104.492.204.065.043.126.095.248.2.306.26.459.39.619.467.37.176.8.176 1.17 0 .16-.077.313-.207.619-.468.122-.104.183-.156.248-.2.149-.1.316-.168.492-.203.077-.015.157-.022.316-.034.4-.032.601-.048.768-.107a1.356 1.356 0 00.828-.828c.059-.167.075-.367.107-.768.012-.16.019-.24.034-.316.035-.176.104-.343.204-.492.043-.065.095-.126.2-.248.26-.306.39-.459.467-.619.176-.37.176-.8 0-1.17-.077-.16-.207-.313-.468-.619a2.785 2.785 0 01-.2-.247c-.1-.15-.169-.317-.203-.493a2.861 2.861 0 01-.034-.316c-.032-.4-.048-.6-.107-.768a1.356 1.356 0 00-.828-.827c-.167-.06-.367-.075-.768-.107a2.851 2.851 0 01-.316-.034A1.356 1.356 0 016.452.8a2.866 2.866 0 01-.248-.2C5.898.34 5.745.21 5.585.133a1.357 1.357 0 00-1.17 0c-.16.076-.313.207-.619.467zm3.12 2.485a.407.407 0 010 .575L3.66 6.916a.407.407 0 11-.575-.575L6.34 3.086a.407.407 0 01.575 0zm-.017 3.272a.543.543 0 11-1.085 0 .543.543 0 011.085 0zm-3.255-2.17a.542.542 0 100-1.085.542.542 0 000 1.085z"
-                                          clipRule="evenodd"
-                                        ></path>
-                                      </svg>
-                                      <Typography sx={{ fontSize: "12px" }}>
-                                        Free Extra:{" "}
-                                      </Typography>
-                                      <Typography sx={{ fontSize: "12px" }}>
-                                        {detailTournament?.extras?.normal}
-                                      </Typography>
-                                    </Box>
-                                    <Box display={"flex"} alignItems={"center"}>
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="10"
-                                        height="10"
-                                        fill="none"
-                                        viewBox="0 0 10 10"
-                                      >
-                                        <path
-                                          fill="#BE48ED"
-                                          fillRule="evenodd"
-                                          d="M3.796.6a2.787 2.787 0 01-.248.2c-.149.1-.316.169-.492.204a2.853 2.853 0 01-.316.034c-.4.032-.601.048-.768.107a1.357 1.357 0 00-.828.827c-.059.167-.075.368-.107.768a2.851 2.851 0 01-.034.316A1.36 1.36 0 01.8 3.55a2.787 2.787 0 01-.2.247c-.26.306-.39.46-.467.62-.176.37-.176.8 0 1.17.077.16.207.312.468.618.104.122.156.183.2.248.1.149.168.316.203.492.015.077.022.157.034.316.032.4.048.601.107.768a1.356 1.356 0 00.828.828c.167.059.367.075.768.107.16.012.24.019.316.034.176.035.343.104.492.204.065.043.126.095.248.2.306.26.459.39.619.467.37.176.8.176 1.17 0 .16-.077.313-.207.619-.468.122-.104.183-.156.248-.2.149-.1.316-.168.492-.203.077-.015.157-.022.316-.034.4-.032.601-.048.768-.107a1.356 1.356 0 00.828-.828c.059-.167.075-.367.107-.768.012-.16.019-.24.034-.316.035-.176.104-.343.204-.492.043-.065.095-.126.2-.248.26-.306.39-.459.467-.619.176-.37.176-.8 0-1.17-.077-.16-.207-.313-.468-.619a2.785 2.785 0 01-.2-.247c-.1-.15-.169-.317-.203-.493a2.861 2.861 0 01-.034-.316c-.032-.4-.048-.6-.107-.768a1.356 1.356 0 00-.828-.827c-.167-.06-.367-.075-.768-.107a2.851 2.851 0 01-.316-.034A1.356 1.356 0 016.452.8a2.866 2.866 0 01-.248-.2C5.898.34 5.745.21 5.585.133a1.357 1.357 0 00-1.17 0c-.16.076-.313.207-.619.467zm3.39 3.332a.407.407 0 00-.574-.575L4.186 5.782l-.798-.798a.407.407 0 00-.575.575l1.085 1.085a.407.407 0 00.575 0l2.714-2.712z"
-                                          clipRule="evenodd"
-                                        ></path>
-                                      </svg>
-                                      <Typography sx={{ fontSize: "12px" }}>
-                                        Promotion Extra:{" "}
-                                      </Typography>
-                                      <Typography sx={{ fontSize: "12px" }}>
-                                        {detailTournament?.extras?.promo}
-                                      </Typography>
-                                    </Box>
-                                  </Box>
-                                )}
-                              </Box>
-                            )}
-                          </Box> */}
                           <Box
                             display={"flex"}
                             justifyContent={"flex-start"}
@@ -763,7 +513,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              {detailTournament?.extras?.normal}
+                              {detailTournament?.extra}
                             </Typography>
                           </Box>
                         </Box>
@@ -820,12 +570,6 @@ export default function JoinTournament() {
                             sx={{
                               color: "#fff",
                               textAlign: "start",
-                              // fontSize:
-                              //   576 < width && width < 1200
-                              //     ? `${width / 76}px`
-                              //     : "14px",
-                              // fontWeight: "500 !important",
-                              // marginLeft: "0px !important",
                             }}
                           >
                             {fetchT ? (
@@ -1475,161 +1219,6 @@ export default function JoinTournament() {
                         Play game to get this voucher
                       </Box>
                     </Box>
-
-                    {/* ----------------------- */}
-                    {/* <Box className="d-flex" sx={{ marginTop: "16px" }}>
-                      <div className="cardWrap">
-                        <div className="cardT cardLeft">
-                          <h5
-                            style={{
-                              color: "#BE48ED",
-                              marginTop: "15px",
-                              fontSize:
-                                576 < width && width < 1200 ? "18px" : "20px",
-                            }}
-                            className="mb-2"
-                          >
-                            {detailTournament?.tournamentInfors?.rewardInfors
-                              ?.rewardTitle || "SS Z-Flip 5 free voucher"}
-                          </h5>
-                          <Grid container>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "100%",
-                                boxSizing: "border-box",
-                                paddingRight: "1rem",
-                              }}
-                            >
-                              <Grid item sx={{ width: "60%" }}>
-                                <div className="title d-flex flex-column mb-2">
-                                  <h6
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                      color: "#525252",
-                                    }}
-                                  >
-                                    Recipient
-                                  </h6>
-                                  <span
-                                    style={{
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    {sliceString(
-                                      detailTournament?.tournamentInfors
-                                        ?.rewardInfors?.rewardRecipient
-                                    ) || "Recipient"}
-                                  </span>
-                                </div>
-                              </Grid>
-                              <Grid
-                                item
-                                sx={{
-                                  width: "40%",
-                                }}
-                              >
-                                <div className="name d-flex flex-column mb-2">
-                                  <h6
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                      color: "#525252",
-                                    }}
-                                  >
-                                    Validity date
-                                  </h6>
-                                  <span
-                                    style={{
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    {moment(
-                                      detailTournament?.tournamentInfors
-                                        ?.rewardInfors?.rewardValidityDate
-                                    )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                                  </span>
-                                </div>
-                              </Grid>
-                            </Box>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "100%",
-                                boxSizing: "border-box",
-                                paddingRight: "1rem",
-                              }}
-                            >
-                              {" "}
-                              <Grid sx={{ width: "60%" }} item>
-                                <div className="seat d-flex flex-column">
-                                  <h2
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                    }}
-                                  >
-                                    Sponsor by
-                                  </h2>
-                                  <span
-                                    style={{
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    {detailTournament?.tournamentInfors?.owner
-                                      ?.brandName || "Samsung"}
-                                  </span>
-                                </div>
-                              </Grid>
-                              <Grid
-                                sx={{
-                                  width: "40%",
-                                }}
-                                item
-                              >
-                                <div className="time d-flex flex-column">
-                                  <h2
-                                    style={{
-                                      fontSize: "10px",
-                                      marginBottom: "0px !important",
-                                    }}
-                                  >
-                                    Conditions
-                                  </h2>
-                                  <span
-                                    onClick={() => setOpenVoucher(true)}
-                                    style={{
-                                      color: "#0096FF",
-                                      fontSize:
-                                        576 < width && width < 1200
-                                          ? "12px"
-                                          : "14px",
-                                    }}
-                                  >
-                                    See more
-                                  </span>
-                                </div>
-                              </Grid>
-                            </Box>
-                          </Grid>
-                        </div>
-                        <div className="cardT cardRight">
-
-                        </div>
-                      </div>
-                    </Box> */}
                     {fetchT ? (
                       <Skeleton
                         width={"100%"}
@@ -1665,10 +1254,6 @@ export default function JoinTournament() {
                               style={{
                                 color: "#BE48ED",
                                 fontSize: "20.27px",
-                                // maxHeight: "24px",
-                                // overflow: "hidden",
-                                // textOverflow: "ellipsis",
-                                // whiteSpace: "nowrap",
                                 textAlign: "start",
                               }}
                             >
@@ -1681,7 +1266,6 @@ export default function JoinTournament() {
                             sx={{
                               display: "flex",
                               alignItems: "center",
-                              // justifyContent: "space-between",
                               marginTop: "8px",
                             }}
                           >
@@ -2084,13 +1668,7 @@ export default function JoinTournament() {
           </Container>
         ) : (
           <>
-            {/* <JoinTournamentMobile
-              handleOnClickStartGame={() => {
-                socket?.emit("startGameInTournament", {
-                  tournamentId: id,
-                });
-              }}
-            /> */}
+
             <Box>
               <Container
                 sx={{
@@ -2099,29 +1677,8 @@ export default function JoinTournament() {
                   backgroundColor: "#211D28",
                 }}
               >
-                {/* BackgroundMobile */}
                 {detailTournament?.tournamentStatus === 2 ? (
-                  // <BannerWinMobile
-                  //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                  //   userAvatar={
-                  //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                  //       ? process.env.REACT_APP_SOCKET_SERVER +
-                  //         "/" +
-                  //         biggestEndTour?.bestUser?.tUser?.userAccount
-                  //           ?.accountAvatar
-                  //       : imageHome.BannerWinAva
-                  //   }
-                  //   sponsorName={
-                  //     biggestEndTour && biggestEndTour?.endTour
-                  //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                  //       : "Samsung"
-                  //   }
-                  //   tournamentName={
-                  //     biggestEndTour && biggestEndTour?.endTour
-                  //       ? biggestEndTour?.endTour?.tournamentName
-                  //       : "Galaxy Z-flip 5"
-                  //   }
-                  // />
+                 
                   <></>
                 ) : (
                   <Box
@@ -2191,7 +1748,6 @@ export default function JoinTournament() {
                       fontWeight: "500 !important",
                       fontSize: "12px",
                       color: "#7C81F2",
-                      fontWeight: "700",
                       paddingLeft: "1rem",
                       paddingRight: "1rem",
                     }}
@@ -2406,7 +1962,7 @@ export default function JoinTournament() {
                           fontWeight: "700",
                         }}
                       >
-                        {detailTournament?.extras?.normal}
+                        {detailTournament?.extra}
                       </Typography>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

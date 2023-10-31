@@ -15,7 +15,6 @@ import { images } from "../../../utils/images";
 import "./index.scss";
 // import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
@@ -23,7 +22,6 @@ import {
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   isJson,
   sliceString
@@ -31,7 +29,6 @@ import {
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
-// import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
@@ -54,21 +51,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   }, []);
   
   useEffect(() => {
-    socket?.emit("detailTournament", {
+    socket?.emit("detailNewTournament", {
       tournamentId: id,
     });
   }, [socket, id]);
 
   useEffect(() => {
     if(token) {
-      socket?.emit("detailTournament", {
+      socket?.emit("detailNewTournament", {
         tournamentId: id,
       });
     }
   }, [socket, id, token]);
 
   const handlePlayTour = () => {
-    socket?.emit("startGameInTournament", {
+    socket?.emit("startGameInNewTournament", {
       tournamentId: id,
     });
   };
@@ -76,7 +73,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
 
   const handleJoinTour = () => {
     if (token) {
-      socket?.emit("joinTournament", {
+      socket?.emit("joinNewTournament", {
         tournamentId: detailTournament?.id,
       });
     } else {
@@ -84,53 +81,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     }
   };
   useEffect(() => {
-    socket?.on("detailTournamentSuccess", (data) => {
+    socket?.on("detailNewTournamentSuccess", (data) => {
       setDetailTournament(data);
       setFetchT(false);
     });
-    socket?.on("buyTicketTournamentSuccess", () => {
-      // window.location.reload();
+    
+    socket?.on("joinNewTournamentSuccess", (data) => {
       if (token) {
-        socket?.emit("detailTournament", {
-          tournamentId: id,
-        });
-      }
-    });
-    socket?.on("joinTournamentSuccess", (data) => {
-      // socket?.emit("detailTournament", {
-      //   tournamentId: data?.id,
-      // });
-      toast.success("Join Tournament Successfully", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.successIcon}
-          />
-        ),
-        position: "top-center",
-        className: "success-background",
-      });
-      // setTimeout(() => {
-      //   socket?.emit("detailTournament", {
-      //     tournamentId: data?.id,
-      //   });
-      // }, 1000);
-      // window.location.reload();
-      if (token) {
-        socket?.emit("detailTournament", {
+        socket?.emit("detailNewTournament", {
           tournamentId: id,
         });
       }
     });
     return () => {
-      socket?.off("joinTournamentSuccess");
+      socket?.off("joinNewTournamentSuccess");
     };
   }, [socket, token, id]);
 
   const dispatch = useDispatch();
   const handleClickOpen = () => {
-    // dispatch(toggleBuyTicket(true));
+
   };
   const navigate = useNavigate();
   let anchorSelector = 'a[href^="#"]';
@@ -197,29 +167,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   Tournament
                 </Typography>
               </Box>
-              {/* BackgroundMobile */}
               {detailTournament?.tournamentStatus === 2 ? (
-                // <BannerWinMobile
-                //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                //   userAvatar={
-                //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                //       ? process.env.REACT_APP_SOCKET_SERVER +
-                //         "/" +
-                //         biggestEndTour?.bestUser?.tUser?.userAccount
-                //           ?.accountAvatar
-                //       : imageHome.BannerWinAva
-                //   }
-                //   sponsorName={
-                //     biggestEndTour && biggestEndTour?.endTour
-                //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                //       : "Samsung"
-                //   }
-                //   tournamentName={
-                //     biggestEndTour && biggestEndTour?.endTour
-                //       ? biggestEndTour?.endTour?.tournamentName
-                //       : "Galaxy Z-flip 5"
-                //   }
-                // />
                 <></>
               ) : (
                 <Box
@@ -479,7 +427,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         </svg>
                         <Typography>Free Extra: </Typography>
                         <Typography>
-                          {detailTournament?.extras?.normal}
+                          {detailTournament?.extra}
                         </Typography>
                       </Box>
                       <Box display={"flex"} alignItems={"center"}>

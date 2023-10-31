@@ -51,19 +51,21 @@ export default function TicketCheckOut() {
 
   const btnBuyTicket = (event) => {
       event.currentTarget.disabled = true;
-    if (userGold < 0.99 * sl) {
+      let price = typeWallet === "combo1" ? 0.99 : 3.96
+      console.log(sl);
+    if (userGold < price) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
     } else if (!boughtTour) {
       socket?.emit("buyNewPackage", {
         packageId: idPackage,
-
+        quantityExtra: sl
       });
       dispatch(toggleCheckWallet());
     } else {
       socket?.emit("buyNewPackage", {
         packageId: idPackage,
-
+        quantityExtra: sl
       });
       dispatch(toggleCheckWallet());
     }
@@ -79,7 +81,9 @@ export default function TicketCheckOut() {
     setSocket(socket);
   }, [socket]);
   useEffect(() => {
-    socket?.on("buyNewPackageSuccessfully", (data) => {});
+    socket?.on("buyNewPackageSuccessfully", (data) => {
+      
+    });
   }, [socket]);
 
   return ReactDOM.createPortal(

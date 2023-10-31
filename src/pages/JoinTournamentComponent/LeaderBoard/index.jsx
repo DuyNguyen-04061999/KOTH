@@ -1,10 +1,8 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { images } from "../../../utils/images";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
@@ -132,8 +130,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: 576 < width && width < 1200 ? "16px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                  color: "#9D39F1",
                 }}
               >
                 {top3 && top3[1] && top3[1]?.score ? top3[1]?.score : "0"}
@@ -229,8 +226,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: 576 < width && width < 1200 ? "20px" : "25px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                  color: "#9D39F1",
+
                 }}
               >
                 {top3 && top3[0] && top3[0]?.score ? top3[0]?.score : "0"}
@@ -324,8 +321,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: 576 < width && width < 1200 ? "16px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                  color: "#9D39F1",
+
                 }}
               >
                 {top3 && top3[2] && top3[2]?.score ? top3[2]?.score : "0"}
@@ -763,7 +760,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[1] && top3[1]?.score}
@@ -858,7 +855,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[0] && top3[0]?.score}
@@ -951,7 +948,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[2] && top3[2]?.score}
@@ -1369,7 +1366,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                    "#9D39F1",
                 }}
               >
                 {top3 && top3[1] && top3[1]?.score ? top3[1]?.score : "0"}
@@ -1462,7 +1459,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                    "#9D39F1",
                 }}
               >
                 {top3 && top3[0] && top3[0]?.score ? top3[0]?.score : "0"}
@@ -1553,7 +1550,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                    "#9D39F1",
                 }}
               >
                 {top3 && top3[2] && top3[2]?.score ? top3[2]?.score : "0"}
@@ -1864,7 +1861,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[1] && top3[1]?.score}
@@ -1959,7 +1956,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[0] && top3[0]?.score}
@@ -2052,7 +2049,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[2] && top3[2]?.score}

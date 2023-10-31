@@ -48,6 +48,7 @@ import {
   toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
+  updatePromotionExtra,
   updateSubPackageId,
   updateUserGold,
 } from "./redux-saga-middleware/reducers/authReducer";
@@ -199,6 +200,34 @@ function App() {
   useEffect(() => {
     if (socket) {
       socket?.once("connect", (data) => {});
+      socket?.on("buyNewPackageSuccessfully", (data) => {
+        toast.success("Buy Subscription Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        store.dispatch(updateSubPackageId(data));
+      });
+      socket?.on("buyPromoExtraSuccess", (data) => {
+        toast.success("Buy Combo Extra Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        store.dispatch(updatePromotionExtra(data || 0))
+      })
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
