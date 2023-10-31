@@ -202,7 +202,6 @@ function App() {
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
-          console.log(promotionExtra);
           store.dispatch(
             updateCountEveryDay(user?.userCountSpin?.countEveryday)
           );
