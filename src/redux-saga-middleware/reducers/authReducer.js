@@ -253,7 +253,7 @@ const authReducer = (
     case "TOGGLE_SHARE_TOUR":
       return { ...state, isShare: !state.isShare };
     case "TOGGLE_SUBSCRIPTION_DIALOG":
-      return { ...state, isSubscription: payload };
+      return { ...state, isSubscription: !state.isSubscription };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
     default:
