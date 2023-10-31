@@ -1,8 +1,7 @@
-import React from "react";
-import Layout from "../../components/Layout";
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
 import Markdown from "markdown-to-jsx";
+import React, { useEffect, useState } from "react";
+import MainLayout from "../../components/MainLayout/MainLayout";
 
 const ChangeLog = () => {
   const fileName = "CHANGELOG.md";
@@ -21,7 +20,7 @@ const ChangeLog = () => {
 
 
   return (
-    <Layout
+    <MainLayout
       children={
         <Box sx={{ color: "white", marginTop:"24px" }}>
           {
@@ -29,7 +28,7 @@ const ChangeLog = () => {
           }
         </Box>
       }
-    ></Layout>
+    ></MainLayout>
   );
 };
 

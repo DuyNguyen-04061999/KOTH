@@ -219,8 +219,8 @@ const BannerTour = (props) => {
           </Box>
           <Box
             sx={{
-              width: useWindowDimensions().width > 1024 ? "168px" : "158px",
-              height: useWindowDimensions().width > 1024 ? "187px" : "177px",
+              width: width > 1024 ? "168px" : "158px",
+              height: width > 1024 ? "187px" : "177px",
               border: "2px solid  rgba(246,212,0,1)",
               boxShadow: "0px 0px 0px 8px #f5c40c",
               borderRadius: "16px",

@@ -1,23 +1,43 @@
-import { lazy, useEffect, useState } from "react";
+import {
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "./assets/css/App.css";
 import CountDownTimer from "./components/CountDownTimer";
+import Layout from "./components/Layout";
+import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
+import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
-import TestSocketFriendAPI from "./components/TestSocket";
+import ChangeLog from "./pages/ChangeLog/ChangeLog";
+import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import GamePage from "./pages/GameManager/GamePage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
 import UploadPage from "./pages/GameManager/UploadPage";
+import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
 import GameLobby from "./pages/GamePlay";
 import HomePage from "./pages/Home";
+import NewHomePageComponent from "./pages/NewHomePageComponent";
+import PlayGamePage from "./pages/PlayGamePage";
+import SelectRoomContainer from "./pages/SelectRoomContainer";
+import Tournament from "./pages/Tournament";
+import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
 import { showAlert } from "./redux-saga-middleware/reducers/alertReducer";
+import {
+  getListBet,
+  getListPackage,
+} from "./redux-saga-middleware/reducers/appReducer";
 import {
   getLeaderBoardSuccess,
   getNavTablet,
@@ -38,6 +58,10 @@ import {
   updateFriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
+  updateDevice,
+  updateDeviceType,
+} from "./redux-saga-middleware/reducers/deviceReducer";
+import {
   addGameLog,
   changeOrientation,
   gameLogoutSuccessFully,
@@ -50,6 +74,12 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import {
+  addMoreSpinHistory,
+  addMoretotalAmount,
+  updateCountEveryDay,
+  updateRewardHistory,
+} from "./redux-saga-middleware/reducers/luckyWheelReducer";
+import {
   getDepostiData,
   getWithdrawData,
   paymentLogoutSuccessFully,
@@ -61,50 +91,13 @@ import {
   profileLogoutSuccessFully,
   saveDataProfile,
 } from "./redux-saga-middleware/reducers/profileReducer";
-// import LuckySpinComponent from "./components/EdittedLuckySpin/LuckySpinComponent";
-import SelectRoomContainer from "./pages/SelectRoomContainer";
-import Tournament from "./pages/Tournament";
-import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
-import {
-  getListBet,
-  getListPackage,
-} from "./redux-saga-middleware/reducers/appReducer";
-import {
-  addMoreSpinHistory,
-  addMoretotalAmount,
-  updateCountEveryDay,
-  updateRewardHistory,
-} from "./redux-saga-middleware/reducers/luckyWheelReducer";
+import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
-import { useTracking } from "./utils/useTracking";
-// import AlertComponent from "./components/Alert/AlertComponent";
-import { ToastContainer, toast } from "react-toastify";
-import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
-import NewHomePageComponent from "./pages/NewHomePageComponent";
+import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
+import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-// import HourlyTournament from "./pages/HourlyTournament";
-import {
-  CssBaseline,
-  ThemeProvider,
-  // createMuiTheme,
-  createTheme,
-} from "@mui/material";
-import LoadingScreen from "./components/LoadingScreen";
-import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
-import {
-  updateDevice,
-  updateDeviceType,
-} from "./redux-saga-middleware/reducers/deviceReducer";
-import { detectDevice } from "./utils/detectDevice";
-// import PlayGame from "./pages/JoinTournamentComponent/PlayGame";
-import { Suspense } from "react";
-import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
-import ChangeLog from "./pages/ChangeLog/ChangeLog";
-import PlayGamePage from "./pages/PlayGamePage";
-import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
-// import UnityGameComponent from "./components/GameManager/UnityGameComponent";
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -121,6 +114,11 @@ const LazyUpcomingPromo = lazy(() =>
   import("./pages/Promotion/UpcomingPromotion")
 );
 const LazyEndedPromo = lazy(() => import("./pages/Promotion/EndedPromotion"));
+
+const SuspenseWrapper = (props) => {
+  const { child } = props
+  return <Suspense fallback={<PageLoading/>}>{child}</Suspense>
+}
 
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
@@ -184,7 +182,7 @@ function App() {
         !startGameCheck &&
         !window.location.pathname?.includes("tournamentDetail")
       ) {
-        // window.location.reload();
+        
       }
     };
 
@@ -195,16 +193,6 @@ function App() {
   }, [startGameCheck]);
 
   useEffect(() => {}, [orientation, startGameCheck]);
-
-  // const checkPreAuthRouter = () => {
-  //   const params = window.location.pathname;
-  //   const newArr = params.split("/");
-  //   if (params.includes("tournamentDetail")) {
-  //     socket?.emit("detailTournament", {
-  //       tournamentId: newArr.pop(),
-  //     });
-  //   }
-  // };
 
   useEffect(() => {
     if (socket) {
@@ -598,7 +586,9 @@ function App() {
 
   useEffect(() => {
     const onPageLoad = () => {
-      store.dispatch(getListGame());
+      if(getAppType() !== "promote") {
+        store.dispatch(getListGame());
+      }
       if (localStorage.getItem("KE")) {
         socket?.emit("login", {
           username: localStorage.getItem("NAME"),
@@ -628,7 +618,9 @@ function App() {
   }, [socket, token]);
 
   useEffect(() => {
-    store.dispatch(getListBet());
+    if(getAppType() !== "promote") {
+      store.dispatch(getListBet());
+    }
   });
   //Detect device
   const getMobileOS = () => {
@@ -651,6 +643,20 @@ function App() {
   }, [os, device]);
 
   const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        x300: 300,
+        mobile: 576,
+        sm: 600,
+        tablet: 640,
+        md: 900,
+        laptop: 1024,
+        lg: 1200,
+        desktop: 1200, 
+        xl: 1536,
+      },
+    },
     typography: {
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
     },
@@ -666,132 +672,122 @@ function App() {
           <PersistGate loading={null} persistor={persistor}>
             <CustomRouter history={history}>
               <Routes>
-                <Route
-                  path="/home"
-                  element={
-                    getAppType() === "promote" ? (
-                      <Suspense fallback={<PageLoading />}>
-                        <LazyNewHomePage />
-                      </Suspense>
-                    ) : (
-                      <HomePage />
-                    )
-                  }
-                ></Route>
-                <Route path="/gamelobby/:id" element={<GameLobby />} />
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
-                <Route
-                  path="/selectroom/:id"
-                  element={<SelectRoomContainer />}
-                />
-                <Route
-                  path="/testsocketAPI"
-                  element={<TestSocketFriendAPI />}
-                />
-                <Route
-                  path="/tournamentDetail/:id"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyJoinTour />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/hot-promotion"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyHotPromo />
-                    </Suspense>
-                  }
-                />
-                {/* <Route path="/hourly-tournament" element={<HourlyTournament />} /> */}
-                <Route
-                  path="/vip-promotion"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyVipPromo />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/standard-promotion"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyStandardPromo />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/ongoing-promotion"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyOngoingPromo />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/upcoming-promotion"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyUpcomingPromo />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/ended-promotion"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyEndedPromo />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/help-center"
-                  element={
-                    <Suspense fallback={<PageLoading />}>
-                      <LazyHelpCenter />
-                    </Suspense>
-                  }
-                />
-                <Route path="/change-log" element={<ChangeLog />} />
-                <Route path="/loadingscreen" element={<LoadingScreen />} />
-                <Route path="/new-home" element={<NewHomePageComponent />} />
-                <Route path="/countdowntimer" element={<CountDownTimer />} />
-                <Route path="list-game-manager" element={<ListGamePage />} />
-                <Route path="upload" element={<UploadPage />} />
-                <Route path="game" element={<GamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />
-                {getAppType() === "promote" && (
-                  <Route path="/tournaments" element={<Tournament />} />
-                )}
-                {getAppType() !== "promote" && (
-                  <Route path="game-type/:type" element={<TypeGamePage />} />
-                )}
-
-                <Route path="game/edit/:id" element={<GameEditPage />} />
-                <Route
-                  path="game/:id/upload-skins"
-                  element={<UploadSkinPage />}
-                />
-                <Route
-                  path="game/:id/delete-skins"
-                  element={<DeleteSkinPage />}
-                />
-                {getAppType() === "promote" && (
+                <Route path="list-game-manager" element={<ListGamePage />} />
+                <Route path="/" element={<Layout/>}>
                   <Route
-                    path="packages"
+                    path="/"
                     element={
-                      <Suspense fallback={<PageLoading />}>
-                        <LazyPackage />
-                      </Suspense>
+                      getAppType() === "promote" ? (
+                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                      ) : (
+                        <SuspenseWrapper child={<HomePage/>}/>
+                      )
                     }
                   ></Route>
-                )}
-                <Route
-                  path="transactions/:id"
-                  element={<TransactionDetailPage />}
-                />
-                <Route path="*" element={<Navigate to="/home" />} />
+                  <Route
+                    path="/home"
+                    element={
+                      getAppType() === "promote" ? (
+                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                      ) : (
+                        <SuspenseWrapper child={<HomePage/>}/>
+                      )
+                    }
+                  ></Route>
+                  <Route path="/gamelobby/:id" element={<GameLobby />} />
+                  <Route
+                    path="/selectroom/:id"
+                    element={<SelectRoomContainer />}
+                  />
+                  <Route
+                    path="/tournamentDetail/:id"
+                    element={
+                      <SuspenseWrapper child={<LazyJoinTour/>}/>
+                    }
+                  />
+                  <Route
+                    path="/hot-promotion"
+                    element={
+                      <SuspenseWrapper child={<LazyHotPromo/>}/>
+                      
+                    }
+                  />
+                  <Route
+                    path="/vip-promotion"
+                    element={
+                      <SuspenseWrapper child={<LazyVipPromo/>}/>
+                    }
+                  />
+                  <Route
+                    path="/standard-promotion"
+                    element={
+                      <SuspenseWrapper child={<LazyStandardPromo/>}/>
+                    }
+                  />
+                  <Route
+                    path="/ongoing-promotion"
+                    element={
+                      <SuspenseWrapper child={<LazyOngoingPromo/>}/>
+                    }
+                  />
+                  <Route
+                    path="/upcoming-promotion"
+                    element={
+                      <SuspenseWrapper child={<LazyUpcomingPromo/>}/>
+                    }
+                  />
+                  <Route
+                    path="/ended-promotion"
+                    element={
+                      <SuspenseWrapper child={<LazyEndedPromo/>}/>
+                    }
+                  />
+                  <Route
+                    path="/help-center"
+                    element={
+                      <SuspenseWrapper child={<LazyHelpCenter/>}/>
+                    }
+                  />
+                  <Route path="/change-log" element={<ChangeLog />} />
+                  <Route path="/loadingscreen" element={<LoadingScreen />} />
+                  <Route path="/new-home" element={<NewHomePageComponent />} />
+                  <Route path="/countdowntimer" element={<CountDownTimer />} />
+                  <Route path="upload" element={<UploadPage />} />
+                  <Route path="game" element={<GamePage />} />
+                  {getAppType() === "promote" && (
+                    <Route path="/tournaments" element={<Tournament />} />
+                  )}
+                  {getAppType() !== "promote" && (
+                    <Route path="game-type/:type" element={<TypeGamePage />} />
+                  )}
+
+                  <Route path="game/edit/:id" element={<GameEditPage />} />
+                  <Route
+                    path="game/:id/upload-skins"
+                    element={<UploadSkinPage />}
+                  />
+                  <Route
+                    path="game/:id/delete-skins"
+                    element={<DeleteSkinPage />}
+                  />
+                  {getAppType() === "promote" && (
+                    <Route
+                      path="packages"
+                      element={
+                        <Suspense fallback={<PageLoading />}>
+                          <LazyPackage />
+                        </Suspense>
+                      }
+                    ></Route>
+                  )}
+                  <Route
+                    path="transactions/:id"
+                    element={<TransactionDetailPage />}
+                  />
+                  <Route path="*" element={<Navigate to="/home" />} />
+                </Route>
               </Routes>
               <ToastContainer
                 hideProgressBar={true}

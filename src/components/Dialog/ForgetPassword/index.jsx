@@ -1,12 +1,12 @@
 import { Box, Dialog, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleForgetPass } from "../../../redux-saga-middleware/reducers/authReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { useState } from "react";
-import OtpInput from "react-otp-input";
-import { useEffect } from "react";
+
 export default function ForgetPassword() {
   const { forgetPassDialog } = useSelector((state) => state.authReducer);
   const { device } = useSelector((state) => state.deviceReducer);
@@ -31,7 +31,7 @@ export default function ForgetPassword() {
     setIsTab(true);
   }, [forgetPassDialog]);
 
-  return (
+  return ReactDOM.createPortal(
     <Dialog
       onClose={() => {
         dispatch(toggleForgetPass(false));
@@ -356,6 +356,6 @@ export default function ForgetPassword() {
           </button>
         </Box>
       )}
-    </Dialog>
+    </Dialog>, document.body
   );
 }

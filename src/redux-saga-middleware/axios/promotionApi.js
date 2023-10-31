@@ -3,13 +3,13 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = "X-XSRF-TOKEN";
 
-export const API = axios.create({
-  baseURL: process.env.REACT_APP_END_POINT,
+export const PROMOTION_API = axios.create({
+  baseURL: process.env.REACT_APP_PROMOTION_URL,
   headers: {
     "Content-Type": "multipart/form-data",
     Authorization: "Bearer " + localStorage.getItem("token"),
     "x-access-token": localStorage.getItem("token"),
-    "x-time-zone": -new Date().getTimezoneOffset() / 60,
+    'x-time-zone': - new Date().getTimezoneOffset()/60
   },
 });
 
@@ -22,7 +22,7 @@ export const API = axios.create({
   }
 })();
 
-API.interceptors.response.use(
+PROMOTION_API.interceptors.response.use(
   function (response) {
     return response;
   },

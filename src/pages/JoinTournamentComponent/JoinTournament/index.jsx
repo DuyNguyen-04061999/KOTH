@@ -69,8 +69,8 @@ const typographyStyle = {
 
 export default function JoinTournament() {
   const [socket, setSocket] = useState(null);
-  const [fetchT, setFetchT] = useState(true);
-  const [detailTournament, setDetailTournament] = useState({});
+  const [fetchT, setFetchT] = useState(false);
+  // const [detailTournament, setDetailTournament] = useState({});
 
   const [startGame, setStartGame] = useState(false);
   const { id } = useParams();
@@ -81,6 +81,7 @@ export default function JoinTournament() {
   const [currentResult, setCurrentResult] = useState(false);
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -110,24 +111,35 @@ export default function JoinTournament() {
   useEffect(() => {
     setSocket(_socket);
   }, []);
-
   useEffect(() => {
-    socket?.emit("detailTournament", {
-      tournamentId: id,
-    });
+    // socket?.emit("detailTournament", {
+    //   tournamentId: id,
+    // });
   }, [id, socket]);
 
   useEffect(() => {
+    // if (token) {
+    //   socket?.emit("detailTournament", {
+    //     tournamentId: id,
+    //   });
+    // }
+  }, [id, socket, token]);
+  useEffect(() => {
     if (token) {
-      socket?.emit("detailTournament", {
-        tournamentId: id,
+      dispatch({
+        type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
+        payload: id,
+      });
+    } else {
+      dispatch({
+        type: "GET_DETAIL_PROMOTION_INFO",
+        payload: id,
       });
     }
-  }, [id, socket, token]);
-
+  }, [token, id, dispatch]);
   useEffect(() => {
     socket?.on("detailTournamentSuccess", (data) => {
-      setDetailTournament(data);
+      dispatch(updateDetailTour(data));
       setFetchT(false);
     });
     socket?.on("buyTicketTournamentSuccess", () => {
@@ -154,8 +166,9 @@ export default function JoinTournament() {
         className: "success-background",
       });
       if (token) {
-        socket?.emit("detailTournament", {
-          tournamentId: id,
+        dispatch({
+          type: "GET_DETAIL_PROMOTION_INFO_TOKEN",
+          payload: id,
         });
       }
     });
@@ -542,7 +555,7 @@ export default function JoinTournament() {
                             </BgWithTooltip>
                             {/* {!detailTournament?.checkInTournament ? (
                               <BgWithTooltip
-                                title="Extra: A player can participate in a promotion up to 5 times. Share the promotion with friends to earn an extra play for each new sign-up through your link."
+                                title="Extra: A player can participate in a Promotion up to 5 times. Share the Promotion with friends to earn an extra play for each new sign-up through your link."
                                 placement="right"
                                 sx={{
                                   backgroundColor: "white",
@@ -583,8 +596,7 @@ export default function JoinTournament() {
                                   color: "white",
                                 }}
                               >
-                                : {detailTournament?.boughtToday}/
-                                {detailTournament?.maxPlay}
+                                
                               </Typography>
                             )} */}
                           </Box>
@@ -664,11 +676,11 @@ export default function JoinTournament() {
                                       maxWidth: "250px",
                                       color: "#979797",
                                       fontSize: "12px",
-                                      textAlign: "left"
+                                      textAlign: "left",
                                     }}
                                   >
-                                    The highest number of available Extras in the
-                                    current Promotion.
+                                    The highest number of available Extras in
+                                    the current Promotion.
                                   </Typography>
                                 ) : (
                                   <Box
@@ -692,7 +704,7 @@ export default function JoinTournament() {
                                         ></path>
                                       </svg>
                                       <Typography sx={{ fontSize: "12px" }}>
-                                        Extra:{" "}
+                                        Free Extra:{" "}
                                       </Typography>
                                       <Typography sx={{ fontSize: "12px" }}>
                                         {detailTournament?.extras?.normal}
@@ -1873,7 +1885,7 @@ export default function JoinTournament() {
                       marginTop: "36px",
                     }}
                   >
-                    Game for promotion
+                    Game for Promotion
                   </Typography>
 
                   <Box

@@ -7,7 +7,6 @@ import { useParams } from "react-router";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   toggleCloseResultEndGame,
-  toggleOpenResultEndGame,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import "./index.scss";
 

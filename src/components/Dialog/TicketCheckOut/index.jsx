@@ -2,9 +2,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   closeCheckWallet,
   toggleCheckWallet,
@@ -32,7 +32,6 @@ export default function TicketCheckOut() {
   const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
   const [goldTicket] = useState(0.99);
-  const [disablePlaceOrder, setDisablePlaceOrder] = useState(false);
   const handleChangeValue = (e) => {
     setSl(e.target.value);
   };
@@ -41,8 +40,8 @@ export default function TicketCheckOut() {
     dispatch(toggleCheckWallet());
   };
 
-  const btnSubscription = () => {
-    setDisablePlaceOrder(true);
+  const btnSubscription = (event) => {
+      event.currentTarget.disabled = true;
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
@@ -53,11 +52,11 @@ export default function TicketCheckOut() {
       });
       dispatch(toggleCheckWallet());
     }
-    setDisablePlaceOrder(false);
+    // setDisablePlaceOrder(false);
   };
 
-  const btnBuyTicket = () => {
-    setDisablePlaceOrder(true);
+  const btnBuyTicket = (event) => {
+      event.currentTarget.disabled = true;
     if (userGold < 0.99 * sl) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
@@ -76,7 +75,7 @@ export default function TicketCheckOut() {
       });
       dispatch(toggleCheckWallet());
     }
-    setDisablePlaceOrder(false);
+    // setDisablePlaceOrder(false);
     // dispatch(toggleBuyTicket(false));
   };
 
@@ -94,7 +93,7 @@ export default function TicketCheckOut() {
   useEffect(() => {
     socket?.on("buyPackageSuccess", (data) => {});
   }, [socket]);
-  return (
+  return ReactDOM.createPortal(
     <>
       <Dialog
         fullScreen={width < 576}
@@ -495,13 +494,11 @@ export default function TicketCheckOut() {
                       type={"primary"}
                       onClick={btnSubscription}
                       text={"Place Order"}
-                      disable={disablePlaceOrder}
                     />
                   ) : (
                     <AnimButton
                       onClick={btnBuyTicket}
                       text={"Place Order"}
-                      disable={disablePlaceOrder}
                       type={"primary"}
                     />
                   )}
@@ -511,6 +508,6 @@ export default function TicketCheckOut() {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>, document.body
   );
 }

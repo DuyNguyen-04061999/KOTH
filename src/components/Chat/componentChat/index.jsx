@@ -48,14 +48,15 @@ export default function ComponentChat() {
   };
 
   useEffect(() => {
-    if (chatBox.current) {
-      chatBox.current.addEventListener("scroll", handleScroll);
+    let chatCurrent  = chatBox.current
+    if (chatCurrent) {
+      chatCurrent.addEventListener("scroll", handleScroll);
     }
 
     // Clean up the event listener
     return () => {
-      if (chatBox.current) {
-        chatBox.current.removeEventListener("scroll", handleScroll);
+      if (chatCurrent) {
+        chatCurrent.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);
@@ -232,7 +233,7 @@ export default function ComponentChat() {
                         fontSize: "12px",
                       }}
                     >
-                      {e?.createdAt && moment(e?.createdAt).format("H:mm a")}
+                      {e?.createdAt && moment(e?.createdAt).format("LT")}
                     </span>
                   </Box>
                   <Box
@@ -288,7 +289,7 @@ export default function ComponentChat() {
                       fontWeight: "500 !important",
                     }}
                   >
-                    {e?.updatedAt && moment(e?.updatedAt).format("H:mm a")}
+                    {e?.updatedAt && moment(e?.updatedAt).format("LT")}
                   </span>
                 </Box>
               </Box>

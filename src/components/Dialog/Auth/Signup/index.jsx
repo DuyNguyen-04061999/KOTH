@@ -29,6 +29,7 @@ export default function Signup(props) {
   const [socket, setSocket] = useState(null);
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
+  const { refCodeRegister } = useSelector((state) => state.authReducer);
 
   useEffect(() => {
     const socket = _socket;
@@ -68,26 +69,20 @@ export default function Signup(props) {
     return emailRegex.test(email);
   }
 
-  
-
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    if(disabledBtn) {
-      toast.warning(
-          "Inputs required!",
-        {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.WarningIcon}
-            />
-          ),
-          position: "top-center",
-          className:
-            "warning-background",
-        }
-      );
+    if (disabledBtn) {
+      toast.warning("Inputs required!", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.WarningIcon}
+          />
+        ),
+        position: "top-center",
+        className: "warning-background",
+      });
     } else {
       sendRegister();
     }
@@ -96,7 +91,6 @@ export default function Signup(props) {
   //------------------------------------------------------------------
   const [textC_pass, setTextC_pass] = useState("");
   const [textUserName, setTextUserName] = useState("");
-  const [validEmail, setValidEmail] = useState("");
   const [characterPass, setCharacterPass] = useState(false);
   const [passOneNumber, setPassOneNumber] = useState(false);
   const [passOneLetter, setPassOneLetter] = useState(false);
@@ -139,17 +133,24 @@ export default function Signup(props) {
     } else {
       setDisabledBtn(false);
     }
-  }, [username, password, c_password, email, characterPass, gender, hasUppercase, passOneLetter, passOneNumber]);
-  
+  }, [
+    username,
+    password,
+    c_password,
+    email,
+    characterPass,
+    gender,
+    hasUppercase,
+    passOneLetter,
+    passOneNumber,
+  ]);
+
   useEffect(() => {
     if (password && password.length >= 6) {
       setCharacterPass(true);
     }
     if (c_password === password) {
       setTextC_pass("");
-    }
-    if (checkEmailFormat(email) === true) {
-      setValidEmail("");
     }
   }, [
     c_password,
@@ -171,8 +172,7 @@ export default function Signup(props) {
       setTextC_pass("Password does not match");
       return;
     } else if (checkEmailFormat(email) === false) {
-      // setPassSai(true);
-      setValidEmail("Invalid Email Address");
+      
       return;
     } else {
       // setPassSai(false);
@@ -181,7 +181,7 @@ export default function Signup(props) {
         password: password,
         email: email,
         phone: phone,
-        ref: ref,
+        ref: refCodeRegister ? refCodeRegister : ref,
         c_password: c_password,
         gender: gender,
       });
@@ -259,13 +259,16 @@ export default function Signup(props) {
               The account must not have spaces
             </span>
           )}
-          {username && username.length > 15 && (
-            <span className="text-danger">no more than 15 characters</span>
-          )}
-          {/* {isAlphanumeric(username) === false && ( */}
-          <span className="text-danger">{textUserName}</span>
-          {/* )} */}
         </FormControl>
+
+        {username && username.length > 15 && (
+          <Box sx={{ marginTop: "-10px" }}>
+            <span className="text-danger">no more than 15 characters</span>
+          </Box>
+        )}
+        {/* {isAlphanumeric(username) === false && ( */}
+        <span className="text-danger">{textUserName}</span>
+        {/* )} */}
         <FormControl
           variant="standard"
           sx={{
@@ -684,7 +687,6 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />{" "}
-          <span className="text-danger">{validEmail}</span>
         </FormControl>
         <FormControl
           variant="standard"
@@ -780,7 +782,8 @@ export default function Signup(props) {
             onChange={(e) => {
               setRef(e.target.value);
             }}
-            value={ref}
+            readOnly={refCodeRegister !== ''}
+            value={refCodeRegister ? refCodeRegister : ref}
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
@@ -794,29 +797,29 @@ export default function Signup(props) {
               "&:hover": {
                 border: "none",
               },
-              color: "white",
+              color: "white !important",
               fontWeight: "500",
               padding: "0px 0px 0px 35px !important",
+              "&:disabled": {
+                color: "white !important",
+              },
             }}
           />
         </FormControl>
-        <Box
-          className=" mb-3"
-          sx={{ paddingTop: width < 576 ? "30px" : "0" }}
-        >
+        <Box className=" mb-3" sx={{ paddingTop: width < 576 ? "30px" : "0" }}>
           <div className="btn-conteiner">
             {disabledBtn === true ? (
-              <AnimButton 
+              <AnimButton
                 type={"Dislable"}
                 text={"Sign Up"}
                 onClick={handleSubmitSignUp}
               />
             ) : (
-             <AnimButton 
-              onClick={handleSubmitSignUp}
-              text={"Sign Up"}
-              type={"Signin"}
-             />
+              <AnimButton
+                onClick={handleSubmitSignUp}
+                text={"Sign Up"}
+                type={"Signin"}
+              />
             )}
           </div>
         </Box>

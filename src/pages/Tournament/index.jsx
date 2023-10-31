@@ -1,17 +1,17 @@
-import "./index.scss";
-import Layout from "../../components/Layout";
-import { useEffect, useState } from "react";
-import _socket from "../../redux-saga-middleware/config/socket";
 import { Box, Container, Dialog, Grid, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import { images } from "../../utils/images";
-import { useNavigate } from "react-router-dom";
-import { getFontSizeDependOnWidth } from "../../utils/config";
-import useWindowDimensions from "../../utils/useWindowDimensions";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import TitleHomeDesktopComponent from "../../components/Title/TitleHomeDesktopComponent";
+import _socket from "../../redux-saga-middleware/config/socket";
+import { getFontSizeDependOnWidth } from "../../utils/config";
+import { images } from "../../utils/images";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 import CreateTournament from "./CreateTournament";
 import TournamentMobile from "./TournamentMobile";
+import "./index.scss";
 export default function Tournament() {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
@@ -268,7 +268,7 @@ export default function Tournament() {
     }
   });
   return (
-    <Layout
+    <MainLayout
       children={
         <Box className="tournamentDemo mt-5">
           <Container
@@ -590,7 +590,7 @@ export default function Tournament() {
                   3.1 The User may promote and market their tournaments within
                   the guidelines and rules set forth by the Platform.
                   <br />
-                  3.2 The User shall ensure that any promotional or marketing
+                  3.2 The User shall ensure that any Promotional or marketing
                   materials used for the tournaments comply with all applicable
                   laws and regulations.
                   <br />

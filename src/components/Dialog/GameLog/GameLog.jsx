@@ -1,3 +1,5 @@
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Dialog,
@@ -12,12 +14,11 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
+import ReactDOM from "react-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameLogDetailDialog from "../GameLogDetail";
-import { useDispatch, useSelector } from "react-redux";
-import CloseIcon from "@mui/icons-material/Close";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
 
 export default function GameLogDialog(props) {
   const { open, handleClose } = props;
@@ -70,7 +71,7 @@ export default function GameLogDialog(props) {
     setIsDetailDialog(false);
   };
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <GameLogDetailDialog
         log={detailGameLog}
@@ -452,6 +453,6 @@ export default function GameLogDialog(props) {
           </Box>
         </Dialog>
       )}
-    </>
+    </>, document.body
   );
 }

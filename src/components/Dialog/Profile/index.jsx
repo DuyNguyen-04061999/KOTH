@@ -9,10 +9,9 @@ import {
   Slide,
   Typography,
 } from "@mui/material";
-import copy from "copy-to-clipboard";
 import { forwardRef, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -30,7 +29,7 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { userName, token, uPack } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
-  const { id, email, refCode, phone, userNameProfile, avatarUrl } = useSelector(
+  const { id, email, phone, userNameProfile, avatarUrl } = useSelector(
     (state) => state.profileReducer
   );
 
@@ -327,86 +326,6 @@ export default function DialogProfile(props) {
                     />
                   </FormControl>
                 </Box>
-                {/* <Box
-                  className="ref-code d-flex flex-column align-items-start mb-3"
-                  position={"relative"}
-                >
-                  <Typography
-                    variant="inherit"
-                    sx={{
-                      color: "#757ae5",
-                      fontWeight: "500",
-                      marginBottom: "5px !important",
-                    }}
-                  >
-                    Ref Code
-                  </Typography>
-                  <FormControl
-                    variant="standard"
-                    sx={{
-                      width: "100%",
-                      backgroundColor: "#3d2c63",
-                      borderRadius: "5px",
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      color: "white",
-                    }}
-                  >
-                    <Input
-                      id="input-with-icon-adornment"
-                      value={refCode}
-                      disabled
-                      sx={{
-                        "& .MuiInputBase-input.Mui-disabled": {
-                          WebkitTextFillColor: "#fff",
-                        },
-                        "&:before": {
-                          borderBottom: "0px solid",
-                          "&:hover": {
-                            borderBottom: "0px solid",
-                          },
-                        },
-                        "&:after": {
-                          borderBottom: "0px solid",
-                        },
-                        "&:hover": {
-                          border: "none",
-                        },
-                        color: "#fff",
-                        marginLeft: "10px",
-                        fontWeight: "700",
-                      }}
-                    />
-                    <Box>
-                      <img
-                        src={images.copybutton}
-                        className="cursor-pointer"
-                        alt=""
-                        onClick={() => {
-                          copy(refCode);
-                          // dispatch(showAlert("success", "Copy successfully!"));
-                          toast.success("Copy ref code successfully!", {
-                            icon: ({ theme, type }) => (
-                              <img
-                                style={{ width: "20px", marginRight: "10px" }}
-                                alt="..."
-                                src={images.successIcon}
-                              />
-                            ),
-                            position: "top-center",
-
-                            className:
-                              width < 576
-                                ? "success-background-small"
-                                : "success-background",
-                          });
-                        }}
-                      />
-                    </Box>
-                  </FormControl>
-                </Box> */}
                 {userNameProfile === userName && token && (
                   <Box
                     sx={{
@@ -429,7 +348,7 @@ export default function DialogProfile(props) {
     );
   };
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <Dialog
         fullScreen={width && width < 576}
@@ -518,6 +437,6 @@ export default function DialogProfile(props) {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>, document.body
   );
 }

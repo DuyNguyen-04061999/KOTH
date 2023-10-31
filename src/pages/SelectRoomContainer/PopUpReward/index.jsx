@@ -1,10 +1,12 @@
-import React from "react";
-import "./index.scss";
 import { Box, Dialog, Typography } from "@mui/material";
-import { images } from "../../../utils/images";
+import React from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { closeRewardPopup } from "../../../redux-saga-middleware/reducers/gameReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import "./index.scss";
+
 export default function PopUpReward() {
   const { width } = useWindowDimensions();
   const { reward, typeReward, popupReward } = useSelector(
@@ -12,7 +14,7 @@ export default function PopUpReward() {
   );
   const dispatch = useDispatch();
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <Dialog
         sx={{
@@ -74,6 +76,6 @@ export default function PopUpReward() {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>, document.body
   );
 }

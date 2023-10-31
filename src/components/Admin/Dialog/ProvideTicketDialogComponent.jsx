@@ -1,10 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
 import { Box, Dialog, Typography } from "@mui/material";
-import { MobileDatePicker } from "@mui/x-date-pickers";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +22,7 @@ export default function ProvideTicketDialogComponent(props) {
   );
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
-  const [dateInput, setDateInput] = useState({
+  const [dateInput] = useState({
     date: moment().format("YYYY/MM/DD"),
   });
   const [ticketQuantity, setTicketQuantity] = useState(0);
@@ -55,12 +51,14 @@ export default function ProvideTicketDialogComponent(props) {
         : provideTicketInfo.quantity > listTicket?.length
     ) {
       setErrorMessage("Not enough available tickets to provide");
-    } else if (
-      roles?.includes("master") &&
-      new Date(dateInput.date).getTime() < new Date().getTime()
-    ) {
-      setErrorMessage("Date you have selected is before current date");
-    } else {
+    } 
+    // else if (
+    //   roles?.includes("master") &&
+    //   new Date(dateInput.date).getTime() < new Date().getTime()
+    // ) {
+    //   setErrorMessage("Date you have selected is before current date");
+    // } 
+    else {
       dispatch(provideTicket(provideTicketInfo));
       setErrorMessage("");
       setTicketQuantity(0)
@@ -322,7 +320,7 @@ export default function ProvideTicketDialogComponent(props) {
             ></Box>
           </Box>
 
-          {roles.includes("master") && (
+          {/* {roles.includes("master") && (
             <Box component={"div"} className="rounded mt-3">
               <div>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -385,7 +383,7 @@ export default function ProvideTicketDialogComponent(props) {
                 </LocalizationProvider>
               </div>
             </Box>
-          )}
+          )} */}
 
           {errorMessage && (
             <p style={{ color: "red", marginTop: "24px" }}>{errorMessage}</p>

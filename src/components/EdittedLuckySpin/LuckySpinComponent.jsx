@@ -1,11 +1,11 @@
 import React from "react";
-import Layout from "../Layout";
-import EdittedLuckySpin from ".";
 import { useSelector } from "react-redux";
-import PopupWheel from "../PopupWheel";
+import EdittedLuckySpin from ".";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import LuckySpinMobile from "../SpinMobile/LuckySpinMobile";
+import MainLayout from "../MainLayout/MainLayout";
 import Navigation from "../Navigation";
+import PopupWheel from "../PopupWheel";
+import LuckySpinMobile from "../SpinMobile/LuckySpinMobile";
 
 export default function LuckySpinComponent() {
   const { popupLuckyWheel } = useSelector((state) => state.luckyWheelReducer);
@@ -15,7 +15,7 @@ export default function LuckySpinComponent() {
       <Navigation />
       {popupLuckyWheel && <PopupWheel />}
       {width > 900 ? (
-        <Layout children={<EdittedLuckySpin />} />
+        <MainLayout children={<EdittedLuckySpin />} />
       ) : (
         <LuckySpinMobile />
       )}
