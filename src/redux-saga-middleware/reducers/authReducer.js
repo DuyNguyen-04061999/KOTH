@@ -92,7 +92,6 @@ export const toggleDialogConfirm = (data) => {
 };
 
 export const getIdPackage = (data) => {
-  console.log(data);
   return {
     type: "GET_ID_PACKAGE",
     payload: data,
@@ -147,6 +146,13 @@ export const addRefCodeRegister = (data) => {
   };
 };
 
+export const updatePromotionExtra = (data) => {
+  return {
+    type: "UPDATE_PROMOTION_EXTRA",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -174,7 +180,7 @@ const authReducer = (
     isShare: false,
     isSubscription: false,
     refCodeRegister: "",
-    promotionExtra:''
+    promotionExtra: 0
   },
   action
 ) => {
@@ -195,7 +201,7 @@ const authReducer = (
         userId: payload?.id,
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
-        promotionExtra:payload.promotionExtra
+        promotionExtra:payload.promotionExtra || 0
       };
     }
     case "REMOVE_TOKEN":
@@ -258,6 +264,7 @@ const authReducer = (
       return { ...state, isSubscription: !state.isSubscription };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
+    case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
     default:
       return state;
   }

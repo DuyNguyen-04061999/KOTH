@@ -17,11 +17,28 @@ export const hideAlert = () => {
   };
 };
 
+export const showToastNotification = (data) => {
+  return {
+    type: "SHOW_TOAST_NOTIFICATION",
+    payload: data
+  }
+}
+
+export const hideToastNotification = (data) => {
+  return {
+    type: "HIDE_TOAST_NOTIFICATION",
+    payload: data
+  }
+}
+
 const alertReducer = (
   state = {
     isShow: false,
     message: "Alert System",
     type: "success",
+    isShowToastNotification: false,
+    messageToastNotifiaction: "",
+    typeToastNotification: ""
   },
   action
 ) => {
@@ -43,6 +60,8 @@ const alertReducer = (
         message: "Alert System",
         type: "success",
       };
+      case  "SHOW_TOAST_NOTIFICATION": return{...state, isShowToastNotification: true, messageToastNotifiaction: payload?.message || "", typeToastNotification: payload?.type || ""}
+      case  "HIDE_TOAST_NOTIFICATION": return{...state, isShowToastNotification: false, messageToastNotifiaction: "", typeToastNotification: ""}
     default:
       return { ...state };
   }

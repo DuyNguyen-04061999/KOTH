@@ -6,9 +6,8 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
-  closeCheckWallet,
   toggleCheckWallet,
-  toggleWalletDialog,
+  toggleWalletDialog
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney } from "../../../utils/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -19,19 +18,16 @@ export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet,goldCombo,totalExtra } = useSelector(
     (state) => state.walletReducer
   );
-    console.log(isCheckWallet, "checkWallet");
   const { idPackage } = useSelector((state) => state.authReducer);
   const { userGold } = useSelector((state) => state.authReducer);
-  const { boughtTour, idTour } = useSelector(
+  const { boughtTour } = useSelector(
     (state) => state.tournamentReducer
   );
   const { listPackage } = useSelector((state) => state.appReducer);
   const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
-  const [goldTicket] = useState(0.99);
   const handleChangeValue = (e) => {
     setSl(e.target.value);
   };
@@ -45,51 +41,49 @@ export default function TicketCheckOut() {
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
-      // dispatch(toggleBuyTicket());
     } else {
       socket.emit("buyNewPackage", {
         packageId: idPackage,
       });
       dispatch(toggleCheckWallet());
     }
-    // setDisablePlaceOrder(false);
   };
 
   const btnBuyTicket = (event) => {
       event.currentTarget.disabled = true;
-    if (userGold < 0.99 * sl) {
+      let price = typeWallet === "combo1" ? 0.99 : 3.96
+      console.log(sl);
+    if (userGold < price) {
       dispatch(toggleCheckWallet());
       dispatch(toggleWalletDialog());
     } else if (!boughtTour) {
       socket?.emit("buyNewPackage", {
         packageId: idPackage,
-
+        quantityExtra: sl
       });
       dispatch(toggleCheckWallet());
     } else {
       socket?.emit("buyNewPackage", {
         packageId: idPackage,
-
+        quantityExtra: sl
       });
       dispatch(toggleCheckWallet());
     }
-    // setDisablePlaceOrder(false);
-    // dispatch(toggleBuyTicket(false));
   };
 
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
-    const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
-    setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
-  }, [listPackage, setSocket, setTicketBuy]);
+  }, [listPackage, setSocket]);
 
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
   useEffect(() => {
-    socket?.on("buyNewPackageSuccessfully", (data) => {});
+    socket?.on("buyNewPackageSuccessfully", (data) => {
+      
+    });
   }, [socket]);
 
   return ReactDOM.createPortal(

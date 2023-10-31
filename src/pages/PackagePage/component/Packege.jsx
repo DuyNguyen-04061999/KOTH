@@ -6,17 +6,16 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   getIdPackage,
   // toggleDialogConfirm,
-  toggleLoginDialog,
-  toggleSubscriptionDialog,
+  toggleLoginDialog
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
 // import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
+import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useLocation } from "react-router-dom";
 import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walletReducer";
-import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 
 export default function Package() {
   const { width } = useWindowDimensions();
@@ -251,7 +250,7 @@ export default function Package() {
                                       i?.packageName === "Free" ? "15px" : "",
                                     marginTop:
                                       "15px",
-                                    mixBlendMode: "difference",
+                                    mixBlendMode: width < 576 ? "normal" : "difference",
                                   }}
                                   playsInline
                                   muted
@@ -704,7 +703,7 @@ export default function Package() {
                                       //   ? "15px"
                                       //   : "",
                                       "15px",
-                                    mixBlendMode: "difference",
+                                      mixBlendMode: width < 576 ? "normal" : "difference",
                                   }}
                                   playsInline
                                   muted
@@ -1205,7 +1204,7 @@ export default function Package() {
                                   }
                                   alt=""
                                   style={{
-                                    mixBlendMode: "difference",
+                                    mixBlendMode: width < 576 ? "normal" : "difference",
                                   }}
                                   playsInline
                                   muted
@@ -1686,7 +1685,7 @@ export default function Package() {
                                   }
                                   alt=""
                                   style={{
-                                    mixBlendMode: "difference",
+                                    mixBlendMode: width < 576 ? "normal" : "difference",
                                   }}
                                   playsInline
                                   muted

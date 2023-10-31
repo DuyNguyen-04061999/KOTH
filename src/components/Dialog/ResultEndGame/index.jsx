@@ -33,7 +33,7 @@ export default function ResultEndGame() {
   const handleClose = () => {
     dispatch(toggleCloseResultEndGame());
     if (token) {
-      socket?.emit("detailTournament", {
+      socket?.emit("detailNewTournament", {
         tournamentId: id,
       });
     }
