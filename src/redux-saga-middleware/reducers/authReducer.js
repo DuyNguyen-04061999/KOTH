@@ -174,6 +174,7 @@ const authReducer = (
     isShare: false,
     isSubscription: false,
     refCodeRegister: "",
+    promotionExtra:''
   },
   action
 ) => {
@@ -194,6 +195,7 @@ const authReducer = (
         userId: payload?.id,
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
+        promotionExtra:payload.promotionExtra
       };
     }
     case "REMOVE_TOKEN":

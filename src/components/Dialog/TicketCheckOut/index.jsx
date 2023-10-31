@@ -104,7 +104,11 @@ export default function TicketCheckOut() {
           zIndex: "1320",
         }}
         maxWidth="2000px !important"
-        onClose={() => dispatch(toggleCheckWallet())}
+        onClose={() => {
+          dispatch(toggleCheckWallet())
+          setSl(1)
+        }
+        }
       >
         <Box
           sx={{
@@ -141,6 +145,7 @@ export default function TicketCheckOut() {
                 className={"cursor-pointer"}
                 onClick={() => {
                   dispatch(toggleCheckWallet());
+                  setSl(1)
                 }}
               >
                 <g fill="#fff">
