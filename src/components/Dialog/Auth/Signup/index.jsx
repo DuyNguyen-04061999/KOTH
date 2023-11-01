@@ -10,6 +10,7 @@ import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
+import { validateUserName } from "../../../../utils/validation";
 
 export default function Signup(props) {
   const { handleTab } = props;
@@ -25,7 +26,6 @@ export default function Signup(props) {
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
   const { width } = useWindowDimensions();
-  // const [passSai, setPassSai] = useState(false);
   const [socket, setSocket] = useState(null);
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
@@ -87,7 +87,6 @@ export default function Signup(props) {
       sendRegister();
     }
   };
-  // console.log(passSai);
   //------------------------------------------------------------------
   const [textC_pass, setTextC_pass] = useState("");
   const [textUserName, setTextUserName] = useState("");
@@ -172,7 +171,6 @@ export default function Signup(props) {
       setTextC_pass("Password does not match");
       return;
     } else if (checkEmailFormat(email) === false) {
-      
       return;
     } else {
       // setPassSai(false);
@@ -186,9 +184,8 @@ export default function Signup(props) {
         gender: gender,
       });
     }
-    // socket?.on("registerError", (data) => {});
   };
-
+  console.log("validateUserName: ", validateUserName(username));
   return (
     <Box className="signup">
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -782,7 +779,7 @@ export default function Signup(props) {
             onChange={(e) => {
               setRef(e.target.value);
             }}
-            readOnly={refCodeRegister !== ''}
+            readOnly={refCodeRegister !== ""}
             value={refCodeRegister ? refCodeRegister : ref}
             sx={{
               "&:before": {
