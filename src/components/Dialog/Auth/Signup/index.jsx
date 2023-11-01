@@ -72,33 +72,21 @@ export default function Signup(props) {
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    sendRegister();
-    // if (disabledBtn) {
-    //   toast.warning("Inputs required!", {
-    //     icon: ({ theme, type }) => (
-    //       <img
-    //         style={{ width: "20px", marginRight: "10px" }}
-    //         alt="..."
-    //         src={images.WarningIcon}
-    //       />
-    //     ),
-    //     position: "top-center",
-    //     className: "warning-background",
-    //   });
-    // } 
-    // if (isAlphanumeric(username) === false) {
-    //   // setPassSai(true);
-    //   setTextUserName("Account name should contain only letters and numbers");
-    //   return;
-    // }
-    // // } else if (c_password !== password) {
-    // //   // setPassSai(true);
-    // //   setTextC_pass("Password does not match");
-    // //   return;
-    // // } 
-    // else {
-
-    // }
+    if (disabledBtn) {
+      toast.warning("Inputs required or data input incorrect!", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.WarningIcon}
+          />
+        ),
+        position: "top-center",
+        className: "warning-background",
+      });
+    } else {
+      sendRegister();
+    }
   };
   // console.log(passSai);
   //------------------------------------------------------------------

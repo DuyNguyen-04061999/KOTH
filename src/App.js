@@ -215,6 +215,7 @@ function App() {
         store.dispatch(updateSubPackageId(data));
       });
       socket?.on("buyPromoExtraSuccess", (data) => {
+        history.back()
         toast.success("Buy Combo Extra Successfully", {
           icon: ({ theme, type }) => (
             <img
