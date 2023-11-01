@@ -43,6 +43,7 @@ import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import DialogProfile from "../Dialog/Profile";
 import ShareTour from "../Dialog/ShareTour";
+import SimpleDialog from "../Dialog/Simple/SimpleDialog";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import SubscriptionDialog from "../Dialog/Subscription";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
@@ -210,6 +211,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      <SimpleDialog/>
       <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
