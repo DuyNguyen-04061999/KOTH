@@ -3,10 +3,9 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { images, sign } from "../../../../utils/images";
+import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
@@ -18,6 +17,7 @@ export default function Signup(props) {
   // const [blur, setBlur] = useState(false);
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
+  const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [c_password, setC_password] = useState("");
   const [email, setEmail] = useState("");
@@ -46,6 +46,7 @@ export default function Signup(props) {
   useEffect(() => {
     if (registerValue === "success") {
       setUsername("");
+      setNickname("");
       setPassword("");
       setC_password("");
       setEmail("");
@@ -71,21 +72,33 @@ export default function Signup(props) {
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    if (disabledBtn) {
-      toast.warning("Inputs required!", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.WarningIcon}
-          />
-        ),
-        position: "top-center",
-        className: "warning-background",
-      });
-    } else {
-      sendRegister();
-    }
+    sendRegister();
+    // if (disabledBtn) {
+    //   toast.warning("Inputs required!", {
+    //     icon: ({ theme, type }) => (
+    //       <img
+    //         style={{ width: "20px", marginRight: "10px" }}
+    //         alt="..."
+    //         src={images.WarningIcon}
+    //       />
+    //     ),
+    //     position: "top-center",
+    //     className: "warning-background",
+    //   });
+    // } 
+    // if (isAlphanumeric(username) === false) {
+    //   // setPassSai(true);
+    //   setTextUserName("Account name should contain only letters and numbers");
+    //   return;
+    // }
+    // // } else if (c_password !== password) {
+    // //   // setPassSai(true);
+    // //   setTextC_pass("Password does not match");
+    // //   return;
+    // // } 
+    // else {
+
+    // }
   };
   // console.log(passSai);
   //------------------------------------------------------------------
@@ -112,17 +125,21 @@ export default function Signup(props) {
     setPassOneLetter(containsSpecialCharacter);
   };
 
+  console.log(phone);
+
   useEffect(() => {
     if (
       gender === "" ||
       username === "" ||
+      nickname === "" ||
       password === "" ||
       c_password === "" ||
       username.includes(" ") ||
       username.length > 15 ||
       c_password.length > 15 ||
       isAlphanumeric(username) === false ||
-      email === "" ||
+      (email === "" &&
+      phone.length < 0 )||
       characterPass === false ||
       passOneLetter === false ||
       passOneNumber === false ||
@@ -135,9 +152,11 @@ export default function Signup(props) {
     }
   }, [
     username,
+    nickname,
     password,
     c_password,
     email,
+    phone,
     characterPass,
     gender,
     hasUppercase,
@@ -163,35 +182,21 @@ export default function Signup(props) {
   ]);
 
   const sendRegister = () => {
-    if (isAlphanumeric(username) === false) {
-      // setPassSai(true);
-      setTextUserName("Account name should contain only letters and numbers");
-      return;
-    } else if (c_password !== password) {
-      // setPassSai(true);
-      setTextC_pass("Password does not match");
-      return;
-    } else if (checkEmailFormat(email) === false) {
-      
-      return;
-    } else {
-      // setPassSai(false);
-      socket?.emit("register", {
-        username: username,
-        password: password,
-        email: email,
-        phone: phone,
-        ref: refCodeRegister ? refCodeRegister : ref,
-        c_password: c_password,
-        gender: gender,
-      });
-    }
-    // socket?.on("registerError", (data) => {});
+    console.log(socket?.emit("register", {
+      username: username,
+      nickName: nickname,
+      password: password,
+      email: email,
+      phone: phone,
+      ref: refCodeRegister ? refCodeRegister : ref,
+      c_password: c_password,
+      gender: gender,
+    }));
   };
 
   return (
     <Box className="signup">
-      <Box component="form" className="p-2 ps-2 pe-3" noValidate>
+      <Box component="form" className="p-2 ps-2" noValidate>
         <Box>
           <Typography
             variant="h5"
@@ -259,16 +264,65 @@ export default function Signup(props) {
               The account must not have spaces
             </span>
           )}
+          {username && username.length > 15 && (
+            <Box>
+              <span className="text-danger">No more than 15 characters</span>
+            </Box>
+          )}
         </FormControl>
 
-        {username && username.length > 15 && (
-          <Box sx={{ marginTop: "-10px" }}>
-            <span className="text-danger">no more than 15 characters</span>
-          </Box>
-        )}
         {/* {isAlphanumeric(username) === false && ( */}
         <span className="text-danger">{textUserName}</span>
         {/* )} */}
+        <FormControl
+          variant="standard"
+          sx={{
+            width: "100%",
+            backgroundColor: "#1a132d",
+            padding: width > 576 ? "5px 10px" : "5px",
+            borderRadius: width > 576 ? "5px" : "4px",
+            marginBottom: width > 576 ? "10px" : "20px",
+          }}
+        >
+          <img
+            src={sign.up06}
+            alt="..."
+            width={18}
+            height={"auto"}
+            style={{
+              position: "absolute",
+              top: width > 576 ? "10px" : "10px",
+              left: width > 576 ? "12px" : "10px",
+            }}
+          />
+          <Input
+            type={"text"}
+            name="nickname"
+            placeholder="Nickname"
+            autoComplete="new-nickname"
+            onChange={(e) => {
+              setNickname(e.target.value);
+            }}
+            value={nickname}
+            sx={{
+              "&:before": {
+                borderBottom: "0px solid !important",
+                "&:hover": {
+                  borderBottom: "0px solid !important",
+                },
+              },
+              "&:after": {
+                borderBottom: "0px solid !important",
+              },
+              "&:hover": {
+                border: "none",
+              },
+              color: "white",
+              fontWeight: "500",
+              padding: "0px 0px 0px 35px !important",
+            }}
+          />
+        </FormControl>
         <FormControl
           variant="standard"
           sx={{
@@ -782,7 +836,7 @@ export default function Signup(props) {
             onChange={(e) => {
               setRef(e.target.value);
             }}
-            readOnly={refCodeRegister !== ''}
+            readOnly={refCodeRegister !== ""}
             value={refCodeRegister ? refCodeRegister : ref}
             sx={{
               "&:before": {
@@ -807,12 +861,12 @@ export default function Signup(props) {
           />
         </FormControl>
         <Box className=" mb-3" sx={{ paddingTop: width < 576 ? "30px" : "0" }}>
-          <div className="btn-conteiner">
+          <Box>
             {disabledBtn === true ? (
               <AnimButton
-                type={"Dislable"}
-                text={"Sign Up"}
                 onClick={handleSubmitSignUp}
+                type={"Disabled"}
+                text={"Sign Up"}
               />
             ) : (
               <AnimButton
@@ -821,7 +875,7 @@ export default function Signup(props) {
                 type={"Signin"}
               />
             )}
-          </div>
+          </Box>
         </Box>
         <Box>
           <Box
@@ -835,7 +889,7 @@ export default function Signup(props) {
             Already Registered ?
             <Typography
               onClick={() => {
-                dispatch(clickTab(false));
+                dispatch(clickTab("login"));
               }}
               sx={{ color: "#ffb600", cursor: "pointer" }}
             >

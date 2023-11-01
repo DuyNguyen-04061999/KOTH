@@ -1,7 +1,7 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import "../Slider/index.scss";
-import { useDispatch, useSelector } from "react-redux";
 // import VideoThumb from "../VideoThumb";
 // import { useState } from "react";
 import { clickTab, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
@@ -36,7 +36,7 @@ export default function GameThumb(props) {
                 });
               } else {
                 dispatch(toggleLoginDialog());
-                dispatch(clickTab(false))
+                dispatch(clickTab("login"))
               }
             }}
           >

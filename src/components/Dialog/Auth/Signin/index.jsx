@@ -69,7 +69,7 @@ export default function Dialoglg() {
 
   const handleClickSignIn = () => {
     dispatch(toggleLoginDialog());
-    dispatch(clickTab(false));
+    dispatch(clickTab("login"));
   };
 
   const handleCloseProfile = () => {};

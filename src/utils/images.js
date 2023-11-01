@@ -241,6 +241,7 @@ import up02 from "../assets/imagesLayout/02.svg";
 import up03 from "../assets/imagesLayout/03.svg";
 import up04 from "../assets/imagesLayout/04.svg";
 import up05 from "../assets/imagesLayout/05.svg";
+import up06 from "../assets/imagesLayout/06.svg";
 
 //---------------------------------------------------
 import video1 from "../assets/videoHover/Bida1.mp4";
@@ -354,11 +355,11 @@ import NavStandardActive from "../assets/images/navbar/standardActive.png";
 import NavUpcomingActive from "../assets/images/navbar/upcomingActive.png";
 import NavVipActive from "../assets/images/navbar/vipActive.png";
 
+import bannerendmobile from "../assets/images/bannerendmobile.png";
+import bannerendtour from '../assets/images/bannerendtour.png';
 import BtnBack from "../assets/images/btnback.png";
-import bannerendtour from '../assets/images/bannerendtour.png'
-import bannerendmobile from "../assets/images/bannerendmobile.png"
 
-import bgBannerCountDown from  "../assets/images/banners/bg_banner_countdown.png"
+import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -691,6 +692,7 @@ export const sign = {
   up03: up03,
   up04: up04,
   up05: up05,
+  up06: up06,
   btnBack: BtnBack
 };
 

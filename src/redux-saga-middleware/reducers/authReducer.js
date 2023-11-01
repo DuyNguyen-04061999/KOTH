@@ -91,6 +91,13 @@ export const toggleDialogConfirm = (data) => {
   };
 };
 
+export const verifyOTP = (data) => {
+  return {
+    type: "VERIFY_OTP",
+    payload: data,
+  };
+};
+
 export const getIdPackage = (data) => {
   return {
     type: "GET_ID_PACKAGE",
@@ -169,7 +176,7 @@ const authReducer = (
     token: "",
     userRole: "",
     registerValue: "",
-    isTab: false,
+    currentTab: "login",
     isUpdateProfile: false,
     userChangeAvatar: "",
     isNav: true,
@@ -218,7 +225,7 @@ const authReducer = (
     case "REGISTER_SUCCESS_FULLY":
       return { ...state, registerValue: payload };
     case "CLICK_TAB":
-      return { ...state, isTab: payload };
+      return { ...state, currentTab: payload };
     case "UPDATE_PROFILE":
       return { ...state, isUpdateProfile: true, userChangeAvatar: "" };
     case "UPDATE_PROFILE_SUCCESS":

@@ -40,17 +40,17 @@ import {
   getListPackage,
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
+  clickTab,
   getLeaderBoardSuccess,
   getNavTablet,
   logoutSuccessFully,
   registerSuccesFully,
   saveDataLogin,
-  toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
   updatePromotionExtra,
   updateSubPackageId,
-  updateUserGold,
+  updateUserGold
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   chatLogoutSuccessFully,
@@ -315,7 +315,7 @@ function App() {
         });
         store.dispatch(showAlert("success", "register succesfully"));
         store.dispatch(registerSuccesFully("success"));
-        store.dispatch(toggleLoginDialog());
+        store.dispatch(clickTab("otp"));
       });
 
       socket?.on("logoutSuccess", (data) => {

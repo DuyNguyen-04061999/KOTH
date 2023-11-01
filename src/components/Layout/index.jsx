@@ -38,7 +38,6 @@ import {
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
-import ForgetPassword from "../Dialog/ForgetPassword";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import DialogProfile from "../Dialog/Profile";
@@ -192,7 +191,7 @@ export default function Layout(props) {
       if (refCodeURL) {
         const refcode = refCodeURL?.split("refcode")?.join()
         dispatch(addRefCodeRegister(refcode));
-        dispatch(clickTab(true));
+        dispatch(clickTab("login"));
         dispatch(toggleLoginDialog(true));
       }
     }
@@ -215,7 +214,6 @@ export default function Layout(props) {
       <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
-      <ForgetPassword />
       <ShareTour />
       <PopUpReward />
       <SubscriptionDialog />
