@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { updatePromotionExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/authReducer";
 import {
   toggleCloseResultEndGame,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
@@ -14,7 +15,9 @@ export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
     (state) => state.tournamentReducer
   );
-  const { token } = useSelector((state) => state.authReducer);
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
+
+  const { token, promotionExtra } = useSelector((state) => state.authReducer);
   const [socket, setSocket] = useState(null);
 
   const dispatch = useDispatch();
@@ -36,6 +39,10 @@ export default function ResultEndGame() {
       socket?.emit("detailNewTournament", {
         tournamentId: id,
       });
+    }
+
+    if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && promotionExtra > 0) {
+      dispatch(updatePromotionExtraAfterPlayGame(1))
     }
   };
 

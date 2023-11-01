@@ -153,6 +153,13 @@ export const updatePromotionExtra = (data) => {
   };
 };
 
+export const updatePromotionExtraAfterPlayGame = (data) => {
+  return {
+    type: "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -265,6 +272,7 @@ const authReducer = (
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
     case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
+    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
     default:
       return state;
   }
