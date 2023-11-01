@@ -1,23 +1,17 @@
+import InfinityIcon from "@mui/icons-material/AllInclusive";
 import {
   Box,
-  // CssBaseline,
   Dialog,
-  // Grid,
-  // ThemeProvider,
   Typography,
 } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { images } from "../../../utils/images";
-import "./index.scss";
-// import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
-import InfinityIcon from "@mui/icons-material/AllInclusive";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   toggleLoginDialog,
   toggleShareTour,
@@ -26,9 +20,11 @@ import {
   isJson,
   sliceString
 } from "../../../utils/helper";
+import { images } from "../../../utils/images";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
+import "./index.scss";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
