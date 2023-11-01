@@ -266,33 +266,45 @@ export default function JoinTournament() {
               ) : (
                 <Box
                   sx={{
-                    width: "100%",
-                    height: "340px",
-                    boxSizing: "border-box",
-                    padding: `${parseFloat(width / 51.9)}px`,
-                    backgroundImage: `url("${
-                      detailTournament?.tournamentBackground
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          detailTournament?.tournamentBackground
-                        : images.TournamentBG
-                    }")`,
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
+                    // width: "100%",
+                    // height: "340px",
+                    // boxSizing: "border-box",
+                    // padding: `${parseFloat(width / 51.9)}px`,
+                    // backgroundImage: `url("${
+                    //   detailTournament?.tournamentBackground
+                    //     ? process.env.REACT_APP_SOCKET_SERVER +
+                    //       "/" +
+                    //       detailTournament?.tournamentBackground
+                    //     : images.TournamentBG
+                    // }")`,
+                    // backgroundPosition: "center",
+                    // backgroundRepeat: "no-repeat",
+                    // backgroundSize: "cover",
                     display: "flex",
                     justifyContent: "space-between",
                     position: "relative",
                   }}
                 >
                   {/* {detailTournament?.tournamentStatus === 2 && <BgEndGame />} */}
-
+                  <Box>
+                    <img style={{
+                      width:"100%",
+                      height:"auto"
+                    }} src={detailTournament?.tournamentBackground
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          detailTournament?.tournamentBackground
+                        : images.TournamentBG} alt="..." />
+                  </Box>
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
                       width: "100%",
                       alignItems: "flex-end",
+                      position:"absolute",
+                      bottom:"10px",
+                      right:"10px"
                     }}
                     className="btn-conteiner"
                   >
