@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
+  closeCheckWallet,
   toggleCheckWallet,
   toggleWalletDialog
 } from "../../../redux-saga-middleware/reducers/walletReducer";
@@ -33,14 +34,14 @@ export default function TicketCheckOut() {
   };
 
   const cancelButton = () => {
-    dispatch(toggleCheckWallet());
+    dispatch(toggleCheckWallet(false));
   };
 
   const btnSubscription = (event) => {
       event.currentTarget.disabled = true;
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
-      dispatch(toggleWalletDialog());
+      dispatch(toggleWalletDialog(19.99));
     } else {
       socket.emit("buyNewPackage", {
         packageId: idPackage,
@@ -51,11 +52,10 @@ export default function TicketCheckOut() {
 
   const btnBuyTicket = (event) => {
       event.currentTarget.disabled = true;
-      let price = typeWallet === "combo1" ? 0.99 : 3.96
-      console.log(sl);
+      let price = typeWallet === "combo1" ? 0.99*sl : 3.96*sl
     if (userGold < price) {
       dispatch(toggleCheckWallet());
-      dispatch(toggleWalletDialog());
+      dispatch(toggleWalletDialog(price));
     } else if (!boughtTour) {
       socket?.emit("buyNewPackage", {
         packageId: idPackage,
@@ -99,7 +99,7 @@ export default function TicketCheckOut() {
         }}
         maxWidth="2000px !important"
         onClose={() => {
-          dispatch(toggleCheckWallet())
+          dispatch(closeCheckWallet(false))
           setSl(1)
         }
         }
@@ -138,7 +138,7 @@ export default function TicketCheckOut() {
                 viewBox="0 0 20 20"
                 className={"cursor-pointer"}
                 onClick={() => {
-                  dispatch(toggleCheckWallet());
+                  dispatch(closeCheckWallet(false));
                   setSl(1)
                 }}
               >
