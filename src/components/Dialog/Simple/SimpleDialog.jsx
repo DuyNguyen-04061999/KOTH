@@ -2,12 +2,12 @@ import { Close } from "@mui/icons-material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
-    Box,
-    Dialog,
-    FormControl,
-    Grid,
-    Input,
-    Typography
+  Box,
+  Dialog,
+  FormControl,
+  Grid,
+  Input,
+  Typography
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
@@ -80,7 +80,7 @@ export default function SimpleDialog(props) {
           username: username?.toLowerCase(),
           password: password,
         });
-        // dispatch(toggleLoginDialog());
+        dispatch(toggleLoginDialog());
       }
     };
     return ReactDOM.createPortal(
