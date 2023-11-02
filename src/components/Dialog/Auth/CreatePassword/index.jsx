@@ -1,38 +1,46 @@
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { images, sign } from "../../../../utils/images";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
-export default function ForgetPassword() {
+export default function CreatePassword() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { width } = useWindowDimensions();
-  const [username, setUsername] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
+  const [inputError, setInputError] = useState("");
+  const [displayPassword, setDisplayPassword] = useState(false);
+  const [displayRePassword, setDisplayRePassword] = useState(false);
   const dispatch = useDispatch();
 
-  // return ReactDOM.createPortal(
-  //   <Dialog
-  //     onClose={() => {
-  //       dispatch(toggleForgetPass(false));
-  //     }}
-  //     open={forgetPassDialog}
-  //     fullScreen={device === "Mobile" ? true : false}
-  //   >
-  //   </Dialog>, document.body
-  // );
+  const handleSetPassword = () => {
+    setDisplayPassword(!displayPassword);
+  };
 
-  const handleSubmit = () => {
-    console.log({
-      username: username,
-      email: email,
-      phoneNumber: phoneNumber
-    })
-  }
+  const handleSetRePassword = () => {
+    setDisplayRePassword(!displayRePassword);
+  };
+
+  const handleCreatePass = () => {
+    if (!password || !rePassword) {
+      dispatch(showAlert("sucess", "Input required !"))
+    } else {
+      if (password && password.length >= 6) {
+        setInputError("Password must be at least 6 characters.");
+      } else if (rePassword !== password) {
+        setInputError("The password confirmation does not match");
+      } else {
+        console.log({
+          password: password,
+        });
+      }
+    }
+  };
 
   return (
     <Box
@@ -58,7 +66,7 @@ export default function ForgetPassword() {
             fontWeight: "700",
           }}
         >
-          Forgot Password
+          Reset Password
         </Typography>
         <Typography
           sx={{
@@ -68,8 +76,8 @@ export default function ForgetPassword() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Please enter the username and phone number that associated with your
-          account. We will send you a verification code.
+          Password must be at least 6 characters long and contain at lease one
+          non letter, one digit and one upper case.
         </Typography>
       </Box>
       <Box
@@ -84,6 +92,7 @@ export default function ForgetPassword() {
           sx={{
             width: "100%",
             display: "flex",
+            position: "relative",
           }}
         >
           <Box
@@ -99,14 +108,15 @@ export default function ForgetPassword() {
             <img
               style={{ width: "18px", height: "18px" }}
               alt="..."
-              src={images.userIcon}
+              src={sign.up02}
             />
           </Box>
           <input
             onChange={(e) => {
-              setUsername(e.target.value);
+              setPassword(e.target.value);
             }}
-            placeholder="Username"
+            type={displayPassword ? "text" : "password"}
+            placeholder="Password"
             style={{
               width: "100%",
               backgroundColor: "#181223",
@@ -118,14 +128,35 @@ export default function ForgetPassword() {
               borderRadius: "0px 5px 5px 0px",
               fontFamily: "Cyntho Next",
             }}
-            type="text"
           />
+          <Box onClick={handleSetPassword} sx={{display:password.length >0 ? "block" : "none"}}>
+            {displayPassword === false ? (
+              <VisibilityOffIcon
+                sx={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  color: "#7C81F2",
+                }}
+              />
+            ) : (
+              <VisibilityIcon
+                sx={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  color: "#7C81F2",
+                }}
+              />
+            )}
+          </Box>
         </Box>
         <Box
           sx={{
             width: "100%",
             display: "flex",
             marginTop: "20px",
+            position: "relative",
           }}
         >
           <Box
@@ -135,23 +166,21 @@ export default function ForgetPassword() {
               alignItems: "center",
               backgroundColor: "#181223",
               padding: "10px 12px",
-              borderRadius:
-                phoneNumber?.length > 16
-                  ? "5px 0px 0px 0px"
-                  : "5px 0px 0px 5px",
+              borderRadius: "5px 0px 0px 5px",
             }}
           >
             <img
               style={{ width: "18px", height: "18px" }}
               alt="..."
-              src={sign.up03}
+              src={sign.up02}
             />
           </Box>
           <input
             onChange={(e) => {
-              setEmail(e.target.value);
+              setRePassword(e.target.value);
             }}
-            placeholder="Email"
+            type={displayRePassword ? "text" : "password"}
+            placeholder="Confirm password"
             style={{
               width: "100%",
               backgroundColor: "#181223",
@@ -161,87 +190,36 @@ export default function ForgetPassword() {
               fontSize: "14px",
               padding: "10px 12px 10px 0px",
               fontFamily: "Cyntho Next",
-              borderRadius:
-                phoneNumber?.length > 16
-                  ? "0px 5px 0px 0px"
-                  : "0px 5px 5px 0px",
+              borderRadius: "0px 5px 5px 0px",
             }}
-            type="text"
           />
-        </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            marginTop: "20px",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#181223",
-              padding: "10px 12px",
-              borderRadius:
-                phoneNumber?.length > 16
-                  ? "5px 0px 0px 0px"
-                  : "5px 0px 0px 5px",
-            }}
-          >
-            <img
-              style={{ width: "18px", height: "18px" }}
-              alt="..."
-              src={images.phoneIcon}
-            />
+          <Box onClick={handleSetRePassword} sx={{display:password.length > 0 ? "block" : "none"}}>
+            {displayRePassword === false ? (
+              <VisibilityOffIcon
+                sx={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  color: "#7C81F2",
+                }}
+              />
+            ) : (
+              <VisibilityIcon
+                sx={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  color: "#7C81F2",
+                }}
+              />
+            )}
           </Box>
-          <input
-            onChange={(e) => {
-              setPhoneNumber(e.target.value);
-            }}
-            placeholder="Phone number"
-            style={{
-              width: "100%",
-              backgroundColor: "#181223",
-              outline: "none",
-              border: "none",
-              color: "white",
-              fontSize: "14px",
-              padding: "10px 12px 10px 0px",
-              fontFamily: "Cyntho Next",
-              borderRadius:
-                phoneNumber?.length > 16
-                  ? "0px 5px 0px 0px"
-                  : "0px 5px 5px 0px",
-            }}
-            type="number"
-          />
         </Box>
       </Box>
       <Box
         sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}
       >
-        <Box sx={{ width: "48%" }}>
-          <AnimButton
-            type={"ghost"}
-            text={"BACK"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
-            onClick={() => dispatch(clickTab("login"))}
-          >
-            Back
-          </AnimButton>
-        </Box>
-        <Box sx={{ width: "48%" }}>
+        <Box sx={{ width: "100%" }}>
           <AnimButton
             type={"primary"}
             text={"NEXT"}
@@ -256,7 +234,7 @@ export default function ForgetPassword() {
             //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
             //   marginTop: device === "Desktop" ? "120px" : "none",
             // }}
-            onClick={() => handleSubmit()}
+            onClick={() => handleCreatePass()}
           >
             Next
           </AnimButton>

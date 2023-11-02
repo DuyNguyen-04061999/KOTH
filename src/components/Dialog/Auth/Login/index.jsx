@@ -198,6 +198,15 @@ const Login = () => {
         <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("forgetPass"))}>
             <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>Forgot Password?</Typography>
         </Box>
+        <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("createPass"))}>
+            <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>Create Password?</Typography>
+        </Box>
+        <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("otpVerifyAccount"))}>
+            <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>OTP Verify Account?</Typography>
+        </Box>
+        <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("otpResetPassword"))}>
+            <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>OTP Reset Password?</Typography>
+        </Box>
         <Box className="d-flex justify-content-center">
           <button
             type="submit"

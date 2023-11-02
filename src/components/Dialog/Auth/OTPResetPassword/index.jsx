@@ -7,7 +7,7 @@ import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
-export default function OTPVerify() {
+export default function OTPResetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
@@ -31,6 +31,7 @@ export default function OTPVerify() {
 
     return () => clearInterval(timer);
   }, [timeLeft]);
+
 
   const handleVerifyOTP = () => {
     socket?.emit("verifyOtp", { otp: otp });
@@ -161,7 +162,7 @@ export default function OTPVerify() {
             //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
             //   marginTop: device === "Desktop" ? "120px" : "none",
             // }}
-            onClick={() => dispatch(clickTab("otp"))}
+            onClick={() => handleVerifyOTP}
           >
             Next
           </AnimButton>

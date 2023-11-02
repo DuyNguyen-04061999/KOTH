@@ -46,6 +46,7 @@ import {
   logoutSuccessFully,
   registerSuccesFully,
   saveDataLogin,
+  toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
   updatePromotionExtra,
@@ -215,6 +216,7 @@ function App() {
         store.dispatch(updateSubPackageId(data));
       });
       socket?.on("buyPromoExtraSuccess", (data) => {
+        history.back()
         toast.success("Buy Combo Extra Successfully", {
           icon: ({ theme, type }) => (
             <img
@@ -262,6 +264,7 @@ function App() {
           socket?.emit("getDetailProfile", {
             username: user?.userName,
           });
+          store.dispatch(toggleLoginDialog());
           // checkPreAuthRouter();
         }
       );

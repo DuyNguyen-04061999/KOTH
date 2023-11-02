@@ -1,9 +1,5 @@
 import { Close } from "@mui/icons-material";
-import {
-  Box,
-  Dialog,
-  Grid
-} from "@mui/material";
+import { Box, Dialog, Grid } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,13 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAppType } from "../../../utils/helper";
 import { images, sign } from "../../../utils/images";
 
-import {
-  toggleLoginDialog
-} from "../../../redux-saga-middleware/reducers/authReducer";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import CreatePassword from "../Auth/CreatePassword";
 import ForgetPassword from "../Auth/ForgetPassword";
 import Login from "../Auth/Login";
-import OTPVerify from "../Auth/OTPVerify";
+import OTPResetPassword from "../Auth/OTPResetPassword";
+import { default as OTPVerifyAccount } from "../Auth/OTPVerifyAccount";
 import Signup from "../Auth/Signup";
 import "./../Auth/Signin/index.scss";
 
@@ -27,11 +23,12 @@ export default function SimpleDialog(props) {
   );
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  
+
   const handleClose = () => {
     dispatch(toggleLoginDialog());
-  };
+    dispatch(clickTab("login"));
 
+  };
 
   return ReactDOM.createPortal(
     <>
@@ -75,15 +72,19 @@ export default function SimpleDialog(props) {
               </Box>
               {currentTab === "login" ? (
                 <Login />
-                ) : currentTab === "otp" ? (
-                  <Signup />
-                ) : currentTab === "." ? (
-                  <ForgetPassword></ForgetPassword>
-                ) : currentTab === "signup" ? (
-                  <OTPVerify></OTPVerify>
-                ) : (
-                  <Login></Login>
-                )}
+              ) : currentTab === "signup" ? (
+                <Signup />
+              ) : currentTab === "forgetPass" ? (
+                <ForgetPassword></ForgetPassword>
+              ) : currentTab === "otpVerifyAccount" ? (
+                <OTPVerifyAccount></OTPVerifyAccount>
+              ) : currentTab === "otpResetPassword" ? (
+                <OTPResetPassword></OTPResetPassword>
+              ) : currentTab === "createPass" ? (
+                <CreatePassword></CreatePassword>
+              ) : (
+                <Login></Login>
+              )}
             </Box>
           </Box>
         </Dialog>
@@ -117,15 +118,19 @@ export default function SimpleDialog(props) {
                 className="p-2"
               >
                 {currentTab === "login" ? (
-                  <Login/>
-                ) : currentTab === "otp" ? (
+                  <Login />
+                ) : currentTab === "signup" ? (
                   <Signup />
                 ) : currentTab === "forgetPass" ? (
                   <ForgetPassword></ForgetPassword>
-                ) : currentTab === "signup" ? (
-                  <OTPVerify></OTPVerify>
+                ) : currentTab === "otpVerifyAccount" ? (
+                  <OTPVerifyAccount></OTPVerifyAccount>
+                ) : currentTab === "otpResetPassword" ? (
+                  <OTPResetPassword></OTPResetPassword>
+                ) : currentTab === "createPass" ? (
+                  <CreatePassword></CreatePassword>
                 ) : (
-                  <></>
+                  <Login></Login>
                 )}
               </Box>
             </Grid>

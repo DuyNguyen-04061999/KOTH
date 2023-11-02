@@ -1,17 +1,16 @@
 import { Box, Container, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import SliderLayout from "../../../components/Slider";
-import _socket from "../../../redux-saga-middleware/config/socket";
 import { useDispatch, useSelector } from "react-redux";
-import { getListGameByType } from "../../../redux-saga-middleware/reducers/gameReducer";
-import "../components/Typegame.scss";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { getUniqueID } from "../../../utils/helper";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
-  clickTab,
-  toggleLoginDialog,
+  toggleLoginDialog
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { getListGameByType } from "../../../redux-saga-middleware/reducers/gameReducer";
+import { getUniqueID } from "../../../utils/helper";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import "../components/Typegame.scss";
 
 export default function TypeGame() {
   const { type } = useParams();
@@ -102,7 +101,7 @@ export default function TypeGame() {
                               });
                             } else {
                               dispatch(toggleLoginDialog());
-                              dispatch(clickTab(false));
+                              
                             }
                           }}
                         >
