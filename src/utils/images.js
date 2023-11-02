@@ -32,6 +32,7 @@ import QR from "../assets/images/QRcode.png";
 import Rectangle from "../assets/images/Rectangle.png";
 import RotateScreen from "../assets/images/RotateScreen.png";
 import TimeTour from "../assets/images/TimeTour.png";
+import ToolTipIcon from "../assets/images/ToolTipIcon.png";
 import TournamentBG from "../assets/images/TournamentBG.png";
 import UnCheck from "../assets/images/UnCheck.png";
 import UnCheckMobile from "../assets/images/UnCheckMobile.png";
@@ -94,6 +95,7 @@ import loseWardBG from "../assets/images/loseWardBG.png";
 import megaHolicBanner from "../assets/images/megaHolicBanner.png";
 import New from "../assets/images/new.png";
 import new1 from "../assets/images/new1.png";
+import nickname from "../assets/images/nickname.png";
 import numberClient from "../assets/images/numberClient.png";
 import passiveCoin from "../assets/images/passiveCoin.png";
 import passiveUser from "../assets/images/passiveUser.png";
@@ -241,7 +243,6 @@ import up02 from "../assets/imagesLayout/02.svg";
 import up03 from "../assets/imagesLayout/03.svg";
 import up04 from "../assets/imagesLayout/04.svg";
 import up05 from "../assets/imagesLayout/05.svg";
-import up06 from "../assets/imagesLayout/06.svg";
 
 //---------------------------------------------------
 import video1 from "../assets/videoHover/Bida1.mp4";
@@ -393,7 +394,7 @@ export const imageHome = {
   BannerWinBigMobile: bannerWinBigMobile,
   BannerWinCelebMobile: bannerWinCelebMobile,
   BannerWinAroundMobile: bannerWinAroundMobile,
-  BGBannerCountDown:bgBannerCountDown,
+  BGBannerCountDown: bgBannerCountDown,
 };
 
 export const navbar = {
@@ -415,7 +416,7 @@ export const navbar = {
   navUpcomingActive: NavUpcomingActive,
   navEndedActive: NavEndedActive,
   navHelpCenterActive: NavHelpCenterActive,
-  navPackageActive: NavPackageActive
+  navPackageActive: NavPackageActive,
 };
 
 export const images = {
@@ -583,8 +584,10 @@ export const images = {
   GamePreview3: GamePreview3,
   userIcon: userIcon,
   phoneIcon: phoneIcon,
-  bannerendtour:bannerendtour,
-  bannerendmobile:bannerendmobile
+  bannerendtour: bannerendtour,
+  bannerendmobile: bannerendmobile,
+  nickname: nickname,
+  ToolTipIcon: ToolTipIcon,
 };
 
 export const navigationImages = {
@@ -692,8 +695,7 @@ export const sign = {
   up03: up03,
   up04: up04,
   up05: up05,
-  up06: up06,
-  btnBack: BtnBack
+  btnBack: BtnBack,
 };
 
 export const video = {
