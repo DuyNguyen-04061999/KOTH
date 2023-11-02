@@ -75,7 +75,7 @@ const BannerTour = (props) => {
           </Typography>
         </Box> 
 
-        <Box sx={{ width: "380px", marginBottom: "0px", marginTop:"12px" }}>
+        <Box sx={{ width: "436px", marginBottom: "0px", marginTop:"12px" }}>
           <Typography
             sx={{
               width: "100%",
