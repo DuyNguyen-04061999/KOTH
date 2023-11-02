@@ -34,7 +34,7 @@ export default function TicketCheckOut() {
   };
 
   const cancelButton = () => {
-    dispatch(toggleCheckWallet(false));
+    dispatch(closeCheckWallet(false))
   };
 
   const btnSubscription = (event) => {
