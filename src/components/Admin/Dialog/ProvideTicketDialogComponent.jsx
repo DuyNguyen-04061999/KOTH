@@ -20,6 +20,7 @@ export default function ProvideTicketDialogComponent(props) {
   const { listTicket, isProvideTicket } = useSelector(
     (state) => state.adminConfigReducer
   );
+
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const [dateInput] = useState({
