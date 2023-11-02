@@ -143,7 +143,7 @@ export default function Layout(props) {
   }, [width, dispatch]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    
   }, [pathname]);
 
   const clickNavIcon = () => {
@@ -160,10 +160,6 @@ export default function Layout(props) {
       // Check if the virtual keyboard is open (adjust the threshold if needed)
       if (window.innerHeight < window.outerHeight) {
         // Adjust the timeout delay if needed
-        setTimeout(() => {
-          // Scroll to the top or any other desired behavior
-          window.scrollTo(0, 0);
-        }, 300); // Wait for virtual keyboard to fully open (adjust as needed)
       }
     };
 
