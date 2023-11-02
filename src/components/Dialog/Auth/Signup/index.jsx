@@ -72,7 +72,7 @@ export default function Signup(props) {
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
     if (disabledBtn) {
-      toast.warning("Inputs required!", {
+      toast.warning("Inputs required or data input incorrect!", {
         icon: ({ theme, type }) => (
           <img
             style={{ width: "20px", marginRight: "10px" }}

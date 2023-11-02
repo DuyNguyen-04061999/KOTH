@@ -63,6 +63,8 @@ export default function SimpleDialog(props) {
     };
   
     const sendLogin = () => {
+      setUsername("");
+      setPassword("");
       if (!username || !password) {
         toast.error("Login Failed! Enter username and password!", {
           icon: ({ theme, type }) => (
