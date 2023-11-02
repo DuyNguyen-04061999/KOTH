@@ -110,7 +110,7 @@ export default function WalletTypePromote(props) {
         sx={{
           backgroundColor: "#271C39",
           width: "100%",
-          overflow: "auto",
+          // overflow: "auto",
           minHeight: width < 576 ? "100vh" : "unset",
           maxHeight: width < 576 ? "unset" : height - 100,
         }}
