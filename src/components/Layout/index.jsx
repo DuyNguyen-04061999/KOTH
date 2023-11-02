@@ -474,7 +474,7 @@ export default function Layout(props) {
               marginRight:
                 device === "Tablet" ||
                 (device === "Mobile" && orientation === "landscape") ||
-                (device === "Desktop" && width < 1200)
+                (device === "Desktop" && width < 1200) || (width > 576 && width < 950)
                   ? "0"
                   : "",
             }}

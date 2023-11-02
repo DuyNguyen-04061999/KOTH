@@ -1,17 +1,17 @@
-import { Dialog, Slide, Box } from "@mui/material";
+import { Box, Dialog, Slide } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
-import { inpChat } from "../../../utils/cssFrom";
 import styled from "styled-components";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { inpChat } from "../../../utils/cssFrom";
 import { images280423_l } from "../../../utils/images280423_l";
 import { imageChat } from "../../../utils/imagesChat";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
-import ChatWorldList from "../../Chat/ChatWorldList";
-import ChatFriendList from "../../Chat/ChatFriendList";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { popup } from "../../../utils/images";
+import ChatFriendList from "../../Chat/ChatFriendList";
+import ChatWorldList from "../../Chat/ChatWorldList";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
