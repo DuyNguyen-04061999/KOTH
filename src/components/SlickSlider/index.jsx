@@ -97,7 +97,7 @@ export default function SlickSlider(props) {
                 height: "100%",
                 cursor: "pointer",
                 borderRadius: "8px",
-                objectFit: "cover",
+                objectFit: "contain",
               }}
               component={"img"}
               src={
@@ -120,7 +120,7 @@ export default function SlickSlider(props) {
                 <Box
                   key={index}
                   sx={{
-                    height: width < 576 ? "208px" : "363px",
+                    height: width < 576 ? "208px" : "auto",
                   }}
                 >
                   <Box
@@ -132,7 +132,7 @@ export default function SlickSlider(props) {
                       height: "100%",
                       cursor: "pointer",
                       borderRadius: "8px",
-                      objectFit: "cover",
+                      objectFit: "contain",
                     }}
                     component={"img"}
                     src={
