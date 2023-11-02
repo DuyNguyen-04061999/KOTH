@@ -60,9 +60,10 @@ const walletReducer = (
     transactionData: null,
     depositData: null,
     isCheckWallet: false,
-    typeWallet:"",
-    goldCombo:0,
-    totalExtra:0
+    typeWallet: "",
+    goldCombo: 0,
+    totalExtra: 0,
+    price: 0
   },
   action
 ) => {
@@ -74,7 +75,7 @@ const walletReducer = (
     case REHYDRATE:
       return { ...state };
     case "TOGGLE_WALLET_DIALOG":
-      return { ...state, isWalletDialog: !state.isWalletDialog };
+      return { ...state, isWalletDialog: !state.isWalletDialog, price: payload || 0 };
     case "OPEN_TRANSACTION_DIALOG":
       return { ...state, isTransactionDialog: true };
     case "CLOSE_TRANSACTION_DIALOG":
