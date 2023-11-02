@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../../../redux-saga-middleware/config/socket";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -12,8 +13,13 @@ export default function ForgetPassword() {
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-
+  const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
 
   // return ReactDOM.createPortal(
   //   <Dialog
@@ -27,12 +33,26 @@ export default function ForgetPassword() {
   // );
 
   const handleSubmit = () => {
-    console.log({
+    socket?.emit("forgetPassword", {
       username: username,
       email: email,
-      phoneNumber: phoneNumber
-    })
-  }
+      phoneNumber: phoneNumber,
+      type:"password"
+    });
+    // dispatch(clickTab("createPass"));
+  };
+
+  useEffect(() => {
+    if(socket){
+      socket?.on("forgetPasswordSuccess",() => {
+        dispatch(clickTab("createPass"))
+      })
+    }
+    return () => {
+      socket?.off("forgetPasswordSuccess")
+    }
+  }, [socket])
+  
 
   return (
     <Box

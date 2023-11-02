@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { clickTab, toggleLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const { userName, email, phone } = useSelector((state) => state.authReducer);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -32,9 +33,31 @@ export default function OTPVerifyAccount() {
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-
   const handleVerifyOTP = () => {
-    socket?.emit("verifyOtp", { otp: otp });
+    socket?.emit("verifyOtp", {
+      otp: otp,
+      username: userName,
+      type: "register",
+    });
+  };
+
+  useEffect(() => {
+    socket?.on("verifyOtpSuccess", () => {
+      dispatch(toggleLoginDialog());
+      dispatch(clickTab("login"));
+    });
+
+    return () => {
+      socket?.off("verifyOtpSuccess");
+    };
+  }, [socket]);
+
+  const handleResendOTP = () => {
+    socket?.emit("resendOtp", {
+      email: email,
+      username: userName,
+      phone: phone,
+    });
   };
 
   return (
@@ -109,7 +132,7 @@ export default function OTPVerifyAccount() {
           </Typography>
         </Box>
       ) : (
-        <Box onClick={() => handleVerifyOTP} sx={{ marginBottom: "36px" }}>
+        <Box onClick={() => handleResendOTP()} sx={{ marginBottom: "36px" }}>
           <Typography
             sx={{
               fontSize: "14px",
@@ -162,7 +185,7 @@ export default function OTPVerifyAccount() {
             //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
             //   marginTop: device === "Desktop" ? "120px" : "none",
             // }}
-            onClick={() => handleVerifyOTP}
+            onClick={() => handleVerifyOTP()}
           >
             Next
           </AnimButton>

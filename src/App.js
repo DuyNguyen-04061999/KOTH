@@ -46,7 +46,6 @@ import {
   logoutSuccessFully,
   registerSuccesFully,
   saveDataLogin,
-  toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
   updatePromotionExtra,
@@ -264,7 +263,6 @@ function App() {
           socket?.emit("getDetailProfile", {
             username: user?.userName,
           });
-          store.dispatch(toggleLoginDialog());
           // checkPreAuthRouter();
         }
       );

@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAppType } from "../../../utils/helper";
 import { images, sign } from "../../../utils/images";
 
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  clickTab,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import CreatePassword from "../Auth/CreatePassword";
 import ForgetPassword from "../Auth/ForgetPassword";
@@ -21,13 +24,13 @@ export default function SimpleDialog(props) {
   const { currentTab, isLoginDialog } = useSelector(
     (state) => state.authReducer
   );
+
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
 
   const handleClose = () => {
     dispatch(toggleLoginDialog());
     dispatch(clickTab("login"));
-
   };
 
   return ReactDOM.createPortal(

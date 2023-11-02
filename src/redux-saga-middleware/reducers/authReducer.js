@@ -175,6 +175,8 @@ const authReducer = (
     userGold: "",
     token: "",
     userRole: "",
+    email: "",
+    phone: "",
     registerValue: "",
     currentTab: "login",
     isUpdateProfile: false,
@@ -203,10 +205,7 @@ const authReducer = (
     case REHYDRATE:
       return { ...state };
     case "TOGGLE_LOGIN_DIALOG":
-      return {
-        ...state,
-        isLoginDialog: !state.isLoginDialog,
-      };
+      return { ...state, isLoginDialog: !state.isLoginDialog };
     case "SAVE_DATA_LOGIN": {
       return {
         ...state,
@@ -219,6 +218,8 @@ const authReducer = (
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
         promotionExtra: payload.promotionExtra || 0,
+        email: payload.email,
+        phone: payload.phone,
       };
     }
     case "REMOVE_TOKEN":
@@ -249,16 +250,8 @@ const authReducer = (
         ...state,
         resetInputValue: payload,
         isLoginDialog: false,
-        userName: "",
-        userAvatar: "",
-        userGold: "",
-        token: "",
-        userRole: "",
-        registerValue: "",
-        isTab: false,
+        isTab: "login",
         isUpdateProfile: false,
-        userChangeAvatar: "",
-        userPackageId: "",
       };
     case "GET_LEADERBOARD_SUCCESS":
       return { ...state, leaderBoard: payload };

@@ -3,7 +3,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
@@ -27,20 +27,13 @@ export default function CreatePassword() {
   };
 
   const handleCreatePass = () => {
-    if (!password || !rePassword) {
-      dispatch(showAlert("sucess", "Input required !"))
-    } else {
-      if (password && password.length >= 6) {
-        setInputError("Password must be at least 6 characters.");
-      } else if (rePassword !== password) {
-        setInputError("The password confirmation does not match");
-      } else {
-        console.log({
-          password: password,
-        });
-      }
-    }
+    console.log({
+        password: password,
+      });
+      dispatch(clickTab("otpResetPassword"))
   };
+
+  console.log(inputError);
 
   return (
     <Box

@@ -5,12 +5,18 @@ import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+import {
+  clickTab,
+  saveDataLogin,
+} from "../../../../redux-saga-middleware/reducers/authReducer";
+import { updateCountEveryDay } from "../../../../redux-saga-middleware/reducers/luckyWheelReducer";
+import { images, sign } from "../../../../utils/images";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateNickName } from "../../../../utils/validateNickName";
 import { validateEmail } from "../../../../utils/validationEmail";
-import {
-  validateUserName
-} from "../../../../utils/validationUserName";
+import { validateUserName } from "../../../../utils/validationUserName";
+import AnimButton from "../../../AnimButton";
 import "./index.scss";
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -67,11 +73,6 @@ export default function Signup(props) {
     return regex.test(input);
   }
 
-  // function containsSpecialCharacters(input) {
-  //   const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{6,15}$/; // Define your special character pattern
-  //   return regex.test(input);
-  // }
-
   function checkEmailFormat(email) {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
@@ -81,6 +82,7 @@ export default function Signup(props) {
     e.preventDefault();
     sendRegister();
   };
+
   //------------------------------------------------------------------
   const [textC_pass, setTextC_pass] = useState("");
   const [characterPass, setCharacterPass] = useState(false);
@@ -176,7 +178,37 @@ export default function Signup(props) {
       setPassSai(true);
     }
   }, [password, c_password]);
-  useEffect(() => {}, []);
+
+  useEffect(() => {
+    socket?.on("registerSuccess", (data, user) => {
+      dispatch(
+        saveDataLogin({
+          username: user?.username,
+          email: user?.email,
+          phone: user?.phone,
+        })
+      );
+      socket?.emit("login", {
+        username: user?.username?.toLowerCase(),
+        password: user?.password,
+      });
+
+      socket?.on(
+        "loginSuccess",
+        (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
+          dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
+        }
+      );
+      dispatch(showAlert("success", "register succesfully"));
+      dispatch(clickTab("otpVerifyAccount"));
+    });
+
+    return () => {
+      socket?.off("registerSuccess");
+      socket?.off("loginSuccess");
+    };
+  }, [socket]);
+
   return (
     <Box className="signup">
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -861,7 +893,7 @@ export default function Signup(props) {
             sx={{
               position: "absolute",
               top: "8px",
-              left: width > 576 ? "30px" : "6px",
+              left: width < 576 ? "24px" : "30px",
               color: "#979797",
               fontWeight: "600",
             }}
@@ -993,7 +1025,7 @@ export default function Signup(props) {
         <Box className=" mb-3" sx={{ paddingTop: width < 576 ? "30px" : "0" }}>
           <div className="btn-conteiner">
             {disabledBtn === true ? (
-              <AnimButton type={"Dislable"} text={"Sign Up"} />
+              <AnimButton type={"Disabled"} text={"Sign Up"} />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}
@@ -1015,7 +1047,7 @@ export default function Signup(props) {
             Already Registered ?
             <Typography
               onClick={() => {
-                dispatch(clickTab(false));
+                dispatch(clickTab("login"));
               }}
               sx={{ color: "#ffb600", cursor: "pointer" }}
             >
@@ -1025,5 +1057,5 @@ export default function Signup(props) {
         </Box>
       </Box>
     </Box>
-  )
+  );
 }

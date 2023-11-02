@@ -9,6 +9,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function OTPResetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const {userName, email, phone} = useSelector((state) => state.authReducer);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -34,7 +35,11 @@ export default function OTPResetPassword() {
 
 
   const handleVerifyOTP = () => {
-    socket?.emit("verifyOtp", { otp: otp });
+    socket?.emit("verifyOtp", {
+      otp: otp,
+      username: userName,
+      type: "password",
+    });
   };
 
   return (
@@ -142,7 +147,7 @@ export default function OTPResetPassword() {
             //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
             //   marginTop: device === "Desktop" ? "120px" : "none",
             // }}
-            onClick={() => dispatch(clickTab("login"))}
+            onClick={() => dispatch(clickTab("createPass"))}
           >
             Back
           </AnimButton>
