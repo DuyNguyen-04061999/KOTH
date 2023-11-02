@@ -37,6 +37,7 @@ const BannerTourMobile = (props) => {
           display: "flex",
           flexDirection: "column",
           width: "190px",
+          alignItems:"center"
         }}
       >
          <Box sx={{
@@ -62,7 +63,7 @@ const BannerTourMobile = (props) => {
               color: "white",
               fontWeight: 700,
               textTransform: "uppercase",
-              height: "40px",
+              height: "36px",
               overflow: "hidden",
             }}
           >

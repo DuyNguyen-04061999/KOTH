@@ -81,7 +81,9 @@ export default function Navbar() {
                   padding: "10px",
                   transition: "0.3s ease",
                   backgroundColor:
-                    pathname && pathname?.includes("home") ? "#7648ED" : "",
+                    (pathname && pathname?.includes("home")) || pathname === "/"
+                      ? "#7648ED"
+                      : "",
                   borderRadius: "5px",
                   color:
                     (pathname && pathname?.includes("home")) || pathname === "/"
@@ -529,8 +531,7 @@ export default function Navbar() {
                         ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
                         : "",
                     color:
-                      (pathname && pathname?.includes("ongoing-promotion")) ||
-                      pathname === "/"
+                      pathname && pathname?.includes("ongoing-promotion")
                         ? "white"
                         : "#A89CD7",
                     padding: "10px",
@@ -588,8 +589,7 @@ export default function Navbar() {
                       "#7648ED",
                     borderRadius: "5px",
                     color:
-                      (pathname && pathname?.includes("upcoming-promotion")) ||
-                      pathname === "/"
+                      pathname && pathname?.includes("upcoming-promotion")
                         ? "white"
                         : "#A89CD7",
                     boxShadow:
@@ -652,8 +652,7 @@ export default function Navbar() {
                       "#7648ED",
                     borderRadius: "5px",
                     color:
-                      (pathname && pathname?.includes("ended-promotion")) ||
-                      pathname === "/"
+                      pathname && pathname?.includes("ended-promotion")
                         ? "white"
                         : "#A89CD7",
                     padding: "10px",

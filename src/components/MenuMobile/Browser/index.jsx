@@ -278,7 +278,7 @@ export default function Browser(props) {
                     }}
                     onClick={() => {
                       navigate("/hot-promotion");
-                      handleShowMenu()
+                      handleShowMenu();
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                   >
@@ -354,7 +354,7 @@ export default function Browser(props) {
                     }}
                     onClick={() => {
                       navigate("/ongoing-promotion");
-                      handleShowMenu()
+                      handleShowMenu();
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >
@@ -416,7 +416,7 @@ export default function Browser(props) {
                     }}
                     onClick={() => {
                       navigate("/upcoming-promotion");
-                      handleShowMenu()
+                      handleShowMenu();
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >
@@ -478,7 +478,7 @@ export default function Browser(props) {
                     }}
                     onClick={() => {
                       navigate("/ended-promotion");
-                      handleShowMenu()
+                      handleShowMenu();
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >
@@ -776,7 +776,7 @@ export default function Browser(props) {
                   }}
                   onClick={() => {
                     navigate(`/help-center`);
-                    handleShowMenu()
+                    handleShowMenu();
                   }}
                 >
                   {pathname && pathname?.includes("help-center") ? (
