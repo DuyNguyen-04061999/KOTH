@@ -74,9 +74,10 @@ export default function CountDownBannerHot({
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Typography
         sx={{
-          fontSize: "20.052px",
+          fontSize: "25.052px",
           color: "white",
           marginLeft: "0px !important",
+          lineHeight:1.5
         }}
       >
         {days && days}d : {hours && hours}h : {minutes && minutes}m
