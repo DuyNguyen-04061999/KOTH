@@ -5,24 +5,28 @@ import "./index.scss";
 // import FullScreenDialog from "../../../FullScreenDialog";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney, getAppType } from "../../../../utils/helper";
 import AnimButton from "../../../AnimButton";
-import { useNavigate } from "react-router";
 
 export default function WalletTypePromote(props) {
   const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
   const { userGold } = useSelector((state) => state.authReducer);
-  // const [activeColor, setActveColor] = useState("");
+  const { price } = useSelector((state) => state.walletReducer);
   const [amount, setAmount] = useState(0);
   const [typePayment, setTypePayment] = useState("stripe");
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
   const [bgInput, setBgInput] = useState("gray");
-  // const [textRed,setTextRed] = useState("")
+  
+  useEffect(() => {
+    setAmount(price)
+  }, [price])
+
   const navigate = useNavigate();
 
   const handleContinue = () => {

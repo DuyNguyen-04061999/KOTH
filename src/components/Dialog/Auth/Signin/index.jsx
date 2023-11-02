@@ -80,7 +80,7 @@ export default function Dialoglg() {
     dispatch(removeToken());
     dispatch(clickTabChat(true));
     if (window.location.pathname?.includes("tournamentDetail")) {
-      socket?.emit("detailTournament", {
+      socket?.emit("detailNewTournament", {
         tournamentId: id,
       });
     }
