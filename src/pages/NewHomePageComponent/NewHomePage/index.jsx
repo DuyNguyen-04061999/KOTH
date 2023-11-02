@@ -440,5 +440,5 @@ export default function NewHomePage() {
             {getAppType() === "promote" ? <Package/> : <></>}
             <NewFooter/>
         </Box>
-    </Container>);
+    </Container>); 
 }
