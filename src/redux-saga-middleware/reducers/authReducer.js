@@ -7,6 +7,13 @@ export const toggleLoginDialog = (data) => {
   };
 };
 
+export const closeLoginDialog = (data) => {
+  return {
+    type: "CLOSE_LOGIN_DIALOG",
+    payload: data,
+  };
+};
+
 export const saveDataLogin = (data) => {
   return {
     type: "SAVE_DATA_LOGIN",
@@ -273,6 +280,7 @@ const authReducer = (
       return { ...state, userPackageId: payload || "" };
     case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
     case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
+    case "CLOSE_LOGIN_DIALOG": return {...state, isLoginDialog: false}
     default:
       return state;
   }

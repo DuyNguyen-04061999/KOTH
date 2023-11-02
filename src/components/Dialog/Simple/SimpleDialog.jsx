@@ -82,7 +82,7 @@ export default function SimpleDialog(props) {
           username: username?.toLowerCase(),
           password: password,
         });
-        dispatch(toggleLoginDialog());
+        // dispatch(toggleLoginDialog());
       }
     };
     return ReactDOM.createPortal(

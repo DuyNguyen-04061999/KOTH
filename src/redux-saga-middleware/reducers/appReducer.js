@@ -62,6 +62,14 @@ export const toggleStartGame = (data) => {
   };
 };
 
+
+export const updateFromRouter = (data) => {
+  return {
+    type: "UPDATE_FROM_ROUTER",
+    payload: data,
+  };
+};
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -71,6 +79,7 @@ const appReducer = (
     listPackage: [],
     router: "",
     startGameCheck: false,
+    fromRouter: ""
   },
   action
 ) => {
@@ -96,6 +105,9 @@ const appReducer = (
       return { ...state, listPackage: payload };
     case "TOGGLE_START_GAME":
       return { ...state, startGameCheck: payload };
+    case "UPDATE_FROM_ROUTER": {
+      return {...state, fromRouter: payload}
+    }
     default:
       return { ...state };
   }
