@@ -49,9 +49,8 @@ import {
   toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
-  updatePromotionExtra,
   updateSubPackageId,
-  updateUserGold,
+  updateUserGold
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   chatLogoutSuccessFully,
@@ -126,8 +125,9 @@ const SuspenseWrapper = (props) => {
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
-  const { token, isLoginDialog } = store.getState().authReducer;
+  const { token } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
+  
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
 
@@ -198,6 +198,25 @@ function App() {
 
   useEffect(() => {}, [orientation, startGameCheck]);
 
+  // useEffect(() => {
+  //   if(socket) {
+  //     socket?.on("buyPromoExtraSuccess", (data) => {
+  //       toast.success("Buy Combo Extra Successfully", {
+  //         icon: ({ theme, type }) => (
+  //           <img
+  //             style={{ width: "20px", marginRight: "10px" }}
+  //             alt="..."
+  //             src={images.successIcon}
+  //           />
+  //         ),
+  //         position: "top-center",
+  //         className: "success-background",
+  //       });
+  //       store.dispatch(updatePromotionExtra(data || 0))
+  //     })
+  //   }
+  // }, [fromRouter, socket, router])
+
   useEffect(() => {
     if (socket) {
       socket?.once("connect", (data) => {});
@@ -215,21 +234,7 @@ function App() {
         });
         store.dispatch(updateSubPackageId(data));
       });
-      socket?.on("buyPromoExtraSuccess", (data) => {
-        history.back()
-        toast.success("Buy Combo Extra Successfully", {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.successIcon}
-            />
-          ),
-          position: "top-center",
-          className: "success-background",
-        });
-        store.dispatch(updatePromotionExtra(data || 0))
-      })
+      
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {

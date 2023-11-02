@@ -1,9 +1,10 @@
+import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleExtra } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { Box, Dialog, Typography } from "@mui/material";
 import AnimButton from "../../AnimButton";
-import { useNavigate } from "react-router-dom";
 
 export default function NotificationExtra(props) {
   const { isExtra } = useSelector((state) => state.tournamentReducer);
@@ -14,8 +15,11 @@ export default function NotificationExtra(props) {
     dispatch(toggleExtra());
   };
 
+  const location = useLocation()
+
   const handleConfrim = () => { 
     navigate('/packages')
+    dispatch(updateFromRouter(location.pathname))
   }
 
   return (

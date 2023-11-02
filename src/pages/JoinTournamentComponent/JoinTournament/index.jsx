@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  useLocation,
   useNavigate,
   // useNavigate,
   // useNavigate,
@@ -27,7 +28,7 @@ import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
+import { toggleStartGame, updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   toggleLoginDialog,
   toggleShareTour,
@@ -83,8 +84,11 @@ export default function JoinTournament() {
   const [rewardPopup, setRewardPopup] = useState(false);
   const navigate = useNavigate();
 
+  const location = useLocation()
+
   const handleClickOpen = () => {
     navigate("/packages")
+    dispatch(updateFromRouter(location.pathname))
   };
   const screen = useFullScreenHandle();
   const [minLength, setMinLength] = useState(0);

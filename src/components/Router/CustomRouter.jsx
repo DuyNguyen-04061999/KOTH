@@ -1,6 +1,6 @@
-import React,  {
-    useState,
-    useLayoutEffect
+import React, {
+    useLayoutEffect,
+    useState
 } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -11,7 +11,9 @@ const CustomRouter = ({ history, ...props }) => {
         location: history.location
     })
 
-    useLayoutEffect(() => history.listen(setState), [history]);
+    useLayoutEffect(() => {
+        history.listen(setState)
+    }, [history]);
 
     return (
         <Router

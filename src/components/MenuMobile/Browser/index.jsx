@@ -3,6 +3,7 @@ import { forwardRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTab,
   showDropdown,
@@ -540,6 +541,7 @@ export default function Browser(props) {
                   }}
                   onClick={() => {
                     navigate(`/packages`);
+                    dispatch(updateFromRouter(location.pathname))
                     handleShowMenu()
                   }}
                 >
