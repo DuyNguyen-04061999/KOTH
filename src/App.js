@@ -40,6 +40,7 @@ import {
   getListPackage,
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
+  closeLoginDialog,
   getLeaderBoardSuccess,
   getNavTablet,
   logoutSuccessFully,
@@ -125,7 +126,7 @@ const SuspenseWrapper = (props) => {
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
-  const { token } = store.getState().authReducer;
+  const { token, isLoginDialog } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
@@ -263,7 +264,7 @@ function App() {
           socket?.emit("getDetailProfile", {
             username: user?.userName,
           });
-          // checkPreAuthRouter();
+          store.dispatch(closeLoginDialog())
         }
       );
 
