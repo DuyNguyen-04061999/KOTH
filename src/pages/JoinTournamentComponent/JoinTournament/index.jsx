@@ -1702,10 +1702,10 @@ export default function JoinTournament() {
                     <img
                       className="w-100 pt-3"
                       src={
-                        detailTournament?.tournamentBackgroundMobile
+                        detailTournament?.tournamentBackground
                           ? process.env.REACT_APP_SOCKET_SERVER +
                             "/" +
-                            detailTournament?.tournamentBackgroundMobile
+                            detailTournament?.tournamentBackground
                           : images.DoubleDragonMobile
                       }
                       alt="..."
@@ -1996,6 +1996,7 @@ export default function JoinTournament() {
                   <BgWithTooltip
                     title="Free Extra will be reset at 23:59 per day, so make sure to use them all."
                     placement="right"
+                    enterTouchDelay={0}
                     sx={{
                       backgroundColor: "white",
                       color: "red",
