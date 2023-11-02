@@ -38,7 +38,6 @@ export default function AnimButton(props) {
           }}
           onClick={onClick}
           disabled={disable}
-
         >
           {text}
         </button>
@@ -60,7 +59,6 @@ export default function AnimButton(props) {
           }}
           onClick={onClick}
           disabled={disable}
-
         >
           {text}
         </button>
@@ -80,7 +78,6 @@ export default function AnimButton(props) {
           }}
           onClick={onClick}
           disabled={disable}
-
         >
           {text}
         </button>
@@ -116,15 +113,12 @@ export default function AnimButton(props) {
               borderRadius: "8px",
               width: "100%",
               fontWeight: "700",
-              border:"none"
+              border: "none",
             }}
             onClick={onClick}
-          disabled={disable}
-
+            disabled={disable}
           >
-            <span>
-              {text}
-            </span>
+            <span>{text}</span>
             <span className="icon-arrow">
               <svg
                 width="20px"
@@ -173,15 +167,12 @@ export default function AnimButton(props) {
               borderRadius: "8px",
               width: "100%",
               fontWeight: "700",
-              border:"none"
+              border: "none",
             }}
             onClick={onClick}
-          disabled={disable}
-
+            disabled={true}
           >
-            <span>
-              {text}
-            </span>
+            <span>{text}</span>
             <span className="icon-arrow">
               <svg
                 width="20px"
@@ -230,19 +221,16 @@ export default function AnimButton(props) {
               borderRadius: "8px",
               width: "100%",
               fontWeight: "700",
-              border:"none"
+              border: "none",
             }}
             onClick={onClick}
-          disabled={disable}
-
+            disabled={disable}
           >
-            <span>
-              {text}
-            </span>
+            <span>{text}</span>
           </button>
         </Box>
       );
-    } 
+    }
   };
 
   return (

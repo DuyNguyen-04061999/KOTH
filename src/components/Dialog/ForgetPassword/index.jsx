@@ -356,6 +356,7 @@ export default function ForgetPassword() {
           </button>
         </Box>
       )}
-    </Dialog>, document.body
+    </Dialog>,
+    document.body
   );
 }

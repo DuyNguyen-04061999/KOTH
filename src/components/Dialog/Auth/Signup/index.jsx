@@ -1,6 +1,6 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Box, FormControl, Input, Typography } from "@mui/material";
+import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -10,15 +10,27 @@ import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
-import { validateUserName } from "../../../../utils/validation";
-
+import {
+  checkSpecialCharacter,
+  validateUserName,
+} from "../../../../utils/validationUserName";
+import { withStyles } from "@mui/styles";
+import { validateEmail } from "../../../../utils/validationEmail";
+import { validateNickName } from "../../../../utils/validateNickName";
+const BgWithTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white",
+    padding: "10px",
+  },
+})(Tooltip);
 export default function Signup(props) {
   const { handleTab } = props;
   const [gender] = useState(0);
   const { registerValue } = useSelector((state) => state.authReducer);
-  // const [blur, setBlur] = useState(false);
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
+  const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
   const [c_password, setC_password] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +39,7 @@ export default function Signup(props) {
   const [disabledBtn, setDisabledBtn] = useState(true);
   const { width } = useWindowDimensions();
   const [socket, setSocket] = useState(null);
+  const [passSai, setPassSai] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
@@ -71,25 +84,10 @@ export default function Signup(props) {
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    if (disabledBtn) {
-      toast.warning("Inputs required!", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.WarningIcon}
-          />
-        ),
-        position: "top-center",
-        className: "warning-background",
-      });
-    } else {
-      sendRegister();
-    }
+    sendRegister();
   };
   //------------------------------------------------------------------
   const [textC_pass, setTextC_pass] = useState("");
-  const [textUserName, setTextUserName] = useState("");
   const [characterPass, setCharacterPass] = useState(false);
   const [passOneNumber, setPassOneNumber] = useState(false);
   const [passOneLetter, setPassOneLetter] = useState(false);
@@ -117,15 +115,15 @@ export default function Signup(props) {
       username === "" ||
       password === "" ||
       c_password === "" ||
-      username.includes(" ") ||
-      username.length > 15 ||
-      c_password.length > 15 ||
-      isAlphanumeric(username) === false ||
-      email === "" ||
+      passSai === true ||
       characterPass === false ||
       passOneLetter === false ||
       passOneNumber === false ||
-      hasUppercase === false
+      hasUppercase === false ||
+      !validateUserName(username) ||
+      !validateEmail(email) ||
+      !validateNickName(nickName) ||
+      phone.length !== 10
       //  containsSpecialCharacters(password) === false
     ) {
       setDisabledBtn(true);
@@ -142,6 +140,9 @@ export default function Signup(props) {
     hasUppercase,
     passOneLetter,
     passOneNumber,
+    passSai,
+    nickName,
+    phone,
   ]);
 
   useEffect(() => {
@@ -162,30 +163,25 @@ export default function Signup(props) {
   ]);
 
   const sendRegister = () => {
-    if (isAlphanumeric(username) === false) {
-      // setPassSai(true);
-      setTextUserName("Account name should contain only letters and numbers");
-      return;
-    } else if (c_password !== password) {
-      // setPassSai(true);
-      setTextC_pass("Password does not match");
-      return;
-    } else if (checkEmailFormat(email) === false) {
-      return;
-    } else {
-      // setPassSai(false);
-      socket?.emit("register", {
-        username: username,
-        password: password,
-        email: email,
-        phone: phone,
-        ref: refCodeRegister ? refCodeRegister : ref,
-        c_password: c_password,
-        gender: gender,
-      });
-    }
+    socket?.emit("register", {
+      username: username,
+      password: password,
+      email: email,
+      phone: phone,
+      ref: refCodeRegister ? refCodeRegister : ref,
+      c_password: c_password,
+      gender: gender,
+      nickName: nickName,
+    });
   };
-  console.log("validateUserName: ", validateUserName(username));
+  useEffect(() => {
+    if (password === c_password) {
+      setPassSai(false);
+    } else {
+      setPassSai(true);
+    }
+  }, [password, c_password]);
+  useEffect(() => {}, []);
   return (
     <Box className="signup">
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -200,6 +196,7 @@ export default function Signup(props) {
             Sign Up
           </Typography>
         </Box>
+
         <FormControl
           variant="standard"
           sx={{
@@ -251,21 +248,140 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />
-          {username && username.includes(" ") && (
-            <span className="text-danger">
-              The account must not have spaces
-            </span>
+          {!validateUserName(username) && username !== "" && (
+            <Typography
+              sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
+            >
+              Please enter a valid username
+            </Typography>
           )}
+          <BgWithTooltip
+            enterTouchDelay={0}
+            title={
+              <Box>
+                {" "}
+                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                  Username should be 3-10 characters long and include at least 1
+                  uppercase or lowercase letter. You can use number or
+                  underscore but no spaces. Username are case sensitive.
+                </Typography>
+                <Typography
+                  sx={{
+                    textAlign: "start",
+                    fontSize: "12px",
+                    marginTop: "10px",
+                  }}
+                >
+                  Correct example: Superman0_
+                </Typography>
+              </Box>
+            }
+            placement="right"
+            sx={{
+              backgroundColor: "white",
+              color: "red",
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#1a132d",
+                position: "absolute",
+                right: "10px",
+                top: "8px",
+                cursor: "pointer",
+              }}
+              component={"img"}
+              src={images.ToolTipIcon}
+            ></Box>
+          </BgWithTooltip>
         </FormControl>
-
-        {username && username.length > 15 && (
-          <Box sx={{ marginTop: "-10px" }}>
-            <span className="text-danger">no more than 15 characters</span>
-          </Box>
-        )}
-        {/* {isAlphanumeric(username) === false && ( */}
-        <span className="text-danger">{textUserName}</span>
-        {/* )} */}
+        <FormControl
+          variant="standard"
+          sx={{
+            width: "100%",
+            backgroundColor: "#1a132d",
+            padding: width > 576 ? "5px 10px" : "5px",
+            borderRadius: width > 576 ? "5px" : "4px",
+            marginBottom: width > 576 ? "10px" : "20px",
+          }}
+        >
+          <img
+            src={images.nickname}
+            alt="..."
+            width={20}
+            height={"auto"}
+            style={{
+              position: "absolute",
+              top: width > 576 ? "10px" : "10px",
+              left: width > 576 ? "12px" : "10px",
+            }}
+          />
+          <Input
+            name="nickName"
+            placeholder="Nickname"
+            onChange={(e) => {
+              setNickName(e.target.value);
+            }}
+            value={nickName}
+            sx={{
+              "&:before": {
+                borderBottom: "0px solid !important",
+                "&:hover": {
+                  borderBottom: "0px solid !important",
+                },
+              },
+              "&:after": {
+                borderBottom: "0px solid !important",
+              },
+              "&:hover": {
+                border: "none",
+              },
+              color: "white",
+              fontWeight: "500",
+              padding: "0px 0px 0px 35px !important",
+            }}
+          />
+          {!validateNickName(nickName) && nickName !== "" && (
+            <Typography
+              sx={{
+                textAlign: "start",
+                color: "#F05153",
+                fontSize: "13px",
+              }}
+            >
+              Please enter a valid nick name
+            </Typography>
+          )}
+          <BgWithTooltip
+            enterTouchDelay={0}
+            title={
+              <Box>
+                {" "}
+                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                  Your nickname must not be more than 12 characters and not
+                  include special letter.
+                </Typography>
+              </Box>
+            }
+            placement="right"
+            sx={{
+              backgroundColor: "white",
+              color: "red",
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#1a132d",
+                position: "absolute",
+                right: "10px",
+                top: "8px",
+                cursor: "pointer",
+              }}
+              component={"img"}
+              src={images.ToolTipIcon}
+            ></Box>
+          </BgWithTooltip>
+        </FormControl>
         <FormControl
           variant="standard"
           sx={{
@@ -387,7 +503,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must be at least 6 characters.{" "}
+              Password must be at least 6 characters long.{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center ms-3 text-white">
@@ -579,9 +695,6 @@ export default function Signup(props) {
             name="c_password"
             autoComplete="new-password"
             onChange={(e) => {
-              if (password !== c_password) {
-                // setPassSai(true);
-              }
               setC_password(e.target.value);
             }}
             value={c_password}
@@ -631,11 +744,11 @@ export default function Signup(props) {
           {/* {c_password && c_password !== password && ( */}
           <span className="text-danger">{textC_pass}</span>
           {/* )} */}
-          {/* {passSai === true ? (
-            <span className="text-danger">Password not march</span>
+          {passSai === true && c_password !== "" ? (
+            <span className="text-danger">Password does not match</span>
           ) : (
             ""
-          )} */}
+          )}
         </FormControl>
         <FormControl
           variant="standard"
@@ -684,6 +797,41 @@ export default function Signup(props) {
               padding: "0px 0px 0px 35px !important",
             }}
           />{" "}
+          {!validateEmail(email) && email !== "" && (
+            <Typography
+              sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
+            >
+              Please enter a valid email
+            </Typography>
+          )}{" "}
+          <BgWithTooltip
+            enterTouchDelay={0}
+            title={
+              <Box>
+                {" "}
+                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                  Correct example: superman0@gmail.com
+                </Typography>
+              </Box>
+            }
+            placement="right"
+            sx={{
+              backgroundColor: "white",
+              color: "red",
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#1a132d",
+                position: "absolute",
+                right: "10px",
+                top: "8px",
+                cursor: "pointer",
+              }}
+              component={"img"}
+              src={images.ToolTipIcon}
+            ></Box>
+          </BgWithTooltip>
         </FormControl>
         <FormControl
           variant="standard"
@@ -695,16 +843,6 @@ export default function Signup(props) {
             marginBottom: width > 576 ? "10px" : "20px",
           }}
         >
-          {/* <img
-            src={sign.up04}
-            alt="..."
-            width={13}
-            style={{
-              position: "absolute",
-              top: "10px",
-              left: width > 576 ? "13px" : "10px",
-            }}
-          /> */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -724,6 +862,17 @@ export default function Signup(props) {
               ></path>
             </g>
           </svg>
+          <Typography
+            sx={{
+              position: "absolute",
+              top: "8px",
+              left: width > 576 ? "30px" : "6px",
+              color: "#979797",
+              fontWeight: "600",
+            }}
+          >
+            (+1){" "}
+          </Typography>
           <Input
             type="number"
             name="phone"
@@ -747,9 +896,52 @@ export default function Signup(props) {
               },
               color: "white",
               fontWeight: "500",
-              padding: "0px 0px 0px 35px !important",
+              padding: "0px 0px 0px 60px !important",
             }}
-          />
+          />{" "}
+          {phone.length !== 10 && phone !== "" && (
+            <Typography
+              sx={{
+                textAlign: "start",
+                color: "#F05153",
+                fontSize: "13px",
+              }}
+            >
+              Please enter a valid phone number
+            </Typography>
+          )}{" "}
+          <BgWithTooltip
+            enterTouchDelay={0}
+            title={
+              <Box>
+                {" "}
+                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                  Your mobile number must a US phone number. Format: country
+                  code + area code + call number.
+                </Typography>
+                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                  Correct example: +1 (212) 555-1234
+                </Typography>
+              </Box>
+            }
+            placement="right"
+            sx={{
+              backgroundColor: "white",
+              color: "red",
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#1a132d",
+                position: "absolute",
+                right: "10px",
+                top: "8px",
+                cursor: "pointer",
+              }}
+              component={"img"}
+              src={images.ToolTipIcon}
+            ></Box>
+          </BgWithTooltip>
         </FormControl>
         <FormControl
           variant="standard"
@@ -806,11 +998,7 @@ export default function Signup(props) {
         <Box className=" mb-3" sx={{ paddingTop: width < 576 ? "30px" : "0" }}>
           <div className="btn-conteiner">
             {disabledBtn === true ? (
-              <AnimButton
-                type={"Dislable"}
-                text={"Sign Up"}
-                onClick={handleSubmitSignUp}
-              />
+              <AnimButton type={"Dislable"} text={"Sign Up"} />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}

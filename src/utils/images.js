@@ -99,6 +99,7 @@ import passiveCoin from "../assets/images/passiveCoin.png";
 import passiveUser from "../assets/images/passiveUser.png";
 import personTour from "../assets/images/personTour.png";
 import phoneIcon from "../assets/images/phoneIcon.png";
+import ToolTipIcon from "../assets/images/ToolTipIcon.png";
 import pvp1 from "../assets/images/pvp2.png";
 import samsungBrand from "../assets/images/samsungBrand.png";
 import wallet1 from "../assets/images/simple-folding-wallet-svgrepo-com.svg";
@@ -114,6 +115,7 @@ import userIcon from "../assets/images/userIcon.png";
 import userIconWhite from "../assets/images/userIconWhite.png";
 import viewAllButton from "../assets/images/viewAllButton.png";
 import voucher_tour from "../assets/images/voucher_tour.png";
+import nickname from "../assets/images/nickname.png";
 import waitingClient from "../assets/images/waitingClient.png";
 import winingMedal from "../assets/images/winingMedal.png";
 import winnerBG from "../assets/images/winnerBG.png";
@@ -355,10 +357,10 @@ import NavUpcomingActive from "../assets/images/navbar/upcomingActive.png";
 import NavVipActive from "../assets/images/navbar/vipActive.png";
 
 import BtnBack from "../assets/images/btnback.png";
-import bannerendtour from '../assets/images/bannerendtour.png'
-import bannerendmobile from "../assets/images/bannerendmobile.png"
+import bannerendtour from "../assets/images/bannerendtour.png";
+import bannerendmobile from "../assets/images/bannerendmobile.png";
 
-import bgBannerCountDown from  "../assets/images/banners/bg_banner_countdown.png"
+import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -392,7 +394,7 @@ export const imageHome = {
   BannerWinBigMobile: bannerWinBigMobile,
   BannerWinCelebMobile: bannerWinCelebMobile,
   BannerWinAroundMobile: bannerWinAroundMobile,
-  BGBannerCountDown:bgBannerCountDown,
+  BGBannerCountDown: bgBannerCountDown,
 };
 
 export const navbar = {
@@ -414,7 +416,7 @@ export const navbar = {
   navUpcomingActive: NavUpcomingActive,
   navEndedActive: NavEndedActive,
   navHelpCenterActive: NavHelpCenterActive,
-  navPackageActive: NavPackageActive
+  navPackageActive: NavPackageActive,
 };
 
 export const images = {
@@ -582,8 +584,10 @@ export const images = {
   GamePreview3: GamePreview3,
   userIcon: userIcon,
   phoneIcon: phoneIcon,
-  bannerendtour:bannerendtour,
-  bannerendmobile:bannerendmobile
+  bannerendtour: bannerendtour,
+  bannerendmobile: bannerendmobile,
+  nickname: nickname,
+  ToolTipIcon: ToolTipIcon,
 };
 
 export const navigationImages = {
@@ -691,7 +695,7 @@ export const sign = {
   up03: up03,
   up04: up04,
   up05: up05,
-  btnBack: BtnBack
+  btnBack: BtnBack,
 };
 
 export const video = {
