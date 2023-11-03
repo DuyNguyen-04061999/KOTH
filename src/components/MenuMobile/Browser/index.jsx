@@ -604,7 +604,7 @@ export default function Browser(props) {
                       className=" pt-2 pb-2"
                       onClick={() => {
                         if (!token) {
-                          dispatch(clickTab(false));
+                          dispatch(clickTab("login"));
 
                           dispatch(toggleLoginDialog());
                         } else {
@@ -730,7 +730,7 @@ export default function Browser(props) {
                     className="nav-game-log pt-2 pb-2"
                     onClick={() => {
                       if (!token) {
-                        dispatch(clickTab(false));
+                        dispatch(clickTab("login"));
 
                         dispatch(toggleLoginDialog());
                       } else {

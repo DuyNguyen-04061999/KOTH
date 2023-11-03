@@ -552,9 +552,10 @@ export default function WalletTypePromote(props) {
                     className="cursor-pointer"
                     onClick={() => navigateFooter(1)}
                     style={{
-                      color: "#A57FF6",
+                      color: "#FF9F38",
                       fontSize: "14px",
                       fontWeight: "lighter !important",
+                      cursor:"pointer"
                     }}
                   >
                     Terms & Agreement
