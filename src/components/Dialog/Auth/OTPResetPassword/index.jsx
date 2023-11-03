@@ -9,7 +9,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function OTPResetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const {userName, email, phone} = useSelector((state) => state.authReducer);
+  const { forgotPassInfo } = useSelector((state) => state.authReducer);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -33,13 +33,27 @@ export default function OTPResetPassword() {
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-
   const handleVerifyOTP = () => {
-    socket?.emit("verifyOtp", {
-      otp: otp,
-      username: userName,
-      type: "password",
+      socket?.emit("verifyOtp", {
+        otp: otp,
+        username: forgotPassInfo.username,
+        type: "password",
+      })
+  };
+
+  useEffect(()=> {
+    socket?.on("forgetPasswordSuccess",() => {
+      dispatch(clickTab("createPass"));
+    })
+  },[socket])
+
+  const handleResendOTP = () => {
+    socket?.emit("resendOtp", {
+      email: forgotPassInfo.email,
+      username: forgotPassInfo.username,
+      phone: forgotPassInfo.phone,
     });
+    setOtp("");
   };
 
   return (
@@ -76,7 +90,8 @@ export default function OTPResetPassword() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Type in the 6-digit code sent to the number +123456789
+          A verification code has been send to {forgotPassInfo.phone}, enter it
+          below.
         </Typography>
       </Box>
       <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
@@ -114,17 +129,28 @@ export default function OTPResetPassword() {
           </Typography>
         </Box>
       ) : (
-        <Box onClick={() => handleVerifyOTP} sx={{ marginBottom: "36px" }}>
+        <Box
+          sx={{ marginBottom: "36px", display: "flex", alignItems: "center" }}
+        >
           <Typography
             sx={{
               fontSize: "14px",
-              fontWeight: 500,
-              color: "#7848ED",
-              textDecoration: "underline",
-              cursor: "pointer",
+              fontWeight: "500",
+              color: "white",
             }}
           >
-            Resend OTP?
+            Didn’t recieve a code?
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "14px",
+              fontWeight: "600",
+              color: "rgba(255, 159, 56, 1)",
+              cursor: "pointer",
+            }}
+            onClick={() => handleResendOTP()}
+          >
+            Resend OTP
           </Typography>
         </Box>
       )}
@@ -147,7 +173,7 @@ export default function OTPResetPassword() {
             //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
             //   marginTop: device === "Desktop" ? "120px" : "none",
             // }}
-            onClick={() => dispatch(clickTab("createPass"))}
+            onClick={() => dispatch(clickTab("forgetPass"))}
           >
             Back
           </AnimButton>
@@ -167,7 +193,7 @@ export default function OTPResetPassword() {
             //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
             //   marginTop: device === "Desktop" ? "120px" : "none",
             // }}
-            onClick={() => handleVerifyOTP}
+            onClick={() => handleVerifyOTP()}
           >
             Next
           </AnimButton>

@@ -5,9 +5,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { clickTab, toggleLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import AnimButton from "../../../AnimButton";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,13 +23,16 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
+    socket?.on("loginSuccess", (data) => {
+      dispatch(toggleLoginDialog());
+    });
     socket?.on("loginError", (data) => {});
   }, [socket, dispatch]);
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
   };
-  
+
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
@@ -59,7 +63,6 @@ const Login = () => {
         username: username?.toLowerCase(),
         password: password,
       });
-   
     }
   };
 
@@ -195,47 +198,35 @@ const Login = () => {
             )}
           </Box>
         </FormControl>
-        <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("forgetPass"))}>
-            <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>Forgot Password?</Typography>
-        </Box>
-        <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("createPass"))}>
-            <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>Create Password?</Typography>
-        </Box>
-        <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("otpVerifyAccount"))}>
-            <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>OTP Verify Account?</Typography>
-        </Box>
-        <Box sx={{display:"flex", alignItems:"center", justifyContent:"flex-end", marginTop:"16px", cursor:"pointer"}} onClick={() => dispatch(clickTab("otpResetPassword"))}>
-            <Typography sx={{ color:"#7848ED",fontSize:"14px", fontWeight:"700",textAlign:"center"}}>OTP Reset Password?</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            margin: "16px 0",
+            cursor: "pointer",
+          }}
+          onClick={() => dispatch(clickTab("forgetPass"))}
+        >
+          <Typography
+            sx={{
+              color: "#FF9F38",
+              fontSize: "14px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            Forgot Password?
+          </Typography>
         </Box>
         <Box className="d-flex justify-content-center">
-          <button
-            type="submit"
-            className="mt-5 btn-submit"
-            style={{
-              background:
-                "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-              borderRadius: 4,
-              border: "none",
-              padding: "8px 35px",
-            }}
-            onClick={sendLogin}
-          >
-            <span
-              style={{
-                color: "#faecf1",
-                fontWeight: "700",
-              }}
-            >
-              SIGN IN
-            </span>
-          </button>
+          <AnimButton onClick={sendLogin} text={"Sign In"} type={"Signin"} />
         </Box>
         <Box className="d-flex justify-content-center mt-4">
           <Box
             className="d-flex"
             sx={{
-              color: "#7671ba",
-              fontWeight: "500",
+              color: "white",
             }}
           >
             New User?
@@ -243,7 +234,7 @@ const Login = () => {
               onClick={() => {
                 dispatch(clickTab("signup"));
               }}
-              sx={{ color: "#ffb600", cursor: "pointer" }}
+              sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "700" }}
             >
               Create Account
             </Typography>

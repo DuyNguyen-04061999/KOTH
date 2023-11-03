@@ -40,11 +40,9 @@ import {
   getListPackage,
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
-  clickTab,
   getLeaderBoardSuccess,
   getNavTablet,
   logoutSuccessFully,
-  registerSuccesFully,
   saveDataLogin,
   updateProfileFail,
   updateProfileSuccess,
@@ -307,16 +305,6 @@ function App() {
         });
         socket?.emit("listFriend");
         store.dispatch(deleteFriendSuccesFully("success"));
-      });
-
-      socket?.on("registerSuccess", (data, user) => {
-        socket?.emit("login", {
-          username: user?.username?.toLowerCase(),
-          password: user?.password,
-        });
-        store.dispatch(showAlert("success", "register succesfully"));
-        store.dispatch(registerSuccesFully("success"));
-        store.dispatch(clickTab("otp"));
       });
 
       socket?.on("logoutSuccess", (data) => {

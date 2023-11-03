@@ -3,13 +3,17 @@ import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clickTab, toggleLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
+import {
+  clearCreateAccInfo,
+  clickTab,
+  toggleLoginDialog,
+} from "../../../../redux-saga-middleware/reducers/authReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { userName, email, phone } = useSelector((state) => state.authReducer);
+  const { createAccInfo } = useSelector((state) => state.authReducer);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -36,7 +40,7 @@ export default function OTPVerifyAccount() {
   const handleVerifyOTP = () => {
     socket?.emit("verifyOtp", {
       otp: otp,
-      username: userName,
+      username: createAccInfo.username,
       type: "register",
     });
   };
@@ -45,6 +49,7 @@ export default function OTPVerifyAccount() {
     socket?.on("verifyOtpSuccess", () => {
       dispatch(toggleLoginDialog());
       dispatch(clickTab("login"));
+      dispatch(clearCreateAccInfo());
     });
 
     return () => {
@@ -54,9 +59,9 @@ export default function OTPVerifyAccount() {
 
   const handleResendOTP = () => {
     socket?.emit("resendOtp", {
-      email: email,
-      username: userName,
-      phone: phone,
+      email: createAccInfo.email,
+      username: createAccInfo.username,
+      phone: createAccInfo.phone,
     });
   };
 
@@ -84,7 +89,7 @@ export default function OTPVerifyAccount() {
             fontWeight: "700",
           }}
         >
-          Enter OTP
+          OTP Verify
         </Typography>
         <Typography
           sx={{
@@ -94,7 +99,8 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Type in the 6-digit code sent to the number +123456789
+          Type in the 6-digit code sent to the number {createAccInfo.phone} to identify your
+          account
         </Typography>
       </Box>
       <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
@@ -132,17 +138,26 @@ export default function OTPVerifyAccount() {
           </Typography>
         </Box>
       ) : (
-        <Box onClick={() => handleResendOTP()} sx={{ marginBottom: "36px" }}>
+        <Box sx={{ marginBottom: "36px", display:"flex", alignItems:"center" }}>
+          <Typography
+            sx={{
+              fontSize: "14px",
+              fontWeight: "500",
+              color: "white",
+            }}
+          >
+            Didn’t recieve a code?
+          </Typography>
           <Typography
             sx={{
               fontSize: "14px",
               fontWeight: 500,
-              color: "#7848ED",
-              textDecoration: "underline",
+              color: "rgba(255, 159, 56, 1)",
               cursor: "pointer",
             }}
+            onClick={() => handleResendOTP()}
           >
-            Resend OTP?
+            Resend OTP
           </Typography>
         </Box>
       )}

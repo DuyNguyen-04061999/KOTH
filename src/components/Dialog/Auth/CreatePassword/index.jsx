@@ -1,15 +1,16 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
+import _socket from "../../../../redux-saga-middleware/config/socket";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 export default function CreatePassword() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const { forgotPassInfo } = useSelector((state) => state.authReducer);
   const { width } = useWindowDimensions();
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -17,6 +18,12 @@ export default function CreatePassword() {
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayRePassword, setDisplayRePassword] = useState(false);
   const dispatch = useDispatch();
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
 
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
@@ -27,13 +34,21 @@ export default function CreatePassword() {
   };
 
   const handleCreatePass = () => {
-    console.log({
-        password: password,
-      });
-      dispatch(clickTab("otpResetPassword"))
+    socket?.emit("updateNewPassword", {
+      username: forgotPassInfo.username,
+      password: password,
+    });
   };
 
-  console.log(inputError);
+  useEffect(() => {
+    socket?.on("updateNewPasswordSuccess", (user) => {
+      socket?.emit("login", {
+        username: user.username,
+        password: user.password,
+      });
+      // dispatch(clearForgetPassInfo());
+    });
+  }, [socket]);
 
   return (
     <Box
@@ -122,7 +137,10 @@ export default function CreatePassword() {
               fontFamily: "Cyntho Next",
             }}
           />
-          <Box onClick={handleSetPassword} sx={{display:password.length >0 ? "block" : "none"}}>
+          <Box
+            onClick={handleSetPassword}
+            sx={{ display: password.length > 0 ? "block" : "none" }}
+          >
             {displayPassword === false ? (
               <VisibilityOffIcon
                 sx={{
@@ -186,7 +204,10 @@ export default function CreatePassword() {
               borderRadius: "0px 5px 5px 0px",
             }}
           />
-          <Box onClick={handleSetRePassword} sx={{display:password.length > 0 ? "block" : "none"}}>
+          <Box
+            onClick={handleSetRePassword}
+            sx={{ display: password.length > 0 ? "block" : "none" }}
+          >
             {displayRePassword === false ? (
               <VisibilityOffIcon
                 sx={{

@@ -91,13 +91,6 @@ export const toggleDialogConfirm = (data) => {
   };
 };
 
-export const verifyOTP = (data) => {
-  return {
-    type: "VERIFY_OTP",
-    payload: data,
-  };
-};
-
 export const getIdPackage = (data) => {
   return {
     type: "GET_ID_PACKAGE",
@@ -167,6 +160,34 @@ export const updatePromotionExtraAfterPlayGame = (data) => {
   };
 };
 
+export const saveCreateAccInfo = (data) => {
+  return {
+    type: "SAVE_CREATE_ACC_INFO",
+    payload: data,
+  };
+};
+
+export const clearCreateAccInfo = (data) => {
+  return {
+    type: "CLEAR_CREATE_ACC_INFO",
+    payload: data,
+  };
+};
+
+export const saveForgetPassInfo = (data) => {
+  return {
+    type: "SAVE_FORGET_PASS_INFO",
+    payload: data,
+  };
+};
+
+export const clearForgetPassInfo = (data) => {
+  return {
+    type: "CLEAR_FORGET_PASS_INFO",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -175,8 +196,6 @@ const authReducer = (
     userGold: "",
     token: "",
     userRole: "",
-    email: "",
-    phone: "",
     registerValue: "",
     currentTab: "login",
     isUpdateProfile: false,
@@ -197,6 +216,8 @@ const authReducer = (
     isSubscription: false,
     refCodeRegister: "",
     promotionExtra: 0,
+    createAccInfo:{},
+    forgotPassInfo:{}
   },
   action
 ) => {
@@ -217,9 +238,31 @@ const authReducer = (
         userId: payload?.id,
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
-        promotionExtra: payload.promotionExtra || 0,
-        email: payload.email,
-        phone: payload.phone,
+        promotionExtra:payload.promotionExtra || 0
+      };
+    }
+    case "SAVE_CREATE_ACC_INFO": {
+      return {
+        ...state,
+        createAccInfo: payload.createAccInfo,
+      };
+    }
+    case "CLEAR_CREATE_ACC_INFO": {
+      return {
+        ...state,
+        createAccInfo: {},
+      };
+    }
+    case "SAVE_FORGET_PASS_INFO": {
+      return {
+        ...state,
+        forgotPassInfo: payload.forgotPassInfo,
+      };
+    }
+    case "CLEAR_FORGET_PASS_INFO": {
+      return {
+        ...state,
+        forgotPassInfo: {},
       };
     }
     case "REMOVE_TOKEN":
@@ -250,8 +293,16 @@ const authReducer = (
         ...state,
         resetInputValue: payload,
         isLoginDialog: false,
-        isTab: "login",
+        userName: "",
+        userAvatar: "",
+        userGold: "",
+        token: "",
+        userRole: "",
+        registerValue: "",
+        isTab: false,
         isUpdateProfile: false,
+        userChangeAvatar: "",
+        userPackageId: "",
       };
     case "GET_LEADERBOARD_SUCCESS":
       return { ...state, leaderBoard: payload };
@@ -274,10 +325,8 @@ const authReducer = (
       return { ...state, isSubscription: !state.isSubscription };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
-    case "UPDATE_PROMOTION_EXTRA":
-      return { ...state, promotionExtra: state.promotionExtra + payload };
-    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME":
-      return { ...state, promotionExtra: state.promotionExtra - payload };
+    case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
+    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
     default:
       return state;
   }

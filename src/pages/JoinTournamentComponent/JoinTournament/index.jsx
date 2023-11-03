@@ -614,7 +614,7 @@ export default function JoinTournament() {
                                   {moment(
                                     detailTournament?.tournamentStartAt ||
                                       new Date()
-                                  )?.format("HH:mm")}
+                                  )?.format("LT")}
                                 </Typography>
                               </Box>
                             )}
@@ -715,7 +715,7 @@ export default function JoinTournament() {
                                   {moment(
                                     detailTournament?.tournamentEndAt ||
                                       new Date()
-                                  )?.format("HH:mm")}
+                                  )?.format("LT")}
                                 </Typography>
                               </Box>
                             )}

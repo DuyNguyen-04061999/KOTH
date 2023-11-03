@@ -8,7 +8,7 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   clickTab,
-  saveDataLogin,
+  saveCreateAccInfo,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { updateCountEveryDay } from "../../../../redux-saga-middleware/reducers/luckyWheelReducer";
 import { images, sign } from "../../../../utils/images";
@@ -28,7 +28,9 @@ const BgWithTooltip = withStyles({
 export default function Signup(props) {
   const { handleTab } = props;
   const [gender] = useState(0);
-  const { registerValue } = useSelector((state) => state.authReducer);
+  const { registerValue, createAccInfo } = useSelector(
+    (state) => state.authReducer
+  );
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [nickName, setNickName] = useState("");
@@ -56,17 +58,6 @@ export default function Signup(props) {
   const handleSetPasswordC = () => {
     setDisplayPasswordC(!displayPasswordC);
   };
-
-  useEffect(() => {
-    if (registerValue === "success") {
-      setUsername("");
-      setPassword("");
-      setC_password("");
-      setEmail("");
-      setPhone("");
-      setRef("");
-    }
-  }, [registerValue, handleTab]);
 
   function isAlphanumeric(input) {
     const regex = /^[a-zA-Z0-9]+$/;
@@ -171,6 +162,7 @@ export default function Signup(props) {
       nickName: nickName,
     });
   };
+
   useEffect(() => {
     if (password === c_password) {
       setPassSai(false);
@@ -181,12 +173,16 @@ export default function Signup(props) {
 
   useEffect(() => {
     socket?.on("registerSuccess", (data, user) => {
-      dispatch(
-        saveDataLogin({
-          username: user?.username,
-          email: user?.email,
-          phone: user?.phone,
-        })
+      console.log(
+        dispatch(
+          saveCreateAccInfo({
+            createAccInfo: {
+              username: user?.username,
+              email: user?.email,
+              phone: user?.phone,
+            },
+          })
+        )
       );
       socket?.emit("login", {
         username: user?.username?.toLowerCase(),
@@ -1022,7 +1018,7 @@ export default function Signup(props) {
             }}
           />
         </FormControl>
-        <Box className=" mb-3" sx={{ paddingTop: width < 576 ? "30px" : "0" }}>
+        <Box className=" mb-3" sx={{ paddingTop: width < 576 ? "30px" : "0",marginTop: width < 576 ? "6px" :"24px" }}>
           <div className="btn-conteiner">
             {disabledBtn === true ? (
               <AnimButton type={"Disabled"} text={"Sign Up"} />
@@ -1040,16 +1036,15 @@ export default function Signup(props) {
             sx={{
               display: "flex",
               justifyContent: "center",
-              color: "#7671ba",
-              fontWeight: "500",
+              color: "white",
             }}
           >
-            Already Registered ?
+            Already registered?
             <Typography
               onClick={() => {
                 dispatch(clickTab("login"));
               }}
-              sx={{ color: "#ffb600", cursor: "pointer" }}
+              sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "700" }}
             >
               Sign In
             </Typography>
