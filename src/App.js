@@ -754,6 +754,12 @@ function App() {
                       )
                     }
                   ></Route>
+                                  <Route
+                    path="/tournamentDetail/:id/influencers/:userName"
+                    element={
+                      <SuspenseWrapper child={<LazyJoinTour/>}/>
+                    }
+                  ></Route>
                   <Route path="/gamelobby/:id" element={<GameLobby />} />
                   <Route
                     path="/selectroom/:id"
