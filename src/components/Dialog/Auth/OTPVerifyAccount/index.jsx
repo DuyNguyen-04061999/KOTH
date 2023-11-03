@@ -89,7 +89,7 @@ export default function OTPVerifyAccount() {
             fontWeight: "700",
           }}
         >
-          OTP Verify
+          Verify your account
         </Typography>
         <Typography
           sx={{
@@ -99,8 +99,7 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Type in the 6-digit code sent to the number {createAccInfo.phone} to identify your
-          account
+          Please enter the 6-digit verification code that was sent to {createAccInfo.phone} to verify your account
         </Typography>
       </Box>
       <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
