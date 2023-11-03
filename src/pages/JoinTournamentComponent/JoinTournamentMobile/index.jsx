@@ -1,37 +1,30 @@
+import InfinityIcon from "@mui/icons-material/AllInclusive";
 import {
   Box,
-  // CssBaseline,
   Dialog,
-  // Grid,
-  // ThemeProvider,
   Typography,
 } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { images } from "../../../utils/images";
-import "./index.scss";
-// import InspirationTTF from "../../../assets/font/CynthoNextRegular.otf";
-import InfinityIcon from "@mui/icons-material/AllInclusive";
-import { toast } from "react-toastify";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   isJson,
   sliceString
 } from "../../../utils/helper";
+import { images } from "../../../utils/images";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
-// import useWindowDimensions from "../../../utils/useWindowDimensions";
+import "./index.scss";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const [detailTournament, setDetailTournament] = useState({});
@@ -54,28 +47,29 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   }, []);
   
   useEffect(() => {
-    socket?.emit("detailTournament", {
+    socket?.emit("detailNewTournament", {
       tournamentId: id,
     });
   }, [socket, id]);
 
   useEffect(() => {
     if(token) {
-      socket?.emit("detailTournament", {
+      socket?.emit("detailNewTournament", {
         tournamentId: id,
       });
     }
   }, [socket, id, token]);
 
   const handlePlayTour = () => {
-    socket?.emit("startGameInTournament", {
+    socket?.emit("startGameInNewTournament", {
       tournamentId: id,
     });
   };
+  
 
   const handleJoinTour = () => {
     if (token) {
-      socket?.emit("joinTournament", {
+      socket?.emit("joinNewTournament", {
         tournamentId: detailTournament?.id,
       });
     } else {
@@ -83,53 +77,26 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     }
   };
   useEffect(() => {
-    socket?.on("detailTournamentSuccess", (data) => {
+    socket?.on("detailNewTournamentSuccess", (data) => {
       setDetailTournament(data);
       setFetchT(false);
     });
-    socket?.on("buyTicketTournamentSuccess", () => {
-      // window.location.reload();
+    
+    socket?.on("joinNewTournamentSuccess", (data) => {
       if (token) {
-        socket?.emit("detailTournament", {
-          tournamentId: id,
-        });
-      }
-    });
-    socket?.on("joinTournamentSuccess", (data) => {
-      // socket?.emit("detailTournament", {
-      //   tournamentId: data?.id,
-      // });
-      toast.success("Join Tournament Successfully", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.successIcon}
-          />
-        ),
-        position: "top-center",
-        className: "success-background",
-      });
-      // setTimeout(() => {
-      //   socket?.emit("detailTournament", {
-      //     tournamentId: data?.id,
-      //   });
-      // }, 1000);
-      // window.location.reload();
-      if (token) {
-        socket?.emit("detailTournament", {
+        socket?.emit("detailNewTournament", {
           tournamentId: id,
         });
       }
     });
     return () => {
-      socket?.off("joinTournamentSuccess");
+      socket?.off("joinNewTournamentSuccess");
     };
   }, [socket, token, id]);
 
   const dispatch = useDispatch();
   const handleClickOpen = () => {
-    dispatch(toggleBuyTicket(true));
+
   };
   const navigate = useNavigate();
   let anchorSelector = 'a[href^="#"]';
@@ -196,29 +163,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   Tournament
                 </Typography>
               </Box>
-              {/* BackgroundMobile */}
               {detailTournament?.tournamentStatus === 2 ? (
-                // <BannerWinMobile
-                //   userName={biggestEndTour?.bestUser?.userNickName || "super_"}
-                //   userAvatar={
-                //     biggestEndTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                //       ? process.env.REACT_APP_SOCKET_SERVER +
-                //         "/" +
-                //         biggestEndTour?.bestUser?.tUser?.userAccount
-                //           ?.accountAvatar
-                //       : imageHome.BannerWinAva
-                //   }
-                //   sponsorName={
-                //     biggestEndTour && biggestEndTour?.endTour
-                //       ? biggestEndTour?.endTour?.tournamentBrand?.brandName
-                //       : "Samsung"
-                //   }
-                //   tournamentName={
-                //     biggestEndTour && biggestEndTour?.endTour
-                //       ? biggestEndTour?.endTour?.tournamentName
-                //       : "Galaxy Z-flip 5"
-                //   }
-                // />
                 <></>
               ) : (
                 <Box
@@ -284,7 +229,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
               {detailTournament?.tournamentStatus === 2 ? (
                 <Box
                   sx={{
-                    fontWeight: "500 !important",
                     fontSize: "12px",
                     color: "#7C81F2",
                     fontWeight: "700",
@@ -479,7 +423,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         </svg>
                         <Typography>Free Extra: </Typography>
                         <Typography>
-                          {detailTournament?.extras?.normal}
+                        {detailTournament?.tournamentStatus !== 2 ? detailTournament?.extra : 0}
                         </Typography>
                       </Box>
                       <Box display={"flex"} alignItems={"center"}>
@@ -1155,10 +1099,11 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                 sx={{
                   position: "fixed",
                   bottom: "0px",
-                  padding: "28px 28px 28px 28px",
+                  padding: "28px",
                   width: "100%",
                   background: detailTournament?.tournamentStatus === 2 ? "" : "rgba(37, 37, 37, 0.20)",
                   backdropFilter: detailTournament?.tournamentStatus === 2 ? "" : "blur(2px)",
+                  display: detailTournament?.tournamentStatus === 2 ? "none" : "block",
                   zIndex: "28",
                 }}
               >
@@ -1176,17 +1121,17 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <AnimButton
+                    {detailTournament?.tournamentStatus !== 2 && <AnimButton
                       onClick={handlePlayTour}
                       type={"highlight"}
                       text={"Play"}
-                    />
+                    />}
 
-                    <AnimButton
+                    {detailTournament?.tournamentStatus !== 2 && <AnimButton
                       onClick={handleClickOpen}
                       text={"Buy Extra"}
                       type={"primary"}
-                    />
+                    />}
                   </Box>
                 )}
               </Box>

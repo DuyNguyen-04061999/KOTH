@@ -5,24 +5,28 @@ import "./index.scss";
 // import FullScreenDialog from "../../../FullScreenDialog";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney, getAppType } from "../../../../utils/helper";
 import AnimButton from "../../../AnimButton";
-import { useNavigate } from "react-router";
 
 export default function WalletTypePromote(props) {
   const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
   const { userGold } = useSelector((state) => state.authReducer);
-  // const [activeColor, setActveColor] = useState("");
+  const { price } = useSelector((state) => state.walletReducer);
   const [amount, setAmount] = useState(0);
   const [typePayment, setTypePayment] = useState("stripe");
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
   const [bgInput, setBgInput] = useState("gray");
-  // const [textRed,setTextRed] = useState("")
+  
+  useEffect(() => {
+    setAmount(Math.ceil(price))
+  }, [price])
+
   const navigate = useNavigate();
 
   const handleContinue = () => {
@@ -37,8 +41,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
       return;
     }
@@ -53,8 +56,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
     } else if (typePayment === "stripe" && currency === "USD") {
       dispatch(getStripe(Number.parseFloat(amount)));
@@ -69,8 +71,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
     }
   };
@@ -106,7 +107,7 @@ export default function WalletTypePromote(props) {
         sx={{
           backgroundColor: "#271C39",
           width: "100%",
-          overflow: "auto",
+          // overflow: "auto",
           minHeight: width < 576 ? "100vh" : "unset",
           maxHeight: width < 576 ? "unset" : height - 100,
         }}
@@ -353,7 +354,7 @@ export default function WalletTypePromote(props) {
                         Please enter the amount.
                       </span>
                     ) : (
-                      ""
+                      "" 
                     )}
                     <Box
                       sx={{
@@ -548,9 +549,10 @@ export default function WalletTypePromote(props) {
                     className="cursor-pointer"
                     onClick={() => navigateFooter(1)}
                     style={{
-                      color: "#A57FF6",
+                      color: "#FF9F38",
                       fontSize: "14px",
                       fontWeight: "lighter !important",
+                      cursor:"pointer"
                     }}
                   >
                     Terms & Agreement

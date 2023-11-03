@@ -2,6 +2,7 @@ import { Badge } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
@@ -36,9 +37,7 @@ export default function NavMobile() {
     }
   }, [isProfileDialog]);
 
-  // useEffect(() => {
-  //   dispatch(setBadgeChat(false));
-  // }, [chatWorld]);
+  const location = useLocation()
 
   const { pathname } = useLocation();
 
@@ -119,6 +118,7 @@ export default function NavMobile() {
                     <div
                       onClick={() => {
                         navigate("/packages");
+                        dispatch(updateFromRouter(location.pathname))
                       }}
                     >
                       {pathname && pathname === "/packages" ? (
@@ -173,7 +173,7 @@ export default function NavMobile() {
                           marginTop: "4px",
                         }}
                       >
-                        Subscription
+                        Packages
                       </p>
                     </div>
                   </div>

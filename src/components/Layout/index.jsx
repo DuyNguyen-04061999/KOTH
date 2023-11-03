@@ -5,55 +5,52 @@ import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { imageDesktop } from "../../utils/images";
+import { imageDesktop, images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
 // import { inpChat } from "../../utils/cssFrom";
 import { useEffect } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import GameLogDialog from "../Dialog/GameLog/GameLog";
 import MenuWallet from "../MenuMobile/Wallet";
 import history from "../Router/history";
-// import ComponentChat from "../Chat/componentChat";
-// import { imageChat } from "../../utils/imagesChat";
-import GameLogDialog from "../Dialog/GameLog/GameLog";
 
-// import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import Navbar from "../Nav/Nav";
-import NavMobile from "../Nav/NavMobile";
-// import { Search } from "@mui/icons-material";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../redux-saga-middleware/config/socket";
-import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
-import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
-import {
-  closeTransactionDialog,
-  toggleWalletDialog,
-} from "../../redux-saga-middleware/reducers/walletReducer";
-import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
-import DialogProfile from "../Dialog/Profile";
-// import { getSearchGame } from "../../redux-saga-middleware/reducers/gameReducer";
+import { toast } from "react-toastify";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
+import { API } from "../../redux-saga-middleware/axios/api";
+import _socket from "../../redux-saga-middleware/config/socket";
 import {
   changeRouter,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
-import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
+import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog, updatePromotionExtra } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
   openChatPopup,
   showBadgeChat,
 } from "../../redux-saga-middleware/reducers/chatReducer";
+import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
+import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
+import {
+  closeTransactionDialog,
+  toggleWalletDialog,
+} from "../../redux-saga-middleware/reducers/walletReducer";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
-import ForgetPassword from "../Dialog/ForgetPassword";
+import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
+import DialogProfile from "../Dialog/Profile";
 import ShareTour from "../Dialog/ShareTour";
+import SimpleDialog from "../Dialog/Simple/SimpleDialog";
 import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import SubscriptionDialog from "../Dialog/Subscription";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
-// import { getAppType } from "../../utils/helper";
+import Navbar from "../Nav/Nav";
+import NavMobile from "../Nav/NavMobile";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -97,35 +94,32 @@ export default function Layout(props) {
   );
   const { orientation } = useSelector((state) => state.gameReducer);
 
-  const { token, isNav, resetInputValue, isNavTablet } = useSelector(
+  const { token, isNav, userNameRef } = useSelector(
     (state) => state.authReducer
   );
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, tabChat, badgechat } = useSelector(
+  const { chatPopup, badgechat } = useSelector(
     (state) => state.chatReducer
   );
-  const { router, startGameCheck } = useSelector((state) => state.appReducer);
-  const { isLoginDialog, refCodeRegister } = useSelector((state) => state.authReducer);
-  const { children } = props;
+  const { router, startGameCheck, fromRouter } = useSelector((state) => state.appReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const pathname = useLocation();
-
-  // const [backgroundGlobal, setBackgroundGlobal] = useState("#883AF0");
-  // const [backgroundPrivate, setBackgroundPrivate] = useState("#261a35");
 
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const { device } = useSelector((state) => state.deviceReducer);
   useEffect(() => {
-    dispatch(changeRouter(window.location.pathname));
     const socket = _socket;
     setSocket(socket);
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(setBadgeChat(false))
-  // },[chatWorld])
+  const location = useLocation()
+
+  React.useEffect(() => {
+    dispatch(changeRouter(location.pathname));
+  }, [location, dispatch])
+  
   useEffect(() => {
     if (
       router &&
@@ -133,7 +127,7 @@ export default function Layout(props) {
       router?.includes("tournamentDetail") &&
       startGameCheck
     ) {
-      // window.location.reload();
+      
     }
   }, [router, startGameCheck]);
   useEffect(() => {
@@ -149,14 +143,29 @@ export default function Layout(props) {
   }, [width, dispatch]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    
   }, [pathname]);
 
-  // useEffect(() => {
-  //   if (width < 1024 && width > 576) {
-  //     dispatch(clickTabNav(false));
-  //   }
-  // }, [width, dispatch]);
+  const {userName} = useParams();
+
+  useEffect(()=> {
+    const getRefCodeByUserName = async () => {
+      if(userName){
+        try {
+          const response = await API.get(`/api/get-refcode-by-username/${userName}`);
+          if(response){
+            console.log(response);
+            dispatch(addRefCodeRegister(response?.data?.ref));
+            dispatch(clickTab("signup"));
+            dispatch(toggleLoginDialog());
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    getRefCodeByUserName();
+  },[userName,dispatch])
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -168,14 +177,14 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
+    
+  })
+
+  useEffect(() => {
     const handleKeyboardOpen = () => {
       // Check if the virtual keyboard is open (adjust the threshold if needed)
       if (window.innerHeight < window.outerHeight) {
         // Adjust the timeout delay if needed
-        setTimeout(() => {
-          // Scroll to the top or any other desired behavior
-          window.scrollTo(0, 0);
-        }, 300); // Wait for virtual keyboard to fully open (adjust as needed)
       }
     };
 
@@ -188,45 +197,6 @@ export default function Layout(props) {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (token === "" || token === null) {
-  //     setBackgroundGlobal("#883AF0");
-  //     setBackgroundPrivate("#261a35");
-  //   }
-  // }, [token]);
-  // const [searchValue, setSearchValue] = useState("");
-
-  // const handleSearch = () => {
-  //   if (getAppType() !== "promote") {
-  //     if (!searchValue) {
-  //     } else {
-  //       const lowercaseSearchValue = searchValue.toUpperCase();
-  //       navigate("/game-type/search", {
-  //         state: { value: lowercaseSearchValue },
-  //       });
-  //       dispatch(getSearchGame(lowercaseSearchValue));
-  //     }
-  //   }
-  // };
-
-  // const handleOnKeyDownEnter = (e) => {
-  //   if (getAppType() !== "promote") {
-  //     if (e.key === "Enter" && searchValue) {
-  //       const lowercaseSearchValue = searchValue.toLowerCase();
-  //       navigate("/game-type/search", {
-  //         state: { value: lowercaseSearchValue },
-  //       });
-  //       dispatch(getSearchGame(lowercaseSearchValue));
-  //       setChatF("");
-  //     }
-  //   }
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  // };
-
-  const location = useLocation();
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
   const refCodeURL= query?.get("refcode");
@@ -242,26 +212,38 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-
-  useEffect(() => {
-    const checkRefCode =() =>{
-      if (refCodeURL) {
-        const refCode = query?.get("refcode").split("refcode").join();
-        console.log(refCode)
-        dispatch(addRefCodeRegister(refCode));
-        if(!isLoginDialog){
-          dispatch(clickTab(true));
-          dispatch(toggleLoginDialog(true));
-        }
-      }
-    }
-    checkRefCode();
-  }, [refCodeURL, dispatch]);
-
+  
   useEffect(() => {
     dispatch(toggleStartGame(false));
   }, [location.pathname, dispatch]);
-  return (
+
+  useEffect(() => {
+    if(socket) {
+      socket?.on("buyPromoExtraSuccess", (data) => {
+        if(fromRouter && router !== "/" && router !== "/home") {
+          navigate(fromRouter)
+        }
+        toast.success("Buy Combo Extra Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        dispatch(updatePromotionExtra(data || 0))
+      })
+    }
+
+    return () => {
+      socket?.off("buyPromoExtraSuccess");
+    };
+  }, [fromRouter, socket, router, navigate, dispatch])
+
+  return ReactDOM.createPortal(
     <Box
       className="tong"
       component="div"
@@ -270,10 +252,10 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      <SimpleDialog/>
       <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
-      <ForgetPassword />
       <ShareTour />
       <PopUpReward />
       <SubscriptionDialog />
@@ -313,10 +295,9 @@ export default function Layout(props) {
             minHeight: "48px !important",
             paddingTop: "9px",
             paddingBottom: "10px",
-            paddingLeft: "18px",
-            paddingRight: "18px",
+            paddingLeft: device === "Mobile" ?  "0px" : "18px",
+            paddingRight: device === "Mobile" ?  "0px" : "18px",
           }}
-          // className="pt-1 pb-2"
         >
           {device === "Tablet" ||
           (device === "Mobile" && orientation === "landscape") ? (
@@ -356,6 +337,7 @@ export default function Layout(props) {
                 style={{ position: "relative" }}
                 onClick={() => {
                   navigate("/home");
+                  window.scrollTo(0, 0)
                 }}
               >
                 <img
@@ -373,7 +355,10 @@ export default function Layout(props) {
               location?.pathname?.includes("/packages") ? (
                 <span className="ms-2">Packages</span>
               ) : (
-                <NavLink to="/home">
+                <Box onClick={() => {
+                  navigate("/home");
+                  window.scrollTo(0, 0)
+                }}>
                   <img
                     style={{
                       width: "34px",
@@ -384,62 +369,13 @@ export default function Layout(props) {
                     src={imageDesktop.LogoCongTy}
                     alt="logocty"
                   />
-                </NavLink>
+                </Box>
               )}
             </Box>
           )}
           <Box sx={{ flexGrow: 1 }}>
             {width > 1199 ? (
               <Box>
-                {/* <form
-                  onSubmit={handleSubmit}
-                  className="form"
-                  style={{
-                    maxWidth: "400px",
-                    marginLeft: "90px",
-                    position: "relative",
-                  }}
-                >
-                  <input
-                    className="inp-search"
-                    type="text"
-                    name="search"
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    onKeyDown={handleOnKeyDownEnter}
-                    placeholder="Want to find something"
-                    style={{
-                      width: "100%",
-                      backgroundColor: "#1a151e",
-                      border: "none",
-                      padding: "5px 10px",
-                      color: "#857cab",
-                      fontWeight: "500",
-                      borderRadius: 5,
-                    }}
-                  />
-                  <button
-                    type="submit"
-                    style={{
-                      position: "absolute",
-                      left: "362px",
-                      top: "2px",
-                      border: "none",
-                      backgroundColor: "unset",
-                    }}
-                  >
-                    <Search
-                      onClick={() => {
-                        handleSearch();
-                      }}
-                      sx={{
-                        color: "white",
-                        cursor: "pointer",
-                        fontSize: "25px",
-                      }}
-                    />
-                  </button>
-                </form> */}
               </Box>
             ) : (
               ""
@@ -507,14 +443,6 @@ export default function Layout(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {/* {device === "Tablet" && !startGameCheck ? (
-        <div
-          className="when-active"
-          style={{ display: isNav === true ? "block" : "none" }}
-        ></div>
-      ) : (
-        ""
-      )} */}
       <Grid container>
         {device === "Desktop" ||
         device === "Tablet" ||
@@ -529,11 +457,6 @@ export default function Layout(props) {
               transition: "visibility 0s, all 0.2s ease-in-out",
               position: "relative",
               zIndex: "1024",
-              // width: "400px !important",
-              // "& .MuiGrid-item": {
-              //   minWidth: "400px !important",
-              //   width: "400px !important",
-              // },
               display:
                 startGameCheck && (device === "Tablet" || device === "Mobile")
                   ? "none"
@@ -558,22 +481,24 @@ export default function Layout(props) {
             zIndex: 1,
           }}
         >
+
           <Main
+            id="layout-main"
             open={chatPopup}
             sx={{
               marginRight:
                 device === "Tablet" ||
                 (device === "Mobile" && orientation === "landscape") ||
-                (device === "Desktop" && width < 1200)
+                (device === "Desktop" && width < 1200) || (width > 576 && width < 950)
                   ? "0"
                   : "",
             }}
           >
-            {children}
+            <Outlet/>
           </Main>
         </Grid>
       </Grid>
       <ChatDrawer />
-    </Box>
+    </Box>, document.body
   );
 }

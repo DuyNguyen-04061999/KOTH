@@ -59,8 +59,11 @@ const walletReducer = (
     isMetamaskDialog: false,
     transactionData: null,
     depositData: null,
-    isCheckWallet:false,
-    typeWallet:""
+    isCheckWallet: false,
+    typeWallet: "",
+    goldCombo: 0,
+    totalExtra: 0,
+    price: 0
   },
   action
 ) => {
@@ -72,7 +75,7 @@ const walletReducer = (
     case REHYDRATE:
       return { ...state };
     case "TOGGLE_WALLET_DIALOG":
-      return { ...state, isWalletDialog: !state.isWalletDialog };
+      return { ...state, isWalletDialog: !state.isWalletDialog, price: payload || 0 };
     case "OPEN_TRANSACTION_DIALOG":
       return { ...state, isTransactionDialog: true };
     case "CLOSE_TRANSACTION_DIALOG":
@@ -87,7 +90,8 @@ const walletReducer = (
     case "TOGGLE_METAMASK_DIALOG": return {...state, isMetamaskDialog: !state.isMetamaskDialog}
     case "SAVE_TRANSACTION_DATA": return {...state, transactionData: payload?.transactionData, depositData: payload?.depositData}
     case "TOGGLE_CHECK_WALLET" : 
-    return {...state, isCheckWallet: !state.isCheckWallet, typeWallet:payload?.type}
+
+    return {...state, isCheckWallet: !state.isCheckWallet, typeWallet:payload?.type, goldCombo:payload?.gold, totalExtra:payload?.total}
     case "CLOSE_CHECK_WALLET" : return {...state, isCheckWallet: false}
     default:
       return state;

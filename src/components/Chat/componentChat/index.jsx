@@ -48,14 +48,15 @@ export default function ComponentChat() {
   };
 
   useEffect(() => {
-    if (chatBox.current) {
-      chatBox.current.addEventListener("scroll", handleScroll);
+    let chatCurrent  = chatBox.current
+    if (chatCurrent) {
+      chatCurrent.addEventListener("scroll", handleScroll);
     }
 
     // Clean up the event listener
     return () => {
-      if (chatBox.current) {
-        chatBox.current.removeEventListener("scroll", handleScroll);
+      if (chatCurrent) {
+        chatCurrent.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);

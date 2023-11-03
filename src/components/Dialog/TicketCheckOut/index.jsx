@@ -2,13 +2,13 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleBuyTicket } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   closeCheckWallet,
   toggleCheckWallet,
-  toggleWalletDialog,
+  toggleWalletDialog
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney } from "../../../utils/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -16,88 +16,81 @@ import AnimButton from "../../AnimButton";
 import "./index.scss";
 
 export default function TicketCheckOut() {
-  const { isCheckWallet, typeWallet } = useSelector(
+  const { isCheckWallet, typeWallet,goldCombo,totalExtra } = useSelector(
     (state) => state.walletReducer
   );
-
   const { idPackage } = useSelector((state) => state.authReducer);
   const { userGold } = useSelector((state) => state.authReducer);
-  const { boughtTour, idTour } = useSelector(
+  const { boughtTour } = useSelector(
     (state) => state.tournamentReducer
   );
   const { listPackage } = useSelector((state) => state.appReducer);
   const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  const [ticketBuy, setTicketBuy] = useState([]);
   const [sl, setSl] = useState(1);
-  const [goldTicket] = useState(0.99);
-  const [disablePlaceOrder, setDisablePlaceOrder] = useState(false);
   const handleChangeValue = (e) => {
     setSl(e.target.value);
   };
 
   const cancelButton = () => {
-    dispatch(toggleCheckWallet());
+    dispatch(closeCheckWallet(false))
   };
 
-  const btnSubscription = () => {
-    setDisablePlaceOrder(true);
+  const btnSubscription = (event) => {
+      event.currentTarget.disabled = true;
     if (userGold < 19.99) {
       dispatch(toggleCheckWallet());
-      dispatch(toggleWalletDialog());
-      // dispatch(toggleBuyTicket());
+      dispatch(toggleWalletDialog(19.99));
     } else {
-      socket.emit("buyPackage", {
+      socket.emit("buyNewPackage", {
         packageId: idPackage,
       });
+      setSl(1)
       dispatch(toggleCheckWallet());
     }
-    setDisablePlaceOrder(false);
-    // dispatch(toggleBuyTicket(false));
   };
 
-  const btnBuyTicket = () => {
-    setDisablePlaceOrder(true);
-    if (userGold < 0.99 * sl) {
+  const btnBuyTicket = (event) => {
+      event.currentTarget.disabled = true;
+      let price = typeWallet === "combo1" ? 0.99*sl : 3.96*sl
+    if (userGold < price) {
       dispatch(toggleCheckWallet());
-      dispatch(toggleWalletDialog());
+      dispatch(toggleWalletDialog(price));
     } else if (!boughtTour) {
-      socket?.emit("buyPackage", {
-        quantity: sl,
-        tournamentId: idTour,
-        packageId: ticketBuy?.id,
+      socket?.emit("buyNewPackage", {
+        packageId: idPackage,
+        quantityExtra: sl
       });
+      setSl(1)
       dispatch(toggleCheckWallet());
     } else {
-      socket?.emit("buyPackage", {
-        quantity: sl,
-        tournamentId: idTour,
-        packageId: ticketBuy?.id,
+      socket?.emit("buyNewPackage", {
+        packageId: idPackage,
+        quantityExtra: sl
       });
+      setSl(1)
       dispatch(toggleCheckWallet());
     }
-    setDisablePlaceOrder(false);
-    // dispatch(toggleBuyTicket(false));
   };
 
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
-    const tP = listPackage.filter((i) => i.packageName === "Ticket Play");
-    setTicketBuy(tP && tP?.length > 0 ? tP[0] : null);
-  }, [listPackage, setSocket, setTicketBuy]);
+  }, [listPackage, setSocket]);
 
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
   useEffect(() => {
-    socket?.on("buyPackageSuccess", (data) => {});
+   
   }, [socket]);
-  return (
+
+  return ReactDOM.createPortal(
     <>
       <Dialog
+        open={isCheckWallet}
         fullScreen={width < 576}
         sx={{
           "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
@@ -106,8 +99,11 @@ export default function TicketCheckOut() {
           zIndex: "1320",
         }}
         maxWidth="2000px !important"
-        onClose={() => dispatch(closeCheckWallet())}
-        open={isCheckWallet}
+        onClose={() => {
+          dispatch(closeCheckWallet(false))
+          setSl(1)
+        }
+        }
       >
         <Box
           sx={{
@@ -143,7 +139,8 @@ export default function TicketCheckOut() {
                 viewBox="0 0 20 20"
                 className={"cursor-pointer"}
                 onClick={() => {
-                  dispatch(toggleCheckWallet());
+                  dispatch(closeCheckWallet(false));
+                  setSl(1)
                 }}
               >
                 <g fill="#fff">
@@ -288,17 +285,62 @@ export default function TicketCheckOut() {
               >
                 <Box sx={{ color: "white" }}>
                   {typeWallet === "subscription" ? (
-                    <Typography className="mb-1">Subscription Pack</Typography>
+                    <Box
+                      display={"flex"}
+                      flexDirection={"column"}
+                      alignItems={"start"}
+                    >
+                      <Typography
+                        className="mb-1"
+                        sx={{ marginLeft: "0px !important", color: "#BE48ED " }}
+                      >
+                        Subscription Pack
+                      </Typography>
+                      <Typography
+                        sx={{
+                          marginLeft: "0px !important",
+                          textAlign: "start",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Total Extra: 4 Free Extra/day
+                      </Typography>
+                    </Box>
                   ) : (
-                    <Typography className="mb-1">Extra</Typography>
+                    <Box
+                      display={"flex"}
+                      flexDirection={"column"}
+                      alignItems={"start"}
+                    >
+                      <Typography
+                        className="mb-1"
+                        sx={{
+                          marginLeft: "0px !important",
+                          color: "#BE48ED ",
+                        }}
+                      >
+                        Standard Extra Pack
+                      </Typography>
+                      <Typography
+                        sx={{
+                          marginLeft: "0px !important",
+                          textAlign: "start",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Total Extra: {totalExtra * sl} Extra
+                      </Typography>
+                    </Box>
                   )}
-                  <Typography sx={{ color: "gray" }} variant="body2">
-                    {typeWallet === "subscription"
-                      ? "$19.99"
-                      : `$${goldTicket}`}
-                  </Typography>
                 </Box>
                 <Box>
+                  <Box>
+                  <Typography sx={{ color: "#BE48ED", textAlign:"end" }} variant="body2">
+                    {typeWallet === "subscription"
+                      ? "$19.99"
+                      : `$${goldCombo}`}
+                  </Typography>
+                  </Box>
                   <Box
                     sx={{
                       display: "flex",
@@ -312,7 +354,7 @@ export default function TicketCheckOut() {
                       disabled={
                         typeWallet === "subscription"
                           ? true
-                          : false || typeWallet === "buyTicket"
+                          : false || typeWallet === "combo1" || typeWallet === "combo2"
                           ? false
                           : true
                       }
@@ -327,7 +369,7 @@ export default function TicketCheckOut() {
                         backgroundColor:
                           typeWallet === "subscription"
                             ? "gray !important"
-                            : "" || typeWallet === "buyTicket"
+                            : "" || typeWallet === "combo1" || typeWallet === "combo2"
                             ? "#7848ED"
                             : "",
                         borderRadius: "0px",
@@ -349,14 +391,15 @@ export default function TicketCheckOut() {
                       min={1}
                       disabled={
                         typeWallet === "subscription" ||
-                        typeWallet === "buyTicket"
+                        typeWallet === "combo1" ||
+                        typeWallet === "combo2"
                       }
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor:
                           typeWallet === "subscription"
                             ? "#3D2D53"
-                            : "" || typeWallet === "buyTicket"
+                            : "" || typeWallet === "combo1" || typeWallet === "combo2"
                             ? "#181223"
                             : "",
                       }}
@@ -377,7 +420,7 @@ export default function TicketCheckOut() {
                         backgroundColor:
                           typeWallet === "subscription"
                             ? "gray !important"
-                            : "" || typeWallet === "buyTicket"
+                            : "" || typeWallet === "combo1" || typeWallet === "combo2"
                             ? "#7848ED !important"
                             : "",
                         borderRadius: "0px",
@@ -443,10 +486,10 @@ export default function TicketCheckOut() {
               }}
             >
               <Typography>Total payment</Typography>
-              {typeWallet === "buyTicket" ? (
+              {typeWallet === "combo1" || typeWallet === "combo2" ? (
                 <Typography sx={{ color: "#BF48ED" }}>
                   {" "}
-                  ${formatMoney(Number.parseFloat(sl * goldTicket))}
+                  ${formatMoney(Number.parseFloat(sl * goldCombo))}
                 </Typography>
               ) : (
                 <Typography sx={{ color: "#BF48ED" }}>$ 19.99</Typography>
@@ -461,7 +504,7 @@ export default function TicketCheckOut() {
                 color: "white",
               }}
             >
-              {typeWallet === "buyTicket" ? (
+              {typeWallet === "combo1" || typeWallet === "combo2" ? (
                 <Typography>Your curent balance</Typography>
               ) : (
                 <Typography>Your curent balance</Typography>
@@ -475,7 +518,7 @@ export default function TicketCheckOut() {
                   ${" "}
                   {formatMoney(
                     Number.parseFloat(
-                      userGold - Number(sl) * Number(goldTicket)
+                      userGold - Number(sl) * Number(goldCombo)
                     )
                   )}
                 </Typography>
@@ -496,13 +539,11 @@ export default function TicketCheckOut() {
                       type={"primary"}
                       onClick={btnSubscription}
                       text={"Place Order"}
-                      disable={disablePlaceOrder}
                     />
                   ) : (
                     <AnimButton
                       onClick={btnBuyTicket}
                       text={"Place Order"}
-                      disable={disablePlaceOrder}
                       type={"primary"}
                     />
                   )}
@@ -512,6 +553,7 @@ export default function TicketCheckOut() {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>,
+    document.body
   );
 }

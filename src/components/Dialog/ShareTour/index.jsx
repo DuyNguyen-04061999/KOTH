@@ -1,6 +1,7 @@
 import { Box, Dialog, FormControl, Input, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FacebookShareButton,
@@ -15,24 +16,19 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ShareTour() {
   const { width, height } = useWindowDimensions();
-  const { isShare } = useSelector((state) => state.authReducer);
-  const { refCode } = useSelector((state) => state.profileReducer);
+  const { isShare, userName } = useSelector((state) => state.authReducer);
+  // const { refCode } = useSelector((state) => state.profileReducer);
   const currentUrl = window.location.href;
-  const copyref = `${currentUrl}?refcode=${refCode}`;
+  const copyref = `${currentUrl}/influencers/${userName}`;
   const [copySuccess, setCopySuccess] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(toggleShareTour());
     setCopySuccess(false);
   };
-  // useEffect(() => {
-  //   // Get the current URL
-  //   const currentUrl = window.location.href;
 
-  //   console.log('Current URL:', currentUrl);
-  // }, [])
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <Dialog
         sx={{
@@ -397,6 +393,6 @@ export default function ShareTour() {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>, document.body
   );
 }

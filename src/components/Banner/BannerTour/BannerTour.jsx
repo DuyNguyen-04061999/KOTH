@@ -42,7 +42,7 @@ const BannerTour = (props) => {
       >
         <Box
           sx={{
-            marginBottom: "8px",
+            // marginBottom: "8px", 
             padding: "6px",
             backgroundColor: "#FD9800",
             borderRadius: "10px",
@@ -52,38 +52,41 @@ const BannerTour = (props) => {
             sx={{
               color: "white",
               textTransform: "uppercase",
-              fontSize: "14px",
+              fontSize: "20px",
               fontWeight: 700,
+              lineHeight:1.5
             }}
           >
             Promotion of the week
           </Typography>
         </Box>
-        <Box>
+        <Box> 
           <Typography
             sx={{
               fontSize: "20px",
               color: "white",
               fontWeight: 700,
-              textTransform: "uppercase",
+              textTransform: "uppercase", 
+              lineHeight:1.5,
+              marginTop:"10px"
             }}
           >
             {tournamentName}
           </Typography>
-        </Box>
+        </Box> 
 
-        <Box sx={{ width: "380px", marginBottom: "12px" }}>
+        <Box sx={{ width: "436px", marginBottom: "0px", marginTop:"12px" }}>
           <Typography
             sx={{
               width: "100%",
               fontSize: "42px",
-              fontWeight: 800,
+              fontWeight: 1000,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              lineHeight: "0.9",
+              lineHeight: "50px",
               height: "120px",
               overflow: "hidden",
               textAlign: "center",
@@ -108,7 +111,7 @@ const BannerTour = (props) => {
           sx={{
             backgroundColor: "#300854",
             borderRadius: "5px",
-            width: "326px",
+            width: "440px",
             display: "flex",
             justifyContent: "space-between",
             padding: "12px",
@@ -141,7 +144,7 @@ const BannerTour = (props) => {
               borderRadius: "5px",
               color: "#fff",
               padding: "0px 32px",
-              fontSize: width < 1024 ? "12px" : "16px",
+              fontSize: width < 1024 ? "12px" : "24px",
               cursor: "pointer",
               fontWeight: 600,
               width: width < 576 ?  "70px" : "auto"
@@ -219,8 +222,8 @@ const BannerTour = (props) => {
           </Box>
           <Box
             sx={{
-              width: useWindowDimensions().width > 1024 ? "168px" : "158px",
-              height: useWindowDimensions().width > 1024 ? "187px" : "177px",
+              width: width > 1024 ? "168px" : "158px",
+              height: width > 1024 ? "187px" : "177px",
               border: "2px solid  rgba(246,212,0,1)",
               boxShadow: "0px 0px 0px 8px #f5c40c",
               borderRadius: "16px",
@@ -268,9 +271,8 @@ const BannerTour = (props) => {
               left: "45%",
               transform: "translate(-50%,-50%)",
               color: "#4A8ED7",
-              fontSize: "20px",
-              fontWeight: 800,
-              textTransform: "uppercase",
+              fontSize: "24px",
+              fontWeight: 1000,
             }}
           >
             {userName ? userName : "Super_"}

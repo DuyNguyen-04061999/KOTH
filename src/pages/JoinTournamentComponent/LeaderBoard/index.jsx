@@ -1,10 +1,8 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { images } from "../../../utils/images";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
@@ -13,13 +11,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const { userName } = useSelector((state) => state.authReducer);
   const [start, setStart] = useState(3);
   const [end, setEnd] = useState(6);
-  useEffect(() => {
-    if (height > 820) {
-      setEnd(6);
-    } else {
-      setEnd(5);
-    }
-  }, [height]);
+
   useEffect(() => {
     setTop3(detailTournament?.tournamentResult?.slice(0, 3));
   }, [detailTournament]);
@@ -138,8 +130,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: 576 < width && width < 1200 ? "16px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                  color: "#9D39F1",
                 }}
               >
                 {top3 && top3[1] && top3[1]?.score ? top3[1]?.score : "0"}
@@ -235,8 +226,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: 576 < width && width < 1200 ? "20px" : "25px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                  color: "#9D39F1",
+
                 }}
               >
                 {top3 && top3[0] && top3[0]?.score ? top3[0]?.score : "0"}
@@ -330,8 +321,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: 576 < width && width < 1200 ? "16px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                  color: "#9D39F1",
+
                 }}
               >
                 {top3 && top3[2] && top3[2]?.score ? top3[2]?.score : "0"}
@@ -385,12 +376,15 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               marginRight: "5px",
                             }}
                           ></Box>
-                          <Box>
+                          <Box sx={{width:"70%"}}>
                             <Typography
                               sx={{
                                 textAlign: "start",
                                 color: "#BFBEED",
                                 fontWeight: "lighter !important",
+                                  maxWidth: "100%",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis"
                               }}
                             >
                               {item?.userNickName}
@@ -523,98 +517,102 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               .map((item, index) => {
                 return (
                   index === 0 && (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "16px",
-                        paddingRight: "16px",
-                        paddingBottom: "10px",
-                        paddingTop: "10px",
-                        backgroundColor: "#68399E",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <Box
+                    <>
+                      {detailTournament?.tournamentStatus !== 2 && (
+                        <Box
+                        key={index}
                         sx={{
-                          color: "#ffff",
-                          width: "10%",
                           display: "flex",
-                          justifyContent: "center",
-                          fontSize:
-                            576 < width && width < 1200
-                              ? `${width / 64}px`
-                              : "14px",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: "16px",
+                          paddingRight: "16px",
+                          paddingBottom: "10px",
+                          paddingTop: "10px",
+                          backgroundColor: "#68399E",
+                          borderRadius: "5px",
                         }}
                       >
-                        {detailTournament?.tournamentResult
-                          ?.map((item, index) => {
-                            return item?.userNickName;
-                          })
-                          .indexOf(userName) + 1}
-                      </Box>
-                      <Box sx={{ display: "flex", width: "70%" }}>
                         <Box
-                          component={"img"}
-                          src={
-                            item?.tUser?.userAccount?.accountAvatar
-                              ? process.env.REACT_APP_SOCKET_SERVER +
-                                "/" +
-                                item?.tUser?.userAccount?.accountAvatar
-                              : images.undefinedAvatar
-                          }
                           sx={{
-                            borderRadius: "50%",
-                            width:
-                              576 < width && width < 1200 ? width / 24 : "40px",
-                            height:
-                              576 < width && width < 1200 ? width / 24 : "40px",
-                            marginRight: "5px",
+                            color: "#ffff",
+                            width: "10%",
+                            display: "flex",
+                            justifyContent: "center",
+                            fontSize:
+                              576 < width && width < 1200
+                                ? `${width / 64}px`
+                                : "14px",
                           }}
-                        ></Box>
-                        <Box>
-                          <Typography
+                        >
+                          {detailTournament?.tournamentResult
+                            ?.map((item, index) => {
+                              return item?.userNickName;
+                            })
+                            .indexOf(userName) + 1}
+                        </Box>
+                        <Box sx={{ display: "flex", width: "70%" }}>
+                          <Box
+                            component={"img"}
+                            src={
+                              item?.tUser?.userAccount?.accountAvatar
+                                ? process.env.REACT_APP_SOCKET_SERVER +
+                                  "/" +
+                                  item?.tUser?.userAccount?.accountAvatar
+                                : images.undefinedAvatar
+                            }
                             sx={{
-                              textAlign: "start",
-                              color: "#ffff",
-                              fontWeight: "lighter !important",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 64}px`
-                                  : "16px",
+                              borderRadius: "50%",
+                              width:
+                                576 < width && width < 1200 ? width / 24 : "40px",
+                              height:
+                                576 < width && width < 1200 ? width / 24 : "40px",
+                              marginRight: "5px",
                             }}
-                          >
-                            You
-                          </Typography>
-                          <Typography
-                            sx={{
-                              textAlign: "start",
-                              color: "#ffff",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 66}px`
-                                  : "14px",
-                              fontWeight: "lighter !important",
-                              marginTop: "-4px !important",
-                            }}
-                          >
-                            {moment(item?.updatedAt).format("MM/DD/YYYY")}
-                          </Typography>
+                          ></Box>
+                          <Box>
+                            <Typography
+                              sx={{
+                                textAlign: "start",
+                                color: "#ffff",
+                                fontWeight: "lighter !important",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 64}px`
+                                    : "16px",
+                              }}
+                            >
+                              You
+                            </Typography>
+                            <Typography
+                              sx={{
+                                textAlign: "start",
+                                color: "#ffff",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 66}px`
+                                    : "14px",
+                                fontWeight: "lighter !important",
+                                marginTop: "-4px !important",
+                              }}
+                            >
+                              {moment(item?.updatedAt).format("MM/DD/YYYY")}
+                            </Typography>
+                          </Box>
+                        </Box>
+                        <Box
+                          sx={{
+                            color: "#fff",
+                            width: "20%",
+                            display: "flex",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          {item?.score}
                         </Box>
                       </Box>
-                      <Box
-                        sx={{
-                          color: "#fff",
-                          width: "20%",
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        {item?.score}
-                      </Box>
-                    </Box>
+                      )}
+                    </>
                   )
                 );
               })}
@@ -624,7 +622,9 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
             onClose={handleOnClose}
             sx={{
               zIndex: "1311",
-              // backgroundColor:"#211d28"
+              ".MuiDialog-paper": {
+                backgroundColor:"#211d28 !important",
+              }
             }}
             open={open}
           >
@@ -649,7 +649,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   display: "flex",
                   alignItems: "center",
                   boxSizing: "border-box",
-                  padding: "0px 12px",
+                  padding: "12px",
                   justifyContent: "space-between",
                 }}
               >
@@ -764,7 +764,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[1] && top3[1]?.score}
@@ -859,7 +859,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[0] && top3[0]?.score}
@@ -952,7 +952,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[2] && top3[2]?.score}
@@ -963,7 +963,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     sx={{
                       padding: "28px 28px 0px 28px",
                       overflow: "auto",
-                      height: "500px",
+                      height: "max-content",
                     }}
                   >
                     {detailTournament?.tournamentResult?.map((item, index) => {
@@ -1370,7 +1370,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                    "#9D39F1",
                 }}
               >
                 {top3 && top3[1] && top3[1]?.score ? top3[1]?.score : "0"}
@@ -1463,7 +1463,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                    "#9D39F1",
                 }}
               >
                 {top3 && top3[0] && top3[0]?.score ? top3[0]?.score : "0"}
@@ -1554,7 +1554,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color:
-                    "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                    "#9D39F1",
                 }}
               >
                 {top3 && top3[2] && top3[2]?.score ? top3[2]?.score : "0"}
@@ -1648,7 +1648,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               <></>
             )}
           </Box>
-          <Box sx={{ padding: "0px 0px 100px 0px" }}>
+          <Box sx={{ padding: "0px 0px 50px 0px" }}>
             {detailTournament?.tournamentResult
               ?.filter((n) => {
                 return n?.userNickName === userName;
@@ -1865,7 +1865,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[1] && top3[1]?.score}
@@ -1960,7 +1960,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[0] && top3[0]?.score}
@@ -2053,7 +2053,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                           marginTop: "10px",
                           color:
-                            "linear-gradient(180deg, #9D39F1 29.17%, #BF48ED 42.19%)",
+                            "#9D39F1",
                         }}
                       >
                         {top3 && top3[2] && top3[2]?.score}

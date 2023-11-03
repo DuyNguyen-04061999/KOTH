@@ -1,31 +1,30 @@
-import {
-  Dialog,
-  Box,
-  Slide,
-  Typography,
-  CircularProgress,
-  styled,
-  TableCell,
-  tableCellClasses,
-  TableRow,
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableBody,
-  Input,
-} from "@mui/material";
-import { forwardRef, useCallback, useEffect } from "react";
-import "./index.scss";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { images280423_l } from "../../../utils/images280423_l";
-import { useState } from "react";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import {
+  Box,
+  CircularProgress,
+  Dialog,
+  Input,
+  Paper,
+  Slide,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  styled,
+  tableCellClasses,
+} from "@mui/material";
 import moment from "moment";
-import _socket from "../../../redux-saga-middleware/config/socket";
+import { forwardRef, useCallback, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import Web3 from "web3";
 import { store } from "../../../redux-saga-middleware/config/configRedux";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer";
 import {
   closeTransactionDialog,
   openTransactionDialog,
@@ -33,13 +32,14 @@ import {
   toggleMetaMaskDialog,
   toggleWalletDialog,
 } from "../../../redux-saga-middleware/reducers/walletReducer";
-import { images } from "../../../utils/images";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
-import TransactionDetailDialog from "../../Dialog/TransactionDetail";
-import Web3 from "web3";
-import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer";
-import WalletTypePromote from "./WalletTypePromote";
 import { getAppType } from "../../../utils/helper";
+import { images } from "../../../utils/images";
+import { images280423_l } from "../../../utils/images280423_l";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import TransactionDetailDialog from "../../Dialog/TransactionDetail";
+import WalletTypePromote from "./WalletTypePromote";
+import "./index.scss";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -197,7 +197,6 @@ export default function DialogWallet(props) {
   const [withdrawCharge] = useState(5);
   const [willGet, setWillGet] = useState(0);
   const [willBe, setWillBe] = useState(0);
-  // const [valueDepositAddress] = useState("");
   const [tab, setTab] = useState(1);
 
   const renderDeposit = () => {
@@ -887,7 +886,6 @@ export default function DialogWallet(props) {
     );
   };
 
-  // const transactionsTab = ["Deposit", "Withdraw"];
   const [transactionTabSelected, setTransactionTabSelected] = useState(0);
   const [detailTrans, setDetailTrans] = useState(null);
   const [isDetailTransactionDialog, setIsDetailTransactionDialog] =
@@ -1438,7 +1436,7 @@ export default function DialogWallet(props) {
     );
   };
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <TransactionDetailDialog
         trans={detailTrans}
@@ -1596,6 +1594,6 @@ export default function DialogWallet(props) {
           </Box>
         )}
       </Dialog>
-    </>
+    </>, document.body
   );
 }

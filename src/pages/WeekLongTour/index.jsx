@@ -1,5 +1,3 @@
-import React from "react";
-import Layout from "../../components/Layout";
 import {
   Box,
   Container,
@@ -8,17 +6,17 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import useWindowDimensions from "../../utils/useWindowDimensions";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useState } from "react";
-import PaginatedItems from "../PaginatedItems";
-import NewFooter from "../NewFooter";
-import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
+import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
-import BannerLoading from "../../components/LoadingComponent/BannerLoading";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import SlickSlider from "../../components/SlickSlider";
+import useWindowDimensions from "../../utils/useWindowDimensions";
+import NewFooter from "../NewFooter";
+import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
+import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
   typography: {},
   components: {
@@ -65,7 +63,7 @@ export default function WeekLongTour() {
     }
   }, [dispatch, isFetchList]);
   return (
-    <Layout
+    <MainLayout
       children={
         <Container
           maxWidth="lg"

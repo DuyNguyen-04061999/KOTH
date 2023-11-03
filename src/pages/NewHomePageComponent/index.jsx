@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../../components/Layout";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import NewHomePage from "./NewHomePage";
 
 export default function NewHomePageComponent() {
-  return <Layout children={<NewHomePage />} type="Home" />;
+  return <MainLayout children={<NewHomePage />} type="Home" />;
 }

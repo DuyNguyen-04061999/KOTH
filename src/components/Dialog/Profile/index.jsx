@@ -9,10 +9,9 @@ import {
   Slide,
   Typography,
 } from "@mui/material";
-import copy from "copy-to-clipboard";
 import { forwardRef, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -30,7 +29,7 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { userName, token, uPack } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
-  const { id, email, refCode, phone, userNameProfile, avatarUrl } = useSelector(
+  const { id, email, phone, userNameProfile, avatarUrl } = useSelector(
     (state) => state.profileReducer
   );
 
@@ -349,7 +348,7 @@ export default function DialogProfile(props) {
     );
   };
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <Dialog
         fullScreen={width && width < 576}
@@ -438,6 +437,6 @@ export default function DialogProfile(props) {
           </Box>
         </Box>
       </Dialog>
-    </>
+    </>, document.body
   );
 }

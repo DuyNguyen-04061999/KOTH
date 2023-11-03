@@ -1,24 +1,21 @@
-import { Close, SyncAlt } from "@mui/icons-material";
+import { SyncAlt } from "@mui/icons-material";
 import GameLogIcon from "@mui/icons-material/List";
 import {
   AvatarGroup,
   // Badge,
   Box,
-  Dialog,
-  FormControl,
   Grid,
-  Input,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
   removeToken,
-  toggleLoginDialog
+  toggleLoginDialog,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   clickTabChat,
@@ -28,583 +25,15 @@ import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
-import { images, sign } from "../../../../utils/images";
+import { images } from "../../../../utils/images";
 import { images260423_l } from "../../../../utils/images260423_l";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import Gold from "../../../Gold/Gold";
 import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
-import Signup from "../Signup";
 import "./index.scss";
-// import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { toast } from "react-toastify";
-import AnimButton from "../../../AnimButton";
-
-function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [displayPassword, setDisplayPassword] = useState(false);
-  const { isTab } = useSelector((state) => state.authReducer);
-  const dispatch = useDispatch();
-  const { width } = useWindowDimensions();
-  const [socket, setSocket] = useState(null);
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, []);
-
-  const handleSetPassword = () => {
-    setDisplayPassword(!displayPassword);
-  };
-
-  const handleClose = () => {
-    onClose(selectedValue);
-    setUsername("");
-    setPassword("");
-    dispatch(clickTab(false));
-  };
-  useEffect(() => {
-    socket?.on("loginError", (data) => {});
-  }, [socket, dispatch]);
-  const handleChangeUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const sendLogin = () => {
-    if (!username || !password) {
-      toast.error("Login Failed! Enter username and password!", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.closeButtonToast}
-          />
-        ),
-        position: "top-center",
-        className: width < 576 ? "error-background-small" : "error-background",
-      });
-    } else if (username && password) {
-      socket?.emit("login", {
-        username: username?.toLowerCase(),
-        password: password,
-      });
-      // dispatch(toggleLoginDialog());
-    }
-  };
-  return (
-    <>
-      {width < 576 ? (
-        <Dialog
-          onClose={handleClose}
-          open={open}
-          fullScreen={true}
-          sx={{
-            backgroundColor: "#291e3b",
-            height: "100%",
-            overflowX: "hidden",
-            display: "flex",
-            flexDirection: "row",
-            maxWidth: "820px !important",
-            zIndex: "1320",
-          }}
-        >
-          <Box sx={{ height: "100vh" }}>
-            <Box
-              sx={{
-                backgroundColor: "#291e3b",
-                height: "100%",
-                width: "auto",
-                display: "flex",
-                alignItems: "center",
-              }}
-              className="p-2"
-            >
-              <Box>
-                <Close
-                  sx={{
-                    position: "absolute",
-                    top: "10px",
-                    right: "10px",
-                    color: "gray",
-                    fontSize: "30px",
-                  }}
-                  onClick={handleClose}
-                />
-              </Box>
-              {isTab === false ? (
-                <Box>
-                  <Box>
-                    <Typography
-                      variant="h5"
-                      className="text-center text-white mt-4 mb-4"
-                    >
-                      Sign In
-                    </Typography>
-                  </Box>
-                  <Box
-                    component={"form"}
-                    className="p-2 ps-2 pe-3"
-                    noValidate
-                    onSubmit={handleSubmit}
-                  >
-                    <FormControl
-                      variant="standard"
-                      sx={{
-                        width: "100%",
-                        backgroundColor: "#1f1733",
-                        padding: "10px",
-                        borderRadius: "5px",
-                        marginBottom: "20px",
-                      }}
-                    >
-                      <img
-                        src={sign.up01}
-                        alt="..."
-                        width={17}
-                        height={"auto"}
-                        style={{
-                          position: "absolute",
-                          top: width > 576 ? "11px" : "13px",
-                        }}
-                      />
-                      <Input
-                        id="login_username"
-                        type="text"
-                        value={username}
-                        placeholder="Username"
-                        autoComplete="username"
-                        onChange={handleChangeUsername}
-                        sx={{
-                          "&:before": {
-                            borderBottom: " 0px solid !important ",
-                            "&:hover": {
-                              borderBottom: "0px solid !important",
-                            },
-                          },
-                          "&:after": {
-                            borderBottom: "0px solid !important",
-                          },
-                          "&:hover": {
-                            border: "none",
-                          },
-                          "& .MuiInputBase-root": {
-                            padding: "0px 0px 0px 25px !important",
-                          },
-                          color: "white",
-                          fontWeight: "500",
-                          padding: "0px 0px 0px 25px !important",
-                        }}
-                      />
-                    </FormControl>
-                    <FormControl
-                      variant="standard"
-                      sx={{
-                        width: "100%",
-                        backgroundColor: "#1f1733",
-                        padding: "10px",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <img
-                        src={sign.up02}
-                        alt="..."
-                        width={15}
-                        height={"auto"}
-                        style={{
-                          position: "absolute",
-                          top: width > 576 ? "10px" : "15px",
-                        }}
-                      />
-                      <Input
-                        id="login_password"
-                        placeholder="Password"
-                        type={displayPassword === false ? "password" : "text"}
-                        name="password"
-                        value={password}
-                        autoComplete="current-password"
-                        onChange={handleChangePassword}
-                        sx={{
-                          "&:before": {
-                            borderBottom: "0px solid !important",
-                            "&:hover": {
-                              borderBottom: "0px solid !important",
-                            },
-                          },
-                          "&:after": {
-                            borderBottom: "0px solid !important",
-                          },
-                          "&:hover": {
-                            border: "none",
-                          },
-                          "& .MuiInputBase-root": {
-                            padding: "0px 0px 0px 25px !important",
-                          },
-                          color: "white",
-                          fontWeight: "500",
-                          padding: "0px 0px 0px 25px !important",
-                        }}
-                      />
-                      <Box onClick={handleSetPassword}>
-                        {displayPassword === false ? (
-                          <VisibilityOffIcon
-                            sx={{
-                              position: "absolute",
-                              top: width > 576 ? "12px" : "14px",
-                              right: width > 576 ? "12px" : "10px",
-                              color: "#7C81F2",
-                            }}
-                          />
-                        ) : (
-                          <VisibilityIcon
-                            sx={{
-                              position: "absolute",
-                              top: width > 576 ? "12px" : "10px",
-                              right: width > 576 ? "12px" : "10px",
-                              color: "#7C81F2",
-                            }}
-                          />
-                        )}
-                      </Box>
-                    </FormControl>
-                    {/* <Typography
-                      onClick={() => {
-                        dispatch(toggleLoginDialog());
-                        dispatch(toggleForgetPass(true));
-                      }}
-                      sx={{
-                        color: "#7848ED",
-                        textAlign: "end",
-                        marginTop: "10px",
-                        fontWeight: "600",
-                        fontSize: "12px",
-                      }}
-                    >
-                      Forgot password?
-                    </Typography> */}
-                    <Box className="d-flex justify-content-end mt-4">
-                      {/* <Box
-                        sx={{
-                          color: "#7671ba",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Forgot Password ?
-                      </Box> */}
-                    </Box>
-                    <Box className="d-flex justify-content-center">
-                      <button
-                        type="submit"
-                        className="mt-5 btn-submit"
-                        style={{
-                          background:
-                            "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                          borderRadius: 4,
-                          border: "none",
-                          padding: "8px 35px",
-                        }}
-                        onClick={sendLogin}
-                      >
-                        <span
-                          style={{
-                            color: "#faecf1",
-                            fontWeight: "700",
-                          }}
-                        >
-                          SIGN IN
-                        </span>
-                      </button>
-                    </Box>
-                    <Box className="d-flex justify-content-center mt-4">
-                      <Box
-                        className="d-flex"
-                        sx={{
-                          color: "#7671ba",
-                          fontWeight: "500",
-                        }}
-                      >
-                        New User?
-                        <Typography
-                          onClick={() => {
-                            dispatch(clickTab(true));
-                          }}
-                          sx={{ color: "#ffb600", cursor: "pointer" }}
-                        >
-                          Create Account
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              ) : (
-                <Signup />
-              )}
-            </Box>
-          </Box>
-        </Dialog>
-      ) : (
-        <Dialog
-          onClose={handleClose}
-          open={open}
-          maxWidth={"md"}
-          sx={{
-            ".css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
-              backgroundColor: "#291e3b",
-              height: "auto",
-              overflowX: "hidden",
-              display: "flex",
-              flexDirection: "row",
-              maxWidth: "820px !important",
-              position: "relative",
-            },
-          }}
-        >
-          <Grid container>
-            <Grid item md={6}>
-              <Box
-                sx={{
-                  backgroundColor: "#291e3b",
-                  height: "100%",
-                  width: "auto",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-                className="p-2"
-              >
-                {isTab === false ? (
-                  <Box>
-                    <Box>
-                      <Typography
-                        variant="h5"
-                        className="text-center text-white"
-                      >
-                        Sign In
-                      </Typography>
-                    </Box>
-                    <Box
-                      component={"form"}
-                      className="p-2 ps-2 pe-3"
-                      noValidate
-                      onSubmit={handleSubmit}
-                    >
-                      <FormControl
-                        variant="standard"
-                        sx={{
-                          width: "100%",
-                          backgroundColor: "#1f1733",
-                          padding: "10px",
-                          borderRadius: "5px",
-                          marginBottom: "20px",
-                        }}
-                      >
-                        <img
-                          src={sign.up01}
-                          alt="..."
-                          width={17}
-                          height={"auto"}
-                          style={{
-                            position: "absolute",
-                            top: width > 576 ? "14px" : "10px",
-                          }}
-                        />
-                        <Input
-                          id="login_username"
-                          type="text"
-                          value={username}
-                          placeholder="Username"
-                          autoComplete="username"
-                          onChange={handleChangeUsername}
-                          sx={{
-                            "&:before": {
-                              borderBottom: " 0px solid !important ",
-                              "&:hover": {
-                                borderBottom: "0px solid !important",
-                              },
-                            },
-                            "&:after": {
-                              borderBottom: "0px solid !important",
-                            },
-                            "&:hover": {
-                              border: "none",
-                            },
-                            color: "white",
-                            fontWeight: "500",
-                            padding: "0px 0px 0px 25px !important",
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl
-                        variant="standard"
-                        sx={{
-                          width: "100%",
-                          backgroundColor: "#1f1733",
-                          padding: "10px",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        <img
-                          src={sign.up02}
-                          alt="..."
-                          width={15}
-                          height={"auto"}
-                          style={{
-                            position: "absolute",
-                            top: width > 576 ? "14px" : "10px",
-                          }}
-                        />
-                        <Input
-                          id="login_password"
-                          placeholder="Password"
-                          type={displayPassword === false ? "password" : "text"}
-                          value={password}
-                          autoComplete="current-password"
-                          onChange={handleChangePassword}
-                          sx={{
-                            "&:before": {
-                              borderBottom: "0px solid !important",
-                              "&:hover": {
-                                borderBottom: "0px solid !important",
-                              },
-                            },
-                            "&:after": {
-                              borderBottom: "0px solid !important",
-                            },
-                            "&:hover": {
-                              border: "none",
-                            },
-                            color: "white",
-                            fontWeight: "500",
-                            padding: "0px 0px 0px 25px !important",
-                          }}
-                        />
-                        <Box onClick={handleSetPassword}>
-                          {displayPassword === false ? (
-                            <VisibilityOffIcon
-                              sx={{
-                                position: "absolute",
-                                top: width > 576 ? "12px" : "10px",
-                                right: width > 576 ? "12px" : "10px",
-                                color: "#7C81F2",
-                              }}
-                            />
-                          ) : (
-                            <VisibilityIcon
-                              sx={{
-                                position: "absolute",
-                                top: width > 576 ? "12px" : "10px",
-                                right: width > 576 ? "12px" : "10px",
-                                color: "#7C81F2",
-                              }}
-                            />
-                          )}
-                        </Box>
-                      </FormControl>
-                      <Box className="d-flex justify-content-end">
-                        {/* <Box
-                          onClick={() => {
-                            dispatch(toggleLoginDialog());
-                            dispatch(toggleForgetPass(true));
-                          }}
-                          sx={{
-                            color: "#7671ba",
-                            cursor: "pointer",
-                            fontWeight: "500",
-                            marginTop: width > 576 ? "15px" : "15px",
-                          }}
-                        >
-                          Forgot Password ?
-                        </Box> */}
-                      </Box>
-                      <Box className="d-flex justify-content-center">
-                        <AnimButton
-                          type={"Signin"}
-                          text={"Sign In"}
-                          onClick={sendLogin}
-                        />
-                      </Box>
-                      <Box className="d-flex justify-content-center mt-4">
-                        <Box
-                          className="d-flex"
-                          sx={{
-                            color: "#7671ba",
-                            fontWeight: "500",
-                          }}
-                        >
-                          New User?
-                          <Typography
-                            sx={{ color: "#ffb600", cursor: "pointer" }}
-                            onClick={() => {
-                              dispatch(clickTab(true));
-                            }}
-                          >
-                            Create Account
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                ) : (
-                  <Signup />
-                )}
-              </Box>
-            </Grid>
-            <Grid item md={6}>
-              {width > 992 ? (
-                <Box
-                  sx={{
-                    backgroundColor: "#19133e",
-                    color: "white",
-                    height: "100%",
-                    position: "relative",
-                  }}
-                >
-                  <img
-                    src={
-                      getAppType() === "promote"
-                        ? sign.bannersignin
-                        : images?.signInCrypto
-                    }
-                    alt="..."
-                    width={"100%"}
-                    height={"100%"}
-                    style={{ backgroundColor: "#3a2b6d" }}
-                  />
-                  <Box
-                    component={"img"}
-                    src={sign.btnBack}
-                    sx={{
-                      width: "20px",
-                      height: "20px",
-                      position: "absolute",
-                      zIndex: "100",
-                      top: "20px",
-                      right: "20px",
-                      cursor: "pointer",
-                    }}
-                    onClick={handleClose}
-                  ></Box>
-                </Box>
-              ) : null}
-            </Grid>
-          </Grid>
-        </Dialog>
-      )}
-    </>
-  );
-}
 
 export default function Dialoglg() {
-  const navigate = useNavigate();
   const [openMess, setOpenMess] = useState(false);
   const [socket, setSocket] = useState(null);
   const [transData, setTransData] = useState([]);
@@ -624,13 +53,13 @@ export default function Dialoglg() {
     setSocket(socket);
   }, []);
   const {
-    isLoginDialog,
     token,
     userGold,
     userName,
     userAvatar,
     isUpdateProfile,
     uPack,
+    promotionExtra,
   } = useSelector((state) => state.authReducer);
   useEffect(() => {}, [isUpdateProfile]);
 
@@ -638,11 +67,7 @@ export default function Dialoglg() {
 
   const handleClickSignIn = () => {
     dispatch(toggleLoginDialog());
-    dispatch(clickTab(false));
-  };
-
-  const handleClose = () => {
-    dispatch(toggleLoginDialog());
+    dispatch(clickTab("login"));
   };
 
   const handleCloseProfile = () => {};
@@ -654,25 +79,13 @@ export default function Dialoglg() {
     dispatch(closeChatPopup());
     dispatch(removeToken());
     dispatch(clickTabChat(true));
-    if(window.location.pathname?.includes("tournamentDetail")) {
-      socket?.emit("detailTournament", {
+    if (window.location.pathname?.includes("tournamentDetail")) {
+      socket?.emit("detailNewTournament", {
         tournamentId: id,
       });
     }
   };
   const { width, height } = useWindowDimensions();
-  
-  const location = useLocation();
-
-  const [isHovering, setIsHovering] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovering(false);
-  };
 
   return (
     <div className="dialog">
@@ -693,11 +106,6 @@ export default function Dialoglg() {
               <img src={images260423_l.walletButton} alt="..." />
             </div>
           )}
-          <SimpleDialog
-            className="fa-dialog"
-            open={isLoginDialog}
-            onClose={handleClose}
-          />
         </Box>
       ) : (
         <AvatarGroup
@@ -706,6 +114,130 @@ export default function Dialoglg() {
             borderRadius: width > 576 ? "5px !important" : "20px !important",
           }}
         >
+          {width < 576 ? (
+            <Box
+              sx={{
+                backgroundColor: width > 576 ? "#170f1e" : "#68399E",
+                borderRadius:
+                  width > 576 ? "5px !important" : "20px !important",
+                marginRight: "10px",
+              }}
+              className="d-flex align-items-center"
+            >
+              <Box
+                variant="standard"
+                sx={{
+                  maxWidth: "115px",
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  borderRadius:
+                    width > 576 ? "5px !important" : "20px !important",
+                }}
+              >
+                <Box
+                  sx={{
+                    marginRight: width < 576 ? "5px" : 0,
+
+                    borderRightWidth: width > 576 ? 0 : "unset",
+                    height: "100%",
+                    padding: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  className="cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="21"
+                    fill="none"
+                    viewBox="0 0 25 26"
+                  >
+                    <g>
+                      <g>
+                        <path
+                          fill="#E68A2E"
+                          d="M9.762 6.955c.015-.037.028-.076.039-.115.483-2.204.26-1.732 1.926-3.417.305-.305.602-.616.917-.909.842-.784 2.139-.843 2.918-.074a757.778 757.778 0 017.021 7.021c.782.791.734 2.1-.076 2.948-.642.67-1.287 1.346-1.98 1.963-.307.273-.721.45-1.113.589-.424.15-.877.208-1.345.313-.055.36-.112.722-.164 1.084a2.32 2.32 0 01-.678 1.34c-1.913 1.914-3.824 3.833-5.744 5.74-.916.907-2.228.942-3.1.08a1567.642 1567.642 0 01-6.852-6.852c-.877-.889-.84-2.196.087-3.13 1.907-1.92 3.829-3.828 5.742-5.741.353-.36.812-.595 1.302-.666l1.1-.174zm3.7 3.72a.691.691 0 00-.193.333.645.645 0 00.02.377.609.609 0 00.586.4c.129 0 .256-.04.366-.112a.697.697 0 00.252-.295.661.661 0 00.051-.377.615.615 0 00-.166-.332.62.62 0 00-.449-.184.682.682 0 00-.464.191l-.002-.002zm-2.176-1.226a.619.619 0 00.43.186.69.69 0 00.692-.587.63.63 0 00-.109-.459.62.62 0 00-.428-.182.69.69 0 00-.689.585.631.631 0 00.105.457zm5.179 4.236a.682.682 0 00.197-.463.62.62 0 00-.18-.453.625.625 0 00-.442-.137.685.685 0 00-.434.202.685.685 0 00-.198.435c-.011.162.039.32.14.442a.62.62 0 00.454.176.684.684 0 00.462-.2v-.002z"
+                        ></path>
+                      </g>
+                      <g>
+                        <path
+                          fill="#FB3"
+                          d="M9.762 5.955c.015-.037.028-.076.039-.115.483-2.204.26-1.732 1.926-3.417.305-.305.602-.616.917-.909.842-.784 2.139-.843 2.918-.074a757.778 757.778 0 017.021 7.021c.782.791.734 2.1-.076 2.948-.642.67-1.287 1.346-1.98 1.963-.307.273-.721.45-1.113.589-.424.15-.877.208-1.345.313-.055.36-.112.722-.164 1.084a2.32 2.32 0 01-.678 1.34c-1.913 1.914-3.824 3.833-5.744 5.74-.916.907-2.228.942-3.1.08a1567.642 1567.642 0 01-6.852-6.852c-.877-.889-.84-2.196.087-3.13 1.907-1.92 3.829-3.828 5.742-5.741.353-.36.812-.595 1.302-.666l1.1-.174zm3.7 3.72a.691.691 0 00-.193.333.645.645 0 00.02.377.609.609 0 00.586.4c.129 0 .256-.04.366-.112a.697.697 0 00.252-.295.661.661 0 00.051-.377.616.616 0 00-.166-.333.62.62 0 00-.449-.183.682.682 0 00-.464.191l-.002-.002zm-2.176-1.226a.619.619 0 00.43.186.69.69 0 00.692-.587.63.63 0 00-.109-.459.62.62 0 00-.428-.182.69.69 0 00-.689.585.631.631 0 00.105.457zm5.179 4.236a.682.682 0 00.197-.463.62.62 0 00-.18-.453.625.625 0 00-.442-.137.685.685 0 00-.434.202.685.685 0 00-.198.435c-.011.162.039.32.14.442a.62.62 0 00.454.176.684.684 0 00.462-.2v-.002z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                  <Typography sx={{ color: "#f5a128" }}>
+                    {promotionExtra}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                backgroundColor: "#68399E",
+                borderRadius: "20px !important",
+                marginRight: "10px",
+              }}
+              className="d-flex align-items-center"
+            >
+              <Box
+                variant="standard"
+                sx={{
+                  maxWidth: "115px",
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  borderRadius:
+                    width > 576 ? "5px !important" : "20px !important",
+                }}
+              >
+                <Box
+                  sx={{
+                    marginRight: width < 576 ? "5px" : 0,
+
+                    borderRightWidth: width > 576 ? 0 : "unset",
+                    height: "100%",
+                    padding: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  className="cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="21"
+                    fill="none"
+                    viewBox="0 0 25 26"
+                  >
+                    <g>
+                      <g>
+                        <path
+                          fill="#E68A2E"
+                          d="M9.762 6.955c.015-.037.028-.076.039-.115.483-2.204.26-1.732 1.926-3.417.305-.305.602-.616.917-.909.842-.784 2.139-.843 2.918-.074a757.778 757.778 0 017.021 7.021c.782.791.734 2.1-.076 2.948-.642.67-1.287 1.346-1.98 1.963-.307.273-.721.45-1.113.589-.424.15-.877.208-1.345.313-.055.36-.112.722-.164 1.084a2.32 2.32 0 01-.678 1.34c-1.913 1.914-3.824 3.833-5.744 5.74-.916.907-2.228.942-3.1.08a1567.642 1567.642 0 01-6.852-6.852c-.877-.889-.84-2.196.087-3.13 1.907-1.92 3.829-3.828 5.742-5.741.353-.36.812-.595 1.302-.666l1.1-.174zm3.7 3.72a.691.691 0 00-.193.333.645.645 0 00.02.377.609.609 0 00.586.4c.129 0 .256-.04.366-.112a.697.697 0 00.252-.295.661.661 0 00.051-.377.615.615 0 00-.166-.332.62.62 0 00-.449-.184.682.682 0 00-.464.191l-.002-.002zm-2.176-1.226a.619.619 0 00.43.186.69.69 0 00.692-.587.63.63 0 00-.109-.459.62.62 0 00-.428-.182.69.69 0 00-.689.585.631.631 0 00.105.457zm5.179 4.236a.682.682 0 00.197-.463.62.62 0 00-.18-.453.625.625 0 00-.442-.137.685.685 0 00-.434.202.685.685 0 00-.198.435c-.011.162.039.32.14.442a.62.62 0 00.454.176.684.684 0 00.462-.2v-.002z"
+                        ></path>
+                      </g>
+                      <g>
+                        <path
+                          fill="#FB3"
+                          d="M9.762 5.955c.015-.037.028-.076.039-.115.483-2.204.26-1.732 1.926-3.417.305-.305.602-.616.917-.909.842-.784 2.139-.843 2.918-.074a757.778 757.778 0 017.021 7.021c.782.791.734 2.1-.076 2.948-.642.67-1.287 1.346-1.98 1.963-.307.273-.721.45-1.113.589-.424.15-.877.208-1.345.313-.055.36-.112.722-.164 1.084a2.32 2.32 0 01-.678 1.34c-1.913 1.914-3.824 3.833-5.744 5.74-.916.907-2.228.942-3.1.08a1567.642 1567.642 0 01-6.852-6.852c-.877-.889-.84-2.196.087-3.13 1.907-1.92 3.829-3.828 5.742-5.741.353-.36.812-.595 1.302-.666l1.1-.174zm3.7 3.72a.691.691 0 00-.193.333.645.645 0 00.02.377.609.609 0 00.586.4c.129 0 .256-.04.366-.112a.697.697 0 00.252-.295.661.661 0 00.051-.377.616.616 0 00-.166-.333.62.62 0 00-.449-.183.682.682 0 00-.464.191l-.002-.002zm-2.176-1.226a.619.619 0 00.43.186.69.69 0 00.692-.587.63.63 0 00-.109-.459.62.62 0 00-.428-.182.69.69 0 00-.689.585.631.631 0 00.105.457zm5.179 4.236a.682.682 0 00.197-.463.62.62 0 00-.18-.453.625.625 0 00-.442-.137.685.685 0 00-.434.202.685.685 0 00-.198.435c-.011.162.039.32.14.442a.62.62 0 00.454.176.684.684 0 00.462-.2v-.002z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                  <Typography sx={{ color: "#f5a128" }}>
+                    {promotionExtra}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          )}
           {width < 576 ? (
             <Box
               onClick={() => {
@@ -742,35 +274,6 @@ export default function Dialoglg() {
                   <Gold value={userGold} />
                 </Box>
               </Box>
-
-              {/* {token && (
-                <div
-                  className="btn-wallet"
-                  style={{
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "9px 22px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    backgroundImage: "linear-gradient( #7548ed , #893bf1)",
-                  }}
-                  onClick={() => {
-                    if (!token) {
-                      dispatch(toggleLoginDialog());
-                    } else {
-                      dispatch(toggleWalletDialog());
-                    }
-                  }}
-                >
-                  <i
-                    style={{ marginRight: "6px" }}
-                    className="fa-solid fa-wallet"
-                  ></i>
-                  <span style={{ fontSize: "13px" }}>Wallet</span>
-                </div>
-              )} */}
             </Box>
           ) : (
             <Box
@@ -808,51 +311,18 @@ export default function Dialoglg() {
                   <Gold value={userGold} />
                 </Box>
               </Box>
-
-              {/* {token && (
-              <div
-                className="btn-wallet"
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "9px 22px",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  backgroundImage: "linear-gradient( #7548ed , #893bf1)",
-                }}
-                onClick={() => {
-                  if (!token) {
-                    dispatch(toggleLoginDialog());
-                  } else {
-                    dispatch(toggleWalletDialog());
-                  }
-                }}
-              >
-                <i
-                  style={{ marginRight: "6px" }}
-                  className="fa-solid fa-wallet"
-                ></i>
-                <span style={{ fontSize: "13px" }}>Wallet</span>
-              </div>
-            )} */}
             </Box>
           )}
           <Box
             component={"div"}
-            sx={{
-              
-            }}
+            sx={{}}
             className={
               width && width > 576
                 ? "d-flex align-items-center user-name"
                 : "d-flex align-items-center user-name"
             }
           >
-            <Dropdown sx={{
-              
-            }}>
+            <Dropdown sx={{}}>
               <Dropdown.Toggle
                 style={{
                   backgroundColor: "unset",
@@ -865,7 +335,7 @@ export default function Dialoglg() {
                 <Box
                   sx={{
                     backgroundColor: "#68399E",
-                    width: "110px",
+                    width: width < 576 ? "auto" : "110px",
                     display: "flex",
                     borderRadius: "20px",
                   }}
@@ -885,52 +355,58 @@ export default function Dialoglg() {
                     width={34}
                     className="ava-signin"
                   />
-                  <Box
-                    display={"flex"}
-                    flexDirection={"column"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    sx={{marginLeft:"-5px"}}
-                  >
-                    <Typography
-                      style={{
-                        width: "65px",
-                        fontSize: "12px",
-                        textOverflow: "ellipsis",
-                        marginLeft: "1px !important",
-                        overflow: "hidden",
-                      }}
+                  {width < 576 ? (
+                    ""
+                  ) : (
+                    <Box
+                      display={"flex"}
+                      flexDirection={"column"}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      sx={{ marginLeft: "-5px" }}
                     >
-                      {userName?.length > 10
-                        ? userName.slice(0, 10) + "..."
-                        : userName}
-                    </Typography>
-                    {uPack !== null ? (
-                      <Box
-                        display={"flex"}
-                        justifyContent={"center"}
-                        alignItems={"center"}
+                      <Typography
+                        style={{
+                          width: "65px",
+                          fontSize: "12px",
+                          textOverflow: "ellipsis",
+                          marginLeft: "1px !important",
+                          overflow: "hidden",
+                        }}
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="13"
-                          height="10"
-                          fill="none"
-                          viewBox="0 0 13 10"
+                        {userName?.length > 10
+                          ? userName.slice(0, 10) + "..."
+                          : userName}
+                      </Typography>
+                      {uPack !== null ? (
+                        <Box
+                          display={"flex"}
+                          justifyContent={"center"}
+                          alignItems={"center"}
                         >
-                          <path
-                            fill="#FB3"
-                            d="M3.615 4.766c.152-.28.293-.534.43-.79.63-1.17 1.259-2.342 1.887-3.515.125-.234.245-.465.55-.461.305.004.42.242.544.474.704 1.316 1.41 2.632 2.117 3.948.055.104.115.206.187.338.098-.044.191-.081.28-.127.852-.432 1.705-.863 2.554-1.301.22-.114.433-.175.644-.006.227.18.213.426.157.686l-1.16 5.402c-.099.461-.24.586-.688.586H1.795c-.42 0-.55-.103-.644-.545C.765 7.621.375 5.786.01 3.948c-.037-.183.045-.44.157-.592.147-.197.386-.153.602-.042.933.48 1.87.954 2.847 1.452z"
-                          ></path>
-                        </svg>
-                        <Typography sx={{ color: "#f8bd40", fontSize: "10px" }}>
-                          VIP
-                        </Typography>
-                      </Box>
-                    ) : (
-                      ""
-                    )}
-                  </Box>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="10"
+                            fill="none"
+                            viewBox="0 0 13 10"
+                          >
+                            <path
+                              fill="#FB3"
+                              d="M3.615 4.766c.152-.28.293-.534.43-.79.63-1.17 1.259-2.342 1.887-3.515.125-.234.245-.465.55-.461.305.004.42.242.544.474.704 1.316 1.41 2.632 2.117 3.948.055.104.115.206.187.338.098-.044.191-.081.28-.127.852-.432 1.705-.863 2.554-1.301.22-.114.433-.175.644-.006.227.18.213.426.157.686l-1.16 5.402c-.099.461-.24.586-.688.586H1.795c-.42 0-.55-.103-.644-.545C.765 7.621.375 5.786.01 3.948c-.037-.183.045-.44.157-.592.147-.197.386-.153.602-.042.933.48 1.87.954 2.847 1.452z"
+                            ></path>
+                          </svg>
+                          <Typography
+                            sx={{ color: "#f8bd40", fontSize: "10px" }}
+                          >
+                            VIP
+                          </Typography>
+                        </Box>
+                      ) : (
+                        ""
+                      )}
+                    </Box>
+                  )}
                 </Box>
                 {/* )} */}
               </Dropdown.Toggle>
@@ -940,7 +416,7 @@ export default function Dialoglg() {
                   width: "max-content",
                   padding: "0px",
                   overflow: height < 500 ? "auto" : "unset",
-                  maxHeight: height < 500 ? 250 : "unset"
+                  maxHeight: height < 500 ? 250 : "unset",
                 }}
               >
                 <Box marginBottom={"20px"}>
@@ -1197,8 +673,6 @@ export default function Dialoglg() {
                   sx={{
                     margin: " 5px 15px",
                   }}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
                 >
                   <Dropdown.Item style={{ paddingLeft: "5px" }}>
                     <svg

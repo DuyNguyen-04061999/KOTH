@@ -1,10 +1,10 @@
-import Layout from "../../components/Layout";
+import MainLayout from "../../components/MainLayout/MainLayout";
 import Navigation from "../../components/Navigation";
 import GameLobbyInfo from "./components/GameLobbyInfo";
 
 export default function GamePlayPage() {
   return (
-    <Layout
+    <MainLayout
       children={
         <>
           <Navigation />

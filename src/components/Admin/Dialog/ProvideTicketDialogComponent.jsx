@@ -20,9 +20,10 @@ export default function ProvideTicketDialogComponent(props) {
   const { listTicket, isProvideTicket } = useSelector(
     (state) => state.adminConfigReducer
   );
+
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
-  const [dateInput, setDateInput] = useState({
+  const [dateInput] = useState({
     date: moment().format("YYYY/MM/DD"),
   });
   const [ticketQuantity, setTicketQuantity] = useState(0);

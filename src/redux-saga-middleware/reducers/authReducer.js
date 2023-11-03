@@ -7,6 +7,13 @@ export const toggleLoginDialog = (data) => {
   };
 };
 
+export const closeLoginDialog = (data) => {
+  return {
+    type: "CLOSE_LOGIN_DIALOG",
+    payload: data,
+  };
+};
+
 export const saveDataLogin = (data) => {
   return {
     type: "SAVE_DATA_LOGIN",
@@ -92,7 +99,6 @@ export const toggleDialogConfirm = (data) => {
 };
 
 export const getIdPackage = (data) => {
-  console.log(data);
   return {
     type: "GET_ID_PACKAGE",
     payload: data,
@@ -147,6 +153,61 @@ export const addRefCodeRegister = (data) => {
   };
 };
 
+export const updatePromotionExtra = (data) => {
+  return {
+    type: "UPDATE_PROMOTION_EXTRA",
+    payload: data,
+  };
+};
+
+export const updatePromotionExtraAfterPlayGame = (data) => {
+  return {
+    type: "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME",
+    payload: data,
+  };
+};
+
+export const updateUPack = (data) => {
+  return {
+    type: "UPDATE_U_PACK",
+    payload: data
+  }
+}
+export const saveCreateAccInfo = (data) => {
+  return {
+    type: "SAVE_CREATE_ACC_INFO",
+    payload: data,
+  };
+};
+
+export const clearCreateAccInfo = (data) => {
+  return {
+    type: "CLEAR_CREATE_ACC_INFO",
+    payload: data,
+  };
+};
+
+export const saveForgetPassInfo = (data) => {
+  return {
+    type: "SAVE_FORGET_PASS_INFO",
+    payload: data,
+  };
+};
+
+export const clearForgetPassInfo = (data) => {
+  return {
+    type: "CLEAR_FORGET_PASS_INFO",
+    payload: data,
+  };
+};
+
+export const updateUsernameWhenReset = (data) => {
+  return {
+    type: "UPDATE_USERNAME_WHEN_RESET",
+    payload: data,
+  };
+}
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -156,7 +217,7 @@ const authReducer = (
     token: "",
     userRole: "",
     registerValue: "",
-    isTab: false,
+    currentTab: "login",
     isUpdateProfile: false,
     userChangeAvatar: "",
     isNav: true,
@@ -174,6 +235,11 @@ const authReducer = (
     isShare: false,
     isSubscription: false,
     refCodeRegister: "",
+    promotionExtra: 0,
+    createAccInfo:{},
+    forgotPassInfo:{},
+    userNameRef:"",
+    nameReset: ""
   },
   action
 ) => {
@@ -194,6 +260,31 @@ const authReducer = (
         userId: payload?.id,
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
+        promotionExtra:payload.promotionExtra || 0
+      };
+    }
+    case "SAVE_CREATE_ACC_INFO": {
+      return {
+        ...state,
+        createAccInfo: payload.createAccInfo,
+      };
+    }
+    case "CLEAR_CREATE_ACC_INFO": {
+      return {
+        ...state,
+        createAccInfo: {},
+      };
+    }
+    case "SAVE_FORGET_PASS_INFO": {
+      return {
+        ...state,
+        forgotPassInfo: payload.forgotPassInfo,
+      };
+    }
+    case "CLEAR_FORGET_PASS_INFO": {
+      return {
+        ...state,
+        forgotPassInfo: {},
       };
     }
     case "REMOVE_TOKEN":
@@ -203,7 +294,7 @@ const authReducer = (
     case "REGISTER_SUCCESS_FULLY":
       return { ...state, registerValue: payload };
     case "CLICK_TAB":
-      return { ...state, isTab: payload };
+      return { ...state, currentTab: payload };
     case "UPDATE_PROFILE":
       return { ...state, isUpdateProfile: true, userChangeAvatar: "" };
     case "UPDATE_PROFILE_SUCCESS":
@@ -253,9 +344,16 @@ const authReducer = (
     case "TOGGLE_SHARE_TOUR":
       return { ...state, isShare: !state.isShare };
     case "TOGGLE_SUBSCRIPTION_DIALOG":
-      return { ...state, isSubscription: payload };
+      return { ...state, isSubscription: !state.isSubscription };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
+    case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
+    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
+    case "CLOSE_LOGIN_DIALOG": return {...state, isLoginDialog: false}
+    case "UPDATE_U_PACK": return {...state, uPack: payload || {}}
+    case "UPDATE_USERNAME_WHEN_RESET": {
+      return {...state, nameReset: payload || ""}
+    }
     default:
       return state;
   }
