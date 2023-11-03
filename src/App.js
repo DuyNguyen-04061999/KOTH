@@ -44,9 +44,7 @@ import {
   getLeaderBoardSuccess,
   getNavTablet,
   logoutSuccessFully,
-  registerSuccesFully,
   saveDataLogin,
-  toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
   updatePromotionExtra,
@@ -345,16 +343,6 @@ function App() {
         });
         socket?.emit("listFriend");
         store.dispatch(deleteFriendSuccesFully("success"));
-      });
-
-      socket?.on("registerSuccess", (data, user) => {
-        socket?.emit("login", {
-          username: user?.username?.toLowerCase(),
-          password: user?.password,
-        });
-        store.dispatch(showAlert("success", "register succesfully"));
-        store.dispatch(registerSuccesFully("success"));
-        store.dispatch(toggleLoginDialog());
       });
 
       socket?.on("logoutSuccess", (data) => {

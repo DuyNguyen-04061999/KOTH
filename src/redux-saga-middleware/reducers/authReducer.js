@@ -173,6 +173,33 @@ export const updateUPack = (data) => {
     payload: data
   }
 }
+export const saveCreateAccInfo = (data) => {
+  return {
+    type: "SAVE_CREATE_ACC_INFO",
+    payload: data,
+  };
+};
+
+export const clearCreateAccInfo = (data) => {
+  return {
+    type: "CLEAR_CREATE_ACC_INFO",
+    payload: data,
+  };
+};
+
+export const saveForgetPassInfo = (data) => {
+  return {
+    type: "SAVE_FORGET_PASS_INFO",
+    payload: data,
+  };
+};
+
+export const clearForgetPassInfo = (data) => {
+  return {
+    type: "CLEAR_FORGET_PASS_INFO",
+    payload: data,
+  };
+};
 
 const authReducer = (
   state = {
@@ -183,7 +210,7 @@ const authReducer = (
     token: "",
     userRole: "",
     registerValue: "",
-    isTab: false,
+    currentTab: "login",
     isUpdateProfile: false,
     userChangeAvatar: "",
     isNav: true,
@@ -201,7 +228,9 @@ const authReducer = (
     isShare: false,
     isSubscription: false,
     refCodeRegister: "",
-    promotionExtra: 0
+    promotionExtra: 0,
+    createAccInfo:{},
+    forgotPassInfo:{}
   },
   action
 ) => {
@@ -225,6 +254,30 @@ const authReducer = (
         promotionExtra:payload.promotionExtra || 0
       };
     }
+    case "SAVE_CREATE_ACC_INFO": {
+      return {
+        ...state,
+        createAccInfo: payload.createAccInfo,
+      };
+    }
+    case "CLEAR_CREATE_ACC_INFO": {
+      return {
+        ...state,
+        createAccInfo: {},
+      };
+    }
+    case "SAVE_FORGET_PASS_INFO": {
+      return {
+        ...state,
+        forgotPassInfo: payload.forgotPassInfo,
+      };
+    }
+    case "CLEAR_FORGET_PASS_INFO": {
+      return {
+        ...state,
+        forgotPassInfo: {},
+      };
+    }
     case "REMOVE_TOKEN":
       return { ...state, token: "" };
     case "UPDATE_USER_GOLD":
@@ -232,7 +285,7 @@ const authReducer = (
     case "REGISTER_SUCCESS_FULLY":
       return { ...state, registerValue: payload };
     case "CLICK_TAB":
-      return { ...state, isTab: payload };
+      return { ...state, currentTab: payload };
     case "UPDATE_PROFILE":
       return { ...state, isUpdateProfile: true, userChangeAvatar: "" };
     case "UPDATE_PROFILE_SUCCESS":

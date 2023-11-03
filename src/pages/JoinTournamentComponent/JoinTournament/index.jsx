@@ -38,7 +38,7 @@ import {
   saveBoughtTournament,
   saveIdTournament,
   toggleExtra,
-  toggleTournamentShow
+  toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
@@ -618,7 +618,7 @@ export default function JoinTournament() {
                                   {moment(
                                     detailTournament?.tournamentStartAt ||
                                       new Date()
-                                  )?.format("HH:mm")}
+                                  )?.format("LT")}
                                 </Typography>
                               </Box>
                             )}
@@ -719,7 +719,7 @@ export default function JoinTournament() {
                                   {moment(
                                     detailTournament?.tournamentEndAt ||
                                       new Date()
-                                  )?.format("HH:mm")}
+                                  )?.format("LT")}
                                 </Typography>
                               </Box>
                             )}
@@ -1905,7 +1905,6 @@ export default function JoinTournament() {
           </Container>
         ) : (
           <>
-
             <Box>
               <Container
                 sx={{
@@ -1915,7 +1914,6 @@ export default function JoinTournament() {
                 }}
               >
                 {detailTournament?.tournamentStatus === 2 ? (
-                 
                   <></>
                 ) : (
                   <Box
@@ -2517,7 +2515,7 @@ export default function JoinTournament() {
                     //     ? ""
                     //     : "blur(2px)",
                     // zIndex: "28",
-                    marginTop:"15px",
+                    marginTop: "15px",
                   }}
                 >
                   {!detailTournament?.checkInTournament ? (
@@ -2771,8 +2769,8 @@ export default function JoinTournament() {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    marginTop:"15px",
-                    marginBottom:"15px"
+                    marginTop: "15px",
+                    marginBottom: "15px",
                   }}
                 >
                   <Box
@@ -2787,7 +2785,7 @@ export default function JoinTournament() {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    marginTop:"15px"
+                    marginTop: "15px",
                   }}
                 >
                   <Typography
@@ -2800,8 +2798,7 @@ export default function JoinTournament() {
                     Informations
                   </Typography>
                 </Box>
-                <Box
-                >
+                <Box>
                   <Box
                     sx={{
                       textAlign: "start",
@@ -2873,7 +2870,7 @@ export default function JoinTournament() {
                       </Typography>
                     )}
                 </Box>
-                <Box sx={{ marginBottom:"15px", marginTop:"15px"}}>
+                <Box sx={{ marginBottom: "15px", marginTop: "15px" }}>
                   <Box
                     sx={{
                       height: "1px",
@@ -2887,7 +2884,7 @@ export default function JoinTournament() {
                     sx={{
                       display: "flex",
                       justifyContent: "space-between",
-                      marginTop:"15px"
+                      marginTop: "15px",
                     }}
                   >
                     <Typography
