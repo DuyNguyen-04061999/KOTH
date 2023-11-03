@@ -10,6 +10,7 @@ import {
   clickTab,
   closeLoginDialog,
   saveCreateAccInfo,
+  saveDataLogin,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { updateCountEveryDay } from "../../../../redux-saga-middleware/reducers/luckyWheelReducer";
 import { images, sign } from "../../../../utils/images";
@@ -188,16 +189,49 @@ export default function Signup(props) {
         password: user?.password,
       });
 
-      socket?.on(
-        "loginSuccess",
-        (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
-          dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
-        }
-      );
+      
       dispatch(showAlert("success", "register succesfully"));
       dispatch(clickTab("otpVerifyAccount"));
-      dispatch(closeLoginDialog())
     });
+
+    socket?.on(
+      "loginSuccess",
+      (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
+        dispatch(closeLoginDialog())
+        dispatch(
+          updateCountEveryDay(user?.userCountSpin?.countEveryday)
+        );
+        dispatch(
+          saveDataLogin({
+            token: token,
+            username: user?.userName,
+            gold: user?.userGold,
+            avatar: user?.userAccount?.accountAvatar,
+            role: user?.userRole,
+            id: user?.id,
+            userPackageId: userPackageId,
+            uPack: uPack,
+            promotionExtra:promotionExtra
+          })
+        );
+
+        localStorage.setItem("NAME", user.userName);
+        // localStorage.setItem("PASS", password);
+        localStorage.setItem("KE", key);
+        localStorage.setItem("token", token);
+        // socket?.emit("listMessage");
+        socket?.emit("listFriend");
+        socket?.emit("getTransaction");
+        // socket?.emit("leaveAllRoom");
+        socket?.emit("listPackage", {
+          type: true,
+        });
+        socket?.emit("getDetailProfile", {
+          username: user?.userName,
+        });
+        dispatch(closeLoginDialog())
+      }
+    );
 
     return () => {
       socket?.off("registerSuccess");

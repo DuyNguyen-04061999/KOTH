@@ -79,7 +79,7 @@ export default function Package() {
                   color: "#fff",
                 }}
               >
-                Package
+                Packages
               </Typography>
             )}
           </Box>
@@ -92,25 +92,6 @@ export default function Package() {
             <Box>
               <Box className="subscription_pack">
                 <Box>
-                  <Typography
-                    className="pt-2"
-                    sx={{
-                      textAlign:
-                        location && location?.pathname?.includes("home")
-                          ? "start"
-                          : "center",
-                      fontSize: width < 576 ? "14px" : "18px",
-                      fontWeight: "200 !important",
-                      marginLeft: "0px !important",
-                      color: "#fff",
-                      marginTop:
-                        location && location?.pathname?.includes("home")
-                          ? "0px"
-                          : "20px",
-                    }}
-                  >
-                    Subscription
-                  </Typography>
                 </Box>
                 <Box
                   sx={{
@@ -124,14 +105,6 @@ export default function Package() {
                         : "30px",
                   }}
                 >
-                  {/* {listPackage
-                      ?.filter(
-                        (item) =>
-                          item?.packageName !== "Ticket Play" &&
-                          item?.packageName !== "Merchant" &&
-                          item?.packageName !== "Free"
-                      )
-                      ?.map((i, index) => { */}
                   {listPackage
                     ?.filter((item) => item?.packageName === "Subscription")
                     ?.map((i, index) => {
@@ -162,7 +135,7 @@ export default function Package() {
                               color: "white",
                             }}
                           >
-                            {i?.packageName} Pack
+                            {i?.packageName === "Combo Extra 1" ? ("Standard Extra Pack") : "" || i?.packageName === "Combo Extra 2" ? ("Value Extra Pack") : i?.packageName} 
                           </Typography>
                           <Box
                             className="card"
@@ -290,8 +263,7 @@ export default function Package() {
                                         marginLeft: "4px !important",
                                       }}
                                     >
-                                      {i?.packageFreeTicketTournament} extras /
-                                      Days
+                                      {i?.packageFreeTicketTournament} extras/days
                                     </Typography>
                                   </Box>
                                   {i?.packageName === "Subscription" ? (
@@ -546,14 +518,6 @@ export default function Package() {
                         : "30px",
                   }}
                 >
-                  {/* {listPackage
-                      ?.filter(
-                        (item) =>
-                          item?.packageName !== "Ticket Play" &&
-                          item?.packageName !== "Merchant" &&
-                          item?.packageName !== "Free"
-                      )
-                      ?.map((i, index) => { */}
                   {listPackage
                     ?.filter(
                       (item) =>
@@ -580,10 +544,6 @@ export default function Package() {
                             alignItems: "center",
                             flexDirection: "column",
                             position: "relative",
-                            // border:"5px solid",
-                            // borderImageSlice:"1",
-                            // borderWidth:"5px",
-                            // borderImageSource:"linear-gradient(to bottom, #743ad5, #d53a9d)"
                           }}
                           className={
                             i?.packageName === "Combo Extra 1"
@@ -593,7 +553,6 @@ export default function Package() {
                               : "" || i?.packageName === "Combo Extra 2"
                               ? "gradient-border-rounded2"
                               : ""
-                            // "gradient-border-rounded1"
                           }
                         >
                           <Typography
@@ -604,16 +563,9 @@ export default function Package() {
                               marginTop: "5px",
                               marginBottom: "15px",
                               color: "white",
-                              // i?.packageName === "Free"
-                              //   ? "#383B80"
-                              //   : "" || i?.packageName === "Diamond"
-                              //   ? "white"
-                              //   : "" || i?.packageName === "Gold"
-                              //   ? "black"
-                              //   : "",
                             }}
                           >
-                            {i?.packageName === "Combo Extra 1" ? ("Standard Extra Pack") : "" || i?.packageName === "Combo Extra 2" ? ("Value Extra Pack") : ""} 
+                            {i?.packageName === "Combo Extra 1" ? ("Standard Extra Pack") : "" || i?.packageName === "Combo Extra 2" ? ("Value Extra Pack") : i?.packageName} 
                           </Typography>
                           <Box
                             className="card"
@@ -656,11 +608,6 @@ export default function Package() {
                                     marginBottom:
                                       i?.packageName === "Free" ? "15px" : "",
                                     marginTop:
-                                      // i?.packageName === "Gold"
-                                      //   ? "15px"
-                                      //   : "" || i?.packageName === "Diamond"
-                                      //   ? "15px"
-                                      //   : "",
                                       "15px",
                                       mixBlendMode: width < 576 ? "normal" : "difference",
                                   }}
@@ -680,43 +627,7 @@ export default function Package() {
                                     type="video/mp4"
                                   />
                                 </video>
-                                {/* <video
-                                    autoPlay
-                                    // src={
-                                    //   i?.packageName === "Free"
-                                    //     ? images.free
-                                    //     : "" || i?.packageName === "Diamond"
-                                    //     ? images.diamon
-                                    //     : "" || i?.packageName === "Gold"
-                                    //     ? images.gold1
-                                    //     : ""
-                                    // }
-                                    src={
-                                      i?.packageAvatar
-                                        ? process.env.REACT_APP_END_POINT +
-                                          "/" +
-                                          i?.packageAvatar
-                                        : images.free
-                                    }
-                                    width={
-                                      width < 1200 && width > 576 ? 130 : 200
-                                    }
-                                    height={
-                                      width < 1200 && width > 576 ? 130 : 200
-                                    }
-                                    alt=""
-                                    style={{
-                                      marginBottom:
-                                        i?.packageName === "Free" ? "15px" : "",
-                                      marginTop:
-                                        // i?.packageName === "Gold"
-                                        //   ? "15px"
-                                        //   : "" || i?.packageName === "Diamond"
-                                        //   ? "15px"
-                                        //   : "",
-                                        "15px"
-                                    }}
-                                  /> */}
+                                
                                 <Box
                                   sx={{
                                     marginBottom: "0px",
@@ -786,65 +697,7 @@ export default function Package() {
                                       {i?.packageFreeTicketTournament} extras 
                                     </Typography>
                                   </Box>
-                                  {/* <Box
-                                    sx={{
-                                      display: "flex",
-                                      justifyContent: "flex-start",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    {i?.packageCountLuckySpin === 0 ? (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 16 16"
-                                      >
-                                        <g>
-                                          <path
-                                            fill="#F05153"
-                                            d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
-                                          ></path>
-                                          <g fill="#fff">
-                                            <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
-                                            <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
-                                          </g>
-                                        </g>
-                                      </svg>
-                                    ) : (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                      >
-                                        <g>
-                                          <path
-                                            fill="#14C58A"
-                                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                          ></path>
-                                          <path
-                                            fill="#fff"
-                                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                          ></path>
-                                        </g>
-                                      </svg>
-                                    )}
-                                    <Typography
-                                      variant="body1"
-                                      sx={{
-                                        fontSize: "17px",
-                                        color: "white",
-                                        
-                                        fontWeight: "500 !important",
-                                      }}
-                                    >
-                                      {i?.packageCountLuckySpin}Times for lucky
-                                      spin
-                                    </Typography>
-                                  </Box> */}
+                                  
                                 </Box>
                                 {i?.packagePrice === 0 ? (
                                   <Box
@@ -895,7 +748,6 @@ export default function Package() {
                                     }
                                     if (i?.packageName === "Combo Extra 1") {
                                       if (token) {
-                                        // dispatch(toggleDialogConfirm());
                                         dispatch(
                                           toggleCheckWallet({
                                             type: "combo1",
@@ -904,11 +756,9 @@ export default function Package() {
                                           })
                                         );
                                         dispatch(getIdPackage(i?.id));
-                                        // dispatch(toggleSubscriptionDialog());
                                       }
                                     } else {
                                       if (token) {
-                                        // dispatch(toggleDialogConfirm());
                                         dispatch(
                                           toggleCheckWallet({
                                             type: "combo2",
@@ -917,7 +767,6 @@ export default function Package() {
                                           })
                                         );
                                         dispatch(getIdPackage(i?.id));
-                                        // dispatch(toggleSubscriptionDialog());
                                       }
                                     }
                                   }}
@@ -951,7 +800,6 @@ export default function Package() {
                           </Box>
                           <Box
                             className={
-                              // i?.packageName === "Diamond" ? "sale" : ""
                               "sale"
                             }
                           >
@@ -1036,7 +884,7 @@ export default function Package() {
                 color: "#fff",
               }}
             >
-              Package
+              Packages
             </Typography>
           )}
           <Box style={{ padding: "10px" }}>
@@ -1122,7 +970,7 @@ export default function Package() {
                             textOverflow: "ellipsis",
                           }}
                         >
-                          {i?.packageName} Pack
+                          {i?.packageName === "Combo Extra 1" ? ("Standard Extra Pack") : "" || i?.packageName === "Combo Extra 2" ? ("Value Extra Pack") : i?.packageName} 
                         </Typography>
                         <Box
                           className="card"
@@ -1244,7 +1092,7 @@ export default function Package() {
                                       marginLeft: "4px !important",
                                     }}
                                   >
-                                    {i?.packageFreeTicketTournament} extras 
+                                    {i?.packageFreeTicketTournament} extras{i?.packageName === "Subscription" ? "/days" : ""} 
                                   </Typography>
                                 </Box>
                                 {i?.packageName === "Subscription" ? (
@@ -1293,65 +1141,6 @@ export default function Package() {
                                   marginBottom: "15px"
                                 }}>
                                   </Box>}
-                                {/* <Box
-                               sx={{
-                                 display: "flex",
-                                 justifyContent: "flex-start",
-                                 alignItems: "center",
-                               }}
-                             >
-                               {i?.packageCountLuckySpin === 0 ? (
-                                 <svg
-                                   xmlns="http://www.w3.org/2000/svg"
-                                   width="15"
-                                   height="15"
-                                   fill="none"
-                                   viewBox="0 0 16 16"
-                                 >
-                                   <g>
-                                     <path
-                                       fill="#F05153"
-                                       d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
-                                     ></path>
-                                     <g fill="#fff">
-                                       <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
-                                       <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
-                                     </g>
-                                   </g>
-                                 </svg>
-                               ) : (
-                                 <svg
-                                   xmlns="http://www.w3.org/2000/svg"
-                                   width="15"
-                                   height="15"
-                                   fill="none"
-                                   viewBox="0 0 18 18"
-                                 >
-                                   <g>
-                                     <path
-                                       fill="#14C58A"
-                                       d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                     ></path>
-                                     <path
-                                       fill="#fff"
-                                       d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                     ></path>
-                                   </g>
-                                 </svg>
-                               )}
- 
-                               <Typography
-                                 variant="body1"
-                                 sx={{
-                                   fontSize: "14px",
-                                   color: "white",
-                                   
-                                   fontWeight: "500 !important",
-                                 }}
-                               >
-                                 {i?.packageCountLuckySpin}Times for lucky spin
-                               </Typography>
-                             </Box> */}
                               </Box>
                               {i?.packagePrice === 0 ? (
                                 <Box
@@ -1390,15 +1179,7 @@ export default function Package() {
                                   >
                                     ${i?.packagePrice}
                                   </Typography>
-                                  {/* <Typography
-                                   variant="body1"
-                                   sx={{
-                                     marginTop: "7px",
-                                     fontSize: "12px",
-                                   }}
-                                 >
-                                   /month
-                                 </Typography> */}
+
                                 </Box>
                               )}
                               <button
@@ -1411,7 +1192,6 @@ export default function Package() {
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 1"){
@@ -1424,7 +1204,6 @@ export default function Package() {
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 2"){
@@ -1437,7 +1216,6 @@ export default function Package() {
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if (token === null || token === "") {
@@ -1597,18 +1375,11 @@ export default function Package() {
                             marginTop: "5px",
                             marginBottom: "15px !important",
                             color:
-                              // i?.packageName === "Free"
-                              //   ? "#383B80"
-                              //   : "" || i?.packageName === "Diamond"
-                              //   ? "white"
-                              //   : "" || i?.packageName === "Gold"
-                              //   ? "black"
-                              //   : "",
                               "white",
                             textOverflow: "ellipsis",
                           }}
                         >
-                          {i?.packageName} Pack
+                          {i?.packageName === "Combo Extra 1" ? ("Standard Extra Pack") : "" || i?.packageName === "Combo Extra 2" ? ("Value Extra Pack") : i?.packageName} 
                         </Typography>
                         <Box
                           className="card"
@@ -1729,7 +1500,7 @@ export default function Package() {
                                       marginLeft: "4px !important",
                                     }}
                                   >
-                                    {i?.packageFreeTicketTournament} extras 
+                                    {i?.packageFreeTicketTournament} extras{i?.packageName === "Subscription" ? "/days" : ""}
                                   </Typography>
                                 </Box>
                                 {i?.packageName === "Subscription" ? (
@@ -1778,65 +1549,6 @@ export default function Package() {
                                   marginBottom: "15px"
                                 }}>
                                   </Box>}
-                                {/* <Box
-                              sx={{
-                                display: "flex",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                              }}
-                            >
-                              {i?.packageCountLuckySpin === 0 ? (
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="15"
-                                  height="15"
-                                  fill="none"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <g>
-                                    <path
-                                      fill="#F05153"
-                                      d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
-                                    ></path>
-                                    <g fill="#fff">
-                                      <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
-                                      <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
-                                    </g>
-                                  </g>
-                                </svg>
-                              ) : (
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="15"
-                                  height="15"
-                                  fill="none"
-                                  viewBox="0 0 18 18"
-                                >
-                                  <g>
-                                    <path
-                                      fill="#14C58A"
-                                      d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                    ></path>
-                                    <path
-                                      fill="#fff"
-                                      d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                    ></path>
-                                  </g>
-                                </svg>
-                              )}
-
-                              <Typography
-                                variant="body1"
-                                sx={{
-                                  fontSize: "14px",
-                                  color: "white",
-                                  
-                                  fontWeight: "500 !important",
-                                }}
-                              >
-                                {i?.packageCountLuckySpin}Times for lucky spin
-                              </Typography>
-                            </Box> */}
                               </Box>
                               {i?.packagePrice === 0 ? (
                                 <Box
@@ -1875,15 +1587,6 @@ export default function Package() {
                                   >
                                     ${i?.packagePrice}
                                   </Typography>
-                                  {/* <Typography
-                                  variant="body1"
-                                  sx={{
-                                    marginTop: "7px",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  /month
-                                </Typography> */}
                                 </Box>
                               )}
                               <button
@@ -1896,7 +1599,6 @@ export default function Package() {
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 1") {
@@ -1909,7 +1611,6 @@ export default function Package() {
                                         })
                                       );
                                       dispatch(getIdPackage(i?.id));
-                                      // dispatch(toggleSubscriptionDialog(false));
                                     }
                                   }
                                   if(i?.packageName === "Combo Extra 2") {

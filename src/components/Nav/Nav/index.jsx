@@ -853,7 +853,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("packages") && "white",
                   }}
                 >
-                  Subscription
+                  Packages
                 </Typography>
               </Box>
             </Box>

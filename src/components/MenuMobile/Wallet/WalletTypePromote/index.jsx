@@ -41,8 +41,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
       return;
     }
@@ -57,8 +56,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
     } else if (typePayment === "stripe" && currency === "USD") {
       dispatch(getStripe(Number.parseFloat(amount)));
@@ -73,8 +71,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
     }
   };
