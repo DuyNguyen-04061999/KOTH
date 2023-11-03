@@ -5,7 +5,7 @@ import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { imageDesktop } from "../../utils/images";
+import { imageDesktop, images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
@@ -18,13 +18,14 @@ import history from "../Router/history";
 
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import _socket from "../../redux-saga-middleware/config/socket";
 import {
   changeRouter,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
-import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
+import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog, updatePromotionExtra } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
   openChatPopup,
@@ -99,7 +100,7 @@ export default function Layout(props) {
   const { chatPopup, badgechat } = useSelector(
     (state) => state.chatReducer
   );
-  const { router, startGameCheck } = useSelector((state) => state.appReducer);
+  const { router, startGameCheck, fromRouter } = useSelector((state) => state.appReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const pathname = useLocation();
@@ -108,11 +109,16 @@ export default function Layout(props) {
   const [socket, setSocket] = useState(null);
   const { device } = useSelector((state) => state.deviceReducer);
   useEffect(() => {
-    dispatch(changeRouter(window.location.pathname));
     const socket = _socket;
     setSocket(socket);
   }, [dispatch]);
 
+  const location = useLocation()
+
+  React.useEffect(() => {
+    dispatch(changeRouter(location.pathname));
+  }, [location, dispatch])
+  
   useEffect(() => {
     if (
       router &&
@@ -136,7 +142,7 @@ export default function Layout(props) {
   }, [width, dispatch]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    
   }, [pathname]);
 
   const clickNavIcon = () => {
@@ -153,10 +159,6 @@ export default function Layout(props) {
       // Check if the virtual keyboard is open (adjust the threshold if needed)
       if (window.innerHeight < window.outerHeight) {
         // Adjust the timeout delay if needed
-        setTimeout(() => {
-          // Scroll to the top or any other desired behavior
-          window.scrollTo(0, 0);
-        }, 300); // Wait for virtual keyboard to fully open (adjust as needed)
       }
     };
 
@@ -169,7 +171,6 @@ export default function Layout(props) {
     };
   }, []);
 
-  const location = useLocation();
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
   const refCodeURL= query?.get("refcode");
@@ -201,6 +202,34 @@ export default function Layout(props) {
   useEffect(() => {
     dispatch(toggleStartGame(false));
   }, [location.pathname, dispatch]);
+
+
+  useEffect(() => {
+    if(socket) {
+      socket?.on("buyPromoExtraSuccess", (data) => {
+        if(fromRouter) {
+          navigate(fromRouter)
+        }
+        toast.success("Buy Combo Extra Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        dispatch(updatePromotionExtra(data || 0))
+      })
+    }
+
+    return () => {
+      socket?.off("buyPromoExtraSuccess");
+    };
+  }, [fromRouter, socket, router, navigate, dispatch])
+
   return ReactDOM.createPortal(
     <Box
       className="tong"
@@ -443,7 +472,7 @@ export default function Layout(props) {
               marginRight:
                 device === "Tablet" ||
                 (device === "Mobile" && orientation === "landscape") ||
-                (device === "Desktop" && width < 1200)
+                (device === "Desktop" && width < 1200) || (width > 576 && width < 950)
                   ? "0"
                   : "",
             }}

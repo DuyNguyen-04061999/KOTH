@@ -34,7 +34,7 @@ export default function TicketCheckOut() {
   };
 
   const cancelButton = () => {
-    dispatch(toggleCheckWallet(false));
+    dispatch(closeCheckWallet(false))
   };
 
   const btnSubscription = (event) => {
@@ -46,6 +46,7 @@ export default function TicketCheckOut() {
       socket.emit("buyNewPackage", {
         packageId: idPackage,
       });
+      setSl(1)
       dispatch(toggleCheckWallet());
     }
   };
@@ -61,12 +62,14 @@ export default function TicketCheckOut() {
         packageId: idPackage,
         quantityExtra: sl
       });
+      setSl(1)
       dispatch(toggleCheckWallet());
     } else {
       socket?.emit("buyNewPackage", {
         packageId: idPackage,
         quantityExtra: sl
       });
+      setSl(1)
       dispatch(toggleCheckWallet());
     }
   };
