@@ -201,6 +201,13 @@ export const clearForgetPassInfo = (data) => {
   };
 };
 
+export const updateUsernameWhenReset = (data) => {
+  return {
+    type: "UPDATE_USERNAME_WHEN_RESET",
+    payload: data,
+  };
+}
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -232,6 +239,7 @@ const authReducer = (
     createAccInfo:{},
     forgotPassInfo:{},
     userNameRef:"",
+    nameReset: ""
   },
   action
 ) => {
@@ -343,6 +351,9 @@ const authReducer = (
     case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
     case "CLOSE_LOGIN_DIALOG": return {...state, isLoginDialog: false}
     case "UPDATE_U_PACK": return {...state, uPack: payload || {}}
+    case "UPDATE_USERNAME_WHEN_RESET": {
+      return {...state, nameReset: payload || ""}
+    }
     default:
       return state;
   }

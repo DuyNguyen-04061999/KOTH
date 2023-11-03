@@ -55,7 +55,7 @@ export default function OTPVerifyAccount() {
     return () => {
       socket?.off("verifyOtpSuccess");
     };
-  }, [socket]);
+  }, [socket, dispatch]);
 
   const handleResendOTP = () => {
     socket?.emit("resendOtp", {
