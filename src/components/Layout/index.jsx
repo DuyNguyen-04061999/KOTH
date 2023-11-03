@@ -11,7 +11,7 @@ import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
 // import { inpChat } from "../../utils/cssFrom";
 import { useEffect } from "react";
-import { NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 import MenuWallet from "../MenuMobile/Wallet";
 import history from "../Router/history";
@@ -177,6 +177,10 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
+    
+  })
+
+  useEffect(() => {
     const handleKeyboardOpen = () => {
       // Check if the virtual keyboard is open (adjust the threshold if needed)
       if (window.innerHeight < window.outerHeight) {
@@ -213,11 +217,10 @@ export default function Layout(props) {
     dispatch(toggleStartGame(false));
   }, [location.pathname, dispatch]);
 
-
   useEffect(() => {
     if(socket) {
       socket?.on("buyPromoExtraSuccess", (data) => {
-        if(fromRouter) {
+        if(fromRouter && router !== "/" && router !== "/home") {
           navigate(fromRouter)
         }
         toast.success("Buy Combo Extra Successfully", {
@@ -334,6 +337,7 @@ export default function Layout(props) {
                 style={{ position: "relative" }}
                 onClick={() => {
                   navigate("/home");
+                  window.scrollTo(0, 0)
                 }}
               >
                 <img
@@ -351,7 +355,10 @@ export default function Layout(props) {
               location?.pathname?.includes("/packages") ? (
                 <span className="ms-2">Packages</span>
               ) : (
-                <NavLink to="/home">
+                <Box onClick={() => {
+                  navigate("/home");
+                  window.scrollTo(0, 0)
+                }}>
                   <img
                     style={{
                       width: "34px",
@@ -362,7 +369,7 @@ export default function Layout(props) {
                     src={imageDesktop.LogoCongTy}
                     alt="logocty"
                   />
-                </NavLink>
+                </Box>
               )}
             </Box>
           )}

@@ -51,6 +51,7 @@ export default function VideoComponent(props) {
       });
     }
   }, []);
+
   return (
     <Box
       sx={{
@@ -106,7 +107,7 @@ export default function VideoComponent(props) {
                 device === "Mobile" && orientation === "landscape"
                   ? "fixed"
                   : "absolute",
-              top: width < 576 ? "35%" : "80%",
+              top: width < 576 ? "25%" : "50%",
               right: "20px",
               display: "flex",
               alignItems: "center",
