@@ -173,16 +173,14 @@ export default function Signup(props) {
 
   useEffect(() => {
     socket?.on("registerSuccess", (data, user) => {
-      console.log(
-        dispatch(
-          saveCreateAccInfo({
-            createAccInfo: {
-              username: user?.username,
-              email: user?.email,
-              phone: user?.phone,
-            },
-          })
-        )
+      dispatch(
+        saveCreateAccInfo({
+          createAccInfo: {
+            username: user?.username,
+            email: user?.email,
+            phone: user?.phone,
+          },
+        })
       );
       socket?.emit("login", {
         username: user?.username?.toLowerCase(),
@@ -1018,7 +1016,13 @@ export default function Signup(props) {
             }}
           />
         </FormControl>
-        <Box className=" mb-3" sx={{ paddingTop: width < 576 ? "30px" : "0",marginTop: width < 576 ? "6px" :"24px" }}>
+        <Box
+          className=" mb-3"
+          sx={{
+            paddingTop: width < 576 ? "30px" : "0",
+            marginTop: width < 576 ? "6px" : "24px",
+          }}
+        >
           <div className="btn-conteiner">
             {disabledBtn === true ? (
               <AnimButton type={"Disabled"} text={"Sign Up"} />

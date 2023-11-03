@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { clearForgetPassInfo, clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
@@ -44,6 +44,7 @@ export default function OTPResetPassword() {
   useEffect(()=> {
     socket?.on("forgetPasswordSuccess",() => {
       dispatch(clickTab("createPass"));
+      dispatch(clearForgetPassInfo());
     })
   },[socket])
 
