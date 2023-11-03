@@ -11,9 +11,9 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ScanQRCodeDialogComponent(props) {
-    const {refCode} = props;
+    const { name } = useSelector(state => state?.adminAuthReducer)
     const location = window.location.host.replace("admin.", "");
-    const urlRedirect = `https://${location}/home?refcode=${refCode}`;
+    const urlRedirect = process.env.REACT_APP_ENV === "development" ? `http://${location}/influencers/${name}` : `https://${location}/influencers/${name}`;
     const {isOpenQRCode} = useSelector((state) => state.adminDialogReducer);
     const dispatch = useDispatch();
     const {width} = useWindowDimensions();
