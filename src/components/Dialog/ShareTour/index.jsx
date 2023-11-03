@@ -16,16 +16,17 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ShareTour() {
   const { width, height } = useWindowDimensions();
-  const { isShare } = useSelector((state) => state.authReducer);
-  const { refCode } = useSelector((state) => state.profileReducer);
+  const { isShare, userName } = useSelector((state) => state.authReducer);
+  // const { refCode } = useSelector((state) => state.profileReducer);
   const currentUrl = window.location.href;
-  const copyref = `${currentUrl}?refcode=${refCode}`;
+  const copyref = `${currentUrl}/influencers/${userName}`;
   const [copySuccess, setCopySuccess] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(toggleShareTour());
     setCopySuccess(false);
   };
+
 
   return ReactDOM.createPortal(
     <>

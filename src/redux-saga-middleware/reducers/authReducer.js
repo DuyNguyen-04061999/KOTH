@@ -224,7 +224,8 @@ const authReducer = (
     refCodeRegister: "",
     promotionExtra: 0,
     createAccInfo:{},
-    forgotPassInfo:{}
+    forgotPassInfo:{},
+    userNameRef:"",
   },
   action
 ) => {

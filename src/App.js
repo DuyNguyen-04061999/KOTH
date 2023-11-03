@@ -711,6 +711,16 @@ function App() {
                       )
                     }
                   ></Route>
+                                    <Route
+                    path="/influencers/:userName"
+                    element={
+                      getAppType() === "promote" ? (
+                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                      ) : (
+                        <SuspenseWrapper child={<HomePage/>}/>
+                      )
+                    }
+                  ></Route>
                   <Route path="/gamelobby/:id" element={<GameLobby />} />
                   <Route
                     path="/selectroom/:id"

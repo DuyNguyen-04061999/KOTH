@@ -11,7 +11,7 @@ import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
 // import { inpChat } from "../../utils/cssFrom";
 import { useEffect } from "react";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 import MenuWallet from "../MenuMobile/Wallet";
 import history from "../Router/history";
@@ -20,6 +20,7 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
+import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
 import {
   changeRouter,
@@ -93,7 +94,7 @@ export default function Layout(props) {
   );
   const { orientation } = useSelector((state) => state.gameReducer);
 
-  const { token, isNav } = useSelector(
+  const { token, isNav, userNameRef } = useSelector(
     (state) => state.authReducer
   );
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
@@ -145,6 +146,27 @@ export default function Layout(props) {
     
   }, [pathname]);
 
+  const {userName} = useParams();
+
+  useEffect(()=> {
+    const getRefCodeByUserName = async () => {
+      if(userName){
+        try {
+          const response = await API.get(`/api/get-refcode-by-username/${userName}`);
+          if(response){
+            console.log(response);
+            dispatch(addRefCodeRegister(response?.data?.ref));
+            dispatch(clickTab("signup"));
+            dispatch(toggleLoginDialog());
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    getRefCodeByUserName();
+  },[userName,dispatch])
+
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
@@ -186,18 +208,6 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-
-  useEffect(() => {
-    const checkRefCode =() =>{
-      if (refCodeURL) {
-        const refcode = refCodeURL?.split("refcode")?.join()
-        dispatch(addRefCodeRegister(refcode));
-        dispatch(clickTab("login"));
-        dispatch(toggleLoginDialog(true));
-      }
-    }
-    checkRefCode();
-  }, [refCodeURL, dispatch]);
   
   useEffect(() => {
     dispatch(toggleStartGame(false));
