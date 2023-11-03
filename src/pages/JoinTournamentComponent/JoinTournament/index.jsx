@@ -529,7 +529,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              {detailTournament?.extra}
+                              {detailTournament?.tournamentStatus !== 2 ? detailTournament?.extra : 0}
                             </Typography>
                           </Box>
                         </Box>
@@ -2199,7 +2199,7 @@ export default function JoinTournament() {
                           fontWeight: "700",
                         }}
                       >
-                        {detailTournament?.extra}
+                        {detailTournament?.tournamentStatus !== 2 ? detailTournament?.extra : 0}
                       </Typography>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -2534,17 +2534,17 @@ export default function JoinTournament() {
                     <Box
                       sx={{ display: "flex", justifyContent: "space-between" }}
                     >
-                      <AnimButton
+                      {detailTournament?.tournamentStatus !== 2 && <AnimButton
                         onClick={handlePlayTour}
                         type={"highlight"}
                         text={"Play"}
-                      />
+                    />}
 
-                      <AnimButton
-                        onClick={handleClickOpen}
-                        text={"Buy Extra"}
-                        type={"primary"}
-                      />
+                      {detailTournament?.tournamentStatus !== 2 && <AnimButton
+                      onClick={handleClickOpen}
+                      text={"Buy Extra"}
+                      type={"primary"}
+                    />}
                     </Box>
                   )}
                 </Box>

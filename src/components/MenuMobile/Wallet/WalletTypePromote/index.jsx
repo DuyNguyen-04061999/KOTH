@@ -24,7 +24,7 @@ export default function WalletTypePromote(props) {
   const [bgInput, setBgInput] = useState("gray");
   
   useEffect(() => {
-    setAmount(price)
+    setAmount(Math.ceil(price))
   }, [price])
 
   const navigate = useNavigate();

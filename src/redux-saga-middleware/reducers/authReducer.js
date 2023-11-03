@@ -167,6 +167,13 @@ export const updatePromotionExtraAfterPlayGame = (data) => {
   };
 };
 
+export const updateUPack = (data) => {
+  return {
+    type: "UPDATE_U_PACK",
+    payload: data
+  }
+}
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -281,6 +288,7 @@ const authReducer = (
     case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
     case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
     case "CLOSE_LOGIN_DIALOG": return {...state, isLoginDialog: false}
+    case "UPDATE_U_PACK": return {...state, uPack: payload || {}}
     default:
       return state;
   }
