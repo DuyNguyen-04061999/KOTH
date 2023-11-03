@@ -47,7 +47,9 @@ import {
   saveDataLogin,
   updateProfileFail,
   updateProfileSuccess,
+  updatePromotionExtra,
   updateSubPackageId,
+  updateUPack,
   updateUserGold
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
@@ -218,7 +220,7 @@ function App() {
   useEffect(() => {
     if (socket) {
       socket?.once("connect", (data) => {});
-      socket?.on("buyNewPackageSuccessfully", (data) => {
+      socket?.on("buyNewPackageSuccessfully", (data, uPackc) => {
         toast.success("Buy Subscription Successfully", {
           icon: ({ theme, type }) => (
             <img
@@ -231,8 +233,38 @@ function App() {
           className: "success-background",
         });
         store.dispatch(updateSubPackageId(data));
+        store.dispatch(updateUPack(uPackc))
       });
-      
+      socket?.on("getTicketFromAgent", (quantity) => {
+        toast.success("Get Promotion Extra From Agent Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        store.dispatch(updatePromotionExtra(quantity || 0))
+      })
+      socket?.on("upgradeSubscriptionSuccess", (data, uPackc) => {
+        toast.success("Upgrade Subscription Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        store.dispatch(updateSubPackageId(data));
+        store.dispatch(updateUPack(uPackc))
+      });
+
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
@@ -809,6 +841,12 @@ function App() {
                 autoClose={1000}
                 position="top-center"
                 draggable={false}
+                style={{
+                  right: "30px",
+                  display: "flex",
+                  padding: "0px 10px",
+                  top: "0px"
+                }}
                 onClick={() => {
                   store.dispatch(hideToastNotification())
               }}

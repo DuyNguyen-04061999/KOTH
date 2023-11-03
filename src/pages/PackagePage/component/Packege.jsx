@@ -20,13 +20,9 @@ import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walle
 export default function Package() {
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.appReducer);
-  const { token, userPackageId } = useSelector((state) => state.authReducer);
+  const { token, userPackageId, uPack } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  // const [bgFree, setBgFree] = useState("#A361EE");
-  // const [bgDiamond, setBgDiamond] = useState("#A361EE");
-  // const [bgGold, setBgGold] = useState("transparent");
-  // const [activePop, setAcivePop] = useState(1);
   const [item, setItem] = useState([]);
   useEffect(() => {
     const socket = _socket;
@@ -43,32 +39,8 @@ export default function Package() {
     }
   }, [socket, token]);
 
-  // const handleClickFree = () => {
-  //   setBgFree("#A361EE");
-  //   setBgDiamond("transparent");
-  //   setBgGold("transparent");
-  //   setAcivePop(0);
-  // };
-  // const handleClickDiamond = () => {
-  //   // setBgFree("transparent");
-  //   setBgDiamond("#A361EE");
-  //   setBgGold("transparent");
-  //   setAcivePop(1);
-  // };
-  // const handleClickGold = () => {
-  //   // setBgFree("transparent");
-  //   setBgDiamond("transparent");
-  //   setBgGold("#A361EE");
-  //   setAcivePop(2);
-  // };
 
   useEffect(() => {
-    // if (listPackage && listPackage?.length > 0) {
-    //   const list = listPackage?.filter(
-    //     (item) => item?.packageName === "Diamond"
-    //   );
-    //   setItem(list);
-    // }
     if (listPackage && listPackage?.length > 0) {
       const list = listPackage?.filter(
         (item) => item?.packageName === "Subscription"
@@ -78,23 +50,7 @@ export default function Package() {
   }, [listPackage]);
 
   useEffect(() => {
-    // if (activePop === 0) {
-    //   const itemPackage = listPackage?.filter(
-    //     (item) => item?.packageName === "Free"
-    //   );
-    //   setItem(itemPackage);
-    // } else
-    // if (activePop === 1) {
-    //   const itemPackage = listPackage?.filter(
-    //     (item) => item?.packageName === "Diamond"
-    //   );
-    //   setItem(itemPackage);
-    // } else if (activePop === 2) {
-    //   const itemPackage = listPackage?.filter(
-    //     (item) => item?.packageName === "Gold"
-    //   );
-    //   setItem(itemPackage);
-    // }
+   
     const itemPackage = listPackage?.filter(
       (item) =>
         item?.packageName === "Subscription" ||
@@ -338,46 +294,52 @@ export default function Package() {
                                       Days
                                     </Typography>
                                   </Box>
+                                  {i?.packageName === "Subscription" ? (
                                   <Box
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                    marginBottom: "15px",
+                                  }}
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="12"
+                                    height="12"
+                                    fill="none"
+                                    viewBox="0 0 18 18"
+                                  >
+                                    <g>
+                                      <path
+                                        fill="#14C58A"
+                                        d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
+                                      ></path>
+                                      <path
+                                        fill="#fff"
+                                        d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
+                                      ></path>
+                                    </g>
+                                  </svg>
+                                  <Typography
+                                    variant="body1"
                                     sx={{
-                                      display: "flex",
-                                      justifyContent: "flex-start",
-                                      alignItems: "center",
-                                      marginBottom: "15px",
+                                      fontSize: "11px",
+                                      color: "white",
+
+                                      fontWeight: "500 !important",
                                     }}
                                   >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      fill="none"
-                                      viewBox="0 0 18 18"
-                                    >
-                                      <g>
-                                        <path
-                                          fill="#14C58A"
-                                          d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                                        ></path>
-                                        <path
-                                          fill="#fff"
-                                          d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                                        ></path>
-                                      </g>
-                                    </svg>
-                                    <Typography
-                                      variant="body1"
-                                      sx={{
-                                        fontSize: "17px",
-                                        color: "white",
-
-                                        fontWeight: "500 !important",
-                                      }}
-                                    >
-                                      {i?.packageReduceWatchAds === 0
-                                        ? "No watching ads"
-                                        : `Expiration 30 days`}
-                                    </Typography>
-                                  </Box>
+                                    {i?.packageReduceWatchAds === 0
+                                      ? "No watching ads"
+                                      : `Expiration 30 days`}
+                                  </Typography>
+                                </Box>
+                                ) : <Box sx={{
+                                  height: "16.5px",
+                                  marginBottom: "15px"
+                                }}>
+                                  </Box>}
                                 </Box>
                                 {i?.packagePrice === 0 ? (
                                   <Box
@@ -440,20 +402,18 @@ export default function Package() {
                                     }
                                     if (i?.packageName !== "Free") {
                                       if (token) {
-                                        // dispatch(toggleDialogConfirm());
                                         dispatch(
                                           toggleCheckWallet({
                                             type: "subscription",
                                           })
                                         );
                                         dispatch(getIdPackage(i?.id));
-                                        // dispatch(toggleSubscriptionDialog());
                                       }
                                     } else {
                                     }
                                   }}
                                   disabled={
-                                    i?.id === userPackageId ? true : false
+                                    i?.id === userPackageId && uPack && uPack?.remain !== "Expired" ? true : false
                                   }
                                   style={{
                                     border: "none",
@@ -461,7 +421,7 @@ export default function Package() {
                                     borderRadius: "7px",
                                     color: "white",
                                     background:
-                                      i?.id === userPackageId
+                                    i?.id === userPackageId && uPack && uPack?.remain !== "Expired"
                                         ? "Gray"
                                         : "#9747FF",
                                     backdropFilter: " blur(4px)",
@@ -473,9 +433,8 @@ export default function Package() {
                                     marginTop: "5px",
                                   }}
                                 >
-                                  {i?.id === userPackageId ||
-                                  (i?.packageName === "Free" && !userPackageId)
-                                    ? "Current pack"
+                                  {uPack && uPack?.remain === "Expired" ? "Upgrade pack" : (i?.id === userPackageId ||
+                                  (i?.packageName === "Free" && !userPackageId)) ? "Current pack"
                                     : "Buy Now"}
                                 </button>
                               </Box>
@@ -654,7 +613,7 @@ export default function Package() {
                               //   : "",
                             }}
                           >
-                            {i?.packageName === "Combo Extra 1" ? ("Standard Extra Pack") : "" || i?.packageName === "Combo Extra 2" ? ("Value Extra Package") : ""} 
+                            {i?.packageName === "Combo Extra 1" ? ("Standard Extra Pack") : "" || i?.packageName === "Combo Extra 2" ? ("Value Extra Pack") : ""} 
                           </Typography>
                           <Box
                             className="card"
@@ -963,7 +922,7 @@ export default function Package() {
                                     }
                                   }}
                                   disabled={
-                                    i?.id === userPackageId ? true : false
+                                    i?.id === userPackageId && uPack && uPack?.remain !== "Expired" ? true : false
                                   }
                                   style={{
                                     border: "none",
@@ -971,7 +930,7 @@ export default function Package() {
                                     borderRadius: "7px",
                                     color: "white",
                                     background:
-                                      i?.id === userPackageId
+                                    i?.id === userPackageId && uPack && uPack?.remain !== "Expired"
                                         ? "Gray"
                                         : "#9747FF",
                                     backdropFilter: " blur(4px)",
@@ -983,9 +942,8 @@ export default function Package() {
                                     marginTop: "5px",
                                   }}
                                 >
-                                  {i?.id === userPackageId ||
-                                  (i?.packageName === "Free" && !userPackageId)
-                                    ? "Current pack"
+                                  {uPack && uPack?.remain === "Expired" ? "Upgrade pack" : (i?.id === userPackageId ||
+                                  (i?.packageName === "Free" && !userPackageId)) ? "Current pack"
                                     : "Buy Now"}
                                 </button>
                               </Box>
@@ -1289,7 +1247,8 @@ export default function Package() {
                                     {i?.packageFreeTicketTournament} extras 
                                   </Typography>
                                 </Box>
-                                <Box
+                                {i?.packageName === "Subscription" ? (
+                                  <Box
                                   sx={{
                                     display: "flex",
                                     justifyContent: "flex-start",
@@ -1329,6 +1288,11 @@ export default function Package() {
                                       : `Expiration 30 days`}
                                   </Typography>
                                 </Box>
+                                ) : <Box sx={{
+                                  height: "16.5px",
+                                  marginBottom: "15px"
+                                }}>
+                                  </Box>}
                                 {/* <Box
                                sx={{
                                  display: "flex",
@@ -1482,7 +1446,7 @@ export default function Package() {
                                   }
                                 }}
                                 disabled={
-                                  i?.id === userPackageId ? true : false
+                                  i?.id === userPackageId && uPack && uPack?.remain !== "Expired" ? true : false
                                 }
                                 style={{
                                   border: "none",
@@ -1490,7 +1454,7 @@ export default function Package() {
                                   borderRadius: "7px",
                                   color: "white",
                                   background:
-                                    i?.id === userPackageId
+                                  i?.id === userPackageId && uPack && uPack?.remain !== "Expired"
                                       ? "Gray"
                                       : "#9747FF",
                                   backdropFilter: " blur(4px)",
@@ -1504,9 +1468,8 @@ export default function Package() {
                                     fontSize: "11px !important",
                                   }}
                                 >
-                                  {i?.id === userPackageId ||
-                                  (i?.packageName === "Free" && !userPackageId)
-                                    ? "Current pack"
+                                  {uPack && uPack?.remain === "Expired" ? "Upgrade pack" : (i?.id === userPackageId ||
+                                  (i?.packageName === "Free" && !userPackageId)) ? "Current pack"
                                     : "Buy Now"}
                                 </Typography>
                               </button>
@@ -1769,7 +1732,8 @@ export default function Package() {
                                     {i?.packageFreeTicketTournament} extras 
                                   </Typography>
                                 </Box>
-                                <Box
+                                {i?.packageName === "Subscription" ? (
+                                  <Box
                                   sx={{
                                     display: "flex",
                                     justifyContent: "flex-start",
@@ -1809,6 +1773,11 @@ export default function Package() {
                                       : `Expiration 30 days`}
                                   </Typography>
                                 </Box>
+                                ) : <Box sx={{
+                                  height: "16.5px",
+                                  marginBottom: "15px"
+                                }}>
+                                  </Box>}
                                 {/* <Box
                               sx={{
                                 display: "flex",
@@ -1962,7 +1931,7 @@ export default function Package() {
                                   }
                                 }}
                                 disabled={
-                                  i?.id === userPackageId ? true : false
+                                  i?.id === userPackageId && uPack && uPack?.remain !== "Expired" ? true : false
                                 }
                                 style={{
                                   border: "none",
@@ -1970,7 +1939,7 @@ export default function Package() {
                                   borderRadius: "7px",
                                   color: "white",
                                   background:
-                                    i?.id === userPackageId
+                                  i?.id === userPackageId && uPack && uPack?.remain !== "Expired"
                                       ? "Gray"
                                       : "#9747FF",
                                   backdropFilter: " blur(4px)",
@@ -1984,9 +1953,8 @@ export default function Package() {
                                     fontSize: "11px !important",
                                   }}
                                 >
-                                  {i?.id === userPackageId ||
-                                  (i?.packageName === "Free" && !userPackageId)
-                                    ? "Current pack"
+                                  {uPack && uPack?.remain === "Expired" ? "Upgrade pack" : (i?.id === userPackageId ||
+                                  (i?.packageName === "Free" && !userPackageId)) ? "Current pack"
                                     : "Buy Now"}
                                 </Typography>
                               </button>
