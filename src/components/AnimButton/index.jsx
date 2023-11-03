@@ -148,7 +148,7 @@ export default function AnimButton(props) {
           </span>
         </button>
       );
-    } else if (type === "Disabled") {
+    } else if (type === "dislable") {
       return (
         <Box>
           <button

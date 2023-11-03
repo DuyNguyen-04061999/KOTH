@@ -5,6 +5,7 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
   saveForgetPassInfo,
+  updateUsernameWhenReset,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -16,7 +17,7 @@ export default function ForgetPassword() {
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [optionEmail, setOptionEmail] = useState(false);
+  const [optionEmail, setOptionEmail] = useState(true);
   const [focusInput, setFocusInput] = useState(false);
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ export default function ForgetPassword() {
   useEffect(() => {
     if (socket) {
       socket?.on("forgetPasswordSuccess", (user) => {
+        dispatch(updateUsernameWhenReset(user?.username))
         const forgotPassInfo = {
           username: user?.username,
           email: user?.email,
@@ -74,7 +76,7 @@ export default function ForgetPassword() {
     return () => {
       socket?.off("forgetPasswordSuccess");
     };
-  }, [socket]);
+  }, [socket, dispatch]);
 
   return (
     <Box
@@ -279,7 +281,7 @@ export default function ForgetPassword() {
             />
           </Box>
         )}
-        <Box
+        {/* <Box
           sx={{
             marginTop: "16px",
             display: "flex",
@@ -305,7 +307,7 @@ export default function ForgetPassword() {
           >
             Reset by {optionEmail ? "phone" : "email"}{" "}
           </Typography>
-        </Box>
+        </Box> */}
       </Box>
       <Box
         sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}

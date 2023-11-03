@@ -371,7 +371,7 @@ function App() {
             ),
             position: "top-center",
             className:
-              "warning-background",
+            width < 576 ? "warning-background-small" : "warning-background",
           });
           localStorage.removeItem("NAME");
           localStorage.removeItem("PASS");
@@ -590,8 +590,7 @@ function App() {
           ),
           position: "top-center",
           className:
-            // width < 576 ? "warning-background-small" : "warning-background",
-            "warning-background",
+            width < 576 ? "warning-background-small" : "warning-background",
         });
       });
 
@@ -859,10 +858,7 @@ function App() {
                 position="top-center"
                 draggable={false}
                 style={{
-                  right: "30px",
-                  display: "flex",
-                  padding: "0px 10px",
-                  top: "0px"
+                  
                 }}
                 onClick={() => {
                   store.dispatch(hideToastNotification())

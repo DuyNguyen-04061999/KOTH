@@ -585,7 +585,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Subscription
+                    Packages
                   </span>
                 </Box>
                 {getAppType() && getAppType() === "promote" ? (

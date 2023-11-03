@@ -10,7 +10,8 @@ import AnimButton from "../../../AnimButton";
 
 export default function CreatePassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { forgotPassInfo } = useSelector((state) => state.authReducer);
+  const { forgotPassInfo, nameReset } = useSelector((state) => state.authReducer);
+  console.log(nameReset, forgotPassInfo);
   const { width } = useWindowDimensions();
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -33,9 +34,10 @@ export default function CreatePassword() {
     setDisplayRePassword(!displayRePassword);
   };
 
+  
   const handleCreatePass = () => {
     socket?.emit("updateNewPassword", {
-      username: forgotPassInfo.username,
+      username: nameReset || forgotPassInfo.username,
       password: password,
     });
   };
@@ -48,7 +50,7 @@ export default function CreatePassword() {
       });
       // dispatch(clearForgetPassInfo());
     });
-  }, [socket]);
+  }, [socket, dispatch]);
 
   return (
     <Box
