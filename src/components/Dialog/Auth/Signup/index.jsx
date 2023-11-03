@@ -8,6 +8,7 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   clickTab,
+  closeLoginDialog,
   saveCreateAccInfo,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { updateCountEveryDay } from "../../../../redux-saga-middleware/reducers/luckyWheelReducer";
@@ -195,13 +196,14 @@ export default function Signup(props) {
       );
       dispatch(showAlert("success", "register succesfully"));
       dispatch(clickTab("otpVerifyAccount"));
+      dispatch(closeLoginDialog())
     });
 
     return () => {
       socket?.off("registerSuccess");
       socket?.off("loginSuccess");
     };
-  }, [socket]);
+  }, [socket, dispatch]);
 
   return (
     <Box className="signup">

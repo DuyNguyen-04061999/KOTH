@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clickTab, toggleLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { clickTab, closeLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
@@ -24,7 +24,7 @@ const Login = () => {
 
   useEffect(() => {
     socket?.on("loginSuccess", (data) => {
-      dispatch(toggleLoginDialog());
+      dispatch(closeLoginDialog());
     });
     socket?.on("loginError", (data) => {});
   }, [socket, dispatch]);

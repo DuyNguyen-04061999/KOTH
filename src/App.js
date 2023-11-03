@@ -268,6 +268,7 @@ function App() {
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
+          store.dispatch(closeLoginDialog())
           store.dispatch(
             updateCountEveryDay(user?.userCountSpin?.countEveryday)
           );
@@ -299,7 +300,7 @@ function App() {
           socket?.emit("getDetailProfile", {
             username: user?.userName,
           });
-          store.dispatch(closeLoginDialog())
+          
         }
       );
 
@@ -751,6 +752,12 @@ function App() {
                       ) : (
                         <SuspenseWrapper child={<HomePage/>}/>
                       )
+                    }
+                  ></Route>
+                                  <Route
+                    path="/tournamentDetail/:id/influencers/:userName"
+                    element={
+                      <SuspenseWrapper child={<LazyJoinTour/>}/>
                     }
                   ></Route>
                   <Route path="/gamelobby/:id" element={<GameLobby />} />
