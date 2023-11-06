@@ -21,6 +21,7 @@ import helpcenterReducer from "../reducers/helpcenterReducer";
 import deviceReducer from "../reducers/deviceReducer";
 import videoReducer from "../reducers/videoReducer";
 import playgameReducer from "../reducers/playgameReducer";
+import packageReducer from "../reducers/packageReducer";
 let rootReducer = combineReducers({
   alertReducer,
   authReducer,
@@ -40,6 +41,7 @@ let rootReducer = combineReducers({
   deviceReducer,
   videoReducer,
   playgameReducer,
+  packageReducer,
 });
 
 const persistConfig = {
