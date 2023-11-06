@@ -43,8 +43,6 @@ import {
   closeLoginDialog,
   getLeaderBoardSuccess,
   getNavTablet,
-  logoutSuccessFully,
-  saveDataLogin,
   updateProfileFail,
   updateProfileSuccess,
   updatePromotionExtra,
@@ -53,11 +51,10 @@ import {
   updateUserGold
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
-  chatLogoutSuccessFully,
   pushChatWorld,
   pushfriendList,
   updateChatWorld,
-  updateFriendList,
+  updateFriendList
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
@@ -66,14 +63,13 @@ import {
 import {
   addGameLog,
   changeOrientation,
-  gameLogoutSuccessFully,
   getGameLog,
   getListGame,
   getListGameByType,
   storeFavoriteGame,
   updateListDisLikeGame,
   updateListLikeGame,
-  updateReward,
+  updateReward
 } from "./redux-saga-middleware/reducers/gameReducer";
 import {
   addMoreSpinHistory,
@@ -84,17 +80,14 @@ import {
 import {
   getDepostiData,
   getWithdrawData,
-  paymentLogoutSuccessFully,
   updateDeposit,
-  updateWithDraw,
+  updateWithDraw
 } from "./redux-saga-middleware/reducers/paymentReducer";
 import {
   deleteFriendSuccesFully,
-  profileLogoutSuccessFully,
-  saveDataProfile,
+  saveDataProfile
 } from "./redux-saga-middleware/reducers/profileReducer";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
-import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
@@ -272,19 +265,6 @@ function App() {
           store.dispatch(
             updateCountEveryDay(user?.userCountSpin?.countEveryday)
           );
-          store.dispatch(
-            saveDataLogin({
-              token: token,
-              username: user?.userName,
-              gold: user?.userGold,
-              avatar: user?.userAccount?.accountAvatar,
-              role: user?.userRole,
-              id: user?.id,
-              userPackageId: userPackageId,
-              uPack: uPack,
-              promotionExtra:promotionExtra
-            })
-          );
 
           localStorage.setItem("NAME", user.userName);
           // localStorage.setItem("PASS", password);
@@ -344,46 +324,6 @@ function App() {
         });
         socket?.emit("listFriend");
         store.dispatch(deleteFriendSuccesFully("success"));
-      });
-
-      socket?.on("logoutSuccess", (data) => {
-        const { type, message } = data;
-
-        if (type === "logout") {
-          localStorage.removeItem("NAME");
-          localStorage.removeItem("PASS");
-          localStorage.removeItem("KE");
-          localStorage.removeItem("token");
-          store.dispatch(logoutSuccessFully("logoutSuccess"));
-          store.dispatch(gameLogoutSuccessFully());
-          store.dispatch(chatLogoutSuccessFully());
-          store.dispatch(profileLogoutSuccessFully());
-          store.dispatch(paymentLogoutSuccessFully());
-          store.dispatch(walletLogoutSuccessFully());
-        } else if (type === "sameAccount") {
-          toast.warning(message, {
-            icon: ({ theme, type }) => (
-              <img
-                style={{ width: "20px", marginRight: "10px" }}
-                alt="..."
-                src={images.WarningIcon}
-              />
-            ),
-            position: "top-center",
-            className:
-            width < 576 ? "warning-background-small" : "warning-background",
-          });
-          localStorage.removeItem("NAME");
-          localStorage.removeItem("PASS");
-          localStorage.removeItem("KE");
-          localStorage.removeItem("token");
-          store.dispatch(logoutSuccessFully("logoutSuccess"));
-          store.dispatch(gameLogoutSuccessFully());
-          store.dispatch(chatLogoutSuccessFully());
-          store.dispatch(profileLogoutSuccessFully());
-          store.dispatch(paymentLogoutSuccessFully());
-          store.dispatch(walletLogoutSuccessFully());
-        }
       });
 
       socket?.on("getDetailProfileSuccess", (data) => {
