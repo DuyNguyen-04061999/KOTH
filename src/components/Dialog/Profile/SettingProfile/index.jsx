@@ -195,7 +195,7 @@ export default function SettingProfile({ closePopup }) {
                 </BgWithTooltip>
               </FormControl>{" "}
             </Box>
-            <Box className="Email mb-3 d-flex flex-column align-items-start">
+            {/* <Box className="Email mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
                 sx={{
@@ -393,7 +393,7 @@ export default function SettingProfile({ closePopup }) {
                   ></Box>
                 </BgWithTooltip>
               </FormControl>
-            </Box>
+            </Box> */}
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
             <Box className="pe-2 w-100">
