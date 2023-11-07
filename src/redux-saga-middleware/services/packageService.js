@@ -14,9 +14,9 @@ class PackageService {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem("token"),
-                'x-access-token': localStorage.getItem("token"),
+                'authorization': localStorage.getItem("token"),
+                'x-access-refactor-token': localStorage.getItem("token"),
             }
-
         })
         return res
     }

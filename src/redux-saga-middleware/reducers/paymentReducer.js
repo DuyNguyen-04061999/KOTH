@@ -46,12 +46,21 @@ export const toggleDialogPromote = (data) => {
   }
 }
 
+export const toggleDialogFunds = (data) => {
+  return {
+    type : "TOGGLE_DIALOG_FUNDS",
+    payload: data
+  }
+}
+
 const paymentReducer = (
   state = {
     withdrawData: [],
     despositData: [],
     timeTrans:[],
-    isDialogPromote:false
+    isDialogPromote:false,
+    isNotiFunds:false,
+    typeNoti: "",
   },
   action
 ) => {
@@ -98,6 +107,12 @@ const paymentReducer = (
       return {
         ...state,
         isDialogPromote: !state.isDialogPromote
+      }
+    }
+    case "TOGGLE_DIALOG_FUNDS" : {
+      return {
+        ...state,
+        isNotiFunds: !state.isNotiFunds, typeNoti: payload
       }
     }
     default:

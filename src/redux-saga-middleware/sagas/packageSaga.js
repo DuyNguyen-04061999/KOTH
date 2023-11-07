@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import PackageService from "../services/packageService";
-import { getListPackageFail, getListPackageSuccess } from "../reducers/packageReducer";
+import { buyPackageFail, buyPackageSuccess, getListPackageFail, getListPackageSuccess } from "../reducers/packageReducer";
 
 const packageService = new PackageService()
 
@@ -24,19 +24,20 @@ function* buyPackageSaga(dataRequest) {
         const {payload} = dataRequest
         const res = yield call(packageService.buyPackage, payload)
         const {status, data} = res
+        console.log(res);
         if(status === 200 || status === 201) {
-            yield put()
+            yield put(buyPackageSuccess(data))
         } else {
-            yield put()
+            yield put(buyPackageFail())
         }
     } catch (error) {
-        yield put()
+        yield put(buyPackageFail())
     }
 }
 
  function* packageSaga() {
     yield takeEvery("GET_LIST_PACKAGE", getListPackageSaga)
-    yield takeEvery("GET_PACKAGE", buyPackageSaga)
+    yield takeEvery("BUY_PACKAGE", buyPackageSaga)
  }
 
  export default packageSaga
