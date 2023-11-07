@@ -1,8 +1,4 @@
-import {
-  CssBaseline,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -34,7 +30,10 @@ import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
-import { hideToastNotification, showAlert } from "./redux-saga-middleware/reducers/alertReducer";
+import {
+  hideToastNotification,
+  showAlert,
+} from "./redux-saga-middleware/reducers/alertReducer";
 import {
   getListBet,
   getListPackage,
@@ -50,7 +49,7 @@ import {
   updateProfileFail,
   updateProfileSuccess,
   updateSubPackageId,
-  updateUserGold
+  updateUserGold,
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   chatLogoutSuccessFully,
@@ -118,16 +117,16 @@ const LazyUpcomingPromo = lazy(() =>
 const LazyEndedPromo = lazy(() => import("./pages/Promotion/EndedPromotion"));
 
 const SuspenseWrapper = (props) => {
-  const { child } = props
-  return <Suspense fallback={<PageLoading/>}>{child}</Suspense>
-}
+  const { child } = props;
+  return <Suspense fallback={<PageLoading />}>{child}</Suspense>;
+};
 
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
   const { token } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
-  
+
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
 
@@ -155,7 +154,7 @@ function App() {
       socket?.emit("listMessageGlobal");
     }
   });
-  
+
   useEffect(() => {});
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
@@ -186,7 +185,6 @@ function App() {
         !startGameCheck &&
         !window.location.pathname?.includes("tournamentDetail")
       ) {
-        
       }
     };
 
@@ -234,7 +232,7 @@ function App() {
         });
         store.dispatch(updateSubPackageId(data));
       });
-      
+
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
@@ -251,7 +249,7 @@ function App() {
               id: user?.id,
               userPackageId: userPackageId,
               uPack: uPack,
-              promotionExtra:promotionExtra
+              promotionExtra: promotionExtra,
             })
           );
 
@@ -269,7 +267,7 @@ function App() {
           socket?.emit("getDetailProfile", {
             username: user?.userName,
           });
-          store.dispatch(closeLoginDialog())
+          store.dispatch(closeLoginDialog());
         }
       );
 
@@ -349,8 +347,7 @@ function App() {
               />
             ),
             position: "top-center",
-            className:
-              "warning-background",
+            className: "warning-background",
           });
           localStorage.removeItem("NAME");
           localStorage.removeItem("PASS");
@@ -376,6 +373,7 @@ function App() {
             avatarUrl: data?.userAccount?.accountAvatar,
             firstName: data?.userFirstName,
             lastName: data?.userLastName,
+            nickName: data?.userNickName,
           })
         );
       });
@@ -395,6 +393,7 @@ function App() {
       });
 
       socket?.on("updateProfileSuccess", (data) => {
+        console.log("Running");
         store.dispatch(updateProfileSuccess(data?.userAccount?.accountAvatar));
         store.dispatch(
           saveDataProfile({
@@ -613,7 +612,7 @@ function App() {
 
   useEffect(() => {
     const onPageLoad = () => {
-      if(getAppType() !== "promote") {
+      if (getAppType() !== "promote") {
         store.dispatch(getListGame());
       }
       if (localStorage.getItem("KE")) {
@@ -645,7 +644,7 @@ function App() {
   }, [socket, token]);
 
   useEffect(() => {
-    if(getAppType() !== "promote") {
+    if (getAppType() !== "promote") {
       store.dispatch(getListBet());
     }
   });
@@ -680,7 +679,7 @@ function App() {
         md: 900,
         laptop: 1024,
         lg: 1200,
-        desktop: 1200, 
+        desktop: 1200,
         xl: 1536,
       },
     },
@@ -702,14 +701,14 @@ function App() {
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
-                <Route path="/" element={<Layout/>}>
+                <Route path="/" element={<Layout />}>
                   <Route
                     path="/"
                     element={
                       getAppType() === "promote" ? (
-                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage/>}/>
+                        <SuspenseWrapper child={<HomePage />} />
                       )
                     }
                   ></Route>
@@ -717,9 +716,9 @@ function App() {
                     path="/home"
                     element={
                       getAppType() === "promote" ? (
-                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage/>}/>
+                        <SuspenseWrapper child={<HomePage />} />
                       )
                     }
                   ></Route>
@@ -730,52 +729,35 @@ function App() {
                   />
                   <Route
                     path="/tournamentDetail/:id"
-                    element={
-                      <SuspenseWrapper child={<LazyJoinTour/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   />
                   <Route
                     path="/hot-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyHotPromo/>}/>
-                      
-                    }
+                    element={<SuspenseWrapper child={<LazyHotPromo />} />}
                   />
                   <Route
                     path="/vip-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyVipPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyVipPromo />} />}
                   />
                   <Route
                     path="/standard-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyStandardPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyStandardPromo />} />}
                   />
                   <Route
                     path="/ongoing-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyOngoingPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyOngoingPromo />} />}
                   />
                   <Route
                     path="/upcoming-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyUpcomingPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyUpcomingPromo />} />}
                   />
                   <Route
                     path="/ended-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyEndedPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyEndedPromo />} />}
                   />
                   <Route
                     path="/help-center"
-                    element={
-                      <SuspenseWrapper child={<LazyHelpCenter/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyHelpCenter />} />}
                   />
                   <Route path="/change-log" element={<ChangeLog />} />
                   <Route path="/loadingscreen" element={<LoadingScreen />} />
@@ -822,10 +804,10 @@ function App() {
                 position="top-center"
                 draggable={false}
                 onClick={() => {
-                  store.dispatch(hideToastNotification())
-              }}
+                  store.dispatch(hideToastNotification());
+                }}
               />
-              <ToastNotification/>
+              <ToastNotification />
             </CustomRouter>
           </PersistGate>
         </Provider>

@@ -194,7 +194,7 @@ const authReducer = (
     isShare: false,
     isSubscription: false,
     refCodeRegister: "",
-    promotionExtra: 0
+    promotionExtra: 0,
   },
   action
 ) => {
@@ -215,7 +215,7 @@ const authReducer = (
         userId: payload?.id,
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
-        promotionExtra:payload.promotionExtra || 0
+        promotionExtra: payload.promotionExtra || 0,
       };
     }
     case "REMOVE_TOKEN":
@@ -278,9 +278,12 @@ const authReducer = (
       return { ...state, isSubscription: !state.isSubscription };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
-    case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
-    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
-    case "CLOSE_LOGIN_DIALOG": return {...state, isLoginDialog: false}
+    case "UPDATE_PROMOTION_EXTRA":
+      return { ...state, promotionExtra: state.promotionExtra + payload };
+    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME":
+      return { ...state, promotionExtra: state.promotionExtra - payload };
+    case "CLOSE_LOGIN_DIALOG":
+      return { ...state, isLoginDialog: false };
     default:
       return state;
   }

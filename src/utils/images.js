@@ -142,6 +142,7 @@ import BackButtonDesposit from "../assets/images/BackButtonDeposit.png";
 import CheckIcon from "../assets/images/CheckIcon.png";
 import QRCodeTicket from "../assets/images/QRCodeTicket.png";
 import SpinIconHomePage from "../assets/images/SpinIconHomePage.png";
+import ToolTipIcon from "../assets/images/ToolTipIcon.png";
 import backgroundPrize from "../assets/images/backgroundPrize.png";
 import sendIcon from "../assets/images/sendIcon.png";
 import chatbtn2 from "../assets/imagesDesktop/c2.png";
@@ -355,10 +356,10 @@ import NavUpcomingActive from "../assets/images/navbar/upcomingActive.png";
 import NavVipActive from "../assets/images/navbar/vipActive.png";
 
 import BtnBack from "../assets/images/btnback.png";
-import bannerendtour from '../assets/images/bannerendtour.png'
-import bannerendmobile from "../assets/images/bannerendmobile.png"
+import bannerendtour from "../assets/images/bannerendtour.png";
+import bannerendmobile from "../assets/images/bannerendmobile.png";
 
-import bgBannerCountDown from  "../assets/images/banners/bg_banner_countdown.png"
+import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -392,7 +393,7 @@ export const imageHome = {
   BannerWinBigMobile: bannerWinBigMobile,
   BannerWinCelebMobile: bannerWinCelebMobile,
   BannerWinAroundMobile: bannerWinAroundMobile,
-  BGBannerCountDown:bgBannerCountDown,
+  BGBannerCountDown: bgBannerCountDown,
 };
 
 export const navbar = {
@@ -414,7 +415,7 @@ export const navbar = {
   navUpcomingActive: NavUpcomingActive,
   navEndedActive: NavEndedActive,
   navHelpCenterActive: NavHelpCenterActive,
-  navPackageActive: NavPackageActive
+  navPackageActive: NavPackageActive,
 };
 
 export const images = {
@@ -582,8 +583,9 @@ export const images = {
   GamePreview3: GamePreview3,
   userIcon: userIcon,
   phoneIcon: phoneIcon,
-  bannerendtour:bannerendtour,
-  bannerendmobile:bannerendmobile
+  bannerendtour: bannerendtour,
+  bannerendmobile: bannerendmobile,
+  ToolTipIcon: ToolTipIcon,
 };
 
 export const navigationImages = {
@@ -691,7 +693,7 @@ export const sign = {
   up03: up03,
   up04: up04,
   up05: up05,
-  btnBack: BtnBack
+  btnBack: BtnBack,
 };
 
 export const video = {

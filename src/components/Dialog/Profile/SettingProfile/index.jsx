@@ -1,4 +1,4 @@
-import { Box, FormControl, Input, Typography } from "@mui/material";
+import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
@@ -7,10 +7,20 @@ import { updateProfile } from "../../../../redux-saga-middleware/reducers/authRe
 import AnimButton from "../../../AnimButton";
 import LoadingEffect from "../../../LoadingComponent";
 import AvatarPicker from "../AvatarPicker";
-
+import { validateNickName } from "../../../../utils/validateNickName";
+import { validateEmail } from "../../../../utils/validateEmail";
+import { withStyles } from "@mui/styles";
+import { images } from "../../../../utils/images";
+const BgWithTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white",
+    padding: "10px",
+  },
+})(Tooltip);
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
-  const { firstName, lastName, email, phone,  } = useSelector(
+  const { firstName, lastName, email, phone, nickName } = useSelector(
     (state) => state.profileReducer
   );
   const [socket, setSocket] = useState(null);
@@ -20,7 +30,7 @@ export default function SettingProfile({ closePopup }) {
   }, []);
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
-  const [nName,setNname] = useState("")
+  const [nName, setNname] = useState(nickName ? nickName : "");
   const [fName, setFristName] = useState(firstName || "");
   const [lName, setLastName] = useState(lastName || "");
   const [emailAddress, setEmailAddress] = useState(email);
@@ -40,35 +50,33 @@ export default function SettingProfile({ closePopup }) {
     return kb;
   }
 
-  function checkEmailFormat(email) {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-  }
-
   useEffect(() => {
-    if (fName === "" || lName === "" || nName < 6 || nName > 15 || phone === "" || nName === "") {
-      setDisable(true);
-      return;
-    } else if (checkEmailFormat(emailAddress) === false) {
-      // setValidEmailSetting("Invalid Email Address");
+    if (
+      phoneNumber === "" ||
+      phoneNumber.length !== 10 ||
+      nName === "" ||
+      !validateNickName(nName) ||
+      emailAddress === "" ||
+      !validateEmail(emailAddress)
+    ) {
       setDisable(true);
     } else {
       setDisable(false);
-      // setValidEmailSetting("");
     }
-  }, [fName, lName, emailAddress,nName, phone]);
+  }, [phoneNumber, nName, emailAddress]);
 
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
       dispatch(showAlert("error", "Please attach image smaller 1MB"));
     } else {
       if (avatarImage === avatarUrl) {
+        console.log("Input: ", fName, lName, emailAddress, phoneNumber, nName);
         socket?.emit("updateProfile", {
           firstName: fName,
           lastName: lName,
           email: emailAddress,
           phone: phoneNumber,
-          nickName:nName
+          nickName: nName,
         });
         dispatch(updateProfile());
         closePopup();
@@ -79,7 +87,7 @@ export default function SettingProfile({ closePopup }) {
           email: emailAddress,
           phone: phoneNumber,
           avatar: avatarImage?.replace("data:image/png;base64,", ""),
-          nickName:nName
+          nickName: nName,
         });
         dispatch(updateProfile());
         closePopup();
@@ -91,16 +99,15 @@ export default function SettingProfile({ closePopup }) {
     return (
       <>
         <Box>
-          <Box
-          >
+          <Box>
             <AvatarPicker handleChangeImage={handleImageChange} />
-          </Box>
+          </Box>{" "}
           <Box component={"form"} className="mt-2" onSubmit={handleSubmit}>
-          <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
+            <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
                 sx={{
-                  color: "#757ae5",
+                  color: "#ffff",
                   fontWeight: "500",
                   marginBottom: "5px !important",
                 }}
@@ -138,120 +145,66 @@ export default function SettingProfile({ closePopup }) {
                       border: "none",
                     },
                     color: "white",
+                    fontSize: "14px",
                     "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
                       padding: "0px !important",
                     },
                   }}
-                />
-              </FormControl>
-            </Box>
-            <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
-              <Typography
-                variant="inherit"
-                sx={{
-                  color: "#757ae5",
-                  fontWeight: "500",
-                  marginBottom: "5px !important",
-                }}
-              >
-                First Name
-              </Typography>
-              <FormControl
-                variant="standard"
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#181223",
-                  padding: "10px",
-                  borderRadius: "5px",
-                }}
-              >
-                <Input
-                  id="input-with-icon-adornment"
-                  type="text"
-                  onChange={(e) => {
-                    setFristName(e.target.value);
-                  }}
-                  value={fName}
-                  placeholder="Enter Your First Name"
+                />{" "}
+                {!validateNickName(nName) && (
+                  <Typography
+                    sx={{
+                      color: "#F05153",
+                      fontSize: "12px",
+                      textAlign: "start",
+                      marginLeft: "0px !important",
+                    }}
+                  >
+                    Please enter a valid nickname
+                  </Typography>
+                )}{" "}
+                <BgWithTooltip
+                  enterTouchDelay={0}
+                  title={
+                    <Box>
+                      {" "}
+                      <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                        Your nickname must be 12 characters or less and not
+                        contain special characters. Nicknames are case sensitive
+                        (e.g., Examplename)
+                      </Typography>
+                    </Box>
+                  }
+                  placement="right"
                   sx={{
-                    "&:before": {
-                      borderBottom: " 0px solid !important ",
-                      "&:hover": {
-                        borderBottom: "0px solid !important",
-                      },
-                    },
-                    "&:after": {
-                      borderBottom: "0px solid !important",
-                    },
-                    "&:hover": {
-                      border: "none",
-                    },
-                    color: "white",
-                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                      padding: "0px !important",
-                    },
+                    backgroundColor: "white",
+                    color: "red",
                   }}
-                />
-              </FormControl>
-            </Box>
-            <Box className="Last-Name mb-3 d-flex flex-column align-items-start">
-              <Typography
-                variant="inherit"
-                sx={{
-                  color: "#757ae5",
-                  fontWeight: "500",
-                  marginBottom: "5px !important",
-                }}
-              >
-                Last Name
-              </Typography>
-              <FormControl
-                variant="standard"
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#181223",
-                  padding: "10px",
-                  borderRadius: "5px",
-                }}
-              >
-                <Input
-                  id="input-with-icon-adornment"
-                  value={lName}
-                  onChange={(e) => {
-                    setLastName(e.target.value);
-                  }}
-                  placeholder="Enter Your Last Name"
-                  sx={{
-                    "&:before": {
-                      borderBottom: "0px solid !important",
-                      "&:hover": {
-                        borderBottom: "0px solid !important",
-                      },
-                    },
-                    "&:after": {
-                      borderBottom: "0px solid !important",
-                    },
-                    "&:hover": {
-                      border: "none",
-                    },
-                    color: "white",
-                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                      padding: "0px !important",
-                    },
-                  }}
-                />
-              </FormControl>
+                >
+                  <Box
+                    sx={{
+                      backgroundColor: "#1a132d",
+                      right: "10px",
+                      top: "8px",
+                      cursor: "pointer",
+                      position: "absolute",
+                    }}
+                    component={"img"}
+                    src={images.ToolTipIcon}
+                  ></Box>
+                </BgWithTooltip>
+              </FormControl>{" "}
             </Box>
             <Box className="Email mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
                 sx={{
-                  color: "#757ae5",
+                  color: "#ffff",
                   fontWeight: "500",
                   marginBottom: "5px !important",
                 }}
               >
-                Email Address
+                Email address
               </Typography>
               <FormControl
                 variant="standard"
@@ -266,6 +219,7 @@ export default function SettingProfile({ closePopup }) {
                   // id="input-with-icon-adornment"
                   type="text"
                   name="emailAddress"
+                  disabled
                   value={emailAddress}
                   onChange={(e) => {
                     setEmailAddress(e.target.value);
@@ -285,25 +239,64 @@ export default function SettingProfile({ closePopup }) {
                       border: "none",
                     },
                     color: "white",
+                    fontSize: "14px",
                     "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
                       padding: "0px !important",
                     },
                   }}
                 />{" "}
-                {""}
-                {/* <span className="text-danger">{validEmailSetting}</span> */}
+                {!validateEmail(emailAddress) && (
+                  <Typography
+                    sx={{
+                      color: "#F05153",
+                      fontSize: "12px",
+                      textAlign: "start",
+                      marginLeft: "0px !important",
+                    }}
+                  >
+                    Please enter a valid email
+                  </Typography>
+                )}{" "}
+                <BgWithTooltip
+                  enterTouchDelay={0}
+                  title={
+                    <Box>
+                      {" "}
+                      <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                        Correct example: superman0@gmail.com
+                      </Typography>
+                    </Box>
+                  }
+                  placement="right"
+                  sx={{
+                    backgroundColor: "white",
+                    color: "red",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      backgroundColor: "#1a132d",
+                      right: "10px",
+                      top: "8px",
+                      cursor: "pointer",
+                      position: "absolute",
+                    }}
+                    component={"img"}
+                    src={images.ToolTipIcon}
+                  ></Box>
+                </BgWithTooltip>
               </FormControl>
             </Box>
             <Box className="Phone mb-3 d-flex flex-column align-items-start">
               <Typography
                 variant="inherit"
                 sx={{
-                  color: "#757ae5",
+                  color: "#ffff",
                   fontWeight: "500",
                   marginBottom: "5px !important",
                 }}
               >
-                Phone
+                Mobile number
               </Typography>
               <FormControl
                 variant="standard"
@@ -314,48 +307,105 @@ export default function SettingProfile({ closePopup }) {
                   borderRadius: "5px",
                 }}
               >
-                <Input
-                  type="number"
-                  name="phone"
-                  value={phoneNumber}
-                  onChange={(e) => {
-                    setPhoneNumber(e.target.value);
-                  }}
-                  placeholder="Enter Your Phone"
-                  sx={{
-                    "&:before": {
-                      borderBottom: "0px solid !important",
-                      "&:hover": {
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Typography
+                    sx={{
+                      textAlign: "start",
+                      marginLeft: "0px !important",
+                      marginRight: "10px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    +1
+                  </Typography>
+                  <Input
+                    disabled
+                    type="number"
+                    name="phone"
+                    value={phoneNumber}
+                    onChange={(e) => {
+                      setPhoneNumber(e.target.value);
+                    }}
+                    placeholder="Enter Your Phone"
+                    sx={{
+                      "&:before": {
+                        borderBottom: "0px solid !important",
+                        "&:hover": {
+                          borderBottom: "0px solid !important",
+                        },
+                      },
+                      "&:after": {
                         borderBottom: "0px solid !important",
                       },
-                    },
-                    "&:after": {
-                      borderBottom: "0px solid !important",
-                    },
-                    "&:hover": {
-                      border: "none",
-                    },
-                    color: "white",
-                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                      padding: "0px !important",
-                    },
+                      "&:hover": {
+                        border: "none",
+                      },
+                      fontSize: "14px",
+                      color: "white",
+                      "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                        padding: "0px !important",
+                      },
+                    }}
+                  />
+                </Box>
+                {phoneNumber.length !== 10 && (
+                  <Typography
+                    sx={{
+                      color: "#F05153",
+                      fontSize: "12px",
+                      textAlign: "start",
+                      marginLeft: "0px !important",
+                    }}
+                  >
+                    Please enter a valid phone number
+                  </Typography>
+                )}{" "}
+                <BgWithTooltip
+                  enterTouchDelay={0}
+                  title={
+                    <Box>
+                      {" "}
+                      <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                        Your mobile number must a US phone number. Format:
+                        country code + area code + call number.
+                      </Typography>
+                      <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                        Correct example: +1 (212) 555-1234
+                      </Typography>
+                    </Box>
+                  }
+                  placement="right"
+                  sx={{
+                    backgroundColor: "white",
+                    color: "red",
                   }}
-                />{" "}
-                {""}
+                >
+                  <Box
+                    sx={{
+                      backgroundColor: "#1a132d",
+                      position: "absolute",
+                      right: "10px",
+                      top: "8px",
+                      cursor: "pointer",
+                    }}
+                    component={"img"}
+                    src={images.ToolTipIcon}
+                  ></Box>
+                </BgWithTooltip>
               </FormControl>
             </Box>
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
             <Box className="pe-2 w-100">
-              <AnimButton type={"ghost"} text={"Cancel"} onClick={closePopup} />
+              <AnimButton type={"ghost"} text={"CANCEL"} onClick={closePopup} />
             </Box>
             <Box className="ps-2 w-100">
               {disable === true ? (
-                <AnimButton type={"dislable"} text={"Update Profile"} />
+                <AnimButton type={"dislable"} text={"UPDATE"} />
               ) : (
                 <AnimButton
                   type={"primary"}
-                  text={"Update Profile"}
+                  text={"UPDATE"}
                   onClick={sendUpdateProfile}
                 />
               )}

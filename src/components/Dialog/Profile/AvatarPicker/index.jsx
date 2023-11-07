@@ -1,4 +1,4 @@
-import { Avatar, Badge } from "@mui/material";
+import { Avatar, Badge, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import { makeStyles } from "@mui/styles";
 import t from "prop-types";
@@ -10,7 +10,6 @@ import {
   openLoading,
 } from "../../../../redux-saga-middleware/reducers/loadingReducer";
 import { images } from "../../../../utils/images";
-import AnimButton from "../../../AnimButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,12 +43,10 @@ export const AvatarPicker = (props) => {
   const handleChange = async (event) => {
     dispatch(openLoading());
     let reader = new FileReader();
+    console.log("event.target.files[0]: ", event.target.files[0]);
     const imageType =
       event?.target?.files[0]?.type?.replace("image/", "") || "";
-    if (
-      imageType === "png" ||
-      imageType === "jpg" ||
-      imageType === "jpeg" ) {
+    if (imageType === "png" || imageType === "jpg" || imageType === "gif") {
       reader.onload = function (e) {
         handleChangeImage(reader.result);
         setFile(reader.result);
@@ -63,28 +60,14 @@ export const AvatarPicker = (props) => {
         dispatch(closeLoading());
       }, 2000);
       handleChangeImage(avatarUrl);
-      dispatch(showAlert("error","Please attach correct format of file"))
+      dispatch(showAlert("error", "Please attach correct format of file"));
     }
-
-    // const fileSizeInBytes = imageType.size;
-    // const fileSizeInMB = fileSizeInBytes / (1024 * 1024); // Convert bytes to MB
-
-    // if (fileSizeInMB < 100) {
-    //   // File size is less than 100MB
-    //   // You can perform further actions with the file, like uploading it, etc.
-    //   dispatch(
-    //     showAlert("success", "good")
-    //   );
-    // } else {
-    //   // File size exceeds 100MB
-    //   dispatch(
-    //     showAlert("error", "The image size is too large, please choose again")
-    //   );
-    // }
   };
-
   return (
-    <List data-testid={"image-upload"} sx={{paddingBottom:"0px !important", paddingTop:"0px !important"}}>
+    <List
+      data-testid={"image-upload"}
+      sx={{ paddingBottom: "0px !important", paddingTop: "0px !important" }}
+    >
       <div
         style={{
           display: "flex",
@@ -104,21 +87,12 @@ export const AvatarPicker = (props) => {
               alignItems: "center",
             }}
           >
-            {/* <Box className="text-danger mt-1 mb-1" component={"div"}>
-                {"The image's size must be < 1 MB"}
-            </Box> */}
-            <AnimButton 
-              type={"primary"}
-              text={"Update Avatar"}
-              onClick={showOpenFileDialog}
-            />
-            {/* <button
+            <button
               onClick={showOpenFileDialog}
               style={{
                 border: "0px solid",
-                background:
-                  "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                padding: "7px 15px",
+                background: "#7848ED",
+                padding: "12px 40px",
                 borderRadius: "5px",
                 color: "#fff",
                 fontWeight: "bold",
@@ -126,12 +100,14 @@ export const AvatarPicker = (props) => {
                 fontSize: "12px",
               }}
             >
-              Update Avatar
-            </button> */}
-            
+              UPLOAD PHOTO
+            </button>
             <Avatar
               src={
-                file && file.includes("data:image/png;base64,")
+                file &&
+                (file.includes(`data:image/gif;base64,`) ||
+                  file.includes(`data:image/png;base64,`) ||
+                  file.includes(`data:image/jpg;base64,`))
                   ? file
                   : !file && avatarUrl
                   ? process.env.REACT_APP_SOCKET_SERVER + "/" + avatarUrl
@@ -141,13 +117,12 @@ export const AvatarPicker = (props) => {
                 width: "100px",
                 height: "100px",
                 borderRadius: "50%",
-                border: "4px solid #FD9E0F", 
-                marginBottom:"15px"
+                border: "4px solid #FD9E0F",
+                marginBottom: "15px",
               }}
             />
-             
           </Badge>
-          
+
           <input
             ref={imageRef}
             type="file"
@@ -156,7 +131,14 @@ export const AvatarPicker = (props) => {
             onChange={handleChange}
           />
         </div>
-      </div>
+      </div>{" "}
+      <Typography
+        sx={{ fontSize: "12px", marginTop: "20px", fontWeight: "100" }}
+      >
+        The image size must be less than 200KB.
+        <br />
+        Allowed file extension: png, jpg, gif
+      </Typography>
     </List>
   );
 };
