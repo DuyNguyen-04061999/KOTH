@@ -517,98 +517,102 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
               .map((item, index) => {
                 return (
                   index === 0 && (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "16px",
-                        paddingRight: "16px",
-                        paddingBottom: "10px",
-                        paddingTop: "10px",
-                        backgroundColor: "#68399E",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <Box
+                    <>
+                      {detailTournament?.tournamentStatus !== 2 && (
+                        <Box
+                        key={index}
                         sx={{
-                          color: "#ffff",
-                          width: "10%",
                           display: "flex",
-                          justifyContent: "center",
-                          fontSize:
-                            576 < width && width < 1200
-                              ? `${width / 64}px`
-                              : "14px",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: "16px",
+                          paddingRight: "16px",
+                          paddingBottom: "10px",
+                          paddingTop: "10px",
+                          backgroundColor: "#68399E",
+                          borderRadius: "5px",
                         }}
                       >
-                        {detailTournament?.tournamentResult
-                          ?.map((item, index) => {
-                            return item?.userNickName;
-                          })
-                          .indexOf(userName) + 1}
-                      </Box>
-                      <Box sx={{ display: "flex", width: "70%" }}>
                         <Box
-                          component={"img"}
-                          src={
-                            item?.tUser?.userAccount?.accountAvatar
-                              ? process.env.REACT_APP_SOCKET_SERVER +
-                                "/" +
-                                item?.tUser?.userAccount?.accountAvatar
-                              : images.undefinedAvatar
-                          }
                           sx={{
-                            borderRadius: "50%",
-                            width:
-                              576 < width && width < 1200 ? width / 24 : "40px",
-                            height:
-                              576 < width && width < 1200 ? width / 24 : "40px",
-                            marginRight: "5px",
+                            color: "#ffff",
+                            width: "10%",
+                            display: "flex",
+                            justifyContent: "center",
+                            fontSize:
+                              576 < width && width < 1200
+                                ? `${width / 64}px`
+                                : "14px",
                           }}
-                        ></Box>
-                        <Box>
-                          <Typography
+                        >
+                          {detailTournament?.tournamentResult
+                            ?.map((item, index) => {
+                              return item?.userNickName;
+                            })
+                            .indexOf(userName) + 1}
+                        </Box>
+                        <Box sx={{ display: "flex", width: "70%" }}>
+                          <Box
+                            component={"img"}
+                            src={
+                              item?.tUser?.userAccount?.accountAvatar
+                                ? process.env.REACT_APP_SOCKET_SERVER +
+                                  "/" +
+                                  item?.tUser?.userAccount?.accountAvatar
+                                : images.undefinedAvatar
+                            }
                             sx={{
-                              textAlign: "start",
-                              color: "#ffff",
-                              fontWeight: "lighter !important",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 64}px`
-                                  : "16px",
+                              borderRadius: "50%",
+                              width:
+                                576 < width && width < 1200 ? width / 24 : "40px",
+                              height:
+                                576 < width && width < 1200 ? width / 24 : "40px",
+                              marginRight: "5px",
                             }}
-                          >
-                            You
-                          </Typography>
-                          <Typography
-                            sx={{
-                              textAlign: "start",
-                              color: "#ffff",
-                              fontSize:
-                                576 < width && width < 1200
-                                  ? `${width / 66}px`
-                                  : "14px",
-                              fontWeight: "lighter !important",
-                              marginTop: "-4px !important",
-                            }}
-                          >
-                            {moment(item?.updatedAt).format("MM/DD/YYYY")}
-                          </Typography>
+                          ></Box>
+                          <Box>
+                            <Typography
+                              sx={{
+                                textAlign: "start",
+                                color: "#ffff",
+                                fontWeight: "lighter !important",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 64}px`
+                                    : "16px",
+                              }}
+                            >
+                              You
+                            </Typography>
+                            <Typography
+                              sx={{
+                                textAlign: "start",
+                                color: "#ffff",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 66}px`
+                                    : "14px",
+                                fontWeight: "lighter !important",
+                                marginTop: "-4px !important",
+                              }}
+                            >
+                              {moment(item?.updatedAt).format("MM/DD/YYYY")}
+                            </Typography>
+                          </Box>
+                        </Box>
+                        <Box
+                          sx={{
+                            color: "#fff",
+                            width: "20%",
+                            display: "flex",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          {item?.score}
                         </Box>
                       </Box>
-                      <Box
-                        sx={{
-                          color: "#fff",
-                          width: "20%",
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        {item?.score}
-                      </Box>
-                    </Box>
+                      )}
+                    </>
                   )
                 );
               })}

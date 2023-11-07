@@ -43,12 +43,12 @@ import {
   getLeaderBoardSuccess,
   getNavTablet,
   logoutSuccessFully,
-  registerSuccesFully,
   saveDataLogin,
-  toggleLoginDialog,
   updateProfileFail,
   updateProfileSuccess,
+  updatePromotionExtra,
   updateSubPackageId,
+  updateUPack,
   updateUserGold,
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
@@ -218,7 +218,7 @@ function App() {
   useEffect(() => {
     if (socket) {
       socket?.once("connect", (data) => {});
-      socket?.on("buyNewPackageSuccessfully", (data) => {
+      socket?.on("buyNewPackageSuccessfully", (data, uPackc) => {
         toast.success("Buy Subscription Successfully", {
           icon: ({ theme, type }) => (
             <img
@@ -231,11 +231,42 @@ function App() {
           className: "success-background",
         });
         store.dispatch(updateSubPackageId(data));
+        store.dispatch(updateUPack(uPackc));
+      });
+      socket?.on("getTicketFromAgent", (quantity) => {
+        toast.success("Get Promotion Extra From Agent Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        store.dispatch(updatePromotionExtra(quantity || 0));
+      });
+      socket?.on("upgradeSubscriptionSuccess", (data, uPackc) => {
+        toast.success("Upgrade Subscription Successfully", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.successIcon}
+            />
+          ),
+          position: "top-center",
+          className: "success-background",
+        });
+        store.dispatch(updateSubPackageId(data));
+        store.dispatch(updateUPack(uPackc));
       });
 
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
+          store.dispatch(closeLoginDialog());
           store.dispatch(
             updateCountEveryDay(user?.userCountSpin?.countEveryday)
           );
@@ -313,16 +344,6 @@ function App() {
         store.dispatch(deleteFriendSuccesFully("success"));
       });
 
-      socket?.on("registerSuccess", (data, user) => {
-        socket?.emit("login", {
-          username: user?.username?.toLowerCase(),
-          password: user?.password,
-        });
-        store.dispatch(showAlert("success", "register succesfully"));
-        store.dispatch(registerSuccesFully("success"));
-        store.dispatch(toggleLoginDialog());
-      });
-
       socket?.on("logoutSuccess", (data) => {
         const { type, message } = data;
 
@@ -347,7 +368,8 @@ function App() {
               />
             ),
             position: "top-center",
-            className: "warning-background",
+            className:
+              width < 576 ? "warning-background-small" : "warning-background",
           });
           localStorage.removeItem("NAME");
           localStorage.removeItem("PASS");
@@ -568,8 +590,7 @@ function App() {
           ),
           position: "top-center",
           className:
-            // width < 576 ? "warning-background-small" : "warning-background",
-            "warning-background",
+            width < 576 ? "warning-background-small" : "warning-background",
         });
       });
 
@@ -722,6 +743,20 @@ function App() {
                       )
                     }
                   ></Route>
+                  <Route
+                    path="/influencers/:userName"
+                    element={
+                      getAppType() === "promote" ? (
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
+                      ) : (
+                        <SuspenseWrapper child={<HomePage />} />
+                      )
+                    }
+                  ></Route>
+                  <Route
+                    path="/tournamentDetail/:id/influencers/:userName"
+                    element={<SuspenseWrapper child={<LazyJoinTour />} />}
+                  ></Route>
                   <Route path="/gamelobby/:id" element={<GameLobby />} />
                   <Route
                     path="/selectroom/:id"
@@ -803,6 +838,7 @@ function App() {
                 autoClose={1000}
                 position="top-center"
                 draggable={false}
+                style={{}}
                 onClick={() => {
                   store.dispatch(hideToastNotification());
                 }}

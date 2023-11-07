@@ -763,7 +763,9 @@ const FilterRevenue = () => {
 
                             <CSVLink data={csvData}
                                      filename={roles && roles?.length && roles[0] ? `revenue_${roles[0]}_${new Date().getTime()}` : `revenue_${new Date().getTime()}`}>
-                                {roles && !roles?.includes("agent") && <Button
+                                {roles && 
+                                // {roles && !roles?.includes("agent") && 
+                                <Button
                                     sx={{
                                         fontSize: "12px",
                                         textTransform: "unset",

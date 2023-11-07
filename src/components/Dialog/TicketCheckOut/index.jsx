@@ -84,9 +84,7 @@ export default function TicketCheckOut() {
     setSocket(socket);
   }, [socket]);
   useEffect(() => {
-    socket?.on("buyNewPackageSuccessfully", (data) => {
-      
-    });
+   
   }, [socket]);
 
   return ReactDOM.createPortal(

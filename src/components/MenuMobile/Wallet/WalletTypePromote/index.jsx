@@ -24,7 +24,7 @@ export default function WalletTypePromote(props) {
   const [bgInput, setBgInput] = useState("gray");
   
   useEffect(() => {
-    setAmount(price)
+    setAmount(Math.ceil(price))
   }, [price])
 
   const navigate = useNavigate();
@@ -41,8 +41,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
       return;
     }
@@ -57,8 +56,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
     } else if (typePayment === "stripe" && currency === "USD") {
       dispatch(getStripe(Number.parseFloat(amount)));
@@ -73,8 +71,7 @@ export default function WalletTypePromote(props) {
         ),
         position: "top-center",
         className:
-          // width < 576 ? "warning-background-small" : "warning-background",
-          "warning-background",
+          width < 576 ? "warning-background-small" : "warning-background",
       });
     }
   };
@@ -552,9 +549,10 @@ export default function WalletTypePromote(props) {
                     className="cursor-pointer"
                     onClick={() => navigateFooter(1)}
                     style={{
-                      color: "#A57FF6",
+                      color: "#FF9F38",
                       fontSize: "14px",
                       fontWeight: "lighter !important",
+                      cursor:"pointer"
                     }}
                   >
                     Terms & Agreement

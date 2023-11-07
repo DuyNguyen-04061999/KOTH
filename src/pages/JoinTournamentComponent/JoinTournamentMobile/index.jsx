@@ -423,7 +423,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         </svg>
                         <Typography>Free Extra: </Typography>
                         <Typography>
-                          {detailTournament?.extra}
+                        {detailTournament?.tournamentStatus !== 2 ? detailTournament?.extra : 0}
                         </Typography>
                       </Box>
                       <Box display={"flex"} alignItems={"center"}>
@@ -1121,17 +1121,17 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <AnimButton
+                    {detailTournament?.tournamentStatus !== 2 && <AnimButton
                       onClick={handlePlayTour}
                       type={"highlight"}
                       text={"Play"}
-                    />
+                    />}
 
-                    <AnimButton
+                    {detailTournament?.tournamentStatus !== 2 && <AnimButton
                       onClick={handleClickOpen}
                       text={"Buy Extra"}
                       type={"primary"}
-                    />
+                    />}
                   </Box>
                 )}
               </Box>

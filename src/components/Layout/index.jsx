@@ -11,7 +11,7 @@ import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
 // import { inpChat } from "../../utils/cssFrom";
 import { useEffect } from "react";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 import MenuWallet from "../MenuMobile/Wallet";
 import history from "../Router/history";
@@ -20,6 +20,7 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
+import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
 import {
   changeRouter,
@@ -39,7 +40,6 @@ import {
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
-import ForgetPassword from "../Dialog/ForgetPassword";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import DialogProfile from "../Dialog/Profile";
@@ -94,7 +94,7 @@ export default function Layout(props) {
   );
   const { orientation } = useSelector((state) => state.gameReducer);
 
-  const { token, isNav } = useSelector(
+  const { token, isNav, userNameRef } = useSelector(
     (state) => state.authReducer
   );
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
@@ -146,6 +146,27 @@ export default function Layout(props) {
     
   }, [pathname]);
 
+  const {userName} = useParams();
+
+  useEffect(()=> {
+    const getRefCodeByUserName = async () => {
+      if(userName){
+        try {
+          const response = await API.get(`/api/get-refcode-by-username/${userName}`);
+          if(response){
+            console.log(response);
+            dispatch(addRefCodeRegister(response?.data?.ref));
+            dispatch(clickTab("signup"));
+            dispatch(toggleLoginDialog());
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    getRefCodeByUserName();
+  },[userName,dispatch])
+
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
@@ -154,6 +175,10 @@ export default function Layout(props) {
     if (history.action === "POP") {
     }
   }, []);
+
+  useEffect(() => {
+    
+  })
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -187,28 +212,15 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-
-  useEffect(() => {
-    const checkRefCode =() =>{
-      if (refCodeURL) {
-        const refcode = refCodeURL?.split("refcode")?.join()
-        dispatch(addRefCodeRegister(refcode));
-        dispatch(clickTab(true));
-        dispatch(toggleLoginDialog(true));
-      }
-    }
-    checkRefCode();
-  }, [refCodeURL, dispatch]);
   
   useEffect(() => {
     dispatch(toggleStartGame(false));
   }, [location.pathname, dispatch]);
 
-
   useEffect(() => {
     if(socket) {
       socket?.on("buyPromoExtraSuccess", (data) => {
-        if(fromRouter) {
+        if(fromRouter && router !== "/" && router !== "/home") {
           navigate(fromRouter)
         }
         toast.success("Buy Combo Extra Successfully", {
@@ -244,7 +256,6 @@ export default function Layout(props) {
       <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
-      <ForgetPassword />
       <ShareTour />
       <PopUpReward />
       <SubscriptionDialog />
@@ -326,6 +337,7 @@ export default function Layout(props) {
                 style={{ position: "relative" }}
                 onClick={() => {
                   navigate("/home");
+                  window.scrollTo(0, 0)
                 }}
               >
                 <img
@@ -343,7 +355,10 @@ export default function Layout(props) {
               location?.pathname?.includes("/packages") ? (
                 <span className="ms-2">Packages</span>
               ) : (
-                <NavLink to="/home">
+                <Box onClick={() => {
+                  navigate("/home");
+                  window.scrollTo(0, 0)
+                }}>
                   <img
                     style={{
                       width: "34px",
@@ -354,7 +369,7 @@ export default function Layout(props) {
                     src={imageDesktop.LogoCongTy}
                     alt="logocty"
                   />
-                </NavLink>
+                </Box>
               )}
             </Box>
           )}

@@ -173,7 +173,7 @@ export default function NavMobile() {
                           marginTop: "4px",
                         }}
                       >
-                        Subscription
+                        Packages
                       </p>
                     </div>
                   </div>

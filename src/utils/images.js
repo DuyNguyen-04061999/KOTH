@@ -32,6 +32,7 @@ import QR from "../assets/images/QRcode.png";
 import Rectangle from "../assets/images/Rectangle.png";
 import RotateScreen from "../assets/images/RotateScreen.png";
 import TimeTour from "../assets/images/TimeTour.png";
+import ToolTipIcon from "../assets/images/ToolTipIcon.png";
 import TournamentBG from "../assets/images/TournamentBG.png";
 import UnCheck from "../assets/images/UnCheck.png";
 import UnCheckMobile from "../assets/images/UnCheckMobile.png";
@@ -94,6 +95,7 @@ import loseWardBG from "../assets/images/loseWardBG.png";
 import megaHolicBanner from "../assets/images/megaHolicBanner.png";
 import New from "../assets/images/new.png";
 import new1 from "../assets/images/new1.png";
+import nickname from "../assets/images/nickname.png";
 import numberClient from "../assets/images/numberClient.png";
 import passiveCoin from "../assets/images/passiveCoin.png";
 import passiveUser from "../assets/images/passiveUser.png";
@@ -142,7 +144,6 @@ import BackButtonDesposit from "../assets/images/BackButtonDeposit.png";
 import CheckIcon from "../assets/images/CheckIcon.png";
 import QRCodeTicket from "../assets/images/QRCodeTicket.png";
 import SpinIconHomePage from "../assets/images/SpinIconHomePage.png";
-import ToolTipIcon from "../assets/images/ToolTipIcon.png";
 import backgroundPrize from "../assets/images/backgroundPrize.png";
 import sendIcon from "../assets/images/sendIcon.png";
 import chatbtn2 from "../assets/imagesDesktop/c2.png";
@@ -355,9 +356,9 @@ import NavStandardActive from "../assets/images/navbar/standardActive.png";
 import NavUpcomingActive from "../assets/images/navbar/upcomingActive.png";
 import NavVipActive from "../assets/images/navbar/vipActive.png";
 
-import BtnBack from "../assets/images/btnback.png";
-import bannerendtour from "../assets/images/bannerendtour.png";
 import bannerendmobile from "../assets/images/bannerendmobile.png";
+import bannerendtour from "../assets/images/bannerendtour.png";
+import BtnBack from "../assets/images/btnback.png";
 
 import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
 
@@ -585,6 +586,7 @@ export const images = {
   phoneIcon: phoneIcon,
   bannerendtour: bannerendtour,
   bannerendmobile: bannerendmobile,
+  nickname: nickname,
   ToolTipIcon: ToolTipIcon,
 };
 

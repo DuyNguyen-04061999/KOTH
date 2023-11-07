@@ -13,7 +13,6 @@ import { ExpandMoreOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import RefcodeDialogComponent from "../../../components/Admin/Dialog/RefcodeDialogComponent";
-import SearchBar from "../../../components/Admin/SearchBar/SearchBar";
 import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
 import { changePassword } from "../../../redux-saga-middleware_admin/reducers/adminAuthReducer";
 import { updateAccount } from "../../../redux-saga-middleware_admin/reducers/adminConfigReducer";
@@ -147,9 +146,9 @@ const Setting = () => {
         >
           Settings
         </Box>
-        <Box sx={{marginTop:"32px"}}>
+        {/* <Box sx={{marginTop:"32px"}}>
           <SearchBar placeholder="Search" width="100%" />
-        </Box>
+        </Box> */}
         <Box sx={{ marginTop: width < 576 ? "20px" : "60px" }}>
           <Accordion expanded={expanded}>
             <AccordionSummary
