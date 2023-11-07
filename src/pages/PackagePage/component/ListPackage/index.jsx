@@ -5,8 +5,12 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import { images } from "../../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { getIdPackage, toggleLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
+import {
+  getIdPackage,
+  toggleLoginDialog,
+} from "../../../../redux-saga-middleware/reducers/authReducer";
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/packageReducer";
 
 export default function ListPackage(props) {
   const {
@@ -21,8 +25,9 @@ export default function ListPackage(props) {
   const { token, userPackageId, uPack } = useSelector(
     (state) => state.authReducer
   );
-    const {width} = useWindowDimensions()
-    const dispatch = useDispatch()
+
+  const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -696,6 +701,16 @@ export default function ListPackage(props) {
                   if (packageName === "Subscription") {
                     if (token) {
                       dispatch(
+                        saveDataPackage({
+                          packageName,
+                          packageAvatar,
+                          packagePrice,
+                          packageFreeTicketTournament,
+                          packageReduceWatchAds,
+                          id,
+                        })
+                      );
+                      dispatch(
                         toggleCheckWallet({
                           type: "subscription",
                         })
@@ -705,6 +720,16 @@ export default function ListPackage(props) {
                   }
                   if (packageName === "Combo Extra 1") {
                     if (token) {
+                      dispatch(
+                        saveDataPackage({
+                          packageName,
+                          packageAvatar,
+                          packagePrice,
+                          packageFreeTicketTournament,
+                          packageReduceWatchAds,
+                          id,
+                        })
+                      );
                       dispatch(
                         toggleCheckWallet({
                           type: "combo1",
@@ -717,6 +742,16 @@ export default function ListPackage(props) {
                   }
                   if (packageName === "Combo Extra 2") {
                     if (token) {
+                      dispatch(
+                        saveDataPackage({
+                          packageName,
+                          packageAvatar,
+                          packagePrice,
+                          packageFreeTicketTournament,
+                          packageReduceWatchAds,
+                          id,
+                        })
+                      );
                       dispatch(
                         toggleCheckWallet({
                           type: "combo2",

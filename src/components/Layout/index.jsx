@@ -51,6 +51,7 @@ import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
+import NotiFunds from "../Dialog/NotiFunds";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -260,6 +261,7 @@ export default function Layout(props) {
       <PopUpReward />
       <SubscriptionDialog />
       <TouramentShow />
+      <NotiFunds />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {
