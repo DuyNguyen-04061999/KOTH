@@ -14,15 +14,14 @@ import { useParams } from "react-router-dom";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
-  removeToken,
   toggleLoginDialog,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
-import {
-  clickTabChat,
-  closeChatPopup,
-} from "../../../../redux-saga-middleware/reducers/chatReducer";
 import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
+import {
+  getUserInfoReady,
+  logoutReady,
+} from "../../../../redux-saga-middleware/reducers/userReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
 import { images } from "../../../../utils/images";
@@ -53,16 +52,11 @@ export default function Dialoglg() {
     setSocket(socket);
   }, []);
   const {
-    token,
-    userGold,
-    userName,
-    userAvatar,
+    // token,
     isUpdateProfile,
-    uPack,
-    promotionExtra,
   } = useSelector((state) => state.authReducer);
+  const { user, tokenUser } = useSelector((state) => state.userReducer);
   useEffect(() => {}, [isUpdateProfile]);
-
   const dispatch = useDispatch();
 
   const handleClickSignIn = () => {
@@ -75,21 +69,30 @@ export default function Dialoglg() {
   const { id } = useParams();
 
   const logout = () => {
-    socket?.emit("logout");
-    dispatch(closeChatPopup());
-    dispatch(removeToken());
-    dispatch(clickTabChat(true));
-    if (window.location.pathname?.includes("tournamentDetail")) {
-      socket?.emit("detailNewTournament", {
-        tournamentId: id,
-      });
-    }
+    // socket?.emit("logout");
+    // dispatch(closeChatPopup());
+    // dispatch(removeToken());
+    // dispatch(clickTabChat(true));
+    // if (window.location.pathname?.includes("tournamentDetail")) {
+    //   socket?.emit("detailNewTournament", {
+    //     tournamentId: id,
+    //   });
+    // }
+    dispatch(logoutReady());
   };
   const { width, height } = useWindowDimensions();
 
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if(token) {
+      dispatch(getUserInfoReady(token));
+    }
+  }, [token]);
+
   return (
     <div className="dialog">
-      {token === "" || !token || token === null ? (
+      {token === "" || token === null || token === undefined ? (
         <Box className="btn-group">
           <button className="btn-sign-up signin" onClick={handleClickSignIn}>
             <span>SIGN IN</span>
@@ -171,7 +174,7 @@ export default function Dialoglg() {
                     </g>
                   </svg>
                   <Typography sx={{ color: "#f5a128" }}>
-                    {promotionExtra}
+                    {user?.promotionExtra}
                   </Typography>
                 </Box>
               </Box>
@@ -232,7 +235,7 @@ export default function Dialoglg() {
                     </g>
                   </svg>
                   <Typography sx={{ color: "#f5a128" }}>
-                    {promotionExtra}
+                    {user?.promotionExtra}
                   </Typography>
                 </Box>
               </Box>
@@ -271,7 +274,7 @@ export default function Dialoglg() {
                   }}
                   className="cursor-pointer d-flex doge-coin "
                 >
-                  <Gold value={userGold} />
+                  <Gold value={user?.userGold} />
                 </Box>
               </Box>
             </Box>
@@ -308,7 +311,7 @@ export default function Dialoglg() {
                   }}
                   className="cursor-pointer d-flex doge-coin "
                 >
-                  <Gold value={userGold} />
+                  <Gold value={user?.userGold} />
                 </Box>
               </Box>
             </Box>
@@ -347,8 +350,10 @@ export default function Dialoglg() {
                     }}
                     alt="Remy Sharp"
                     src={
-                      userAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
+                      user?.userAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          user?.userAvatar
                         : images.undefinedAvatar
                     }
                     height={34}
@@ -374,11 +379,11 @@ export default function Dialoglg() {
                           overflow: "hidden",
                         }}
                       >
-                        {userName?.length > 10
-                          ? userName.slice(0, 10) + "..."
-                          : userName}
+                        {user?.userName?.length > 10
+                          ? user?.userName.slice(0, 10) + "..."
+                          : user?.userName}
                       </Typography>
-                      {uPack !== null ? (
+                      {user?.uPack ? (
                         <Box
                           display={"flex"}
                           justifyContent={"center"}
@@ -426,7 +431,7 @@ export default function Dialoglg() {
                     justifyContent={"center"}
                     sx={{ padding: "10px 15px" }}
                   >
-                    {userAvatar === null ? (
+                    {user?.userAvatar === null ? (
                       <img
                         style={{
                           borderRadius: 50,
@@ -451,10 +456,10 @@ export default function Dialoglg() {
                         }}
                         alt="Remy Sharp1"
                         src={
-                          userAvatar
+                          user?.userAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              userAvatar
+                              user?.userAvatar
                             : images.undefinedAvatar
                         }
                         className="ava-signin"
@@ -466,10 +471,10 @@ export default function Dialoglg() {
                       sx={{ fontWeight: "700", fontSize: "24px" }}
                       className="text-white ps-2"
                     >
-                      {userName}
+                      {user?.userName}
                     </Typography>
                   </Box>
-                  {uPack !== null ? (
+                  {user?.uPack ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
@@ -492,7 +497,7 @@ export default function Dialoglg() {
                   ) : (
                     ""
                   )}
-                  {uPack !== null ? (
+                  {user?.uPack ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
@@ -505,7 +510,7 @@ export default function Dialoglg() {
                           fontWeight: "300",
                         }}
                       >
-                        Remaining days: {uPack.remain}
+                        Remaining days: {user?.uPack?.remain}
                       </Typography>
                     </Box>
                   ) : (
@@ -576,7 +581,7 @@ export default function Dialoglg() {
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
                           socket?.emit("getDetailProfile", {
-                            username: userName,
+                            username: user?.userName,
                           });
                         }}
                       >

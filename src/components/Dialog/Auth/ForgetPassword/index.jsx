@@ -7,6 +7,7 @@ import {
   saveForgetPassInfo,
   updateUsernameWhenReset,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { forgetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
@@ -47,13 +48,10 @@ export default function ForgetPassword() {
   // );
 
   const handleSubmit = () => {
-    socket?.emit("forgetPassword", {
+    dispatch(forgetPasswordReady({
       username: username,
-      email: email,
-      phone: phoneNumber,
-      type: "password",
-    });
-    // dispatch(clickTab("createPass"));
+      email: email
+    }));
   };
 
   useEffect(() => {

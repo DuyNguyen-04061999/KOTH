@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
-  getUserInfoReady,
   loginReady
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
@@ -20,7 +19,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [displayPassword, setDisplayPassword] = useState(false);
   const { user } = useSelector((state) => state.userReducer);
-  const token = localStorage.getItem("token");
+
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -53,9 +52,6 @@ const Login = () => {
           password: password,
         })
       );
-      if (token) {
-        dispatch(getUserInfoReady());
-      }
     }
   };
 

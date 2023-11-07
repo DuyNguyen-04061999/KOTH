@@ -1,39 +1,44 @@
 import { API } from "../axios/api";
+import { PROMOTION_API } from "../axios/promotionApi";
 
 class UserService {
   async login(dataRequest) {
-    const res = await API.post("/api/authenticate/login", dataRequest , {
+    const res = await API.post("/api/authenticate/login", dataRequest, {
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
     return res;
   }
 
   async register(dataRequest) {
-    const res = await API.post("/api/authenticate/register", dataRequest,{
+    const res = await API.post("/api/authenticate/register", dataRequest, {
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
     return res;
   }
 
   async verifyOtp(dataRequest) {
-    const res = await API.post("/api/authenticate/verify-otp", dataRequest,{
+    const res = await API.post("/api/authenticate/verify-otp", dataRequest, {
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
     return res;
   }
 
   async forgetPassword(dataRequest) {
-    const res = await API.post("/api/authenticate/forgot-password", dataRequest,{
-      headers: {
-        "Content-Type": "application/json",
+    const res = await API.post(
+      "/api/authenticate/forgot-password",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
     return res;
   }
 
@@ -56,10 +61,10 @@ class UserService {
   }
 
   async resendOtp(dataRequest) {
-    const res = await API.post("/api/authenticate/resend-otp", dataRequest,{
+    const res = await API.post("/api/authenticate/resend-otp", dataRequest, {
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
     return res;
   }
@@ -83,17 +88,14 @@ class UserService {
   }
 
   async userInfo(dataRequest) {
-    const token = localStorage.getItem("token");
-    const res = await API.get(
+    const res = await PROMOTION_API.get(
       "/api/authenticate/me",
-      {
-        token: token,
-      },
       {
         headers: {
           "Content-Type": "application/json",
-          "x-access-token": { token },
-          Authorization: `Bearer ${token}`
+          "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
+          "Authorization": `Bearer ${dataRequest || localStorage.getItem("token")}`,
+          "authorization": `Bearer ${dataRequest || localStorage.getItem("token")}`,
         },
       }
     );
@@ -101,23 +103,9 @@ class UserService {
   }
 
   async logout(dataRequest) {
-    const token = localStorage.getItem("token");
-    const res = await API.post(
-      "/api/logout",
-      {
-        data: dataRequest,
-        token: token,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + { token },
-        },
-      }
-    );
-    return res;
+    return true;
   }
-  
+
   async verifyPhone(dataRequest) {
     const res = await API.post("/api/authenticate/verify-phone", dataRequest);
     return res;

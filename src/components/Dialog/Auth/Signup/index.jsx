@@ -12,6 +12,7 @@ import {
   saveCreateAccInfo
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { updateCountEveryDay } from "../../../../redux-saga-middleware/reducers/luckyWheelReducer";
+import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateNickName } from "../../../../utils/validateNickName";
@@ -149,17 +150,25 @@ export default function Signup(props) {
   ]);
 
   const sendRegister = () => {
-    console.log(socket);
-    socket?.emit("register", {
+    dispatch(registerReady({
       username: username,
       password: password,
       email: email,
       phone: phone,
       ref: refCodeRegister ? refCodeRegister : ref,
-      c_password: c_password,
       gender: gender,
       nickName: nickName,
-    });
+    }))
+    // socket?.emit("register", {
+    //   username: username,
+    //   password: password,
+    //   email: email,
+    //   phone: phone,
+    //   ref: refCodeRegister ? refCodeRegister : ref,
+    //   c_password: c_password,
+    //   gender: gender,
+    //   nickName: nickName,
+    // });
   };
 
   useEffect(() => {

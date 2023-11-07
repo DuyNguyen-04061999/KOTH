@@ -44,21 +44,21 @@ export const registerFail = (data) => {
 
 export const logoutReady = (data) => {
   return {
-    type: "LOGOUT_READY",
+    type: "LOG_OUT_READY",
     payload: data,
   };
 };
 
 export const logoutFail = (data) => {
   return {
-    type: "LOGOUT_FAIL",
+    type: "LOG_OUT_FAIL",
     payload: data,
   };
 };
 
 export const logoutSuccess = (data) => {
   return {
-    type: "LOGOUT_SUCCESS",
+    type: "LOG_OUT_SUCCESS",
     payload: data,
   };
 };
@@ -105,9 +105,51 @@ export const forgetPasswordSuccess = (data) => {
   };
 };
 
+export const sendOtpReady = (data) => {
+  return {
+    type: "SEND_OTP_READY",
+    payload: data,
+  };
+};
+
+export const sendOtpFail = (data) => {
+  return {
+    type: "SEND_OTP_FAIL",
+    payload: data,
+  };
+};
+
+export const sendOtpSuccess = (data) => {
+  return {
+    type: "SEND_OTP_SUCCESS",
+    payload: data,
+  };
+};
+
+export const resendOtpReady = (data) => {
+  return {
+    type: "RESEND_OTP_READY",
+    payload: data,
+  };
+};
+
+export const resendOtpFail = (data) => {
+  return {
+    type: "RESEND_OTP_FAIL",
+    payload: data,
+  };
+};
+
+export const resendOtpSuccess = (data) => {
+  return {
+    type: "RESEND_OTP_SUCCESS",
+    payload: data,
+  };
+};
+
 const userReducer = (
   state = {
-    token: "",
+    tokenUserUser: "",
     registerValue: "",
     userChangeAvatar: "",
     resetInputValue: "",
@@ -115,13 +157,17 @@ const userReducer = (
     mess: "",
     idPackage: "",
     refCodeRegister: "",
-    user:{},
+    user: {},
     userNameRef: "",
     nameReset: "",
     isLogin: false,
     isRegister: false,
     isUpdateProfile: false,
-    isGetInfoUser:false,
+    isGetInfoUser: false,
+    isLogout: false,
+    registerUsername: "",
+    isForgetPassword: false,
+    isResendOtp: false,
   },
   action
 ) => {
@@ -134,33 +180,37 @@ const userReducer = (
         ...state,
         isLogin: true,
       };
-    case "LOGIN_SUCCESS":
+    case "LOGIN_SUCCESS": {
       return {
         ...state,
-        token: payload.token,
+        tokenUser: payload.token,
         isLogin: false,
       };
+    }
+
     case "LOGIN_FAIL":
       return {
         ...state,
         isLogin: false,
       };
-      case "GET_USER_INFO_READY":
-        return {
-          ...state,
-          isGetInfoUser: true,
-        };
-      case "GET_USER_INFO_SUCCESS":
-        return {
-          ...state,
-          isGetInfoUser: false,
-          user: payload.user
-        };
-      case "GET_USER_INFO_FAIL":
-        return {
-          ...state,
-          isGetInfoUser: false,
-        };
+    case "GET_USER_INFO_READY":
+      return {
+        ...state,
+        isGetInfoUser: true,
+      };
+    case "GET_USER_INFO_SUCCESS":
+      return {
+        ...state,
+        isGetInfoUser: false,
+        user: {
+          ...payload.user,
+        },
+      };
+    case "GET_USER_INFO_FAIL":
+      return {
+        ...state,
+        isGetInfoUser: false,
+      };
     case "REGISTER_READY":
       return {
         ...state,
@@ -170,14 +220,16 @@ const userReducer = (
       return {
         ...state,
         isRegister: false,
+        registerUsername: payload?.username,
+        tokenUser: payload?.token,
       };
     case "REGISTER_FAIL":
       return {
         ...state,
         isRegister: false,
       };
-    case "REMOVE_TOKEN":
-      return { ...state, token: "" };
+    case "REMOVE_TOKEN_USER":
+      return { ...state, tokenUser: "" };
     case "REGISTER_SUCCESS_FULLY":
       return { ...state, registerValue: payload };
     case "UPDATE_PROFILE":
@@ -193,10 +245,22 @@ const userReducer = (
       return { ...state, isUpdateProfile: false, userChangeAvatar: "" };
 
       return { ...state, isNav: payload };
-    case "LOGOUT_SUCCESS":
+    case "LOG_OUT_READY":
       return {
         ...state,
-        token: "",
+        isLogout: true,
+      };
+    case "LOG_OUT_SUCCESS":
+      return {
+        ...state,
+        isLogout: false,
+        user: {},
+        tokenUser: "",
+      };
+    case "LOG_OUT_FAIL":
+      return {
+        ...state,
+        isLogout: false,
       };
 
       return {
@@ -205,7 +269,24 @@ const userReducer = (
       };
     case "GET_ID_PACKAGE":
       return { ...state, idPackage: payload };
-
+    case "SEND_OTP_READY":
+      return { ...state };
+    case "SEND_OTP_SUCCESS":
+      return { ...state };
+    case "SEND_OTP_FAIL":
+      return { ...state };
+    case "FORGET_PASSWORD_READY":
+      return { ...state, isForgetPassword: true };
+    case "FORGET_PASSWORD_FAIL":
+      return { ...state, isForgetPassword: false };
+    case "FORGET_PASSWORD_SUCCESS":
+      return { ...state, isForgetPassword: false };
+      case "RESEND_OTP_READY":
+        return { ...state, isResendOtp: true };
+      case "RESEND_OTP_FAIL":
+        return { ...state, isResendOtp: false };
+      case "RESEND_OTP_SUCCESS":
+        return { ...state, isResendOtp: false };
     default:
       return state;
   }

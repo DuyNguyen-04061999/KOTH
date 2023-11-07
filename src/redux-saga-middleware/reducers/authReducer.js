@@ -7,6 +7,13 @@ export const toggleLoginDialog = (data) => {
   };
 };
 
+export const openLoginDialog = (data) => {
+  return {
+    type: "OPEN_LOGIN_DIALOG",
+    payload: data,
+  };
+};
+
 export const closeLoginDialog = (data) => {
   return {
     type: "CLOSE_LOGIN_DIALOG",
@@ -170,9 +177,9 @@ export const updatePromotionExtraAfterPlayGame = (data) => {
 export const updateUPack = (data) => {
   return {
     type: "UPDATE_U_PACK",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 export const saveCreateAccInfo = (data) => {
   return {
     type: "SAVE_CREATE_ACC_INFO",
@@ -206,7 +213,21 @@ export const updateUsernameWhenReset = (data) => {
     type: "UPDATE_USERNAME_WHEN_RESET",
     payload: data,
   };
-}
+};
+
+export const openVerifyDialog = (data) => {
+  return {
+    type: "OPEN_VERIFY_DIALOG",
+    payload: data,
+  };
+};
+
+export const closeVerifyDialog = (data) => {
+  return {
+    type: "CLOSE_VERIFY_DIALOG",
+    payload: data,
+  };
+};
 
 const authReducer = (
   state = {
@@ -236,10 +257,12 @@ const authReducer = (
     isSubscription: false,
     refCodeRegister: "",
     promotionExtra: 0,
-    createAccInfo:{},
-    forgotPassInfo:{},
-    userNameRef:"",
-    nameReset: ""
+    createAccInfo: {},
+    forgotPassUsername: "",
+    forgotPassEmail: "",
+    userNameRef: "",
+    nameReset: "",
+    isVerifyDialog: false,
   },
   action
 ) => {
@@ -260,7 +283,7 @@ const authReducer = (
         userId: payload?.id,
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
-        promotionExtra:payload.promotionExtra || 0
+        promotionExtra: payload.promotionExtra || 0,
       };
     }
     case "SAVE_CREATE_ACC_INFO": {
@@ -275,10 +298,12 @@ const authReducer = (
         createAccInfo: {},
       };
     }
+
     case "SAVE_FORGET_PASS_INFO": {
       return {
         ...state,
-        forgotPassInfo: payload.forgotPassInfo,
+        forgotPassUsername: payload?.username,
+        forgotPassEmail: payload?.email,
       };
     }
     case "CLEAR_FORGET_PASS_INFO": {
@@ -345,14 +370,24 @@ const authReducer = (
       return { ...state, isShare: !state.isShare };
     case "TOGGLE_SUBSCRIPTION_DIALOG":
       return { ...state, isSubscription: !state.isSubscription };
+    case "OPEN_VERIFY_DIALOG":
+      return { ...state, isVerifyDialog: true };
+    case "CLOSE_VERIFY_DIALOG":
+      return { ...state, isVerifyDialog: false };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
-    case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
-    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
-    case "CLOSE_LOGIN_DIALOG": return {...state, isLoginDialog: false}
-    case "UPDATE_U_PACK": return {...state, uPack: payload || {}}
+    case "UPDATE_PROMOTION_EXTRA":
+      return { ...state, promotionExtra: state.promotionExtra + payload };
+    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME":
+      return { ...state, promotionExtra: state.promotionExtra - payload };
+    case "OPEN_LOGIN_DIALOG":
+      return { ...state, isLoginDialog: true };
+    case "CLOSE_LOGIN_DIALOG":
+      return { ...state, isLoginDialog: false };
+    case "UPDATE_U_PACK":
+      return { ...state, uPack: payload || {} };
     case "UPDATE_USERNAME_WHEN_RESET": {
-      return {...state, nameReset: payload || ""}
+      return { ...state, nameReset: payload || "" };
     }
     default:
       return state;
