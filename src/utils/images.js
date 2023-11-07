@@ -328,11 +328,13 @@ import NavTotal from "../assets/images/Chart.png";
 import NavFilter from "../assets/images/Document.png";
 import NavLogout from "../assets/images/Logout.png";
 import NavSetting from "../assets/images/Setting.png";
+import stripeLogo from "../assets/images/stripeLogo.png";
 
 import NavManageActive from "../assets/images/ActivityActive.png";
 import NavCreateActive from "../assets/images/CategoryActive.png";
 import NavTotalActive from "../assets/images/ChartActive.png";
 import NavFilterActive from "../assets/images/DocumentActive.png";
+import payPalIcon from "../assets/images/payPalIcon.png";
 import NavSettingActive from "../assets/images/SettingActive.png";
 
 import NavEnded from "../assets/images/navbar/ended.png";
@@ -357,7 +359,7 @@ import NavUpcomingActive from "../assets/images/navbar/upcomingActive.png";
 import NavVipActive from "../assets/images/navbar/vipActive.png";
 
 import bannerendmobile from "../assets/images/bannerendmobile.png";
-import bannerendtour from '../assets/images/bannerendtour.png';
+import bannerendtour from "../assets/images/bannerendtour.png";
 import BtnBack from "../assets/images/btnback.png";
 
 import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
@@ -588,6 +590,8 @@ export const images = {
   bannerendmobile: bannerendmobile,
   nickname: nickname,
   ToolTipIcon: ToolTipIcon,
+  payPalIcon: payPalIcon,
+  stripeLogo: stripeLogo,
 };
 
 export const navigationImages = {
