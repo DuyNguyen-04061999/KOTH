@@ -171,9 +171,7 @@ const Login = () => {
             alignItems: "center",
             justifyContent: "flex-end",
             margin: "16px 0",
-            cursor: "pointer",
           }}
-          onClick={() => dispatch(clickTab("forgetPass"))}
         >
           <Typography
             sx={{
@@ -181,7 +179,9 @@ const Login = () => {
               fontSize: "14px",
               fontWeight: "700",
               textAlign: "center",
+              cursor: "pointer",
             }}
+            onClick={() => dispatch(clickTab("forgetPass"))}
           >
             Forgot Password?
           </Typography>
