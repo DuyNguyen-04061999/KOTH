@@ -69,7 +69,7 @@ export default function Package() {
       {width > 576 ? (
         <div className="Package-home pb-5 ">
           <Box className="text-white">
-            {location && location?.pathname?.includes("home") || pathname === "/" ? (
+            {(location && location?.pathname?.includes("home")) || pathname === "/" ? (
               <Typography
                 className="pt-5 pb-4"
                 sx={{
@@ -97,7 +97,7 @@ export default function Package() {
                     className="pt-2"
                     sx={{
                       textAlign:
-                        location && location?.pathname?.includes("home") || pathname === "/"
+                        (location && location?.pathname?.includes("home")) || pathname === "/"
                           ? "start"
                           : "center",
                       fontSize: width < 576 ? "14px" : "18px",
@@ -105,7 +105,7 @@ export default function Package() {
                       marginLeft: "0px !important",
                       color: "#fff",
                       marginTop:
-                        location && location?.pathname?.includes("home") || pathname === "/"
+                        (location && location?.pathname?.includes("home")) || pathname === "/"
                           ? "0px"
                           : "30px",
                     }}
@@ -120,7 +120,7 @@ export default function Package() {
                     alignItems: "center",
                     justifyContent: "space-around",
                     marginTop:
-                      location && location?.pathname?.includes("home") || pathname === "/"
+                      (location && location?.pathname?.includes("home")) || pathname === "/"
                         ? "20px"
                         : "30px",
                   }}
@@ -151,7 +151,7 @@ export default function Package() {
                     className="pt-2"
                     sx={{
                       textAlign:
-                        location && location?.pathname?.includes("home") || pathname === "/"
+                        (location && location?.pathname?.includes("home")) || pathname === "/"
                           ? "start"
                           : "center",
                       fontSize: width < 576 ? "14px" : "18px",
@@ -159,7 +159,7 @@ export default function Package() {
                       marginLeft: "0px !important",
                       color: "#fff",
                       marginTop:
-                        location && location?.pathname?.includes("home") || pathname === "/"
+                        (location && location?.pathname?.includes("home")) || pathname === "/"
                           ? "0px"
                           : "30px",
                     }}
@@ -174,7 +174,7 @@ export default function Package() {
                     alignItems: "center",
                     justifyContent: "space-around",
                     marginTop:
-                      location && location?.pathname?.includes("home") || pathname === "/"
+                      (location && location?.pathname?.includes("home")) || pathname === "/"
                         ? "20px"
                         : "30px",
                   }}
@@ -208,7 +208,7 @@ export default function Package() {
         </div>
       ) : (
         <div className="Package-home" style={{ marginTop: "48px" }}>
-          {location && location?.pathname?.includes("home") || pathname === "/" ? (
+          {(location && location?.pathname?.includes("home")) || pathname === "/" ? (
             <Typography
               sx={{
                 textAlign: "start",
@@ -249,12 +249,12 @@ export default function Package() {
             <Box
               sx={{
                 padding:
-                  pathname && pathname?.includes("home") || pathname === "/" ? "0px" : "40px",
+                  (pathname && pathname?.includes("home")) || pathname === "/" ? "0px" : "40px",
                 marginTop:
-                  pathname && pathname?.includes("home") || pathname === "/" ? "24px" : "0px",
+                  (pathname && pathname?.includes("home")) || pathname === "/" ? "24px" : "0px",
               }}
             >
-              {location && location?.pathname?.includes("home") || pathname === "/" ? (
+              {(location && location?.pathname?.includes("home")) || pathname === "/" ? (
                 <ScrollingCarousel>
                   {item?.map((i, index) => {
                     return (
