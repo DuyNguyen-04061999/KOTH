@@ -168,6 +168,26 @@ export const resendOtpSuccess = (data) => {
   };
 };
 
+export const reVerifyAccount = (data) => {
+  return {
+    type: "RE_VERIFY_ACCOUNT",
+    payload: data
+  }
+}
+
+export const reVerifyAccountSuccess = (data) => {
+  return {
+    type: "RE_VERIFY_ACCOUNT_SUCCESS",
+    payload: data
+  }
+}
+
+export const reVerifyAccountFail = (data) => {
+  return {
+    type: "RE_VERIFY_ACCOUNT_FAIL",
+    payload: data
+  }
+}
 const userReducer = (
   state = {
     tokenUserUser: "",
@@ -191,6 +211,7 @@ const userReducer = (
     isResendOtp: false,
     isResetPassword: false,
     tokenResetPass: "",
+    isReVerifyAccount: false
   },
   action
 ) => {
@@ -316,6 +337,9 @@ const userReducer = (
       return { ...state, isResendOtp: false };
     case "RESEND_OTP_SUCCESS":
       return { ...state, isResendOtp: false };
+    case "RE_VERIFY_ACCOUNT": return {...state, isReVerifyAccount: true}
+    case "RE_VERIFY_ACCOUNT_SUCCESS": return {...state, isReVerifyAccount: false}
+    case "RE_VERIFY_ACCOUNT_FAIL": return {...state, isReVerifyAccount: false}
     default:
       return state;
   }

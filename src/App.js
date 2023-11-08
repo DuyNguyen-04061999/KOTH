@@ -44,6 +44,8 @@ import {
   closeLoginDialog,
   getLeaderBoardSuccess,
   getNavTablet,
+  logoutSuccessFully,
+  saveDataLogin,
   updateProfileFail,
   updateProfileSuccess,
   updatePromotionExtra,
@@ -52,6 +54,7 @@ import {
   updateUserGold,
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
+  chatLogoutSuccessFully,
   pushChatWorld,
   pushfriendList,
   updateChatWorld,
@@ -64,6 +67,7 @@ import {
 import {
   addGameLog,
   changeOrientation,
+  gameLogoutSuccessFully,
   getGameLog,
   getListGame,
   getListGameByType,
@@ -81,14 +85,17 @@ import {
 import {
   getDepostiData,
   getWithdrawData,
+  paymentLogoutSuccessFully,
   updateDeposit,
   updateWithDraw
 } from "./redux-saga-middleware/reducers/paymentReducer";
 import {
   deleteFriendSuccesFully,
+  profileLogoutSuccessFully,
   saveDataProfile
 } from "./redux-saga-middleware/reducers/profileReducer";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
+import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
@@ -627,11 +634,11 @@ function App() {
         store.dispatch(getListGame());
       }
       if (localStorage.getItem("KE")) {
-        socket?.emit("login", {
-          username: localStorage.getItem("NAME"),
-          password: localStorage.getItem("PASS"),
-          key: localStorage.getItem("KE"),
-        });
+        // socket?.emit("login", {
+        //   username: localStorage.getItem("NAME"),
+        //   password: localStorage.getItem("PASS"),
+        //   key: localStorage.getItem("KE"),
+        // });
       }
     };
 

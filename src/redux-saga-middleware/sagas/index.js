@@ -6,7 +6,7 @@ import packageSaga from "./packageSaga";
 import promotionSaga from "./promotionSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
-import userSaga from "./userSaga";
+import { default as authSaga, default as userSaga } from "./userSaga";
 
 function* watchAll() {
   yield all([

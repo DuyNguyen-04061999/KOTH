@@ -54,7 +54,6 @@ class UserService {
   }
 
   async updateNewPassword(dataRequest) {
-    const token = localStorage.getItem("token");
     const res = await PROMOTION_API.post(
       "/api/authenticate/update-new-password",
       dataRequest,
@@ -126,6 +125,22 @@ class UserService {
     const res = await PROMOTION_API.post(
       "/api/authenticate/verify-email",
       dataRequest
+    );
+    return res;
+  }
+
+  async reVerifyAccount(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/authenticate/re-verify",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+          authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+        }
+      },
     );
     return res;
   }

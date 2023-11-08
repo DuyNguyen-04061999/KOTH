@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clickTab, closeVerifyDialog, openLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { logoutReady } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { closeVerifyDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { logoutReady, reVerifyAccount } from "../../../../redux-saga-middleware/reducers/userReducer";
 import AnimButton from "../../../AnimButton";
 
 export default function DialogVerify() {
@@ -28,9 +28,7 @@ export default function DialogVerify() {
   };
 
   const handleConfirm = () => {
-    dispatch(closeVerifyDialog());
-    dispatch(openLoginDialog());
-    dispatch(clickTab("otpVerifyAccount"));
+    dispatch(reVerifyAccount())
   }
 
   return ReactDOM.createPortal(
