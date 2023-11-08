@@ -4,14 +4,18 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
+import { resetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 export default function CreatePassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { forgotPassInfo, nameReset } = useSelector((state) => state.authReducer);
-  console.log(nameReset, forgotPassInfo);
+  // const { forgotPassInfo, nameReset } = useSelector((state) => state.authReducer);
+  const { forgotPassUsername, nameReset } = useSelector(
+    (state) => state.authReducer
+  );
+  const { tokenResetPass } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -34,12 +38,19 @@ export default function CreatePassword() {
     setDisplayRePassword(!displayRePassword);
   };
 
-  
   const handleCreatePass = () => {
-    socket?.emit("updateNewPassword", {
-      username: nameReset || forgotPassInfo.username,
-      password: password,
-    });
+    // socket?.emit("updateNewPassword", {
+    //   username: nameReset || forgotPassInfo.username,
+    //   password: password,
+    // });
+
+    dispatch(
+      resetPasswordReady({
+        username: nameReset || forgotPassUsername,
+        password: password,
+        token: tokenResetPass,
+      })
+    );
   };
 
   useEffect(() => {

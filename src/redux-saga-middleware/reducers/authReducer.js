@@ -7,6 +7,13 @@ export const toggleLoginDialog = (data) => {
   };
 };
 
+export const openLoginDialog = (data) => {
+  return {
+    type: "OPEN_LOGIN_DIALOG",
+    payload: data,
+  };
+};
+
 export const closeLoginDialog = (data) => {
   return {
     type: "CLOSE_LOGIN_DIALOG",
@@ -208,6 +215,20 @@ export const updateUsernameWhenReset = (data) => {
   };
 };
 
+export const openVerifyDialog = (data) => {
+  return {
+    type: "OPEN_VERIFY_DIALOG",
+    payload: data,
+  };
+};
+
+export const closeVerifyDialog = (data) => {
+  return {
+    type: "CLOSE_VERIFY_DIALOG",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -237,9 +258,11 @@ const authReducer = (
     refCodeRegister: "",
     promotionExtra: 0,
     createAccInfo: {},
-    forgotPassInfo: {},
+    forgotPassUsername: "",
+    forgotPassEmail: "",
     userNameRef: "",
     nameReset: "",
+    isVerifyDialog: false,
   },
   action
 ) => {
@@ -275,10 +298,12 @@ const authReducer = (
         createAccInfo: {},
       };
     }
+
     case "SAVE_FORGET_PASS_INFO": {
       return {
         ...state,
-        forgotPassInfo: payload.forgotPassInfo,
+        forgotPassUsername: payload?.username,
+        forgotPassEmail: payload?.email,
       };
     }
     case "CLEAR_FORGET_PASS_INFO": {
@@ -345,12 +370,18 @@ const authReducer = (
       return { ...state, isShare: !state.isShare };
     case "TOGGLE_SUBSCRIPTION_DIALOG":
       return { ...state, isSubscription: !state.isSubscription };
+    case "OPEN_VERIFY_DIALOG":
+      return { ...state, isVerifyDialog: true };
+    case "CLOSE_VERIFY_DIALOG":
+      return { ...state, isVerifyDialog: false };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
     case "UPDATE_PROMOTION_EXTRA":
       return { ...state, promotionExtra: state.promotionExtra + payload };
     case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME":
       return { ...state, promotionExtra: state.promotionExtra - payload };
+    case "OPEN_LOGIN_DIALOG":
+      return { ...state, isLoginDialog: true };
     case "CLOSE_LOGIN_DIALOG":
       return { ...state, isLoginDialog: false };
     case "UPDATE_U_PACK":

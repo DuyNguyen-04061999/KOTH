@@ -1,7 +1,7 @@
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { Navigate, Route, Routes, useParams } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
@@ -24,10 +24,12 @@ import GameLobby from "./pages/GamePlay";
 import HomePage from "./pages/Home";
 import NewHomePageComponent from "./pages/NewHomePageComponent";
 import PlayGamePage from "./pages/PlayGamePage";
+import Refresh from "./pages/Refresh";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
+import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
 import {
@@ -56,7 +58,7 @@ import {
   pushChatWorld,
   pushfriendList,
   updateChatWorld,
-  updateFriendList,
+  updateFriendList
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
@@ -72,7 +74,7 @@ import {
   storeFavoriteGame,
   updateListDisLikeGame,
   updateListLikeGame,
-  updateReward,
+  updateReward
 } from "./redux-saga-middleware/reducers/gameReducer";
 import {
   addMoreSpinHistory,
@@ -85,12 +87,12 @@ import {
   getWithdrawData,
   paymentLogoutSuccessFully,
   updateDeposit,
-  updateWithDraw,
+  updateWithDraw
 } from "./redux-saga-middleware/reducers/paymentReducer";
 import {
   deleteFriendSuccesFully,
   profileLogoutSuccessFully,
-  saveDataProfile,
+  saveDataProfile
 } from "./redux-saga-middleware/reducers/profileReducer";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
@@ -99,8 +101,6 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-import Refresh from "./pages/Refresh";
-import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -634,11 +634,11 @@ function App() {
         store.dispatch(getListGame());
       }
       if (localStorage.getItem("KE")) {
-        socket?.emit("login", {
-          username: localStorage.getItem("NAME"),
-          password: localStorage.getItem("PASS"),
-          key: localStorage.getItem("KE"),
-        });
+        // socket?.emit("login", {
+        //   username: localStorage.getItem("NAME"),
+        //   password: localStorage.getItem("PASS"),
+        //   key: localStorage.getItem("KE"),
+        // });
       }
     };
 

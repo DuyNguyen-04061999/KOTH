@@ -8,7 +8,8 @@ export const PROMOTION_API = axios.create({
   headers: {
     "Content-Type": "multipart/form-data",
     Authorization: "Bearer " + localStorage.getItem("token"),
-    "x-access-token": localStorage.getItem("token"),
+    authorization: "Bearer " + localStorage.getItem("token"),
+    "x-access-refactor-token": localStorage.getItem("token"),
     'x-time-zone': - new Date().getTimezoneOffset()/60
   },
 });
