@@ -1,3 +1,5 @@
+import { REHYDRATE } from "redux-persist";
+
 export const getWithdrawData = (data) => {
   return {
     type: "GET_WITHDRAW_DATA",
@@ -57,15 +59,16 @@ const paymentReducer = (
   state = {
     withdrawData: [],
     despositData: [],
-    timeTrans:[],
-    isDialogPromote:false,
-    isNotiFunds:false,
+    timeTrans: [],
+    isDialogPromote: false,
+    isNotiFunds: false,
     typeNoti: "",
   },
   action
 ) => {
   let { type, payload } = action;
   switch (type) {
+    case REHYDRATE: return {...state}
     case "GET_WITHDRAW_DATA": {
       return {
         ...state,
