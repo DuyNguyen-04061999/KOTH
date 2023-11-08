@@ -1,4 +1,4 @@
-import { checkSpecialCharacter } from "./validationUserName";
+import { checkSpecialCharacter } from "./validateUserName";
 
 const checkLengthNickName = (nickname) => {
   return nickname.length <= 12 ? true : false;

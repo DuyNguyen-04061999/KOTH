@@ -5,17 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleSubscriptionDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { toggleTournamentShow } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 import AnimButton from "../../../AnimButton";
+import { useNavigate } from "react-router-dom";
 
 export default function TouramentShow() {
   const { isTournamentShow } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleClose = () => {
     dispatch(toggleTournamentShow(false));
   };
 
   const openSubscription = () => {
-    dispatch(toggleSubscriptionDialog(true))
+    // dispatch(toggleSubscriptionDialog(true))
+    navigate("/packages")
     dispatch(toggleTournamentShow(false));
   }
 

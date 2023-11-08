@@ -1,8 +1,4 @@
-import {
-  CssBaseline,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -28,13 +24,18 @@ import GameLobby from "./pages/GamePlay";
 import HomePage from "./pages/Home";
 import NewHomePageComponent from "./pages/NewHomePageComponent";
 import PlayGamePage from "./pages/PlayGamePage";
+import Refresh from "./pages/Refresh";
 import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
+import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
-import { hideToastNotification, showAlert } from "./redux-saga-middleware/reducers/alertReducer";
+import {
+  hideToastNotification,
+  showAlert,
+} from "./redux-saga-middleware/reducers/alertReducer";
 import {
   getListBet,
   getListPackage,
@@ -48,7 +49,7 @@ import {
   updatePromotionExtra,
   updateSubPackageId,
   updateUPack,
-  updateUserGold
+  updateUserGold,
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
@@ -111,16 +112,16 @@ const LazyUpcomingPromo = lazy(() =>
 const LazyEndedPromo = lazy(() => import("./pages/Promotion/EndedPromotion"));
 
 const SuspenseWrapper = (props) => {
-  const { child } = props
-  return <Suspense fallback={<PageLoading/>}>{child}</Suspense>
-}
+  const { child } = props;
+  return <Suspense fallback={<PageLoading />}>{child}</Suspense>;
+};
 
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
   const { token } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
-  
+
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
 
@@ -148,7 +149,7 @@ function App() {
       socket?.emit("listMessageGlobal");
     }
   });
-  
+
   useEffect(() => {});
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
@@ -179,7 +180,6 @@ function App() {
         !startGameCheck &&
         !window.location.pathname?.includes("tournamentDetail")
       ) {
-        
       }
     };
 
@@ -226,7 +226,7 @@ function App() {
           className: "success-background",
         });
         store.dispatch(updateSubPackageId(data));
-        store.dispatch(updateUPack(uPackc))
+        store.dispatch(updateUPack(uPackc));
       });
       socket?.on("getTicketFromAgent", (quantity) => {
         toast.success("Get Promotion Extra From Agent Successfully", {
@@ -240,8 +240,8 @@ function App() {
           position: "top-center",
           className: "success-background",
         });
-        store.dispatch(updatePromotionExtra(quantity || 0))
-      })
+        store.dispatch(updatePromotionExtra(quantity || 0));
+      });
       socket?.on("upgradeSubscriptionSuccess", (data, uPackc) => {
         toast.success("Upgrade Subscription Successfully", {
           icon: ({ theme, type }) => (
@@ -255,15 +255,28 @@ function App() {
           className: "success-background",
         });
         store.dispatch(updateSubPackageId(data));
-        store.dispatch(updateUPack(uPackc))
+        store.dispatch(updateUPack(uPackc));
       });
 
       socket?.on(
         "loginSuccess",
         (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
-          store.dispatch(closeLoginDialog())
+          store.dispatch(closeLoginDialog());
           store.dispatch(
             updateCountEveryDay(user?.userCountSpin?.countEveryday)
+          );
+          store.dispatch(
+            saveDataLogin({
+              token: token,
+              username: user?.userName,
+              gold: user?.userGold,
+              avatar: user?.userAccount?.accountAvatar,
+              role: user?.userRole,
+              id: user?.id,
+              userPackageId: userPackageId,
+              uPack: uPack,
+              promotionExtra: promotionExtra,
+            })
           );
 
           localStorage.setItem("NAME", user.userName);
@@ -280,7 +293,6 @@ function App() {
           socket?.emit("getDetailProfile", {
             username: user?.userName,
           });
-          
         }
       );
 
@@ -326,6 +338,46 @@ function App() {
         store.dispatch(deleteFriendSuccesFully("success"));
       });
 
+      socket?.on("logoutSuccess", (data) => {
+        const { type, message } = data;
+
+        if (type === "logout") {
+          localStorage.removeItem("NAME");
+          localStorage.removeItem("PASS");
+          localStorage.removeItem("KE");
+          localStorage.removeItem("token");
+          store.dispatch(logoutSuccessFully("logoutSuccess"));
+          store.dispatch(gameLogoutSuccessFully());
+          store.dispatch(chatLogoutSuccessFully());
+          store.dispatch(profileLogoutSuccessFully());
+          store.dispatch(paymentLogoutSuccessFully());
+          store.dispatch(walletLogoutSuccessFully());
+        } else if (type === "sameAccount") {
+          toast.warning(message, {
+            icon: ({ theme, type }) => (
+              <img
+                style={{ width: "20px", marginRight: "10px" }}
+                alt="..."
+                src={images.WarningIcon}
+              />
+            ),
+            position: "top-center",
+            className:
+              width < 576 ? "warning-background-small" : "warning-background",
+          });
+          localStorage.removeItem("NAME");
+          localStorage.removeItem("PASS");
+          localStorage.removeItem("KE");
+          localStorage.removeItem("token");
+          store.dispatch(logoutSuccessFully("logoutSuccess"));
+          store.dispatch(gameLogoutSuccessFully());
+          store.dispatch(chatLogoutSuccessFully());
+          store.dispatch(profileLogoutSuccessFully());
+          store.dispatch(paymentLogoutSuccessFully());
+          store.dispatch(walletLogoutSuccessFully());
+        }
+      });
+
       socket?.on("getDetailProfileSuccess", (data) => {
         store.dispatch(
           saveDataProfile({
@@ -337,6 +389,7 @@ function App() {
             avatarUrl: data?.userAccount?.accountAvatar,
             firstName: data?.userFirstName,
             lastName: data?.userLastName,
+            nickName: data?.userNickName,
           })
         );
       });
@@ -356,6 +409,7 @@ function App() {
       });
 
       socket?.on("updateProfileSuccess", (data) => {
+        console.log("Running");
         store.dispatch(updateProfileSuccess(data?.userAccount?.accountAvatar));
         store.dispatch(
           saveDataProfile({
@@ -533,7 +587,6 @@ function App() {
             width < 576 ? "warning-background-small" : "warning-background",
         });
       });
-
       socket?.on("success", (data) => {
         toast.success(data, {
           icon: ({ theme, type }) => (
@@ -552,15 +605,12 @@ function App() {
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
-
       socket?.on("buySubscriptionSuccess", (id) => {
         store.dispatch(updateSubPackageId(id));
       });
-
       socket?.on("gameDefeated", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
-
       socket?.on("gameDraw", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
@@ -573,7 +623,7 @@ function App() {
 
   useEffect(() => {
     const onPageLoad = () => {
-      if(getAppType() !== "promote") {
+      if (getAppType() !== "promote") {
         store.dispatch(getListGame());
       }
       if (localStorage.getItem("KE")) {
@@ -605,7 +655,7 @@ function App() {
   }, [socket, token]);
 
   useEffect(() => {
-    if(getAppType() !== "promote") {
+    if (getAppType() !== "promote") {
       store.dispatch(getListBet());
     }
   });
@@ -640,7 +690,7 @@ function App() {
         md: 900,
         laptop: 1024,
         lg: 1200,
-        desktop: 1200, 
+        desktop: 1200,
         xl: 1536,
       },
     },
@@ -652,6 +702,39 @@ function App() {
     },
   });
 
+  useEffect(() => {
+    async function fetchData(paymentId, PayerID) {
+      try {
+        const response = await PROMOTION_API.post(
+          "/api/payments/paypal/success",
+          {
+            paymentId: paymentId,
+            payerId: PayerID,
+            token: localStorage.getItem("token"),
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return response;
+      } catch (error) {
+        console.log("error: ", error);
+      }
+    }
+    const params = new URLSearchParams(window.location.search);
+    const paymentId = params.get("paymentId");
+    const PayerID = params.get("PayerID");
+    (async function () {
+      if (paymentId && PayerID) {
+        let response = await fetchData(
+          params.get("paymentId"),
+          params.get("PayerID")
+        );
+      }
+    })();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -662,14 +745,14 @@ function App() {
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
-                <Route path="/" element={<Layout/>}>
+                <Route path="/" element={<Layout />}>
                   <Route
                     path="/"
                     element={
                       getAppType() === "promote" ? (
-                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage/>}/>
+                        <SuspenseWrapper child={<HomePage />} />
                       )
                     }
                   ></Route>
@@ -677,27 +760,25 @@ function App() {
                     path="/home"
                     element={
                       getAppType() === "promote" ? (
-                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage/>}/>
+                        <SuspenseWrapper child={<HomePage />} />
                       )
                     }
                   ></Route>
-                                    <Route
+                  <Route
                     path="/influencers/:userName"
                     element={
                       getAppType() === "promote" ? (
-                        <SuspenseWrapper child={<LazyNewHomePage/>}/>
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage/>}/>
+                        <SuspenseWrapper child={<HomePage />} />
                       )
                     }
                   ></Route>
-                                  <Route
+                  <Route
                     path="/tournamentDetail/:id/influencers/:userName"
-                    element={
-                      <SuspenseWrapper child={<LazyJoinTour/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   ></Route>
                   <Route path="/gamelobby/:id" element={<GameLobby />} />
                   <Route
@@ -706,54 +787,38 @@ function App() {
                   />
                   <Route
                     path="/tournamentDetail/:id"
-                    element={
-                      <SuspenseWrapper child={<LazyJoinTour/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   />
                   <Route
                     path="/hot-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyHotPromo/>}/>
-                      
-                    }
+                    element={<SuspenseWrapper child={<LazyHotPromo />} />}
                   />
                   <Route
                     path="/vip-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyVipPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyVipPromo />} />}
                   />
                   <Route
                     path="/standard-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyStandardPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyStandardPromo />} />}
                   />
                   <Route
                     path="/ongoing-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyOngoingPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyOngoingPromo />} />}
                   />
                   <Route
                     path="/upcoming-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyUpcomingPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyUpcomingPromo />} />}
                   />
                   <Route
                     path="/ended-promotion"
-                    element={
-                      <SuspenseWrapper child={<LazyEndedPromo/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyEndedPromo />} />}
                   />
                   <Route
                     path="/help-center"
-                    element={
-                      <SuspenseWrapper child={<LazyHelpCenter/>}/>
-                    }
+                    element={<SuspenseWrapper child={<LazyHelpCenter />} />}
                   />
                   <Route path="/change-log" element={<ChangeLog />} />
+                  <Route path="/test-refresh" element={<Refresh />} />
                   <Route path="/loadingscreen" element={<LoadingScreen />} />
                   <Route path="/new-home" element={<NewHomePageComponent />} />
                   <Route path="/countdowntimer" element={<CountDownTimer />} />
@@ -797,14 +862,12 @@ function App() {
                 autoClose={1000}
                 position="top-center"
                 draggable={false}
-                style={{
-                  
-                }}
+                style={{}}
                 onClick={() => {
-                  store.dispatch(hideToastNotification())
-              }}
+                  store.dispatch(hideToastNotification());
+                }}
               />
-              <ToastNotification/>
+              <ToastNotification />
             </CustomRouter>
           </PersistGate>
         </Provider>

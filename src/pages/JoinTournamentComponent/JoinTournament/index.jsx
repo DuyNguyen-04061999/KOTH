@@ -1936,10 +1936,10 @@ export default function JoinTournament() {
                     <img
                       className="w-100 pt-3"
                       src={
-                        detailTournament?.tournamentBackground
+                        detailTournament?.tournamentBackgroundMobile
                           ? process.env.REACT_APP_SOCKET_SERVER +
                             "/" +
-                            detailTournament?.tournamentBackground
+                            detailTournament?.tournamentBackgroundMobile
                           : images.DoubleDragonMobile
                       }
                       alt="..."
