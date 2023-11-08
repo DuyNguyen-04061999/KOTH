@@ -99,7 +99,7 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Please enter the 6-digit verification code that was sent to {createAccInfo.phone} to verify your account
+          Please enter the 6-digit verification code that was sent to {createAccInfo?.email} to verify your account
         </Typography>
       </Box>
       <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
@@ -117,12 +117,14 @@ export default function OTPVerifyAccount() {
                 backgroundColor: "#271C39",
                 border: "none",
                 outline: "none",
-                borderBottom: "2px solid white",
                 textAlign: "center",
-                fontSize: "24px",
+                fontSize: width < 576 ? "12px" : "20px",
                 color: "white",
+                border:"2px solid white",
+                borderRadius:"4px"
               }}
               type="number"
+              inputMode="numeric"
               maxLength={1}
             />
           )}

@@ -152,6 +152,8 @@ export default function Signup(props) {
     passOneLetter,
   ]);
 
+  console.log(socket);
+
   const sendRegister = () => {
     socket?.emit("register", {
       username: username,
@@ -931,7 +933,6 @@ export default function Signup(props) {
             (+1){" "}
           </Typography>
           <Input
-            type="number"
             name="phone"
             onChange={(e) => {
               setPhone(e.target.value);
