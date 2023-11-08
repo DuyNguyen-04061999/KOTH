@@ -170,9 +170,9 @@ export const updatePromotionExtraAfterPlayGame = (data) => {
 export const updateUPack = (data) => {
   return {
     type: "UPDATE_U_PACK",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 export const saveCreateAccInfo = (data) => {
   return {
     type: "SAVE_CREATE_ACC_INFO",
@@ -206,7 +206,7 @@ export const updateUsernameWhenReset = (data) => {
     type: "UPDATE_USERNAME_WHEN_RESET",
     payload: data,
   };
-}
+};
 
 const authReducer = (
   state = {
@@ -236,10 +236,10 @@ const authReducer = (
     isSubscription: false,
     refCodeRegister: "",
     promotionExtra: 0,
-    createAccInfo:{},
-    forgotPassInfo:{},
-    userNameRef:"",
-    nameReset: ""
+    createAccInfo: {},
+    forgotPassInfo: {},
+    userNameRef: "",
+    nameReset: "",
   },
   action
 ) => {
@@ -260,7 +260,7 @@ const authReducer = (
         userId: payload?.id,
         userPackageId: payload.userPackageId,
         uPack: payload.uPack,
-        promotionExtra:payload.promotionExtra || 0
+        promotionExtra: payload.promotionExtra || 0,
       };
     }
     case "SAVE_CREATE_ACC_INFO": {
@@ -347,12 +347,16 @@ const authReducer = (
       return { ...state, isSubscription: !state.isSubscription };
     case "UPDATE_SUB_PACKAGE_ID":
       return { ...state, userPackageId: payload || "" };
-    case "UPDATE_PROMOTION_EXTRA": return {...state, promotionExtra: state.promotionExtra + payload}
-    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME": return {...state, promotionExtra: state.promotionExtra - payload}
-    case "CLOSE_LOGIN_DIALOG": return {...state, isLoginDialog: false}
-    case "UPDATE_U_PACK": return {...state, uPack: payload || {}}
+    case "UPDATE_PROMOTION_EXTRA":
+      return { ...state, promotionExtra: state.promotionExtra + payload };
+    case "UPDATE_PROMOTION_EXTRA_AFTER_PLAY_GAME":
+      return { ...state, promotionExtra: state.promotionExtra - payload };
+    case "CLOSE_LOGIN_DIALOG":
+      return { ...state, isLoginDialog: false };
+    case "UPDATE_U_PACK":
+      return { ...state, uPack: payload || {} };
     case "UPDATE_USERNAME_WHEN_RESET": {
-      return {...state, nameReset: payload || ""}
+      return { ...state, nameReset: payload || "" };
     }
     default:
       return state;

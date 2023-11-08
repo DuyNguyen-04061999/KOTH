@@ -396,6 +396,7 @@ function App() {
             avatarUrl: data?.userAccount?.accountAvatar,
             firstName: data?.userFirstName,
             lastName: data?.userLastName,
+            nickName: data?.userNickName,
           })
         );
       });
@@ -415,6 +416,7 @@ function App() {
       });
 
       socket?.on("updateProfileSuccess", (data) => {
+        console.log("Running");
         store.dispatch(updateProfileSuccess(data?.userAccount?.accountAvatar));
         store.dispatch(
           saveDataProfile({
