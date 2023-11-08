@@ -1,4 +1,4 @@
-import { Grid, Box, Typography } from "@mui/material";
+import { Grid, Box, Typography, Tooltip } from "@mui/material";
 import { images280423_l } from "../../../../utils/images280423_l";
 import { useEffect, useState } from "react";
 import _socket from "../../../../redux-saga-middleware/config/socket";
@@ -11,6 +11,14 @@ import {
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/packageReducer";
+import { withStyles } from "@mui/styles";
+
+const BgWithTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white",
+  },
+})(Tooltip);
 
 export default function ListPackage(props) {
   const {
@@ -554,26 +562,7 @@ export default function ListPackage(props) {
                     marginBottom: "15px",
                   }}
                 >
-                  {packageFreeTicketTournament === 0 ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="none"
-                      viewBox="0 0 16 16"
-                    >
-                      <g>
-                        <path
-                          fill="#F05153"
-                          d="M7.643.343a7.643 7.643 0 107.643 7.643A7.652 7.652 0 007.643.343z"
-                        ></path>
-                        <g fill="#fff">
-                          <path d="M11.25 5.372l-6.563 6.563-.937-.938 6.563-6.562.937.937z"></path>
-                          <path d="M10.313 11.936L3.75 5.373l.938-.937 6.562 6.562-.938.938z"></path>
-                        </g>
-                      </g>
-                    </svg>
-                  ) : (
+                  {packageName === "Subscription" ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -584,28 +573,71 @@ export default function ListPackage(props) {
                       <g>
                         <path
                           fill="#14C58A"
-                          d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
+                          d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
                         ></path>
                         <path
                           fill="#fff"
-                          d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
+                          d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
                         ></path>
                       </g>
                     </svg>
+                  ) : (
+                    <BgWithTooltip
+                      title="Promotion Extra: The extra you will use in all promotion"
+                      placement="bottom-start"
+                      enterTouchDelay={0}
+                      sx={{
+                        // backgroundColor: "white",
+                        color: "white",
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        fill="none"
+                        viewBox="0 0 18 18"
+                      >
+                        <g>
+                          <path
+                            fill="#14C58A"
+                            d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
+                          ></path>
+                          <path
+                            fill="#fff"
+                            d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
+                          ></path>
+                        </g>
+                      </svg>
+                    </BgWithTooltip>
                   )}
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontSize: "11px",
-                      color: "white",
+                  {packageName === "Subscription" ? (
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: "11px",
+                        color: "white",
 
-                      fontWeight: "500 !important",
-                      marginLeft: "4px !important",
-                    }}
-                  >
-                    {packageFreeTicketTournament} extras
-                    {packageName === "Subscription" ? "/days" : ""}
-                  </Typography>
+                        fontWeight: "500 !important",
+                        marginLeft: "4px !important",
+                      }}
+                    >
+                      {packageFreeTicketTournament} Free Extra/day
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: "11px",
+                        color: "white",
+
+                        fontWeight: "500 !important",
+                        marginLeft: "4px !important",
+                      }}
+                    >
+                      Plus {packageFreeTicketTournament} Promotion Extra
+                    </Typography>
+                  )}
                 </Box>
                 {packageName === "Subscription" ? (
                   <Box
