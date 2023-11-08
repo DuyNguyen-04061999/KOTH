@@ -6,6 +6,7 @@ import helpcenterSaga from "./helpcenterSaga";
 import promotionSaga from "./promotionSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
+import packageSaga from "./packageSaga";
 
 function* watchAll() {
   yield all([
@@ -15,7 +16,8 @@ function* watchAll() {
     stripeSaga(),
     helpcenterSaga(),
     promotionSaga(),
-    authSaga()
+    authSaga(),
+    packageSaga()
   ]);
 }
 

@@ -25,7 +25,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function DialogProfile(props) {
   const { width, height } = useWindowDimensions();
-  
+
   const { open, handleShowProfile } = props;
   const { userName, token, uPack } = useSelector((state) => state.authReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
@@ -51,7 +51,7 @@ export default function DialogProfile(props) {
   const setTabEdit = () => {
     setTab(1);
   };
-
+  console.log("avatarUrl: ", avatarUrl);
   const renderUserInfo = () => {
     return (
       <Box sx={{ height: "100%" }}>
@@ -182,7 +182,7 @@ export default function DialogProfile(props) {
               <Typography
                 variant="inherit"
                 sx={{
-                  color: "#757ae5",
+                  color: "#fff",
                   fontWeight: "500",
                   marginBottom: "5px !important",
                 }}
@@ -219,13 +219,59 @@ export default function DialogProfile(props) {
                       borderBottom: "0px solid !important",
                     },
                     "&:hover": {
-                      border: "0px solid !important",
+                      border: "none",
                     },
-                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                      color: "#fff",
+                    color: "white",
+                    fontWeight: "200",
+                    fontSize: "14px",
+                  }}
+                />
+              </FormControl>
+            </Box>
+            <Box className="Iduser d-flex flex-column align-items-start mb-3">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#fff",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Username
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#3d2c63",
+                  padding: "7px 10px 7px 10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  type="text"
+                  disabled
+                  value={userNameProfile}
+                  sx={{
+                    "& .MuiInputBase-input.Mui-disabled": {
+                      WebkitTextFillColor: "#fff",
                     },
-                    color: "#fff",
-                    fontWeight: "700",
+                    "&:before": {
+                      borderBottom: "0px solid !important",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    color: "white",
+                    fontWeight: "200",
+                    fontSize: "14px",
                   }}
                 />
               </FormControl>
@@ -236,7 +282,7 @@ export default function DialogProfile(props) {
                   <Typography
                     variant="inherit"
                     sx={{
-                      color: "#757ae5",
+                      color: "#ffff",
                       fontWeight: "500",
                       marginBottom: "5px !important",
                     }}
@@ -273,7 +319,8 @@ export default function DialogProfile(props) {
                           border: "none",
                         },
                         color: "white",
-                        fontWeight: "700",
+                        fontWeight: "200",
+                        fontSize: "14px",
                       }}
                     />
                   </FormControl>
@@ -282,7 +329,7 @@ export default function DialogProfile(props) {
                   <Typography
                     variant="inherit"
                     sx={{
-                      color: "#757ae5",
+                      color: "#ffff",
                       fontWeight: "500",
                       marginBottom: "5px !important",
                     }}
@@ -299,31 +346,51 @@ export default function DialogProfile(props) {
                       color: "white",
                     }}
                   >
-                    <Input
-                      id="input-with-icon-adornment"
-                      type="number"
-                      value={phone}
-                      disabled
+                    <Box
                       sx={{
-                        "& .MuiInputBase-input.Mui-disabled": {
-                          WebkitTextFillColor: "#fff",
-                        },
-                        "&:before": {
-                          borderBottom: "0px solid !important",
-                          "&:hover": {
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "0px !important",
+                      }}
+                    >
+                      {" "}
+                      <Typography
+                        sx={{
+                          textAlign: "start",
+                          marginLeft: "0px !important",
+                          marginRight: "10px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        +1
+                      </Typography>
+                      <Input
+                        id="input-with-icon-adornment"
+                        type="number"
+                        value={phone}
+                        disabled
+                        sx={{
+                          "& .MuiInputBase-input.Mui-disabled": {
+                            WebkitTextFillColor: "#fff",
+                          },
+                          "&:before": {
+                            borderBottom: "0px solid !important",
+                            "&:hover": {
+                              borderBottom: "0px solid",
+                            },
+                          },
+                          "&:after": {
                             borderBottom: "0px solid",
                           },
-                        },
-                        "&:after": {
-                          borderBottom: "0px solid",
-                        },
-                        "&:hover": {
-                          border: "none",
-                        },
-                        color: "white",
-                        fontWeight: "700",
-                      }}
-                    />
+                          "&:hover": {
+                            border: "none",
+                          },
+                          color: "white",
+                          fontWeight: "200",
+                          fontSize: "15px",
+                        }}
+                      />
+                    </Box>
                   </FormControl>
                 </Box>
                 {userNameProfile === userName && token && (
@@ -386,22 +453,24 @@ export default function DialogProfile(props) {
               height: height > 800 ? "auto" : "auto",
             }}
           >
-            <Box sx={{
-              display:"flex",
-              justifyContent:tab === 1 ? "space-between" : "flex-end",
-              padding:"15px"
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: tab === 1 ? "space-between" : "flex-end",
+                padding: "15px",
+              }}
+            >
               {tab === 1 && (
-                  <LeftIcon
-                    className="cursor-pointer"
-                    sx={{
-                      color: "#fff",
-                    }}
-                    onClick={() => {
-                      setTab(0);
-                    }}
-                  />
-                )}
+                <LeftIcon
+                  className="cursor-pointer"
+                  sx={{
+                    color: "#fff",
+                  }}
+                  onClick={() => {
+                    setTab(0);
+                  }}
+                />
+              )}
               <CloseIcon
                 style={{
                   color: "#fff",
@@ -413,12 +482,10 @@ export default function DialogProfile(props) {
                 }}
               />
             </Box>
-            <Box
-              className="box-head"
-            >
+            <Box className="box-head">
               <Box>
                 <h4 className="text-white text-center">
-                  {tab === 0 ? "User information" : "Profile Setting"}
+                  {tab === 0 ? "Profile" : "Profile Setting"}
                 </h4>
               </Box>
             </Box>
@@ -437,6 +504,7 @@ export default function DialogProfile(props) {
           </Box>
         </Box>
       </Dialog>
-    </>, document.body
+    </>,
+    document.body
   );
 }
