@@ -913,7 +913,7 @@ export default function Signup(props) {
             (+1){" "}
           </Typography>
           <Input
-            type="number"
+            type="text"
             name="phone"
             onChange={(e) => {
               setPhone(e.target.value);
