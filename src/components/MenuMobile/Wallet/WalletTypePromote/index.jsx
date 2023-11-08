@@ -102,7 +102,6 @@ export default function WalletTypePromote(props) {
     navigate("/help-center");
     dispatch(toggleWalletDialog());
   };
-  console.log("typePayment: ", typePayment);
   return (
     <>
       <Box
