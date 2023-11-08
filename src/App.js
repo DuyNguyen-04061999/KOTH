@@ -58,7 +58,7 @@ import {
   pushChatWorld,
   pushfriendList,
   updateChatWorld,
-  updateFriendList
+  updateFriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
@@ -74,7 +74,7 @@ import {
   storeFavoriteGame,
   updateListDisLikeGame,
   updateListLikeGame,
-  updateReward
+  updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import {
   addMoreSpinHistory,
@@ -87,12 +87,12 @@ import {
   getWithdrawData,
   paymentLogoutSuccessFully,
   updateDeposit,
-  updateWithDraw
+  updateWithDraw,
 } from "./redux-saga-middleware/reducers/paymentReducer";
 import {
   deleteFriendSuccesFully,
   profileLogoutSuccessFully,
-  saveDataProfile
+  saveDataProfile,
 } from "./redux-saga-middleware/reducers/profileReducer";
 import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
 import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
@@ -101,6 +101,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import { ScrollToTopURL } from "./components/ScrollToTop";
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -748,6 +749,8 @@ function App() {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <CustomRouter history={history}>
+              {" "}
+              <ScrollToTopURL />
               <Routes>
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />

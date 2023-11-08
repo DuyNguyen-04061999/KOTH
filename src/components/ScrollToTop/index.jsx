@@ -1,6 +1,12 @@
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useEffect, useState } from "react";
-
+import { useLocation } from "react-router";
+export function ScrollToTopURL() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+}
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -33,12 +39,18 @@ export default function ScrollToTop() {
         bottom: "80px",
         right: "20px",
         color: "white",
-        zIndex:"1"
+        zIndex: "1",
       }}
     >
       {isVisible && (
         <div onClick={scrollToTop}>
-          <div style={{backgroundColor:"#4c48be", borderRadius:"50%", padding:"5px"}}>
+          <div
+            style={{
+              backgroundColor: "#4c48be",
+              borderRadius: "50%",
+              padding: "5px",
+            }}
+          >
             <ArrowUpwardIcon />
           </div>
         </div>
