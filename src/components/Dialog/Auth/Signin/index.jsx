@@ -92,13 +92,13 @@ export default function Dialoglg() {
   };
   const { width, height } = useWindowDimensions();
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");    
 
   useEffect(() => {
     if(token) {
       dispatch(getUserInfoReady(token));
     }
-  }, [token]);
+  }, [token, dispatch]);
 
   return (
     <div className="dialog">

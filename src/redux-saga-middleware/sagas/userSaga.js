@@ -3,6 +3,8 @@ import { showToastNotification } from "../reducers/alertReducer";
 import {
   clickTab,
   closeLoginDialog,
+  closeVerifyDialog,
+  openLoginDialog,
   openVerifyDialog,
   saveForgetPassInfo
 } from "../reducers/authReducer";
@@ -16,6 +18,8 @@ import {
   loginSuccess,
   logoutFail,
   logoutSuccess,
+  reVerifyAccountFail,
+  reVerifyAccountSuccess,
   registerSuccess,
   resendOtpFail,
   resendOtpSuccess,
@@ -320,6 +324,36 @@ function* resetPasswordSaga(dataRequest) {
   }
 }
 
+function* reVerifyAccountSaga(dataRequest) {
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(userService.reVerifyAccount, payload);
+    const { status } = res;
+    if (status === 200 || status === 201) {
+      yield put(reVerifyAccountSuccess());
+      yield put(closeVerifyDialog());
+      yield put(openLoginDialog());
+      yield put(clickTab("otpVerifyAccount"));
+    } else {
+      yield put(reVerifyAccountFail());
+      yield put(
+        showToastNotification({
+          type: "warning",
+          message: "Something went wrong!",
+        })
+      );
+    }
+  } catch (error) {
+    yield put(reVerifyAccountFail());
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: error?.message,
+      })
+    );
+  }
+}
+
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
@@ -330,6 +364,7 @@ function* authSaga() {
   yield takeEvery("RESEND_OTP_READY", resendOtpSaga);
   yield takeEvery("FORGET_PASSWORD_READY", forgetPasswordSaga);
   yield takeEvery("RESET_PASSWORD_READY", resetPasswordSaga);
+  yield takeEvery("RE_VERIFY_ACCOUNT", reVerifyAccountSaga);
 }
 
 export default authSaga;

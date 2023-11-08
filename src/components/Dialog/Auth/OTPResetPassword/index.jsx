@@ -60,6 +60,7 @@ export default function OTPResetPassword() {
   }, [socket]);
 
   const handleResendOTP = () => {
+    setTimeLeft(60)
     dispatch(resendOtpReady({
       username: forgotPassUsername,
       email: forgotPassEmail,

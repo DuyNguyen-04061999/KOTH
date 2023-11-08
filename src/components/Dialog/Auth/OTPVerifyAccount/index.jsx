@@ -20,7 +20,7 @@ import AnimButton from "../../../AnimButton";
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { createAccInfo } = useSelector((state) => state.authReducer);
-  const { user, registerUsername, tokenUser } = useSelector(
+  const { user, registerUsername } = useSelector(
     (state) => state.userReducer
   );
   const { width } = useWindowDimensions();
@@ -51,7 +51,7 @@ export default function OTPVerifyAccount() {
       sendOtpReady({
         otp: otp,
         type: "register",
-        username: registerUsername,
+        username: registerUsername || user?.userName,
       })
     );
   };
@@ -69,6 +69,7 @@ export default function OTPVerifyAccount() {
   }, [socket, dispatch]);
 
   const handleResendOTP = () => {
+    setTimeLeft(60)
     dispatch(
       resendOtpReady({
         username: user?.userName,
@@ -142,7 +143,7 @@ export default function OTPVerifyAccount() {
           )}
         />
       </Box>
-      {false ? (
+      {timeLeft > 0 ? (
         <Box sx={{ marginBottom: "36px" }}>
           <Typography
             sx={{ fontSize: "14px", fontWeight: 500, color: "#979797" }}
