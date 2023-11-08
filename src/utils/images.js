@@ -328,11 +328,13 @@ import NavTotal from "../assets/images/Chart.png";
 import NavFilter from "../assets/images/Document.png";
 import NavLogout from "../assets/images/Logout.png";
 import NavSetting from "../assets/images/Setting.png";
+import stripeLogo from "../assets/images/stripeLogo.png";
 
 import NavManageActive from "../assets/images/ActivityActive.png";
 import NavCreateActive from "../assets/images/CategoryActive.png";
 import NavTotalActive from "../assets/images/ChartActive.png";
 import NavFilterActive from "../assets/images/DocumentActive.png";
+import payPalIcon from "../assets/images/payPalIcon.png";
 import NavSettingActive from "../assets/images/SettingActive.png";
 
 import NavEnded from "../assets/images/navbar/ended.png";
@@ -588,6 +590,8 @@ export const images = {
   bannerendmobile: bannerendmobile,
   nickname: nickname,
   ToolTipIcon: ToolTipIcon,
+  payPalIcon: payPalIcon,
+  stripeLogo: stripeLogo,
 };
 
 export const navigationImages = {

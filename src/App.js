@@ -1,7 +1,7 @@
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
@@ -99,6 +99,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -298,7 +299,6 @@ function App() {
           socket?.emit("getDetailProfile", {
             username: user?.userName,
           });
-          store.dispatch(closeLoginDialog());
         }
       );
 
@@ -593,7 +593,6 @@ function App() {
             width < 576 ? "warning-background-small" : "warning-background",
         });
       });
-
       socket?.on("success", (data) => {
         toast.success(data, {
           icon: ({ theme, type }) => (
@@ -612,15 +611,12 @@ function App() {
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
-
       socket?.on("buySubscriptionSuccess", (id) => {
         store.dispatch(updateSubPackageId(id));
       });
-
       socket?.on("gameDefeated", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
-
       socket?.on("gameDraw", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
@@ -712,6 +708,39 @@ function App() {
     },
   });
 
+  useEffect(() => {
+    async function fetchData(paymentId, PayerID) {
+      try {
+        const response = await PROMOTION_API.post(
+          "/api/payments/paypal/success",
+          {
+            paymentId: paymentId,
+            payerId: PayerID,
+            token: localStorage.getItem("token"),
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return response;
+      } catch (error) {
+        console.log("error: ", error);
+      }
+    }
+    const params = new URLSearchParams(window.location.search);
+    const paymentId = params.get("paymentId");
+    const PayerID = params.get("PayerID");
+    (async function () {
+      if (paymentId && PayerID) {
+        let response = await fetchData(
+          params.get("paymentId"),
+          params.get("PayerID")
+        );
+      }
+    })();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
