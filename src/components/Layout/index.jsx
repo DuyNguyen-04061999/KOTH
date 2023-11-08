@@ -40,6 +40,7 @@ import {
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
+import DialogVerify from "../Dialog/Auth/DialogVerify";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import DialogProfile from "../Dialog/Profile";
@@ -51,7 +52,6 @@ import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
-import NotiFunds from "../Dialog/NotiFunds";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -261,7 +261,7 @@ export default function Layout(props) {
       <PopUpReward />
       <SubscriptionDialog />
       <TouramentShow />
-      <NotiFunds />
+      <DialogVerify />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {

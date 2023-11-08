@@ -9,10 +9,10 @@ import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReduc
 import {
   clickTab,
   closeLoginDialog,
-  saveCreateAccInfo,
-  saveDataLogin,
+  saveCreateAccInfo
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { updateCountEveryDay } from "../../../../redux-saga-middleware/reducers/luckyWheelReducer";
+import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateNickName } from "../../../../utils/validateNickName";
@@ -30,9 +30,6 @@ const BgWithTooltip = withStyles({
 export default function Signup(props) {
   const { handleTab } = props;
   const [gender] = useState(0);
-  const { registerValue, createAccInfo } = useSelector(
-    (state) => state.authReducer
-  );
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [nickName, setNickName] = useState("");
@@ -153,16 +150,25 @@ export default function Signup(props) {
   ]);
 
   const sendRegister = () => {
-    socket?.emit("register", {
+    dispatch(registerReady({
       username: username,
       password: password,
       email: email,
       phone: phone,
       ref: refCodeRegister ? refCodeRegister : ref,
-      c_password: c_password,
       gender: gender,
       nickName: nickName,
-    });
+    }))
+    // socket?.emit("register", {
+    //   username: username,
+    //   password: password,
+    //   email: email,
+    //   phone: phone,
+    //   ref: refCodeRegister ? refCodeRegister : ref,
+    //   c_password: c_password,
+    //   gender: gender,
+    //   nickName: nickName,
+    // });
   };
 
   useEffect(() => {
@@ -189,7 +195,6 @@ export default function Signup(props) {
         password: user?.password,
       });
 
-      
       dispatch(showAlert("success", "register succesfully"));
       dispatch(clickTab("otpVerifyAccount"));
     });
@@ -197,23 +202,8 @@ export default function Signup(props) {
     socket?.on(
       "loginSuccess",
       (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
-        dispatch(closeLoginDialog())
-        dispatch(
-          updateCountEveryDay(user?.userCountSpin?.countEveryday)
-        );
-        dispatch(
-          saveDataLogin({
-            token: token,
-            username: user?.userName,
-            gold: user?.userGold,
-            avatar: user?.userAccount?.accountAvatar,
-            role: user?.userRole,
-            id: user?.id,
-            userPackageId: userPackageId,
-            uPack: uPack,
-            promotionExtra:promotionExtra
-          })
-        );
+        dispatch(closeLoginDialog());
+        dispatch(updateCountEveryDay(user?.userCountSpin?.countEveryday));
 
         localStorage.setItem("NAME", user.userName);
         // localStorage.setItem("PASS", password);
@@ -229,7 +219,7 @@ export default function Signup(props) {
         socket?.emit("getDetailProfile", {
           username: user?.userName,
         });
-        dispatch(closeLoginDialog())
+        dispatch(closeLoginDialog());
       }
     );
 
@@ -278,12 +268,11 @@ export default function Signup(props) {
           <Input
             name="username"
             type="text"
-            autoComplete="username"
             onChange={(e) => {
               setUsername(e.target.value);
             }}
             value={username}
-            placeholder="User Name"
+            placeholder="Username"
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
@@ -320,16 +309,8 @@ export default function Signup(props) {
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
                   Username should be 3-10 characters long and include at least 1
                   uppercase or lowercase letter. You can use number or
-                  underscore but no spaces. Username are case sensitive.
-                </Typography>
-                <Typography
-                  sx={{
-                    textAlign: "start",
-                    fontSize: "12px",
-                    marginTop: "10px",
-                  }}
-                >
-                  Correct example: Superman0_
+                  underscore but no spaces. Usernames are case sensitive (e.g.,
+                  Example_)
                 </Typography>
               </Box>
             }
@@ -415,8 +396,9 @@ export default function Signup(props) {
               <Box>
                 {" "}
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                  Your nickname must not be more than 12 characters and not
-                  include special letter.
+                  Your nickname must be 12 characters or less and not contain
+                  special characters. Nicknames are case sensitive (e.g.,
+                  Examplename)
                 </Typography>
               </Box>
             }
@@ -973,11 +955,8 @@ export default function Signup(props) {
               <Box>
                 {" "}
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                  Your mobile number must a US phone number. Format: country
-                  code + area code + call number.
-                </Typography>
-                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                  Correct example: +1 (212) 555-1234
+                  Your mobile phone number must be a US phone number (e.g.,+1
+                  (212) 555-1234)
                 </Typography>
               </Box>
             }
@@ -1060,8 +1039,8 @@ export default function Signup(props) {
           }}
         >
           <div className="btn-conteiner">
-            {disabledBtn === true ? (
-              <AnimButton type={"Disabled"} text={"Sign Up"} />
+            {disabledBtn ? (
+              <AnimButton type={"dislable"} text={"Sign Up"} />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}

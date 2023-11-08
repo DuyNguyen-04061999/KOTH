@@ -6,14 +6,23 @@ import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clearCreateAccInfo,
   clickTab,
+  closeLoginDialog,
   toggleLoginDialog,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
+import {
+  logoutReady,
+  resendOtpReady,
+  sendOtpReady,
+} from "../../../../redux-saga-middleware/reducers/userReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { createAccInfo } = useSelector((state) => state.authReducer);
+  const { user, registerUsername, tokenUser } = useSelector(
+    (state) => state.userReducer
+  );
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -38,11 +47,13 @@ export default function OTPVerifyAccount() {
   }, [timeLeft]);
 
   const handleVerifyOTP = () => {
-    socket?.emit("verifyOtp", {
-      otp: otp,
-      username: createAccInfo.username,
-      type: "register",
-    });
+    dispatch(
+      sendOtpReady({
+        otp: otp,
+        type: "register",
+        username: registerUsername,
+      })
+    );
   };
 
   useEffect(() => {
@@ -58,11 +69,13 @@ export default function OTPVerifyAccount() {
   }, [socket, dispatch]);
 
   const handleResendOTP = () => {
-    socket?.emit("resendOtp", {
-      email: createAccInfo.email,
-      username: createAccInfo.username,
-      phone: createAccInfo.phone,
-    });
+    dispatch(
+      resendOtpReady({
+        username: user?.userName,
+        email: user?.email,
+        type:"register"
+      })
+    );
   };
 
   return (
@@ -99,7 +112,8 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Please enter the 6-digit verification code that was sent to {createAccInfo.phone} to verify your account
+          Please enter the 6-digit verification code that was sent to{" "}
+          {createAccInfo.phone} to verify your account
         </Typography>
       </Box>
       <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
@@ -128,7 +142,7 @@ export default function OTPVerifyAccount() {
           )}
         />
       </Box>
-      {timeLeft > 0 ? (
+      {false ? (
         <Box sx={{ marginBottom: "36px" }}>
           <Typography
             sx={{ fontSize: "14px", fontWeight: 500, color: "#979797" }}
@@ -137,7 +151,9 @@ export default function OTPVerifyAccount() {
           </Typography>
         </Box>
       ) : (
-        <Box sx={{ marginBottom: "36px", display:"flex", alignItems:"center" }}>
+        <Box
+          sx={{ marginBottom: "36px", display: "flex", alignItems: "center" }}
+        >
           <Typography
             sx={{
               fontSize: "14px",
@@ -179,7 +195,10 @@ export default function OTPVerifyAccount() {
             //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
             //   marginTop: device === "Desktop" ? "120px" : "none",
             // }}
-            onClick={() => dispatch(clickTab("login"))}
+            onClick={() => {
+              dispatch(logoutReady());
+              dispatch(closeLoginDialog());
+            }}
           >
             Back
           </AnimButton>

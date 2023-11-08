@@ -60,8 +60,8 @@ const alertReducer = (
         message: "Alert System",
         type: "success",
       };
-      case  "SHOW_TOAST_NOTIFICATION": return{...state, isShowToastNotification: true, messageToastNotifiaction: payload?.message || "", typeToastNotification: payload?.type || ""}
-      case  "HIDE_TOAST_NOTIFICATION": return{...state, isShowToastNotification: false, messageToastNotifiaction: "", typeToastNotification: ""}
+      case  "SHOW_TOAST_NOTIFICATION": return{...state, isShowToastNotification: true, messageToastNotification: payload?.message || "", typeToastNotification: payload?.type || ""}
+      case  "HIDE_TOAST_NOTIFICATION": return{...state, isShowToastNotification: false, messageToastNotification: "", typeToastNotification: ""}
     default:
       return { ...state };
   }

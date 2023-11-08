@@ -1,12 +1,12 @@
 import { all } from "redux-saga/effects";
 import appSaga from "./appSaga";
-import authSaga from "./authSaga";
 import gameSaga from "./gameSaga";
 import helpcenterSaga from "./helpcenterSaga";
+import packageSaga from "./packageSaga";
 import promotionSaga from "./promotionSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
-import packageSaga from "./packageSaga";
+import userSaga from "./userSaga";
 
 function* watchAll() {
   yield all([
@@ -16,6 +16,7 @@ function* watchAll() {
     stripeSaga(),
     helpcenterSaga(),
     promotionSaga(),
+    userSaga(),
     authSaga(),
     packageSaga()
   ]);
