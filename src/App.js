@@ -99,6 +99,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import Refresh from "./pages/Refresh";
 import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -824,6 +825,7 @@ function App() {
                     element={<SuspenseWrapper child={<LazyHelpCenter />} />}
                   />
                   <Route path="/change-log" element={<ChangeLog />} />
+                  <Route path="/test-refresh" element={<Refresh />} />
                   <Route path="/loadingscreen" element={<LoadingScreen />} />
                   <Route path="/new-home" element={<NewHomePageComponent />} />
                   <Route path="/countdowntimer" element={<CountDownTimer />} />

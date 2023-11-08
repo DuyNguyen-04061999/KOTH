@@ -15,6 +15,7 @@ import payPalReducer from "../reducers/payPalReducer";
 import paymentReducer from "../reducers/paymentReducer";
 import playgameReducer from "../reducers/playgameReducer";
 import profileReducer from "../reducers/profileReducer";
+import refreshReducer from "../reducers/refreshReducer";
 import roomReducer from "../reducers/roomReducer";
 import stripeReducer from "../reducers/stripeReducer";
 import toastReducer from "../reducers/toastReducer";
@@ -42,6 +43,7 @@ let rootReducer = combineReducers({
   deviceReducer,
   videoReducer,
   playgameReducer,
+  refreshReducer,
   packageReducer,
   payPalReducer,
 });
