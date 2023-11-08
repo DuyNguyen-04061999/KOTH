@@ -11,6 +11,7 @@ import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeRedu
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney, getAppType } from "../../../../utils/helper";
 import AnimButton from "../../../AnimButton";
+import { getPaypal } from "../../../../redux-saga-middleware/reducers/payPalReducer";
 
 export default function WalletTypePromote(props) {
   const { width, height } = useWindowDimensions();
@@ -22,10 +23,10 @@ export default function WalletTypePromote(props) {
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
   const [bgInput, setBgInput] = useState("gray");
-  
+
   useEffect(() => {
-    setAmount(Math.ceil(price))
-  }, [price])
+    setAmount(Math.ceil(price));
+  }, [price]);
 
   const navigate = useNavigate();
 
@@ -60,6 +61,8 @@ export default function WalletTypePromote(props) {
       });
     } else if (typePayment === "stripe" && currency === "USD") {
       dispatch(getStripe(Number.parseFloat(amount)));
+    } else if (typePayment === "paypal" && currency === "USD") {
+      dispatch(getPaypal(Number.parseFloat(amount)));
     } else {
       toast.warning("Updating...!", {
         icon: ({ theme, type }) => (
@@ -99,7 +102,7 @@ export default function WalletTypePromote(props) {
     navigate("/help-center");
     dispatch(toggleWalletDialog());
   };
-
+  console.log("typePayment: ", typePayment);
   return (
     <>
       <Box
@@ -354,7 +357,7 @@ export default function WalletTypePromote(props) {
                         Please enter the amount.
                       </span>
                     ) : (
-                      "" 
+                      ""
                     )}
                     <Box
                       sx={{
@@ -475,43 +478,65 @@ export default function WalletTypePromote(props) {
                   variant="subtitle1"
                   className="text-white mb-2"
                   sx={{
-                    fontSize: "13px",
+                    fontSize: "16px",
                     fontWeight: "lighter !important",
                     marginLeft: "0px !important",
                   }}
                 >
                   Payment method
                 </Typography>
-                <input
-                  type="text"
-                  className={`w-100 input-method `}
-                  defaultValue="stripe"
-                  disabled
-                  style={{
-                    borderRadius: "7px",
-                    border: "1px solid gray",
-                    height: "40px",
-                    fontSize: "15px",
-                    background: "transparent",
-                    paddingLeft: "20px",
-                    color: "#6c59fc",
-                    fontWeight: "bold",
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
                   }}
-                />
-                <input
-                  type="radio"
-                  className="radio-input"
-                  defaultChecked
-                  style={{
-                    position: "absolute",
-                    top: 43,
-                    right: 20,
-                  }}
-                  onClick={() => {
-                    // setActveColor("activewl");
-                    setTypePayment("stripe");
-                  }}
-                />
+                >
+                  {" "}
+                  <Box
+                    sx={{
+                      width: "45%",
+                      padding: "10px 15px",
+                      backgroundColor: "#ffff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <img src={images.stripeLogo} alt="Paypal" />
+                    <input
+                      defaultChecked
+                      name="wallet"
+                      type="radio"
+                      onClick={() => {
+                        // setActveColor("activewl");
+                        setTypePayment("stripe");
+                      }}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "45%",
+                      padding: "10px 15px",
+                      backgroundColor: "#ffff",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <img src={images.payPalIcon} alt="Paypal" />
+                    <input
+                      name="wallet"
+                      type="radio"
+                      onClick={() => {
+                        // setActveColor("activewl");
+                        setTypePayment("paypal");
+                      }}
+                    />
+                  </Box>{" "}
+                </Box>
               </form>
             </Box>
             <Box
@@ -552,7 +577,7 @@ export default function WalletTypePromote(props) {
                       color: "#FF9F38",
                       fontSize: "14px",
                       fontWeight: "lighter !important",
-                      cursor:"pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Terms & Agreement

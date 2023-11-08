@@ -22,6 +22,7 @@ import deviceReducer from "../reducers/deviceReducer";
 import videoReducer from "../reducers/videoReducer";
 import playgameReducer from "../reducers/playgameReducer";
 import refreshReducer from "../reducers/refreshReducer";
+import payPalReducer from "../reducers/payPalReducer";
 let rootReducer = combineReducers({
   alertReducer,
   authReducer,
@@ -42,6 +43,7 @@ let rootReducer = combineReducers({
   videoReducer,
   playgameReducer,
   refreshReducer,
+  payPalReducer,
 });
 
 const persistConfig = {
