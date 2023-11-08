@@ -105,6 +105,27 @@ export const forgetPasswordSuccess = (data) => {
   };
 };
 
+export const resetPasswordReady = (data) => {
+  return {
+    type: "RESET_PASSWORD_READY",
+    payload: data,
+  };
+};
+
+export const resetPasswordFail = (data) => {
+  return {
+    type: "RESET_PASSWORD_FAIL",
+    payload: data,
+  };
+};
+
+export const resetPasswordSuccess = (data) => {
+  return {
+    type: "RESET_PASSWORD_SUCCESS",
+    payload: data,
+  };
+};
+
 export const sendOtpReady = (data) => {
   return {
     type: "SEND_OTP_READY",
@@ -168,6 +189,8 @@ const userReducer = (
     registerUsername: "",
     isForgetPassword: false,
     isResendOtp: false,
+    isResetPassword: false,
+    tokenResetPass: "",
   },
   action
 ) => {
@@ -272,7 +295,7 @@ const userReducer = (
     case "SEND_OTP_READY":
       return { ...state };
     case "SEND_OTP_SUCCESS":
-      return { ...state };
+      return { ...state, tokenResetPass: payload?.token };
     case "SEND_OTP_FAIL":
       return { ...state };
     case "FORGET_PASSWORD_READY":
@@ -281,12 +304,18 @@ const userReducer = (
       return { ...state, isForgetPassword: false };
     case "FORGET_PASSWORD_SUCCESS":
       return { ...state, isForgetPassword: false };
-      case "RESEND_OTP_READY":
-        return { ...state, isResendOtp: true };
-      case "RESEND_OTP_FAIL":
-        return { ...state, isResendOtp: false };
-      case "RESEND_OTP_SUCCESS":
-        return { ...state, isResendOtp: false };
+    case "RESET_PASSWORD_READY":
+      return { ...state, isResetPassword: true };
+    case "RESET_PASSWORD_FAIL":
+      return { ...state, isResetPassword: false };
+    case "RESET_PASSWORD_SUCCESS":
+      return { ...state, isResetPassword: false };
+    case "RESEND_OTP_READY":
+      return { ...state, isResendOtp: true };
+    case "RESEND_OTP_FAIL":
+      return { ...state, isResendOtp: false };
+    case "RESEND_OTP_SUCCESS":
+      return { ...state, isResendOtp: false };
     default:
       return state;
   }

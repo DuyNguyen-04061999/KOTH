@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
-  clickTab,
-  saveForgetPassInfo,
-  updateUsernameWhenReset,
+  clickTab
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { forgetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
@@ -32,7 +30,7 @@ export default function ForgetPassword() {
     if (optionEmail) {
       setPhoneNumber("");
     } else {
-      setPhoneNumber("");
+      setEmail("");
     }
   }, [optionEmail]);
 
@@ -50,31 +48,32 @@ export default function ForgetPassword() {
   const handleSubmit = () => {
     dispatch(forgetPasswordReady({
       username: username,
-      email: email
+      email: email,
+      phone: phoneNumber,
     }));
   };
 
-  useEffect(() => {
-    if (socket) {
-      socket?.on("forgetPasswordSuccess", (user) => {
-        dispatch(updateUsernameWhenReset(user?.username))
-        const forgotPassInfo = {
-          username: user?.username,
-          email: user?.email,
-          phone: user?.phone,
-        };
-        dispatch(clickTab("otpResetPassword"));
-        dispatch(
-          saveForgetPassInfo({
-            forgotPassInfo: forgotPassInfo,
-          })
-        );
-      });
-    }
-    return () => {
-      socket?.off("forgetPasswordSuccess");
-    };
-  }, [socket, dispatch]);
+  // useEffect(() => {
+  //   if (socket) {
+  //     socket?.on("forgetPasswordSuccess", (user) => {
+  //       dispatch(updateUsernameWhenReset(user?.username))
+  //       const forgotPassInfo = {
+  //         username: user?.username,
+  //         email: user?.email,
+  //         phone: user?.phone,
+  //       };
+  //       dispatch(clickTab("otpResetPassword"));
+  //       dispatch(
+  //         saveForgetPassInfo({
+  //           forgotPassInfo: forgotPassInfo,
+  //         })
+  //       );
+  //     });
+  //   }
+  //   return () => {
+  //     socket?.off("forgetPasswordSuccess");
+  //   };
+  // }, [socket, dispatch]);
 
   return (
     <Box
@@ -279,7 +278,7 @@ export default function ForgetPassword() {
             />
           </Box>
         )}
-        {/* <Box
+        <Box
           sx={{
             marginTop: "16px",
             display: "flex",
@@ -305,7 +304,7 @@ export default function ForgetPassword() {
           >
             Reset by {optionEmail ? "phone" : "email"}{" "}
           </Typography>
-        </Box> */}
+        </Box>
       </Box>
       <Box
         sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}

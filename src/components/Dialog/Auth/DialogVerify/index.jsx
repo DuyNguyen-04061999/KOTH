@@ -16,7 +16,7 @@ export default function DialogVerify() {
   const { isVerifyDialog } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  console.log(isVerifyDialog);
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);

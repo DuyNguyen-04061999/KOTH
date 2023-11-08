@@ -4,8 +4,7 @@ import {
   clickTab,
   closeLoginDialog,
   openVerifyDialog,
-  saveForgetPassInfo,
-  toggleLoginDialog,
+  saveForgetPassInfo
 } from "../reducers/authReducer";
 import {
   forgetPasswordFail,
@@ -20,6 +19,7 @@ import {
   registerSuccess,
   resendOtpFail,
   resendOtpSuccess,
+  resetPasswordSuccess,
   sendOtpFail,
   sendOtpSuccess,
 } from "../reducers/userReducer";
@@ -57,7 +57,6 @@ function* loginSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
   }
 }
 
@@ -85,7 +84,6 @@ function* registerSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
   }
 }
 
@@ -112,7 +110,6 @@ function* updateProfileSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
   }
 }
 
@@ -146,7 +143,6 @@ function* logoutSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
   }
 }
 
@@ -180,7 +176,6 @@ function* userInfoSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
   }
 }
 
@@ -190,16 +185,29 @@ function* sendOtpSaga(dataRequest) {
     const res = yield call(userService.verifyOtp, payload);
     const { status, data } = res;
     if (status === 200 || status === 201) {
-      yield put(sendOtpSuccess());
-      yield put(
-        showToastNotification({
-          type: "success",
-          message: "You have successfully registered and are now logged in.",
-        })
-      );
-      localStorage.setItem("token", data?.data?.token);
-      yield put(getUserInfoReady(localStorage.getItem("token")));
-      yield put(toggleLoginDialog());
+      if(payload?.type === "password"){
+        yield put(sendOtpSuccess(data?.data));
+        yield put(
+          showToastNotification({
+            type: "success",
+            message: "You have successfully registered and are now logged in.",
+          })
+        );
+        yield put(clickTab("createPass"));
+      }
+      else if(payload?.type === "register"){
+        yield put(sendOtpSuccess());
+        yield put(
+          showToastNotification({
+            type: "success",
+            message: "You have successfully registered and are now logged in.",
+          })
+        );
+        localStorage.setItem("token", data?.data?.token);
+        yield put(getUserInfoReady(localStorage.getItem("token")));
+        yield put(closeLoginDialog());
+      }
+      
     } else {
       yield put(sendOtpFail());
       yield put(
@@ -216,7 +224,6 @@ function* sendOtpSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
   }
 }
 
@@ -249,7 +256,6 @@ function* resendOtpSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
   }
 }
 
@@ -260,8 +266,7 @@ function* forgetPasswordSaga(dataRequest) {
     const { status, data } = res;
     if (status === 200 || status === 201) {
       yield put(forgetPasswordSuccess());
-      console.log(payload);
-      yield put(saveForgetPassInfo())
+      yield put(saveForgetPassInfo(payload))
       yield put(clickTab("otpResetPassword"));
     } else {
       yield put(forgetPasswordFail());
@@ -279,7 +284,39 @@ function* forgetPasswordSaga(dataRequest) {
         message: error?.message,
       })
     );
-    console.log(error);
+  }
+}
+
+function* resetPasswordSaga(dataRequest) {
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(userService.updateNewPassword, payload);
+    const { status, data } = res;
+    if (status === 200 || status === 201) {
+      yield put(resetPasswordSuccess());
+      yield put(
+        showToastNotification({
+          type: "success",
+          message: "Change password successfully",
+        })
+      );
+      yield put(closeLoginDialog());
+    } else {
+      yield put(forgetPasswordFail());
+      yield put(
+        showToastNotification({
+          type: "warning",
+          message: "Something went wrong!",
+        })
+      );
+    }
+  } catch (error) {
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: error?.message,
+      })
+    );
   }
 }
 
@@ -292,6 +329,7 @@ function* authSaga() {
   yield takeEvery("SEND_OTP_READY", sendOtpSaga);
   yield takeEvery("RESEND_OTP_READY", resendOtpSaga);
   yield takeEvery("FORGET_PASSWORD_READY", forgetPasswordSaga);
+  yield takeEvery("RESET_PASSWORD_READY", resetPasswordSaga);
 }
 
 export default authSaga;
