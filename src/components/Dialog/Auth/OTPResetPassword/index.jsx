@@ -57,7 +57,7 @@ export default function OTPResetPassword() {
       dispatch(clickTab("createPass"));
       dispatch(clearForgetPassInfo());
     });
-  }, [socket]);
+  }, [socket, dispatch]);
 
   const handleResendOTP = () => {
     setTimeLeft(60)
