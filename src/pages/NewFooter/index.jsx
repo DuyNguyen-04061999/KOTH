@@ -115,6 +115,41 @@ export default function NewFooter() {
           sx={{
             display: "flex",
             justifyContent: "center",
+            flexDirection:"column",
+            marginTop: width > 576 ? "40px" : "10px",
+            marginBottom: width > 576 ? "0px" : "20px"
+          }}
+        >
+          <Typography
+            sx={{
+              color: "#ffff",
+              fontSize: width < 576 ? "16px" : "25px",
+              textAlign: "center",
+            }}
+          >
+            Contact Us
+          </Typography>
+          <Box
+            component={"a"}
+            href="https://t.me/play4promo"
+            target="_blank"
+            sx={{
+              textDecoration:"none"
+            }}
+          >
+            <Typography sx={{
+              color:"#fff",
+              fontSize: width < 576 ? "12px" : "14px",
+              textAlign:"center"
+            }}>
+            Get help: support@play4promo.com
+            </Typography>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
           }}
         >
           {" "}
