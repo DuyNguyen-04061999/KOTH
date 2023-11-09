@@ -11,6 +11,7 @@ import Layout from "./components/Layout";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
+import { ScrollToTopURL } from "./components/ScrollToTop";
 import ToastNotification from "./components/Toast/ToastNotification";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
@@ -404,6 +405,8 @@ function App() {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <CustomRouter history={history}>
+              {" "}
+              <ScrollToTopURL />
               <Routes>
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />

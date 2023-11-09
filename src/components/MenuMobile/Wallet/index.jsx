@@ -108,13 +108,13 @@ export default function DialogWallet(props) {
         );
         let depositAmount = data?.token_quantity + "00000000";
 
-        let result = await contract.methods 
+        let result = await contract.methods
           .transfer(data?.target_wallet, depositAmount)
           .send({ from: account });
-          
-          // console.log("tid", data?.transaction_id);
-          // console.log("txh", result?.transactionHash);
-          
+
+        // console.log("tid", data?.transaction_id);
+        // console.log("txh", result?.transactionHash);
+
         if (result) {
           socket?.emit("updateDepositTransaction", {
             type: "confirm",
@@ -1458,7 +1458,7 @@ export default function DialogWallet(props) {
         sx={{
           zIndex: 1323,
           "& .MuiPaper-root-MuiDialog-paper": {
-            overflow:"auto",
+            overflow: "auto",
             backgroundColor: "white",
           },
           height: "100%",
@@ -1470,7 +1470,7 @@ export default function DialogWallet(props) {
                 width < 576 ? width : isTransactionDialog ? "900px" : "500px",
               height: "auto",
               maxHeight: width < 576 ? height : "auto",
-              overflow:"auto",
+              overflow: "auto",
               backgroundColor: "white",
             },
           },
@@ -1595,6 +1595,7 @@ export default function DialogWallet(props) {
           </Box>
         )}
       </Dialog>
-    </>, document.body
+    </>,
+    document.body
   );
 }

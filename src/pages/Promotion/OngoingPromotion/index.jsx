@@ -32,8 +32,8 @@ export default function HotTournament() {
   );
 
   useEffect(() => {
-    if(width) {
-      setItemOffSet(0)
+    if (width) {
+      setItemOffSet(0);
     }
 
     if (width > 576) {
@@ -66,7 +66,6 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-
   return (
     <>
       <MainLayout
