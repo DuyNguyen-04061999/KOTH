@@ -128,13 +128,12 @@ export default function OTPVerifyAccount() {
                 height: "38px",
                 marginRight: "16px",
                 backgroundColor: "#271C39",
-                border: "none",
                 outline: "none",
                 textAlign: "center",
                 fontSize: width < 576 ? "12px" : "20px",
-                border: "2px solid white",
-                borderRadius: "4px",
                 color: "white",
+                border:"2px solid white",
+                borderRadius:"4px"
               }}
               type="number"
               inputMode="numeric"
