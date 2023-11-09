@@ -246,7 +246,7 @@ export default function JoinTournament() {
       window.removeEventListener("orientationchange", updateOrientation);
     };
   }, [startGame]);
-
+  console.log(detailTournament);
   return (
     <>
       <ResultEndGame />
@@ -362,7 +362,7 @@ export default function JoinTournament() {
                       justifyContent: "center",
                     }}
                   >
-                     <svg
+                    <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="23"
@@ -386,35 +386,100 @@ export default function JoinTournament() {
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     width: "100%",
-                    height: "130px",
                     borderRadius: "5px",
-                    marginTop: "34px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "row",
+                    // marginTop: "34px",
+                    // display: "flex",
+                    // justifyContent: "center",
+                    // alignItems: "center",
+                    // flexDirection: "column",
                   }}
                 >
                   <Box
                     sx={{
-                      width: "500px",
                       wordWrap: "break-word",
-                      color: "white",
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      textShadow: "#F25957 2px 4px 5px",
+                      textAlign: "center",
                     }}
                   >
-                    THIS PROMOTION HAS ENDED! CONGRATS WINNER:{" "}
-                    <span
-                      style={{
-                        color: "#FFDF4A",
-                        fontWeight: "700",
-                        fontSize: "32px",
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        color: "white",
+                        fontSize: `calc(100vw / 32)`,
                       }}
                     >
-                      {detailTournament?.bestUser || ""}
-                    </span>
+                      THIS PROMOTION HAS ENDED!
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: `calc(100vw / 32)`,
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        color: "#FFE36C",
+                      }}
+                    >
+                      WINNER ANNOUNCEMENT
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "60%",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "20px",
+                          fontWeight: "800",
+                          color: "white",
+                        }}
+                      >
+                        REWARD SPONSOR: SAMSUNG
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "80px",
+                          fontWeight: "800",
+                          letterSpacing: 7.2,
+                          textTransform: "uppercase",
+                          color: "white",
+                        }}
+                      >
+                        Galaxy Z-FliP 5
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "20px",
+                          color: "#FFC56F",
+                          fontWeight: "800",
+                        }}
+                      >
+                        Celebrating Our Lucky Champion!
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "40%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        component={"img"}
+                        src={images.WINNER}
+                        alt="..."
+                      ></Box>
+                      <Typography>Taylor berry</Typography>
+                    </Box>
                   </Box>
                 </Box>
               ) : (
@@ -1917,7 +1982,7 @@ export default function JoinTournament() {
                     sx={{
                       width: "100%",
                     }}
-                  > 
+                  >
                     {/* {detailTournament?.tournamentStatus === 2 && <BgEndGame />} */}
                     <img
                       className="w-100 pt-3"
@@ -1995,7 +2060,7 @@ export default function JoinTournament() {
                         borderRadius: "10px",
                         display: "flex",
                         alignItems: "flex-end",
-                        marginBottom:"20px"
+                        marginBottom: "20px",
                       }}
                     >
                       <Box
@@ -2530,13 +2595,21 @@ export default function JoinTournament() {
                     )
                   ) : (
                     <Box
-                      sx={{ display:detailTournament?.tournamentStatus === 2 ? "none" : "flex", justifyContent: "space-between" }}
-                    > (
-                        <AnimButton
-                          onClick={handlePlayTour}
-                          type={"highlight"}
-                          text={"Play"}
-                        />
+                      sx={{
+                        display:
+                          detailTournament?.tournamentStatus === 2
+                            ? "none"
+                            : "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {" "}
+                      (
+                      <AnimButton
+                        onClick={handlePlayTour}
+                        type={"highlight"}
+                        text={"Play"}
+                      />
                       )
                       <AnimButton
                         onClick={handleClickOpen}
