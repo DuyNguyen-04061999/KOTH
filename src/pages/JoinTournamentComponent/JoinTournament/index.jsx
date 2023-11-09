@@ -12,31 +12,30 @@ import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
 import NotificationExtra from "../../../components/Dialog/NotificationExtra";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
-  updateFromRouter
-} from "../../../redux-saga-middleware/reducers/appReducer";
-import {
-  toggleLoginDialog,
+  openSubscribeDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
-import { finishGame, finishVideo, getRefactorDetailAuthPromotion, getRefactorDetailPromotion, joinPromotion, startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import {
+  finishGame,
+  finishVideo,
+  getRefactorDetailAuthPromotion,
+  getRefactorDetailPromotion,
+  startGameInPromotion,
+} from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   saveBoughtTournament,
   saveIdTournament,
   toggleExtra,
-  toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
@@ -65,16 +64,25 @@ const typographyStyle = {
 
 export default function JoinTournament() {
   const { id } = useParams();
-  const { tokenUser: token, uPack, countTicket, listJoinedTour } = useSelector((state) => state.userReducer);
-  
+  const {
+    tokenUser: token,
+    uPack,
+    countTicket,
+    listJoinedTour,
+  } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
   const { detailTournament } = useSelector((state) => state.playgameReducer);
-  const { startGamePromotion, startVideoPromotion, isGetDetailPromotion, isGetDetailAuthPromotion } = useSelector(state => state.promotionReducer);
-  
+  const {
+    startGamePromotion,
+    startVideoPromotion,
+    isGetDetailPromotion,
+    isGetDetailAuthPromotion,
+  } = useSelector((state) => state.promotionReducer);
+
   const { orientation } = useSelector((state) => state.gameReducer);
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -86,19 +94,19 @@ export default function JoinTournament() {
     navigate("/packages");
     dispatch(updateFromRouter(location.pathname));
   };
-  
+
   const [minLength, setMinLength] = useState(0);
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
 
   useEffect(() => {
-    dispatch(getRefactorDetailPromotion(id))
+    dispatch(getRefactorDetailPromotion(id));
   }, [id, dispatch]);
 
   useEffect(() => {
     if (token) {
-      dispatch(getRefactorDetailAuthPromotion(id))
+      dispatch(getRefactorDetailAuthPromotion(id));
     }
   }, [id, token, dispatch]);
 
@@ -107,21 +115,11 @@ export default function JoinTournament() {
       dispatch(toggleExtra());
       return;
     } else {
-      dispatch(startGameInPromotion({
-        tournamentId: id,
-      }))
-    }
-  };
-
-  const handleJoinTour = () => {
-    if ((detailTournament?.tournamentVip !== 0 && uPack === null) || (detailTournament?.tournamentVip !== 0 && uPack && uPack?.remain === "Expired")) {
-      dispatch(toggleTournamentShow());
-    } else if (token) {
-      dispatch(joinPromotion({
-        tournamentId: detailTournament?.id,
-      }))
-    } else {
-      dispatch(toggleLoginDialog());
+      dispatch(
+        startGameInPromotion({
+          tournamentId: id,
+        })
+      );
     }
   };
 
@@ -239,7 +237,7 @@ export default function JoinTournament() {
                     {!listJoinedTour?.includes(id) ? (
                       <Box sx={{ width: "150px" }}>
                         <AnimButton
-                          onClick={handleJoinTour}
+                          onClick={() => dispatch(openSubscribeDialog())}
                           text={"Join"}
                           type={"primary"}
                         />
@@ -513,7 +511,8 @@ export default function JoinTournament() {
                               textAlign: "start",
                             }}
                           >
-                            {isGetDetailPromotion || isGetDetailAuthPromotion ? (
+                            {isGetDetailPromotion ||
+                            isGetDetailAuthPromotion ? (
                               <Skeleton
                                 variant="text"
                                 sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
@@ -617,7 +616,8 @@ export default function JoinTournament() {
                               marginLeft: "0px !important",
                             }}
                           >
-                            {isGetDetailPromotion || isGetDetailAuthPromotion ? (
+                            {isGetDetailPromotion ||
+                            isGetDetailAuthPromotion ? (
                               <Skeleton
                                 variant="text"
                                 sx={{ bgcolor: "rgba(255,255,255,0.5)" }}
@@ -1746,7 +1746,9 @@ export default function JoinTournament() {
                         setCurrentResult(false);
                       }}
                       detailTournament={detailTournament}
-                      isFetching={isGetDetailPromotion || isGetDetailAuthPromotion}
+                      isFetching={
+                        isGetDetailPromotion || isGetDetailAuthPromotion
+                      }
                     />
                   </Box>
                 )}
@@ -2451,20 +2453,28 @@ export default function JoinTournament() {
                       ""
                     ) : (
                       <AnimButton
-                        onClick={handleJoinTour}
+                        onClick={() => dispatch(openSubscribeDialog())}
                         text={"Join"}
                         type={"highlight"}
                       />
                     )
                   ) : (
                     <Box
-                      sx={{ display:detailTournament?.tournamentStatus === 2 ? "none" : "flex", justifyContent: "space-between" }}
-                    > (
-                        <AnimButton
-                          onClick={handlePlayTour}
-                          type={"highlight"}
-                          text={"Play"}
-                        />
+                      sx={{
+                        display:
+                          detailTournament?.tournamentStatus === 2
+                            ? "none"
+                            : "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {" "}
+                      (
+                      <AnimButton
+                        onClick={handlePlayTour}
+                        type={"highlight"}
+                        text={"Play"}
+                      />
                       )
                       <AnimButton
                         onClick={handleClickOpen}
@@ -2936,11 +2946,11 @@ export default function JoinTournament() {
           startGame={startGamePromotion}
           detailTournament={detailTournament}
           setStartGame={() => {
-            dispatch(finishGame())
+            dispatch(finishGame());
           }}
           videoGame={startVideoPromotion}
           setVideoGame={(data) => {
-            dispatch(finishVideo(data))
+            dispatch(finishVideo(data));
           }}
         />
       )}

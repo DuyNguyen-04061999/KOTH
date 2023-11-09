@@ -41,6 +41,7 @@ import {
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
+import DialogSubscribe from "../Dialog/DialogSubscribe";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import DialogProfile from "../Dialog/Profile";
@@ -249,6 +250,7 @@ export default function Layout(props) {
       <SubscriptionDialog />
       <TouramentShow />
       <DialogVerify />
+      <DialogSubscribe />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {
