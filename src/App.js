@@ -208,8 +208,6 @@ function App() {
       });
 
       socket?.on("getListMessageGlobalSuccess", (data) => {
-        console.log(data);
-
         store.dispatch(pushChatWorld(data));
       });
 
@@ -383,7 +381,7 @@ function App() {
         );
         return response;
       } catch (error) {
-        console.log("error: ", error);
+        
       }
     }
     const params = new URLSearchParams(window.location.search);
@@ -395,7 +393,7 @@ function App() {
           params.get("paymentId"),
           params.get("PayerID")
         );
-        console.log(response);
+        console.log("Paypal success: ", response);
       }
     })();
   }, []);
