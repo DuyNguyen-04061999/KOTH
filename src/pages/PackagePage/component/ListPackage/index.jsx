@@ -1,16 +1,15 @@
-import { Grid, Box, Typography } from "@mui/material";
-import { images280423_l } from "../../../../utils/images280423_l";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import _socket from "../../../../redux-saga-middleware/config/socket";
-import { images } from "../../../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   getIdPackage,
   toggleLoginDialog,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/packageReducer";
+import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
+import { images } from "../../../../utils/images";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 export default function ListPackage(props) {
   const {
@@ -22,8 +21,11 @@ export default function ListPackage(props) {
     id,
   } = props;
   const [socket, setSocket] = useState(null);
-  const { token, userPackageId, uPack } = useSelector(
+  const { userPackageId } = useSelector(
     (state) => state.authReducer
+  );
+  const { tokenUser: token, uPack } = useSelector(
+    (state) => state.userReducer
   );
 
   const { width } = useWindowDimensions();

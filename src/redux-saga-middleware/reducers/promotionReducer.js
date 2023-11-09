@@ -84,16 +84,32 @@ export const startGameInPromotionFail = (data) => {
     }
 }
 
+export const finishGame = (data) => {
+    return {
+        type: "FINISH_GAME",
+        payload: data
+    }
+}
+
+export const finishVideo = (data) => {
+    return {
+        type: "FINISH_VIDEO",
+        payload: data
+    }
+}
+
 const promotionReducer = (
     state = {
         isGetDetailPromotion: false,
         isGetDetailAuthPromotion: false,
         isJoinPromotion: false,
         isStartGameInPromotion: false, 
+        startGamePromotion: false,
+        startVideoPromotion: false
     },
     action
 ) => {
-    const { type } = action
+    const { type, payload } = action
     switch(type) {
         case REHYDRATE: return {...state}
         case "GET_REFACTOR_DETAIL_PROMOTION": return {...state, isGetDetailPromotion: true}
@@ -106,8 +122,10 @@ const promotionReducer = (
         case "JOIN_PROMOTION_SUCCESS": return {...state, isJoinPromotion: false}
         case "JOIN_PROMOTION_FAIL": return {...state, isJoinPromotion: false}
         case "START_GAME_IN_PROMOTION": return {...state, isStartGameInPromotion: true}
-        case "START_GAME_IN_PROMOTION_SUCCESS": return {...state, isStartGameInPromotion: false}
-        case "START_GAME_IN_PROMOTION_FAIL": return {...state, isStartGameInPromotion: false}
+        case "START_GAME_IN_PROMOTION_SUCCESS": return {...state, isStartGameInPromotion: false, startGamePromotion: true, startVideoPromotion: true}
+        case "START_GAME_IN_PROMOTION_FAIL": return {...state, isStartGameInPromotion: false, startGamePromotion: false, startVideoPromotion: false}
+        case "FINISH_GAME": return {...state, startGamePromotion: false}
+        case "FINISH_VIDEO": return {...state, startVideoPromotion: payload || false}
         default: return {...state}
     }
 }

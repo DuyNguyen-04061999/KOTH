@@ -16,8 +16,10 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ShareTour() {
   const { width, height } = useWindowDimensions();
-  const { isShare, userName } = useSelector((state) => state.authReducer);
-  // const { refCode } = useSelector((state) => state.profileReducer);
+  const { isShare } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
+  
   const currentUrl = window.location.href;
   const copyref = `${currentUrl}/influencers/${userName}`;
   const [copySuccess, setCopySuccess] = useState(false);

@@ -27,7 +27,10 @@ export default function DialogProfile(props) {
   const { width, height } = useWindowDimensions();
 
   const { open, handleShowProfile } = props;
-  const { userName, token, uPack } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
+  const { uPack } = useSelector((state) => state.userReducer);
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
   const { id, email, phone, userNameProfile, avatarUrl } = useSelector(
     (state) => state.profileReducer
@@ -51,7 +54,7 @@ export default function DialogProfile(props) {
   const setTabEdit = () => {
     setTab(1);
   };
-  console.log("avatarUrl: ", avatarUrl);
+  
   const renderUserInfo = () => {
     return (
       <Box sx={{ height: "100%" }}>
@@ -77,7 +80,7 @@ export default function DialogProfile(props) {
             >
               {userNameProfile}
             </Typography>
-            {userNameProfile === userName && token && (
+            {userNameProfile === userName && tokenUser && (
               <Box>
                 {uPack !== null ? (
                   <Box
@@ -104,7 +107,7 @@ export default function DialogProfile(props) {
                 )}
               </Box>
             )}
-            {userNameProfile === userName && token && (
+            {userNameProfile === userName && tokenUser && (
               <Box>
                 {uPack !== null ? (
                   <Box
@@ -127,7 +130,7 @@ export default function DialogProfile(props) {
                 )}
               </Box>
             )}
-            {token &&
+            {tokenUser &&
               userNameProfile !== userName &&
               (checkExistInFriendList() === false ? (
                 <Box
@@ -276,7 +279,7 @@ export default function DialogProfile(props) {
                 />
               </FormControl>
             </Box>
-            {userNameProfile === userName && token && (
+            {userNameProfile === userName && tokenUser && (
               <Box>
                 <Box className="Email d-flex flex-column align-items-start mb-3">
                   <Typography
@@ -393,7 +396,7 @@ export default function DialogProfile(props) {
                     </Box>
                   </FormControl>
                 </Box>
-                {userNameProfile === userName && token && (
+                {userNameProfile === userName && tokenUser && (
                   <Box
                     sx={{
                       cursor: "pointer",

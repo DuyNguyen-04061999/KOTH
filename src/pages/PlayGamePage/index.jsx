@@ -48,9 +48,9 @@ export default function PlayGamePage() {
     setSocket(_socket);
   }, []);
   useEffect(() => {
-    socket?.emit("detailTournament", {
-      tournamentId: id,
-    });
+    // socket?.emit("detailTournament", {
+    //   tournamentId: id,
+    // });
   }, [socket, id]);
   
   useEffect(() => {

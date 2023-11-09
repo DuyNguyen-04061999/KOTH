@@ -33,7 +33,7 @@ const theme = createTheme({
 //----------
 export default function BuyTicket(props) {
   const { isBuyTicket } = useSelector((state) => state.tournamentReducer);
-  const { listPackage } = useSelector((state) => state.appReducer);
+  const { listPackage } = useSelector((state) => state.packageReducer);
   const [ticketBuy, setTicketBuy] = useState([]);
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
@@ -330,19 +330,6 @@ export default function BuyTicket(props) {
             <button
               onClick={() => {
                 dispatch(toggleCheckWallet({ type: "buyTicket" }));
-                // if (!bought) {
-                //   socket?.emit("buyPackage", {
-                //     price: 0.5,
-                //     tournamentId: tournamentId,
-                //     packageId: ticketBuy?.id,
-                //   });
-                // } else {
-                //   socket?.emit("buyPackage", {
-                //     price: 0.5,
-                //     tournamentId: tournamentId,
-                //     packageId: ticketBuy?.id,
-                //   });
-                // }
                 handleClose();
               }}
               style={{

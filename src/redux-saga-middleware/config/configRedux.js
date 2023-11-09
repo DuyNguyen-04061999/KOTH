@@ -15,6 +15,7 @@ import payPalReducer from "../reducers/payPalReducer";
 import paymentReducer from "../reducers/paymentReducer";
 import playgameReducer from "../reducers/playgameReducer";
 import profileReducer from "../reducers/profileReducer";
+import promotionReducer from "../reducers/promotionReducer";
 import refreshReducer from "../reducers/refreshReducer";
 import roomReducer from "../reducers/roomReducer";
 import stripeReducer from "../reducers/stripeReducer";
@@ -48,6 +49,7 @@ let rootReducer = combineReducers({
   refreshReducer,
   packageReducer,
   payPalReducer,
+  promotionReducer
 });
 
 const persistConfig = {

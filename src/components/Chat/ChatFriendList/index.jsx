@@ -36,7 +36,7 @@ export default function ChatFriendList() {
   const { width, height } = useWindowDimensions();
   const [searchFeild, setSearchFeild] = useState("");
   const { friendList, chatWorld } = useSelector((state) => state.chatReducer);
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const handleChangeSearchChat = (e) => {
@@ -60,7 +60,7 @@ export default function ChatFriendList() {
   const handleSubmitSearchChat = (e) => {
     e.preventDefault();
   };
-  useEffect(() => {}, [token]);
+  useEffect(() => {}, [tokenUser]);
   const renderListFriend1 = () => {
     return (
       <>

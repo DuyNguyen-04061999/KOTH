@@ -80,17 +80,18 @@ class UserService {
   }
 
   async updateProfile(dataRequest) {
-    const token = localStorage.getItem("token");
     const res = await PROMOTION_API.post(
-      "/api/update-profile",
+      "/api/authenticate/update-profile",
       {
-        data: dataRequest,
-        token: token,
+        ...dataRequest,
+        token: localStorage.getItem("token")
       },
       {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + { token },
+          "Content-Type": "multipart/form-data",
+          "x-access-refactor-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
@@ -101,9 +102,9 @@ class UserService {
     const res = await PROMOTION_API.get("/api/authenticate/me", {
       headers: {
         "Content-Type": "application/json",
-        "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
-        Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
-        authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+        "x-access-refactor-token": localStorage.getItem("token"),
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return res;
@@ -136,9 +137,22 @@ class UserService {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
-          Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
-          authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+          "x-access-refactor-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      },
+    );
+    return res;
+  }
+
+  async getUserByUsername(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/authenticate/get-user-info-by-username",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
         }
       },
     );
