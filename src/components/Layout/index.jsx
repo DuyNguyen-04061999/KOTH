@@ -5,7 +5,7 @@ import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { imageDesktop, images } from "../../utils/images";
+import { imageDesktop } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
@@ -18,7 +18,6 @@ import history from "../Router/history";
 
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
@@ -26,13 +25,14 @@ import {
   changeRouter,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
-import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog, updatePromotionExtra } from "../../redux-saga-middleware/reducers/authReducer";
+import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
   openChatPopup,
   showBadgeChat,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
+import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import {
@@ -40,6 +40,7 @@ import {
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
+import DialogVerify from "../Dialog/Auth/DialogVerify";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
 import DialogProfile from "../Dialog/Profile";
@@ -51,7 +52,6 @@ import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
-import NotiFunds from "../Dialog/NotiFunds";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -94,9 +94,13 @@ export default function Layout(props) {
     (state) => state.walletReducer
   );
   const { orientation } = useSelector((state) => state.gameReducer);
-
-  const { token, isNav, userNameRef } = useSelector(
+  const { isChangeLocation } = useSelector((state) => state.packageReducer);
+  
+  const { isNav } = useSelector(
     (state) => state.authReducer
+  );
+  const { tokenUser: token } = useSelector(
+    (state) => state.userReducer
   );
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, badgechat } = useSelector(
@@ -133,7 +137,7 @@ export default function Layout(props) {
   }, [router, startGameCheck]);
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
-      socket?.emit("leaveAllRoom");
+      
     }
   }, [router, socket, token]);
 
@@ -155,13 +159,12 @@ export default function Layout(props) {
         try {
           const response = await API.get(`/api/get-refcode-by-username/${userName}`);
           if(response){
-            console.log(response);
             dispatch(addRefCodeRegister(response?.data?.ref));
             dispatch(clickTab("signup"));
             dispatch(toggleLoginDialog());
           }
         } catch (error) {
-          console.log(error);
+          
         }
       }
     }
@@ -200,7 +203,6 @@ export default function Layout(props) {
 
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
-  const refCodeURL= query?.get("refcode");
   const { isAlertDialog } = useSelector((state) => state.stripeReducer);
   useEffect(() => {
     if (query?.get("type") === "stripe") {
@@ -219,30 +221,13 @@ export default function Layout(props) {
   }, [location.pathname, dispatch]);
 
   useEffect(() => {
-    if(socket) {
-      socket?.on("buyPromoExtraSuccess", (data) => {
-        if(fromRouter && router !== "/" && router !== "/home") {
-          navigate(fromRouter)
-        }
-        toast.success("Buy Combo Extra Successfully", {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.successIcon}
-            />
-          ),
-          position: "top-center",
-          className: "success-background",
-        });
-        dispatch(updatePromotionExtra(data || 0))
-      })
+    if(isChangeLocation) {
+      if(fromRouter && router !== "/" && router !== "/home") {
+        navigate(fromRouter)
+        dispatch(updateChangeLocation())
+      }
     }
-
-    return () => {
-      socket?.off("buyPromoExtraSuccess");
-    };
-  }, [fromRouter, socket, router, navigate, dispatch])
+  }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation])
 
   return ReactDOM.createPortal(
     <Box
@@ -261,7 +246,7 @@ export default function Layout(props) {
       <PopUpReward />
       <SubscriptionDialog />
       <TouramentShow />
-      <NotiFunds />
+      <DialogVerify />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {

@@ -1,24 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-import "../Slider/index.scss";
-// import VideoThumb from "../VideoThumb";
-// import { useState } from "react";
 import { clickTab, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 import { getUniqueID } from "../../utils/helper";
+import useWindowDimensions from "../../utils/useWindowDimensions";
+import "../Slider/index.scss";
 export default function GameThumb(props) {
   const { id, name, img, title } = props;
   const { width } = useWindowDimensions();
-  const { token } = useSelector((state) => state?.authReducer);
+  const { tokenUser: token } = useSelector((state) => state?.userReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <>
       <div className="new">
         <div>
-          {/* {showVideo === true && cardId === id ? (
-            <VideoThumb video={video} isPlaying={isPlaying}/>
-          ) : ( */}
           <div
             id={id}
             className="card-item cursor-pointer"

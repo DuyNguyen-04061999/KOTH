@@ -1,3 +1,5 @@
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Chip,
@@ -10,17 +12,15 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { images } from "../../../utils/images";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileTimePicker } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
-import { getFontSizeDependOnWidth } from "../../../utils/config";
-import _socket from "../../../redux-saga-middleware/config/socket";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
 import {
   createTournament,
   createTournamentReady,
@@ -28,9 +28,9 @@ import {
   // getBrandTournamentSuccess,
   getSkinForTournament,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
-import { LoadingButton } from "@mui/lab";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { getFontSizeDependOnWidth } from "../../../utils/config";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function CreateTournament({ createTour, handleOnClose, type }) {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
@@ -235,7 +235,7 @@ export default function CreateTournament({ createTour, handleOnClose, type }) {
   }, []);
 
   useEffect(() => {
-    socket?.emit("getListGameTournament");
+    
   }, [socket]);
 
   useEffect(() => {

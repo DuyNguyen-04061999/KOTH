@@ -15,11 +15,13 @@ import payPalReducer from "../reducers/payPalReducer";
 import paymentReducer from "../reducers/paymentReducer";
 import playgameReducer from "../reducers/playgameReducer";
 import profileReducer from "../reducers/profileReducer";
+import promotionReducer from "../reducers/promotionReducer";
 import refreshReducer from "../reducers/refreshReducer";
 import roomReducer from "../reducers/roomReducer";
 import stripeReducer from "../reducers/stripeReducer";
 import toastReducer from "../reducers/toastReducer";
 import tournamentReducer from "../reducers/tournamentReducer";
+import userReducer from "../reducers/userReducer";
 import videoReducer from "../reducers/videoReducer";
 import walletReducer from "../reducers/walletReducer";
 import rootSaga from "../sagas";
@@ -43,9 +45,11 @@ let rootReducer = combineReducers({
   deviceReducer,
   videoReducer,
   playgameReducer,
+  userReducer,
   refreshReducer,
   packageReducer,
   payPalReducer,
+  promotionReducer
 });
 
 const persistConfig = {

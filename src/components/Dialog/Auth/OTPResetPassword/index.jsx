@@ -3,19 +3,27 @@ import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { clearForgetPassInfo, clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
+import {
+  clearForgetPassInfo,
+  clickTab,
+} from "../../../../redux-saga-middleware/reducers/authReducer";
+import {
+  resendOtpReady,
+  sendOtpReady,
+} from "../../../../redux-saga-middleware/reducers/userReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 export default function OTPResetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { forgotPassInfo } = useSelector((state) => state.authReducer);
+  const { forgotPassUsername, forgotPassEmail } = useSelector(
+    (state) => state.authReducer
+  );
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState(60);
   const [socket, setSocket] = useState(null);
-
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -34,27 +42,30 @@ export default function OTPResetPassword() {
   }, [timeLeft]);
 
   const handleVerifyOTP = () => {
-      socket?.emit("verifyOtp", {
+    dispatch(
+      sendOtpReady({
         otp: otp,
-        username: forgotPassInfo.username,
+        username: forgotPassUsername,
+        email: forgotPassEmail,
         type: "password",
       })
+    );
   };
 
-  useEffect(()=> {
-    socket?.on("forgetPasswordSuccess",() => {
+  useEffect(() => {
+    socket?.on("forgetPasswordSuccess", () => {
       dispatch(clickTab("createPass"));
       dispatch(clearForgetPassInfo());
-    })
-  },[socket])
+    });
+  }, [socket]);
 
   const handleResendOTP = () => {
-    socket?.emit("resendOtp", {
-      email: forgotPassInfo.email,
-      username: forgotPassInfo.username,
-      phone: forgotPassInfo.phone,
-    });
-    setOtp("");
+    setTimeLeft(60)
+    dispatch(resendOtpReady({
+      username: forgotPassUsername,
+      email: forgotPassEmail,
+      type: "password",
+    }));
   };
 
   return (
@@ -91,7 +102,7 @@ export default function OTPResetPassword() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          A verification code has been send to {forgotPassInfo.phone}, enter it
+          A verification code has been send to {forgotPassEmail}, enter it
           below.
         </Typography>
       </Box>

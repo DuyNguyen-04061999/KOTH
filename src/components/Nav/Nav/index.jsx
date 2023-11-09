@@ -21,10 +21,13 @@ export default function Navbar() {
 
   // const { width } = useWindowDimensions();
   const [tablet, setTablet] = useState("");
-  const { token, isNav, isDropdownNav, isNavTablet } = useSelector(
+  const { isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
 
+  const { tokenUser: token} = useSelector(
+    (state) => state.userReducer
+  );
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;

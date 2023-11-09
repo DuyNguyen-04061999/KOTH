@@ -45,7 +45,7 @@ const ChatDrawer = () => {
   const [socket, setSocket] = useState(null);
   const { tabChat, chatPopup } = useSelector((state) => state.chatReducer);
   const dispatch = useDispatch();
-  const { token, resetInputValue } = useSelector((state) => state.authReducer);
+  const { tokenUser, resetInputValue } = useSelector((state) => state.userReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   useEffect(() => {
     if (resetInputValue === "logoutSuccess" && chatInput && chatInput.current) {
@@ -206,12 +206,10 @@ const ChatDrawer = () => {
                   color: "#fff",
                 }}
                 onClick={() => {
-                  if (token === null || token === "") {
+                  if (tokenUser === null || tokenUser === "") {
                     dispatch(toggleLoginDialog());
                   } else {
                     dispatch(clickTabChat(false));
-                    // setBackgroundPrivate("#883AF0");
-                    // setBackgroundGlobal("#261a35");
                   }
                 }}
               >

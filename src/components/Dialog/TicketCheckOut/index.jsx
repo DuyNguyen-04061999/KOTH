@@ -6,29 +6,28 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
+  buyPackage,
+  saveQuantityExtra
+} from "../../../redux-saga-middleware/reducers/packageReducer";
+import { toggleDialogFunds } from "../../../redux-saga-middleware/reducers/paymentReducer";
+import {
   closeCheckWallet,
-  toggleCheckWallet,
-  toggleWalletDialog,
+  toggleCheckWallet
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney } from "../../../utils/helper";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import "./index.scss";
-import { toggleDialogFunds } from "../../../redux-saga-middleware/reducers/paymentReducer";
-import {
-  buyPackage,
-  buyPackageSuccess,
-  saveQuantityExtra,
-} from "../../../redux-saga-middleware/reducers/packageReducer";
 
 export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet, goldCombo, totalExtra } = useSelector(
     (state) => state.walletReducer
   );
   const { idPackage } = useSelector((state) => state.authReducer);
-  const { userGold } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userGold = user?.userGold || 0
   const { boughtTour } = useSelector((state) => state.tournamentReducer);
-  const { listPackage } = useSelector((state) => state.appReducer);
+  const { listPackage } = useSelector((state) => state.packageReducer);
   const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -48,9 +47,12 @@ export default function TicketCheckOut() {
       dispatch(toggleDialogFunds("subscription"));
       // dispatch(toggleWalletDialog(19.99));
     } else {
-      socket.emit("buyNewPackage", {
-        packageId: idPackage,
-      });
+      dispatch(
+        buyPackage({
+          packageId: idPackage,
+          quantityExtra: sl,
+        })
+      );
       setSl(1);
       dispatch(toggleCheckWallet());
     }
@@ -530,7 +532,7 @@ export default function TicketCheckOut() {
               )}
               {typeWallet === "subscription" ? (
                 <Typography>
-                  ${formatMoney(Number.parseFloat(userGold)) - 19.99}
+                  ${formatMoney(Number.parseFloat(userGold - 19.99))}
                 </Typography>
               ) : (
                 <Typography>

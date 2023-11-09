@@ -4,17 +4,23 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
+import { resetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 export default function CreatePassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { forgotPassInfo, nameReset } = useSelector((state) => state.authReducer);
-  console.log(nameReset, forgotPassInfo);
+  // const { forgotPassInfo, nameReset } = useSelector((state) => state.authReducer);
+  const { forgotPassUsername, nameReset } = useSelector(
+    (state) => state.authReducer
+  );
+  const { tokenResetPass } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [rePasswordError, setRePasswordError] = useState("");
   const [inputError, setInputError] = useState("");
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayRePassword, setDisplayRePassword] = useState(false);
@@ -34,23 +40,56 @@ export default function CreatePassword() {
     setDisplayRePassword(!displayRePassword);
   };
 
-  
   const handleCreatePass = () => {
-    socket?.emit("updateNewPassword", {
-      username: nameReset || forgotPassInfo.username,
-      password: password,
-    });
+    // socket?.emit("updateNewPassword", {
+    //   username: nameReset || forgotPassInfo.username,
+    //   password: password,
+    // });
+
+    dispatch(
+      resetPasswordReady({
+        username: nameReset || forgotPassUsername,
+        password: password,
+        token: tokenResetPass,
+      })
+    );
   };
 
   useEffect(() => {
-    socket?.on("updateNewPasswordSuccess", (user) => {
-      socket?.emit("login", {
-        username: user.username,
-        password: user.password,
-      });
-      // dispatch(clearForgetPassInfo());
-    });
-  }, [socket, dispatch]);
+    const specialCharacterRegex = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/;
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const containsSpecialCharacter = specialCharacterRegex.test(password);
+    const isPasswordValid = password.length >= 6;
+    const containsUppercase = uppercaseRegex.test(password);
+    const containNumber = numberRegex.test(password);
+    if (containsSpecialCharacter && isPasswordValid && containsUppercase && containNumber) {
+      setPasswordError("");
+    }
+    else {
+      setPasswordError("Please enter valid password");
+    }
+  }, [password]);
+
+  useEffect(() => {
+    if (rePassword !== password) {
+      setRePasswordError("Password does not match");
+    } else {
+      setRePasswordError("");
+    }
+  }, [rePassword, password]);
+
+
+
+  // useEffect(() => {
+  //   socket?.on("updateNewPasswordSuccess", (user) => {
+  //     socket?.emit("login", {
+  //       username: user.username,
+  //       password: user.password,
+  //     });
+  //     // dispatch(clearForgetPassInfo());
+  //   });
+  // }, [socket, dispatch]);
 
   return (
     <Box
@@ -103,133 +142,151 @@ export default function CreatePassword() {
             width: "100%",
             display: "flex",
             position: "relative",
+            flexDirection: "column",
+            backgroundColor: "#181223",
+            padding: "2px 12px",
+            borderRadius: "4px",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#181223",
-              padding: "10px 12px",
-              borderRadius: "5px 0px 0px 5px",
-            }}
-          >
-            <img
-              style={{ width: "18px", height: "18px" }}
-              alt="..."
-              src={sign.up02}
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                style={{ width: "18px", height: "18px" }}
+                alt="..."
+                src={sign.up02}
+              />
+            </Box>
+            <input
+              onChange={(e)=> setPassword(e.target.value)}
+              type={displayPassword ? "text" : "password"}
+              placeholder="Password"
+              style={{
+                width: "100%",
+                backgroundColor: "#181223",
+                outline: "none",
+                border: "none",
+                color: "white",
+                fontSize: "14px",
+                padding: "10px 12px 10px 0px",
+                borderRadius: "0px 5px 5px 0px",
+                fontFamily: "Cyntho Next",
+                marginLeft: "12px",
+              }}
             />
+            <Box
+              onClick={handleSetPassword}
+              sx={{ display: password.length > 0 ? "block" : "none" }}
+            >
+              {displayPassword === false ? (
+                <VisibilityOffIcon
+                  sx={{
+                    position: "absolute",
+                    top: "8px",
+                    right: "8px",
+                    color: "#7C81F2",
+                  }}
+                />
+              ) : (
+                <VisibilityIcon
+                  sx={{
+                    position: "absolute",
+                    top: "8px",
+                    right: "8px",
+                    color: "#7C81F2",
+                  }}
+                />
+              )}
+            </Box>
           </Box>
-          <input
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type={displayPassword ? "text" : "password"}
-            placeholder="Password"
-            style={{
-              width: "100%",
-              backgroundColor: "#181223",
-              outline: "none",
-              border: "none",
-              color: "white",
-              fontSize: "14px",
-              padding: "10px 12px 10px 0px",
-              borderRadius: "0px 5px 5px 0px",
-              fontFamily: "Cyntho Next",
-            }}
-          />
-          <Box
-            onClick={handleSetPassword}
-            sx={{ display: password.length > 0 ? "block" : "none" }}
-          >
-            {displayPassword === false ? (
-              <VisibilityOffIcon
-                sx={{
-                  position: "absolute",
-                  top: "8px",
-                  right: "8px",
-                  color: "#7C81F2",
-                }}
-              />
-            ) : (
-              <VisibilityIcon
-                sx={{
-                  position: "absolute",
-                  top: "8px",
-                  right: "8px",
-                  color: "#7C81F2",
-                }}
-              />
-            )}
-          </Box>
+          {passwordError && (
+            <Typography
+              sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
+            >
+              {passwordError}
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
             width: "100%",
             display: "flex",
-            marginTop: "20px",
             position: "relative",
+            flexDirection: "column",
+            backgroundColor: "#181223",
+            padding: "2px 12px",
+            borderRadius: "4px",
+            marginTop: "24px",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#181223",
-              padding: "10px 12px",
-              borderRadius: "5px 0px 0px 5px",
-            }}
-          >
-            <img
-              style={{ width: "18px", height: "18px" }}
-              alt="..."
-              src={sign.up02}
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                style={{ width: "18px", height: "18px" }}
+                alt="..."
+                src={sign.up02}
+              />
+            </Box>
+            <input
+              onChange={(e)=> setRePassword(e.target.value)}
+              type={displayRePassword ? "text" : "password"}
+              placeholder="Confirm password"
+              style={{
+                width: "100%",
+                backgroundColor: "#181223",
+                outline: "none",
+                border: "none",
+                color: "white",
+                fontSize: "14px",
+                padding: "10px 12px 10px 0px",
+                borderRadius: "0px 5px 5px 0px",
+                fontFamily: "Cyntho Next",
+                marginLeft: "12px",
+              }}
             />
+            <Box
+              onClick={handleSetRePassword}
+              sx={{ display: rePassword.length > 0 ? "block" : "none" }}
+            >
+              {displayRePassword === false ? (
+                <VisibilityOffIcon
+                  sx={{
+                    position: "absolute",
+                    top: "8px",
+                    right: "8px",
+                    color: "#7C81F2",
+                  }}
+                />
+              ) : (
+                <VisibilityIcon
+                  sx={{
+                    position: "absolute",
+                    top: "8px",
+                    right: "8px",
+                    color: "#7C81F2",
+                  }}
+                />
+              )}
+            </Box>
           </Box>
-          <input
-            onChange={(e) => {
-              setRePassword(e.target.value);
-            }}
-            type={displayRePassword ? "text" : "password"}
-            placeholder="Confirm password"
-            style={{
-              width: "100%",
-              backgroundColor: "#181223",
-              outline: "none",
-              border: "none",
-              color: "white",
-              fontSize: "14px",
-              padding: "10px 12px 10px 0px",
-              fontFamily: "Cyntho Next",
-              borderRadius: "0px 5px 5px 0px",
-            }}
-          />
-          <Box
-            onClick={handleSetRePassword}
-            sx={{ display: password.length > 0 ? "block" : "none" }}
-          >
-            {displayRePassword === false ? (
-              <VisibilityOffIcon
-                sx={{
-                  position: "absolute",
-                  top: "8px",
-                  right: "8px",
-                  color: "#7C81F2",
-                }}
-              />
-            ) : (
-              <VisibilityIcon
-                sx={{
-                  position: "absolute",
-                  top: "8px",
-                  right: "8px",
-                  color: "#7C81F2",
-                }}
-              />
-            )}
-          </Box>
+          {rePasswordError && (
+            <Typography
+              sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
+            >
+              {rePasswordError}
+            </Typography>
+          )}
         </Box>
       </Box>
       <Box
@@ -237,7 +294,7 @@ export default function CreatePassword() {
       >
         <Box sx={{ width: "100%" }}>
           <AnimButton
-            type={"primary"}
+            type={(!rePasswordError || !passwordError) ? "primary" : "disabled"}
             text={"NEXT"}
             // style={{
             //   width: "100%",
