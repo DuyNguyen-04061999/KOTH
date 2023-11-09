@@ -229,6 +229,18 @@ export default function Layout(props) {
     }
   }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation])
 
+  useEffect(() => {
+    const tokenLocal = localStorage.getItem("token")
+    if((tokenLocal || token)) {
+      socket?.emit("loginSocial", {
+        token: tokenLocal || token
+      });
+    } else {
+      socket?.emit("logoutSocial")
+      socket?.emit("listMessageGlobal");
+    }
+  }, [token, socket])
+
   return ReactDOM.createPortal(
     <Box
       className="tong"

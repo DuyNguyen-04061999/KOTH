@@ -161,7 +161,7 @@ function App() {
   useEffect(() => {}, [orientation, startGameCheck]);
 
   useEffect(() => {
-    const token =localStorage.getItem("token")
+    const token = localStorage.getItem("token")
     if (!tokenUser && !token) {
       socket?.emit("listMessageGlobal");
     } else {
@@ -219,20 +219,20 @@ function App() {
       });
 
       socket?.on("disconnect", (data) => {
-        if((tokenUser || token)) {
-          socket?.emit("loginSocial", {
-            token: tokenUser || token
-          });
-        }
+          if((tokenUser || token)) {
+            socket?.emit("loginSocial", {
+              token: tokenUser || token
+            });
+          }
         });
 
       socket?.on("loginSocialSuccess", () => {
-        if (!tokenUser && !token) {
-          socket?.emit("listMessageGlobal");
-        } else {
-          socket?.emit("listMessage");
-          socket?.emit("listFriend");
-        }
+        socket?.emit("listMessage");
+        socket?.emit("listFriend");
+      });
+
+      socket?.on("logoutSocialSuccess", () => {
+        socket?.emit("listMessageGlobal");
       });
 
       socket?.on("reconnectSuccess", () => {
