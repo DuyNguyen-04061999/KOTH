@@ -20,7 +20,7 @@ export default function TypeGame() {
   );
   const { state } = useLocation();
 
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const { width } = useWindowDimensions();

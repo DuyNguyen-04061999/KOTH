@@ -16,7 +16,7 @@ import MenuSearch from "../../MenuMobile/Search";
 import "./index.scss";
 
 export default function NavMobile() {
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { chatWorld, badgechat } = useSelector((state) => state.chatReducer);
 
   // const { device } = useSelector((state) => state.deviceReducer);

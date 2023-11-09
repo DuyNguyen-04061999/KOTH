@@ -56,6 +56,15 @@ export const buyPackageFail = (data) => {
   };
 };
 
+
+export const updateChangeLocation = (data) => {
+  return {
+    type: "UPDATE_CHANGE_LOCATION",
+    payload: data,
+  };
+};
+
+
 const packageReducer = (
   state = {
     listPackage: [],
@@ -64,6 +73,7 @@ const packageReducer = (
     quantityExtra: 0,
     isFecthPackage: false,
     package: [],
+    isChangeLocation: false
   },
   action
 ) => {
@@ -82,11 +92,12 @@ const packageReducer = (
     case "SAVE_QUANTITY_EXTRA":
       return { ...state, quantityExtra: payload };
     case "BUY_PACKAGE":
-      return { ...state, isFecthPackage: true };
+      return { ...state, isFecthPackage: true, isChangeLocation: false };
     case "BUY_PACKAGE_SUCCESS":
-      return { ...state, isFecthPackage: false, package: payload };
+      return { ...state, isFecthPackage: false, package: payload, isChangeLocation: true };
     case "BUY_PACKAGE_FAIL":
-      return { ...state, isFecthPackage: false };
+      return { ...state, isFecthPackage: false, isChangeLocation: false };
+    case "UPDATE_CHANGE_LOCATION": return {...state, isChangeLocation: false}
     default:
       return { ...state };
   }

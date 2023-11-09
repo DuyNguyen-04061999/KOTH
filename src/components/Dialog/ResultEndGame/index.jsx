@@ -1,14 +1,13 @@
 import { Box } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import { updatePromotionExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/authReducer";
+import { getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   toggleCloseResultEndGame,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
 import "./index.scss";
 
 export default function ResultEndGame() {
@@ -17,32 +16,20 @@ export default function ResultEndGame() {
   );
   const { detailTournament } = useSelector((state) => state.playgameReducer);
 
-  const { token, promotionExtra } = useSelector((state) => state.authReducer);
-  const [socket, setSocket] = useState(null);
+  const { tokenUser, countTicket } = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (window.location.pathname === "/changelog") {
-      setSocket(null);
-    } else {
-      const socket = _socket;
-      setSocket(socket);
-    }
-  }, []);
 
   const { id } = useParams();
 
   const handleClose = () => {
     dispatch(toggleCloseResultEndGame());
-    if (token) {
-      socket?.emit("detailNewTournament", {
-        tournamentId: id,
-      });
+    if (tokenUser) {
+      dispatch(getRefactorDetailAuthPromotion(id))
     }
 
-    if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && promotionExtra > 0) {
-      dispatch(updatePromotionExtraAfterPlayGame(1))
+    if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {
+      dispatch(updateCountExtraAfterPlayGame(1))
     }
   };
 

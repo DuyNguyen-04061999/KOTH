@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { REFRESH_API } from "../../redux-saga-middleware/axios/refreshApi";
-import { useState } from "react";
 import _socket from "../../redux-saga-middleware/config/socket";
-import { useEffect } from "react";
 
 export default function Refresh() {
   const [socket, setSocket] = useState(null);
@@ -12,10 +10,9 @@ export default function Refresh() {
   }, []);
   useEffect(() => {
     socket?.on("loginChatSuccess", () => {
-      console.log(123);
+      
     });
     return () => {
-      // socket?.off();
       socket?.disconnect();
     };
   }, [socket]);

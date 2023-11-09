@@ -1,33 +1,35 @@
-import "../scss/PlayGame.scss";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { images2 } from "../../../utils/images";
-import { Box, Typography } from "@mui/material";
-import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { Fragment, useEffect, useState } from "react";
-import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
-import { useLocation } from "react-router-dom";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import GoldIcon from "@mui/icons-material/AttachMoney";
-import MemberIcon from "@mui/icons-material/Group";
-import imagesFavorite from "../../../utils/imagesFavorite";
 import AddIcon from "@mui/icons-material/Add";
-import QuitIcon from "@mui/icons-material/ExitToApp";
-import TrashIcon from "@mui/icons-material/Delete";
-import { showAlert } from "./../../../redux-saga-middleware/reducers/alertReducer";
 import BackIcon from "@mui/icons-material/ArrowBack";
+import GoldIcon from "@mui/icons-material/AttachMoney";
+import TrashIcon from "@mui/icons-material/Delete";
+import QuitIcon from "@mui/icons-material/ExitToApp";
+import MemberIcon from "@mui/icons-material/Group";
+import { Box, Typography } from "@mui/material";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
+import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import { updateTypeLike } from "../../../redux-saga-middleware/reducers/gameReducer";
 import {
   getFontSizeDependOnWidth,
   getFontSizeTitleDependOnWidth,
 } from "../../../utils/config";
+import { images2 } from "../../../utils/images";
+import imagesFavorite from "../../../utils/imagesFavorite";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import "../scss/PlayGame.scss";
+import { showAlert } from "./../../../redux-saga-middleware/reducers/alertReducer";
 
 export default function PlayGame() {
   const { detailGame, listFavoriteGame } = useSelector(
     (state) => state.gameReducer
   );
   const dispatch = useDispatch();
-  const { token, userName, userId } = useSelector((state) => state.authReducer);
+  const { token, userId } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
   const location = useLocation();
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();

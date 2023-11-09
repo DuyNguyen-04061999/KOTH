@@ -34,7 +34,7 @@ export const AvatarPicker = (props) => {
   const classes = useStyles();
   const imageRef = useRef(null);
   const dispatch = useDispatch();
-  const { handleChangeImage } = props;
+  const { handleChangeImage, handleSetAvatar } = props;
 
   const showOpenFileDialog = (event) => {
     imageRef.current.click();
@@ -42,8 +42,9 @@ export const AvatarPicker = (props) => {
 
   const handleChange = async (event) => {
     dispatch(openLoading());
+    handleSetAvatar(event.target.files[0])
     let reader = new FileReader();
-    console.log("event.target.files[0]: ", event.target.files[0]);
+    
     const imageType =
       event?.target?.files[0]?.type?.replace("image/", "") || "";
     if (imageType === "png" || imageType === "jpg" || imageType === "gif") {

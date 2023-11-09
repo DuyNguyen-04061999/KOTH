@@ -30,7 +30,7 @@ export default function UnityGameComponent(props) {
     gameScreenType,
   } = props;
 
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   function getLoaderJs(data) {
     for (let index = 0; index < data?.length; index++) {
