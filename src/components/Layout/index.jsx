@@ -44,6 +44,7 @@ import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
+import NotiFunds from "../Dialog/NotiFunds";
 import DialogProfile from "../Dialog/Profile";
 import ShareTour from "../Dialog/ShareTour";
 import SimpleDialog from "../Dialog/Simple/SimpleDialog";
@@ -251,6 +252,7 @@ export default function Layout(props) {
       <TouramentShow />
       <DialogVerify />
       <DialogSubscribe />
+      <NotiFunds />
       <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {
