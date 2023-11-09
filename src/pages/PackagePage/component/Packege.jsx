@@ -1,30 +1,20 @@
 import { Box, Container, Typography } from "@mui/material";
-// import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
+import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import {
-  getIdPackage,
-  // toggleDialogConfirm,
-  toggleLoginDialog,
-} from "../../../redux-saga-middleware/reducers/authReducer";
-import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
-// import InspirationTTF from "../../../assets/font/CynthoNextMedium.otf";
-import { ScrollingCarousel } from "@trendyol-js/react-carousel";
-import { useLocation } from "react-router-dom";
-import { toggleCheckWallet } from "../../../redux-saga-middleware/reducers/walletReducer";
 import ListPackage from "./ListPackage";
 
 export default function Package() {
   const { width } = useWindowDimensions();
-  const { listPackage } = useSelector((state) => state.appReducer);
-  const { token, userPackageId, uPack } = useSelector(
-    (state) => state.authReducer
+  const { listPackage } = useSelector((state) => state.packageReducer);
+  const { tokenUser: token } = useSelector(
+    (state) => state.userReducer
   );
-  const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const [item, setItem] = useState([]);
   useEffect(() => {
@@ -33,13 +23,13 @@ export default function Package() {
   }, [socket]);
 
   useEffect(() => {
-    if (token === null || token === "") {
-      socket?.emit("listPackage");
-    } else {
-      socket?.emit("listPackage", {
-        type: true,
-      });
-    }
+    // if (token === null || token === "") {
+    //   socket?.emit("listPackage");
+    // } else {
+    //   socket?.emit("listPackage", {
+    //     type: true,
+    //   });
+    // }
   }, [socket, token]);
 
   useEffect(() => {

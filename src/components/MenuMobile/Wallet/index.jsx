@@ -51,11 +51,12 @@ export default function DialogWallet(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDeposit, setLoadingDeposit] = useState(false);
   const { isTransactionDialog } = useSelector((state) => state.walletReducer);
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const [withDrawAddress, setWithDrawAddress] = useState("");
   const [transactions, setTransaction] = useState([]);
   const [wrapperWidth, setWrapperWidth] = useState();
-  const { userGold } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userGold = user?.userGold || 0
   const [recovery, setRecovery] = useState(false);
   const [transactionRecoverId, setTransactionRecoverId] = useState(0);
   const [Txh, setTxh] = useState("");
@@ -74,9 +75,9 @@ export default function DialogWallet(props) {
   }, []);
 
   useEffect(() => {
-    if (token) {
-      socket?.emit("getListWithdraw");
-    }
+    // if (token) {
+    //   socket?.emit("getListWithdraw");
+    // }
   });
 
   useEffect(() => {

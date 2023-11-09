@@ -188,9 +188,87 @@ export const reVerifyAccountFail = (data) => {
     payload: data
   }
 }
+
+export const getUserByUsername = (data) => {
+  return {
+    type: "GET_USER_BY_USERNAME",
+    payload: data
+  }
+}
+
+export const getUserByUsernameSuccess = (data) => {
+  return {
+    type: "GET_USER_BY_USERNAME_SUCCESS",
+    payload: data
+  }
+}
+
+export const getUserByUsernameFail = (data) => {
+  return {
+    type: "GET_USER_BY_USERNAME_FAIL",
+    payload: data
+  }
+}
+
+export const updateUserToken = (data) => {
+  return {
+    type: "UPDATE_USER_TOKEN",
+    payload: data
+  }
+}
+
+export const updateProfileUser = (data) => {
+  return {
+    type: "UPDATE_PROFILE_USER",
+    payload: data
+  }
+}
+
+export const updateProfileUserSuccess = (data) => {
+  return {
+    type: "UPDATE_PROFILE_USER_SUCCESS",
+    payload: data
+  }
+}
+
+export const updateProfileUserFail = (data) => {
+  return {
+    type: "UPDATE_PROFILE_USER_FAIL",
+    payload: data
+  }
+}
+
+export const updateGoldAfterBuyPackage = (data) => {
+  return {
+    type: "UPDATE_GOLD_AFTER_BUY_PACKAGE",
+    payload: data
+  } 
+}
+
+export const updateListPromotionJoined = (data) => {
+  return {
+    type: "UPDATE_LIST_PROMOTION_JOINED",
+    payload: data
+  } 
+}
+
+export const updateCountExtraAfterPlayGame = (data) => {
+  return {
+    type: "UPDATE_COUNT_EXTRA_AFTER_PLAY_GAME",
+    payload: data
+  } 
+}
+
+export const updateCountTicket = (data) => {
+  return {
+    type: "UPDATE_COUNT_TICKET",
+    payload: data
+  } 
+}
+
 const userReducer = (
   state = {
-    tokenUserUser: "",
+    tokenUser: "",
     registerValue: "",
     userChangeAvatar: "",
     resetInputValue: "",
@@ -211,14 +289,23 @@ const userReducer = (
     isResendOtp: false,
     isResetPassword: false,
     tokenResetPass: "",
-    isReVerifyAccount: false
+    isReVerifyAccount: false,
+    uPack: null,
+    listJoinedTour: [],
+    countTicket: 0,
+    userAvatar: "",
+    isGetUserByUsername: false
   },
   action
 ) => {
   let { type, payload } = action;
   switch (type) {
     case REHYDRATE:
-      return { ...state };
+      {
+        const { userReducer } = payload || {}
+        const { tokenUser } = userReducer || ""
+        return {...state, tokenUser: tokenUser || ""}
+      }
     case "LOGIN_READY":
       return {
         ...state,
@@ -246,6 +333,10 @@ const userReducer = (
       return {
         ...state,
         isGetInfoUser: false,
+        uPack: payload?.uPack || null,
+        listJoinedTour: payload?.listJoinTour || [],
+        countTicket: payload?.countTicket || 0,
+        userAvatar: payload?.avatar || "",
         user: {
           ...payload.user,
         },
@@ -276,19 +367,16 @@ const userReducer = (
       return { ...state, tokenUser: "" };
     case "REGISTER_SUCCESS_FULLY":
       return { ...state, registerValue: payload };
-    case "UPDATE_PROFILE":
-      return { ...state, isUpdateProfile: true, userChangeAvatar: "" };
-    case "UPDATE_PROFILE_SUCCESS":
+    case "UPDATE_PROFILE_USER":
+      return { ...state, isUpdateProfile: true};
+    case "UPDATE_PROFILE_USER_SUCCESS":
       return {
         ...state,
         isUpdateProfile: false,
-        userChangeAvatar: payload,
-        userAvatar: payload,
+        userAvatar: payload?.avatar,
       };
-    case "UPDATE_PROFILE_FAIL":
-      return { ...state, isUpdateProfile: false, userChangeAvatar: "" };
-
-      return { ...state, isNav: payload };
+    case "UPDATE_PROFILE_USER_FAIL":
+      return { ...state, isUpdateProfile: false};
     case "LOG_OUT_READY":
       return {
         ...state,
@@ -299,17 +387,16 @@ const userReducer = (
         ...state,
         isLogout: false,
         user: {},
+        uPack: null,
+        listJoinedTour: [],
+        countTicket: 0,
         tokenUser: "",
+        userAvatar: ""
       };
     case "LOG_OUT_FAIL":
       return {
         ...state,
         isLogout: false,
-      };
-
-      return {
-        ...state,
-        isDialogConfirm: !state.isDialogConfirm,
       };
     case "GET_ID_PACKAGE":
       return { ...state, idPackage: payload };
@@ -340,6 +427,14 @@ const userReducer = (
     case "RE_VERIFY_ACCOUNT": return {...state, isReVerifyAccount: true}
     case "RE_VERIFY_ACCOUNT_SUCCESS": return {...state, isReVerifyAccount: false}
     case "RE_VERIFY_ACCOUNT_FAIL": return {...state, isReVerifyAccount: false}
+    case "GET_USER_BY_USERNAME": return {...state, isGetUserByUsername: true}
+    case "GET_USER_BY_USERNAME_SUCCESS": return {...state, isGetUserByUsername: false}
+    case "GET_USER_BY_USERNAME_FAIL": return {...state, isGetUserByUsername: false}
+    case "UPDATE_USER_TOKEN": return {...state, tokenUser: payload || ""}
+    case "UPDATE_GOLD_AFTER_BUY_PACKAGE": return {...state, user: {...state.user, userGold: payload || 0}}
+    case "UPDATE_LIST_PROMOTION_JOINED": return {...state, listJoinedTour: [...state.listJoinedTour, payload]}
+    case "UPDATE_COUNT_EXTRA_AFTER_PLAY_GAME": return { ...state, countTicket: state.countTicket - payload };
+    case "UPDATE_COUNT_TICKET": return { ...state, countTicket: state.countTicket + payload };
     default:
       return state;
   }
