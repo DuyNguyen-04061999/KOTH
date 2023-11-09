@@ -21,6 +21,7 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
+  openSubscribeDialog,
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -30,8 +31,7 @@ import {
   finishVideo,
   getRefactorDetailAuthPromotion,
   getRefactorDetailPromotion,
-  joinPromotion,
-  startGameInPromotion,
+  startGameInPromotion
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   saveBoughtTournament,
@@ -72,7 +72,6 @@ export default function JoinTournament() {
     countTicket,
     listJoinedTour,
   } = useSelector((state) => state.userReducer);
-
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
@@ -135,11 +134,12 @@ export default function JoinTournament() {
     ) {
       dispatch(toggleTournamentShow());
     } else if (token) {
-      dispatch(
-        joinPromotion({
-          tournamentId: detailTournament?.id,
-        })
-      );
+      dispatch(openSubscribeDialog())
+      // dispatch(
+      //   joinPromotion({
+      //     tournamentId: detailTournament?.id,
+      //   })
+      // );
     } else {
       dispatch(toggleLoginDialog());
     }
@@ -259,7 +259,7 @@ export default function JoinTournament() {
                     {!listJoinedTour?.includes(id) ? (
                       <Box sx={{ width: "150px" }}>
                         <AnimButton
-                          onClick={handleJoinTour}
+                          onClick={() => dispatch(openSubscribeDialog())}
                           text={"Join"}
                           type={"primary"}
                         />

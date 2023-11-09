@@ -229,6 +229,20 @@ export const closeVerifyDialog = (data) => {
   };
 };
 
+export const openSubscribeDialog = (data) => {
+  return {
+    type: "OPEN_SUBSCRIBE_DIALOG",
+    payload: data,
+  };
+};
+
+export const closeSubscribeDialog = (data) => {
+  return {
+    type: "CLOSE_SUBSCRIBE_DIALOG",
+    payload: data,
+  };
+};
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -263,6 +277,7 @@ const authReducer = (
     userNameRef: "",
     nameReset: "",
     isVerifyDialog: false,
+    isSubscribeDialog: false,
   },
   action
 ) => {
@@ -384,6 +399,10 @@ const authReducer = (
       return { ...state, isLoginDialog: true };
     case "CLOSE_LOGIN_DIALOG":
       return { ...state, isLoginDialog: false };
+      case "OPEN_SUBSCRIBE_DIALOG":
+        return { ...state, isSubscribeDialog: true };
+      case "CLOSE_SUBSCRIBE_DIALOG":
+        return { ...state, isSubscribeDialog: false };
     case "UPDATE_U_PACK":
       return { ...state, uPack: payload || {} };
     case "UPDATE_USERNAME_WHEN_RESET": {
