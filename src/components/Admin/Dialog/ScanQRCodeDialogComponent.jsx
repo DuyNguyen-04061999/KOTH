@@ -105,15 +105,15 @@ export default function ScanQRCodeDialogComponent(props) {
                         <QRCode
                             value={urlRedirect}
                             renderAs="canvas"
-                            size={224}
+                            size={300}
                             bgColor={"#ffffff"}
                             fgColor={"#000000"}
                             level={"H"}
                             includeMargin={false}
                             imageSettings={{
                                 src: images.adminLogo,
-                                height: 56,
-                                width: 56,
+                                height: 128,
+                                width: 128,
                                 excavate: true,
                             }}
                         />
