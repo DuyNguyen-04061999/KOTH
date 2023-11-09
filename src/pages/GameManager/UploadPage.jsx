@@ -1,8 +1,8 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
-import React, { useState } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
+import React, { useState } from 'react';
 import { envs } from '../../utils/envs';
-import _ from 'lodash'
 // import JSZip from "jszip";
 // import DeleteIcon from '@mui/icons-material/Delete'
 
@@ -76,22 +76,6 @@ export default function UploadPage() {
     const files = Array.from(e.target.files);
     setUploadItem(files)
   }
-
-  // const handleSelectedAsset = (e) => {
-  //     const files = Array.from(e.target.files);
-  //     setUploadAsset(files)
-  //     const zip = new JSZip();
-
-  //     files.forEach((file) => {
-  //       zip.file(file.webkitRelativePath, file);
-  //     });
-  //     zip
-  //       .generateAsync({ type: "blob" })
-  //       .then(function (content) {
-  //         setContentZip([...contentZip, content])
-  //       })
-  //       .catch((e) => console.log(e));
-  // };
 
   const handleChangeScreen = (event) => {
     setScreen(event.target.value);

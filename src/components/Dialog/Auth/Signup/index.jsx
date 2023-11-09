@@ -130,8 +130,6 @@ export default function Signup(props) {
     passOneLetter,
   ]);
 
-  console.log(socket);
-
   const sendRegister = () => {
     dispatch(registerReady({
       username: username,

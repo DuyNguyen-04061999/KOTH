@@ -159,13 +159,12 @@ export default function Layout(props) {
         try {
           const response = await API.get(`/api/get-refcode-by-username/${userName}`);
           if(response){
-            console.log(response);
             dispatch(addRefCodeRegister(response?.data?.ref));
             dispatch(clickTab("signup"));
             dispatch(toggleLoginDialog());
           }
         } catch (error) {
-          console.log(error);
+          
         }
       }
     }
@@ -222,7 +221,6 @@ export default function Layout(props) {
   }, [location.pathname, dispatch]);
 
   useEffect(() => {
-    console.log(isChangeLocation);
     if(isChangeLocation) {
       if(fromRouter && router !== "/" && router !== "/home") {
         navigate(fromRouter)
