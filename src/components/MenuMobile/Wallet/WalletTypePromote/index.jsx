@@ -103,7 +103,7 @@ export default function WalletTypePromote(props) {
     navigate("/help-center");
     dispatch(toggleWalletDialog());
   };
-
+  
   return (
     <>
       <Box

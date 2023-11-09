@@ -294,6 +294,7 @@ import top1Icon from "../assets/imagesHome/top1Icon.png";
 import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
 
 import AdminLogo from "../assets/images/lggame.png";
+import AdminLogoSvg from "../assets/images/logogame.svg"
 import bannertour5 from "../assets/imagesDesktop/bannertour5.png";
 import bannertourDesk from "../assets/imagesDesktop/bannertourDesk.png";
 import bannerWindesk from "../assets/imagesDesktop/bannerwin.png";
@@ -581,6 +582,7 @@ export const images = {
   bannerTournamentMobile_2: bannerTournamentMobile_2,
   bannerLoading: bannerLoading,
   adminLogo: AdminLogo,
+  adminLogoSvg: AdminLogoSvg,
   GamePreview1: GamePreview1,
   GamePreview2: GamePreview2,
   GamePreview3: GamePreview3,

@@ -20,9 +20,7 @@ import AnimButton from "../../../AnimButton";
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { createAccInfo } = useSelector((state) => state.authReducer);
-  const { user, registerUsername } = useSelector(
-    (state) => state.userReducer
-  );
+  const { user, registerUsername } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -69,12 +67,12 @@ export default function OTPVerifyAccount() {
   }, [socket, dispatch]);
 
   const handleResendOTP = () => {
-    setTimeLeft(60)
+    setTimeLeft(60);
     dispatch(
       resendOtpReady({
         username: user?.userName,
         email: user?.email,
-        type:"register"
+        type: "register",
       })
     );
   };
@@ -114,7 +112,7 @@ export default function OTPVerifyAccount() {
           }}
         >
           Please enter the 6-digit verification code that was sent to{" "}
-          {createAccInfo.phone} to verify your account
+          {createAccInfo?.email} to verify your account
         </Typography>
       </Box>
       <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
@@ -130,14 +128,15 @@ export default function OTPVerifyAccount() {
                 height: "38px",
                 marginRight: "16px",
                 backgroundColor: "#271C39",
-                border: "none",
                 outline: "none",
-                borderBottom: "2px solid white",
                 textAlign: "center",
-                fontSize: "24px",
+                fontSize: width < 576 ? "12px" : "20px",
                 color: "white",
+                border:"2px solid white",
+                borderRadius:"4px"
               }}
               type="number"
+              inputMode="numeric"
               maxLength={1}
             />
           )}

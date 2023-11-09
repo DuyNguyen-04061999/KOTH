@@ -11,6 +11,7 @@ import Layout from "./components/Layout";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
+import { ScrollToTopURL } from "./components/ScrollToTop";
 import ToastNotification from "./components/Toast/ToastNotification";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
@@ -160,7 +161,7 @@ function App() {
   useEffect(() => {}, [orientation, startGameCheck]);
 
   useEffect(() => {
-    const token =localStorage.getItem("token")
+    const token = localStorage.getItem("token")
     if (!tokenUser && !token) {
       socket?.emit("listMessageGlobal");
     } else {
@@ -207,8 +208,6 @@ function App() {
       });
 
       socket?.on("getListMessageGlobalSuccess", (data) => {
-        console.log(data);
-
         store.dispatch(pushChatWorld(data));
       });
 
@@ -220,20 +219,20 @@ function App() {
       });
 
       socket?.on("disconnect", (data) => {
-        if((tokenUser || token)) {
-          socket?.emit("loginSocial", {
-            token: tokenUser || token
-          });
-        }
+          if((tokenUser || token)) {
+            socket?.emit("loginSocial", {
+              token: tokenUser || token
+            });
+          }
         });
 
       socket?.on("loginSocialSuccess", () => {
-        if (!tokenUser && !token) {
-          socket?.emit("listMessageGlobal");
-        } else {
-          socket?.emit("listMessage");
-          socket?.emit("listFriend");
-        }
+        socket?.emit("listMessage");
+        socket?.emit("listFriend");
+      });
+
+      socket?.on("logoutSocialSuccess", () => {
+        socket?.emit("listMessageGlobal");
       });
 
       socket?.on("reconnectSuccess", () => {
@@ -382,7 +381,7 @@ function App() {
         );
         return response;
       } catch (error) {
-        console.log("error: ", error);
+        
       }
     }
     const params = new URLSearchParams(window.location.search);
@@ -394,7 +393,7 @@ function App() {
           params.get("paymentId"),
           params.get("PayerID")
         );
-        console.log(response);
+        console.log("Paypal success: ", response);
       }
     })();
   }, []);
@@ -404,6 +403,8 @@ function App() {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <CustomRouter history={history}>
+              {" "}
+              <ScrollToTopURL />
               <Routes>
                 <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />
