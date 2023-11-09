@@ -1,10 +1,9 @@
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { imageHome, images } from "../../../../utils/images";
 import FlipCountDownItem from "../../../../components/FlipCountDownItem/FlipCountDownItem";
-import { Typography } from "@mui/material";
-import "moment-timezone";
+import { imageHome, images } from "../../../../utils/images";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 export default function BannerHomePage({ setBannerCountDown }) {
   const { width } = useWindowDimensions();
