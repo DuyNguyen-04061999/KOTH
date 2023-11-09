@@ -12,8 +12,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function DialogVerify() {
   const { isVerifyDialog } = useSelector((state) => state.authReducer);
-  const { isReVerifyAccount } = useSelector((state) => state.userReducer);
-  console.log(isReVerifyAccount, "rerender");
+  
   const dispatch = useDispatch();
   
 

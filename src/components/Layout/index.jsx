@@ -224,7 +224,6 @@ export default function Layout(props) {
   }, [location.pathname, dispatch]);
 
   useEffect(() => {
-    console.log(isChangeLocation);
     if(isChangeLocation) {
       if(fromRouter && router !== "/" && router !== "/home") {
         navigate(fromRouter)
