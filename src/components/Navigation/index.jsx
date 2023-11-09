@@ -1,9 +1,9 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 export default function Navigation() {
-    const { token } = useSelector(state => state.authReducer)
+    const { tokenUser: token } = useSelector(state => state.userReducer)
 
     if (token && ['/', '/home'].includes(window.location.pathname)) {
         return <Navigate to="/home" />;

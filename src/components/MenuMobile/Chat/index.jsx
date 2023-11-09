@@ -42,7 +42,7 @@ export default function DialogChat(props) {
   const dispatch = useDispatch();
   const [showChat] = useState(true);
   const [chat, setChat] = useState("");
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const [renderTab, setRenderTab] = useState(false);
   const [colorTab, setColorTab] = useState(false);
   const [socket, setSocket] = useState(null);

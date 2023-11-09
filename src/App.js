@@ -33,69 +33,27 @@ import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
 import {
-  hideToastNotification,
-  showAlert,
+  hideToastNotification, showToastNotification
 } from "./redux-saga-middleware/reducers/alertReducer";
 import {
-  getListBet,
-  getListPackage,
+  getListBet
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
-  closeLoginDialog,
-  getLeaderBoardSuccess,
   getNavTablet,
-  logoutSuccessFully,
-  saveDataLogin,
-  updateProfileFail,
-  updateProfileSuccess,
-  updatePromotionExtra,
-  updateSubPackageId,
-  updateUPack,
-  updateUserGold,
+  updateSubPackageId
 } from "./redux-saga-middleware/reducers/authReducer";
-import {
-  chatLogoutSuccessFully,
-  pushChatWorld,
-  pushfriendList,
-  updateChatWorld,
-  updateFriendList
-} from "./redux-saga-middleware/reducers/chatReducer";
+import { pushChatWorld, pushfriendList, updateChatWorld, updateFriendList } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
   updateDeviceType,
 } from "./redux-saga-middleware/reducers/deviceReducer";
 import {
-  addGameLog,
   changeOrientation,
-  gameLogoutSuccessFully,
-  getGameLog,
-  getListGame,
-  getListGameByType,
-  storeFavoriteGame,
-  updateListDisLikeGame,
-  updateListLikeGame,
   updateReward
 } from "./redux-saga-middleware/reducers/gameReducer";
-import {
-  addMoreSpinHistory,
-  addMoretotalAmount,
-  updateCountEveryDay,
-  updateRewardHistory,
-} from "./redux-saga-middleware/reducers/luckyWheelReducer";
-import {
-  getDepostiData,
-  getWithdrawData,
-  paymentLogoutSuccessFully,
-  updateDeposit,
-  updateWithDraw
-} from "./redux-saga-middleware/reducers/paymentReducer";
-import {
-  deleteFriendSuccesFully,
-  profileLogoutSuccessFully,
-  saveDataProfile
-} from "./redux-saga-middleware/reducers/profileReducer";
-import { showToast } from "./redux-saga-middleware/reducers/toastReducer";
-import { walletLogoutSuccessFully } from "./redux-saga-middleware/reducers/walletReducer";
+import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
+import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
+import { updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
@@ -126,8 +84,8 @@ const SuspenseWrapper = (props) => {
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
-  const { token } = store.getState().authReducer;
   const { startGameCheck } = store.getState().appReducer;
+  const { tokenUser, user } = store.getState().userReducer;
 
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
@@ -141,6 +99,15 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    const token =localStorage.getItem("token")
+    if(socket && (tokenUser || token)) {
+      socket?.emit("loginSocial", {
+        token: tokenUser || token
+      });
+    }
+  }, [tokenUser, socket, user]);
+
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -150,12 +117,6 @@ function App() {
       store.dispatch(getNavTablet(true));
     }
   }, [width]);
-
-  useEffect(() => {
-    if (!token) {
-      socket?.emit("listMessageGlobal");
-    }
-  });
 
   useEffect(() => {});
   const isLandscape = () =>
@@ -198,43 +159,91 @@ function App() {
 
   useEffect(() => {}, [orientation, startGameCheck]);
 
-  // useEffect(() => {
-  //   if(socket) {
-  //     socket?.on("buyPromoExtraSuccess", (data) => {
-  //       toast.success("Buy Combo Extra Successfully", {
-  //         icon: ({ theme, type }) => (
-  //           <img
-  //             style={{ width: "20px", marginRight: "10px" }}
-  //             alt="..."
-  //             src={images.successIcon}
-  //           />
-  //         ),
-  //         position: "top-center",
-  //         className: "success-background",
-  //       });
-  //       store.dispatch(updatePromotionExtra(data || 0))
-  //     })
-  //   }
-  // }, [fromRouter, socket, router])
+  useEffect(() => {
+    const token =localStorage.getItem("token")
+    if (!tokenUser && !token) {
+      socket?.emit("listMessageGlobal");
+    } else {
+      socket?.emit("listMessage");
+      socket?.emit("listFriend");
+    }
+  }, [socket, tokenUser]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token")
+
     if (socket) {
       socket?.once("connect", (data) => {});
-      socket?.on("buyNewPackageSuccessfully", (data, uPackc) => {
-        toast.success("Buy Subscription Successfully", {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.successIcon}
-            />
-          ),
-          position: "top-center",
-          className: "success-background",
-        });
-        store.dispatch(updateSubPackageId(data));
-        store.dispatch(updateUPack(uPackc));
+      
+
+      socket?.on("disconnect", (data) => {
+        
       });
+
+      socket?.on("heartbeat", (data) => {
+        
+      });
+
+      socket?.on("error", (data) => {
+        
+      });
+
+      socket?.on("warning", (data) => {
+        store.dispatch(showToastNotification({
+          type: "warning",
+          message: data || ""
+        }))
+      });
+      socket?.on("success", (data) => {
+        
+      });
+
+      socket?.on("getListFriendSuccess", (data) => {
+        store.dispatch(pushfriendList(data));
+      });
+
+      socket?.on("getListMessageSuccess", (data) => {
+        store.dispatch(pushChatWorld(data));
+      });
+
+      socket?.on("getListMessageGlobalSuccess", (data) => {
+        console.log(data);
+
+        store.dispatch(pushChatWorld(data));
+      });
+
+      socket?.on("chatSuccess", (data) => {
+        if (token) {
+          socket?.emit("listFriend");
+        }
+        store.dispatch(updateChatWorld(data));
+      });
+
+      socket?.on("disconnect", (data) => {
+        if((tokenUser || token)) {
+          socket?.emit("loginSocial", {
+            token: tokenUser || token
+          });
+        }
+        });
+
+      socket?.on("loginSocialSuccess", () => {
+        if (!tokenUser && !token) {
+          socket?.emit("listMessageGlobal");
+        } else {
+          socket?.emit("listMessage");
+          socket?.emit("listFriend");
+        }
+      });
+
+      socket?.on("reconnectSuccess", () => {
+        if((tokenUser || token)) {
+          socket?.emit("loginSocial", {
+            token: tokenUser || token
+          });
+        }
+      });
+
       socket?.on("getTicketFromAgent", (quantity) => {
         toast.success("Get Promotion Extra From Agent Successfully", {
           icon: ({ theme, type }) => (
@@ -247,368 +256,18 @@ function App() {
           position: "top-center",
           className: "success-background",
         });
-        store.dispatch(updatePromotionExtra(quantity || 0));
-      });
-      socket?.on("upgradeSubscriptionSuccess", (data, uPackc) => {
-        toast.success("Upgrade Subscription Successfully", {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.successIcon}
-            />
-          ),
-          position: "top-center",
-          className: "success-background",
-        });
-        store.dispatch(updateSubPackageId(data));
-        store.dispatch(updateUPack(uPackc));
-      });
-
-      socket?.on(
-        "loginSuccess",
-        (mess, token, key, user, userPackageId, uPack, promotionExtra) => {
-          store.dispatch(closeLoginDialog());
-          store.dispatch(
-            updateCountEveryDay(user?.userCountSpin?.countEveryday)
-          );
-          store.dispatch(
-            saveDataLogin({
-              token: token,
-              username: user?.userName,
-              gold: user?.userGold,
-              avatar: user?.userAccount?.accountAvatar,
-              role: user?.userRole,
-              id: user?.id,
-              userPackageId: userPackageId,
-              uPack: uPack,
-              promotionExtra: promotionExtra,
-            })
-          );
-
-          localStorage.setItem("NAME", user.userName);
-          // localStorage.setItem("PASS", password);
-          localStorage.setItem("KE", key);
-          localStorage.setItem("token", token);
-          // socket?.emit("listMessage");
-          socket?.emit("listFriend");
-          socket?.emit("getTransaction");
-          // socket?.emit("leaveAllRoom");
-          socket?.emit("listPackage", {
-            type: true,
-          });
-          socket?.emit("getDetailProfile", {
-            username: user?.userName,
-          });
-        }
-      );
-
-      socket?.on("getListFriendSuccess", (data) => {
-        store.dispatch(pushfriendList(data));
-      });
-
-      socket?.on("chatSuccess", (data) => {
-        if (localStorage.getItem("token")) {
-          socket?.emit("listFriend");
-        }
-        store.dispatch(updateChatWorld(data));
+        store.dispatch(updateCountTicket(quantity || 0));
       });
 
       socket?.on("addFriendSuccess", (data) => {
-        toast.success("Add Friend Successfully", {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.successIcon}
-            />
-          ),
-          position: "top-center",
-          className: "success-background",
-        });
         store.dispatch(updateFriendList(data));
-      });
+      })
 
       socket?.on("deleteFriendSuccess", (data) => {
-        toast.success("Delete Friend Successfully", {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.successIcon}
-            />
-          ),
-          position: "top-center",
-          className: "success-background",
-        });
         socket?.emit("listFriend");
         store.dispatch(deleteFriendSuccesFully("success"));
-      });
+      })
 
-      socket?.on("logoutSuccess", (data) => {
-        const { type, message } = data;
-
-        if (type === "logout") {
-          localStorage.removeItem("NAME");
-          localStorage.removeItem("PASS");
-          localStorage.removeItem("KE");
-          localStorage.removeItem("token");
-          store.dispatch(logoutSuccessFully("logoutSuccess"));
-          store.dispatch(gameLogoutSuccessFully());
-          store.dispatch(chatLogoutSuccessFully());
-          store.dispatch(profileLogoutSuccessFully());
-          store.dispatch(paymentLogoutSuccessFully());
-          store.dispatch(walletLogoutSuccessFully());
-        } else if (type === "sameAccount") {
-          toast.warning(message, {
-            icon: ({ theme, type }) => (
-              <img
-                style={{ width: "20px", marginRight: "10px" }}
-                alt="..."
-                src={images.WarningIcon}
-              />
-            ),
-            position: "top-center",
-            className:
-              width < 576 ? "warning-background-small" : "warning-background",
-          });
-          localStorage.removeItem("NAME");
-          localStorage.removeItem("PASS");
-          localStorage.removeItem("KE");
-          localStorage.removeItem("token");
-          store.dispatch(logoutSuccessFully("logoutSuccess"));
-          store.dispatch(gameLogoutSuccessFully());
-          store.dispatch(chatLogoutSuccessFully());
-          store.dispatch(profileLogoutSuccessFully());
-          store.dispatch(paymentLogoutSuccessFully());
-          store.dispatch(walletLogoutSuccessFully());
-        }
-      });
-
-      socket?.on("getDetailProfileSuccess", (data) => {
-        store.dispatch(
-          saveDataProfile({
-            id: data?.id,
-            email: data?.userEmail,
-            refCode: data?.userRefCode,
-            phone: data?.userPhone,
-            userNameProfile: data?.userName,
-            avatarUrl: data?.userAccount?.accountAvatar,
-            firstName: data?.userFirstName,
-            lastName: data?.userLastName,
-            nickName: data?.userNickName,
-          })
-        );
-      });
-      socket?.on("getDetailProfileNotAuthSuccess", (data) => {
-        store.dispatch(
-          saveDataProfile({
-            id: data?.id,
-            email: data?.userEmail,
-            refCode: data?.userRefCode,
-            phone: data?.userPhone,
-            userNameProfile: data?.userName,
-            avatarUrl: data?.userAccount?.accountAvatar,
-            firstName: data?.userFirstName,
-            lastName: data?.userLastName,
-          })
-        );
-      });
-
-      socket?.on("updateProfileSuccess", (data) => {
-        console.log("Running");
-        store.dispatch(updateProfileSuccess(data?.userAccount?.accountAvatar));
-        store.dispatch(
-          saveDataProfile({
-            id: data?.id,
-            email: data?.userEmail,
-            refCode: data?.userRefCode,
-            phone: data?.userPhone,
-            userNameProfile: data?.userName,
-            avatarUrl: data?.userAccount?.accountAvatar,
-            firstName: data?.userFirstName,
-            lastName: data?.userLastName,
-          })
-        );
-        window.location.reload();
-        setTimeout(() => {
-          store.dispatch(showAlert("success", "Update profile successfully!"));
-        }, 3000);
-      });
-
-      socket?.on("getListMessageSuccess", (data) => {
-        store.dispatch(pushChatWorld(data));
-      });
-
-      socket?.on("getListMessageGlobalSuccess", (data) => {
-        store.dispatch(pushChatWorld(data));
-      });
-
-      socket?.on("getCryptoSuccess", (data) => {});
-
-      socket?.on("depositSuccess", (data) => {
-        store.dispatch(updateDeposit(data));
-      });
-
-      socket?.on("withdrawSuccess", (data) => {
-        store.dispatch(updateWithDraw(data));
-        store.dispatch(showAlert("success", "Withdraw successfully!"));
-      });
-
-      socket?.on("storeSpinHistorySuccess", (data, left, userGold) => {
-        store.dispatch(addMoretotalAmount(data?.rhValue));
-        store.dispatch(updateCountEveryDay(left));
-        store.dispatch(addMoreSpinHistory(data));
-        store.dispatch(updateUserGold(userGold));
-      });
-      socket?.on("getRewardHistorySuccess", (data) => {
-        store.dispatch(updateRewardHistory(data));
-      });
-
-      socket?.on("getTransactionSuccess", (data) => {
-        store.dispatch(
-          getWithdrawData(data.filter((n) => n.transactionType === "withdraw"))
-        );
-        store.dispatch(
-          getDepostiData(data.filter((n) => n.transactionType === "deposit"))
-        );
-      });
-
-      socket?.on("listGameLogSuccess", (data) => {
-        store.dispatch(getGameLog(data));
-      });
-      socket?.on("getGameLikeSuccess", (listLike, listUnlike) => {
-        store.dispatch(updateListLikeGame(listLike));
-        store.dispatch(updateListDisLikeGame(listUnlike));
-      });
-
-      socket?.on("gameLogSuccess", (data) => {
-        store.dispatch(addGameLog(data));
-      });
-      socket?.on("handleLikeGameSuccess", (data) => {});
-
-      socket?.on("addfSuccess", (data) => {
-        store.dispatch(showAlert("success", "Add Favorite Game Successfully!"));
-      });
-
-      socket?.on("deleteFavoriteGameSuccess", (data) => {
-        store.dispatch(
-          showAlert("success", "Remove Favorite Game Successfully!")
-        );
-      });
-
-      socket?.on("listFavoriteGameSuccess", (data) => {
-        store.dispatch(storeFavoriteGame(data));
-        store.dispatch(
-          getListGameByType({
-            typeGame: "favorite",
-            listGame: data,
-          })
-        );
-      });
-
-      socket?.on("buyPackageSuccess", (data) => {});
-
-      socket?.on("getLeaderBoardSuccess", (data) => {
-        store.dispatch(getLeaderBoardSuccess(data));
-      });
-      socket?.on("inviteGameSuccess", (data) => {});
-
-      socket?.on("updateGoldBet", (data) => {
-        store.dispatch(showAlert("success", "Update gold success"));
-        store.dispatch(updateUserGold(data));
-      });
-
-      socket?.on("updateGoldEarn", (data) => {
-        store.dispatch(showAlert("success", "Update gold success"));
-        store.dispatch(updateUserGold(data));
-      });
-
-      socket?.on("updateGold", (data) => {
-        store.dispatch(updateUserGold(data));
-      });
-
-      socket?.on("getListPackageSuccess", (data) => {
-        store.dispatch(getListPackage(data));
-      });
-      socket?.on("connected", (socketId) => {});
-
-      socket?.on("server", (socketId) => {});
-
-      socket?.on("serverGame", (socketId) => {});
-
-      socket?.on("winGame", (data) => {
-        store.dispatch(showAlert("success", "You are winner!"));
-        store.dispatch(updateUserGold(data));
-      });
-
-      socket?.on("disconnect", (data) => {
-        if (localStorage.getItem("KE")) {
-          socket?.emit("login", {
-            username: localStorage.getItem("NAME"),
-            password: localStorage.getItem("PASS"),
-            key: localStorage.getItem("KE"),
-          });
-        } else {
-          store.dispatch(
-            showAlert("error", "Session expired! Please login again!")
-          );
-        }
-      });
-
-      socket?.on("heartbeat", (data) => {});
-
-      socket?.on("error", (data) => {
-        toast.error(
-          data ||
-            "Even a function, given you return something that can be rendered",
-          {
-            icon: ({ theme, type }) => (
-              <img
-                style={{ width: "20px", marginRight: "10px" }}
-                alt="..."
-                src={images.closeButtonToast}
-              />
-            ),
-            position: "top-center",
-            className:
-              // width < 576 ? "error-background-small" : "error-background",
-              "error-background",
-          }
-        );
-        store.dispatch(updateProfileFail());
-      });
-
-      socket?.on("warning", (data) => {
-        store.dispatch(showToast(data));
-        toast.warning(data, {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.WarningIcon}
-            />
-          ),
-          position: "top-center",
-          className:
-            width < 576 ? "warning-background-small" : "warning-background",
-        });
-      });
-      socket?.on("success", (data) => {
-        toast.success(data, {
-          icon: ({ theme, type }) => (
-            <img
-              style={{ width: "20px", marginRight: "10px" }}
-              alt="..."
-              src={images.successIcon}
-            />
-          ),
-          position: "top-center",
-          className:
-            // width < 576 ? "success-background-small" : "success-background",
-            "success-background",
-        });
-      });
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
@@ -623,22 +282,24 @@ function App() {
       });
     }
     return () => {
-      // socket?.off();
       socket?.disconnect();
     };
-  }, [socket]);
+  }, [socket, tokenUser]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if(!tokenUser || !token) {
+      
+    }
+  }, [tokenUser])
 
   useEffect(() => {
     const onPageLoad = () => {
-      if (getAppType() !== "promote") {
-        store.dispatch(getListGame());
-      }
-      if (localStorage.getItem("KE")) {
-        // socket?.emit("login", {
-        //   username: localStorage.getItem("NAME"),
-        //   password: localStorage.getItem("PASS"),
-        //   key: localStorage.getItem("KE"),
-        // });
+      const token =localStorage.getItem("token")
+      if(socket && (tokenUser || token)) {
+        socket?.emit("loginSocial", {
+          token: tokenUser || token
+        });
       }
     };
 
@@ -649,24 +310,14 @@ function App() {
 
       return () => window.removeEventListener("load", onPageLoad);
     }
-  }, [socket]);
-
-  useEffect(() => {
-    if (token === null || token === "") {
-      socket?.emit("listPackage");
-    } else {
-      socket?.emit("listPackage", {
-        type: true,
-      });
-    }
-  }, [socket, token]);
+  }, [socket, tokenUser, user]);
 
   useEffect(() => {
     if (getAppType() !== "promote") {
       store.dispatch(getListBet());
     }
   });
-  //Detect device
+  
   const getMobileOS = () => {
     const ua = navigator.userAgent;
     if (/android/i.test(ua)) {
@@ -710,6 +361,10 @@ function App() {
   });
 
   useEffect(() => {
+    store.dispatch(getListPackage())
+  }, []);
+
+  useEffect(() => {
     async function fetchData(paymentId, PayerID) {
       try {
         const response = await PROMOTION_API.post(
@@ -739,6 +394,7 @@ function App() {
           params.get("paymentId"),
           params.get("PayerID")
         );
+        console.log(response);
       }
     })();
   }, []);

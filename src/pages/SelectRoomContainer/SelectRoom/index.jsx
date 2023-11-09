@@ -1,3 +1,5 @@
+import AddFriendIcon from "@mui/icons-material/Person";
+import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import {
   Box,
   CircularProgress,
@@ -9,19 +11,26 @@ import {
   Slide,
   Typography,
 } from "@mui/material";
-import React, { Fragment, forwardRef, useCallback, useEffect } from "react";
-import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
+import React, { Fragment, forwardRef, useCallback, useEffect, useState } from "react";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
+import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
+import TitleHomeDesktopComponent from "../../../components/Title/TitleHomeDesktopComponent";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { updateUserGold } from "../../../redux-saga-middleware/reducers/authReducer";
 import {
   getDetailGame,
   openInvitefriendPopup,
   updateTypeLike,
 } from "../../../redux-saga-middleware/reducers/gameReducer";
-import { useLocation, useParams } from "react-router-dom";
-import { useState } from "react";
-import "./index.scss";
-import AddFriendIcon from "@mui/icons-material/Person";
+import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import {
+  setSelectNav,
+  setWaitingNav,
+} from "../../../redux-saga-middleware/reducers/roomReducer";
 import {
   convertToInternationalCurrencySystem,
   getFontSizeButtonDependOnWidth,
@@ -30,20 +39,10 @@ import {
   getIconSizeDependOnWith,
 } from "../../../utils/config";
 import { images, video } from "../../../utils/images";
-import _socket from "../../../redux-saga-middleware/config/socket";
-import {
-  setSelectNav,
-  setWaitingNav,
-} from "../../../redux-saga-middleware/reducers/roomReducer";
-import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import imagesFavorite from "../../../utils/imagesFavorite";
-import UnityGameComponent from "../../../components/GameManager/UnityGameComponent";
-import { updateUserGold } from "../../../redux-saga-middleware/reducers/authReducer";
-import styled from "styled-components";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 import PopupInviteFriend from "./PopupInviteFriend";
-import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
-import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
+import "./index.scss";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -72,9 +71,11 @@ export default function SelectRoom() {
   } = useSelector((state) => state.gameReducer);
   const { roomNav } = useSelector((state) => state.roomReducer);
   const [dogeGold, setDogeGold] = useState(0);
-  const { token, userName, userId, userGold } = useSelector(
+  const { token, userId, userGold } = useSelector(
     (state) => state.authReducer
   );
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
   const { listBet, router } = useSelector((state) => state.appReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
   const { state } = useLocation();
