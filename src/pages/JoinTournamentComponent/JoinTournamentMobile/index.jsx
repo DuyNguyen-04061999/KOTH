@@ -12,6 +12,7 @@ import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
 import {
+  openSubscribeDialog,
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -24,7 +25,6 @@ import {
 import { images } from "../../../utils/images";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
-import JoinTournament from "../JoinTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import "./index.scss";
 
@@ -72,9 +72,10 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     if ((detailTournament?.tournamentVip !== 0 && uPack === null) || (detailTournament?.tournamentVip !== 0 && uPack && uPack?.remain === "Expired")) {
       dispatch(toggleTournamentShow());
     } else if (token) {
-      dispatch(JoinTournament({
-        tournamentId: detailTournament?.id,
-      }))
+      dispatch(openSubscribeDialog())
+      // dispatch(JoinTournament({
+      //   tournamentId: detailTournament?.id,
+      // }))
     } else {
       dispatch(toggleLoginDialog());
     }

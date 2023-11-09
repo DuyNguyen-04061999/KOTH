@@ -196,7 +196,7 @@ export default function JoinTournament() {
       window.removeEventListener("orientationchange", updateOrientation);
     };
   }, [startGamePromotion]);
-  console.log(detailTournament);
+  
   return (
     <>
       <ResultEndGame />
