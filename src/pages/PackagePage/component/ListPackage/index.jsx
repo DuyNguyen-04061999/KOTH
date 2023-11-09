@@ -315,6 +315,8 @@ export default function ListPackage(props) {
                     display: "flex",
                     color: "white",
                     alignItems: "center",
+                    display:"flex",
+                    flexDirection:"column"
                   }}
                 >
                   <Typography
@@ -322,10 +324,21 @@ export default function ListPackage(props) {
                     sx={{
                       fontWeight: "500 !important",
                       fontSize: "16px !important",
+                      
                     }}
                   >
                     ${packagePrice}
                   </Typography>
+                  {packageName === "Subscription" ? (<Typography
+                    sx={{
+                      fontWeight: "500 !important",
+                      fontSize: "12px !important",
+                      color:"#979797",
+                      marginTop:"5px !important"
+                    }}
+                  >
+                    Only $0.67/ day
+                  </Typography>) : ("")}
                 </Box>
               )}
               <button
