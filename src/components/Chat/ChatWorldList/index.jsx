@@ -13,6 +13,7 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
+import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
@@ -30,7 +31,9 @@ export default function ChatWorldList() {
     (state) => state.chatReducer
   );
   const endOfMessageRef = useRef(null);
-  const { userName, token } = useSelector((state) => state.authReducer);
+  const { tokenUser, user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
+
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,7 +75,7 @@ export default function ChatWorldList() {
     return false;
   };
   const handleAddFriend = () => {
-    if (token === null || token === "") {
+    if (tokenUser === null || tokenUser === "") {
       dispatch(toggleLoginDialog());
     } else {
       socket?.emit("addFriend", { username: messagefromName });
@@ -167,7 +170,7 @@ export default function ChatWorldList() {
             }}
             className="d-flex"
           >
-            {e?.messageFromName === userName && token ? (
+            {e?.messageFromName === userName && tokenUser ? (
               <>
                 {e?.messageGameId > 0 && e?.messageRoomName ? (
                   <Box
@@ -583,15 +586,9 @@ export default function ChatWorldList() {
           <MenuItem
             onClick={() => {
               dispatch(toggleProfileDialog(true));
-              if (token === null || token === "") {
-                socket?.emit("getDetailProfileNoAuth", {
-                  username: messagefromName,
-                });
-              } else {
-                socket?.emit("getDetailProfile", {
-                  username: messagefromName,
-                });
-              }
+              dispatch(getUserByUsername({
+                username: messagefromName,
+              }));
               handleClose();
             }}
             sx={{
@@ -611,7 +608,7 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {token &&
+          {tokenUser &&
             (checkExistInFriendList() === true ? (
               <MenuItem
                 sx={{

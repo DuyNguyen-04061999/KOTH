@@ -2,7 +2,6 @@ import { SyncAlt } from "@mui/icons-material";
 import GameLogIcon from "@mui/icons-material/List";
 import {
   AvatarGroup,
-  // Badge,
   Box,
   Grid,
   Tooltip,
@@ -12,7 +11,6 @@ import { withStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   clickTab,
@@ -21,6 +19,7 @@ import {
 import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
 import {
+  getUserByUsername,
   getUserInfoReady,
   logoutReady,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
@@ -49,6 +48,10 @@ export default function Dialoglg() {
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
   );
+  const { countTicket, userAvatar } = useSelector(
+    (state) => state.userReducer
+  );
+
   useEffect(() => {
     if (transData === 0) {
       setTransData(withdrawData);
@@ -62,10 +65,10 @@ export default function Dialoglg() {
     setSocket(socket);
   }, []);
   const {
-    // token,
     isUpdateProfile,
   } = useSelector((state) => state.authReducer);
-  const { user, tokenUser } = useSelector((state) => state.userReducer);
+  const { user, uPack } = useSelector((state) => state.userReducer);
+  
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
 
@@ -76,18 +79,7 @@ export default function Dialoglg() {
 
   const handleCloseProfile = () => {};
 
-  const { id } = useParams();
-
   const logout = () => {
-    // socket?.emit("logout");
-    // dispatch(closeChatPopup());
-    // dispatch(removeToken());
-    // dispatch(clickTabChat(true));
-    // if (window.location.pathname?.includes("tournamentDetail")) {
-    //   socket?.emit("detailNewTournament", {
-    //     tournamentId: id,
-    //   });
-    // }
     dispatch(logoutReady());
   };
   const { width, height } = useWindowDimensions();
@@ -200,7 +192,7 @@ export default function Dialoglg() {
                   
                   </svg>
                   <Typography sx={{ color: "#f5a128" }}>
-                    {user?.promotionExtra}
+                    {countTicket || 0}
                   </Typography>
                   </Box>
                 </Box>
@@ -277,7 +269,7 @@ export default function Dialoglg() {
                       </g>
                   </svg>
                   <Typography sx={{ color: "#f5a128" }}>
-                    {user?.promotionExtra}
+                    {countTicket || 0}
                   </Typography>
                   </Box>
                 </Box>
@@ -393,10 +385,10 @@ export default function Dialoglg() {
                     }}
                     alt="Remy Sharp"
                     src={
-                      user?.userAvatar
+                      userAvatar
                         ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
-                          user?.userAvatar
+                          userAvatar
                         : images.undefinedAvatar
                     }
                     height={34}
@@ -426,7 +418,7 @@ export default function Dialoglg() {
                           ? user?.userName.slice(0, 10) + "..."
                           : user?.userName}
                       </Typography>
-                      {user?.uPack ? (
+                      {uPack ? (
                         <Box
                           display={"flex"}
                           justifyContent={"center"}
@@ -474,7 +466,7 @@ export default function Dialoglg() {
                     justifyContent={"center"}
                     sx={{ padding: "10px 15px" }}
                   >
-                    {user?.userAvatar === null ? (
+                    {userAvatar === null ? (
                       <img
                         style={{
                           borderRadius: 50,
@@ -499,10 +491,10 @@ export default function Dialoglg() {
                         }}
                         alt="Remy Sharp1"
                         src={
-                          user?.userAvatar
+                          userAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
-                              user?.userAvatar
+                              userAvatar
                             : images.undefinedAvatar
                         }
                         className="ava-signin"
@@ -517,7 +509,7 @@ export default function Dialoglg() {
                       {user?.userName}
                     </Typography>
                   </Box>
-                  {user?.uPack ? (
+                  {uPack ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
@@ -540,7 +532,7 @@ export default function Dialoglg() {
                   ) : (
                     ""
                   )}
-                  {user?.uPack ? (
+                  {uPack ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
@@ -553,7 +545,7 @@ export default function Dialoglg() {
                           fontWeight: "300",
                         }}
                       >
-                        Remaining days: {user?.uPack?.remain}
+                        Remaining days: {uPack?.remain}
                       </Typography>
                     </Box>
                   ) : (
@@ -623,9 +615,9 @@ export default function Dialoglg() {
                         }}
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
-                          socket?.emit("getDetailProfile", {
+                          dispatch(getUserByUsername({
                             username: user?.userName,
-                          });
+                          }))
                         }}
                       >
                         <svg

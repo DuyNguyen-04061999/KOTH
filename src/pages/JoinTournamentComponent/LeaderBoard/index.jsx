@@ -8,7 +8,8 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const [top3, setTop3] = useState([]);
   const { width, height } = useWindowDimensions();
-  const { userName } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
   const [start, setStart] = useState(3);
   const [end, setEnd] = useState(6);
 

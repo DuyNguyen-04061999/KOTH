@@ -1,34 +1,32 @@
-import React from "react";
-import CountDownTimer from "./CountDownTimer";
-import LuckyWheel from "../LuckyWheel";
-import TitleHomeDesktopComponent from "../Title/TitleHomeDesktopComponent";
-import { images2 } from "../../utils/images";
-import "./index.scss";
-import { images } from "../../utils/images";
-import { images270423_l } from "../../utils/images270423_l";
-import moment from "moment";
-import { Container } from "react-bootstrap";
 import {
   Box,
-  styled,
-  TableCell,
-  tableCellClasses,
-  TableRow,
-  TableContainer,
   Table,
-  TableHead,
   TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  styled,
+  tableCellClasses,
 } from "@mui/material";
-import useWindowDimensions from "../../utils/useWindowDimensions";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useState } from "react";
-import { useEffect } from "react";
+import { images, images2 } from "../../utils/images";
+import { images270423_l } from "../../utils/images270423_l";
+import useWindowDimensions from "../../utils/useWindowDimensions";
+import LuckyWheel from "../LuckyWheel";
+import TitleHomeDesktopComponent from "../Title/TitleHomeDesktopComponent";
+import CountDownTimer from "./CountDownTimer";
+import "./index.scss";
 export default function EdittedLuckySpin() {
   const { width } = useWindowDimensions();
   const [tab, setTab] = useState(true); //true ---> allbest, false ---> mybest
   const { rewardHistory } = useSelector((state) => state.luckyWheelReducer);
 
-  const { userName } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#473377",

@@ -19,7 +19,8 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function Browser(props) {
   const { open, handleShowMenu } = props;
-  const { token, isDropdownNav } = useSelector((state) => state.authReducer);
+  const { isDropdownNav } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);

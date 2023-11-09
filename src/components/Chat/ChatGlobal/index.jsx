@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
 import { inpChat } from "../../../utils/cssFrom";
 import { images, popup } from "../../../utils/images";
 import { images280423_l } from "../../../utils/images280423_l";
@@ -42,7 +43,7 @@ export default function ChatGlobal(props) {
   const dispatch = useDispatch();
   const chatInput = useRef("");
   const { contacter } = useSelector((state) => state.chatReducer);
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -51,10 +52,10 @@ export default function ChatGlobal(props) {
   }, []);
 
   useEffect(() => {
-    if (token === null || token === "") {
+    if (tokenUser === null || tokenUser === "") {
       chatInput.current.reset();
     }
-  }, [token]);
+  }, [tokenUser]);
 
   const handleOnKeyDownEnter = (e) => {
     if(chatInput?.current){
@@ -148,9 +149,9 @@ export default function ChatGlobal(props) {
                 className="p-2 text-white"
                 onClick={() => {
                   dispatch(toggleProfileDialog(true));
-                  socket?.emit("getDetailProfile", {
+                  dispatch(getUserByUsername({
                     username: contacter.userName,
-                  });
+                  }));
                 }}
                 sx={{
                   background: "linear-gradient(180deg, #843ff0, #7748ed)",
@@ -306,9 +307,9 @@ export default function ChatGlobal(props) {
                 className="p-2 text-white"
                 onClick={() => {
                   dispatch(toggleProfileDialog(true));
-                  socket?.emit("getDetailProfile", {
+                  dispatch(getUserByUsername({
                     username: contacter.userName,
-                  });
+                  }));
                 }}
                 sx={{
                   background: "linear-gradient(180deg, #843ff0, #7748ed)",
