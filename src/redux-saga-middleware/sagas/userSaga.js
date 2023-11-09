@@ -1,13 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
+import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
 import {
   clickTab,
   closeLoginDialog,
-  closeVerifyDialog,
-  openLoginDialog,
   openVerifyDialog,
-  saveForgetPassInfo
+  saveForgetPassInfo,
 } from "../reducers/authReducer";
 import { saveDataProfile } from "../reducers/profileReducer";
 import {
@@ -38,30 +37,34 @@ import {
 import UserService from "../services/userService";
 const userService = new UserService();
 
+var loginCount = 0;
 function* loginSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.login, payload);
-    const { status, data } = res;
-    if (status === 200 || status === 201) {
-      yield put(loginSuccess(data?.data));
-      yield put(
-        showToastNotification({
-          type: "success",
-          message: "Login successfully",
-        })
-      );
-      localStorage.setItem("token", data?.data?.token);
-      localStorage.setItem("refreshToken", data?.data?.refreshToken);
-      yield put(getUserInfoReady(data?.data?.token));
-    } else {
-      yield put(loginFail());
-      yield put(
-        showToastNotification({
-          type: "error",
-          message: "Something when wrong!",
-        })
-      );
+    loginCount += 1;
+    if (loginCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.login, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(loginSuccess(data?.data));
+        yield put(
+          showToastNotification({
+            type: authNotification.signIn.signInSuccess.type,
+            message: authNotification.signIn.signInSuccess.message,
+          })
+        );
+        localStorage.setItem("token", data?.data?.token);
+        localStorage.setItem("refreshToken", data?.data?.refreshToken);
+        yield put(getUserInfoReady(data?.data?.token));
+      } else {
+        yield put(loginFail());
+        yield put(
+          showToastNotification({
+            type: "error",
+            message: "Something when wrong!",
+          })
+        );
+      }
     }
   } catch (error) {
     yield put(loginFail());
@@ -74,22 +77,27 @@ function* loginSaga(dataRequest) {
   }
 }
 
+var registerCount = 0;
 function* registerSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.register, payload);
-    const { status, data } = res;
-    if (status === 200 || status === 201) {
-      yield put(registerSuccess({ ...payload, ...data?.data }));
-      yield put(clickTab("otpVerifyAccount"));
-    } else {
-      yield put(registerFail());
-      yield put(
-        showToastNotification({
-          type: "error",
-          message: "Something when wrong!",
-        })
-      );
+    registerCount += 1;
+    if (registerCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.register, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(registerSuccess({ ...payload, ...data?.data }));
+        yield put(clickTab("otpVerifyAccount"));
+      } else {
+        yield put(registerFail());
+        yield put(
+          showToastNotification({
+            type: "error",
+            message: "Something when wrong!",
+          })
+        );
+      }
+      registerCount = 0;
     }
   } catch (error) {
     yield put(registerFail());
@@ -106,17 +114,18 @@ function* updateProfileSaga(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(userService.updateProfile, payload);
-    const { status, data } = res
-    if(status === 200 || status === 201) {
-      yield put(updateProfileUserSuccess({
-        avatar: data?.data?.avatar
-      }))
+    const { status, data } = res;
+    if (status === 200 || status === 201) {
+      yield put(
+        updateProfileUserSuccess({
+          avatar: data?.data?.avatar,
+        })
+      );
     } else {
-      yield put(updateProfileUserFail())
+      yield put(updateProfileUserFail());
     }
-
   } catch (error) {
-    yield put(updateProfileUserFail())
+    yield put(updateProfileUserFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -126,30 +135,35 @@ function* updateProfileSaga(dataRequest) {
   }
 }
 
+var logOutCount = 0;
 function* logoutSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.logout, payload);
+    logOutCount += 1;
+    if (logOutCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.logout, payload);
 
-    if (res) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      _socket.emit("logoutSocial")
-      yield put(logoutSuccess());
-      yield put(
-        showToastNotification({
-          type: "success",
-          message: "You have been successfully logged out.",
-        })
-      );
-    } else {
-      yield put(logoutFail());
-      yield put(
-        showToastNotification({
-          type: "error",
-          message: "Something when wrong!",
-        })
-      );
+      if (res) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        _socket.emit("logoutSocial");
+        yield put(logoutSuccess());
+        yield put(
+          showToastNotification({
+            type: authNotification.signOut.logoutSuccess.type,
+            message: authNotification.signOut.logoutSuccess.message,
+          })
+        );
+      } else {
+        yield put(logoutFail());
+        yield put(
+          showToastNotification({
+            type: "error",
+            message: "Something when wrong!",
+          })
+        );
+      }
+      logOutCount = 0;
     }
   } catch (error) {
     yield put(logoutFail());
@@ -161,29 +175,27 @@ function* logoutSaga(dataRequest) {
     );
   }
 }
-
+var userInfoCount = 0;
 function* userInfoSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.userInfo, payload);
-    const { status, data } = res;
-    if (status === 200 || status === 201) {
-      yield put(getUserInfoSuccess(data?.data));
-      if (
-        data?.data?.user?.userVerifiedEmail === 0 ||
-        data?.data?.user?.userVerifiedPhone === 0
-      ) {
-        yield put(openVerifyDialog());
+    userInfoCount += 1;
+    if (userInfoCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.userInfo, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(getUserInfoSuccess(data?.data));
+        if (
+          data?.data?.user?.userVerifiedEmail === 0 ||
+          data?.data?.user?.userVerifiedPhone === 0
+        ) {
+          yield put(openVerifyDialog());
+        }
+        yield put(closeLoginDialog());
+      } else {
+        yield put(getUserInfoFail());
       }
-      yield put(closeLoginDialog());
-    } else {
-      yield put(getUserInfoFail());
-      yield put(
-        showToastNotification({
-          type: "error",
-          message: "Something went wrong!",
-        })
-      );
+      userInfoCount = 0;
     }
   } catch (error) {
     yield put(getUserInfoFail());
@@ -196,43 +208,46 @@ function* userInfoSaga(dataRequest) {
   }
 }
 
+var sendOtpCount = 0;
 function* sendOtpSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.verifyOtp, payload);
-    const { status, data } = res;
-    if (status === 200 || status === 201) {
-      if(payload?.type === "password"){
-        yield put(sendOtpSuccess(data?.data));
+    sendOtpCount += 1;
+    if (sendOtpCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.verifyOtp, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        if (payload?.type === "password") {
+          yield put(sendOtpSuccess(data?.data));
+          yield put(
+            showToastNotification({
+              type: authNotification.otpForgotPassword.validOTP.type,
+              message: authNotification.otpForgotPassword.validOTP.message,
+            })
+          );
+          yield put(clickTab("createPass"));
+        } else if (payload?.type === "register") {
+          yield put(sendOtpSuccess());
+          yield put(
+            showToastNotification({
+              type: authNotification.verifyAccount.verifySuccess.type,
+              message: authNotification.verifyAccount.verifySuccess.message,
+            })
+          );
+          localStorage.setItem("token", data?.data?.token);
+          yield put(getUserInfoReady(localStorage.getItem("token")));
+          yield put(closeLoginDialog());
+        }
+      } else {
+        yield put(sendOtpFail());
         yield put(
           showToastNotification({
-            type: "success",
-            message: "You have successfully registered and are now logged in.",
+            type: "warning",
+            message: "Something went wrong!",
           })
         );
-        yield put(clickTab("createPass"));
       }
-      else if(payload?.type === "register"){
-        yield put(sendOtpSuccess());
-        yield put(
-          showToastNotification({
-            type: "success",
-            message: "You have successfully registered and are now logged in.",
-          })
-        );
-        localStorage.setItem("token", data?.data?.token);
-        yield put(getUserInfoReady(localStorage.getItem("token")));
-        yield put(closeLoginDialog());
-      }
-      
-    } else {
-      yield put(sendOtpFail());
-      yield put(
-        showToastNotification({
-          type: "warning",
-          message: "Something went wrong!",
-        })
-      );
+      sendOtpCount = 0;
     }
   } catch (error) {
     yield put(sendOtpFail());
@@ -245,27 +260,32 @@ function* sendOtpSaga(dataRequest) {
   }
 }
 
+var resendOtpCount = 0;
 function* resendOtpSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.resendOtp, payload);
-    const { status } = res;
-    if (status === 200 || status === 201) {
-      yield put(resendOtpSuccess());
-      yield put(
-        showToastNotification({
-          type: "success",
-          message: "OTP resend!",
-        })
-      );
-    } else {
-      yield put(resendOtpFail());
-      yield put(
-        showToastNotification({
-          type: "warning",
-          message: "Something went wrong!",
-        })
-      );
+    resendOtpCount += 1;
+    if (resendOtpCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.resendOtp, payload);
+      const { status } = res;
+      if (status === 200 || status === 201) {
+        yield put(resendOtpSuccess());
+        yield put(
+          showToastNotification({
+            type: "success",
+            message: "OTP resend!",
+          })
+        );
+      } else {
+        yield put(resendOtpFail());
+        yield put(
+          showToastNotification({
+            type: "warning",
+            message: "Something went wrong!",
+          })
+        );
+      }
+      resendOtpCount = 0;
     }
   } catch (error) {
     yield put(resendOtpFail());
@@ -278,23 +298,28 @@ function* resendOtpSaga(dataRequest) {
   }
 }
 
+var forgetCount = 0;
 function* forgetPasswordSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.forgetPassword, payload);
-    const { status } = res;
-    if (status === 200 || status === 201) {
-      yield put(forgetPasswordSuccess());
-      yield put(saveForgetPassInfo(payload))
-      yield put(clickTab("otpResetPassword"));
-    } else {
-      yield put(forgetPasswordFail());
-      yield put(
-        showToastNotification({
-          type: "warning",
-          message: "Something went wrong!",
-        })
-      );
+    forgetCount += 1;
+    if (forgetCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.forgetPassword, payload);
+      const { status } = res;
+      if (status === 200 || status === 201) {
+        yield put(forgetPasswordSuccess());
+        yield put(saveForgetPassInfo(payload));
+        yield put(clickTab("otpResetPassword"));
+      } else {
+        yield put(forgetPasswordFail());
+        yield put(
+          showToastNotification({
+            type: "warning",
+            message: "Something went wrong!",
+          })
+        );
+      }
+      forgetCount = 0;
     }
   } catch (error) {
     yield put(forgetPasswordFail());
@@ -307,28 +332,33 @@ function* forgetPasswordSaga(dataRequest) {
   }
 }
 
+var resetPasswordCount = 0;
 function* resetPasswordSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.updateNewPassword, payload);
-    const { status } = res;
-    if (status === 200 || status === 201) {
-      yield put(resetPasswordSuccess());
-      yield put(
-        showToastNotification({
-          type: "success",
-          message: "Change password successfully",
-        })
-      );
-      yield put(closeLoginDialog());
-    } else {
-      yield put(resetPasswordFail());
-      yield put(
-        showToastNotification({
-          type: "warning",
-          message: "Something went wrong!",
-        })
-      );
+    resetPasswordCount += 1;
+    if (resetPasswordCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.updateNewPassword, payload);
+      const { status } = res;
+      if (status === 200 || status === 201) {
+        yield put(resetPasswordSuccess());
+        yield put(
+          showToastNotification({
+            type: "success",
+            message: "Change password successfully",
+          })
+        );
+        yield put(closeLoginDialog());
+      } else {
+        yield put(resetPasswordFail());
+        yield put(
+          showToastNotification({
+            type: "warning",
+            message: "Something went wrong!",
+          })
+        );
+      }
+      resetPasswordCount = 0;
     }
   } catch (error) {
     yield put(resetPasswordFail());
@@ -341,24 +371,29 @@ function* resetPasswordSaga(dataRequest) {
   }
 }
 
+var reVerifyCount = 0;
 function* reVerifyAccountSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.reVerifyAccount, payload);
-    const { status } = res;
-    if (status === 200 || status === 201) {
-      yield put(reVerifyAccountSuccess());
-      yield put(closeVerifyDialog());
-      yield put(openLoginDialog());
-      yield put(clickTab("otpVerifyAccount"));
-    } else {
-      yield put(reVerifyAccountFail());
-      yield put(
-        showToastNotification({
-          type: "warning",
-          message: "Something went wrong!",
-        })
-      );
+    reVerifyCount = reVerifyCount + 1;
+    if (reVerifyCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.reVerifyAccount, payload);
+      const { status } = res;
+      if (status === 200 || status === 201) {
+        yield put(reVerifyAccountSuccess());
+        // yield put(closeVerifyDialog());
+        // yield put(openLoginDialog());
+        // yield put(clickTab("otpVerifyAccount"));
+      } else {
+        yield put(reVerifyAccountFail());
+        yield put(
+          showToastNotification({
+            type: "warning",
+            message: "Something went wrong!",
+          })
+        );
+      }
+      reVerifyCount = 0;
     }
   } catch (error) {
     yield put(reVerifyAccountFail());
@@ -376,23 +411,24 @@ function* getUserByUsernameSaga(dataRequest) {
     const { payload } = dataRequest;
     const res = yield call(userService.getUserByUsername, payload);
     const { status } = res;
-    const { user } = res?.data?.data || {}
+    const { user } = res?.data?.data || {};
     if (status === 200 || status === 201) {
       yield put(getUserByUsernameSuccess());
-      yield put(saveDataProfile({
-        id: user?.userId || "ID",
-        email: user?.userEmail,
-        refCode: user?.userRefCode,
-        phone: user?.userPhone,
-        userNameProfile: user?.userName,
-        avatarUrl: user?.userAccount?.accountAvatar,
-        firstName: user?.userFirstName,
-        lastName: user?.userLastName,
-        nickName: user?.userNickName,
-      }))
+      yield put(
+        saveDataProfile({
+          id: user?.userId || "ID",
+          email: user?.userEmail,
+          refCode: user?.userRefCode,
+          phone: user?.userPhone,
+          userNameProfile: user?.userName,
+          avatarUrl: user?.userAccount?.accountAvatar,
+          firstName: user?.userFirstName,
+          lastName: user?.userLastName,
+          nickName: user?.userNickName,
+        })
+      );
     } else {
       yield put(getUserByUsernameFail());
-      
     }
   } catch (error) {
     yield put(getUserByUsernameFail());

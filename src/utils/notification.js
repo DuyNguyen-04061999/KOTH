@@ -1,4 +1,4 @@
-const authNotification = {
+export const authNotification = {
   signUp: {
     userNameExist: {
       case: "should fail if username does exist",
@@ -42,28 +42,28 @@ const authNotification = {
   signIn: {
     userNameNotExist: {
       case: "should fail if user does not exist ",
-      type: "waring",
+      type: "warning",
       message: "This username does not exist. Please try again.",
     },
     passwordIncorrect: {
       case: "should fail if password is incorrect",
-      type: "waring",
+      type: "warning",
       message: "The password you entered is invalid. Please try again.",
     },
     invalidInput: {
       case: "Khi không nhập username hoặc password",
-      type: "waring",
+      type: "warning",
       message: "Please enter your username and password to sign in.",
     },
     loggedAnotherDevice: {
       case: "Khi tài khoản đang đăng nhập trên thiết bị khác",
-      type: "waring",
+      type: "warning",
       message:
         "You're currently logged in on another device. Please sign out there to continue here.",
     },
     signInSuccess: {
       case: "Khi đăng nhập thành công",
-      type: "waring",
+      type: "success",
       message: "Login successfully!",
     },
   },
@@ -130,7 +130,7 @@ const authNotification = {
   },
 };
 
-const paymentNotification = {
+export const paymentNotification = {
   payment: {
     paymentSuccess: {
       case: "Khi nạp tiền thành công",
@@ -146,7 +146,7 @@ const paymentNotification = {
   },
 };
 
-const promotionNotification = {
+export const promotionNotification = {
   promoDetail: {
     joinPromoSuccess: {
       case: "Khi join promo thành công",
@@ -174,13 +174,13 @@ const promotionNotification = {
     },
     buyExtraFail: {
         case: "Khi mua thêm subscription pack dù đã mua rồi",
-        type: "waring",
+        type: "warning",
         message: "You've already bought this pack. It's currently active.",
       },
   },
 };
 
-const userNotification = {
+export const userNotification = {
     updateProfile:{
         invalidImageFormat:{
             case: "Khi chọn ảnh sai định dạng ",
@@ -205,7 +205,7 @@ const userNotification = {
     }
 };
 
-const chatNotification = {
+export const chatNotification = {
     chat:{
         messageTooLong:{
             case: "Khi gửi lên chatbox tin nhắn quá dài",
