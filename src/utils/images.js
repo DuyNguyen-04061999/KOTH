@@ -362,6 +362,7 @@ import NavVipActive from "../assets/images/navbar/vipActive.png";
 import bannerendmobile from "../assets/images/bannerendmobile.png";
 import bannerendtour from "../assets/images/bannerendtour.png";
 import BtnBack from "../assets/images/btnback.png";
+import layerend from "../assets/images/layerend.png"
 
 import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
 
@@ -594,6 +595,7 @@ export const images = {
   ToolTipIcon: ToolTipIcon,
   payPalIcon: payPalIcon,
   stripeLogo: stripeLogo,
+  layerend:layerend
 };
 
 export const navigationImages = {

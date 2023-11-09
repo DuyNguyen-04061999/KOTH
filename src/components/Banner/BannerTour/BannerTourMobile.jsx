@@ -25,7 +25,7 @@ const BannerTourMobile = (props) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        height: "208px",
+        height: "214px",
         background: `url(${imageHome.BannerTourBg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -51,6 +51,10 @@ const BannerTourMobile = (props) => {
               fontSize: "10px",
               color: "white",
               fontWeight: 700,
+              paddingLeft:"5px",
+              paddingRight:"5px",
+              lineHeight:1.5,
+               
             }}
           >
             Promotion of the week
@@ -59,12 +63,14 @@ const BannerTourMobile = (props) => {
         <Box>
           <Typography
             sx={{
-              fontSize: "12px",
+              fontSize: "11px",
               color: "white",
-              fontWeight: 700,
+              fontWeight: 500,
               textTransform: "uppercase",
-              height: "36px",
+              height: "38px",
               overflow: "hidden",
+              marginTop:"5px",
+              lineHeight: 1.5
             }}
           >
             {tournamentName
@@ -77,16 +83,17 @@ const BannerTourMobile = (props) => {
           <Typography
             sx={{
               width: "100%",
-              fontSize: "24px",
-              fontWeight: 800,
+              fontSize: "22px",
+              fontWeight: 700,
               textTransform: "uppercase",
               background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               lineHeight: "0.9",
-              height: "65px",
+              height: "38px",
               overflow: "hidden",
+              marginTop:"10px"
             }}
           >
             {rewardName
@@ -134,6 +141,8 @@ const BannerTourMobile = (props) => {
               fontSize: "12px",
               cursor: "pointer",
               fontWeight: 600,
+              paddingLeft:"10px",
+              paddingRight:"10px"
             }}
           >
             Play now
@@ -222,7 +231,7 @@ const BannerTourMobile = (props) => {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius:"8px"
+                borderRadius:"14px"
               }}
               src={userAvatar || imageHome.BannerWinAva}
             ></img>
@@ -236,7 +245,7 @@ const BannerTourMobile = (props) => {
               backgroundSize: "cover",
               backgroundPosition: "center",
               position: "absolute",
-              top: "-20px",
+              top: "-20px",  
               right: "-40px",
               display: width > 425 ? "block" : "none",
             }}

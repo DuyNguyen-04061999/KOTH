@@ -37,7 +37,7 @@ export default function CountDownBannerHot({
         sx={{
           fontSize: "4.695px",
           color: "white",
-          margin: "0px 6px !important",
+          margin: "0px 4px !important",
         }}
       >
         :
@@ -55,7 +55,7 @@ export default function CountDownBannerHot({
         sx={{
           fontSize: "4.695px",
           color: "white",
-          margin: "0px 6px !important",
+          margin: "0px 4px !important",
         }}
       >
         :
