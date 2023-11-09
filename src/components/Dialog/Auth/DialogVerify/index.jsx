@@ -4,27 +4,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../../redux-saga-middleware/config/socket";
 import { closeVerifyDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { logoutReady, reVerifyAccount } from "../../../../redux-saga-middleware/reducers/userReducer";
 import AnimButton from "../../../AnimButton";
 
 export default function DialogVerify() {
   const { isVerifyDialog } = useSelector((state) => state.authReducer);
+  const { isReVerifyAccount } = useSelector((state) => state.userReducer);
+  console.log(isReVerifyAccount, "rerender");
   const dispatch = useDispatch();
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, [socket]);
+  
 
   const handleClose = () => {
-    dispatch(closeVerifyDialog());
     dispatch(logoutReady());
+    dispatch(closeVerifyDialog());
   };
 
   const handleConfirm = () => {
@@ -66,8 +61,8 @@ export default function DialogVerify() {
               paddingBottom: "20px",
             }}
           >
-            <AnimButton onClick={handleClose} type={"ghost"} text={"Cancel"} />
-            <AnimButton onClick={handleConfirm} type={"primary"} text={"Confirm"} />
+            <AnimButton onClick={() => handleClose()} type={"ghost"} text={"Cancel"} />
+            <AnimButton onClick={() => handleConfirm()} type={"primary"} text={"Confirm"} />
           </DialogActions>
         </Box>
       </Dialog>

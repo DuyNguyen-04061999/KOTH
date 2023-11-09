@@ -161,12 +161,13 @@ export default function Layout(props) {
         try {
           const response = await API.get(`/api/get-refcode-by-username/${userName}`);
           if(response){
+            console.log(response);
             dispatch(addRefCodeRegister(response?.data?.ref));
             dispatch(clickTab("signup"));
             dispatch(toggleLoginDialog());
           }
         } catch (error) {
-          
+          console.log(error);
         }
       }
     }
@@ -223,6 +224,7 @@ export default function Layout(props) {
   }, [location.pathname, dispatch]);
 
   useEffect(() => {
+    console.log(isChangeLocation);
     if(isChangeLocation) {
       if(fromRouter && router !== "/" && router !== "/home") {
         navigate(fromRouter)
@@ -230,18 +232,6 @@ export default function Layout(props) {
       }
     }
   }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation])
-
-  useEffect(() => {
-    const tokenLocal = localStorage.getItem("token")
-    if((tokenLocal || token)) {
-      socket?.emit("loginSocial", {
-        token: tokenLocal || token
-      });
-    } else {
-      socket?.emit("logoutSocial")
-      socket?.emit("listMessageGlobal");
-    }
-  }, [token, socket])
 
   return ReactDOM.createPortal(
     <Box

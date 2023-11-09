@@ -523,7 +523,7 @@ function App() {
               </Routes>
               <ToastContainer
                 hideProgressBar={true}
-                autoClose={1000}
+                autoClose={3000}
                 position="top-center"
                 draggable={false}
                 style={{}}

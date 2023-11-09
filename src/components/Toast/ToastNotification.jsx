@@ -33,7 +33,7 @@ export default function ToastNotification() {
     }
     const timeOut = setTimeout(() => {
       dispatch(hideToastNotification());
-    }, 1000);
+    }, 2000);
     return () => {
       clearTimeout(timeOut);
     };
