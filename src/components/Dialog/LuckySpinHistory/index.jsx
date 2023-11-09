@@ -1,22 +1,13 @@
-import { Box, Dialog } from "@mui/material";
+import { Box, Dialog, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material";
 import React, { useState } from "react";
-import { images } from "../../../utils/images";
-import "./index.scss";
-import {
-  styled,
-  TableCell,
-  tableCellClasses,
-  TableRow,
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-} from "@mui/material";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { useSelector } from "react-redux";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import "./index.scss";
 export default function LuckySpinHistory(props) {
   const { width } = useWindowDimensions();
-  const { userName } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
   const { rewardHistory } = useSelector((state) => state.luckyWheelReducer);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

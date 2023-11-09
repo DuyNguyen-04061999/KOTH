@@ -19,7 +19,8 @@ export default function ComponentChat() {
   const chatBox = useRef(null);
 
   const { width, height } = useWindowDimensions();
-  const { userName } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userName = user?.userName || ""
   const [socket, setSocket] = useState(null);
   const [gameId] = useState(0);
   const [roomId] = useState(0);

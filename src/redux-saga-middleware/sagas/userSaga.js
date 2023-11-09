@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
+import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
 import {
   clickTab,
@@ -8,9 +9,12 @@ import {
   openVerifyDialog,
   saveForgetPassInfo
 } from "../reducers/authReducer";
+import { saveDataProfile } from "../reducers/profileReducer";
 import {
   forgetPasswordFail,
   forgetPasswordSuccess,
+  getUserByUsernameFail,
+  getUserByUsernameSuccess,
   getUserInfoFail,
   getUserInfoReady,
   getUserInfoSuccess,
@@ -20,12 +24,16 @@ import {
   logoutSuccess,
   reVerifyAccountFail,
   reVerifyAccountSuccess,
+  registerFail,
   registerSuccess,
   resendOtpFail,
   resendOtpSuccess,
+  resetPasswordFail,
   resetPasswordSuccess,
   sendOtpFail,
   sendOtpSuccess,
+  updateProfileUserFail,
+  updateProfileUserSuccess,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
 const userService = new UserService();
@@ -44,6 +52,7 @@ function* loginSaga(dataRequest) {
         })
       );
       localStorage.setItem("token", data?.data?.token);
+      localStorage.setItem("refreshToken", data?.data?.refreshToken);
       yield put(getUserInfoReady(data?.data?.token));
     } else {
       yield put(loginFail());
@@ -55,6 +64,7 @@ function* loginSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(loginFail());
     yield put(
       showToastNotification({
         type: error?.type,
@@ -73,7 +83,7 @@ function* registerSaga(dataRequest) {
       yield put(registerSuccess({ ...payload, ...data?.data }));
       yield put(clickTab("otpVerifyAccount"));
     } else {
-      yield put(loginFail());
+      yield put(registerFail());
       yield put(
         showToastNotification({
           type: "error",
@@ -82,6 +92,7 @@ function* registerSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(registerFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -94,20 +105,18 @@ function* registerSaga(dataRequest) {
 function* updateProfileSaga(dataRequest) {
   try {
     const { payload } = dataRequest;
-    const res = yield call(userService.register, payload);
-    const { status, data } = res;
-    if (status === 200 || status === 201) {
-      yield put(registerSuccess(data));
+    const res = yield call(userService.updateProfile, payload);
+    const { status, data } = res
+    if(status === 200 || status === 201) {
+      yield put(updateProfileUserSuccess({
+        avatar: data?.data?.avatar
+      }))
     } else {
-      yield put(loginFail());
-      yield put(
-        showToastNotification({
-          type: "error",
-          message: "Something when wrong!",
-        })
-      );
+      yield put(updateProfileUserFail())
     }
+
   } catch (error) {
+    yield put(updateProfileUserFail())
     yield put(
       showToastNotification({
         type: "error",
@@ -124,6 +133,8 @@ function* logoutSaga(dataRequest) {
 
     if (res) {
       localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      _socket.emit("logoutSocial")
       yield put(logoutSuccess());
       yield put(
         showToastNotification({
@@ -141,6 +152,7 @@ function* logoutSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(logoutFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -174,6 +186,7 @@ function* userInfoSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(getUserInfoFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -222,6 +235,7 @@ function* sendOtpSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(sendOtpFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -235,7 +249,7 @@ function* resendOtpSaga(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(userService.resendOtp, payload);
-    const { status, data } = res;
+    const { status } = res;
     if (status === 200 || status === 201) {
       yield put(resendOtpSuccess());
       yield put(
@@ -254,6 +268,7 @@ function* resendOtpSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(resendOtpFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -267,7 +282,7 @@ function* forgetPasswordSaga(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(userService.forgetPassword, payload);
-    const { status, data } = res;
+    const { status } = res;
     if (status === 200 || status === 201) {
       yield put(forgetPasswordSuccess());
       yield put(saveForgetPassInfo(payload))
@@ -282,6 +297,7 @@ function* forgetPasswordSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(forgetPasswordFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -295,7 +311,7 @@ function* resetPasswordSaga(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(userService.updateNewPassword, payload);
-    const { status, data } = res;
+    const { status } = res;
     if (status === 200 || status === 201) {
       yield put(resetPasswordSuccess());
       yield put(
@@ -306,7 +322,7 @@ function* resetPasswordSaga(dataRequest) {
       );
       yield put(closeLoginDialog());
     } else {
-      yield put(forgetPasswordFail());
+      yield put(resetPasswordFail());
       yield put(
         showToastNotification({
           type: "warning",
@@ -315,6 +331,7 @@ function* resetPasswordSaga(dataRequest) {
       );
     }
   } catch (error) {
+    yield put(resetPasswordFail());
     yield put(
       showToastNotification({
         type: "error",
@@ -354,10 +371,44 @@ function* reVerifyAccountSaga(dataRequest) {
   }
 }
 
+function* getUserByUsernameSaga(dataRequest) {
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(userService.getUserByUsername, payload);
+    const { status } = res;
+    const { user } = res?.data?.data || {}
+    if (status === 200 || status === 201) {
+      yield put(getUserByUsernameSuccess());
+      yield put(saveDataProfile({
+        id: user?.userId || "ID",
+        email: user?.userEmail,
+        refCode: user?.userRefCode,
+        phone: user?.userPhone,
+        userNameProfile: user?.userName,
+        avatarUrl: user?.userAccount?.accountAvatar,
+        firstName: user?.userFirstName,
+        lastName: user?.userLastName,
+        nickName: user?.userNickName,
+      }))
+    } else {
+      yield put(getUserByUsernameFail());
+      
+    }
+  } catch (error) {
+    yield put(getUserByUsernameFail());
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: error?.message,
+      })
+    );
+  }
+}
+
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
-  yield takeEvery("UPDATE_PROFILE_READY", updateProfileSaga);
+  yield takeEvery("UPDATE_PROFILE_USER", updateProfileSaga);
   yield takeEvery("GET_USER_INFO_READY", userInfoSaga);
   yield takeEvery("LOG_OUT_READY", logoutSaga);
   yield takeEvery("SEND_OTP_READY", sendOtpSaga);
@@ -365,6 +416,7 @@ function* authSaga() {
   yield takeEvery("FORGET_PASSWORD_READY", forgetPasswordSaga);
   yield takeEvery("RESET_PASSWORD_READY", resetPasswordSaga);
   yield takeEvery("RE_VERIFY_ACCOUNT", reVerifyAccountSaga);
+  yield takeEvery("GET_USER_BY_USERNAME", getUserByUsernameSaga);
 }
 
 export default authSaga;

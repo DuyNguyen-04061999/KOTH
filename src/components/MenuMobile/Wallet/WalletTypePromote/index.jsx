@@ -7,16 +7,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { getPaypal } from "../../../../redux-saga-middleware/reducers/payPalReducer";
 import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney, getAppType } from "../../../../utils/helper";
 import AnimButton from "../../../AnimButton";
-import { getPaypal } from "../../../../redux-saga-middleware/reducers/payPalReducer";
 
 export default function WalletTypePromote(props) {
   const { width, height } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { userGold } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const userGold = user?.userGold || 0
   const { price } = useSelector((state) => state.walletReducer);
   const [amount, setAmount] = useState(0);
   const [typePayment, setTypePayment] = useState("stripe");
@@ -102,7 +103,7 @@ export default function WalletTypePromote(props) {
     navigate("/help-center");
     dispatch(toggleWalletDialog());
   };
-  console.log("typePayment: ", typePayment);
+
   return (
     <>
       <Box

@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
-import "./index.scss";
 import $ from "jquery";
-import _socket from "../../redux-saga-middleware/config/socket.js";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../redux-saga-middleware/config/socket.js";
 import { showAlert } from "../../redux-saga-middleware/reducers/alertReducer";
-import { images } from "../../utils/images";
 import {
-  assigntotalAmount,
-  openLuckyWheelPopup,
+  openLuckyWheelPopup
 } from "../../redux-saga-middleware/reducers/luckyWheelReducer";
+import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import CountDownMobile from "../SpinMobile/CountDownMobile";
+import "./index.scss";
 
 export default function LuckyWheel(props) {
   const [config, setConfig] = useState(null);
@@ -19,7 +18,7 @@ export default function LuckyWheel(props) {
   const [buttonState, SetButtonState] = useState(true);
   const [isFetchReward, setIsFetchListReward] = useState(true);
   const [isFetchListRh, setIsFetchListRh] = useState(true);
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { countEveryday } = useSelector((state) => state.luckyWheelReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -27,26 +26,26 @@ export default function LuckyWheel(props) {
     setSocket(socket);
   }, []);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (isFetchReward && token)
-      socket?.emit("getLuckySpinConfig", { type: process.env.REACT_APP_TYPE_APP && process.env.REACT_APP_TYPE_APP === "promote" ? "promote" : "dogegold" });
-    if (isFetchListRh && token)
-      socket?.emit("getRewardHistory", { type: "luckyspin" });
-    socket?.on("getLuckySpinConfigSuccess", (data) => {
-      setConfig(data);
-      setListReward(data?.LuckySpinReward);
-      setIsFetchListReward(false);
-      dispatch(assigntotalAmount(data.total));
-    });
+  // useEffect(() => {
+  //   if (isFetchReward && token)
+  //     socket?.emit("getLuckySpinConfig", { type: process.env.REACT_APP_TYPE_APP && process.env.REACT_APP_TYPE_APP === "promote" ? "promote" : "dogegold" });
+  //   if (isFetchListRh && token)
+  //     socket?.emit("getRewardHistory", { type: "luckyspin" });
+  //   socket?.on("getLuckySpinConfigSuccess", (data) => {
+  //     setConfig(data);
+  //     setListReward(data?.LuckySpinReward);
+  //     setIsFetchListReward(false);
+  //     dispatch(assigntotalAmount(data.total));
+  //   });
 
-    socket?.on("getRewardHistorySuccess", (data) => {
-      setIsFetchListRh(false);
-    });
+  //   socket?.on("getRewardHistorySuccess", (data) => {
+  //     setIsFetchListRh(false);
+  //   });
 
-    return () => {
-      // socket?.off()
-    };
-  }, [socket, dispatch, isFetchListRh, isFetchReward, token]);
+  //   return () => {
+  //     // socket?.off()
+  //   };
+  // }, [socket, dispatch, isFetchListRh, isFetchReward, token]);
   function getRandomValueByPercent(arr, random) {
     let cumulativePercentage = 0;
     const cumulativePercentages = arr.map((obj) => {

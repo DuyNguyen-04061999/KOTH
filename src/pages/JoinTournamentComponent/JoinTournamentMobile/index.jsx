@@ -11,11 +11,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
-import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { getRefactorDetailAuthPromotion, getRefactorDetailPromotion, startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { toggleExtra, toggleTournamentShow } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   isJson,
   sliceString
@@ -23,78 +24,62 @@ import {
 import { images } from "../../../utils/images";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
+import JoinTournament from "../JoinTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import "./index.scss";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
-  const [detailTournament, setDetailTournament] = useState({});
-  const [fetchT, setFetchT] = useState(true);
-  const [socket, setSocket] = useState(null);
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
+  const { isGetDetailPromotion, isGetDetailAuthPromotion } = useSelector(state => state.promotionReducer);
   const [currentResult, setCurrentResult] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const [openVoucher, setOpenVoucher] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const { id } = useParams();
-  const { token } = useSelector((state) => state.authReducer);
+  const { tokenUser: token, uPack, listJoinedTour, countTicket } = useSelector((state) => state.userReducer);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "lighter !important",
     marginLeft: "0px !important",
     color: "#fff",
   };
-  useEffect(() => {
-    setSocket(_socket);
-  }, []);
+
+  const dispatch = useDispatch();
   
   useEffect(() => {
-    socket?.emit("detailNewTournament", {
-      tournamentId: id,
-    });
-  }, [socket, id]);
+    dispatch(getRefactorDetailPromotion(id))
+  }, [id, dispatch]);
 
   useEffect(() => {
-    if(token) {
-      socket?.emit("detailNewTournament", {
-        tournamentId: id,
-      });
+    if (token) {
+      dispatch(getRefactorDetailAuthPromotion(id))
     }
-  }, [socket, id, token]);
+  }, [id, token, dispatch]);
 
   const handlePlayTour = () => {
-    socket?.emit("startGameInNewTournament", {
-      tournamentId: id,
-    });
+    if (detailTournament?.extra === 0 && countTicket === 0) {
+      dispatch(toggleExtra());
+      return;
+    } else {
+      dispatch(startGameInPromotion({
+        tournamentId: id,
+      }))
+    }
   };
   
 
   const handleJoinTour = () => {
-    if (token) {
-      socket?.emit("joinNewTournament", {
+    if ((detailTournament?.tournamentVip !== 0 && uPack === null) || (detailTournament?.tournamentVip !== 0 && uPack && uPack?.remain === "Expired")) {
+      dispatch(toggleTournamentShow());
+    } else if (token) {
+      dispatch(JoinTournament({
         tournamentId: detailTournament?.id,
-      });
+      }))
     } else {
       dispatch(toggleLoginDialog());
     }
   };
-  useEffect(() => {
-    socket?.on("detailNewTournamentSuccess", (data) => {
-      setDetailTournament(data);
-      setFetchT(false);
-    });
-    
-    socket?.on("joinNewTournamentSuccess", (data) => {
-      if (token) {
-        socket?.emit("detailNewTournament", {
-          tournamentId: id,
-        });
-      }
-    });
-    return () => {
-      socket?.off("joinNewTournamentSuccess");
-    };
-  }, [socket, token, id]);
 
-  const dispatch = useDispatch();
   const handleClickOpen = () => {
 
   };
@@ -124,7 +109,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   });
   return (
     <>
-      {fetchT ? (
+      {isGetDetailAuthPromotion || isGetDetailPromotion ? (
         <PageLoading />
       ) : (
         <>
@@ -384,7 +369,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   >
                     Extra
                   </Typography>
-                  {!detailTournament?.checkInTournament ? (
+                  {!listJoinedTour?.includes(id) ? (
                     ""
                   ) : (
                     <Typography sx={{ marginLeft: "0px !important", color:"white" }}>
@@ -393,7 +378,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   )}
                 </Box>
                 <Box color={"white"}>
-                  {!detailTournament?.checkInTournament ? (
+                  {!listJoinedTour?.includes(id) ? (
                     <Typography
                       sx={{ marginLeft: "0px !important", fontSize: "12px" }}
                     >
@@ -1107,7 +1092,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   zIndex: "28",
                 }}
               >
-                {!detailTournament?.checkInTournament ? (
+                {!listJoinedTour?.includes(id) ? (
                   detailTournament?.tournamentStatus === 2 ? (
                     ""
                   ) : (

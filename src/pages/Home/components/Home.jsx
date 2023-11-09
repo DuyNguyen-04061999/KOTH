@@ -33,10 +33,12 @@ import "../scss/home.scss";
 
 export default function Home() {
   const { width } = useWindowDimensions();
-  const { token, userRole, leaderBoard } = useSelector(
+  const { userRole, leaderBoard } = useSelector(
     (state) => state.authReducer
   );
-
+  const { tokenUser: token } = useSelector(
+    (state) => state.userReducer
+  );
   const { listGame } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -51,9 +53,9 @@ export default function Home() {
     if(getAppType() !== "promote") {
       dispatch(getListGame());
     }
-    socket?.emit("getLeaderBoard", {
-      type: "gold",
-    });
+    // socket?.emit("getLeaderBoard", {
+    //   type: "gold",
+    // });
   }, [dispatch, socket]);
 
   const navigate = useNavigate();
@@ -74,9 +76,9 @@ export default function Home() {
     return arr; // insert it at index 'to'
   }
   useEffect(() => {
-    if (token && fetchT) {
-      socket?.emit("getListTournament");
-    }
+    // if (token && fetchT) {
+    //   socket?.emit("getListTournament");
+    // }
   });
 
   useEffect(() => {
