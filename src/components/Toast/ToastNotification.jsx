@@ -31,12 +31,9 @@ export default function ToastNotification() {
           toast.info("This is default notify!");
       }
     }
-    const timeOut = setTimeout(() => {
+    setTimeout(() => {
       dispatch(hideToastNotification());
-    }, 2000);
-    return () => {
-      clearTimeout(timeOut);
-    };
+    }, 3000);
   }, [
     messageToastNotification,
     isShowToastNotification,
