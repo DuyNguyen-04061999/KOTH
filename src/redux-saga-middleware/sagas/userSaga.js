@@ -5,6 +5,8 @@ import { showToastNotification } from "../reducers/alertReducer";
 import {
   clickTab,
   closeLoginDialog,
+  closeVerifyDialog,
+  openLoginDialog,
   openVerifyDialog,
   saveForgetPassInfo,
 } from "../reducers/authReducer";
@@ -381,9 +383,9 @@ function* reVerifyAccountSaga(dataRequest) {
       const { status } = res;
       if (status === 200 || status === 201) {
         yield put(reVerifyAccountSuccess());
-        // yield put(closeVerifyDialog());
-        // yield put(openLoginDialog());
-        // yield put(clickTab("otpVerifyAccount"));
+        yield put(closeVerifyDialog());
+        yield put(openLoginDialog());
+        yield put(clickTab("otpVerifyAccount"));
       } else {
         yield put(reVerifyAccountFail());
         yield put(
