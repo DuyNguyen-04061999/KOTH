@@ -112,21 +112,20 @@ export default function WalletTypePromote(props) {
           backgroundColor: "#271C39",
           width: "100%",
           // overflow: "auto",
-          minHeight: width < 576 ? "100vh" : "unset",
-          maxHeight: width < 576 ? "unset" : height - 100,
+          // height:"100%",
+          // minHeight: width < 576 ? "100vh" : "unset",
+          // maxHeight: width < 576 ? "unset" : height - 100,
         }}
       >
         {/* <FullScreenDialog /> */}
         {getAppType() === "promote" ? (
           <Box
+            component={"div"}
             sx={{
               width: "100%",
-              // backgroundImage: `url(${popup.proWallet})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
               padding: "25px 25px 25px 25px",
-              overflow: "auto",
+              // overflowY: "auto",
+              // height:"100vh"
             }}
           >
             <Box

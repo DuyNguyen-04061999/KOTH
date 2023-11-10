@@ -1,7 +1,6 @@
 import axios from "axios";
 import { store } from "../config/configRedux";
 import _socket from "../config/socket";
-import { showToastNotification } from "../reducers/alertReducer";
 import { logoutReady, updateUserToken } from "../reducers/userReducer";
 
 axios.defaults.withCredentials = true;
@@ -38,28 +37,36 @@ PROMOTION_API.interceptors.response.use(
         }
 
         if (er.response.status === 410) {
-          const res = await PROMOTION_API.post(
-            "/api/authenticate/refresh-token",
-            {
-              refreshToken: localStorage.getItem("refreshToken"),
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                "x-access-refresh-token": localStorage.getItem("refreshToken"),
+          if(localStorage.getItem("refreshToken")) {
+            store.dispatch(logoutReady())
+            const res = await PROMOTION_API.post(
+              "/api/authenticate/refresh-token",
+              {
+                refreshToken: localStorage.getItem("refreshToken"),
               },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  "x-access-refresh-token": localStorage.getItem("refreshToken"),
+                },
+              }
+            );
+            if(res && res.data) {
+              localStorage.setItem("token", res.data.data.token);
+              localStorage.setItem("refreshToken", res.data.data.refreshToken);
+              store.dispatch(updateUserToken(res.data.data.token))
+              _socket.emit("loginSocial", {
+                token: res.data.data.token
+              });
+              window.location.reload()
+            } else {
+              store.dispatch(logoutReady())
             }
-          );
-          localStorage.setItem("token", res.data.data.token);
-          localStorage.setItem("refreshToken", res.data.data.refreshToken);
-          store.dispatch(updateUserToken(res.data.data.token))
-          _socket.emit("loginSocial", {
-            token: res.data.data.token
-          });
-          store.dispatch(showToastNotification({
-            type: 'success',
-            message: "Please do again!"
-          }))
+            
+          } else {
+            store.dispatch(logoutReady())
+          }
+          
         }
 
         if (er.response.status === 411) {

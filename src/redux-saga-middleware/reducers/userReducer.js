@@ -266,6 +266,13 @@ export const updateCountTicket = (data) => {
   } 
 }
 
+export const updateVerifyOTPType = (data) => {
+  return {
+    type: "UPDATE_VERIFY_OTP_TYPE",
+    payload: data
+  } 
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -294,7 +301,9 @@ const userReducer = (
     listJoinedTour: [],
     countTicket: 0,
     userAvatar: "",
-    isGetUserByUsername: false
+    isGetUserByUsername: false,
+    typeVerifyOTP: "",
+    resenOTPSuccess: false
   },
   action
 ) => {
@@ -357,6 +366,7 @@ const userReducer = (
         isRegister: false,
         registerUsername: payload?.username,
         tokenUser: payload?.token,
+        typeVerifyOTP: "register"
       };
     case "REGISTER_FAIL":
       return {
@@ -419,11 +429,11 @@ const userReducer = (
     case "RESET_PASSWORD_SUCCESS":
       return { ...state, isResetPassword: false };
     case "RESEND_OTP_READY":
-      return { ...state, isResendOtp: true };
+      return { ...state, isResendOtp: true, resenOTPSuccess: false };
     case "RESEND_OTP_FAIL":
-      return { ...state, isResendOtp: false };
+      return { ...state, isResendOtp: false, resenOTPSuccess: false };
     case "RESEND_OTP_SUCCESS":
-      return { ...state, isResendOtp: false };
+      return { ...state, isResendOtp: false, resenOTPSuccess: true };
     case "RE_VERIFY_ACCOUNT": return {...state, isReVerifyAccount: true}
     case "RE_VERIFY_ACCOUNT_SUCCESS": return {...state, isReVerifyAccount: false}
     case "RE_VERIFY_ACCOUNT_FAIL": return {...state, isReVerifyAccount: false}
@@ -435,6 +445,7 @@ const userReducer = (
     case "UPDATE_LIST_PROMOTION_JOINED": return {...state, listJoinedTour: [...state.listJoinedTour, payload]}
     case "UPDATE_COUNT_EXTRA_AFTER_PLAY_GAME": return { ...state, countTicket: state.countTicket - payload };
     case "UPDATE_COUNT_TICKET": return { ...state, countTicket: state.countTicket + payload };
+    case "UPDATE_VERIFY_OTP_TYPE": return {...state, typeVerifyOTP: payload || ""}
     default:
       return state;
   }

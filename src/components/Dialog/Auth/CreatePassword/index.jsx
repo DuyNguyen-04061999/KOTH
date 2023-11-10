@@ -3,7 +3,6 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../../redux-saga-middleware/config/socket";
 import { resetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -21,16 +20,9 @@ export default function CreatePassword() {
   const [passwordError, setPasswordError] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [rePasswordError, setRePasswordError] = useState("");
-  const [inputError, setInputError] = useState("");
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayRePassword, setDisplayRePassword] = useState(false);
   const dispatch = useDispatch();
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, []);
 
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
@@ -41,10 +33,6 @@ export default function CreatePassword() {
   };
 
   const handleCreatePass = () => {
-    // socket?.emit("updateNewPassword", {
-    //   username: nameReset || forgotPassInfo.username,
-    //   password: password,
-    // });
 
     dispatch(
       resetPasswordReady({
@@ -78,18 +66,6 @@ export default function CreatePassword() {
       setRePasswordError("");
     }
   }, [rePassword, password]);
-
-
-
-  // useEffect(() => {
-  //   socket?.on("updateNewPasswordSuccess", (user) => {
-  //     socket?.emit("login", {
-  //       username: user.username,
-  //       password: user.password,
-  //     });
-  //     // dispatch(clearForgetPassInfo());
-  //   });
-  // }, [socket, dispatch]);
 
   return (
     <Box
@@ -212,6 +188,225 @@ export default function CreatePassword() {
             </Typography>
           )}
         </Box>
+        <Box className="mb-3 mt-3">
+          {" "}
+          <Box className="d-flex align-items-center ms-3">
+            {" "}
+            {!passwordError ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: !passwordError ? "green" : "white",
+                fontSize: 12,
+              }}
+            >
+              {" "}
+              Password must be at least 6 characters long.{" "}
+            </Typography>{" "}
+          </Box>{" "}
+          <Box className="d-flex align-items-center ms-3 text-white">
+            {" "}
+            {!passwordError ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: !passwordError ? "green" : "white",
+                fontSize: 12,
+              }}
+            >
+              {" "}
+              Password must have at least one non letter.{" "}
+            </Typography>{" "}
+          </Box>{" "}
+          <Box className="d-flex align-items-center ms-3 text-white">
+            {" "}
+            {!passwordError ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: !passwordError ? "green" : "white",
+                fontSize: 12,
+              }}
+            >
+              {" "}
+              Password must have at least one digit ('0-9').{" "}
+            </Typography>{" "}
+          </Box>{" "}
+          <Box className="d-flex align-items-center ms-3 text-white">
+            {" "}
+            {!passwordError ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g>
+                  <path
+                    fill="#5F9724"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>
+                  <path
+                    fill="#F7F9FA"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                {" "}
+                <g>
+                  {" "}
+                  <path
+                    fill="#979797"
+                    d="M5.999 12.604A5.999 5.999 0 01.117 5.423a6.002 6.002 0 018.196-4.358A6 6 0 0112 6.626c-.005 3.298-2.695 5.978-6.001 5.978z"
+                  ></path>{" "}
+                  <path
+                    fill="#291E3B"
+                    d="M9.616 4.351a.63.63 0 01-.199.483L4.564 9.692c-.094.094-.144.094-.24 0-.619-.628-1.247-1.248-1.869-1.876-.285-.288-.293-.696-.03-.965.27-.282.677-.28.98.014.303.292.604.59.892.896.116.123.18.11.292-.004 1.267-1.274 2.536-2.546 3.809-3.815.155-.156.323-.265.552-.261a.657.657 0 01.666.67z"
+                  ></path>{" "}
+                </g>{" "}
+              </svg>
+            )}{" "}
+            <Typography
+              variant="body1"
+              sx={{
+                color: !passwordError ? "green" : "white",
+                fontSize: 12,
+              }}
+            >
+              {" "}
+              Password must have at least one upper case.{" "}
+            </Typography>{" "}
+          </Box>{" "}
+        </Box>
         <Box
           sx={{
             width: "100%",
@@ -296,17 +491,6 @@ export default function CreatePassword() {
           <AnimButton
             type={(!rePasswordError || !passwordError) ? "primary" : "disabled"}
             text={"NEXT"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
             onClick={() => handleCreatePass()}
           >
             Next

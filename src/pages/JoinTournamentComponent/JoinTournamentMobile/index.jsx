@@ -12,6 +12,17 @@ import {
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { updateDetailTourAfterPlayGame } from "../../../redux-saga-middleware/reducers/playgameReducer";
+import {
+  getRefactorDetailAuthPromotion,
+  getRefactorDetailPromotion,
+  startGameInPromotion,
+} from "../../../redux-saga-middleware/reducers/promotionReducer";
+import {
+  toggleExtra,
+  toggleTournamentShow,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
 import {
   getRefactorDetailAuthPromotion,
   getRefactorDetailPromotion,
@@ -64,33 +75,46 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     }
   }, [id, token, dispatch]);
 
+  useEffect(() => {
+    if (token || localStorage.getItem("token")) {
+      dispatch(getRefactorDetailAuthPromotion(id));
+    } else {
+      dispatch(getRefactorDetailPromotion(id));
+    }
+  }, [token, dispatch, id]);
+
   const handlePlayTour = () => {
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
       return;
     } else {
+      if (countTicket > 0 && detailTournament?.extra <= 0) {
+        dispatch(updateCountExtraAfterPlayGame(1));
+      }
+
+      if (countTicket <= 0 && detailTournament?.extra > 0) {
+        dispatch(updateDetailTourAfterPlayGame());
+      }
       dispatch(
         startGameInPromotion({
           tournamentId: id,
         })
       );
-      dispatch(toggleStartGame(true));
     }
   };
 
   const handleJoinTour = () => {
-    if (
-      (detailTournament?.tournamentVip !== 0 && uPack === null) ||
-      (detailTournament?.tournamentVip !== 0 &&
-        uPack &&
-        uPack?.remain === "Expired")
-    ) {
-      dispatch(toggleTournamentShow());
-    } else if (token) {
-      dispatch(openSubscribeDialog());
-      // dispatch(JoinTournament({
-      //   tournamentId: detailTournament?.id,
-      // }))
+    if (token) {
+      if (
+        (detailTournament?.tournamentVip !== 0 && uPack === null) ||
+        (detailTournament?.tournamentVip !== 0 &&
+          uPack &&
+          uPack?.remain === "Expired")
+      ) {
+        dispatch(toggleTournamentShow());
+      } else {
+        dispatch(openSubscribeDialog());
+      }
     } else {
       dispatch(toggleLoginDialog());
     }

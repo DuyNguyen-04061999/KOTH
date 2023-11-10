@@ -9,8 +9,8 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
-    closeSubscribeDialog,
-    toggleLoginDialog,
+  closeSubscribeDialog,
+  toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { joinPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleTournamentShow } from "../../../redux-saga-middleware/reducers/tournamentReducer";
@@ -24,8 +24,6 @@ export default function DialogSubscribe() {
   const {
     tokenUser: token,
     uPack,
-    countTicket,
-    listJoinedTour,
   } = useSelector((state) => state.userReducer);
 
   const handleJoinTour = (sub) => {
