@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
   toggleLoginDialog,
@@ -23,22 +24,12 @@ import {
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
-import {
-  getRefactorDetailAuthPromotion,
-  getRefactorDetailPromotion,
-  startGameInPromotion,
-} from "../../../redux-saga-middleware/reducers/promotionReducer";
-import {
-  toggleExtra,
-  toggleTournamentShow,
-} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { isJson, sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import "./index.scss";
-import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const { detailTournament } = useSelector((state) => state.playgameReducer);
@@ -100,6 +91,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           tournamentId: id,
         })
       );
+      dispatch(toggleStartGame())
     }
   };
 
@@ -341,7 +333,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     >
                       {moment(
                         detailTournament?.tournamentStartAt || new Date()
-                      )?.format("HH:mm a")}
+                      )?.format("hh:mm a")}
                     </Typography>
                   </Box>
                 </Box>
@@ -384,7 +376,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     >
                       {moment(
                         detailTournament?.tournamentEndAt || new Date()
-                      )?.format("HH:mm a")}
+                      )?.format("hh:mm a")}
                     </Typography>
                   </Box>
                 </Box>
@@ -1171,13 +1163,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {/* {detailTournament?.tournamentStatus !== 2 && (
+                    {detailTournament?.tournamentStatus !== 2 && (
                       <AnimButton
                         onClick={handlePlayTour}
                         type={"highlight"}
                         text={"Play"}
                       />
-                    )} */}
+                    )}
 
                     {detailTournament?.tournamentStatus !== 2 && (
                       <AnimButton

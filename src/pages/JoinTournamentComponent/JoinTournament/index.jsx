@@ -679,7 +679,7 @@ export default function JoinTournament() {
                                   {moment(
                                     detailTournament?.tournamentStartAt ||
                                       new Date()
-                                  )?.format("LT")}
+                                  )?.format("hh:mm a")}
                                 </Typography>
                               </Box>
                             )}
@@ -784,7 +784,7 @@ export default function JoinTournament() {
                                   {moment(
                                     detailTournament?.tournamentEndAt ||
                                       new Date()
-                                  )?.format("LT")}
+                                  )?.format("hh:mm a")}
                                 </Typography>
                               </Box>
                             )}
@@ -2278,7 +2278,7 @@ export default function JoinTournament() {
                         >
                           {moment(
                             detailTournament?.tournamentStartAt || new Date()
-                          )?.format("HH:mm a")}
+                          )?.format("hh:mm a")}
                         </Typography>
                       </Box>
                     </Box>
@@ -2342,7 +2342,7 @@ export default function JoinTournament() {
                         >
                           {moment(
                             detailTournament?.tournamentEndAt || new Date()
-                          )?.format("HH:mm a")}
+                          )?.format("hh:mm a")}
                         </Typography>
                       </Box>
                     </Box>
