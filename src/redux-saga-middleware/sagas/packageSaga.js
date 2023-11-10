@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { showToastNotification } from "../reducers/alertReducer";
 import { buyPackageFail, buyPackageSuccess, getListPackageFail, getListPackageSuccess } from "../reducers/packageReducer";
-import { updateCountTicket, updateGoldAfterBuyPackage } from "../reducers/userReducer";
+import { getUserInfoReady, updateCountTicket, updateGoldAfterBuyPackage } from "../reducers/userReducer";
 import PackageService from "../services/packageService";
 
 const packageService = new PackageService()
@@ -40,6 +40,9 @@ function* buyPackageSaga(dataRequest) {
                 yield put(buyPackageSuccess(data))
                 yield put(updateGoldAfterBuyPackage(data?.data?.gold || data?.data?.goldLeft || 0))
                 yield put(updateCountTicket(data?.data?.quantity || 0))
+                if(!data?.data?.quantity) {
+                    yield put(getUserInfoReady(localStorage.getItem("token")))
+                }
                 yield put(
                     showToastNotification({
                       type: "success",
