@@ -259,10 +259,18 @@ function App() {
       });
 
       socket?.on("addFriendSuccess", (data) => {
+        store.dispatch(showToastNotification({
+          type: "success",
+          message: "Add friend successfully!"
+        }))
         store.dispatch(updateFriendList(data));
       })
 
       socket?.on("deleteFriendSuccess", (data) => {
+        store.dispatch(showToastNotification({
+          type: "success",
+          message: "Delete friend successfully!"
+        }))
         socket?.emit("listFriend");
         store.dispatch(deleteFriendSuccesFully("success"));
       })
