@@ -50,6 +50,9 @@ function* loginSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(loginSuccess(data?.data));
+        _socket.emit("loginSocial", {
+          token:  data?.data?.token
+        })
         yield put(
           showToastNotification({
             type: authNotification.signIn.signInSuccess.type,
