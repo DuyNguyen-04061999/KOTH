@@ -160,6 +160,7 @@ export default function ListPackage(props) {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     marginBottom: "15px",
+                    marginTop: packageName === "Subscription" ? "0px" : "25px"
                   }}
                 >
                   {packageName === "Subscription" ? (
@@ -413,7 +414,7 @@ export default function ListPackage(props) {
                   }
                 }}
                 disabled={
-                  id === userPackageId && uPack && uPack?.remain !== "Expired"
+                  uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
                     ? true
                     : false
                 }
@@ -423,7 +424,7 @@ export default function ListPackage(props) {
                   borderRadius: "7px",
                   color: "white",
                   background:
-                    id === userPackageId && uPack && uPack?.remain !== "Expired"
+                  uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
                       ? "Gray"
                       : "#9747FF",
                   backdropFilter: " blur(4px)",
@@ -437,11 +438,8 @@ export default function ListPackage(props) {
                     fontSize: "11px !important",
                   }}
                 >
-                  {uPack && uPack?.remain === "Expired"
-                    ? "Upgrade pack"
-                    : id === userPackageId ||
-                      (packageName === "Free" && !userPackageId)
-                    ? "Current pack"
+                  {uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
+                    ? "Current pack" : uPack?.remain === "Expired" ? "Upgrade Pack"
                     : "Buy Now"}
                 </Typography>
               </button>
