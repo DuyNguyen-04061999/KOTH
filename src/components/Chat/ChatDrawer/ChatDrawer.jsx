@@ -309,7 +309,7 @@ const ChatDrawer = () => {
                 <Test
                   style={{ fontSize: "13px" }}
                   type="text"
-                  id="sendmessages"
+                  id="sendmessages_chat_drawer"
                   onKeyDown={handleOnKeyDown}
                   placeholder="Type your message... "
                 />

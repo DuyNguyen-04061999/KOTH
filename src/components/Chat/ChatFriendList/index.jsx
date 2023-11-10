@@ -277,7 +277,7 @@ export default function ChatFriendList() {
           <Test
             type="text"
             value={searchFeild}
-            id="sendmessages"
+            id="sendmessages_chat_friend_list"
             style={{
               border: "0px solid #3f3970",
               borderRadius: "4px",

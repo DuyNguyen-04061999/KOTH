@@ -263,7 +263,7 @@ export default function DialogChat(props) {
                 
                   type="text"
                   value={chat}
-                  id="sendmessages"
+                  id="sendmessages_mobile_chat"
                   onChange={handleChangeChat}
                   onKeyDown={handleOnKeyDown}
                   style={inpChat()}
