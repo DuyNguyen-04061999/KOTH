@@ -51,7 +51,6 @@ export default function DialogWallet(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDeposit, setLoadingDeposit] = useState(false);
   const { isTransactionDialog } = useSelector((state) => state.walletReducer);
-  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const [withDrawAddress, setWithDrawAddress] = useState("");
   const [transactions, setTransaction] = useState([]);
   const [wrapperWidth, setWrapperWidth] = useState();

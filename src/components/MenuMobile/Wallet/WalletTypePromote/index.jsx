@@ -14,7 +14,7 @@ import { formatMoney, getAppType } from "../../../../utils/helper";
 import AnimButton from "../../../AnimButton";
 
 export default function WalletTypePromote(props) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducer);
   const userGold = user?.userGold || 0

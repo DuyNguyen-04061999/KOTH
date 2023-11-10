@@ -22,8 +22,7 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
 import {
-  changeRouter,
-  toggleStartGame,
+  changeRouter
 } from "../../redux-saga-middleware/reducers/appReducer";
 import {
   addRefCodeRegister,
