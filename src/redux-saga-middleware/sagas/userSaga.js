@@ -35,6 +35,7 @@ import {
   sendOtpSuccess,
   updateProfileUserFail,
   updateProfileUserSuccess,
+  updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
 const userService = new UserService();
@@ -202,6 +203,7 @@ function* userInfoSaga(dataRequest) {
           data?.data?.user?.userVerifiedEmail === 0 ||
           data?.data?.user?.userVerifiedPhone === 0
         ) {
+          yield put(updateVerifyOTPType("reVerify"));
           yield put(openVerifyDialog());
         }
         yield put(closeLoginDialog());
