@@ -6,41 +6,53 @@ import PackageService from "../services/packageService";
 
 const packageService = new PackageService()
 
+let getListPackageCount = 0
 function* getListPackageSaga(dataRequest) {
     try {
-        const {payload} = dataRequest;
-        const res = yield call(packageService.getListPackage, payload)
-        const{ status, data} = res
-        
-        if(status === 200 || status === 201) {
-            yield put(getListPackageSuccess(data?.data?.list || []))
-        } else {
-            yield put(getListPackageFail())
+        getListPackageCount += 1
+        if(getListPackageCount === 1) {
+            const {payload} = dataRequest;
+            const res = yield call(packageService.getListPackage, payload)
+            const{ status, data} = res
+            
+            if(status === 200 || status === 201) {
+                yield put(getListPackageSuccess(data?.data?.list || []))
+            } else {
+                yield put(getListPackageFail())
+            }
         }
+        getListPackageCount = 0
     } catch (error) {
+        getListPackageCount = 0
         yield put(getListPackageFail())
     }
 }
 
+let buyPackageCount = 0
 function* buyPackageSaga(dataRequest) {
     try {
-        const {payload} = dataRequest
-        const res = yield call(packageService.buyPackage, payload)
-        const {status, data} = res
-        if(status === 200 || status === 201) {
-            yield put(buyPackageSuccess(data))
-            yield put(updateGoldAfterBuyPackage(data?.data?.gold || data?.data?.goldLeft || 0))
-            yield put(updateCountTicket(data?.data?.quantity || 0))
-            yield put(
-                showToastNotification({
-                  type: "success",
-                  message: "Buy package successfully!",
-                })
-              );
-        } else {
-            yield put(buyPackageFail())
+        buyPackageCount += 1
+        if(buyPackageCount === 1) {
+            const {payload} = dataRequest
+            const res = yield call(packageService.buyPackage, payload)
+            const {status, data} = res
+            if(status === 200 || status === 201) {
+                yield put(buyPackageSuccess(data))
+                yield put(updateGoldAfterBuyPackage(data?.data?.gold || data?.data?.goldLeft || 0))
+                yield put(updateCountTicket(data?.data?.quantity || 0))
+                yield put(
+                    showToastNotification({
+                      type: "success",
+                      message: "Buy package successfully!",
+                    })
+                  );
+            } else {
+                yield put(buyPackageFail())
+            }
         }
+        buyPackageCount = 0
     } catch (error) {
+        buyPackageCount = 0
         yield put(buyPackageFail())
         yield put(
             showToastNotification({

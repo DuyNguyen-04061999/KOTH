@@ -5,6 +5,8 @@ import { showToastNotification } from "../reducers/alertReducer";
 import {
   clickTab,
   closeLoginDialog,
+  closeVerifyDialog,
+  openLoginDialog,
   openVerifyDialog,
   saveForgetPassInfo,
 } from "../reducers/authReducer";
@@ -66,7 +68,9 @@ function* loginSaga(dataRequest) {
         );
       }
     }
+    loginCount = 0
   } catch (error) {
+    loginCount = 0
     yield put(loginFail());
     yield put(
       showToastNotification({
@@ -86,6 +90,7 @@ function* registerSaga(dataRequest) {
       const res = yield call(userService.register, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
+        console.log({ ...payload, ...data?.data });
         yield put(registerSuccess({ ...payload, ...data?.data }));
         yield put(clickTab("otpVerifyAccount"));
       } else {
@@ -97,9 +102,10 @@ function* registerSaga(dataRequest) {
           })
         );
       }
-      registerCount = 0;
     }
+    registerCount = 0;
   } catch (error) {
+    registerCount = 0;
     yield put(registerFail());
     yield put(
       showToastNotification({
@@ -110,21 +116,27 @@ function* registerSaga(dataRequest) {
   }
 }
 
+let updateCount = 0
 function* updateProfileSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.updateProfile, payload);
-    const { status, data } = res;
-    if (status === 200 || status === 201) {
-      yield put(
-        updateProfileUserSuccess({
-          avatar: data?.data?.avatar,
-        })
-      );
-    } else {
-      yield put(updateProfileUserFail());
+    updateCount += 1
+    if(updateCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.updateProfile, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(
+          updateProfileUserSuccess({
+            avatar: data?.data?.avatar,
+          })
+        );
+      } else {
+        yield put(updateProfileUserFail());
+      }
     }
+    updateCount = 0
   } catch (error) {
+    updateCount = 0
     yield put(updateProfileUserFail());
     yield put(
       showToastNotification({
@@ -163,9 +175,10 @@ function* logoutSaga(dataRequest) {
           })
         );
       }
-      logOutCount = 0;
     }
+    logOutCount = 0;
   } catch (error) {
+    logOutCount = 0;
     yield put(logoutFail());
     yield put(
       showToastNotification({
@@ -195,9 +208,10 @@ function* userInfoSaga(dataRequest) {
       } else {
         yield put(getUserInfoFail());
       }
-      userInfoCount = 0;
     }
+    userInfoCount = 0;
   } catch (error) {
+    userInfoCount = 0;
     yield put(getUserInfoFail());
     yield put(
       showToastNotification({
@@ -247,9 +261,10 @@ function* sendOtpSaga(dataRequest) {
           })
         );
       }
-      sendOtpCount = 0;
     }
+    sendOtpCount = 0;
   } catch (error) {
+    sendOtpCount = 0;
     yield put(sendOtpFail());
     yield put(
       showToastNotification({
@@ -285,9 +300,10 @@ function* resendOtpSaga(dataRequest) {
           })
         );
       }
-      resendOtpCount = 0;
     }
+    resendOtpCount = 0;
   } catch (error) {
+    resendOtpCount = 0;
     yield put(resendOtpFail());
     yield put(
       showToastNotification({
@@ -319,9 +335,10 @@ function* forgetPasswordSaga(dataRequest) {
           })
         );
       }
-      forgetCount = 0;
     }
+    forgetCount = 0;
   } catch (error) {
+    forgetCount = 0;
     yield put(forgetPasswordFail());
     yield put(
       showToastNotification({
@@ -358,9 +375,10 @@ function* resetPasswordSaga(dataRequest) {
           })
         );
       }
-      resetPasswordCount = 0;
     }
+    resetPasswordCount = 0;
   } catch (error) {
+    resetPasswordCount = 0;
     yield put(resetPasswordFail());
     yield put(
       showToastNotification({
@@ -381,9 +399,9 @@ function* reVerifyAccountSaga(dataRequest) {
       const { status } = res;
       if (status === 200 || status === 201) {
         yield put(reVerifyAccountSuccess());
-        // yield put(closeVerifyDialog());
-        // yield put(openLoginDialog());
-        // yield put(clickTab("otpVerifyAccount"));
+        yield put(closeVerifyDialog());
+        yield put(openLoginDialog());
+        yield put(clickTab("otpVerifyAccount"));
       } else {
         yield put(reVerifyAccountFail());
         yield put(
@@ -393,9 +411,10 @@ function* reVerifyAccountSaga(dataRequest) {
           })
         );
       }
-      reVerifyCount = 0;
     }
+    reVerifyCount = 0;
   } catch (error) {
+    reVerifyCount = 0
     yield put(reVerifyAccountFail());
     yield put(
       showToastNotification({
@@ -406,31 +425,37 @@ function* reVerifyAccountSaga(dataRequest) {
   }
 }
 
+let getUserCount = 0
 function* getUserByUsernameSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(userService.getUserByUsername, payload);
-    const { status } = res;
-    const { user } = res?.data?.data || {};
-    if (status === 200 || status === 201) {
-      yield put(getUserByUsernameSuccess());
-      yield put(
-        saveDataProfile({
-          id: user?.userId || "ID",
-          email: user?.userEmail,
-          refCode: user?.userRefCode,
-          phone: user?.userPhone,
-          userNameProfile: user?.userName,
-          avatarUrl: user?.userAccount?.accountAvatar,
-          firstName: user?.userFirstName,
-          lastName: user?.userLastName,
-          nickName: user?.userNickName,
-        })
-      );
-    } else {
-      yield put(getUserByUsernameFail());
+    getUserCount += 1
+    if(getUserCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.getUserByUsername, payload);
+      const { status } = res;
+      const { user } = res?.data?.data || {};
+      if (status === 200 || status === 201) {
+        yield put(getUserByUsernameSuccess());
+        yield put(
+          saveDataProfile({
+            id: user?.userId || "ID",
+            email: user?.userEmail,
+            refCode: user?.userRefCode,
+            phone: user?.userPhone,
+            userNameProfile: user?.userName,
+            avatarUrl: user?.userAccount?.accountAvatar,
+            firstName: user?.userFirstName,
+            lastName: user?.userLastName,
+            nickName: user?.userNickName,
+          })
+        );
+      } else {
+        yield put(getUserByUsernameFail());
+      }
     }
+    getUserCount = 0
   } catch (error) {
+    getUserCount = 0
     yield put(getUserByUsernameFail());
     yield put(
       showToastNotification({
