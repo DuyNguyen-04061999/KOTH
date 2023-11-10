@@ -10,8 +10,6 @@ import AnimButton from "../../../AnimButton";
 
 export default function ForgetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { user, registerUsername, typeVerifyOTP, resenOTPSuccess } = useSelector((state) => state.userReducer);
-console.log(typeVerifyOTP);
   const { width } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

@@ -111,7 +111,7 @@ export default function OTPVerifyAccount() {
     }
     
   };
-console.log(createAccInfo);
+
   return (
     <Box
       sx={{

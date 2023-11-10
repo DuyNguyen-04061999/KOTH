@@ -19,7 +19,6 @@ export default function OTPResetPassword() {
   );
   const {  typeVerifyOTP, resenOTPSuccess } = useSelector((state) => state.userReducer);
 
-  console.log(typeVerifyOTP);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();

@@ -85,7 +85,7 @@ export default function Dialoglg() {
   const { width, height } = useWindowDimensions();
 
   const token = localStorage.getItem("token");    
-  console.log(uPack);
+  
   useEffect(() => {
     if(token) {
       dispatch(getUserInfoReady(token));
