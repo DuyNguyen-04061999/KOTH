@@ -2,7 +2,10 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { forgetPasswordReady, updateVerifyOTPType } from "../../../../redux-saga-middleware/reducers/userReducer";
+import {
+  forgetPasswordReady,
+  updateVerifyOTPType,
+} from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateEmail } from "../../../../utils/validationEmail";
@@ -29,9 +32,11 @@ export default function ForgetPassword() {
   }, [optionEmail]);
 
   useEffect(() => {
-    dispatch(updateVerifyOTPType(optionEmail ? "forget_email" : "forget_phone"))
-  }, [optionEmail, dispatch])
-  
+    dispatch(
+      updateVerifyOTPType(optionEmail ? "forget_email" : "forget_phone")
+    );
+  }, [optionEmail, dispatch]);
+
   const handleSubmit = () => {
     dispatch(
       forgetPasswordReady({
@@ -49,8 +54,7 @@ export default function ForgetPassword() {
       } else {
         setEmailError("");
       }
-    }
-    else{
+    } else {
       setEmailError("");
     }
   }, [email]);
@@ -62,8 +66,7 @@ export default function ForgetPassword() {
       } else {
         setPhoneNumberError("");
       }
-    }
-    else{
+    } else {
       setPhoneNumberError("");
     }
   }, [phoneNumber]);
