@@ -12,6 +12,7 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
+import { getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
@@ -48,6 +49,7 @@ export default function PlayGame(props) {
             setStartGame(false);
           }, 1000);
           setTimeout(() => {
+            dispatch(getRefactorDetailPromotion(id));
             dispatch(toggleOpenResultEndGame(score || 0));
             dispatch(toggleStartGame(false));
           }, 1500);
@@ -378,7 +380,7 @@ export default function PlayGame(props) {
                           : "28px",
                       width: "480px",
                       wordBreak: "break-all",
-                      textAlign: "left"
+                      textAlign: "left",
                     }}
                   >
                     {detailTournament?.tournamentName?.length > 50

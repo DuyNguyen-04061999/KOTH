@@ -19,19 +19,26 @@ import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
-import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
+import {
+  toggleStartGame,
+  updateFromRouter,
+} from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
-import { updateDetailTour, updateDetailTourAfterPlayGame } from "../../../redux-saga-middleware/reducers/playgameReducer";
+import {
+  updateDetailTour,
+  updateDetailTourAfterPlayGame,
+} from "../../../redux-saga-middleware/reducers/playgameReducer";
 import {
   finishGame,
   finishVideo,
   getRefactorDetailAuthPromotion,
   getRefactorDetailPromotion,
-  startGameInPromotion
+  startGameInPromotion,
+  startGameInPromotionFail,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   saveBoughtTournament,
@@ -114,25 +121,24 @@ export default function JoinTournament() {
   }, [id, token, dispatch]);
 
   useEffect(() => {
-    if(token || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion(id))
+    if (token || localStorage.getItem("token")) {
+      dispatch(getRefactorDetailAuthPromotion(id));
     } else {
-      dispatch(getRefactorDetailPromotion(id))
-      
+      dispatch(getRefactorDetailPromotion(id));
     }
-  }, [token, dispatch, id])
-  
+  }, [token, dispatch, id]);
+
   const handlePlayTour = () => {
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
       return;
     } else {
-      if(countTicket > 0 && detailTournament?.extra <= 0) {
-        dispatch(updateCountExtraAfterPlayGame(1))
+      if (countTicket > 0 && detailTournament?.extra <= 0) {
+        dispatch(updateCountExtraAfterPlayGame(1));
       }
 
-      if(countTicket <= 0 && detailTournament?.extra > 0) {
-        dispatch(updateDetailTourAfterPlayGame())
+      if (countTicket <= 0 && detailTournament?.extra > 0) {
+        dispatch(updateDetailTourAfterPlayGame());
       }
 
       dispatch(
@@ -140,11 +146,12 @@ export default function JoinTournament() {
           tournamentId: id,
         })
       );
+      dispatch(toggleStartGame(true));
     }
   };
 
   const handleJoinTour = () => {
-    if(token) {
+    if (token) {
       if (
         (detailTournament?.tournamentVip !== 0 && uPack === null) ||
         (detailTournament?.tournamentVip !== 0 &&
@@ -153,8 +160,8 @@ export default function JoinTournament() {
       ) {
         dispatch(toggleTournamentShow());
       } else {
-        dispatch(openSubscribeDialog())
-      } 
+        dispatch(openSubscribeDialog());
+      }
     } else {
       dispatch(toggleLoginDialog());
     }
@@ -211,7 +218,10 @@ export default function JoinTournament() {
       window.removeEventListener("orientationchange", updateOrientation);
     };
   }, [startGamePromotion]);
-  
+  useEffect(() => {
+    dispatch(startGameInPromotionFail());
+  }, [dispatch]);
+
   return (
     <>
       <ResultEndGame />
@@ -394,7 +404,7 @@ export default function JoinTournament() {
                           fontSize: `calc(100vw / 90)`,
                           fontWeight: "800",
                           color: "white",
-                          marginBottom:"10px !important"
+                          marginBottom: "10px !important",
                         }}
                       >
                         REWARD SPONSORED BY:{" "}
@@ -407,7 +417,7 @@ export default function JoinTournament() {
                           letterSpacing: 0,
                           textTransform: "uppercase",
                           color: "white",
-                          marginBottom:"10px !important"
+                          marginBottom: "10px !important",
                         }}
                       >
                         {detailTournament?.tournamentName}
@@ -425,7 +435,7 @@ export default function JoinTournament() {
                     <Box
                       sx={{
                         width: `calc(100vw/ 5)`,
-                        height:`calc(100vw/ 6)`,
+                        height: `calc(100vw/ 6)`,
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -1860,24 +1870,26 @@ export default function JoinTournament() {
                       >
                         Final Result
                       </Typography>
-                      {detailTournament?.tournamentStatus === 2 ? ("") : (
+                      {detailTournament?.tournamentStatus === 2 ? (
+                        ""
+                      ) : (
                         <Typography
-                        onClick={() => {
-                          setCurrentResult(true);
-                        }}
-                        sx={{
-                          textAlign: "start",
-                          fontWeight: "lighter !important",
-                          fontSize:
-                            576 < width && width < 1200
-                              ? `${width / 71}px`
-                              : "18px",
-                          color: "#BE48ED",
-                          cursor: "pointer",
-                        }}
-                      >
-                        View All
-                      </Typography>
+                          onClick={() => {
+                            setCurrentResult(true);
+                          }}
+                          sx={{
+                            textAlign: "start",
+                            fontWeight: "lighter !important",
+                            fontSize:
+                              576 < width && width < 1200
+                                ? `${width / 71}px`
+                                : "18px",
+                            color: "#BE48ED",
+                            cursor: "pointer",
+                          }}
+                        >
+                          View All
+                        </Typography>
                       )}
                     </Box>
                     <LeaderBoard
@@ -2094,7 +2106,7 @@ export default function JoinTournament() {
                               fontSize: "8px",
                               color: "#FFC56F",
                               fontWeight: "800",
-                              textTransform:"uppercase"
+                              textTransform: "uppercase",
                             }}
                           >
                             Celebrating Our Lucky Champion!
@@ -2448,12 +2460,15 @@ export default function JoinTournament() {
                         : "column",
                   }}
                 >
-                  <Box sx={{
-                     display: "flex",
-                      flexDirection: detailTournament?.tournamentStatus === 2
-                      ? "column"
-                      : "column",
-                  }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection:
+                        detailTournament?.tournamentStatus === 2
+                          ? "column"
+                          : "column",
+                    }}
+                  >
                     <Box
                       sx={{ display: "flex", justifyContent: "space-between" }}
                     >
@@ -2483,643 +2498,646 @@ export default function JoinTournament() {
                       </Box>
                     </Box>
                     <Box className="d-flex p-2 ps-3 pe-3">
-                      
-                      <Box
-                      sx={{
-                        bgcolor: "white",
-                        width: "100%",
-                        height: "116px",
-                        marginTop: "16px",
-                        display: "flex",
-                        borderRadius: "8px",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                      }}
-                    >
                       <Box
                         sx={{
-                          width: "64.8%",
-                          height: "100%",
-                          borderRadius: "1px 0px 0px 8px",
-                          padding: "12px 10px",
+                          bgcolor: "white",
+                          width: "100%",
+                          height: "116px",
+                          marginTop: "16px",
+                          display: "flex",
+                          borderRadius: "8px",
+                          marginLeft: "auto",
+                          marginRight: "auto",
                         }}
                       >
-                        <Box>
-                          <Typography
-                            variant="h5"
-                            style={{
-                              color: "#BE48ED",
-                              fontSize: "16px",
-                              maxHeight: "24px",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              fontWeight: "700",
+                        <Box
+                          sx={{
+                            width: "64.8%",
+                            height: "100%",
+                            borderRadius: "1px 0px 0px 8px",
+                            padding: "12px 10px",
+                          }}
+                        >
+                          <Box>
+                            <Typography
+                              variant="h5"
+                              style={{
+                                color: "#BE48ED",
+                                fontSize: "16px",
+                                maxHeight: "24px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                fontWeight: "700",
+                              }}
+                            >
+                              {" "}
+                              {detailTournament?.tournamentInfors?.rewardInfors
+                                ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              marginTop: "4px",
                             }}
                           >
-                            {" "}
-                            {detailTournament?.tournamentInfors?.rewardInfors
-                              ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                            <Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                {" "}
+                                <Typography
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                    color: "#525252",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  Recipient
+                                </Typography>
+                                <Typography
+                                  style={{
+                                    fontSize: "12px",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  {sliceString(
+                                    detailTournament?.tournamentInfors
+                                      ?.rewardInfors?.rewardRecipient
+                                  ) || "Recipient"}
+                                </Typography>
+                              </Box>
+                              <Box
+                                sx={{
+                                  marginTop: "6px",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                {" "}
+                                <Typography
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                    color: "#525252",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  Sponsored by
+                                </Typography>
+                                <Typography
+                                  style={{
+                                    fontSize: "12px",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  {detailTournament?.tournamentInfors?.owner
+                                    ?.brandName || "Samsung"}
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box>
+                              {" "}
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                {" "}
+                                <Typography
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                    color: "#525252",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  Valid by
+                                </Typography>
+                                <Typography
+                                  style={{
+                                    fontSize: "12px",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  {moment(
+                                    detailTournament?.tournamentInfors
+                                      ?.rewardInfors?.rewardValidityDate
+                                  )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
+                                </Typography>
+                              </Box>
+                              <Box
+                                sx={{
+                                  marginTop: "6px",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                {" "}
+                                <Typography
+                                  style={{
+                                    fontSize: "10px",
+                                    marginBottom: "0px !important",
+                                    color: "#525252",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  Conditions
+                                </Typography>
+                                <Typography
+                                  className="cursor-pointer"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setOpenVoucher(true);
+                                  }}
+                                  style={{
+                                    color: "#0096FF",
+                                    fontSize: "12px",
+                                    textAlign: "start",
+                                  }}
+                                >
+                                  See more
+                                </Typography>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </Box>
+                        <Box
+                          sx={{
+                            width: "35.2%",
+                            height: "100%",
+                            borderLeft: "dashed 1px #0D0804",
+                            borderRadius: "0px 8px 8px 0px",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              width: "100%",
+                              height: "100%",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "8px",
+                              position: "relative",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                height: "20px",
+                                width: "20px",
+                                bgcolor: "#1a151e",
+                                position: "absolute",
+                                borderRadius: "50%",
+                                top: "-10px",
+                                left: "-10px",
+                              }}
+                            ></Box>
+                            <Box
+                              sx={{
+                                height: "20px",
+                                width: "20px",
+                                bgcolor: "#1a151e",
+                                position: "absolute",
+                                borderRadius: "50%",
+                                bottom: "-10px",
+                                left: "-10px",
+                              }}
+                            ></Box>
+                            <img
+                              style={{
+                                borderRadius: "10px",
+                                objectFit: "cover",
+                                width: "100%",
+                                height: "100%",
+                              }}
+                              src={
+                                detailTournament?.tournamentInfors?.rewardInfors
+                                  ?.rewardAvatar
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    detailTournament?.tournamentInfors
+                                      ?.rewardInfors?.rewardAvatar
+                                  : images.GameTournament
+                              }
+                              alt="..."
+                              width={"95%"}
+                              height={"90%"}
+                            />
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box sx={{ marginTop: "5px" }}>
+                      <GameInTournament
+                        game={
+                          detailTournament?.tournamentInfors?.skin?.skinGame ||
+                          null
+                        }
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        marginTop: "15px",
+                      }}
+                    >
+                      {!listJoinedTour?.includes(id) ? (
+                        detailTournament?.tournamentStatus === 2 ? (
+                          ""
+                        ) : (
+                          <AnimButton
+                            onClick={handleJoinTour}
+                            text={"Join"}
+                            type={"highlight"}
+                          />
+                        )
+                      ) : (
+                        <Box
+                          sx={{
+                            display:
+                              detailTournament?.tournamentStatus === 2
+                                ? "none"
+                                : "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {" "}
+                          (
+                          <AnimButton
+                            onClick={handlePlayTour}
+                            type={"highlight"}
+                            text={"Play"}
+                          />
+                          )
+                          <AnimButton
+                            onClick={handleClickOpen}
+                            text={"Buy Extra"}
+                            type={"primary"}
+                          />
+                        </Box>
+                      )}
+                    </Box>
+                    {detailTournament?.tournamentStatus === 2 ? (
+                      ""
+                    ) : (
+                      <Box sx={{ marginTop: "15px" }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              textAlign: "start",
+                              color: "#fff",
+                              fontSize: "14px",
+                              fontWeight: "700 !important",
+                            }}
+                          >
+                            Participants
+                          </Typography>
+                          <Typography
+                            sx={{
+                              color: "#BE48ED",
+                              fontWeight: "600 !important",
+                              fontSize: "14px",
+                              display: "flex",
+                              alignItems: "center",
+                              backgroundColor: "#2E233D",
+                              paddingLeft: "5px",
+                              paddingRight: "5px",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            {detailTournament?.tournamentParticipants?.length}/
+                            {detailTournament?.tournamentQuantity > 0 ? (
+                              detailTournament?.tournamentQuantity
+                            ) : (
+                              <InfinityIcon
+                                sx={{
+                                  width: 12,
+                                  height: 12,
+                                }}
+                              />
+                            )}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="17"
+                              fill="none"
+                              viewBox="0 0 16 17"
+                            >
+                              <g>
+                                <path
+                                  fill="#BE48ED"
+                                  d="M8 1.583A3.17 3.17 0 004.833 4.75c0 1.713 1.34 3.1 3.087 3.16a.538.538 0 01.147 0h.046a3.159 3.159 0 003.054-3.16A3.17 3.17 0 008 1.583zm3.387 8.1c-1.86-1.24-4.894-1.24-6.767 0-.847.566-1.313 1.333-1.313 2.153 0 .82.466 1.58 1.306 2.14.934.626 2.16.94 3.387.94 1.227 0 2.453-.314 3.387-.94.84-.567 1.306-1.327 1.306-2.154-.006-.82-.466-1.58-1.306-2.14z"
+                                ></path>
+                              </g>
+                            </svg>
                           </Typography>
                         </Box>
                         <Box
                           sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            marginTop: "4px",
-                          }}
-                        >
-                          <Box>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "flex-start",
-                              }}
-                            >
-                              {" "}
-                              <Typography
-                                style={{
-                                  fontSize: "10px",
-                                  marginBottom: "0px !important",
-                                  color: "#525252",
-                                  textAlign: "start",
-                                }}
-                              >
-                                Recipient
-                              </Typography>
-                              <Typography
-                                style={{
-                                  fontSize: "12px",
-                                  textAlign: "start",
-                                }}
-                              >
-                                {sliceString(
-                                  detailTournament?.tournamentInfors
-                                    ?.rewardInfors?.rewardRecipient
-                                ) || "Recipient"}
-                              </Typography>
-                            </Box>
-                            <Box
-                              sx={{
-                                marginTop: "6px",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "flex-start",
-                              }}
-                            >
-                              {" "}
-                              <Typography
-                                style={{
-                                  fontSize: "10px",
-                                  marginBottom: "0px !important",
-                                  color: "#525252",
-                                  textAlign: "start",
-                                }}
-                              >
-                                Sponsored by
-                              </Typography>
-                              <Typography
-                                style={{
-                                  fontSize: "12px",
-                                  textAlign: "start",
-                                }}
-                              >
-                                {detailTournament?.tournamentInfors?.owner
-                                  ?.brandName || "Samsung"}
-                              </Typography>
-                            </Box>
-                          </Box>
-                          <Box>
-                            {" "}
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "flex-start",
-                              }}
-                            >
-                              {" "}
-                              <Typography
-                                style={{
-                                  fontSize: "10px",
-                                  marginBottom: "0px !important",
-                                  color: "#525252",
-                                  textAlign: "start",
-                                }}
-                              >
-                                Valid by
-                              </Typography>
-                              <Typography
-                                style={{
-                                  fontSize: "12px",
-                                  textAlign: "start",
-                                }}
-                              >
-                                {moment(
-                                  detailTournament?.tournamentInfors
-                                    ?.rewardInfors?.rewardValidityDate
-                                )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                              </Typography>
-                            </Box>
-                            <Box
-                              sx={{
-                                marginTop: "6px",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "flex-start",
-                              }}
-                            >
-                              {" "}
-                              <Typography
-                                style={{
-                                  fontSize: "10px",
-                                  marginBottom: "0px !important",
-                                  color: "#525252",
-                                  textAlign: "start",
-                                }}
-                              >
-                                Conditions
-                              </Typography>
-                              <Typography
-                                className="cursor-pointer"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  setOpenVoucher(true);
-                                }}
-                                style={{
-                                  color: "#0096FF",
-                                  fontSize: "12px",
-                                  textAlign: "start",
-                                }}
-                              >
-                                See more
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "35.2%",
-                          height: "100%",
-                          borderLeft: "dashed 1px #0D0804",
-                          borderRadius: "0px 8px 8px 0px",
-                        }}
-                      >
-                        <Box
-                          sx={{
                             width: "100%",
-                            height: "100%",
+                            height: "36px",
                             display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: "8px",
+                            justifyContent: "space-between",
                             position: "relative",
+                            marginTop: "5px",
                           }}
                         >
-                          <Box
-                            sx={{
-                              height: "20px",
-                              width: "20px",
-                              bgcolor: "#1a151e",
-                              position: "absolute",
-                              borderRadius: "50%",
-                              top: "-10px",
-                              left: "-10px",
-                            }}
-                          ></Box>
-                          <Box
-                            sx={{
-                              height: "20px",
-                              width: "20px",
-                              bgcolor: "#1a151e",
-                              position: "absolute",
-                              borderRadius: "50%",
-                              bottom: "-10px",
-                              left: "-10px",
-                            }}
-                          ></Box>
-                          <img
-                            style={{
-                              borderRadius: "10px",
-                              objectFit: "cover",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                            src={
-                              detailTournament?.tournamentInfors?.rewardInfors
-                                ?.rewardAvatar
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  detailTournament?.tournamentInfors
-                                    ?.rewardInfors?.rewardAvatar
-                                : images.GameTournament
-                            }
-                            alt="..."
-                            width={"95%"}
-                            height={"90%"}
-                          />
-                        </Box>
-                      </Box>
-                      </Box>
-                    </Box>
-                  <Box sx={{ marginTop: "5px" }}>
-                    <GameInTournament
-                      game={
-                        detailTournament?.tournamentInfors?.skin?.skinGame ||
-                        null
-                      }
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      width: "100%",
-                      marginTop: "15px",
-                    }}
-                  >
-                    {!listJoinedTour?.includes(id) ? (
-                      detailTournament?.tournamentStatus === 2 ? (
-                        ""
-                      ) : (
-                        <AnimButton
-                          onClick={handleJoinTour}
-                          text={"Join"}
-                          type={"highlight"}
-                        />
-                      )
-                    ) : (
-                      <Box
-                        sx={{
-                          display:
-                            detailTournament?.tournamentStatus === 2
-                              ? "none"
-                              : "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {" "}
-                        (
-                        <AnimButton
-                          onClick={handlePlayTour}
-                          type={"highlight"}
-                          text={"Play"}
-                        />
-                        )
-                        <AnimButton
-                          onClick={handleClickOpen}
-                          text={"Buy Extra"}
-                          type={"primary"}
-                        />
-                      </Box>
-                    )}
-                  </Box>
-                  {detailTournament?.tournamentStatus === 2 ? (
-                    ""
-                  ) : (
-                    <Box sx={{ marginTop: "15px" }}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            textAlign: "start",
-                            color: "#fff",
-                            fontSize: "14px",
-                            fontWeight: "700 !important",
-                          }}
-                        >
-                          Participants
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: "#BE48ED",
-                            fontWeight: "600 !important",
-                            fontSize: "14px",
-                            display: "flex",
-                            alignItems: "center",
-                            backgroundColor: "#2E233D",
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
-                            borderRadius: "5px",
-                          }}
-                        >
-                          {detailTournament?.tournamentParticipants?.length}/
-                          {detailTournament?.tournamentQuantity > 0 ? (
-                            detailTournament?.tournamentQuantity
-                          ) : (
-                            <InfinityIcon
-                              sx={{
-                                width: 12,
-                                height: 12,
-                              }}
-                            />
-                          )}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="17"
-                            fill="none"
-                            viewBox="0 0 16 17"
-                          >
-                            <g>
-                              <path
-                                fill="#BE48ED"
-                                d="M8 1.583A3.17 3.17 0 004.833 4.75c0 1.713 1.34 3.1 3.087 3.16a.538.538 0 01.147 0h.046a3.159 3.159 0 003.054-3.16A3.17 3.17 0 008 1.583zm3.387 8.1c-1.86-1.24-4.894-1.24-6.767 0-.847.566-1.313 1.333-1.313 2.153 0 .82.466 1.58 1.306 2.14.934.626 2.16.94 3.387.94 1.227 0 2.453-.314 3.387-.94.84-.567 1.306-1.327 1.306-2.154-.006-.82-.466-1.58-1.306-2.14z"
-                              ></path>
-                            </g>
-                          </svg>
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "36px",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          position: "relative",
-                          marginTop: "5px",
-                        }}
-                      >
-                        {detailTournament?.tournamentParticipants?.map(
-                          (item, index) => {
-                            return detailTournament?.tournamentParticipants
-                              ?.length <= 5 ? (
-                              <Box
-                                key={index}
-                                sx={{
-                                  padding: "3px",
-                                  backgroundColor: "#211D28",
-                                  width: "36px",
-                                  height: "36px",
-                                  borderRadius: "50%",
-                                  position: "absolute",
-                                  top: "0px",
-                                  left: `${index * 25}px`,
-                                  // zIndex: `${
-                                  //   detailTournament?.tournamentParticipants?.length - index
-                                  // }`,
-                                  zIndex: 0,
-                                }}
-                              >
+                          {detailTournament?.tournamentParticipants?.map(
+                            (item, index) => {
+                              return detailTournament?.tournamentParticipants
+                                ?.length <= 5 ? (
                                 <Box
-                                  component={"img"}
+                                  key={index}
                                   sx={{
+                                    padding: "3px",
+                                    backgroundColor: "#211D28",
+                                    width: "36px",
+                                    height: "36px",
                                     borderRadius: "50%",
-                                    width: "100%",
-                                    height: "100%",
+                                    position: "absolute",
+                                    top: "0px",
+                                    left: `${index * 25}px`,
+                                    // zIndex: `${
+                                    //   detailTournament?.tournamentParticipants?.length - index
+                                    // }`,
+                                    zIndex: 0,
                                   }}
-                                  src={
-                                    item?.userAccount?.accountAvatar
-                                      ? process.env.REACT_APP_SOCKET_SERVER +
-                                        "/" +
-                                        item?.userAccount?.accountAvatar
-                                      : images.undefinedAvatar
-                                  }
-                                ></Box>
-                              </Box>
-                            ) : (
-                              index < 5 &&
-                                (index === 0 ? (
+                                >
                                   <Box
-                                    key={index}
+                                    component={"img"}
                                     sx={{
-                                      width: "36px",
-                                      height: "36px",
-                                      backgroundColor: "#211D28",
                                       borderRadius: "50%",
-                                      boxSizing: "border-box",
-                                      padding: "3px",
-                                      position: "absolute",
-                                      left: `${index * 25}px`,
-                                      top: "0px",
-                                      // zIndex: `${
-                                      //   detailTournament?.tournamentParticipants?.length -
-                                      //   index
-                                      // }`,
-                                      zIndex: 0,
+                                      width: "100%",
+                                      height: "100%",
                                     }}
-                                  >
+                                    src={
+                                      item?.userAccount?.accountAvatar
+                                        ? process.env.REACT_APP_SOCKET_SERVER +
+                                          "/" +
+                                          item?.userAccount?.accountAvatar
+                                        : images.undefinedAvatar
+                                    }
+                                  ></Box>
+                                </Box>
+                              ) : (
+                                index < 5 &&
+                                  (index === 0 ? (
                                     <Box
+                                      key={index}
                                       sx={{
-                                        width: "100%",
-                                        height: "100%",
+                                        width: "36px",
+                                        height: "36px",
+                                        backgroundColor: "#211D28",
                                         borderRadius: "50%",
-                                        position: "relative",
-                                        backgroundImage: `url(${
+                                        boxSizing: "border-box",
+                                        padding: "3px",
+                                        position: "absolute",
+                                        left: `${index * 25}px`,
+                                        top: "0px",
+                                        // zIndex: `${
+                                        //   detailTournament?.tournamentParticipants?.length -
+                                        //   index
+                                        // }`,
+                                        zIndex: 0,
+                                      }}
+                                    >
+                                      <Box
+                                        sx={{
+                                          width: "100%",
+                                          height: "100%",
+                                          borderRadius: "50%",
+                                          position: "relative",
+                                          backgroundImage: `url(${
+                                            item?.userAccount?.accountAvatar
+                                              ? process.env
+                                                  .REACT_APP_SOCKET_SERVER +
+                                                "/" +
+                                                item?.userAccount?.accountAvatar
+                                              : images.undefinedAvatar
+                                          })`,
+                                          backgroundSize: "cover",
+                                          backgroundPosition: "center",
+                                        }}
+                                      >
+                                        <Box
+                                          sx={{
+                                            position: "absolute",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            width: "100%",
+                                            height: "100%",
+                                            borderRadius: "50%",
+                                            backgroundColor: "rgba(7,7,7,0.5)",
+                                            color:
+                                              detailTournament
+                                                ?.tournamentParticipants
+                                                .length > 5
+                                                ? "white"
+                                                : "none",
+                                            fontSize: "12px",
+                                            zIndex: 0,
+                                          }}
+                                        >
+                                          <Typography
+                                            sx={{
+                                              textAlign: "start",
+                                              color: "#fff",
+                                              fontSize: "12px",
+                                              fontWeight: "200 !important",
+                                              marginLeft: "1px !important",
+                                            }}
+                                          >
+                                            {detailTournament
+                                              ?.tournamentParticipants?.length >
+                                              5 &&
+                                              `+${
+                                                detailTournament
+                                                  ?.tournamentParticipants
+                                                  ?.length - 5
+                                              }`}
+                                          </Typography>
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  ) : (
+                                    <Box
+                                      key={index}
+                                      sx={{
+                                        padding: "3px",
+                                        backgroundColor: "#211D28",
+                                        width: "36px",
+                                        height: "36px",
+                                        borderRadius: "50%",
+                                        position: "absolute",
+                                        top: "0px",
+                                        left: `${index * 25}px`,
+                                        // zIndex: `${
+                                        //   detailTournament?.tournamentParticipants?.length -
+                                        //   index
+                                        // }`,
+                                        zIndex: 0,
+                                      }}
+                                    >
+                                      <Box
+                                        component={"img"}
+                                        sx={{
+                                          borderRadius: "50%",
+                                          width: "100%",
+                                          height: "100%",
+                                        }}
+                                        src={
                                           item?.userAccount?.accountAvatar
                                             ? process.env
                                                 .REACT_APP_SOCKET_SERVER +
                                               "/" +
                                               item?.userAccount?.accountAvatar
                                             : images.undefinedAvatar
-                                        })`,
-                                        backgroundSize: "cover",
-                                        backgroundPosition: "center",
-                                      }}
-                                    >
-                                      <Box
-                                        sx={{
-                                          position: "absolute",
-                                          display: "flex",
-                                          justifyContent: "center",
-                                          alignItems: "center",
-                                          width: "100%",
-                                          height: "100%",
-                                          borderRadius: "50%",
-                                          backgroundColor: "rgba(7,7,7,0.5)",
-                                          color:
-                                            detailTournament
-                                              ?.tournamentParticipants.length >
-                                            5
-                                              ? "white"
-                                              : "none",
-                                          fontSize: "12px",
-                                          zIndex: 0,
-                                        }}
-                                      >
-                                        <Typography
-                                          sx={{
-                                            textAlign: "start",
-                                            color: "#fff",
-                                            fontSize: "12px",
-                                            fontWeight: "200 !important",
-                                            marginLeft: "1px !important",
-                                          }}
-                                        >
-                                          {detailTournament
-                                            ?.tournamentParticipants?.length >
-                                            5 &&
-                                            `+${
-                                              detailTournament
-                                                ?.tournamentParticipants
-                                                ?.length - 5
-                                            }`}
-                                        </Typography>
-                                      </Box>
+                                        }
+                                      ></Box>
                                     </Box>
-                                  </Box>
-                                ) : (
-                                  <Box
-                                    key={index}
-                                    sx={{
-                                      padding: "3px",
-                                      backgroundColor: "#211D28",
-                                      width: "36px",
-                                      height: "36px",
-                                      borderRadius: "50%",
-                                      position: "absolute",
-                                      top: "0px",
-                                      left: `${index * 25}px`,
-                                      // zIndex: `${
-                                      //   detailTournament?.tournamentParticipants?.length -
-                                      //   index
-                                      // }`,
-                                      zIndex: 0,
-                                    }}
-                                  >
-                                    <Box
-                                      component={"img"}
-                                      sx={{
-                                        borderRadius: "50%",
-                                        width: "100%",
-                                        height: "100%",
-                                      }}
-                                      src={
-                                        item?.userAccount?.accountAvatar
-                                          ? process.env
-                                              .REACT_APP_SOCKET_SERVER +
-                                            "/" +
-                                            item?.userAccount?.accountAvatar
-                                          : images.undefinedAvatar
-                                      }
-                                    ></Box>
-                                  </Box>
-                                ))
-                            );
-                          }
-                        )}
+                                  ))
+                              );
+                            }
+                          )}
+                        </Box>
                       </Box>
-                    </Box>
-                  )}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginTop: "15px",
-                      marginBottom: "15px",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        height: "1px",
-                        backgroundColor: "rgba(151, 151, 151, 0.40)",
-                        width: "100%",
-                      }}
-                    ></Box>
-                  </Box>
-                  <Box className="imformations">
+                    )}
                     <Box
                       sx={{
                         display: "flex",
                         justifyContent: "space-between",
                         marginTop: "15px",
+                        marginBottom: "15px",
                       }}
                     >
-                      <Typography
+                      <Box
                         sx={{
-                          color: "#fff",
-                          fontWeight: "700 !important",
-                          fontSize: "14px",
+                          height: "1px",
+                          backgroundColor: "rgba(151, 151, 151, 0.40)",
+                          width: "100%",
+                        }}
+                      ></Box>
+                    </Box>
+                    <Box className="imformations">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginTop: "15px",
                         }}
                       >
-                        Informations
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        textAlign: "start",
-                        color: "#9384B7",
-                        fontWeight: "lighter !important",
-                        fontSize: "11px",
-                        height: readMore ? "fit-content" : "100px",
-                        overflow: "hidden",
-                        transition: "height 0.5s ease",
-                      }}
-                    >
-                      {detailTournament &&
-                        detailTournament?.tournamentInformations &&
-                        isJson(detailTournament?.tournamentInformations) &&
-                        JSON.parse(detailTournament?.tournamentInformations) &&
-                        JSON.parse(detailTournament?.tournamentInformations)
-                          ?.length > 0 &&
-                        JSON.parse(
-                          detailTournament?.tournamentInformations
-                        )?.map((item, index) => {
-                          return (
-                            <Box
-                              key={index}
+                        <Typography
+                          sx={{
+                            color: "#fff",
+                            fontWeight: "700 !important",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Informations
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          textAlign: "start",
+                          color: "#9384B7",
+                          fontWeight: "lighter !important",
+                          fontSize: "11px",
+                          height: readMore ? "fit-content" : "100px",
+                          overflow: "hidden",
+                          transition: "height 0.5s ease",
+                        }}
+                      >
+                        {detailTournament &&
+                          detailTournament?.tournamentInformations &&
+                          isJson(detailTournament?.tournamentInformations) &&
+                          JSON.parse(
+                            detailTournament?.tournamentInformations
+                          ) &&
+                          JSON.parse(detailTournament?.tournamentInformations)
+                            ?.length > 0 &&
+                          JSON.parse(
+                            detailTournament?.tournamentInformations
+                          )?.map((item, index) => {
+                            return (
+                              <Box
+                                key={index}
+                                sx={{
+                                  textAlign: "start",
+                                  color: "#9384B7",
+                                  marginTop: "10px",
+                                }}
+                              >
+                                <Typography
+                                  sx={{
+                                    textAlign: "start",
+                                    fontWeight: "500 !important",
+                                    fontSize: "13px",
+                                  }}
+                                >
+                                  {item}
+                                </Typography>
+                              </Box>
+                            );
+                          })}
+                      </Box>
+                      <Box
+                        onClick={() => setReadMore(!readMore)}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        {detailTournament &&
+                          detailTournament?.tournamentInformations &&
+                          isJson(detailTournament?.tournamentInformations) &&
+                          JSON.parse(
+                            detailTournament?.tournamentInformations
+                          ) &&
+                          JSON.parse(detailTournament?.tournamentInformations)
+                            ?.length > 3 && (
+                            <Typography
                               sx={{
-                                textAlign: "start",
-                                color: "#9384B7",
+                                color: "#fff",
+                                fontWeight: "500 !important",
+                                fontSize: "12px",
+                                display: "flex",
+                                alignItems: "center",
+                                marginRight: "28px",
                                 marginTop: "10px",
                               }}
                             >
-                              <Typography
-                                sx={{
-                                  textAlign: "start",
-                                  fontWeight: "500 !important",
-                                  fontSize: "13px",
-                                }}
-                              >
-                                {item}
-                              </Typography>
-                            </Box>
-                          );
-                        })}
+                              {readMore ? "Read less" : "Read more"}
+                            </Typography>
+                          )}
+                      </Box>
                     </Box>
-                    <Box
-                      onClick={() => setReadMore(!readMore)}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      {detailTournament &&
-                        detailTournament?.tournamentInformations &&
-                        isJson(detailTournament?.tournamentInformations) &&
-                        JSON.parse(detailTournament?.tournamentInformations) &&
-                        JSON.parse(detailTournament?.tournamentInformations)
-                          ?.length > 3 && (
-                          <Typography
-                            sx={{
-                              color: "#fff",
-                              fontWeight: "500 !important",
-                              fontSize: "12px",
-                              display: "flex",
-                              alignItems: "center",
-                              marginRight: "28px",
-                              marginTop: "10px",
-                            }}
-                          >
-                            {readMore ? "Read less" : "Read more"}
-                          </Typography>
-                        )}
+                    <Box sx={{ marginBottom: "15px", marginTop: "15px" }}>
+                      <Box
+                        sx={{
+                          height: "1px",
+                          backgroundColor: "rgba(151, 151, 151, 0.40)",
+                          width: "100%",
+                        }}
+                      ></Box>
                     </Box>
-                  </Box>
-                  <Box sx={{ marginBottom: "15px", marginTop: "15px" }}>
-                    <Box
-                      sx={{
-                        height: "1px",
-                        backgroundColor: "rgba(151, 151, 151, 0.40)",
-                        width: "100%",
-                      }}
-                    ></Box>
-                  </Box>
                   </Box>
                   <Box className="final-result">
                     <Box
@@ -3138,31 +3156,33 @@ export default function JoinTournament() {
                       >
                         Final Result
                       </Typography>
-                     {detailTournament?.tournamentStatus === 2 ? ("") : (
-                       <Typography
-                       sx={{
-                         color: "#BE48ED",
-                         fontWeight: "600 !important",
-                         fontSize: "14px",
-                         display: "flex",
-                         alignItems: "center",
-                       }}
-                       onClick={() => {
-                         setCurrentResult(true);
-                       }}
-                     >
-                       View all
-                       <Box
-                         sx={{
-                           marginLeft: "4px",
-                           width: "12px",
-                           heigth: "12px",
-                         }}
-                         component={"img"}
-                         src={images.viewAllButton}
-                       ></Box>
-                     </Typography>
-                     )}
+                      {detailTournament?.tournamentStatus === 2 ? (
+                        ""
+                      ) : (
+                        <Typography
+                          sx={{
+                            color: "#BE48ED",
+                            fontWeight: "600 !important",
+                            fontSize: "14px",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                          onClick={() => {
+                            setCurrentResult(true);
+                          }}
+                        >
+                          View all
+                          <Box
+                            sx={{
+                              marginLeft: "4px",
+                              width: "12px",
+                              heigth: "12px",
+                            }}
+                            component={"img"}
+                            src={images.viewAllButton}
+                          ></Box>
+                        </Typography>
+                      )}
                     </Box>
                     <LeaderBoard
                       open={currentResult}

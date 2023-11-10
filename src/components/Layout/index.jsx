@@ -25,7 +25,12 @@ import {
   changeRouter,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
-import { addRefCodeRegister, clickTab, clickTabNav, toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
+import {
+  addRefCodeRegister,
+  clickTab,
+  clickTabNav,
+  toggleLoginDialog,
+} from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
   openChatPopup,
@@ -97,18 +102,14 @@ export default function Layout(props) {
   );
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
-  
-  const { isNav } = useSelector(
-    (state) => state.authReducer
-  );
-  const { tokenUser: token } = useSelector(
-    (state) => state.userReducer
-  );
+
+  const { isNav } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, badgechat } = useSelector(
-    (state) => state.chatReducer
+  const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
+  const { router, startGameCheck, fromRouter } = useSelector(
+    (state) => state.appReducer
   );
-  const { router, startGameCheck, fromRouter } = useSelector((state) => state.appReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const pathname = useLocation();
@@ -121,12 +122,12 @@ export default function Layout(props) {
     setSocket(socket);
   }, [dispatch]);
 
-  const location = useLocation()
+  const location = useLocation();
 
   React.useEffect(() => {
     dispatch(changeRouter(location.pathname));
-  }, [location, dispatch])
-  
+  }, [location, dispatch]);
+
   useEffect(() => {
     if (
       router &&
@@ -134,12 +135,10 @@ export default function Layout(props) {
       router?.includes("tournamentDetail") &&
       startGameCheck
     ) {
-      
     }
   }, [router, startGameCheck]);
   useEffect(() => {
     if (token && !router?.includes(`selectroom`)) {
-      
     }
   }, [router, socket, token]);
 
@@ -149,18 +148,18 @@ export default function Layout(props) {
     }
   }, [width, dispatch]);
 
+  useEffect(() => {}, [pathname]);
+
+  const { userName } = useParams();
+
   useEffect(() => {
-    
-  }, [pathname]);
-
-  const {userName} = useParams();
-
-  useEffect(()=> {
     const getRefCodeByUserName = async () => {
-      if(userName){
+      if (userName) {
         try {
-          const response = await API.get(`/api/get-refcode-by-username/${userName}`);
-          if(response){
+          const response = await API.get(
+            `/api/get-refcode-by-username/${userName}`
+          );
+          if (response) {
             console.log(response);
             dispatch(addRefCodeRegister(response?.data?.ref));
             dispatch(clickTab("signup"));
@@ -170,9 +169,9 @@ export default function Layout(props) {
           console.log(error);
         }
       }
-    }
+    };
     getRefCodeByUserName();
-  },[userName,dispatch])
+  }, [userName, dispatch]);
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -183,9 +182,7 @@ export default function Layout(props) {
     }
   }, []);
 
-  useEffect(() => {
-    
-  })
+  useEffect(() => {});
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -218,19 +215,19 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
-  
-  useEffect(() => {
-    dispatch(toggleStartGame(false));
-  }, [location.pathname, dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(toggleStartGame(false));
+  // }, [location.pathname, dispatch]);
 
   useEffect(() => {
-    if(isChangeLocation) {
-      if(fromRouter && router !== "/" && router !== "/home") {
-        navigate(fromRouter)
-        dispatch(updateChangeLocation())
+    if (isChangeLocation) {
+      if (fromRouter && router !== "/" && router !== "/home") {
+        navigate(fromRouter);
+        dispatch(updateChangeLocation());
       }
     }
-  }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation])
+  }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation]);
 
   return ReactDOM.createPortal(
     <Box
@@ -241,7 +238,7 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      <SimpleDialog/>
+      <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />
       <MetaMaskDialog />
@@ -287,8 +284,8 @@ export default function Layout(props) {
             minHeight: "48px !important",
             paddingTop: "9px",
             paddingBottom: "10px",
-            paddingLeft: device === "Mobile" ?  "0px" : "18px",
-            paddingRight: device === "Mobile" ?  "0px" : "18px",
+            paddingLeft: device === "Mobile" ? "0px" : "18px",
+            paddingRight: device === "Mobile" ? "0px" : "18px",
           }}
         >
           {device === "Tablet" ||
@@ -329,7 +326,7 @@ export default function Layout(props) {
                 style={{ position: "relative" }}
                 onClick={() => {
                   navigate("/home");
-                  window.scrollTo(0, 0)
+                  window.scrollTo(0, 0);
                 }}
               >
                 <img
@@ -347,10 +344,12 @@ export default function Layout(props) {
               location?.pathname?.includes("/packages") ? (
                 <span className="ms-2">Packages</span>
               ) : (
-                <Box onClick={() => {
-                  navigate("/home");
-                  window.scrollTo(0, 0)
-                }}>
+                <Box
+                  onClick={() => {
+                    navigate("/home");
+                    window.scrollTo(0, 0);
+                  }}
+                >
                   <img
                     style={{
                       width: "34px",
@@ -365,14 +364,7 @@ export default function Layout(props) {
               )}
             </Box>
           )}
-          <Box sx={{ flexGrow: 1 }}>
-            {width > 1199 ? (
-              <Box>
-              </Box>
-            ) : (
-              ""
-            )}
-          </Box>
+          <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : ""}</Box>
 
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
@@ -473,7 +465,6 @@ export default function Layout(props) {
             zIndex: 1,
           }}
         >
-
           <Main
             id="layout-main"
             open={chatPopup}
@@ -481,16 +472,18 @@ export default function Layout(props) {
               marginRight:
                 device === "Tablet" ||
                 (device === "Mobile" && orientation === "landscape") ||
-                (device === "Desktop" && width < 1200) || (width > 576 && width < 950)
+                (device === "Desktop" && width < 1200) ||
+                (width > 576 && width < 950)
                   ? "0"
                   : "",
             }}
           >
-            <Outlet/>
+            <Outlet />
           </Main>
         </Grid>
       </Grid>
       <ChatDrawer />
-    </Box>, document.body
+    </Box>,
+    document.body
   );
 }

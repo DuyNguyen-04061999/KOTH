@@ -1,9 +1,5 @@
 import InfinityIcon from "@mui/icons-material/AllInclusive";
-import {
-  Box,
-  Dialog,
-  Typography,
-} from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,28 +13,49 @@ import {
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { updateDetailTourAfterPlayGame } from "../../../redux-saga-middleware/reducers/playgameReducer";
-import { getRefactorDetailAuthPromotion, getRefactorDetailPromotion, startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { toggleExtra, toggleTournamentShow } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  getRefactorDetailAuthPromotion,
+  getRefactorDetailPromotion,
+  startGameInPromotion,
+} from "../../../redux-saga-middleware/reducers/promotionReducer";
+import {
+  toggleExtra,
+  toggleTournamentShow,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
 import {
-  isJson,
-  sliceString
-} from "../../../utils/helper";
+  getRefactorDetailAuthPromotion,
+  getRefactorDetailPromotion,
+  startGameInPromotion,
+} from "../../../redux-saga-middleware/reducers/promotionReducer";
+import {
+  toggleExtra,
+  toggleTournamentShow,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { isJson, sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import "./index.scss";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const { detailTournament } = useSelector((state) => state.playgameReducer);
-  const { isGetDetailPromotion, isGetDetailAuthPromotion } = useSelector(state => state.promotionReducer);
+  const { isGetDetailPromotion, isGetDetailAuthPromotion } = useSelector(
+    (state) => state.promotionReducer
+  );
   const [currentResult, setCurrentResult] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const [openVoucher, setOpenVoucher] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const { id } = useParams();
-  const { tokenUser: token, uPack, listJoinedTour, countTicket } = useSelector((state) => state.userReducer);
+  const {
+    tokenUser: token,
+    uPack,
+    listJoinedTour,
+    countTicket,
+  } = useSelector((state) => state.userReducer);
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "lighter !important",
@@ -47,47 +64,47 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   };
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    dispatch(getRefactorDetailPromotion(id))
+    dispatch(getRefactorDetailPromotion(id));
   }, [id, dispatch]);
 
   useEffect(() => {
     if (token) {
-      dispatch(getRefactorDetailAuthPromotion(id))
+      dispatch(getRefactorDetailAuthPromotion(id));
     }
   }, [id, token, dispatch]);
 
   useEffect(() => {
-    if(token || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion(id))
+    if (token || localStorage.getItem("token")) {
+      dispatch(getRefactorDetailAuthPromotion(id));
     } else {
-      dispatch(getRefactorDetailPromotion(id))
-      
+      dispatch(getRefactorDetailPromotion(id));
     }
-  }, [token, dispatch, id])
+  }, [token, dispatch, id]);
 
   const handlePlayTour = () => {
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
       return;
     } else {
-      if(countTicket > 0 && detailTournament?.extra <= 0) {
-        dispatch(updateCountExtraAfterPlayGame(1))
+      if (countTicket > 0 && detailTournament?.extra <= 0) {
+        dispatch(updateCountExtraAfterPlayGame(1));
       }
 
-      if(countTicket <= 0 && detailTournament?.extra > 0) {
-        dispatch(updateDetailTourAfterPlayGame())
+      if (countTicket <= 0 && detailTournament?.extra > 0) {
+        dispatch(updateDetailTourAfterPlayGame());
       }
-      dispatch(startGameInPromotion({
-        tournamentId: id,
-      }))
+      dispatch(
+        startGameInPromotion({
+          tournamentId: id,
+        })
+      );
     }
   };
-  
 
   const handleJoinTour = () => {
-    if(token) {
+    if (token) {
       if (
         (detailTournament?.tournamentVip !== 0 && uPack === null) ||
         (detailTournament?.tournamentVip !== 0 &&
@@ -96,16 +113,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       ) {
         dispatch(toggleTournamentShow());
       } else {
-        dispatch(openSubscribeDialog())
-      } 
+        dispatch(openSubscribeDialog());
+      }
     } else {
       dispatch(toggleLoginDialog());
     }
   };
 
-  const handleClickOpen = () => {
-
-  };
+  const handleClickOpen = () => {};
   const navigate = useNavigate();
   let anchorSelector = 'a[href^="#"]';
 
@@ -312,16 +327,20 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     Start
                   </Typography>
                   <Box className="d-flex" component={"div"}>
-                    <Typography className="me-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {moment(
-                        detailTournament?.tournamentStartAt ||
-                          new Date()
+                    <Typography
+                      className="me-2"
+                      sx={{ ...typographyStyle, fontSize: "12px" }}
+                    >
+                      {moment(
+                        detailTournament?.tournamentStartAt || new Date()
                       )?.format("MM/DD/YYYY")}
                     </Typography>
-                    <Typography className="ms-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
+                    <Typography
+                      className="ms-2"
+                      sx={{ ...typographyStyle, fontSize: "12px" }}
+                    >
                       {moment(
-                        detailTournament?.tournamentStartAt ||
-                          new Date()
+                        detailTournament?.tournamentStartAt || new Date()
                       )?.format("HH:mm a")}
                     </Typography>
                   </Box>
@@ -340,7 +359,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     width: "45%",
                   }}
                   className="ps-3"
-
                 >
                   <Typography
                     sx={{
@@ -352,16 +370,20 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     End
                   </Typography>
                   <Box className="d-flex" component={"div"}>
-                    <Typography className="me-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {moment(
-                        detailTournament?.tournamentEndAt ||
-                          new Date()
+                    <Typography
+                      className="me-2"
+                      sx={{ ...typographyStyle, fontSize: "12px" }}
+                    >
+                      {moment(
+                        detailTournament?.tournamentEndAt || new Date()
                       )?.format("MM/DD/YYYY")}
                     </Typography>
-                    <Typography className="ms-2" sx={{ ...typographyStyle, fontSize: "12px" }}>
-                    {moment(
-                        detailTournament?.tournamentEndAt ||
-                          new Date()
+                    <Typography
+                      className="ms-2"
+                      sx={{ ...typographyStyle, fontSize: "12px" }}
+                    >
+                      {moment(
+                        detailTournament?.tournamentEndAt || new Date()
                       )?.format("HH:mm a")}
                     </Typography>
                   </Box>
@@ -395,9 +417,9 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   {!listJoinedTour?.includes(id) ? (
                     ""
                   ) : (
-                    <Typography sx={{ marginLeft: "0px !important", color:"white" }}>
-                      
-                    </Typography>
+                    <Typography
+                      sx={{ marginLeft: "0px !important", color: "white" }}
+                    ></Typography>
                   )}
                 </Box>
                 <Box color={"white"}>
@@ -431,7 +453,9 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         </svg>
                         <Typography>Free Extra: </Typography>
                         <Typography>
-                        {detailTournament?.tournamentStatus !== 2 ? detailTournament?.extra : 0}
+                          {detailTournament?.tournamentStatus !== 2
+                            ? detailTournament?.extra
+                            : 0}
                         </Typography>
                       </Box>
                       <Box display={"flex"} alignItems={"center"}>
@@ -480,7 +504,8 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     }}
                   >
                     <Box>
-                      <Typography variant="h5"
+                      <Typography
+                        variant="h5"
                         style={{
                           color: "#BE48ED",
                           fontSize: "16px",
@@ -488,7 +513,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                          fontWeight:"700"
+                          fontWeight: "700",
                         }}
                       >
                         {" "}
@@ -505,7 +530,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       }}
                     >
                       <Box>
-                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                          }}
+                        >
                           {" "}
                           <Typography
                             style={{
@@ -534,7 +565,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
-                            alignItems:"flex-start"
+                            alignItems: "flex-start",
                           }}
                         >
                           {" "}
@@ -561,7 +592,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       </Box>
                       <Box>
                         {" "}
-                        <Box sx={{ display: "flex", flexDirection: "column", alignItems:"flex-start" }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                          }}
+                        >
                           {" "}
                           <Typography
                             style={{
@@ -590,7 +627,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                             marginTop: "6px",
                             display: "flex",
                             flexDirection: "column",
-                            alignItems:"flex-start"
+                            alignItems: "flex-start",
                           }}
                         >
                           {" "}
@@ -1109,9 +1146,14 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   bottom: "0px",
                   padding: "28px",
                   width: "100%",
-                  background: detailTournament?.tournamentStatus === 2 ? "" : "rgba(37, 37, 37, 0.20)",
-                  backdropFilter: detailTournament?.tournamentStatus === 2 ? "" : "blur(2px)",
-                  display: detailTournament?.tournamentStatus === 2 ? "none" : "block",
+                  background:
+                    detailTournament?.tournamentStatus === 2
+                      ? ""
+                      : "rgba(37, 37, 37, 0.20)",
+                  backdropFilter:
+                    detailTournament?.tournamentStatus === 2 ? "" : "blur(2px)",
+                  display:
+                    detailTournament?.tournamentStatus === 2 ? "none" : "block",
                   zIndex: "28",
                 }}
               >
@@ -1129,17 +1171,21 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {detailTournament?.tournamentStatus !== 2 && <AnimButton
-                      onClick={handlePlayTour}
-                      type={"highlight"}
-                      text={"Play"}
-                    />}
+                    {/* {detailTournament?.tournamentStatus !== 2 && (
+                      <AnimButton
+                        onClick={handlePlayTour}
+                        type={"highlight"}
+                        text={"Play"}
+                      />
+                    )} */}
 
-                    {detailTournament?.tournamentStatus !== 2 && <AnimButton
-                      onClick={handleClickOpen}
-                      text={"Buy Extra"}
-                      type={"primary"}
-                    />}
+                    {detailTournament?.tournamentStatus !== 2 && (
+                      <AnimButton
+                        onClick={handleClickOpen}
+                        text={"Buy Extra"}
+                        type={"primary"}
+                      />
+                    )}
                   </Box>
                 )}
               </Box>
