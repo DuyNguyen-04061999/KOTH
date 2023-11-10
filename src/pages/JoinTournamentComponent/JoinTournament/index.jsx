@@ -112,6 +112,15 @@ export default function JoinTournament() {
     }
   }, [id, token, dispatch]);
 
+  useEffect(() => {
+    if(token || localStorage.getItem("token")) {
+      dispatch(getRefactorDetailAuthPromotion(id))
+    } else {
+      dispatch(getRefactorDetailPromotion(id))
+      
+    }
+  }, [token, dispatch, id])
+  
   const handlePlayTour = () => {
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
@@ -135,11 +144,6 @@ export default function JoinTournament() {
       dispatch(toggleTournamentShow());
     } else if (token) {
       dispatch(openSubscribeDialog())
-      // dispatch(
-      //   joinPromotion({
-      //     tournamentId: detailTournament?.id,
-      //   })
-      // );
     } else {
       dispatch(toggleLoginDialog());
     }

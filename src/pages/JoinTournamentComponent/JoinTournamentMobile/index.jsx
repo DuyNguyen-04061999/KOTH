@@ -56,6 +56,15 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     }
   }, [id, token, dispatch]);
 
+  useEffect(() => {
+    if(token || localStorage.getItem("token")) {
+      dispatch(getRefactorDetailAuthPromotion(id))
+    } else {
+      dispatch(getRefactorDetailPromotion(id))
+      
+    }
+  }, [token, dispatch, id])
+
   const handlePlayTour = () => {
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
