@@ -274,6 +274,7 @@ const authReducer = (
     createAccInfo: {},
     forgotPassUsername: "",
     forgotPassEmail: "",
+    forgotPassPhone: "",
     userNameRef: "",
     nameReset: "",
     isVerifyDialog: false,
@@ -319,6 +320,7 @@ const authReducer = (
         ...state,
         forgotPassUsername: payload?.username,
         forgotPassEmail: payload?.email,
+        forgotPassPhone: payload?.phone,
       };
     }
     case "CLEAR_FORGET_PASS_INFO": {

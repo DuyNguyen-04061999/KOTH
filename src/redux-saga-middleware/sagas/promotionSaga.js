@@ -65,7 +65,7 @@ function* joinPromotionSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "success",
-            message: "Join tournament successfully!",
+            message: "Join promotion successfully!",
           })
         );
       } else {
@@ -73,7 +73,7 @@ function* joinPromotionSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "error",
-            message: "Join tournament failed!",
+            message: "Join promotion failed! Something went wrong",
           })
         );
       }
@@ -84,8 +84,8 @@ function* joinPromotionSaga(dataRequest) {
     yield put(joinPromotionFail());
     yield put(
       showToastNotification({
-        type: "error",
-        message: error?.message,
+        type: error?.type || "error",
+        message: error?.message || "Join promotion failed! Something went wrong",
       })
     );
   }
@@ -109,6 +109,12 @@ function* startGameInPromotionSaga(dataRequest) {
   } catch (error) {
     startGameCount = 0
     yield put(startGameInPromotionFail());
+    yield put(
+      showToastNotification({
+        type: error?.type || "error",
+        message: error?.message || "Start game failed! Something went wrong",
+      })
+    );
   }
 }
 
