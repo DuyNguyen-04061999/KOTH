@@ -16,7 +16,7 @@ import AnimButton from "../../../AnimButton";
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { createAccInfo } = useSelector((state) => state.authReducer);
-  const { user, registerUsername, typeVerifyOTP } = useSelector((state) => state.userReducer);
+  const { user, registerUsername, typeVerifyOTP, resenOTPSuccess } = useSelector((state) => state.userReducer);
   
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
@@ -36,26 +36,82 @@ export default function OTPVerifyAccount() {
   }, [timeLeft]);
 
   const handleVerifyOTP = () => {
-    dispatch(
-      sendOtpReady({
-        otp: otp,
-        type: "register",
-        username: registerUsername || user?.userName,
-      })
-    );
+    switch(typeVerifyOTP) {
+        case "register": dispatch(
+          sendOtpReady({
+            otp: otp,
+            type: "register",
+            username: registerUsername,
+          })
+        );break
+        case "reVerify": dispatch(
+          sendOtpReady({
+            otp: otp,
+            type: "register",
+            username: user?.userName,
+          })
+        );break
+        case "forget_email": dispatch(
+          sendOtpReady({
+            otp: otp,
+            type: "password",
+            username: createAccInfo?.username,
+            phone: createAccInfo?.phone,
+          })
+        );break
+        case "forget_phone": dispatch(
+          sendOtpReady({
+            otp: otp,
+            type: "password",
+            username: createAccInfo?.username,
+            phone: createAccInfo?.phone,
+          })
+        );break
+        default: return false
+    }
+    
   };
+
+  useEffect(() => {
+    if(resenOTPSuccess) {
+      setTimeLeft(60);
+    }
+
+  }, [resenOTPSuccess])
 
   const handleResendOTP = () => {
-    setTimeLeft(60);
-    dispatch(
-      resendOtpReady({
-        username: user?.userName,
-        email: user?.email,
-        type: "register",
-      })
-    );
+    switch(typeVerifyOTP) {
+        case "register": dispatch(
+          resendOtpReady({
+            username: registerUsername,
+            type: "register",
+          })
+        );break
+        case "reVerify": dispatch(
+          resendOtpReady({
+            username: user?.userName,
+            type: "register",
+          })
+        );break
+        case "forget_email": dispatch(
+          resendOtpReady({
+            username: createAccInfo?.username,
+            email: createAccInfo?.email,
+            type: "password",
+          })
+        );break
+        case "forget_phone": dispatch(
+          resendOtpReady({
+            username: createAccInfo?.username,
+            phone: createAccInfo?.phone,
+            type: "password",
+          })
+        );break
+        default: return false
+    }
+    
   };
-
+console.log(createAccInfo);
   return (
     <Box
       sx={{
@@ -90,8 +146,9 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Please enter the 6-digit verification code that was sent to{" "}
-          {createAccInfo?.email} to verify your account
+          {typeVerifyOTP === "register" || typeVerifyOTP === "reVerify" ? ` Please enter the 6-digit verification code that was sent to your device to verify your account`
+           :  typeVerifyOTP === "forget_phone" ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.phone} to verify your account` : typeVerifyOTP === "forget_email" 
+           ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.email} to verify your account` : ``}
         </Typography>
       </Box>
       <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>

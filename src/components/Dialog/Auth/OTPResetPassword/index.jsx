@@ -2,10 +2,8 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
-  clearForgetPassInfo,
-  clickTab,
+  clickTab
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   resendOtpReady,
@@ -16,18 +14,16 @@ import AnimButton from "../../../AnimButton";
 
 export default function OTPResetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { forgotPassUsername, forgotPassEmail } = useSelector(
+  const { forgotPassUsername, forgotPassEmail, forgotPassPhone } = useSelector(
     (state) => state.authReducer
   );
+  const {  typeVerifyOTP, resenOTPSuccess } = useSelector((state) => state.userReducer);
+
+  console.log(typeVerifyOTP);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState(60);
-  const [socket, setSocket] = useState(null);
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,30 +38,48 @@ export default function OTPResetPassword() {
   }, [timeLeft]);
 
   const handleVerifyOTP = () => {
-    dispatch(
-      sendOtpReady({
-        otp: otp,
-        username: forgotPassUsername,
-        email: forgotPassEmail,
-        type: "password",
-      })
-    );
+    if(typeVerifyOTP === "forget_email") {
+      dispatch(
+        sendOtpReady({
+          otp: otp,
+          username: forgotPassUsername,
+          email: forgotPassEmail,
+          type: "password",
+        })
+      );
+    } else if(typeVerifyOTP === "forget_phone") {
+      dispatch(
+        sendOtpReady({
+          otp: otp,
+          username: forgotPassUsername,
+          email: forgotPassPhone,
+          type: "password",
+        })
+      );
+    }
   };
 
   useEffect(() => {
-    socket?.on("forgetPasswordSuccess", () => {
-      dispatch(clickTab("createPass"));
-      dispatch(clearForgetPassInfo());
-    });
-  }, [socket, dispatch]);
+    if(resenOTPSuccess) {
+      setTimeLeft(60);
+    }
+
+  }, [resenOTPSuccess])
 
   const handleResendOTP = () => {
-    setTimeLeft(60)
-    dispatch(resendOtpReady({
-      username: forgotPassUsername,
-      email: forgotPassEmail,
-      type: "password",
-    }));
+    if(typeVerifyOTP === "forget_email") {
+      dispatch(resendOtpReady({
+        username: forgotPassUsername,
+        email: forgotPassEmail,
+        type: "password",
+      }));
+    } else if(typeVerifyOTP === "forget_phone") {
+      dispatch(resendOtpReady({
+        username: forgotPassUsername,
+        phone: forgotPassPhone,
+        type: "password",
+      }));
+    }
   };
 
   return (
@@ -174,17 +188,6 @@ export default function OTPResetPassword() {
           <AnimButton
             type={"ghost"}
             text={"BACK"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
             onClick={() => dispatch(clickTab("forgetPass"))}
           >
             Back
@@ -194,17 +197,6 @@ export default function OTPResetPassword() {
           <AnimButton
             type={otp?.length < 6 ? "disabled" : "primary"}
             text={"NEXT"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
             onClick={() => handleVerifyOTP()}
           >
             Next

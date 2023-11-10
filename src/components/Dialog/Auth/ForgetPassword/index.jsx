@@ -1,9 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../../redux-saga-middleware/config/socket";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { forgetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { forgetPasswordReady, updateVerifyOTPType } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateEmail } from "../../../../utils/validationEmail";
@@ -11,6 +10,8 @@ import AnimButton from "../../../AnimButton";
 
 export default function ForgetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const { user, registerUsername, typeVerifyOTP, resenOTPSuccess } = useSelector((state) => state.userReducer);
+console.log(typeVerifyOTP);
   const { width } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -19,13 +20,7 @@ export default function ForgetPassword() {
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [optionEmail, setOptionEmail] = useState(true);
   const [focusInput, setFocusInput] = useState(false);
-  const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, []);
 
   useEffect(() => {
     if (optionEmail) {
@@ -35,17 +30,10 @@ export default function ForgetPassword() {
     }
   }, [optionEmail]);
 
-  // return ReactDOM.createPortal(
-  //   <Dialog
-  //     onClose={() => {
-  //       dispatch(toggleForgetPass(false));
-  //     }}
-  //     open={forgetPassDialog}
-  //     fullScreen={device === "Mobile" ? true : false}
-  //   >
-  //   </Dialog>, document.body
-  // );
-
+  useEffect(() => {
+    dispatch(updateVerifyOTPType(optionEmail ? "forget_email" : "forget_phone"))
+  }, [optionEmail, dispatch])
+  
   const handleSubmit = () => {
     dispatch(
       forgetPasswordReady({
@@ -81,28 +69,6 @@ export default function ForgetPassword() {
       setPhoneNumberError("");
     }
   }, [phoneNumber]);
-
-  // useEffect(() => {
-  //   if (socket) {
-  //     socket?.on("forgetPasswordSuccess", (user) => {
-  //       dispatch(updateUsernameWhenReset(user?.username))
-  //       const forgotPassInfo = {
-  //         username: user?.username,
-  //         email: user?.email,
-  //         phone: user?.phone,
-  //       };
-  //       dispatch(clickTab("otpResetPassword"));
-  //       dispatch(
-  //         saveForgetPassInfo({
-  //           forgotPassInfo: forgotPassInfo,
-  //         })
-  //       );
-  //     });
-  //   }
-  //   return () => {
-  //     socket?.off("forgetPasswordSuccess");
-  //   };
-  // }, [socket, dispatch]);
 
   return (
     <Box
@@ -310,69 +276,6 @@ export default function ForgetPassword() {
               </Typography>
             )}
           </Box>
-          // <Box
-          //   sx={{
-          //     width: "100%",
-          //     display: "flex",
-          //     marginTop: "20px",
-          //     position: "relative",
-          //   }}
-          // >
-          //   <Box
-          //     sx={{
-          //       display: "flex",
-          //       justifyContent: "center",
-          //       alignItems: "center",
-          //       backgroundColor: "#181223",
-          //       padding: "10px 12px",
-          //       borderRadius:
-          //         phoneNumber?.length > 16
-          //           ? "5px 0px 0px 0px"
-          //           : "5px 0px 0px 5px",
-          //     }}
-          //   >
-          //     <img
-          //       style={{ width: "18px", height: "18px" }}
-          //       alt="..."
-          //       src={images.phoneIcon}
-          //     />
-          //   </Box>
-          //   <Typography
-          //     sx={{
-          //       position: "absolute",
-          //       top: "8px",
-          //       left: width < 576 ? "24px" : "30px",
-          //       color: "#979797",
-          //       fontWeight: "600",
-          //       display:
-          //         focusInput || phoneNumber.length > 0 ? "block" : "none",
-          //     }}
-          //   >
-          //     (+1){" "}
-          //   </Typography>
-          //   <input
-          //     onFocus={() => setFocusInput(true)}
-          //     onBlur={() => setFocusInput(false)}
-          //     onChange={handleChangePhone}
-          //     placeholder="Phone number"
-          //     style={{
-          //       width: "100%",
-          //       backgroundColor: "#181223",
-          //       outline: "none",
-          //       border: "none",
-          //       color: "white",
-          //       fontSize: "14px",
-          //       padding: "10px 12px 10px 0px",
-          //       fontFamily: "Cyntho Next",
-          //       borderRadius:
-          //         phoneNumber?.length > 16
-          //           ? "0px 5px 0px 0px"
-          //           : "0px 5px 5px 0px",
-          //       paddingLeft: focusInput || phoneNumber.length > 0 ? "24px" : "",
-          //     }}
-          //     type="number"
-          //   />
-          // </Box>
         )}
         <Box
           sx={{
@@ -409,17 +312,6 @@ export default function ForgetPassword() {
           <AnimButton
             type={"ghost"}
             text={"BACK"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
             onClick={() => dispatch(clickTab("login"))}
           >
             Back
@@ -434,17 +326,6 @@ export default function ForgetPassword() {
                 : "disabled"
             }
             text={"NEXT"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
             onClick={() => handleSubmit()}
           >
             Next

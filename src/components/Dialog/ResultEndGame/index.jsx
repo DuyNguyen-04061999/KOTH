@@ -24,7 +24,7 @@ export default function ResultEndGame() {
 
   const handleClose = () => {
     dispatch(toggleCloseResultEndGame());
-    if (tokenUser) {
+    if (tokenUser || localStorage.getItem("token")) {
       dispatch(getRefactorDetailAuthPromotion(id))
     }
 

@@ -1455,10 +1455,10 @@ export default function DialogWallet(props) {
           handleClose();
         }}
         TransitionComponent={Transition}
+        maxWidth={"2000px !important"}
         sx={{
           zIndex: 1323,
           "& .MuiPaper-root-MuiDialog-paper": {
-            overflow: "auto",
             backgroundColor: "white",
           },
           height: "100%",
@@ -1468,10 +1468,9 @@ export default function DialogWallet(props) {
               width: "100%",
               maxWidth:
                 width < 576 ? width : isTransactionDialog ? "900px" : "500px",
-              height: "auto",
-              maxHeight: width < 576 ? height : "auto",
-              overflow: "auto",
-              backgroundColor: "white",
+              // height: "auto",
+              // maxHeight: width < 576 ? height : "auto",
+              // backgroundColor: "white",
             },
           },
         }}
