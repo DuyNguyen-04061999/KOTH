@@ -85,7 +85,7 @@ export default function Dialoglg() {
   const { width, height } = useWindowDimensions();
 
   const token = localStorage.getItem("token");    
-
+  console.log(uPack);
   useEffect(() => {
     if(token) {
       dispatch(getUserInfoReady(token));
@@ -418,7 +418,7 @@ export default function Dialoglg() {
                           ? user?.userName.slice(0, 10) + "..."
                           : user?.userName}
                       </Typography>
-                      {uPack ? (
+                      {uPack?.remain !== "Expired" ? (
                         <Box
                           display={"flex"}
                           justifyContent={"center"}
@@ -509,7 +509,7 @@ export default function Dialoglg() {
                       {user?.userName}
                     </Typography>
                   </Box>
-                  {uPack ? (
+                  {uPack?.remain !== "Expired" ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
@@ -532,7 +532,7 @@ export default function Dialoglg() {
                   ) : (
                     ""
                   )}
-                  {uPack ? (
+                  {uPack?.remain !== "Expired" ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
