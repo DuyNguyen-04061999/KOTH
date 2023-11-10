@@ -16,8 +16,10 @@ import {
   toggleLoginDialog,
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { updateDetailTourAfterPlayGame } from "../../../redux-saga-middleware/reducers/playgameReducer";
 import { getRefactorDetailAuthPromotion, getRefactorDetailPromotion, startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleExtra, toggleTournamentShow } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
 import {
   isJson,
   sliceString
@@ -70,6 +72,13 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       dispatch(toggleExtra());
       return;
     } else {
+      if(countTicket > 0 && detailTournament?.extra <= 0) {
+        dispatch(updateCountExtraAfterPlayGame(1))
+      }
+
+      if(countTicket <= 0 && detailTournament?.extra > 0) {
+        dispatch(updateDetailTourAfterPlayGame())
+      }
       dispatch(startGameInPromotion({
         tournamentId: id,
       }))
