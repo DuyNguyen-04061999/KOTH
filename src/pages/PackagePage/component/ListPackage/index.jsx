@@ -1,4 +1,5 @@
-import { Grid, Box, Typography, Tooltip } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../../redux-saga-middleware/config/socket";
@@ -7,7 +8,6 @@ import {
   toggleLoginDialog,
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/packageReducer";
-import { withStyles } from "@mui/styles";
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -29,9 +29,6 @@ export default function ListPackage(props) {
     id,
   } = props;
   const [socket, setSocket] = useState(null);
-  const { userPackageId } = useSelector(
-    (state) => state.authReducer
-  );
   const { tokenUser: token, uPack } = useSelector(
     (state) => state.userReducer
   );
@@ -316,7 +313,6 @@ export default function ListPackage(props) {
                     display: "flex",
                     color: "white",
                     alignItems: "center",
-                    display:"flex",
                     flexDirection:"column"
                   }}
                 >

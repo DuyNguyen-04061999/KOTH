@@ -418,7 +418,7 @@ export default function Dialoglg() {
                           ? user?.userName.slice(0, 10) + "..."
                           : user?.userName}
                       </Typography>
-                      {uPack?.remain !== "Expired" ? (
+                      {uPack ? (
                         <Box
                           display={"flex"}
                           justifyContent={"center"}
@@ -509,7 +509,7 @@ export default function Dialoglg() {
                       {user?.userName}
                     </Typography>
                   </Box>
-                  {uPack?.remain !== "Expired" ? (
+                  {uPack ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
@@ -532,7 +532,7 @@ export default function Dialoglg() {
                   ) : (
                     ""
                   )}
-                  {uPack?.remain !== "Expired" ? (
+                  {uPack ? (
                     <Box
                       display={"flex"}
                       justifyContent={"center"}
@@ -545,7 +545,7 @@ export default function Dialoglg() {
                           fontWeight: "300",
                         }}
                       >
-                        Remaining days: {uPack?.remain}
+                        Remaining days: {uPack?.remain || ""}
                       </Typography>
                     </Box>
                   ) : (
