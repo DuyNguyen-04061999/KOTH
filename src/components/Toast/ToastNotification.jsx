@@ -28,8 +28,7 @@ export default function ToastNotification() {
             ),
             position: "top-center",
             className:
-              // width < 576 ? "error-background-small" : "error-background",
-              "error-background",
+              width < 576 ? "error-background-small" : "error-background",
           });
           break;
         case "warning":
@@ -57,8 +56,7 @@ export default function ToastNotification() {
             ),
             position: "top-center",
             className:
-              // width < 576 ? "success-background-small" : "success-background",
-              "success-background",
+              width < 576 ? "success-background-small" : "success-background",
           });
           break;
         case "info":
@@ -76,6 +74,7 @@ export default function ToastNotification() {
     isShowToastNotification,
     typeToastNotification,
     dispatch,
+    width
   ]);
 
   return <></>;
