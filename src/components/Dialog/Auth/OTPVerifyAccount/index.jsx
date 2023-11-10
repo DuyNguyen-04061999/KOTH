@@ -2,12 +2,8 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
-  clearCreateAccInfo,
-  clickTab,
-  closeLoginDialog,
-  toggleLoginDialog,
+  closeLoginDialog
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   logoutReady,
@@ -20,17 +16,12 @@ import AnimButton from "../../../AnimButton";
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { createAccInfo } = useSelector((state) => state.authReducer);
-  const { user, registerUsername } = useSelector((state) => state.userReducer);
+  const { user, registerUsername, typeVerifyOTP } = useSelector((state) => state.userReducer);
+  
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState(60);
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -53,18 +44,6 @@ export default function OTPVerifyAccount() {
       })
     );
   };
-
-  useEffect(() => {
-    socket?.on("verifyOtpSuccess", () => {
-      dispatch(toggleLoginDialog());
-      dispatch(clickTab("login"));
-      dispatch(clearCreateAccInfo());
-    });
-
-    return () => {
-      socket?.off("verifyOtpSuccess");
-    };
-  }, [socket, dispatch]);
 
   const handleResendOTP = () => {
     setTimeLeft(60);
@@ -184,17 +163,6 @@ export default function OTPVerifyAccount() {
           <AnimButton
             type={"ghost"}
             text={"BACK"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
             onClick={() => {
               dispatch(logoutReady());
               dispatch(closeLoginDialog());
@@ -207,17 +175,6 @@ export default function OTPVerifyAccount() {
           <AnimButton
             type={otp?.length < 6 ? "disabled" : "primary"}
             text={"NEXT"}
-            // style={{
-            //   width: "100%",
-            //   border: "none",
-            //   padding: "8px 0px 6px 0px",
-            //   borderRadius: "5px",
-            //   backgroundColor: checkButton() === true ? "#7848ED" : "#979797",
-            //   color: "#fff",
-            //   fontWeight: "700",
-            //   fontSize: device === "Mobile" ? `${width / 21}px` : "",
-            //   marginTop: device === "Desktop" ? "120px" : "none",
-            // }}
             onClick={() => handleVerifyOTP()}
           >
             Next

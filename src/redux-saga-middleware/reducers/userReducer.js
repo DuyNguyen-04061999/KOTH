@@ -294,7 +294,8 @@ const userReducer = (
     listJoinedTour: [],
     countTicket: 0,
     userAvatar: "",
-    isGetUserByUsername: false
+    isGetUserByUsername: false,
+    typeVerifyOTP: ""
   },
   action
 ) => {
@@ -357,6 +358,7 @@ const userReducer = (
         isRegister: false,
         registerUsername: payload?.username,
         tokenUser: payload?.token,
+        typeVerifyOTP: "register"
       };
     case "REGISTER_FAIL":
       return {

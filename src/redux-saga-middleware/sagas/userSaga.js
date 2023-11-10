@@ -90,6 +90,7 @@ function* registerSaga(dataRequest) {
       const res = yield call(userService.register, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
+        console.log({ ...payload, ...data?.data });
         yield put(registerSuccess({ ...payload, ...data?.data }));
         yield put(clickTab("otpVerifyAccount"));
       } else {
