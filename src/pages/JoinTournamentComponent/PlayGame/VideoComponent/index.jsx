@@ -107,11 +107,11 @@ export default function VideoComponent(props) {
                 device === "Mobile" && orientation === "landscape"
                   ? "fixed"
                   : "absolute",
-              top: width < 576 ? "25%" : "50%",
-              right: "20px",
+              top: width < 576 ? "40%" : "50%",
+              right: "10px",
               display: "flex",
               alignItems: "center",
-              padding: "10px",
+              padding: "7px",
               backgroundColor: second > 0 ? "rgba(0,0,0,30%)" : "#000",
               border: "2px solid #ffff",
               cursor: "pointer",
@@ -122,10 +122,10 @@ export default function VideoComponent(props) {
               sx={{
                 color: "white",
                 marginRight: "4px",
-                fontSize: width < 576 ? "10px !important" : "14px",
+                fontSize: width < 576 ? " 10px !important" : "14px",
               }}
             >
-              {second > 0 ? `You can skip Ads after ${second}s` : "Skip Ads"}
+              {second > 0 ? `Skip Ads after ${second}s` : "Skip Ads"}
             </Typography>
             <i
               style={{
