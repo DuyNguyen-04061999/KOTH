@@ -6,63 +6,81 @@ import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
 const PromotionService = new promotionService();
 
+let proDetailCount = 0
 function* getPromotionDetail(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(PromotionService.callDetailPromotion, payload);
-    const { data, status } = res
-    if (status === 200 || status === 201) {
-      yield put(getRefactorDetailPromotionSuccess(data));
-      yield put(updateDetailTour(data));
-    } else {
-      yield put(getRefactorDetailPromotionFail())
+    proDetailCount += 1
+    if(proDetailCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(PromotionService.callDetailPromotion, payload);
+      const { data, status } = res
+      if (status === 200 || status === 201) {
+        yield put(getRefactorDetailPromotionSuccess(data));
+        yield put(updateDetailTour(data));
+      } else {
+        yield put(getRefactorDetailPromotionFail())
+      }
     }
+    proDetailCount = 0
   } catch (error) {
+    proDetailCount = 0
     yield put(getRefactorDetailPromotionFail())
   }
 }
 
+let proDetailAuthCount = 0
 function* getPromotionDetailToken(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(PromotionService.callDetailPromotionToken, payload);
-    const { data, status } = res
-    if (status === 200 || status === 201) {
-      yield put(getRefactorDetailAuthPromotionSuccess(data));
-      yield put(updateDetailTour(data));
-    } else {
-      yield put(getRefactorDetailAuthPromotionFail());
+    proDetailAuthCount += 1
+    if(proDetailAuthCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(PromotionService.callDetailPromotionToken, payload);
+      const { data, status } = res
+      if (status === 200 || status === 201) {
+        yield put(getRefactorDetailAuthPromotionSuccess(data));
+        yield put(updateDetailTour(data));
+      } else {
+        yield put(getRefactorDetailAuthPromotionFail());
+      }
     }
+    proDetailAuthCount = 0
   } catch (error) {
+    proDetailAuthCount = 0
     yield put(getRefactorDetailAuthPromotionFail());
   }
 }
 
+let joinCount = 0
 function* joinPromotionSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(PromotionService.joinPromotion, payload);
-    const { data, status } = res
-    if (status === 200 || status === 201) {
-      yield put(joinPromotionSuccess(data));
-      yield put(updateListPromotionJoined(payload?.tournamentId));
-      yield put(getRefactorDetailAuthPromotion(payload?.tournamentId));
-      yield put(
-        showToastNotification({
-          type: "success",
-          message: "Join tournament successfully!",
-        })
-      );
-    } else {
-      yield put(joinPromotionFail());
-      yield put(
-        showToastNotification({
-          type: "error",
-          message: "Join tournament failed!",
-        })
-      );
+    joinCount += 1
+    if(joinCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(PromotionService.joinPromotion, payload);
+      const { data, status } = res
+      if (status === 200 || status === 201) {
+        yield put(joinPromotionSuccess(data));
+        yield put(updateListPromotionJoined(payload?.tournamentId));
+        yield put(getRefactorDetailAuthPromotion(payload?.tournamentId));
+        yield put(
+          showToastNotification({
+            type: "success",
+            message: "Join tournament successfully!",
+          })
+        );
+      } else {
+        yield put(joinPromotionFail());
+        yield put(
+          showToastNotification({
+            type: "error",
+            message: "Join tournament failed!",
+          })
+        );
+      }
     }
+    joinCount = 0
   } catch (error) {
+    joinCount = 0
     yield put(joinPromotionFail());
     yield put(
       showToastNotification({
@@ -73,17 +91,23 @@ function* joinPromotionSaga(dataRequest) {
   }
 }
 
+let startGameCount = 0
 function* startGameInPromotionSaga(dataRequest) {
   try {
-    const { payload } = dataRequest;
-    const res = yield call(PromotionService.startGameInPromotion, payload);
-    const { data, status } = res
-    if (status === 200 || status === 201) {
-      yield put(startGameInPromotionSuccess(data));
-    } else {
-      yield put(startGameInPromotionFail());
+    startGameCount += 1
+    if(startGameCount === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(PromotionService.startGameInPromotion, payload);
+      const { data, status } = res
+      if (status === 200 || status === 201) {
+        yield put(startGameInPromotionSuccess(data));
+      } else {
+        yield put(startGameInPromotionFail());
+      }
     }
+    startGameCount = 0
   } catch (error) {
+    startGameCount = 0
     yield put(startGameInPromotionFail());
   }
 }
