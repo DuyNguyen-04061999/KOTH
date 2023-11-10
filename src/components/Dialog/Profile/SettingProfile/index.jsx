@@ -19,9 +19,7 @@ const BgWithTooltip = withStyles({
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
   const { userAvatar } = useSelector((state) => state.userReducer);
-  const { nickName } = useSelector(
-    (state) => state.profileReducer
-  );
+  const { nickName } = useSelector((state) => state.profileReducer);
 
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
@@ -40,15 +38,16 @@ export default function SettingProfile({ closePopup }) {
     return kb;
   }
 
-
   const sendUpdateProfile = () => {
     if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
       dispatch(showAlert("error", "Please attach image smaller 1MB"));
     } else {
-      dispatch(updateProfileUser({
-        nickName: nName,
-        avatar: avatar
-      }));
+      dispatch(
+        updateProfileUser({
+          nickName: nName,
+          avatar: avatar,
+        })
+      );
     }
   };
 
@@ -57,7 +56,10 @@ export default function SettingProfile({ closePopup }) {
       <>
         <Box>
           <Box>
-            <AvatarPicker handleSetAvatar={setAvatar} handleChangeImage={handleImageChange} />
+            <AvatarPicker
+              handleSetAvatar={setAvatar}
+              handleChangeImage={handleImageChange}
+            />
           </Box>{" "}
           <Box component={"form"} className="mt-2" onSubmit={handleSubmit}>
             <Box className="Frist-Name mb-3 d-flex flex-column align-items-start">
@@ -132,7 +134,7 @@ export default function SettingProfile({ closePopup }) {
                       </Typography>
                     </Box>
                   }
-                  placement="right"
+                  placement="left"
                   sx={{
                     backgroundColor: "white",
                     color: "red",
@@ -159,10 +161,10 @@ export default function SettingProfile({ closePopup }) {
             </Box>
             <Box className="ps-2 w-100">
               <AnimButton
-                  type={"primary"}
-                  text={"UPDATE"}
-                  onClick={sendUpdateProfile}
-                />
+                type={"primary"}
+                text={"UPDATE"}
+                onClick={sendUpdateProfile}
+              />
             </Box>
           </Box>{" "}
         </Box>
