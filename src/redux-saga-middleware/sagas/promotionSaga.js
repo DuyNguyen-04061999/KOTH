@@ -109,6 +109,12 @@ function* startGameInPromotionSaga(dataRequest) {
   } catch (error) {
     startGameCount = 0
     yield put(startGameInPromotionFail());
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: error?.message,
+      })
+    );
   }
 }
 
