@@ -1246,6 +1246,7 @@ export default function Navbar() {
                   boxShadow:
                     "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
                   backgroundColor: "#7648ED",
+                  color:"#A89CD7"
                 },
                 backgroundColor:
                   pathname && pathname?.includes("support") ? "#7648ED" : "",
