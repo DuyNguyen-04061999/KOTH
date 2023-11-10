@@ -4,9 +4,7 @@ import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clickTab
-} from "../../../../redux-saga-middleware/reducers/authReducer";
+import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -39,9 +37,7 @@ export default function Signup(props) {
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
@@ -131,15 +127,17 @@ export default function Signup(props) {
   ]);
 
   const sendRegister = () => {
-    dispatch(registerReady({
-      username: username,
-      password: password,
-      email: email,
-      phone: phone,
-      ref: refCodeRegister ? refCodeRegister : ref,
-      gender: gender,
-      nickName: nickName,
-    }))
+    dispatch(
+      registerReady({
+        username: username,
+        password: password,
+        email: email,
+        phone: phone,
+        ref: refCodeRegister ? refCodeRegister : ref,
+        gender: gender,
+        nickName: nickName,
+      })
+    );
   };
 
   useEffect(() => {
@@ -235,7 +233,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            // placement="left"            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
@@ -323,7 +321,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
@@ -774,7 +772,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
@@ -881,7 +879,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
