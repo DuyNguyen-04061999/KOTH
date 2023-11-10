@@ -264,7 +264,7 @@ export default function ChatGlobal(props) {
               >
                 <ChatRoot
                   type="text"
-                  id="sendmessages"
+                  id="sendmessages_chat_global_1"
                   onKeyDown={handleOnKeyDownEnter}
                   style={inpChat()}
                   placeholder="Type your messages..."
@@ -425,7 +425,7 @@ export default function ChatGlobal(props) {
               >
                 <ChatRoot
                   type="text"
-                  id="sendmessages"
+                  id="sendmessages_chat_global_2"
                   onKeyDown={handleOnKeyDownEnter}
                   style={inpChat()}
                   placeholder="Type your messages..."
