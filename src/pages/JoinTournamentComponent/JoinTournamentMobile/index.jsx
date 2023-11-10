@@ -87,13 +87,17 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   
 
   const handleJoinTour = () => {
-    if ((detailTournament?.tournamentVip !== 0 && uPack === null) || (detailTournament?.tournamentVip !== 0 && uPack && uPack?.remain === "Expired")) {
-      dispatch(toggleTournamentShow());
-    } else if (token) {
-      dispatch(openSubscribeDialog())
-      // dispatch(JoinTournament({
-      //   tournamentId: detailTournament?.id,
-      // }))
+    if(token) {
+      if (
+        (detailTournament?.tournamentVip !== 0 && uPack === null) ||
+        (detailTournament?.tournamentVip !== 0 &&
+          uPack &&
+          uPack?.remain === "Expired")
+      ) {
+        dispatch(toggleTournamentShow());
+      } else {
+        dispatch(openSubscribeDialog())
+      } 
     } else {
       dispatch(toggleLoginDialog());
     }

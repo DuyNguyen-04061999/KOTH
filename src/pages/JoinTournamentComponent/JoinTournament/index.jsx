@@ -144,15 +144,17 @@ export default function JoinTournament() {
   };
 
   const handleJoinTour = () => {
-    if (
-      (detailTournament?.tournamentVip !== 0 && uPack === null) ||
-      (detailTournament?.tournamentVip !== 0 &&
-        uPack &&
-        uPack?.remain === "Expired")
-    ) {
-      dispatch(toggleTournamentShow());
-    } else if (token) {
-      dispatch(openSubscribeDialog())
+    if(token) {
+      if (
+        (detailTournament?.tournamentVip !== 0 && uPack === null) ||
+        (detailTournament?.tournamentVip !== 0 &&
+          uPack &&
+          uPack?.remain === "Expired")
+      ) {
+        dispatch(toggleTournamentShow());
+      } else {
+        dispatch(openSubscribeDialog())
+      } 
     } else {
       dispatch(toggleLoginDialog());
     }
@@ -272,7 +274,7 @@ export default function JoinTournament() {
                     {!listJoinedTour?.includes(id) ? (
                       <Box sx={{ width: "150px" }}>
                         <AnimButton
-                          onClick={() => dispatch(openSubscribeDialog())}
+                          onClick={handleJoinTour}
                           text={"Join"}
                           type={"primary"}
                         />
