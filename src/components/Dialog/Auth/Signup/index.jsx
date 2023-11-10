@@ -5,9 +5,7 @@ import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
-import {
-  clickTab
-} from "../../../../redux-saga-middleware/reducers/authReducer";
+import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -40,9 +38,7 @@ export default function Signup(props) {
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
@@ -132,21 +128,26 @@ export default function Signup(props) {
   ]);
 
   const sendRegister = () => {
-    if(!disabledBtn) {
-      dispatch(registerReady({
-        username: username,
-        password: password,
-        email: email,
-        phone: phone,
-        ref: refCodeRegister ? refCodeRegister : ref,
-        gender: gender,
-        nickName: nickName,
-      }))
+    if (!disabledBtn) {
+      dispatch(
+        registerReady({
+          username: username,
+          password: password,
+          email: email,
+          phone: phone,
+          ref: refCodeRegister ? refCodeRegister : ref,
+          gender: gender,
+          nickName: nickName,
+        })
+      );
     } else {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Please complete all required information before signing up."
-      }))
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message:
+            "Please complete all required information before signing up.",
+        })
+      );
     }
   };
 
@@ -243,7 +244,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
@@ -331,7 +332,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
@@ -782,7 +783,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
@@ -889,7 +890,7 @@ export default function Signup(props) {
                 </Typography>
               </Box>
             }
-            placement="right"
+            placement="left"
             sx={{
               backgroundColor: "white",
               color: "red",
