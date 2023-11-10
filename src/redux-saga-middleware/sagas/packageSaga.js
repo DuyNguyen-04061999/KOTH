@@ -48,6 +48,12 @@ function* buyPackageSaga(dataRequest) {
                   );
             } else {
                 yield put(buyPackageFail())
+                yield put(
+                    showToastNotification({
+                      type: "error",
+                      message: "Buy package failed! Something went wrong",
+                    })
+                  );
             }
         }
         buyPackageCount = 0
@@ -56,8 +62,8 @@ function* buyPackageSaga(dataRequest) {
         yield put(buyPackageFail())
         yield put(
             showToastNotification({
-              type: "error",
-              message: error?.message,
+              type: error?.type || "error",
+              message: error?.message || "Buy package failed! Something went wrong",
             })
           );
     }
