@@ -4,6 +4,7 @@ import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   clickTab
 } from "../../../../redux-saga-middleware/reducers/authReducer";
@@ -131,15 +132,22 @@ export default function Signup(props) {
   ]);
 
   const sendRegister = () => {
-    dispatch(registerReady({
-      username: username,
-      password: password,
-      email: email,
-      phone: phone,
-      ref: refCodeRegister ? refCodeRegister : ref,
-      gender: gender,
-      nickName: nickName,
-    }))
+    if(!disabledBtn) {
+      dispatch(registerReady({
+        username: username,
+        password: password,
+        email: email,
+        phone: phone,
+        ref: refCodeRegister ? refCodeRegister : ref,
+        gender: gender,
+        nickName: nickName,
+      }))
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Please complete all required information before signing up."
+      }))
+    }
   };
 
   useEffect(() => {
