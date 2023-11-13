@@ -13,7 +13,10 @@ export const PROMOTION_API = axios.create({
     Authorization: "Bearer " + localStorage.getItem("token"),
     authorization: "Bearer " + localStorage.getItem("token"),
     "x-access-refactor-token": localStorage.getItem("token"),
-    'x-time-zone': - new Date().getTimezoneOffset()/60
+    'x-time-zone': - new Date().getTimezoneOffset()/60,
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+    'Expires': '0',
   },
 });
 

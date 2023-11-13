@@ -448,7 +448,9 @@ export default function JoinTournament() {
                     >
                       <img
                         src={
-                          detailTournament?.bestUser.avatar ||
+                          detailTournament?.bestUser.avatar ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          detailTournament?.bestUser.avatar :
                           images.bannerWin_Desktop
                         }
                         alt="..."
@@ -2127,7 +2129,8 @@ export default function JoinTournament() {
                         >
                           <img
                             src={
-                              detailTournament?.bestUser.avatar ||
+                              detailTournament?.bestUser.avatar ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" + detailTournament?.bestUser.avatar :
                               images.bannerWin_Desktop
                             }
                             alt="..."
