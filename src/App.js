@@ -189,12 +189,15 @@ function App() {
         
       });
 
-      socket?.on("warning", (data) => {
-        store.dispatch(showToastNotification({
-          type: "warning",
-          message: data || ""
-        }))
+      socket?.on("warning", (data, type) => {
+        if(type && type !== "get") {
+          store.dispatch(showToastNotification({
+            type: "warning",
+            message: data || ""
+          }))
+        }
       });
+
       socket?.on("success", (data) => {
         
       });
@@ -289,6 +292,7 @@ function App() {
       });
     }
     return () => {
+      socket?.off("warning")
       socket?.disconnect();
     };
   }, [socket, tokenUser]);
