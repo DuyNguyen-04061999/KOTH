@@ -84,7 +84,6 @@ export default function NewHomePage() {
   }, [dispatch]);
 
   const navigate = useNavigate();
-  const releaseTime = Date.parse("20 Nov 2023 00:00:00 CDT");
 
   const handleFetchTimeout = () => {
     dispatch({
