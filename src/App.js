@@ -5,6 +5,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
+import io from "socket.io-client";
 import "./assets/css/App.css";
 import CountDownTimer from "./components/CountDownTimer";
 import Layout from "./components/Layout";
@@ -60,6 +61,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -101,7 +103,34 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const token =localStorage.getItem("token")
+    const token = localStorage.getItem("token")
+    if(tokenUser || token) {
+      const __socket = io(process.env.REACT_APP_END_POINT, {
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        reconnectionAttempts: Infinity,
+    
+        transports: ["polling", "websocket"],
+        secure: true,
+        rejectUnauthorized: false,
+        forceNew: true,
+        timeout: 
+        (
+            window?.location?.host?.split('.')[0] 
+                      && window?.location?.host?.split('.')?.length > 0 
+                      && window?.location?.host?.split('.')[0] !== "admin"
+          ) ? 60000 : 300000,
+        auth: {
+          token: tokenUser || token, // Provide the authentication token here
+        },
+      });
+      setSocket(__socket)
+    }
+  }, [tokenUser, user]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
     if(socket && (tokenUser || token)) {
       socket?.emit("loginSocial", {
         token: tokenUser || token
@@ -164,9 +193,6 @@ function App() {
     const token = localStorage.getItem("token")
     if (!tokenUser && !token) {
       socket?.emit("listMessageGlobal");
-    } else {
-      socket?.emit("listMessage");
-      socket?.emit("listFriend");
     }
   }, [socket, tokenUser]);
 
