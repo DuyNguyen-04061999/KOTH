@@ -17,7 +17,9 @@ const BannerLoading = (props) => {
         height: height,
         width: width,
         bgcolor: bgColor,
-        other
+        other,
+        marginTop:"10px",
+        marginBottom:"10px"
       }}
       variant={variant}
       animation={animation}
