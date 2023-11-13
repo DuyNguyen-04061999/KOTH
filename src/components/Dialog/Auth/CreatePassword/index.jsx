@@ -33,7 +33,6 @@ export default function CreatePassword() {
   };
 
   const handleCreatePass = () => {
-
     dispatch(
       resetPasswordReady({
         username: nameReset || forgotPassUsername,
@@ -51,10 +50,14 @@ export default function CreatePassword() {
     const isPasswordValid = password.length >= 6;
     const containsUppercase = uppercaseRegex.test(password);
     const containNumber = numberRegex.test(password);
-    if (containsSpecialCharacter && isPasswordValid && containsUppercase && containNumber) {
+    if (
+      containsSpecialCharacter &&
+      isPasswordValid &&
+      containsUppercase &&
+      containNumber
+    ) {
       setPasswordError("");
-    }
-    else {
+    } else {
       setPasswordError("Please enter valid password");
     }
   }, [password]);
@@ -139,7 +142,7 @@ export default function CreatePassword() {
               />
             </Box>
             <input
-              onChange={(e)=> setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               type={displayPassword ? "text" : "password"}
               placeholder="Password"
               style={{
@@ -416,7 +419,6 @@ export default function CreatePassword() {
             backgroundColor: "#181223",
             padding: "2px 12px",
             borderRadius: "4px",
-            marginTop: "24px",
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -434,7 +436,7 @@ export default function CreatePassword() {
               />
             </Box>
             <input
-              onChange={(e)=> setRePassword(e.target.value)}
+              onChange={(e) => setRePassword(e.target.value)}
               type={displayRePassword ? "text" : "password"}
               placeholder="Confirm password"
               style={{
@@ -489,7 +491,14 @@ export default function CreatePassword() {
       >
         <Box sx={{ width: "100%" }}>
           <AnimButton
-            type={(!rePasswordError || !passwordError) ? "primary" : "disabled"}
+            type={
+              rePasswordError === "" &&
+              passwordError === "" &&
+              password !== "" &&
+              rePassword !== ""
+                ? "primary"
+                : "disabled"
+            }
             text={"NEXT"}
             onClick={() => handleCreatePass()}
           >
