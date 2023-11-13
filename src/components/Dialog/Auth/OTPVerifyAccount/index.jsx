@@ -146,7 +146,7 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          {typeVerifyOTP === "register" || typeVerifyOTP === "reVerify" ? ` Please enter the 6-digit verification code that was sent to your device to verify your account`
+          {typeVerifyOTP === "register" || typeVerifyOTP === "reVerify" ? ` Please enter the 6-digit verification code that was sent to ${user?.userEmail} to verify your account`
            :  typeVerifyOTP === "forget_phone" ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.phone} to verify your account` : typeVerifyOTP === "forget_email" 
            ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.email} to verify your account` : ``}
         </Typography>

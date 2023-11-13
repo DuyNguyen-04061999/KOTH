@@ -29,8 +29,7 @@ import {
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import {
-  updateDetailTour,
-  updateDetailTourAfterPlayGame,
+  updateDetailTour
 } from "../../../redux-saga-middleware/reducers/playgameReducer";
 import {
   finishGame,
@@ -46,7 +45,6 @@ import {
   toggleExtra,
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
@@ -133,13 +131,13 @@ export default function JoinTournament() {
       dispatch(toggleExtra());
       return;
     } else {
-      if (countTicket > 0 && detailTournament?.extra <= 0) {
-        dispatch(updateCountExtraAfterPlayGame(1));
-      }
+      // if (countTicket > 0 && detailTournament?.extra <= 0) {
+      //   dispatch(updateCountExtraAfterPlayGame(1));
+      // }
 
-      if (countTicket <= 0 && detailTournament?.extra > 0) {
-        dispatch(updateDetailTourAfterPlayGame());
-      }
+      // if (countTicket <= 0 && detailTournament?.extra > 0) {
+      //   dispatch(updateDetailTourAfterPlayGame());
+      // }
 
       dispatch(
         startGameInPromotion({
@@ -448,7 +446,9 @@ export default function JoinTournament() {
                     >
                       <img
                         src={
-                          detailTournament?.bestUser.avatar ||
+                          detailTournament?.bestUser.avatar ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          detailTournament?.bestUser.avatar :
                           images.bannerWin_Desktop
                         }
                         alt="..."
@@ -2127,7 +2127,8 @@ export default function JoinTournament() {
                         >
                           <img
                             src={
-                              detailTournament?.bestUser.avatar ||
+                              detailTournament?.bestUser.avatar ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" + detailTournament?.bestUser.avatar :
                               images.bannerWin_Desktop
                             }
                             alt="..."
