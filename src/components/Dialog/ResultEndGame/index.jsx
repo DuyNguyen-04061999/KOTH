@@ -7,6 +7,7 @@ import { getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/r
 import {
   toggleCloseResultEndGame,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
 import "./index.scss";
 
 export default function ResultEndGame() {
@@ -28,7 +29,7 @@ export default function ResultEndGame() {
     }
 
     if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {
-      // dispatch(updateCountExtraAfterPlayGame(1))
+      dispatch(updateCountExtraAfterPlayGame(1))
     }
   };
 
