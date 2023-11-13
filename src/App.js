@@ -164,9 +164,6 @@ function App() {
     const token = localStorage.getItem("token")
     if (!tokenUser && !token) {
       socket?.emit("listMessageGlobal");
-    } else {
-      socket?.emit("listMessage");
-      socket?.emit("listFriend");
     }
   }, [socket, tokenUser]);
 
