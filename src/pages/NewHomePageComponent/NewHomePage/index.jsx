@@ -1,5 +1,4 @@
-import { Button } from "@mui/base";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -85,7 +84,6 @@ export default function NewHomePage() {
   }, [dispatch]);
 
   const navigate = useNavigate();
-  const releaseTime = Date.parse("20 Nov 2023 00:00:00 CDT");
 
   const handleFetchTimeout = () => {
     dispatch({
