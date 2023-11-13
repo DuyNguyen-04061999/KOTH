@@ -28,7 +28,6 @@ export default function DialogProfile(props) {
 
   const { open, handleShowProfile } = props;
   const { user } = useSelector((state) => state.userReducer);
-  const userName = user?.userName || ""
   const { uPack } = useSelector((state) => state.userReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
@@ -80,7 +79,7 @@ export default function DialogProfile(props) {
             >
               {userNameProfile}
             </Typography>
-            {userNameProfile === userName && tokenUser && (
+            {userNameProfile === user?.userName && tokenUser && (
               <Box>
                 {uPack !== null ? (
                   <Box
@@ -107,7 +106,7 @@ export default function DialogProfile(props) {
                 )}
               </Box>
             )}
-            {userNameProfile === userName && tokenUser && (
+            {userNameProfile === user?.userName && tokenUser && (
               <Box>
                 {uPack !== null ? (
                   <Box
@@ -131,7 +130,7 @@ export default function DialogProfile(props) {
               </Box>
             )}
             {tokenUser &&
-              userNameProfile !== userName &&
+              userNameProfile !== user?.userName &&
               (checkExistInFriendList() === false ? (
                 <Box
                   onClick={() => {
@@ -279,7 +278,7 @@ export default function DialogProfile(props) {
                 />
               </FormControl>
             </Box>
-            {userNameProfile === userName && tokenUser && (
+            {userNameProfile === user?.userName && tokenUser && (
               <Box>
                 <Box className="Email d-flex flex-column align-items-start mb-3">
                   <Typography
@@ -396,7 +395,7 @@ export default function DialogProfile(props) {
                     </Box>
                   </FormControl>
                 </Box>
-                {userNameProfile === userName && tokenUser && (
+                {userNameProfile === user?.userName && tokenUser && (
                   <Box
                     sx={{
                       cursor: "pointer",

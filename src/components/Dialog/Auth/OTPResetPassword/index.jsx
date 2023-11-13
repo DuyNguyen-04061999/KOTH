@@ -132,15 +132,16 @@ export default function OTPResetPassword() {
                 height: "38px",
                 marginRight: "16px",
                 backgroundColor: "#271C39",
-                border: "none",
                 outline: "none",
-                borderBottom: "2px solid white",
                 textAlign: "center",
-                fontSize: "24px",
+                fontSize: width < 576 ? "12px" : "20px",
                 color: "white",
+                border:"2px solid white",
+                borderRadius:"4px"
               }}
               type="number"
               maxLength={1}
+              inputMode="numeric"
             />
           )}
         />
