@@ -1028,6 +1028,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                                 textAlign: "start",
                                 fontWeight: "500 !important",
                                 fontSize: "13px",
+                                whiteSpace: "pre-wrap"
                               }}
                             >
                               {item}
