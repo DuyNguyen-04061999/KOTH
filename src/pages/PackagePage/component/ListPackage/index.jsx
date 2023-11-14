@@ -11,6 +11,7 @@ import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/pack
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -29,9 +30,9 @@ export default function ListPackage(props) {
     id,
   } = props;
   const [socket, setSocket] = useState(null);
-  const { tokenUser: token, uPack } = useSelector(
-    (state) => state.userReducer
-  );
+  const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
+
+  const { isFetchListPackage } = useSelector((state) => state.packageReducer);
 
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -39,7 +40,6 @@ export default function ListPackage(props) {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
-
 
   return (
     <>
@@ -122,29 +122,36 @@ export default function ListPackage(props) {
               }}
             >
               <Box>
-                <video
-                  width={width < 1200 && width > 576 ? 130 : 200}
-                  height={width < 1200 && width > 576 ? 130 : 170}
-                  alt=""
-                  style={{
-                    mixBlendMode: width < 576 ? "normal" : "difference",
-                  }}
-                  playsInline
-                  muted
-                  autoPlay
-                  loop={true}
-                >
-                  <source
-                    src={
-                      packageAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          packageAvatar
-                        : images.free
-                    }
-                    type="video/mp4"
+                {isFetchListPackage ? (
+                  <BannerLoading
+                    width={width < 1200 && width > 576 ? 130 : 200}
+                    height={width < 1200 && width > 576 ? 130 : 170}
                   />
-                </video>
+                ) : (
+                  <video
+                    width={width < 1200 && width > 576 ? 130 : 200}
+                    height={width < 1200 && width > 576 ? 130 : 170}
+                    alt=""
+                    style={{
+                      mixBlendMode: width < 576 ? "normal" : "difference",
+                    }}
+                    playsInline
+                    muted
+                    autoPlay
+                    loop={true}
+                  >
+                    <source
+                      src={
+                        packageAvatar
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            packageAvatar
+                          : images.free
+                      }
+                      type="video/mp4"
+                    />
+                  </video>
+                )}
               </Box>
               <Box
                 sx={{
@@ -157,7 +164,7 @@ export default function ListPackage(props) {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     marginBottom: "15px",
-                    marginTop: packageName === "Subscription" ? "0px" : "25px"
+                    marginTop: packageName === "Subscription" ? "0px" : "25px",
                   }}
                 >
                   {packageName === "Subscription" ? (
@@ -313,7 +320,7 @@ export default function ListPackage(props) {
                     display: "flex",
                     color: "white",
                     alignItems: "center",
-                    flexDirection:"column"
+                    flexDirection: "column",
                   }}
                 >
                   <Typography
@@ -321,21 +328,24 @@ export default function ListPackage(props) {
                     sx={{
                       fontWeight: "500 !important",
                       fontSize: "16px !important",
-                      
                     }}
                   >
                     ${packagePrice}
                   </Typography>
-                  {packageName === "Subscription" ? (<Typography
-                    sx={{
-                      fontWeight: "500 !important",
-                      fontSize: "12px !important",
-                      color:"#979797",
-                      marginTop:"5px !important"
-                    }}
-                  >
-                    Only $0.67/ day
-                  </Typography>) : ("")}
+                  {packageName === "Subscription" ? (
+                    <Typography
+                      sx={{
+                        fontWeight: "500 !important",
+                        fontSize: "12px !important",
+                        color: "#979797",
+                        marginTop: "5px !important",
+                      }}
+                    >
+                      Only $0.67/ day
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
                 </Box>
               )}
               <button
@@ -410,7 +420,9 @@ export default function ListPackage(props) {
                   }
                 }}
                 disabled={
-                  uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
+                  uPack &&
+                  uPack?.remain !== "Expired" &&
+                  packageName === "Subscription"
                     ? true
                     : false
                 }
@@ -420,7 +432,9 @@ export default function ListPackage(props) {
                   borderRadius: "7px",
                   color: "white",
                   background:
-                  uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
+                    uPack &&
+                    uPack?.remain !== "Expired" &&
+                    packageName === "Subscription"
                       ? "Gray"
                       : "#9747FF",
                   backdropFilter: " blur(4px)",
@@ -434,8 +448,12 @@ export default function ListPackage(props) {
                     fontSize: "11px !important",
                   }}
                 >
-                  {uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
-                    ? "Current pack" : uPack?.remain === "Expired" ? "Upgrade Pack"
+                  {uPack &&
+                  uPack?.remain !== "Expired" &&
+                  packageName === "Subscription"
+                    ? "Current pack"
+                    : uPack?.remain === "Expired"
+                    ? "Upgrade Pack"
                     : "Buy Now"}
                 </Typography>
               </button>

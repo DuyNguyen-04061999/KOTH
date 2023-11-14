@@ -1,11 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
+import { useSelector } from "react-redux";
 
 export default function GameInTournament(props) {
   const { game } = props;
   const { width } = useWindowDimensions();
-
+  const {isGetDetailPromotion,
+    isGetDetailAuthPromotion,} = useSelector((state) => state.promotionReducer)
   return (
     <>
       <Box
@@ -37,10 +40,12 @@ export default function GameInTournament(props) {
             flexDirection: "column",
             alignItems: width < 576 ? "center" : "start",
             color: "white",
-           
           }}
         >
-          <Box
+          {isGetDetailAuthPromotion || isGetDetailPromotion ? (
+            <BannerLoading width={"100%"} height={"180px"}/>
+          ) : (
+            <Box
             sx={{
               display: "flex",
               flexDirection: width < 576 ? "column" : "row",
@@ -84,6 +89,8 @@ export default function GameInTournament(props) {
               </Typography>
             )}
           </Box>
+          )}
+        
         </Box>
       </Box>
     </>
