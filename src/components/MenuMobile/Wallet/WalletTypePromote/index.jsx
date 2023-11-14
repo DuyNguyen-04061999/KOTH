@@ -7,24 +7,26 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { getPaypal } from "../../../../redux-saga-middleware/reducers/payPalReducer";
 import { getStripe } from "../../../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney, getAppType } from "../../../../utils/helper";
+import { systemNotification } from "../../../../utils/notification";
 import AnimButton from "../../../AnimButton";
 
 export default function WalletTypePromote(props) {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducer);
-  const userGold = user?.userGold || 0
+  const userGold = user?.userGold || 0;
   const { price } = useSelector((state) => state.walletReducer);
   const [amount, setAmount] = useState(0);
   const [typePayment, setTypePayment] = useState("stripe");
   const [currency, setCurrency] = useState("USD");
   const [agree, setAgree] = useState(false);
   const [bgInput, setBgInput] = useState("gray");
-
+  const { listSetting } = useSelector((state) => state.settingReducer);
   useEffect(() => {
     setAmount(Math.ceil(price));
   }, [price]);
@@ -32,51 +34,60 @@ export default function WalletTypePromote(props) {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    if (agree === false) {
-      toast.warning("Please agree policy!", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.WarningIcon}
-          />
-        ),
-        position: "top-center",
-        className:
-          width < 576 ? "warning-background-small" : "warning-background",
-      });
-      return;
-    }
-    if (!amount || amount < 0) {
-      toast.warning("Please enter amount", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.WarningIcon}
-          />
-        ),
-        position: "top-center",
-        className:
-          width < 576 ? "warning-background-small" : "warning-background",
-      });
-    } else if (typePayment === "stripe" && currency === "USD") {
-      dispatch(getStripe(Number.parseFloat(amount)));
-    } else if (typePayment === "paypal" && currency === "USD") {
-      dispatch(getPaypal(Number.parseFloat(amount)));
+    if (!listSetting?.paymentEnabled) {
+      dispatch(
+        showToastNotification({
+          type: systemNotification.maintenance.serviceClose.type,
+          message: systemNotification.maintenance.serviceClose.message,
+        })
+      );
     } else {
-      toast.warning("Updating...!", {
-        icon: ({ theme, type }) => (
-          <img
-            style={{ width: "20px", marginRight: "10px" }}
-            alt="..."
-            src={images.WarningIcon}
-          />
-        ),
-        position: "top-center",
-        className:
-          width < 576 ? "warning-background-small" : "warning-background",
-      });
+      if (!agree) {
+        toast.warning("Please agree policy!", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.WarningIcon}
+            />
+          ),
+          position: "top-center",
+          className:
+            width < 576 ? "warning-background-small" : "warning-background",
+        });
+        return;
+      }
+      if (!amount || amount < 0) {
+        toast.warning("Please enter amount", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.WarningIcon}
+            />
+          ),
+          position: "top-center",
+          className:
+            width < 576 ? "warning-background-small" : "warning-background",
+        });
+      } else if (typePayment === "stripe" && currency === "USD") {
+        dispatch(getStripe(Number.parseFloat(amount)));
+      } else if (typePayment === "paypal" && currency === "USD") {
+        dispatch(getPaypal(Number.parseFloat(amount)));
+      } else {
+        toast.warning("Updating...!", {
+          icon: ({ theme, type }) => (
+            <img
+              style={{ width: "20px", marginRight: "10px" }}
+              alt="..."
+              src={images.WarningIcon}
+            />
+          ),
+          position: "top-center",
+          className:
+            width < 576 ? "warning-background-small" : "warning-background",
+        });
+      }
     }
   };
 
@@ -103,7 +114,7 @@ export default function WalletTypePromote(props) {
     navigate("/help-center");
     dispatch(toggleWalletDialog());
   };
-  
+
   return (
     <>
       <Box
