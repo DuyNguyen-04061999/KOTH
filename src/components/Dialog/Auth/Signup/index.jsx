@@ -14,6 +14,7 @@ import { validateEmail } from "../../../../utils/validationEmail";
 import { validateUserName } from "../../../../utils/validationUserName";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
+
 const BgWithTooltip = withStyles({
   tooltip: {
     color: "black",
@@ -233,6 +234,8 @@ export default function Signup(props) {
           )}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -257,6 +260,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -322,6 +326,8 @@ export default function Signup(props) {
           )}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -345,6 +351,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -775,6 +782,8 @@ export default function Signup(props) {
           )}{" "}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -796,6 +805,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -881,6 +891,8 @@ export default function Signup(props) {
           )}{" "}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -903,6 +915,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}

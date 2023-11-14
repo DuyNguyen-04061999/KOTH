@@ -1,6 +1,7 @@
 import axios from "axios";
 import { store } from "../config/configRedux";
 import _socket from "../config/socket";
+import { showToastNotification } from "../reducers/alertReducer";
 import { logoutReady, updateUserToken } from "../reducers/userReducer";
 
 axios.defaults.withCredentials = true;
@@ -13,8 +14,16 @@ export const PROMOTION_API = axios.create({
     Authorization: "Bearer " + localStorage.getItem("token"),
     authorization: "Bearer " + localStorage.getItem("token"),
     "x-access-refactor-token": localStorage.getItem("token"),
-    'x-time-zone': - new Date().getTimezoneOffset()/60
+    'x-time-zone': - new Date().getTimezoneOffset()/60,
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+    'Expires': '0',
   },
+});
+
+PROMOTION_API.interceptors.request.use((config) => {
+  config.timeout = process.env.REACT_APP_REQUEST_TIMEOUT || 5000;
+  return config;
 });
 
 (function () {
@@ -37,8 +46,8 @@ PROMOTION_API.interceptors.response.use(
         }
 
         if (er.response.status === 410) {
-          if(localStorage.getItem("refreshToken")) {
-            store.dispatch(logoutReady())
+          if (localStorage.getItem("refreshToken")) {
+            store.dispatch(logoutReady());
             const res = await PROMOTION_API.post(
               "/api/authenticate/refresh-token",
               {
@@ -47,36 +56,46 @@ PROMOTION_API.interceptors.response.use(
               {
                 headers: {
                   "Content-Type": "application/json",
-                  "x-access-refresh-token": localStorage.getItem("refreshToken"),
+                  "x-access-refresh-token":
+                    localStorage.getItem("refreshToken"),
                 },
               }
             );
-            if(res && res.data) {
+            if (res && res.data) {
               localStorage.setItem("token", res.data.data.token);
               localStorage.setItem("refreshToken", res.data.data.refreshToken);
-              store.dispatch(updateUserToken(res.data.data.token))
+              store.dispatch(updateUserToken(res.data.data.token));
               _socket.emit("loginSocial", {
-                token: res.data.data.token
+                token: res.data.data.token,
               });
-              window.location.reload()
+              window.location.reload();
             } else {
-              store.dispatch(logoutReady())
+              store.dispatch(logoutReady());
             }
-            
           } else {
-            store.dispatch(logoutReady())
+            store.dispatch(logoutReady());
           }
-          
         }
 
         if (er.response.status === 411) {
           localStorage.removeItem("token");
           localStorage.removeItem("refreshToken");
-          store.dispatch(logoutReady())
+          store.dispatch(logoutReady());
         }
       }
-    }
 
-    return Promise.reject(er.response.data);
+      if (er?.code === "ECONNABORTED" && er?.message.includes("timeout")) {
+        store.dispatch(
+          showToastNotification({
+            type: "error",
+            message:
+              "Sorry for the inconvenience. The server is currently overloaded. Please try again later.",
+          })
+        );
+        return Promise.reject(er?.message);
+      }
+    }
+    return Promise.reject(er?.response?.data);
+
   }
 );

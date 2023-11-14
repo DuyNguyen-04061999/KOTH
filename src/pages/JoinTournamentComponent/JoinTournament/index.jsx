@@ -29,8 +29,7 @@ import {
   toggleShareTour,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import {
-  updateDetailTour,
-  updateDetailTourAfterPlayGame,
+  updateDetailTour
 } from "../../../redux-saga-middleware/reducers/playgameReducer";
 import {
   finishGame,
@@ -46,7 +45,6 @@ import {
   toggleExtra,
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
@@ -133,13 +131,13 @@ export default function JoinTournament() {
       dispatch(toggleExtra());
       return;
     } else {
-      if (countTicket > 0 && detailTournament?.extra <= 0) {
-        dispatch(updateCountExtraAfterPlayGame(1));
-      }
+      // if (countTicket > 0 && detailTournament?.extra <= 0) {
+      //   dispatch(updateCountExtraAfterPlayGame(1));
+      // }
 
-      if (countTicket <= 0 && detailTournament?.extra > 0) {
-        dispatch(updateDetailTourAfterPlayGame());
-      }
+      // if (countTicket <= 0 && detailTournament?.extra > 0) {
+      //   dispatch(updateDetailTourAfterPlayGame());
+      // }
 
       dispatch(
         startGameInPromotion({
@@ -483,7 +481,150 @@ export default function JoinTournament() {
               )}
               {/* Partipants */}
               {detailTournament?.tournamentStatus === 2 ? (
-                ""
+                <Box
+                  sx={{
+                    backgroundImage: `url(${images.bannerendtour})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    width: "100%",
+                    borderRadius: "5px",
+                    // marginTop: "34px",
+                    // display: "flex",
+                    // justifyContent: "center",
+                    // alignItems: "center",
+                    // flexDirection: "column",
+                    padding: "30px",
+                    position: "relative",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      wordWrap: "break-word",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        color: "white",
+                        fontSize: `calc(100vw / 32)`,
+                      }}
+                    >
+                      THIS PROMOTION HAS ENDED!
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: `calc(100vw / 60)`,
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        color: "#FFE36C",
+                        marginBottom: "20px !important",
+                      }}
+                    >
+                      WINNER ANNOUNCEMENT
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        // width: "365px",
+                        marginLeft: "60px",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: `calc(100vw / 90)`,
+                          fontWeight: "800",
+                          color: "white",
+                          marginBottom: "10px !important",
+                        }}
+                      >
+                        REWARD SPONSORED BY:{" "}
+                        {detailTournament?.tournamentInfors?.owner?.brandName}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: width < 1500 ? `calc(100vw / 40)` : "50px",
+                          fontWeight: "800",
+                          letterSpacing: 0,
+                          textTransform: "uppercase",
+                          color: "white",
+                          marginBottom: "10px !important",
+                        }}
+                      >
+                        {detailTournament?.tournamentName}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "16px",
+                          color: "#FFC56F",
+                          fontWeight: "800",
+                        }}
+                      >
+                        CELEBRATING OUR LUCKY CHAMPION!
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        width: `calc(100vw/ 5)`,
+                        height: `calc(100vw/ 6)`,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundImage: `url(${images.layerend})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                        backgroundSize: "contain",
+                      }}
+                    >
+                      <img
+                        src={
+                          detailTournament?.bestUser.avatar ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          detailTournament?.bestUser.avatar :
+                          images.bannerWin_Desktop
+                        }
+                        alt="..."
+                        style={{
+                          width: width < 1500 ? "80px" : "150px",
+                          height: width < 1500 ? "80px" : "150px",
+                          borderRadius: "12px",
+                          border: " 1px solid #FFBB33",
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          background: "rgba(71, 55, 152, 0.80)",
+                          padding: "10px",
+                          borderRadius: "5px",
+                          marginTop: "10px",
+                          width: width < 1500 ? "80px" : "150px",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#FFF8B7",
+                            fontSize: `calc(100vw / 95)`,
+                            marginLeft: "0px !important",
+                          }}
+                        >
+                          {detailTournament?.bestUser.name}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
               ) : (
                 // <Box
                 //   sx={{
@@ -2419,7 +2560,8 @@ export default function JoinTournament() {
                         >
                           <img
                             src={
-                              detailTournament?.bestUser.avatar ||
+                              detailTournament?.bestUser.avatar ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" + detailTournament?.bestUser.avatar :
                               images.bannerWin_Desktop
                             }
                             alt="..."

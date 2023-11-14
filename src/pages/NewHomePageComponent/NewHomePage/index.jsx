@@ -1,19 +1,18 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BannerTour, BannerTourMobile } from "../../../components/Banner";
-import FlipCountDownItem from "../../../components/FlipCountDownItem/FlipCountDownItem";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
 import { getAppType } from "../../../utils/helper";
-import { imageHome, images } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import { Package } from "../../PackagePage/component";
-import "./index.scss";
 import BannerHomePage from "./BannerHomePage";
+import "./index.scss";
 
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
@@ -85,7 +84,13 @@ export default function NewHomePage() {
   }, [dispatch]);
 
   const navigate = useNavigate();
-  const releaseTime = Date.parse("20 Nov 2023 00:00:00 CDT");
+
+  const handleFetchTimeout = () => {
+    dispatch({
+      type: "CALL_LIST_TOURNAMENT",
+      payload: "ended",
+    });
+  };
 
   return (
     <Container
@@ -117,6 +122,9 @@ export default function NewHomePage() {
           Game Manager
         </div>
       )}{" "}
+      {process.env.REACT_APP_TEST === "test" && (
+        <Button onClick={() => handleFetchTimeout()}>Fetch Timeout</Button>
+      )}
       <Box
         sx={{
           paddingBottom: "70px",
