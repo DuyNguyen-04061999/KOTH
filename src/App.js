@@ -54,12 +54,13 @@ import {
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
 import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
-import { updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
+import { updateCountTicket, updateUserGoldAfterPaypal } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -101,13 +102,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const token =localStorage.getItem("token")
+    const token = localStorage.getItem("token")
     if(socket && (tokenUser || token)) {
       socket?.emit("loginSocial", {
         token: tokenUser || token
       });
     }
-  }, [tokenUser, socket, user]);
+  }, [tokenUser, socket]);
 
   const { width } = useWindowDimensions();
 
@@ -164,9 +165,6 @@ function App() {
     const token = localStorage.getItem("token")
     if (!tokenUser && !token) {
       socket?.emit("listMessageGlobal");
-    } else {
-      socket?.emit("listMessage");
-      socket?.emit("listFriend");
     }
   }, [socket, tokenUser]);
 
@@ -189,12 +187,15 @@ function App() {
         
       });
 
-      socket?.on("warning", (data) => {
-        store.dispatch(showToastNotification({
-          type: "warning",
-          message: data || ""
-        }))
+      socket?.on("warning", (data, type) => {
+        if(type && type !== "get") {
+          store.dispatch(showToastNotification({
+            type: "warning",
+            message: data || ""
+          }))
+        }
       });
+
       socket?.on("success", (data) => {
         
       });
@@ -289,6 +290,7 @@ function App() {
       });
     }
     return () => {
+      socket?.off("warning")
       socket?.disconnect();
     };
   }, [socket, tokenUser]);
@@ -402,6 +404,7 @@ function App() {
           params.get("PayerID")
         );
         console.log("Paypal success: ", response);
+        store.dispatch(updateUserGoldAfterPaypal(response?.data?.data?.gold || 0))
       }
     })();
   }, []);

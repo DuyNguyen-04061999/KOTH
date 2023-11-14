@@ -102,9 +102,9 @@ class UserService {
     const res = await PROMOTION_API.get("/api/authenticate/me", {
       headers: {
         "Content-Type": "application/json",
-        "x-access-refactor-token": localStorage.getItem("token"),
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
+        Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+        authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
       },
     });
     return res;
