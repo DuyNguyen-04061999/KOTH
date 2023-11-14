@@ -453,7 +453,7 @@ const userReducer = (
     case "UPDATE_COUNT_EXTRA_AFTER_PLAY_GAME": return { ...state, countTicket: state.countTicket - payload };
     case "UPDATE_COUNT_TICKET": return { ...state, countTicket: state.countTicket + payload };
     case "UPDATE_VERIFY_OTP_TYPE": return {...state, typeVerifyOTP: payload || ""}
-    case "UPDATE_USER_GOLD_AFTER_PAYPAL": return {...state, user: {...state?.user, userGold: payload || 0}}
+    case "UPDATE_USER_GOLD_AFTER_PAYPAL": return {...state, user: {...state?.user, userGold: Number(state?.user?.userGold) + payload || 0}}
     default:
       return state;
   }

@@ -404,7 +404,11 @@ function App() {
           params.get("PayerID")
         );
         console.log("Paypal success: ", response);
-        store.dispatch(updateUserGoldAfterPaypal(response?.data?.data?.gold || 0))
+        store.dispatch(showToastNotification({
+          type: "success",
+          message: "Update gold successfully!"
+        }))
+        store.dispatch(updateUserGoldAfterPaypal(Number(response?.data?.data?.gold) || 0))
       }
     })();
   }, []);
