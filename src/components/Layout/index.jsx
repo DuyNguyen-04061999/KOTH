@@ -113,7 +113,6 @@ export default function Layout(props) {
   );
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
-  const pathname = useLocation();
 
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -154,7 +153,7 @@ export default function Layout(props) {
     if (!listSetting?.chatEnabled) {
       dispatch(closeChatPopup());
     }
-  }, [listSetting]);
+  }, [listSetting, dispatch]);
 
   const { userName } = useParams();
 
@@ -190,7 +189,7 @@ export default function Layout(props) {
 
   useEffect(() => {
     dispatch(getSettingReady());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -232,34 +231,6 @@ export default function Layout(props) {
       }
     }
   }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation]);
-
-  // useEffect(() => {
-  //   const tokenLocal = localStorage.getItem("token")
-  //   if(token || tokenLocal) {
-  //     const __socket = io(process.env.REACT_APP_END_POINT, {
-  //       reconnection: true,
-  //       reconnectionDelay: 1000,
-  //       reconnectionDelayMax: 5000,
-  //       reconnectionAttempts: Infinity,
-    
-  //       transports: ["polling", "websocket"],
-  //       secure: true,
-  //       rejectUnauthorized: false,
-  //       forceNew: true,
-  //       timeout: 
-  //       (
-  //           window?.location?.host?.split('.')[0] 
-  //                     && window?.location?.host?.split('.')?.length > 0 
-  //                     && window?.location?.host?.split('.')[0] !== "admin"
-  //         ) ? 60000 : 300000,
-  //       auth: {
-  //         token: token || tokenLocal, // Provide the authentication token here
-  //       },
-  //     });
-
-  //     setSocket(__socket)
-  //   }
-  // }, [token]);
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token")

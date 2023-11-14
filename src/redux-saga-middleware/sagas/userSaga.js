@@ -10,7 +10,7 @@ import {
   openVerifyDialog,
   saveForgetPassInfo,
 } from "../reducers/authReducer";
-import { saveDataProfile } from "../reducers/profileReducer";
+import { closeProfileDialog, saveDataProfile } from "../reducers/profileReducer";
 import {
   forgetPasswordFail,
   forgetPasswordSuccess,
@@ -135,6 +135,7 @@ function* updateProfileSaga(dataRequest) {
       const res = yield call(userService.updateProfile, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
+        yield put(closeProfileDialog())
         yield put(showToastNotification({
           type: "success",
           message: "Update profile successfully!"
