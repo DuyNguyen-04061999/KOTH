@@ -22,7 +22,7 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
-import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
+import { changeRouter, toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
 import {
   addRefCodeRegister,
   clickTab,
@@ -37,6 +37,7 @@ import {
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
+import { finishGame, finishVideo } from "../../redux-saga-middleware/reducers/promotionReducer";
 import { getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import {
@@ -122,6 +123,13 @@ export default function Layout(props) {
     setSocket(socket);
   }, [dispatch]);
 
+  useEffect(() => {
+    if(router) {
+      dispatch(toggleStartGame(false));
+      dispatch(finishGame())
+      dispatch(finishVideo())
+    }
+  }, [dispatch, router])
   
   const location = useLocation();
 

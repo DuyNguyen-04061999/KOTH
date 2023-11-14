@@ -3,7 +3,8 @@ import Dialog from "@mui/material/Dialog";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
+import { finishGame, finishVideo, getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   toggleCloseResultEndGame,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
@@ -24,6 +25,9 @@ export default function ResultEndGame() {
 
   const handleClose = () => {
     dispatch(toggleCloseResultEndGame());
+    dispatch(toggleStartGame(false));
+    dispatch(finishGame())
+    dispatch(finishVideo())
     if (tokenUser || localStorage.getItem("token")) {
       dispatch(getRefactorDetailAuthPromotion(id))
     }
