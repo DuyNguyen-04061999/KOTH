@@ -26,7 +26,6 @@ if (window.location.pathname !== "/change-log"
       ) ? 60000 : 300000,
     auth: {
       token: localStorage?.getItem("token"), // Provide the authentication token here
-      refreshToken: localStorage?.getItem("refreshToken"), // Provide the authentication token here
     },
   });
 }

@@ -8,12 +8,14 @@ import { showToastNotification } from "../../../../redux-saga-middleware/reducer
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
+import { systemNotification } from "../../../../utils/notification";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateNickName } from "../../../../utils/validateNickName";
 import { validateEmail } from "../../../../utils/validationEmail";
 import { validateUserName } from "../../../../utils/validationUserName";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
+
 const BgWithTooltip = withStyles({
   tooltip: {
     color: "black",
@@ -37,6 +39,7 @@ export default function Signup(props) {
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
+  const { listSetting } = useSelector((state) => state.settingReducer);
 
   useEffect(() => {}, []);
 
@@ -49,7 +52,19 @@ export default function Signup(props) {
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    sendRegister();
+    if(!listSetting?.signupEnabled){
+      dispatch(
+        showToastNotification({
+          type: systemNotification.maintenance.serviceClose
+            .type,
+          message:
+            systemNotification.maintenance.serviceClose.message,
+        })
+      );
+    }
+    else {
+      sendRegister();      
+    }
   };
 
   //------------------------------------------------------------------
@@ -233,6 +248,8 @@ export default function Signup(props) {
           )}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -257,6 +274,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -322,6 +340,8 @@ export default function Signup(props) {
           )}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -345,6 +365,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -775,6 +796,8 @@ export default function Signup(props) {
           )}{" "}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -796,6 +819,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -881,6 +905,8 @@ export default function Signup(props) {
           )}{" "}
           <BgWithTooltip
             enterTouchDelay={0}
+            enterDelay={0}
+            enterNextDelay={0}
             title={
               <Box>
                 {" "}
@@ -903,6 +929,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
+                zIndex: 1
               }}
               component={"img"}
               src={images.ToolTipIcon}

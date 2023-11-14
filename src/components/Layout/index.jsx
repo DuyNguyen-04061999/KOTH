@@ -21,9 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
-import {
-  changeRouter
-} from "../../redux-saga-middleware/reducers/appReducer";
+import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
+import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
 import {
   addRefCodeRegister,
   clickTab,
@@ -38,11 +37,13 @@ import {
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
+import { getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import {
   closeTransactionDialog,
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
+import { systemNotification } from "../../utils/notification";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
@@ -106,6 +107,7 @@ export default function Layout(props) {
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
+  const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter } = useSelector(
     (state) => state.appReducer
   );
@@ -121,6 +123,7 @@ export default function Layout(props) {
     setSocket(socket);
   }, [dispatch]);
 
+  
   const location = useLocation();
 
   React.useEffect(() => {
@@ -147,7 +150,11 @@ export default function Layout(props) {
     }
   }, [width, dispatch]);
 
-  useEffect(() => {}, [pathname]);
+  useEffect(() => {
+    if (!listSetting?.chatEnabled) {
+      dispatch(closeChatPopup());
+    }
+  }, [listSetting]);
 
   const { userName } = useParams();
 
@@ -181,7 +188,9 @@ export default function Layout(props) {
     }
   }, []);
 
-  useEffect(() => {});
+  useEffect(() => {
+    dispatch(getSettingReady());
+  }, []);
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -215,10 +224,6 @@ export default function Layout(props) {
     }
   }, [query, dispatch, isAlertDialog]);
 
-  // useEffect(() => {
-  //   dispatch(toggleStartGame(false));
-  // }, [location.pathname, dispatch]);
-
   useEffect(() => {
     if (isChangeLocation) {
       if (fromRouter && router !== "/" && router !== "/home") {
@@ -227,6 +232,43 @@ export default function Layout(props) {
       }
     }
   }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation]);
+
+  // useEffect(() => {
+  //   const tokenLocal = localStorage.getItem("token")
+  //   if(token || tokenLocal) {
+  //     const __socket = io(process.env.REACT_APP_END_POINT, {
+  //       reconnection: true,
+  //       reconnectionDelay: 1000,
+  //       reconnectionDelayMax: 5000,
+  //       reconnectionAttempts: Infinity,
+    
+  //       transports: ["polling", "websocket"],
+  //       secure: true,
+  //       rejectUnauthorized: false,
+  //       forceNew: true,
+  //       timeout: 
+  //       (
+  //           window?.location?.host?.split('.')[0] 
+  //                     && window?.location?.host?.split('.')?.length > 0 
+  //                     && window?.location?.host?.split('.')[0] !== "admin"
+  //         ) ? 60000 : 300000,
+  //       auth: {
+  //         token: token || tokenLocal, // Provide the authentication token here
+  //       },
+  //     });
+
+  //     setSocket(__socket)
+  //   }
+  // }, [token]);
+
+  useEffect(() => {
+    const tokenLocal = localStorage.getItem("token")
+    if(socket && (token || tokenLocal)) {
+      socket?.emit("loginSocial", {
+        token: token || tokenLocal
+      });
+    }
+  }, [token, socket]);
 
   return ReactDOM.createPortal(
     <Box
@@ -364,12 +406,12 @@ export default function Layout(props) {
             </Box>
           )}
           <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : ""}</Box>
-
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
           </AvatarGroup>
+
           <div className="icon-toggle">
-            {chatPopup === false ? (
+            {!chatPopup ? (
               <Box
                 sx={{
                   backgroundColor: "#68399E",
@@ -385,8 +427,19 @@ export default function Layout(props) {
                   fill="none"
                   viewBox="0 0 20 20"
                   onClick={() => {
-                    dispatch(openChatPopup());
-                    dispatch(showBadgeChat(true));
+                    if (!listSetting?.chatEnabled) {
+                      dispatch(
+                        showToastNotification({
+                          type: systemNotification.maintenance.serviceClose
+                            .type,
+                          message:
+                            systemNotification.maintenance.serviceClose.message,
+                        })
+                      );
+                    } else {
+                      dispatch(openChatPopup());
+                      dispatch(showBadgeChat(true));
+                    }
                   }}
                   className="cursor-pointer"
                 >
@@ -481,7 +534,7 @@ export default function Layout(props) {
           </Main>
         </Grid>
       </Grid>
-      <ChatDrawer />
+      {listSetting.chatEnabled && <ChatDrawer />}
     </Box>,
     document.body
   );
