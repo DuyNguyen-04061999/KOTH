@@ -263,7 +263,6 @@ const HelpCenterComponent = () => {
                     listFAQ?.map((item, index) => (
                       <TabPanel key={index} value={tabHelpCenter} index={index}>
                         {item?.FAQPromoteData?.map((item, index) => {
-                          console.log(JSON.parse(item?.faqAnswer));
                           return (
                             <Box key={index}>
                               <Typography
@@ -280,6 +279,7 @@ const HelpCenterComponent = () => {
                               <Box>
                                 {JSON.parse(item?.faqAnswer)?.map((e, i) => (
                                   <Typography
+                                    key={i}
                                     style={{
                                       fontSize: "14px",
                                       textAlign: "start",
