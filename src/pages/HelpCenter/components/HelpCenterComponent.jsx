@@ -262,31 +262,48 @@ const HelpCenterComponent = () => {
                   {listFAQ?.length &&
                     listFAQ?.map((item, index) => (
                       <TabPanel key={index} value={tabHelpCenter} index={index}>
-                        {item?.FAQPromoteData?.map((item, index) => (
-                          <Box key={index}>
-                            <Typography
-                              style={{
-                                fontSize: "20px",
-                                textAlign: "start",
-                                margin: "24px 0px",
-                                color: "#fff",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {item?.faqQuestion}
-                            </Typography>
-                            <Typography
-                              style={{
-                                fontSize: "14px",
-                                textAlign: "start",
-                                marginTop: "12px",
-                                color: "#fff",
-                              }}
-                            >
-                              {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
-                            </Typography>
-                          </Box>
-                        ))}
+                        {item?.FAQPromoteData?.map((item, index) => {
+                          return (
+                            <Box key={index}>
+                              <Typography
+                                style={{
+                                  fontSize: "20px",
+                                  textAlign: "start",
+                                  margin: "24px 0px",
+                                  color: "#fff",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {item?.faqQuestion}
+                              </Typography>
+                              <Box>
+                                {JSON.parse(item?.faqAnswer)?.map((e, i) => (
+                                  <Typography
+                                    key={i}
+                                    style={{
+                                      fontSize: "14px",
+                                      textAlign: "start",
+                                      marginTop: "12px",
+                                      color: "#fff",
+                                    }}
+                                  >
+                                    {e}
+                                  </Typography>
+                                ))}
+                              </Box>
+                              {/* <Typography
+                                style={{
+                                  fontSize: "14px",
+                                  textAlign: "start",
+                                  marginTop: "12px",
+                                  color: "#fff",
+                                }}
+                              >
+                                {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
+                              </Typography> */}
+                            </Box>
+                          );
+                        })}
                         <Typography
                           style={{
                             margin: "36px 0px",
