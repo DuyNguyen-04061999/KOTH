@@ -6,6 +6,7 @@ import ItemComponent from "../../pages/NewHomePageComponent/NewHomePage/ItemComp
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import ListItemLoading from "../LoadingComponent/ItemLoading";
 import ListEmpty from "../LoadingComponent/ListEmpty";
+import BannerLoading from "../LoadingComponent/BannerLoading";
 
 const ListPromotion = (props) => {
   const { width } = useWindowDimensions();
@@ -48,6 +49,7 @@ const ListPromotion = (props) => {
                 })
               ) : (
                 <ListEmpty textData={typePromo}></ListEmpty>
+                // <BannerLoading  height={208}/>
               )}
             </ScrollingCarousel>
           </Box>
@@ -70,6 +72,7 @@ const ListPromotion = (props) => {
                 })
               ) : (
                 <ListEmpty textData={typePromo}></ListEmpty>
+                // <BannerLoading  height={363}/>
               )}
             </ScrollingCarousel>
           </Box>
@@ -100,6 +103,7 @@ const ListPromotion = (props) => {
                 })
               ) : (
                 <ListEmpty textData={typePromo}></ListEmpty>
+                // <BannerLoading  height={208}/>
               )}
           </Grid>
         ) : (
@@ -146,6 +150,7 @@ const ListPromotion = (props) => {
               </Box>
             ) : (
               <ListEmpty textData={typePromo} />
+              // <BannerLoading  height={363}/>
             )}
           </Box>
         )}
