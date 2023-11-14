@@ -68,7 +68,6 @@ export default function Dialoglg() {
     isUpdateProfile,
   } = useSelector((state) => state.authReducer);
   const { user, uPack } = useSelector((state) => state.userReducer);
-  
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
 
@@ -85,7 +84,6 @@ export default function Dialoglg() {
   const { width, height } = useWindowDimensions();
 
   const token = localStorage.getItem("token");    
-  
   useEffect(() => {
     if(token) {
       dispatch(getUserInfoReady(token));
