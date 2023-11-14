@@ -173,45 +173,57 @@ export const promotionNotification = {
       message: "Package purchase successful. Enjoy the benefits!",
     },
     buyExtraFail: {
-        case: "Khi mua thêm subscription pack dù đã mua rồi",
-        type: "warning",
-        message: "You've already bought this pack. It's currently active.",
-      },
+      case: "Khi mua thêm subscription pack dù đã mua rồi",
+      type: "warning",
+      message: "You've already bought this pack. It's currently active.",
+    },
   },
 };
 
 export const userNotification = {
-    updateProfile:{
-        invalidImageFormat:{
-            case: "Khi chọn ảnh sai định dạng ",
-            type: "error",
-            message: "Avatar upload failed: Unsupported file type. Please use <định dạng> or <định dạng>",
-        },
-        invalidImageSize:{
-            case: "Khi chọn ảnh quá dung lượng mà web cho phép",
-            type: "error",
-            message: "Avatar upload failed: File size exceeds <dung lượng> MB. Please choose a smaller file.",
-        },
-        emailExist:{
-            case: "Khi nhập email hoặc sđt đã dùng",
-            type: "error",
-            message: "Unable to update profile: Email or phone number already in use.",
-        },
-        updateProfileSuccess:{
-            case: "Khi update profile thành công",
-            type: "success",
-            message: "Profile update successful! Your changes have been saved.",
-        }
-    }
+  updateProfile: {
+    invalidImageFormat: {
+      case: "Khi chọn ảnh sai định dạng ",
+      type: "error",
+      message:
+        "Avatar upload failed: Unsupported file type. Please use <định dạng> or <định dạng>",
+    },
+    invalidImageSize: {
+      case: "Khi chọn ảnh quá dung lượng mà web cho phép",
+      type: "error",
+      message:
+        "Avatar upload failed: File size exceeds <dung lượng> MB. Please choose a smaller file.",
+    },
+    emailExist: {
+      case: "Khi nhập email hoặc sđt đã dùng",
+      type: "error",
+      message:
+        "Unable to update profile: Email or phone number already in use.",
+    },
+    updateProfileSuccess: {
+      case: "Khi update profile thành công",
+      type: "success",
+      message: "Profile update successful! Your changes have been saved.",
+    },
+  },
 };
 
 export const chatNotification = {
-    chat:{
-        messageTooLong:{
-            case: "Khi gửi lên chatbox tin nhắn quá dài",
-            type: "warning",
-            message: "Can't send messages that are too long!",
-        },
-        
+  chat: {
+    messageTooLong: {
+      case: "Khi gửi lên chatbox tin nhắn quá dài",
+      type: "warning",
+      message: "Can't send messages that are too long!",
+    },
+  },
+};
+
+export const systemNotification = {
+  maintenance: {
+    serviceClose:{
+      case:"Khi service bị đóng để bảo trì",
+      type:"warning",
+      message:"Sorry for the inconvenience. The server is currently overloaded. Please try again later."
     }
+  },
 };
