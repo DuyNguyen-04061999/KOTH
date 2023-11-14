@@ -2259,6 +2259,7 @@ export default function JoinTournament() {
                               576 < width && width < 1200
                                 ? `${width / 71}px`
                                 : "16px",
+                            whiteSpace: "pre-wrap"
                           }}
                         >
                           {item ? item : ""}

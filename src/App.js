@@ -54,6 +54,7 @@ import {
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
 import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
+import { toggleAlertStripeProcess } from "./redux-saga-middleware/reducers/stripeReducer";
 import { updateCountTicket, updateUserGoldAfterPaypal } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
@@ -403,8 +404,19 @@ function App() {
           params.get("paymentId"),
           params.get("PayerID")
         );
-        console.log("Paypal success: ", response);
-        store.dispatch(updateUserGoldAfterPaypal(response?.data?.data?.gold || 0))
+
+        if(response && response?.data?.data?.gold) {
+          store.dispatch(toggleAlertStripeProcess({
+            type: "success",
+          }))
+          store.dispatch(updateUserGoldAfterPaypal(Number(response?.data?.data?.gold) || 0))
+        } else {
+          store.dispatch(toggleAlertStripeProcess({
+            type: "error",
+          }))
+        }
+        
+        
       }
     })();
   }, []);

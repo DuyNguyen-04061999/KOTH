@@ -22,7 +22,7 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
-import { changeRouter } from "../../redux-saga-middleware/reducers/appReducer";
+import { changeRouter, toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
 import {
   addRefCodeRegister,
   clickTab,
@@ -37,6 +37,7 @@ import {
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
+import { finishGame, finishVideo } from "../../redux-saga-middleware/reducers/promotionReducer";
 import { getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import {
@@ -113,7 +114,6 @@ export default function Layout(props) {
   );
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
-  const pathname = useLocation();
 
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -123,6 +123,13 @@ export default function Layout(props) {
     setSocket(socket);
   }, [dispatch]);
 
+  useEffect(() => {
+    if(router) {
+      dispatch(toggleStartGame(false));
+      dispatch(finishGame())
+      dispatch(finishVideo())
+    }
+  }, [dispatch, router])
   
   const location = useLocation();
 
@@ -154,7 +161,7 @@ export default function Layout(props) {
     if (!listSetting?.chatEnabled) {
       dispatch(closeChatPopup());
     }
-  }, [listSetting]);
+  }, [listSetting, dispatch]);
 
   const { userName } = useParams();
 
@@ -190,7 +197,7 @@ export default function Layout(props) {
 
   useEffect(() => {
     dispatch(getSettingReady());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const handleKeyboardOpen = () => {
@@ -232,34 +239,6 @@ export default function Layout(props) {
       }
     }
   }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation]);
-
-  // useEffect(() => {
-  //   const tokenLocal = localStorage.getItem("token")
-  //   if(token || tokenLocal) {
-  //     const __socket = io(process.env.REACT_APP_END_POINT, {
-  //       reconnection: true,
-  //       reconnectionDelay: 1000,
-  //       reconnectionDelayMax: 5000,
-  //       reconnectionAttempts: Infinity,
-    
-  //       transports: ["polling", "websocket"],
-  //       secure: true,
-  //       rejectUnauthorized: false,
-  //       forceNew: true,
-  //       timeout: 
-  //       (
-  //           window?.location?.host?.split('.')[0] 
-  //                     && window?.location?.host?.split('.')?.length > 0 
-  //                     && window?.location?.host?.split('.')[0] !== "admin"
-  //         ) ? 60000 : 300000,
-  //       auth: {
-  //         token: token || tokenLocal, // Provide the authentication token here
-  //       },
-  //     });
-
-  //     setSocket(__socket)
-  //   }
-  // }, [token]);
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token")
