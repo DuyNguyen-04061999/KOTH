@@ -66,15 +66,16 @@ export default function ToastNotification() {
           toast.info("This is default notify!");
       }
     }
-    setTimeout(() => {
+    const timeId = setTimeout(() => {
       dispatch(hideToastNotification());
-    }, 3000);
+    }, 2000);
+    return () => clearTimeout(timeId);
   }, [
     messageToastNotification,
     isShowToastNotification,
     typeToastNotification,
     dispatch,
-    width
+    width,
   ]);
 
   return <></>;

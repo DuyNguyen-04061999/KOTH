@@ -18,6 +18,7 @@ import profileReducer from "../reducers/profileReducer";
 import promotionReducer from "../reducers/promotionReducer";
 import refreshReducer from "../reducers/refreshReducer";
 import roomReducer from "../reducers/roomReducer";
+import settingReducer from "../reducers/settingReducer";
 import stripeReducer from "../reducers/stripeReducer";
 import toastReducer from "../reducers/toastReducer";
 import tournamentReducer from "../reducers/tournamentReducer";
@@ -49,7 +50,8 @@ let rootReducer = combineReducers({
   refreshReducer,
   packageReducer,
   payPalReducer,
-  promotionReducer
+  promotionReducer,
+  settingReducer
 });
 
 const persistConfig = {
