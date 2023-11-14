@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -85,12 +85,12 @@ export default function NewHomePage() {
 
   const navigate = useNavigate();
 
-  const handleFetchTimeout = () => {
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "ended",
-    });
-  };
+  // const handleFetchTimeout = () => {
+  //   dispatch({
+  //     type: "CALL_LIST_TOURNAMENT",
+  //     payload: "ended",
+  //   });
+  // };
 
   return (
     <Container
@@ -112,7 +112,7 @@ export default function NewHomePage() {
         backgroundColor: "#1a151e",
       }}
     >
-      {process.env.REACT_APP_TEST === "test" && (
+      {/* {process.env.REACT_APP_TEST === "test" && (
         <div
           className="text-white p-2 ps-3"
           onClick={() => {
@@ -124,7 +124,7 @@ export default function NewHomePage() {
       )}{" "}
       {process.env.REACT_APP_TEST === "test" && (
         <Button onClick={() => handleFetchTimeout()}>Fetch Timeout</Button>
-      )}
+      )} */}
       <Box
         sx={{
           paddingBottom: "70px",
