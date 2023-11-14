@@ -4,6 +4,7 @@ import gameSaga from "./gameSaga";
 import helpcenterSaga from "./helpcenterSaga";
 import packageSaga from "./packageSaga";
 import promotionSaga from "./promotionSaga";
+import settingSaga from "./settingSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
 import { default as authSaga, default as userSaga } from "./userSaga";
@@ -18,7 +19,8 @@ function* watchAll() {
     promotionSaga(),
     userSaga(),
     authSaga(),
-    packageSaga()
+    packageSaga(),
+    settingSaga(),
   ]);
 }
 
