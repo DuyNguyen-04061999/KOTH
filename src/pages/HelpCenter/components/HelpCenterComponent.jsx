@@ -125,40 +125,62 @@ const HelpCenterComponent = () => {
             ) : (
               <>
                 {" "}
-                <Typography style={{ fontSize: "16px" }}>
+                <Typography
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
                   {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqTitle}
                 </Typography>
-                <Typography style={{ fontSize: "14px", textAlign: "start" }}>
+                <Typography style={{ fontSize: "14px", textAlign: "start",marginTop:"12px" }}>
                   {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqDesc}
                 </Typography>
                 {listFAQ?.length &&
                   listFAQ?.map((item, index) => (
                     <TabPanel value={tabHelpCenter} key={index} index={index}>
-                      {item?.FAQPromoteData?.map((item, index) => (
-                        <Box key={index}>
-                          <Typography
-                            style={{
-                              margin: "20px 0px",
-                              fontWeight: "bold",
-                              color: "#fff",
-                              fontSize: "12px",
-                            }}
-                          >
-                            {item?.faqQuestion}
-                          </Typography>
-                          <Typography
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "lighter !important",
-                              margin: "10px 0px",
-                              color: "#fff",
-                              textAlign: "start",
-                            }}
-                          >
-                            {item?.faqAnswer.replace(/(\d+\.) /g, "<br>")}
-                          </Typography>
-                        </Box>
-                      ))}
+                      {item?.FAQPromoteData?.map((item, index) => {
+                        return (
+                          <Box key={index}>
+                            <Typography
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff",
+                                fontWeight: "bold",
+                                textAlign: "start",
+                                margin: "12px 0px",
+                              }}
+                            >
+                              {item?.faqQuestion}
+                            </Typography>
+                            <Box>
+                              {JSON.parse(item?.faqAnswer)?.map((e, i) => (
+                                <Typography
+                                  key={i}
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#fff",
+                                    textAlign: "start",
+                                    marginTop: "6px",
+                                  }}
+                                >
+                                  {e}
+                                </Typography>
+                              ))}
+                            </Box>
+                            {/* <Typography
+                                style={{
+                                  fontSize: "14px",
+                                  textAlign: "start",
+                                  marginTop: "12px",
+                                  color: "#fff",
+                                }}
+                              >
+                                {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
+                              </Typography> */}
+                          </Box>
+                        );
+                      })}
                       <Typography
                         style={{
                           margin: "20px 0px",
