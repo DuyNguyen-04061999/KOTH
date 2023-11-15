@@ -67,7 +67,7 @@ export default function DialogProfile(props) {
       setTab(1);
     }
   };
-  
+
   const renderUserInfo = () => {
     return (
       <Box sx={{ height: "100%" }}>

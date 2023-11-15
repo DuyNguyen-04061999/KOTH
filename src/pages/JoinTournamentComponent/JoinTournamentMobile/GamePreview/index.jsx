@@ -2,7 +2,7 @@ import { Dialog, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import React, { useRef, useState } from "react";
-import { images } from "../../../../utils/images";
+import { images, video } from "../../../../utils/images";
 import { useSelector } from "react-redux";
 import "./index.scss";
 import Slider from "react-slick";

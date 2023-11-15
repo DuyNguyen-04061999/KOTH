@@ -89,7 +89,6 @@ export default function JoinTournament() {
     isGetDetailPromotion,
     isGetDetailAuthPromotion,
   } = useSelector((state) => state.promotionReducer);
-
   const { orientation } = useSelector((state) => state.gameReducer);
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -218,7 +217,6 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
-
   return (
     <>
       <ResultEndGame />
@@ -483,7 +481,7 @@ export default function JoinTournament() {
               )}
               {/* Partipants */}
               {detailTournament?.tournamentStatus === 2 ? (
-               ""
+                ""
               ) : (
                 // <Box
                 //   sx={{
@@ -2115,7 +2113,7 @@ export default function JoinTournament() {
                               576 < width && width < 1200
                                 ? `${width / 71}px`
                                 : "16px",
-                            whiteSpace: "pre-wrap"
+                            whiteSpace: "pre-wrap",
                           }}
                         >
                           {item ? item : ""}
