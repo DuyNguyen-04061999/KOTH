@@ -16,24 +16,30 @@ const ListPromotion = (props) => {
     typePromo,
     itemOffSet = 0,
     itemQuantity = 12,
+    noData
   } = props;
 
   const { pathname } = useLocation();
-  if (pathname.includes("home") || pathname === "/") {
+  if (pathname.includes("home") || pathname === "/") { 
     return (
       <Box>
         {width < 576 ? (
-          // <Slider
-          //   dots={false}
-          //   slidesToShow={2.05}
-          //   arrows={false}
-          //   slidesToScroll={2}
-          //   infinite={false}
-          // >
-          // </Slider>
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-              {loadingState || listData === null ? (
+            {loadingState &&   <ListItemLoading></ListItemLoading> }
+              {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
+              {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
+                  return (
+                    <Box key={index}>
+                      <ItemComponent
+                        // key={index}
+                        tourInfo={item}
+                        countdown={true}
+                      />
+                    </Box>
+                  );
+                })}
+              {/* {loadingState || (listData === null) ? (
                 <ListItemLoading></ListItemLoading>
               ) : listData && listData?.length > 0 ? (
                 listData?.map((item, index) => {
@@ -50,13 +56,26 @@ const ListPromotion = (props) => {
               ) : (
                 <ListEmpty textData={typePromo}></ListEmpty>
                 // <BannerLoading  height={208}/>
-              )}
+              )} */}
             </ScrollingCarousel>
           </Box>
         ) : (
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-              {loadingState && listData === null ? (
+              {loadingState &&   <ListItemLoading></ListItemLoading> }
+              {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
+              {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
+                  return (
+                    <Box key={index}>
+                      <ItemComponent
+                        // key={index}
+                        tourInfo={item}
+                        countdown={true}
+                      />
+                    </Box>
+                  );
+                })}
+              {/* {loadingState && listData === null ? (
                 <ListItemLoading></ListItemLoading>
               ) : listData && listData?.length > 0 ? (
                 listData?.map((item, index) => {
@@ -73,7 +92,7 @@ const ListPromotion = (props) => {
               ) : (
                 <ListEmpty textData={typePromo}></ListEmpty>
                 // <BannerLoading  height={363}/>
-              )}
+              )} */}
             </ScrollingCarousel>
           </Box>
         )}
@@ -84,7 +103,23 @@ const ListPromotion = (props) => {
       <Box>
         {width < 576 ? (
           <Grid container rowSpacing={2}>
-             {loadingState || listData === null ? (
+            {loadingState && <ListItemLoading></ListItemLoading>}
+            {noData && !loadingState && <ListEmpty textData={typePromo}></ListEmpty>}
+            {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
+                  return (
+                    index >= itemOffSet &&
+                    index <= itemOffSet + itemQuantity - 1 && (
+                      <Grid item xs={6} key={index}>
+                        <ItemComponent
+                          // key={index}
+                          tourInfo={item}
+                          countdown={true}
+                        />
+                      </Grid>
+                    )
+                  );
+                })}
+             {/* {loadingState || listData === null ? (
                 <ListItemLoading></ListItemLoading>
               ) : listData && listData?.length > 0 ? (
                 listData?.map((item, index) => {
@@ -104,11 +139,50 @@ const ListPromotion = (props) => {
               ) : (
                 <ListEmpty textData={typePromo}></ListEmpty>
                 // <BannerLoading  height={208}/>
-              )}
+              )} */}
           </Grid>
         ) : (
           <Box>
-            {loadingState || listData === null ? (
+            {loadingState && <Box
+                sx={{
+                  display: width < 576 ? "flex" : "grid",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                  gridRowGap: "50px",
+                }}
+              >
+                <ListItemLoading></ListItemLoading>
+              </Box>}
+            {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
+            {!noData && !loadingState && listData && listData.length > 0 &&  <Box
+                sx={{
+                  display: width < 576 ? "flex" : "grid",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                  gridRowGap: "50px",
+                }}
+              >
+                {listData?.map((item, index) => {
+                  return (
+                    index >= itemOffSet &&
+                    index <= itemOffSet + itemQuantity - 1 && (
+                      <Box
+                        sx={{
+                          width: width < 576 && width < 1200 ? "auto" : "20%",
+                          marginRight:
+                            width > 576 && width < 1200 ? "100px" : "none",
+                        }}
+                        key={index}
+                      >
+                        <ItemComponent tourInfo={item} countdown={true} />
+                      </Box>
+                    )
+                  );
+                })}
+              </Box>}
+            {/* {loadingState || listData === null ? (
               <Box
                 sx={{
                   display: width < 576 ? "flex" : "grid",
@@ -151,7 +225,7 @@ const ListPromotion = (props) => {
             ) : (
               <ListEmpty textData={typePromo} />
               // <BannerLoading  height={363}/>
-            )}
+            )} */}
           </Box>
         )}
       </Box>
