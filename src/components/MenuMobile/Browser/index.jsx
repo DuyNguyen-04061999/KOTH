@@ -829,7 +829,7 @@ export default function Browser(props) {
                         : "#A89CD7",
                   }}
                   onClick={() => {
-                    window.open("https://t.me/play4promo", "_blank")
+                    window.open("https://t.me/+LaxB-V2ovfNiNzNl", "_blank")
                     handleShowMenu();
                   }}
                 >
