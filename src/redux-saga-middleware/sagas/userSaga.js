@@ -35,6 +35,7 @@ import {
   sendOtpSuccess,
   updateProfileUserFail,
   updateProfileUserSuccess,
+  updateUserToken,
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
@@ -61,10 +62,11 @@ function* loginSaga(dataRequest) {
         );
         localStorage.setItem("token", data?.data?.token);
         localStorage.setItem("refreshToken", data?.data?.refreshToken);
+        yield put(updateUserToken(data?.data?.token))
         yield put(getUserInfoReady(data?.data?.token));
         setTimeout(() => {
           window.location.reload()
-        }, 1000)
+        }, 2000)
       } else {
         yield put(loginFail());
         yield put(

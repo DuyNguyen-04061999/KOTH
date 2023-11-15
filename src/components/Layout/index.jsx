@@ -40,6 +40,7 @@ import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profil
 import { finishGame, finishVideo } from "../../redux-saga-middleware/reducers/promotionReducer";
 import { getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
+import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import {
   closeTransactionDialog,
   toggleWalletDialog,
@@ -248,6 +249,13 @@ export default function Layout(props) {
       });
     }
   }, [token, socket]);
+
+  useEffect(() => {
+    const tokenLocal = localStorage.getItem("token")
+    if(tokenLocal) {
+      dispatch(updateUserToken(tokenLocal))
+    }
+  }, [dispatch]);
 
   return ReactDOM.createPortal(
     <Box
