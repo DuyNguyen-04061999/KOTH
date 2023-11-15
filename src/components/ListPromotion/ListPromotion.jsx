@@ -6,7 +6,6 @@ import ItemComponent from "../../pages/NewHomePageComponent/NewHomePage/ItemComp
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import ListItemLoading from "../LoadingComponent/ItemLoading";
 import ListEmpty from "../LoadingComponent/ListEmpty";
-import BannerLoading from "../LoadingComponent/BannerLoading";
 
 const ListPromotion = (props) => {
   const { width } = useWindowDimensions();
@@ -39,24 +38,6 @@ const ListPromotion = (props) => {
                     </Box>
                   );
                 })}
-              {/* {loadingState || (listData === null) ? (
-                <ListItemLoading></ListItemLoading>
-              ) : listData && listData?.length > 0 ? (
-                listData?.map((item, index) => {
-                  return (
-                    <Box key={index}>
-                      <ItemComponent
-                        // key={index}
-                        tourInfo={item}
-                        countdown={true}
-                      />
-                    </Box>
-                  );
-                })
-              ) : (
-                <ListEmpty textData={typePromo}></ListEmpty>
-                // <BannerLoading  height={208}/>
-              )} */}
             </ScrollingCarousel>
           </Box>
         ) : (
@@ -75,24 +56,6 @@ const ListPromotion = (props) => {
                     </Box>
                   );
                 })}
-              {/* {loadingState && listData === null ? (
-                <ListItemLoading></ListItemLoading>
-              ) : listData && listData?.length > 0 ? (
-                listData?.map((item, index) => {
-                  return (
-                    <Box key={index}>
-                      <ItemComponent
-                        // key={index}
-                        tourInfo={item}
-                        countdown={true}
-                      />
-                    </Box>
-                  );
-                })
-              ) : (
-                <ListEmpty textData={typePromo}></ListEmpty>
-                // <BannerLoading  height={363}/>
-              )} */}
             </ScrollingCarousel>
           </Box>
         )}
@@ -119,27 +82,6 @@ const ListPromotion = (props) => {
                     )
                   );
                 })}
-             {/* {loadingState || listData === null ? (
-                <ListItemLoading></ListItemLoading>
-              ) : listData && listData?.length > 0 ? (
-                listData?.map((item, index) => {
-                  return (
-                    index >= itemOffSet &&
-                    index <= itemOffSet + itemQuantity - 1 && (
-                      <Grid item xs={6} key={index}>
-                        <ItemComponent
-                          // key={index}
-                          tourInfo={item}
-                          countdown={true}
-                        />
-                      </Grid>
-                    )
-                  );
-                })
-              ) : (
-                <ListEmpty textData={typePromo}></ListEmpty>
-                // <BannerLoading  height={208}/>
-              )} */}
           </Grid>
         ) : (
           <Box>
@@ -182,50 +124,7 @@ const ListPromotion = (props) => {
                   );
                 })}
               </Box>}
-            {/* {loadingState || listData === null ? (
-              <Box
-                sx={{
-                  display: width < 576 ? "flex" : "grid",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                  gridRowGap: "50px",
-                }}
-              >
-                <ListItemLoading></ListItemLoading>
-              </Box>
-            ) : listData && listData?.length > 0 ? (
-              <Box
-                sx={{
-                  display: width < 576 ? "flex" : "grid",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                  gridRowGap: "50px",
-                }}
-              >
-                {listData?.map((item, index) => {
-                  return (
-                    index >= itemOffSet &&
-                    index <= itemOffSet + itemQuantity - 1 && (
-                      <Box
-                        sx={{
-                          width: width < 576 && width < 1200 ? "auto" : "20%",
-                          marginRight:
-                            width > 576 && width < 1200 ? "100px" : "none",
-                        }}
-                        key={index}
-                      >
-                        <ItemComponent tourInfo={item} countdown={true} />
-                      </Box>
-                    )
-                  );
-                })}
-              </Box>
-            ) : (
-              <ListEmpty textData={typePromo} />
-              // <BannerLoading  height={363}/>
-            )} */}
+            
           </Box>
         )}
       </Box>

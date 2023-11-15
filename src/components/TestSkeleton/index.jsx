@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
+import React, { Component } from 'react';
 
 class TestSkeleton extends Component {
     constructor(props) {
