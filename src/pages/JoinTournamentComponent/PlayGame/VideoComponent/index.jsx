@@ -31,16 +31,20 @@ export default function VideoComponent(props) {
   const [second, setSeconds] = useState(null);
   const videoRef = useRef(null);
 
+  const { uPack } = useSelector((state) => state.userReducer);
+  const timeSkip =
+    uPack !== null && uPack?.vip === true
+      ? process.env.REACT_APP_SKIP_TIME_VIP
+      : process.env.REACT_APP_SKIP_TIME_PERSONAL;
   useEffect(() => {
     if (videoRef && videoRef.current) {
       var supposedCurrentTime = 0;
       videoRef?.current?.addEventListener("timeupdate", () => {
-        setSeconds(7 - Math.round(videoRef.current?.currentTime));
-
-        if (!videoRef.current?.seeking) {
-          supposedCurrentTime = videoRef.current?.currentTime;
-        }
+        setSeconds(
+          Number(timeSkip) - Math.round(videoRef.current?.currentTime)
+        );
       });
+
       videoRef?.current?.addEventListener("seeking", function () {
         if (videoRef.current?.seeking) {
           var delta = videoRef.current?.currentTime - supposedCurrentTime;
@@ -50,7 +54,7 @@ export default function VideoComponent(props) {
         }
       });
     }
-  }, []);
+  }, [uPack, timeSkip]);
 
   return (
     <Box
@@ -71,13 +75,20 @@ export default function VideoComponent(props) {
         }}
       >
         <video
+          onRateChange={() => {
+            videoRef.current.playbackRate = 1;
+          }}
           autoPlay={true}
           width={"100%"}
           ref={videoRef}
           playsInline={true}
           controls={true}
           onPlay={() => {
-            setSeconds(7);
+            setSeconds(
+              uPack !== null && uPack?.vip === true
+                ? process.env.REACT_APP_SKIP_TIME_VIP
+                : process.env.REACT_APP_SKIP_TIME_PERSONAL
+            );
           }}
           onEnded={() => {
             setVideoGame(false);

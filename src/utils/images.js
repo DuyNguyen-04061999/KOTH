@@ -4,6 +4,7 @@ import pool from "../assets/images/8pool1.png";
 import bg from "../assets/images/BG.png";
 import bnb from "../assets/images/BNB.webp";
 import btc from "../assets/images/BTC.webp";
+import imageTutorial from "../assets/images/imageTutorial.jpg";
 import BackButtonLobby from "../assets/images/BackButtonLobby.png";
 import BannerTour from "../assets/images/Banner phu 1.png";
 import BannerHomePageDesktop from "../assets/images/BannerHomePageDesktop.png";
@@ -246,6 +247,7 @@ import up05 from "../assets/imagesLayout/05.svg";
 
 //---------------------------------------------------
 import video1 from "../assets/videoHover/Bida1.mp4";
+import videoTutorial from "../assets/videoHover/videoTutorial.mp4";
 import video2 from "../assets/videoHover/Domino1.mp4";
 import Promo_Sale_Video_Desktop from "../assets/videoHover/Promo_Sale_Video_Desktop.mp4";
 import Promo_Sale_Video_Mobile from "../assets/videoHover/Promo_Sale_Video_Mobile.mp4";
@@ -294,7 +296,7 @@ import top1Icon from "../assets/imagesHome/top1Icon.png";
 import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
 
 import AdminLogo from "../assets/images/lggame.png";
-import AdminLogoSvg from "../assets/images/logogame.svg"
+import AdminLogoSvg from "../assets/images/logogame.svg";
 import bannertour5 from "../assets/imagesDesktop/bannertour5.png";
 import bannertourDesk from "../assets/imagesDesktop/bannertourDesk.png";
 import bannerWindesk from "../assets/imagesDesktop/bannerwin.png";
@@ -362,7 +364,7 @@ import NavVipActive from "../assets/images/navbar/vipActive.png";
 import bannerendmobile from "../assets/images/bannerendmobile.png";
 import bannerendtour from "../assets/images/bannerendtour.png";
 import BtnBack from "../assets/images/btnback.png";
-import layerend from "../assets/images/layerend.png"
+import layerend from "../assets/images/layerend.png";
 
 import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
 
@@ -595,7 +597,8 @@ export const images = {
   ToolTipIcon: ToolTipIcon,
   payPalIcon: payPalIcon,
   stripeLogo: stripeLogo,
-  layerend:layerend
+  layerend: layerend,
+  imageTutorial: imageTutorial,
 };
 
 export const navigationImages = {
@@ -713,6 +716,7 @@ export const video = {
   LogoAnim: LogoAnim,
   Promo_Sale_Video_Desktop: Promo_Sale_Video_Desktop,
   Promo_Sale_Video_Mobile: Promo_Sale_Video_Mobile,
+  videoTutorial: videoTutorial,
 };
 
 export const imageDesktop = {

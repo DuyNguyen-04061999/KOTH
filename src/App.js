@@ -61,6 +61,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import TestSkeleton from "./components/TestSkeleton";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -540,6 +541,10 @@ function App() {
                   <Route
                     path="transactions/:id"
                     element={<TransactionDetailPage />}
+                  />
+                  <Route
+                    path="test-skeleton"
+                    element={<TestSkeleton />}
                   />
                   <Route path="*" element={<Navigate to="/home" />} />
                 </Route>
