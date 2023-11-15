@@ -672,7 +672,7 @@ const AdminPanel = () => {
                                 {detailAccount?.amount || 0}
                             </Typography>
                         </Grid>
-                        {checkRouteIsManage(pathname) && (
+                        {checkRouteIsManage(pathname) && roles && !roles?.includes("agent") && (
                             <Grid sx={{padding: "24px", flex: 1}}>
                                 <Typography
                                     sx={{
@@ -763,7 +763,7 @@ const AdminPanel = () => {
                                 Edit Nick Name
                             </Button>
                         )}
-                        {!roles?.includes("agent") && (
+                        {!roles?.includes("agent") && !roles?.includes("distributor") && (
                             <Button
                                 onClick={handleDeleteAccount}
                                 sx={{
