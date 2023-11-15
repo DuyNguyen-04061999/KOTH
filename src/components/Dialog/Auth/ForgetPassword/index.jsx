@@ -13,6 +13,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function ForgetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const { isForgetPassword } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -311,26 +312,29 @@ export default function ForgetPassword() {
       >
         <Box sx={{ width: "48%" }}>
           <AnimButton
-            type={"ghost"}
-            text={"BACK"}
+            type="ghost"
+            text="BACK"
             onClick={() => dispatch(clickTab("login"))}
           >
             Back
           </AnimButton>
         </Box>
         <Box sx={{ width: "48%" }}>
-          <AnimButton
-            type={
-              (optionEmail && username && email && !emailError) ||
-              (!optionEmail && username && phoneNumber && !phoneNumberError)
-                ? "primary"
-                : "disabled"
-            }
-            text={"NEXT"}
-            onClick={() => handleSubmit()}
-          >
-            Next
-          </AnimButton>
+          {!((optionEmail && username && email && !emailError) ||
+          (!optionEmail && username && phoneNumber && !phoneNumberError)) ? (
+            <AnimButton
+              type="disable"
+              text="NEXT"
+            />
+          ) : isForgetPassword ? (
+            <AnimButton type="loading" text="NEXT" />
+          ) : (
+            <AnimButton
+              type="primary"
+              text="NEXT"
+              onClick={() => handleSubmit()}
+            />
+          )}
         </Box>
       </Box>
     </Box>

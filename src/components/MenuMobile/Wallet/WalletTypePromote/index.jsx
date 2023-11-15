@@ -27,6 +27,9 @@ export default function WalletTypePromote(props) {
   const [agree, setAgree] = useState(false);
   const [bgInput, setBgInput] = useState("gray");
   const { listSetting } = useSelector((state) => state.settingReducer);
+  const { isFetchStripe } = useSelector((state) => state.stripeReducer);
+  const { isFetchPayPal } = useSelector((state) => state.payPalReducer);
+
   useEffect(() => {
     setAmount(Math.ceil(price));
   }, [price]);
@@ -599,12 +602,20 @@ export default function WalletTypePromote(props) {
             </Box>
             <Box>
               {amount === "" || agree === false ? (
-                <AnimButton type={"dislable"} text={"CONTINUE"} />
-              ) : (
+                <AnimButton type={"disable"} text={"CONTINUE"} isHasIcon />
+              ) : isFetchStripe || isFetchPayPal ? (
                 <AnimButton
                   text={"CONTINUE"}
                   onClick={handleContinue}
-                  type={"primary"}
+                  type={"loading"}
+                  isHasIcon
+                />
+              ) : (
+                <AnimButton
+                  text="CONTINUE"
+                  onClick={handleContinue}
+                  type="primary"
+                  isHasIcon
                 />
               )}
             </Box>

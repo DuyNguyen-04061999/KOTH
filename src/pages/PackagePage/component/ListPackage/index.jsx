@@ -2,6 +2,8 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AnimButton from "../../../../components/AnimButton";
+import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   getIdPackage,
@@ -11,7 +13,6 @@ import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/pack
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -40,6 +41,77 @@ export default function ListPackage(props) {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
+
+  const handleBuyPackage = () => {
+    if (packageName === "Subscription") {
+      if (token) {
+        dispatch(
+          saveDataPackage({
+            packageName,
+            packageAvatar,
+            packagePrice,
+            packageFreeTicketTournament,
+            packageReduceWatchAds,
+            id,
+          })
+        );
+        dispatch(
+          toggleCheckWallet({
+            type: "subscription",
+          })
+        );
+        dispatch(getIdPackage(id));
+      }
+    }
+    if (packageName === "Combo Extra 1") {
+      if (token) {
+        dispatch(
+          saveDataPackage({
+            packageName,
+            packageAvatar,
+            packagePrice,
+            packageFreeTicketTournament,
+            packageReduceWatchAds,
+            id,
+          })
+        );
+        dispatch(
+          toggleCheckWallet({
+            type: "combo1",
+            gold: 0.99,
+            total: 5,
+          })
+        );
+        dispatch(getIdPackage(id));
+      }
+    }
+    if (packageName === "Combo Extra 2") {
+      if (token) {
+        dispatch(
+          saveDataPackage({
+            packageName,
+            packageAvatar,
+            packagePrice,
+            packageFreeTicketTournament,
+            packageReduceWatchAds,
+            id,
+          })
+        );
+        dispatch(
+          toggleCheckWallet({
+            type: "combo2",
+            gold: 3.96,
+            total: 20,
+          })
+        );
+        dispatch(getIdPackage(id));
+      }
+    }
+    if (token === null || token === "") {
+      dispatch(toggleLoginDialog());
+      return;
+    }
+  };
 
   return (
     <>
@@ -348,115 +420,39 @@ export default function ListPackage(props) {
                   )}
                 </Box>
               )}
-              <button
-                onClick={() => {
-                  if (packageName === "Subscription") {
-                    if (token) {
-                      dispatch(
-                        saveDataPackage({
-                          packageName,
-                          packageAvatar,
-                          packagePrice,
-                          packageFreeTicketTournament,
-                          packageReduceWatchAds,
-                          id,
-                        })
-                      );
-                      dispatch(
-                        toggleCheckWallet({
-                          type: "subscription",
-                        })
-                      );
-                      dispatch(getIdPackage(id));
-                    }
-                  }
-                  if (packageName === "Combo Extra 1") {
-                    if (token) {
-                      dispatch(
-                        saveDataPackage({
-                          packageName,
-                          packageAvatar,
-                          packagePrice,
-                          packageFreeTicketTournament,
-                          packageReduceWatchAds,
-                          id,
-                        })
-                      );
-                      dispatch(
-                        toggleCheckWallet({
-                          type: "combo1",
-                          gold: 0.99,
-                          total: 5,
-                        })
-                      );
-                      dispatch(getIdPackage(id));
-                    }
-                  }
-                  if (packageName === "Combo Extra 2") {
-                    if (token) {
-                      dispatch(
-                        saveDataPackage({
-                          packageName,
-                          packageAvatar,
-                          packagePrice,
-                          packageFreeTicketTournament,
-                          packageReduceWatchAds,
-                          id,
-                        })
-                      );
-                      dispatch(
-                        toggleCheckWallet({
-                          type: "combo2",
-                          gold: 3.96,
-                          total: 20,
-                        })
-                      );
-                      dispatch(getIdPackage(id));
-                    }
-                  }
-                  if (token === null || token === "") {
-                    dispatch(toggleLoginDialog());
-                    return;
-                  }
-                }}
-                disabled={
-                  uPack &&
-                  uPack?.remain !== "Expired" &&
-                  packageName === "Subscription"
-                    ? true
-                    : false
-                }
-                style={{
-                  border: "none",
-                  padding: "4px 30px",
-                  borderRadius: "7px",
-                  color: "white",
-                  background:
+              <Box sx={{ margin: "12px 0px", width: "80%"}}>
+                <AnimButton
+                  text={
                     uPack &&
                     uPack?.remain !== "Expired" &&
                     packageName === "Subscription"
-                      ? "Gray"
-                      : "#9747FF",
-                  backdropFilter: " blur(4px)",
-                  fontSize: "11px",
-                  marginTop: "5px",
-                }}
-                className="mb-3"
-              >
-                <Typography
-                  sx={{
-                    fontSize: "11px !important",
+                      ? "Current pack"
+                      : uPack?.remain === "Expired"
+                      ? "Upgrade Pack"
+                      : "Buy Now"
+                  }
+                  type={
+                    uPack &&
+                    uPack?.remain !== "Expired" &&
+                    packageName === "Subscription"
+                      ? "disable"
+                      : "primary"
+                  }
+                  onClick={handleBuyPackage}
+                  style={{
+                    padding: "4px 30px",
+                    color: "white",
+                    background:
+                      uPack &&
+                      uPack?.remain !== "Expired" &&
+                      packageName === "Subscription"
+                        ? "Gray"
+                        : "#9747FF",
+                    backdropFilter: " blur(4px)",
+                    fontSize: "11px ",
                   }}
-                >
-                  {uPack &&
-                  uPack?.remain !== "Expired" &&
-                  packageName === "Subscription"
-                    ? "Current pack"
-                    : uPack?.remain === "Expired"
-                    ? "Upgrade Pack"
-                    : "Buy Now"}
-                </Typography>
-              </button>
+                ></AnimButton>
+              </Box>
             </Box>
           </Box>
         </Box>

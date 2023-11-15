@@ -1,15 +1,15 @@
-import * as React from "react";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleDialogConfirm } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { useState } from "react";
-import { useEffect } from "react";
+import AnimButton from "../../../../components/AnimButton";
 import _socket from "../../../../redux-saga-middleware/config/socket";
-import { Box } from "@mui/material";
+import { toggleDialogConfirm } from "../../../../redux-saga-middleware/reducers/authReducer";
 
 export default function DialogConfirm() { 
   const { isDialogConfirm, idPackage } = useSelector(
@@ -57,16 +57,16 @@ export default function DialogConfirm() {
               paddingBottom:"20px"
             }}
           >
-            <Button
+            <AnimButton
               onClick={handleClose}
               sx={{
                 color: "white",
                 padding: " 5px 25px",
                 background: "#251936",
               }}
-            >
-              Cancel
-            </Button>
+              text="Cancel"
+              type="ghost"
+            />
             <Button
               onClick={() => {
                 socket.emit("buyPackage", {
