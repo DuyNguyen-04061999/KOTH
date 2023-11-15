@@ -349,7 +349,7 @@ const AdminPanel = () => {
                     {width < 576
                         ? `${
                             roles?.includes("agent")
-                                ? "Play Management"
+                                ? "Player Management"
                                 : roles?.includes("master")
                                     ? "Create Distributor"
                                     : roles?.includes("distributor")
