@@ -9,6 +9,7 @@ axios.defaults.xsrfHeaderName = "X-XSRF-TOKEN";
 
 export const PROMOTION_API = axios.create({
   baseURL: process.env.REACT_APP_PROMOTION_URL,
+  timeout: process.env.REACT_APP_REQUEST_TIMEOUT || 10000,
   headers: {
     "Content-Type": "multipart/form-data",
     Authorization: "Bearer " + localStorage.getItem("token"),
@@ -22,7 +23,7 @@ export const PROMOTION_API = axios.create({
 });
 
 PROMOTION_API.interceptors.request.use((config) => {
-  config.timeout = process.env.REACT_APP_REQUEST_TIMEOUT || 5000;
+  config.timeout = process.env.REACT_APP_REQUEST_TIMEOUT || 10000;
   return config;
 });
 
