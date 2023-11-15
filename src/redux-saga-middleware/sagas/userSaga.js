@@ -184,7 +184,7 @@ function* logoutSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: authNotification.signOut.logoutSuccess.type,
-            message: authNotification.signOut.logoutSuccess.message,
+            message: payload && payload === "refresh" ? "Reconnect system successfully!" : authNotification.signOut.logoutSuccess.message,
           })
         );
       } else {
