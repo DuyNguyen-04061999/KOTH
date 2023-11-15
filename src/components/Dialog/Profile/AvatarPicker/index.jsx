@@ -4,7 +4,10 @@ import { makeStyles } from "@mui/styles";
 import t from "prop-types";
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+import {
+  showAlert,
+  showToastNotification,
+} from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   closeLoading,
   openLoading,
@@ -43,14 +46,20 @@ export const AvatarPicker = (props) => {
 
   const handleChange = async (event) => {
     dispatch(openLoading());
-    handleSetAvatar(event.target.files[0])
+    handleSetAvatar(event.target.files[0]);
     let reader = new FileReader();
-    
+
     const imageType =
       event?.target?.files[0]?.type?.replace("image/", "") || "";
-    if (imageType === "png" || imageType === "jpg" || imageType === "gif") {
+    console.log("imageType: ", imageType);
+    if (
+      imageType === "png" ||
+      imageType === "jpg" ||
+      imageType === "gif" ||
+      imageType === "jpeg"
+    ) {
       reader.onload = function (e) {
-        handleChangeImage(reader.result);
+        handleChangeImage(reader.result, imageType);
         setFile(reader.result);
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -61,8 +70,13 @@ export const AvatarPicker = (props) => {
       setTimeout(() => {
         dispatch(closeLoading());
       }, 2000);
-      handleChangeImage(avatarUrl);
-      dispatch(showAlert("error", "Please attach correct format of file"));
+      handleChangeImage(avatarUrl, imageType);
+      dispatch(
+        showToastNotification({
+          type: "error",
+          message: "Please attach correct format of file",
+        })
+      );
     }
   };
   return (
@@ -109,7 +123,8 @@ export const AvatarPicker = (props) => {
                 file &&
                 (file.includes(`data:image/gif;base64,`) ||
                   file.includes(`data:image/png;base64,`) ||
-                  file.includes(`data:image/jpg;base64,`))
+                  file.includes(`data:image/jpg;base64,`) ||
+                  file.includes(`data:image/jpeg;base64,`))
                   ? file
                   : !file && avatarUrl
                   ? process.env.REACT_APP_SOCKET_SERVER + "/" + avatarUrl
@@ -137,9 +152,9 @@ export const AvatarPicker = (props) => {
       <Typography
         sx={{ fontSize: "12px", marginTop: "20px", fontWeight: "100" }}
       >
-        The image size must be less than 200KB.
+        The image size must be less than 5MB.
         <br />
-        Allowed file extension: png, jpg, gif
+        Allowed file extension: PG, JPEG, GIF, PNG, JPG
       </Typography>
     </List>
   );
