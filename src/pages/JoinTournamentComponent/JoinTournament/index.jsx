@@ -437,7 +437,7 @@ export default function JoinTournament() {
                         sx={{ display: "flex", justifyContent: "flex-end" }}
                         className="btn-conteiner"
                       >
-                        <Box sx={{ width: "150px" }}>
+                        <Box sx={{ width: "150px", marginRight: "12px" }}>
                           {" "}
                           {isStartGameInPromotion ? (
                             <AnimButton

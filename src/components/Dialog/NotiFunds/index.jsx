@@ -1,7 +1,6 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
 import { toggleDialogFunds } from "../../../redux-saga-middleware/reducers/paymentReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import AnimButton from "../../AnimButton";
@@ -10,12 +9,9 @@ export default function NotiFunds(props) {
   const { isNotiFunds, typeNoti } = useSelector(state => state.paymentReducer);
   const {dataPackage, quantityExtra} = useSelector(state => state.packageReducer)
   const dispatch = useDispatch();
-  const navigate = useNavigate()
   const handleClose = () => {
     dispatch(toggleDialogFunds());
   };
-
-  const location = useLocation()
 
   const handleConfrim = () => { 
     if(typeNoti === "subscription") {

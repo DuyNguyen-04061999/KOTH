@@ -5,8 +5,7 @@ import t from "prop-types";
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  showAlert,
-  showToastNotification,
+  showToastNotification
 } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   closeLoading,
@@ -51,7 +50,6 @@ export const AvatarPicker = (props) => {
 
     const imageType =
       event?.target?.files[0]?.type?.replace("image/", "") || "";
-    console.log("imageType: ", imageType);
     if (
       imageType === "png" ||
       imageType === "jpg" ||

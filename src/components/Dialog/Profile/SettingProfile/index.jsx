@@ -20,7 +20,7 @@ const BgWithTooltip = withStyles({
 })(Tooltip);
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
-  const { userAvatar, isUpdateProfile } = useSelector(
+  const { isUpdateProfile } = useSelector(
     (state) => state.userReducer
   );
   const { nickName } = useSelector((state) => state.profileReducer);
@@ -59,7 +59,7 @@ export default function SettingProfile({ closePopup }) {
       closePopup();
     }
   };
-  console.log(GetOriginalLengthInBytes(avatarImage));
+  
   const renderChangeUserName = () => {
     return (
       <>

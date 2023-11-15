@@ -7,16 +7,14 @@ import { showToastNotification } from "../../../../redux-saga-middleware/reducer
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { loginReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { width } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [displayPassword, setDisplayPassword] = useState(false);
-  const { user, isLogin } = useSelector((state) => state.userReducer);
+  const { isLogin } = useSelector((state) => state.userReducer);
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);

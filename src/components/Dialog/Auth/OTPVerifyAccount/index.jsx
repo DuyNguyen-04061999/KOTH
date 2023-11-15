@@ -21,7 +21,7 @@ export default function OTPVerifyAccount() {
     resenOTPSuccess,
     isVerifyOTP,
   } = useSelector((state) => state.userReducer);
-  console.log(isVerifyOTP);
+  
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
