@@ -33,6 +33,7 @@ import {
   closeChatPopup,
   openChatPopup,
   showBadgeChat,
+  updateChatWorld,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
@@ -256,6 +257,23 @@ export default function Layout(props) {
       dispatch(updateUserToken(tokenLocal))
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    const tokenLocal = localStorage.getItem("token")
+    if (socket) {
+      socket?.on("chatSuccess", (data) => {
+        if(!startGameCheck) {
+          if (token || tokenLocal) {
+            socket?.emit("listFriend");
+          }
+          dispatch(updateChatWorld(data));
+        }
+      });
+    }
+    return () => {
+      socket?.off("chatSuccess");
+    };
+  }, [socket, token, dispatch, startGameCheck]);
 
   return ReactDOM.createPortal(
     <Box
