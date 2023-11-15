@@ -1,16 +1,9 @@
 import {
   Box,
   Button,
-  Container,
-  Typography,
+  Container
 } from "@mui/material";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import { styled } from "@mui/material/styles";
-import React, { useEffect, useRef } from "react";
-// import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { ExpandMoreOutlined } from "@mui/icons-material";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import RefcodeDialogComponent from "../../../components/Admin/Dialog/RefcodeDialogComponent";
 import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
@@ -19,41 +12,7 @@ import { updateAccount } from "../../../redux-saga-middleware_admin/reducers/adm
 import { openRefcodeNotify } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `2px solid #E4E4E4`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-  borderRadius: "16px",
-  overflow: "hidden",
-}));
-
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ExpandMoreOutlined sx={{ fontSize: "24px" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "#F7F7F7",
-  flexDirection: "row",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(180deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-  padding: useWindowDimensions().width < 576 ? "1px 20px" : "11px 24px",
-}));
-
 const Setting = () => {
-  const [expanded, setExpanded] = useState(false);
-  // const [selectedIndex, setSelectedIndex] = useState(1);
   const [passwordError, setPasswordError] = useState("");
   const { width } = useWindowDimensions();
   const currentPassInput = useRef("");
@@ -67,13 +26,6 @@ const Setting = () => {
   useEffect(() => {
     setPasswordError(errorChangePassword);
   }, [errorChangePassword]);
-
-  // const handleListItemClick = (index) => {
-  //   setSelectedIndex(index);
-  // };
-  const handleChange = () => {
-    setExpanded((prevState) => !prevState);
-  };
 
   const handleChangePassword = (e) => {
     e.preventDefault();
@@ -97,18 +49,6 @@ const Setting = () => {
     }
   };
 
-  // const handleConfirmTimeZone = (e) => {
-  //   e.preventDefault();
-  // };
-
-  // const handleSearchTimeZone = (e) => {
-  //   e.preventDefault();
-  // };
-
-  // const handleChangeSearch = (e) => {
-  //   e.preventDefault();
-  // };
-
   const { roles, ref } = useSelector((state) => state.adminAuthReducer);
   const [newRefcode, setNewRefcode] = useState("")
 
@@ -120,12 +60,12 @@ const Setting = () => {
     }  else if (/\s/.test(newRefcode)) {
       dispatch(showToastNotify({ type: "warning", message: "Refcode invalid !" }))
       return
-    } else if (newRefcode?.length > 30) {
-      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too long ! Maximum 30 characters" }))
+    } else if (newRefcode?.length > 15) {
+      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too long ! Maximum 15 characters" }))
       // dispatch(showToastNotify({ type: "warning", message: "Refcode too long !" }))
-    } else if (newRefcode?.length < 15) {
+    } else if (newRefcode?.length < 5) {
       // dispatch(showToastNotify({ type: "warning", message: "Refcode too short !" }))
-      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too short ! Minimum 15 characters" }))
+      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too short ! Minimum 5 characters" }))
     } else {
       dispatch(updateAccount({ newRefcode }))
       setNewRefcode("")
@@ -145,121 +85,6 @@ const Setting = () => {
           }}
         >
           Settings
-        </Box>
-        {/* <Box sx={{marginTop:"32px"}}>
-          <SearchBar placeholder="Search" width="100%" />
-        </Box> */}
-        <Box sx={{ marginTop: width < 576 ? "20px" : "60px" }}>
-          <Accordion expanded={expanded}>
-            <AccordionSummary
-              onClick={handleChange}
-              aria-controls="panel1d-content"
-              id="panel1d-header"
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: "18px",
-                    fontWeight: 500,
-                    lineHeight: "24px",
-                    color: "#11142D",
-                  }}
-                >
-                  Time Zone
-                </Typography>
-                <Box
-                  sx={{
-                    marginLeft: "32px",
-                    width: "336px",
-                    display: width < 768 && "none",
-                  }}
-                >
-                  {/* <SearchBar
-                    placeholder="Search"
-                    onChange={handleChangeSearch}
-                    onSubmit={handleSearchTimeZone}
-                  /> */}
-                  <Typography>Chicago (UTC/GMT -5 hours) - Default</Typography>
-                </Box>
-              </Box>
-            </AccordionSummary>
-            {/* <AccordionDetails>
-              <List sx={{ maxHeight: "220px", overflow: "scroll" }}>
-                {americanTimeZones?.map((item, index) => (
-                  <ListItem
-                    disablePadding
-                    key={index}
-                    onClick={() => handleListItemClick(index)}
-                    sx={{
-                      borderRadius: "6px",
-                      overflow: "hidden",
-                      backgroundColor:
-                        selectedIndex === index
-                          ? "#355DFF"
-                          : index % 2 !== 0 && "#F7F7F7",
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      color: selectedIndex === index ? "#fff" : "#000",
-                      lineHeight: "24px",
-                      fontFamily: "Cyntho Next",
-                      cursor: "pointer",
-                      ":hover": {
-                        backgroundColor:
-                          selectedIndex === index ? "#355DFF" : "#F8F8F8",
-                      },
-                      padding: "10px 16px",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: 500,
-                        lineHeight: "24px",
-                        fontFamily: "Cyntho Next",
-                      }}
-                    >
-                      {item}
-                    </Typography>
-                  </ListItem>
-                ))}
-              </List>
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3,1fr)",
-                  gridColumnGap: "36px",
-                  marginTop: "42px",
-                }}
-              >
-                <Button
-                  sx={{
-                    backgroundColor: "#355DFF",
-                    color: "white",
-                    borderRadius: "12px",
-                    fontSize: "14px",
-                    fontFamily: "Cyntho Next",
-                    fontWeight: 700,
-                    textTransform: "unset",
-                    gridColumnStart: 3,
-                    gridColumnEnd: 4,
-                    ":hover": {
-                      backgroundColor: "#355DFF",
-                      opacity: 0.9,
-                    },
-                    padding: "12px 0",
-                  }}
-                  onClick={handleConfirmTimeZone}
-                >
-                  Confirm
-                </Button>
-              </Box>
-            </AccordionDetails> */}
-          </Accordion>
         </Box>
         <Box
           sx={{

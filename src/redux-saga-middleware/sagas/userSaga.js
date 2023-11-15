@@ -38,6 +38,7 @@ import {
   sendOtpSuccess,
   updateProfileUserFail,
   updateProfileUserSuccess,
+  updateUserToken,
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
@@ -64,10 +65,11 @@ function* loginSaga(dataRequest) {
         );
         localStorage.setItem("token", data?.data?.token);
         localStorage.setItem("refreshToken", data?.data?.refreshToken);
+        yield put(updateUserToken(data?.data?.token))
         yield put(getUserInfoReady(data?.data?.token));
         setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+          window.location.reload()
+        }, 2000)
       } else {
         yield put(loginFail());
         yield put(
@@ -192,7 +194,7 @@ function* logoutSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: authNotification.signOut.logoutSuccess.type,
-            message: authNotification.signOut.logoutSuccess.message,
+            message: payload && payload === "refresh" ? "Reconnect system successfully!" : authNotification.signOut.logoutSuccess.message,
           })
         );
       } else {

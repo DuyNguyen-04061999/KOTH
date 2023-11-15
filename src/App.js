@@ -43,7 +43,7 @@ import {
   getNavTablet,
   updateSubPackageId
 } from "./redux-saga-middleware/reducers/authReducer";
-import { pushChatWorld, pushfriendList, updateChatWorld, updateFriendList } from "./redux-saga-middleware/reducers/chatReducer";
+import { pushChatWorld, pushfriendList, updateFriendList } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
   updateDeviceType,
@@ -214,12 +214,12 @@ function App() {
         store.dispatch(pushChatWorld(data));
       });
 
-      socket?.on("chatSuccess", (data) => {
-        if (token) {
-          socket?.emit("listFriend");
-        }
-        store.dispatch(updateChatWorld(data));
-      });
+      // socket?.on("chatSuccess", (data) => {
+      //   if (token || tokenUser) {
+      //     socket?.emit("listFriend");
+      //   }
+      //   store.dispatch(updateChatWorld(data));
+      // });
 
       socket?.on("disconnect", (data) => {
           if((tokenUser || token)) {

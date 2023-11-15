@@ -1497,7 +1497,7 @@ export default function JoinTournament() {
                                         sx={{
                                           position: "absolute",
                                           display: "flex",
-                                          justifyContent: "center",
+                                          justifyContent: "left",
                                           alignItems: "center",
                                           width: "100%",
                                           height: "100%",
@@ -1509,7 +1509,7 @@ export default function JoinTournament() {
                                             5
                                               ? "white"
                                               : "none",
-                                          fontSize: "12px",
+                                          fontSize: "10px",
                                           zIndex: 0,
                                         }}
                                       >
@@ -1517,7 +1517,7 @@ export default function JoinTournament() {
                                           sx={{
                                             textAlign: "start",
                                             color: "#fff",
-                                            fontSize: "12px",
+                                            fontSize: "10px",
                                             fontWeight: "200 !important",
                                             marginLeft: "1px !important",
                                           }}

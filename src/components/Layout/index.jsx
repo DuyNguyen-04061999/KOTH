@@ -33,6 +33,7 @@ import {
   closeChatPopup,
   openChatPopup,
   showBadgeChat,
+  updateChatWorld,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
@@ -40,6 +41,7 @@ import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profil
 import { finishGame, finishVideo } from "../../redux-saga-middleware/reducers/promotionReducer";
 import { getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
+import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import {
   closeTransactionDialog,
   toggleWalletDialog,
@@ -248,6 +250,30 @@ export default function Layout(props) {
       });
     }
   }, [token, socket]);
+
+  useEffect(() => {
+    const tokenLocal = localStorage.getItem("token")
+    if(tokenLocal) {
+      dispatch(updateUserToken(tokenLocal))
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    const tokenLocal = localStorage.getItem("token")
+    if (socket) {
+      socket?.on("chatSuccess", (data) => {
+        if(!startGameCheck) {
+          if (token || tokenLocal) {
+            socket?.emit("listFriend");
+          }
+          dispatch(updateChatWorld(data));
+        }
+      });
+    }
+    return () => {
+      socket?.off("chatSuccess");
+    };
+  }, [socket, token, dispatch, startGameCheck]);
 
   return ReactDOM.createPortal(
     <Box

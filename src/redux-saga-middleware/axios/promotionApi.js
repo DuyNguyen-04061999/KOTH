@@ -48,7 +48,7 @@ PROMOTION_API.interceptors.response.use(
 
         if (er.response.status === 410) {
           if (localStorage.getItem("refreshToken")) {
-            store.dispatch(logoutReady());
+            store.dispatch(logoutReady("refresh"));
             const res = await PROMOTION_API.post(
               "/api/authenticate/refresh-token",
               {

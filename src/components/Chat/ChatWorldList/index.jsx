@@ -125,15 +125,9 @@ export default function ChatWorldList() {
         chatCurrent.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
+  });
 
-  // const checkExistInArray = (membersInRoom, userName) => {
-  //   return membersInRoom?.filter((n) => {
-  //     return n.username === userName && n.owner === 0;
-  //   }).length > 0
-  //     ? true
-  //     : false;
-  // };
+  
   useEffect(() => {
     socket?.on(`joinRoomGameFromMessageSuccess`, (room, roomId) => {
       dispatch(setWaitingNav());
