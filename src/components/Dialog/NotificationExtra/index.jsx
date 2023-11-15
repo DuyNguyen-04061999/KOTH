@@ -18,6 +18,7 @@ export default function NotificationExtra(props) {
   const location = useLocation()
 
   const handleConfrim = () => { 
+    dispatch(toggleExtra());
     navigate('/packages')
     dispatch(updateFromRouter(location.pathname))
   }

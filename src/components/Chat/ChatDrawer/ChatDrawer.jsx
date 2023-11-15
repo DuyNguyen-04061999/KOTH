@@ -8,6 +8,7 @@ import { changeRouter } from "../../../redux-saga-middleware/reducers/appReducer
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { clickTabChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { images280423_l } from "../../../utils/images280423_l";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ChatFriendList from "../ChatFriendList";
 import ChatWorldList from "../ChatWorldList";
 
@@ -91,6 +92,8 @@ const ChatDrawer = () => {
       }
   };
 
+  const { width }  = useWindowDimensions()
+
   return ReactDOM.createPortal(
     <Drawer
       // hidden={startGameCheck && width < 1200}
@@ -107,7 +110,7 @@ const ChatDrawer = () => {
           borderLeft: "none",
         },
       }}
-      open={chatPopup && !startGameCheck}
+      open={(chatPopup && width > 1200) || (!startGameCheck && chatPopup)}
       variant="persistent"
       anchor="right"
     >
