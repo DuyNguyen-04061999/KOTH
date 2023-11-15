@@ -2,10 +2,9 @@ import { Box, Dialog } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSubscriptionDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
+import { useNavigate } from "react-router-dom";
 import { toggleTournamentShow } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 import AnimButton from "../../../AnimButton";
-import { useNavigate } from "react-router-dom";
 
 export default function TouramentShow() {
   const { isTournamentShow } = useSelector((state) => state.tournamentReducer);
@@ -79,10 +78,10 @@ export default function TouramentShow() {
             }}
           >
             <Box sx={{width:"100%", marginRight:"15px"}}>
-              <AnimButton text={"No"} type={"ghost"} onClick={handleClose}/>
+              <AnimButton text="No" type="ghost" onClick={handleClose}/>
             </Box>
             <Box sx={{width:"100%"}} >
-              <AnimButton text={"Upgrade"} type={"primary"} onClick={openSubscription} />
+              <AnimButton text="Upgrade" type="primary" onClick={openSubscription} />
             </Box>
           </Box> 
         </Box>

@@ -417,8 +417,8 @@ export default function DialogProfile(props) {
                     }}
                   >
                     <AnimButton
-                      text={"Edit"}
-                      type={"primary"}
+                      text="Edit"
+                      type="primary"
                       onClick={setTabEdit}
                     />
                   </Box>

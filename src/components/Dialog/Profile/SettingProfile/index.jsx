@@ -3,8 +3,7 @@ import { withStyles } from "@mui/styles";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  showAlert,
-  showToastNotification,
+  showToastNotification
 } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { updateProfileUser } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../../utils/images";
@@ -21,8 +20,10 @@ const BgWithTooltip = withStyles({
 })(Tooltip);
 export default function SettingProfile({ closePopup }) {
   const { avatarUrl } = useSelector((state) => state.profileReducer);
+  const { userAvatar, isUpdateProfile } = useSelector(
+    (state) => state.userReducer
+  );
   const { nickName } = useSelector((state) => state.profileReducer);
-
   const dispatch = useDispatch();
   const { loadingState } = useSelector((state) => state.loadingReducer);
   const [nName, setNname] = useState(nickName ? nickName : "");
@@ -165,14 +166,18 @@ export default function SettingProfile({ closePopup }) {
           </Box>
           <Box className="mt-5 d-flex justify-content-center">
             <Box className="pe-2 w-100">
-              <AnimButton type={"ghost"} text={"CANCEL"} onClick={closePopup} />
+              <AnimButton type="ghost" text="CANCEL" onClick={closePopup} />
             </Box>
             <Box className="ps-2 w-100">
-              <AnimButton
-                type={"primary"}
-                text={"UPDATE"}
-                onClick={sendUpdateProfile}
-              />
+              {isUpdateProfile ? (
+                <AnimButton type="loading" text="UPDATE" />
+              ) : (
+                <AnimButton
+                  type="primary"
+                  text="UPDATE"
+                  onClick={sendUpdateProfile}
+                />
+              )}
             </Box>
           </Box>{" "}
         </Box>

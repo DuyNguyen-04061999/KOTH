@@ -5,9 +5,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import {
-  loginReady
-} from "../../../../redux-saga-middleware/reducers/userReducer";
+import { loginReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
@@ -18,8 +16,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [displayPassword, setDisplayPassword] = useState(false);
-  const { user } = useSelector((state) => state.userReducer);
-
+  const { user, isLogin } = useSelector((state) => state.userReducer);
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -37,7 +34,8 @@ const Login = () => {
     setDisplayPassword(!displayPassword);
   };
 
-  const sendLogin = () => {
+  const sendLogin = (e) => {
+    e.preventDefault();
     if (!username || !password) {
       dispatch(
         showToastNotification({
@@ -187,20 +185,31 @@ const Login = () => {
           </Typography>
         </Box>
         <Box className="d-flex justify-content-center">
-          <AnimButton
-            onClick={() => sendLogin()}
-            text={"Sign In"}
-            type={"Signin"}
-          />
+          {isLogin ? (
+            <AnimButton
+              onClick={sendLogin}
+              text="Sign In"
+              type="loading"
+              isHasIcon
+            />
+          ) : (
+            <AnimButton
+              onClick={sendLogin}
+              text="Sign In"
+              type="primary"
+              isHasIcon
+            />
+          )}
         </Box>
         <Box className="d-flex justify-content-center mt-4">
-          <Box
-            className="d-flex"
-            sx={{
-              color: "white",
-            }}
-          >
-            New User?
+          <Box className="d-flex" sx={{ alignItems: "center" }}>
+            <Typography
+              sx={{
+                color: "white",
+              }}
+            >
+              New User?
+            </Typography>
             <Typography
               onClick={() => {
                 dispatch(clickTab("signup"));

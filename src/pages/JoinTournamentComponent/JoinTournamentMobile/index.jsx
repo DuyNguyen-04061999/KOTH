@@ -1155,7 +1155,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     <AnimButton
                       onClick={handleJoinTour}
                       text={"Join"}
-                      type={"primary"}
+                      type={"disable"}
                     />
                   )
                 ) : (
@@ -1165,16 +1165,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     {detailTournament?.tournamentStatus !== 2 && (
                       <AnimButton
                         onClick={handlePlayTour}
-                        type={"highlight"}
-                        text={"Play"}
+                        type="highlight"
+                        text="Play"
                       />
                     )}
 
                     {detailTournament?.tournamentStatus !== 2 && (
                       <AnimButton
                         onClick={handleClickOpen}
-                        text={"Buy Extra"}
-                        type={"primary"}
+                        text="Buy Extra"
+                        type="primary"
                       />
                     )}
                   </Box>
