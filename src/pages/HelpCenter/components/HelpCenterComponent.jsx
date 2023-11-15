@@ -133,7 +133,13 @@ const HelpCenterComponent = () => {
                 >
                   {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqTitle}
                 </Typography>
-                <Typography style={{ fontSize: "14px", textAlign: "start",marginTop:"12px" }}>
+                <Typography
+                  style={{
+                    fontSize: "14px",
+                    textAlign: "start",
+                    marginTop: "12px",
+                  }}
+                >
                   {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqDesc}
                 </Typography>
                 {listFAQ?.length &&
@@ -275,10 +281,16 @@ const HelpCenterComponent = () => {
               ) : (
                 <>
                   {" "}
-                  <Typography style={{ fontSize: "20px" }}>
+                  <Typography style={{ fontSize: "24px", fontWeight: "bold" }}>
                     {listFAQ?.length && listFAQ[tabHelpCenter]?.faqTitle}
                   </Typography>
-                  <Typography style={{ fontSize: "14px", textAlign: "start" }}>
+                  <Typography
+                    style={{
+                      fontSize: "16px",
+                      textAlign: "start",
+                      marginTop: "24px",
+                    }}
+                  >
                     {listFAQ?.length && listFAQ[tabHelpCenter]?.faqDesc}
                   </Typography>
                   {listFAQ?.length &&
@@ -330,7 +342,6 @@ const HelpCenterComponent = () => {
                           style={{
                             margin: "36px 0px",
                             fontSize: "14px",
-                            textAlign: "start",
                           }}
                         >{`Last Updated: [${moment(item?.updatedAt).format(
                           "MMM Do YY"
