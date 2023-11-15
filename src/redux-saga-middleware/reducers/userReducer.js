@@ -310,7 +310,8 @@ const userReducer = (
     userAvatar: "",
     isGetUserByUsername: false,
     typeVerifyOTP: "",
-    resenOTPSuccess: false
+    resenOTPSuccess: false,
+    isVerifyOTP: false
   },
   action
 ) => {
@@ -416,13 +417,13 @@ const userReducer = (
         isLogout: false,
       };
     case "GET_ID_PACKAGE":
-      return { ...state, idPackage: payload };
+      return { ...state, idPackage: payload};
     case "SEND_OTP_READY":
-      return { ...state };
+      return { ...state,  isVerifyOTP: true};
     case "SEND_OTP_SUCCESS":
-      return { ...state, tokenResetPass: payload?.token };
+      return { ...state, tokenResetPass: payload?.token,isVerifyOTP: false };
     case "SEND_OTP_FAIL":
-      return { ...state };
+      return { ...state, isVerifyOTP: false };
     case "FORGET_PASSWORD_READY":
       return { ...state, isForgetPassword: true };
     case "FORGET_PASSWORD_FAIL":

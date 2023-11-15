@@ -355,7 +355,14 @@ const tournamentReducer = (
     endGameScore: 0,
     idTour: "",
     boughtTour: "",
-    isExtra:false
+    isExtra:false,
+    noDataUpcoming: false,
+    noDataHot:false,
+    noDataOncoming:false,
+    noDataEnd:false,
+    noDataThreeBrand:false,
+    noDataHotWeek:false,
+    noDataBrand:false
     //--------------------------------------
   },
   action
@@ -400,6 +407,7 @@ const tournamentReducer = (
         ...state,
         hotTournament: payload,
         isFetchHot: false,
+        noDataHot:  (!payload || (payload && payload?.length <= 0)) ? true : false
       };
     case "GET_LIST_HOT_TOURNAMENT_FAIL":
       return {
@@ -463,6 +471,7 @@ const tournamentReducer = (
         ...state,
         ongoingTournament: payload,
         isFetchOngoing: false,
+        noDataOncoming:  (!payload || (payload && payload?.length <= 0)) ? true : false
       };
     case "GET_LIST_ONGOING_TOURNAMENT_FAIL":
       return {
@@ -479,6 +488,7 @@ const tournamentReducer = (
         ...state,
         upcomingTournament: payload,
         isFetchUpcoming: false,
+        noDataUpcoming: (!payload || (payload && payload?.length <= 0)) ? true : false
       };
     case "GET_LIST_UPCOMING_TOURNAMENT_FAIL":
       return {
@@ -495,6 +505,7 @@ const tournamentReducer = (
         ...state,
         endedTournament: payload,
         isFetchEnded: false,
+        noDataEnd:  (!payload || (payload && payload?.length <= 0)) ? true : false
       };
     case "GET_LIST_ENDED_TOURNAMENT_FAIL":
       return {
@@ -568,19 +579,23 @@ const tournamentReducer = (
     case "GET_BRAND_TOUR_SUCCESS":
       return {
         ...state,
+        isFecthBrand:false,
         brandTour: payload,
+        noDataBrand:true
       };
     case "GET_HOTTEST_WEEK_TOUR_SUCCESS":
       return {
         ...state,
         isFetchHotWeek: false,
         hotWeekTour: payload,
+        noDataHotWeek:true
       };
     case "GET_THREE_BRAND_TOUR_SUCCESS":
       return {
         ...state,
         isFetchThreeTour: false,
         threeBrandTour: payload,
+        noDataThreeBrand: true
       };
     case "TOGGLE_OPEN_RESULT_END_GAME":
       return {

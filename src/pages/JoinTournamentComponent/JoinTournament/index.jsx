@@ -84,12 +84,12 @@ export default function JoinTournament() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { detailTournament } = useSelector((state) => state.playgameReducer);
   const {
+    isStartGameInPromotion,
     startGamePromotion,
     startVideoPromotion,
     isGetDetailPromotion,
     isGetDetailAuthPromotion,
   } = useSelector((state) => state.promotionReducer);
-
   const { orientation } = useSelector((state) => state.gameReducer);
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -218,7 +218,6 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
-
   return (
     <>
       <ResultEndGame />
@@ -429,8 +428,8 @@ export default function JoinTournament() {
                       <Box sx={{ width: "150px" }}>
                         <AnimButton
                           onClick={handleJoinTour}
-                          text={"Join"}
-                          type={"primary"}
+                          text="Join"
+                          type="highlight"
                         />
                       </Box>
                     ) : (
@@ -438,16 +437,29 @@ export default function JoinTournament() {
                         sx={{ display: "flex", justifyContent: "flex-end" }}
                         className="btn-conteiner"
                       >
-                        <AnimButton
-                          onClick={handlePlayTour}
-                          type={"highlight"}
-                          text={"Play"}
-                        />
-                        <AnimButton
-                          onClick={handleClickOpen}
-                          text={"Buy Extra"}
-                          type={"loading"}
-                        />
+                        <Box sx={{ width: "150px" }}>
+                          {" "}
+                          {isStartGameInPromotion ? (
+                            <AnimButton
+                              onClick={handlePlayTour}
+                              type="loading"
+                              text="Play"
+                            />
+                          ) : (
+                            <AnimButton
+                              onClick={handlePlayTour}
+                              type="highlight"
+                              text="Play"
+                            />
+                          )}
+                        </Box>
+                        <Box sx={{ width: "150px" }}>
+                          <AnimButton
+                            onClick={handleClickOpen}
+                            text="Buy Extra"
+                            type="primary"
+                          />
+                        </Box>
                       </Box>
                     )}
                   </Box>
@@ -483,7 +495,7 @@ export default function JoinTournament() {
               )}
               {/* Partipants */}
               {detailTournament?.tournamentStatus === 2 ? (
-               ""
+                ""
               ) : (
                 // <Box
                 //   sx={{
@@ -2115,7 +2127,7 @@ export default function JoinTournament() {
                               576 < width && width < 1200
                                 ? `${width / 71}px`
                                 : "16px",
-                            whiteSpace: "pre-wrap"
+                            whiteSpace: "pre-wrap",
                           }}
                         >
                           {item ? item : ""}
@@ -2958,8 +2970,8 @@ export default function JoinTournament() {
                         ) : (
                           <AnimButton
                             onClick={handleJoinTour}
-                            text={"Join"}
-                            type={"highlight"}
+                            text="Join"
+                            type="highlight"
                           />
                         )
                       ) : (
@@ -2976,14 +2988,14 @@ export default function JoinTournament() {
                           (
                           <AnimButton
                             onClick={handlePlayTour}
-                            type={"highlight"}
-                            text={"Play"}
+                            type="highlight"
+                            text="Play"
                           />
                           )
                           <AnimButton
                             onClick={handleClickOpen}
-                            text={"Buy Extra"}
-                            type={"primary"}
+                            text="Buy Extra"
+                            type="primary"
                           />
                         </Box>
                       )}

@@ -379,7 +379,7 @@ export default function Dialoglg() {
                   <img
                     style={{
                       borderRadius: 50,
-                      border: "2px solid #FD9E0F",
+                      border: uPack ? "2px solid #FD9E0F" : "",
                     }}
                     alt="Remy Sharp"
                     src={
@@ -468,7 +468,7 @@ export default function Dialoglg() {
                       <img
                         style={{
                           borderRadius: 50,
-                          border: "4px solid #FD9E0F",
+                          border: uPack ? "4px solid #FD9E0F" : "",
                         }}
                         alt="Remy Sharp"
                         src={images.undefinedAvatar}
@@ -480,9 +480,9 @@ export default function Dialoglg() {
                       <img
                         style={{
                           border:
-                            width && width > 576
+                            uPack
                               ? "4px solid #FD9E0F"
-                              : "4px solid #FD9E0F",
+                              : "",
                           borderRadius: 50,
                           width: width < 576 ? "50px" : "100px",
                           height: width < 576 ? "50px" : "100px",

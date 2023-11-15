@@ -548,22 +548,22 @@ export default function TicketCheckOut() {
                 <Grid item xs={6} md={6}>
                   <AnimButton
                     onClick={cancelButton}
-                    text={"Cancel"}
-                    type={"ghost"}
+                    text="Cancel"
+                    type="ghost"
                   />
                 </Grid>
                 <Grid item xs={6} md={6}>
                   {typeWallet === "subscription" ? (
                     <AnimButton
-                      type={"primary"}
+                      type="primary"
                       onClick={btnSubscription}
-                      text={"Place Order"}
+                      text="Place Order"
                     />
                   ) : (
                     <AnimButton
                       onClick={btnBuyTicket}
-                      text={"Place Order"}
-                      type={"primary"}
+                      text="Place Order"
+                      type="primary"
                     />
                   )}
                 </Grid>

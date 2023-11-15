@@ -83,7 +83,7 @@ export default function NotiFunds(props) {
                 width: "100%",
               }}
             >
-              <AnimButton type={"ghost"} text={"Cancel"} onClick={handleClose} />
+              <AnimButton type="ghost" text="Cancel" onClick={handleClose} />
             </Box>
             <Box
               sx={{
@@ -91,7 +91,7 @@ export default function NotiFunds(props) {
                 marginLeft: "20px",
               }}
             >
-              <AnimButton type={"primary"} text={"Confirm"} onClick={handleConfrim}  />
+              <AnimButton type="primary" text="Confirm" onClick={handleConfrim}  />
             </Box>
           </Box>
         </Box>

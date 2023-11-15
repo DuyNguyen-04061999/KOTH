@@ -40,8 +40,7 @@ export default function Signup(props) {
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
-
-  useEffect(() => {}, []);
+  const { isRegister } = useSelector((state) => state.userReducer);
 
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
@@ -52,18 +51,15 @@ export default function Signup(props) {
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    if(!listSetting?.signupEnabled){
+    if (!listSetting?.signupEnabled) {
       dispatch(
         showToastNotification({
-          type: systemNotification.maintenance.serviceClose
-            .type,
-          message:
-            systemNotification.maintenance.serviceClose.message,
+          type: systemNotification.maintenance.serviceClose.type,
+          message: systemNotification.maintenance.serviceClose.message,
         })
       );
-    }
-    else {
-      sendRegister();      
+    } else {
+      sendRegister();
     }
   };
 
@@ -274,7 +270,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -365,7 +361,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -819,7 +815,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -929,7 +925,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -997,12 +993,20 @@ export default function Signup(props) {
         >
           <div className="btn-conteiner">
             {disabledBtn ? (
-              <AnimButton type={"dislable"} text={"Sign Up"} />
+              <AnimButton type="disable" text="Sign Up" isHasIcon />
+            ) : isRegister ? (
+              <AnimButton
+                onClick={handleSubmitSignUp}
+                text="Sign Up"
+                type="loading"
+                isHasIcon
+              />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}
-                text={"Sign Up"}
-                type={"Signin"}
+                text="Sign Up"
+                type="primary"
+                isHasIcon
               />
             )}
           </div>
@@ -1011,11 +1015,14 @@ export default function Signup(props) {
           <Box
             sx={{
               display: "flex",
+              alignItems: "center",
               justifyContent: "center",
-              color: "white",
             }}
           >
-            Already registered?
+            <Typography sx={{ color: "white" }}>
+              {" "}
+              Already registered?
+            </Typography>
             <Typography
               onClick={() => {
                 dispatch(clickTab("login"));

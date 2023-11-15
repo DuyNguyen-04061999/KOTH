@@ -80,7 +80,7 @@ export default function NotificationExtra(props) {
                 width: "100%",
               }}
             >
-              <AnimButton type={"ghost"} text={"No"} onClick={handleClose} />
+              <AnimButton type="ghost" text="No" onClick={handleClose} />
             </Box>
             <Box
               sx={{
@@ -88,7 +88,7 @@ export default function NotificationExtra(props) {
                 marginLeft: "20px",
               }}
             >
-              <AnimButton type={"primary"} text={"Confirm"} onClick={handleConfrim}  />
+              <AnimButton type="primary" text="Confirm" onClick={handleConfrim}  />
             </Box>
           </Box>
           <Box

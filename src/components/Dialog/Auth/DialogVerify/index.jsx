@@ -7,14 +7,17 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeVerifyDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { logoutReady, reVerifyAccount } from "../../../../redux-saga-middleware/reducers/userReducer";
+import {
+  logoutReady,
+  reVerifyAccount,
+} from "../../../../redux-saga-middleware/reducers/userReducer";
 import AnimButton from "../../../AnimButton";
 
 export default function DialogVerify() {
   const { isVerifyDialog } = useSelector((state) => state.authReducer);
-  
+  const { isReVerifyAccount } = useSelector((state) => state.userReducer);
+
   const dispatch = useDispatch();
-  
 
   const handleClose = () => {
     dispatch(logoutReady());
@@ -22,8 +25,8 @@ export default function DialogVerify() {
   };
 
   const handleConfirm = () => {
-    dispatch(reVerifyAccount())
-  }
+    dispatch(reVerifyAccount());
+  };
 
   return ReactDOM.createPortal(
     <div>
@@ -60,8 +63,23 @@ export default function DialogVerify() {
               paddingBottom: "20px",
             }}
           >
-            <AnimButton onClick={() => handleClose()} type={"ghost"} text={"Cancel"} />
-            <AnimButton onClick={() => handleConfirm()} type={"primary"} text={"Confirm"} />
+            <AnimButton
+              onClick={() => handleClose()}
+              type="ghost"
+              text="Cancel"
+            />
+            {isReVerifyAccount ? (
+              <AnimButton
+                type="loading"
+                text="Confirm"
+              />
+            ) : (
+              <AnimButton
+                onClick={() => handleConfirm()}
+                type="primary"
+                text="Confirm"
+              />
+            )}
           </DialogActions>
         </Box>
       </Dialog>

@@ -67,7 +67,7 @@ export default function DialogProfile(props) {
       setTab(1);
     }
   };
-  
+
   const renderUserInfo = () => {
     return (
       <Box sx={{ height: "100%" }}>
@@ -84,7 +84,7 @@ export default function DialogProfile(props) {
               style={{
                 borderRadius: "50%",
                 height: "95px",
-                border: "4px solid #FD9E0F",
+                border: uPack ? "4px solid #FD9E0F" : "",
               }}
             />
             <Typography
@@ -417,8 +417,8 @@ export default function DialogProfile(props) {
                     }}
                   >
                     <AnimButton
-                      text={"Edit"}
-                      type={"primary"}
+                      text="Edit"
+                      type="primary"
                       onClick={setTabEdit}
                     />
                   </Box>
