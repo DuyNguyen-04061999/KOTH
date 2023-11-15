@@ -30,6 +30,10 @@ export default function NewHomePage() {
     isFetchOngoing,
     isFetchUpcoming,
     isFetchEnded,
+    noDataUpcoming,
+    noDataHot,
+    noDataOncoming,
+    noDataEnd
   } = useSelector((state) => state.tournamentReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -225,6 +229,7 @@ export default function NewHomePage() {
               listData={hotTournament}
               loadingState={isFetchHot}
               typePromo={"hot"}
+              noData={noDataHot}
             />
           </Box>
         </Box>{" "}
@@ -291,6 +296,7 @@ export default function NewHomePage() {
               listData={ongoingTournament}
               loadingState={isFetchOngoing}
               typePromo={"ongoing"}
+              noData={noDataOncoming}
             />
           </Box>
         </Box>{" "}
@@ -347,6 +353,7 @@ export default function NewHomePage() {
             <ListPromotion
               listData={upcomingTournament}
               loadingState={isFetchUpcoming}
+              noData={noDataUpcoming}
               typePromo={"upcoming"}
             />
           </Box>
@@ -495,6 +502,7 @@ export default function NewHomePage() {
               listData={endedTournament}
               loadingState={isFetchEnded}
               typePromo={"ended"}
+              noData={noDataEnd}
             />
           </Box>
         </Box>{" "}

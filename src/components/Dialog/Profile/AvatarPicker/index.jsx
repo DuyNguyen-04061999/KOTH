@@ -35,6 +35,7 @@ export const AvatarPicker = (props) => {
   const imageRef = useRef(null);
   const dispatch = useDispatch();
   const { handleChangeImage, handleSetAvatar } = props;
+  const { uPack } = useSelector((state) => state.userReducer);
 
   const showOpenFileDialog = (event) => {
     imageRef.current.click();
@@ -118,7 +119,7 @@ export const AvatarPicker = (props) => {
                 width: "100px",
                 height: "100px",
                 borderRadius: "50%",
-                border: "4px solid #FD9E0F",
+                border: uPack ? "4px solid #FD9E0F" : "",
                 marginBottom: "15px",
               }}
             />
