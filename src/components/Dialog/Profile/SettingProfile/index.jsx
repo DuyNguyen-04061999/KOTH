@@ -2,7 +2,9 @@ import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showAlert } from "../../../../redux-saga-middleware/reducers/alertReducer";
+import {
+  showToastNotification
+} from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { updateProfileUser } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../../utils/images";
 import { validateNickName } from "../../../../utils/validateNickName";
@@ -40,8 +42,13 @@ export default function SettingProfile({ closePopup }) {
   }
 
   const sendUpdateProfile = () => {
-    if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 1000000) {
-      dispatch(showAlert("error", "Please attach image smaller 1MB"));
+    if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 5000) {
+      dispatch(
+        showToastNotification({
+          type: "error",
+          message: "Please attach image less than 5MB",
+        })
+      );
     } else {
       dispatch(
         updateProfileUser({
@@ -49,9 +56,10 @@ export default function SettingProfile({ closePopup }) {
           avatar: avatar,
         })
       );
+      closePopup();
     }
   };
-
+  console.log(GetOriginalLengthInBytes(avatarImage));
   const renderChangeUserName = () => {
     return (
       <>

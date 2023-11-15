@@ -90,7 +90,6 @@ export default function JoinTournament() {
     isGetDetailPromotion,
     isGetDetailAuthPromotion,
   } = useSelector((state) => state.promotionReducer);
-  console.log(isStartGameInPromotion);
   const { orientation } = useSelector((state) => state.gameReducer);
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
@@ -219,7 +218,6 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
-
   return (
     <>
       <ResultEndGame />
@@ -2972,8 +2970,8 @@ export default function JoinTournament() {
                         ) : (
                           <AnimButton
                             onClick={handleJoinTour}
-                            text={"Join"}
-                            type={"highlight"}
+                            text="Join"
+                            type="highlight"
                           />
                         )
                       ) : (

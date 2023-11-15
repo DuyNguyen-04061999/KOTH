@@ -189,20 +189,20 @@ export default function OTPResetPassword() {
       >
         <Box sx={{ width: "48%" }}>
           <AnimButton
-            type={"ghost"}
-            text={"BACK"}
+            type="ghost"
+            text="BACK"
             onClick={() => dispatch(clickTab("forgetPass"))}
           />
         </Box>
         <Box sx={{ width: "48%" }}>
           {otp?.length < 6 ? (
             <AnimButton
-              type={"disable"}
-              text={"NEXT"}
+              type="disable"
+              text="NEXT"
               onClick={() => handleVerifyOTP()}
             />
           ) : isVerifyOTP ? (
-            <AnimButton type={"loading"} text={"NEXT"} />
+            <AnimButton type="loading" text="NEXT"/>
           ) : (
             <AnimButton
               type="primary"

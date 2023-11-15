@@ -95,7 +95,8 @@ const profileReducer = (
         lastName: "",
         deleteFriendValue: "",
       };
-    case "CLOSE_PROFILE_DIALOG": return {...state, isProfileDialog: false}
+    case "CLOSE_PROFILE_DIALOG":
+      return { ...state, isProfileDialog: false };
     default:
       return state;
   }

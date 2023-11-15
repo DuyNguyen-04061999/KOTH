@@ -188,8 +188,8 @@ const Login = () => {
           {isLogin ? (
             <AnimButton
               onClick={sendLogin}
-              text={"Sign In"}
-              type={"loading"}
+              text="Sign In"
+              type="loading"
               isHasIcon
             />
           ) : (

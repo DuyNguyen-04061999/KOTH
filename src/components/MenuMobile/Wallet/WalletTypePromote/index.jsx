@@ -602,12 +602,12 @@ export default function WalletTypePromote(props) {
             </Box>
             <Box>
               {amount === "" || agree === false ? (
-                <AnimButton type={"disable"} text={"CONTINUE"} isHasIcon />
+                <AnimButton type="disable" text="CONTINUE" isHasIcon />
               ) : isFetchStripe || isFetchPayPal ? (
                 <AnimButton
-                  text={"CONTINUE"}
+                  text="CONTINUE"
                   onClick={handleContinue}
-                  type={"loading"}
+                  type="loading"
                   isHasIcon
                 />
               ) : (
