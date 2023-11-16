@@ -46,7 +46,9 @@ const ChatDrawer = () => {
   const [socket, setSocket] = useState(null);
   const { tabChat, chatPopup } = useSelector((state) => state.chatReducer);
   const dispatch = useDispatch();
-  const { tokenUser, resetInputValue } = useSelector((state) => state.userReducer);
+  const { tokenUser, resetInputValue } = useSelector(
+    (state) => state.userReducer
+  );
   const { startGameCheck } = useSelector((state) => state.appReducer);
   useEffect(() => {
     if (resetInputValue === "logoutSuccess" && chatInput && chatInput.current) {
@@ -76,23 +78,23 @@ const ChatDrawer = () => {
     }
   };
   const handleOnClickSendMessage = () => {
-      if (chatInput.current) {
-        if (
-          chatInput.current.childNodes[0] &&
-          chatInput.current.childNodes[0].value &&
-          chatInput.current.childNodes[0].value.trim() !== ""
-        ) {
-          socket?.emit("chat", {
-            type: "World",
-            toId: 0,
-            content: chatInput.current.childNodes[0].value,
-          });
-          chatInput.current.reset();
-        }
+    if (chatInput.current) {
+      if (
+        chatInput.current.childNodes[0] &&
+        chatInput.current.childNodes[0].value &&
+        chatInput.current.childNodes[0].value.trim() !== ""
+      ) {
+        socket?.emit("chat", {
+          type: "World",
+          toId: 0,
+          content: chatInput.current.childNodes[0].value,
+        });
+        chatInput.current.reset();
       }
+    }
   };
 
-  const { width }  = useWindowDimensions()
+  const { width } = useWindowDimensions();
 
   return ReactDOM.createPortal(
     <Drawer

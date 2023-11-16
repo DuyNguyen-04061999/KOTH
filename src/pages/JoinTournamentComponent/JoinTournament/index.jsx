@@ -43,7 +43,6 @@ import {
   toggleExtra,
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { isJson, sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -1682,7 +1681,9 @@ export default function JoinTournament() {
                                   )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
                                 </Typography>
                               </Box>
-                              <Box sx={{ marginTop: "7.6px" }}>
+                              <Box
+                                sx={{ marginTop: "7.6px", minHeight: "42px" }}
+                              >
                                 {" "}
                                 <Typography
                                   style={{
@@ -1692,7 +1693,7 @@ export default function JoinTournament() {
                                     textAlign: "start",
                                   }}
                                 >
-                                  Conditions
+                                  {/* Conditions */}
                                 </Typography>
                                 <Typography
                                   className="cursor-pointer"
@@ -1710,7 +1711,7 @@ export default function JoinTournament() {
                                     textAlign: "start",
                                   }}
                                 >
-                                  See more
+                                  {/* See more */}
                                 </Typography>
                               </Box>
                             </Box>
@@ -1946,59 +1947,67 @@ export default function JoinTournament() {
                 padding: "16px",
                 boxSizing: "border-box",
                 marginTop: `36px`,
-                marginBottom: `36px`,
               }}
             >
-              <Box
+              <Typography
                 sx={{
                   textAlign: "start",
-                  fontWeight: "lighter",
-                  marginBottom: `${parseFloat(width / 74)}px`,
+                  fontWeight: "800",
                   color: "white",
-                  fontSize: "18px",
+                  fontSize: "24px",
                 }}
               >
-                Informations
-              </Box>
+                Information
+              </Typography>
               {isGetDetailPromotion || isGetDetailAuthPromotion ? (
                 <ParagraphLoading />
               ) : (
-                detailTournament &&
-                detailTournament?.tournamentInformations &&
-                isJson(detailTournament?.tournamentInformations) &&
-                JSON.parse(detailTournament?.tournamentInformations) &&
-                JSON.parse(detailTournament?.tournamentInformations)?.length >
-                  0 &&
-                JSON.parse(detailTournament?.tournamentInformations)?.map(
-                  (item, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        sx={{
-                          fontSize: getFontSizeDependOnWidth(width),
-                          textAlign: "start",
-                          color: "#9384B7",
-                          marginTop: "10px",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            textAlign: "start",
-                            fontWeight: "500 !important",
-                            marginLeft: "0px !important",
-                            fontSize:
-                              576 < width && width < 1200
-                                ? `${width / 71}px`
-                                : "16px",
-                            whiteSpace: "pre-wrap",
-                          }}
-                        >
-                          {item ? item : ""}
-                        </Typography>
-                      </Box>
-                    );
-                  }
-                )
+                <Box
+                  sx={{
+                    marginTop: "24px",
+                    maxHeight: "60vh",
+                    padding: "0px 24px",
+                    overflow: "scroll",
+                    overscrollBehavior: "contain",
+                  }}
+                >
+                  {detailTournament &&
+                    detailTournament?.tournamentInformations &&
+                    isJson(detailTournament?.tournamentInformations) &&
+                    JSON.parse(detailTournament?.tournamentInformations) &&
+                    JSON.parse(detailTournament?.tournamentInformations)
+                      ?.length > 0 &&
+                    JSON.parse(detailTournament?.tournamentInformations)?.map(
+                      (item, index) => {
+                        return (
+                          <Box
+                            key={index}
+                            sx={{
+                              fontSize: "24px",
+                              textAlign: "start",
+                              color: "#9384B7",
+                              marginTop: "10px",
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                textAlign: "start",
+                                fontWeight: "500 !important",
+                                marginLeft: "0px !important",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 71}px`
+                                    : "16px",
+                                whiteSpace: "pre-wrap",
+                              }}
+                            >
+                              {item ? item : ""}
+                            </Typography>
+                          </Box>
+                        );
+                      }
+                    )}
+                </Box>
               )}
             </Box>
             <GamePreview />
@@ -2715,6 +2724,7 @@ export default function JoinTournament() {
                                       display: "flex",
                                       flexDirection: "column",
                                       alignItems: "flex-start",
+                                      minHeight: "33px",
                                     }}
                                   >
                                     {" "}
@@ -2726,7 +2736,7 @@ export default function JoinTournament() {
                                         textAlign: "start",
                                       }}
                                     >
-                                      Conditions
+                                      {/* Conditions */}
                                     </Typography>
                                     <Typography
                                       className="cursor-pointer"
@@ -2740,7 +2750,7 @@ export default function JoinTournament() {
                                         textAlign: "start",
                                       }}
                                     >
-                                      See more
+                                      {/* See more */}
                                     </Typography>
                                   </Box>
                                 </Box>
@@ -3156,7 +3166,7 @@ export default function JoinTournament() {
                               fontSize: "14px",
                             }}
                           >
-                            Informations
+                            Information
                           </Typography>
                         </Box>
                       )}
@@ -3170,49 +3180,68 @@ export default function JoinTournament() {
                           }}
                         />
                       ) : (
-                        <Box
-                          sx={{
-                            textAlign: "start",
-                            color: "#9384B7",
-                            fontWeight: "lighter !important",
-                            fontSize: "11px",
-                            height: readMore ? "fit-content" : "100px",
-                            overflow: "hidden",
-                            transition: "height 0.5s ease",
-                          }}
-                        >
-                          {detailTournament &&
-                            detailTournament?.tournamentInformations &&
-                            isJson(detailTournament?.tournamentInformations) &&
-                            JSON.parse(
-                              detailTournament?.tournamentInformations
-                            ) &&
-                            JSON.parse(detailTournament?.tournamentInformations)
-                              ?.length > 0 &&
-                            JSON.parse(
-                              detailTournament?.tournamentInformations
-                            )?.map((item, index) => {
-                              return (
-                                <Box
-                                  key={index}
-                                  sx={{
-                                    textAlign: "start",
-                                    color: "#9384B7",
-                                    marginTop: "10px",
-                                  }}
-                                >
-                                  <Typography
+                        <Box sx={{ position: "relative" }}>
+                          <Box
+                            sx={{
+                              textAlign: "start",
+                              color: "#9384B7",
+                              fontWeight: "lighter !important",
+                              fontSize: "11px",
+                              height: readMore ? "fit-content" : "140px",
+                              overflow: "hidden",
+                              transition: "height 0.5s ease",
+                              padding:"0 6px"
+                            }}
+                          >
+                            {detailTournament &&
+                              detailTournament?.tournamentInformations &&
+                              isJson(
+                                detailTournament?.tournamentInformations
+                              ) &&
+                              JSON.parse(
+                                detailTournament?.tournamentInformations
+                              ) &&
+                              JSON.parse(
+                                detailTournament?.tournamentInformations
+                              )?.length > 0 &&
+                              JSON.parse(
+                                detailTournament?.tournamentInformations
+                              )?.map((item, index) => {
+                                return (
+                                  <Box
+                                    key={index}
                                     sx={{
                                       textAlign: "start",
-                                      fontWeight: "500 !important",
-                                      fontSize: "13px",
+                                      color: "#9384B7",
+                                      marginTop: "10px",
                                     }}
                                   >
-                                    {item}
-                                  </Typography>
-                                </Box>
-                              );
-                            })}
+                                    <Typography
+                                      sx={{
+                                        textAlign: "start",
+                                        fontWeight: "500 !important",
+                                        fontSize: "13px",
+                                      }}
+                                    >
+                                      {item}
+                                    </Typography>
+                                  </Box>
+                                );
+                              })}
+                          </Box>
+                          {!readMore ? (
+                            <Box
+                              sx={{
+                                position: "absolute",
+                                bottom: "4px",
+                                width: "100%",
+                                height: "20px",
+                                backdropFilter: "blur(1px)",
+                              }}
+                            />
+                          ) : (
+                            <></>
+                          )}
                         </Box>
                       )}
                       {isGetDetailAuthPromotion || isGetDetailPromotion ? (
@@ -3251,7 +3280,7 @@ export default function JoinTournament() {
                                   marginTop: "10px",
                                 }}
                               >
-                                {readMore ? "Read less" : "Read more"}
+                                {readMore ? "Show less" : "Show more"}
                               </Typography>
                             )}
                         </Box>
