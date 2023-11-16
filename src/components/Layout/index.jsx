@@ -22,7 +22,10 @@ import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
-import { changeRouter, toggleStartGame } from "../../redux-saga-middleware/reducers/appReducer";
+import {
+  changeRouter,
+  toggleStartGame,
+} from "../../redux-saga-middleware/reducers/appReducer";
 import {
   addRefCodeRegister,
   clickTab,
@@ -38,7 +41,10 @@ import {
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
-import { finishGame, finishVideo } from "../../redux-saga-middleware/reducers/promotionReducer";
+import {
+  finishGame,
+  finishVideo,
+} from "../../redux-saga-middleware/reducers/promotionReducer";
 import { getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
@@ -126,13 +132,13 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if(router) {
+    if (router) {
       dispatch(toggleStartGame(false));
-      dispatch(finishGame())
-      dispatch(finishVideo())
+      dispatch(finishGame());
+      dispatch(finishVideo());
     }
-  }, [dispatch, router])
-  
+  }, [dispatch, router]);
+
   const location = useLocation();
 
   React.useEffect(() => {
@@ -243,26 +249,26 @@ export default function Layout(props) {
   }, [fromRouter, socket, router, navigate, dispatch, isChangeLocation]);
 
   useEffect(() => {
-    const tokenLocal = localStorage.getItem("token")
-    if(socket && (token || tokenLocal)) {
+    const tokenLocal = localStorage.getItem("token");
+    if (socket && (token || tokenLocal)) {
       socket?.emit("loginSocial", {
-        token: token || tokenLocal
+        token: token || tokenLocal,
       });
     }
   }, [token, socket]);
 
   useEffect(() => {
-    const tokenLocal = localStorage.getItem("token")
-    if(tokenLocal) {
-      dispatch(updateUserToken(tokenLocal))
+    const tokenLocal = localStorage.getItem("token");
+    if (tokenLocal) {
+      dispatch(updateUserToken(tokenLocal));
     }
   }, [dispatch]);
 
   useEffect(() => {
-    const tokenLocal = localStorage.getItem("token")
+    const tokenLocal = localStorage.getItem("token");
     if (socket) {
       socket?.on("chatSuccess", (data) => {
-        if(!startGameCheck) {
+        if (!startGameCheck) {
           if (token || tokenLocal) {
             socket?.emit("listFriend");
           }
