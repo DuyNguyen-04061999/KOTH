@@ -79,7 +79,6 @@ export default function Dialoglg() {
       dispatch(getUserInfoReady(token));
     }
   }, [token, dispatch]);
-  console.log("User: ", user);
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (

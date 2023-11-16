@@ -142,7 +142,6 @@ export default function ChatWorldList() {
       gameId: gameId,
     });
   };
-  console.log("worldMessage: ", worldMessage);
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
