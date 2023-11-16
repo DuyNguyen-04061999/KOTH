@@ -11,8 +11,9 @@ export default function UploadGamePreview() {
   const handleSubmit = () => {
     const dataRequest = {
       previews: files,
+      preview: "preview"
     };
-    console.log("length: ", files);
+    
     if (files?.length > 0) {
       axios
         .post(

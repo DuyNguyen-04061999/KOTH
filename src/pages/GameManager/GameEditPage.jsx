@@ -1,11 +1,12 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
-import React, { useState } from 'react';
 import axios from 'axios';
-import { envs } from '../../utils/envs';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { envs } from '../../utils/envs';
 
 export default function GameEditPage() {
     const [uploadItem, setUploadItem] = useState([]);
+    const [uploadItemPre, setUploadItemPre] = useState([]);
     const [screen, setScreen] = useState(false);
     const [fmod, setFmod] = useState(false);
     const location = useLocation();
@@ -29,6 +30,7 @@ export default function GameEditPage() {
             screen: screen ? 1 : 0,
             fmod: fmod ? 1 : 0,
             files: uploadItem,
+            previews: uploadItemPre
         };
 
         const fileExtension = ["text/javascript", "application/wasm", ""];
@@ -57,6 +59,11 @@ export default function GameEditPage() {
     const handleSelectedFile  = (e) => {
         const files = Array.from(e.target.files);
         setUploadItem(files)
+    }
+
+    const handleSelectedPreview = (e) => {
+        const files = Array.from(e.target.files);
+        setUploadItemPre(files)
     }
 
     const handleChangeScreen = (event) => {
@@ -102,6 +109,16 @@ export default function GameEditPage() {
                 onChange={handleSelectedFile}
             />
 
+            <FormLabel className='mt-2 mb-2 text-white'>
+                Preview Files
+            </FormLabel>
+            <input
+                type="file"
+                name='previews'
+                multiple
+                className='form-control'
+                onChange={handleSelectedPreview}
+            />
             <FormControl>
                 <FormLabel id="demo-controlled-radio-buttons-group" className='text-white mt-2'>Game Screen</FormLabel>
                 <RadioGroup
@@ -163,6 +180,9 @@ export default function GameEditPage() {
             </FormControl>
             <Box component={"div"} className='text-white mt-3 mb-3' onClick={() => navigate(`/game/${location?.state?.id}/upload-skins`)}>
                 Add Skin Games
+            </Box>
+            <Box component={"div"} className='text-white mt-3 mb-3' onClick={() => navigate(`/game/${location?.state?.id}/upload-game-preview`)}>
+                Add Previews Games
             </Box>
             <Button className='bg-warning text-white rounded mt-2' onClick={() => navigate(`/game/${location?.state?.id}/delete-skins`)}>
                 List Skin Games
