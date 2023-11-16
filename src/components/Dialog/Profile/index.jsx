@@ -33,9 +33,8 @@ export default function DialogProfile(props) {
   const { uPack } = useSelector((state) => state.userReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
-  const { id, email, phone, userNameProfile, avatarUrl } = useSelector(
-    (state) => state.profileReducer
-  );
+  const { id, email, phone, userNameProfile, avatarUrl, nickName } =
+    useSelector((state) => state.profileReducer);
   const dispatch = useDispatch();
   const { listSetting } = useSelector((state) => state.settingReducer);
 
@@ -91,7 +90,7 @@ export default function DialogProfile(props) {
               className="mt-2 fs-3"
               sx={{ fontWeight: "700", fontSize: "24px" }}
             >
-              {userNameProfile}
+              {nickName}
             </Typography>
             {userNameProfile === user?.userName && tokenUser && (
               <Box>

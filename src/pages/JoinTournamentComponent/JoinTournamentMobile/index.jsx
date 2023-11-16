@@ -1063,7 +1063,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         marginTop: "10px",
                       }}
                     >
-                      {readMore ? "Read less" : "Read more"}
+                      {readMore ? "Show less" : "Show more"}
                     </Typography>
                   )}
               </Box>
