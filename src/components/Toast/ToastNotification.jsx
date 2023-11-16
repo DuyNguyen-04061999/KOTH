@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { hideToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import "./index.scss";
 
 export default function ToastNotification() {
   const {
