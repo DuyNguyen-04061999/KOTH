@@ -210,7 +210,10 @@ export default function Signup(props) {
             name="username"
             type="text"
             onChange={(e) => {
-              setUsername(e.target.value);
+              const inputUsername = e.target.value;
+              if (inputUsername.length <= 10) {
+                setUsername(inputUsername);
+              }
             }}
             value={username}
             placeholder="Username"
@@ -252,8 +255,7 @@ export default function Signup(props) {
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
                   Username should be 3-10 characters long and include at least 1
                   uppercase or lowercase letter. You can use number or
-                  underscore but no spaces. Usernames are case sensitive (e.g.,
-                  Example_)
+                  underscore but no spaces. (e.g., Superman0_)
                 </Typography>
               </Box>
             }
