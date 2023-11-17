@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,7 @@ export default function OTPVerifyAccount() {
     resenOTPSuccess,
     isVerifyOTP,
   } = useSelector((state) => state.userReducer);
-  
+
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -59,26 +59,6 @@ export default function OTPVerifyAccount() {
           })
         );
         break;
-      case "forget_email":
-        dispatch(
-          sendOtpReady({
-            otp: otp,
-            type: "password",
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-          })
-        );
-        break;
-      case "forget_phone":
-        dispatch(
-          sendOtpReady({
-            otp: otp,
-            type: "password",
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-          })
-        );
-        break;
       default:
         return false;
     }
@@ -108,27 +88,13 @@ export default function OTPVerifyAccount() {
           })
         );
         break;
-      case "forget_email":
-        dispatch(
-          resendOtpReady({
-            username: createAccInfo?.username,
-            email: createAccInfo?.email,
-            type: "password",
-          })
-        );
-        break;
-      case "forget_phone":
-        dispatch(
-          resendOtpReady({
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-            type: "password",
-          })
-        );
-        break;
       default:
         return false;
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -165,39 +131,39 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          {typeVerifyOTP === "register" || typeVerifyOTP === "reVerify"
-            ? ` Please enter the 6-digit verification code that was sent to ${user?.userEmail} to verify your account`
-            : typeVerifyOTP === "forget_phone"
-            ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.phone} to verify your account`
-            : typeVerifyOTP === "forget_email"
-            ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.email} to verify your account`
-            : ``}
+          {` Please enter the 6-digit verification code that was sent to ${createAccInfo?.email ? createAccInfo?.email : createAccInfo?.phone} to verify your account`}
         </Typography>
       </Box>
-      <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
+      <Box
+        component={"form"}
+        onSubmit={handleSubmit}
+        sx={{ margin: "36px 0", marginRight: "-16px" }}
+      >
         <OTPInput
           value={otp}
           onChange={setOtp}
           numInputs={6}
           renderInput={(props) => (
-            <input
-              {...props}
-              style={{
-                width: "32px",
-                height: "38px",
-                marginRight: "16px",
-                backgroundColor: "#271C39",
-                outline: "none",
-                textAlign: "center",
-                fontSize: width < 576 ? "12px" : "20px",
-                color: "white",
-                border: "2px solid white",
-                borderRadius: "4px",
-              }}
-              type="number"
-              inputMode="numeric"
-              maxLength={1}
-            />
+            <FormControl>
+              <input
+                {...props}
+                style={{
+                  width: "32px",
+                  height: "38px",
+                  marginRight: "16px",
+                  backgroundColor: "#271C39",
+                  outline: "none",
+                  textAlign: "center",
+                  fontSize: width < 576 ? "12px" : "20px",
+                  color: "white",
+                  border: "2px solid white",
+                  borderRadius: "4px",
+                }}
+                type="number"
+                inputMode="numeric"
+                maxLength={1}
+              />
+            </FormControl>
           )}
         />
       </Box>
@@ -253,15 +219,13 @@ export default function OTPVerifyAccount() {
           {otp?.length < 6 ? (
             <AnimButton type="disable" text="NEXT" />
           ) : isVerifyOTP ? (
-            <AnimButton
-              type="loading"
-              text="NEXT"
-            />
+            <AnimButton type="loading" text="NEXT" />
           ) : (
             <AnimButton
               type="primary"
               text="NEXT"
-              onClick={() => handleVerifyOTP()}
+              onClick={handleVerifyOTP}
+              isSubmitBtn
             />
           )}
         </Box>
