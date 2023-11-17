@@ -160,6 +160,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
+                paddingBottom:"50px"
               }}
             >
               <Typography
