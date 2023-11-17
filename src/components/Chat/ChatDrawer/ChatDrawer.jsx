@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { changeRouter } from "../../../redux-saga-middleware/reducers/appReducer";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  openLoginDialog,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import { clickTabChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { images280423_l } from "../../../utils/images280423_l";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -68,28 +71,37 @@ const ChatDrawer = () => {
         chatInput.current.childNodes[0].value &&
         chatInput.current.childNodes[0].value.trim() !== ""
       ) {
-        socket?.emit("chat", {
-          type: "World",
-          toId: 0,
-          content: chatInput.current.childNodes[0].value,
-        });
-        chatInput.current.reset();
+        if (tokenUser) {
+          socket?.emit("chat", {
+            type: "World",
+            toId: 0,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        } else {
+          dispatch(openLoginDialog());
+        }
       }
     }
   };
   const handleOnClickSendMessage = () => {
+    console.log(chatInput.current);
     if (chatInput.current) {
       if (
         chatInput.current.childNodes[0] &&
         chatInput.current.childNodes[0].value &&
         chatInput.current.childNodes[0].value.trim() !== ""
       ) {
-        socket?.emit("chat", {
-          type: "World",
-          toId: 0,
-          content: chatInput.current.childNodes[0].value,
-        });
-        chatInput.current.reset();
+        if (tokenUser) {
+          socket?.emit("chat", {
+            type: "World",
+            toId: 0,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        } else {
+          dispatch(openLoginDialog());
+        }
       }
     }
   };

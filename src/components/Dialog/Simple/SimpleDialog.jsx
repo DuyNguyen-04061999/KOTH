@@ -31,7 +31,7 @@ export default function SimpleDialog(props) {
   const handleClose = () => {
     if (currentTab === "otpVerifyAccount") {
       dispatch(closeLoginDialog());
-      dispatch(clickTab(""));
+      dispatch(clickTab("login"));
       dispatch(logoutReady());
     } else {
       dispatch(closeLoginDialog());
@@ -104,7 +104,7 @@ export default function SimpleDialog(props) {
           <Dialog
             onClose={handleClose}
             open={isLoginDialog}
-            maxWidth={"lg"}
+            maxWidth={"md"}
             sx={{
               ".MuiPaper-root": {
                 backgroundColor: "#291e3b",
@@ -117,7 +117,7 @@ export default function SimpleDialog(props) {
             }}
           >
             <Grid container flexWrap={"nowrap"}>
-              <Grid item md={6}>
+              <Grid item md={6} sx={{maxWidth:"50%"}}>
                 <Box
                   sx={{
                     backgroundColor: "#291e3b",

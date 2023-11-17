@@ -26,6 +26,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    sendLogin(e);
   };
 
   const handleSetPassword = () => {
@@ -62,7 +63,7 @@ const Login = () => {
         component={"form"}
         className="p-2 ps-2 pe-3"
         noValidate
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
       >
         <FormControl
           variant="standard"
@@ -189,6 +190,7 @@ const Login = () => {
               text="Sign In"
               type="loading"
               isHasIcon
+              isSubmitBtn
             />
           ) : (
             <AnimButton
@@ -196,6 +198,7 @@ const Login = () => {
               text="Sign In"
               type="primary"
               isHasIcon
+              isSubmitBtn
             />
           )}
         </Box>

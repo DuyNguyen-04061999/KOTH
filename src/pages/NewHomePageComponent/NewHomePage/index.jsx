@@ -35,6 +35,7 @@ export default function NewHomePage() {
     noDataOncoming,
     noDataEnd
   } = useSelector((state) => state.tournamentReducer);
+  console.log(hotWeekTour);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -388,7 +389,7 @@ console.log(threeBrandTour, isFetchThreeTour);
                 hotWeekTour &&
                 hotWeekTour?.bestUser &&
                 hotWeekTour?.bestUser?.tUser &&
-                hotWeekTour?.bestUser?.tUser?.userName
+                hotWeekTour?.bestUser?.tUser?.userNickName
               }
               endTime={hotWeekTour?.tournamentEndAt}
               userScore={hotWeekTour?.bestUser?.score}
@@ -430,7 +431,7 @@ console.log(threeBrandTour, isFetchThreeTour);
               hotWeekTour &&
               hotWeekTour?.bestUser &&
               hotWeekTour?.bestUser?.tUser &&
-              hotWeekTour?.bestUser?.tUser?.userName
+              hotWeekTour?.bestUser?.tUser?.userNickName
             }
             endTime={hotWeekTour?.tournamentEndAt}
             userScore={hotWeekTour?.bestUser?.score}

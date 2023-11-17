@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
@@ -81,17 +81,19 @@ export default function ForgetPassword() {
         background: "#271C39",
         height: "100%",
         justifyContent: "center",
-        padding: device === "Mobile" ? "0px 20px 0px 20px" : "0px 30px",
+        padding: device === "Mobile" ? "0px 20px 0px 20px" : "0px 24px",
         boxSizing: "border-box",
         width: "100%",
         position: device === "Desktop" ? "relative" : "none",
       }}
+      component={"form"}
+      onSubmit={handleSubmit}
     >
       <Box sx={{ boxSizing: "border-box" }}>
         <Typography
           sx={{
             color: "#ffff",
-            fontSize: device === "Mobile" ? `${width / 14}px` : "28px",
+            fontSize: width < 992 ? `20px` : "28px",
             textAlign: "center",
             fontWeight: "700",
           }}
@@ -102,7 +104,7 @@ export default function ForgetPassword() {
           sx={{
             color: "#979797",
             textAlign: "center",
-            fontSize: device === "Mobile" ? `${width / 27}px` : "14px",
+            fontSize: width < 992 ? `16px` : "14px",
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
@@ -141,12 +143,8 @@ export default function ForgetPassword() {
               src={images.userIcon}
             />
           </Box>
-          <input
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            placeholder="Username"
-            style={{
+          <FormControl
+            sx={{
               width: "100%",
               backgroundColor: "#181223",
               outline: "none",
@@ -157,8 +155,21 @@ export default function ForgetPassword() {
               borderRadius: "0px 5px 5px 0px",
               fontFamily: "Cyntho Next",
             }}
-            type="text"
-          />
+          >
+            <input
+              style={{
+                backgroundColor: "#181223",
+                outline: "none",
+                border: "none",
+                color: "white",
+              }}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+              placeholder="Username"
+              type="text"
+            />
+          </FormControl>
         </Box>
         {optionEmail ? (
           <Box
@@ -168,7 +179,7 @@ export default function ForgetPassword() {
               marginTop: "20px",
               flexDirection: "column",
               backgroundColor: "#181223",
-              padding: "4px 12px",
+              padding: "0px 12px",
               borderRadius: "5px 0px 0px 5px",
             }}
           >
@@ -184,10 +195,8 @@ export default function ForgetPassword() {
                 alt="..."
                 src={sign.up03}
               />
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                style={{
+              <FormControl
+                sx={{
                   width: "100%",
                   backgroundColor: "#181223",
                   outline: "none",
@@ -199,8 +208,20 @@ export default function ForgetPassword() {
                   borderRadius: "0px 5px 5px 0px",
                   marginLeft: "12px",
                 }}
-                type="text"
-              />
+              >
+                <input
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#181223",
+                    outline: "none",
+                    border: "none",
+                    color: "white",
+                  }}
+                  type="email"
+                />
+              </FormControl>
             </Box>
             {emailError && (
               <Typography
@@ -283,8 +304,9 @@ export default function ForgetPassword() {
           sx={{
             marginTop: "16px",
             display: "flex",
-            alignItems: "center",
+            alignItems: width < 992 && width > 576 ? "flex-end" :  "center",
             justifyContent: "flex-end",
+            flexDirection: width < 992 && width > 576 ? "column" : "row",
           }}
         >
           <Typography
@@ -320,19 +342,19 @@ export default function ForgetPassword() {
           </AnimButton>
         </Box>
         <Box sx={{ width: "48%" }}>
-          {!((optionEmail && username && email && !emailError) ||
-          (!optionEmail && username && phoneNumber && !phoneNumberError)) ? (
-            <AnimButton
-              type="disable"
-              text="NEXT"
-            />
+          {!(
+            (optionEmail && username && email && !emailError) ||
+            (!optionEmail && username && phoneNumber && !phoneNumberError)
+          ) ? (
+            <AnimButton type="disable" text="NEXT" />
           ) : isForgetPassword ? (
-            <AnimButton type="loading" text="NEXT" />
+            <AnimButton type="loading" text="NEXT" isSubmitBtn />
           ) : (
             <AnimButton
               type="primary"
               text="NEXT"
               onClick={() => handleSubmit()}
+              isSubmitBtn
             />
           )}
         </Box>

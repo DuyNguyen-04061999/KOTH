@@ -865,7 +865,7 @@ export default function Signup(props) {
             (+1){" "}
           </Typography>
           <Input
-            type="text"
+            type="number"
             name="phone"
             onChange={(e) => {
               setPhone(e.target.value);
@@ -1009,6 +1009,7 @@ export default function Signup(props) {
                 text="Sign Up"
                 type="primary"
                 isHasIcon
+                isSubmitBtn
               />
             )}
           </div>

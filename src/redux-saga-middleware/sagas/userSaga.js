@@ -8,6 +8,7 @@ import {
   closeVerifyDialog,
   openLoginDialog,
   openVerifyDialog,
+  saveCreateAccInfo,
   saveForgetPassInfo,
 } from "../reducers/authReducer";
 import {
@@ -112,6 +113,7 @@ function* registerSaga(dataRequest) {
         );
         yield put(clickTab("otpVerifyAccount"));
         yield put(registerSuccess({ ...payload, ...data?.data }));
+        yield put(saveCreateAccInfo(payload));
       } else {
         yield put(registerFail());
         yield put(

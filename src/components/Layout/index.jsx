@@ -215,6 +215,14 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
+    if(width < 1200 && width > 576) {
+      dispatch(clickTabNav(false));
+    } else {
+      dispatch(clickTabNav(true));
+    }
+  },[width])
+
+  useEffect(() => {
     dispatch(getSettingReady());
   }, [dispatch]);
 

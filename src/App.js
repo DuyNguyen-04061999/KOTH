@@ -46,8 +46,7 @@ import {
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
-  pushfriendList,
-  updateFriendList,
+  pushfriendList
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
@@ -58,7 +57,6 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
 import { toggleAlertStripeProcess } from "./redux-saga-middleware/reducers/stripeReducer";
 import {
   updateCountTicket,
@@ -261,26 +259,26 @@ function App() {
         store.dispatch(updateCountTicket(quantity || 0));
       });
 
-      socket?.on("addFriendSuccess", (data) => {
-        store.dispatch(
-          showToastNotification({
-            type: "success",
-            message: "Add friend successfully!",
-          })
-        );
-        store.dispatch(updateFriendList(data));
-      });
+      // socket?.on("addFriendSuccess", (data) => {
+      //   store.dispatch(
+      //     showToastNotification({
+      //       type: "success",
+      //       message: "Add friend successfully!",
+      //     })
+      //   );
+      //   store.dispatch(updateFriendList(data));
+      // });
 
-      socket?.on("deleteFriendSuccess", (data) => {
-        store.dispatch(
-          showToastNotification({
-            type: "success",
-            message: "Delete friend successfully!",
-          })
-        );
-        socket?.emit("listFriend");
-        store.dispatch(deleteFriendSuccesFully("success"));
-      });
+      // socket?.on("deleteFriendSuccess", (data) => {
+      //   store.dispatch(
+      //     showToastNotification({
+      //       type: "success",
+      //       message: "Delete friend successfully!",
+      //     })
+      //   );
+      //   socket?.emit("listFriend");
+      //   store.dispatch(deleteFriendSuccesFully("success"));
+      // });
 
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));

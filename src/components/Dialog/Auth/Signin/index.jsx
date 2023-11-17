@@ -27,6 +27,7 @@ import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
 import "./index.scss";
+import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -70,6 +71,7 @@ export default function Dialoglg() {
 
   const logout = () => {
     dispatch(logoutReady());
+    dispatch(closeChatPopup(false))
   };
   const { width, height } = useWindowDimensions();
 
