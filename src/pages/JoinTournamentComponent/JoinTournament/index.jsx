@@ -3190,7 +3190,7 @@ export default function JoinTournament() {
                               height: readMore ? "fit-content" : "140px",
                               overflow: "hidden",
                               transition: "height 0.5s ease",
-                              padding:"0 6px"
+                              padding: "0 6px",
                             }}
                           >
                             {detailTournament &&
