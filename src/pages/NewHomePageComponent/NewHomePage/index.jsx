@@ -35,7 +35,7 @@ export default function NewHomePage() {
     noDataOncoming,
     noDataEnd
   } = useSelector((state) => state.tournamentReducer);
-  console.log(hotWeekTour);
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
