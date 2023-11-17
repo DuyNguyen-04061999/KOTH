@@ -39,7 +39,7 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { upcomingTournament, isFetchUpcoming } = useSelector(
+  const { upcomingTournament, isFetchUpcoming , noDataUpcoming} = useSelector(
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
@@ -153,6 +153,7 @@ export default function HotTournament() {
                   itemOffSet={itemOffSet}
                   typePromo={"upcoming"}
                   itemQuantity={itemQuantity}
+                  noData={noDataUpcoming}
                 />
               </Box>
               <Box sx={{ margin: "36px 0px" }}>
@@ -222,6 +223,7 @@ export default function HotTournament() {
                   itemOffSet={itemOffSet}
                   typePromo={"upcoming"}
                   itemQuantity={itemQuantity}
+                  noData={noDataUpcoming}
                 />
               </Box>
               <Box
