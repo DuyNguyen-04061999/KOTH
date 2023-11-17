@@ -132,6 +132,17 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
+    if(router) {
+      const tokenLocal = localStorage.getItem("token");
+      if (!tokenLocal && !token) {
+        socket?.emit("listMessageGlobal");
+      } else {
+        socket?.emit("listMessage");
+      }
+    }
+  }, [socket, token, router]);
+
+  useEffect(() => {
     if (router) {
       dispatch(toggleStartGame(false));
       dispatch(finishGame());
