@@ -35,7 +35,7 @@ export default function NewHomePage() {
     noDataOncoming,
     noDataEnd
   } = useSelector((state) => state.tournamentReducer);
-  console.log(hotWeekTour);
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -96,7 +96,7 @@ export default function NewHomePage() {
   //     payload: "ended",
   //   });
   // };
-console.log(threeBrandTour, isFetchThreeTour);
+
   return (
     <Container
       maxWidth="lg"
