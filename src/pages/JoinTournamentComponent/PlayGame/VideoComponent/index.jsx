@@ -43,6 +43,9 @@ export default function VideoComponent(props) {
         setSeconds(
           Number(timeSkip) - Math.round(videoRef.current?.currentTime)
         );
+        if (!videoRef?.current?.seeking) {
+          supposedCurrentTime = videoRef?.current?.currentTime;
+        }
       });
 
       videoRef?.current?.addEventListener("seeking", function () {
@@ -78,7 +81,7 @@ export default function VideoComponent(props) {
           onRateChange={() => {
             videoRef.current.playbackRate = 1;
           }}
-          autoPlay={true}
+          autoPlay="autoplay"
           width={"100%"}
           ref={videoRef}
           playsInline={true}
