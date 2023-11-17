@@ -38,7 +38,8 @@ export default function ChatFriendList() {
   const { friendList, chatWorld } = useSelector((state) => state.chatReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-
+  console.log(friendList);
+  console.log(chatWorld);
   const handleChangeSearchChat = (e) => {
     setSearchFeild(e.target.value);
   };
@@ -110,7 +111,7 @@ export default function ChatFriendList() {
                         letterSpacing:"1px"
                       }}
                     >
-                      {e.userName}
+                      {e.userNickName}
                     </h6>
                   </Box>
                 </Box>
@@ -203,7 +204,7 @@ export default function ChatFriendList() {
                     letterSpacing:"1px"
                   }}
                 >
-                  {e?.userName}
+                  {e?.userNickName}
                 </h5>
                 <span
                   style={{
