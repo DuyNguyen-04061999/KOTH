@@ -440,7 +440,7 @@ export default function ListPackage(props) {
                   }
                   onClick={handleBuyPackage}
                   style={{
-                    padding: "4px 30px",
+                    padding: "4px 3px",
                     color: "white",
                     background:
                       uPack &&
