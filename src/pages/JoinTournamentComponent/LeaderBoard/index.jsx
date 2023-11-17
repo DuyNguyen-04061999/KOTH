@@ -9,7 +9,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const [top3, setTop3] = useState([]);
   const { width, height } = useWindowDimensions();
   const { user } = useSelector((state) => state.userReducer);
-  const userName = user?.userName || ""
+  const userName = user?.userName || "";
   const [start, setStart] = useState(3);
   const [end, setEnd] = useState(6);
 
@@ -228,7 +228,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color: "#9D39F1",
-
                 }}
               >
                 {top3 && top3[0] && top3[0]?.score ? top3[0]?.score : "0"}
@@ -323,7 +322,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                   marginTop: "10px",
                   color: "#9D39F1",
-
                 }}
               >
                 {top3 && top3[2] && top3[2]?.score ? top3[2]?.score : "0"}
@@ -377,15 +375,15 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               marginRight: "5px",
                             }}
                           ></Box>
-                          <Box sx={{width:"70%"}}>
+                          <Box sx={{ width: "70%" }}>
                             <Typography
                               sx={{
                                 textAlign: "start",
                                 color: "#BFBEED",
                                 fontWeight: "lighter !important",
-                                  maxWidth: "100%",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis"
+                                maxWidth: "100%",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
                               }}
                             >
                               {item?.userNickName}
@@ -521,97 +519,101 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     <Box key={index}>
                       {detailTournament?.tournamentStatus !== 2 && (
                         <Box
-                        key={index}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginBottom: "16px",
-                          paddingRight: "16px",
-                          paddingBottom: "10px",
-                          paddingTop: "10px",
-                          backgroundColor: "#68399E",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        <Box
+                          key={index}
                           sx={{
-                            color: "#ffff",
-                            width: "10%",
                             display: "flex",
-                            justifyContent: "center",
-                            fontSize:
-                              576 < width && width < 1200
-                                ? `${width / 64}px`
-                                : "14px",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: "16px",
+                            paddingRight: "16px",
+                            paddingBottom: "10px",
+                            paddingTop: "10px",
+                            backgroundColor: "#68399E",
+                            borderRadius: "5px",
                           }}
                         >
-                          {detailTournament?.tournamentResult
-                            ?.map((item, index) => {
-                              return item?.userNickName;
-                            })
-                            .indexOf(userName) + 1}
-                        </Box>
-                        <Box sx={{ display: "flex", width: "70%" }}>
                           <Box
-                            component={"img"}
-                            src={
-                              item?.tUser?.userAccount?.accountAvatar
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  item?.tUser?.userAccount?.accountAvatar
-                                : images.undefinedAvatar
-                            }
                             sx={{
-                              borderRadius: "50%",
-                              width:
-                                576 < width && width < 1200 ? width / 24 : "40px",
-                              height:
-                                576 < width && width < 1200 ? width / 24 : "40px",
-                              marginRight: "5px",
+                              color: "#ffff",
+                              width: "10%",
+                              display: "flex",
+                              justifyContent: "center",
+                              fontSize:
+                                576 < width && width < 1200
+                                  ? `${width / 64}px`
+                                  : "14px",
                             }}
-                          ></Box>
-                          <Box>
-                            <Typography
+                          >
+                            {detailTournament?.tournamentResult
+                              ?.map((item, index) => {
+                                return item?.userNickName;
+                              })
+                              .indexOf(userName) + 1}
+                          </Box>
+                          <Box sx={{ display: "flex", width: "70%" }}>
+                            <Box
+                              component={"img"}
+                              src={
+                                item?.tUser?.userAccount?.accountAvatar
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    item?.tUser?.userAccount?.accountAvatar
+                                  : images.undefinedAvatar
+                              }
                               sx={{
-                                textAlign: "start",
-                                color: "#ffff",
-                                fontWeight: "lighter !important",
-                                fontSize:
+                                borderRadius: "50%",
+                                width:
                                   576 < width && width < 1200
-                                    ? `${width / 64}px`
-                                    : "16px",
-                              }}
-                            >
-                              You
-                            </Typography>
-                            <Typography
-                              sx={{
-                                textAlign: "start",
-                                color: "#ffff",
-                                fontSize:
+                                    ? width / 24
+                                    : "40px",
+                                height:
                                   576 < width && width < 1200
-                                    ? `${width / 66}px`
-                                    : "14px",
-                                fontWeight: "lighter !important",
-                                marginTop: "-4px !important",
+                                    ? width / 24
+                                    : "40px",
+                                marginRight: "5px",
                               }}
-                            >
-                              {moment(item?.updatedAt).format("MM/DD/YYYY")}
-                            </Typography>
+                            ></Box>
+                            <Box>
+                              <Typography
+                                sx={{
+                                  textAlign: "start",
+                                  color: "#ffff",
+                                  fontWeight: "lighter !important",
+                                  fontSize:
+                                    576 < width && width < 1200
+                                      ? `${width / 64}px`
+                                      : "16px",
+                                }}
+                              >
+                                You
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  textAlign: "start",
+                                  color: "#ffff",
+                                  fontSize:
+                                    576 < width && width < 1200
+                                      ? `${width / 66}px`
+                                      : "14px",
+                                  fontWeight: "lighter !important",
+                                  marginTop: "-4px !important",
+                                }}
+                              >
+                                {moment(item?.updatedAt).format("MM/DD/YYYY")}
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box
+                            sx={{
+                              color: "#fff",
+                              width: "20%",
+                              display: "flex",
+                              justifyContent: "flex-end",
+                            }}
+                          >
+                            {item?.score}
                           </Box>
                         </Box>
-                        <Box
-                          sx={{
-                            color: "#fff",
-                            width: "20%",
-                            display: "flex",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          {item?.score}
-                        </Box>
-                      </Box>
                       )}
                     </Box>
                   )
@@ -624,8 +626,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
             sx={{
               zIndex: "1311",
               ".MuiDialog-paper": {
-                backgroundColor:"#211d28 !important",
-              }
+                backgroundColor: "#211d28 !important",
+              },
             }}
             open={open}
           >
@@ -764,8 +766,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontSize: "18px",
                           fontStyle: "normal",
                           marginTop: "10px",
-                          color:
-                            "#9D39F1",
+                          color: "#9D39F1",
                         }}
                       >
                         {top3 && top3[1] && top3[1]?.score}
@@ -859,8 +860,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontSize: "25px",
                           fontStyle: "normal",
                           marginTop: "10px",
-                          color:
-                            "#9D39F1",
+                          color: "#9D39F1",
                         }}
                       >
                         {top3 && top3[0] && top3[0]?.score}
@@ -952,8 +952,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontSize: "18px",
                           fontStyle: "normal",
                           marginTop: "10px",
-                          color:
-                            "#9D39F1",
+                          color: "#9D39F1",
                         }}
                       >
                         {top3 && top3[2] && top3[2]?.score}
@@ -1084,7 +1083,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               <Box sx={{ color: "#ffff", width: "10%" }}>
                                 {detailTournament?.tournamentResult
                                   ?.map((item, index) => {
-                                    return <Box key={index}>{item?.userNickName}</Box>;
+                                    return item?.userNickName;
                                   })
                                   .indexOf(userName) + 1}
                               </Box>
@@ -1370,8 +1369,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "#9D39F1",
+                  color: "#9D39F1",
                 }}
               >
                 {top3 && top3[1] && top3[1]?.score ? top3[1]?.score : "0"}
@@ -1463,8 +1461,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: "25px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "#9D39F1",
+                  color: "#9D39F1",
                 }}
               >
                 {top3 && top3[0] && top3[0]?.score ? top3[0]?.score : "0"}
@@ -1554,8 +1551,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontSize: "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
-                  color:
-                    "#9D39F1",
+                  color: "#9D39F1",
                 }}
               >
                 {top3 && top3[2] && top3[2]?.score ? top3[2]?.score : "0"}
@@ -1670,7 +1666,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       <Box sx={{ color: "#ffff", width: "10%" }}>
                         {detailTournament?.tournamentResult
                           ?.map((item, index) => {
-                            return <Box key={index}>{item?.userNickName}</Box>;
+                            return item?.userNickName;
                           })
                           .indexOf(userName) + 1}
                       </Box>
@@ -1865,8 +1861,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontSize: "18px",
                           fontStyle: "normal",
                           marginTop: "10px",
-                          color:
-                            "#9D39F1",
+                          color: "#9D39F1",
                         }}
                       >
                         {top3 && top3[1] && top3[1]?.score}
@@ -1960,8 +1955,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontSize: "25px",
                           fontStyle: "normal",
                           marginTop: "10px",
-                          color:
-                            "#9D39F1",
+                          color: "#9D39F1",
                         }}
                       >
                         {top3 && top3[0] && top3[0]?.score}
@@ -2053,8 +2047,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontSize: "18px",
                           fontStyle: "normal",
                           marginTop: "10px",
-                          color:
-                            "#9D39F1",
+                          color: "#9D39F1",
                         }}
                       >
                         {top3 && top3[2] && top3[2]?.score}
