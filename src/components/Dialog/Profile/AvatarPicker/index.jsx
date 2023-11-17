@@ -4,9 +4,7 @@ import { makeStyles } from "@mui/styles";
 import t from "prop-types";
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  showToastNotification
-} from "../../../../redux-saga-middleware/reducers/alertReducer";
+import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import {
   closeLoading,
   openLoading,
@@ -152,7 +150,7 @@ export const AvatarPicker = (props) => {
       >
         The image size must be less than 5MB.
         <br />
-        Allowed file extension: PG, JPEG, GIF, PNG, JPG
+        Allowed file extension: JPEG, GIF, PNG, JPG
       </Typography>
     </List>
   );
