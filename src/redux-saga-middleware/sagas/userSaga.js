@@ -17,6 +17,8 @@ import {
 import {
   forgetPasswordFail,
   forgetPasswordSuccess,
+  getMyInforFail,
+  getMyInforSuccess,
   getUserByUsernameFail,
   getUserByUsernameSuccess,
   getUserInfoFail,
@@ -501,6 +503,41 @@ function* getUserByUsernameSaga(dataRequest) {
   }
 }
 
+let getMyInfo = 0;
+function* getMyInforSaga(dataRequest) {
+  try {
+    getMyInfo += 1;
+    if (getMyInfo === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.getMyInfo, payload);
+      const { status } = res;
+      const { user } = res?.data?.data || {};
+      if (status === 200 || status === 201) {
+        yield put(getMyInforSuccess());
+        yield put(
+          saveDataProfile({
+            id: user?.userId || "ID",
+            email: user?.userEmail,
+            refCode: user?.userRefCode,
+            phone: user?.userPhone,
+            userNameProfile: user?.userName,
+            avatarUrl: user?.userAccount?.accountAvatar,
+            firstName: user?.userFirstName,
+            lastName: user?.userLastName,
+            nickName: user?.userNickName,
+          })
+        );
+      } else {
+        yield put(getMyInforFail());
+      }
+    }
+    getMyInfo = 0;
+  } catch (error) {
+    getMyInfo = 0;
+    yield put(getMyInforFail());
+  }
+}
+
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
@@ -513,6 +550,7 @@ function* authSaga() {
   yield takeEvery("RESET_PASSWORD_READY", resetPasswordSaga);
   yield takeEvery("RE_VERIFY_ACCOUNT", reVerifyAccountSaga);
   yield takeEvery("GET_USER_BY_USERNAME", getUserByUsernameSaga);
+  yield takeEvery("GET_MY_INFOR", getMyInforSaga);
 }
 
 export default authSaga;

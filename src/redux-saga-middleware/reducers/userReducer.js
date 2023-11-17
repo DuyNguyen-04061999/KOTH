@@ -280,6 +280,27 @@ export const updateUserGoldAfterPaypal = (data) => {
   } 
 }
 
+export const getMyInfor = (data) => {
+  return {
+    type: "GET_MY_INFOR",
+    payload: data
+  }
+}
+
+export const getMyInforSuccess = (data) => {
+  return {
+    type: "GET_MY_INFOR_SUCCESS",
+    payload: data
+  }
+}
+
+export const getMyInforFail = (data) => {
+  return {
+    type: "GET_MY_INFOR_FAIL",
+    payload: data
+  }
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -311,7 +332,8 @@ const userReducer = (
     isGetUserByUsername: false,
     typeVerifyOTP: "",
     resenOTPSuccess: false,
-    isVerifyOTP: false
+    isVerifyOTP: false,
+    isGetMyInfo: false
   },
   action
 ) => {
@@ -455,6 +477,9 @@ const userReducer = (
     case "UPDATE_COUNT_TICKET": return { ...state, countTicket: state.countTicket + payload };
     case "UPDATE_VERIFY_OTP_TYPE": return {...state, typeVerifyOTP: payload || ""}
     case "UPDATE_USER_GOLD_AFTER_PAYPAL": return {...state, user: {...state?.user, userGold: Number(state?.user?.userGold) + payload || 0}}
+    case "GET_MY_INFOR": return {...state, isGetMyInfo: true}
+    case "GET_MY_INFOR_SUCCESS": return {...state, isGetMyInfo: false}
+    case "GET_MY_INFOR_FAIL": return {...state, isGetMyInfo: false}
     default:
       return state;
   }
