@@ -35,6 +35,7 @@ export default function NewHomePage() {
     noDataOncoming,
     noDataEnd
   } = useSelector((state) => state.tournamentReducer);
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -388,7 +389,7 @@ export default function NewHomePage() {
                 hotWeekTour &&
                 hotWeekTour?.bestUser &&
                 hotWeekTour?.bestUser?.tUser &&
-                hotWeekTour?.bestUser?.tUser?.userName
+                hotWeekTour?.bestUser?.tUser?.userNickName
               }
               endTime={hotWeekTour?.tournamentEndAt}
               userScore={hotWeekTour?.bestUser?.score}
@@ -430,7 +431,7 @@ export default function NewHomePage() {
               hotWeekTour &&
               hotWeekTour?.bestUser &&
               hotWeekTour?.bestUser?.tUser &&
-              hotWeekTour?.bestUser?.tUser?.userName
+              hotWeekTour?.bestUser?.tUser?.userNickName
             }
             endTime={hotWeekTour?.tournamentEndAt}
             userScore={hotWeekTour?.bestUser?.score}

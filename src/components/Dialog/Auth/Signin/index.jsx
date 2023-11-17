@@ -13,9 +13,9 @@ import {
 import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
 import {
-  getUserByUsername,
+  getMyInfor,
   getUserInfoReady,
-  logoutReady,
+  logoutReady
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
@@ -27,6 +27,7 @@ import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
 import "./index.scss";
+import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -70,6 +71,7 @@ export default function Dialoglg() {
 
   const logout = () => {
     dispatch(logoutReady());
+    dispatch(closeChatPopup(false))
   };
   const { width, height } = useWindowDimensions();
 
@@ -597,9 +599,7 @@ export default function Dialoglg() {
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
                           dispatch(
-                            getUserByUsername({
-                              username: user?.userName,
-                            })
+                            getMyInfor()
                           );
                         }}
                       >

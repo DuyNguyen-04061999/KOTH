@@ -85,7 +85,6 @@ const ChatDrawer = () => {
     }
   };
   const handleOnClickSendMessage = () => {
-    console.log(chatInput.current);
     if (chatInput.current) {
       if (
         chatInput.current.childNodes[0] &&

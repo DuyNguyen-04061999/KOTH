@@ -158,6 +158,22 @@ class UserService {
     );
     return res;
   }
+
+  async getMyInfo(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/authenticate/get-my-info",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+          authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+        }
+      },
+    );
+    return res;
+  }
 }
 
 export default UserService;
