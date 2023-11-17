@@ -1,6 +1,6 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Box, Typography } from "@mui/material";
+import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
@@ -14,7 +14,9 @@ export default function CreatePassword() {
   const { forgotPassUsername, nameReset } = useSelector(
     (state) => state.authReducer
   );
-  const { tokenResetPass } = useSelector((state) => state.userReducer);
+  const { tokenResetPass, isResetPassword } = useSelector(
+    (state) => state.userReducer
+  );
   const { width } = useWindowDimensions();
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -30,6 +32,10 @@ export default function CreatePassword() {
 
   const handleSetRePassword = () => {
     setDisplayRePassword(!displayRePassword);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   const handleCreatePass = () => {
@@ -127,7 +133,11 @@ export default function CreatePassword() {
             borderRadius: "4px",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{ display: "flex", alignItems: "center" }}
+            component={"form"}
+            onSubmit={handleSubmit}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -141,23 +151,25 @@ export default function CreatePassword() {
                 src={sign.up02}
               />
             </Box>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              type={displayPassword ? "text" : "password"}
-              placeholder="Password"
-              style={{
-                width: "100%",
-                backgroundColor: "#181223",
-                outline: "none",
-                border: "none",
-                color: "white",
-                fontSize: "14px",
-                padding: "10px 12px 10px 0px",
-                borderRadius: "0px 5px 5px 0px",
-                fontFamily: "Cyntho Next",
-                marginLeft: "12px",
-              }}
-            />
+            <FormControl>
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                type={displayPassword ? "text" : "password"}
+                placeholder="Password"
+                style={{
+                  width: "100%",
+                  backgroundColor: "#181223",
+                  outline: "none",
+                  border: "none",
+                  color: "white",
+                  fontSize: "14px",
+                  padding: "10px 12px 10px 0px",
+                  borderRadius: "0px 5px 5px 0px",
+                  fontFamily: "Cyntho Next",
+                  marginLeft: "12px",
+                }}
+              />
+            </FormControl>
             <Box
               onClick={handleSetPassword}
               sx={{ display: password.length > 0 ? "block" : "none" }}
@@ -435,23 +447,25 @@ export default function CreatePassword() {
                 src={sign.up02}
               />
             </Box>
-            <input
-              onChange={(e) => setRePassword(e.target.value)}
-              type={displayRePassword ? "text" : "password"}
-              placeholder="Confirm password"
-              style={{
-                width: "100%",
-                backgroundColor: "#181223",
-                outline: "none",
-                border: "none",
-                color: "white",
-                fontSize: "14px",
-                padding: "10px 12px 10px 0px",
-                borderRadius: "0px 5px 5px 0px",
-                fontFamily: "Cyntho Next",
-                marginLeft: "12px",
-              }}
-            />
+            <FormControl>
+              <input
+                onChange={(e) => setRePassword(e.target.value)}
+                type={displayRePassword ? "text" : "password"}
+                placeholder="Confirm password"
+                style={{
+                  width: "100%",
+                  backgroundColor: "#181223",
+                  outline: "none",
+                  border: "none",
+                  color: "white",
+                  fontSize: "14px",
+                  padding: "10px 12px 10px 0px",
+                  borderRadius: "0px 5px 5px 0px",
+                  fontFamily: "Cyntho Next",
+                  marginLeft: "12px",
+                }}
+              />
+            </FormControl>
             <Box
               onClick={handleSetRePassword}
               sx={{ display: rePassword.length > 0 ? "block" : "none" }}
@@ -490,20 +504,31 @@ export default function CreatePassword() {
         sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}
       >
         <Box sx={{ width: "100%" }}>
-          <AnimButton
-            type={
-              rePasswordError === "" &&
-              passwordError === "" &&
-              password !== "" &&
-              rePassword !== ""
-                ? "primary"
-                : "disabled"
-            }
-            text={"NEXT"}
-            onClick={() => handleCreatePass()}
-          >
-            Next
-          </AnimButton>
+          {rePasswordError !== "" &&
+          passwordError !== "" &&
+          password === "" &&
+          rePassword === "" ? (
+            <AnimButton
+              type={"disable"}
+              text={"NEXT"}
+              onClick={handleCreatePass}
+              isSubmitBtn
+            />
+          ) : isResetPassword ? (
+            <AnimButton
+              type={"loading"}
+              text={"NEXT"}
+              onClick={handleCreatePass}
+              isSubmitBtn
+            />
+          ) : (
+            <AnimButton
+              type={"primary"}
+              text={"NEXT"}
+              onClick={handleCreatePass}
+              isSubmitBtn
+            />
+          )}
         </Box>
       </Box>
     </Box>

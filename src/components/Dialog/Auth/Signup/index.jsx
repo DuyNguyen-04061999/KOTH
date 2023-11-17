@@ -1009,6 +1009,7 @@ export default function Signup(props) {
                 text="Sign Up"
                 type="primary"
                 isHasIcon
+                isSubmitBtn
               />
             )}
           </div>

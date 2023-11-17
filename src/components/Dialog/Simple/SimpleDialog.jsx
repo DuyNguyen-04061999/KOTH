@@ -104,7 +104,7 @@ export default function SimpleDialog(props) {
           <Dialog
             onClose={handleClose}
             open={isLoginDialog}
-            maxWidth={"lg"}
+            maxWidth={"md"}
             sx={{
               ".MuiPaper-root": {
                 backgroundColor: "#291e3b",

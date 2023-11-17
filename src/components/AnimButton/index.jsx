@@ -3,7 +3,14 @@ import { Button } from "@mui/material";
 import "./index.scss";
 
 export default function AnimButton(props) {
-  const { text, onClick, type = "primary", style, isHasIcon} = props;
+  const {
+    text,
+    onClick,
+    type = "primary",
+    style,
+    isHasIcon,
+    isSubmitBtn,
+  } = props;
   const ArrrowIcon = () => (
     <span className="icon-arrow">
       <svg
@@ -44,6 +51,7 @@ export default function AnimButton(props) {
     case "primary":
       return (
         <Button
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#7848ED",
             color: "white",
@@ -81,7 +89,7 @@ export default function AnimButton(props) {
         <LoadingButton
           sx={{
             backgroundColor: "#7848ED",
-            padding:"11px 5px",
+            padding: "11px 5px",
             borderRadius: "8px",
             border: "0px solid",
             width: "100%",
@@ -111,7 +119,8 @@ export default function AnimButton(props) {
       break;
     case "ghost":
       return (
-        <LoadingButton
+        <Button
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "transparent",
             color: "#7848ED",
@@ -138,12 +147,13 @@ export default function AnimButton(props) {
           >
             {text}
           </p>
-        </LoadingButton>
+        </Button>
       );
       break;
     case "disable":
       return (
-        <LoadingButton
+        <Button
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#979797",
             color: "white !important",
@@ -170,12 +180,13 @@ export default function AnimButton(props) {
             {text}
           </p>
           {isHasIcon ? <ArrrowIcon /> : <></>}
-        </LoadingButton>
+        </Button>
       );
       break;
     case "highlight":
       return (
-        <LoadingButton
+        <Button
+        type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#BE48ED",
             color: "white",
@@ -205,12 +216,13 @@ export default function AnimButton(props) {
             {text}
           </p>
           {isHasIcon ? <ArrrowIcon /> : <></>}
-        </LoadingButton>
+        </Button>
       );
       break;
     case "success":
       return (
-        <LoadingButton
+        <Button
+        type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#4FBF67",
             color: "white",
@@ -240,12 +252,13 @@ export default function AnimButton(props) {
             {text}
           </p>
           {isHasIcon ? <ArrrowIcon /> : <></>}
-        </LoadingButton>
+        </Button>
       );
       break;
     case "error":
       return (
-        <LoadingButton
+        <Button
+        type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#F05153",
             color: "white",
@@ -275,12 +288,13 @@ export default function AnimButton(props) {
             {text}
           </p>
           {isHasIcon ? <ArrrowIcon /> : <></>}
-        </LoadingButton>
+        </Button>
       );
       break;
     case "full-width":
       return (
-        <LoadingButton
+        <Button
+        type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#7848ED",
             color: "white",
@@ -308,12 +322,13 @@ export default function AnimButton(props) {
           >
             {text}
           </p>
-        </LoadingButton>
+        </Button>
       );
       break;
     default:
       return (
-        <LoadingButton
+        <Button
+        type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#7848ED",
             color: "white",
@@ -326,8 +341,8 @@ export default function AnimButton(props) {
             ":hover": {
               background: "#5E32D1",
             },
-                          fontSize: "16px",
-              fontWeight: "700",
+            fontSize: "16px",
+            fontWeight: "700",
             ...style,
           }}
           onClick={onClick}
@@ -340,7 +355,7 @@ export default function AnimButton(props) {
           >
             {text}
           </p>
-        </LoadingButton>
+        </Button>
       );
       break;
   }
