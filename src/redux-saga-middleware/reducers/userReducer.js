@@ -414,6 +414,7 @@ const userReducer = (
         ...state,
         isUpdateProfile: false,
         userAvatar: payload?.avatar,
+        user: {...state.user, userNickName: payload?.nickName}
       };
     case "UPDATE_PROFILE_USER_FAIL":
       return { ...state, isUpdateProfile: false};

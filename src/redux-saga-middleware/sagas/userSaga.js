@@ -154,6 +154,7 @@ function* updateProfileSaga(dataRequest) {
         yield put(
           updateProfileUserSuccess({
             avatar: data?.data?.avatar,
+            nickName: data?.data?.nickName
           })
         );
       } else {

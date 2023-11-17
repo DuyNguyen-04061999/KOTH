@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { useSelector } from "react-redux";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
@@ -112,7 +112,7 @@ export default function SlickSlider(props) {
     </Slider>
   ) : (
     <Slider {...settings}>
-      {!isHtmlCode && tours && tours?.length >= 3
+      {!isHtmlCode && tours && tours?.length >= 1
         ? tours
             ?.filter((item) => item)
             ?.map((item, index) => {

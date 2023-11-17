@@ -95,7 +95,7 @@ export default function NewHomePage() {
   //     payload: "ended",
   //   });
   // };
-
+console.log(threeBrandTour, isFetchThreeTour);
   return (
     <Container
       maxWidth="lg"
