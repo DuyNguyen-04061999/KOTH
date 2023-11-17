@@ -119,7 +119,7 @@ export default function Package() {
                     ?.filter((item) => item?.packageName === "Subscription")
                     ?.map((i, index) => {
                       return (
-                        <Box key={index} width={250} height={430}>
+                        <Box key={index} width={width < 576 ? 250 : 300} height={width < 576 ? 430 : 500}>
                           <ListPackage
                             packageName={i?.packageName}
                             packageAvatar={i?.packageAvatar}
@@ -177,7 +177,7 @@ export default function Package() {
                     )
                     ?.map((i, index) => {
                       return (
-                        <Box key={index} width={250} height={430}>
+                        <Box key={index} width={width < 576 ? 250 : 300} height={width < 576 ? 430 : 500}>
                           <ListPackage
                             packageName={i?.packageName}
                             packageAvatar={i?.packageAvatar}
