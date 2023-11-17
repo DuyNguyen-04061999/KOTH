@@ -4,7 +4,6 @@ import pool from "../assets/images/8pool1.png";
 import bg from "../assets/images/BG.png";
 import bnb from "../assets/images/BNB.webp";
 import btc from "../assets/images/BTC.webp";
-import imageTutorial from "../assets/images/imageTutorial.jpg";
 import BackButtonLobby from "../assets/images/BackButtonLobby.png";
 import BannerTour from "../assets/images/Banner phu 1.png";
 import BannerHomePageDesktop from "../assets/images/BannerHomePageDesktop.png";
@@ -90,6 +89,7 @@ import gameHotTournament_1 from "../assets/images/gameHotTournament_1.png";
 import giveAway from "../assets/images/giveAway.png";
 import giveAwayDesktop from "../assets/images/giveAwayDesktop.png";
 import hatWinner from "../assets/images/hatWinner.png";
+import imageTutorial from "../assets/images/imageTutorial.jpg";
 import inviteFriendMobile from "../assets/images/inviteFriendMobile.png";
 import loseMedal from "../assets/images/loseMedal.png";
 import loseWardBG from "../assets/images/loseWardBG.png";
@@ -247,11 +247,11 @@ import up05 from "../assets/imagesLayout/05.svg";
 
 //---------------------------------------------------
 import video1 from "../assets/videoHover/Bida1.mp4";
-import videoTutorial from "../assets/videoHover/videoTutorial.mp4";
 import video2 from "../assets/videoHover/Domino1.mp4";
 import Promo_Sale_Video_Desktop from "../assets/videoHover/Promo_Sale_Video_Desktop.mp4";
 import Promo_Sale_Video_Mobile from "../assets/videoHover/Promo_Sale_Video_Mobile.mp4";
 import video3 from "../assets/videoHover/Shooter.mp4";
+import videoTutorial from "../assets/videoHover/videoTutorial.mp4";
 
 import btnnav from "../assets/imagesDesktop/button.svg";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
@@ -337,8 +337,8 @@ import NavManageActive from "../assets/images/ActivityActive.png";
 import NavCreateActive from "../assets/images/CategoryActive.png";
 import NavTotalActive from "../assets/images/ChartActive.png";
 import NavFilterActive from "../assets/images/DocumentActive.png";
-import payPalIcon from "../assets/images/payPalIcon.png";
 import NavSettingActive from "../assets/images/SettingActive.png";
+import payPalIcon from "../assets/images/payPalIcon.png";
 
 import NavEnded from "../assets/images/navbar/ended.png";
 import NavHelpCenter from "../assets/images/navbar/helpcenter.png";
@@ -367,6 +367,8 @@ import BtnBack from "../assets/images/btnback.png";
 import layerend from "../assets/images/layerend.png";
 
 import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png";
+
+import bannersigninTablet from "../assets/images/signinTablet.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -698,6 +700,7 @@ export const popup = {
 export const sign = {
   pic: pic,
   signintopbar: signintopbar,
+  bannersigninTablet: bannersigninTablet,
   bannersignin: bannersignin,
   chose1: chose1,
   chose2: chose2,

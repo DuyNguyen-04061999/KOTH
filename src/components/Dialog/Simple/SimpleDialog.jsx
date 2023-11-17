@@ -108,7 +108,7 @@ export default function SimpleDialog(props) {
             sx={{
               ".MuiPaper-root": {
                 backgroundColor: "#291e3b",
-                height: "calc(100vh - 64px)",
+                height: width < 992 ? "68vh" : "calc(100vh - 64px)",
                 overflowX: "hidden",
                 display: "flex",
                 flexDirection: "row",
@@ -117,7 +117,7 @@ export default function SimpleDialog(props) {
             }}
           >
             <Grid container flexWrap={"nowrap"}>
-              <Grid item md={6} sx={{maxWidth:"50%"}}>
+              <Grid item md={6} sx={{ maxWidth: "50%" }}>
                 <Box
                   sx={{
                     backgroundColor: "#291e3b",
@@ -157,13 +157,19 @@ export default function SimpleDialog(props) {
                   <img
                     src={
                       getAppType() === "promote"
-                        ? sign.bannersignin
+                        ? width < 992
+                          ? sign.bannersigninTablet
+                          : sign.bannersignin
                         : images?.signInCrypto
                     }
                     alt="..."
                     width={"100%"}
                     height={"100%"}
-                    style={{ backgroundColor: "#3a2b6d", objectFit:"cover", objectPosition:"center 10%" }}
+                    style={{
+                      backgroundColor: "#3a2b6d",
+                      objectFit: "cover",
+                      objectPosition: "center 10%",
+                    }}
                   />
                   <Box
                     component={"img"}
