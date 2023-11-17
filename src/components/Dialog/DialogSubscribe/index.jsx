@@ -97,11 +97,11 @@ export default function DialogSubscribe() {
               paddingBottom: "20px",
             }}
           >
-            <AnimButton onClick={handleClose} type={"ghost"} text={"No"} />
+            <AnimButton onClick={handleClose} type="ghost" text="No" />
             <AnimButton
               onClick={handleConfirm}
-              type={"primary"}
-              text={"Confirm"}
+              type="primary"
+              text="Confirm"
             />
           </DialogActions>
         </Box>

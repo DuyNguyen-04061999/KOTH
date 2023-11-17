@@ -223,21 +223,23 @@ export default function DetailAccountDialogComponent() {
                         <ItemDetail title="Timezone" value="Chicago TMZ" icon={<ManagerIcon/>}/>
                     </Box>
 
-                    <Box component={"div"} onClick={handleActive} className='text-center p-2 text-white' sx={{
-                        marginTop: "14px",
-                        borderRadius: "16px", background: detailAccount?.status ? "#355DFF" : "#FF4135"
-                    }}>
-                        <Typography sx={{
-                            color: "#FFF",
-                            textAlign: "center",
-                            fontSize: "14px",
-                            fontStyle: "normal",
-                            fontWeight: 700,
-                            lineHeight: "normal"
+                    {roles && !roles?.includes("agent") && (
+                        <Box component={"div"} onClick={handleActive} className='text-center p-2 text-white' sx={{
+                            marginTop: "14px",
+                            borderRadius: "16px", background: detailAccount?.status ? "#355DFF" : "#FF4135"
                         }}>
-                            {detailAccount?.status ? "Active" : "Prohibit"}
-                        </Typography>
-                    </Box>
+                            <Typography sx={{
+                                color: "#FFF",
+                                textAlign: "center",
+                                fontSize: "14px",
+                                fontStyle: "normal",
+                                fontWeight: 700,
+                                lineHeight: "normal"
+                            }}>
+                                {detailAccount?.status ? "Active" : "Prohibit"}
+                            </Typography>
+                        </Box>
+                    )}
                     <Box component={"div"} className='d-flex' sx={{
                         marginTop: "40px"
                     }}>
@@ -443,7 +445,7 @@ export default function DetailAccountDialogComponent() {
                                 </Typography>
                             </Box>
                         )}
-                        {!roles?.includes("agent") && (
+                        {!roles?.includes("agent") && !roles?.includes("distributor") && (
                             <Box component={"div"} onClick={handleDeleteAccount} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
                                 borderRadius: "7.618px",
                                 maxWidth: width/4,

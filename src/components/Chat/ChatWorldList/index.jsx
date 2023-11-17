@@ -1,6 +1,4 @@
-import { PersonAddAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
-import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Avatar, Box } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -27,12 +25,10 @@ export default function ChatWorldList() {
   const [isFetching, setIsFetching] = useState(true);
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
     useState(true);
-  const { chatWorld, friendList } = useSelector(
-    (state) => state.chatReducer
-  );
+  const { chatWorld, friendList } = useSelector((state) => state.chatReducer);
   const endOfMessageRef = useRef(null);
   const { tokenUser, user } = useSelector((state) => state.userReducer);
-  const userName = user?.userName || ""
+  const userName = user?.userName || "";
 
   const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
@@ -93,10 +89,9 @@ export default function ChatWorldList() {
   const isScrolledToBottom = () => {
     if (chatBox.current) {
       const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
-      if(scrollTop + clientHeight + 100 >= scrollHeight){
+      if (scrollTop + clientHeight + 100 >= scrollHeight) {
         return true;
-      } 
-      else return false;
+      } else return false;
     }
     return false;
   };
@@ -113,7 +108,7 @@ export default function ChatWorldList() {
   };
 
   useEffect(() => {
-    let chatCurrent  = chatBox.current
+    let chatCurrent = chatBox.current;
 
     if (chatCurrent) {
       chatCurrent.addEventListener("scroll", handleScroll);
@@ -125,15 +120,8 @@ export default function ChatWorldList() {
         chatCurrent.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
+  });
 
-  // const checkExistInArray = (membersInRoom, userName) => {
-  //   return membersInRoom?.filter((n) => {
-  //     return n.username === userName && n.owner === 0;
-  //   }).length > 0
-  //     ? true
-  //     : false;
-  // };
   useEffect(() => {
     socket?.on(`joinRoomGameFromMessageSuccess`, (room, roomId) => {
       dispatch(setWaitingNav());
@@ -152,7 +140,6 @@ export default function ChatWorldList() {
       gameId: gameId,
     });
   };
-
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -291,8 +278,7 @@ export default function ChatWorldList() {
                             letterSpacing: "0.5px",
                           }}
                         >
-                          {e?.updatedAt &&
-                            moment(e?.updatedAt).format("LT")}
+                          {e?.updatedAt && moment(e?.updatedAt).format("LT")}
                         </span>
                       </Box>
                       <Box
@@ -358,7 +344,7 @@ export default function ChatWorldList() {
                             letterSpacing: "0.5px",
                           }}
                         >
-                          {e?.messageFromName}
+                          {e?.fromNickName}
                         </span>
                       </span>
                       {e.checkFrom === true ? (
@@ -395,8 +381,7 @@ export default function ChatWorldList() {
                       }}
                     >
                       {" "}
-                      {e?.updatedAt &&
-                        moment(e?.updatedAt).format("LT")}{" "}
+                      {e?.updatedAt && moment(e?.updatedAt).format("LT")}{" "}
                     </span>{" "}
                   </Box>
                   <Box
@@ -541,14 +526,13 @@ export default function ChatWorldList() {
     }
     return height;
   };
-
   return (
     <Box sx={{ position: "relative" }}>
       <Box
         ref={chatBox}
         className="chat-content"
         sx={{
-          "scrollBehavior": "smooth",
+          scrollBehavior: "smooth",
           maxHeight: checkHeightResponsive(),
           minHeight: checkHeightResponsive(),
           overflow: "auto",
@@ -586,9 +570,11 @@ export default function ChatWorldList() {
           <MenuItem
             onClick={() => {
               dispatch(toggleProfileDialog(true));
-              dispatch(getUserByUsername({
-                username: messagefromName,
-              }));
+              dispatch(
+                getUserByUsername({
+                  username: messagefromName,
+                })
+              );
               handleClose();
             }}
             sx={{
@@ -608,7 +594,7 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {tokenUser &&
+          {/* {tokenUser &&
             (checkExistInFriendList() === true ? (
               <MenuItem
                 sx={{
@@ -648,7 +634,7 @@ export default function ChatWorldList() {
                   Add Friend
                 </Box>
               </MenuItem>
-            ))}
+            ))} */}
         </Menu>
         {renderChat}
         <span ref={endOfMessageRef}></span>

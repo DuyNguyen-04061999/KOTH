@@ -8,6 +8,7 @@ import { showToastNotification } from "../../../../redux-saga-middleware/reducer
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
+import { systemNotification } from "../../../../utils/notification";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateNickName } from "../../../../utils/validateNickName";
 import { validateEmail } from "../../../../utils/validationEmail";
@@ -38,8 +39,8 @@ export default function Signup(props) {
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
-
-  useEffect(() => {}, []);
+  const { listSetting } = useSelector((state) => state.settingReducer);
+  const { isRegister } = useSelector((state) => state.userReducer);
 
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
@@ -50,7 +51,16 @@ export default function Signup(props) {
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
-    sendRegister();
+    if (!listSetting?.signupEnabled) {
+      dispatch(
+        showToastNotification({
+          type: systemNotification.maintenance.serviceClose.type,
+          message: systemNotification.maintenance.serviceClose.message,
+        })
+      );
+    } else {
+      sendRegister();
+    }
   };
 
   //------------------------------------------------------------------
@@ -200,7 +210,10 @@ export default function Signup(props) {
             name="username"
             type="text"
             onChange={(e) => {
-              setUsername(e.target.value);
+              const inputUsername = e.target.value;
+              if (inputUsername.length <= 10) {
+                setUsername(inputUsername);
+              }
             }}
             value={username}
             placeholder="Username"
@@ -242,8 +255,7 @@ export default function Signup(props) {
                 <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
                   Username should be 3-10 characters long and include at least 1
                   uppercase or lowercase letter. You can use number or
-                  underscore but no spaces. Usernames are case sensitive (e.g.,
-                  Example_)
+                  underscore but no spaces. (e.g., Superman0_)
                 </Typography>
               </Box>
             }
@@ -260,7 +272,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -351,7 +363,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -805,7 +817,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -853,7 +865,7 @@ export default function Signup(props) {
             (+1){" "}
           </Typography>
           <Input
-            type="text"
+            type="number"
             name="phone"
             onChange={(e) => {
               setPhone(e.target.value);
@@ -915,7 +927,7 @@ export default function Signup(props) {
                 right: "10px",
                 top: "8px",
                 cursor: "pointer",
-                zIndex: 1
+                zIndex: 1,
               }}
               component={"img"}
               src={images.ToolTipIcon}
@@ -983,12 +995,21 @@ export default function Signup(props) {
         >
           <div className="btn-conteiner">
             {disabledBtn ? (
-              <AnimButton type={"dislable"} text={"Sign Up"} />
+              <AnimButton type="disable" text="Sign Up" isHasIcon />
+            ) : isRegister ? (
+              <AnimButton
+                onClick={handleSubmitSignUp}
+                text="Sign Up"
+                type="loading"
+                isHasIcon
+              />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}
-                text={"Sign Up"}
-                type={"Signin"}
+                text="Sign Up"
+                type="primary"
+                isHasIcon
+                isSubmitBtn
               />
             )}
           </div>
@@ -997,11 +1018,14 @@ export default function Signup(props) {
           <Box
             sx={{
               display: "flex",
+              alignItems: "center",
               justifyContent: "center",
-              color: "white",
             }}
           >
-            Already registered?
+            <Typography sx={{ color: "white" }}>
+              {" "}
+              Already registered?
+            </Typography>
             <Typography
               onClick={() => {
                 dispatch(clickTab("login"));

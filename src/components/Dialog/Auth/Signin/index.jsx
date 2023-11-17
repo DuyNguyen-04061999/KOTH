@@ -1,12 +1,6 @@
 import { SyncAlt } from "@mui/icons-material";
 import GameLogIcon from "@mui/icons-material/List";
-import {
-  AvatarGroup,
-  Box,
-  Grid,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { AvatarGroup, Box, Grid, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -19,9 +13,9 @@ import {
 import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
 import {
-  getUserByUsername,
+  getMyInfor,
   getUserInfoReady,
-  logoutReady,
+  logoutReady
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
@@ -33,6 +27,7 @@ import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
 import "./index.scss";
+import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -48,9 +43,7 @@ export default function Dialoglg() {
   const { withdrawData, despositData } = useSelector(
     (state) => state.paymentReducer
   );
-  const { countTicket, userAvatar } = useSelector(
-    (state) => state.userReducer
-  );
+  const { countTicket, userAvatar } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     if (transData === 0) {
@@ -64,11 +57,8 @@ export default function Dialoglg() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  const {
-    isUpdateProfile,
-  } = useSelector((state) => state.authReducer);
+  const { isUpdateProfile } = useSelector((state) => state.authReducer);
   const { user, uPack } = useSelector((state) => state.userReducer);
-  
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
 
@@ -81,17 +71,16 @@ export default function Dialoglg() {
 
   const logout = () => {
     dispatch(logoutReady());
+    dispatch(closeChatPopup(false))
   };
   const { width, height } = useWindowDimensions();
 
-  const token = localStorage.getItem("token");    
-  
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    if(token) {
+    if (token) {
       dispatch(getUserInfoReady(token));
     }
   }, [token, dispatch]);
-
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (
@@ -189,11 +178,10 @@ export default function Dialoglg() {
                           d="M9.762 5.955c.015-.037.028-.076.039-.115.483-2.204.26-1.732 1.926-3.417.305-.305.602-.616.917-.909.842-.784 2.139-.843 2.918-.074a757.778 757.778 0 017.021 7.021c.782.791.734 2.1-.076 2.948-.642.67-1.287 1.346-1.98 1.963-.307.273-.721.45-1.113.589-.424.15-.877.208-1.345.313-.055.36-.112.722-.164 1.084a2.32 2.32 0 01-.678 1.34c-1.913 1.914-3.824 3.833-5.744 5.74-.916.907-2.228.942-3.1.08a1567.642 1567.642 0 01-6.852-6.852c-.877-.889-.84-2.196.087-3.13 1.907-1.92 3.829-3.828 5.742-5.741.353-.36.812-.595 1.302-.666l1.1-.174zm3.7 3.72a.691.691 0 00-.193.333.645.645 0 00.02.377.609.609 0 00.586.4c.129 0 .256-.04.366-.112a.697.697 0 00.252-.295.661.661 0 00.051-.377.616.616 0 00-.166-.333.62.62 0 00-.449-.183.682.682 0 00-.464.191l-.002-.002zm-2.176-1.226a.619.619 0 00.43.186.69.69 0 00.692-.587.63.63 0 00-.109-.459.62.62 0 00-.428-.182.69.69 0 00-.689.585.631.631 0 00.105.457zm5.179 4.236a.682.682 0 00.197-.463.62.62 0 00-.18-.453.625.625 0 00-.442-.137.685.685 0 00-.434.202.685.685 0 00-.198.435c-.011.162.039.32.14.442a.62.62 0 00.454.176.684.684 0 00.462-.2v-.002z"
                         ></path>
                       </g>
-                  
-                  </svg>
-                  <Typography sx={{ color: "#f5a128" }}>
-                    {countTicket || 0}
-                  </Typography>
+                    </svg>
+                    <Typography sx={{ color: "#f5a128" }}>
+                      {countTicket || 0}
+                    </Typography>
                   </Box>
                 </Box>
               </BgWithTooltip>
@@ -267,10 +255,10 @@ export default function Dialoglg() {
                           d="M9.762 5.955c.015-.037.028-.076.039-.115.483-2.204.26-1.732 1.926-3.417.305-.305.602-.616.917-.909.842-.784 2.139-.843 2.918-.074a757.778 757.778 0 017.021 7.021c.782.791.734 2.1-.076 2.948-.642.67-1.287 1.346-1.98 1.963-.307.273-.721.45-1.113.589-.424.15-.877.208-1.345.313-.055.36-.112.722-.164 1.084a2.32 2.32 0 01-.678 1.34c-1.913 1.914-3.824 3.833-5.744 5.74-.916.907-2.228.942-3.1.08a1567.642 1567.642 0 01-6.852-6.852c-.877-.889-.84-2.196.087-3.13 1.907-1.92 3.829-3.828 5.742-5.741.353-.36.812-.595 1.302-.666l1.1-.174zm3.7 3.72a.691.691 0 00-.193.333.645.645 0 00.02.377.609.609 0 00.586.4c.129 0 .256-.04.366-.112a.697.697 0 00.252-.295.661.661 0 00.051-.377.616.616 0 00-.166-.333.62.62 0 00-.449-.183.682.682 0 00-.464.191l-.002-.002zm-2.176-1.226a.619.619 0 00.43.186.69.69 0 00.692-.587.63.63 0 00-.109-.459.62.62 0 00-.428-.182.69.69 0 00-.689.585.631.631 0 00.105.457zm5.179 4.236a.682.682 0 00.197-.463.62.62 0 00-.18-.453.625.625 0 00-.442-.137.685.685 0 00-.434.202.685.685 0 00-.198.435c-.011.162.039.32.14.442a.62.62 0 00.454.176.684.684 0 00.462-.2v-.002z"
                         ></path>
                       </g>
-                  </svg>
-                  <Typography sx={{ color: "#f5a128" }}>
-                    {countTicket || 0}
-                  </Typography>
+                    </svg>
+                    <Typography sx={{ color: "#f5a128" }}>
+                      {countTicket || 0}
+                    </Typography>
                   </Box>
                 </Box>
               </BgWithTooltip>
@@ -381,14 +369,12 @@ export default function Dialoglg() {
                   <img
                     style={{
                       borderRadius: 50,
-                      border: "2px solid #FD9E0F",
+                      border: uPack ? "2px solid #FD9E0F" : "",
                     }}
                     alt="Remy Sharp"
                     src={
                       userAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          userAvatar
+                        ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
                         : images.undefinedAvatar
                     }
                     height={34}
@@ -414,9 +400,9 @@ export default function Dialoglg() {
                           overflow: "hidden",
                         }}
                       >
-                        {user?.userName?.length > 10
-                          ? user?.userName.slice(0, 10) + "..."
-                          : user?.userName}
+                        {user?.userNickName?.length > 10
+                          ? user?.userNickName.slice(0, 10) + "..."
+                          : user?.userNickName}
                       </Typography>
                       {uPack ? (
                         <Box
@@ -470,7 +456,7 @@ export default function Dialoglg() {
                       <img
                         style={{
                           borderRadius: 50,
-                          border: "4px solid #FD9E0F",
+                          border: uPack ? "4px solid #FD9E0F" : "",
                         }}
                         alt="Remy Sharp"
                         src={images.undefinedAvatar}
@@ -481,10 +467,7 @@ export default function Dialoglg() {
                     ) : (
                       <img
                         style={{
-                          border:
-                            width && width > 576
-                              ? "4px solid #FD9E0F"
-                              : "4px solid #FD9E0F",
+                          border: uPack ? "4px solid #FD9E0F" : "",
                           borderRadius: 50,
                           width: width < 576 ? "50px" : "100px",
                           height: width < 576 ? "50px" : "100px",
@@ -506,7 +489,7 @@ export default function Dialoglg() {
                       sx={{ fontWeight: "700", fontSize: "24px" }}
                       className="text-white ps-2"
                     >
-                      {user?.userName}
+                      {user?.userNickName}
                     </Typography>
                   </Box>
                   {uPack ? (
@@ -615,9 +598,9 @@ export default function Dialoglg() {
                         }}
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
-                          dispatch(getUserByUsername({
-                            username: user?.userName,
-                          }))
+                          dispatch(
+                            getMyInfor()
+                          );
                         }}
                       >
                         <svg

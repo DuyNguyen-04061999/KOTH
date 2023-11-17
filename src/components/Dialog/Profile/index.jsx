@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { images } from "../../../utils/images";
+import { systemNotification } from "../../../utils/notification";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import SettingProfile from "./SettingProfile";
@@ -31,9 +33,10 @@ export default function DialogProfile(props) {
   const { uPack } = useSelector((state) => state.userReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
-  const { id, email, phone, userNameProfile, avatarUrl } = useSelector(
-    (state) => state.profileReducer
-  );
+  const { id, email, phone, userNameProfile, avatarUrl, nickName } =
+    useSelector((state) => state.profileReducer);
+  const dispatch = useDispatch();
+  const { listSetting } = useSelector((state) => state.settingReducer);
 
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -50,10 +53,20 @@ export default function DialogProfile(props) {
     return false;
   };
 
-  const setTabEdit = () => {
-    setTab(1);
+  const setTabEdit = (e) => {
+    e.preventDefault();
+    if (!listSetting?.updateProfileEnabled) {
+      dispatch(
+        showToastNotification({
+          type: systemNotification.maintenance.serviceClose.type,
+          message: systemNotification.maintenance.serviceClose.message,
+        })
+      );
+    } else {
+      setTab(1);
+    }
   };
-  
+
   const renderUserInfo = () => {
     return (
       <Box sx={{ height: "100%" }}>
@@ -70,14 +83,14 @@ export default function DialogProfile(props) {
               style={{
                 borderRadius: "50%",
                 height: "95px",
-                border: "4px solid #FD9E0F",
+                border: uPack ? "4px solid #FD9E0F" : "",
               }}
             />
             <Typography
               className="mt-2 fs-3"
               sx={{ fontWeight: "700", fontSize: "24px" }}
             >
-              {userNameProfile}
+              {nickName}
             </Typography>
             {userNameProfile === user?.userName && tokenUser && (
               <Box>
@@ -403,8 +416,8 @@ export default function DialogProfile(props) {
                     }}
                   >
                     <AnimButton
-                      text={"Edit"}
-                      type={"primary"}
+                      text="Edit"
+                      type="primary"
                       onClick={setTabEdit}
                     />
                   </Box>

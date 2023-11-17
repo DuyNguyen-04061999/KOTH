@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   clickTab,
-  closeLoginDialog
+  closeLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { logoutReady } from "../../../redux-saga-middleware/reducers/userReducer";
 import { getAppType } from "../../../utils/helper";
@@ -31,6 +31,7 @@ export default function SimpleDialog(props) {
   const handleClose = () => {
     if (currentTab === "otpVerifyAccount") {
       dispatch(closeLoginDialog());
+      dispatch(clickTab("login"));
       dispatch(logoutReady());
     } else {
       dispatch(closeLoginDialog());
@@ -105,24 +106,23 @@ export default function SimpleDialog(props) {
             open={isLoginDialog}
             maxWidth={"md"}
             sx={{
-              ".css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
+              ".MuiPaper-root": {
                 backgroundColor: "#291e3b",
-                height: "auto",
+                height: "calc(100vh - 64px)",
                 overflowX: "hidden",
                 display: "flex",
                 flexDirection: "row",
-                maxWidth: "820px !important",
                 position: "relative",
               },
             }}
           >
-            <Grid container>
-              <Grid item md={6}>
+            <Grid container flexWrap={"nowrap"}>
+              <Grid item md={6} sx={{maxWidth:"50%"}}>
                 <Box
                   sx={{
                     backgroundColor: "#291e3b",
                     height: "100%",
-                    width: "auto",
+                    width: "100%",
                     display: "flex",
                     alignItems: "center",
                   }}
@@ -146,42 +146,40 @@ export default function SimpleDialog(props) {
                 </Box>
               </Grid>
               <Grid item md={6}>
-                {width > 992 ? (
+                <Box
+                  sx={{
+                    backgroundColor: "#19133e",
+                    color: "white",
+                    height: "100%",
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={
+                      getAppType() === "promote"
+                        ? sign.bannersignin
+                        : images?.signInCrypto
+                    }
+                    alt="..."
+                    width={"100%"}
+                    height={"100%"}
+                    style={{ backgroundColor: "#3a2b6d", objectFit:"cover", objectPosition:"center 10%" }}
+                  />
                   <Box
+                    component={"img"}
+                    src={sign.btnBack}
                     sx={{
-                      backgroundColor: "#19133e",
-                      color: "white",
-                      height: "100%",
-                      position: "relative",
+                      width: "20px",
+                      height: "20px",
+                      position: "absolute",
+                      zIndex: "100",
+                      top: "20px",
+                      right: "20px",
+                      cursor: "pointer",
                     }}
-                  >
-                    <img
-                      src={
-                        getAppType() === "promote"
-                          ? sign.bannersignin
-                          : images?.signInCrypto
-                      }
-                      alt="..."
-                      width={"100%"}
-                      height={"100%"}
-                      style={{ backgroundColor: "#3a2b6d" }}
-                    />
-                    <Box
-                      component={"img"}
-                      src={sign.btnBack}
-                      sx={{
-                        width: "20px",
-                        height: "20px",
-                        position: "absolute",
-                        zIndex: "100",
-                        top: "20px",
-                        right: "20px",
-                        cursor: "pointer",
-                      }}
-                      onClick={handleClose}
-                    ></Box>
-                  </Box>
-                ) : null}
+                    onClick={handleClose}
+                  ></Box>
+                </Box>
               </Grid>
             </Grid>
           </Dialog>

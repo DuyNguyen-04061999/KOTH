@@ -25,6 +25,7 @@ export default function Navbar() {
     (state) => state.authReducer
   );
 
+
   const { tokenUser: token} = useSelector(
     (state) => state.userReducer
   );
@@ -889,7 +890,7 @@ export default function Navbar() {
                 textDecoration:"none",
                 color:"#A89CD7"
               }}
-              href="https://t.me/play4promo"
+              href="https://t.me/+LaxB-V2ovfNiNzNl"
               target="_blank"
             >
               <svg

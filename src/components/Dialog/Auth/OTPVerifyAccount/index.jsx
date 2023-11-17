@@ -1,10 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  closeLoginDialog
-} from "../../../../redux-saga-middleware/reducers/authReducer";
+import { closeLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   logoutReady,
   resendOtpReady,
@@ -16,8 +14,14 @@ import AnimButton from "../../../AnimButton";
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { createAccInfo } = useSelector((state) => state.authReducer);
-  const { user, registerUsername, typeVerifyOTP, resenOTPSuccess } = useSelector((state) => state.userReducer);
-  
+  const {
+    user,
+    registerUsername,
+    typeVerifyOTP,
+    resenOTPSuccess,
+    isVerifyOTP,
+  } = useSelector((state) => state.userReducer);
+
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -36,80 +40,61 @@ export default function OTPVerifyAccount() {
   }, [timeLeft]);
 
   const handleVerifyOTP = () => {
-    switch(typeVerifyOTP) {
-        case "register": dispatch(
+    switch (typeVerifyOTP) {
+      case "register":
+        dispatch(
           sendOtpReady({
             otp: otp,
             type: "register",
             username: registerUsername,
           })
-        );break
-        case "reVerify": dispatch(
+        );
+        break;
+      case "reVerify":
+        dispatch(
           sendOtpReady({
             otp: otp,
             type: "register",
             username: user?.userName,
           })
-        );break
-        case "forget_email": dispatch(
-          sendOtpReady({
-            otp: otp,
-            type: "password",
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-          })
-        );break
-        case "forget_phone": dispatch(
-          sendOtpReady({
-            otp: otp,
-            type: "password",
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-          })
-        );break
-        default: return false
+        );
+        break;
+      default:
+        return false;
     }
-    
   };
 
   useEffect(() => {
-    if(resenOTPSuccess) {
+    if (resenOTPSuccess) {
       setTimeLeft(60);
     }
-
-  }, [resenOTPSuccess])
+  }, [resenOTPSuccess]);
 
   const handleResendOTP = () => {
-    switch(typeVerifyOTP) {
-        case "register": dispatch(
+    switch (typeVerifyOTP) {
+      case "register":
+        dispatch(
           resendOtpReady({
             username: registerUsername,
             type: "register",
           })
-        );break
-        case "reVerify": dispatch(
+        );
+        break;
+      case "reVerify":
+        dispatch(
           resendOtpReady({
             username: user?.userName,
             type: "register",
           })
-        );break
-        case "forget_email": dispatch(
-          resendOtpReady({
-            username: createAccInfo?.username,
-            email: createAccInfo?.email,
-            type: "password",
-          })
-        );break
-        case "forget_phone": dispatch(
-          resendOtpReady({
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-            type: "password",
-          })
-        );break
-        default: return false
+        );
+        break;
+      default:
+        return false;
     }
-    
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -146,35 +131,39 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          {typeVerifyOTP === "register" || typeVerifyOTP === "reVerify" ? ` Please enter the 6-digit verification code that was sent to ${user?.userEmail} to verify your account`
-           :  typeVerifyOTP === "forget_phone" ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.phone} to verify your account` : typeVerifyOTP === "forget_email" 
-           ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.email} to verify your account` : ``}
+          {` Please enter the 6-digit verification code that was sent to ${createAccInfo?.email ? createAccInfo?.email : createAccInfo?.phone} to verify your account`}
         </Typography>
       </Box>
-      <Box sx={{ margin: "36px 0", marginRight: "-16px" }}>
+      <Box
+        component={"form"}
+        onSubmit={handleSubmit}
+        sx={{ margin: "36px 0", marginRight: "-16px" }}
+      >
         <OTPInput
           value={otp}
           onChange={setOtp}
           numInputs={6}
           renderInput={(props) => (
-            <input
-              {...props}
-              style={{
-                width: "32px",
-                height: "38px",
-                marginRight: "16px",
-                backgroundColor: "#271C39",
-                outline: "none",
-                textAlign: "center",
-                fontSize: width < 576 ? "12px" : "20px",
-                color: "white",
-                border:"2px solid white",
-                borderRadius:"4px"
-              }}
-              type="number"
-              inputMode="numeric"
-              maxLength={1}
-            />
+            <FormControl>
+              <input
+                {...props}
+                style={{
+                  width: "32px",
+                  height: "38px",
+                  marginRight: "16px",
+                  backgroundColor: "#271C39",
+                  outline: "none",
+                  textAlign: "center",
+                  fontSize: width < 576 ? "12px" : "20px",
+                  color: "white",
+                  border: "2px solid white",
+                  borderRadius: "4px",
+                }}
+                type="number"
+                inputMode="numeric"
+                maxLength={1}
+              />
+            </FormControl>
           )}
         />
       </Box>
@@ -218,24 +207,27 @@ export default function OTPVerifyAccount() {
       >
         <Box sx={{ width: "48%" }}>
           <AnimButton
-            type={"ghost"}
-            text={"BACK"}
+            type="ghost"
+            text="BACK"
             onClick={() => {
               dispatch(logoutReady());
               dispatch(closeLoginDialog());
             }}
-          >
-            Back
-          </AnimButton>
+          />
         </Box>
         <Box sx={{ width: "48%" }}>
-          <AnimButton
-            type={otp?.length < 6 ? "disabled" : "primary"}
-            text={"NEXT"}
-            onClick={() => handleVerifyOTP()}
-          >
-            Next
-          </AnimButton>
+          {otp?.length < 6 ? (
+            <AnimButton type="disable" text="NEXT" />
+          ) : isVerifyOTP ? (
+            <AnimButton type="loading" text="NEXT" />
+          ) : (
+            <AnimButton
+              type="primary"
+              text="NEXT"
+              onClick={handleVerifyOTP}
+              isSubmitBtn
+            />
+          )}
         </Box>
       </Box>
     </Box>

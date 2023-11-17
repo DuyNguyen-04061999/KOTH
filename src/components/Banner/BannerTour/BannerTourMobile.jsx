@@ -138,7 +138,7 @@ const BannerTourMobile = (props) => {
               borderRadius: "5px",
               color: "#fff",
               padding: "4px",
-              fontSize: "12px",
+              fontSize: "10px",
               cursor: "pointer",
               fontWeight: 600,
               paddingLeft:"10px",

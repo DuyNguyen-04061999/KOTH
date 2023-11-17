@@ -2,6 +2,8 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AnimButton from "../../../../components/AnimButton";
+import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 import _socket from "../../../../redux-saga-middleware/config/socket";
 import {
   getIdPackage,
@@ -29,9 +31,9 @@ export default function ListPackage(props) {
     id,
   } = props;
   const [socket, setSocket] = useState(null);
-  const { tokenUser: token, uPack } = useSelector(
-    (state) => state.userReducer
-  );
+  const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
+
+  const { isFetchListPackage } = useSelector((state) => state.packageReducer);
 
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -40,6 +42,76 @@ export default function ListPackage(props) {
     setSocket(socket);
   }, [socket]);
 
+  const handleBuyPackage = () => {
+    if (packageName === "Subscription") {
+      if (token) {
+        dispatch(
+          saveDataPackage({
+            packageName,
+            packageAvatar,
+            packagePrice,
+            packageFreeTicketTournament,
+            packageReduceWatchAds,
+            id,
+          })
+        );
+        dispatch(
+          toggleCheckWallet({
+            type: "subscription",
+          })
+        );
+        dispatch(getIdPackage(id));
+      }
+    }
+    if (packageName === "Combo Extra 1") {
+      if (token) {
+        dispatch(
+          saveDataPackage({
+            packageName,
+            packageAvatar,
+            packagePrice,
+            packageFreeTicketTournament,
+            packageReduceWatchAds,
+            id,
+          })
+        );
+        dispatch(
+          toggleCheckWallet({
+            type: "combo1",
+            gold: 0.99,
+            total: 5,
+          })
+        );
+        dispatch(getIdPackage(id));
+      }
+    }
+    if (packageName === "Combo Extra 2") {
+      if (token) {
+        dispatch(
+          saveDataPackage({
+            packageName,
+            packageAvatar,
+            packagePrice,
+            packageFreeTicketTournament,
+            packageReduceWatchAds,
+            id,
+          })
+        );
+        dispatch(
+          toggleCheckWallet({
+            type: "combo2",
+            gold: 3.96,
+            total: 20,
+          })
+        );
+        dispatch(getIdPackage(id));
+      }
+    }
+    if (token === null || token === "") {
+      dispatch(toggleLoginDialog());
+      return;
+    }
+  };
 
   return (
     <>
@@ -80,7 +152,7 @@ export default function ListPackage(props) {
         <Typography
           variant="h5"
           sx={{
-            fontSize: "20px",
+            fontSize:  width < 1200 ? "14px" : "20px",
             marginTop: "5px",
             marginBottom: "15px !important",
             color: "white",
@@ -122,29 +194,36 @@ export default function ListPackage(props) {
               }}
             >
               <Box>
-                <video
-                  width={width < 1200 && width > 576 ? 130 : 200}
-                  height={width < 1200 && width > 576 ? 130 : 170}
-                  alt=""
-                  style={{
-                    mixBlendMode: width < 576 ? "normal" : "difference",
-                  }}
-                  playsInline
-                  muted
-                  autoPlay
-                  loop={true}
-                >
-                  <source
-                    src={
-                      packageAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          packageAvatar
-                        : images.free
-                    }
-                    type="video/mp4"
+                {isFetchListPackage ? (
+                  <BannerLoading
+                    width={width < 1200 && width > 576 ? 130 : 200}
+                    height={width < 1200 && width > 576 ? 130 : 170}
                   />
-                </video>
+                ) : (
+                  <video
+                    width={width < 1200 && width > 576 ? 130 : 200}
+                    height={width < 1200 && width > 576 ? 130 : 170}
+                    alt=""
+                    style={{
+                      mixBlendMode: width < 576 ? "normal" : "difference",
+                    }}
+                    playsInline
+                    muted
+                    autoPlay
+                    loop={true}
+                  >
+                    <source
+                      src={
+                        packageAvatar
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            packageAvatar
+                          : images.free
+                      }
+                      type="video/mp4"
+                    />
+                  </video>
+                )}
               </Box>
               <Box
                 sx={{
@@ -157,7 +236,7 @@ export default function ListPackage(props) {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     marginBottom: "15px",
-                    marginTop: packageName === "Subscription" ? "0px" : "25px"
+                    marginTop: packageName === "Subscription" ? "0px" : "25px",
                   }}
                 >
                   {packageName === "Subscription" ? (
@@ -233,10 +312,48 @@ export default function ListPackage(props) {
                         marginLeft: "4px !important",
                       }}
                     >
-                      Plus {packageFreeTicketTournament} Promotion Extra
+                      {packageFreeTicketTournament} extra plays
                     </Typography>
                   )}
                 </Box>
+                {packageName !== "Subscription" && (<Box sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    marginBottom: "15px",
+                    marginTop: packageName === "Subscription" ? "0px" : "25px",
+                  }}>
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                    >
+                      <g>
+                        <path
+                          fill="#14C58A"
+                          d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
+                        ></path>
+                        <path
+                          fill="#fff"
+                          d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: "11px",
+                        color: "white",
+
+                        fontWeight: "500 !important",
+                        marginLeft: "4px !important",
+                      }}
+                    >
+                        Use on any promotion
+                    </Typography>
+                </Box>)}
                 {packageName === "Subscription" ? (
                   <Box
                     sx={{
@@ -273,9 +390,7 @@ export default function ListPackage(props) {
                         fontWeight: "500 !important",
                       }}
                     >
-                      {packageReduceWatchAds === 0
-                        ? "No watching ads"
-                        : `Expiration 30 days`}
+                      Applies to all promotions
                     </Typography>
                   </Box>
                 ) : (
@@ -283,6 +398,95 @@ export default function ListPackage(props) {
                     sx={{
                       height: "16.5px",
                       marginBottom: "15px",
+                    }}
+                  ></Box>
+                )}
+                {packageName === "Subscription" ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginBottom: "15px",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                    >
+                      <g>
+                        <path
+                          fill="#14C58A"
+                          d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
+                        ></path>
+                        <path
+                          fill="#fff"
+                          d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: "11px",
+                        color: "white",
+
+                        fontWeight: "500 !important",
+                      }}
+                    >
+                      Every day for a month
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Box
+                  ></Box>
+                )}
+                {packageName === "Subscription" ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginBottom: "15px",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                    >
+                      <g>
+                        <path
+                          fill="#14C58A"
+                          d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
+                        ></path>
+                        <path
+                          fill="#fff"
+                          d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: "11px",
+                        color: "white",
+
+                        fontWeight: "500 !important",
+                      }}
+                    >
+                      Save over 20% more
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      height: "19.5px",
                     }}
                   ></Box>
                 )}
@@ -313,7 +517,7 @@ export default function ListPackage(props) {
                     display: "flex",
                     color: "white",
                     alignItems: "center",
-                    flexDirection:"column"
+                    flexDirection: "column",
                   }}
                 >
                   <Typography
@@ -321,124 +525,59 @@ export default function ListPackage(props) {
                     sx={{
                       fontWeight: "500 !important",
                       fontSize: "16px !important",
-                      
                     }}
                   >
                     ${packagePrice}
                   </Typography>
-                  {packageName === "Subscription" ? (<Typography
-                    sx={{
-                      fontWeight: "500 !important",
-                      fontSize: "12px !important",
-                      color:"#979797",
-                      marginTop:"5px !important"
-                    }}
-                  >
-                    Only $0.67/ day
-                  </Typography>) : ("")}
+                  {packageName === "Subscription" ? (
+                    <Typography
+                      sx={{
+                        fontWeight: "500 !important",
+                        fontSize: "12px !important",
+                        color: "#979797",
+                        marginTop: "5px !important",
+                      }}
+                    >
+                      Only $0.67/ day
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
                 </Box>
               )}
-              <button
-                onClick={() => {
-                  if (packageName === "Subscription") {
-                    if (token) {
-                      dispatch(
-                        saveDataPackage({
-                          packageName,
-                          packageAvatar,
-                          packagePrice,
-                          packageFreeTicketTournament,
-                          packageReduceWatchAds,
-                          id,
-                        })
-                      );
-                      dispatch(
-                        toggleCheckWallet({
-                          type: "subscription",
-                        })
-                      );
-                      dispatch(getIdPackage(id));
-                    }
+              <Box sx={{ margin: "12px 0px", width: "80%"}}>
+                <AnimButton
+                  text={
+                    uPack &&
+                    uPack?.remain !== "Expired" &&
+                    packageName === "Subscription"
+                      ? "Current pack"
+                      : uPack?.remain === "Expired"
+                      ? "Upgrade Pack"
+                      : "Buy Now"
                   }
-                  if (packageName === "Combo Extra 1") {
-                    if (token) {
-                      dispatch(
-                        saveDataPackage({
-                          packageName,
-                          packageAvatar,
-                          packagePrice,
-                          packageFreeTicketTournament,
-                          packageReduceWatchAds,
-                          id,
-                        })
-                      );
-                      dispatch(
-                        toggleCheckWallet({
-                          type: "combo1",
-                          gold: 0.99,
-                          total: 5,
-                        })
-                      );
-                      dispatch(getIdPackage(id));
-                    }
+                  type={
+                    uPack &&
+                    uPack?.remain !== "Expired" &&
+                    packageName === "Subscription"
+                      ? "disable"
+                      : "primary"
                   }
-                  if (packageName === "Combo Extra 2") {
-                    if (token) {
-                      dispatch(
-                        saveDataPackage({
-                          packageName,
-                          packageAvatar,
-                          packagePrice,
-                          packageFreeTicketTournament,
-                          packageReduceWatchAds,
-                          id,
-                        })
-                      );
-                      dispatch(
-                        toggleCheckWallet({
-                          type: "combo2",
-                          gold: 3.96,
-                          total: 20,
-                        })
-                      );
-                      dispatch(getIdPackage(id));
-                    }
-                  }
-                  if (token === null || token === "") {
-                    dispatch(toggleLoginDialog());
-                    return;
-                  }
-                }}
-                disabled={
-                  uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
-                    ? true
-                    : false
-                }
-                style={{
-                  border: "none",
-                  padding: "4px 30px",
-                  borderRadius: "7px",
-                  color: "white",
-                  background:
-                  uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
-                      ? "Gray"
-                      : "#9747FF",
-                  backdropFilter: " blur(4px)",
-                  fontSize: "11px",
-                  marginTop: "5px",
-                }}
-                className="mb-3"
-              >
-                <Typography
-                  sx={{
-                    fontSize: "11px !important",
+                  onClick={handleBuyPackage}
+                  style={{
+                    padding: "4px 3px",
+                    color: "white",
+                    background:
+                      uPack &&
+                      uPack?.remain !== "Expired" &&
+                      packageName === "Subscription"
+                        ? "Gray"
+                        : "#9747FF",
+                    backdropFilter: " blur(4px)",
+                    fontSize: "11px ",
                   }}
-                >
-                  {uPack && uPack?.remain !== "Expired" && packageName === "Subscription"
-                    ? "Current pack" : uPack?.remain === "Expired" ? "Upgrade Pack"
-                    : "Buy Now"}
-                </Typography>
-              </button>
+                ></AnimButton>
+              </Box>
             </Box>
           </Box>
         </Box>

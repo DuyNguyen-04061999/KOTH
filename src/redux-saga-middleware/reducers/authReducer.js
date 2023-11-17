@@ -305,7 +305,7 @@ const authReducer = (
     case "SAVE_CREATE_ACC_INFO": {
       return {
         ...state,
-        createAccInfo: payload.createAccInfo,
+        createAccInfo: payload,
       };
     }
     case "CLEAR_CREATE_ACC_INFO": {

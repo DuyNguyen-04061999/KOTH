@@ -1,84 +1,205 @@
 import { Dialog, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
-import React, { useState } from "react";
-import { images } from "../../../../utils/images";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import "./index.scss";
 import Slider from "react-slick";
+import { images } from "../../../../utils/images";
+import "./index.scss";
+
 export default function GamePreview() {
+  const settings = {
+    arrows: false,
+    slidesToShow: 1,
+  };
+  const slider = useRef();
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   const [open, setOpen] = useState(false);
-  const settings = {
-    dots: true,
-    arrows: false,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-  };
+  const [newArray, setNewArray] = useState([]);
+  useEffect(() => {
+    setNewArray([]);
+    for (
+      let i = 0;
+      i < detailTournament?.skin?.skinGame?.GamePreviews?.length;
+      i++
+    ) {
+      if (
+        detailTournament?.skin?.skinGame?.GamePreviews[i].previewType ===
+        "video"
+      ) {
+        setNewArray((prev) => [
+          detailTournament?.skin?.skinGame?.GamePreviews[i],
+          ...prev,
+        ]);
+      } else {
+        setNewArray((prev) => [
+          ...prev,
+          detailTournament?.skin?.skinGame?.GamePreviews[i],
+        ]);
+      }
+    }
+  }, [detailTournament]);
   return (
-    <Box
-      sx={{
-        padding:
-          device === "Desktop" ? "0px 0px 20px 0px" : "28px 28px 0px 28px",
-      }}
-    >
-      <Typography
+    newArray?.length > 0 && (
+      <Box
         sx={{
-          color: "#fff",
-          fontWeight: "600 !important",
-          fontSize: device === "Desktop" ? "18px" : "14px",
-          marginLeft: "0px",
+          paddingBottom: device === "Desktop" ? "20px" : "0px",
         }}
       >
-        Game Preview
-      </Typography>
-      <ScrollingCarousel>
-        {[1, 2, 3, 4, 5].map((item, index) => {
-          return (
-            <Box
-              key={index}
-              sx={{
-                boxSizing: "border-box",
-                padding: "8px",
+        <Typography
+          sx={{
+            color: "#fff",
+            fontWeight: "500 !important",
+            fontSize: device === "Desktop" ? "18px" : "14px",
+            marginLeft: "0px",
+            textAlign: "start",
+          }}
+        >
+          Game Preview
+        </Typography>
+        <ScrollingCarousel>
+          {newArray?.map((item, index) => {
+            return item?.previewType === "image" ? (
+              <Box
+                key={index}
+                sx={{
+                  boxSizing: "border-box",
+                  padding: "8px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    height: device === "Desktop" ? "250px" : "200px",
+                    width: "auto",
+                  }}
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                  component={"img"}
+                  src={
+                    item?.previewLink
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        item?.previewLink
+                      : images.GamePreview1
+                  }
+                ></Box>
+              </Box>
+            ) : (
+              <Box
+                key={index}
+                sx={{
+                  boxSizing: "border-box",
+                  padding: "8px",
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {" "}
+                <video
+                  autoPlay={false}
+                  playsInline={true}
+                  controls={true}
+                  style={{
+                    width: "auto",
+                    height: device === "Desktop" ? "250px" : "200px",
+                  }}
+                  src={
+                    item?.previewLink
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        item?.previewLink
+                      : images.GamePreview1
+                  }
+                ></video>
+              </Box>
+            );
+          })}
+        </ScrollingCarousel>
+        <Dialog
+          PaperProps={{
+            style: {
+              backgroundColor: "transparent",
+              boxShadow: "none",
+            },
+          }}
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+          sx={{ zIndex: "10000", backgroundColor: "none !important" }}
+        >
+          <Box sx={{ position: "relative", padding: "20px" }}>
+            {" "}
+            <Slider ref={slider} {...settings}>
+              {newArray
+                ?.filter((n) => {
+                  return n.previewType === "image";
+                })
+                ?.map((item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        boxSizing: "border-box",
+                        cursor: "pointer",
+                        display: "flex",
+                        justifyContent: "center",
+                        padding: "10px",
+                      }}
+                    >
+                      <Box
+                        component={"img"}
+                        sx={{ width: "100%" }}
+                        src={
+                          item?.previewLink
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              item?.previewLink
+                            : images.GamePreview1
+                        }
+                      ></Box>
+                    </Box>
+                  );
+                })}
+            </Slider>
+            <i
+              style={{
+                position: "absolute",
+                left: "0px",
+                top: "45%",
+                color: "#ffff",
+                fontSize: "30px",
                 cursor: "pointer",
               }}
-            >
-              <Box
-                onClick={() => {
-                  setOpen(true);
-                }}
-                component={"img"}
-                src={images.GamePreview1}
-              ></Box>
-            </Box>
-          );
-        })}
-      </ScrollingCarousel>
-      <Dialog
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
-        sx={{ zIndex: "10000" }}
-      >
-        {" "}
-        {/* <Box
-          sx={{
-            width: device === "Desktop" ? `${width / 5}px` : `${width / 1.5}px`,
-          }}
-          component={"img"}
-          src={images.GamePreview1}
-        ></Box> */}
-        <Slider {...settings}>
-          {[1, 2, 3, 4, 5, 6, 7]?.map((item, index) => {
-            return <Box key={index} component={"img"} src={images.GamePreview1}></Box>;
-          })}
-        </Slider>
-      </Dialog>
-    </Box>
+              onClick={() => {
+                slider.current.slickPrev();
+              }}
+              className="fa-solid fa-angle-left"
+            ></i>
+            <i
+              style={{
+                position: "absolute",
+                right: "0px",
+                top: "45%",
+                color: "#ffff",
+                fontSize: "30px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                slider.current.slickNext();
+              }}
+              className="fa-solid fa-angle-right"
+            ></i>
+          </Box>
+        </Dialog>
+      </Box>
+    )
   );
 }

@@ -3,17 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BannerTour, BannerTourMobile } from "../../../components/Banner";
-import FlipCountDownItem from "../../../components/FlipCountDownItem/FlipCountDownItem";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
 import { getAppType } from "../../../utils/helper";
-import { imageHome, images } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import { Package } from "../../PackagePage/component";
-import "./index.scss";
 import BannerHomePage from "./BannerHomePage";
+import "./index.scss";
 
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
@@ -31,7 +30,12 @@ export default function NewHomePage() {
     isFetchOngoing,
     isFetchUpcoming,
     isFetchEnded,
+    noDataUpcoming,
+    noDataHot,
+    noDataOncoming,
+    noDataEnd
   } = useSelector((state) => state.tournamentReducer);
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -85,7 +89,13 @@ export default function NewHomePage() {
   }, [dispatch]);
 
   const navigate = useNavigate();
-  const releaseTime = Date.parse("20 Nov 2023 00:00:00 CDT");
+
+  // const handleFetchTimeout = () => {
+  //   dispatch({
+  //     type: "CALL_LIST_TOURNAMENT",
+  //     payload: "ended",
+  //   });
+  // };
 
   return (
     <Container
@@ -107,7 +117,7 @@ export default function NewHomePage() {
         backgroundColor: "#1a151e",
       }}
     >
-      {process.env.REACT_APP_TEST === "test" && (
+      {/* {process.env.REACT_APP_TEST === "test" && (
         <div
           className="text-white p-2 ps-3"
           onClick={() => {
@@ -117,6 +127,9 @@ export default function NewHomePage() {
           Game Manager
         </div>
       )}{" "}
+      {process.env.REACT_APP_TEST === "test" && (
+        <Button onClick={() => handleFetchTimeout()}>Fetch Timeout</Button>
+      )} */}
       <Box
         sx={{
           paddingBottom: "70px",
@@ -217,6 +230,7 @@ export default function NewHomePage() {
               listData={hotTournament}
               loadingState={isFetchHot}
               typePromo={"hot"}
+              noData={noDataHot}
             />
           </Box>
         </Box>{" "}
@@ -283,6 +297,7 @@ export default function NewHomePage() {
               listData={ongoingTournament}
               loadingState={isFetchOngoing}
               typePromo={"ongoing"}
+              noData={noDataOncoming}
             />
           </Box>
         </Box>{" "}
@@ -339,6 +354,7 @@ export default function NewHomePage() {
             <ListPromotion
               listData={upcomingTournament}
               loadingState={isFetchUpcoming}
+              noData={noDataUpcoming}
               typePromo={"upcoming"}
             />
           </Box>
@@ -373,7 +389,7 @@ export default function NewHomePage() {
                 hotWeekTour &&
                 hotWeekTour?.bestUser &&
                 hotWeekTour?.bestUser?.tUser &&
-                hotWeekTour?.bestUser?.tUser?.userName
+                hotWeekTour?.bestUser?.tUser?.userNickName
               }
               endTime={hotWeekTour?.tournamentEndAt}
               userScore={hotWeekTour?.bestUser?.score}
@@ -415,7 +431,7 @@ export default function NewHomePage() {
               hotWeekTour &&
               hotWeekTour?.bestUser &&
               hotWeekTour?.bestUser?.tUser &&
-              hotWeekTour?.bestUser?.tUser?.userName
+              hotWeekTour?.bestUser?.tUser?.userNickName
             }
             endTime={hotWeekTour?.tournamentEndAt}
             userScore={hotWeekTour?.bestUser?.score}
@@ -487,6 +503,7 @@ export default function NewHomePage() {
               listData={endedTournament}
               loadingState={isFetchEnded}
               typePromo={"ended"}
+              noData={noDataEnd}
             />
           </Box>
         </Box>{" "}

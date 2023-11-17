@@ -15,27 +15,19 @@ const ListPromotion = (props) => {
     typePromo,
     itemOffSet = 0,
     itemQuantity = 12,
+    noData
   } = props;
 
   const { pathname } = useLocation();
-  if (pathname.includes("home") || pathname === "/") {
+  if (pathname.includes("home") || pathname === "/") { 
     return (
       <Box>
         {width < 576 ? (
-          // <Slider
-          //   dots={false}
-          //   slidesToShow={2.05}
-          //   arrows={false}
-          //   slidesToScroll={2}
-          //   infinite={false}
-          // >
-          // </Slider>
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-              {loadingState || listData === null ? (
-                <ListItemLoading></ListItemLoading>
-              ) : listData && listData?.length > 0 ? (
-                listData?.map((item, index) => {
+            {loadingState &&   <ListItemLoading></ListItemLoading> }
+              {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
+              {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
                   return (
                     <Box key={index}>
                       <ItemComponent
@@ -45,19 +37,15 @@ const ListPromotion = (props) => {
                       />
                     </Box>
                   );
-                })
-              ) : (
-                <ListEmpty textData={typePromo}></ListEmpty>
-              )}
+                })}
             </ScrollingCarousel>
           </Box>
         ) : (
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-              {loadingState && listData === null ? (
-                <ListItemLoading></ListItemLoading>
-              ) : listData && listData?.length > 0 ? (
-                listData?.map((item, index) => {
+              {loadingState &&   <ListItemLoading></ListItemLoading> }
+              {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
+              {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
                   return (
                     <Box key={index}>
                       <ItemComponent
@@ -67,10 +55,7 @@ const ListPromotion = (props) => {
                       />
                     </Box>
                   );
-                })
-              ) : (
-                <ListEmpty textData={typePromo}></ListEmpty>
-              )}
+                })}
             </ScrollingCarousel>
           </Box>
         )}
@@ -81,10 +66,9 @@ const ListPromotion = (props) => {
       <Box>
         {width < 576 ? (
           <Grid container rowSpacing={2}>
-             {loadingState || listData === null ? (
-                <ListItemLoading></ListItemLoading>
-              ) : listData && listData?.length > 0 ? (
-                listData?.map((item, index) => {
+            {loadingState && <ListItemLoading></ListItemLoading>}
+            {noData && !loadingState && <ListEmpty textData={typePromo}></ListEmpty>}
+            {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
                   return (
                     index >= itemOffSet &&
                     index <= itemOffSet + itemQuantity - 1 && (
@@ -97,15 +81,11 @@ const ListPromotion = (props) => {
                       </Grid>
                     )
                   );
-                })
-              ) : (
-                <ListEmpty textData={typePromo}></ListEmpty>
-              )}
+                })}
           </Grid>
         ) : (
           <Box>
-            {loadingState || listData === null ? (
-              <Box
+            {loadingState && <Box
                 sx={{
                   display: width < 576 ? "flex" : "grid",
                   flexWrap: "wrap",
@@ -115,9 +95,9 @@ const ListPromotion = (props) => {
                 }}
               >
                 <ListItemLoading></ListItemLoading>
-              </Box>
-            ) : listData && listData?.length > 0 ? (
-              <Box
+              </Box>}
+            {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
+            {!noData && !loadingState && listData && listData.length > 0 &&  <Box
                 sx={{
                   display: width < 576 ? "flex" : "grid",
                   flexWrap: "wrap",
@@ -143,10 +123,8 @@ const ListPromotion = (props) => {
                     )
                   );
                 })}
-              </Box>
-            ) : (
-              <ListEmpty textData={typePromo} />
-            )}
+              </Box>}
+            
           </Box>
         )}
       </Box>

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { hideToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import "./index.scss";
 
 export default function ToastNotification() {
   const {
@@ -66,15 +67,16 @@ export default function ToastNotification() {
           toast.info("This is default notify!");
       }
     }
-    setTimeout(() => {
+    const timeId = setTimeout(() => {
       dispatch(hideToastNotification());
-    }, 3000);
+    }, 2000);
+    return () => clearTimeout(timeId);
   }, [
     messageToastNotification,
     isShowToastNotification,
     typeToastNotification,
     dispatch,
-    width
+    width,
   ]);
 
   return <></>;

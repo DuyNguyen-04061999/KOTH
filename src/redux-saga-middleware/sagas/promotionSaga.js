@@ -25,6 +25,10 @@ function* getPromotionDetail(dataRequest) {
   } catch (error) {
     proDetailCount = 0
     yield put(getRefactorDetailPromotionFail())
+    yield put(showToastNotification({
+      type: error?.type || "error",
+      message: error?.message || ""
+    }))
   }
 }
 
@@ -47,6 +51,10 @@ function* getPromotionDetailToken(dataRequest) {
   } catch (error) {
     proDetailAuthCount = 0
     yield put(getRefactorDetailAuthPromotionFail());
+    yield put(showToastNotification({
+      type: error?.type || "error",
+      message: error?.message || ""
+    }))
   }
 }
 

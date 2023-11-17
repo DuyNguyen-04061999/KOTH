@@ -7,6 +7,13 @@ export const toggleProfileDialog = (data) => {
   };
 };
 
+export const closeProfileDialog = (data) => {
+  return {
+    type: "CLOSE_PROFILE_DIALOG",
+    payload: data,
+  };
+};
+
 export const saveDataProfile = (data) => {
   return {
     type: "SAVE_DATA_PROFILE",
@@ -88,6 +95,8 @@ const profileReducer = (
         lastName: "",
         deleteFriendValue: "",
       };
+    case "CLOSE_PROFILE_DIALOG":
+      return { ...state, isProfileDialog: false };
     default:
       return state;
   }

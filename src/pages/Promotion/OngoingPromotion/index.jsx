@@ -20,7 +20,7 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { ongoingTournament, isFetchOngoing } = useSelector(
+  const { ongoingTournament, isFetchOngoing, noDataOncoming } = useSelector(
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
@@ -128,6 +128,7 @@ export default function HotTournament() {
                   itemOffSet={itemOffSet}
                   itemQuantity={itemQuantity}
                   typePromo={"ongoing"}
+                  noData={noDataOncoming}
                 />
               </Box>
               <Box sx={{ margin: "36px 0px" }}>
@@ -159,6 +160,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
+                paddingBottom:"50px"
               }}
             >
               <Typography
@@ -197,6 +199,7 @@ export default function HotTournament() {
                   itemOffSet={itemOffSet}
                   itemQuantity={itemQuantity}
                   typePromo={"ongoing"}
+                  noData={noDataOncoming}
                 />
               </Box>
               <Box

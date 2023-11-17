@@ -131,7 +131,7 @@ export default function NewFooter() {
           </Typography>
           <Box
             component={"a"}
-            href="https://t.me/play4promo"
+            href="mailto:support@play4promo.com"
             target="_blank"
             sx={{
               textDecoration:"none"

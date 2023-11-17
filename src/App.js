@@ -12,6 +12,7 @@ import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
 import { ScrollToTopURL } from "./components/ScrollToTop";
+import TestSkeleton from "./components/TestSkeleton";
 import ToastNotification from "./components/Toast/ToastNotification";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
@@ -19,6 +20,7 @@ import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import GamePage from "./pages/GameManager/GamePage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
+import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
 import GameLobby from "./pages/GamePlay";
@@ -34,27 +36,32 @@ import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
 import {
-  hideToastNotification, showToastNotification
+  hideToastNotification,
+  showToastNotification,
 } from "./redux-saga-middleware/reducers/alertReducer";
-import {
-  getListBet
-} from "./redux-saga-middleware/reducers/appReducer";
+import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
-  updateSubPackageId
+  updateSubPackageId,
 } from "./redux-saga-middleware/reducers/authReducer";
-import { pushChatWorld, pushfriendList, updateChatWorld, updateFriendList } from "./redux-saga-middleware/reducers/chatReducer";
+import {
+  pushChatWorld,
+  pushfriendList
+} from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
   updateDeviceType,
 } from "./redux-saga-middleware/reducers/deviceReducer";
 import {
   changeOrientation,
-  updateReward
+  updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
-import { updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
+import { toggleAlertStripeProcess } from "./redux-saga-middleware/reducers/stripeReducer";
+import {
+  updateCountTicket,
+  updateUserGoldAfterPaypal,
+} from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
@@ -102,10 +109,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if(socket && (tokenUser || token)) {
+    const token = localStorage.getItem("token");
+    if (socket && (tokenUser || token)) {
       socket?.emit("loginSocial", {
-        token: tokenUser || token
+        token: tokenUser || token,
       });
     }
   }, [tokenUser, socket]);
@@ -162,40 +169,36 @@ function App() {
   useEffect(() => {}, [orientation, startGameCheck]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     if (!tokenUser && !token) {
       socket?.emit("listMessageGlobal");
     }
   }, [socket, tokenUser]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
 
     if (socket) {
       socket?.once("connect", (data) => {});
-      
 
-      socket?.on("disconnect", (data) => {
-        
+      socket?.on("disconnect", (data) => {});
+
+      socket?.on("heartbeat", (data) => {});
+
+      socket?.on("error", (data) => {});
+
+      socket?.on("warning", (data, type) => {
+        if (type && type !== "get") {
+          store.dispatch(
+            showToastNotification({
+              type: "warning",
+              message: data || "",
+            })
+          );
+        }
       });
 
-      socket?.on("heartbeat", (data) => {
-        
-      });
-
-      socket?.on("error", (data) => {
-        
-      });
-
-      socket?.on("warning", (data) => {
-        store.dispatch(showToastNotification({
-          type: "warning",
-          message: data || ""
-        }))
-      });
-      socket?.on("success", (data) => {
-        
-      });
+      socket?.on("success", (data) => {});
 
       socket?.on("getListFriendSuccess", (data) => {
         store.dispatch(pushfriendList(data));
@@ -209,20 +212,20 @@ function App() {
         store.dispatch(pushChatWorld(data));
       });
 
-      socket?.on("chatSuccess", (data) => {
-        if (token) {
-          socket?.emit("listFriend");
-        }
-        store.dispatch(updateChatWorld(data));
-      });
+      // socket?.on("chatSuccess", (data) => {
+      //   if (token || tokenUser) {
+      //     socket?.emit("listFriend");
+      //   }
+      //   store.dispatch(updateChatWorld(data));
+      // });
 
       socket?.on("disconnect", (data) => {
-          if((tokenUser || token)) {
-            socket?.emit("loginSocial", {
-              token: tokenUser || token
-            });
-          }
-        });
+        if (tokenUser || token) {
+          socket?.emit("loginSocial", {
+            token: tokenUser || token,
+          });
+        }
+      });
 
       socket?.on("loginSocialSuccess", () => {
         socket?.emit("listMessage");
@@ -234,9 +237,9 @@ function App() {
       });
 
       socket?.on("reconnectSuccess", () => {
-        if((tokenUser || token)) {
+        if (tokenUser || token) {
           socket?.emit("loginSocial", {
-            token: tokenUser || token
+            token: tokenUser || token,
           });
         }
       });
@@ -256,22 +259,26 @@ function App() {
         store.dispatch(updateCountTicket(quantity || 0));
       });
 
-      socket?.on("addFriendSuccess", (data) => {
-        store.dispatch(showToastNotification({
-          type: "success",
-          message: "Add friend successfully!"
-        }))
-        store.dispatch(updateFriendList(data));
-      })
+      // socket?.on("addFriendSuccess", (data) => {
+      //   store.dispatch(
+      //     showToastNotification({
+      //       type: "success",
+      //       message: "Add friend successfully!",
+      //     })
+      //   );
+      //   store.dispatch(updateFriendList(data));
+      // });
 
-      socket?.on("deleteFriendSuccess", (data) => {
-        store.dispatch(showToastNotification({
-          type: "success",
-          message: "Delete friend successfully!"
-        }))
-        socket?.emit("listFriend");
-        store.dispatch(deleteFriendSuccesFully("success"));
-      })
+      // socket?.on("deleteFriendSuccess", (data) => {
+      //   store.dispatch(
+      //     showToastNotification({
+      //       type: "success",
+      //       message: "Delete friend successfully!",
+      //     })
+      //   );
+      //   socket?.emit("listFriend");
+      //   store.dispatch(deleteFriendSuccesFully("success"));
+      // });
 
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
@@ -287,23 +294,23 @@ function App() {
       });
     }
     return () => {
+      socket?.off("warning");
       socket?.disconnect();
     };
   }, [socket, tokenUser]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if(!tokenUser || !token) {
-      
+    const token = localStorage.getItem("token");
+    if (!tokenUser || !token) {
     }
-  }, [tokenUser])
+  }, [tokenUser]);
 
   useEffect(() => {
     const onPageLoad = () => {
-      const token =localStorage.getItem("token")
-      if(socket && (tokenUser || token)) {
+      const token = localStorage.getItem("token");
+      if (socket && (tokenUser || token)) {
         socket?.emit("loginSocial", {
-          token: tokenUser || token
+          token: tokenUser || token,
         });
       }
     };
@@ -322,7 +329,7 @@ function App() {
       store.dispatch(getListBet());
     }
   });
-  
+
   const getMobileOS = () => {
     const ua = navigator.userAgent;
     if (/android/i.test(ua)) {
@@ -366,7 +373,7 @@ function App() {
   });
 
   useEffect(() => {
-    store.dispatch(getListPackage())
+    store.dispatch(getListPackage());
   }, []);
 
   useEffect(() => {
@@ -386,9 +393,7 @@ function App() {
           }
         );
         return response;
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     const params = new URLSearchParams(window.location.search);
     const paymentId = params.get("paymentId");
@@ -399,7 +404,23 @@ function App() {
           params.get("paymentId"),
           params.get("PayerID")
         );
-        console.log("Paypal success: ", response);
+
+        if (response && response?.data?.data?.gold) {
+          store.dispatch(
+            toggleAlertStripeProcess({
+              type: "success",
+            })
+          );
+          store.dispatch(
+            updateUserGoldAfterPaypal(Number(response?.data?.data?.gold) || 0)
+          );
+        } else {
+          store.dispatch(
+            toggleAlertStripeProcess({
+              type: "error",
+            })
+          );
+        }
       }
     })();
   }, []);
@@ -507,6 +528,10 @@ function App() {
                     element={<UploadSkinPage />}
                   />
                   <Route
+                    path="game/:id/upload-game-preview"
+                    element={<UploadGamePreview />}
+                  />
+                  <Route
                     path="game/:id/delete-skins"
                     element={<DeleteSkinPage />}
                   />
@@ -524,6 +549,7 @@ function App() {
                     path="transactions/:id"
                     element={<TransactionDetailPage />}
                   />
+                  <Route path="test-skeleton" element={<TestSkeleton />} />
                   <Route path="*" element={<Navigate to="/home" />} />
                 </Route>
               </Routes>

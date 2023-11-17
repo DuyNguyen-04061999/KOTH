@@ -5,9 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { changeRouter } from "../../../redux-saga-middleware/reducers/appReducer";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  openLoginDialog,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import { clickTabChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { images280423_l } from "../../../utils/images280423_l";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ChatFriendList from "../ChatFriendList";
 import ChatWorldList from "../ChatWorldList";
 
@@ -45,7 +49,9 @@ const ChatDrawer = () => {
   const [socket, setSocket] = useState(null);
   const { tabChat, chatPopup } = useSelector((state) => state.chatReducer);
   const dispatch = useDispatch();
-  const { tokenUser, resetInputValue } = useSelector((state) => state.userReducer);
+  const { tokenUser, resetInputValue } = useSelector(
+    (state) => state.userReducer
+  );
   const { startGameCheck } = useSelector((state) => state.appReducer);
   useEffect(() => {
     if (resetInputValue === "logoutSuccess" && chatInput && chatInput.current) {
@@ -65,31 +71,41 @@ const ChatDrawer = () => {
         chatInput.current.childNodes[0].value &&
         chatInput.current.childNodes[0].value.trim() !== ""
       ) {
-        socket?.emit("chat", {
-          type: "World",
-          toId: 0,
-          content: chatInput.current.childNodes[0].value,
-        });
-        chatInput.current.reset();
-      }
-    }
-  };
-  const handleOnClickSendMessage = () => {
-      if (chatInput.current) {
-        if (
-          chatInput.current.childNodes[0] &&
-          chatInput.current.childNodes[0].value &&
-          chatInput.current.childNodes[0].value.trim() !== ""
-        ) {
+        if (tokenUser) {
           socket?.emit("chat", {
             type: "World",
             toId: 0,
             content: chatInput.current.childNodes[0].value,
           });
           chatInput.current.reset();
+        } else {
+          dispatch(openLoginDialog());
         }
       }
+    }
   };
+  const handleOnClickSendMessage = () => {
+    if (chatInput.current) {
+      if (
+        chatInput.current.childNodes[0] &&
+        chatInput.current.childNodes[0].value &&
+        chatInput.current.childNodes[0].value.trim() !== ""
+      ) {
+        if (tokenUser) {
+          socket?.emit("chat", {
+            type: "World",
+            toId: 0,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        } else {
+          dispatch(openLoginDialog());
+        }
+      }
+    }
+  };
+
+  const { width } = useWindowDimensions();
 
   return ReactDOM.createPortal(
     <Drawer
@@ -107,7 +123,7 @@ const ChatDrawer = () => {
           borderLeft: "none",
         },
       }}
-      open={chatPopup && !startGameCheck}
+      open={(chatPopup && width > 1200) || (!startGameCheck && chatPopup)}
       variant="persistent"
       anchor="right"
     >

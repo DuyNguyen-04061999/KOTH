@@ -2,9 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clickTab
-} from "../../../../redux-saga-middleware/reducers/authReducer";
+import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   resendOtpReady,
   sendOtpReady,
@@ -17,7 +15,9 @@ export default function OTPResetPassword() {
   const { forgotPassUsername, forgotPassEmail, forgotPassPhone } = useSelector(
     (state) => state.authReducer
   );
-  const {  typeVerifyOTP, resenOTPSuccess } = useSelector((state) => state.userReducer);
+  const { typeVerifyOTP, resenOTPSuccess, isVerifyOTP } = useSelector(
+    (state) => state.userReducer
+  );
 
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
@@ -37,7 +37,7 @@ export default function OTPResetPassword() {
   }, [timeLeft]);
 
   const handleVerifyOTP = () => {
-    if(typeVerifyOTP === "forget_email") {
+    if (typeVerifyOTP === "forget_email") {
       dispatch(
         sendOtpReady({
           otp: otp,
@@ -46,7 +46,7 @@ export default function OTPResetPassword() {
           type: "password",
         })
       );
-    } else if(typeVerifyOTP === "forget_phone") {
+    } else if (typeVerifyOTP === "forget_phone") {
       dispatch(
         sendOtpReady({
           otp: otp,
@@ -59,25 +59,28 @@ export default function OTPResetPassword() {
   };
 
   useEffect(() => {
-    if(resenOTPSuccess) {
+    if (resenOTPSuccess) {
       setTimeLeft(60);
     }
-
-  }, [resenOTPSuccess])
+  }, [resenOTPSuccess]);
 
   const handleResendOTP = () => {
-    if(typeVerifyOTP === "forget_email") {
-      dispatch(resendOtpReady({
-        username: forgotPassUsername,
-        email: forgotPassEmail,
-        type: "password",
-      }));
-    } else if(typeVerifyOTP === "forget_phone") {
-      dispatch(resendOtpReady({
-        username: forgotPassUsername,
-        phone: forgotPassPhone,
-        type: "password",
-      }));
+    if (typeVerifyOTP === "forget_email") {
+      dispatch(
+        resendOtpReady({
+          username: forgotPassUsername,
+          email: forgotPassEmail,
+          type: "password",
+        })
+      );
+    } else if (typeVerifyOTP === "forget_phone") {
+      dispatch(
+        resendOtpReady({
+          username: forgotPassUsername,
+          phone: forgotPassPhone,
+          type: "password",
+        })
+      );
     }
   };
 
@@ -136,8 +139,8 @@ export default function OTPResetPassword() {
                 textAlign: "center",
                 fontSize: width < 576 ? "12px" : "20px",
                 color: "white",
-                border:"2px solid white",
-                borderRadius:"4px"
+                border: "2px solid white",
+                borderRadius: "4px",
               }}
               type="number"
               maxLength={1}
@@ -186,21 +189,27 @@ export default function OTPResetPassword() {
       >
         <Box sx={{ width: "48%" }}>
           <AnimButton
-            type={"ghost"}
-            text={"BACK"}
+            type="ghost"
+            text="BACK"
             onClick={() => dispatch(clickTab("forgetPass"))}
-          >
-            Back
-          </AnimButton>
+          />
         </Box>
         <Box sx={{ width: "48%" }}>
-          <AnimButton
-            type={otp?.length < 6 ? "disabled" : "primary"}
-            text={"NEXT"}
-            onClick={() => handleVerifyOTP()}
-          >
-            Next
-          </AnimButton>
+          {otp?.length < 6 ? (
+            <AnimButton
+              type="disable"
+              text="NEXT"
+              onClick={() => handleVerifyOTP()}
+            />
+          ) : isVerifyOTP ? (
+            <AnimButton type="loading" text="NEXT"/>
+          ) : (
+            <AnimButton
+              type="primary"
+              text="NEXT"
+              onClick={() => handleVerifyOTP()}
+            />
+          )}
         </Box>
       </Box>
     </Box>

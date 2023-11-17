@@ -1028,6 +1028,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                                 textAlign: "start",
                                 fontWeight: "500 !important",
                                 fontSize: "13px",
+                                whiteSpace: "pre-wrap"
                               }}
                             >
                               {item}
@@ -1062,7 +1063,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                         marginTop: "10px",
                       }}
                     >
-                      {readMore ? "Read less" : "Read more"}
+                      {readMore ? "Show less" : "Show more"}
                     </Typography>
                   )}
               </Box>
@@ -1154,7 +1155,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     <AnimButton
                       onClick={handleJoinTour}
                       text={"Join"}
-                      type={"primary"}
+                      type={"disable"}
                     />
                   )
                 ) : (
@@ -1164,16 +1165,16 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                     {detailTournament?.tournamentStatus !== 2 && (
                       <AnimButton
                         onClick={handlePlayTour}
-                        type={"highlight"}
-                        text={"Play"}
+                        type="highlight"
+                        text="Play"
                       />
                     )}
 
                     {detailTournament?.tournamentStatus !== 2 && (
                       <AnimButton
                         onClick={handleClickOpen}
-                        text={"Buy Extra"}
-                        type={"primary"}
+                        text="Buy Extra"
+                        type="primary"
                       />
                     )}
                   </Box>

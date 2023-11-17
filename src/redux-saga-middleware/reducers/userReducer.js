@@ -273,6 +273,34 @@ export const updateVerifyOTPType = (data) => {
   } 
 }
 
+export const updateUserGoldAfterPaypal = (data) => {
+  return {
+    type: "UPDATE_USER_GOLD_AFTER_PAYPAL",
+    payload: data
+  } 
+}
+
+export const getMyInfor = (data) => {
+  return {
+    type: "GET_MY_INFOR",
+    payload: data
+  }
+}
+
+export const getMyInforSuccess = (data) => {
+  return {
+    type: "GET_MY_INFOR_SUCCESS",
+    payload: data
+  }
+}
+
+export const getMyInforFail = (data) => {
+  return {
+    type: "GET_MY_INFOR_FAIL",
+    payload: data
+  }
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -303,7 +331,9 @@ const userReducer = (
     userAvatar: "",
     isGetUserByUsername: false,
     typeVerifyOTP: "",
-    resenOTPSuccess: false
+    resenOTPSuccess: false,
+    isVerifyOTP: false,
+    isGetMyInfo: false
   },
   action
 ) => {
@@ -384,6 +414,7 @@ const userReducer = (
         ...state,
         isUpdateProfile: false,
         userAvatar: payload?.avatar,
+        user: {...state.user, userNickName: payload?.nickName}
       };
     case "UPDATE_PROFILE_USER_FAIL":
       return { ...state, isUpdateProfile: false};
@@ -409,13 +440,13 @@ const userReducer = (
         isLogout: false,
       };
     case "GET_ID_PACKAGE":
-      return { ...state, idPackage: payload };
+      return { ...state, idPackage: payload};
     case "SEND_OTP_READY":
-      return { ...state };
+      return { ...state,  isVerifyOTP: true};
     case "SEND_OTP_SUCCESS":
-      return { ...state, tokenResetPass: payload?.token };
+      return { ...state, tokenResetPass: payload?.token,isVerifyOTP: false };
     case "SEND_OTP_FAIL":
-      return { ...state };
+      return { ...state, isVerifyOTP: false };
     case "FORGET_PASSWORD_READY":
       return { ...state, isForgetPassword: true };
     case "FORGET_PASSWORD_FAIL":
@@ -446,6 +477,10 @@ const userReducer = (
     case "UPDATE_COUNT_EXTRA_AFTER_PLAY_GAME": return { ...state, countTicket: state.countTicket - payload };
     case "UPDATE_COUNT_TICKET": return { ...state, countTicket: state.countTicket + payload };
     case "UPDATE_VERIFY_OTP_TYPE": return {...state, typeVerifyOTP: payload || ""}
+    case "UPDATE_USER_GOLD_AFTER_PAYPAL": return {...state, user: {...state?.user, userGold: Number(state?.user?.userGold) + payload || 0}}
+    case "GET_MY_INFOR": return {...state, isGetMyInfo: true}
+    case "GET_MY_INFOR_SUCCESS": return {...state, isGetMyInfo: false}
+    case "GET_MY_INFOR_FAIL": return {...state, isGetMyInfo: false}
     default:
       return state;
   }
