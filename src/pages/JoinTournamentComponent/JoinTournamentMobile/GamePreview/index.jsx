@@ -103,7 +103,7 @@ export default function GamePreview() {
               >
                 {" "}
                 <video
-                  autoPlay={true}
+                  autoPlay={false}
                   playsInline={true}
                   controls={true}
                   style={{
