@@ -39,7 +39,7 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { endedTournament, isFetchEnded } = useSelector(
+  const { endedTournament, isFetchEnded,noDataEnd } = useSelector(
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
@@ -152,7 +152,8 @@ export default function HotTournament() {
                   loadingState={isFetchEnded}
                   itemOffSet={itemOffSet}
                   itemQuantity={itemQuantity}
-                  typePromo={"ongoing"}
+                  typePromo={"Ended"}
+                  noData={noDataEnd}
                 />
               </Box>
               {!isFetchEnded && data !== null && data?.length > 0 && (
@@ -219,7 +220,9 @@ export default function HotTournament() {
                   loadingState={isFetchEnded}
                   itemOffSet={itemOffSet}
                   itemQuantity={itemQuantity}
-                  typePromo={"ongoing"}
+                  typePromo={"Ended"}
+                  noData={noDataEnd}
+
                 />
               </Box>
               <Box
