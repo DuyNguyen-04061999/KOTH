@@ -59,26 +59,6 @@ export default function OTPVerifyAccount() {
           })
         );
         break;
-      case "forget_email":
-        dispatch(
-          sendOtpReady({
-            otp: otp,
-            type: "password",
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-          })
-        );
-        break;
-      case "forget_phone":
-        dispatch(
-          sendOtpReady({
-            otp: otp,
-            type: "password",
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-          })
-        );
-        break;
       default:
         return false;
     }
@@ -105,24 +85,6 @@ export default function OTPVerifyAccount() {
           resendOtpReady({
             username: user?.userName,
             type: "register",
-          })
-        );
-        break;
-      case "forget_email":
-        dispatch(
-          resendOtpReady({
-            username: createAccInfo?.username,
-            email: createAccInfo?.email,
-            type: "password",
-          })
-        );
-        break;
-      case "forget_phone":
-        dispatch(
-          resendOtpReady({
-            username: createAccInfo?.username,
-            phone: createAccInfo?.phone,
-            type: "password",
           })
         );
         break;
@@ -169,13 +131,7 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          {typeVerifyOTP === "register" || typeVerifyOTP === "reVerify"
-            ? ` Please enter the 6-digit verification code that was sent to ${user?.userEmail} to verify your account`
-            : typeVerifyOTP === "forget_phone"
-            ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.phone} to verify your account`
-            : typeVerifyOTP === "forget_email"
-            ? `Please enter the 6-digit verification code that was sent to ${createAccInfo?.email} to verify your account`
-            : ``}
+          {` Please enter the 6-digit verification code that was sent to ${createAccInfo?.email ? createAccInfo?.email : createAccInfo?.phone} to verify your account`}
         </Typography>
       </Box>
       <Box

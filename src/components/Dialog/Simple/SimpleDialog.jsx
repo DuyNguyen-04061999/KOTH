@@ -31,7 +31,7 @@ export default function SimpleDialog(props) {
   const handleClose = () => {
     if (currentTab === "otpVerifyAccount") {
       dispatch(closeLoginDialog());
-      dispatch(clickTab(""));
+      dispatch(clickTab("login"));
       dispatch(logoutReady());
     } else {
       dispatch(closeLoginDialog());
