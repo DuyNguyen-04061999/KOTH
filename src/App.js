@@ -12,6 +12,7 @@ import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
 import { ScrollToTopURL } from "./components/ScrollToTop";
+import TestSkeleton from "./components/TestSkeleton";
 import ToastNotification from "./components/Toast/ToastNotification";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
@@ -19,6 +20,7 @@ import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import GamePage from "./pages/GameManager/GamePage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
+import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
 import GameLobby from "./pages/GamePlay";
@@ -44,8 +46,7 @@ import {
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
-  pushfriendList,
-  updateFriendList,
+  pushfriendList
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
@@ -56,7 +57,6 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
 import { toggleAlertStripeProcess } from "./redux-saga-middleware/reducers/stripeReducer";
 import {
   updateCountTicket,
@@ -67,8 +67,6 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-import TestSkeleton from "./components/TestSkeleton";
-import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -261,26 +259,26 @@ function App() {
         store.dispatch(updateCountTicket(quantity || 0));
       });
 
-      socket?.on("addFriendSuccess", (data) => {
-        store.dispatch(
-          showToastNotification({
-            type: "success",
-            message: "Add friend successfully!",
-          })
-        );
-        store.dispatch(updateFriendList(data));
-      });
+      // socket?.on("addFriendSuccess", (data) => {
+      //   store.dispatch(
+      //     showToastNotification({
+      //       type: "success",
+      //       message: "Add friend successfully!",
+      //     })
+      //   );
+      //   store.dispatch(updateFriendList(data));
+      // });
 
-      socket?.on("deleteFriendSuccess", (data) => {
-        store.dispatch(
-          showToastNotification({
-            type: "success",
-            message: "Delete friend successfully!",
-          })
-        );
-        socket?.emit("listFriend");
-        store.dispatch(deleteFriendSuccesFully("success"));
-      });
+      // socket?.on("deleteFriendSuccess", (data) => {
+      //   store.dispatch(
+      //     showToastNotification({
+      //       type: "success",
+      //       message: "Delete friend successfully!",
+      //     })
+      //   );
+      //   socket?.emit("listFriend");
+      //   store.dispatch(deleteFriendSuccesFully("success"));
+      // });
 
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));

@@ -30,7 +30,7 @@ const BannerTour = (props) => {
         background: `url(${imageHome.BannerTourBg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        padding: "0 0 0 46px",
+        padding: width < 992 ? "0px" : "0 0 0 46px",
       }}
     >
       <Box
@@ -38,11 +38,12 @@ const BannerTour = (props) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          margin:width < 992 ?  "auto" : "",
         }}
       >
         <Box
           sx={{
-            // marginBottom: "8px", 
+            // marginBottom: "8px",
             padding: "6px",
             backgroundColor: "#FD9800",
             borderRadius: "10px",
@@ -54,28 +55,28 @@ const BannerTour = (props) => {
               textTransform: "uppercase",
               fontSize: "20px",
               fontWeight: 700,
-              lineHeight:1.5
+              lineHeight: 1.5,
             }}
           >
             Promotion of the week
           </Typography>
         </Box>
-        <Box> 
+        <Box>
           <Typography
             sx={{
               fontSize: "20px",
               color: "white",
               fontWeight: 700,
-              textTransform: "uppercase", 
-              lineHeight:1.5,
-              marginTop:"10px"
+              textTransform: "uppercase",
+              lineHeight: 1.5,
+              marginTop: "10px",
             }}
           >
             {tournamentName}
           </Typography>
-        </Box> 
+        </Box>
 
-        <Box sx={{ width: "436px", marginBottom: "0px", marginTop:"12px" }}>
+        <Box sx={{ width: "436px", marginBottom: "0px", marginTop: "12px" }}>
           <Typography
             sx={{
               width: "100%",
@@ -147,7 +148,7 @@ const BannerTour = (props) => {
               fontSize: width < 1024 ? "12px" : "24px",
               cursor: "pointer",
               fontWeight: 600,
-              width: width < 576 ?  "70px" : "auto"
+              width: width < 576 ? "70px" : "auto",
             }}
           >
             Play now

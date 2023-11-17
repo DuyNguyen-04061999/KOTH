@@ -81,7 +81,7 @@ export default function ForgetPassword() {
         background: "#271C39",
         height: "100%",
         justifyContent: "center",
-        padding: device === "Mobile" ? "0px 20px 0px 20px" : "0px 30px",
+        padding: device === "Mobile" ? "0px 20px 0px 20px" : "0px 24px",
         boxSizing: "border-box",
         width: "100%",
         position: device === "Desktop" ? "relative" : "none",
@@ -93,7 +93,7 @@ export default function ForgetPassword() {
         <Typography
           sx={{
             color: "#ffff",
-            fontSize: device === "Mobile" ? `${width / 14}px` : "28px",
+            fontSize: width < 992 ? `20px` : "28px",
             textAlign: "center",
             fontWeight: "700",
           }}
@@ -104,7 +104,7 @@ export default function ForgetPassword() {
           sx={{
             color: "#979797",
             textAlign: "center",
-            fontSize: device === "Mobile" ? `${width / 27}px` : "14px",
+            fontSize: width < 992 ? `16px` : "14px",
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
@@ -304,8 +304,9 @@ export default function ForgetPassword() {
           sx={{
             marginTop: "16px",
             display: "flex",
-            alignItems: "center",
+            alignItems: width < 992 && width > 576 ? "flex-end" :  "center",
             justifyContent: "flex-end",
+            flexDirection: width < 992 && width > 576 ? "column" : "row",
           }}
         >
           <Typography
@@ -345,7 +346,7 @@ export default function ForgetPassword() {
             (optionEmail && username && email && !emailError) ||
             (!optionEmail && username && phoneNumber && !phoneNumberError)
           ) ? (
-            <AnimButton type="disable" text="NEXT"  />
+            <AnimButton type="disable" text="NEXT" />
           ) : isForgetPassword ? (
             <AnimButton type="loading" text="NEXT" isSubmitBtn />
           ) : (

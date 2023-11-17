@@ -1,6 +1,4 @@
-import { PersonAddAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
-import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Avatar, Box } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -596,7 +594,7 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {tokenUser &&
+          {/* {tokenUser &&
             (checkExistInFriendList() === true ? (
               <MenuItem
                 sx={{
@@ -636,7 +634,7 @@ export default function ChatWorldList() {
                   Add Friend
                 </Box>
               </MenuItem>
-            ))}
+            ))} */}
         </Menu>
         {renderChat}
         <span ref={endOfMessageRef}></span>

@@ -117,7 +117,7 @@ export default function SimpleDialog(props) {
             }}
           >
             <Grid container flexWrap={"nowrap"}>
-              <Grid item md={6}>
+              <Grid item md={6} sx={{maxWidth:"50%"}}>
                 <Box
                   sx={{
                     backgroundColor: "#291e3b",

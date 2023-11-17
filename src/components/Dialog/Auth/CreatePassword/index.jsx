@@ -95,7 +95,7 @@ export default function CreatePassword() {
         <Typography
           sx={{
             color: "#ffff",
-            fontSize: device === "Mobile" ? `${width / 14}px` : "28px",
+            fontSize: width < 992 ? `20px` : "24px",
             textAlign: "center",
             fontWeight: "700",
           }}
@@ -106,7 +106,7 @@ export default function CreatePassword() {
           sx={{
             color: "#979797",
             textAlign: "center",
-            fontSize: device === "Mobile" ? `${width / 27}px` : "14px",
+            fontSize: width < 992 ? `16px` : "16px",
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
@@ -205,7 +205,7 @@ export default function CreatePassword() {
         </Box>
         <Box className="mb-3 mt-3">
           {" "}
-          <Box className="d-flex align-items-center ms-3">
+          <Box className="d-flex align-items-center">
             {" "}
             {!passwordError ? (
               <svg
@@ -259,7 +259,7 @@ export default function CreatePassword() {
               Password must be at least 6 characters long.{" "}
             </Typography>{" "}
           </Box>{" "}
-          <Box className="d-flex align-items-center ms-3 text-white">
+          <Box className="d-flex align-items-center  text-white">
             {" "}
             {!passwordError ? (
               <svg
@@ -313,7 +313,7 @@ export default function CreatePassword() {
               Password must have at least one non letter.{" "}
             </Typography>{" "}
           </Box>{" "}
-          <Box className="d-flex align-items-center ms-3 text-white">
+          <Box className="d-flex align-items-center  text-white">
             {" "}
             {!passwordError ? (
               <svg
@@ -367,7 +367,7 @@ export default function CreatePassword() {
               Password must have at least one digit ('0-9').{" "}
             </Typography>{" "}
           </Box>{" "}
-          <Box className="d-flex align-items-center ms-3 text-white">
+          <Box className="d-flex align-items-center  text-white">
             {" "}
             {!passwordError ? (
               <svg
