@@ -391,7 +391,7 @@ const Setting = () => {
                     }}
                   >
                     New Refcode <Box component={"span"} className="text-danger">
-                      {"("} Min 15 - Max 30 Characters {")"}
+                      {"("} Min 5 - Max 15 Characters {")"}
                     </Box>
                   </Box>
                   <Box
