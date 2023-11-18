@@ -112,7 +112,9 @@ const ListPromotion = (props) => {
                     index <= itemOffSet + itemQuantity - 1 && (
                       <Box
                         sx={{
-                          width: width < 576 && width < 1200 ? "auto" : "20%",
+                          display: "flex",
+                          justifyContent: "center",
+                          width: width < 576 && width < 1200 ? "auto" : "100%",
                           marginRight:
                             width > 576 && width < 1200 ? "100px" : "none",
                         }}
