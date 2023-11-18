@@ -43,6 +43,7 @@ export default function DialogChat(props) {
   const [showChat] = useState(true);
   const [chat, setChat] = useState("");
   const { tokenUser: token } = useSelector((state) => state.userReducer);
+  const { startGameCheck } = useSelector((state) => state.appReducer);
   const [renderTab, setRenderTab] = useState(false);
   const [colorTab, setColorTab] = useState(false);
   const [socket, setSocket] = useState(null);
@@ -72,29 +73,35 @@ export default function DialogChat(props) {
     setChat(e.target.value);
   };
   const handleOnKeyDown = (e) => {
-    if (token === null || token === "") {
-      dispatch(toggleLoginDialog());
-    } else {
-      if (renderTab === false) {
-        if (e.key === "Enter" && chat.trim() !== "") {
-          socket?.emit("chat", { type: "World", toId: 0, content: chat });
-          setChat("");
+    if(!startGameCheck) {
+      if (token === null || token === "") {
+        dispatch(toggleLoginDialog());
+      } else {
+        if (renderTab === false) {
+          if (e.key === "Enter" && chat.trim() !== "") {
+            socket?.emit("chat", { type: "World", toId: 0, content: chat });
+            setChat("");
+          }
         }
-      }
-    } 
+      } 
+    }
+    
   };
 
   const handleOnClickSendMessageWorld = () => {
-    if (token === null || token === "") {
-      dispatch(toggleLoginDialog());
-    } else {
-      if (renderTab === false) {
-        if (chat.trim() !== "") {
-          socket?.emit("chat", { type: "World", toId: 0, content: chat });
-          setChat("");
+    if(!startGameCheck) {
+      if (token === null || token === "") {
+        dispatch(toggleLoginDialog());
+      } else {
+        if (renderTab === false) {
+          if (chat.trim() !== "") {
+            socket?.emit("chat", { type: "World", toId: 0, content: chat });
+            setChat("");
+          }
         }
       }
     }
+    
   };
 
   return (
