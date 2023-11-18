@@ -60,7 +60,7 @@ export default function ComponentChat() {
         chatCurrent.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
+  });
 
   useEffect(() => {
     chatBox?.current?.scrollTo(0, chatBox.current.scrollHeight);

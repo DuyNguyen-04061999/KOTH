@@ -17,29 +17,42 @@ export default function GamePreview() {
   const { device } = useSelector((state) => state.deviceReducer);
   const [open, setOpen] = useState(false);
   const [newArray, setNewArray] = useState([]);
+  const [imageString, setImageString] = useState("")
+
   useEffect(() => {
-    setNewArray([]);
-    for (
-      let i = 0;
-      i < detailTournament?.skin?.skinGame?.GamePreviews?.length;
-      i++
-    ) {
-      if (
-        detailTournament?.skin?.skinGame?.GamePreviews[i].previewType ===
-        "video"
+    const res1 = newArray?.filter(i => i?.previewLink === imageString)
+    const res2 = newArray?.filter(i => i?.previewLink !== imageString)
+    if(res1 && res2 && res1?.length > 0 && res2?.length > 0) {
+      const res = [res1[0], ...res2]
+      setNewArray(res)
+    }
+  }, [imageString, newArray])
+
+  useEffect(() => {
+    if(!imageString) {
+      setNewArray([]);
+      for (
+        let i = 0;
+        i < detailTournament?.skin?.skinGame?.GamePreviews?.length;
+        i++
       ) {
-        setNewArray((prev) => [
-          detailTournament?.skin?.skinGame?.GamePreviews[i],
-          ...prev,
-        ]);
-      } else {
-        setNewArray((prev) => [
-          ...prev,
-          detailTournament?.skin?.skinGame?.GamePreviews[i],
-        ]);
+        if (
+          detailTournament?.skin?.skinGame?.GamePreviews[i].previewType ===
+          "video"
+        ) {
+          setNewArray((prev) => [
+            detailTournament?.skin?.skinGame?.GamePreviews[i],
+            ...prev,
+          ]);
+        } else {
+          setNewArray((prev) => [
+            ...prev,
+            detailTournament?.skin?.skinGame?.GamePreviews[i],
+          ]);
+        }
       }
     }
-  }, [detailTournament]);
+  }, [detailTournament, imageString]);
   return (
     newArray?.length > 0 && (
       <Box
@@ -78,6 +91,7 @@ export default function GamePreview() {
                   }}
                   onClick={() => {
                     setOpen(true);
+                    setImageString(item?.previewLink || "")
                   }}
                   component={"img"}
                   src={
@@ -110,14 +124,19 @@ export default function GamePreview() {
                     width: "auto",
                     height: device === "Desktop" ? "250px" : "200px",
                   }}
-                  src={
-                    item?.previewLink
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
+                  
+                >
+                  <source
+                      src={
                         item?.previewLink
-                      : images.GamePreview1
-                  }
-                ></video>
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            item?.previewLink
+                          : images.GamePreview1
+                      }
+                      type="video/mp4"
+                    />
+                </video>
               </Box>
             );
           })}
@@ -132,6 +151,7 @@ export default function GamePreview() {
           open={open}
           onClose={() => {
             setOpen(false);
+            setImageString("")
           }}
           sx={{ zIndex: "10000", backgroundColor: "none !important" }}
         >
@@ -152,6 +172,9 @@ export default function GamePreview() {
                         display: "flex",
                         justifyContent: "center",
                         padding: "10px",
+                      }}
+                      onClick={() => {
+                        
                       }}
                     >
                       <Box

@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
@@ -25,12 +24,11 @@ export default function ChatWorldList() {
   const [isFetching, setIsFetching] = useState(true);
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
     useState(true);
-  const { chatWorld, friendList } = useSelector((state) => state.chatReducer);
+  const { chatWorld } = useSelector((state) => state.chatReducer);
   const endOfMessageRef = useRef(null);
   const { tokenUser, user } = useSelector((state) => state.userReducer);
   const userName = user?.userName || "";
 
-  const [clickUserName, setUserName] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -58,28 +56,10 @@ export default function ChatWorldList() {
   }, [chatWorld]);
 
   const handleClick = (event, userName) => {
-    setUserName(userName);
     setAnchorEl(event.currentTarget);
     setMessFromName(userName);
   };
-  const checkExistInFriendList = () => {
-    for (let i = 0; i < friendList.length; i++) {
-      if (friendList[i].userName === clickUserName) {
-        return true;
-      }
-    }
-    return false;
-  };
-  const handleAddFriend = () => {
-    if (tokenUser === null || tokenUser === "") {
-      dispatch(toggleLoginDialog());
-    } else {
-      socket?.emit("addFriend", { username: messagefromName });
-    }
-  };
-  const handleDeleteFriend = () => {
-    socket?.emit("deleteFriend", { username: messagefromName });
-  };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };

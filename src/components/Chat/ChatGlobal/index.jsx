@@ -44,6 +44,8 @@ export default function ChatGlobal(props) {
   const chatInput = useRef("");
   const { contacter } = useSelector((state) => state.chatReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
+  const { startGameCheck } = useSelector((state) => state.appReducer);
+  
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -58,29 +60,35 @@ export default function ChatGlobal(props) {
   }, [tokenUser]);
 
   const handleOnKeyDownEnter = (e) => {
-    if(chatInput?.current){
-      if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
-        socket?.emit("chat", {
-          type: "Private",
-          toId: contacter.id,
-          content: chatInput.current.childNodes[0].value,
-        });
-        chatInput.current.reset();
+    if(!startGameCheck) {
+      if(chatInput?.current){
+        if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+          socket?.emit("chat", {
+            type: "Private",
+            toId: contacter.id,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        }
       }
     }
+    
   };
 
   const handleSendMessage = () => {
-    if(chatInput?.current){
-      if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
-        socket?.emit("chat", {
-          type: "Private",
-          toId: contacter.id,
-          content: chatInput.current.childNodes[0].value,
-        });
-        chatInput.current.reset();
+    if(!startGameCheck) {
+      if(chatInput?.current){
+        if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+          socket?.emit("chat", {
+            type: "Private",
+            toId: contacter.id,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        }
       }
     }
+    
   };
 
   const checkHeightResponsive = () => {

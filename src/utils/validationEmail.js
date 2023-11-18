@@ -3,7 +3,7 @@ const checkWhiteSpace = (email) => {
 };
 
 const checkTheTail = (email) => {
-  return /\@[a-zA-Z]+(\.[a-zA-Z]+)*(\.[a-zA-Z]+)$/.test(email);
+  return /[a-zA-Z]+(\.[a-zA-Z]+)*(\.[a-zA-Z]+)$/.test(email);
 };
 export const validateEmail = (email) => {
   if (!checkWhiteSpace(email) && checkTheTail(email)) {

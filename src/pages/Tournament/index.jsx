@@ -17,9 +17,8 @@ export default function Tournament() {
   const MarginTop = parseFloat(width / 100);
   const [socket, setSocket] = useState(null);
   const [tournaments, setTournaments] = useState([]);
-  const [fetchT, setFetchT] = useState(true);
   const { userRole } = useSelector((state) => state.authReducer);
-  const { tokenUser: token } = useSelector((state) => state.userReducer);
+  
   const navigate = useNavigate();
   const [createTour, setCreateTour] = useState(false);
   const [tourType, setTourType] = useState(false);
@@ -45,7 +44,6 @@ export default function Tournament() {
 
     socket?.on("getListTournamentSuccess", (data) => {
       setTournaments(data);
-      setFetchT(false);
     });
 
     return () => {};

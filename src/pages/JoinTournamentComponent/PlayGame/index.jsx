@@ -379,7 +379,6 @@ export default function PlayGame(props) {
                         576 < width && width < 1200
                           ? `${width / 42}px`
                           : "28px",
-                      width: "480px",
                       wordBreak: "break-all",
                       textAlign: "left",
                     }}
@@ -388,22 +387,9 @@ export default function PlayGame(props) {
                       ? detailTournament?.tournamentName.slice(0, 50) + " ..."
                       : detailTournament?.tournamentName}
                   </Typography>
-                  {/* <Typography
-                    sx={{
-                      margin: "0px !important",
-                      fontSize: 576 < width && width < 1200 ? "12px" : "14px",
-                      fontWeight: "lighter !important",
-                    }}
-                  >
-                    {detailTournament?.tournamentTimeType === "hourly"
-                      ? "Hourly Promotion"
-                      : detailTournament?.tournamentTimeType === "daily"
-                      ? "Daily Promotion"
-                      : "Weeklong Promotion"}
-                  </Typography> */}
                 </>
               </Box>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", maxWidth: "480px" }}>
                 {" "}
                 <Box
                   sx={{
@@ -436,6 +422,7 @@ export default function PlayGame(props) {
                   position: "relative",
                   display: "flex",
                   borderRadius: "8px",
+                  maxWidth: "480px" 
                 }}
               >
                 <Box
