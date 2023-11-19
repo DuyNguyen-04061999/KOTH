@@ -11,6 +11,7 @@ import {
   saveCreateAccInfo,
   saveForgetPassInfo,
 } from "../reducers/authReducer";
+import { clickTabChat } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
   saveDataProfile,
@@ -196,6 +197,7 @@ function* logoutSaga(dataRequest) {
         localStorage.removeItem("refreshToken");
         _socket.emit("logoutSocial");
         yield put(logoutSuccess());
+        yield put(clickTabChat(true));
         yield put(
           showToastNotification({
             type: authNotification.signOut.logoutSuccess.type,
