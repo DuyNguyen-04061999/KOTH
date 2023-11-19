@@ -1,5 +1,4 @@
 import AddFriendIcon from "@mui/icons-material/Person";
-import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Box, Dialog, Menu, MenuItem } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -110,9 +109,9 @@ export default function ChatGlobal(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleOnClickDeleteFriend = () => {
-    socket?.emit("deleteFriend", { username: contacter.userName });
-  };
+  // const handleOnClickDeleteFriend = () => {
+  //   socket?.emit("deleteFriend", { username: contacter.userName });
+  // };
 
   useEffect(() => {
     socket?.on("deleteFriendSuccess", () => {
@@ -172,7 +171,7 @@ export default function ChatGlobal(props) {
                 View Profile
               </Box>
             </MenuItem>
-            <MenuItem onClick={handleOnClickDeleteFriend}>
+            {/* <MenuItem onClick={handleOnClickDeleteFriend}>
               <Box
                 className="p-2 text-white cursor-pointer"
                 onClick={() => {
@@ -191,7 +190,7 @@ export default function ChatGlobal(props) {
                 <DeleteFriendIcon className="me-2 pb-1" />
                 Delete Friend
               </Box>
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
           <Box
             sx={{
@@ -330,7 +329,7 @@ export default function ChatGlobal(props) {
                 View Profile
               </Box>
             </MenuItem>
-            <MenuItem onClick={handleOnClickDeleteFriend}>
+            {/* <MenuItem onClick={handleOnClickDeleteFriend}>
               <Box
                 className="p-2 text-white cursor-pointer"
                 onClick={() => {
@@ -349,7 +348,7 @@ export default function ChatGlobal(props) {
                 <DeleteFriendIcon className="me-2 pb-1" />
                 Delete Friend
               </Box>
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
           <Box
             sx={{

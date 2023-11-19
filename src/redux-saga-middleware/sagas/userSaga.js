@@ -487,15 +487,15 @@ function* getUserByUsernameSaga(dataRequest) {
         yield put(
           saveDataProfile({
             id: user?.userId || "ID",
-            email: user?.userEmail,
-            refCode: user?.userRefCode,
-            phone: user?.userPhone,
+            email: user?.userEmail || "",
+            refCode: user?.userRefCode || "",
+            phone: user?.userPhone || "",
             userNameProfile: user?.userName || "",
             userNickNameProfile: user?.userNickName || "",
-            avatarUrl: user?.userAccount?.accountAvatar,
-            firstName: user?.userFirstName,
-            lastName: user?.userLastName,
-            nickName: user?.userNickName,
+            avatarUrl: user?.userAccount?.accountAvatar || "",
+            firstName: user?.userFirstName || "",
+            lastName: user?.userLastName || "",
+            nickName: user?.userNickName || "",
           })
         );
       } else {

@@ -1,4 +1,3 @@
-import { PersonAddAlt1, PersonRemove } from "@mui/icons-material";
 import LeftIcon from "@mui/icons-material/ArrowBackIos";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -9,10 +8,10 @@ import {
   Slide,
   Typography,
 } from "@mui/material";
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import _socket from "../../../redux-saga-middleware/config/socket";
+// import _socket from "../../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { images } from "../../../utils/images";
 import { systemNotification } from "../../../utils/notification";
@@ -32,26 +31,26 @@ export default function DialogProfile(props) {
   const { user } = useSelector((state) => state.userReducer);
   const { uPack } = useSelector((state) => state.userReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
-  const { friendList } = useSelector((state) => state.chatReducer);
+  // const { friendList } = useSelector((state) => state.chatReducer);
   const { id, email, phone, userNameProfile, avatarUrl, nickName, userNickNameProfile } =
     useSelector((state) => state.profileReducer);
   const dispatch = useDispatch();
   const { listSetting } = useSelector((state) => state.settingReducer);
 
-  const [socket, setSocket] = useState(null);
-  useEffect(() => {
-    const socket = _socket;
-    setSocket(socket);
-  }, []);
+  // const [socket, setSocket] = useState(null);
+  // useEffect(() => {
+  //   const socket = _socket;
+  //   setSocket(socket);
+  // }, []);
   const [tab, setTab] = useState(0);
-  const checkExistInFriendList = () => {
-    for (let i = 0; i < friendList.length; i++) {
-      if (friendList[i].userName === userNameProfile) {
-        return true;
-      }
-    }
-    return false;
-  };
+  // const checkExistInFriendList = () => {
+  //   for (let i = 0; i < friendList.length; i++) {
+  //     if (friendList[i].userName === userNameProfile) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // };
 
   const setTabEdit = (e) => {
     e.preventDefault();
@@ -142,7 +141,7 @@ export default function DialogProfile(props) {
                 )}
               </Box>
             )}
-            {tokenUser &&
+            {/* {tokenUser &&
               userNameProfile !== user?.userName &&
               (checkExistInFriendList() === false ? (
                 <Box
@@ -188,7 +187,7 @@ export default function DialogProfile(props) {
                     Delete Friend
                   </Typography>
                 </Box>
-              ))}
+              ))} */}
           </Box>
         </Box>
         <Box>
@@ -252,7 +251,7 @@ export default function DialogProfile(props) {
                   marginBottom: "5px !important",
                 }}
               >
-                {userNameProfile === user?.userName ? "Username" : "User Nick Nname"}
+                {userNameProfile === user?.userName ? "Username" : "User Nick Name"}
               </Typography>
               <FormControl
                 variant="standard"
