@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
-import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
   toggleLoginDialog,
@@ -89,7 +88,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           tournamentId: id,
         })
       );
-      dispatch(toggleStartGame())
     }
   };
 

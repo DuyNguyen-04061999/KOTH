@@ -20,8 +20,7 @@ import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import {
-  toggleStartGame,
-  updateFromRouter,
+  updateFromRouter
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
@@ -142,7 +141,6 @@ export default function JoinTournament() {
           tournamentId: id,
         })
       );
-      dispatch(toggleStartGame(true));
     }
   };
 
