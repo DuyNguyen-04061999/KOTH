@@ -2017,6 +2017,7 @@ export default function JoinTournament() {
               )}
             </Box>
             <GamePreview />
+            <NewFooter />
           </Container>
         ) : (
           <>
@@ -3360,6 +3361,11 @@ export default function JoinTournament() {
                 </Box>
                 <GamePreview />
                 <NewFooter />
+                <Box sx={{
+                  marginBottom: "75px"
+                }}>
+
+                </Box>
               </Container>
               <Dialog
                 onClose={() => {
