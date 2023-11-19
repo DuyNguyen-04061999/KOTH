@@ -1,9 +1,9 @@
-import { Dialog, Box, Typography, TextField } from "@mui/material";
-import { useState } from "react";
+import LeftIcon from "@mui/icons-material/ArrowBackIos";
+import RightIcon from "@mui/icons-material/ArrowForwardIos";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
-import RightIcon from "@mui/icons-material/ArrowForwardIos";
-import LeftIcon from "@mui/icons-material/ArrowBackIos";
+import { Box, Dialog, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 

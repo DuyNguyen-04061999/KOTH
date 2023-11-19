@@ -3,6 +3,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { resetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -39,13 +40,36 @@ export default function CreatePassword() {
   };
 
   const handleCreatePass = () => {
-    dispatch(
-      resetPasswordReady({
-        username: nameReset || forgotPassUsername,
-        password: password,
-        token: tokenResetPass,
-      })
-    );
+    const specialCharacterRegex = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/;
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const containsSpecialCharacter = specialCharacterRegex.test(password);
+    const isPasswordValid = password.length >= 6;
+    const containsUppercase = uppercaseRegex.test(password);
+    const containNumber = numberRegex.test(password);
+    if(password !== rePassword) {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Password and re-password does not match!"
+      }))
+    } else if(!containsSpecialCharacter ||
+      !isPasswordValid ||
+      !containsUppercase ||
+      !containNumber) {
+        dispatch(showToastNotification({
+          type: "warning",
+          message: "Please enter valid password"
+        }))
+    } else {
+      dispatch(
+        resetPasswordReady({
+          username: nameReset || forgotPassUsername,
+          password: password,
+          token: tokenResetPass,
+        })
+      );
+    }
+    
   };
 
   useEffect(() => {
@@ -207,7 +231,7 @@ export default function CreatePassword() {
           {" "}
           <Box className="d-flex align-items-center">
             {" "}
-            {!passwordError ? (
+            {password && password?.length >= 6 ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -251,7 +275,7 @@ export default function CreatePassword() {
             <Typography
               variant="body1"
               sx={{
-                color: !passwordError ? "green" : "white",
+                color: password && password?.length >= 6 ? "#5F9724" : "#fff",
                 fontSize: 12,
               }}
             >
@@ -261,7 +285,7 @@ export default function CreatePassword() {
           </Box>{" "}
           <Box className="d-flex align-items-center  text-white">
             {" "}
-            {!passwordError ? (
+            {password && /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/?.test(password) ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -305,7 +329,7 @@ export default function CreatePassword() {
             <Typography
               variant="body1"
               sx={{
-                color: !passwordError ? "green" : "white",
+                color: password && /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/?.test(password) ? "#5F9724" : "#fff",
                 fontSize: 12,
               }}
             >
@@ -315,7 +339,7 @@ export default function CreatePassword() {
           </Box>{" "}
           <Box className="d-flex align-items-center  text-white">
             {" "}
-            {!passwordError ? (
+            {password && /[0-9]/?.test(password) ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -359,7 +383,7 @@ export default function CreatePassword() {
             <Typography
               variant="body1"
               sx={{
-                color: !passwordError ? "green" : "white",
+                color: password && /[0-9]/?.test(password) ? "#5F9724" : "#fff",
                 fontSize: 12,
               }}
             >
@@ -369,7 +393,7 @@ export default function CreatePassword() {
           </Box>{" "}
           <Box className="d-flex align-items-center  text-white">
             {" "}
-            {!passwordError ? (
+            {password && /[A-Z]/?.test(password) ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -413,7 +437,7 @@ export default function CreatePassword() {
             <Typography
               variant="body1"
               sx={{
-                color: !passwordError ? "green" : "white",
+                color: password && /[A-Z]/?.test(password) ? "#5F9724" : "#fff",
                 fontSize: 12,
               }}
             >
