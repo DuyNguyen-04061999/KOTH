@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clickTab,
   closeLoginDialog,
+  closeVerifyDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { logoutReady } from "../../../redux-saga-middleware/reducers/userReducer";
 import { getAppType } from "../../../utils/helper";
@@ -30,6 +31,7 @@ export default function SimpleDialog(props) {
 
   const handleClose = () => {
     dispatch(closeLoginDialog());
+    dispatch(closeVerifyDialog());
     setTimeout(() => {
       if (currentTab === "otpVerifyAccount") {
         dispatch(clickTab("login"));
