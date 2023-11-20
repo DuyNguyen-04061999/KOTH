@@ -29,7 +29,10 @@ export default function ResultEndGame() {
     dispatch(finishGame())
     dispatch(finishVideo())
     if (tokenUser || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion(id))
+      dispatch(getRefactorDetailAuthPromotion({
+        id,
+        token: tokenUser
+      }))
     }
 
     if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {

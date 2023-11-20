@@ -26,8 +26,8 @@ import Gold from "../../../Gold/Gold";
 import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
-import "./index.scss";
 import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
+import "./index.scss";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -58,7 +58,7 @@ export default function Dialoglg() {
     setSocket(socket);
   }, []);
   const { isUpdateProfile } = useSelector((state) => state.authReducer);
-  const { user, uPack } = useSelector((state) => state.userReducer);
+  const { user, uPack, tokenUser } = useSelector((state) => state.userReducer);
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
 
@@ -77,10 +77,10 @@ export default function Dialoglg() {
 
   const token = localStorage.getItem("token");
   useEffect(() => {
-    if (token) {
-      dispatch(getUserInfoReady(token));
+    if (token || tokenUser) {
+      dispatch(getUserInfoReady(token || tokenUser));
     }
-  }, [token, dispatch]);
+  }, [token, dispatch, tokenUser]);
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (
