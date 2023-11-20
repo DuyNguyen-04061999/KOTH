@@ -120,7 +120,7 @@ export default function SlickSlider(props) {
                 <Box
                   key={index}
                   sx={{
-                    height: width < 576 ? "208px" : "auto",
+                    height: width < 576 ? "182.4px" : "auto",
                   }}
                 >
                   <Box
@@ -128,12 +128,12 @@ export default function SlickSlider(props) {
                       navigate(`/tournamentDetail/${item?.id}`);
                     }}
                     sx={{
-                      width: "100%",
-                      height: "100%",
+                      height: "182.4px",
                       cursor: "pointer",
                       borderRadius: "8px",
                       objectFit: "contain",
                     }}
+                    className="img-fluid"
                     component={"img"}
                     src={
                       (device === "Mobile" ||
