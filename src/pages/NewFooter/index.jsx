@@ -115,9 +115,9 @@ export default function NewFooter() {
           sx={{
             display: "flex",
             justifyContent: "center",
-            flexDirection:"column",
+            flexDirection: "column",
             marginTop: width > 576 ? "40px" : "10px",
-            marginBottom: width > 576 ? "0px" : "20px"
+            marginBottom: width > 576 ? "0px" : "20px",
           }}
         >
           <Typography
@@ -134,15 +134,17 @@ export default function NewFooter() {
             href="https://t.me/play4promo"
             target="_blank"
             sx={{
-              textDecoration:"none"
+              textDecoration: "none",
             }}
           >
-            <Typography sx={{
-              color:"#fff",
-              fontSize: width < 576 ? "12px" : "14px",
-              textAlign:"center"
-            }}>
-            Get help: support@play4promo.com
+            <Typography
+              sx={{
+                color: "#fff",
+                fontSize: width < 576 ? "12px" : "14px",
+                textAlign: "center",
+              }}
+            >
+              Get help: support@play4promo.com
             </Typography>
           </Box>
         </Box>
@@ -171,12 +173,13 @@ export default function NewFooter() {
             lineHeight: "normal",
             marginTop: "20px",
             textAlign: "center",
+            letterSpacing:"1px"
           }}
         >
-          "Experience the thrill of gaming at Play4Promo, where Promotions,
-          gameplay, and your dedication unlock exciting voucher rewards. Our
-          policies guarantee a seamless and rewarding voucher redemption process
-          for an enhanced gaming journey."
+          "Experience the thrill of competing and winning at Play4Promo, where
+          tournaments, promotions, and your dedication will lead to unlocking
+          exciting sponsored rewards . Our policies guarantee a seamless and
+          rewarding voucher redemption process for an enhanced journey."
         </Typography>
         <Typography
           sx={{
