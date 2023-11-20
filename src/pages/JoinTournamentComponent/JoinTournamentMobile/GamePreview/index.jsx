@@ -124,7 +124,7 @@ export default function GamePreview() {
                     width: "auto",
                     height: device === "Desktop" ? "250px" : "200px",
                   }}
-                  
+                  key={item?.previewLink}
                 >
                   <source
                       src={
