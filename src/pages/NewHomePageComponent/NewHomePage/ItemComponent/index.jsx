@@ -224,7 +224,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 }}
               >
                 {tourInfo?.tournamentStatus === 0
-                  ? "Start at: "
+                  ? "Starting in: "
                   : tourInfo?.tournamentStatus === 1
                   ? "End in: "
                   : tourInfo?.tournamentStatus === 2
