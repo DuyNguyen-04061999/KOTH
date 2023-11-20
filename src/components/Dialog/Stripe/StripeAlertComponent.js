@@ -142,7 +142,10 @@ export default function StripeAlertComponent() {
             fontSize: "14px",
           }}
         >
-          Payment Successful. Your payment has been successfully processed.
+          {typeAlert && typeAlert === "success"
+              ? "Payment Successful. Your payment has been successfully processed."
+              : "Payment failed. Please try again."}
+          
         </Box>
       </Box>
       )}
