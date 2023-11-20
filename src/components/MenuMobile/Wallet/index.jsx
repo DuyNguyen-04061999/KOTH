@@ -1467,6 +1467,7 @@ export default function DialogWallet(props) {
               width: "100%",
               maxWidth:
                 width < 576 ? width : isTransactionDialog ? "900px" : "500px",
+                backgroundColor:"#271c38"
               // height: "auto",
               // maxHeight: width < 576 ? height : "auto",
               // backgroundColor: "white",

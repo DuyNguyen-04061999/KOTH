@@ -121,15 +121,14 @@ export default function TicketCheckOut() {
             width: "100%",
             height: "100%",
             overflow: "auto",
-            minHeight: width < 576 ? "100vh" : "unset",
-            maxHeight: width < 576 ? "unset" : height - 100,
+            // minHeight: width < 576 ? "100vh" : "unset",
+            // maxHeight: width < 576 ? "unset" : height - 100,
           }}
         >
           <Box
             component={"div"}
             sx={{
               width: "100%",
-              height: "100vh",
               padding: "25px 25px 0px 25px",
               overflowY: "auto",
             }}
@@ -543,7 +542,7 @@ export default function TicketCheckOut() {
                 </Typography>
               )}
             </Box>
-            <Box>
+            <Box className="mt-2 mb-4">
               <Grid container columnSpacing={2}>
                 <Grid item xs={6} md={6}>
                   <AnimButton
