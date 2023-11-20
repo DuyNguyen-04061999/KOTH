@@ -111,13 +111,19 @@ export default function JoinTournament() {
 
   useEffect(() => {
     if (token) {
-      dispatch(getRefactorDetailAuthPromotion(id));
+      dispatch(getRefactorDetailAuthPromotion({
+        id,
+        token
+      }));
     }
   }, [id, token, dispatch]);
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion(id));
+      dispatch(getRefactorDetailAuthPromotion({
+        id,
+        token
+      }));
     } else {
       dispatch(getRefactorDetailPromotion(id));
     }

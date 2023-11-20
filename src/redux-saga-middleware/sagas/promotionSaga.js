@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { showToastNotification } from "../reducers/alertReducer";
-import { toggleStartGame } from "../reducers/appReducer";
 import { updateDetailTour } from "../reducers/playgameReducer";
 import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, getRefactorDetailAuthPromotionSuccess, getRefactorDetailPromotionFail, getRefactorDetailPromotionSuccess, joinPromotionFail, joinPromotionSuccess, startGameInPromotionFail, startGameInPromotionSuccess } from "../reducers/promotionReducer";
+import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
 const PromotionService = new promotionService();
@@ -110,7 +110,7 @@ function* startGameInPromotionSaga(dataRequest) {
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(startGameInPromotionSuccess(data));
-        yield put(toggleStartGame(true));
+        yield put(refreshTokenAction());
       } else {
         yield put(startGameInPromotionFail());
       }
