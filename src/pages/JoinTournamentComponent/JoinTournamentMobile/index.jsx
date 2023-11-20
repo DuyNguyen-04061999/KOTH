@@ -1101,7 +1101,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       fontSize: "14px",
                     }}
                   >
-                    Current Result
+                    Final Result
                   </Typography>
                   <Typography
                     sx={{
