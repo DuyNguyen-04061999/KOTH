@@ -282,7 +282,12 @@ function* sendOtpSaga(dataRequest) {
             })
           );
           localStorage.setItem("token", data?.data?.token);
-          yield put(getUserInfoReady(localStorage.getItem("token")));
+          localStorage.setItem("refreshToken", data?.data?.refreshToken);
+          _socket.emit("loginSocial", {
+            token: data?.data?.token,
+          });
+          yield put(updateUserToken(data?.data?.token));
+          yield put(getUserInfoReady(data?.data?.token));
           yield put(closeLoginDialog());
         }
       } else {
