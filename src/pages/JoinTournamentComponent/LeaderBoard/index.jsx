@@ -659,7 +659,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 <Typography
                   sx={{ textAlign: "start", color: "#ffff", fontSize: "14px" }}
                 >
-                  Current Result
+                  Final Result
                 </Typography>
                 <Box
                   onClick={handleOnClose}
@@ -1760,7 +1760,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   onClick={handleOnClose}
                   sx={{ textAlign: "start", color: "#ffff", fontSize: "14px" }}
                 >
-                  Current Result
+                  Final Result
                 </Typography>
               </Box>
               {detailTournament?.tournamentResult?.length > 0 ? (

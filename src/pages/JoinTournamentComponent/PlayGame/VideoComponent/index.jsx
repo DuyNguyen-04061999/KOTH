@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import "./index.scss";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const WarningIcon = () => {
   return (
@@ -141,14 +142,13 @@ export default function VideoComponent(props) {
             >
               {second > 0 ? `Skip Ads after ${second}s` : "Skip Ads"}
             </Typography>
-            <i
-              style={{
+            <ChevronRightIcon
+              sx={{
                 color: "#ffff",
                 marginTop: "2px",
-                fontSize: width < 576 ? "10px" : "14px",
+                fontSize: width < 576 ? "15px" : "20px",
               }}
-              className="fa-solid fa-angle-right"
-            ></i>
+            />
           </Box>
         )}
         {width < 576 && (
