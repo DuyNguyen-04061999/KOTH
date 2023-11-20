@@ -86,7 +86,7 @@ const HelpCenterComponent = () => {
             style={{ backgroundColor: "#302642" }}
           >
             {listFAQ?.length &&
-              listFAQ?.sort().map((item, index) => {
+              listFAQ?.sort(function(a, b){return a.id - b.id}).map((item, index) => {
                 return (
                   <Tab
                     key={index}
@@ -242,7 +242,7 @@ const HelpCenterComponent = () => {
               indicatorColor="unset"
             >
               {listFAQ?.length &&
-                listFAQ?.sort().map((item, index) => {
+                listFAQ?.sort(function(a, b){return a.id - b.id}).map((item, index) => {
                   return (
                     <Tab
                       key={index}
