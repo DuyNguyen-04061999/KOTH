@@ -133,7 +133,6 @@ export default function SlickSlider(props) {
                       borderRadius: "8px",
                       objectFit: "contain",
                     }}
-                    className="img-fluid"
                     component={"img"}
                     src={
                       (device === "Mobile" ||
