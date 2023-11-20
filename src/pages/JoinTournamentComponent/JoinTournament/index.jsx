@@ -3244,7 +3244,7 @@ export default function JoinTournament() {
                             <Box
                               sx={{
                                 position: "absolute",
-                                bottom: "4px",
+                                bottom: "0px",
                                 width: "100%",
                                 height: "20px",
                                 backdropFilter: "blur(1px)",
