@@ -57,7 +57,7 @@ export default function Dialoglg() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  const { isUpdateProfile } = useSelector((state) => state.authReducer);
+  const { isUpdateProfile, currentTab } = useSelector((state) => state.authReducer);
   const { user, uPack, tokenUser } = useSelector((state) => state.userReducer);
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
@@ -77,10 +77,10 @@ export default function Dialoglg() {
 
   const token = localStorage.getItem("token");
   useEffect(() => {
-    if (token || tokenUser) {
+    if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
       dispatch(getUserInfoReady(token || tokenUser));
     }
-  }, [token, dispatch, tokenUser]);
+  }, [token, dispatch, tokenUser, currentTab]);
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (
