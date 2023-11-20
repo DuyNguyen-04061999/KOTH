@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BannerTour, BannerTourMobile } from "../../../components/Banner";
@@ -11,12 +11,11 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import { Package } from "../../PackagePage/component";
-import BannerHomePage from "./BannerHomePage";
 import "./index.scss";
 
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
-  const [bannerCountDown, setBannerCountDown] = useState(true);
+  // const [bannerCountDown, setBannerCountDown] = useState(true);
   const {
     hotTournament,
     hotWeekTour,
@@ -137,9 +136,9 @@ export default function NewHomePage() {
           flexDirection: "column",
         }}
       >
-        {bannerCountDown && (
+        {/* {bannerCountDown && (
           <BannerHomePage setBannerCountDown={setBannerCountDown} />
-        )}{" "}
+        )}{" "} */}
         <Box
           sx={{
             marginBottom: width < 576 ? "24px" : "32px",
