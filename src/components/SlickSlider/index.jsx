@@ -128,7 +128,8 @@ export default function SlickSlider(props) {
                       navigate(`/tournamentDetail/${item?.id}`);
                     }}
                     sx={{
-                      height: "182.4px",
+                      width: "100%",
+                      height: width > 576 ? "100%" : "182.4px",
                       cursor: "pointer",
                       borderRadius: "8px",
                       objectFit: "contain",
