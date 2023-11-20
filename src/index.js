@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import Admin from './Admin';
 import App from './App';
 import "./assets/css/index.css";
+import Maintenance from './components/Dialog/Maintenance';
 import reportWebVitals from './setup/reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,12 +20,14 @@ const meta = {
   
 root.render(
     <>
-        <DocumentMeta {...meta}>
-        {
-            window?.location?.host?.split('.')[0] 
-            && window?.location?.host?.split('.')?.length > 0 
-            && window?.location?.host?.split('.')[0] === "admin" ? <Admin/> : <App/>}
-        </DocumentMeta>
+        {process.env.REACT_APP_MAINTENANCE ? <Maintenance/> : (
+          <DocumentMeta {...meta}>
+          {
+              window?.location?.host?.split('.')[0] 
+              && window?.location?.host?.split('.')?.length > 0 
+              && window?.location?.host?.split('.')[0] === "admin" ? <Admin/> : <App/>}
+          </DocumentMeta>
+        )}
     </>
 );
 
