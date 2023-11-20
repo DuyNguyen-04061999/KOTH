@@ -70,7 +70,10 @@ function* joinPromotionSaga(dataRequest) {
       if (status === 200 || status === 201) {
         yield put(joinPromotionSuccess(data));
         yield put(updateListPromotionJoined(payload?.tournamentId));
-        yield put(getRefactorDetailAuthPromotion(payload?.tournamentId));
+        yield put(getRefactorDetailAuthPromotion({
+          id: payload?.tournamentId,
+          token: localStorage.getItem("token")
+        }));
         yield put(
           showToastNotification({
             type: "success",
