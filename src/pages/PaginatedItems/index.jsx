@@ -12,6 +12,20 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
         color: "#fff",
       },
     },
+    root: {
+      "& li .Mui-selected": {
+        color: "white",
+        backgroundColor: "#7648ED",
+      },
+      "& li .MuiPaginationItem-page": {
+        color: "white",
+        border: "1px solid #7648ED",
+      },
+      "& li .Mui-selected:hover": {
+        color: "white",
+        backgroundColor: "#7648ED",
+      },
+    },
   }));
 
   const classes = useStyles();
@@ -30,8 +44,8 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
         onChange={(e, value) => {
           changeOffSet(value);
         }}
-        classes={{ ul: classes.ul }}
-        color="secondary"
+        classes={{ ul: classes.ul, root: classes.root }}
+        shape="rounded"
         renderItem={(item) => (
           <PaginationItem
             components={{
@@ -41,7 +55,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
                     display: "flex",
                     color: "#fff",
                     alignItems: "center",
-                    backgroundColor: "#7648ED",
+                    backgroundColor: "#7848ED",
                     width: "32px",
                     height: "32px",
                     borderRadius: "5px",
@@ -65,7 +79,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
                     display: "flex",
                     color: "#fff",
                     alignItems: "center",
-                    backgroundColor: "#BF48ED",
+                    backgroundColor: "#7848ED",
                     width: "32px",
                     height: "32px",
                     borderRadius: "5px",
@@ -101,11 +115,12 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
     >
       <Pagination
         siblingCount={0}
-        classes={{ ul: classes.ul }}
+        classes={{ ul: classes.ul, root: classes.root }}
         onChange={(e, value) => {
           changeOffSet(value);
         }}
         color="secondary"
+        shape="rounded"
         renderItem={(item) => (
           <PaginationItem
             components={{
@@ -115,7 +130,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
                     display: "flex",
                     color: "#fff",
                     alignItems: "center",
-                    backgroundColor: "#7648ED",
+                    backgroundColor: "#7848ED",
                     width: "96px",
                     height: "36px",
                     borderRadius: "5px",
@@ -144,7 +159,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
                     display: "flex",
                     color: "#fff",
                     alignItems: "center",
-                    backgroundColor: "#BF48ED",
+                    backgroundColor: "#7848ED",
                     width: "96px",
                     height: "36px",
                     borderRadius: "5px",
