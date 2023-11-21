@@ -7,7 +7,7 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 export default function BannerHomePage({ setBannerCountDown }) {
   const { width } = useWindowDimensions();
-  const releaseTime = Date.parse("20 Nov 2023 00:00:00 CDT");
+  const releaseTime = Date.parse("20 Nov 2023 00:00:00 CST");
   return (
     <Box
       sx={{

@@ -92,6 +92,7 @@ export default function Signup(props) {
       username === "" ||
       password === "" ||
       c_password === "" ||
+      nickName === "" ||
       passSai === true ||
       characterPass === false ||
       passOneLetter === false ||

@@ -1,5 +1,4 @@
 import AddFriendIcon from "@mui/icons-material/Person";
-import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Box, Dialog, Menu, MenuItem } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +43,8 @@ export default function ChatGlobal(props) {
   const chatInput = useRef("");
   const { contacter } = useSelector((state) => state.chatReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
+  const { startGameCheck } = useSelector((state) => state.appReducer);
+  
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -58,29 +59,35 @@ export default function ChatGlobal(props) {
   }, [tokenUser]);
 
   const handleOnKeyDownEnter = (e) => {
-    if(chatInput?.current){
-      if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "" ) {
-        socket?.emit("chat", {
-          type: "Private",
-          toId: contacter.id,
-          content: chatInput.current.childNodes[0].value,
-        });
-        chatInput.current.reset();
+    if(!startGameCheck) {
+      if(chatInput?.current){
+        if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+          socket?.emit("chat", {
+            type: "Private",
+            toId: contacter.id,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        }
       }
     }
+    
   };
 
   const handleSendMessage = () => {
-    if(chatInput?.current){
-      if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
-        socket?.emit("chat", {
-          type: "Private",
-          toId: contacter.id,
-          content: chatInput.current.childNodes[0].value,
-        });
-        chatInput.current.reset();
+    if(!startGameCheck) {
+      if(chatInput?.current){
+        if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+          socket?.emit("chat", {
+            type: "Private",
+            toId: contacter.id,
+            content: chatInput.current.childNodes[0].value,
+          });
+          chatInput.current.reset();
+        }
       }
     }
+    
   };
 
   const checkHeightResponsive = () => {
@@ -102,9 +109,9 @@ export default function ChatGlobal(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleOnClickDeleteFriend = () => {
-    socket?.emit("deleteFriend", { username: contacter.userName });
-  };
+  // const handleOnClickDeleteFriend = () => {
+  //   socket?.emit("deleteFriend", { username: contacter.userName });
+  // };
 
   useEffect(() => {
     socket?.on("deleteFriendSuccess", () => {
@@ -164,7 +171,7 @@ export default function ChatGlobal(props) {
                 View Profile
               </Box>
             </MenuItem>
-            <MenuItem onClick={handleOnClickDeleteFriend}>
+            {/* <MenuItem onClick={handleOnClickDeleteFriend}>
               <Box
                 className="p-2 text-white cursor-pointer"
                 onClick={() => {
@@ -183,7 +190,7 @@ export default function ChatGlobal(props) {
                 <DeleteFriendIcon className="me-2 pb-1" />
                 Delete Friend
               </Box>
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
           <Box
             sx={{
@@ -322,7 +329,7 @@ export default function ChatGlobal(props) {
                 View Profile
               </Box>
             </MenuItem>
-            <MenuItem onClick={handleOnClickDeleteFriend}>
+            {/* <MenuItem onClick={handleOnClickDeleteFriend}>
               <Box
                 className="p-2 text-white cursor-pointer"
                 onClick={() => {
@@ -341,7 +348,7 @@ export default function ChatGlobal(props) {
                 <DeleteFriendIcon className="me-2 pb-1" />
                 Delete Friend
               </Box>
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
           <Box
             sx={{

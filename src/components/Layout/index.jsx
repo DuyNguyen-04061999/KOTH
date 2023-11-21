@@ -220,7 +220,7 @@ export default function Layout(props) {
     } else {
       dispatch(clickTabNav(true));
     }
-  },[width])
+  },[width, dispatch])
 
   useEffect(() => {
     dispatch(getSettingReady());

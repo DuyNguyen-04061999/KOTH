@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { showToastNotification } from "../reducers/alertReducer";
 import { updateDetailTour } from "../reducers/playgameReducer";
 import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, getRefactorDetailAuthPromotionSuccess, getRefactorDetailPromotionFail, getRefactorDetailPromotionSuccess, joinPromotionFail, joinPromotionSuccess, startGameInPromotionFail, startGameInPromotionSuccess } from "../reducers/promotionReducer";
+import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
 const PromotionService = new promotionService();
@@ -69,7 +70,10 @@ function* joinPromotionSaga(dataRequest) {
       if (status === 200 || status === 201) {
         yield put(joinPromotionSuccess(data));
         yield put(updateListPromotionJoined(payload?.tournamentId));
-        yield put(getRefactorDetailAuthPromotion(payload?.tournamentId));
+        yield put(getRefactorDetailAuthPromotion({
+          id: payload?.tournamentId,
+          token: localStorage.getItem("token")
+        }));
         yield put(
           showToastNotification({
             type: "success",
@@ -109,6 +113,7 @@ function* startGameInPromotionSaga(dataRequest) {
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(startGameInPromotionSuccess(data));
+        yield put(refreshTokenAction());
       } else {
         yield put(startGameInPromotionFail());
       }

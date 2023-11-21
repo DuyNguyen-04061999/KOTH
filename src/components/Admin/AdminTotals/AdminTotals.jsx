@@ -51,7 +51,7 @@ export default function AdminTotals(props) {
                   lineHeight: "32px",
                 }}
               >
-                {item?.type === "Master Revenue" || item?.type === "System Revenue" || item?.type === "revenue" ? "$" : ""} {item?.type === "Master Revenue" || item?.type === "System Revenue" || item?.type === "revenue" ? `${Number(item.count).toFixed(5)}` : item.count} 
+                {item?.type === "Master Revenue" || item?.type === "System Revenue" || item?.type === "revenue" ? "$" : ""} {item?.type === "Master Revenue" || item?.type === "System Revenue" || item?.type === "revenue" ? `${item.count > 0 ? Number(item.count).toFixed(2) : 0}` : item.count} 
               </Box>
             </Box>
             {/* <Box

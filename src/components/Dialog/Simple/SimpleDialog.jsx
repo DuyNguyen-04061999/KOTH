@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clickTab,
   closeLoginDialog,
+  closeVerifyDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { logoutReady } from "../../../redux-saga-middleware/reducers/userReducer";
 import { getAppType } from "../../../utils/helper";
@@ -29,14 +30,16 @@ export default function SimpleDialog(props) {
   const { width } = useWindowDimensions();
 
   const handleClose = () => {
-    if (currentTab === "otpVerifyAccount") {
-      dispatch(closeLoginDialog());
-      dispatch(clickTab("login"));
-      dispatch(logoutReady());
-    } else {
-      dispatch(closeLoginDialog());
-      dispatch(clickTab("login"));
-    }
+    dispatch(closeLoginDialog());
+    dispatch(closeVerifyDialog());
+    setTimeout(() => {
+      if (currentTab === "otpVerifyAccount") {
+        dispatch(clickTab("login"));
+        dispatch(logoutReady());
+      } else {
+        dispatch(clickTab("login"));
+      }
+    }, 500)
   };
 
   return ReactDOM.createPortal(
@@ -117,7 +120,7 @@ export default function SimpleDialog(props) {
             }}
           >
             <Grid container flexWrap={"nowrap"}>
-              <Grid item md={6} sx={{ maxWidth: "50%" }}>
+              <Grid item md={6} sx={{maxWidth: width > 756 ? "50%" : "100%"}}>
                 <Box
                   sx={{
                     backgroundColor: "#291e3b",
@@ -145,48 +148,44 @@ export default function SimpleDialog(props) {
                   )}
                 </Box>
               </Grid>
-              <Grid item md={6}>
-                <Box
-                  sx={{
-                    backgroundColor: "#19133e",
-                    color: "white",
-                    height: "100%",
-                    position: "relative",
-                  }}
-                >
-                  <img
-                    src={
-                      getAppType() === "promote"
-                        ? width < 992
-                          ? sign.bannersigninTablet
-                          : sign.bannersignin
-                        : images?.signInCrypto
-                    }
-                    alt="..."
-                    width={"100%"}
-                    height={"100%"}
-                    style={{
-                      backgroundColor: "#3a2b6d",
-                      objectFit: "cover",
-                      objectPosition: "center 10%",
-                    }}
-                  />
+              {width > 756 && (
+                <Grid item md={6}>
                   <Box
-                    component={"img"}
-                    src={sign.btnBack}
                     sx={{
-                      width: "20px",
-                      height: "20px",
-                      position: "absolute",
-                      zIndex: "100",
-                      top: "20px",
-                      right: "20px",
-                      cursor: "pointer",
+                      backgroundColor: "#19133e",
+                      color: "white",
+                      height: "100%",
+                      position: "relative",
                     }}
-                    onClick={handleClose}
-                  ></Box>
-                </Box>
-              </Grid>
+                  >
+                    <img
+                      src={
+                        getAppType() === "promote"
+                          ? sign.bannersignin
+                          : images?.signInCrypto
+                      }
+                      alt="..."
+                      width={"100%"}
+                      height={"100%"}
+                      style={{ backgroundColor: "#3a2b6d", objectFit:"cover", objectPosition:"center 10%" }}
+                    />
+                    <Box
+                      component={"img"}
+                      src={sign.btnBack}
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        position: "absolute",
+                        zIndex: "100",
+                        top: "20px",
+                        right: "20px",
+                        cursor: "pointer",
+                      }}
+                      onClick={handleClose}
+                    ></Box>
+                  </Box>
+                </Grid>
+              )}
             </Grid>
           </Dialog>
         </>

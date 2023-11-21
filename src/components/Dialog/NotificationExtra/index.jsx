@@ -91,7 +91,7 @@ export default function NotificationExtra(props) {
               <AnimButton type="primary" text="Confirm" onClick={handleConfrim}  />
             </Box>
           </Box>
-          <Box
+          {/* <Box
             display={"flex"}
             justifyContent={"center"}
             color={"white"}
@@ -126,7 +126,7 @@ export default function NotificationExtra(props) {
                 d="M2.1 12.96l-1.6-1.5 4.8-4.5-4.8-4.5L2.1.96l6.4 6-6.4 6z"
               ></path>
             </svg>
-          </Box>
+          </Box> */}
         </Box>
         {/* <Package /> */}
       </Dialog>

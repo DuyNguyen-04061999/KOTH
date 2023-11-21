@@ -9,15 +9,29 @@ class TournamentService {
   }
 
   async callListTournament(dataRequest) {
-    const res = await PROMOTION_API.get(
-      `/api/promotions/list-promotion?typeTournament=${dataRequest}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return res;
+    const pathname = window.location.pathname
+    if(pathname && (pathname === "/home" || pathname === "/")) {
+      const res = await PROMOTION_API.get(
+        `/api/promotions/list-promotion?typeTournament=${dataRequest}&type=home`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return res;
+    } else {
+      const res = await PROMOTION_API.get(
+        `/api/promotions/list-promotion?typeTournament=${dataRequest}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return res;
+    }
+    
   }
   async listGameForTournament(dataRequest) {
     const res = await API.get("/api/games/list-game-tournament", dataRequest);

@@ -65,44 +65,50 @@ const ChatDrawer = () => {
   }, [dispatch]);
 
   const handleOnKeyDown = (e) => {
-    if (chatInput.current) {
-      if (
-        e.key === "Enter" &&
-        chatInput.current.childNodes[0].value &&
-        chatInput.current.childNodes[0].value.trim() !== ""
-      ) {
-        if (tokenUser) {
-          socket?.emit("chat", {
-            type: "World",
-            toId: 0,
-            content: chatInput.current.childNodes[0].value,
-          });
-          chatInput.current.reset();
-        } else {
-          dispatch(openLoginDialog());
+    if(!startGameCheck) {
+      if (chatInput.current) {
+        if (
+          e.key === "Enter" &&
+          chatInput.current.childNodes[0].value &&
+          chatInput.current.childNodes[0].value.trim() !== ""
+        ) {
+          if (tokenUser) {
+            socket?.emit("chat", {
+              type: "World",
+              toId: 0,
+              content: chatInput.current.childNodes[0].value,
+            });
+            chatInput.current.reset();
+          } else {
+            dispatch(openLoginDialog());
+          }
         }
       }
     }
+    
   };
   const handleOnClickSendMessage = () => {
-    if (chatInput.current) {
-      if (
-        chatInput.current.childNodes[0] &&
-        chatInput.current.childNodes[0].value &&
-        chatInput.current.childNodes[0].value.trim() !== ""
-      ) {
-        if (tokenUser) {
-          socket?.emit("chat", {
-            type: "World",
-            toId: 0,
-            content: chatInput.current.childNodes[0].value,
-          });
-          chatInput.current.reset();
-        } else {
-          dispatch(openLoginDialog());
+    if(!startGameCheck) {
+      if (chatInput.current) {
+        if (
+          chatInput.current.childNodes[0] &&
+          chatInput.current.childNodes[0].value &&
+          chatInput.current.childNodes[0].value.trim() !== ""
+        ) {
+          if (tokenUser) {
+            socket?.emit("chat", {
+              type: "World",
+              toId: 0,
+              content: chatInput.current.childNodes[0].value,
+            });
+            chatInput.current.reset();
+          } else {
+            dispatch(openLoginDialog());
+          }
         }
       }
     }
+    
   };
 
   const { width } = useWindowDimensions();

@@ -9,9 +9,9 @@ class promotionService {
 
   async callDetailPromotionToken(dataRequest) {
     const headers = {
-      "x-access-refactor-token": localStorage.getItem("token"),
+      "x-access-refactor-token": dataRequest?.token || localStorage.getItem("token"),
     };
-    const res = await PROMOTION_API.get("/api/promotions/auth/detail/" + dataRequest,
+    const res = await PROMOTION_API.get("/api/promotions/auth/detail/" + dataRequest?.id,
       {
         headers,
       }

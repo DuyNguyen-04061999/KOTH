@@ -26,8 +26,8 @@ import Gold from "../../../Gold/Gold";
 import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
-import "./index.scss";
 import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
+import "./index.scss";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -57,8 +57,8 @@ export default function Dialoglg() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  const { isUpdateProfile } = useSelector((state) => state.authReducer);
-  const { user, uPack } = useSelector((state) => state.userReducer);
+  const { isUpdateProfile, currentTab } = useSelector((state) => state.authReducer);
+  const { user, uPack, tokenUser } = useSelector((state) => state.userReducer);
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
 
@@ -77,10 +77,10 @@ export default function Dialoglg() {
 
   const token = localStorage.getItem("token");
   useEffect(() => {
-    if (token) {
-      dispatch(getUserInfoReady(token));
+    if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
+      dispatch(getUserInfoReady(token || tokenUser));
     }
-  }, [token, dispatch]);
+  }, [token, dispatch, tokenUser, currentTab]);
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (

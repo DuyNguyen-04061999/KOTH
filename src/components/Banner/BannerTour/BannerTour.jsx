@@ -135,9 +135,11 @@ const BannerTour = (props) => {
             </Box>
           </Box>
           <button
-            onClick={() => {
-              navigate(`/tournamentDetail/${tourId}`);
-            }}
+              onClick={() => {
+                if(tourId !== "undefined") {
+                  navigate(`/tournamentDetail/${tourId}`);
+                } 
+              }}
             style={{
               background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
               outline: "none",
