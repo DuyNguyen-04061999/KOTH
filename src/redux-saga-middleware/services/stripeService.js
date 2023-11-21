@@ -1,4 +1,3 @@
-import { API } from "../axios/api";
 import { PROMOTION_API } from "../axios/promotionApi";
 
 class StripeService {

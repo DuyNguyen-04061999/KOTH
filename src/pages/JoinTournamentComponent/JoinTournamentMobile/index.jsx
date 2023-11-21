@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import PageLoading from "../../../components/LoadingComponent/PageLoading/PageLoading";
-import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
   toggleLoginDialog,
@@ -60,13 +59,19 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
 
   useEffect(() => {
     if (token) {
-      dispatch(getRefactorDetailAuthPromotion(id));
+      dispatch(getRefactorDetailAuthPromotion({
+        id,
+        token
+      }));
     }
   }, [id, token, dispatch]);
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion(id));
+      dispatch(getRefactorDetailAuthPromotion({
+        id,
+        token
+      }));
     } else {
       dispatch(getRefactorDetailPromotion(id));
     }
@@ -89,7 +94,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           tournamentId: id,
         })
       );
-      dispatch(toggleStartGame())
     }
   };
 
@@ -1103,7 +1107,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       fontSize: "14px",
                     }}
                   >
-                    Current Result
+                    Final Result
                   </Typography>
                   <Typography
                     sx={{

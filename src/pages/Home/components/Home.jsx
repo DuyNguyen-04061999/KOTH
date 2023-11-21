@@ -42,7 +42,6 @@ export default function Home() {
   const { listGame } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  const [fetchT, setFetchT] = useState(true);
   const [tournaments, setTournaments] = useState([]);
   useEffect(() => {
     const socket = _socket;
@@ -53,9 +52,7 @@ export default function Home() {
     if(getAppType() !== "promote") {
       dispatch(getListGame());
     }
-    // socket?.emit("getLeaderBoard", {
-    //   type: "gold",
-    // });
+
   }, [dispatch, socket]);
 
   const navigate = useNavigate();
@@ -84,7 +81,6 @@ export default function Home() {
   useEffect(() => {
     socket?.on("getListTournamentSuccess", (data) => {
       setTournaments(data);
-      setFetchT(false);
     });
     return () => {};
   }, [socket]);

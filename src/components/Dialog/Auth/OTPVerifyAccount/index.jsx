@@ -150,13 +150,13 @@ export default function OTPVerifyAccount() {
                 style={{
                   width: "32px",
                   height: "38px",
-                  marginRight: "16px",
-                  backgroundColor: "#271C39",
-                  outline: "none",
+                  marginRight: "5px",
+                  backgroundColor: "#fff",
                   textAlign: "center",
-                  fontSize: width < 576 ? "12px" : "20px",
-                  color: "white",
-                  border: "2px solid white",
+                  fontSize: width < 576 ? "11.5px" : "20px",
+                  color: "#000",
+                  border: "none",
+                  borderBottom: "2px solid white !important",
                   borderRadius: "4px",
                 }}
                 type="number"

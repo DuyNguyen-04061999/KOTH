@@ -20,8 +20,7 @@ import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import {
-  toggleStartGame,
-  updateFromRouter,
+  updateFromRouter
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
@@ -112,13 +111,19 @@ export default function JoinTournament() {
 
   useEffect(() => {
     if (token) {
-      dispatch(getRefactorDetailAuthPromotion(id));
+      dispatch(getRefactorDetailAuthPromotion({
+        id,
+        token
+      }));
     }
   }, [id, token, dispatch]);
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion(id));
+      dispatch(getRefactorDetailAuthPromotion({
+        id,
+        token
+      }));
     } else {
       dispatch(getRefactorDetailPromotion(id));
     }
@@ -142,7 +147,6 @@ export default function JoinTournament() {
           tournamentId: id,
         })
       );
-      dispatch(toggleStartGame(true));
     }
   };
 
@@ -2017,6 +2021,7 @@ export default function JoinTournament() {
               )}
             </Box>
             <GamePreview />
+            <NewFooter />
           </Container>
         ) : (
           <>
@@ -3239,7 +3244,7 @@ export default function JoinTournament() {
                             <Box
                               sx={{
                                 position: "absolute",
-                                bottom: "4px",
+                                bottom: "0px",
                                 width: "100%",
                                 height: "20px",
                                 backdropFilter: "blur(1px)",
@@ -3360,6 +3365,11 @@ export default function JoinTournament() {
                 </Box>
                 <GamePreview />
                 <NewFooter />
+                <Box sx={{
+                  marginBottom: "75px"
+                }}>
+
+                </Box>
               </Container>
               <Dialog
                 onClose={() => {

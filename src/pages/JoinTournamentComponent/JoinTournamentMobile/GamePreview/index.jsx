@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import { images } from "../../../../utils/images";
 import "./index.scss";
-
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 export default function GamePreview() {
   const settings = {
     arrows: false,
@@ -17,6 +18,8 @@ export default function GamePreview() {
   const { device } = useSelector((state) => state.deviceReducer);
   const [open, setOpen] = useState(false);
   const [newArray, setNewArray] = useState([]);
+  const [imageString, setImageString] = useState("");
+
   useEffect(() => {
     setNewArray([]);
     for (
@@ -40,6 +43,18 @@ export default function GamePreview() {
       }
     }
   }, [detailTournament]);
+
+  useEffect(() => {
+    if (imageString) {
+      const res1 = newArray?.filter((i) => i?.previewLink === imageString);
+      const res2 = newArray?.filter((i) => i?.previewLink !== imageString);
+      if (res1 && res2 && res1?.length > 0 && res2?.length > 0) {
+        const res = [res1[0], ...res2];
+        setNewArray(res);
+      }
+    }
+  }, [imageString, newArray]);
+
   return (
     newArray?.length > 0 && (
       <Box
@@ -78,6 +93,7 @@ export default function GamePreview() {
                   }}
                   onClick={() => {
                     setOpen(true);
+                    setImageString(item?.previewLink || "");
                   }}
                   component={"img"}
                   src={
@@ -110,14 +126,19 @@ export default function GamePreview() {
                     width: "auto",
                     height: device === "Desktop" ? "250px" : "200px",
                   }}
-                  src={
-                    item?.previewLink
-                      ? process.env.REACT_APP_SOCKET_SERVER +
-                        "/" +
-                        item?.previewLink
-                      : images.GamePreview1
-                  }
-                ></video>
+                  key={item?.previewLink}
+                >
+                  <source
+                    src={
+                      item?.previewLink
+                        ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
+                          item?.previewLink
+                        : images.GamePreview1
+                    }
+                    type="video/mp4"
+                  />
+                </video>
               </Box>
             );
           })}
@@ -132,6 +153,7 @@ export default function GamePreview() {
           open={open}
           onClose={() => {
             setOpen(false);
+            setImageString("");
           }}
           sx={{ zIndex: "10000", backgroundColor: "none !important" }}
         >
@@ -153,6 +175,7 @@ export default function GamePreview() {
                         justifyContent: "center",
                         padding: "10px",
                       }}
+                      onClick={() => {}}
                     >
                       <Box
                         component={"img"}
@@ -169,34 +192,32 @@ export default function GamePreview() {
                   );
                 })}
             </Slider>
-            <i
-              style={{
-                position: "absolute",
-                left: "0px",
-                top: "45%",
-                color: "#ffff",
-                fontSize: "30px",
-                cursor: "pointer",
-              }}
+            <ChevronLeftIcon
               onClick={() => {
                 slider.current.slickPrev();
               }}
-              className="fa-solid fa-angle-left"
-            ></i>
-            <i
-              style={{
+              sx={{
                 position: "absolute",
-                right: "0px",
+                left: "-10px",
                 top: "45%",
                 color: "#ffff",
-                fontSize: "30px",
+                fontSize: "40px",
                 cursor: "pointer",
               }}
+            />
+            <ChevronRightIcon
               onClick={() => {
                 slider.current.slickNext();
               }}
-              className="fa-solid fa-angle-right"
-            ></i>
+              sx={{
+                position: "absolute",
+                right: "-10px",
+                top: "45%",
+                color: "#ffff",
+                fontSize: "40px",
+                cursor: "pointer",
+              }}
+            />
           </Box>
         </Dialog>
       </Box>

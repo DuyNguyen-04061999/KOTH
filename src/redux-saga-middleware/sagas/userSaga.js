@@ -11,6 +11,7 @@ import {
   saveCreateAccInfo,
   saveForgetPassInfo,
 } from "../reducers/authReducer";
+import { clickTabChat } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
   saveDataProfile,
@@ -196,6 +197,7 @@ function* logoutSaga(dataRequest) {
         localStorage.removeItem("refreshToken");
         _socket.emit("logoutSocial");
         yield put(logoutSuccess());
+        yield put(clickTabChat(true));
         yield put(
           showToastNotification({
             type: authNotification.signOut.logoutSuccess.type,
@@ -280,7 +282,12 @@ function* sendOtpSaga(dataRequest) {
             })
           );
           localStorage.setItem("token", data?.data?.token);
-          yield put(getUserInfoReady(localStorage.getItem("token")));
+          localStorage.setItem("refreshToken", data?.data?.refreshToken);
+          _socket.emit("loginSocial", {
+            token: data?.data?.token,
+          });
+          yield put(updateUserToken(data?.data?.token));
+          yield put(getUserInfoReady(data?.data?.token));
           yield put(closeLoginDialog());
         }
       } else {
@@ -485,14 +492,15 @@ function* getUserByUsernameSaga(dataRequest) {
         yield put(
           saveDataProfile({
             id: user?.userId || "ID",
-            email: user?.userEmail,
-            refCode: user?.userRefCode,
-            phone: user?.userPhone,
-            userNameProfile: user?.userName,
-            avatarUrl: user?.userAccount?.accountAvatar,
-            firstName: user?.userFirstName,
-            lastName: user?.userLastName,
-            nickName: user?.userNickName,
+            email: user?.userEmail || "",
+            refCode: user?.userRefCode || "",
+            phone: user?.userPhone || "",
+            userNameProfile: user?.userName || "",
+            userNickNameProfile: user?.userNickName || "",
+            avatarUrl: user?.userAccount?.accountAvatar || "",
+            firstName: user?.userFirstName || "",
+            lastName: user?.userLastName || "",
+            nickName: user?.userNickName || "",
           })
         );
       } else {

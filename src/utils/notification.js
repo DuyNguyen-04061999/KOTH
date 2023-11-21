@@ -10,12 +10,6 @@ export const authNotification = {
       type: "error",
       message: "Email already in use. Please log in or use a different email.",
     },
-    emailNotUnique: {
-      case: "should fail if phone is not unique",
-      type: "error",
-      message:
-        "Phone number already in use. Please log in or use a different phone number.",
-    },
     phoneNotUnique: {
       case: "should fail if phone is not unique",
       type: "error",

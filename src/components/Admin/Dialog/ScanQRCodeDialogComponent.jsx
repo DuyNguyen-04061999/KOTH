@@ -112,8 +112,8 @@ export default function ScanQRCodeDialogComponent(props) {
                             includeMargin={false}
                             imageSettings={{
                                 src: images.adminLogo,
-                                height: 128,
-                                width: 128,
+                                height: 100,
+                                width: 100,
                                 excavate: true,
                             }}
                         />

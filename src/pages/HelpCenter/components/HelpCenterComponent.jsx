@@ -65,6 +65,7 @@ const HelpCenterComponent = () => {
       <Container
         style={{
           padding: width < 576 ? "16px 24px 24px 24px" : "16px 24px 24px 50px",
+          marginBottom: "75px"
         }}
       >
         <Box sx={{ margin: "16px 0px 32px 0px" }}>
@@ -85,7 +86,7 @@ const HelpCenterComponent = () => {
             style={{ backgroundColor: "#302642" }}
           >
             {listFAQ?.length &&
-              listFAQ?.map((item, index) => {
+              listFAQ?.sort(function(a, b){return a.id - b.id}).map((item, index) => {
                 return (
                   <Tab
                     key={index}
@@ -116,7 +117,7 @@ const HelpCenterComponent = () => {
               padding: "27px 8px",
               backgroundColor: "#282136",
               color: "white",
-              maxHeight: "600px",
+              maxHeight: "500px",
               overflowY: "auto",
             }}
           >
@@ -241,7 +242,7 @@ const HelpCenterComponent = () => {
               indicatorColor="unset"
             >
               {listFAQ?.length &&
-                listFAQ?.map((item, index) => {
+                listFAQ?.sort(function(a, b){return a.id - b.id}).map((item, index) => {
                   return (
                     <Tab
                       key={index}

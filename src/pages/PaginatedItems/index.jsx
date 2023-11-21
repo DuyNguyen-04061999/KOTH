@@ -1,6 +1,6 @@
 import { Box, Pagination, PaginationItem, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { useEffect } from "react";
+import React from "react";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
