@@ -97,7 +97,30 @@ export const finishVideo = (data) => {
     payload: data,
   };
 };
-
+export const updateOngoingPage = (data) => {
+  return {
+    type: "UPDATE_ONGOING_PAGE",
+    payload: data,
+  };
+};
+export const updateHotPage = (data) => {
+  return {
+    type: "UPDATE_HOT_PAGE",
+    payload: data,
+  };
+};
+export const updateUpcomingPage = (data) => {
+  return {
+    type: "UPDATE_UPCOMING_PAGE",
+    payload: data,
+  };
+};
+export const updateEndedPage = (data) => {
+  return {
+    type: "UPDATE_ENDED_PAGE",
+    payload: data,
+  };
+};
 const promotionReducer = (
   state = {
     isGetDetailPromotion: false,
@@ -106,6 +129,10 @@ const promotionReducer = (
     isStartGameInPromotion: false,
     startGamePromotion: false,
     startVideoPromotion: false,
+    ongoingPag: 0,
+    hotPag: 0,
+    upcomingPag: 0,
+    endedPage: 0,
   },
   action
 ) => {
@@ -113,6 +140,14 @@ const promotionReducer = (
   switch (type) {
     case REHYDRATE:
       return { ...state };
+    case "UPDATE_ONGOING_PAGE":
+      return { ...state, ongoingPag: payload };
+    case "UPDATE_HOT_PAGE":
+      return { ...state, hotPag: payload };
+    case "UPDATE_UPCOMING_PAGE":
+      return { ...state, upcomingPag: payload };
+    case "UPDATE_ENDED_PAGE":
+      return { ...state, endedPage: payload };
     case "GET_REFACTOR_DETAIL_PROMOTION":
       return { ...state, isGetDetailPromotion: true };
     case "GET_REFACTOR_DETAIL_PROMOTION_SUCCESS":
