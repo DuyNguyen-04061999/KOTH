@@ -17,6 +17,7 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
+import { updateUpcomingPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 const theme = createTheme({
   typography: {},
   components: {
@@ -42,8 +43,8 @@ export default function HotTournament() {
   const { upcomingTournament, isFetchUpcoming, noDataUpcoming } = useSelector(
     (state) => state.tournamentReducer
   );
+  const { upcomingPag } = useSelector((state) => state.promotionReducer);
   const [data, setData] = useState(null);
-  const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
   const { hotWeekTour, isFetchHotWeek } = useSelector(
@@ -60,10 +61,8 @@ export default function HotTournament() {
   }, [width]);
 
   useEffect(() => {
-    if (width) {
-      setItemOffSet(0);
-    }
-  }, [width]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [upcomingPag]);
 
   useEffect(() => {
     dispatch({
@@ -88,9 +87,7 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [itemOffSet]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -151,21 +148,27 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchUpcoming}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={upcomingPag}
                   typePromo={"upcoming"}
                   itemQuantity={itemQuantity}
                   noData={noDataUpcoming}
                 />
               </Box>
               <Box sx={{ margin: "36px 0px" }}>
-                {!isFetchUpcoming && data !== null && data?.length > 0 && (
-                  <PaginatedItems
-                    pageCount={Math.ceil(data.length / itemQuantity)}
-                    changeOffSet={(value) => {
-                      setItemOffSet((value - 1) * itemQuantity);
-                    }}
-                  />
-                )}
+                {!isFetchUpcoming &&
+                  data !== null &&
+                  data?.length > 0 &&
+                  itemQuantity && (
+                    <PaginatedItems
+                      defaultPage={Math.ceil(upcomingPag / itemQuantity) + 1}
+                      pageCount={Math.ceil(data.length / itemQuantity)}
+                      changeOffSet={(value) => {
+                        dispatch(
+                          updateUpcomingPage((value - 1) * itemQuantity)
+                        );
+                      }}
+                    />
+                  )}
               </Box>
               <NewFooter />
             </Container>
@@ -222,7 +225,7 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchUpcoming}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={upcomingPag}
                   typePromo={"upcoming"}
                   itemQuantity={itemQuantity}
                   noData={noDataUpcoming}
@@ -271,14 +274,20 @@ export default function HotTournament() {
                 )}
               </Box>
               <Box sx={{ margin: "36px 0px" }}>
-                {!isFetchUpcoming && data !== null && data?.length > 0 && (
-                  <PaginatedItems
-                    pageCount={Math.ceil(data.length / itemQuantity)}
-                    changeOffSet={(value) => {
-                      setItemOffSet((value - 1) * itemQuantity);
-                    }}
-                  />
-                )}
+                {!isFetchUpcoming &&
+                  data !== null &&
+                  data?.length > 0 &&
+                  itemQuantity && (
+                    <PaginatedItems
+                      defaultPage={Math.ceil(upcomingPag / itemQuantity) + 1}
+                      pageCount={Math.ceil(data.length / itemQuantity)}
+                      changeOffSet={(value) => {
+                        dispatch(
+                          updateUpcomingPage((value - 1) * itemQuantity)
+                        );
+                      }}
+                    />
+                  )}
               </Box>
               <NewFooter />
             </Container>

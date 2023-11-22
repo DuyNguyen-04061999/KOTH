@@ -17,6 +17,7 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
+import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 const theme = createTheme({
   typography: {},
   components: {
@@ -43,13 +44,12 @@ export default function HotTournament() {
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
-  const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
   const { hotWeekTour, isFetchHotWeek } = useSelector(
     (state) => state.tournamentReducer
   );
-
+  const { endedPage } = useSelector((state) => state.promotionReducer);
   useEffect(() => {
     dispatch({
       type: "CALL_LIST_TOURNAMENT",
@@ -59,21 +59,17 @@ export default function HotTournament() {
       type: "GET_HOTTEST_WEEK_TOUR",
     });
   }, [dispatch]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [itemOffSet]);
+  }, [endedPage]);
+
   useEffect(() => {
     if (width > 576) {
       setItemQuantity(12);
     }
     if (width < 576) {
       setItemQuantity(4);
-    }
-  }, [width]);
-
-  useEffect(() => {
-    if (width) {
-      setItemOffSet(0);
     }
   }, [width]);
 
@@ -151,20 +147,24 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchEnded}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={endedPage}
                   itemQuantity={itemQuantity}
                   typePromo={"Ended"}
                   noData={noDataEnd}
                 />
               </Box>
-              {!isFetchEnded && data !== null && data?.length > 0 && (
-                <PaginatedItems
-                  pageCount={Math.ceil(data.length / itemQuantity)}
-                  changeOffSet={(value) => {
-                    setItemOffSet((value - 1) * itemQuantity);
-                  }}
-                />
-              )}
+              {!isFetchEnded &&
+                data !== null &&
+                data?.length > 0 &&
+                itemQuantity && (
+                  <PaginatedItems
+                    defaultPage={Math.ceil(endedPage / itemQuantity) + 1}
+                    pageCount={Math.ceil(data.length / itemQuantity)}
+                    changeOffSet={(value) => {
+                      dispatch(updateEndedPage((value - 1) * itemQuantity));
+                    }}
+                  />
+                )}
               <NewFooter />
             </Container>
           ) : (
@@ -220,7 +220,7 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchEnded}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={endedPage}
                   itemQuantity={itemQuantity}
                   typePromo={"Ended"}
                   noData={noDataEnd}
@@ -269,14 +269,18 @@ export default function HotTournament() {
                 )}
               </Box>
               <Box sx={{ margin: "36px 0px" }}>
-                {!isFetchEnded && data !== null && data?.length > 0 && (
-                  <PaginatedItems
-                    pageCount={Math.ceil(data.length / itemQuantity)}
-                    changeOffSet={(value) => {
-                      setItemOffSet((value - 1) * itemQuantity);
-                    }}
-                  />
-                )}
+                {!isFetchEnded &&
+                  data !== null &&
+                  data?.length > 0 &&
+                  itemQuantity && (
+                    <PaginatedItems
+                      defaultPage={Math.ceil(endedPage / itemQuantity) + 1}
+                      pageCount={Math.ceil(data.length / itemQuantity)}
+                      changeOffSet={(value) => {
+                        dispatch(updateEndedPage((value - 1) * itemQuantity));
+                      }}
+                    />
+                  )}
               </Box>
               <NewFooter />
             </Container>
