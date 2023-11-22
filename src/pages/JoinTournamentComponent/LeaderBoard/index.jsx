@@ -87,6 +87,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     width: 576 < width && width < 1200 ? width / 24 : "60px",
                     height: 576 < width && width < 1200 ? width / 24 : "60px",
                     borderRadius: "50%",
+                    objectFit: "cover",
                   }}
                   src={
                     top3 &&
@@ -183,6 +184,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     height:
                       576 < width && width < 1200 ? `${width / 10}px` : "100px",
                     borderRadius: "50%",
+                    objectFit:"cover"
                   }}
                   src={
                     top3 &&
@@ -277,6 +279,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     height:
                       576 < width && width < 1200 ? `${width / 24}px` : "60px",
                     borderRadius: "50%",
+                    objectFit: "cover",
                   }}
                   src={
                     top3 &&
@@ -374,6 +377,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               width: "40px",
                               height: "40px",
                               marginRight: "5px",
+                              objectFit:"cover"
                             }}
                           ></Box>
                           <Box sx={{ width: "70%" }}>
@@ -463,6 +467,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             height:
                               576 < width && width < 1200 ? width / 24 : "40px",
                             marginRight: "5px",
+                            objectFit:"cover"
                           }}
                         ></Box>
                         <Box>
@@ -572,6 +577,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                     ? width / 24
                                     : "40px",
                                 marginRight: "5px",
+                                objectFit:"cover"
                               }}
                             ></Box>
                             <Box>
@@ -724,6 +730,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               width: "60px",
                               height: "60px",
                               borderRadius: "50%",
+                              objectFit: "cover",
                             }}
                             src={
                               top3 &&
@@ -818,6 +825,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               width: "100px",
                               height: "100px",
                               borderRadius: "50%",
+                              objectFit:"cover"
                             }}
                             src={
                               top3 &&
@@ -910,6 +918,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               width: "60px",
                               height: "60px",
                               borderRadius: "50%",
+                              objectFit: "cover",
                             }}
                             src={
                               top3 &&
@@ -1015,6 +1024,8 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                   width: "40px",
                                   height: "40px",
                                   marginRight: "5px",
+                                  objectFit:"cover",
+                                  
                                 }}
                               ></Box>
                               <Box>
@@ -1109,6 +1120,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                     width: "40px",
                                     height: "40px",
                                     marginRight: "5px",
+                                    objectFit:"cover"
                                   }}
                                 ></Box>
                                 <Box>
@@ -1326,6 +1338,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     width: "60px",
                     height: "60px",
                     borderRadius: "50%",
+                    objectFit: "cover",
                   }}
                   src={
                     top3 &&
@@ -1418,6 +1431,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     width: "100px",
                     height: "100px",
                     borderRadius: "50%",
+                    objectFit:"cover"
                   }}
                   src={
                     top3 &&
@@ -1508,6 +1522,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     width: "60px",
                     height: "60px",
                     borderRadius: "50%",
+                    objectFit: "cover",
                   }}
                   src={
                     top3 &&
@@ -1603,6 +1618,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             width: "40px",
                             height: "40px",
                             marginRight: "5px",
+                            objectFit:"cover"
                           }}
                         ></Box>
                         <Box>
@@ -1692,6 +1708,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             width: "40px",
                             height: "40px",
                             marginRight: "5px",
+                            objectFit:"cover"
                           }}
                         ></Box>
                         <Box>
@@ -1913,6 +1930,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               width: "100px",
                               height: "100px",
                               borderRadius: "50%",
+                              objectFit:"cover"
                             }}
                             src={
                               top3 &&
@@ -2005,6 +2023,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               width: "60px",
                               height: "60px",
                               borderRadius: "50%",
+                              objectFit: "cover",
                             }}
                             src={
                               top3 &&
@@ -2107,6 +2126,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                   width: "40px",
                                   height: "40px",
                                   marginRight: "5px",
+                                  objectFit:"cover"
                                 }}
                               ></Box>
                               <Box>
@@ -2202,6 +2222,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                     width: "40px",
                                     height: "40px",
                                     marginRight: "5px",
+                                    objectFit:"cover"
                                   }}
                                 ></Box>
                                 <Box>
