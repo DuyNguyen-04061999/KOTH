@@ -8,16 +8,14 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
-import { images } from "../../../utils/images";
+import { updateUpcomingPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-import { updateUpcomingPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 const theme = createTheme({
   typography: {},
   components: {
@@ -47,9 +45,9 @@ export default function HotTournament() {
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
-  const { hotWeekTour, isFetchHotWeek } = useSelector(
-    (state) => state.tournamentReducer
-  );
+  // const { hotWeekTour, isFetchHotWeek } = useSelector(
+  //   (state) => state.tournamentReducer
+  // );
 
   useEffect(() => {
     if (width > 576) {

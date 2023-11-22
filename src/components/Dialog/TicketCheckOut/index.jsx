@@ -28,7 +28,7 @@ export default function TicketCheckOut() {
   const userGold = user?.userGold || 0
   const { boughtTour } = useSelector((state) => state.tournamentReducer);
   const { listPackage } = useSelector((state) => state.packageReducer);
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const [sl, setSl] = useState(1);

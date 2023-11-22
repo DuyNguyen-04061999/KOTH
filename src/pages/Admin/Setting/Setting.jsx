@@ -408,7 +408,7 @@ const Setting = () => {
                     type="text"
                     autoComplete="New Refcode"
                     value={newRefcode}
-                    onChange={(e) => setNewRefcode(e?.target?.value)}
+                    onChange={(e) => setNewRefcode(e?.target?.value?.toLowerCase())}
                   />
                 </Box>
                 <Button
