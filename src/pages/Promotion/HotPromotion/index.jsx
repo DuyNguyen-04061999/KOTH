@@ -39,7 +39,7 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { hotTournament, isFetchHot , noDataHot} = useSelector(
+  const { hotTournament, isFetchHot, noDataHot } = useSelector(
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
@@ -59,12 +59,11 @@ export default function HotTournament() {
     }
   }, [width]);
 
-    useEffect(() => {
-        if (width) {
-            setItemOffSet(0);
-        }
-
-    }, [width]);
+  useEffect(() => {
+    if (width) {
+      setItemOffSet(0);
+    }
+  }, [width]);
 
   useEffect(() => {
     dispatch({
@@ -185,7 +184,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
-                paddingBottom:"50px"
+                paddingBottom: "50px",
               }}
             >
               <Typography
@@ -225,7 +224,6 @@ export default function HotTournament() {
                   typePromo={"hot"}
                   itemQuantity={itemQuantity}
                   noData={noDataHot}
-
                 />
               </Box>
               <Box
