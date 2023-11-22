@@ -15,7 +15,7 @@ import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/
 import {
   getMyInfor,
   getUserInfoReady,
-  logoutReady
+  logoutReady,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
@@ -57,7 +57,9 @@ export default function Dialoglg() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  const { isUpdateProfile, currentTab } = useSelector((state) => state.authReducer);
+  const { isUpdateProfile, currentTab } = useSelector(
+    (state) => state.authReducer
+  );
   const { user, uPack, tokenUser } = useSelector((state) => state.userReducer);
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
@@ -71,7 +73,7 @@ export default function Dialoglg() {
 
   const logout = () => {
     dispatch(logoutReady());
-    dispatch(closeChatPopup(false))
+    dispatch(closeChatPopup(false));
   };
   const { width, height } = useWindowDimensions();
 
@@ -370,6 +372,7 @@ export default function Dialoglg() {
                     style={{
                       borderRadius: 50,
                       border: uPack ? "2px solid #FD9E0F" : "",
+                      objectFit: "cover",
                     }}
                     alt="Remy Sharp"
                     src={
@@ -457,6 +460,7 @@ export default function Dialoglg() {
                         style={{
                           borderRadius: 50,
                           border: uPack ? "4px solid #FD9E0F" : "",
+                          objectFit: "cover",
                         }}
                         alt="Remy Sharp"
                         src={images.undefinedAvatar}
@@ -471,6 +475,7 @@ export default function Dialoglg() {
                           borderRadius: 50,
                           width: width < 576 ? "50px" : "100px",
                           height: width < 576 ? "50px" : "100px",
+                          objectFit: "cover",
                         }}
                         alt="Remy Sharp1"
                         src={
@@ -582,6 +587,7 @@ export default function Dialoglg() {
                             fontWeight: "700",
                             color: "#A89CD7",
                             letterSpacing: "0.5px",
+                            marginLeft: "4px",
                           }}
                         >
                           Wallet
@@ -598,9 +604,7 @@ export default function Dialoglg() {
                         }}
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
-                          dispatch(
-                            getMyInfor()
-                          );
+                          dispatch(getMyInfor());
                         }}
                       >
                         <svg
@@ -626,6 +630,7 @@ export default function Dialoglg() {
                             fontWeight: "700",
                             color: "#A89CD7",
                             letterSpacing: "0.5px",
+                            marginLeft: "4px",
                           }}
                         >
                           User Info
@@ -692,9 +697,9 @@ export default function Dialoglg() {
                 />
                 <Box
                   onClick={logout}
-                  className="log-out"
+                  className="log-out hover-dropdown"
                   sx={{
-                    margin: " 5px 15px",
+                    margin: "15px",
                   }}
                 >
                   <Dropdown.Item style={{ paddingLeft: "5px" }}>
@@ -721,8 +726,8 @@ export default function Dialoglg() {
                       style={{
                         fontWeight: "700",
                         color: "#A89CD7",
-                        marginBottom: "10px",
                         letterSpacing: "0.5px",
+                        marginLeft: "4px",
                       }}
                     >
                       Logout
