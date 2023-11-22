@@ -176,6 +176,7 @@ export default function SettingProfile({ closePopup }) {
                   type="primary"
                   text="UPDATE"
                   onClick={sendUpdateProfile}
+                  disabledBtn={!validateNickName(nName) ? true : false}
                 />
               )}
             </Box>

@@ -231,7 +231,7 @@ export default function HotTournament() {
                   noData={noDataUpcoming}
                 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   marginTop: "48px",
                   marginBottom: "0px",
@@ -272,7 +272,7 @@ export default function HotTournament() {
                     tourId={hotWeekTour && hotWeekTour?.id}
                   />
                 )}
-              </Box>
+              </Box> */}
               <Box sx={{ margin: "36px 0px" }}>
                 {!isFetchUpcoming &&
                   data !== null &&
