@@ -54,6 +54,10 @@ export default function HotTournament() {
   }, [dispatch]);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [itemOffSet]);
+
+  useEffect(() => {
     if (ongoingTournament) {
       setData(ongoingTournament);
     }
@@ -160,7 +164,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
-                paddingBottom:"50px"
+                paddingBottom: "50px",
               }}
             >
               <Typography
