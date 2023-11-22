@@ -8,6 +8,7 @@ import { images } from "../../../../utils/images";
 import "./index.scss";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 export default function GamePreview() {
   const settings = {
     arrows: false,
@@ -16,6 +17,10 @@ export default function GamePreview() {
   };
   const slider = useRef();
   const { detailTournament } = useSelector((state) => state.playgameReducer);
+  const {
+    isGetDetailPromotion,
+    isGetDetailAuthPromotion,
+  } = useSelector((state) => state.promotionReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   const [open, setOpen] = useState(false);
   const [newArray, setNewArray] = useState([]);
@@ -72,29 +77,65 @@ export default function GamePreview() {
         >
           Game Preview
         </Typography>
+       {isGetDetailAuthPromotion || isGetDetailPromotion ? (
+        <BannerLoading width={"100%"} height={"200px"}/>
+       ) : (
         <ScrollingCarousel>
-          {newArray?.map((item, index) => {
-            return item?.previewType === "image" ? (
+        {newArray?.map((item, index) => {
+          return item?.previewType === "image" ? (
+            <Box
+              key={index}
+              sx={{
+                boxSizing: "border-box",
+                padding: "8px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <Box
-                key={index}
                 sx={{
-                  boxSizing: "border-box",
-                  padding: "8px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
+                  height: device === "Desktop" ? "250px" : "200px",
+                  width: "auto",
                 }}
+                onClick={() => {
+                  setOpen(true);
+                  setImageString(item.id);
+                }}
+                component={"img"}
+                src={
+                  item?.previewLink
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      item?.previewLink
+                    : images.GamePreview1
+                }
+              ></Box>
+            </Box>
+          ) : (
+            <Box
+              key={index}
+              sx={{
+                boxSizing: "border-box",
+                padding: "8px",
+                cursor: "pointer",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {" "}
+              <video
+                autoPlay={false}
+                playsInline={true}
+                controls={true}
+                style={{
+                  width: "auto",
+                  height: device === "Desktop" ? "250px" : "200px",
+                }}
+                key={item?.previewLink}
               >
-                <Box
-                  sx={{
-                    height: device === "Desktop" ? "250px" : "200px",
-                    width: "auto",
-                  }}
-                  onClick={() => {
-                    setOpen(true);
-                    setImageString(item.id);
-                  }}
-                  component={"img"}
+                <source
                   src={
                     item?.previewLink
                       ? process.env.REACT_APP_SOCKET_SERVER +
@@ -102,46 +143,14 @@ export default function GamePreview() {
                         item?.previewLink
                       : images.GamePreview1
                   }
-                ></Box>
-              </Box>
-            ) : (
-              <Box
-                key={index}
-                sx={{
-                  boxSizing: "border-box",
-                  padding: "8px",
-                  cursor: "pointer",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {" "}
-                <video
-                  autoPlay={false}
-                  playsInline={true}
-                  controls={true}
-                  style={{
-                    width: "auto",
-                    height: device === "Desktop" ? "250px" : "200px",
-                  }}
-                  key={item?.previewLink}
-                >
-                  <source
-                    src={
-                      item?.previewLink
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          item?.previewLink
-                        : images.GamePreview1
-                    }
-                    type="video/mp4"
-                  />
-                </video>
-              </Box>
-            );
-          })}
-        </ScrollingCarousel>
+                  type="video/mp4"
+                />
+              </video>
+            </Box>
+          );
+        })}
+      </ScrollingCarousel>
+       )}
         <Dialog
           PaperProps={{
             style: {
