@@ -10,6 +10,7 @@ export default function AnimButton(props) {
     style,
     isHasIcon,
     isSubmitBtn,
+    disabledBtn
   } = props;
   const ArrrowIcon = () => (
     <span className="icon-arrow">
@@ -70,7 +71,8 @@ export default function AnimButton(props) {
             ...style,
           }}
           onClick={onClick}
-          disableRipple
+          // disableRipple
+          disabled={disabledBtn}
         >
           <p
             style={{
