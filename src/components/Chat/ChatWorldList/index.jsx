@@ -76,8 +76,6 @@ export default function ChatWorldList() {
     return false;
   };
 
-  console.log(isScrolledToBottom());
-
   const handleScroll = () => {
     setShowScrollToBottomButton(!isScrolledToBottom());
   };
