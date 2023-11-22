@@ -105,18 +105,18 @@ export default function JoinTournament() {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
 
-  useEffect(() => {
-    dispatch(getRefactorDetailPromotion(id));
-  }, [id, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getRefactorDetailPromotion(id));
+  // }, [id, dispatch]);
 
-  useEffect(() => {
-    if (token) {
-      dispatch(getRefactorDetailAuthPromotion({
-        id,
-        token
-      }));
-    }
-  }, [id, token, dispatch]);
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(getRefactorDetailAuthPromotion({
+  //       id,
+  //       token
+  //     }));
+  //   }
+  // }, [id, token, dispatch]);
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
