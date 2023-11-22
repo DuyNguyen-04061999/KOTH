@@ -39,7 +39,7 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { upcomingTournament, isFetchUpcoming , noDataUpcoming} = useSelector(
+  const { upcomingTournament, isFetchUpcoming, noDataUpcoming } = useSelector(
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
@@ -59,12 +59,11 @@ export default function HotTournament() {
     }
   }, [width]);
 
-    useEffect(() => {
-        if (width) {
-            setItemOffSet(0);
-        }
-
-    }, [width]);
+  useEffect(() => {
+    if (width) {
+      setItemOffSet(0);
+    }
+  }, [width]);
 
   useEffect(() => {
     dispatch({
@@ -89,7 +88,9 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [itemOffSet]);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -185,8 +186,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
-                paddingBottom:"50px"
-
+                paddingBottom: "50px",
               }}
             >
               <Typography

@@ -74,7 +74,9 @@ export default function HotTournament() {
       type: "GET_HOTTEST_WEEK_TOUR",
     });
   }, [dispatch]);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [itemOffSet]);
   useEffect(() => {
     if (hotTournament) {
       setData(hotTournament);

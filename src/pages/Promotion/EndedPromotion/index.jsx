@@ -39,7 +39,7 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { endedTournament, isFetchEnded,noDataEnd } = useSelector(
+  const { endedTournament, isFetchEnded, noDataEnd } = useSelector(
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
@@ -59,7 +59,9 @@ export default function HotTournament() {
       type: "GET_HOTTEST_WEEK_TOUR",
     });
   }, [dispatch]);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [itemOffSet]);
   useEffect(() => {
     if (width > 576) {
       setItemQuantity(12);
@@ -69,12 +71,11 @@ export default function HotTournament() {
     }
   }, [width]);
 
-    useEffect(() => {
-        if (width) {
-            setItemOffSet(0);
-        }
-
-    }, [width]);
+  useEffect(() => {
+    if (width) {
+      setItemOffSet(0);
+    }
+  }, [width]);
 
   useEffect(() => {
     if (endedTournament) {
@@ -183,8 +184,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
-                paddingBottom:"50px"
-
+                paddingBottom: "50px",
               }}
             >
               <Typography
@@ -224,7 +224,6 @@ export default function HotTournament() {
                   itemQuantity={itemQuantity}
                   typePromo={"Ended"}
                   noData={noDataEnd}
-
                 />
               </Box>
               <Box
@@ -269,7 +268,7 @@ export default function HotTournament() {
                   />
                 )}
               </Box>
-              <Box sx={{ margin: "36px 0px"}}>
+              <Box sx={{ margin: "36px 0px" }}>
                 {!isFetchEnded && data !== null && data?.length > 0 && (
                   <PaginatedItems
                     pageCount={Math.ceil(data.length / itemQuantity)}
