@@ -9,6 +9,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const [top3, setTop3] = useState([]);
   const { width, height } = useWindowDimensions();
   const { user } = useSelector((state) => state.userReducer);
+  const { nickName } = useSelector((state) => state.profileReducer);
   const userName = user?.userName || "";
   const [start, setStart] = useState(3);
   const [end, setEnd] = useState(6);
@@ -511,7 +512,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 })}{" "}
             {detailTournament?.tournamentResult
               ?.filter((n) => {
-                return n?.userNickName === userName;
+                return n?.userNickName === nickName;
               })
               .map((item, index) => {
                 return (

@@ -32,8 +32,15 @@ export default function DialogProfile(props) {
   const { uPack } = useSelector((state) => state.userReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   // const { friendList } = useSelector((state) => state.chatReducer);
-  const { id, email, phone, userNameProfile, avatarUrl, nickName, userNickNameProfile } =
-    useSelector((state) => state.profileReducer);
+  const {
+    id,
+    email,
+    phone,
+    userNameProfile,
+    avatarUrl,
+    nickName,
+    userNickNameProfile,
+  } = useSelector((state) => state.profileReducer);
   const dispatch = useDispatch();
   const { listSetting } = useSelector((state) => state.settingReducer);
 
@@ -251,7 +258,9 @@ export default function DialogProfile(props) {
                   marginBottom: "5px !important",
                 }}
               >
-                {userNameProfile === user?.userName ? "Username" : "User Nick Name"}
+                {userNameProfile === user?.userName
+                  ? "Username"
+                  : "User Nick Name"}
               </Typography>
               <FormControl
                 variant="standard"
@@ -266,7 +275,11 @@ export default function DialogProfile(props) {
                   id="input-with-icon-adornment"
                   type="text"
                   disabled
-                  value={userNameProfile === user?.userName ? userNameProfile : userNickNameProfile }
+                  value={
+                    userNameProfile === user?.userName
+                      ? userNameProfile
+                      : userNickNameProfile
+                  }
                   sx={{
                     "& .MuiInputBase-input.Mui-disabled": {
                       WebkitTextFillColor: "#fff",
