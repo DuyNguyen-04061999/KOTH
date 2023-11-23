@@ -177,7 +177,7 @@ export default function NavMobile() {
                       </p>
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className="items"
                     style={{
                       backgroundColor: "unset",
@@ -226,7 +226,7 @@ export default function NavMobile() {
                     >
                       Credit
                     </p>
-                  </div>
+                  </div> */}
                   <div
                     className="items"
                     style={{
