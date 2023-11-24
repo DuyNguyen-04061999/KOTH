@@ -39,7 +39,8 @@ export default function ForgetPassword() {
     );
   }, [optionEmail, dispatch]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (validateEmail(username)) {
       dispatch(
         forgetPasswordReady({
@@ -352,7 +353,7 @@ export default function ForgetPassword() {
             (optionEmail && username && email && !emailError) ||
             (!optionEmail && username && phoneNumber && !phoneNumberError)
           ) ? ( */}
-          {!username ? (
+          {!validateEmail(username) && !validatePhoneNumber(username) ? (
             <AnimButton type="disable" text="NEXT" />
           ) : isForgetPassword ? (
             <AnimButton type="loading" text="NEXT" isSubmitBtn />
@@ -360,7 +361,7 @@ export default function ForgetPassword() {
             <AnimButton
               type="primary"
               text="NEXT"
-              onClick={() => handleSubmit()}
+              onClick={handleSubmit}
               isSubmitBtn
             />
           )}
