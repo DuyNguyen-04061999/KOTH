@@ -26,7 +26,7 @@ export default function OTPVerifyAccount() {
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(300);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -53,16 +53,14 @@ export default function OTPVerifyAccount() {
         );
         break;
       case "reVerify":
-        console.log(
-          dispatch(
-            sendOtpReady({
-              otp: otp,
-              type: "register",
-              email: user?.userEmail,
-              phone: user?.userPhone,
-            })
-          )
-        );
+        dispatch(
+          sendOtpReady({
+            otp: otp,
+            type: "register",
+            email: user?.userEmail,
+            phone: user?.userPhone,
+          })
+        )
         break;
       default:
         return false;
@@ -71,11 +69,9 @@ export default function OTPVerifyAccount() {
 
   useEffect(() => {
     if (resenOTPSuccess) {
-      setTimeLeft(60);
+      setTimeLeft(300);
     }
   }, [resenOTPSuccess]);
-
-  console.log(user);
 
   const handleResendOTP = () => {
     switch (typeVerifyOTP) {
@@ -89,11 +85,6 @@ export default function OTPVerifyAccount() {
         );
         break;
       case "reVerify":
-        console.log({
-          email: user?.userEmail,
-          phone: user?.userPhone,
-          type: "register",
-        });
         dispatch(
           resendOtpReady({
             email: user?.userEmail,

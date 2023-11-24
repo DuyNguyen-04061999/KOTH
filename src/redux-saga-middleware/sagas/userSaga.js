@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
+import { openDialogGif } from "../reducers/appReducer";
 import {
   clickTab,
   closeLoginDialog,
@@ -71,9 +72,6 @@ function* loginSaga(dataRequest) {
         localStorage.setItem("refreshToken", data?.data?.refreshToken);
         yield put(updateUserToken(data?.data?.token))
         yield put(getUserInfoReady(data?.data?.token));
-        setTimeout(() => {
-          window.location.reload()
-        }, 2000)
       } else {
         yield put(loginFail());
         yield put(
@@ -237,7 +235,7 @@ function* userInfoSaga(dataRequest) {
       if (status === 200 || status === 201) {
         yield put(getUserInfoSuccess(data?.data));
         if (
-          data?.data?.user?.userVerifiedEmail === 0 & data?.data?.user?.userVerifiedPhone === 0
+          data?.data?.user?.userVerifiedEmail === 0 && data?.data?.user?.userVerifiedPhone === 0
         ) {
           yield put(updateVerifyOTPType("reVerify"));
           yield put(openVerifyDialog());
@@ -288,6 +286,8 @@ function* sendOtpSaga(dataRequest) {
           yield put(updateUserToken(data?.data?.token));
           yield put(getUserInfoReady(data?.data?.token));
           yield put(closeLoginDialog());
+          yield put(openDialogGif())
+
         }
       } else {
         yield put(sendOtpFail());

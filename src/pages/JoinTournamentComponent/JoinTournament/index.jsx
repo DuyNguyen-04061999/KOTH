@@ -94,7 +94,6 @@ export default function JoinTournament() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  console.log(detailTournament);
 
   const handleClickOpen = () => {
     navigate("/packages");
@@ -107,19 +106,6 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getRefactorDetailPromotion(id));
-  // }, [id, dispatch]);
-
-  // useEffect(() => {
-  //   if (token) {
-  //     dispatch(getRefactorDetailAuthPromotion({
-  //       id,
-  //       token
-  //     }));
-  //   }
-  // }, [id, token, dispatch]);
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
@@ -137,14 +123,6 @@ export default function JoinTournament() {
       dispatch(toggleExtra());
       return;
     } else {
-      // if (countTicket > 0 && detailTournament?.extra <= 0) {
-      //   dispatch(updateCountExtraAfterPlayGame(1));
-      // }
-
-      // if (countTicket <= 0 && detailTournament?.extra > 0) {
-      //   dispatch(updateDetailTourAfterPlayGame());
-      // }
-
       dispatch(
         startGameInPromotion({
           tournamentId: id,

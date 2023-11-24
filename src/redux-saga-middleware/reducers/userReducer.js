@@ -449,7 +449,7 @@ const userReducer = (
     case "SEND_OTP_FAIL":
       return { ...state, isVerifyOTP: false };
     case "FORGET_PASSWORD_READY":
-      return { ...state, isForgetPassword: true };
+      return { ...state, isForgetPassword: true, forgotPassEmail: payload?.email || "", forgotPassPhone: payload?.phone || "" };
     case "FORGET_PASSWORD_FAIL":
       return { ...state, isForgetPassword: false };
     case "FORGET_PASSWORD_SUCCESS":

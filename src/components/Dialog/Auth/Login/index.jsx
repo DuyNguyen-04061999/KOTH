@@ -54,10 +54,6 @@ const Login = () => {
             password: password,
           })
         );
-        console.log({
-          email: username,
-          password: password,
-        });
       } else if (validatePhoneNumber(username)) {
         dispatch(
           loginReady({
@@ -145,7 +141,7 @@ const Login = () => {
           <Typography
             sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
           >
-            {usernameError}
+            {username && usernameError ? usernameError : ""}
           </Typography>
         </FormControl>
         <FormControl
