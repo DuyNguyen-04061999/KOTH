@@ -5,7 +5,7 @@ import { styled as muiStyled } from "@mui/material/styles";
 import React, { useState } from "react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { imageDesktop, images } from "../../utils/images";
+import { imageDesktop } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AuthDialog from "../Dialog/Auth/Signin";
 import "./index.scss";
@@ -16,6 +16,7 @@ import GameLogDialog from "../Dialog/GameLog/GameLog";
 import MenuWallet from "../MenuMobile/Wallet";
 import history from "../Router/history";
 
+import { ArrowForwardIos } from "@mui/icons-material";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
@@ -54,7 +55,9 @@ import {
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import { systemNotification } from "../../utils/notification";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
+import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
+import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
@@ -68,8 +71,6 @@ import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
-import ChatBot from "../ChatBot";
-import { ArrowForwardIos } from "@mui/icons-material";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -338,6 +339,7 @@ export default function Layout(props) {
       <TouramentShow />
       <DialogVerify />
       <DialogSubscribe />
+      <DialogGift />
       <NotiFunds />
       <DialogProfile
         open={isProfileDialog}

@@ -371,6 +371,9 @@ import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png"
 
 import bannersigninTablet from "../assets/images/signinTablet.png";
 
+
+import bannerGift from "../assets/images/giftBanner.png";
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -404,6 +407,7 @@ export const imageHome = {
   BannerWinCelebMobile: bannerWinCelebMobile,
   BannerWinAroundMobile: bannerWinAroundMobile,
   BGBannerCountDown: bgBannerCountDown,
+  BannerGift: bannerGift,
 };
 
 export const navbar = {
