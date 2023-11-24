@@ -79,6 +79,18 @@ export const chatLogoutSuccessFully = (data) => {
     payload: data,
   };
 };
+export const updateOpenMess = (data) => {
+  return {
+    type: "UPDATE_OPEN_MESS",
+    payload: data,
+  };
+};
+export const updateOpenMenu = (data) => {
+  return {
+    type: "UPDATE_OPEN_MENU",
+    payload: data,
+  };
+};
 
 const chatReducer = (
   state = {
@@ -91,6 +103,8 @@ const chatReducer = (
     privateChatPopup: false,
     tabChat: true,
     badgechat: false,
+    openMess: false,
+    openMenu: false,
   },
   action
 ) => {
@@ -176,6 +190,18 @@ const chatReducer = (
         chatPopup: false,
         privateChatPopup: false,
         tabChat: true,
+      };
+    }
+    case "UPDATE_OPEN_MESS": {
+      return {
+        ...state,
+        openMess: payload,
+      };
+    }
+    case "UPDATE_OPEN_MENU": {
+      return {
+        ...state,
+        openMenu: payload,
       };
     }
     default:

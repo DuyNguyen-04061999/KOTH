@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
-import { showBadgeChat } from "../../../redux-saga-middleware/reducers/chatReducer";
+import {
+  showBadgeChat,
+  updateOpenMenu,
+  updateOpenMess,
+} from "../../../redux-saga-middleware/reducers/chatReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { getAppType } from "../../../utils/helper";
@@ -17,13 +21,13 @@ import "./index.scss";
 
 export default function NavMobile() {
   const { tokenUser: token } = useSelector((state) => state.userReducer);
-  const { chatWorld, badgechat } = useSelector((state) => state.chatReducer);
+  const { chatWorld, badgechat, openMess, openMenu } = useSelector(
+    (state) => state.chatReducer
+  );
 
   // const { device } = useSelector((state) => state.deviceReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
-  const [openMess, setOpenMess] = useState(false);
-  const [openMenu, setOpenMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const navigate = useNavigate();
   const [hideNavMobile, setHideNavMobile] = useState("block");
@@ -37,7 +41,7 @@ export default function NavMobile() {
     }
   }, [isProfileDialog]);
 
-  const location = useLocation()
+  const location = useLocation();
 
   const { pathname } = useLocation();
 
@@ -118,7 +122,7 @@ export default function NavMobile() {
                     <div
                       onClick={() => {
                         navigate("/packages");
-                        dispatch(updateFromRouter(location.pathname))
+                        dispatch(updateFromRouter(location.pathname));
                       }}
                     >
                       {pathname && pathname === "/packages" ? (
@@ -235,9 +239,9 @@ export default function NavMobile() {
                   >
                     <div
                       onClick={() => {
-                        setOpenMess(true);
+                        dispatch(updateOpenMess(true));
                         setOpenSearch(false);
-                        setOpenMenu(false);
+                        dispatch(updateOpenMenu(false));
                         dispatch(showBadgeChat(true));
                       }}
                     >
@@ -285,7 +289,7 @@ export default function NavMobile() {
                       backgroundColor: "unset",
                     }}
                     onClick={() => {
-                      setOpenMenu(true);
+                      dispatch(updateOpenMenu(true));
                     }}
                   >
                     <div>
@@ -337,14 +341,15 @@ export default function NavMobile() {
               <MenuChat
                 open={openMess}
                 handleShow={() => {
-                  setOpenMess(false);
+                  dispatch(updateOpenMess(false));
                 }}
                 handleColor={() => {}}
               />
+              {/* kdjaskldjlas */}
               <MenuBrowser
                 open={openMenu}
                 handleShowMenu={() => {
-                  setOpenMenu(false);
+                  dispatch(updateOpenMenu(false));
                 }}
                 handleColor={() => {}}
               />
@@ -369,7 +374,7 @@ export default function NavMobile() {
                       backgroundColor: "unset",
                     }}
                     onClick={() => {
-                      setOpenMenu(true);
+                      dispatch(updateOpenMenu(true));
                       setOpenSearch(false);
                     }}
                   >
@@ -440,9 +445,9 @@ export default function NavMobile() {
                       backgroundColor: "unset",
                     }}
                     onClick={() => {
-                      setOpenMess(true);
+                      dispatch(updateOpenMess(true));
                       setOpenSearch(false);
-                      setOpenMenu(false);
+                      dispatch(updateOpenMenu(false));
                     }}
                   >
                     <div>
@@ -474,7 +479,7 @@ export default function NavMobile() {
                       backgroundColor: "unset",
                     }}
                     onClick={() => {
-                      setOpenMenu(true);
+                      dispatch(updateOpenMenu(true));
                     }}
                   >
                     <div>
@@ -492,14 +497,14 @@ export default function NavMobile() {
               <MenuChat
                 open={openMess}
                 handleShow={() => {
-                  setOpenMess(false);
+                  dispatch(updateOpenMess(false));
                 }}
                 handleColor={() => {}}
               />
               <MenuBrowser
                 open={openMenu}
                 handleShowMenu={() => {
-                  setOpenMenu(false);
+                  dispatch(updateOpenMenu(false));
                 }}
                 handleColor={() => {}}
               />
