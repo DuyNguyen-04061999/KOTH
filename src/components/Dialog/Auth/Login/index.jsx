@@ -10,6 +10,7 @@ import { sign } from "../../../../utils/images";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Login = () => {
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin } = useSelector((state) => state.userReducer);
+  const {width} = useWindowDimensions()
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -66,15 +68,19 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (validateEmail(username) || validatePhoneNumber(username)) {
-      setUsernameError("");
+    if (
+      !validateEmail(username) &&
+      !validatePhoneNumber(username) &&
+      username !== ""
+    ) {
+      setUsernameError("Please enter a valid email or phone number!");
     } else {
-      setUsernameError("Please enter valid email or phone number!");
+      setUsernameError("");
     }
   }, [username]);
 
   useEffect(() => {
-    if (usernameError) {
+    if (usernameError || username === "") {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
@@ -82,7 +88,7 @@ const Login = () => {
   }, [usernameError]);
 
   return (
-    <Box>
+    <Box >
       <Box>
         <Typography
           variant="h5"

@@ -157,7 +157,11 @@ export default function ForgetPassword() {
           </AnimButton>
         </Box>
         <Box sx={{ width: "48%" }}>
-          {!username ? (
+          {/* {!(
+            (optionEmail && username && email && !emailError) ||
+            (!optionEmail && username && phoneNumber && !phoneNumberError)
+          ) ? ( */}
+          {username && !validateEmail(username) && !validatePhoneNumber(username) ? (
             <AnimButton type="disable" text="NEXT" />
           ) : isForgetPassword ? (
             <AnimButton type="loading" text="NEXT" isSubmitBtn />

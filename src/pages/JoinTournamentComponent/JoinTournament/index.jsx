@@ -19,9 +19,7 @@ import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
-import {
-  updateFromRouter
-} from "../../../redux-saga-middleware/reducers/appReducer";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
   toggleLoginDialog,
@@ -109,10 +107,12 @@ export default function JoinTournament() {
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion({
-        id,
-        token
-      }));
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token,
+        })
+      );
     } else {
       dispatch(getRefactorDetailPromotion(id));
     }
@@ -201,7 +201,7 @@ export default function JoinTournament() {
   }, [startGamePromotion]);
   useEffect(() => {
     dispatch(startGameInPromotionFail());
-  }, [dispatch]); 
+  }, [dispatch]);
 
   return (
     <>
@@ -1132,7 +1132,7 @@ export default function JoinTournament() {
                                         width: "100%",
                                         height: "100%",
                                         borderRadius: "50%",
-                                        objectFit:"cover"
+                                        objectFit: "cover",
                                       }}
                                     ></Box>
                                   </Box>
@@ -1186,7 +1186,7 @@ export default function JoinTournament() {
                                     width: "100%",
                                     height: "100%",
                                     borderRadius: "50%",
-                                    objectFit:"cover"
+                                    objectFit: "cover",
                                   }}
                                 ></Box>
                               </Box>
@@ -1293,7 +1293,7 @@ export default function JoinTournament() {
                                     borderRadius: "50%",
                                     width: "100%",
                                     height: "100%",
-                                    objectFit:"cover"
+                                    objectFit: "cover",
                                   }}
                                   src={
                                     item?.userAccount?.accountAvatar
@@ -1410,7 +1410,7 @@ export default function JoinTournament() {
                                         borderRadius: "50%",
                                         width: "100%",
                                         height: "100%",
-                                        objectFit:"cover"
+                                        objectFit: "cover",
                                       }}
                                       src={
                                         item?.userAccount?.accountAvatar
@@ -1953,7 +1953,7 @@ export default function JoinTournament() {
                   fontSize: "24px",
                 }}
               >
-                Information
+                Informations
               </Typography>
               {isGetDetailPromotion || isGetDetailAuthPromotion ? (
                 <ParagraphLoading />
@@ -1967,6 +1967,32 @@ export default function JoinTournament() {
                     overscrollBehavior: "contain",
                   }}
                 >
+                  <Box
+                    sx={{
+                      display: "flex",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="none"
+                      viewBox="0 0 25 25"
+                    >
+                      <path
+                        fill="#F05153"
+                        d="M12.263 24.204H3.502c-2.76 0-4.356-2.843-3.025-5.401A3262.403 3262.403 0 019.31 1.938C10.67-.636 13.903-.65 15.262 1.92a2396.638 2396.638 0 018.855 16.923c1.306 2.521-.315 5.353-3.032 5.36-2.94.007-5.88 0-8.822 0zm.036-17.287c-.269 0-.537.015-.804.046-.827.143-1.32.847-1.226 1.73.195 1.807.392 3.612.59 5.416.098.89.628 1.444 1.383 1.464.797.02 1.359-.508 1.466-1.434.21-1.825.41-3.652.6-5.48.089-.858-.402-1.538-1.2-1.689a6.192 6.192 0 00-.81-.052v-.001zM12.286 20.5c.41 0 .805-.173 1.096-.481.29-.308.454-.726.454-1.162 0-.435-.163-.853-.454-1.16a1.508 1.508 0 00-1.096-.482 1.537 1.537 0 00-1.095.5c-.29.312-.452.732-.453 1.17.027.868.742 1.618 1.548 1.616V20.5z"
+                      ></path>
+                    </svg>
+                    <Typography
+                      className="ms-2"
+                      sx={{ color: "#e75857", textAlign: "left" }}
+                    >
+                      Persons under the age of 18 should use this Website only
+                      with the supervision of an Adult. Payment Information must
+                      be provided by or with the permission of an Adult
+                    </Typography>
+                  </Box>
                   {detailTournament &&
                     detailTournament?.tournamentInformations &&
                     isJson(detailTournament?.tournamentInformations) &&
@@ -3191,6 +3217,39 @@ export default function JoinTournament() {
                               padding: "0 6px",
                             }}
                           >
+                            <Box
+                              sx={{
+                                display: "flex",
+                              }}
+                            >
+                              <Box>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20"
+                                  height="20"
+                                  fill="none"
+                                  viewBox="0 0 25 25"
+                                >
+                                  <path
+                                    fill="#F05153"
+                                    d="M12.263 24.204H3.502c-2.76 0-4.356-2.843-3.025-5.401A3262.403 3262.403 0 019.31 1.938C10.67-.636 13.903-.65 15.262 1.92a2396.638 2396.638 0 018.855 16.923c1.306 2.521-.315 5.353-3.032 5.36-2.94.007-5.88 0-8.822 0zm.036-17.287c-.269 0-.537.015-.804.046-.827.143-1.32.847-1.226 1.73.195 1.807.392 3.612.59 5.416.098.89.628 1.444 1.383 1.464.797.02 1.359-.508 1.466-1.434.21-1.825.41-3.652.6-5.48.089-.858-.402-1.538-1.2-1.689a6.192 6.192 0 00-.81-.052v-.001zM12.286 20.5c.41 0 .805-.173 1.096-.481.29-.308.454-.726.454-1.162 0-.435-.163-.853-.454-1.16a1.508 1.508 0 00-1.096-.482 1.537 1.537 0 00-1.095.5c-.29.312-.452.732-.453 1.17.027.868.742 1.618 1.548 1.616V20.5z"
+                                  ></path>
+                                </svg>
+                              </Box>
+                              <Typography
+                                className="ms-2"
+                                sx={{
+                                  color: "#e75857",
+                                  textAlign: "left",
+                                  fontSize: "12px",
+                                }}
+                              >
+                                Persons under the age of 18 should use this
+                                Website only with the supervision of an Adult.
+                                Payment Information must be provided by or with
+                                the permission of an Adult
+                              </Typography>
+                            </Box>
                             {detailTournament &&
                               detailTournament?.tournamentInformations &&
                               isJson(
@@ -3352,11 +3411,11 @@ export default function JoinTournament() {
                 </Box>
                 <GamePreview />
                 <NewFooter />
-                <Box sx={{
-                  marginBottom: "75px"
-                }}>
-
-                </Box>
+                <Box
+                  sx={{
+                    marginBottom: "75px",
+                  }}
+                ></Box>
               </Container>
               <Dialog
                 onClose={() => {
