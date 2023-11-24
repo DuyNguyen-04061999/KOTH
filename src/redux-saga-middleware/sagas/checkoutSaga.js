@@ -1,10 +1,17 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import CheckoutService from "../services/checkoutService";
+import { showToastNotification } from "../reducers/alertReducer";
 import {
+  checkoutPaypalCancelComplete,
+  checkoutPaypalCancelFail,
+  checkoutPaypalSuccessComplete,
+  checkoutPaypalSuccessFail,
   getCheckOutFail,
   getCheckOutSuccess,
-} from "../reducers/checkouReducer";
-import { Try } from "@mui/icons-material";
+} from "../reducers/checkoutReducer";
+import { buyPackageSuccess } from "../reducers/packageReducer";
+import { toggleAlertStripeProcess } from "../reducers/stripeReducer";
+import { getUserInfoReady, updateCountTicket } from "../reducers/userReducer";
+import CheckoutService from "../services/checkoutService";
 
 const checkoutService = new CheckoutService();
 function* getCheckOutSaga(dataRequest) {
@@ -12,9 +19,9 @@ function* getCheckOutSaga(dataRequest) {
     const { payload } = dataRequest;
     const res = yield call(checkoutService.getCheckout, payload);
     const { status, data } = res;
-    console.log(res);
     if (status === 200 || status === 201) {
-      yield put(getCheckOutSuccess(data));
+      yield put(getCheckOutSuccess(data?.data?.paymentLink || ""));
+      window.open(data?.data?.paymentLink || "/", "_self")
     } else {
       yield put(getCheckOutFail());
     }
@@ -26,41 +33,62 @@ function* getCheckOutSaga(dataRequest) {
 function* getCheckOutSagaSuccess(dataRequest) {
     try {
         const { payload } = dataRequest;
-        const res = yield call(checkoutService.getCheckout, payload);
+        const res = yield call(checkoutService.getCheckoutSuccess, payload);
         const { status, data } = res;
-        console.log(res);
         if (status === 200 || status === 201) {
-          yield put(getCheckOutSuccess(data));
+          yield put(buyPackageSuccess(data))
+          yield put(checkoutPaypalSuccessComplete(data));
+          yield put(updateCountTicket(data?.data?.quantity || 0))
+          if(!data?.data?.quantity) {
+              yield put(getUserInfoReady(localStorage.getItem("token")))
+          }
+          yield put(toggleAlertStripeProcess({
+            type: "success"
+          }));
         } else {
-          yield put(getCheckOutFail());
+          yield put(checkoutPaypalSuccessFail());
+          yield put(toggleAlertStripeProcess({
+            type: "error"
+          }));
         }
     } catch (err) {
-        yield put(getCheckOutFail());
+        yield put(checkoutPaypalSuccessFail());
+        yield put(toggleAlertStripeProcess({
+          type: "error"
+        }));
     }
 }
 
-function* getCheckOutSagaCencal(dataRequest) {
+function* getCheckOutSagaCancel(dataRequest) {
     try {
         const { payload } = dataRequest;
-        const res = yield call(checkoutService.getCheckout, payload);
+        const res = yield call(checkoutService.getCheckoutCancel, payload);
         const { status, data } = res;
-        console.log(res);
         if (status === 200 || status === 201) {
-          yield put(getCheckOutSuccess(data));
+          yield put(checkoutPaypalCancelComplete(data));
+          yield put(toggleAlertStripeProcess({
+            type: "error"
+          }));
         } else {
-          yield put(getCheckOutFail());
+          yield put(checkoutPaypalCancelFail());
+          yield put(showToastNotification({
+            type: "error",
+            message: "Payment error!"
+          }))
         }
     } catch (err) {
-        yield put(getCheckOutFail());
+        yield put(checkoutPaypalCancelFail());
+        yield put(showToastNotification({
+          type: "error",
+          message: err?.message || "Payment error!"
+        }))
     }
 }
-
-
 
 function* checkoutSaga() {
     yield takeEvery("GET_CHECK_OUT", getCheckOutSaga)
-    yield takeEvery("GET_CHECK_OUT_SUCCESS",getCheckOutSagaSuccess)
-    yield takeEvery("GET_CHECK_OUT_CENCAL",getCheckOutSagaCencal)
+    yield takeEvery("CHECKOUT_PAYPAL_SUCCESS", getCheckOutSagaSuccess)
+    yield takeEvery("CHECKOUT_PAYPAL_CANCEL", getCheckOutSagaCancel)
 }
 
 export default checkoutSaga

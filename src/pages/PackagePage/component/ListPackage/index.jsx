@@ -58,6 +58,8 @@ export default function ListPackage(props) {
         dispatch(
           toggleCheckWallet({
             type: "subscription",
+            gold: 19.99,
+            total: 1,
           })
         );
         dispatch(getIdPackage(id));
