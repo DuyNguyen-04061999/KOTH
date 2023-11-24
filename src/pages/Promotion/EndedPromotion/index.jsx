@@ -8,16 +8,14 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
-import { images } from "../../../utils/images";
+import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 const theme = createTheme({
   typography: {},
   components: {
@@ -226,7 +224,7 @@ export default function HotTournament() {
                   noData={noDataEnd}
                 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   marginTop: "48px",
                   marginBottom: "0px",
@@ -267,7 +265,7 @@ export default function HotTournament() {
                     tourId={hotWeekTour && hotWeekTour?.id}
                   />
                 )}
-              </Box>
+              </Box> */}
               <Box sx={{ margin: "36px 0px" }}>
                 {!isFetchEnded &&
                   data !== null &&

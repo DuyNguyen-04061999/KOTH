@@ -334,7 +334,7 @@ export default function CreatePassword() {
               }}
             >
               {" "}
-              Password must have at least one non letter.{" "}
+              Password must have at least one special character.{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center  text-white">

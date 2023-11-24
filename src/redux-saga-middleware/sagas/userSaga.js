@@ -237,8 +237,7 @@ function* userInfoSaga(dataRequest) {
       if (status === 200 || status === 201) {
         yield put(getUserInfoSuccess(data?.data));
         if (
-          data?.data?.user?.userVerifiedEmail === 0 ||
-          data?.data?.user?.userVerifiedPhone === 0
+          data?.data?.user?.userVerifiedEmail === 0 & data?.data?.user?.userVerifiedPhone === 0
         ) {
           yield put(updateVerifyOTPType("reVerify"));
           yield put(openVerifyDialog());
