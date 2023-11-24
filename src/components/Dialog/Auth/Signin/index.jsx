@@ -15,7 +15,7 @@ import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/
 import {
   getMyInfor,
   getUserInfoReady,
-  logoutReady
+  logoutReady,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
@@ -57,7 +57,9 @@ export default function Dialoglg() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  const { isUpdateProfile, currentTab } = useSelector((state) => state.authReducer);
+  const { isUpdateProfile, currentTab } = useSelector(
+    (state) => state.authReducer
+  );
   const { user, uPack, tokenUser } = useSelector((state) => state.userReducer);
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
@@ -71,7 +73,7 @@ export default function Dialoglg() {
 
   const logout = () => {
     dispatch(logoutReady());
-    dispatch(closeChatPopup(false))
+    dispatch(closeChatPopup(false));
   };
   const { width, height } = useWindowDimensions();
 
@@ -598,9 +600,7 @@ export default function Dialoglg() {
                         }}
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
-                          dispatch(
-                            getMyInfor()
-                          );
+                          dispatch(getMyInfor());
                         }}
                       >
                         <svg

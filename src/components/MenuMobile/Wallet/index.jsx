@@ -55,7 +55,7 @@ export default function DialogWallet(props) {
   const [transactions, setTransaction] = useState([]);
   const [wrapperWidth, setWrapperWidth] = useState();
   const { user } = useSelector((state) => state.userReducer);
-  const userGold = user?.userGold || 0
+  const userGold = user?.userGold || 0;
   const [recovery, setRecovery] = useState(false);
   const [transactionRecoverId, setTransactionRecoverId] = useState(0);
   const [Txh, setTxh] = useState("");
@@ -1467,7 +1467,7 @@ export default function DialogWallet(props) {
               width: "100%",
               maxWidth:
                 width < 576 ? width : isTransactionDialog ? "900px" : "500px",
-                backgroundColor:"#271c38"
+              backgroundColor: "#271c38",
               // height: "auto",
               // maxHeight: width < 576 ? height : "auto",
               // backgroundColor: "white",
