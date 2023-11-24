@@ -65,7 +65,7 @@ const ChatDrawer = () => {
   }, [dispatch]);
 
   const handleOnKeyDown = (e) => {
-    if(!startGameCheck) {
+    if (!startGameCheck) {
       if (chatInput.current) {
         if (
           e.key === "Enter" &&
@@ -85,10 +85,9 @@ const ChatDrawer = () => {
         }
       }
     }
-    
   };
   const handleOnClickSendMessage = () => {
-    if(!startGameCheck) {
+    if (!startGameCheck) {
       if (chatInput.current) {
         if (
           chatInput.current.childNodes[0] &&
@@ -108,7 +107,6 @@ const ChatDrawer = () => {
         }
       }
     }
-    
   };
 
   const { width } = useWindowDimensions();

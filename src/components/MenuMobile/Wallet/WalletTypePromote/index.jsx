@@ -46,8 +46,8 @@ const SkrillSvg = () => {
         ></image>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export default function WalletTypePromote(props) {
   const { width } = useWindowDimensions();
@@ -588,10 +588,8 @@ export default function WalletTypePromote(props) {
                       borderRadius: "8px",
                     }}
                   >
-                    <SkrillSvg/>
-                    <Box>
-                      (Coming soon)
-                    </Box>
+                    <SkrillSvg />
+                    <Box>(Coming soon)</Box>
                     {/* <input
                       name="wallet"
                       type="radio"
@@ -600,8 +598,7 @@ export default function WalletTypePromote(props) {
                         setTypePayment("stripe");
                       }}
                     /> */}
-                  </Box>
-                  {" "}
+                  </Box>{" "}
                 </Box>
               </form>
             </Box>

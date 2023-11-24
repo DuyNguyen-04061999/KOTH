@@ -55,6 +55,7 @@ import {
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import { systemNotification } from "../../utils/notification";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
+import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
@@ -111,17 +112,20 @@ export default function Layout(props) {
   const { isWalletDialog, isTransactionDialog } = useSelector(
     (state) => state.walletReducer
   );
+  const { isLoginDialog } = useSelector((state) => state.authReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
-
   const { isNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
+  const { chatPopup, badgechat, openMess } = useSelector(
+    (state) => state.chatReducer
+  );
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter } = useSelector(
     (state) => state.appReducer
   );
+  const { openMenu } = useSelector((state) => state.chatReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
 
@@ -134,7 +138,7 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if(router) {
+    if (router) {
       const tokenLocal = localStorage.getItem("token");
       if (!tokenLocal && !token) {
         socket?.emit("listMessageGlobal");
@@ -217,12 +221,12 @@ export default function Layout(props) {
   }, []);
 
   useEffect(() => {
-    if(width < 1200 && width > 576) {
+    if (width < 1200 && width > 576) {
       dispatch(clickTabNav(false));
     } else {
       dispatch(clickTabNav(true));
     }
-  },[width, dispatch])
+  }, [width, dispatch]);
 
   useEffect(() => {
     dispatch(getSettingReady());
@@ -301,7 +305,6 @@ export default function Layout(props) {
       socket?.off("chatSuccess");
     };
   }, [socket, token, dispatch, startGameCheck]);
-
   return ReactDOM.createPortal(
     <Box
       className="tong"
@@ -311,6 +314,21 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
+      <Box
+        sx={{
+          display:
+            startGameCheck ||
+            chatPopup ||
+            openMess ||
+            openMenu ||
+            isLoginDialog ||
+            isTransactionDialog
+              ? "none"
+              : "block",
+        }}
+      >
+        <ChatBot />
+      </Box>
       <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />
@@ -506,7 +524,7 @@ export default function Layout(props) {
                 }}
                 className="cursor-pointer"
               >
-               <ArrowForwardIos fontSize="small" />
+                <ArrowForwardIos fontSize="small" />
               </Box>
             )}
           </div>

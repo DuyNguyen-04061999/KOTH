@@ -266,7 +266,7 @@ export default function Dialoglg() {
               </BgWithTooltip>
             </Box>
           )}
-          {width < 576 ? (
+          {/* {width < 576 ? (
             <Box
               onClick={() => {
                 dispatch(toggleWalletDialog());
@@ -340,7 +340,7 @@ export default function Dialoglg() {
                 </Box>
               </Box>
             </Box>
-          )}
+          )} */}
           <Box
             component={"div"}
             sx={{}}
