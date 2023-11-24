@@ -70,15 +70,19 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (validateEmail(username) || validatePhoneNumber(username)) {
-      setUsernameError("");
+    if (
+      !validateEmail(username) &&
+      !validatePhoneNumber(username) &&
+      username !== ""
+    ) {
+      setUsernameError("Please enter a valid email or phone number!");
     } else {
-      setUsernameError("Please enter valid email or phone number!");
+      setUsernameError("");
     }
   }, [username]);
 
   useEffect(() => {
-    if (usernameError) {
+    if (usernameError || username === "") {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
