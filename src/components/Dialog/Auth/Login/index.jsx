@@ -86,7 +86,7 @@ const Login = () => {
   }, [usernameError]);
 
   return (
-    <Box>
+    <Box sx={{height:"100%"}}>
       <Box>
         <Typography
           variant="h5"

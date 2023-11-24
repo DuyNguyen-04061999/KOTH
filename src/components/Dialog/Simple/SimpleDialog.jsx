@@ -154,7 +154,7 @@ export default function SimpleDialog(props) {
                     sx={{
                       backgroundColor: "#19133e",
                       color: "white",
-                      height: "100%",
+                      // height: "100%",
                       position: "relative",
                     }}
                   >
