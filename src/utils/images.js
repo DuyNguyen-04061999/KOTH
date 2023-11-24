@@ -67,6 +67,7 @@ import bitcoin from "../assets/images/bitcoin.png";
 import Bookmark2 from "../assets/images/bookmark2.png";
 import calendarTour from "../assets/images/calendarTour.png";
 import Closeimg from "../assets/images/close button.png";
+import btn_back from "../assets/images/btn_back.png";
 import closeButtonInvite from "../assets/images/closeButton.png";
 import closeButtonToast from "../assets/images/closeButtonToast.png";
 import closeEyefullscreen from "../assets/images/closeEyefullscreen.png";
@@ -370,6 +371,9 @@ import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png"
 
 import bannersigninTablet from "../assets/images/signinTablet.png";
 
+
+import bannerGift from "../assets/images/giftBanner.png";
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -403,6 +407,7 @@ export const imageHome = {
   BannerWinCelebMobile: bannerWinCelebMobile,
   BannerWinAroundMobile: bannerWinAroundMobile,
   BGBannerCountDown: bgBannerCountDown,
+  BannerGift: bannerGift,
 };
 
 export const navbar = {
@@ -429,6 +434,7 @@ export const navbar = {
 
 export const images = {
   bn1: DummyBanner1,
+  btn_back: btn_back,
   bn2: DummyBanner2,
   bn3: DummyBanner3,
   bn4: DummyBanner4,

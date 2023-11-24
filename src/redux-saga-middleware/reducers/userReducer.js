@@ -319,7 +319,8 @@ const userReducer = (
     isUpdateProfile: false,
     isGetInfoUser: false,
     isLogout: false,
-    registerUsername: "",
+    registerEmail: "",
+    registerPhone: "",
     isForgetPassword: false,
     isResendOtp: false,
     isResetPassword: false,
@@ -357,7 +358,6 @@ const userReducer = (
         isLogin: false,
       };
     }
-
     case "LOGIN_FAIL":
       return {
         ...state,
@@ -394,7 +394,8 @@ const userReducer = (
       return {
         ...state,
         isRegister: false,
-        registerUsername: payload?.username,
+        registerEmail: payload?.email,
+        registerPhone: payload?.phone,
         // tokenUser: payload?.token,
         typeVerifyOTP: "register"
       };

@@ -111,7 +111,7 @@ export default function SimpleDialog(props) {
             sx={{
               ".MuiPaper-root": {
                 backgroundColor: "#291e3b",
-                height: width < 992 ? "68vh" : "calc(89vh - 64px)",
+                height: width < 992 ? "68vh" : "calc(96vh - 64px)",
                 overflowX: "hidden",
                 display: "flex",
                 flexDirection: "row",
