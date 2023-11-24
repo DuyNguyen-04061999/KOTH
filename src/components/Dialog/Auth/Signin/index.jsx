@@ -416,9 +416,11 @@ export default function Dialoglg() {
                   <Box display={"flex"} justifyContent={"center"}>
                     <Typography
                       sx={{ fontWeight: "700", fontSize: "24px" }}
-                      className="text-white ps-2"
+                      className="text-white ps-2 pe-2"
                     >
-                      {user?.userNickName}
+                      {user?.userNickName?.length > 10
+                          ? user?.userNickName.slice(0, 10) + "..."
+                          : user?.userNickName}
                     </Typography>
                   </Box>
                   {uPack ? (
@@ -472,7 +474,7 @@ export default function Dialoglg() {
                     container
                     sx={{ padding: "10px 15px", maxWidth: "300px" }}
                   >
-                    <Grid item xs={12} className="hover-dropdown">
+                    {/* <Grid item xs={12} className="hover-dropdown">
                       <Dropdown.Item
                         style={{
                           paddingRight: "0px",
@@ -517,7 +519,7 @@ export default function Dialoglg() {
                           Wallet
                         </button>
                       </Dropdown.Item>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} className="hover-dropdown">
                       <Dropdown.Item
                         style={{
