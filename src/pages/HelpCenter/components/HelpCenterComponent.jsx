@@ -65,7 +65,7 @@ const HelpCenterComponent = () => {
       <Container
         style={{
           padding: width < 576 ? "16px 24px 24px 24px" : "16px 24px 24px 50px",
-          marginBottom: "75px"
+          marginBottom: "75px",
         }}
       >
         <Box sx={{ margin: "16px 0px 32px 0px" }}>
@@ -86,31 +86,36 @@ const HelpCenterComponent = () => {
             style={{ backgroundColor: "#302642" }}
           >
             {listFAQ?.length &&
-              listFAQ?.sort(function(a, b){return a.id - b.id}).map((item, index) => {
-                return (
-                  <Tab
-                    key={index}
-                    label={item?.faqTitle}
-                    style={{
-                      color: tabHelpCenter === index ? "white" : "#9B9ACF",
-                      backgroundColor:
-                        tabHelpCenter === index ? "#5F3491" : "unset",
-                      fontSize: "10px",
-                      fontStyle: "normal",
-                      lineHeight: "normal",
-                      transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-                      textTransform: "capitalize !important",
-                    }}
-                    sx={{
-                      minWidth: "43px",
-                      textTransform: "unset",
-                      padding: "6px 12px",
-                      maxHeight: "36px",
-                      flexShrink: 1,
-                    }}
-                  />
-                );
-              })}
+              listFAQ
+                ?.sort(function (a, b) {
+                  return a.id - b.id;
+                })
+                .map((item, index) => {
+                  return (
+                    <Tab
+                      key={index}
+                      label={item?.faqTitle}
+                      style={{
+                        color: tabHelpCenter === index ? "white" : "#9B9ACF",
+                        backgroundColor:
+                          tabHelpCenter === index ? "#5F3491" : "unset",
+                        fontSize: "10px",
+                        fontStyle: "normal",
+                        lineHeight: "normal",
+                        transition:
+                          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                        textTransform: "capitalize !important",
+                      }}
+                      sx={{
+                        minWidth: "43px",
+                        textTransform: "unset",
+                        padding: "6px 12px",
+                        maxHeight: "36px",
+                        flexShrink: 1,
+                      }}
+                    />
+                  );
+                })}
           </Tabs>
           <Box
             sx={{
@@ -133,6 +138,37 @@ const HelpCenterComponent = () => {
                   }}
                 >
                   {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqTitle}
+                  {listFAQ?.length &&
+                  listFAQ[tabHelpCenter]?.faqTitle === "Privacy And Policy" ? (
+                    <Box
+                      sx={{
+                        display: "flex",
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100"
+                        height="100"
+                        fill="none"
+                        viewBox="0 0 25 25"
+                      >
+                        <path
+                          fill="#F05153"
+                          d="M12.263 24.204H3.502c-2.76 0-4.356-2.843-3.025-5.401A3262.403 3262.403 0 019.31 1.938C10.67-.636 13.903-.65 15.262 1.92a2396.638 2396.638 0 018.855 16.923c1.306 2.521-.315 5.353-3.032 5.36-2.94.007-5.88 0-8.822 0zm.036-17.287c-.269 0-.537.015-.804.046-.827.143-1.32.847-1.226 1.73.195 1.807.392 3.612.59 5.416.098.89.628 1.444 1.383 1.464.797.02 1.359-.508 1.466-1.434.21-1.825.41-3.652.6-5.48.089-.858-.402-1.538-1.2-1.689a6.192 6.192 0 00-.81-.052v-.001zM12.286 20.5c.41 0 .805-.173 1.096-.481.29-.308.454-.726.454-1.162 0-.435-.163-.853-.454-1.16a1.508 1.508 0 00-1.096-.482 1.537 1.537 0 00-1.095.5c-.29.312-.452.732-.453 1.17.027.868.742 1.618 1.548 1.616V20.5z"
+                        ></path>
+                      </svg>
+                      <Typography
+                        className="ms-2"
+                        sx={{ color: "#e75857", textAlign: "left" }}
+                      >
+                        Persons under the age of 18 should use this Website only
+                        with the supervision of an Adult. Payment Information
+                        must be provided by or with the permission of an Adult
+                      </Typography>
+                    </Box>
+                  ) : (
+                    ""
+                  )}
                 </Typography>
                 <Typography
                   style={{
@@ -242,30 +278,34 @@ const HelpCenterComponent = () => {
               indicatorColor="unset"
             >
               {listFAQ?.length &&
-                listFAQ?.sort(function(a, b){return a.id - b.id}).map((item, index) => {
-                  return (
-                    <Tab
-                      key={index}
-                      sx={{ textTransform: "none" }}
-                      label={item?.faqTitle}
-                      style={{
-                        marginBottom: "16px",
-                        color: tabHelpCenter === index ? "white" : "#9B9ACF",
-                        padding: "7px 10px",
-                        backgroundColor:
-                          tabHelpCenter === index ? "#5F3491" : "unset",
-                        borderTopRightRadius: "8px",
-                        borderBottomRightRadius: "8px",
-                        fontSize: "16px",
-                        fontStyle: "normal",
-                        fontWeight: "600",
-                        lineHeight: "normal",
-                        transition:
-                          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-                      }}
-                    />
-                  );
-                })}
+                listFAQ
+                  ?.sort(function (a, b) {
+                    return a.id - b.id;
+                  })
+                  .map((item, index) => {
+                    return (
+                      <Tab
+                        key={index}
+                        sx={{ textTransform: "none" }}
+                        label={item?.faqTitle}
+                        style={{
+                          marginBottom: "16px",
+                          color: tabHelpCenter === index ? "white" : "#9B9ACF",
+                          padding: "7px 10px",
+                          backgroundColor:
+                            tabHelpCenter === index ? "#5F3491" : "unset",
+                          borderTopRightRadius: "8px",
+                          borderBottomRightRadius: "8px",
+                          fontSize: "16px",
+                          fontStyle: "normal",
+                          fontWeight: "600",
+                          lineHeight: "normal",
+                          transition:
+                            "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                        }}
+                      />
+                    );
+                  })}
             </Tabs>
             <Box
               sx={{
@@ -284,6 +324,39 @@ const HelpCenterComponent = () => {
                   {" "}
                   <Typography style={{ fontSize: "24px", fontWeight: "bold" }}>
                     {listFAQ?.length && listFAQ[tabHelpCenter]?.faqTitle}
+                    {listFAQ?.length &&
+                    listFAQ[tabHelpCenter]?.faqTitle ===
+                      "Privacy And Policy" ? (
+                      <Box
+                        sx={{
+                          display: "flex",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="30"
+                          height="30"
+                          fill="none"
+                          viewBox="0 0 25 25"
+                        >
+                          <path
+                            fill="#F05153"
+                            d="M12.263 24.204H3.502c-2.76 0-4.356-2.843-3.025-5.401A3262.403 3262.403 0 019.31 1.938C10.67-.636 13.903-.65 15.262 1.92a2396.638 2396.638 0 018.855 16.923c1.306 2.521-.315 5.353-3.032 5.36-2.94.007-5.88 0-8.822 0zm.036-17.287c-.269 0-.537.015-.804.046-.827.143-1.32.847-1.226 1.73.195 1.807.392 3.612.59 5.416.098.89.628 1.444 1.383 1.464.797.02 1.359-.508 1.466-1.434.21-1.825.41-3.652.6-5.48.089-.858-.402-1.538-1.2-1.689a6.192 6.192 0 00-.81-.052v-.001zM12.286 20.5c.41 0 .805-.173 1.096-.481.29-.308.454-.726.454-1.162 0-.435-.163-.853-.454-1.16a1.508 1.508 0 00-1.096-.482 1.537 1.537 0 00-1.095.5c-.29.312-.452.732-.453 1.17.027.868.742 1.618 1.548 1.616V20.5z"
+                          ></path>
+                        </svg>
+                        <Typography
+                          className="ms-2"
+                          sx={{ color: "#e75857", textAlign: "left" }}
+                        >
+                          Persons under the age of 18 should use this Website
+                          only with the supervision of an Adult. Payment
+                          Information must be provided by or with the permission
+                          of an Adult
+                        </Typography>
+                      </Box>
+                    ) : (
+                      ""
+                    )}
                   </Typography>
                   <Typography
                     style={{
