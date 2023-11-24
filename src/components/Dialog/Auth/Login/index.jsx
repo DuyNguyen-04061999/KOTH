@@ -10,6 +10,7 @@ import { sign } from "../../../../utils/images";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Login = () => {
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin } = useSelector((state) => state.userReducer);
+  const {width} = useWindowDimensions()
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -90,7 +92,7 @@ const Login = () => {
   }, [usernameError]);
 
   return (
-    <Box>
+    <Box >
       <Box>
         <Typography
           variant="h5"
