@@ -16,7 +16,8 @@ export default function OTPVerifyAccount() {
   const { createAccInfo } = useSelector((state) => state.authReducer);
   const {
     user,
-    registerUsername,
+    registerEmail,
+    registerPhone,
     typeVerifyOTP,
     resenOTPSuccess,
     isVerifyOTP,
@@ -46,17 +47,21 @@ export default function OTPVerifyAccount() {
           sendOtpReady({
             otp: otp,
             type: "register",
-            username: registerUsername,
+            email: registerEmail,
+            phone: registerPhone,
           })
         );
         break;
       case "reVerify":
-        dispatch(
-          sendOtpReady({
-            otp: otp,
-            type: "register",
-            username: user?.userName,
-          })
+        console.log(
+          dispatch(
+            sendOtpReady({
+              otp: otp,
+              type: "register",
+              email: user?.userEmail,
+              phone: user?.userPhone,
+            })
+          )
         );
         break;
       default:
@@ -70,20 +75,29 @@ export default function OTPVerifyAccount() {
     }
   }, [resenOTPSuccess]);
 
+  console.log(user);
+
   const handleResendOTP = () => {
     switch (typeVerifyOTP) {
       case "register":
         dispatch(
           resendOtpReady({
-            username: registerUsername,
+            email: registerEmail,
+            phone: registerPhone,
             type: "register",
           })
         );
         break;
       case "reVerify":
+        console.log({
+          email: user?.userEmail,
+          phone: user?.userPhone,
+          type: "register",
+        });
         dispatch(
           resendOtpReady({
-            username: user?.userName,
+            email: user?.userEmail,
+            phone: user?.userPhone,
             type: "register",
           })
         );
@@ -131,7 +145,9 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          {` Please enter the 6-digit verification code that was sent to ${createAccInfo?.email ? createAccInfo?.email : createAccInfo?.phone} to verify your account`}
+          {` Please enter the 6-digit verification code that was sent to ${
+            createAccInfo?.email ? createAccInfo?.email : createAccInfo?.phone
+          } to verify your account`}
         </Typography>
       </Box>
       <Box
@@ -195,7 +211,7 @@ export default function OTPVerifyAccount() {
               color: "rgba(255, 159, 56, 1)",
               cursor: "pointer",
             }}
-            onClick={() => handleResendOTP()}
+            onClick={handleResendOTP}
           >
             Resend OTP
           </Typography>

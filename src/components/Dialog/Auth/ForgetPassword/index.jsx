@@ -6,8 +6,9 @@ import {
   forgetPasswordReady,
   updateVerifyOTPType,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
-import { images, sign } from "../../../../utils/images";
+import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 
@@ -39,47 +40,53 @@ export default function ForgetPassword() {
   }, [optionEmail, dispatch]);
 
   const handleSubmit = () => {
-    dispatch(
-      forgetPasswordReady({
-        username: username,
-        email: email,
-        phone: phoneNumber,
-      })
-    );
+    if (validateEmail(username)) {
+      dispatch(
+        forgetPasswordReady({
+          email: username,
+        })
+      );
+    } else if (validatePhoneNumber(username)) {
+      dispatch(
+        forgetPasswordReady({
+          phone: username,
+        })
+      );
+    }
   };
 
-  useEffect(() => {
-    if (email) {
-      if (!validateEmail(email)) {
-        setEmailError("Please enter a valid email");
-      } else {
-        setEmailError("");
-      }
-    } else {
-      setEmailError("");
-    }
-  }, [email]);
+  // useEffect(() => {
+  //   if (email) {
+  //     if (!validateEmail(email)) {
+  //       setEmailError("Please enter a valid email");
+  //     } else {
+  //       setEmailError("");
+  //     }
+  //   } else {
+  //     setEmailError("");
+  //   }
+  // }, [email]);
 
-  useEffect(() => {
-    if (phoneNumber !== "") {
-      if (phoneNumber.length < 10 || phoneNumber.length > 12) {
-        setPhoneNumberError("Please enter a valid phone number");
-      } else {
-        setPhoneNumberError("");
-      }
-    } else {
-      setPhoneNumberError("");
-    }
-  }, [phoneNumber]);
+  // useEffect(() => {
+  //   if (phoneNumber !== "") {
+  //     if (phoneNumber.length < 10 || phoneNumber.length > 12) {
+  //       setPhoneNumberError("Please enter a valid phone number");
+  //     } else {
+  //       setPhoneNumberError("");
+  //     }
+  //   } else {
+  //     setPhoneNumberError("");
+  //   }
+  // }, [phoneNumber]);
 
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         background: "#271C39",
         height: "100%",
+        alignItems: "center",
         justifyContent: "center",
         padding: device === "Mobile" ? "0px 20px 0px 20px" : "0px 24px",
         boxSizing: "border-box",
@@ -104,19 +111,18 @@ export default function ForgetPassword() {
           sx={{
             color: "#979797",
             textAlign: "center",
-            fontSize: width < 992 ? `16px` : "14px",
-            marginTop: device === "Desktop" ? "12px" : "0px",
+            fontSize: width < 992 ? `14px` : "16px",
+            marginTop: device === "Desktop" ? "12px" : "8px",
           }}
         >
-          Please enter the username and {optionEmail ? "email" : "phone number"}{" "}
-          that associated with your account. We will send you a verification
-          code.
+          Please enter the email/phone number that associated with your account.
+          We will send you a verification code.
         </Typography>
       </Box>
       <Box
         sx={{
           width: "100%",
-          margin: "30px 0px 20px 0px",
+          margin: "36px 0px 36px 0px",
           display: "flex",
           flexDirection: "column",
         }}
@@ -140,7 +146,7 @@ export default function ForgetPassword() {
             <img
               style={{ width: "18px", height: "18px" }}
               alt="..."
-              src={images.userIcon}
+              src={sign.up03}
             />
           </Box>
           <FormControl
@@ -166,12 +172,12 @@ export default function ForgetPassword() {
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-              placeholder="Username"
+              placeholder="Email/Phone number"
               type="text"
             />
           </FormControl>
         </Box>
-        {optionEmail ? (
+        {/* {optionEmail ? (
           <Box
             sx={{
               width: "100%",
@@ -299,8 +305,8 @@ export default function ForgetPassword() {
               </Typography>
             )}
           </Box>
-        )}
-        <Box
+        )} */}
+        {/* <Box
           sx={{
             marginTop: "16px",
             display: "flex",
@@ -327,7 +333,7 @@ export default function ForgetPassword() {
           >
             Reset by {optionEmail ? "phone" : "email"}{" "}
           </Typography>
-        </Box>
+        </Box> */}
       </Box>
       <Box
         sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}
@@ -342,10 +348,11 @@ export default function ForgetPassword() {
           </AnimButton>
         </Box>
         <Box sx={{ width: "48%" }}>
-          {!(
+          {/* {!(
             (optionEmail && username && email && !emailError) ||
             (!optionEmail && username && phoneNumber && !phoneNumberError)
-          ) ? (
+          ) ? ( */}
+          {!username ? (
             <AnimButton type="disable" text="NEXT" />
           ) : isForgetPassword ? (
             <AnimButton type="loading" text="NEXT" isSubmitBtn />
@@ -358,6 +365,32 @@ export default function ForgetPassword() {
             />
           )}
         </Box>
+      </Box>
+      <Box
+        sx={{
+          marginTop: "20px",
+          display: "flex",
+          alignItems: width < 992 && width > 576 ? "flex-end" : "center",
+          justifyContent: "flex-end",
+          flexDirection: "row",
+        }}
+      >
+        <Typography
+          sx={{ fontSize: width < 576 ? "12px" : "14px", color: "white" }}
+        >
+          Already have an account?
+        </Typography>
+        <Typography
+          onClick={() => dispatch(clickTab("login"))}
+          sx={{
+            cursor: "pointer",
+            fontSize: width < 576 ? "12px" : "14px",
+            fontWeight: "600",
+            color: "#FF9F38",
+          }}
+        >
+          Sign in
+        </Typography>
       </Box>
     </Box>
   );

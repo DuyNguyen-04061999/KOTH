@@ -16,6 +16,7 @@ import GameLogDialog from "../Dialog/GameLog/GameLog";
 import MenuWallet from "../MenuMobile/Wallet";
 import history from "../Router/history";
 
+import { ArrowForwardIos } from "@mui/icons-material";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
@@ -55,6 +56,7 @@ import {
 import { systemNotification } from "../../utils/notification";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
+import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import MetaMaskDialog from "../Dialog/MetaMask";
@@ -68,7 +70,6 @@ import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
-import { ArrowForwardIos } from "@mui/icons-material";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -320,6 +321,7 @@ export default function Layout(props) {
       <TouramentShow />
       <DialogVerify />
       <DialogSubscribe />
+      <DialogGift />
       <NotiFunds />
       <DialogProfile
         open={isProfileDialog}
