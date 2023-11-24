@@ -10,7 +10,6 @@ import { sign } from "../../../../utils/images";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ const Login = () => {
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin } = useSelector((state) => state.userReducer);
-  const {width} = useWindowDimensions()
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -56,10 +54,6 @@ const Login = () => {
             password: password,
           })
         );
-        console.log({
-          email: username,
-          password: password,
-        });
       } else if (validatePhoneNumber(username)) {
         dispatch(
           loginReady({
@@ -89,7 +83,7 @@ const Login = () => {
     } else {
       setDisabledBtn(false);
     }
-  }, [usernameError]);
+  }, [usernameError, username]);
 
   return (
     <Box >
@@ -151,7 +145,7 @@ const Login = () => {
           <Typography
             sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
           >
-            {usernameError}
+            {username && usernameError ? usernameError : ""}
           </Typography>
         </FormControl>
         <FormControl

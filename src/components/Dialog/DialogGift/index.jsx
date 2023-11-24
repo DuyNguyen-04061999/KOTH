@@ -2,25 +2,29 @@ import { Box, Dialog, DialogActions, Typography } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { closeDialogGif } from "../../../redux-saga-middleware/reducers/appReducer";
 import { imageHome } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 
 const DialogGift = () => {
-  const { isReVerifyAccount, user } = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.userReducer);
+  const { isDialogGif } = useSelector((state) => state.appReducer);
 
-  console.log(user);
+  const handleClose = () => {
+    dispatch(closeDialogGif())
+  };
 
-  const handleClose = () => {};
-
-  const handleConfirm = () => {};
+  const handleConfirm = () => {
+    dispatch(closeDialogGif())
+  };
   const { width } = useWindowDimensions();
 
   return ReactDOM.createPortal(
     <div>
       <Dialog
-        open={false}
+        open={isDialogGif}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"

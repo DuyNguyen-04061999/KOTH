@@ -1,7 +1,4 @@
-import { Box } from "@mui/material";
-import React, { useRef } from "react";
-import { useEffect } from "react";
-import { images } from "../../utils/images";
+import React, { useEffect, useRef } from "react";
 
 export default function ChatBot() {
   const MessengerRef = useRef();

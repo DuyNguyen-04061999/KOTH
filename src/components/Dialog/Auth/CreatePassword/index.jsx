@@ -219,7 +219,7 @@ export default function CreatePassword() {
               )}
             </Box>
           </Box>
-          {passwordError && (
+          {password && passwordError && (
             <Typography
               sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
             >
@@ -515,7 +515,7 @@ export default function CreatePassword() {
               )}
             </Box>
           </Box>
-          {rePasswordError && (
+          {rePassword && rePasswordError && (
             <Typography
               sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
             >

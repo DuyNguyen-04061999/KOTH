@@ -1,10 +1,9 @@
 import { Box } from "@mui/material";
-import { images } from "../../../../utils/images";
-import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function ImageGamePre(props) {
-  const { item, handlePlayvideo } = props;
+  const { handlePlayvideo } = props;
   const { device } = useSelector((state) => state.deviceReducer);
   const [absoluteImg, setAbsoluteImg] = useState(false);
 

@@ -4,7 +4,6 @@ import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
@@ -28,19 +27,12 @@ export default function Signup(props) {
   const [gender] = useState(0);
   const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState("");
-  const [displayNameError, setDisplayNameError] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
   const [lastName, setLastName] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [c_password, setC_password] = useState("");
-  const [cPasswordError, setCPasswordError] = useState("");
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
   const [phone, setPhone] = useState("");
-  const [phoneError, setPhoneError] = useState("");
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
   const { width } = useWindowDimensions();
@@ -55,7 +47,6 @@ export default function Signup(props) {
   const { refCodeRegister } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { isRegister } = useSelector((state) => state.userReducer);
-  const navigate = useNavigate();
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
   };
@@ -436,7 +427,7 @@ export default function Signup(props) {
               </BgWithTooltip>
             )}
           </Box>
-          {!validPhone && phone !== "" && (
+          {!validPhone && phone && (
             <Typography
               sx={{
                 textAlign: "start",

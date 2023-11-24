@@ -22,7 +22,6 @@ import { getAppType } from "../../../../utils/helper";
 import { images } from "../../../../utils/images";
 import { images260423_l } from "../../../../utils/images260423_l";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import Gold from "../../../Gold/Gold";
 import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
@@ -266,81 +265,6 @@ export default function Dialoglg() {
               </BgWithTooltip>
             </Box>
           )}
-          {/* {width < 576 ? (
-            <Box
-              onClick={() => {
-                dispatch(toggleWalletDialog());
-              }}
-              sx={{
-                backgroundColor: width > 576 ? "#170f1e" : "#68399E",
-                borderRadius:
-                  width > 576 ? "5px !important" : "20px !important",
-              }}
-              className="d-flex align-items-center"
-            >
-              <Box
-                variant="standard"
-                sx={{
-                  maxWidth: "115px",
-                  position: "relative",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  borderRadius:
-                    width > 576 ? "5px !important" : "20px !important",
-                }}
-              >
-                <Box
-                  sx={{
-                    marginRight: width < 576 ? "5px" : 0,
-
-                    borderRightWidth: width > 576 ? 0 : "unset",
-                    height: "100%",
-                  }}
-                  className="cursor-pointer d-flex doge-coin "
-                >
-                  <Gold value={user?.userGold} />
-                </Box>
-              </Box>
-            </Box>
-          ) : (
-            <Box
-              onClick={() => {
-                dispatch(toggleWalletDialog());
-              }}
-              sx={{
-                backgroundColor: width > 576 ? "#68399E" : "#68399E",
-                borderRadius:
-                  width > 576 ? "20px !important" : "20px !important",
-              }}
-              className="d-flex align-items-center"
-            >
-              <Box
-                variant="standard"
-                sx={{
-                  minWidth: "auto",
-                  position: "relative",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  borderRadius:
-                    width > 576 ? "5px !important" : "20px !important",
-                }}
-              >
-                <Box
-                  sx={{
-                    marginRight: width < 576 ? "5px" : 0,
-
-                    borderRightWidth: width > 576 ? 0 : "unset",
-                    height: "100%",
-                  }}
-                  className="cursor-pointer d-flex doge-coin "
-                >
-                  <Gold value={user?.userGold} />
-                </Box>
-              </Box>
-            </Box>
-          )} */}
           <Box
             component={"div"}
             sx={{}}
@@ -492,9 +416,11 @@ export default function Dialoglg() {
                   <Box display={"flex"} justifyContent={"center"}>
                     <Typography
                       sx={{ fontWeight: "700", fontSize: "24px" }}
-                      className="text-white ps-2"
+                      className="text-white ps-2 pe-2"
                     >
-                      {user?.userNickName}
+                      {user?.userNickName?.length > 10
+                          ? user?.userNickName.slice(0, 10) + "..."
+                          : user?.userNickName}
                     </Typography>
                   </Box>
                   {uPack ? (
@@ -548,7 +474,7 @@ export default function Dialoglg() {
                     container
                     sx={{ padding: "10px 15px", maxWidth: "300px" }}
                   >
-                    <Grid item xs={12} className="hover-dropdown">
+                    {/* <Grid item xs={12} className="hover-dropdown">
                       <Dropdown.Item
                         style={{
                           paddingRight: "0px",
@@ -593,7 +519,7 @@ export default function Dialoglg() {
                           Wallet
                         </button>
                       </Dropdown.Item>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} className="hover-dropdown">
                       <Dropdown.Item
                         style={{
