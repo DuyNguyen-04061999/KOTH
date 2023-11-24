@@ -121,7 +121,7 @@ export default function TicketCheckOut() {
           })
         );
       setSl(1);
-      dispatch(toggleCheckWallet());
+      // dispatch(toggleCheckWallet());
   };
   const btnBuyTicket = (event) => {
     event.currentTarget.disabled = true;
@@ -134,7 +134,7 @@ export default function TicketCheckOut() {
        })
       );
       setSl(1);
-      dispatch(toggleCheckWallet());
+      // dispatch(toggleCheckWallet());
   };
 
   useEffect(() => {

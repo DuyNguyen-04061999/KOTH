@@ -11,6 +11,7 @@ import {
 import { buyPackageSuccess } from "../reducers/packageReducer";
 import { toggleAlertStripeProcess } from "../reducers/stripeReducer";
 import { getUserInfoReady, updateCountTicket } from "../reducers/userReducer";
+import { toggleCheckWallet } from "../reducers/walletReducer";
 import CheckoutService from "../services/checkoutService";
 
 const checkoutService = new CheckoutService();
@@ -21,12 +22,25 @@ function* getCheckOutSaga(dataRequest) {
     const { status, data } = res;
     if (status === 200 || status === 201) {
       yield put(getCheckOutSuccess(data?.data?.paymentLink || ""));
+      yield put(toggleCheckWallet());
+      yield put(showToastNotification({
+        type: "success",
+        message: "Please wait a few minutes while system redirect to checkout page!"
+      }))
       window.open(data?.data?.paymentLink || "/", "_self")
     } else {
       yield put(getCheckOutFail());
+      yield put(showToastNotification({
+        type: "error",
+        message: "Checkout failed!"
+      }))
     }
   } catch (err) {
     yield put(getCheckOutFail());
+    yield put(showToastNotification({
+      type: err?.type || "error",
+      message: err?.message || "Checkout failed!"
+    }))
   }
 }
 
@@ -79,7 +93,7 @@ function* getCheckOutSagaCancel(dataRequest) {
     } catch (err) {
         yield put(checkoutPaypalCancelFail());
         yield put(showToastNotification({
-          type: "error",
+          type: err?.type || "error",
           message: err?.message || "Payment error!"
         }))
     }
