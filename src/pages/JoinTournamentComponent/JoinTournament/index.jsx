@@ -105,18 +105,18 @@ export default function JoinTournament() {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
 
-  useEffect(() => {
-    dispatch(getRefactorDetailPromotion(id));
-  }, [id, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getRefactorDetailPromotion(id));
+  // }, [id, dispatch]);
 
-  useEffect(() => {
-    if (token) {
-      dispatch(getRefactorDetailAuthPromotion({
-        id,
-        token
-      }));
-    }
-  }, [id, token, dispatch]);
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(getRefactorDetailAuthPromotion({
+  //       id,
+  //       token
+  //     }));
+  //   }
+  // }, [id, token, dispatch]);
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
@@ -221,6 +221,7 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
+  
   return (
     <>
       <ResultEndGame />
@@ -354,10 +355,10 @@ export default function JoinTournament() {
                       >
                         <img
                           src={
-                            detailTournament?.bestUser.avatar
+                            detailTournament?.bestUser?.avatar
                               ? process.env.REACT_APP_SOCKET_SERVER +
                                 "/" +
-                                detailTournament?.bestUser.avatar
+                                detailTournament?.bestUser?.avatar
                               : images.bannerWin_Desktop
                           }
                           alt="..."
@@ -384,7 +385,7 @@ export default function JoinTournament() {
                               marginLeft: "0px !important",
                             }}
                           >
-                            {detailTournament?.bestUser.name}
+                            {detailTournament?.bestUser?.name}
                           </Typography>
                         </Box>
                       </Box>
@@ -1150,6 +1151,7 @@ export default function JoinTournament() {
                                         width: "100%",
                                         height: "100%",
                                         borderRadius: "50%",
+                                        objectFit:"cover"
                                       }}
                                     ></Box>
                                   </Box>
@@ -1203,6 +1205,7 @@ export default function JoinTournament() {
                                     width: "100%",
                                     height: "100%",
                                     borderRadius: "50%",
+                                    objectFit:"cover"
                                   }}
                                 ></Box>
                               </Box>
@@ -1309,6 +1312,7 @@ export default function JoinTournament() {
                                     borderRadius: "50%",
                                     width: "100%",
                                     height: "100%",
+                                    objectFit:"cover"
                                   }}
                                   src={
                                     item?.userAccount?.accountAvatar
@@ -1425,6 +1429,7 @@ export default function JoinTournament() {
                                         borderRadius: "50%",
                                         width: "100%",
                                         height: "100%",
+                                        objectFit:"cover"
                                       }}
                                       src={
                                         item?.userAccount?.accountAvatar
@@ -2148,10 +2153,10 @@ export default function JoinTournament() {
                           >
                             <img
                               src={
-                                detailTournament?.bestUser.avatar
+                                detailTournament?.bestUser?.avatar
                                   ? process.env.REACT_APP_SOCKET_SERVER +
                                     "/" +
-                                    detailTournament?.bestUser.avatar
+                                    detailTournament?.bestUser?.avatar
                                   : images.bannerWin_Desktop
                               }
                               alt="..."
@@ -2178,7 +2183,7 @@ export default function JoinTournament() {
                                   fontSize: "8px",
                                 }}
                               >
-                                {detailTournament?.bestUser.name}
+                                {detailTournament?.bestUser?.userNickName}
                               </Typography>
                             </Box>
                           </Box>

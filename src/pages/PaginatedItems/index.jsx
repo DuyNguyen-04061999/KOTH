@@ -4,7 +4,11 @@ import React from "react";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
-export default function PaginatedItems({ changeOffSet, pageCount }) {
+export default function PaginatedItems({
+  changeOffSet,
+  pageCount,
+  defaultPage,
+}) {
   const { width } = useWindowDimensions();
   const useStyles = makeStyles(() => ({
     ul: {
@@ -40,6 +44,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
     >
       {" "}
       <Pagination
+        defaultPage={defaultPage}
         siblingCount={0}
         onChange={(e, value) => {
           changeOffSet(value);
@@ -114,6 +119,7 @@ export default function PaginatedItems({ changeOffSet, pageCount }) {
       }}
     >
       <Pagination
+        defaultPage={defaultPage}
         siblingCount={0}
         classes={{ ul: classes.ul, root: classes.root }}
         onChange={(e, value) => {

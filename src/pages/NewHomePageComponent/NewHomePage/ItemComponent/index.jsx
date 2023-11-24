@@ -256,7 +256,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                         `${days}d:${hours}h:${minutes}m`
                       : tourInfo?.tScores &&
                         tourInfo?.tScores[0]?.tUser &&
-                        tourInfo?.tScores[0]?.tUser?.userName}
+                        tourInfo?.tScores[0]?.tUser?.userNickName}
                   </Typography>
                 )
               )}

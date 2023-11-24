@@ -8,12 +8,11 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
-import { images } from "../../../utils/images";
+import { updateUpcomingPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
@@ -39,16 +38,16 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { upcomingTournament, isFetchUpcoming , noDataUpcoming} = useSelector(
+  const { upcomingTournament, isFetchUpcoming, noDataUpcoming } = useSelector(
     (state) => state.tournamentReducer
   );
+  const { upcomingPag } = useSelector((state) => state.promotionReducer);
   const [data, setData] = useState(null);
-  const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
-  const { hotWeekTour, isFetchHotWeek } = useSelector(
-    (state) => state.tournamentReducer
-  );
+  // const { hotWeekTour, isFetchHotWeek } = useSelector(
+  //   (state) => state.tournamentReducer
+  // );
 
   useEffect(() => {
     if (width > 576) {
@@ -59,12 +58,9 @@ export default function HotTournament() {
     }
   }, [width]);
 
-    useEffect(() => {
-        if (width) {
-            setItemOffSet(0);
-        }
-
-    }, [width]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [upcomingPag]);
 
   useEffect(() => {
     dispatch({
@@ -150,21 +146,27 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchUpcoming}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={upcomingPag}
                   typePromo={"upcoming"}
                   itemQuantity={itemQuantity}
                   noData={noDataUpcoming}
                 />
               </Box>
               <Box sx={{ margin: "36px 0px" }}>
-                {!isFetchUpcoming && data !== null && data?.length > 0 && (
-                  <PaginatedItems
-                    pageCount={Math.ceil(data.length / itemQuantity)}
-                    changeOffSet={(value) => {
-                      setItemOffSet((value - 1) * itemQuantity);
-                    }}
-                  />
-                )}
+                {!isFetchUpcoming &&
+                  data !== null &&
+                  data?.length > 0 &&
+                  itemQuantity && (
+                    <PaginatedItems
+                      defaultPage={Math.ceil(upcomingPag / itemQuantity) + 1}
+                      pageCount={Math.ceil(data.length / itemQuantity)}
+                      changeOffSet={(value) => {
+                        dispatch(
+                          updateUpcomingPage((value - 1) * itemQuantity)
+                        );
+                      }}
+                    />
+                  )}
               </Box>
               <NewFooter />
             </Container>
@@ -185,8 +187,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
-                paddingBottom:"50px"
-
+                paddingBottom: "50px",
               }}
             >
               <Typography
@@ -222,13 +223,13 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchUpcoming}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={upcomingPag}
                   typePromo={"upcoming"}
                   itemQuantity={itemQuantity}
                   noData={noDataUpcoming}
                 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   marginTop: "48px",
                   marginBottom: "0px",
@@ -269,16 +270,22 @@ export default function HotTournament() {
                     tourId={hotWeekTour && hotWeekTour?.id}
                   />
                 )}
-              </Box>
+              </Box> */}
               <Box sx={{ margin: "36px 0px" }}>
-                {!isFetchUpcoming && data !== null && data?.length > 0 && (
-                  <PaginatedItems
-                    pageCount={Math.ceil(data.length / itemQuantity)}
-                    changeOffSet={(value) => {
-                      setItemOffSet((value - 1) * itemQuantity);
-                    }}
-                  />
-                )}
+                {!isFetchUpcoming &&
+                  data !== null &&
+                  data?.length > 0 &&
+                  itemQuantity && (
+                    <PaginatedItems
+                      defaultPage={Math.ceil(upcomingPag / itemQuantity) + 1}
+                      pageCount={Math.ceil(data.length / itemQuantity)}
+                      changeOffSet={(value) => {
+                        dispatch(
+                          updateUpcomingPage((value - 1) * itemQuantity)
+                        );
+                      }}
+                    />
+                  )}
               </Box>
               <NewFooter />
             </Container>

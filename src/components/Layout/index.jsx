@@ -69,6 +69,7 @@ import TouramentShow from "../Dialog/Tourament/showBuy";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import ChatBot from "../ChatBot";
+import { ArrowForwardIos } from "@mui/icons-material";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -515,13 +516,13 @@ export default function Layout(props) {
                 sx={{
                   backgroundColor: "#68399E",
                   borderRadius: "50%",
-                  padding: "5px 10px 5px 12px",
+                  padding: "3px 0px 5px 8px",
                   width: "33px",
                   height: "33px",
                 }}
                 className="cursor-pointer"
               >
-                <i className="fa-solid fa-angle-right"></i>
+                <ArrowForwardIos fontSize="small" />
               </Box>
             )}
           </div>

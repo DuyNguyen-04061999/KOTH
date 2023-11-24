@@ -764,7 +764,7 @@ export default function Browser(props) {
                   </Box>
                 )}
                 <Box
-                  className="cursor-pointer"
+                  className="cursor-pointer mb-3"
                   sx={{
                     display: "flex",
                     alignItems: "center",

@@ -59,7 +59,7 @@ export default function ChatWorldList() {
     setAnchorEl(event.currentTarget);
     setMessFromName(userName);
   };
-  
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -69,7 +69,7 @@ export default function ChatWorldList() {
   const isScrolledToBottom = () => {
     if (chatBox.current) {
       const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
-      if (scrollTop + clientHeight + 100 >= scrollHeight) {
+      if (scrollTop + clientHeight >= scrollHeight) {
         return true;
       } else return false;
     }
@@ -100,7 +100,7 @@ export default function ChatWorldList() {
         chatCurrent.removeEventListener("scroll", handleScroll);
       }
     };
-  });
+  }, []);
 
   useEffect(() => {
     socket?.on(`joinRoomGameFromMessageSuccess`, (room, roomId) => {
