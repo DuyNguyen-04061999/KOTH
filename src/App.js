@@ -46,7 +46,7 @@ import {
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
-  pushfriendList
+  pushfriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   updateDevice,
@@ -67,6 +67,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import ChatBot from "./components/ChatBot";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));

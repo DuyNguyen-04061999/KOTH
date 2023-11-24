@@ -92,11 +92,14 @@ export default function JoinTournament() {
   const navigate = useNavigate();
 
   const location = useLocation();
+  console.log(detailTournament);
 
   const handleClickOpen = () => {
     navigate("/packages");
     dispatch(updateFromRouter(location.pathname));
   };
+
+
 
   const [minLength, setMinLength] = useState(0);
   useEffect(() => {
@@ -385,7 +388,7 @@ export default function JoinTournament() {
                               marginLeft: "0px !important",
                             }}
                           >
-                            {detailTournament?.bestUser?.name}
+                            {detailTournament?.tScores[0]?.tUser?.userNickName}
                           </Typography>
                         </Box>
                       </Box>
@@ -545,7 +548,7 @@ export default function JoinTournament() {
                               Free Extra:
                             </Typography>
                             <BgWithTooltip
-                              title="Free Extra will be reset at 23:59 per day, so make sure to use them all."
+                              title="Free Extra will be reset at 11:59 PM per day, so make sure to use them all."
                               placement="right"
                               sx={{
                                 backgroundColor: "white",
@@ -2199,7 +2202,8 @@ export default function JoinTournament() {
                                 padding: "4px",
                                 borderRadius: "5px",
                                 marginTop: "10px",
-                                width: "50px",
+                                minWidth:"50px",
+                                maxWidth: "max-content",
                               }}
                             >
                               <Typography
@@ -2209,7 +2213,7 @@ export default function JoinTournament() {
                                   fontSize: "8px",
                                 }}
                               >
-                                {detailTournament?.bestUser?.userNickName}
+                                {detailTournament?.tScores[0]?.tUser?.userNickName}
                               </Typography>
                             </Box>
                           </Box>
