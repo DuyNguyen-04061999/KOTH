@@ -888,7 +888,7 @@ export default function Navbar() {
                 color: "#A89CD7",
               }}
               onClick={() => {
-                if (window.FB.CustomerChat) {
+                if (window?.FB && window?.FB?.CustomerChat) {
                   window.FB.CustomerChat.show(true);
                 }
               }}

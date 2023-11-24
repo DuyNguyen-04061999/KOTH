@@ -607,7 +607,7 @@ export default function TicketCheckOut() {
             >
               <input
                 type="checkbox"
-                className="me-2 custom-checkbox-input"
+                className="me-2 custom-checkbox-input checkout checkboxtext"
                 style={{ borderRadius: "50px", marginTop: "6px" }}
                 readOnly
                 onClick={() => {

@@ -13,7 +13,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { createAccInfo } = useSelector((state) => state.authReducer);
+  // const { createAccInfo } = useSelector((state) => state.authReducer);
   const {
     user,
     registerEmail,
@@ -136,9 +136,7 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          {` Please enter the 6-digit verification code that was sent to ${
-            createAccInfo?.email ? createAccInfo?.email : createAccInfo?.phone
-          } to verify your account`}
+          {` Please enter the 6-digit verification code that was sent to your device to verify your account`}
         </Typography>
       </Box>
       <Box
