@@ -55,7 +55,6 @@ import {
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import { systemNotification } from "../../utils/notification";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
-import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
@@ -327,9 +326,9 @@ export default function Layout(props) {
               : "block",
         }}
       >
-        {!process.env.REACT_APP_TEST || process.env.REACT_APP_TEST !== "test" ? (
+        {/* {!process.env.REACT_APP_TEST || process.env.REACT_APP_TEST !== "test" ? (
         <ChatBot />
-        ) : <></>}
+        ) : <></>} */}
       </Box>
       <SimpleDialog />
       <TicketCheckOut />
