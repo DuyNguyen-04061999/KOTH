@@ -70,6 +70,20 @@ export const updateFromRouter = (data) => {
   };
 };
 
+export const openDialogGif = (data) => {
+  return {
+    type: "OPEN_DIALOG_GIF",
+    payload: data
+  }
+}
+
+export const closeDialogGif = (data) => {
+  return {
+    type: "CLOSE_DIALOG_GIF",
+    payload: data
+  }
+}
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -79,7 +93,8 @@ const appReducer = (
     listPackage: [],
     router: "",
     startGameCheck: false,
-    fromRouter: ""
+    fromRouter: "",
+    isDialogGif: false
   },
   action
 ) => {
@@ -108,6 +123,8 @@ const appReducer = (
     case "UPDATE_FROM_ROUTER": {
       return {...state, fromRouter: payload}
     }
+    case "OPEN_DIALOG_GIF": return {...state, isDialogGif: true}
+    case "CLOSE_DIALOG_GIF": return {...state, isDialogGif: false}
     default:
       return { ...state };
   }

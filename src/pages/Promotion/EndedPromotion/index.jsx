@@ -8,12 +8,11 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
-import { images } from "../../../utils/images";
+import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
@@ -39,17 +38,13 @@ export default function HotTournament() {
     color: "#fff",
   };
   const { device } = useSelector((state) => state.deviceReducer);
-  const { endedTournament, isFetchEnded,noDataEnd } = useSelector(
+  const { endedTournament, isFetchEnded, noDataEnd } = useSelector(
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
-  const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
-  const { hotWeekTour, isFetchHotWeek } = useSelector(
-    (state) => state.tournamentReducer
-  );
-
+  const { endedPage } = useSelector((state) => state.promotionReducer);
   useEffect(() => {
     dispatch({
       type: "CALL_LIST_TOURNAMENT",
@@ -61,6 +56,10 @@ export default function HotTournament() {
   }, [dispatch]);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [endedPage]);
+
+  useEffect(() => {
     if (width > 576) {
       setItemQuantity(12);
     }
@@ -68,13 +67,6 @@ export default function HotTournament() {
       setItemQuantity(4);
     }
   }, [width]);
-
-    useEffect(() => {
-        if (width) {
-            setItemOffSet(0);
-        }
-
-    }, [width]);
 
   useEffect(() => {
     if (endedTournament) {
@@ -150,20 +142,24 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchEnded}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={endedPage}
                   itemQuantity={itemQuantity}
                   typePromo={"Ended"}
                   noData={noDataEnd}
                 />
               </Box>
-              {!isFetchEnded && data !== null && data?.length > 0 && (
-                <PaginatedItems
-                  pageCount={Math.ceil(data.length / itemQuantity)}
-                  changeOffSet={(value) => {
-                    setItemOffSet((value - 1) * itemQuantity);
-                  }}
-                />
-              )}
+              {!isFetchEnded &&
+                data !== null &&
+                data?.length > 0 &&
+                itemQuantity && (
+                  <PaginatedItems
+                    defaultPage={Math.ceil(endedPage / itemQuantity) + 1}
+                    pageCount={Math.ceil(data.length / itemQuantity)}
+                    changeOffSet={(value) => {
+                      dispatch(updateEndedPage((value - 1) * itemQuantity));
+                    }}
+                  />
+                )}
               <NewFooter />
             </Container>
           ) : (
@@ -183,8 +179,7 @@ export default function HotTournament() {
                     ? "32px !important"
                     : "0px !important",
                 paddingTop: width < 576 ? "24px !important" : "50px !important",
-                paddingBottom:"50px"
-
+                paddingBottom: "50px",
               }}
             >
               <Typography
@@ -220,14 +215,13 @@ export default function HotTournament() {
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchEnded}
-                  itemOffSet={itemOffSet}
+                  itemOffSet={endedPage}
                   itemQuantity={itemQuantity}
                   typePromo={"Ended"}
                   noData={noDataEnd}
-
                 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   marginTop: "48px",
                   marginBottom: "0px",
@@ -268,16 +262,20 @@ export default function HotTournament() {
                     tourId={hotWeekTour && hotWeekTour?.id}
                   />
                 )}
-              </Box>
-              <Box sx={{ margin: "36px 0px"}}>
-                {!isFetchEnded && data !== null && data?.length > 0 && (
-                  <PaginatedItems
-                    pageCount={Math.ceil(data.length / itemQuantity)}
-                    changeOffSet={(value) => {
-                      setItemOffSet((value - 1) * itemQuantity);
-                    }}
-                  />
-                )}
+              </Box> */}
+              <Box sx={{ margin: "36px 0px" }}>
+                {!isFetchEnded &&
+                  data !== null &&
+                  data?.length > 0 &&
+                  itemQuantity && (
+                    <PaginatedItems
+                      defaultPage={Math.ceil(endedPage / itemQuantity) + 1}
+                      pageCount={Math.ceil(data.length / itemQuantity)}
+                      changeOffSet={(value) => {
+                        dispatch(updateEndedPage((value - 1) * itemQuantity));
+                      }}
+                    />
+                  )}
               </Box>
               <NewFooter />
             </Container>

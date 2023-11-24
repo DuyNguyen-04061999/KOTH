@@ -219,7 +219,7 @@ export default function CreatePassword() {
               )}
             </Box>
           </Box>
-          {passwordError && (
+          {password && passwordError && (
             <Typography
               sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
             >
@@ -334,7 +334,7 @@ export default function CreatePassword() {
               }}
             >
               {" "}
-              Password must have at least one non letter.{" "}
+              Password must have at least one special character.{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center  text-white">
@@ -515,7 +515,7 @@ export default function CreatePassword() {
               )}
             </Box>
           </Box>
-          {rePasswordError && (
+          {rePassword && rePasswordError && (
             <Typography
               sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
             >

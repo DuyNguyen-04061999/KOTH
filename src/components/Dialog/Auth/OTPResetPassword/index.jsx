@@ -12,7 +12,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function OTPResetPassword() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { forgotPassUsername, forgotPassEmail, forgotPassPhone } = useSelector(
+  const { forgotPassEmail, forgotPassPhone } = useSelector(
     (state) => state.authReducer
   );
   const { typeVerifyOTP, resenOTPSuccess, isVerifyOTP } = useSelector(
@@ -22,7 +22,7 @@ export default function OTPResetPassword() {
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(300);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -41,7 +41,6 @@ export default function OTPResetPassword() {
       dispatch(
         sendOtpReady({
           otp: otp,
-          username: forgotPassUsername,
           email: forgotPassEmail,
           type: "password",
         })
@@ -50,8 +49,7 @@ export default function OTPResetPassword() {
       dispatch(
         sendOtpReady({
           otp: otp,
-          username: forgotPassUsername,
-          email: forgotPassPhone,
+          phone: forgotPassPhone,
           type: "password",
         })
       );
@@ -60,7 +58,7 @@ export default function OTPResetPassword() {
 
   useEffect(() => {
     if (resenOTPSuccess) {
-      setTimeLeft(60);
+      setTimeLeft(300);
     }
   }, [resenOTPSuccess]);
 
@@ -68,7 +66,6 @@ export default function OTPResetPassword() {
     if (typeVerifyOTP === "forget_email") {
       dispatch(
         resendOtpReady({
-          username: forgotPassUsername,
           email: forgotPassEmail,
           type: "password",
         })
@@ -76,7 +73,6 @@ export default function OTPResetPassword() {
     } else if (typeVerifyOTP === "forget_phone") {
       dispatch(
         resendOtpReady({
-          username: forgotPassUsername,
           phone: forgotPassPhone,
           type: "password",
         })

@@ -111,7 +111,7 @@ export default function SimpleDialog(props) {
             sx={{
               ".MuiPaper-root": {
                 backgroundColor: "#291e3b",
-                height: width < 992 ? "68vh" : "calc(100vh - 64px)",
+                height: width < 992 ? "68vh" : "calc(96vh - 64px)",
                 overflowX: "hidden",
                 display: "flex",
                 flexDirection: "row",
@@ -154,7 +154,7 @@ export default function SimpleDialog(props) {
                     sx={{
                       backgroundColor: "#19133e",
                       color: "white",
-                      height: "100%",
+                      height: width < 992 && width > 576 ? "auto" : "100%",
                       position: "relative",
                     }}
                   >
@@ -167,7 +167,7 @@ export default function SimpleDialog(props) {
                       alt="..."
                       width={"100%"}
                       height={"100%"}
-                      style={{ backgroundColor: "#3a2b6d", objectFit:"cover", objectPosition:"center 10%" }}
+                      style={{ backgroundColor: "#3a2b6d", objectFit:"cover", objectPosition:"90% center" }}
                     />
                     <Box
                       component={"img"}

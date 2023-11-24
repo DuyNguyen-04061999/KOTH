@@ -25,10 +25,7 @@ export default function Navbar() {
     (state) => state.authReducer
   );
 
-
-  const { tokenUser: token} = useSelector(
-    (state) => state.userReducer
-  );
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const socket = _socket;
@@ -876,7 +873,7 @@ export default function Navbar() {
                   boxShadow:
                     "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
                   backgroundColor: "#7648ED",
-                  color:"#A89CD7"
+                  color: "#A89CD7",
                 },
                 backgroundColor:
                   pathname && pathname?.includes("support") ? "#7648ED" : "",
@@ -887,10 +884,15 @@ export default function Navbar() {
                 borderRadius: "5px",
                 padding: "10px",
                 marginTop: "0.5rem",
-                textDecoration:"none",
-                color:"#A89CD7"
+                textDecoration: "none",
+                color: "#A89CD7",
               }}
-              href="https://t.me/+LaxB-V2ovfNiNzNl"
+              onClick={() => {
+                if (window?.FB && window?.FB?.CustomerChat) {
+                  window.FB.CustomerChat.show(true);
+                }
+              }}
+              // href="https://t.me/+LaxB-V2ovfNiNzNl"
               target="_blank"
             >
               <svg

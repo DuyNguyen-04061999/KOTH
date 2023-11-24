@@ -9,6 +9,7 @@ import settingSaga from "./settingSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
 import { default as authSaga, default as userSaga } from "./userSaga";
+import checkoutSaga from "./checkoutSaga";
 
 function* watchAll() {
   yield all([
@@ -22,7 +23,8 @@ function* watchAll() {
     authSaga(),
     packageSaga(),
     settingSaga(),
-    refreshSaga()
+    refreshSaga(),
+    checkoutSaga()
   ]);
 }
 

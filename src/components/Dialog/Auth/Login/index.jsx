@@ -1,18 +1,22 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { loginReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
+import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
+import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin } = useSelector((state) => state.userReducer);
 
@@ -43,19 +47,52 @@ const Login = () => {
         })
       );
     } else {
-      dispatch(
-        loginReady({
-          username: username,
-          password: password,
-        })
-      );
+      if (validateEmail(username)) {
+        dispatch(
+          loginReady({
+            email: username,
+            password: password,
+          })
+        );
+      } else if (validatePhoneNumber(username)) {
+        dispatch(
+          loginReady({
+            phone: username,
+            password: password,
+          })
+        );
+      }
     }
   };
 
+  useEffect(() => {
+    if (
+      !validateEmail(username) &&
+      !validatePhoneNumber(username) &&
+      username !== ""
+    ) {
+      setUsernameError("Please enter a valid email or phone number!");
+    } else {
+      setUsernameError("");
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (usernameError || username === "") {
+      setDisabledBtn(true);
+    } else {
+      setDisabledBtn(false);
+    }
+  }, [usernameError, username]);
+
   return (
-    <Box>
+    <Box >
       <Box>
-        <Typography variant="h5" className="text-center text-white mt-4 mb-4">
+        <Typography
+          variant="h5"
+          className="text-center text-white mt-4 mb-4"
+          style={{ fontWeight: "700", fontSize: "32px" }}
+        >
           Sign In
         </Typography>
       </Box>
@@ -73,36 +110,43 @@ const Login = () => {
             padding: "10px",
             borderRadius: "5px",
             marginBottom: "20px",
-            flexDirection: "row",
-            alignItems: "center",
           }}
         >
-          <img src={sign.up01} alt="..." width={17} height={"auto"} />
-          <Input
-            type="text"
-            value={username}
-            placeholder="Username"
-            onChange={handleChangeUsername}
-            sx={{
-              "&:before": {
-                borderBottom: " 0px solid !important ",
-                "&:hover": {
+          <Box
+            sx={{ flexDirection: "row", alignItems: "center", display: "flex" }}
+          >
+            <img src={sign.up03} alt="..." width={17} height={"auto"} />
+            <Input
+              type="text"
+              value={username}
+              placeholder="Email / Phone Number"
+              onChange={handleChangeUsername}
+              sx={{
+                "&:before": {
+                  borderBottom: " 0px solid !important ",
+                  "&:hover": {
+                    borderBottom: "0px solid !important",
+                  },
+                },
+                "&:after": {
                   borderBottom: "0px solid !important",
                 },
-              },
-              "&:after": {
-                borderBottom: "0px solid !important",
-              },
-              "&:hover": {
-                border: "none",
-              },
-              color: "white",
-              fontWeight: "500",
-              marginLeft: "16px",
-              width: "100%",
-              backgroundColor: "transparent",
-            }}
-          />
+                "&:hover": {
+                  border: "none",
+                },
+                color: "white",
+                fontWeight: "500",
+                marginLeft: "16px",
+                width: "100%",
+                backgroundColor: "transparent",
+              }}
+            />
+          </Box>
+          <Typography
+            sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
+          >
+            {username && usernameError ? usernameError : ""}
+          </Typography>
         </FormControl>
         <FormControl
           variant="standard"
@@ -167,14 +211,14 @@ const Login = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-end",
-            margin: "16px 0",
+            margin: "12px 0",
           }}
         >
           <Typography
             sx={{
               color: "#FF9F38",
               fontSize: "14px",
-              fontWeight: "700",
+              fontWeight: "500",
               textAlign: "center",
               cursor: "pointer",
             }}
@@ -183,19 +227,30 @@ const Login = () => {
             Forgot Password?
           </Typography>
         </Box>
-        <Box className="d-flex justify-content-center">
+        <Box
+          className="d-flex justify-content-center"
+          sx={{ marginTop: "36px" }}
+        >
           {isLogin ? (
             <AnimButton
               onClick={sendLogin}
-              text="Sign In"
+              text="SIGN IN"
               type="loading"
+              isHasIcon
+              isSubmitBtn
+            />
+          ) : disabledBtn ? (
+            <AnimButton
+              onClick={sendLogin}
+              text="SIGN IN"
+              type="disable"
               isHasIcon
               isSubmitBtn
             />
           ) : (
             <AnimButton
               onClick={sendLogin}
-              text="Sign In"
+              text="SIGN IN"
               type="primary"
               isHasIcon
               isSubmitBtn
@@ -207,6 +262,7 @@ const Login = () => {
             <Typography
               sx={{
                 color: "white",
+                fontWeight: "600",
               }}
             >
               New User?
@@ -215,7 +271,7 @@ const Login = () => {
               onClick={() => {
                 dispatch(clickTab("signup"));
               }}
-              sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "700" }}
+              sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "600" }}
             >
               Create Account
             </Typography>

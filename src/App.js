@@ -32,7 +32,6 @@ import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
-import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
 import {
@@ -46,8 +45,9 @@ import {
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
-  pushfriendList
+  pushfriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
+import { checkoutPaypalCancel, checkoutPaypalSuccess } from "./redux-saga-middleware/reducers/checkoutReducer";
 import {
   updateDevice,
   updateDeviceType,
@@ -57,10 +57,8 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import { toggleAlertStripeProcess } from "./redux-saga-middleware/reducers/stripeReducer";
 import {
-  updateCountTicket,
-  updateUserGoldAfterPaypal,
+  updateCountTicket
 } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
@@ -377,52 +375,24 @@ function App() {
   }, []);
 
   useEffect(() => {
-    async function fetchData(paymentId, PayerID) {
-      try {
-        const response = await PROMOTION_API.post(
-          "/api/payments/paypal/success",
-          {
-            paymentId: paymentId,
-            payerId: PayerID,
-            token: localStorage.getItem("token"),
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        return response;
-      } catch (error) {}
-    }
     const params = new URLSearchParams(window.location.search);
     const paymentId = params.get("paymentId");
     const PayerID = params.get("PayerID");
-    (async function () {
-      if (paymentId && PayerID) {
-        let response = await fetchData(
-          params.get("paymentId"),
-          params.get("PayerID")
-        );
+    const paymentType = params.get("type");
+    const paymentStatus = params.get("result");
 
-        if (response && response?.data?.data?.gold) {
-          store.dispatch(
-            toggleAlertStripeProcess({
-              type: "success",
-            })
-          );
-          store.dispatch(
-            updateUserGoldAfterPaypal(Number(response?.data?.data?.gold) || 0)
-          );
-        } else {
-          store.dispatch(
-            toggleAlertStripeProcess({
-              type: "error",
-            })
-          );
-        }
-      }
-    })();
+    if(paymentType === "paypal" && paymentStatus === "success") {
+      store.dispatch(checkoutPaypalSuccess({
+        paymentId: paymentId,
+        payerId: PayerID,
+      }))
+    }
+
+    if(paymentType === "paypal" && paymentStatus === "fail") {
+      store.dispatch(checkoutPaypalCancel({
+        paymentId: paymentId,
+      }))
+    }
   }, []);
   return (
     <ThemeProvider theme={theme}>

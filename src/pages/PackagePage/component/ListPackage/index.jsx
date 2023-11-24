@@ -58,6 +58,8 @@ export default function ListPackage(props) {
         dispatch(
           toggleCheckWallet({
             type: "subscription",
+            gold: 19.99,
+            total: 1,
           })
         );
         dispatch(getIdPackage(id));
@@ -152,7 +154,7 @@ export default function ListPackage(props) {
         <Typography
           variant="h5"
           sx={{
-            fontSize:  width < 1200 ? "14px" : "20px",
+            fontSize: width < 1200 ? "14px" : "20px",
             marginTop: "5px",
             marginBottom: "15px !important",
             color: "white",
@@ -201,11 +203,13 @@ export default function ListPackage(props) {
                   />
                 ) : (
                   <video
+                    controls={false}
                     width={width < 1200 && width > 576 ? 130 : 200}
                     height={width < 1200 && width > 576 ? 130 : 170}
                     alt=""
                     style={{
                       mixBlendMode: width < 576 ? "normal" : "difference",
+                      pointerEvents: "none",
                     }}
                     playsInline
                     muted
@@ -316,14 +320,18 @@ export default function ListPackage(props) {
                     </Typography>
                   )}
                 </Box>
-                {packageName !== "Subscription" && (<Box sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginBottom: "15px",
-                    marginTop: packageName === "Subscription" ? "0px" : "25px",
-                  }}>
-                  <svg
+                {packageName !== "Subscription" && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginBottom: "15px",
+                      marginTop:
+                        packageName === "Subscription" ? "0px" : "25px",
+                    }}
+                  >
+                    <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
                       height="12"
@@ -351,9 +359,10 @@ export default function ListPackage(props) {
                         marginLeft: "4px !important",
                       }}
                     >
-                        Use on any promotion
+                      Use on any promotion
                     </Typography>
-                </Box>)}
+                  </Box>
+                )}
                 {packageName === "Subscription" ? (
                   <Box
                     sx={{
@@ -441,8 +450,7 @@ export default function ListPackage(props) {
                     </Typography>
                   </Box>
                 ) : (
-                  <Box
-                  ></Box>
+                  <Box></Box>
                 )}
                 {packageName === "Subscription" ? (
                   <Box
@@ -501,7 +509,6 @@ export default function ListPackage(props) {
                   }}
                 >
                   <Typography
-                    variant="h4"
                     sx={{
                       fontWeight: "500 !important",
                       fontSize: "16px !important",
@@ -521,7 +528,6 @@ export default function ListPackage(props) {
                   }}
                 >
                   <Typography
-                    variant="h4"
                     sx={{
                       fontWeight: "500 !important",
                       fontSize: "16px !important",
@@ -545,7 +551,7 @@ export default function ListPackage(props) {
                   )}
                 </Box>
               )}
-              <Box sx={{ margin: "12px 0px", width: "80%"}}>
+              <Box sx={{ margin: "12px 0px", width: "80%" }}>
                 <AnimButton
                   text={
                     uPack &&

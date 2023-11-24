@@ -13,10 +13,11 @@ import AnimButton from "../../../AnimButton";
 
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
-  const { createAccInfo } = useSelector((state) => state.authReducer);
+  // const { createAccInfo } = useSelector((state) => state.authReducer);
   const {
     user,
-    registerUsername,
+    registerEmail,
+    registerPhone,
     typeVerifyOTP,
     resenOTPSuccess,
     isVerifyOTP,
@@ -25,7 +26,7 @@ export default function OTPVerifyAccount() {
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(300);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -46,7 +47,8 @@ export default function OTPVerifyAccount() {
           sendOtpReady({
             otp: otp,
             type: "register",
-            username: registerUsername,
+            email: registerEmail,
+            phone: registerPhone,
           })
         );
         break;
@@ -55,9 +57,10 @@ export default function OTPVerifyAccount() {
           sendOtpReady({
             otp: otp,
             type: "register",
-            username: user?.userName,
+            email: user?.userEmail,
+            phone: user?.userPhone,
           })
-        );
+        )
         break;
       default:
         return false;
@@ -66,7 +69,7 @@ export default function OTPVerifyAccount() {
 
   useEffect(() => {
     if (resenOTPSuccess) {
-      setTimeLeft(60);
+      setTimeLeft(300);
     }
   }, [resenOTPSuccess]);
 
@@ -75,7 +78,8 @@ export default function OTPVerifyAccount() {
       case "register":
         dispatch(
           resendOtpReady({
-            username: registerUsername,
+            email: registerEmail,
+            phone: registerPhone,
             type: "register",
           })
         );
@@ -83,7 +87,8 @@ export default function OTPVerifyAccount() {
       case "reVerify":
         dispatch(
           resendOtpReady({
-            username: user?.userName,
+            email: user?.userEmail,
+            phone: user?.userPhone,
             type: "register",
           })
         );
@@ -131,7 +136,7 @@ export default function OTPVerifyAccount() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          {` Please enter the 6-digit verification code that was sent to ${createAccInfo?.email ? createAccInfo?.email : createAccInfo?.phone} to verify your account`}
+          {` Please enter the 6-digit verification code that was sent to your device to verify your account`}
         </Typography>
       </Box>
       <Box
@@ -195,7 +200,7 @@ export default function OTPVerifyAccount() {
               color: "rgba(255, 159, 56, 1)",
               cursor: "pointer",
             }}
-            onClick={() => handleResendOTP()}
+            onClick={handleResendOTP}
           >
             Resend OTP
           </Typography>

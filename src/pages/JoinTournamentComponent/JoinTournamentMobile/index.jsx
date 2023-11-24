@@ -54,19 +54,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getRefactorDetailPromotion(id));
-  }, [id, dispatch]);
-
-  useEffect(() => {
-    if (token) {
-      dispatch(getRefactorDetailAuthPromotion({
-        id,
-        token
-      }));
-    }
-  }, [id, token, dispatch]);
-
-  useEffect(() => {
     if (token || localStorage.getItem("token")) {
       dispatch(getRefactorDetailAuthPromotion({
         id,
@@ -82,13 +69,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       dispatch(toggleExtra());
       return;
     } else {
-      // if (countTicket > 0 && detailTournament?.extra <= 0) {
-      //   dispatch(updateCountExtraAfterPlayGame(1));
-      // }
-
-      // if (countTicket <= 0 && detailTournament?.extra > 0) {
-      //   dispatch(updateDetailTourAfterPlayGame());
-      // }
       dispatch(
         startGameInPromotion({
           tournamentId: id,

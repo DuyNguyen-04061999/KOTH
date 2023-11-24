@@ -133,6 +133,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 top: 0,
                 backgroundColor: "rgba(0,0,0,0.6)",
                 display: tourInfo?.tournamentStatus === 2 ? "block" : "none",
+                borderStartEndRadius:"7px",
+                borderStartStartRadius:"7px"
               }}
             />
           </>
@@ -256,7 +258,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                         `${days}d:${hours}h:${minutes}m`
                       : tourInfo?.tScores &&
                         tourInfo?.tScores[0]?.tUser &&
-                        tourInfo?.tScores[0]?.tUser?.userName}
+                        tourInfo?.tScores[0]?.tUser?.userNickName}
                   </Typography>
                 )
               )}
