@@ -887,13 +887,13 @@ export default function Navbar() {
                 textDecoration: "none",
                 color: "#A89CD7",
               }}
-              // onClick={() => {
-              //   if (window?.FB && window?.FB?.CustomerChat) {
-              //     window.FB.CustomerChat.show(true);
-              //   }
-              // }}
-              href="https://t.me/+LaxB-V2ovfNiNzNl"
-              target="_blank"
+              onClick={() => {
+                if (window?.FB && window?.FB?.CustomerChat) {
+                  window.FB.CustomerChat.show(true);
+                }
+              }}
+              // href="https://t.me/+LaxB-V2ovfNiNzNl"
+              // target="_blank"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

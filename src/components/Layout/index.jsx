@@ -55,6 +55,7 @@ import {
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import { systemNotification } from "../../utils/notification";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
+import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
@@ -313,23 +314,32 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      <Box
-        sx={{
-          display:
-            startGameCheck ||
+      {startGameCheck ||
             chatPopup ||
             openMess ||
             openMenu ||
             isLoginDialog ||
-            isTransactionDialog
-              ? "none"
-              : "block",
-        }}
-      >
-        {/* {!process.env.REACT_APP_TEST || process.env.REACT_APP_TEST !== "test" ? (
-        <ChatBot />
-        ) : <></>} */}
-      </Box>
+            isTransactionDialog ||
+            width < 576 ? (<></>) : (
+              <Box
+                sx={{
+                  display:
+                    startGameCheck ||
+                    chatPopup ||
+                    openMess ||
+                    openMenu ||
+                    isLoginDialog ||
+                    isTransactionDialog ||
+                    width < 576
+                      ? "none"
+                      : "block",
+                }}
+              >
+                {!process.env.REACT_APP_TEST || process.env.REACT_APP_TEST !== "test" ? (
+                <ChatBot />
+                ) : <></>}
+              </Box>
+            )}
       <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />
