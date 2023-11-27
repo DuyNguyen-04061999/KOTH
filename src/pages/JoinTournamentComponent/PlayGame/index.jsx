@@ -63,7 +63,7 @@ export default function PlayGame(props) {
     // clean up
     return () => window.removeEventListener("message", handler);
   }, [setStartGame, dispatch, id]);
-  
+
   useEffect(() => {
     const checkFullMobileScreen = () => {
       if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
@@ -172,7 +172,8 @@ export default function PlayGame(props) {
                 />
               )}
             </Box>
-            {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" ? (
+            {detailTournament?.tournamentInfors?.game?.gameEngine ===
+            "cocos" ? (
               <iframe
                 allow="fullscreen"
                 style={
@@ -202,8 +203,18 @@ export default function PlayGame(props) {
                 title="Playgame"
                 src={
                   process.env.REACT_APP_ENV === "development"
-                    ? `http://localhost:3001?token=${tokenUser || localStorage.getItem("token")}&tournamentId=${detailTournament?.id}&skinId=${detailTournament?.tournamentInfors?.skin?.id}`
-                    : `${detailTournament?.tournamentInfors?.game?.gameHost}?token=${tokenUser || localStorage.getItem("token")}&tournamentId=${detailTournament?.id}&skinId=${detailTournament?.tournamentInfors?.skin?.id}`
+                    ? `http://localhost:3001?token=${
+                        tokenUser || localStorage.getItem("token")
+                      }&tournamentId=${detailTournament?.id}&skinId=${
+                        detailTournament?.tournamentInfors?.skin?.id
+                      }`
+                    : `${
+                        detailTournament?.tournamentInfors?.game?.gameHost
+                      }?token=${
+                        tokenUser || localStorage.getItem("token")
+                      }&tournamentId=${detailTournament?.id}&skinId=${
+                        detailTournament?.tournamentInfors?.skin?.id
+                      }`
                 }
               ></iframe>
             ) : (
@@ -426,7 +437,13 @@ export default function PlayGame(props) {
                   </Typography>
                 </>
               </Box>
-              <Box sx={{ display: "flex", justifyContent: "space-between", maxWidth: "480px" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  maxWidth: "480px",
+                }}
+              >
                 {" "}
                 <Box
                   sx={{
@@ -459,7 +476,7 @@ export default function PlayGame(props) {
                   position: "relative",
                   display: "flex",
                   borderRadius: "8px",
-                  maxWidth: "480px" 
+                  maxWidth: "480px",
                 }}
               >
                 <Box
