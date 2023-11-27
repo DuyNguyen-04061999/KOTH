@@ -282,6 +282,7 @@ export default function Layout(props) {
     }
   }, [token, socket]);
 
+  
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token");
     if (tokenLocal) {
