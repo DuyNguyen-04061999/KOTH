@@ -579,7 +579,8 @@ export default function Signup(props) {
                   <Box>
                     {" "}
                     <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                      Correct example: superman0@gmail.com
+                      Your display name must be 12 characters or less and not contain special characters. 
+                      Display name are case sensitive (e.g., Examplename)
                     </Typography>
                   </Box>
                 }
