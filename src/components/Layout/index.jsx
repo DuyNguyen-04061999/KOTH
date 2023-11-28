@@ -315,7 +315,8 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      {/* {startGameCheck ||
+      {
+      startGameCheck ||
       chatPopup ||
       openMess ||
       openMenu ||
@@ -338,30 +339,15 @@ export default function Layout(props) {
                 : "block",
           }}
         >
-          {!process.env.REACT_APP_TEST ||
+          {
+          !process.env.REACT_APP_TEST ||
           process.env.REACT_APP_TEST !== "test" ? (
             <ChatBot />
           ) : (
             <></>
           )}
         </Box>
-      )} */}{" "}
-      <Box
-        sx={{
-          display:
-            startGameCheck ||
-            chatPopup ||
-            openMess ||
-            openMenu ||
-            isLoginDialog ||
-            isTransactionDialog ||
-            width < 576
-              ? "none"
-              : "block",
-        }}
-      >
-        <ChatBot />
-      </Box>{" "}
+      )}
       <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />
