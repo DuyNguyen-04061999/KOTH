@@ -98,8 +98,6 @@ export default function JoinTournament() {
     dispatch(updateFromRouter(location.pathname));
   };
 
-
-
   const [minLength, setMinLength] = useState(0);
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
@@ -2180,7 +2178,7 @@ export default function JoinTournament() {
                                 padding: "4px",
                                 borderRadius: "5px",
                                 marginTop: "10px",
-                                minWidth:"50px",
+                                minWidth: "50px",
                                 maxWidth: "max-content",
                               }}
                             >
@@ -2191,7 +2189,10 @@ export default function JoinTournament() {
                                   fontSize: "8px",
                                 }}
                               >
-                                {detailTournament?.tScores[0]?.tUser?.userNickName}
+                                {
+                                  detailTournament?.tScores[0]?.tUser
+                                    ?.userNickName
+                                }
                               </Typography>
                             </Box>
                           </Box>
