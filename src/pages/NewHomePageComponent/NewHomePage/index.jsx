@@ -8,7 +8,7 @@ import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
 import { getAppType } from "../../../utils/helper";
-import { images } from "../../../utils/images";
+import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import { Package } from "../../PackagePage/component";
@@ -92,6 +92,24 @@ export default function NewHomePage() {
 
   const meta = {
     title: process.env.REACT_APP_ENV === "production" ? 'Play4promo' : "Play4promo staging",
+    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
+    meta: {
+      charset: 'utf-8',
+      name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
+        robots: "noindex",
+        keywords: `play4promo,play,promo`
+      } : {
+        keywords: `play4promo,play,promo`
+      },
+      property: {
+        'og:url': window.location.href,
+        'og:image': imageDesktop.logoCT,
+        'og:image:type': 'image/png',
+        'og:image:width': `144`,
+        'og:image:height': `144`,
+        'og:image:alt': 'Play4promo Photo'
+      },
+    },
   }
   
   return (

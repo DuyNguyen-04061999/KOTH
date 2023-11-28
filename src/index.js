@@ -13,11 +13,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const meta = {
     meta: {
+      charset: 'utf-8',
       name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
-        robots: "noindex"
-      } : {}
+        robots: "noindex",
+        keywords: `play4promo,play,promo`
+      } : {
+        keywords: `play4promo,play,promo`
+      },
     },
-    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills."
   };
   
 root.render(
