@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import DocumentMeta from "react-document-meta";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BannerTour, BannerTourMobile } from "../../../components/Banner";
@@ -15,7 +16,7 @@ import "./index.scss";
 
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
-  // const [bannerCountDown, setBannerCountDown] = useState(true);
+
   const {
     hotTournament,
     hotWeekTour,
@@ -89,14 +90,12 @@ export default function NewHomePage() {
 
   const navigate = useNavigate();
 
-  // const handleFetchTimeout = () => {
-  //   dispatch({
-  //     type: "CALL_LIST_TOURNAMENT",
-  //     payload: "ended",
-  //   });
-  // };
-
+  const meta = {
+    title: process.env.REACT_APP_ENV === "production" ? 'Play4promo' : "Play4promo staging",
+  }
+  
   return (
+  <DocumentMeta {...meta}>
     <Container
       maxWidth="lg"
       sx={{
@@ -116,19 +115,6 @@ export default function NewHomePage() {
         backgroundColor: "#1a151e",
       }}
     >
-      {/* {process.env.REACT_APP_TEST === "test" && (
-        <div
-          className="text-white p-2 ps-3"
-          onClick={() => {
-            navigate("/list-game-manager");
-          }}
-        >
-          Game Manager
-        </div>
-      )}{" "}
-      {process.env.REACT_APP_TEST === "test" && (
-        <Button onClick={() => handleFetchTimeout()}>Fetch Timeout</Button>
-      )} */}
       <Box
         sx={{
           paddingBottom: "70px",
@@ -136,9 +122,6 @@ export default function NewHomePage() {
           flexDirection: "column",
         }}
       >
-        {/* {bannerCountDown && (
-          <BannerHomePage setBannerCountDown={setBannerCountDown} />
-        )}{" "} */}
         <Box
           sx={{
             marginBottom: width < 576 ? "24px" : "32px",
@@ -154,17 +137,6 @@ export default function NewHomePage() {
               appendDot={true}
               images={
                 []
-                // width < 576
-                //   ? [
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //     ]
-                //   : [
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //     ]
               }
               tours={threeBrandTour}
             />
@@ -233,15 +205,6 @@ export default function NewHomePage() {
             />
           </Box>
         </Box>{" "}
-        {/* {width < 576 ? (isFetchBiggestTour ? (<BannerLoading
-                height={width < 576 ? "214px" : "363px"}
-                width={"100%"}
-            />) : (
-                <></>)) : isFetchBiggestTour ? (<BannerLoading
-                height={width < 576 ? "214px" : "363px"}
-                width={"100%"}
-            />) : (
-                <></>)} */}
         <Box
           sx={{
             marginTop: width < 576 ? "24px" : "64px",
@@ -510,5 +473,7 @@ export default function NewHomePage() {
         <NewFooter />
       </Box>
     </Container>
+  </DocumentMeta>
+    
   );
 }

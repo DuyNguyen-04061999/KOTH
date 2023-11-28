@@ -11,6 +11,7 @@ import {
 import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
@@ -41,7 +42,7 @@ import {
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { isJson, sliceString } from "../../../utils/helper";
-import { images } from "../../../utils/images";
+import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import DetailVoucher from "../DetailVoucher";
@@ -203,8 +204,32 @@ export default function JoinTournament() {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
 
+  const meta = {
+    title: `${detailTournament?.tournamentName}`,
+    description: `${detailTournament?.tournamentInfors?.rewardInfors
+      ?.rewardTitle || "SS Z-Flip 5 free voucher"}.&nbsp;${detailTournament?.tournamentInfors?.owner?.brandName || "Play4promo"}.&nbsp;${moment(
+        detailTournament?.tournamentInfors
+          ?.rewardInfors?.rewardValidityDate
+      )?.format("MMM-DD-YYYY") || "Nov-10-2023"}`,
+    meta: {
+        charset: 'utf-8',
+        name: {
+            keywords: `play4promo,play,promo,${detailTournament?.tournamentName}`
+        },
+        property: {
+          'og:url': window.location.href,
+          'og:image': imageDesktop.logoCT,
+          'og:image:type': 'image/png',
+          'og:image:width': `144`,
+          'og:image:height': `144`,
+          'og:image:alt': 'Play4promo Photo'
+        },
+    },
+  }
+
   return (
-    <>
+    <DocumentMeta {...meta}>
+      <>
       <ResultEndGame />
       <NotificationExtra />
       {!startGamePromotion ? (
@@ -3506,5 +3531,6 @@ export default function JoinTournament() {
         />
       )}
     </>
+    </DocumentMeta>
   );
 }

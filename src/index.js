@@ -16,7 +16,8 @@ const meta = {
       name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
         robots: "noindex"
       } : {}
-    }
+    },
+    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills."
   };
   
 root.render(
