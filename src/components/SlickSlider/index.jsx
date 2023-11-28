@@ -125,7 +125,7 @@ export default function SlickSlider(props) {
                 >
                   <Box
                     onClick={() => {
-                      navigate(`/tournamentDetail/${item?.id}`);
+                      navigate(`/promotion-detail/${item?.id}`);
                     }}
                     sx={{
                       width: "100%",

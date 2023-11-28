@@ -265,7 +265,7 @@ export default function Home() {
                 </Box>
               </Box>
               <Box
-                onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                onClick={() => navigate("/promotion-detail/" + item?.id)}
                 sx={{
                   width: "100%",
                   boxSizing: "border-box",

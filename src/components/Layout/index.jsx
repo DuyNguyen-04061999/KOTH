@@ -166,7 +166,7 @@ export default function Layout(props) {
     if (
       router &&
       router !== window.location.pathname &&
-      router?.includes("tournamentDetail") &&
+      router?.includes("promotion-detail") &&
       startGameCheck
     ) {
     }

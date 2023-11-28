@@ -153,7 +153,7 @@ function App() {
     const updateOrientation = (event) => {
       if (
         !startGameCheck &&
-        !window.location.pathname?.includes("tournamentDetail")
+        !window.location.pathname?.includes("promotion-detail")
       ) {
       }
     };
@@ -438,7 +438,7 @@ function App() {
                     }
                   ></Route>
                   <Route
-                    path="/tournamentDetail/:id/influencers/:userName"
+                    path="/promotion-detail/:id/influencers/:userName"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   ></Route>
                   <Route path="/gamelobby/:id" element={<GameLobby />} />
@@ -447,7 +447,7 @@ function App() {
                     element={<SelectRoomContainer />}
                   />
                   <Route
-                    path="/tournamentDetail/:id"
+                    path="/promotion-detail/:id"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   />
                   <Route
