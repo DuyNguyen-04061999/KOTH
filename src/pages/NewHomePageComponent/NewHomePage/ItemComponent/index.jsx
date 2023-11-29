@@ -140,6 +140,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 top: 0,
                 backgroundColor: "rgba(0,0,0,0.6)",
                 display: tourInfo?.tournamentStatus === 2 ? "block" : "none",
+                borderStartEndRadius:"7px",
+                borderStartStartRadius:"7px"
               }}
             />
           </>

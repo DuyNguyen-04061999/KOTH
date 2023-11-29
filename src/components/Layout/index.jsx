@@ -326,8 +326,14 @@ export default function Layout(props) {
               : "block",
         }}
       >
-        <ChatBot />
+        {!process.env.REACT_APP_TEST ||
+        process.env.REACT_APP_TEST !== "test" ? (
+          <ChatBot />
+        ) : (
+          <></>
+        )}
       </Box>
+
       <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />

@@ -52,6 +52,8 @@ import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
+import { toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducers/userReducer";
+import CheckProfile from "../../../components/Dialog/CheckProfile";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -74,6 +76,7 @@ export default function JoinTournament() {
     uPack,
     countTicket,
     listJoinedTour,
+    isFullInfo,
   } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
@@ -94,7 +97,6 @@ export default function JoinTournament() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  console.log(detailTournament);
 
   const handleClickOpen = () => {
     navigate("/packages");
@@ -105,20 +107,6 @@ export default function JoinTournament() {
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getRefactorDetailPromotion(id));
-  // }, [id, dispatch]);
-
-  // useEffect(() => {
-  //   if (token) {
-  //     dispatch(getRefactorDetailAuthPromotion({
-  //       id,
-  //       token
-  //     }));
-  //   }
-  // }, [id, token, dispatch]);
-
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
       dispatch(
@@ -131,20 +119,15 @@ export default function JoinTournament() {
       dispatch(getRefactorDetailPromotion(id));
     }
   }, [token, dispatch, id]);
-
   const handlePlayTour = () => {
+    if (isFullInfo === false) {
+      dispatch(toggleCheckProfileDialog());
+      return
+    }
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
       return;
     } else {
-      // if (countTicket > 0 && detailTournament?.extra <= 0) {
-      //   dispatch(updateCountExtraAfterPlayGame(1));
-      // }
-
-      // if (countTicket <= 0 && detailTournament?.extra > 0) {
-      //   dispatch(updateDetailTourAfterPlayGame());
-      // }
-
       dispatch(
         startGameInPromotion({
           tournamentId: id,
@@ -229,6 +212,7 @@ export default function JoinTournament() {
     <>
       <ResultEndGame />
       <NotificationExtra />
+      <CheckProfile id={id}/>
       {!startGamePromotion ? (
         width > 576 ? (
           <Container
@@ -2018,7 +2002,7 @@ export default function JoinTournament() {
                   fontSize: "24px",
                 }}
               >
-                Information
+                Informations
               </Typography>
               {isGetDetailPromotion || isGetDetailAuthPromotion ? (
                 <ParagraphLoading />
@@ -2032,6 +2016,32 @@ export default function JoinTournament() {
                     overscrollBehavior: "contain",
                   }}
                 >
+                  <Box
+                    sx={{
+                      display: "flex",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="none"
+                      viewBox="0 0 25 25"
+                    >
+                      <path
+                        fill="#F05153"
+                        d="M12.263 24.204H3.502c-2.76 0-4.356-2.843-3.025-5.401A3262.403 3262.403 0 019.31 1.938C10.67-.636 13.903-.65 15.262 1.92a2396.638 2396.638 0 018.855 16.923c1.306 2.521-.315 5.353-3.032 5.36-2.94.007-5.88 0-8.822 0zm.036-17.287c-.269 0-.537.015-.804.046-.827.143-1.32.847-1.226 1.73.195 1.807.392 3.612.59 5.416.098.89.628 1.444 1.383 1.464.797.02 1.359-.508 1.466-1.434.21-1.825.41-3.652.6-5.48.089-.858-.402-1.538-1.2-1.689a6.192 6.192 0 00-.81-.052v-.001zM12.286 20.5c.41 0 .805-.173 1.096-.481.29-.308.454-.726.454-1.162 0-.435-.163-.853-.454-1.16a1.508 1.508 0 00-1.096-.482 1.537 1.537 0 00-1.095.5c-.29.312-.452.732-.453 1.17.027.868.742 1.618 1.548 1.616V20.5z"
+                      ></path>
+                    </svg>
+                    <Typography
+                      className="ms-2"
+                      sx={{ color: "#e75857", textAlign: "left" }}
+                    >
+                      Persons under the age of 18 should use this Website only
+                      with the supervision of an Adult. Payment Information must
+                      be provided by or with the permission of an Adult
+                    </Typography>
+                  </Box>
                   {detailTournament &&
                     detailTournament?.tournamentInformations &&
                     isJson(detailTournament?.tournamentInformations) &&
@@ -3287,6 +3297,39 @@ export default function JoinTournament() {
                               padding: "0 6px",
                             }}
                           >
+                            <Box
+                              sx={{
+                                display: "flex",
+                              }}
+                            >
+                              <Box>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20"
+                                  height="20"
+                                  fill="none"
+                                  viewBox="0 0 25 25"
+                                >
+                                  <path
+                                    fill="#F05153"
+                                    d="M12.263 24.204H3.502c-2.76 0-4.356-2.843-3.025-5.401A3262.403 3262.403 0 019.31 1.938C10.67-.636 13.903-.65 15.262 1.92a2396.638 2396.638 0 018.855 16.923c1.306 2.521-.315 5.353-3.032 5.36-2.94.007-5.88 0-8.822 0zm.036-17.287c-.269 0-.537.015-.804.046-.827.143-1.32.847-1.226 1.73.195 1.807.392 3.612.59 5.416.098.89.628 1.444 1.383 1.464.797.02 1.359-.508 1.466-1.434.21-1.825.41-3.652.6-5.48.089-.858-.402-1.538-1.2-1.689a6.192 6.192 0 00-.81-.052v-.001zM12.286 20.5c.41 0 .805-.173 1.096-.481.29-.308.454-.726.454-1.162 0-.435-.163-.853-.454-1.16a1.508 1.508 0 00-1.096-.482 1.537 1.537 0 00-1.095.5c-.29.312-.452.732-.453 1.17.027.868.742 1.618 1.548 1.616V20.5z"
+                                  ></path>
+                                </svg>
+                              </Box>
+                              <Typography
+                                className="ms-2"
+                                sx={{
+                                  color: "#e75857",
+                                  textAlign: "left",
+                                  fontSize: "12px",
+                                }}
+                              >
+                                Persons under the age of 18 should use this
+                                Website only with the supervision of an Adult.
+                                Payment Information must be provided by or with
+                                the permission of an Adult
+                              </Typography>
+                            </Box>
                             {detailTournament &&
                               detailTournament?.tournamentInformations &&
                               isJson(

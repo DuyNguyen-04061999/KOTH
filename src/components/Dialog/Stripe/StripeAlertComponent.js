@@ -143,8 +143,8 @@ export default function StripeAlertComponent() {
           }}
         >
           {typeAlert && typeAlert === "success"
-              ? "Payment Successful. Your payment has been successfully processed."
-              : "Payment failed. Please try again."}
+              ? "You have successfully purchased the package. We have sent the receipt to your email (Including Spam). Please check your email to receive the information"
+              : "Failed to purchase the package. Please try again in a few minutes"}
           
         </Box>
       </Box>

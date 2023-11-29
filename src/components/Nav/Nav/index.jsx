@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
+import {
+  toggleStartGame,
+  updateFromRouter,
+} from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTab,
   showDropdown,
@@ -888,12 +891,12 @@ export default function Navbar() {
                 color: "#A89CD7",
               }}
               onClick={() => {
-                if (window.FB.CustomerChat) {
+                if (window?.FB && window?.FB?.CustomerChat) {
                   window.FB.CustomerChat.show(true);
                 }
               }}
               // href="https://t.me/+LaxB-V2ovfNiNzNl"
-              target="_blank"
+              // target="_blank"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

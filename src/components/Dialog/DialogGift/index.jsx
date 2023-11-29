@@ -4,22 +4,29 @@ import ReactDOM from "react-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
+import { closeDialogGif } from "../../../redux-saga-middleware/reducers/appReducer";
 import { imageHome } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 
 const DialogGift = () => {
-  const { isReVerifyAccount, user } = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
-  const handleClose = () => {};
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.userReducer);
+  const { isDialogGif } = useSelector((state) => state.appReducer);
 
-  const handleConfirm = () => {};
+  const handleClose = () => {
+    dispatch(closeDialogGif())
+  };
+
+  const handleConfirm = () => {
+    dispatch(closeDialogGif())
+  };
   const { width } = useWindowDimensions();
 
   return ReactDOM.createPortal(
     <div>
       <Dialog
-        open={false}
+        open={isDialogGif}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"

@@ -44,9 +44,6 @@ export default function HotTournament() {
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
-  const { hotWeekTour, isFetchHotWeek } = useSelector(
-    (state) => state.tournamentReducer
-  );
   const { endedPage } = useSelector((state) => state.promotionReducer);
   useEffect(() => {
     dispatch({

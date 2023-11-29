@@ -4,6 +4,7 @@ import DocumentMeta from 'react-document-meta';
 import ReactDOM from 'react-dom/client';
 import Admin from './Admin';
 import App from './App';
+import "./assets/css/App.css";
 import "./assets/css/index.css";
 import Maintenance from './components/Dialog/Maintenance';
 import reportWebVitals from './setup/reportWebVitals';

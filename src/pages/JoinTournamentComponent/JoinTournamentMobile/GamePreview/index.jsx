@@ -1,14 +1,15 @@
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Dialog, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
-import { images } from "../../../../utils/images";
-import "./index.scss";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
+import { images } from "../../../../utils/images";
+import ImageGamePre from "../ImgGamePre";
+import "./index.scss";
 export default function GamePreview() {
   const settings = {
     arrows: false,
@@ -26,6 +27,25 @@ export default function GamePreview() {
   const [newArray, setNewArray] = useState([]);
   const [imageString, setImageString] = useState(-1);
   const [sortedArray, setSortedArray] = useState([]);
+  const videored = useRef()
+
+  const handlevideo = (event) => {
+    videored.current && videored.current.play()
+  }
+
+  const getMobileOS = () => {
+    const ua = navigator.userAgent;
+    if (/android/i.test(ua)) {
+      return "Android";
+    } else if (
+      /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    ) {
+      return "iOS";
+    }
+    return "Window";
+  };
+  const os = getMobileOS();
   useEffect(() => {
     setNewArray([]);
     for (
@@ -59,6 +79,7 @@ export default function GamePreview() {
       }
     }
   }, [imageString, newArray]);
+  
   return (
     newArray?.length > 0 && (
       <Box
@@ -122,13 +143,15 @@ export default function GamePreview() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                position:"relative"
               }}
             >
               {" "}
               <video
+                ref={videored}
                 autoPlay={false}
                 playsInline={true}
-                controls={true}
+                controls
                 style={{
                   width: "auto",
                   height: device === "Desktop" ? "250px" : "200px",
@@ -146,6 +169,11 @@ export default function GamePreview() {
                   type="video/mp4"
                 />
               </video>
+              {os === "iOS" ? (
+                <>
+                  <ImageGamePre item={item?.previewLink} handlePlayvideo={handlevideo}/>
+                </>
+              ) : ("")}
             </Box>
           );
         })}
