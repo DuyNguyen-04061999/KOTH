@@ -113,10 +113,10 @@ const Revenue = () => {
       if (roles?.includes("agent")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
+          // "Nick Name",
           "Manager",
-          "Players",
+          // "Players",
           "Revenue",
           "Referral Bonus Revenue 5%",
           "Register Date",
@@ -134,7 +134,7 @@ const Revenue = () => {
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Phone", "Revenue"]);
       }
     }
   }, [roles, width]);

@@ -115,11 +115,13 @@ const ManageDistributor = () => {
         setHeaderList([
           "",
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
+          // "Nick Name",
           "Manager",
-          "Players",
+          // "Players",
           "Revenue",
+          "Phone",
+          "Email"
         ]);
       }
     } else {
@@ -132,7 +134,7 @@ const ManageDistributor = () => {
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Phone", "Revenue"]);
       }
     }
   }, [roles, width]);
