@@ -102,8 +102,8 @@ export default function NewHomePage() {
       },
       property: {
         'og:url': window.location.href,
-        'og:image:secure_url': imageDesktop.logoCT,
-        'og:image': imageDesktop.logoCT,
+        'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+        'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
         'og:image:type': 'image/png',
         'og:image:width': `144`,
         'og:image:height': `144`,
