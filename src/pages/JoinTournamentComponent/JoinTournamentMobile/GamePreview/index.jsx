@@ -9,7 +9,6 @@ import Slider from "react-slick";
 import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 import { images } from "../../../../utils/images";
 import ImageGamePre from "../ImgGamePre";
-import "./index.scss";
 export default function GamePreview() {
   const settings = {
     arrows: false,
