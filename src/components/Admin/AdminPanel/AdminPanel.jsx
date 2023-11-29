@@ -767,7 +767,7 @@ const AdminPanel = () => {
                                 Edit Nick Name
                             </Button>
                         )}
-                        {!roles?.includes("agent") && !roles?.includes("distributor") && (
+                        {!roles?.includes("agent") && !roles?.includes("distributor") && !roles?.includes("master") && (
                             <Button
                                 onClick={handleDeleteAccount}
                                 sx={{
