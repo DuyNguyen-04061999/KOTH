@@ -10,7 +10,6 @@ import { getAppType } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
-import "./index.scss";
 const NewFooter = lazy(() => import("../../NewFooter")) ;
 
 export default function NewHomePage() {
