@@ -11,7 +11,6 @@ import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
-import "./index.scss";
 const NewFooter = lazy(() => import("../../NewFooter")) ;
 
 export default function NewHomePage() {
@@ -214,7 +213,7 @@ export default function NewHomePage() {
               ></Box>
             </Box>
           </Box>
-          <Box sx={{ paddingTop: width < 576 ? "24px" : "32px" }}>
+          <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
             <ListPromotion
               listData={hotTournament}
               loadingState={isFetchHot}
