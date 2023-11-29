@@ -12,6 +12,8 @@ import { forwardRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import _socket from "../../../redux-saga-middleware/config/socket";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { images } from "../../../utils/images";
 import { systemNotification } from "../../../utils/notification";
@@ -78,7 +80,7 @@ export default function DialogProfile(props) {
       <Box sx={{ height: "100%" }}>
         <Box className="position-relative">
           <Box className="d-flex flex-column align-items-center justify-content-center">
-            <img
+            <LazyLoadImage
               alt="abc"
               src={
                 avatarUrl
@@ -90,6 +92,12 @@ export default function DialogProfile(props) {
                 borderRadius: "50%",
                 height: "95px",
                 border: uPack ? "4px solid #FD9E0F" : "",
+              }}
+              effect="blur"
+              wrapperProps={{
+                style: {
+                  transitionDelay: "0.5s",
+                },
               }}
             />
             <Typography

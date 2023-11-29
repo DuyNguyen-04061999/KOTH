@@ -1,5 +1,4 @@
 import { Box, Dialog, Typography } from "@mui/material";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -90,6 +89,14 @@ export default function FullListTournament({ handleOnClose, open, type }) {
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
+
+  const [moment, setMoment] = useState(null);
+
+  useEffect(() => {
+    import('moment').then(momentModule => {
+      setMoment(momentModule);
+    });
+  }, []);
   return (
     <Dialog sx={{ zIndex: "1320" }} fullScreen={true} open={open}>
       <Box

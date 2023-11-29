@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Box, Typography } from "@mui/material";
-import { CalculateDistance } from "../../../components/CountDownTimer/utils/CalculateDistance";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { CalculateDistance } from "../../../components/CountDownTimer/utils/CalculateDistance";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function CountDownTournament({
   expiryTime = "8/16/2023 07:00:00",
 }) {

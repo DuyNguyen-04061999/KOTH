@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import DocumentMeta from "react-document-meta";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,9 @@ import SlickSlider from "../../../components/SlickSlider";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import NewFooter from "../../NewFooter";
 import { Package } from "../../PackagePage/component";
 import "./index.scss";
+const NewFooter = lazy(() => import("../../NewFooter")) ;
 
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
@@ -488,7 +488,7 @@ export default function NewHomePage() {
           </Box>
         </Box>{" "}
         {getAppType() === "promote" ? <Package /> : <></>}
-        <NewFooter />
+        <Suspense fallback="loading..." children={<NewFooter />} />
       </Box>
     </Container>
   </DocumentMeta>

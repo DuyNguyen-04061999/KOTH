@@ -1,6 +1,7 @@
 import { Box, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import AnimButton from "../../../../components/AnimButton";
 import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
@@ -202,31 +203,33 @@ export default function ListPackage(props) {
                     height={width < 1200 && width > 576 ? 130 : 170}
                   />
                 ) : (
-                  <video
-                    controls={false}
-                    width={width < 1200 && width > 576 ? 130 : 200}
-                    height={width < 1200 && width > 576 ? 130 : 170}
-                    alt=""
-                    style={{
-                      mixBlendMode: width < 576 ? "normal" : "difference",
-                      pointerEvents: "none",
-                    }}
-                    playsInline
-                    muted
-                    autoPlay
-                    loop={true}
-                  >
-                    <source
-                      src={
-                        packageAvatar
-                          ? process.env.REACT_APP_SOCKET_SERVER +
-                            "/" +
-                            packageAvatar
-                          : images.free
-                      }
-                      type="video/mp4"
-                    />
-                  </video>
+                  <LazyLoadComponent>
+                    <video
+                      controls={false}
+                      width={width < 1200 && width > 576 ? 130 : 200}
+                      height={width < 1200 && width > 576 ? 130 : 170}
+                      alt=""
+                      style={{
+                        mixBlendMode: width < 576 ? "normal" : "difference",
+                        pointerEvents: "none",
+                      }}
+                      playsInline
+                      muted
+                      autoPlay
+                      loop={true}
+                    >
+                      <source
+                        src={
+                          packageAvatar
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              packageAvatar
+                            : images.free
+                        }
+                        type="video/mp4"
+                      />
+                    </video>
+                  </LazyLoadComponent>
                 )}
               </Box>
               <Box
