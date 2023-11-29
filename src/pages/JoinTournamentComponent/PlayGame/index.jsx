@@ -1,4 +1,4 @@
-import { Box, Dialog, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,6 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import { getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import { sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -20,8 +19,7 @@ export default function PlayGame(props) {
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { chatPopup } = useSelector((state) => state.chatReducer);
-  const [isFullScreen, setIsFullScreen] = useState(true);
-  const [continueGame, setContinueGame] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
   const dispatch = useDispatch();
