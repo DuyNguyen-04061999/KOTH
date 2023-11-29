@@ -4,6 +4,8 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 // import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import { imageHome } from "../../../../utils/images";
@@ -106,8 +108,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           />
         ) : (
           <>
-            <Box
-              sx={{
+            <LazyLoadImage
+              style={{
                 maxHeight: width < 576 ? "156px" : "184px",
                 minHeight: width < 576 ? "156px" : "184px",
                 width: "100%",
@@ -115,7 +117,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 position: "relative",
                 overflow: "hidden",
               }}
-              component={"img"}
+              effect="blur"
+              wrapperProps={{
+                style: {
+                  transitionDelay: "0.5s",
+                },
+              }}
               src={
                 tourInfo?.tournamentAvatar
                   ? process.env.REACT_APP_SOCKET_SERVER +
@@ -123,7 +130,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                     tourInfo?.tournamentAvatar
                   : imageHome.brandImage
               }
-            ></Box>
+            ></LazyLoadImage>
             <Box
               sx={{
                 width: "100%",
@@ -147,7 +154,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
             justifyContent: countdown ? "space-between" : "flex-end",
             flexDirection: "column",
             backgroundColor: "white",
-            minHeight: width < 576 ? "89px" :"108px",
+            minHeight: width < 576 ? "89px" : "108px",
           }}
         >
           <span style={{ fontSize: "10px" }}>
@@ -270,15 +277,20 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 marginBottom: "2px",
               }}
             >
-              <Box
-                sx={{
+              <LazyLoadImage
+                style={{
                   width: width > 576 ? "20px" : "16px",
                   height: width > 576 ? "20px" : "16px",
                   marginRight: width > 576 ? "8px" : "4px",
                 }}
-                component={"img"}
+                wrapperProps={{
+                  style: {
+                    transitionDelay: "0.5s",
+                  },
+                }}
                 src={imageHome.iconMember}
-              ></Box>
+                effect="blur"
+              ></LazyLoadImage>
               <Typography
                 sx={{
                   ...styleTypography,
@@ -321,20 +333,19 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         >
           {isLoading ? (
             <Skeleton
-              variant="circular"
+              variant="rectangular"
               width={40}
               height={40}
               animation="wave"
             />
           ) : (
-            <Box
-              sx={{
+            <LazyLoadImage
+              style={{
                 width: width < 576 ? `40px` : "49px",
                 height: width < 576 ? `40px` : "49px",
                 borderRadius: "4px",
                 objectFit: "cover",
               }}
-              component={"img"}
               src={
                 tourInfo &&
                 tourInfo?.tourSkins &&
@@ -346,7 +357,13 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                     tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
                   : imageHome.brandImage
               }
-            ></Box>
+              effect="blur"
+              wrapperProps={{
+                style: {
+                  transitionDelay: "0.5s",
+                },
+              }}
+            ></LazyLoadImage>
           )}
           <Box
             sx={{

@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
@@ -91,21 +93,26 @@ export default function SlickSlider(props) {
               height: width < 576 ? "208px" : "363px",
             }}
           >
-            <Box
-              sx={{
+            <LazyLoadImage
+              style={{
                 width: "100%",
                 height: "100%",
                 cursor: "pointer",
                 borderRadius: "8px",
                 objectFit: "contain",
               }}
-              component={"img"}
+              effect="blur"
+              wrapperProps={{
+                style: {
+                  transitionDelay: "0.5s",
+                },
+              }}
               src={
                 type && type === "tour"
                   ? process.env.REACT_APP_SOCKET_SERVER + "/" + item
                   : item
               }
-            ></Box>
+            ></LazyLoadImage>
           </Box>
         );
       })}
@@ -123,18 +130,17 @@ export default function SlickSlider(props) {
                     height: width < 576 ? "182.4px" : "auto",
                   }}
                 >
-                  <Box
+                  <LazyLoadImage
                     onClick={() => {
                       navigate(`/tournamentDetail/${item?.id}`);
                     }}
-                    sx={{
+                    style={{
                       width: "100%",
                       height: width > 576 ? "100%" : "182.4px",
                       cursor: "pointer",
                       borderRadius: "8px",
                       objectFit: "contain",
                     }}
-                    component={"img"}
                     src={
                       (device === "Mobile" ||
                         (device === "Tablet" && orientation === "portrait")) &&
@@ -148,7 +154,13 @@ export default function SlickSlider(props) {
                           item?.tournamentBackground
                         : getImage(item)
                     }
-                  ></Box>
+                    effect="blur"
+                    wrapperProps={{
+                      style: {
+                        transitionDelay: "0.5s",
+                      },
+                    }}
+                  ></LazyLoadImage>
                 </Box>
               );
             })

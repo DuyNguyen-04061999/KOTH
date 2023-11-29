@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import "./index.scss";
-import { images } from "../../../utils/images";
-import LuckyWheel from "../../LuckyWheel";
-import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import LuckySpinHistory from "../../Dialog/LuckySpinHistory";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { images } from "../../../utils/images";
+import LuckySpinHistory from "../../Dialog/LuckySpinHistory";
+import "./index.scss";
 export default function LuckySpinMobile() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -19,7 +18,7 @@ export default function LuckySpinMobile() {
         />
         Lucky Spin
       </div>
-      <LuckyWheel />
+      {/* <LuckyWheel /> */}
       <button>SPIN</button>
       <div className="SpinMobileFooter">
         <div

@@ -20,7 +20,7 @@ import moment from "moment";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Web3 from "web3";
+// import Web3 from "web3";
 import { store } from "../../../redux-saga-middleware/config/configRedux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showAlert } from "../../../redux-saga-middleware/reducers/alertReducer";
@@ -28,9 +28,7 @@ import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer
 import {
   closeTransactionDialog,
   openTransactionDialog,
-  saveTransactionData,
-  toggleMetaMaskDialog,
-  toggleWalletDialog,
+  toggleWalletDialog
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { getAppType } from "../../../utils/helper";
@@ -79,106 +77,106 @@ export default function DialogWallet(props) {
     // }
   });
 
-  useEffect(() => {
-    async function sendToken(data, transaction) {
-      try {
-        let web3 = new Web3(window.ethereum);
-        await window.ethereum.enable();
-        let accounts = await web3.eth.getAccounts();
-        let account = accounts[0];
+  // useEffect(() => {
+  //   async function sendToken(data, transaction) {
+  //     try {
+  //       let web3 = new Web3(window.ethereum);
+  //       await window.ethereum.enable();
+  //       let accounts = await web3.eth.getAccounts();
+  //       let account = accounts[0];
 
-        console.log("Token contract: ", data?.token_contract);
-        console.log("Target Wallet: ", data?.target_wallet);
+  //       console.log("Token contract: ", data?.token_contract);
+  //       console.log("Target Wallet: ", data?.target_wallet);
 
-        if (web3.currentProvider.isConnected()) {
-          console.log("Metamask connected !");
-        } else {
-          console.log("Metamask disconnected !");
-        }
+  //       if (web3.currentProvider.isConnected()) {
+  //         console.log("Metamask connected !");
+  //       } else {
+  //         console.log("Metamask disconnected !");
+  //       }
 
-        socket?.emit("updateDepositTransaction", {
-          type: "process",
-          transactionId: transaction?.id,
-        });
+  //       socket?.emit("updateDepositTransaction", {
+  //         type: "process",
+  //         transactionId: transaction?.id,
+  //       });
 
-        let contract = new web3.eth.Contract(
-          data?.token_abi,
-          data?.token_contract
-        );
-        let depositAmount = data?.token_quantity + "00000000";
+  //       let contract = new web3.eth.Contract(
+  //         data?.token_abi,
+  //         data?.token_contract
+  //       );
+  //       let depositAmount = data?.token_quantity + "00000000";
 
-        let result = await contract.methods
-          .transfer(data?.target_wallet, depositAmount)
-          .send({ from: account });
+  //       let result = await contract.methods
+  //         .transfer(data?.target_wallet, depositAmount)
+  //         .send({ from: account });
 
-        // console.log("tid", data?.transaction_id);
-        // console.log("txh", result?.transactionHash);
+  //       // console.log("tid", data?.transaction_id);
+  //       // console.log("txh", result?.transactionHash);
 
-        if (result) {
-          socket?.emit("updateDepositTransaction", {
-            type: "confirm",
-            transactionId: transaction?.id,
-            tid: data?.transaction_id,
-            txh: result?.transactionHash,
-          });
-          return result;
-        } else {
-          dispatch(showAlert("error", "Cannot deposit because contract fail!"));
-          socket?.emit("updateDepositTransaction", {
-            type: "error",
-            transactionId: transaction?.id,
-          });
-        }
-      } catch (error) {
-        socket?.emit("updateDepositTransaction", {
-          type: "error",
-          transactionId: transaction?.id,
-        });
-      }
+  //       if (result) {
+  //         socket?.emit("updateDepositTransaction", {
+  //           type: "confirm",
+  //           transactionId: transaction?.id,
+  //           tid: data?.transaction_id,
+  //           txh: result?.transactionHash,
+  //         });
+  //         return result;
+  //       } else {
+  //         dispatch(showAlert("error", "Cannot deposit because contract fail!"));
+  //         socket?.emit("updateDepositTransaction", {
+  //           type: "error",
+  //           transactionId: transaction?.id,
+  //         });
+  //       }
+  //     } catch (error) {
+  //       socket?.emit("updateDepositTransaction", {
+  //         type: "error",
+  //         transactionId: transaction?.id,
+  //       });
+  //     }
 
-      return false;
-    }
+  //     return false;
+  //   }
 
-    socket?.on("depositRequestSuccess", async (data, transaction) => {
-      setLoadingDeposit(false);
-      setAmountDeposit(0);
-      if (window?.ethereum) {
-        await window?.ethereum?.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: data?.target_network_id || "0x1" }],
-        });
+  //   socket?.on("depositRequestSuccess", async (data, transaction) => {
+  //     setLoadingDeposit(false);
+  //     setAmountDeposit(0);
+  //     if (window?.ethereum) {
+  //       await window?.ethereum?.request({
+  //         method: "wallet_switchEthereumChain",
+  //         params: [{ chainId: data?.target_network_id || "0x1" }],
+  //       });
 
-        await sendToken(data, transaction);
-      } else {
-        dispatch(toggleMetaMaskDialog());
-        dispatch(toggleWalletDialog());
-        dispatch(
-          saveTransactionData({
-            transactionData: transaction,
-            depositData: data,
-          })
-        );
-      }
-    });
+  //       await sendToken(data, transaction);
+  //     } else {
+  //       dispatch(toggleMetaMaskDialog());
+  //       dispatch(toggleWalletDialog());
+  //       dispatch(
+  //         saveTransactionData({
+  //           transactionData: transaction,
+  //           depositData: data,
+  //         })
+  //       );
+  //     }
+  //   });
 
-    socket?.on("withRequestSuccess", async (data, transaction) => {
-      setAmount(0);
-    });
+  //   socket?.on("withRequestSuccess", async (data, transaction) => {
+  //     setAmount(0);
+  //   });
 
-    socket?.on("getListWithdrawSuccess", async (data) => {});
+  //   socket?.on("getListWithdrawSuccess", async (data) => {});
 
-    socket?.on("warning", async (data) => {
-      setLoadingDeposit(false);
-    });
+  //   socket?.on("warning", async (data) => {
+  //     setLoadingDeposit(false);
+  //   });
 
-    socket?.on("error", async (data) => {
-      setLoadingDeposit(false);
-    });
+  //   socket?.on("error", async (data) => {
+  //     setLoadingDeposit(false);
+  //   });
 
-    return () => {
-      socket?.off("depositRequestSuccess");
-    };
-  }, [socket, dispatch]);
+  //   return () => {
+  //     socket?.off("depositRequestSuccess");
+  //   };
+  // }, [socket, dispatch]);
 
   const div = useCallback((node) => {
     if (node !== null) {

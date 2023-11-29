@@ -1,6 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import React from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
 import { imageHome } from "../../../utils/images";
@@ -234,7 +236,7 @@ const BannerTour = (props) => {
               marginLeft: "12px",
             }}
           >
-            <img
+            <LazyLoadImage
               alt="..."
               style={{
                 width: "100%",
@@ -243,7 +245,13 @@ const BannerTour = (props) => {
                 borderRadius: "10px",
               }}
               src={userAvatar}
-            ></img>
+              effect="blur"
+              wrapperProps={{
+                style: {
+                  transitionDelay: "0.5s",
+                },
+              }}
+            ></LazyLoadImage>
           </Box>
           <Box
             sx={{

@@ -60,7 +60,6 @@ import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
-import MetaMaskDialog from "../Dialog/MetaMask";
 import NotiFunds from "../Dialog/NotiFunds";
 import DialogProfile from "../Dialog/Profile";
 import ShareTour from "../Dialog/ShareTour";
@@ -338,7 +337,6 @@ export default function Layout(props) {
       <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />
-      <MetaMaskDialog />
       <ShareTour />
       <PopUpReward />
       <SubscriptionDialog />

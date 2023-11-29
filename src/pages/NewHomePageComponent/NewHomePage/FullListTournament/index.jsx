@@ -1,21 +1,18 @@
-import React from "react";
-import { imageHome, images } from "../../../../utils/images";
 import { Box, Dialog, Typography } from "@mui/material";
-import SlickSlider from "../../../../components/SlickSlider";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { useState } from "react";
-import SliderTime from "../../../../components/SliderTime";
-import CountDownTournament from "../../CountDownTournament";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import ItemComponent from "../ItemComponent";
-import CountDownBannerHot from "../../CountDownBannerHot";
 import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../../../components/LoadingComponent/ListEmpty";
+import SlickSlider from "../../../../components/SlickSlider";
+import SliderTime from "../../../../components/SliderTime";
+import { imageHome, images } from "../../../../utils/images";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import PaginatedItems from "../../../PaginatedItems";
+import CountDownBannerHot from "../../CountDownBannerHot";
+import CountDownTournament from "../../CountDownTournament";
+import ItemComponent from "../ItemComponent";
 
 export default function FullListTournament({ handleOnClose, open, type }) {
   const {
@@ -92,6 +89,14 @@ export default function FullListTournament({ handleOnClose, open, type }) {
     setDayList(dailyTournament.map((item) => item?.timeStart));
   }, [hourlyTournament, dailyTournament]);
   const navigate = useNavigate();
+
+  const [moment, setMoment] = useState(null);
+
+  useEffect(() => {
+    import('moment').then(momentModule => {
+      setMoment(momentModule);
+    });
+  }, []);
   return (
     <Dialog sx={{ zIndex: "1320" }} fullScreen={true} open={open}>
       <Box

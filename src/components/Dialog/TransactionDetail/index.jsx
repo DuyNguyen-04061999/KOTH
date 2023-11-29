@@ -1,7 +1,7 @@
-import { Box, Dialog, Typography } from "@mui/material";
-import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment/moment";
+import React from "react";
 
 export default function TransactionDetailDialog(props) {
   const { trans, open, handleClose } = props;
