@@ -327,13 +327,12 @@ export default function Layout(props) {
               : "block",
         }}
       >
-        {/* {!process.env.REACT_APP_TEST ||
+        {!process.env.REACT_APP_TEST ||
         process.env.REACT_APP_TEST !== "test" ? (
           <ChatBot />
         ) : (
           <></>
-        )} */}{" "}
-        <ChatBot />
+        )}
       </Box>
 
       <SimpleDialog />
