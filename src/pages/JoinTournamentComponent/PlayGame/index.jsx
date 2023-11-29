@@ -20,7 +20,7 @@ export default function PlayGame(props) {
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { chatPopup } = useSelector((state) => state.chatReducer);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(true);
   const [continueGame, setContinueGame] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
@@ -66,26 +66,29 @@ export default function PlayGame(props) {
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
-      if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-        if (
-          (device === "Mobile" || device === "Tablet") &&
-          orientation === "landscape"
-        ) {
-          return true;
-        } else {
-          return false;
-        }
-      } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-        if (
-          (device === "Mobile" || device === "Tablet") &&
-          orientation === "portrait"
-        ) {
-          return true;
-        } else {
-          return false;
-        }
+      // if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
+      //   if (
+      //     (device === "Mobile" || device === "Tablet") &&
+      //     orientation === "landscape"
+      //   ) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
+      //   if (
+      //     (device === "Mobile" || device === "Tablet") &&
+      //     orientation === "portrait"
+      //   ) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // }
+      // return false;
+      if (device === "Mobile") {
+        return true;
       }
-      return false;
     };
     socket?.on("startGameInTournamentSuccess", (data) => {
       if (checkFullMobileScreen()) {
@@ -152,6 +155,8 @@ export default function PlayGame(props) {
             top: isFullScreen ? "0px" : "none",
             left: isFullScreen ? "0px" : "none",
             zIndex: isFullScreen ? "5005" : "none",
+            transform:
+              checkLockScreen() === true && !videoGame ? "rotate(90deg)" : "",
           }}
         >
           <Box
@@ -203,7 +208,7 @@ export default function PlayGame(props) {
                 title="Playgame"
                 src={
                   process.env.REACT_APP_ENV === "development"
-                    ? `http://localhost:3001?token=${
+                    ? `http://192.168.1.144:3001?token=${
                         tokenUser || localStorage.getItem("token")
                       }&tournamentId=${detailTournament?.id}&skinId=${
                         detailTournament?.tournamentInfors?.skin?.id
@@ -256,7 +261,7 @@ export default function PlayGame(props) {
                 }
               ></iframe>
             )}
-            {checkLockScreen() && !videoGame && (
+            {/* {checkLockScreen() && !videoGame && (
               <Dialog
                 sx={{ zIndex: "100000000" }}
                 fullScreen={true}
@@ -397,7 +402,7 @@ export default function PlayGame(props) {
                   </Box>
                 )}
               </Dialog>
-            )}
+            )} */}
           </Box>
         </Box>
         {device === "Desktop" && (
