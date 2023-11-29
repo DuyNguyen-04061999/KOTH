@@ -51,6 +51,8 @@ import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
+import { toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducers/userReducer";
+import CheckProfile from "../../../components/Dialog/CheckProfile";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -73,6 +75,7 @@ export default function JoinTournament() {
     uPack,
     countTicket,
     listJoinedTour,
+    isFullInfo,
   } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
@@ -99,13 +102,10 @@ export default function JoinTournament() {
     dispatch(updateFromRouter(location.pathname));
   };
 
-
-
   const [minLength, setMinLength] = useState(0);
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
-
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
       dispatch(
@@ -118,8 +118,11 @@ export default function JoinTournament() {
       dispatch(getRefactorDetailPromotion(id));
     }
   }, [token, dispatch, id]);
-
   const handlePlayTour = () => {
+    if (isFullInfo === false) {
+      dispatch(toggleCheckProfileDialog());
+      return
+    }
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
       return;
@@ -232,6 +235,7 @@ export default function JoinTournament() {
       <>
       <ResultEndGame />
       <NotificationExtra />
+      <CheckProfile id={id}/>
       {!startGamePromotion ? (
         width > 576 ? (
           <Container
@@ -2205,7 +2209,7 @@ export default function JoinTournament() {
                                 padding: "4px",
                                 borderRadius: "5px",
                                 marginTop: "10px",
-                                minWidth:"50px",
+                                minWidth: "50px",
                                 maxWidth: "max-content",
                               }}
                             >
@@ -2216,7 +2220,10 @@ export default function JoinTournament() {
                                   fontSize: "8px",
                                 }}
                               >
-                                {detailTournament?.tScores[0]?.tUser?.userNickName}
+                                {
+                                  detailTournament?.tScores[0]?.tUser
+                                    ?.userNickName
+                                }
                               </Typography>
                             </Box>
                           </Box>

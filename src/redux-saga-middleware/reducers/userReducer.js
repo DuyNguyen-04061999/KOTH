@@ -301,6 +301,13 @@ export const getMyInforFail = (data) => {
   }
 }
 
+export const toggleCheckProfileDialog = (data) => {
+  return {
+    type: "TOGGLE_CHECK_PROFILE_DIALOG",
+    payload: data
+  }
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -334,7 +341,9 @@ const userReducer = (
     typeVerifyOTP: "",
     resenOTPSuccess: false,
     isVerifyOTP: false,
-    isGetMyInfo: false
+    isGetMyInfo: false,
+    isFullInfo:false,
+    isCheckProfileDialog:false
   },
   action
 ) => {
@@ -482,6 +491,7 @@ const userReducer = (
     case "GET_MY_INFOR": return {...state, isGetMyInfo: true}
     case "GET_MY_INFOR_SUCCESS": return {...state, isGetMyInfo: false}
     case "GET_MY_INFOR_FAIL": return {...state, isGetMyInfo: false}
+    case "TOGGLE_CHECK_PROFILE_DIALOG": return {...state, isCheckProfileDialog: !state.isCheckProfileDialog}
     default:
       return state;
   }
