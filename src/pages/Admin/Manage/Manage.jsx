@@ -89,7 +89,7 @@ const ManageDistributor = () => {
           "Revenue",
           "Register Date",
           "Last Login",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
 
@@ -107,7 +107,7 @@ const ManageDistributor = () => {
           "Revenue",
           "Register Date",
           "Last Login",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
 

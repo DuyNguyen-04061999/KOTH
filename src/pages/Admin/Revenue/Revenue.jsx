@@ -91,7 +91,7 @@ const Revenue = () => {
           "Revenue",
           "Start Date",
           "Finish Date",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
 
@@ -106,7 +106,7 @@ const Revenue = () => {
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
 
@@ -121,7 +121,7 @@ const Revenue = () => {
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
     } else {
