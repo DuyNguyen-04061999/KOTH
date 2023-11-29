@@ -282,7 +282,6 @@ export default function Layout(props) {
     }
   }, [token, socket]);
 
-  
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token");
     if (tokenLocal) {
@@ -315,39 +314,27 @@ export default function Layout(props) {
         backgroundColor: "#1a151e",
       }}
     >
-      {
-      startGameCheck ||
-      chatPopup ||
-      openMess ||
-      openMenu ||
-      isLoginDialog ||
-      isTransactionDialog ||
-      width < 576 ? (
-        <></>
-      ) : (
-        <Box
-          sx={{
-            display:
-              startGameCheck ||
-              chatPopup ||
-              openMess ||
-              openMenu ||
-              isLoginDialog ||
-              isTransactionDialog ||
-              width < 576
-                ? "none"
-                : "block",
-          }}
-        >
-          {
-          !process.env.REACT_APP_TEST ||
-          process.env.REACT_APP_TEST !== "test" ? (
-            <ChatBot />
-          ) : (
-            <></>
-          )}
-        </Box>
-      )}
+      <Box
+        sx={{
+          display:
+            startGameCheck ||
+            chatPopup ||
+            openMess ||
+            openMenu ||
+            isLoginDialog ||
+            isTransactionDialog
+              ? "none"
+              : "block",
+        }}
+      >
+        {!process.env.REACT_APP_TEST ||
+        process.env.REACT_APP_TEST !== "test" ? (
+          <ChatBot />
+        ) : (
+          <></>
+        )}
+      </Box>
+
       <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />
