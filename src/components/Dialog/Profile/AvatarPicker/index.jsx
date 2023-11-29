@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const AvatarPicker = (props) => {
-  const { avatarUrl } = useSelector((state) => state.profileReducer);
+  const { avatarUrl, nickName } = useSelector((state) => state.profileReducer);
   const [file, setFile] = React.useState(null);
   const classes = useStyles();
   const imageRef = useRef(null);
@@ -105,7 +105,7 @@ export const AvatarPicker = (props) => {
               style={{
                 border: "0px solid",
                 background: "#7848ED",
-                padding: "12px 40px",
+                padding: "12px 30px",
                 borderRadius: "5px",
                 color: "#fff",
                 fontWeight: "bold",
@@ -115,6 +115,12 @@ export const AvatarPicker = (props) => {
             >
               UPLOAD PHOTO
             </button>
+            <Typography
+                  className="mt-2 fs-3"
+                  sx={{ fontWeight: "700", fontSize: "24px" }}
+                >
+                  {nickName}
+                </Typography>
             <Avatar
               src={
                 file &&
@@ -135,6 +141,7 @@ export const AvatarPicker = (props) => {
                 marginBottom: "15px",
               }}
             />
+            
           </Badge>
 
           <input
@@ -146,13 +153,6 @@ export const AvatarPicker = (props) => {
           />
         </div>
       </div>{" "}
-      <Typography
-        sx={{ fontSize: "12px", marginTop: "20px", fontWeight: "100" }}
-      >
-        The image size must be less than 5MB.
-        <br />
-        Allowed file extension: JPEG, GIF, PNG, JPG
-      </Typography>
     </List>
   );
 };

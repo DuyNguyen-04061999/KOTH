@@ -4,9 +4,11 @@ import {
   Box,
   Dialog,
   FormControl,
+  Grid,
   Input,
   Slide,
   Typography,
+  Tooltip,
 } from "@mui/material";
 import { forwardRef, useState } from "react";
 import ReactDOM from "react-dom";
@@ -21,10 +23,27 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import SettingProfile from "./SettingProfile";
 import "./index.scss";
+import { withStyles } from "@mui/styles";
+import { validateNickName } from "../../../utils/validateNickName";
+import dayjs from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AccessTime, MoreTime } from "@mui/icons-material";
+import AvatarPicker from "./AvatarPicker";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
+
+const BgWithTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white",
+    padding: "10px",
+  },
+})(Tooltip);
 
 export default function DialogProfile(props) {
   const { width, height } = useWindowDimensions();
@@ -42,10 +61,31 @@ export default function DialogProfile(props) {
     avatarUrl,
     nickName,
     userNickNameProfile,
+    address1,
+    address2,
+    city,
+    state,
+    zipCode,
+    birthDay,
+    firstName,
+    lastName
   } = useSelector((state) => state.profileReducer);
+  console.log(address1);
   const dispatch = useDispatch();
   const { listSetting } = useSelector((state) => state.settingReducer);
+  const [dName, setDName] = useState("Long Time no see");
+  const day = new Date();
+  const [value, setValue] = useState(dayjs(day));
+  const [avatarImage, setAvatarImage] = useState(avatarUrl);
+  const [avatar, setAvatar] = useState("");
+  const handleImageChange = (imageFile) => {
+    setAvatarImage(imageFile.replace("data:image/png;base64,", ""));
+  };
+  const [addressLine1,setAddressLine1] = useState(address1)
+  const [addressLine2,setAddressLine2] = useState(address2)
+  const [zCode,setZcode] = useState(zipCode)
 
+  const [disabledInp, setDisabledInp] = useState(true);
   // const [socket, setSocket] = useState(null);
   // useEffect(() => {
   //   const socket = _socket;
@@ -75,225 +115,588 @@ export default function DialogProfile(props) {
     }
   };
 
+  const returnIcon = () => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="none"
+        viewBox="0 0 26 26"
+      >
+        <g>
+          <g fill="#7848ED">
+            <path d="M.081 6.91h25.911v16.227c0 1.676-1.088 2.758-2.773 2.758H2.863c-1.688 0-2.78-1.08-2.78-2.751V7.489L.08 6.91zM13.05 23.744h4.153c.73 0 1.043-.33 1.012-1.067a5.998 5.998 0 00-.108-.854c-.463-2.483-2.89-4.31-5.48-4.117-2.56.19-4.706 2.407-4.773 4.928-.02.782.3 1.11 1.096 1.111 1.367.001 2.733-.001 4.1-.001zm-3.47-11.256a3.455 3.455 0 103.495-3.43 3.47 3.47 0 00-3.495 3.43z"></path>
+            <path d="M0 5.131C.097 4.5.095 3.887.294 3.347c.385-1.034 1.211-1.58 2.32-1.62.864-.032 1.72-.006 2.61-.006.118-.71-.208-1.753.961-1.7 1.027.047.747.986.825 1.665h5.145c.078-.69-.223-1.62.909-1.684.603-.034.784.355.854 1.672h5.144c.094-.655-.229-1.696.93-1.654 1.033.038.765.972.839 1.699.68 0 1.363.053 2.034-.01 1.924-.18 3.415 1.168 3.09 3.422H0z"></path>
+          </g>
+        </g>
+      </svg>
+    );
+  };
+
   const renderUserInfo = () => {
     return (
-      <Box sx={{ height: "100%" }}>
-        <Box className="position-relative">
-          <Box className="d-flex flex-column align-items-center justify-content-center">
-            <LazyLoadImage
-              alt="abc"
-              src={
-                avatarUrl
-                  ? process.env.REACT_APP_SOCKET_SERVER + "/" + avatarUrl
-                  : images.undefinedAvatar
-              }
-              width={95}
-              style={{
-                borderRadius: "50%",
-                height: "95px",
-                border: uPack ? "4px solid #FD9E0F" : "",
-              }}
-              effect="blur"
-              wrapperProps={{
-                style: {
-                  transitionDelay: "0.5s",
-                },
-              }}
-            />
-            <Typography
-              className="mt-2 fs-3"
-              sx={{ fontWeight: "700", fontSize: "24px" }}
-            >
-              {nickName}
-            </Typography>
-            {userNameProfile === user?.userName && tokenUser && (
-              <Box>
-                {uPack !== null ? (
-                  <Box
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="15"
-                      fill="none"
-                      viewBox="0 0 13 10"
-                    >
-                      <path
-                        fill="#FB3"
-                        d="M3.615 4.766c.152-.28.293-.534.43-.79.63-1.17 1.259-2.342 1.887-3.515.125-.234.245-.465.55-.461.305.004.42.242.544.474.704 1.316 1.41 2.632 2.117 3.948.055.104.115.206.187.338.098-.044.191-.081.28-.127.852-.432 1.705-.863 2.554-1.301.22-.114.433-.175.644-.006.227.18.213.426.157.686l-1.16 5.402c-.099.461-.24.586-.688.586H1.795c-.42 0-.55-.103-.644-.545C.765 7.621.375 5.786.01 3.948c-.037-.183.045-.44.157-.592.147-.197.386-.153.602-.042.933.48 1.87.954 2.847 1.452z"
-                      ></path>
-                    </svg>
-                    <Typography sx={{ color: "#f8bd40" }}>VIP</Typography>
-                  </Box>
-                ) : (
-                  ""
-                )}
-              </Box>
-            )}
-            {userNameProfile === user?.userName && tokenUser && (
-              <Box>
-                {uPack !== null ? (
-                  <Box
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  >
-                    <Typography
-                      sx={{
-                        color: "white",
-                        fontSize: "15px",
-                        fontWeight: "300",
-                      }}
-                    >
-                      Remaining days: {uPack.remain}
-                    </Typography>
-                  </Box>
-                ) : (
-                  ""
-                )}
-              </Box>
-            )}
-            {/* {tokenUser &&
-              userNameProfile !== user?.userName &&
-              (checkExistInFriendList() === false ? (
-                <Box
-                  onClick={() => {
-                    socket?.emit("addFriend", { username: userNameProfile });
-                    handleShowProfile();
-                  }}
-                  className="mt-2 p-2 text-white"
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "fit-content",
-                    borderRadius: 1,
-                    fontWeight: "bold",
-                    display: "flex",
-                    cursor: "pointer",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <PersonAddAlt1 />
-                  <Typography sx={{ fontSize: "14px" }}>Add Friend</Typography>
-                </Box>
-              ) : (
-                <Box
-                  onClick={() => {
-                    socket?.emit("deleteFriend", { username: userNameProfile });
-                    handleShowProfile();
-                  }}
-                  className="mt-2 p-2 text-white cursor-pointer"
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "fit-content",
-                    borderRadius: 1,
-                    fontWeight: "bold",
-                    display: "flex",
-                    cursor: "pointer",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <PersonRemove />
-                  <Typography sx={{ fontSize: "14px" }}>
-                    Delete Friend
-                  </Typography>
-                </Box>
-              ))} */}
-          </Box>
-        </Box>
-        <Box>
-          <Box component={"form"} className="mt-2">
-            <Box className="Iduser d-flex flex-column align-items-start mb-3">
-              <Typography
-                variant="inherit"
-                sx={{
-                  color: "#fff",
-                  fontWeight: "500",
-                  marginBottom: "5px !important",
-                }}
-              >
-                User ID
-              </Typography>
-              <FormControl
-                variant="standard"
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#3d2c63",
-                  padding: "7px 10px 7px 10px",
-                  borderRadius: "5px",
-                }}
-              >
-                <Input
-                  id="input-with-icon-adornment"
-                  type="text"
-                  disabled
-                  value={id}
-                  className="text-white"
-                  placeholder="User ID"
-                  sx={{
-                    "& .MuiInputBase-input.Mui-disabled": {
-                      WebkitTextFillColor: "#fff",
-                    },
-                    "&:before": {
-                      borderBottom: "0px solid !important",
-                      "&:hover": {
-                        borderBottom: "0px solid !important",
-                      },
-                    },
-                    "&:after": {
-                      borderBottom: "0px solid !important",
-                    },
-                    "&:hover": {
-                      border: "none",
-                    },
-                    color: "white",
-                    fontWeight: "200",
-                    fontSize: "14px",
-                  }}
-                />
-              </FormControl>
-            </Box>
-            <Box className="Iduser d-flex flex-column align-items-start mb-3">
-              <Typography
-                variant="inherit"
-                sx={{
-                  color: "#fff",
-                  fontWeight: "500",
-                  marginBottom: "5px !important",
-                }}
-              >
-                {userNameProfile === user?.userName
-                  ? "Username"
-                  : "User Nick Name"}
-              </Typography>
-              <FormControl
-                variant="standard"
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#3d2c63",
-                  padding: "7px 10px 7px 10px",
-                  borderRadius: "5px",
-                }}
-              >
-                <Input
-                  id="input-with-icon-adornment"
-                  type="text"
-                  disabled
-                  value={
-                    userNameProfile === user?.userName
-                      ? userNameProfile
-                      : userNickNameProfile
+      <Grid container>
+        <Grid
+          item
+          md={5}
+          sx={{
+            backgroundColor: "#352658",
+            padding: "20px",
+            borderRadius: "10px",
+          }}
+        >
+          <Box className="position-relative">
+            {tab === 0 ? (
+              <Box className="d-flex flex-column align-items-center justify-content-center">
+                <LazyLoadImage
+                  alt="abc"
+                  src={
+                    avatarUrl
+                      ? process.env.REACT_APP_SOCKET_SERVER + "/" + avatarUrl
+                      : images.undefinedAvatar
                   }
-                  sx={{
-                    "& .MuiInputBase-input.Mui-disabled": {
-                      WebkitTextFillColor: "#fff",
+                  width={95}
+                  style={{
+                    borderRadius: "50%",
+                    height: "95px",
+                    border: uPack ? "4px solid #FD9E0F" : "",
+                  }}
+                  effect="blur"
+                  wrapperProps={{
+                    style: {
+                      transitionDelay: "0.5s",
                     },
+                  }}
+                />
+                <Typography
+                  className="mt-2 fs-3"
+                  sx={{ fontWeight: "700", fontSize: "24px" }}
+                >
+                  {nickName}
+                </Typography>
+                {userNameProfile === user?.userName && tokenUser && (
+                  <Box>
+                    {uPack !== null ? (
+                      <Box
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="15"
+                          fill="none"
+                          viewBox="0 0 13 10"
+                        >
+                          <path
+                            fill="#FB3"
+                            d="M3.615 4.766c.152-.28.293-.534.43-.79.63-1.17 1.259-2.342 1.887-3.515.125-.234.245-.465.55-.461.305.004.42.242.544.474.704 1.316 1.41 2.632 2.117 3.948.055.104.115.206.187.338.098-.044.191-.081.28-.127.852-.432 1.705-.863 2.554-1.301.22-.114.433-.175.644-.006.227.18.213.426.157.686l-1.16 5.402c-.099.461-.24.586-.688.586H1.795c-.42 0-.55-.103-.644-.545C.765 7.621.375 5.786.01 3.948c-.037-.183.045-.44.157-.592.147-.197.386-.153.602-.042.933.48 1.87.954 2.847 1.452z"
+                          ></path>
+                        </svg>
+                        <Typography sx={{ color: "#f8bd40" }}>VIP</Typography>
+                      </Box>
+                    ) : (
+                      ""
+                    )}
+                  </Box>
+                )}
+                {userNameProfile === user?.userName && tokenUser && (
+                  <Box>
+                    {uPack !== null ? (
+                      <Box
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                      >
+                        <Typography
+                          sx={{
+                            color: "white",
+                            fontSize: "15px",
+                            fontWeight: "300",
+                          }}
+                        >
+                          Remaining days: {uPack.remain}
+                        </Typography>
+                      </Box>
+                    ) : (
+                      ""
+                    )}
+                  </Box>
+                )}
+                {/* {tokenUser &&
+               userNameProfile !== user?.userName &&
+               (checkExistInFriendList() === false ? (
+                 <Box
+                   onClick={() => {
+                     socket?.emit("addFriend", { username: userNameProfile });
+                     handleShowProfile();
+                   }}
+                   className="mt-2 p-2 text-white"
+                   sx={{
+                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                     width: "fit-content",
+                     borderRadius: 1,
+                     fontWeight: "bold",
+                     display: "flex",
+                     cursor: "pointer",
+                     alignItems: "center",
+                     justifyContent: "space-between",
+                   }}
+                 >
+                   <PersonAddAlt1 />
+                   <Typography sx={{ fontSize: "14px" }}>Add Friend</Typography>
+                 </Box>
+               ) : (
+                 <Box
+                   onClick={() => {
+                     socket?.emit("deleteFriend", { username: userNameProfile });
+                     handleShowProfile();
+                   }}
+                   className="mt-2 p-2 text-white cursor-pointer"
+                   sx={{
+                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                     width: "fit-content",
+                     borderRadius: 1,
+                     fontWeight: "bold",
+                     display: "flex",
+                     cursor: "pointer",
+                     alignItems: "center",
+                     justifyContent: "space-between",
+                   }}
+                 >
+                   <PersonRemove />
+                   <Typography sx={{ fontSize: "14px" }}>
+                     Delete Friend
+                   </Typography>
+                 </Box>
+               ))} */}
+              </Box>
+            ) : (
+              <Box>
+                <AvatarPicker
+                  handleSetAvatar={setAvatar}
+                  handleChangeImage={handleImageChange}
+                />
+              </Box>
+            )}
+          </Box>
+          <Box>
+            <Box component={"form"} className="mt-2">
+              <hr
+                style={{
+                  border: "1px solid #A89CD7",
+                  marginBottom: "0.5rem",
+                  marginTop: "1.5rem",
+                }}
+              />
+              <Box className="Iduser d-flex align-items-start mb-2">
+                <Box
+                  sx={{
+                    padding: "10px",
+                    borderRadius: "50%",
+                    backgroundColor: "#7C81F2",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: "20px",
+                    width: "32px",
+                    height: "32px",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="11"
+                    height="14"
+                    fill="none"
+                    viewBox="0 0 11 14"
+                  >
+                    <g>
+                      <path
+                        fill="#fff"
+                        stroke="#fff"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.636"
+                        d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                      ></path>
+                      <g>
+                        <path
+                          fill="#fff"
+                          d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                        ></path>
+                        <path
+                          stroke="#fff"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.636"
+                          d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                </Box>
+                <Box sx={{
+                  display:"flex",
+                  flexDirection:"column",
+                  alignItems:"flex-start"
+                }}>
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#BFBEED",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                      fontSize: "14px",
+                    }}
+                  >
+                    User ID
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {id}
+                  </Typography>
+                </Box>
+              </Box>
+              <hr
+                style={{
+                  border: "1px solid #A89CD7",
+                  marginBottom: "0.5rem",
+                  marginTop: "0.5rem",
+                }}
+              />
+              <Box className="Last-name d-flex align-items-start mb-2">
+                <Box
+                  sx={{
+                    padding: "10px",
+                    borderRadius: "50%",
+                    backgroundColor: "#7C81F2",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: "20px",
+                    width: "32px",
+                    height: "32px",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="11"
+                    height="14"
+                    fill="none"
+                    viewBox="0 0 11 14"
+                  >
+                    <g>
+                      <path
+                        fill="#fff"
+                        stroke="#fff"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.636"
+                        d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                      ></path>
+                      <g>
+                        <path
+                          fill="#fff"
+                          d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                        ></path>
+                        <path
+                          stroke="#fff"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.636"
+                          d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                </Box>
+                <Box sx={{
+                  display:"flex",
+                  flexDirection:"column",
+                  alignItems:"flex-start"
+                }}>
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#BFBEED",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Last name
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {lastName}
+                  </Typography>
+                </Box>
+              </Box>
+              <hr
+                style={{
+                  border: "1px solid #A89CD7",
+                  marginBottom: "0.5rem",
+                  marginTop: "0.5rem",
+                }}
+              />
+              <Box className="First-name d-flex align-items-start mb-2">
+                <Box
+                  sx={{
+                    padding: "10px",
+                    borderRadius: "50%",
+                    backgroundColor: "#7C81F2",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: "20px",
+                    width: "32px",
+                    height: "32px",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="11"
+                    height="14"
+                    fill="none"
+                    viewBox="0 0 11 14"
+                  >
+                    <g>
+                      <path
+                        fill="#fff"
+                        stroke="#fff"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.636"
+                        d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                      ></path>
+                      <g>
+                        <path
+                          fill="#fff"
+                          d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                        ></path>
+                        <path
+                          stroke="#fff"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.636"
+                          d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                </Box>
+                <Box sx={{
+                  display:"flex",
+                  flexDirection:"column",
+                  alignItems:"flex-start"
+                }}>
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#BFBEED",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                      fontSize: "14px",
+                    }}
+                  >
+                    First name
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {firstName}
+                  </Typography>
+                </Box>
+              </Box>
+              <hr
+                style={{
+                  border: "1px solid #A89CD7",
+                  marginBottom: "0.5rem",
+                  marginTop: "0.5rem",
+                }}
+              />
+              <Box className="Email-address d-flex align-items-start mb-2">
+                <Box
+                  sx={{
+                    padding: "10px",
+                    borderRadius: "50%",
+                    backgroundColor: "#7C81F2",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: "20px",
+                    width: "32px",
+                    height: "32px",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="15"
+                    fill="none"
+                    viewBox="0 0 14 15"
+                  >
+                    <g>
+                      <g fill="#fff">
+                        <path d="M.373 2.82c.121.112.208.19.291.272L4.512 6.94c1.46 1.46 3.511 1.46 4.973 0 1.29-1.288 2.58-2.578 3.87-3.87.076-.075.157-.145.262-.243.241.328.37.724.368 1.131.013 1.966.026 3.932 0 5.9-.018 1.277-1.206 2.444-2.487 2.452-3 .016-6 .016-8.997 0C1.194 12.302.017 11.104.008 9.797c-.014-1.925-.007-3.85 0-5.778.002-.427.129-.844.365-1.199z"></path>
+                        <path d="M1.062 2.028c.454-.346.931-.531 1.457-.533 2.989-.009 5.977-.009 8.966 0 .524 0 1.002.185 1.443.532-.085.093-.147.169-.217.238a3013.51 3013.51 0 01-3.953 3.953c-1.06 1.058-2.463 1.056-3.525-.004-1.31-1.31-2.621-2.62-3.931-3.932-.07-.071-.138-.145-.24-.254z"></path>
+                      </g>
+                    </g>
+                  </svg>
+                </Box>
+                <Box sx={{
+                  display:"flex",
+                  flexDirection:"column",
+                  alignItems:"flex-start"
+                }}>
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#BFBEED",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Email address
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {email}
+                  </Typography>
+                </Box>
+              </Box>
+              <hr
+                style={{
+                  border: "1px solid #A89CD7",
+                  marginBottom: "0.5rem",
+                  marginTop: "0.5rem",
+                }}
+              />
+              <Box className="Mobile-number d-flex align-items-start mb-2">
+                <Box
+                  sx={{
+                    padding: "10px",
+                    borderRadius: "50%",
+                    backgroundColor: "#7C81F2",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: "20px",
+                    width: "32px",
+                    height: "32px",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="14"
+                    fill="none"
+                    viewBox="0 0 18 14"
+                  >
+                    <g>
+                      <g fill="#fff">
+                        <path d="M12.511 13.352c-2.327 1.02-4.054.919-5.854-.906-.987-1.002-1.633-2.222-2.172-3.5-.492-1.16-.863-2.355-.976-3.616-.016-.19 0-.382 0-.572-.009-1 .157-1.967.765-2.787.703-.953 1.68-1.544 2.79-1.91.52-.17 1 .027 1.319.468.1.13.182.272.243.424.345.942.622 1.9.606 2.916-.012.773-.328 1.347-1.093 1.616a5.773 5.773 0 00-.65.277c-.327.164-.47.422-.419.783.116.815.47 1.578 1.02 2.192.305.35.521.376.944.188.2-.088.401-.171.602-.26.542-.24 1.068-.183 1.515.184.98.806 1.623 1.858 2.017 3.05.202.625-.058 1.19-.657 1.453z"></path>
+                        <path d="M13.163 11.9c-.394-1.192-1.038-2.245-2.017-3.05-.447-.368-.973-.425-1.515-.185-.2.089-.4.172-.601.26-.424.188-.64.164-.946-.188a4.176 4.176 0 01-1.019-2.192c-.05-.361.094-.62.42-.783.211-.105.428-.198.65-.277.766-.269 1.083-.843 1.094-1.616.015-1.016-.262-1.974-.606-2.916A1.816 1.816 0 008.38.53C8.064.088 7.583-.11 7.063.061c-1.109.366-2.087.957-2.793 1.908-.605.82-.773 1.788-.764 2.789 0 .19-.014.382 0 .572.116 1.261.487 2.456.978 3.615.542 1.28 1.188 2.5 2.175 3.5 1.8 1.826 3.527 1.928 5.854.907.597-.262.857-.828.65-1.452zm-1.257.695c-.689.274-1.399.473-2.146.449-.929-.03-1.656-.508-2.295-1.126-1.011-.974-1.636-2.193-2.165-3.47-.492-1.181-.848-2.397-.874-3.77.045-.95.199-1.957 1.07-2.64.496-.39 1.063-.691 1.618-.997.313-.173.497-.105.617.241.191.538.344 1.089.456 1.648.076.385.064.79.055 1.187-.003.224-.153.378-.373.457-.164.058-.319.13-.479.195-1.062.43-1.456 1.12-1.209 2.24.19.896.615 1.724 1.232 2.4.577.626 1.22.738 2.002.382.182-.082.373-.146.546-.241.256-.138.476-.073.678.095.133.11.276.222.366.364.406.633.82 1.263 1.18 1.922.203.37.113.508-.28.665h.001z"></path>
+                      </g>
+                    </g>
+                  </svg>
+                </Box>
+                <Box sx={{
+                  display:"flex",
+                  flexDirection:"column",
+                  alignItems:"flex-start"
+                }}>
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#BFBEED",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Mobile number
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {phone}
+                  </Typography>
+                </Box>
+              </Box>
+              <hr
+                style={{
+                  border: "1px solid #A89CD7",
+                  marginBottom: "0.5rem",
+                  marginTop: "0.5rem",
+                }}
+              />
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item md={7}>
+          <Box
+            className="ms-4"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box className="Display-Name mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#ffff",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Display Name
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  type="text"
+                  onChange={(e) => {
+                    setDName(e.target.value);
+                  }}
+                  value={dName}
+                  disabled={disabledInp}
+                  placeholder="Enter Your Display Name"
+                  sx={{
                     "&:before": {
-                      borderBottom: "0px solid !important",
+                      borderBottom: " 0px solid !important ",
                       "&:hover": {
                         borderBottom: "0px solid !important",
                       },
@@ -305,148 +708,368 @@ export default function DialogProfile(props) {
                       border: "none",
                     },
                     color: "white",
-                    fontWeight: "200",
                     fontSize: "14px",
+                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                      padding: "0px !important",
+                    },
+                    "& .Mui-disabled": {
+                      WebkitTextFillColor: "white !important",
+                    },
+                  }}
+                />{" "}
+              </FormControl>{" "}
+            </Box>
+            <Box className="Address-line-1 mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#ffff",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Address line 1
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  type="text"
+                  onChange={(e) => {
+                    setDName(e.target.value);
+                  }}
+                  value={addressLine1}
+                  disabled={disabledInp}
+                  placeholder="Enter Your Address"
+                  sx={{
+                    "&:before": {
+                      borderBottom: " 0px solid !important ",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    color: "white",
+                    fontSize: "14px",
+                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                      padding: "0px !important",
+                    },
+                    "& .Mui-disabled": {
+                      WebkitTextFillColor: "white !important",
+                    },
+                  }}
+                />{" "}
+              </FormControl>{" "}
+            </Box>
+            <Box className="Address-line-2 mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#ffff",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Address line 2
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  type="text"
+                  onChange={(e) => {
+                    setDName(e.target.value);
+                  }}
+                  value={addressLine2}
+                  disabled={disabledInp}
+                  placeholder="Enter Your Address"
+                  sx={{
+                    "&:before": {
+                      borderBottom: " 0px solid !important ",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    color: "white",
+                    fontSize: "14px",
+                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                      padding: "0px !important",
+                    },
+                    "& .Mui-disabled": {
+                      WebkitTextFillColor: "white !important",
+                    },
+                  }}
+                />{" "}
+              </FormControl>{" "}
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Box className="City mb-3 d-flex flex-column align-items-start">
+                <Typography
+                  variant="inherit"
+                  sx={{
+                    color: "#ffff",
+                    fontWeight: "500",
+                    marginBottom: "5px !important",
+                  }}
+                >
+                  City
+                </Typography>
+                <FormControl
+                  variant="standard"
+                  sx={{
+                    width: "100%",
+                    backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                    padding: "10px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <Input
+                    id="input-with-icon-adornment"
+                    type="text"
+                    onChange={(e) => {
+                      setDName(e.target.value);
+                    }}
+                    value={dName}
+                    disabled={disabledInp}
+                    sx={{
+                      "&:before": {
+                        borderBottom: " 0px solid !important ",
+                        "&:hover": {
+                          borderBottom: "0px solid !important",
+                        },
+                      },
+                      "&:after": {
+                        borderBottom: "0px solid !important",
+                      },
+                      "&:hover": {
+                        border: "none",
+                      },
+                      color: "white",
+                      fontSize: "14px",
+                      "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                        padding: "0px !important",
+                      },
+                      "& .Mui-disabled": {
+                        WebkitTextFillColor: "white !important",
+                      },
+                    }}
+                  />{" "}
+                </FormControl>{" "}
+              </Box>
+              <Box className="State mb-3 ms-2 d-flex flex-column align-items-start">
+                <Typography
+                  variant="inherit"
+                  sx={{
+                    color: "#ffff",
+                    fontWeight: "500",
+                    marginBottom: "5px !important",
+                  }}
+                >
+                  State
+                </Typography>
+                <FormControl
+                  variant="standard"
+                  sx={{
+                    width: "100%",
+                    backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                    padding: "10px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <Input
+                    id="input-with-icon-adornment"
+                    type="text"
+                    onChange={(e) => {
+                      setDName(e.target.value);
+                    }}
+                    value={dName}
+                    disabled={disabledInp}
+                    placeholder="Enter Your Display Name"
+                    sx={{
+                      "&:before": {
+                        borderBottom: " 0px solid !important ",
+                        "&:hover": {
+                          borderBottom: "0px solid !important",
+                        },
+                      },
+                      "&:after": {
+                        borderBottom: "0px solid !important",
+                      },
+                      "&:hover": {
+                        border: "none",
+                      },
+                      color: "white",
+                      fontSize: "14px",
+                      "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                        padding: "0px !important",
+                      },
+                      "& .Mui-disabled": {
+                        WebkitTextFillColor: "white !important",
+                      },
+                    }}
+                  />{" "}
+                </FormControl>{" "}
+              </Box>
+            </Box>
+            <Box className="Zip-code mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#ffff",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Zip code
+              </Typography>
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  type="text"
+                  onChange={(e) => {
+                    setDName(e.target.value);
+                  }}
+                  value={zCode}
+                  disabled={disabledInp}
+                  placeholder="Enter Your ZipCode"
+                  sx={{
+                    "&:before": {
+                      borderBottom: " 0px solid !important ",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    color: "white",
+                    fontSize: "14px",
+                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                      padding: "0px !important",
+                    },
+                    "& .Mui-disabled": {
+                      WebkitTextFillColor: "white !important",
+                    },
+                  }}
+                />{" "}
+              </FormControl>{" "}
+            </Box>
+            <Box className="Birthday mb-3 d-flex flex-column align-items-start">
+              <Typography
+                variant="inherit"
+                sx={{
+                  color: "#ffff",
+                  fontWeight: "500",
+                  marginBottom: "5px !important",
+                }}
+              >
+                Birthday
+              </Typography>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  value={value}
+                  onChange={(newValue) => setValue(newValue)}
+                  slots={{
+                    openPickerIcon: returnIcon,
+                  }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                    borderRadius: "5px",
+                    fontSize: "14px",
+                    "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root": {
+                      color: "#fff",
+                      fontSize: "14px",
+                      "&:before": {
+                        borderBottom: " 0px solid !important ",
+                        "&:hover": {
+                          borderBottom: "0px solid !important",
+                        },
+                      },
+                      "&:after": {
+                        borderBottom: "0px solid !important",
+                      },
+                      "&:hover": {
+                        border: "0px solid !important",
+                      },
+                      "&:focus": {
+                        border: "0px solid",
+                      },
+                    },
+                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                      padding: "11.5px 14px",
+                    },
                   }}
                 />
-              </FormControl>
+              </LocalizationProvider>
             </Box>
-            {userNameProfile === user?.userName && tokenUser && (
-              <Box>
-                <Box className="Email d-flex flex-column align-items-start mb-3">
-                  <Typography
-                    variant="inherit"
-                    sx={{
-                      color: "#ffff",
-                      fontWeight: "500",
-                      marginBottom: "5px !important",
-                    }}
-                  >
-                    Email Address
-                  </Typography>
-                  <FormControl
-                    variant="standard"
-                    sx={{
-                      width: "100%",
-                      backgroundColor: "#3d2c63",
-                      padding: "7px 10px 7px 10px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    <Input
-                      id="input-with-icon-adornment"
-                      value={email}
-                      disabled
-                      sx={{
-                        "& .MuiInputBase-input.Mui-disabled": {
-                          WebkitTextFillColor: "#fff",
-                        },
-                        "&:before": {
-                          borderBottom: "0px solid !important",
-                          "&:hover": {
-                            borderBottom: "0px solid !important",
-                          },
-                        },
-                        "&:after": {
-                          borderBottom: "0px solid !important",
-                        },
-                        "&:hover": {
-                          border: "none",
-                        },
-                        color: "white",
-                        fontWeight: "200",
-                        fontSize: "14px",
-                      }}
-                    />
-                  </FormControl>
-                </Box>
-                <Box className="mobile-number d-flex flex-column align-items-start mb-3">
-                  <Typography
-                    variant="inherit"
-                    sx={{
-                      color: "#ffff",
-                      fontWeight: "500",
-                      marginBottom: "5px !important",
-                    }}
-                  >
-                    Mobile Number
-                  </Typography>
-                  <FormControl
-                    variant="standard"
-                    sx={{
-                      width: "100%",
-                      backgroundColor: "#3d2c63",
-                      padding: "7px 10px 7px 10px",
-                      borderRadius: "5px",
-                      color: "white",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: "0px !important",
-                      }}
-                    >
-                      {" "}
-                      <Typography
-                        sx={{
-                          textAlign: "start",
-                          marginLeft: "0px !important",
-                          marginRight: "10px",
-                          fontSize: "14px",
-                        }}
-                      >
-                        +1
-                      </Typography>
-                      <Input
-                        id="input-with-icon-adornment"
-                        type="number"
-                        value={phone}
-                        disabled
-                        sx={{
-                          "& .MuiInputBase-input.Mui-disabled": {
-                            WebkitTextFillColor: "#fff",
-                          },
-                          "&:before": {
-                            borderBottom: "0px solid !important",
-                            "&:hover": {
-                              borderBottom: "0px solid",
-                            },
-                          },
-                          "&:after": {
-                            borderBottom: "0px solid",
-                          },
-                          "&:hover": {
-                            border: "none",
-                          },
-                          color: "white",
-                          fontWeight: "200",
-                          fontSize: "15px",
-                        }}
-                      />
-                    </Box>
-                  </FormControl>
-                </Box>
-                {userNameProfile === user?.userName && tokenUser && (
-                  <Box
-                    sx={{
-                      cursor: "pointer",
-                      marginTop: "40px",
-                    }}
-                  >
+            <Box>
+              {tab === 0 ? (
+                <AnimButton
+                  type="primary"
+                  text={"EDIT"}
+                  onClick={() => {
+                    setTab(1);
+                    setDisabledInp(false);
+                  }}
+                />
+              ) : (
+                <Box display={"flex"}>
+                  <Box sx={{ width: "100%" }}>
                     <AnimButton
-                      text="Edit"
-                      type="primary"
-                      onClick={setTabEdit}
+                      type="ghost"
+                      text={"CANCEL"}
+                      onClick={() => {
+                        setTab(0);
+                        setDisabledInp(true);
+                      }}
                     />
                   </Box>
-                )}
-              </Box>
-            )}
+                  <Box className="ms-2" sx={{ width: "100%" }}>
+                    <AnimButton type="primary" text={"UPDATE"} />
+                  </Box>
+                </Box>
+              )}
+            </Box>
           </Box>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     );
   };
 
@@ -459,9 +1082,10 @@ export default function DialogProfile(props) {
           setTab(0);
           handleShowProfile();
         }}
+        maxWidth={"md"}
         TransitionComponent={Transition}
         sx={{
-          ".css-m9glnp-MuiPaper-root-MuiDialog-paper": {
+          "& .MuiPaper-root-MuiDialog-paper": {
             backgroundColor: "#291e3b",
           },
           "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
@@ -484,28 +1108,17 @@ export default function DialogProfile(props) {
             flexDirection={"column"}
             sx={{
               backgroundColor: "#291e3a",
-              width: width < 576 ? "100%" : "490px",
+              width: width < 576 ? "100%" : "100%",
               height: height > 800 ? "auto" : "auto",
             }}
           >
             <Box
               sx={{
                 display: "flex",
-                justifyContent: tab === 1 ? "space-between" : "flex-end",
+                justifyContent: "flex-end",
                 padding: "15px",
               }}
             >
-              {tab === 1 && (
-                <LeftIcon
-                  className="cursor-pointer"
-                  sx={{
-                    color: "#fff",
-                  }}
-                  onClick={() => {
-                    setTab(0);
-                  }}
-                />
-              )}
               <CloseIcon
                 style={{
                   color: "#fff",
@@ -517,24 +1130,24 @@ export default function DialogProfile(props) {
                 }}
               />
             </Box>
-            <Box className="box-head">
+            {/* <Box className="box-head">
               <Box>
                 <h4 className="text-white text-center">
                   {tab === 0 ? "Profile" : "Profile Setting"}
                 </h4>
               </Box>
-            </Box>
+            </Box> */}
             <Box className="box-body text-white" sx={{ height: "100%" }}>
-              {tab === 0 ? (
+              {/* {tab === 0 ? (
                 renderUserInfo()
               ) : (
                 <SettingProfile
                   closePopup={() => {
                     setTab(0);
-                    // handleShowProfile();
                   }}
                 />
-              )}
+              )} */}
+              {renderUserInfo()}
             </Box>
           </Box>
         </Box>

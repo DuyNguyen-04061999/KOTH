@@ -535,6 +535,12 @@ function* getMyInforSaga(dataRequest) {
             firstName: user?.userFirstName,
             lastName: user?.userLastName,
             nickName: user?.userNickName,
+            address1: user?.userAccount?.accountAddressOne,
+            address2: user?.userAccount?.accountAddressTwo,
+            city: user?.userAccount?.accountCity,
+            state: user?.userAccount?.accountState,
+            zipCode:  user?.userAccount?.accountZipCode,
+            birthDay: user?.userAccount?.accountBirthday
           })
         );
       } else {
