@@ -224,7 +224,7 @@ export default function NewHomePage() {
               ></Box>
             </Box>
           </Box>
-          <Box sx={{ paddingTop: width < 576 ? "24px" : "32px" }}>
+          <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
             <ListPromotion
               listData={hotTournament}
               loadingState={isFetchHot}

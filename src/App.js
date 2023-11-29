@@ -6,11 +6,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "./assets/css/App.css";
+import Layout from "./components/Layout";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import { CustomRouter, history } from "./components/Router";
 import { ScrollToTopURL } from "./components/ScrollToTop";
+import ToastNotification from "./components/Toast/ToastNotification";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
+import JoinTour from "./pages/JoinTournamentComponent";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
@@ -27,7 +30,10 @@ import {
   pushChatWorld,
   pushfriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
-import { checkoutPaypalCancel, checkoutPaypalSuccess } from "./redux-saga-middleware/reducers/checkoutReducer";
+import {
+  checkoutPaypalCancel,
+  checkoutPaypalSuccess,
+} from "./redux-saga-middleware/reducers/checkoutReducer";
 import {
   updateDevice,
   updateDeviceType,
@@ -37,15 +43,12 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import {
-  updateCountTicket
-} from "./redux-saga-middleware/reducers/userReducer";
+import { updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-const Layout = lazy(() => import("./components/Layout"));
 const PlayGamePage = lazy(() => import("./pages/PlayGamePage"));
 const TransactionDetailPage = lazy(() =>
   import("./pages/Transaction/TransactionDetailPage")
@@ -60,15 +63,11 @@ const GamePage = lazy(() => import("./pages/GameManager/GamePage"));
 const UploadPage = lazy(() => import("./pages/GameManager/UploadPage"));
 const Refresh = lazy(() => import("./pages/Refresh"));
 const GameLobby = lazy(() => import("./pages/GamePlay"));
-const ToastNotification = lazy(() =>
-  import("./components/Toast/ToastNotification")
-);
 const Tournament = lazy(() => import("./pages/Tournament"));
 const ChangeLog = lazy(() => import("./pages/ChangeLog/ChangeLog"));
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
-const LazyJoinTour = lazy(() => import("./pages/JoinTournamentComponent"));
 const LazyHotPromo = lazy(() => import("./pages/Promotion/HotPromotion"));
 const LazyVipPromo = lazy(() => import("./pages/Promotion/VipPromotion"));
 const LazyStandardPromo = lazy(() =>
@@ -153,7 +152,7 @@ function App() {
     const updateOrientation = (event) => {
       if (
         !startGameCheck &&
-        !window.location.pathname?.includes("tournamentDetail")
+        !window.location.pathname?.includes("promotion-detail")
       ) {
       }
     };
@@ -381,17 +380,21 @@ function App() {
     const paymentType = params.get("type");
     const paymentStatus = params.get("result");
 
-    if(paymentType === "paypal" && paymentStatus === "success") {
-      store.dispatch(checkoutPaypalSuccess({
-        paymentId: paymentId,
-        payerId: PayerID,
-      }))
+    if (paymentType === "paypal" && paymentStatus === "success") {
+      store.dispatch(
+        checkoutPaypalSuccess({
+          paymentId: paymentId,
+          payerId: PayerID,
+        })
+      );
     }
 
-    if(paymentType === "paypal" && paymentStatus === "fail") {
-      store.dispatch(checkoutPaypalCancel({
-        paymentId: paymentId,
-      }))
+    if (paymentType === "paypal" && paymentStatus === "fail") {
+      store.dispatch(
+        checkoutPaypalCancel({
+          paymentId: paymentId,
+        })
+      );
     }
   }, []);
   return (
@@ -409,10 +412,7 @@ function App() {
                 />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
-                <Route
-                  path="/"
-                  element={<SuspenseWrapper child={<Layout />} />}
-                >
+                <Route path="/" element={<Layout />}>
                   <Route
                     path="/"
                     element={
@@ -444,8 +444,8 @@ function App() {
                     }
                   ></Route>
                   <Route
-                    path="/tournamentDetail/:id/influencers/:userName"
-                    element={<SuspenseWrapper child={<LazyJoinTour />} />}
+                    path="/promotion-detail/:id/influencers/:userName"
+                    element={<SuspenseWrapper child={<JoinTour />} />}
                   ></Route>
                   <Route
                     path="/gamelobby/:id"
@@ -456,8 +456,8 @@ function App() {
                     element={<SelectRoomContainer />}
                   /> */}
                   <Route
-                    path="/tournamentDetail/:id"
-                    element={<SuspenseWrapper child={<LazyJoinTour />} />}
+                    path="/promotion-detail/:id"
+                    element={<SuspenseWrapper child={<JoinTour />} />}
                   />
                   <Route
                     path="/hot-promotion"
@@ -562,7 +562,7 @@ function App() {
                   store.dispatch(hideToastNotification());
                 }}
               />
-              <SuspenseWrapper child={<ToastNotification />} />
+              <ToastNotification />
             </CustomRouter>
           </PersistGate>
         </Provider>
