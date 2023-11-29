@@ -1,6 +1,8 @@
 import { Box, Dialog, DialogActions, Typography } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { imageHome } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -9,9 +11,6 @@ import AnimButton from "../../AnimButton";
 const DialogGift = () => {
   const { isReVerifyAccount, user } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-
-  console.log(user);
-
   const handleClose = () => {};
 
   const handleConfirm = () => {};
@@ -70,10 +69,15 @@ const DialogGift = () => {
               </Typography>
             </Box>
             <Box sx={{ position: "relative", width: "100%" }}>
-              <Box
-                component={"img"}
+              <LazyLoadImage
                 src={imageHome.BannerGift}
-                sx={{ width: "100%" }}
+                style={{ width: "100%" }}
+                effect="blur"
+                wrapperProps={{
+                  style: {
+                    transitionDelay: "0.5s",
+                  },
+                }}
               />
               <Box
                 sx={{

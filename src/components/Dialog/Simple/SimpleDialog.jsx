@@ -2,8 +2,9 @@ import { Close } from "@mui/icons-material";
 import { Box, Dialog, Grid } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   clickTab,
   closeLoginDialog,
@@ -39,7 +40,7 @@ export default function SimpleDialog(props) {
       } else {
         dispatch(clickTab("login"));
       }
-    }, 500)
+    }, 500);
   };
 
   return ReactDOM.createPortal(
@@ -120,7 +121,7 @@ export default function SimpleDialog(props) {
             }}
           >
             <Grid container flexWrap={"nowrap"}>
-              <Grid item md={6} sx={{maxWidth: width > 756 ? "50%" : "100%"}}>
+              <Grid item md={6} sx={{ maxWidth: width > 756 ? "50%" : "100%" }}>
                 <Box
                   sx={{
                     backgroundColor: "#291e3b",
@@ -158,7 +159,7 @@ export default function SimpleDialog(props) {
                       position: "relative",
                     }}
                   >
-                    <img
+                    <LazyLoadImage
                       src={
                         getAppType() === "promote"
                           ? sign.bannersignin
@@ -167,7 +168,17 @@ export default function SimpleDialog(props) {
                       alt="..."
                       width={"100%"}
                       height={"100%"}
-                      style={{ backgroundColor: "#3a2b6d", objectFit:"cover", objectPosition:"90% center" }}
+                      style={{
+                        backgroundColor: "#3a2b6d",
+                        objectFit: "cover",
+                        objectPosition: "90% center",
+                      }}
+                      effect="blur"
+                      wrapperProps={{
+                        style: {
+                          transitionDelay: "0.5s",
+                        },
+                      }}
                     />
                     <Box
                       component={"img"}

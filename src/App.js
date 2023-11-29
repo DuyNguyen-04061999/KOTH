@@ -6,31 +6,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "./assets/css/App.css";
-import CountDownTimer from "./components/CountDownTimer";
-import Layout from "./components/Layout";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
-import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
 import { ScrollToTopURL } from "./components/ScrollToTop";
-import TestSkeleton from "./components/TestSkeleton";
-import ToastNotification from "./components/Toast/ToastNotification";
-import ChangeLog from "./pages/ChangeLog/ChangeLog";
-import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
-import GameEditPage from "./pages/GameManager/GameEditPage";
-import GamePage from "./pages/GameManager/GamePage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
-import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
-import UploadPage from "./pages/GameManager/UploadPage";
-import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
-import GameLobby from "./pages/GamePlay";
-import HomePage from "./pages/Home";
-import NewHomePageComponent from "./pages/NewHomePageComponent";
-import PlayGamePage from "./pages/PlayGamePage";
-import Refresh from "./pages/Refresh";
-import SelectRoomContainer from "./pages/SelectRoomContainer";
-import Tournament from "./pages/Tournament";
-import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { PROMOTION_API } from "./redux-saga-middleware/axios/promotionApi";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
@@ -67,8 +47,26 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-import ChatBot from "./components/ChatBot";
-
+const Layout = lazy(() => import("./components/Layout"));
+const PlayGamePage = lazy(() => import("./pages/PlayGamePage"));
+const TransactionDetailPage = lazy(() =>
+  import("./pages/Transaction/TransactionDetailPage")
+);
+const DeleteSkinPage = lazy(() => import("./pages/GameManager/DeleteSkinPage"));
+const UploadGamePreview = lazy(() =>
+  import("./pages/GameManager/UploadGamePreview")
+);
+const UploadSkinPage = lazy(() => import("./pages/GameManager/UploadSkinPage"));
+const GameEditPage = lazy(() => import("./pages/GameManager/GameEditPage"));
+const GamePage = lazy(() => import("./pages/GameManager/GamePage"));
+const UploadPage = lazy(() => import("./pages/GameManager/UploadPage"));
+const Refresh = lazy(() => import("./pages/Refresh"));
+const GameLobby = lazy(() => import("./pages/GamePlay"));
+const ToastNotification = lazy(() =>
+  import("./components/Toast/ToastNotification")
+);
+const Tournament = lazy(() => import("./pages/Tournament"));
+const ChangeLog = lazy(() => import("./pages/ChangeLog/ChangeLog"));
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -85,6 +83,7 @@ const LazyUpcomingPromo = lazy(() =>
   import("./pages/Promotion/UpcomingPromotion")
 );
 const LazyEndedPromo = lazy(() => import("./pages/Promotion/EndedPromotion"));
+const HomePage = lazy(() => import("./pages/Home"));
 
 const SuspenseWrapper = (props) => {
   const { child } = props;
@@ -434,10 +433,16 @@ function App() {
               {" "}
               <ScrollToTopURL />
               <Routes>
-                <Route path="/playgame/:id" element={<PlayGamePage />} />
+                <Route
+                  path="/playgame/:id"
+                  element={<SuspenseWrapper child={<PlayGamePage />} />}
+                />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
-                <Route path="/" element={<Layout />}>
+                <Route
+                  path="/"
+                  element={<SuspenseWrapper child={<Layout />} />}
+                >
                   <Route
                     path="/"
                     element={
@@ -472,11 +477,14 @@ function App() {
                     path="/tournamentDetail/:id/influencers/:userName"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   ></Route>
-                  <Route path="/gamelobby/:id" element={<GameLobby />} />
                   <Route
+                    path="/gamelobby/:id"
+                    element={<SuspenseWrapper child={<GameLobby />} />}
+                  />
+                  {/* <Route
                     path="/selectroom/:id"
                     element={<SelectRoomContainer />}
-                  />
+                  /> */}
                   <Route
                     path="/tournamentDetail/:id"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
@@ -509,32 +517,51 @@ function App() {
                     path="/help-center"
                     element={<SuspenseWrapper child={<LazyHelpCenter />} />}
                   />
-                  <Route path="/change-log" element={<ChangeLog />} />
-                  <Route path="/test-refresh" element={<Refresh />} />
-                  <Route path="/loadingscreen" element={<LoadingScreen />} />
-                  <Route path="/new-home" element={<NewHomePageComponent />} />
-                  <Route path="/countdowntimer" element={<CountDownTimer />} />
-                  <Route path="upload" element={<UploadPage />} />
-                  <Route path="game" element={<GamePage />} />
+                  <Route
+                    path="/change-log"
+                    element={<SuspenseWrapper child={<ChangeLog />} />}
+                  />
+                  <Route
+                    path="/test-refresh"
+                    element={<SuspenseWrapper child={<Refresh />} />}
+                  />
+                  {/* <Route path="/countdowntimer" element={<CountDownTimer />} /> */}
+                  <Route
+                    path="upload"
+                    element={<SuspenseWrapper child={<UploadPage />} />}
+                  />
+                  <Route
+                    path="game"
+                    element={<SuspenseWrapper child={<GamePage />} />}
+                  />
                   {getAppType() === "promote" && (
-                    <Route path="/tournaments" element={<Tournament />} />
+                    <Route
+                      path="/tournaments"
+                      element={<SuspenseWrapper child={<Tournament />} />}
+                    />
                   )}
                   {getAppType() !== "promote" && (
-                    <Route path="game-type/:type" element={<TypeGamePage />} />
+                    <Route
+                      path="game-type/:type"
+                      element={<SuspenseWrapper child={<TypeGamePage />} />}
+                    />
                   )}
 
-                  <Route path="game/edit/:id" element={<GameEditPage />} />
+                  <Route
+                    path="game/edit/:id"
+                    element={<SuspenseWrapper child={<GameEditPage />} />}
+                  />
                   <Route
                     path="game/:id/upload-skins"
-                    element={<UploadSkinPage />}
+                    element={<SuspenseWrapper child={<UploadSkinPage />} />}
                   />
                   <Route
                     path="game/:id/upload-game-preview"
-                    element={<UploadGamePreview />}
+                    element={<SuspenseWrapper child={<UploadGamePreview />} />}
                   />
                   <Route
                     path="game/:id/delete-skins"
-                    element={<DeleteSkinPage />}
+                    element={<SuspenseWrapper child={<DeleteSkinPage />} />}
                   />
                   {getAppType() === "promote" && (
                     <Route
@@ -548,9 +575,10 @@ function App() {
                   )}
                   <Route
                     path="transactions/:id"
-                    element={<TransactionDetailPage />}
+                    element={
+                      <SuspenseWrapper child={<TransactionDetailPage />} />
+                    }
                   />
-                  <Route path="test-skeleton" element={<TestSkeleton />} />
                   <Route path="*" element={<Navigate to="/home" />} />
                 </Route>
               </Routes>
@@ -564,7 +592,7 @@ function App() {
                   store.dispatch(hideToastNotification());
                 }}
               />
-              <ToastNotification />
+              <SuspenseWrapper child={<ToastNotification />} />
             </CustomRouter>
           </PersistGate>
         </Provider>

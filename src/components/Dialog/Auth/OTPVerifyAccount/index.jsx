@@ -75,8 +75,6 @@ export default function OTPVerifyAccount() {
     }
   }, [resenOTPSuccess]);
 
-  console.log(user);
-
   const handleResendOTP = () => {
     switch (typeVerifyOTP) {
       case "register":

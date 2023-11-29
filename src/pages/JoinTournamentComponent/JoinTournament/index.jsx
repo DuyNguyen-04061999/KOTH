@@ -11,6 +11,8 @@ import {
 import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
@@ -19,9 +21,7 @@ import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
-import {
-  updateFromRouter
-} from "../../../redux-saga-middleware/reducers/appReducer";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
   toggleLoginDialog,
@@ -101,8 +101,6 @@ export default function JoinTournament() {
     dispatch(updateFromRouter(location.pathname));
   };
 
-
-
   const [minLength, setMinLength] = useState(0);
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
@@ -123,10 +121,12 @@ export default function JoinTournament() {
 
   useEffect(() => {
     if (token || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion({
-        id,
-        token
-      }));
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token,
+        })
+      );
     } else {
       dispatch(getRefactorDetailPromotion(id));
     }
@@ -223,7 +223,7 @@ export default function JoinTournament() {
   }, [startGamePromotion]);
   useEffect(() => {
     dispatch(startGameInPromotionFail());
-  }, [dispatch]); 
+  }, [dispatch]);
 
   return (
     <>
@@ -356,7 +356,7 @@ export default function JoinTournament() {
                           backgroundSize: "contain",
                         }}
                       >
-                        <img
+                        <LazyLoadImage
                           src={
                             detailTournament?.bestUser?.avatar
                               ? process.env.REACT_APP_SOCKET_SERVER +
@@ -370,6 +370,12 @@ export default function JoinTournament() {
                             height: width < 1500 ? "80px" : "150px",
                             borderRadius: "12px",
                             border: " 1px solid #FFBB33",
+                          }}
+                          effect="blur"
+                          wrapperProps={{
+                            style: {
+                              transitionDelay: "0.5s",
+                            },
                           }}
                         />
                         <Box
@@ -404,7 +410,7 @@ export default function JoinTournament() {
                   }}
                 >
                   <Box>
-                    <img
+                    <LazyLoadImage
                       style={{
                         width: "100%",
                         height: "auto",
@@ -416,6 +422,12 @@ export default function JoinTournament() {
                             detailTournament?.tournamentBackground
                           : images.TournamentBG
                       }
+                      effect="blur"
+                      wrapperProps={{
+                        style: {
+                          transitionDelay: "0.5s",
+                        },
+                      }}
                       alt="..."
                     />
                   </Box>
@@ -1005,8 +1017,7 @@ export default function JoinTournament() {
                                       }`,
                                     }}
                                   >
-                                    <Box
-                                      component={"img"}
+                                    <LazyLoadImage
                                       src={
                                         item?.userAccount?.accountAvatar
                                           ? process.env
@@ -1015,13 +1026,19 @@ export default function JoinTournament() {
                                             item?.userAccount?.accountAvatar
                                           : images.undefinedAvatar
                                       }
-                                      sx={{
+                                      style={{
                                         width: "100%",
                                         height: "100%",
                                         flexDirection: "column",
                                         borderRadius: "50%",
                                       }}
-                                    ></Box>
+                                      wrapperProps={{
+                                        style: {
+                                          transitionDelay: "0.5s",
+                                        },
+                                      }}
+                                      effect="blur"
+                                    ></LazyLoadImage>
                                   </Box>
                                 )
                               ) : (
@@ -1140,8 +1157,7 @@ export default function JoinTournament() {
                                       }`,
                                     }}
                                   >
-                                    <Box
-                                      component={"img"}
+                                    <LazyLoadImage
                                       src={
                                         item?.userAccount?.accountAvatar
                                           ? process.env
@@ -1150,13 +1166,19 @@ export default function JoinTournament() {
                                             item?.userAccount?.accountAvatar
                                           : images.undefinedAvatar
                                       }
-                                      sx={{
+                                      style={{
                                         width: "100%",
                                         height: "100%",
                                         borderRadius: "50%",
-                                        objectFit:"cover"
+                                        objectFit: "cover",
                                       }}
-                                    ></Box>
+                                      wrapperProps={{
+                                        style: {
+                                          transitionDelay: "0.5s",
+                                        },
+                                      }}
+                                      effect="blur"
+                                    ></LazyLoadImage>
                                   </Box>
                                 ))
                               )
@@ -1195,8 +1217,7 @@ export default function JoinTournament() {
                                   }`,
                                 }}
                               >
-                                <Box
-                                  component={"img"}
+                                <LazyLoadImage
                                   src={
                                     item?.userAccount?.accountAvatar
                                       ? process.env.REACT_APP_SOCKET_SERVER +
@@ -1204,13 +1225,19 @@ export default function JoinTournament() {
                                         item?.userAccount?.accountAvatar
                                       : images.undefinedAvatar
                                   }
-                                  sx={{
+                                  style={{
                                     width: "100%",
                                     height: "100%",
                                     borderRadius: "50%",
-                                    objectFit:"cover"
+                                    objectFit: "cover",
                                   }}
-                                ></Box>
+                                  wrapperProps={{
+                                    style: {
+                                      transitionDelay: "0.5s",
+                                    },
+                                  }}
+                                  effect="blur"
+                                ></LazyLoadImage>
                               </Box>
                             );
                           }
@@ -1309,13 +1336,12 @@ export default function JoinTournament() {
                                   zIndex: 0,
                                 }}
                               >
-                                <Box
-                                  component={"img"}
-                                  sx={{
+                                <LazyLoadImage
+                                  style={{
                                     borderRadius: "50%",
                                     width: "100%",
                                     height: "100%",
-                                    objectFit:"cover"
+                                    objectFit: "cover",
                                   }}
                                   src={
                                     item?.userAccount?.accountAvatar
@@ -1324,7 +1350,13 @@ export default function JoinTournament() {
                                         item?.userAccount?.accountAvatar
                                       : images.undefinedAvatar
                                   }
-                                ></Box>
+                                  wrapperProps={{
+                                    style: {
+                                      transitionDelay: "0.5s",
+                                    },
+                                  }}
+                                  effect="blur"
+                                ></LazyLoadImage>
                               </Box>
                             ) : (
                               index < 5 &&
@@ -1426,13 +1458,12 @@ export default function JoinTournament() {
                                       zIndex: 0,
                                     }}
                                   >
-                                    <Box
-                                      component={"img"}
-                                      sx={{
+                                    <LazyLoadImage
+                                      style={{
                                         borderRadius: "50%",
                                         width: "100%",
                                         height: "100%",
-                                        objectFit:"cover"
+                                        objectFit: "cover",
                                       }}
                                       src={
                                         item?.userAccount?.accountAvatar
@@ -1442,7 +1473,13 @@ export default function JoinTournament() {
                                             item?.userAccount?.accountAvatar
                                           : images.undefinedAvatar
                                       }
-                                    ></Box>
+                                      effect="blur"
+                                      wrapperProps={{
+                                        style: {
+                                          transitionDelay: "0.5s",
+                                        },
+                                      }}
+                                    ></LazyLoadImage>
                                   </Box>
                                 ))
                             );
@@ -1776,7 +1813,7 @@ export default function JoinTournament() {
                                 left: "-10px",
                               }}
                             ></Box>
-                            <img
+                            <LazyLoadImage
                               style={{
                                 borderRadius: "8px",
                                 objectFit: "cover",
@@ -1795,6 +1832,12 @@ export default function JoinTournament() {
                               alt="..."
                               width={"95%"}
                               height={"90%"}
+                              wrapperProps={{
+                                style: {
+                                  transitionDelay: "0.5s",
+                                },
+                              }}
+                              effect="blur"
                             />
                           </Box>
                         </Box>
@@ -2154,7 +2197,7 @@ export default function JoinTournament() {
                               backgroundSize: "contain",
                             }}
                           >
-                            <img
+                            <LazyLoadImage
                               src={
                                 detailTournament?.bestUser?.avatar
                                   ? process.env.REACT_APP_SOCKET_SERVER +
@@ -2169,6 +2212,12 @@ export default function JoinTournament() {
                                 borderRadius: "8px",
                                 border: " 1px solid #FFBB33",
                               }}
+                              effect="blur"
+                              wrapperProps={{
+                                style: {
+                                  transitionDelay: "0.5s",
+                                },
+                              }}
                             />
                             <Box
                               sx={{
@@ -2176,7 +2225,7 @@ export default function JoinTournament() {
                                 padding: "4px",
                                 borderRadius: "5px",
                                 marginTop: "10px",
-                                minWidth:"50px",
+                                minWidth: "50px",
                                 maxWidth: "max-content",
                               }}
                             >
@@ -2187,7 +2236,10 @@ export default function JoinTournament() {
                                   fontSize: "8px",
                                 }}
                               >
-                                {detailTournament?.tScores[0]?.tUser?.userNickName}
+                                {
+                                  detailTournament?.tScores[0]?.tUser
+                                    ?.userNickName
+                                }
                               </Typography>
                             </Box>
                           </Box>
@@ -2202,7 +2254,7 @@ export default function JoinTournament() {
                     }}
                   >
                     {/* {detailTournament?.tournamentStatus === 2 && <BgEndGame />} */}
-                    <img
+                    <LazyLoadImage
                       className="w-100 pt-3"
                       src={
                         detailTournament?.tournamentBackgroundMobile
@@ -2212,6 +2264,12 @@ export default function JoinTournament() {
                           : images.DoubleDragonMobile
                       }
                       alt="..."
+                      effect="blur"
+                      wrapperProps={{
+                        style: {
+                          transitionDelay: "0.5s",
+                        },
+                      }}
                     />
                   </Box>
                 )}
@@ -2817,7 +2875,7 @@ export default function JoinTournament() {
                                     left: "-10px",
                                   }}
                                 ></Box>
-                                <img
+                                <LazyLoadImage
                                   style={{
                                     borderRadius: "10px",
                                     objectFit: "cover",
@@ -2836,6 +2894,12 @@ export default function JoinTournament() {
                                   alt="..."
                                   width={"95%"}
                                   height={"90%"}
+                                  effect="blur"
+                                  wrapperProps={{
+                                    style: {
+                                      transitionDelay: "0.5s",
+                                    },
+                                  }}
                                 />
                               </Box>
                             </Box>
@@ -2999,9 +3063,8 @@ export default function JoinTournament() {
                                         zIndex: 0,
                                       }}
                                     >
-                                      <Box
-                                        component={"img"}
-                                        sx={{
+                                      <LazyLoadImage
+                                        style={{
                                           borderRadius: "50%",
                                           width: "100%",
                                           height: "100%",
@@ -3014,7 +3077,13 @@ export default function JoinTournament() {
                                               item?.userAccount?.accountAvatar
                                             : images.undefinedAvatar
                                         }
-                                      ></Box>
+                                        effect="blur"
+                                        wrapperProps={{
+                                          style: {
+                                            transitionDelay: "0.5s",
+                                          },
+                                        }}
+                                      ></LazyLoadImage>
                                     </Box>
                                   ) : (
                                     index < 5 &&
@@ -3118,9 +3187,8 @@ export default function JoinTournament() {
                                             zIndex: 0,
                                           }}
                                         >
-                                          <Box
-                                            component={"img"}
-                                            sx={{
+                                          <LazyLoadImage
+                                            style={{
                                               borderRadius: "50%",
                                               width: "100%",
                                               height: "100%",
@@ -3134,7 +3202,13 @@ export default function JoinTournament() {
                                                     ?.accountAvatar
                                                 : images.undefinedAvatar
                                             }
-                                          ></Box>
+                                            wrapperProps={{
+                                              style: {
+                                                transitionDelay: "0.5s",
+                                              },
+                                            }}
+                                            effect="blur"
+                                          ></LazyLoadImage>
                                         </Box>
                                       ))
                                   );
@@ -3349,15 +3423,20 @@ export default function JoinTournament() {
                           }}
                         >
                           View all
-                          <Box
+                          <LazyLoadImage
                             sx={{
                               marginLeft: "4px",
                               width: "12px",
                               heigth: "12px",
                             }}
-                            component={"img"}
                             src={images.viewAllButton}
-                          ></Box>
+                            effect="blur"
+                            wrapperProps={{
+                              style: {
+                                transitionDelay: "0.5s",
+                              },
+                            }}
+                          ></LazyLoadImage>
                         </Typography>
                       )}
                     </Box>
@@ -3374,11 +3453,11 @@ export default function JoinTournament() {
                 </Box>
                 <GamePreview />
                 <NewFooter />
-                <Box sx={{
-                  marginBottom: "75px"
-                }}>
-
-                </Box>
+                <Box
+                  sx={{
+                    marginBottom: "75px",
+                  }}
+                ></Box>
               </Container>
               <Dialog
                 onClose={() => {

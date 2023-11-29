@@ -7,6 +7,7 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 import ListItemLoading from "../LoadingComponent/ItemLoading";
 import ListEmpty from "../LoadingComponent/ListEmpty";
 
+
 const ListPromotion = (props) => {
   const { width } = useWindowDimensions();
   const {
