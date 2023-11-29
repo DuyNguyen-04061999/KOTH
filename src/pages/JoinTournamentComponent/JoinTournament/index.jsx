@@ -208,33 +208,41 @@ export default function JoinTournament() {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
 
-  const meta = {
-    title: `${detailTournament?.tournamentName}`,
-    description: `${
-      detailTournament?.tournamentInfors?.rewardInfors?.rewardTitle ||
-      "SS Z-Flip 5 free voucher"
-    }.&nbsp;${
-      detailTournament?.tournamentInfors?.owner?.brandName || "Play4promo"
-    }.&nbsp;${
-      moment(
-        detailTournament?.tournamentInfors?.rewardInfors?.rewardValidityDate
-      )?.format("MMM-DD-YYYY") || "Nov-10-2023"
-    }`,
-    meta: {
-      charset: "utf-8",
-      name: {
-        keywords: `play4promo,play,promo,${detailTournament?.tournamentName}`,
+
+  const [meta, setMeta] = useState({})
+
+  useEffect(() => {
+    setMeta({
+      title: `${detailTournament?.tournamentName}`,
+      description: `${detailTournament?.tournamentInfors?.rewardInfors
+        ?.rewardTitle || "SS Z-Flip 5 free voucher"}.&nbsp;${detailTournament?.tournamentInfors?.owner?.brandName || "Play4promo"}.&nbsp;${moment(
+          detailTournament?.tournamentInfors
+            ?.rewardInfors?.rewardValidityDate
+        )?.format("MMM-DD-YYYY") || "Nov-10-2023"}`,
+      meta: {
+          charset: 'utf-8',
+          name: {
+              keywords: `play4promo,play,promo,${detailTournament?.tournamentName}`
+          },
+          property: {
+            'og:title': `${detailTournament?.tournamentName || "Promotion Name"}`,
+            'og:url': window.location.href,
+            'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : detailTournament?.tournamentBackgroundMobile ? 
+            process.env.REACT_APP_SOCKET_SERVER +
+            "/" +
+            detailTournament?.tournamentBackgroundMobile : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+            'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : detailTournament?.tournamentBackgroundMobile ? 
+            process.env.REACT_APP_SOCKET_SERVER +
+            "/" +
+            detailTournament?.tournamentBackgroundMobile : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+            'og:image:type': 'image/png',
+            'og:image:width': `144`,
+            'og:image:height': `144`,
+            'og:image:alt': 'Play4promo Photo'
+          },
       },
-      property: {
-        "og:url": window.location.href,
-        "og:image": imageDesktop.logoCT,
-        "og:image:type": "image/png",
-        "og:image:width": `144`,
-        "og:image:height": `144`,
-        "og:image:alt": "Play4promo Photo",
-      },
-    },
-  };
+    })
+  }, [detailTournament])
 
   return (
     <DocumentMeta {...meta}>

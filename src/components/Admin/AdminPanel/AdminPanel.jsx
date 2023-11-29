@@ -37,6 +37,10 @@ const AdminPanel = () => {
     const {width} = useWindowDimensions();
     const {pathname} = useLocation();
 
+    const { name } = useSelector(state => state?.adminAuthReducer)
+    const location = window.location.host.replace("admin.", "");
+    const urlRedirect = process.env.REACT_APP_ENV === "development" ? `http://${location}/influencers/${name}` : `https://${location}/influencers/${name}`;
+
     const handleChangeSearch = (e) => {
         setSearchValue(e?.target?.value);
         dispatch(updateDetailAccount(null))
@@ -331,8 +335,8 @@ const AdminPanel = () => {
     }
 
     const handleCopyRef = () => {
-        copy(ref)
-        dispatch(showToastNotify({type: "success", message: "Copy ref code successfully!"}))
+        copy(urlRedirect || ref)
+        dispatch(showToastNotify({type: "success", message: "Copy URL successfully!"}))
     }
 
     return (
@@ -386,7 +390,7 @@ const AdminPanel = () => {
                                 color: "#8F909E",
                                 fontSize: "14px",
                                 fontWeight: "700",
-                            }}>{ref}</Typography>
+                            }}>{urlRedirect || ref}</Typography>
                             <Box onClick={() => handleCopyRef()}>
                                 <CopyIconSVG className="ms-2 me-2"/>
                             </Box>
@@ -487,7 +491,7 @@ const AdminPanel = () => {
                                     textAlign: "center",
                                 }}
                             >
-                                Account
+                                Display Name
                             </Typography>
                             <Typography
                                 sx={{
@@ -496,7 +500,7 @@ const AdminPanel = () => {
                                     textAlign: "center",
                                 }}
                             >
-                                {detailAccount?.account || ""}
+                                {detailAccount?.displayName || ""}
                             </Typography>
                         </Grid>
                         <Grid
@@ -763,7 +767,7 @@ const AdminPanel = () => {
                                 Edit Nick Name
                             </Button>
                         )}
-                        {!roles?.includes("agent") && !roles?.includes("distributor") && (
+                        {!roles?.includes("agent") && !roles?.includes("distributor") && !roles?.includes("master") && (
                             <Button
                                 onClick={handleDeleteAccount}
                                 sx={{
