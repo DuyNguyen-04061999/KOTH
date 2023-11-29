@@ -7,12 +7,14 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useDispatch, useSelector } from "react-redux";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
@@ -21,10 +23,7 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        // "@font-face": {
-        //   fontFamily: "Cyntho Next",
-        //   src: `url(${InspirationTTF}) format("truetype")`,
-        // },
+       
       },
     },
   },
@@ -82,8 +81,31 @@ export default function HotTournament() {
     return e.tournamentBackgroundMobile;
   });
 
+  const meta = {
+    title: process.env.REACT_APP_ENV === "production" ? 'Play4promo ended promotions' : "Play4promo staging ended promotions",
+    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
+    meta: {
+      charset: 'utf-8',
+      name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
+        robots: "noindex",
+        keywords: `play4promo,play,promo`
+      } : {
+        keywords: `play4promo,play,promo`
+      },
+      property: {
+        'og:url': window.location.href,
+        'og:image': imageDesktop.logoCT,
+        'og:image:type': 'image/png',
+        'og:image:width': `144`,
+        'og:image:height': `144`,
+        'og:image:alt': 'Play4promo Photo'
+      },
+    },
+  }
+
   return (
-    <ThemeProvider theme={theme}>
+    <DocumentMeta {...meta}>
+      <ThemeProvider theme={theme}>
       <CssBaseline />
       <MainLayout
         type="Home"
@@ -221,48 +243,6 @@ export default function HotTournament() {
                   noData={noDataEnd}
                 />
               </Box>
-              {/* <Box
-                sx={{
-                  marginTop: "48px",
-                  marginBottom: "0px",
-                }}
-              >
-                {isFetchHotWeek ? (
-                  <Box>
-                    <BannerLoading height={"214px"} />
-                  </Box>
-                ) : (
-                  <BannerTourMobile
-                    tournamentName={
-                      hotWeekTour && hotWeekTour?.tournamentName
-                        ? hotWeekTour?.tournamentName
-                        : "Galaxy Z-flip 5"
-                    }
-                    sponsorName={hotWeekTour?.tournamentBrand?.brandName}
-                    userName={
-                      hotWeekTour &&
-                      hotWeekTour?.bestUser &&
-                      hotWeekTour?.bestUser?.tUser &&
-                      hotWeekTour?.bestUser?.tUser?.userName
-                    }
-                    endTime={hotWeekTour?.tournamentEndAt}
-                    userScore={hotWeekTour?.bestUser?.score}
-                    userAvatar={
-                      hotWeekTour &&
-                      hotWeekTour?.bestUser &&
-                      hotWeekTour?.bestUser?.tUser &&
-                      hotWeekTour?.bestUser?.tUser?.userAccount &&
-                      hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          hotWeekTour?.bestUser?.tUser?.userAccount
-                            ?.accountAvatar
-                        : images.pool
-                    }
-                    tourId={hotWeekTour && hotWeekTour?.id}
-                  />
-                )}
-              </Box> */}
               <Box sx={{ margin: "36px 0px" }}>
                 {!isFetchEnded &&
                   data !== null &&
@@ -283,5 +263,6 @@ export default function HotTournament() {
         }
       />
     </ThemeProvider>
+    </DocumentMeta>
   );
 }

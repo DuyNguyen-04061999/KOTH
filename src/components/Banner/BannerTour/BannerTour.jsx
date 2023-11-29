@@ -139,7 +139,7 @@ const BannerTour = (props) => {
           <button
               onClick={() => {
                 if(tourId !== "undefined") {
-                  navigate(`/tournamentDetail/${tourId}`);
+                  navigate(`/promotion-detail/${tourId}`);
                 } 
               }}
             style={{

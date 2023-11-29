@@ -1,8 +1,7 @@
 import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+// import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   showToastNotification
@@ -151,7 +150,8 @@ export default function SettingProfile({ closePopup }) {
                     color: "red",
                   }}
                 >
-                  <LazyLoadImage
+                  <Box
+                    component={"img"}
                     style={{
                       backgroundColor: "#1a132d",
                       right: "10px",
@@ -160,13 +160,13 @@ export default function SettingProfile({ closePopup }) {
                       position: "absolute",
                     }}
                     src={images.ToolTipIcon}
-                    effect="blur"
-                    wrapperProps={{
-                      style: {
-                        transitionDelay: "0.5s",
-                      },
-                    }}
-                  ></LazyLoadImage>
+                    // effect="blur"
+                    // wrapperProps={{
+                    //   style: {
+                    //     transitionDelay: "0.5s",
+                    //   },
+                    // }}
+                  ></Box>
                 </BgWithTooltip>
               </FormControl>{" "}
             </Box>

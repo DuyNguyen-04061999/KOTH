@@ -132,7 +132,7 @@ export default function SlickSlider(props) {
                 >
                   <LazyLoadImage
                     onClick={() => {
-                      navigate(`/tournamentDetail/${item?.id}`);
+                      navigate(`/promotion-detail/${item?.id}`);
                     }}
                     style={{
                       width: "100%",
