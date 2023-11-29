@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
-  toggleStartGame,
-  updateFromRouter,
+  updateFromRouter
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTab,

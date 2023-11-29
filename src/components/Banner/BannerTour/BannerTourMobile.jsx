@@ -29,6 +29,128 @@ const BannerTourMobile = (props) => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
+          width: "190px",
+          alignItems:"center"
+        }}
+      >
+         <Box sx={{
+          padding:"4px",
+          backgroundColor:"#FD9800",
+          borderRadius:"10px",
+          width:"160px"
+         }}>
+          <Typography
+            sx={{
+              fontSize: "10px",
+              color: "white",
+              fontWeight: 700,
+              paddingLeft:"5px",
+              paddingRight:"5px",
+              lineHeight:1.5,
+               
+            }}
+          >
+            Promotion of the week
+          </Typography>
+        </Box>
+        <Box>
+          <Typography
+            sx={{
+              fontSize: "11px",
+              color: "white",
+              fontWeight: 500,
+              textTransform: "uppercase",
+              height: "38px",
+              overflow: "hidden",
+              marginTop:"5px",
+              lineHeight: 1.5
+            }}
+          >
+            {tournamentName
+              ? tournamentName
+              : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
+          </Typography>
+        </Box>
+       
+        <Box sx={{ width: "180px", marginBottom: "12px" }}>
+          <Typography
+            sx={{
+              width: "100%",
+              fontSize: "22px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              lineHeight: "0.9",
+              height: "38px",
+              overflow: "hidden",
+              marginTop:"10px"
+            }}
+          >
+            {rewardName
+              ? rewardName
+              : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            backgroundColor: "#300854",
+            borderRadius: "5px",
+            width: "fit-content",
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "12px",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                color: "#FFF",
+                textAlign: "start",
+                fontSize: "12px",
+                marginLeft: "0px !important",
+                marginRight: "5px",
+                fontWeight: 800,
+              }}
+            >
+              <CountDownBannerHot
+                expiryTime={moment(endTime || "2024-09-08T01:30:00.000Z")}
+              />
+            </Box>
+          </Box>
+          <button
+            onClick={() => {
+              if(tourId !== "undefined") {
+                navigate(`/promotion-detail/${tourId}`);
+              } 
+            }}
+            style={{
+              background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+              outline: "none",
+              border: "none",
+              borderRadius: "5px",
+              color: "#fff",
+              padding: "4px",
+              fontSize: "10px",
+              cursor: "pointer",
+              fontWeight: 600,
+              paddingLeft:"10px",
+              paddingRight:"10px"
+            }}
+          >
+            Play now
+          </button>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          width: "fit-content",
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-between",
           height: "214px",

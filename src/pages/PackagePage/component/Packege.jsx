@@ -1,9 +1,11 @@
 import { Box, Container, Typography } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
@@ -23,13 +25,6 @@ export default function Package() {
   }, [socket]);
 
   useEffect(() => {
-    // if (token === null || token === "") {
-    //   socket?.emit("listPackage");
-    // } else {
-    //   socket?.emit("listPackage", {
-    //     type: true,
-    //   });
-    // }
   }, [socket, token]);
 
   useEffect(() => {
@@ -53,8 +48,32 @@ export default function Package() {
 
   const location = useLocation();
   const { pathname } = location;
+
+  const meta = {
+    title: process.env.REACT_APP_ENV === "production" ? 'Play4promo packages' : "Play4promo staging packages",
+    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
+    meta: {
+      charset: 'utf-8',
+      name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
+        robots: "noindex",
+        keywords: `play4promo,play,promo`
+      } : {
+        keywords: `play4promo,play,promo`
+      },
+      property: {
+        'og:url': window.location.href,
+        'og:image': imageDesktop.logoCT,
+        'og:image:type': 'image/png',
+        'og:image:width': `144`,
+        'og:image:height': `144`,
+        'og:image:alt': 'Play4promo Photo'
+      },
+    },
+  }
+
   return (
-    <>
+    <DocumentMeta {...meta}>
+      <>
       <DialogConfirm />
       {width > 576 ? (
         <div className="Package-home pb-5 ">
@@ -288,5 +307,6 @@ export default function Package() {
         </div>
       )}
     </>
+    </DocumentMeta>
   );
 }

@@ -58,7 +58,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={() =>
-        !isLoading && navigate("/tournamentDetail/" + tourInfo?.id)
+        !isLoading && navigate("/promotion-detail/" + tourInfo?.id)
       }
       sx={{
         position: "relative",
@@ -398,7 +398,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               )}
             </Typography>
             <button
-              onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)}
+              onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
               disabled={isLoading}
               style={{
                 border: "none",
@@ -588,7 +588,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     //             : "game Name"}
     //         </Typography>
     //         <button
-    //           onClick={() => navigate("/tournamentDetail/" + tourInfo?.id)}
+    //           onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
     //           style={{
     //             border: "none",
     //             outline: "none",

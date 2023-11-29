@@ -11,11 +11,13 @@ import {
 import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
+import CheckProfile from "../../../components/Dialog/CheckProfile";
 import NotificationExtra from "../../../components/Dialog/NotificationExtra";
 import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
@@ -42,8 +44,9 @@ import {
   toggleExtra,
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducers/userReducer";
 import { isJson, sliceString } from "../../../utils/helper";
-import { images } from "../../../utils/images";
+import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import DetailVoucher from "../DetailVoucher";
@@ -52,8 +55,6 @@ import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
-import { toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducers/userReducer";
-import CheckProfile from "../../../components/Dialog/CheckProfile";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -208,8 +209,32 @@ export default function JoinTournament() {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
 
+  const meta = {
+    title: `${detailTournament?.tournamentName}`,
+    description: `${detailTournament?.tournamentInfors?.rewardInfors
+      ?.rewardTitle || "SS Z-Flip 5 free voucher"}.&nbsp;${detailTournament?.tournamentInfors?.owner?.brandName || "Play4promo"}.&nbsp;${moment(
+        detailTournament?.tournamentInfors
+          ?.rewardInfors?.rewardValidityDate
+      )?.format("MMM-DD-YYYY") || "Nov-10-2023"}`,
+    meta: {
+        charset: 'utf-8',
+        name: {
+            keywords: `play4promo,play,promo,${detailTournament?.tournamentName}`
+        },
+        property: {
+          'og:url': window.location.href,
+          'og:image': imageDesktop.logoCT,
+          'og:image:type': 'image/png',
+          'og:image:width': `144`,
+          'og:image:height': `144`,
+          'og:image:alt': 'Play4promo Photo'
+        },
+    },
+  }
+
   return (
-    <>
+    <DocumentMeta {...meta}>
+      <>
       <ResultEndGame />
       <NotificationExtra />
       <CheckProfile id={id}/>
@@ -3591,5 +3616,6 @@ export default function JoinTournament() {
         />
       )}
     </>
+    </DocumentMeta>
   );
 }

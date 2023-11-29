@@ -43,6 +43,7 @@ export const AvatarPicker = (props) => {
 
   const handleChange = async (event) => {
     dispatch(openLoading());
+    const fileSize = event.target.files[0]?.size
     handleSetAvatar(event.target.files[0]);
     let reader = new FileReader();
 
@@ -51,7 +52,7 @@ export const AvatarPicker = (props) => {
     if (
       imageType === "png" ||
       imageType === "jpg" ||
-      imageType === "gif" ||
+      (imageType === "gif" && fileSize <= 153600) ||
       imageType === "jpeg"
     ) {
       reader.onload = function (e) {

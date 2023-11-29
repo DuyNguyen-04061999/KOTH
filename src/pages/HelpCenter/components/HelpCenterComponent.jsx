@@ -6,8 +6,10 @@ import moment from "moment/moment";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import DocumentMeta from "react-document-meta";
 import { useDispatch, useSelector } from "react-redux";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const HelpCenterComponent = () => {
@@ -60,8 +62,32 @@ const HelpCenterComponent = () => {
       </div>
     );
   }
-  if (device === "Mobile" || device === "Tablet") {
-    return (
+
+  const meta = {
+    title: process.env.REACT_APP_ENV === "production" ? 'Play4promo help center' : "Play4promo staging help center",
+    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
+    meta: {
+      charset: 'utf-8',
+      name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
+        robots: "noindex",
+        keywords: `play4promo,play,promo`
+      } : {
+        keywords: `play4promo,play,promo`
+      },
+      property: {
+        'og:url': window.location.href,
+        'og:image': imageDesktop.logoCT,
+        'og:image:type': 'image/png',
+        'og:image:width': `144`,
+        'og:image:height': `144`,
+        'og:image:alt': 'Play4promo Photo'
+      },
+    },
+  }
+
+  return (
+    <DocumentMeta {...meta}>
+  {(device === "Mobile" || device === "Tablet") ?  (
       <Container
         style={{
           padding: width < 576 ? "16px 24px 24px 24px" : "16px 24px 24px 50px",
@@ -211,16 +237,6 @@ const HelpCenterComponent = () => {
                                 </Typography>
                               ))}
                             </Box>
-                            {/* <Typography
-                                style={{
-                                  fontSize: "14px",
-                                  textAlign: "start",
-                                  marginTop: "12px",
-                                  color: "#fff",
-                                }}
-                              >
-                                {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
-                              </Typography> */}
                           </Box>
                         );
                       })}
@@ -239,9 +255,7 @@ const HelpCenterComponent = () => {
           </Box>
         </Box>
       </Container>
-    );
-  } else {
-    return (
+    ) : (
       <Container>
         <Box sx={{ margin: "40px 0" }}>
           <Typography
@@ -322,7 +336,7 @@ const HelpCenterComponent = () => {
               ) : (
                 <>
                   {" "}
-                  <Typography style={{ fontSize: "24px", fontWeight: "bold" }}>
+                  <Box style={{ fontSize: "24px", fontWeight: "bold" }}>
                     {listFAQ?.length && listFAQ[tabHelpCenter]?.faqTitle}
                     {listFAQ?.length &&
                     listFAQ[tabHelpCenter]?.faqTitle ===
@@ -357,7 +371,7 @@ const HelpCenterComponent = () => {
                     ) : (
                       ""
                     )}
-                  </Typography>
+                  </Box>
                   <Typography
                     style={{
                       fontSize: "16px",
@@ -399,16 +413,6 @@ const HelpCenterComponent = () => {
                                   </Typography>
                                 ))}
                               </Box>
-                              {/* <Typography
-                                style={{
-                                  fontSize: "14px",
-                                  textAlign: "start",
-                                  marginTop: "12px",
-                                  color: "#fff",
-                                }}
-                              >
-                                {item?.faqAnswer.replace(/(\d+\.)/g, `$1 \n`)}
-                              </Typography> */}
                             </Box>
                           );
                         })}
@@ -428,8 +432,11 @@ const HelpCenterComponent = () => {
           </Box>
         </Box>
       </Container>
-    );
+    )
   }
+    </DocumentMeta>
+  )
+  
 };
 
 export default HelpCenterComponent;

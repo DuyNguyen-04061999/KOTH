@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import React, { Suspense, lazy, useEffect } from "react";
+import DocumentMeta from "react-document-meta";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BannerTour, BannerTourMobile } from "../../../components/Banner";
@@ -7,7 +8,7 @@ import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
 import { getAppType } from "../../../utils/helper";
-import { images } from "../../../utils/images";
+import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
 import "./index.scss";
@@ -15,7 +16,7 @@ const NewFooter = lazy(() => import("../../NewFooter")) ;
 
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
-  // const [bannerCountDown, setBannerCountDown] = useState(true);
+
   const {
     hotTournament,
     hotWeekTour,
@@ -89,14 +90,30 @@ export default function NewHomePage() {
 
   const navigate = useNavigate();
 
-  // const handleFetchTimeout = () => {
-  //   dispatch({
-  //     type: "CALL_LIST_TOURNAMENT",
-  //     payload: "ended",
-  //   });
-  // };
-
+  const meta = {
+    title: process.env.REACT_APP_ENV === "production" ? 'Play4promo' : "Play4promo staging",
+    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
+    meta: {
+      charset: 'utf-8',
+      name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
+        robots: "noindex",
+        keywords: `play4promo,play,promo`
+      } : {
+        keywords: `play4promo,play,promo`
+      },
+      property: {
+        'og:url': window.location.href,
+        'og:image': imageDesktop.logoCT,
+        'og:image:type': 'image/png',
+        'og:image:width': `144`,
+        'og:image:height': `144`,
+        'og:image:alt': 'Play4promo Photo'
+      },
+    },
+  }
+  
   return (
+  <DocumentMeta {...meta}>
     <Container
       maxWidth="lg"
       sx={{
@@ -116,19 +133,6 @@ export default function NewHomePage() {
         backgroundColor: "#1a151e",
       }}
     >
-      {/* {process.env.REACT_APP_TEST === "test" && (
-        <div
-          className="text-white p-2 ps-3"
-          onClick={() => {
-            navigate("/list-game-manager");
-          }}
-        >
-          Game Manager
-        </div>
-      )}{" "}
-      {process.env.REACT_APP_TEST === "test" && (
-        <Button onClick={() => handleFetchTimeout()}>Fetch Timeout</Button>
-      )} */}
       <Box
         sx={{
           paddingBottom: "70px",
@@ -136,9 +140,6 @@ export default function NewHomePage() {
           flexDirection: "column",
         }}
       >
-        {/* {bannerCountDown && (
-          <BannerHomePage setBannerCountDown={setBannerCountDown} />
-        )}{" "} */}
         <Box
           sx={{
             marginBottom: width < 576 ? "24px" : "32px",
@@ -154,17 +155,6 @@ export default function NewHomePage() {
               appendDot={true}
               images={
                 []
-                // width < 576
-                //   ? [
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //     ]
-                //   : [
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //       images.pepperBanner,
-                //     ]
               }
               tours={threeBrandTour}
             />
@@ -233,15 +223,6 @@ export default function NewHomePage() {
             />
           </Box>
         </Box>{" "}
-        {/* {width < 576 ? (isFetchBiggestTour ? (<BannerLoading
-                height={width < 576 ? "214px" : "363px"}
-                width={"100%"}
-            />) : (
-                <></>)) : isFetchBiggestTour ? (<BannerLoading
-                height={width < 576 ? "214px" : "363px"}
-                width={"100%"}
-            />) : (
-                <></>)} */}
         <Box
           sx={{
             marginTop: width < 576 ? "24px" : "64px",
@@ -510,5 +491,7 @@ export default function NewHomePage() {
         <Suspense fallback="loading..." children={<NewFooter />} />
       </Box>
     </Container>
+  </DocumentMeta>
+    
   );
 }

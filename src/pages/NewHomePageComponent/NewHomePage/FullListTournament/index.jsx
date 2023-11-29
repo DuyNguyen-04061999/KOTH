@@ -321,7 +321,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                   </Box>
                   <button
                     onClick={() => {
-                      navigate("/tournamentDetail/" + hotWeekTour?.id);
+                      navigate("/promotion-detail/" + hotWeekTour?.id);
                     }}
                     style={{
                       background:
@@ -387,7 +387,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                   index <= itemOffSet + 9 &&
                   (index % 2 === 0 ? (
                     <Box
-                      onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                      onClick={() => navigate("/promotion-detail/" + item?.id)}
                       key={index}
                       sx={{
                         boxSizing: "border-box",
@@ -398,7 +398,7 @@ export default function FullListTournament({ handleOnClose, open, type }) {
                     </Box>
                   ) : (
                     <Box
-                      onClick={() => navigate("/tournamentDetail/" + item?.id)}
+                      onClick={() => navigate("/promotion-detail/" + item?.id)}
                       key={index}
                       sx={{
                         boxSizing: "border-box",
