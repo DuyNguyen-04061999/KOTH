@@ -101,6 +101,7 @@ export default function NewHomePage() {
         keywords: `play4promo,play,promo`
       },
       property: {
+        'og:title': process.env.REACT_APP_ENV === "production" ? 'Play4promo' : "Play4promo staging",
         'og:url': window.location.href,
         'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
         'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
