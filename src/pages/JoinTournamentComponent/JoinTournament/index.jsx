@@ -54,7 +54,6 @@ import GameInTournament from "../GameInTournament";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
-import "./index.scss";
 
 const BgWithTooltip = withStyles({
   tooltip: {
