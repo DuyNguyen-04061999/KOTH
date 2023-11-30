@@ -36,6 +36,9 @@ export default function ListPackage(props) {
 
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
 
+  const { listSetting } = useSelector((state) => state.settingReducer);
+
+
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -350,7 +353,7 @@ export default function ListPackage(props) {
                           marginLeft: "4px !important",
                         }}
                       >
-                        8 Free extra/day
+                        {Number(packageFreeTicketTournament)*Number(listSetting?.saleValue || 1)} extra plays
                       </Typography>
                       <Typography
                         variant="body1"
@@ -363,7 +366,7 @@ export default function ListPackage(props) {
                           textDecorationLine: "line-through",
                         }}
                       >
-                        {packageFreeTicketTournament} extra plays
+                        {Number(packageFreeTicketTournament)} extra plays
                       </Typography>
                     </Box>
                   )}
@@ -595,7 +598,16 @@ export default function ListPackage(props) {
                       Only $0.67/ day
                     </Typography>
                   ) : (
-                    ""
+                    <Typography
+                      sx={{
+                        fontWeight: "500 !important",
+                        fontSize: "12px !important",
+                        color: "#979797",
+                        marginTop: "12px !important",
+                      }}
+                    >
+                      {""}
+                    </Typography>
                   )}
                 </Box>
               )}
