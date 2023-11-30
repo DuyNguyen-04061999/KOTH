@@ -345,12 +345,12 @@ export default function Layout(props) {
       <DialogSubscribe />
       <DialogGift />
       <NotiFunds />
-      <DialogProfile
+      {isProfileDialog && <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {
           dispatch(toggleProfileDialog());
         }}
-      />
+      />}
       <InviteGameDialog />
       <GameLogDialog
         open={isGameLogDialog}
