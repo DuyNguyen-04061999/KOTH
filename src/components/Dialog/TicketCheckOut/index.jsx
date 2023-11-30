@@ -22,6 +22,8 @@ export default function TicketCheckOut() {
     (state) => state.walletReducer
   );
   const { idPackage } = useSelector((state) => state.authReducer);
+  const { listSetting } = useSelector((state) => state.settingReducer);
+  
   const { listPackage } = useSelector((state) => state.packageReducer);
   const [feeCheckout, setFeeCheckout] = useState({
     origin: 4.4 / 100,
@@ -260,7 +262,7 @@ export default function TicketCheckOut() {
                           fontSize: "14px",
                         }}
                       >
-                        Total Extra: {totalExtra * sl} Extra
+                        Total Extra: {totalExtra * sl * Number(listSetting?.saleValue || 1)} Extra
                       </Typography>
                     </Box>
                   )}
