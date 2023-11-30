@@ -1,24 +1,25 @@
-import { AvatarGroup, Box, Grid } from "@mui/material";
+import { ArrowForwardIos } from "@mui/icons-material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LanguageIcon from "@mui/icons-material/Language";
+import {
+  AvatarGroup,
+  Box,
+  ClickAwayListener,
+  Grid,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { styled as muiStyled } from "@mui/material/styles";
-import React, { useState } from "react";
+import { default as React, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { imageDesktop } from "../../utils/images";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-import AuthDialog from "../Dialog/Auth/Signin";
-import "./index.scss";
-// import { inpChat } from "../../utils/cssFrom";
-import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import GameLogDialog from "../Dialog/GameLog/GameLog";
-import MenuWallet from "../MenuMobile/Wallet";
-import history from "../Router/history";
-
-import { ArrowForwardIos } from "@mui/icons-material";
-import ReactDOM from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { locales } from "../../i18n/i18n";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
@@ -46,19 +47,23 @@ import {
   finishGame,
   finishVideo,
 } from "../../redux-saga-middleware/reducers/promotionReducer";
-import { getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
+import {changeCurrentLanguage, getSettingReady} from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import {
   closeTransactionDialog,
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
+import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
 import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
+import AuthDialog from "../Dialog/Auth/Signin";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
+import GameLogDialog from "../Dialog/GameLog/GameLog";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import NotiFunds from "../Dialog/NotiFunds";
 import DialogProfile from "../Dialog/Profile";
@@ -68,9 +73,11 @@ import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import SubscriptionDialog from "../Dialog/Subscription";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
+import MenuWallet from "../MenuMobile/Wallet";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
-
+import history from "../Router/history";
+import "./index.scss";
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -107,6 +114,8 @@ const AppBar = muiStyled(MuiAppBar, {
 const drawerWidth = 310;
 
 export default function Layout(props) {
+  const { i18n } = useTranslation();
+  const currentLanguage = locales[i18n.language];
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const { isWalletDialog, isTransactionDialog } = useSelector(
     (state) => state.walletReducer
@@ -131,6 +140,12 @@ export default function Layout(props) {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const { device } = useSelector((state) => state.deviceReducer);
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  const handleCloseDropDown = () => {
+    setOpenDropdown(false);
+  };
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -287,6 +302,14 @@ export default function Layout(props) {
       dispatch(updateUserToken(tokenLocal));
     }
   }, [dispatch]);
+
+  const {currentLang } = useSelector(state => state.settingReducer);
+
+  const handleChangeLang = (lang) => {
+    i18n.changeLanguage(lang);
+    setOpenDropdown(false);
+    dispatch(changeCurrentLanguage(lang));
+  };
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token");
@@ -461,6 +484,72 @@ export default function Layout(props) {
             </Box>
           )}
           <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : ""}</Box>
+          <ClickAwayListener onClickAway={handleCloseDropDown}>
+            <Box
+              sx={{
+                position: "relative",
+                marginRight: "16px",
+                display: width < 576 ? "none" : "block",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() => setOpenDropdown(!openDropdown)}
+              >
+                <LanguageIcon />
+                <Typography sx={{ marginLeft: "6px", color: "white" }}>
+                  {currentLanguage}
+                </Typography>
+                <KeyboardArrowDownIcon />
+              </Box>
+
+              <Box
+                id="basic-menu"
+                sx={{
+                  position: "absolute",
+                  backgroundColor: "#7648ED",
+                  display: openDropdown ? "block" : "none",
+                  top: "40px",
+                }}
+                component={"div"}
+              >
+                <MenuItem
+                  sx={{ cursor: "pointer", padding: "16px" }}
+                  onClick={() => handleChangeLang("tur")}
+                >
+                  <Box
+                    component={"img"}
+                    src={images.turkishICon}
+                    sx={{ width: "20px", marginRight: "8px" }}
+                  ></Box>
+                  <Typography
+                    sx={{ color: "white", fontSize: "16px", fontWeight: "700" }}
+                  >
+                    Türkçe
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  sx={{ cursor: "pointer", padding: "16px" }}
+                  onClick={() => handleChangeLang("en")}
+                >
+                  <Box
+                    component={"img"}
+                    src={images.englishIcon}
+                    sx={{ width: "20px", marginRight: "8px" }}
+                  ></Box>
+                  <Typography
+                    sx={{ color: "white", fontSize: "16px", fontWeight: "700" }}
+                  >
+                    English
+                  </Typography>
+                </MenuItem>
+              </Box>
+            </Box>
+          </ClickAwayListener>
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
           </AvatarGroup>

@@ -1,5 +1,6 @@
 import { Box, Dialog, Slide, Typography } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -18,12 +19,21 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 export default function Browser(props) {
+  const { t, i18n } = useTranslation("navigation");
   const { open, handleShowMenu } = props;
   const { isDropdownNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
+
+  const handleChangeLang = () => {
+    if (i18n.language === "en") {
+      i18n.changeLanguage("tur");
+    } else if (i18n.language === "tur") {
+      i18n.changeLanguage("en");
+    }
+  };
 
   useEffect(() => {
     const socket = _socket;
@@ -93,12 +103,60 @@ export default function Browser(props) {
                 marginLeft: "10px !important",
               }}
             >
-              Menu
+              {t("Menu")}
             </Typography>
           </Box>
           <Box className="pb-5" sx={{ padding: 1.5 }}>
             <Box>
               <Box className="text-white">
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    borderRadius: "5px",
+                    color: "#A89CD7",
+                  }}
+                  onClick={() => {
+                    handleChangeLang();
+                    handleShowMenu();
+                  }}
+                  className="nav-home pt-2 pb-2 ps-2 mb-3"
+                >
+                  <Box
+                    component={"img"}
+                    src={
+                      i18n.language === "en"
+                        ? images.turkishICon
+                        : i18n.language === "tur"
+                        ? images.englishIcon
+                        : null
+                    }
+                    sx={{
+                      width: "24px",
+                      marginRight: "12px",
+                    }}
+                  />
+                  <span
+                    className="hover-nav"
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {i18n.language === "tur"
+                      ? "English"
+                      : i18n.language === "en"
+                      ? "Turkish"
+                      : ""}
+                  </span>
+                </Box>
                 <Box
                   sx={{
                     cursor: "pointer",
@@ -158,7 +216,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Home
+                    {t("Home")}
                   </span>
                 </Box>
                 <Box
@@ -209,7 +267,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Promotion
+                      {t("Promotion")}
                     </span>
                     <Box sx={{ marginLeft: "auto", marginRight: "24px" }}>
                       <svg
@@ -321,7 +379,7 @@ export default function Browser(props) {
                             : "",
                       }}
                     >
-                      Hot
+                      {t("Hot")}
                     </span>
                   </Box>
 
@@ -394,7 +452,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Ongoing
+                      {t("Ongoing")}
                     </span>
                   </Box>
                   <Box
@@ -456,7 +514,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Upcoming
+                      {t("Upcoming")}
                     </span>
                   </Box>
                   <Box
@@ -518,7 +576,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Ended
+                      {t("Ended")}
                     </span>
                   </Box>
                 </Box>
@@ -586,7 +644,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Packages
+                    {t("Packages")}
                   </span>
                 </Box>
                 {getAppType() && getAppType() === "promote" ? (
@@ -813,7 +871,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Help Center
+                    {t("Help Center")}
                   </span>
                 </Box>
                 <Box
@@ -889,7 +947,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Support
+                    {t("Support")}
                   </span>
                 </Box>
               </Box>

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import {useTranslation} from "react-i18next";
 
 const HelpCenterComponent = () => {
   const { tabHelpCenter, listFAQPromote, isFetching } = useSelector(
@@ -19,7 +20,7 @@ const HelpCenterComponent = () => {
   const { device } = useSelector((state) => state.deviceReducer);
   const dispatch = useDispatch();
   const [listFAQ, setListFAQ] = useState([]);
-
+  const {t} = useTranslation('help_center');
   const handleChange = (event, newValue) => {
     dispatch({
       type: "SET_TAB_HELPCENTER",
@@ -264,7 +265,7 @@ const HelpCenterComponent = () => {
               textAlign: "start",
               color: "white",
             }}
-            children="Help Center"
+            children={t("Help Center")}
           />
         </Box>
         <Box

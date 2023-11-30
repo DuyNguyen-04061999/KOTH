@@ -761,7 +761,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
                       fontWeight: "500 !important",
                     }}
                   >
-                    Participants
+                    {t('Participants')}
                   </Typography>
                   <Typography
                     sx={{

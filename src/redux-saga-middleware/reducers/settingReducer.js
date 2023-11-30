@@ -21,17 +21,29 @@ export const getSettingFail = (data) => {
   };
 };
 
+export const changeCurrentLanguage = (data) => {
+  return {
+    type: "CHANGE_CURRENT_LANGUAGE",
+    payload: data,
+  };
+};
+
 const settingReducer = (
   state = {
     isGetSetting: false,
     listSetting: {},
+    currentLanguage: 'en',
   },
   action
 ) => {
   const { type, payload } = action;
   switch (type) {
     case REHYDRATE:
-      return { ...state };
+    {
+      const { settingReducer } = payload || {}
+      const { currentLanguage } = settingReducer || ""
+      return {...state, currentLanguage: currentLanguage || "en"}
+    }
     case "GET_SETTING_READY":
       return {
         ...state,
@@ -48,6 +60,11 @@ const settingReducer = (
         ...state,
         isGetSetting: false,
         listSetting: {},
+      };
+    case "CHANGE_CURRENT_LANGUAGE":
+      return {
+        ...state,
+        currentLanguage: payload,
       };
     default:
       return { ...state };

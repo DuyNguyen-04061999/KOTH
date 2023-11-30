@@ -11,9 +11,11 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
+import {useTranslation} from "react-i18next";
 
 export default function HotTournament() {
   const { width } = useWindowDimensions();
+  const {t} = useTranslation('ongoing_promo');
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -122,7 +124,7 @@ export default function HotTournament() {
                   fontWeight: 700,
                 }}
               >
-                Ongoing Promotion
+                {t('Ongoing Promotion')}
               </Typography>
               <Box
                 sx={{
@@ -197,7 +199,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                Ongoing Promotion
+                {t('Ongoing Promotion')}
               </Typography>
               <Box
                 sx={{

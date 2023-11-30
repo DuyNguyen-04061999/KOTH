@@ -1,6 +1,7 @@
 import { Box, Drawer } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -52,6 +53,7 @@ const ChatDrawer = () => {
   const { tokenUser, resetInputValue } = useSelector(
     (state) => state.userReducer
   );
+  const { t } = useTranslation("global");
   const { startGameCheck } = useSelector((state) => state.appReducer);
   useEffect(() => {
     if (resetInputValue === "logoutSuccess" && chatInput && chatInput.current) {
@@ -211,7 +213,7 @@ const ChatDrawer = () => {
                       zIndex: 2,
                     }}
                   >
-                    Global
+                    {t("Global")}
                   </span>
                 </div>
               </div>
@@ -281,7 +283,7 @@ const ChatDrawer = () => {
                       zIndex: 2,
                     }}
                   >
-                    Private
+                    {t("Private")}
                   </span>
                 </div>
               </div>

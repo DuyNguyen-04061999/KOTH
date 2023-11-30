@@ -84,6 +84,7 @@ const SuspenseWrapper = (props) => {
   return <Suspense fallback={<PageLoading />}>{child}</Suspense>;
 };
 
+
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 

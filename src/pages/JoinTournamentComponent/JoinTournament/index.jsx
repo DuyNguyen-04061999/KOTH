@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import DocumentMeta from "react-document-meta";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -48,13 +48,13 @@ import { toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducer
 import { isJson, sliceString } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import NewFooter from "../../NewFooter";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
 import "./index.scss";
+import {useTranslation} from "react-i18next";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -96,9 +96,8 @@ export default function JoinTournament() {
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const navigate = useNavigate();
-
   const location = useLocation();
-
+  const {t} = useTranslation("join_tour");
   const handleClickOpen = () => {
     navigate("/packages");
     dispatch(updateFromRouter(location.pathname));
@@ -456,7 +455,7 @@ export default function JoinTournament() {
                       <Box sx={{ width: "150px" }}>
                         <AnimButton
                           onClick={handleJoinTour}
-                          text="Join"
+                          text={t('Join')}
                           type="highlight"
                         />
                       </Box>
@@ -471,20 +470,20 @@ export default function JoinTournament() {
                             <AnimButton
                               onClick={handlePlayTour}
                               type="loading"
-                              text="Play"
+                              text={t('Play')}
                             />
                           ) : (
                             <AnimButton
                               onClick={handlePlayTour}
                               type="highlight"
-                              text="Play"
+                              text={t('Play')}
                             />
                           )}
                         </Box>
                         <Box sx={{ width: "150px" }}>
                           <AnimButton
                             onClick={handleClickOpen}
-                            text="Buy Extra"
+                            text={t('Buy Extra')}
                             type="primary"
                           />
                         </Box>
@@ -566,7 +565,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              Free Extra:
+                              {t('Free Extra')} :
                             </Typography>
                             <BgWithTooltip
                               title="Free Extra will be reset at 11:59 PM per day, so make sure to use them all."
@@ -682,7 +681,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              Start
+                                {t('Start')}
                             </Typography>
                           </Box>
                           <Box
@@ -780,7 +779,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              End
+                                {t('End')}
                             </Typography>
                           </Box>
 
@@ -873,7 +872,7 @@ export default function JoinTournament() {
                             fontWeight: "700",
                           }}
                         >
-                          Participants
+                          {t('Participants')}
                         </Typography>
                         <Typography
                           sx={{
@@ -1595,7 +1594,7 @@ export default function JoinTournament() {
                               : "18px",
                         }}
                       >
-                        Reward
+                          {t('Reward')}
                       </Box>
                       <Box
                         sx={{
@@ -1605,7 +1604,7 @@ export default function JoinTournament() {
                           fontSize: "14px",
                         }}
                       >
-                        Play game to get this voucher
+                        {t('Play game to get this voucher')}
                       </Box>
                     </Box>
                     {isGetDetailPromotion || isGetDetailAuthPromotion ? (
@@ -1669,7 +1668,7 @@ export default function JoinTournament() {
                                     textAlign: "start",
                                   }}
                                 >
-                                  Recipient
+                                  {t("Recipient")}
                                 </Typography>
                                 <Typography
                                   style={{
@@ -1696,7 +1695,7 @@ export default function JoinTournament() {
                                     textAlign: "start",
                                   }}
                                 >
-                                  Sponsored by
+                                  {t('Sponsored by')}
                                 </Typography>
                                 <Typography
                                   style={{
@@ -1728,7 +1727,7 @@ export default function JoinTournament() {
                                     textAlign: "start",
                                   }}
                                 >
-                                  Valid by
+                                  {t('Valid by')}
                                 </Typography>
                                 <Typography
                                   style={{
@@ -1954,7 +1953,7 @@ export default function JoinTournament() {
                               : "28px",
                         }}
                       >
-                        Final Result
+                          {t('Final Result')}
                       </Typography>
                       {detailTournament?.tournamentStatus === 2 ? (
                         ""
@@ -1974,7 +1973,7 @@ export default function JoinTournament() {
                             cursor: "pointer",
                           }}
                         >
-                          View All
+                            {t('View All')}
                         </Typography>
                       )}
                     </Box>
@@ -2062,9 +2061,7 @@ export default function JoinTournament() {
                       className="ms-2"
                       sx={{ color: "#e75857", textAlign: "left" }}
                     >
-                      Persons under the age of 18 should use this Website only
-                      with the supervision of an Adult. Payment Information must
-                      be provided by or with the permission of an Adult
+                        {t('Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult')}
                     </Typography>
                   </Box>
                   {detailTournament &&
@@ -2107,7 +2104,6 @@ export default function JoinTournament() {
               )}
             </Box>
             <GamePreview />
-            <NewFooter />
           </Container>
         ) : (
           <>
@@ -2487,7 +2483,7 @@ export default function JoinTournament() {
                                 marginLeft: "5px !important",
                               }}
                             >
-                              End
+                                {t('End')}
                             </Typography>
                           </Box>
                           <Box
@@ -2561,7 +2557,7 @@ export default function JoinTournament() {
                               fontWeight: "700",
                             }}
                           >
-                            Free Extra:
+                            {t('Free Extra')} :
                           </Typography>
                           <Box
                             display={"flex"}
@@ -2677,7 +2673,7 @@ export default function JoinTournament() {
                                   : "18px",
                             }}
                           >
-                            Reward
+                              {t('Reward')}
                           </Box>
                           <Box
                             sx={{
@@ -2687,7 +2683,7 @@ export default function JoinTournament() {
                               fontSize: "14px",
                             }}
                           >
-                            Play game to get this voucher
+                            {t('Play game to get this voucher')}
                           </Box>
                         </Box>
                         <Box className="d-flex p-2 ps-3 pe-3">
@@ -2786,7 +2782,7 @@ export default function JoinTournament() {
                                         textAlign: "start",
                                       }}
                                     >
-                                      Sponsored by
+                                      {t('Sponsored by')}
                                     </Typography>
                                     <Typography
                                       style={{
@@ -2817,7 +2813,7 @@ export default function JoinTournament() {
                                         textAlign: "start",
                                       }}
                                     >
-                                      Valid by
+                                      {t('Valid by')}
                                     </Typography>
                                     <Typography
                                       style={{
@@ -3021,7 +3017,7 @@ export default function JoinTournament() {
                                   fontWeight: "700 !important",
                                 }}
                               >
-                                Participants
+                                {t('Participants')}
                               </Typography>
                               <Typography
                                 sx={{
@@ -3473,7 +3469,7 @@ export default function JoinTournament() {
                           fontSize: "14px",
                         }}
                       >
-                        Final Result
+                          {t('Final Result')}
                       </Typography>
                       {detailTournament?.tournamentStatus === 2 ? (
                         ""
@@ -3490,7 +3486,7 @@ export default function JoinTournament() {
                             setCurrentResult(true);
                           }}
                         >
-                          View all
+                            {t('View All')}
                           <LazyLoadImage
                             sx={{
                               marginLeft: "4px",
@@ -3520,7 +3516,6 @@ export default function JoinTournament() {
                   </Box>
                 </Box>
                 <GamePreview />
-                <NewFooter />
                 <Box
                   sx={{
                     marginBottom: "75px",

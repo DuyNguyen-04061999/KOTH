@@ -1,6 +1,7 @@
 import { Box, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import AnimButton from "../../../../components/AnimButton";
@@ -35,7 +36,7 @@ export default function ListPackage(props) {
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
 
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
-
+  const { t } = useTranslation("package");
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -306,7 +307,7 @@ export default function ListPackage(props) {
                         marginLeft: "4px !important",
                       }}
                     >
-                      {packageFreeTicketTournament} Free Extra/day
+                      {t(`${packageFreeTicketTournament} Free Extra/day`)}
                     </Typography>
                   ) : (
                     <Typography
@@ -319,7 +320,7 @@ export default function ListPackage(props) {
                         marginLeft: "4px !important",
                       }}
                     >
-                      {packageFreeTicketTournament} extra plays
+                      {packageFreeTicketTournament} {t("extra plays")}
                     </Typography>
                   )}
                 </Box>
@@ -362,7 +363,7 @@ export default function ListPackage(props) {
                         marginLeft: "4px !important",
                       }}
                     >
-                      Use on any promotion
+                      {t("Use on any promotion")}
                     </Typography>
                   </Box>
                 )}
@@ -402,7 +403,7 @@ export default function ListPackage(props) {
                         fontWeight: "500 !important",
                       }}
                     >
-                      Applies to all promotions
+                      {t("Applies to all promotions")}
                     </Typography>
                   </Box>
                 ) : (
@@ -449,7 +450,7 @@ export default function ListPackage(props) {
                         fontWeight: "500 !important",
                       }}
                     >
-                      Every day for a month
+                      {t("Every day for a month")}
                     </Typography>
                   </Box>
                 ) : (
@@ -491,7 +492,7 @@ export default function ListPackage(props) {
                         fontWeight: "500 !important",
                       }}
                     >
-                      Save over 20% more
+                      {t("Save over 20% more")}
                     </Typography>
                   </Box>
                 ) : (
@@ -547,7 +548,7 @@ export default function ListPackage(props) {
                         marginTop: "5px !important",
                       }}
                     >
-                      Only $0.67/ day
+                      {t("Only $0.67/ day")}
                     </Typography>
                   ) : (
                     ""
@@ -563,7 +564,7 @@ export default function ListPackage(props) {
                       ? "Current pack"
                       : uPack?.remain === "Expired"
                       ? "Upgrade Pack"
-                      : "Buy Now"
+                      : t("Buy Now")
                   }
                   type={
                     uPack &&

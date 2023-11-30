@@ -9,8 +9,10 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import { imageHome } from "../../../../utils/images";
+import {useTranslation} from "react-i18next";
 
 export default function ItemComponent({ countdown, tourInfo, isLoading }) {
+    const {t} = useTranslation('global');
   const { width } = useWindowDimensions();
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
@@ -232,11 +234,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 }}
               >
                 {tourInfo?.tournamentStatus === 0
-                  ? "Starting in: "
+                  ? `${t('Starting in')}: `
                   : tourInfo?.tournamentStatus === 1
-                  ? "End in: "
+                  ? `${t('End in')}: `
                   : tourInfo?.tournamentStatus === 2
-                  ? "Winner: "
+                  ? `${t('Winner')}: `
                   : ""}
               </Box>
               {isLoading ? (
@@ -413,7 +415,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               {tourInfo && tourInfo?.tournamentStatus === 0
                 ? "See More"
                 : tourInfo?.tournamentStatus === 1
-                ? "Play Now"
+                ? `${t("Play Now")}`
                 : "See More"}
             </button>
           </Box>

@@ -370,9 +370,11 @@ import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png"
 
 import bannersigninTablet from "../assets/images/signinTablet.png";
 
-
 import bannerGift from "../assets/images/giftBanner.png";
 import skrillIcon from "../assets/images/skrill.png";
+
+import englishIcon from "../assets/images/englishIcon.png";
+import turkishICon from "../assets/images/turkishIcon.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -608,6 +610,8 @@ export const images = {
   layerend: layerend,
   imageTutorial: imageTutorial,
   skrillIcon: skrillIcon,
+  turkishICon: turkishICon,
+  englishIcon: englishIcon,
 };
 
 export const navigationImages = {
