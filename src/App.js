@@ -6,11 +6,26 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "./assets/css/App.css";
+import Layout from "./components/Layout";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import { CustomRouter, history } from "./components/Router";
 import { ScrollToTopURL } from "./components/ScrollToTop";
+import ToastNotification from "./components/Toast/ToastNotification";
+import ChangeLog from "./pages/ChangeLog/ChangeLog";
+import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
+import GameEditPage from "./pages/GameManager/GameEditPage";
+import GamePage from "./pages/GameManager/GamePage";
 import ListGamePage from "./pages/GameManager/ListGamePage";
+import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
+import UploadPage from "./pages/GameManager/UploadPage";
+import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
+import GameLobby from "./pages/GamePlay";
+import HomePage from "./pages/Home";
+import PlayGamePage from "./pages/PlayGamePage";
+import Refresh from "./pages/Refresh";
+import Tournament from "./pages/Tournament";
+import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
@@ -27,7 +42,10 @@ import {
   pushChatWorld,
   pushfriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
-import { checkoutPaypalCancel, checkoutPaypalSuccess } from "./redux-saga-middleware/reducers/checkoutReducer";
+import {
+  checkoutPaypalCancel,
+  checkoutPaypalSuccess,
+} from "./redux-saga-middleware/reducers/checkoutReducer";
 import {
   updateDevice,
   updateDeviceType,
@@ -37,34 +55,13 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import {
-  updateCountTicket
-} from "./redux-saga-middleware/reducers/userReducer";
+import { updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-const Layout = lazy(() => import("./components/Layout"));
-const PlayGamePage = lazy(() => import("./pages/PlayGamePage"));
-const TransactionDetailPage = lazy(() =>
-  import("./pages/Transaction/TransactionDetailPage")
-);
-const DeleteSkinPage = lazy(() => import("./pages/GameManager/DeleteSkinPage"));
-const UploadGamePreview = lazy(() =>
-  import("./pages/GameManager/UploadGamePreview")
-);
-const UploadSkinPage = lazy(() => import("./pages/GameManager/UploadSkinPage"));
-const GameEditPage = lazy(() => import("./pages/GameManager/GameEditPage"));
-const GamePage = lazy(() => import("./pages/GameManager/GamePage"));
-const UploadPage = lazy(() => import("./pages/GameManager/UploadPage"));
-const Refresh = lazy(() => import("./pages/Refresh"));
-const GameLobby = lazy(() => import("./pages/GamePlay"));
-const ToastNotification = lazy(() =>
-  import("./components/Toast/ToastNotification")
-);
-const Tournament = lazy(() => import("./pages/Tournament"));
-const ChangeLog = lazy(() => import("./pages/ChangeLog/ChangeLog"));
+
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
 const LazyHelpCenter = lazy(() => import("./pages/HelpCenter"));
@@ -81,7 +78,6 @@ const LazyUpcomingPromo = lazy(() =>
   import("./pages/Promotion/UpcomingPromotion")
 );
 const LazyEndedPromo = lazy(() => import("./pages/Promotion/EndedPromotion"));
-const HomePage = lazy(() => import("./pages/Home"));
 
 const SuspenseWrapper = (props) => {
   const { child } = props;
@@ -381,17 +377,21 @@ function App() {
     const paymentType = params.get("type");
     const paymentStatus = params.get("result");
 
-    if(paymentType === "paypal" && paymentStatus === "success") {
-      store.dispatch(checkoutPaypalSuccess({
-        paymentId: paymentId,
-        payerId: PayerID,
-      }))
+    if (paymentType === "paypal" && paymentStatus === "success") {
+      store.dispatch(
+        checkoutPaypalSuccess({
+          paymentId: paymentId,
+          payerId: PayerID,
+        })
+      );
     }
 
-    if(paymentType === "paypal" && paymentStatus === "fail") {
-      store.dispatch(checkoutPaypalCancel({
-        paymentId: paymentId,
-      }))
+    if (paymentType === "paypal" && paymentStatus === "fail") {
+      store.dispatch(
+        checkoutPaypalCancel({
+          paymentId: paymentId,
+        })
+      );
     }
   }, []);
   return (
@@ -405,14 +405,11 @@ function App() {
               <Routes>
                 <Route
                   path="/playgame/:id"
-                  element={<SuspenseWrapper child={<PlayGamePage />} />}
+                  element={<PlayGamePage />}
                 />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
-                <Route
-                  path="/"
-                  element={<SuspenseWrapper child={<Layout />} />}
-                >
+                <Route path="/" element={<Layout />}>
                   <Route
                     path="/"
                     element={
@@ -439,7 +436,7 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage />} />
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
                       )
                     }
                   ></Route>
@@ -447,10 +444,7 @@ function App() {
                     path="/promotion-detail/:id/influencers/:userName"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   ></Route>
-                  <Route
-                    path="/gamelobby/:id"
-                    element={<SuspenseWrapper child={<GameLobby />} />}
-                  />
+                  <Route path="/gamelobby/:id" element={<GameLobby />} />
                   {/* <Route
                     path="/selectroom/:id"
                     element={<SelectRoomContainer />}
@@ -562,7 +556,7 @@ function App() {
                   store.dispatch(hideToastNotification());
                 }}
               />
-              <SuspenseWrapper child={<ToastNotification />} />
+              <ToastNotification />
             </CustomRouter>
           </PersistGate>
         </Provider>

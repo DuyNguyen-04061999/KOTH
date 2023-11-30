@@ -78,7 +78,6 @@ const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
       fontWeight: 500,
       lineHeight: "16px",
       maxWidth: "150px",
-      overflow: "scroll",
     },
     ":first-child": {
       color: "#fc3c3c",

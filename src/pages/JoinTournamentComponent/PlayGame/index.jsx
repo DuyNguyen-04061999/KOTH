@@ -1,4 +1,4 @@
-import { Box, Dialog, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,6 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import { getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import { sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -20,8 +19,8 @@ export default function PlayGame(props) {
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { chatPopup } = useSelector((state) => state.chatReducer);
+  const { startGameCheck } = useSelector((state) => state.appReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [continueGame, setContinueGame] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -66,26 +65,29 @@ export default function PlayGame(props) {
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
-      if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-        if (
-          (device === "Mobile" || device === "Tablet") &&
-          orientation === "landscape"
-        ) {
-          return true;
-        } else {
-          return false;
-        }
-      } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-        if (
-          (device === "Mobile" || device === "Tablet") &&
-          orientation === "portrait"
-        ) {
-          return true;
-        } else {
-          return false;
-        }
+      // if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
+      //   if (
+      //     (device === "Mobile" || device === "Tablet") &&
+      //     orientation === "landscape"
+      //   ) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
+      //   if (
+      //     (device === "Mobile" || device === "Tablet") &&
+      //     orientation === "portrait"
+      //   ) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // }
+      // return false;
+      if (device === "Mobile") {
+        return true;
       }
-      return false;
     };
     socket?.on("startGameInTournamentSuccess", (data) => {
       if (checkFullMobileScreen()) {
@@ -126,8 +128,46 @@ export default function PlayGame(props) {
     }
     return false;
   };
+
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (startGameCheck && !videoGame) {
+      setLoading(true);
+    }
+  }, [startGameCheck, videoGame]);
+
   return (
-    <>
+    <Box
+      sx={
+        !videoGame && device === "Mobile"
+          ? detailTournament?.tournamentInfors?.game?.gameScreenType
+            ? orientation === "portrait"
+              ? {
+                  transform: " rotate(-90deg)",
+                  transformOrigin: "left top",
+                  width: "100vh",
+                  height: "100vw",
+                  overflowX: "hidden",
+                  position: "absolute",
+                  top: "100%",
+                  left: "0px",
+                }
+              : ""
+            : orientation === "landscape"
+            ? {
+                transform: " rotate(-90deg)",
+                transformOrigin: "left top",
+                width: "100vh",
+                height: "100vw",
+                overflowX: "hidden",
+                position: "absolute",
+                top: "100%",
+                left: "0px",
+              }
+            : ""
+          : ""
+      }
+    >
       <Box
         sx={{
           width: "100%",
@@ -172,8 +212,8 @@ export default function PlayGame(props) {
                 />
               )}
             </Box>
-            {detailTournament?.tournamentInfors?.game?.gameEngine ===
-            "cocos" ? (
+            {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
+            loading ? (
               <iframe
                 allow="fullscreen"
                 style={
@@ -203,7 +243,7 @@ export default function PlayGame(props) {
                 title="Playgame"
                 src={
                   process.env.REACT_APP_ENV === "development"
-                    ? `http://localhost:3001?token=${
+                    ? `https://storage.googleapis.com/web-system-files/cocos/backtwo/index.html?token=${
                         tokenUser || localStorage.getItem("token")
                       }&tournamentId=${detailTournament?.id}&skinId=${
                         detailTournament?.tournamentInfors?.skin?.id
@@ -255,148 +295,6 @@ export default function PlayGame(props) {
                       detailTournament?.tournamentInfors?.skin?.id
                 }
               ></iframe>
-            )}
-            {checkLockScreen() && !videoGame && (
-              <Dialog
-                sx={{ zIndex: "100000000" }}
-                fullScreen={true}
-                open={true}
-              >
-                {continueGame === true ? (
-                  <Box
-                    sx={{
-                      backgroundColor: "#1c191e",
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        backgroundColor: "#37285c",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        height: "56px",
-                        width: "100%",
-                        boxSizing: "border-box",
-                        padding: "10px",
-                        color: "white",
-                      }}
-                    >
-                      <img
-                        style={{
-                          width: getFontSizeTitleDependOnWidth(width),
-                          height: getFontSizeTitleDependOnWidth(width),
-                        }}
-                        alt="..."
-                        src={images.BackButtonLobby}
-                      />
-                      <Typography>Tournament</Typography>
-                    </Box>
-                    <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
-                      <Box
-                        onClick={() => {
-                          setContinueGame(false);
-                        }}
-                        sx={{
-                          width: "100%",
-                          height: "280px",
-                          backgroundColor: "#423965",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: `${parseFloat(width / 2.6)}px`,
-                            height: "40px",
-                            background: "linear-gradient(#9c39f1,#c049ed)",
-                            borderRadius: "25px",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "0px 10px 0px 5px",
-                          }}
-                        >
-                          <Typography sx={{ color: "white" }}>
-                            Continue
-                          </Typography>
-                          <img
-                            width={width / 18}
-                            src={images.conitnuePlayButton}
-                            alt="..."
-                          />
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                ) : (
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          backgroundColor: "#423965",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        {" "}
-                        <Box sx={{}}>
-                          <Box
-                            sx={{ width: "200px", height: "200px" }}
-                            component={"img"}
-                            src={images.RotateScreen}
-                          ></Box>
-                          <Typography
-                            sx={{ color: "white", marginTop: "20px" }}
-                          >
-                            Rotate Your Screen
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box
-                      onClick={() => {
-                        setContinueGame(true);
-                      }}
-                      sx={{
-                        position: "fixed",
-                        top: "40%",
-                        width: "90px",
-                        height: "40px",
-                        display: "flex",
-                        padding: "10px",
-                        alignItems: "center",
-                        backgroundImage: "linear-gradient(#6844de,#8c39ff)",
-                        borderRadius: "0px 50px 50px 0px",
-                      }}
-                    >
-                      <Box
-                        sx={{ width: "20px", height: "20px" }}
-                        component={"img"}
-                        src={images.BackButtonLobby}
-                      ></Box>
-                      <Typography sx={{ color: "white" }}>Lobby</Typography>
-                    </Box>
-                  </Box>
-                )}
-              </Dialog>
             )}
           </Box>
         </Box>
@@ -707,6 +605,6 @@ export default function PlayGame(props) {
           </Box>
         )}{" "}
       </Box>
-    </>
+    </Box>
   );
 }

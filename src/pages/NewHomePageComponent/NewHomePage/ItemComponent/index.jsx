@@ -9,7 +9,6 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import { imageHome } from "../../../../utils/images";
-import "./index.scss";
 
 export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const { width } = useWindowDimensions();

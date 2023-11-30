@@ -11,7 +11,6 @@ import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
-import "./index.scss";
 const NewFooter = lazy(() => import("../../NewFooter")) ;
 
 export default function NewHomePage() {
@@ -102,8 +101,10 @@ export default function NewHomePage() {
         keywords: `play4promo,play,promo`
       },
       property: {
+        'og:title': process.env.REACT_APP_ENV === "production" ? 'Play4promo' : "Play4promo staging",
         'og:url': window.location.href,
-        'og:image': imageDesktop.logoCT,
+        'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+        'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
         'og:image:type': 'image/png',
         'og:image:width': `144`,
         'og:image:height': `144`,
@@ -214,7 +215,7 @@ export default function NewHomePage() {
               ></Box>
             </Box>
           </Box>
-          <Box sx={{ paddingTop: width < 576 ? "24px" : "32px" }}>
+          <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
             <ListPromotion
               listData={hotTournament}
               loadingState={isFetchHot}

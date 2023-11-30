@@ -445,7 +445,7 @@ export default function DetailAccountDialogComponent() {
                                 </Typography>
                             </Box>
                         )}
-                        {!roles?.includes("agent") && !roles?.includes("distributor") && (
+                        {!roles?.includes("agent") && !roles?.includes("distributor") && !roles?.includes("master") && (
                             <Box component={"div"} onClick={handleDeleteAccount} className='d-flex flex-column align-items-center justify-content-center text-center p-2 me-2' sx={{
                                 borderRadius: "7.618px",
                                 maxWidth: width/4,

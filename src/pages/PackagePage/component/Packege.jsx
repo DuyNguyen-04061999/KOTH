@@ -61,8 +61,10 @@ export default function Package() {
         keywords: `play4promo,play,promo`
       },
       property: {
+        'og:title': process.env.REACT_APP_ENV === "production" ? 'Play4promo packages' : "Play4promo staging packages",
         'og:url': window.location.href,
-        'og:image': imageDesktop.logoCT,
+        'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+        'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
         'og:image:type': 'image/png',
         'og:image:width': `144`,
         'og:image:height': `144`,

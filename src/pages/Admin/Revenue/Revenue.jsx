@@ -91,7 +91,7 @@ const Revenue = () => {
           "Revenue",
           "Start Date",
           "Finish Date",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
 
@@ -106,22 +106,22 @@ const Revenue = () => {
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
 
       if (roles?.includes("agent")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
+          // "Nick Name",
           "Manager",
-          "Players",
+          // "Players",
           "Revenue",
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          "Time Zone",
+          // "Time Zone",
         ]);
       }
     } else {
@@ -134,7 +134,7 @@ const Revenue = () => {
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Phone", "Revenue"]);
       }
     }
   }, [roles, width]);

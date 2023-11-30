@@ -174,13 +174,13 @@ const AdminNavigation = (props) => {
     //   link: "/agent/provide-ticket",
     // },
     {
-      name: "Player Management",
+      name: "Home",
       icon: navigationImages.navCreate,
       iconActive: navigationImages.navCreateActive,
       link: "/",
     },
     {
-      name: "Agents Management",
+      name: "Player Management",
       icon: navigationImages.navManage,
       iconActive: navigationImages.navManageActive,
       link: "/manage",
