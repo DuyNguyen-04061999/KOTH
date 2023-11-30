@@ -13,7 +13,7 @@ import {
 import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
 import {
-  getCityAndStateProfile,
+  // getCityAndStateProfile,
   getMyInfor,
   getUserInfoReady,
   logoutReady,

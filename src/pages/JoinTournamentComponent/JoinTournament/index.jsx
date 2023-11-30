@@ -3491,20 +3491,23 @@ export default function JoinTournament() {
                           }}
                         >
                           View all
-                          <LazyLoadImage
+                          <Box
+                            component={"img"}
                             sx={{
                               marginLeft: "4px",
-                              width: "12px",
-                              heigth: "12px",
+                              width: "12px !important",
+                              heigth: "12px !important",
                             }}
                             src={images.viewAllButton}
-                            effect="blur"
-                            wrapperProps={{
-                              style: {
-                                transitionDelay: "0.5s",
-                              },
-                            }}
-                          ></LazyLoadImage>
+                            // effect="blur"
+                            // wrapperProps={{
+                            //   style: {
+                            //     transitionDelay: "0.5s",
+                            //     width: "12px !important",
+                            //     heigth: "12px !important",
+                            //   },
+                            // }}
+                          ></Box>
                         </Typography>
                       )}
                     </Box>
