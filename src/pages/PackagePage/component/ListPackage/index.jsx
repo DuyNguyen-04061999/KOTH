@@ -139,7 +139,7 @@ export default function ListPackage(props) {
           // width: "100%",
           marginLeft: "8px",
           marginRight: "8px",
-          height: "100%",
+          height: "fit-content",
         }}
         className={
           packageName === "Combo Extra 1"
@@ -177,7 +177,7 @@ export default function ListPackage(props) {
             alignItems: "center",
             borderRadius: "15px",
             width: "100%",
-            height: "100%",
+            height: "auto",
             border: "none",
             padding: "5px",
           }}
