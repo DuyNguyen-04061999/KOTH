@@ -20,6 +20,8 @@ import {
 import {
   forgetPasswordFail,
   forgetPasswordSuccess,
+  getCityAndStateProfileFail,
+  getCityAndStateProfileSuccess,
   getMyInforFail,
   getMyInforSuccess,
   getUserByUsernameFail,
@@ -155,7 +157,8 @@ function* updateProfileSaga(dataRequest) {
         yield put(
           updateProfileUserSuccess({
             avatar: data?.data?.avatar,
-            nickName: data?.data?.nickName
+            nickName: data?.data?.nickName,
+
           })
         );
       } else {
@@ -535,6 +538,12 @@ function* getMyInforSaga(dataRequest) {
             firstName: user?.userFirstName,
             lastName: user?.userLastName,
             nickName: user?.userNickName,
+            address1: user?.userAccount?.accountAddressOne,
+            address2: user?.userAccount?.accountAddressTwo,
+            city: user?.userAccount?.accountCity,
+            state: user?.userAccount?.accountState,
+            zipCode:  user?.userAccount?.accountZipCode,
+            birthDay: user?.userAccount?.accountBirthday
           })
         );
       } else {
@@ -545,6 +554,27 @@ function* getMyInforSaga(dataRequest) {
   } catch (error) {
     getMyInfo = 0;
     yield put(getMyInforFail());
+  }
+}
+
+let getCityAndStateProfile = 0
+function* getCityAndStateProfilSaga(dataRequest) {
+  try {
+    getCityAndStateProfile +=1
+    if(getCityAndStateProfile === 1) {
+      const {payload} = dataRequest
+      const res = yield call(userService.getCityAndStateProfile, payload)
+      const {status, data} = res
+      if(status === 200 || status === 201) {
+        yield put(getCityAndStateProfileSuccess(data))
+      } else {
+        yield put(getCityAndStateProfileFail())
+      }
+    }
+    getCityAndStateProfile = 0
+  } catch (error) {
+    getCityAndStateProfile = 0
+    yield put(getCityAndStateProfileFail())
   }
 }
 
@@ -561,6 +591,7 @@ function* authSaga() {
   yield takeEvery("RE_VERIFY_ACCOUNT", reVerifyAccountSaga);
   yield takeEvery("GET_USER_BY_USERNAME", getUserByUsernameSaga);
   yield takeEvery("GET_MY_INFOR", getMyInforSaga);
+  yield takeEvery("GET_CITY_AND_STATE_PROFILE", getCityAndStateProfilSaga)
 }
 
 export default authSaga;

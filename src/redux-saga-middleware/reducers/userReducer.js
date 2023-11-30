@@ -308,6 +308,27 @@ export const toggleCheckProfileDialog = (data) => {
   }
 }
 
+export const getCityAndStateProfile = (data) => {
+  return {
+    type: "GET_CITY_AND_STATE_PROFILE",
+    payload:data
+  }
+}
+
+export const getCityAndStateProfileSuccess = (data) => {
+  return {
+    type: "GET_CITY_AND_STATE_PROFILE_SUCCESS",
+    payload:data
+  }
+}
+
+export const getCityAndStateProfileFail = (data) => {
+  return {
+    type: "GET_CITY_AND_STATE_PROFILE_FAIL",
+    payload:data
+  }
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -343,7 +364,11 @@ const userReducer = (
     isVerifyOTP: false,
     isGetMyInfo: false,
     isFullInfo:false,
-    isCheckProfileDialog:false
+    isCheckProfileDialog:false,
+    cityProfile:[],
+    isFetchCity:false,
+    stateProfile:[],
+    isFetchState:false
   },
   action
 ) => {
@@ -492,6 +517,10 @@ const userReducer = (
     case "GET_MY_INFOR_SUCCESS": return {...state, isGetMyInfo: false}
     case "GET_MY_INFOR_FAIL": return {...state, isGetMyInfo: false}
     case "TOGGLE_CHECK_PROFILE_DIALOG": return {...state, isCheckProfileDialog: !state.isCheckProfileDialog}
+    case  "GET_CITY_AND_STATE_PROFILE" : return {...state,isFetchCity: true}
+    case  "GET_CITY_AND_STATE_PROFILE_SUCCESS" :
+    return {...state,isFetchCity: false, cityProfile:payload.listCity, stateProfile: payload.listState}
+    case  "GET_CITY_AND_STATE_PROFILE_FAIL" : return {...state,isFetchCity: false}
     default:
       return state;
   }

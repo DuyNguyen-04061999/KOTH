@@ -56,6 +56,13 @@ const profileReducer = (
     lastName: "",
     deleteFriendValue: "",
     nickName: "",
+    displayName: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zipCode:"",
+    birthDay:""
   },
   action
 ) => {
@@ -78,6 +85,13 @@ const profileReducer = (
         firstName: payload.firstName,
         lastName: payload.lastName,
         nickName: payload.nickName,
+        displayName:payload.displayName,
+        address1:payload.address1,
+        address2:payload.address2,
+        city:payload.city,
+        state:payload.state,
+        zipCode:payload.zipCode,
+        birthDay:payload.birthDay
       };
     case "DELETE_FRIEND_SUCCES_FULLY":
       return { ...state, deleteFriendValue: payload };

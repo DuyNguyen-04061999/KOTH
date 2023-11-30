@@ -3577,8 +3577,50 @@ export default function JoinTournament() {
                         padding: "10.5px 7px 10.5px 7px",
                       }}
                     >
-                      <span>Place</span>
-                      <span>Reward</span>
+                      <Typography
+                        sx={{
+                          color: "#fff",
+                          fontWeight: "600 !important",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Final Result
+                      </Typography>
+                      {detailTournament?.tournamentStatus === 2 ? (
+                        ""
+                      ) : (
+                        <Typography
+                          sx={{
+                            color: "#BE48ED",
+                            fontWeight: "600 !important",
+                            fontSize: "14px",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                          onClick={() => {
+                            setCurrentResult(true);
+                          }}
+                        >
+                          View all
+                          <Box
+                            component={"img"}
+                            sx={{
+                              marginLeft: "4px",
+                              width: "12px !important",
+                              heigth: "12px !important",
+                            }}
+                            src={images.viewAllButton}
+                            // effect="blur"
+                            // wrapperProps={{
+                            //   style: {
+                            //     transitionDelay: "0.5s",
+                            //     width: "12px !important",
+                            //     heigth: "12px !important",
+                            //   },
+                            // }}
+                          ></Box>
+                        </Typography>
+                      )}
                     </Box>
                     {detailTournament?.tournamentInfors?.rewards.map(
                       (item, index) => {
