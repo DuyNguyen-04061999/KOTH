@@ -9,8 +9,11 @@ import {
   Slide,
   Typography,
   Tooltip,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import _socket from "../../../redux-saga-middleware/config/socket";
@@ -32,6 +35,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AccessTime, MoreTime } from "@mui/icons-material";
 import AvatarPicker from "./AvatarPicker";
+import { updateProfileUser } from "../../../redux-saga-middleware/reducers/userReducer";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -51,7 +55,9 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { user } = useSelector((state) => state.userReducer);
   const { uPack } = useSelector((state) => state.userReducer);
-  const { tokenUser } = useSelector((state) => state.userReducer);
+  const { tokenUser, cityProfile, stateProfile } = useSelector(
+    (state) => state.userReducer
+  );
   // const { friendList } = useSelector((state) => state.chatReducer);
   const {
     id,
@@ -68,22 +74,40 @@ export default function DialogProfile(props) {
     zipCode,
     birthDay,
     firstName,
-    lastName
+    lastName,
   } = useSelector((state) => state.profileReducer);
-  console.log(address1);
   const dispatch = useDispatch();
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const [dName, setDName] = useState("Long Time no see");
+  const { device } = useSelector((state) => state.deviceReducer);
+  const [dName, setDName] = useState(nickName);
   const day = new Date();
-  const [value, setValue] = useState(dayjs(day));
+  const [value, setValue] = useState(dayjs(birthDay));
   const [avatarImage, setAvatarImage] = useState(avatarUrl);
   const [avatar, setAvatar] = useState("");
   const handleImageChange = (imageFile) => {
     setAvatarImage(imageFile.replace("data:image/png;base64,", ""));
   };
-  const [addressLine1,setAddressLine1] = useState(address1)
-  const [addressLine2,setAddressLine2] = useState(address2)
-  const [zCode,setZcode] = useState(zipCode)
+  const [addressLine1, setAddressLine1] = useState(address1);
+  const [addressLine2, setAddressLine2] = useState(address2);
+  const [zCode, setZcode] = useState(zipCode);
+  const [cityOption, setCityOption] = useState(city);
+  const [stateOption, setStateOption] = useState(state);
+  const handleChangeState = (event) => {
+    setStateOption(event.target.value);
+  };
+  const handleChange = (event) => {
+    setCityOption(event.target.value);
+  };
+
+  useEffect(() => {
+    setDName(nickName);
+    setAddressLine1(address1);
+    setAddressLine2(address2);
+    setCityOption(city);
+    setStateOption(state);
+    setZcode(zipCode);
+    setValue(dayjs(birthDay));
+  }, [nickName]);
 
   const [disabledInp, setDisabledInp] = useState(true);
   // const [socket, setSocket] = useState(null);
@@ -134,12 +158,43 @@ export default function DialogProfile(props) {
     );
   };
 
+  function GetOriginalLengthInBytes(base64string) {
+    const bits = base64string.length * 6;
+    const kb = Math.ceil(bits / 8 / 1000);
+    return kb;
+  }
+
+  const sendUpdateProfile = () => {
+    if (avatarImage && GetOriginalLengthInBytes(avatarImage) > 5000) {
+      dispatch(
+        showToastNotification({
+          type: "error",
+          message: "Please attach image less than 5MB",
+        })
+      );
+    } else {
+      dispatch(
+        updateProfileUser({
+          nickName: dName,
+          avatar: avatar,
+          address1: addressLine1,
+          address2: addressLine2,
+          city: cityOption,
+          state: stateOption,
+          zipcode: zCode,
+          birthday: value,
+        })
+      );
+    }
+  };
+
   const renderUserInfo = () => {
     return (
       <Grid container>
         <Grid
           item
           md={5}
+          xs={12}
           sx={{
             backgroundColor: "#352658",
             padding: "20px",
@@ -170,7 +225,7 @@ export default function DialogProfile(props) {
                   }}
                 />
                 <Typography
-                  className="mt-2 fs-3"
+                  className=" fs-3"
                   sx={{ fontWeight: "700", fontSize: "24px" }}
                 >
                   {nickName}
@@ -291,7 +346,7 @@ export default function DialogProfile(props) {
                   marginTop: "1.5rem",
                 }}
               />
-              <Box className="Iduser d-flex align-items-start mb-2">
+              <Box className="Iduser d-flex align-items-center mb-2">
                 <Box
                   sx={{
                     padding: "10px",
@@ -337,11 +392,13 @@ export default function DialogProfile(props) {
                     </g>
                   </svg>
                 </Box>
-                <Box sx={{
-                  display:"flex",
-                  flexDirection:"column",
-                  alignItems:"flex-start"
-                }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <Typography
                     variant="inherit"
                     sx={{
@@ -370,7 +427,7 @@ export default function DialogProfile(props) {
                   marginTop: "0.5rem",
                 }}
               />
-              <Box className="Last-name d-flex align-items-start mb-2">
+              <Box className="Last-name d-flex align-items-center mb-2">
                 <Box
                   sx={{
                     padding: "10px",
@@ -416,11 +473,13 @@ export default function DialogProfile(props) {
                     </g>
                   </svg>
                 </Box>
-                <Box sx={{
-                  display:"flex",
-                  flexDirection:"column",
-                  alignItems:"flex-start"
-                }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <Typography
                     variant="inherit"
                     sx={{
@@ -449,7 +508,7 @@ export default function DialogProfile(props) {
                   marginTop: "0.5rem",
                 }}
               />
-              <Box className="First-name d-flex align-items-start mb-2">
+              <Box className="First-name d-flex align-items-center mb-2">
                 <Box
                   sx={{
                     padding: "10px",
@@ -495,11 +554,13 @@ export default function DialogProfile(props) {
                     </g>
                   </svg>
                 </Box>
-                <Box sx={{
-                  display:"flex",
-                  flexDirection:"column",
-                  alignItems:"flex-start"
-                }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <Typography
                     variant="inherit"
                     sx={{
@@ -528,7 +589,7 @@ export default function DialogProfile(props) {
                   marginTop: "0.5rem",
                 }}
               />
-              <Box className="Email-address d-flex align-items-start mb-2">
+              <Box className="Email-address d-flex align-items-center mb-2">
                 <Box
                   sx={{
                     padding: "10px",
@@ -557,11 +618,14 @@ export default function DialogProfile(props) {
                     </g>
                   </svg>
                 </Box>
-                <Box sx={{
-                  display:"flex",
-                  flexDirection:"column",
-                  alignItems:"flex-start"
-                }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    minWidth: 250,
+                  }}
+                >
                   <Typography
                     variant="inherit"
                     sx={{
@@ -573,14 +637,27 @@ export default function DialogProfile(props) {
                   >
                     Email address
                   </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {email}
-                  </Typography>
+                  {device === "Mobile" ? (
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        textOverflow: "clip",
+                      }}
+                    >
+                      {email}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        textOverflow: "clip",
+                      }}
+                    >
+                      {email.slice(0, 15)}
+                    </Typography>
+                  )}
                 </Box>
               </Box>
               <hr
@@ -590,7 +667,7 @@ export default function DialogProfile(props) {
                   marginTop: "0.5rem",
                 }}
               />
-              <Box className="Mobile-number d-flex align-items-start mb-2">
+              <Box className="Mobile-number d-flex align-items-center mb-2">
                 <Box
                   sx={{
                     padding: "10px",
@@ -619,11 +696,13 @@ export default function DialogProfile(props) {
                     </g>
                   </svg>
                 </Box>
-                <Box sx={{
-                  display:"flex",
-                  flexDirection:"column",
-                  alignItems:"flex-start"
-                }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <Typography
                     variant="inherit"
                     sx={{
@@ -655,14 +734,15 @@ export default function DialogProfile(props) {
             </Box>
           </Box>
         </Grid>
-        <Grid item md={7}>
+        <Grid item md={7} xs={12}>
           <Box
-            className="ms-4"
+            className={width > 576 ? "ms-4" : ""}
             sx={{
               display: "flex",
               flexDirection: "column",
               height: "100%",
               justifyContent: "space-between",
+              marginTop: width < 576 ? "20px" : "",
             }}
           >
             <Box className="Display-Name mb-3 d-flex flex-column align-items-start">
@@ -717,6 +797,66 @@ export default function DialogProfile(props) {
                     },
                   }}
                 />{" "}
+                {tab === 1 ? (
+                  <BgWithTooltip
+                    enterTouchDelay={0}
+                    title={
+                      <Box>
+                        {" "}
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "12px" }}
+                        >
+                          Your nickname must be 12 characters or less and not
+                          contain special characters. Nicknames are case
+                          sensitive (e.g., Examplename)
+                        </Typography>
+                      </Box>
+                    }
+                    placement="top"
+                    sx={{
+                      backgroundColor: "white",
+                      color: "red",
+                    }}
+                  >
+                    <Box
+                      style={{
+                        backgroundColor: "transparent",
+                        right: "10px",
+                        top: "8px",
+                        cursor: "pointer",
+                        position: "absolute",
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="22"
+                        height="22"
+                        fill="none"
+                        viewBox="0 0 22 22"
+                      >
+                        <g>
+                          <path
+                            stroke="#7C81F2"
+                            strokeWidth="1.5"
+                            d="M11 21c5.523 0 10-4.477 10-10S16.523 1 11 1 1 5.477 1 11s4.477 10 10 10z"
+                          ></path>
+                          <path
+                            stroke="#7C81F2"
+                            strokeLinecap="round"
+                            strokeWidth="1.5"
+                            d="M11 16v-6"
+                          ></path>
+                          <path
+                            fill="#7C81F2"
+                            d="M11 6a1 1 0 110 2 1 1 0 010-2z"
+                          ></path>
+                        </g>
+                      </svg>
+                    </Box>
+                  </BgWithTooltip>
+                ) : (
+                  ""
+                )}
               </FormControl>{" "}
             </Box>
             <Box className="Address-line-1 mb-3 d-flex flex-column align-items-start">
@@ -743,7 +883,7 @@ export default function DialogProfile(props) {
                   id="input-with-icon-adornment"
                   type="text"
                   onChange={(e) => {
-                    setDName(e.target.value);
+                    setAddressLine1(e.target.value);
                   }}
                   value={addressLine1}
                   disabled={disabledInp}
@@ -771,6 +911,45 @@ export default function DialogProfile(props) {
                     },
                   }}
                 />{" "}
+                {addressLine1 === "" || addressLine1 === null ? (
+                  <Box
+                    sx={{
+                      backgroundColor: "transparent",
+                      right: "15px",
+                      top: "6px",
+                      cursor: "pointer",
+                      position: "absolute",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="7"
+                      height="20"
+                      fill="none"
+                      viewBox="0 0 7 20"
+                    >
+                      <g clipPath="url(#clip0_7173_204987)">
+                        <g>
+                          <g fill="#7848ED">
+                            <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
+                            <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
+                          </g>
+                        </g>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_7173_204987">
+                          <path
+                            fill="#fff"
+                            d="M0 0H6.154V20H0z"
+                            transform="matrix(-1 0 0 1 7 0)"
+                          ></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </Box>
+                ) : (
+                  ""
+                )}
               </FormControl>{" "}
             </Box>
             <Box className="Address-line-2 mb-3 d-flex flex-column align-items-start">
@@ -797,7 +976,7 @@ export default function DialogProfile(props) {
                   id="input-with-icon-adornment"
                   type="text"
                   onChange={(e) => {
-                    setDName(e.target.value);
+                    setAddressLine2(e.target.value);
                   }}
                   value={addressLine2}
                   disabled={disabledInp}
@@ -825,10 +1004,52 @@ export default function DialogProfile(props) {
                     },
                   }}
                 />{" "}
+                {addressLine2 === "" || addressLine2 === null ? (
+                  <Box
+                    sx={{
+                      backgroundColor: "transparent",
+                      right: "15px",
+                      top: "6px",
+                      cursor: "pointer",
+                      position: "absolute",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="7"
+                      height="20"
+                      fill="none"
+                      viewBox="0 0 7 20"
+                    >
+                      <g clipPath="url(#clip0_7173_204987)">
+                        <g>
+                          <g fill="#7848ED">
+                            <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
+                            <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
+                          </g>
+                        </g>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_7173_204987">
+                          <path
+                            fill="#fff"
+                            d="M0 0H6.154V20H0z"
+                            transform="matrix(-1 0 0 1 7 0)"
+                          ></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </Box>
+                ) : (
+                  ""
+                )}
               </FormControl>{" "}
             </Box>
             <Box sx={{ display: "flex" }}>
-              <Box className="City mb-3 d-flex flex-column align-items-start">
+              <Box
+                className="City mb-3 d-flex flex-column align-items-start"
+                sx={{ width: "100%" }}
+              >
                 <Typography
                   variant="inherit"
                   sx={{
@@ -852,10 +1073,11 @@ export default function DialogProfile(props) {
                     id="input-with-icon-adornment"
                     type="text"
                     onChange={(e) => {
-                      setDName(e.target.value);
+                      setCityOption(e.target.value);
                     }}
-                    value={dName}
+                    value={cityOption}
                     disabled={disabledInp}
+                    placeholder="Enter Your City"
                     sx={{
                       "&:before": {
                         borderBottom: " 0px solid !important ",
@@ -879,9 +1101,51 @@ export default function DialogProfile(props) {
                       },
                     }}
                   />{" "}
+                  {cityOption === "" || cityOption === null ? (
+                    <Box
+                      sx={{
+                        backgroundColor: "transparent",
+                        right: "15px",
+                        top: "6px",
+                        cursor: "pointer",
+                        position: "absolute",
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="7"
+                        height="20"
+                        fill="none"
+                        viewBox="0 0 7 20"
+                      >
+                        <g clipPath="url(#clip0_7173_204987)">
+                          <g>
+                            <g fill="#7848ED">
+                              <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
+                              <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
+                            </g>
+                          </g>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_7173_204987">
+                            <path
+                              fill="#fff"
+                              d="M0 0H6.154V20H0z"
+                              transform="matrix(-1 0 0 1 7 0)"
+                            ></path>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </Box>
+                  ) : (
+                    ""
+                  )}
                 </FormControl>{" "}
               </Box>
-              <Box className="State mb-3 ms-2 d-flex flex-column align-items-start">
+              <Box
+                className="State mb-3 ms-2 d-flex flex-column align-items-start"
+                sx={{ width: "100%" }}
+              >
                 <Typography
                   variant="inherit"
                   sx={{
@@ -905,11 +1169,11 @@ export default function DialogProfile(props) {
                     id="input-with-icon-adornment"
                     type="text"
                     onChange={(e) => {
-                      setDName(e.target.value);
+                      setStateOption(e.target.value);
                     }}
-                    value={dName}
+                    value={stateOption}
                     disabled={disabledInp}
-                    placeholder="Enter Your Display Name"
+                    placeholder="Enter Your State"
                     sx={{
                       "&:before": {
                         borderBottom: " 0px solid !important ",
@@ -933,112 +1197,370 @@ export default function DialogProfile(props) {
                       },
                     }}
                   />{" "}
+                  {stateOption === "" || stateOption === null ? (
+                    <Box
+                      sx={{
+                        backgroundColor: "transparent",
+                        right: "15px",
+                        top: "6px",
+                        cursor: "pointer",
+                        position: "absolute",
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="7"
+                        height="20"
+                        fill="none"
+                        viewBox="0 0 7 20"
+                      >
+                        <g clipPath="url(#clip0_7173_204987)">
+                          <g>
+                            <g fill="#7848ED">
+                              <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
+                              <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
+                            </g>
+                          </g>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_7173_204987">
+                            <path
+                              fill="#fff"
+                              d="M0 0H6.154V20H0z"
+                              transform="matrix(-1 0 0 1 7 0)"
+                            ></path>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </Box>
+                  ) : (
+                    ""
+                  )}
                 </FormControl>{" "}
               </Box>
             </Box>
-            <Box className="Zip-code mb-3 d-flex flex-column align-items-start">
-              <Typography
-                variant="inherit"
+            {device === "Mobile" ? (
+              <Box
                 sx={{
-                  color: "#ffff",
-                  fontWeight: "500",
-                  marginBottom: "5px !important",
+                  display: "flex",
                 }}
               >
-                Zip code
-              </Typography>
-              <FormControl
-                variant="standard"
-                sx={{
-                  width: "100%",
-                  backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
-                  padding: "10px",
-                  borderRadius: "5px",
-                }}
-              >
-                <Input
-                  id="input-with-icon-adornment"
-                  type="text"
-                  onChange={(e) => {
-                    setDName(e.target.value);
-                  }}
-                  value={zCode}
-                  disabled={disabledInp}
-                  placeholder="Enter Your ZipCode"
-                  sx={{
-                    "&:before": {
-                      borderBottom: " 0px solid !important ",
-                      "&:hover": {
-                        borderBottom: "0px solid !important",
-                      },
-                    },
-                    "&:after": {
-                      borderBottom: "0px solid !important",
-                    },
-                    "&:hover": {
-                      border: "none",
-                    },
-                    color: "white",
-                    fontSize: "14px",
-                    "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                      padding: "0px !important",
-                    },
-                    "& .Mui-disabled": {
-                      WebkitTextFillColor: "white !important",
-                    },
-                  }}
-                />{" "}
-              </FormControl>{" "}
-            </Box>
-            <Box className="Birthday mb-3 d-flex flex-column align-items-start">
-              <Typography
-                variant="inherit"
-                sx={{
-                  color: "#ffff",
-                  fontWeight: "500",
-                  marginBottom: "5px !important",
-                }}
-              >
-                Birthday
-              </Typography>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  value={value}
-                  onChange={(newValue) => setValue(newValue)}
-                  slots={{
-                    openPickerIcon: returnIcon,
-                  }}
-                  sx={{
-                    width: "100%",
-                    backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
-                    borderRadius: "5px",
-                    fontSize: "14px",
-                    "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root": {
-                      color: "#fff",
-                      fontSize: "14px",
-                      "&:before": {
-                        borderBottom: " 0px solid !important ",
-                        "&:hover": {
+                <Box className="Zip-code mb-3 d-flex flex-column align-items-start">
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Zip code
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <Input
+                      id="input-with-icon-adornment"
+                      type="text"
+                      onChange={(e) => {
+                        setZcode(e.target.value);
+                      }}
+                      value={zCode}
+                      disabled={disabledInp}
+                      placeholder="Enter Your ZipCode"
+                      sx={{
+                        "&:before": {
+                          borderBottom: " 0px solid !important ",
+                          "&:hover": {
+                            borderBottom: "0px solid !important",
+                          },
+                        },
+                        "&:after": {
                           borderBottom: "0px solid !important",
                         },
-                      },
-                      "&:after": {
-                        borderBottom: "0px solid !important",
-                      },
-                      "&:hover": {
-                        border: "0px solid !important",
-                      },
-                      "&:focus": {
-                        border: "0px solid",
-                      },
-                    },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                      padding: "11.5px 14px",
-                    },
-                  }}
-                />
-              </LocalizationProvider>
-            </Box>
+                        "&:hover": {
+                          border: "none",
+                        },
+                        color: "white",
+                        fontSize: "14px",
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                          padding: "0px !important",
+                        },
+                        "& .Mui-disabled": {
+                          WebkitTextFillColor: "white !important",
+                        },
+                      }}
+                    />{" "}
+                    {zCode === "" || zCode === null ? (
+                      <Box
+                        sx={{
+                          backgroundColor: "transparent",
+                          right: "15px",
+                          top: "6px",
+                          cursor: "pointer",
+                          position: "absolute",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="7"
+                          height="20"
+                          fill="none"
+                          viewBox="0 0 7 20"
+                        >
+                          <g clipPath="url(#clip0_7173_204987)">
+                            <g>
+                              <g fill="#7848ED">
+                                <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
+                                <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
+                              </g>
+                            </g>
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_7173_204987">
+                              <path
+                                fill="#fff"
+                                d="M0 0H6.154V20H0z"
+                                transform="matrix(-1 0 0 1 7 0)"
+                              ></path>
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      </Box>
+                    ) : (
+                      ""
+                    )}
+                  </FormControl>{" "}
+                </Box>
+                <Box className="Birthday ms-2 mb-3 d-flex flex-column align-items-start">
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Birthday
+                  </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disabled={disabledInp}
+                      value={value}
+                      onChange={(newValue) => setValue(newValue)}
+                      slots={{
+                        openPickerIcon: returnIcon,
+                      }}
+                      sx={{
+                        width: "100%",
+                        backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                        borderRadius: "5px",
+                        fontSize: "14px",
+                        "& .MuiInputBase-root": {
+                          color: "white",
+                          padding: "11.5px 14px",
+                          fontSize: "13px",
+                        },
+                        "& .MuiInputBase-input": {
+                          padding: "0px",
+                        },
+                        "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root":
+                          {
+                            color: "#fff",
+                            fontSize: "14px",
+                            "&:before": {
+                              borderBottom: " 0px solid !important ",
+                              "&:hover": {
+                                borderBottom: "0px solid !important",
+                              },
+                            },
+                            "&:after": {
+                              borderBottom: "0px solid !important",
+                            },
+                            "&:hover": {
+                              border: "0px solid !important",
+                            },
+                            "&:focus": {
+                              border: "0px solid",
+                            },
+                          },
+                        "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
+                          {
+                            padding: "11.5px 14px",
+                          },
+                        "& .Mui-disabled": {
+                          WebkitTextFillColor: "white !important",
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                </Box>
+              </Box>
+            ) : (
+              <>
+                <Box className="Zip-code mb-3 d-flex flex-column align-items-start">
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Zip code
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <Input
+                      id="input-with-icon-adornment"
+                      type="text"
+                      onChange={(e) => {
+                        setZcode(e.target.value);
+                      }}
+                      value={zCode}
+                      disabled={disabledInp}
+                      placeholder="Enter Your ZipCode"
+                      sx={{
+                        "&:before": {
+                          borderBottom: " 0px solid !important ",
+                          "&:hover": {
+                            borderBottom: "0px solid !important",
+                          },
+                        },
+                        "&:after": {
+                          borderBottom: "0px solid !important",
+                        },
+                        "&:hover": {
+                          border: "none",
+                        },
+                        color: "white",
+                        fontSize: "14px",
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                          padding: "0px !important",
+                        },
+                        "& .Mui-disabled": {
+                          WebkitTextFillColor: "white !important",
+                        },
+                      }}
+                    />{" "}
+                    {zCode === "" || zCode === null ? (
+                      <Box
+                        sx={{
+                          backgroundColor: "transparent",
+                          right: "15px",
+                          top: "6px",
+                          cursor: "pointer",
+                          position: "absolute",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="7"
+                          height="20"
+                          fill="none"
+                          viewBox="0 0 7 20"
+                        >
+                          <g clipPath="url(#clip0_7173_204987)">
+                            <g>
+                              <g fill="#7848ED">
+                                <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
+                                <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
+                              </g>
+                            </g>
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_7173_204987">
+                              <path
+                                fill="#fff"
+                                d="M0 0H6.154V20H0z"
+                                transform="matrix(-1 0 0 1 7 0)"
+                              ></path>
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      </Box>
+                    ) : (
+                      ""
+                    )}
+                  </FormControl>{" "}
+                </Box>
+                <Box className="Birthday mb-3 d-flex flex-column align-items-start">
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Birthday
+                  </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disabled={disabledInp}
+                      value={value}
+                      onChange={(newValue) => setValue(newValue)}
+                      slots={{
+                        openPickerIcon: returnIcon,
+                      }}
+                      sx={{
+                        width: "100%",
+                        backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                        borderRadius: "5px",
+                        fontSize: "14px",
+                        "& .MuiInputBase-root": {
+                          color: "white",
+                        },
+                        "& .MuiInputBase-input": {
+                          padding: "0px",
+                        },
+                        "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root":
+                          {
+                            color: "#fff",
+                            fontSize: "14px",
+                            "&:before": {
+                              borderBottom: " 0px solid !important ",
+                              "&:hover": {
+                                borderBottom: "0px solid !important",
+                              },
+                            },
+                            "&:after": {
+                              borderBottom: "0px solid !important",
+                            },
+                            "&:hover": {
+                              border: "0px solid !important",
+                            },
+                            "&:focus": {
+                              border: "0px solid",
+                            },
+                          },
+                        "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
+                          {
+                            padding: "11.5px 14px",
+                          },
+                        "& .Mui-disabled": {
+                          WebkitTextFillColor: "white !important",
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                </Box>
+              </>
+            )}
+
             <Box>
               {tab === 0 ? (
                 <AnimButton
@@ -1058,11 +1580,21 @@ export default function DialogProfile(props) {
                       onClick={() => {
                         setTab(0);
                         setDisabledInp(true);
+                        setAddressLine1(address1);
+                        setAddressLine2(address2);
+                        setCityOption(city);
+                        setDName(nickName);
+                        setStateOption(state);
+                        setZcode(zipCode);
                       }}
                     />
                   </Box>
                   <Box className="ms-2" sx={{ width: "100%" }}>
-                    <AnimButton type="primary" text={"UPDATE"} />
+                    <AnimButton
+                      type="primary"
+                      text={"UPDATE"}
+                      onClick={sendUpdateProfile}
+                    />
                   </Box>
                 </Box>
               )}

@@ -109,7 +109,6 @@ export const AvatarPicker = (props) => {
                 borderRadius: "5px",
                 color: "#fff",
                 fontWeight: "bold",
-                marginTop: "10px",
                 fontSize: "12px",
               }}
             >
@@ -134,11 +133,10 @@ export const AvatarPicker = (props) => {
                   : images.undefinedAvatar
               }
               sx={{
-                width: "100px",
-                height: "100px",
+                width: "95px",
+                height: "95px",
                 borderRadius: "50%",
                 border: uPack ? "4px solid #FD9E0F" : "",
-                marginBottom: "15px",
               }}
             />
             
