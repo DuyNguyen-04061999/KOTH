@@ -19,6 +19,7 @@ export default function PlayGame(props) {
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { chatPopup } = useSelector((state) => state.chatReducer);
+  const { startGameCheck } = useSelector((state) => state.appReducer);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
@@ -127,6 +128,14 @@ export default function PlayGame(props) {
     }
     return false;
   };
+
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    if(startGameCheck && !videoGame) {
+      setLoading(true)
+    }
+  }, [startGameCheck, videoGame])
+
   return (
     <>
       <Box
@@ -176,7 +185,7 @@ export default function PlayGame(props) {
               )}
             </Box>
             {detailTournament?.tournamentInfors?.game?.gameEngine ===
-            "cocos" ? (
+            "cocos" && loading ? (
               <iframe
                 allow="fullscreen"
                 style={
@@ -206,7 +215,7 @@ export default function PlayGame(props) {
                 title="Playgame"
                 src={
                   process.env.REACT_APP_ENV === "development"
-                    ? `http://192.168.1.144:3001?token=${
+                    ? `https://storage.googleapis.com/web-system-files/cocos/backtwo/index.html?token=${
                         tokenUser || localStorage.getItem("token")
                       }&tournamentId=${detailTournament?.id}&skinId=${
                         detailTournament?.tournamentInfors?.skin?.id
