@@ -845,7 +845,7 @@ export default function DialogProfile(props) {
                           <Typography
                             sx={{ textAlign: "start", fontSize: "12px" }}
                           >
-                            Your nickname must be 12 characters or less and not
+                            Your Display name must be 12 characters or less and not
                             contain special characters. Nicknames are case
                             sensitive (e.g., Examplename)
                           </Typography>
