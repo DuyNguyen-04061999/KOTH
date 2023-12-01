@@ -47,19 +47,25 @@ export default function CreatePassword() {
     const isPasswordValid = password.length >= 6;
     const containsUppercase = uppercaseRegex.test(password);
     const containNumber = numberRegex.test(password);
-    if(password !== rePassword) {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Password and re-password does not match!"
-      }))
-    } else if(!containsSpecialCharacter ||
+    if (password !== rePassword) {
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message: "Password and re-password does not match!",
+        })
+      );
+    } else if (
+      !containsSpecialCharacter ||
       !isPasswordValid ||
       !containsUppercase ||
-      !containNumber) {
-        dispatch(showToastNotification({
+      !containNumber
+    ) {
+      dispatch(
+        showToastNotification({
           type: "warning",
-          message: "Please enter valid password"
-        }))
+          message: "Please enter valid password",
+        })
+      );
     } else {
       dispatch(
         resetPasswordReady({
@@ -69,7 +75,6 @@ export default function CreatePassword() {
         })
       );
     }
-    
   };
 
   useEffect(() => {
@@ -134,8 +139,8 @@ export default function CreatePassword() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Password must be at least 6 characters long and contain at lease one
-          non letter, one digit and one upper case.
+          Password must be at least 6 characters long and contain at least one
+          speacial letter, one digit and one upper case.
         </Typography>
       </Box>
       <Box
@@ -285,7 +290,8 @@ export default function CreatePassword() {
           </Box>{" "}
           <Box className="d-flex align-items-center  text-white">
             {" "}
-            {password && /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/?.test(password) ? (
+            {password &&
+            /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/?.test(password) ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -329,7 +335,11 @@ export default function CreatePassword() {
             <Typography
               variant="body1"
               sx={{
-                color: password && /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/?.test(password) ? "#5F9724" : "#fff",
+                color:
+                  password &&
+                  /[!@#$%^&*()_+{}[\]:;<>,.?~\\/\-=|]/?.test(password)
+                    ? "#5F9724"
+                    : "#fff",
                 fontSize: 12,
               }}
             >
