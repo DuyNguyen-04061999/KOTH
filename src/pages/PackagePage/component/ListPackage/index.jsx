@@ -377,9 +377,9 @@ export default function ListPackage(props) {
                       display: "flex",
                       justifyContent: "flex-start",
                       alignItems: "center",
-                      marginBottom: "15px",
+                      marginBottom: "5px",
                       marginTop:
-                        packageName === "Subscription" ? "0px" : "25px",
+                        packageName === "Subscription" ? "0px" : "5px",
                     }}
                   >
                     <svg
@@ -403,7 +403,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "11px",
+                        fontSize: "16px",
                         color: "white",
 
                         fontWeight: "500 !important",
@@ -420,7 +420,6 @@ export default function ListPackage(props) {
                       display: "flex",
                       justifyContent: "flex-start",
                       alignItems: "center",
-                      marginBottom: "15px",
                     }}
                   >
                     <svg
@@ -444,7 +443,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "11px",
+                        fontSize: "16px",
                         color: "white",
 
                         fontWeight: "500 !important",
@@ -457,7 +456,6 @@ export default function ListPackage(props) {
                   <Box
                     sx={{
                       height: "16.5px",
-                      marginBottom: "15px",
                     }}
                   ></Box>
                 )}
@@ -467,7 +465,6 @@ export default function ListPackage(props) {
                       display: "flex",
                       justifyContent: "flex-start",
                       alignItems: "center",
-                      marginBottom: "15px",
                     }}
                   >
                     <svg
@@ -491,7 +488,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "11px",
+                        fontSize: "16px",
                         color: "white",
 
                         fontWeight: "500 !important",
@@ -509,7 +506,6 @@ export default function ListPackage(props) {
                       display: "flex",
                       justifyContent: "flex-start",
                       alignItems: "center",
-                      marginBottom: "15px",
                     }}
                   >
                     <svg
@@ -533,7 +529,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "11px",
+                        fontSize: "16px",
                         color: "white",
 
                         fontWeight: "500 !important",
@@ -545,7 +541,7 @@ export default function ListPackage(props) {
                 ) : (
                   <Box
                     sx={{
-                      height: "19.5px",
+                      height: "20.5px",
                     }}
                   ></Box>
                 )}
