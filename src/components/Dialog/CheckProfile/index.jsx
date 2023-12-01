@@ -1,13 +1,13 @@
-import React, { useState } from "react";
 import { Box, Dialog, Typography } from "@mui/material";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   getMyInfor,
   toggleCheckProfileDialog,
 } from "../../../redux-saga-middleware/reducers/userReducer";
 import AnimButton from "../../AnimButton";
-import { startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 
 export default function CheckProfile(props) {
   const { isCheckProfileDialog } = useSelector((state) => state.userReducer);
@@ -41,7 +41,7 @@ export default function CheckProfile(props) {
             borderRadius: 0,
           },
           "& .MuiDialog-paper": {
-            backgroundColor: "#271C39",
+            backgroundColor: "#181223",
             maxWidth: "490px",
             padding: "15px",
           },
@@ -77,7 +77,7 @@ export default function CheckProfile(props) {
               }}
               className="text-center text-white"
             >
-              Complete your profileGreat !
+              Complete your profile!
             </Typography>
           </Box>
           <Box>
@@ -89,7 +89,7 @@ export default function CheckProfile(props) {
               }}
               className="text-start text-white"
             >
-              Great job on your first Promotion play! Complete your profile by
+              Great job on your Promotion play! Complete your profile by
               adding your shipping address and birthday. This ensures you're
               eligible to receive rewards. Click 'Complete Profile' now!
             </Typography>
@@ -110,7 +110,7 @@ export default function CheckProfile(props) {
             >
               <AnimButton
                 type="primary"
-                text="Complete Profile"
+                text="Complete"
                 onClick={handleComplete} 
               />
             </Box>

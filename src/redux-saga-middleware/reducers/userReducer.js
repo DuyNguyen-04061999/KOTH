@@ -410,6 +410,7 @@ const userReducer = (
         listJoinedTour: payload?.listJoinTour || [],
         countTicket: payload?.countTicket || 0,
         userAvatar: payload?.avatar || "",
+        isFullInfo: payload?.checkFullInfor,
         user: {
           ...payload.user,
         },
@@ -449,6 +450,7 @@ const userReducer = (
         ...state,
         isUpdateProfile: false,
         userAvatar: payload?.avatar,
+        isFullInfo: payload?.checkFullInfor,
         user: {...state.user, userNickName: payload?.nickName}
       };
     case "UPDATE_PROFILE_USER_FAIL":
