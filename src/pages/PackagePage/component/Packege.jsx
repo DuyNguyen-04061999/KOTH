@@ -162,7 +162,7 @@ export default function Package() {
                           <Box
                             key={index}
                             width={width < 576 ? 250 : 300}
-                            height={width < 576 ? 430 : 500}
+                            height={width < 576 ? 430 : 600}
                           >
                             <ListPackage
                               packageName={i?.packageName}
@@ -227,7 +227,7 @@ export default function Package() {
                           <Box
                             key={index}
                             width={width < 576 ? 250 : 300}
-                            height={width < 576 ? 430 : 500}
+                            height={width < 576 ? 430 : 600}
                           >
                             <ListPackage
                               packageName={i?.packageName}
