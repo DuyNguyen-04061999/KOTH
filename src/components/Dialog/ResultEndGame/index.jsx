@@ -9,7 +9,6 @@ import {
   toggleCloseResultEndGame,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
-import "./index.scss";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(

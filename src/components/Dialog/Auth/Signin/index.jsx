@@ -13,6 +13,7 @@ import {
 import { toggleGameLogDialog } from "../../../../redux-saga-middleware/reducers/gameReducer";
 import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/profileReducer";
 import {
+  // getCityAndStateProfile,
   getMyInfor,
   getUserInfoReady,
   logoutReady,
@@ -533,6 +534,7 @@ export default function Dialoglg() {
                         onClick={() => {
                           dispatch(toggleProfileDialog(true));
                           dispatch(getMyInfor());
+                          // dispatch(getCityAndStateProfile())
                         }}
                       >
                         <svg

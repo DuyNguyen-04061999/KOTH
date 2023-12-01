@@ -106,7 +106,7 @@ const HomePage = () => {
       if (roles?.includes("agent")) {
         setHeaderList([
           "ID",
-          "Account",
+          "Display Name",
           "Revenue",
           "Manager",
           "Register Date",
@@ -123,7 +123,7 @@ const HomePage = () => {
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Phone", "Revenue"]);
       }
     }
   }, [roles, width]);
