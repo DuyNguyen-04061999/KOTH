@@ -73,7 +73,7 @@ export default function Signup(props) {
       type: "SET_TAB_HELPCENTER",
       payload: value,
     });
-    window.open(`${window.location}help-center`, "_blank");
+    window.open(`${window.location.origin}/help-center`, "_blank");
   };
 
   const CheckIconSVG = () => {
@@ -1099,7 +1099,7 @@ export default function Signup(props) {
           <Input
             id="input-with-icon-adornment"
             type="text"
-            placeholder="Referral Code (optional)"
+            placeholder="Promo code (optional)"
             onChange={(e) => {
               setRef(e.target.value);
             }}

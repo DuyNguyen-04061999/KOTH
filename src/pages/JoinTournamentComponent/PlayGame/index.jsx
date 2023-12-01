@@ -148,11 +148,11 @@ export default function PlayGame(props) {
                   width: "100vh",
                   height: "100vw",
                   overflowX: "hidden",
-                  position: "absolute",
-                  top: "100%",
+                  position: "fixed",
+                  top: "100vh",
                   left: "0px",
                 }
-              : ""
+              : {}
             : orientation === "landscape"
             ? {
                 transform: " rotate(-90deg)",
@@ -160,12 +160,12 @@ export default function PlayGame(props) {
                 width: "100vh",
                 height: "100vw",
                 overflowX: "hidden",
-                position: "absolute",
-                top: "100%",
+                position: "fixed",
+                top: "100vh",
                 left: "0px",
               }
-            : ""
-          : ""
+            : {}
+          : {}
       }
     >
       <Box

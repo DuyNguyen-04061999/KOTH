@@ -26,6 +26,8 @@ import _socket from "../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
 import {
   changeRouter,
+  openDoubleDayDialog,
+  randomRenderPopup,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
 import {
@@ -47,7 +49,7 @@ import {
   finishGame,
   finishVideo,
 } from "../../redux-saga-middleware/reducers/promotionReducer";
-import {changeCurrentLanguage, getSettingReady} from "../../redux-saga-middleware/reducers/settingReducer";
+import { changeCurrentLanguage, getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import {
@@ -63,6 +65,8 @@ import DialogVerify from "../Dialog/Auth/DialogVerify";
 import AuthDialog from "../Dialog/Auth/Signin";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
+import DoubleDayDialog from "../Dialog/DoubleDay";
+import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import NotiFunds from "../Dialog/NotiFunds";
@@ -146,6 +150,7 @@ export default function Layout(props) {
     setOpenDropdown(false);
   };
 
+  const { randomRender } = useSelector((state) => state.appReducer);
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -327,6 +332,12 @@ export default function Layout(props) {
       socket?.off("chatSuccess");
     };
   }, [socket, token, dispatch, startGameCheck]);
+
+  useEffect(() => {
+    dispatch(randomRenderPopup());
+    dispatch(openDoubleDayDialog());
+  }, []);
+
   return ReactDOM.createPortal(
     <Box
       className="tong"
@@ -368,12 +379,23 @@ export default function Layout(props) {
       <DialogSubscribe />
       <DialogGift />
       <NotiFunds />
-      {isProfileDialog && <DialogProfile
-        open={isProfileDialog}
-        handleShowProfile={() => {
-          dispatch(toggleProfileDialog());
-        }}
-      />}
+      <>
+        {randomRender == 1 ? (
+          <DoubleDayPackDialog />
+        ) : randomRender == 2 ? (
+          <DoubleDayDialog />
+        ) : (
+          <DoubleDayPackDialog />
+        )}
+      </>
+      {isProfileDialog && (
+        <DialogProfile
+          open={isProfileDialog}
+          handleShowProfile={() => {
+            dispatch(toggleProfileDialog());
+          }}
+        />
+      )}
       <InviteGameDialog />
       <GameLogDialog
         open={isGameLogDialog}

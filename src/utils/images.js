@@ -373,6 +373,10 @@ import bannersigninTablet from "../assets/images/signinTablet.png";
 import bannerGift from "../assets/images/giftBanner.png";
 import skrillIcon from "../assets/images/skrill.png";
 
+import doubleDayBanner from "../assets/images/doubleDay.jpg";
+import doubleDayBanneMB from "../assets/images/doubleDayMB.jpg";
+import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
+import doubleDayPackBannerMB from "../assets/images/doubleDayPackMB.jpg";
 import englishIcon from "../assets/images/englishIcon.png";
 import turkishICon from "../assets/images/turkishIcon.png";
 
@@ -612,6 +616,10 @@ export const images = {
   skrillIcon: skrillIcon,
   turkishICon: turkishICon,
   englishIcon: englishIcon,
+  doubleDayBanner: doubleDayBanner,
+  doubleDayPackBanner: doubleDayPackBanner,
+  doubleDayPackBannerMB: doubleDayPackBannerMB,
+  doubleDayBanneMB: doubleDayBanneMB,
 };
 
 export const navigationImages = {
