@@ -148,8 +148,8 @@ export default function PlayGame(props) {
                   width: "100vh",
                   height: "100vw",
                   overflowX: "hidden",
-                  position: "absolute",
-                  top: "100%",
+                  position: "fixed",
+                  top: "100vh",
                   left: "0px",
                 }
               : {}
@@ -160,8 +160,8 @@ export default function PlayGame(props) {
                 width: "100vh",
                 height: "100vw",
                 overflowX: "hidden",
-                position: "absolute",
-                top: "100%",
+                position: "fixed",
+                top: "100vh",
                 left: "0px",
               }
             : {}
