@@ -59,6 +59,8 @@ import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
+import DoubleDayDialog from "../Dialog/DoubleDay";
+import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import NotiFunds from "../Dialog/NotiFunds";
 import DialogProfile from "../Dialog/Profile";
@@ -345,6 +347,8 @@ export default function Layout(props) {
       <DialogSubscribe />
       <DialogGift />
       <NotiFunds />
+      <DoubleDayDialog />
+      <DoubleDayPackDialog />
       {isProfileDialog && <DialogProfile
         open={isProfileDialog}
         handleShowProfile={() => {
