@@ -1,6 +1,8 @@
 import { Box, Dialog, DialogActions, Typography } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDialogGif } from "../../../redux-saga-middleware/reducers/appReducer";
 import { imageHome } from "../../../utils/images";
@@ -74,10 +76,15 @@ const DialogGift = () => {
               </Typography>
             </Box>
             <Box sx={{ position: "relative", width: "100%" }}>
-              <Box
-                component={"img"}
+              <LazyLoadImage
                 src={imageHome.BannerGift}
-                sx={{ width: "100%" }}
+                style={{ width: "100%" }}
+                effect="blur"
+                wrapperProps={{
+                  style: {
+                    transitionDelay: "0.5s",
+                  },
+                }}
               />
               <Box
                 sx={{

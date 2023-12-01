@@ -2,6 +2,7 @@ import InfinityIcon from "@mui/icons-material/AllInclusive";
 import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import AnimButton from "../../../components/AnimButton";
@@ -22,7 +23,7 @@ import {
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { isJson, sliceString } from "../../../utils/helper";
-import { images } from "../../../utils/images";
+import { imageDesktop, images } from "../../../utils/images";
 import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
@@ -119,8 +120,35 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       });
     };
   });
+
+  const meta = {
+    title: `${detailTournament?.tournamentName}`,
+    description: `${detailTournament?.tournamentInfors?.rewardInfors
+      ?.rewardTitle || "SS Z-Flip 5 free voucher"}.&nbsp;${detailTournament?.tournamentInfors?.owner?.brandName || "Play4promo"}.&nbsp;${moment(
+        detailTournament?.tournamentInfors
+          ?.rewardInfors?.rewardValidityDate
+      )?.format("MMM-DD-YYYY") || "Nov-10-2023"}`,
+    meta: {
+        charset: 'utf-8',
+        name: {
+            keywords: `play4promo,play,promo,${detailTournament?.tournamentName}`
+        },
+        property: {
+          'og:title': `${detailTournament?.tournamentName || "Promotion Name"}`,
+          'og:url': window.location.href,
+          'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+          'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+          'og:image:type': 'image/png',
+          'og:image:width': `144`,
+          'og:image:height': `144`,
+          'og:image:alt': 'Play4promo Photo'
+        },
+    },
+  }
+
   return (
-    <>
+    <DocumentMeta {...meta}>
+      <>
       {isGetDetailAuthPromotion || isGetDetailPromotion ? (
         <PageLoading />
       ) : (
@@ -1235,5 +1263,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
         </>
       )}
     </>
+    </DocumentMeta>
+    
   );
 }

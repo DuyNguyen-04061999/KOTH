@@ -1,14 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { imageHome } from "../../../utils/images";
 
 const BannerWinMobile = (props) => {
-  const {
-    rewardName,
-    sponsorName,
-    userAvatar,
-    userName,
-  } = props;
+  const { rewardName, sponsorName, userAvatar, userName } = props;
   return (
     <Box
       sx={{
@@ -67,7 +63,7 @@ const BannerWinMobile = (props) => {
             fontWeight: 700,
           }}
         >
-          Sponsored  by: {sponsorName || "Play4Promo"}
+          Sponsored by: {sponsorName || "Play4Promo"}
         </Typography>
       </Box>
       <Box
@@ -82,7 +78,7 @@ const BannerWinMobile = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginLeft:"10px"
+            marginLeft: "10px",
           }}
         >
           <Box
@@ -94,7 +90,7 @@ const BannerWinMobile = (props) => {
               borderRadius: "8px",
             }}
           >
-            <img
+            <LazyLoadImage
               alt="..."
               style={{
                 width: "100%",
@@ -102,7 +98,13 @@ const BannerWinMobile = (props) => {
                 objectFit: "cover",
               }}
               src={userAvatar || imageHome.BannerWinAva}
-            ></img>
+              effect="blur"
+              wrapperProps={{
+                style: {
+                  transitionDelay: "0.5s",
+                },
+              }}
+            ></LazyLoadImage>
           </Box>
           <Box>
             <Typography
@@ -142,7 +144,7 @@ const BannerWinMobile = (props) => {
                 lineHeight: "1.5",
                 height: "100px",
                 overflow: "hidden",
-                textAlign:"center",
+                textAlign: "center",
               }}
             >
               {rewardName || "Reward Name"}
@@ -160,7 +162,7 @@ const BannerWinMobile = (props) => {
                   lineHeight: "1.5",
                   height: "100px",
                   overflow: "hidden",
-                  textAlign:"center",
+                  textAlign: "center",
                   width: "150px",
                 }}
               >

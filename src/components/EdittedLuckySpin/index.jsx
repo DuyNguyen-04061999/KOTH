@@ -16,9 +16,7 @@ import { useSelector } from "react-redux";
 import { images, images2 } from "../../utils/images";
 import { images270423_l } from "../../utils/images270423_l";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import LuckyWheel from "../LuckyWheel";
 import TitleHomeDesktopComponent from "../Title/TitleHomeDesktopComponent";
-import CountDownTimer from "./CountDownTimer";
 import "./index.scss";
 export default function EdittedLuckySpin() {
   const { width } = useWindowDimensions();
@@ -79,10 +77,10 @@ export default function EdittedLuckySpin() {
             <div>
               <div className="LuckySpinBanner">
                 <div className="countDownTimerContainer">
-                  <CountDownTimer />
+                  {/* <CountDownTimer /> */}
                 </div>
                 <div className="SpinContainer">
-                  <LuckyWheel />
+                  {/* <LuckyWheel /> */}
                 </div>
               </div>
             </div>

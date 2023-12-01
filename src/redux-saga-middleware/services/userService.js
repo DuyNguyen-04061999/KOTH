@@ -174,6 +174,12 @@ class UserService {
     );
     return res;
   }
+
+  async getCityAndStateProfile(dataRequest) {
+    const res = await PROMOTION_API.get("/api/get-cities-and-states/us")
+    return res
+  }
+
 }
 
 export default UserService;

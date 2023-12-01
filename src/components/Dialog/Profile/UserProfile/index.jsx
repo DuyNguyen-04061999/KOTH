@@ -4,6 +4,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Dialog, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
@@ -60,11 +62,17 @@ export default function DialogUserProfile(props) {
     return (
       <Box>
         <Box className="d-flex justify-content-center position-relative">
-          <img
+          <LazyLoadImage
             src={images.Aa}
             alt="..."
             width={100}
             className="img-fluid rounded-circle"
+            effect="blur"
+            wrapperProps={{
+              style: {
+                transitionDelay: "0.5s",
+              },
+            }}
           />
           <Box
             className="position-absolute rounded-circle p-1"

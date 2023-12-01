@@ -84,6 +84,28 @@ export const closeDialogGif = (data) => {
   }
 }
 
+export const openDoubleDayDialog = (data) => {
+  return {
+    type:"OPEN_DIALOG_DOUBLEDAY",
+    payload: data
+  }
+}
+
+export const closeDoubleDayDialog = (data) => {
+  return {
+    type:"CLOSE_DIALOG_DOUBLEDAY",
+    payload: data
+  }
+}
+
+export const randomRenderPopup = (data) => {
+  const random = Math.floor(Math.random() * 2) + 1;
+  return {
+    type:"RANDOM_RENDER_POPUP",
+    payload: random
+  }
+}
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -94,7 +116,9 @@ const appReducer = (
     router: "",
     startGameCheck: false,
     fromRouter: "",
-    isDialogGif: false
+    isDialogGif: false,
+    showDoubleDayDialog: false,
+    randomRender: null,
   },
   action
 ) => {
@@ -125,6 +149,10 @@ const appReducer = (
     }
     case "OPEN_DIALOG_GIF": return {...state, isDialogGif: true}
     case "CLOSE_DIALOG_GIF": return {...state, isDialogGif: false}
+    case "OPEN_DIALOG_DOUBLEDAY": return {...state, showDoubleDayDialog: true}
+    case "CLOSE_DIALOG_DOUBLEDAY": return {...state, showDoubleDayDialog: false}
+    case "RANDOM_RENDER_POPUP":
+      return {...state, randomRender: payload}
     default:
       return { ...state };
   }

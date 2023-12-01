@@ -6,13 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "./assets/css/App.css";
-import CountDownTimer from "./components/CountDownTimer";
 import Layout from "./components/Layout";
 import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
-import LoadingScreen from "./components/LoadingScreen";
 import { CustomRouter, history } from "./components/Router";
 import { ScrollToTopURL } from "./components/ScrollToTop";
-import TestSkeleton from "./components/TestSkeleton";
 import ToastNotification from "./components/Toast/ToastNotification";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
@@ -25,10 +22,8 @@ import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
 import GameLobby from "./pages/GamePlay";
 import HomePage from "./pages/Home";
-import NewHomePageComponent from "./pages/NewHomePageComponent";
 import PlayGamePage from "./pages/PlayGamePage";
 import Refresh from "./pages/Refresh";
-import SelectRoomContainer from "./pages/SelectRoomContainer";
 import Tournament from "./pages/Tournament";
 import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
@@ -47,7 +42,10 @@ import {
   pushChatWorld,
   pushfriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
-import { checkoutPaypalCancel, checkoutPaypalSuccess } from "./redux-saga-middleware/reducers/checkoutReducer";
+import {
+  checkoutPaypalCancel,
+  checkoutPaypalSuccess,
+} from "./redux-saga-middleware/reducers/checkoutReducer";
 import {
   updateDevice,
   updateDeviceType,
@@ -57,9 +55,7 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import {
-  updateCountTicket
-} from "./redux-saga-middleware/reducers/userReducer";
+import { updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
@@ -153,7 +149,7 @@ function App() {
     const updateOrientation = (event) => {
       if (
         !startGameCheck &&
-        !window.location.pathname?.includes("tournamentDetail")
+        !window.location.pathname?.includes("promotion-detail")
       ) {
       }
     };
@@ -381,17 +377,21 @@ function App() {
     const paymentType = params.get("type");
     const paymentStatus = params.get("result");
 
-    if(paymentType === "paypal" && paymentStatus === "success") {
-      store.dispatch(checkoutPaypalSuccess({
-        paymentId: paymentId,
-        payerId: PayerID,
-      }))
+    if (paymentType === "paypal" && paymentStatus === "success") {
+      store.dispatch(
+        checkoutPaypalSuccess({
+          paymentId: paymentId,
+          payerId: PayerID,
+        })
+      );
     }
 
-    if(paymentType === "paypal" && paymentStatus === "fail") {
-      store.dispatch(checkoutPaypalCancel({
-        paymentId: paymentId,
-      }))
+    if (paymentType === "paypal" && paymentStatus === "fail") {
+      store.dispatch(
+        checkoutPaypalCancel({
+          paymentId: paymentId,
+        })
+      );
     }
   }, []);
   return (
@@ -403,7 +403,10 @@ function App() {
               {" "}
               <ScrollToTopURL />
               <Routes>
-                <Route path="/playgame/:id" element={<PlayGamePage />} />
+                <Route
+                  path="/playgame/:id"
+                  element={<PlayGamePage />}
+                />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
                 <Route path="/" element={<Layout />}>
@@ -433,21 +436,21 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage />} />
+                        <SuspenseWrapper child={<LazyNewHomePage />} />
                       )
                     }
                   ></Route>
                   <Route
-                    path="/tournamentDetail/:id/influencers/:userName"
+                    path="/promotion-detail/:id/influencers/:userName"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   ></Route>
                   <Route path="/gamelobby/:id" element={<GameLobby />} />
-                  <Route
+                  {/* <Route
                     path="/selectroom/:id"
                     element={<SelectRoomContainer />}
-                  />
+                  /> */}
                   <Route
-                    path="/tournamentDetail/:id"
+                    path="/promotion-detail/:id"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   />
                   <Route
@@ -478,32 +481,51 @@ function App() {
                     path="/help-center"
                     element={<SuspenseWrapper child={<LazyHelpCenter />} />}
                   />
-                  <Route path="/change-log" element={<ChangeLog />} />
-                  <Route path="/test-refresh" element={<Refresh />} />
-                  <Route path="/loadingscreen" element={<LoadingScreen />} />
-                  <Route path="/new-home" element={<NewHomePageComponent />} />
-                  <Route path="/countdowntimer" element={<CountDownTimer />} />
-                  <Route path="upload" element={<UploadPage />} />
-                  <Route path="game" element={<GamePage />} />
+                  <Route
+                    path="/change-log"
+                    element={<SuspenseWrapper child={<ChangeLog />} />}
+                  />
+                  <Route
+                    path="/test-refresh"
+                    element={<SuspenseWrapper child={<Refresh />} />}
+                  />
+                  {/* <Route path="/countdowntimer" element={<CountDownTimer />} /> */}
+                  <Route
+                    path="upload"
+                    element={<SuspenseWrapper child={<UploadPage />} />}
+                  />
+                  <Route
+                    path="game"
+                    element={<SuspenseWrapper child={<GamePage />} />}
+                  />
                   {getAppType() === "promote" && (
-                    <Route path="/tournaments" element={<Tournament />} />
+                    <Route
+                      path="/tournaments"
+                      element={<SuspenseWrapper child={<Tournament />} />}
+                    />
                   )}
                   {getAppType() !== "promote" && (
-                    <Route path="game-type/:type" element={<TypeGamePage />} />
+                    <Route
+                      path="game-type/:type"
+                      element={<SuspenseWrapper child={<TypeGamePage />} />}
+                    />
                   )}
 
-                  <Route path="game/edit/:id" element={<GameEditPage />} />
+                  <Route
+                    path="game/edit/:id"
+                    element={<SuspenseWrapper child={<GameEditPage />} />}
+                  />
                   <Route
                     path="game/:id/upload-skins"
-                    element={<UploadSkinPage />}
+                    element={<SuspenseWrapper child={<UploadSkinPage />} />}
                   />
                   <Route
                     path="game/:id/upload-game-preview"
-                    element={<UploadGamePreview />}
+                    element={<SuspenseWrapper child={<UploadGamePreview />} />}
                   />
                   <Route
                     path="game/:id/delete-skins"
-                    element={<DeleteSkinPage />}
+                    element={<SuspenseWrapper child={<DeleteSkinPage />} />}
                   />
                   {getAppType() === "promote" && (
                     <Route
@@ -517,9 +539,10 @@ function App() {
                   )}
                   <Route
                     path="transactions/:id"
-                    element={<TransactionDetailPage />}
+                    element={
+                      <SuspenseWrapper child={<TransactionDetailPage />} />
+                    }
                   />
-                  <Route path="test-skeleton" element={<TestSkeleton />} />
                   <Route path="*" element={<Navigate to="/home" />} />
                 </Route>
               </Routes>

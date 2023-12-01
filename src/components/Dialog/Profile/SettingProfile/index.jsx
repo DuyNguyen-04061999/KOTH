@@ -1,6 +1,7 @@
 import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useState } from "react";
+// import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   showToastNotification
@@ -150,15 +151,21 @@ export default function SettingProfile({ closePopup }) {
                   }}
                 >
                   <Box
-                    sx={{
+                    component={"img"}
+                    style={{
                       backgroundColor: "#1a132d",
                       right: "10px",
                       top: "8px",
                       cursor: "pointer",
                       position: "absolute",
                     }}
-                    component={"img"}
                     src={images.ToolTipIcon}
+                    // effect="blur"
+                    // wrapperProps={{
+                    //   style: {
+                    //     transitionDelay: "0.5s",
+                    //   },
+                    // }}
                   ></Box>
                 </BgWithTooltip>
               </FormControl>{" "}

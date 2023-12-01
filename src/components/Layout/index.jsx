@@ -25,6 +25,8 @@ import _socket from "../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
 import {
   changeRouter,
+  openDoubleDayDialog,
+  randomRenderPopup,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
 import {
@@ -55,11 +57,13 @@ import {
 } from "../../redux-saga-middleware/reducers/walletReducer";
 import { systemNotification } from "../../utils/notification";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
+import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
+import DoubleDayDialog from "../Dialog/DoubleDay";
+import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
-import MetaMaskDialog from "../Dialog/MetaMask";
 import NotiFunds from "../Dialog/NotiFunds";
 import DialogProfile from "../Dialog/Profile";
 import ShareTour from "../Dialog/ShareTour";
@@ -131,6 +135,7 @@ export default function Layout(props) {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const { device } = useSelector((state) => state.deviceReducer);
+  const { randomRender } = useSelector((state) => state.appReducer);
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -165,7 +170,7 @@ export default function Layout(props) {
     if (
       router &&
       router !== window.location.pathname &&
-      router?.includes("tournamentDetail") &&
+      router?.includes("promotion-detail") &&
       startGameCheck
     ) {
     }
@@ -304,6 +309,12 @@ export default function Layout(props) {
       socket?.off("chatSuccess");
     };
   }, [socket, token, dispatch, startGameCheck]);
+
+  useEffect(() => {
+    dispatch(randomRenderPopup());
+    dispatch(openDoubleDayDialog());
+  }, []);
+
   return ReactDOM.createPortal(
     <Box
       className="tong"
@@ -326,14 +337,17 @@ export default function Layout(props) {
               : "block",
         }}
       >
-        {/* {!process.env.REACT_APP_TEST || process.env.REACT_APP_TEST !== "test" ? (
-        <ChatBot />
-        ) : <></>} */}
+        {!process.env.REACT_APP_TEST ||
+        process.env.REACT_APP_TEST !== "test" ? (
+          <ChatBot />
+        ) : (
+          <></>
+        )}
       </Box>
+
       <SimpleDialog />
       <TicketCheckOut />
       <StripeAlertComponent />
-      <MetaMaskDialog />
       <ShareTour />
       <PopUpReward />
       <SubscriptionDialog />
@@ -342,12 +356,23 @@ export default function Layout(props) {
       <DialogSubscribe />
       <DialogGift />
       <NotiFunds />
-      <DialogProfile
-        open={isProfileDialog}
-        handleShowProfile={() => {
-          dispatch(toggleProfileDialog());
-        }}
-      />
+      <>
+        {randomRender == 1 ? (
+          <DoubleDayPackDialog />
+        ) : randomRender == 2 ? (
+          <DoubleDayDialog />
+        ) : (
+          <DoubleDayPackDialog />
+        )}
+      </>
+      {isProfileDialog && (
+        <DialogProfile
+          open={isProfileDialog}
+          handleShowProfile={() => {
+            dispatch(toggleProfileDialog());
+          }}
+        />
+      )}
       <InviteGameDialog />
       <GameLogDialog
         open={isGameLogDialog}

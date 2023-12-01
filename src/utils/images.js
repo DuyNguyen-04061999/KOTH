@@ -65,9 +65,9 @@ import bannerwin from "../assets/images/bannerwin.png";
 import binance from "../assets/images/binance.png";
 import bitcoin from "../assets/images/bitcoin.png";
 import Bookmark2 from "../assets/images/bookmark2.png";
+import btn_back from "../assets/images/btn_back.png";
 import calendarTour from "../assets/images/calendarTour.png";
 import Closeimg from "../assets/images/close button.png";
-import btn_back from "../assets/images/btn_back.png";
 import closeButtonInvite from "../assets/images/closeButton.png";
 import closeButtonToast from "../assets/images/closeButtonToast.png";
 import closeEyefullscreen from "../assets/images/closeEyefullscreen.png";
@@ -216,7 +216,6 @@ import search from "../assets/imagesLayout/popup/magnifier-1.png";
 import search2 from "../assets/imagesLayout/popup/magnifier-2.png";
 import popupp from "../assets/imagesLayout/popup/popup.png";
 import popup2 from "../assets/imagesLayout/popup/popup2.png";
-import ticket from "../assets/imagesLayout/popup/ticket.svg";
 import wallet from "../assets/imagesLayout/popup/wallet-1.png";
 import wallet2 from "../assets/imagesLayout/popup/wallet-2.png";
 import WL from "../assets/imagesLayout/popup/wl.png";
@@ -371,8 +370,13 @@ import bgBannerCountDown from "../assets/images/banners/bg_banner_countdown.png"
 
 import bannersigninTablet from "../assets/images/signinTablet.png";
 
-
 import bannerGift from "../assets/images/giftBanner.png";
+import skrillIcon from "../assets/images/skrill.png";
+
+import doubleDayBanner from "../assets/images/doubleDay.jpg";
+import doubleDayBanneMB from "../assets/images/doubleDayMB.jpg";
+import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
+import doubleDayPackBannerMB from "../assets/images/doubleDayPackMB.jpg";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -607,6 +611,11 @@ export const images = {
   stripeLogo: stripeLogo,
   layerend: layerend,
   imageTutorial: imageTutorial,
+  skrillIcon: skrillIcon,
+  doubleDayBanner: doubleDayBanner,
+  doubleDayPackBanner: doubleDayPackBanner,
+  doubleDayPackBannerMB: doubleDayPackBannerMB,
+  doubleDayBanneMB: doubleDayBanneMB,
 };
 
 export const navigationImages = {
@@ -693,7 +702,6 @@ export const popup = {
   SearchActiveIcon: SearchActiveIcon,
   FavoriteActiveIcon: FavoriteActiveIcon,
   HomeActiveIcon: HomeActiveIcon,
-  ticket: ticket,
   packageicon: packageicon,
   walletopen: walletopen,
   proWallet: proWallet,

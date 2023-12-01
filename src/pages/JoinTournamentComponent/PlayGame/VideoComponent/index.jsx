@@ -1,11 +1,10 @@
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import "./index.scss";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const WarningIcon = () => {
   return (

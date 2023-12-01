@@ -829,7 +829,9 @@ export default function Browser(props) {
                         : "#A89CD7",
                   }}
                   onClick={() => {
-                    window.open("https://t.me/+LaxB-V2ovfNiNzNl", "_blank");
+                    if (window?.FB && window?.FB?.CustomerChat) {
+                      window.FB.CustomerChat.show(true);
+                    }
                     handleShowMenu();
                   }}
                 >

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const AvatarPicker = (props) => {
-  const { avatarUrl } = useSelector((state) => state.profileReducer);
+  const { avatarUrl, nickName } = useSelector((state) => state.profileReducer);
   const [file, setFile] = React.useState(null);
   const classes = useStyles();
   const imageRef = useRef(null);
@@ -43,6 +43,7 @@ export const AvatarPicker = (props) => {
 
   const handleChange = async (event) => {
     dispatch(openLoading());
+    const fileSize = event.target.files[0]?.size
     handleSetAvatar(event.target.files[0]);
     let reader = new FileReader();
 
@@ -51,7 +52,7 @@ export const AvatarPicker = (props) => {
     if (
       imageType === "png" ||
       imageType === "jpg" ||
-      imageType === "gif" ||
+      (imageType === "gif" && fileSize <= 153600) ||
       imageType === "jpeg"
     ) {
       reader.onload = function (e) {
@@ -104,16 +105,21 @@ export const AvatarPicker = (props) => {
               style={{
                 border: "0px solid",
                 background: "#7848ED",
-                padding: "12px 40px",
+                padding: "12px 30px",
                 borderRadius: "5px",
                 color: "#fff",
                 fontWeight: "bold",
-                marginTop: "10px",
                 fontSize: "12px",
               }}
             >
               UPLOAD PHOTO
             </button>
+            <Typography
+                  className="mt-2 fs-3"
+                  sx={{ fontWeight: "700", fontSize: "24px" }}
+                >
+                  {nickName}
+                </Typography>
             <Avatar
               src={
                 file &&
@@ -127,13 +133,13 @@ export const AvatarPicker = (props) => {
                   : images.undefinedAvatar
               }
               sx={{
-                width: "100px",
-                height: "100px",
+                width: "95px",
+                height: "95px",
                 borderRadius: "50%",
                 border: uPack ? "4px solid #FD9E0F" : "",
-                marginBottom: "15px",
               }}
             />
+            
           </Badge>
 
           <input
@@ -145,13 +151,6 @@ export const AvatarPicker = (props) => {
           />
         </div>
       </div>{" "}
-      <Typography
-        sx={{ fontSize: "12px", marginTop: "20px", fontWeight: "100" }}
-      >
-        The image size must be less than 5MB.
-        <br />
-        Allowed file extension: JPEG, GIF, PNG, JPG
-      </Typography>
     </List>
   );
 };
