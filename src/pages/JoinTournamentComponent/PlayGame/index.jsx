@@ -152,7 +152,7 @@ export default function PlayGame(props) {
                   top: "100%",
                   left: "0px",
                 }
-              : ""
+              : {}
             : orientation === "landscape"
             ? {
                 transform: " rotate(-90deg)",
@@ -164,8 +164,8 @@ export default function PlayGame(props) {
                 top: "100%",
                 left: "0px",
               }
-            : ""
-          : ""
+            : {}
+          : {}
       }
     >
       <Box
