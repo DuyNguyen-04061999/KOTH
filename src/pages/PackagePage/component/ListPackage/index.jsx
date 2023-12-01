@@ -38,7 +38,6 @@ export default function ListPackage(props) {
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
 
   const { listSetting } = useSelector((state) => state.settingReducer);
-console.log(listSetting);
 
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();

@@ -23,7 +23,7 @@ const DoubleDayPackDialog = () => {
       {width < 576 ? (
         <div>
           <Dialog
-            open={showDoubleDayDialog && randomRender}
+            open={showDoubleDayDialog && randomRender !== null}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
@@ -57,7 +57,7 @@ const DoubleDayPackDialog = () => {
       ) : (
         <div>
           <Dialog
-            open={showDoubleDayDialog && randomRender}
+            open={showDoubleDayDialog && randomRender !== null}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
