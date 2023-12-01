@@ -78,6 +78,7 @@ export default function JoinTournament() {
     listJoinedTour,
     isFullInfo,
   } = useSelector((state) => state.userReducer);
+  
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);

@@ -237,7 +237,7 @@ export default function TicketCheckOut() {
                           fontSize: "14px",
                         }}
                       >
-                        Total Extra: 4 Free Extra/day
+                        Total Extra: {4 * Number(listSetting?.saleValue || 1)} Free Extra/day
                       </Typography>
                     </Box>
                   ) : (

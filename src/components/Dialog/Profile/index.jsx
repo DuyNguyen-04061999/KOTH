@@ -25,6 +25,7 @@ import { updateProfileUser } from "../../../redux-saga-middleware/reducers/userR
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
+import LoadingEffect from "../../LoadingComponent";
 import AvatarPicker from "./AvatarPicker";
 import "./index.scss";
 
@@ -46,6 +47,7 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { user } = useSelector((state) => state.userReducer);
   const { uPack } = useSelector((state) => state.userReducer);
+  const { loadingState } = useSelector((state) => state.loadingReducer);
   const { 
     tokenUser, 
     // cityProfile, 
@@ -76,7 +78,8 @@ export default function DialogProfile(props) {
   const { device } = useSelector((state) => state.deviceReducer);
   const [dName, setDName] = useState(nickName || "");
   // const day = new Date();
-  const [value, setValue] = useState(birthDay ? dayjs(birthDay) : new Date());
+  const [value, setValue] = useState(birthDay ? dayjs(birthDay) : dayjs(new Date()));
+  
   const [avatarImage, setAvatarImage] = useState(avatarUrl);
   const [avatar, setAvatar] = useState("");
   const handleImageChange = (imageFile) => {
@@ -187,6 +190,7 @@ export default function DialogProfile(props) {
   const renderUserInfo = () => {
     return (
       <Grid container>
+        {loadingState && <LoadingEffect />}
         <Grid
           item
           md={(!tokenUser || tokenUser) && userNameProfile !== user?.userName ? 12 : 5}
@@ -1615,6 +1619,7 @@ export default function DialogProfile(props) {
                           setDName(nickName || "");
                           setStateOption(state || "");
                           setZcode(zipCode || "");
+                          setValue(dayjs(birthDay) || new Date());
                         }}
                       />
                     </Box>
@@ -1649,6 +1654,7 @@ export default function DialogProfile(props) {
           setDName(nickName || "");
           setStateOption(state || "");
           setZcode(zipCode || "");
+          setValue(dayjs(birthDay) || new Date());
           handleShowProfile();
         }}
         maxWidth={"md"}
