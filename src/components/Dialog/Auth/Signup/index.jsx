@@ -287,7 +287,7 @@ export default function Signup(props) {
                     </Typography>
                   </Box>
                 }
-                placement="right"
+                placement="left"
                 sx={{
                   backgroundColor: "white",
                   color: "red",
@@ -406,7 +406,7 @@ export default function Signup(props) {
                     </Typography>
                   </Box>
                 }
-                placement="right"
+                placement="left"
                 sx={{
                   backgroundColor: "white",
                   color: "red",
@@ -584,7 +584,7 @@ export default function Signup(props) {
                     </Typography>
                   </Box>
                 }
-                placement="right"
+                placement="left"
                 sx={{
                   backgroundColor: "white",
                   color: "red",
