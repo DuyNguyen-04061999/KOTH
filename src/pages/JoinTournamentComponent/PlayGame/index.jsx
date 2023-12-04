@@ -68,7 +68,7 @@ export default function PlayGame(props) {
 
     // clean up
     return () => window.removeEventListener("message", handler);
-  }, [setStartGame, dispatch, id]);
+  }, [setStartGame, dispatch, id, tokenUser]);
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
@@ -113,28 +113,28 @@ export default function PlayGame(props) {
     dispatch,
     device,
   ]);
-  const checkLockScreen = () => {
-    if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-      if (
-        (device === "Mobile" || device === "Tablet") &&
-        orientation === "portrait"
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-      if (
-        (device === "Mobile" || device === "Tablet") &&
-        orientation === "landscape"
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return false;
-  };
+  // const checkLockScreen = () => {
+  //   if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
+  //     if (
+  //       (device === "Mobile" || device === "Tablet") &&
+  //       orientation === "portrait"
+  //     ) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
+  //     if (
+  //       (device === "Mobile" || device === "Tablet") &&
+  //       orientation === "landscape"
+  //     ) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  //   return false;
+  // };
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {

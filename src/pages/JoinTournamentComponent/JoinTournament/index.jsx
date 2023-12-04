@@ -84,7 +84,6 @@ export default function JoinTournament() {
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
   const { detailTournament } = useSelector((state) => state.playgameReducer);
-  console.log(detailTournament);
 
   const {
     isStartGameInPromotion,

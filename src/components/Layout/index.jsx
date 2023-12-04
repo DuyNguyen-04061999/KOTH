@@ -319,7 +319,7 @@ export default function Layout(props) {
   useEffect(() => {
     dispatch(randomRenderPopup());
     dispatch(openDoubleDayDialog());
-  }, []);
+  }, [dispatch]);
 
   return ReactDOM.createPortal(
     <Box
@@ -363,9 +363,9 @@ export default function Layout(props) {
       <DialogGift />
       <NotiFunds />
       <>
-        {randomRender == 1 ? (
+        {randomRender === 1 ? (
           <DoubleDayPackDialog />
-        ) : randomRender == 2 ? (
+        ) : randomRender === 2 ? (
           <DoubleDayDialog />
         ) : (
           <DoubleDayPackDialog />
