@@ -413,6 +413,7 @@ function* resetPasswordSaga(dataRequest) {
           })
         );
         yield put(closeLoginDialog());
+        yield put(clickTab("login"));
       } else {
         yield put(resetPasswordFail());
         yield put(
