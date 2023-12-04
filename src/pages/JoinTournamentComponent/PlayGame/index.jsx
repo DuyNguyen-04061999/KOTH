@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
-import { getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { getRefactorDetailAuthPromotion, getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import { sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
-import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
@@ -50,7 +50,14 @@ export default function PlayGame(props) {
             setStartGame(false);
           }, 1000);
           setTimeout(() => {
-            dispatch(getRefactorDetailPromotion(id));
+            if (tokenUser || localStorage.getItem("token")) {
+              dispatch(getRefactorDetailAuthPromotion({
+                id,
+                token: tokenUser
+              }));
+            } else {
+              dispatch(getRefactorDetailPromotion(id));
+            }
             dispatch(toggleOpenResultEndGame(score || 0));
             dispatch(toggleStartGame(false));
           }, 1500);
@@ -62,7 +69,7 @@ export default function PlayGame(props) {
 
     // clean up
     return () => window.removeEventListener("message", handler);
-  }, [setStartGame, dispatch, id]);
+  }, [setStartGame, dispatch, id, tokenUser]);
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
