@@ -73,7 +73,7 @@ export default function Signup(props) {
       type: "SET_TAB_HELPCENTER",
       payload: value,
     });
-    window.open(`${window.location}help-center`, "_blank");
+    window.open(`${window.location.origin}/help-center`, "_blank");
   };
 
   const CheckIconSVG = () => {
@@ -689,7 +689,7 @@ export default function Signup(props) {
         </FormControl>
         <Box className="mb-3">
           {" "}
-          <Box className="d-flex align-items-center ms-3">
+          <Box className="d-flex align-items-center ms-1">
             {" "}
             {characterPass === true ? (
               <svg
@@ -743,7 +743,7 @@ export default function Signup(props) {
               Password must be at least 6 characters long.{" "}
             </Typography>{" "}
           </Box>{" "}
-          <Box className="d-flex align-items-center ms-3 text-white">
+          <Box className="d-flex align-items-center ms-1 text-white">
             {" "}
             {passOneLetter === true ? (
               <svg
@@ -791,13 +791,16 @@ export default function Signup(props) {
               sx={{
                 color: passOneLetter === true ? "green" : "white",
                 fontSize: 12,
+                textOverflow:"clip",
+                wordBreak:"break-word",
+                textAlign:"left"
               }}
             >
               {" "}
               Password must have at least one special character.{" "}
             </Typography>{" "}
           </Box>{" "}
-          <Box className="d-flex align-items-center ms-3 text-white">
+          <Box className="d-flex align-items-center ms-1 text-white">
             {" "}
             {passOneNumber === true ? (
               <svg
@@ -851,7 +854,7 @@ export default function Signup(props) {
               Password must have at least one digit ('0-9').{" "}
             </Typography>{" "}
           </Box>{" "}
-          <Box className="d-flex align-items-center ms-3 text-white">
+          <Box className="d-flex align-items-center ms-1 text-white">
             {" "}
             {hasUppercase === true ? (
               <svg
@@ -1099,7 +1102,7 @@ export default function Signup(props) {
           <Input
             id="input-with-icon-adornment"
             type="text"
-            placeholder="Promo Code (optional)"
+            placeholder="Promo code (optional)"
             onChange={(e) => {
               setRef(e.target.value);
             }}

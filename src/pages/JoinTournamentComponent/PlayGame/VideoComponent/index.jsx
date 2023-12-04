@@ -178,7 +178,8 @@ export default function VideoComponent(props) {
                 If an error notification appear when you are loading the game
                 and cannot access it, please close the browser and reopen it.
                 Your extras will not be lost when you close the browser. We
-                apologize for any inconvenience
+                apologize for any inconvenience.
+                Please ensure that you have a stable internet connection before entering the game to guarantee a seamless and enjoyable gaming experience.
               </Typography>
             </Box>
           </Box>

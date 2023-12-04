@@ -39,6 +39,8 @@ export default function ResultEndGame() {
     }
   };
 
+  // isResultEndGame
+
   return (
     <div>
       <Dialog
@@ -56,6 +58,8 @@ export default function ResultEndGame() {
         }}
       >
         <Box
+        component={"div"}
+          id="results"
           sx={{
             width: "100%",
             borderRadius: 0,
