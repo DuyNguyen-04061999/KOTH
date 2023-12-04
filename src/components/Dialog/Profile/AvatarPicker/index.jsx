@@ -105,7 +105,7 @@ export const AvatarPicker = (props) => {
               style={{
                 border: "0px solid",
                 background: "#7848ED",
-                padding: "12px 30px",
+                 padding: "12px 30px",
                 borderRadius: "5px",
                 color: "#fff",
                 fontWeight: "bold",

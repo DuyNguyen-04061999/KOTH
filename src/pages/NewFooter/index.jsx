@@ -30,7 +30,9 @@ export default function NewFooter() {
   };
 
   return (
-    <Box>
+    <Box sx={{
+      marginTop:"70px"
+    }}>
       {" "}
       {/* Footer */}
       <Box>
