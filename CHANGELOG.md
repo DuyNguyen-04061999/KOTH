@@ -1,3 +1,60 @@
+## [1.2.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.1.0...1.2.0) (2023-12-01)
+
+
+### Features
+
+* Add backtwo game ([b016267](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b0162672c449c3ff50b6657885c7666d1238a37a))
+* Added banner in pop up ([8bc3a5b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8bc3a5bdc174e16e441b2457079543b37bad09c2))
+* Added double day pop up ([58c7889](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/58c78891544b80aa658436c254d1e3b100374b95))
+* Added lazy load and reduce size bundle js ([69b4328](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/69b4328877e21b8958a293726a5da758d6cff849))
+* Automatically rotate playing game screen ([abc22b0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/abc22b0c40db618866c7024d2dc56b760e20681f))
+* Automatically rotate playing game screen ([033bca9](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/033bca965aceeed8ca48c7fa78f7d252930812a0))
+* change height ([8d7a2b3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8d7a2b3f239f5043a3eca5af1b5d390087c67149))
+* Change Package UI ([11d7abe](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/11d7abe85b295c47506710f94553bb5110e87ab1))
+* Change skrill svg file to png, remove App.css in index.html and remove test file ([b46b084](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b46b084d330b7373f5bada349b00885982108ece))
+* Chat plugin in mobile ([61985ea](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/61985ea01337d96c49c38fc3caad228247953930))
+* Edit New ui profile ([34e0099](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/34e00998499f4bfb0ff09ee755bc9dff0624d25b))
+* edit profile ([85dbfc2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/85dbfc209053e6e9f3807fd307eed31ec79755f1))
+* Edit UI profile and add API ([ce52fd9](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ce52fd97f529ec300d0f4b611423c5518e7522a8))
+* Fix banner homepage ([b8adf47](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b8adf47c8b526f865911296d346bd3cc64abe565))
+* Fix chat plugin ([bd719f7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/bd719f7aaec7aa3c9f86d7846fd5d7aae85dcdef))
+* Fix chat plugins ([20dff86](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/20dff862fcb71921f40707a28ffe9d8634699940))
+* Remove components using web3 package ([6cc3fee](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6cc3fee0df254315bd513e5bcb320a58a668f0f1))
+
+
+### Bug Fixes
+
+* Add meta to detail promotion page ([ea37d11](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ea37d119118a10b44b40b15c33f106f74134e5ac))
+* Add meta to home page ([70da297](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/70da29771a3c752568ad30068d7edafdc9fef0a3))
+* Add meta to other pages ([1cee1e8](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/1cee1e8247032a2b3ba51dc4aeb363ad05857838))
+* Add phone and email field ([7514b4a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7514b4a80f6ff2d5e72032b6108d4d4ca2911936))
+* Add secure_irl image meta ([7a7c6da](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7a7c6da87df626deb7ce09a7e3f46c012d029055))
+* Change tooltip description display name sigup ([c1562c5](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/c1562c5009ab86b676fa1945d18809931941c86a))
+* Change tournamentDetail to promotion-detail ([9908460](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/9908460719c0e5226c477f87b097a1c8b8431414))
+* Check size gif image ([f9cf25a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f9cf25a482fc58feb157acddad16d2a0b9e4f3df))
+* Close chat bot ([1d5d5d0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/1d5d5d0da3230b08acd45e1741c17e27b911c3cd))
+* Fix background update profile ([e9a10d9](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e9a10d9d6ffc03a672b7593fb3dcc9797c9cdafb))
+* Fix block CSS request URL web crash ([9789077](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/9789077c8912001dda50f54ee188b009ce6d3f8a))
+* Fix bug UI in banner Tour mobile ([2e97687](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/2e9768726ea697b9bf99ea68c511095d761f6033))
+* Fix chat bot condition ([60f0de7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/60f0de78fea10f3745f3f52aec90cf714bb9ae1f))
+* Fix chatbot ([682b5ed](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/682b5ed3025f05f2ed30c5f337e4eef0824f3a3c))
+* Fix game cocos play in ios ([9c8b7b1](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/9c8b7b19a4ad2140f459a3be9b5d17a4d9df04b2))
+* Fix package ([9cd7a22](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/9cd7a228f1516ab9e79866c8119af96b9760af3e))
+* Fix profile ([b0d92d0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b0d92d0f5adcff7669252b5cb1db2a372136ccb0))
+* Fix profile dialog and icon view all ([8b305d7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8b305d7f829ab85ac67f8a2a2d51e408b0986e3f))
+* Lazyload edit profile ([fad098a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/fad098add1d73cf86fb0bf9ee6ec7830d934c0f4))
+* Move scss to App.css ([1bef3d6](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/1bef3d6bd2346302d91404e91f75411c82cbf330))
+* Remove cocos game in public folder ([1d6aa9d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/1d6aa9dd2c787e5dd7539f355c8006df5e13ffc2))
+* Remove delete account ([7525a79](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7525a7973d60d6a475da8c276d1d0eeb69dbfe24))
+* Remove reload when reconnect system ([81c9f65](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/81c9f656a7653babc0de6cb3ce59bb9b915256e0))
+* Remove timezone column ([11d14eb](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/11d14eb8090b55f20f1311764ab254bb99625f99))
+* Remove warning in dialog double day ([eedf377](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/eedf37784fca63fb9e1c68f19a3bbf3bfb40a21f))
+* Update check full infor user ([7edc2c0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7edc2c0420f5b7d9595293736026299ab106275b))
+* Update image meta ([9312f1d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/9312f1df78d63e67ee0ba6110f63b62bbde1a5fb))
+* Update is full screen to false ([7443482](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/74434824821f6105932ebb4aa70d1f3c299612b6))
+* Update meta image ([988fc00](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/988fc002bdfa62f84c93dd4f78eba4b37729894c))
+* Update package sale ([b4c38ba](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b4c38bacf1219add298e84616976ab47d737155e))
+
 ## [1.1.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.0.0...1.1.0) (2023-11-24)
 
 
