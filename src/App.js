@@ -55,7 +55,7 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import { updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
+import { getUserInfoReady, updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
@@ -89,6 +89,7 @@ function App() {
 
   const { startGameCheck } = store.getState().appReducer;
   const { tokenUser, user } = store.getState().userReducer;
+  const { currentTab } = store.getState().authReducer;
 
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
@@ -394,6 +395,27 @@ function App() {
       );
     }
   }, []);
+
+  useEffect(() => {
+    // callback function to call when event triggers
+    const onPageLoad = () => {
+      const token = localStorage.getItem("token");
+      if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
+        store.dispatch(getUserInfoReady(token || tokenUser));
+      }
+      // do something else
+    };
+
+    // Check if the page has already loaded
+    if (document.readyState === 'complete') {
+      onPageLoad();
+    } else {
+      window.addEventListener('load', onPageLoad, false);
+      // Remove the event listener when component unmounts
+      return () => window.removeEventListener('load', onPageLoad);
+    }
+  }, [currentTab, tokenUser]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
