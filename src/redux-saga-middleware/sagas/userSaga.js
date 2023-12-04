@@ -15,6 +15,7 @@ import {
 import { clickTabChat } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
+  exitEditProfile,
   saveDataProfile,
 } from "../reducers/profileReducer";
 import {
@@ -73,7 +74,9 @@ function* loginSaga(dataRequest) {
         localStorage.setItem("token", data?.data?.token);
         localStorage.setItem("refreshToken", data?.data?.refreshToken);
         yield put(updateUserToken(data?.data?.token))
-        yield put(getUserInfoReady(data?.data?.token));
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000)
       } else {
         yield put(loginFail());
         yield put(
@@ -148,6 +151,7 @@ function* updateProfileSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(closeProfileDialog());
+        yield put(exitEditProfile());
         yield put(
           showToastNotification({
             type: "success",
@@ -413,6 +417,7 @@ function* resetPasswordSaga(dataRequest) {
           })
         );
         yield put(closeLoginDialog());
+        yield put(clickTab("login"));
       } else {
         yield put(resetPasswordFail());
         yield put(

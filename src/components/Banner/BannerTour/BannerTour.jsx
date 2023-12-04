@@ -138,7 +138,7 @@ const BannerTour = (props) => {
           </Box>
           <button
             onClick={() => {
-              if (tourId !== "undefined") {
+              if (tourId !== "undefined" && tourId) {
                 navigate(`/promotion-detail/${tourId}`);
               }
             }}

@@ -1,7 +1,7 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { editProfile, toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   getMyInfor,
@@ -24,6 +24,7 @@ export default function CheckProfile(props) {
   const handleComplete = () => {
     dispatch(toggleCheckProfileDialog());
     dispatch(toggleProfileDialog());
+    dispatch(editProfile())
     dispatch(getMyInfor());
   };
 

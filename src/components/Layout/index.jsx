@@ -33,7 +33,7 @@ import {
   addRefCodeRegister,
   clickTab,
   clickTabNav,
-  toggleLoginDialog,
+  openLoginDialog
 } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
@@ -201,11 +201,17 @@ export default function Layout(props) {
           const response = await API.get(
             `/api/get-refcode-by-username/${userName}`
           );
-          if (response) {
-            console.log(response);
-            dispatch(addRefCodeRegister(response?.data?.ref));
-            dispatch(clickTab("signup"));
-            dispatch(toggleLoginDialog());
+          if (response && response?.data && response?.data?.ref) {
+            if(!token && !localStorage.getItem("token")) {
+              dispatch(addRefCodeRegister(response?.data?.ref));
+              dispatch(clickTab("signup"));
+              dispatch(openLoginDialog());
+            } else {
+              dispatch(showToastNotification({
+                type: "warning",
+                message: "Please logout and register again!"
+              }))
+            }
           }
         } catch (error) {
           console.log(error);
@@ -213,7 +219,7 @@ export default function Layout(props) {
       }
     };
     getRefCodeByUserName();
-  }, [userName, dispatch]);
+  }, [userName, dispatch, token]);
 
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
@@ -313,7 +319,7 @@ export default function Layout(props) {
   useEffect(() => {
     dispatch(randomRenderPopup());
     dispatch(openDoubleDayDialog());
-  }, []);
+  }, [dispatch]);
 
   return ReactDOM.createPortal(
     <Box
@@ -357,9 +363,9 @@ export default function Layout(props) {
       <DialogGift />
       <NotiFunds />
       <>
-        {randomRender == 1 ? (
+        {randomRender === 1 ? (
           <DoubleDayPackDialog />
-        ) : randomRender == 2 ? (
+        ) : randomRender === 2 ? (
           <DoubleDayDialog />
         ) : (
           <DoubleDayPackDialog />

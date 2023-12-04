@@ -7,7 +7,7 @@ import {
   Input,
   Slide,
   Tooltip,
-  Typography
+  Typography,
 } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
@@ -21,9 +21,11 @@ import dayjs from "dayjs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { updateProfileUser } from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { validateNickName } from "../../../utils/validateNickName";
 import AnimButton from "../../AnimButton";
 import LoadingEffect from "../../LoadingComponent";
 import AvatarPicker from "./AvatarPicker";
@@ -43,18 +45,15 @@ const BgWithTooltip = withStyles({
 
 export default function DialogProfile(props) {
   const { width, height } = useWindowDimensions();
-
   const { open, handleShowProfile } = props;
   const { user } = useSelector((state) => state.userReducer);
   const { uPack } = useSelector((state) => state.userReducer);
   const { loadingState } = useSelector((state) => state.loadingReducer);
-  const { 
-    tokenUser, 
-    // cityProfile, 
-    // stateProfile 
-  } = useSelector(
-    (state) => state.userReducer
-  );
+  const {
+    tokenUser,
+    // cityProfile,
+    // stateProfile
+  } = useSelector((state) => state.userReducer);
   // const { friendList } = useSelector((state) => state.chatReducer);
   const {
     id,
@@ -72,14 +71,17 @@ export default function DialogProfile(props) {
     birthDay,
     firstName,
     lastName,
+    isEditProfile
   } = useSelector((state) => state.profileReducer);
   const dispatch = useDispatch();
   // const { listSetting } = useSelector((state) => state.settingReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   const [dName, setDName] = useState(nickName || "");
   // const day = new Date();
-  const [value, setValue] = useState(birthDay ? dayjs(birthDay) : dayjs(new Date()));
-  
+  const [value, setValue] = useState(
+    birthDay ? dayjs(birthDay) : dayjs(new Date())
+  );
+  const [disabledBtn, setDisabledBtn] = useState(false);
   const [avatarImage, setAvatarImage] = useState(avatarUrl);
   const [avatar, setAvatar] = useState("");
   const handleImageChange = (imageFile) => {
@@ -107,7 +109,7 @@ export default function DialogProfile(props) {
     setValue(dayjs(birthDay) || new Date());
   }, [nickName, address1, address2, city, state, zipCode, birthDay]);
 
-  const [disabledInp, setDisabledInp] = useState(true);
+  const [disabledInp, setDisabledInp] = useState(false);
   // const [socket, setSocket] = useState(null);
   // useEffect(() => {
   //   const socket = _socket;
@@ -137,6 +139,23 @@ export default function DialogProfile(props) {
   //     setTab(1);
   //   }
   // };
+
+  useEffect(()=>{
+    if(validateNickName(dName)){
+      setDisabledBtn(false);
+    }
+    else {
+      setDisabledBtn(true)
+    }
+  },[dName])
+
+  
+  useEffect(() => {
+    if(isEditProfile) {
+      setTab(1)
+      setDisabledBtn(false);
+    }
+  }, [isEditProfile])
 
   const returnIcon = () => {
     return (
@@ -193,7 +212,11 @@ export default function DialogProfile(props) {
         {loadingState && <LoadingEffect />}
         <Grid
           item
-          md={(!tokenUser || tokenUser) && userNameProfile !== user?.userName ? 12 : 5}
+          md={
+            (!tokenUser || tokenUser) && userNameProfile !== user?.userName
+              ? 12
+              : 5
+          }
           xs={12}
           sx={{
             backgroundColor: "#352658",
@@ -777,7 +800,7 @@ export default function DialogProfile(props) {
               )}
         </Grid>
         {tokenUser && userNameProfile === user?.userName && (
-            <Grid item md={7} xs={12}>
+          <Grid item md={7} xs={12}>
             <Box
               className={width > 576 ? "ms-4" : ""}
               sx={{
@@ -811,9 +834,7 @@ export default function DialogProfile(props) {
                   <Input
                     id="input-with-icon-adornment"
                     type="text"
-                    onChange={(e) => {
-                      setDName(e.target.value);
-                    }}
+                    onChange={(e) => setDName(e.target.value)}
                     value={dName}
                     disabled={disabledInp}
                     placeholder="Enter Your Display Name"
@@ -1003,7 +1024,11 @@ export default function DialogProfile(props) {
                     marginBottom: "5px !important",
                   }}
                 >
-                  Address line 2 (Optional)
+                  Address line 2 <Box component={"span"} sx={{
+                    fontSize: "12px"
+                  }}>
+                  (Optional)
+                  </Box>
                 </Typography>
                 <FormControl
                   variant="standard"
@@ -1597,7 +1622,7 @@ export default function DialogProfile(props) {
                   </Box>
                 </>
               )}
-  
+
               <Box>
                 {tab === 0 ? (
                   <AnimButton
@@ -1616,6 +1641,7 @@ export default function DialogProfile(props) {
                         text={"CANCEL"}
                         onClick={() => {
                           setTab(0);
+                          dispatch(exitEditProfile())
                           setDisabledInp(true);
                           setAddressLine1(address1 || "");
                           setAddressLine2(address2 || "");
@@ -1628,11 +1654,19 @@ export default function DialogProfile(props) {
                       />
                     </Box>
                     <Box className="ms-2" sx={{ width: "100%" }}>
-                      <AnimButton
-                        type="primary"
-                        text={"UPDATE"}
-                        onClick={sendUpdateProfile}
-                      />
+                      {disabledBtn ? (
+                        <AnimButton
+                          type="disable"
+                          text={"UPDATE"}
+                          onClick={sendUpdateProfile}
+                        />
+                      ) : (
+                        <AnimButton
+                          type="primary"
+                          text={"UPDATE"}
+                          onClick={sendUpdateProfile}
+                        />
+                      )}
                     </Box>
                   </Box>
                 )}
@@ -1651,6 +1685,7 @@ export default function DialogProfile(props) {
         open={open}
         onClose={() => {
           setTab(0);
+          dispatch(exitEditProfile())
           setDisabledInp(true);
           setAddressLine1(address1 || "");
           setAddressLine2(address2 || "");

@@ -1,18 +1,18 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
-import { getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { getRefactorDetailAuthPromotion, getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import { sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
-
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
@@ -20,6 +20,7 @@ export default function PlayGame(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { chatPopup } = useSelector((state) => state.chatReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
+  const [continueGame, setContinueGame] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
@@ -49,7 +50,14 @@ export default function PlayGame(props) {
             setStartGame(false);
           }, 1000);
           setTimeout(() => {
-            dispatch(getRefactorDetailPromotion(id));
+            if (tokenUser || localStorage.getItem("token")) {
+              dispatch(getRefactorDetailAuthPromotion({
+                id,
+                token: tokenUser
+              }));
+            } else {
+              dispatch(getRefactorDetailPromotion(id));
+            }
             dispatch(toggleOpenResultEndGame(score || 0));
             dispatch(toggleStartGame(false));
           }, 1500);
@@ -61,7 +69,7 @@ export default function PlayGame(props) {
 
     // clean up
     return () => window.removeEventListener("message", handler);
-  }, [setStartGame, dispatch, id]);
+  }, [setStartGame, dispatch, id, tokenUser]);
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
@@ -108,19 +116,13 @@ export default function PlayGame(props) {
   ]);
   const checkLockScreen = () => {
     if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-      if (
-        (device === "Mobile" || device === "Tablet") &&
-        orientation === "portrait"
-      ) {
+      if (device === "Tablet" && orientation === "portrait") {
         return true;
       } else {
         return false;
       }
     } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-      if (
-        (device === "Mobile" || device === "Tablet") &&
-        orientation === "landscape"
-      ) {
+      if (device === "Tablet" && orientation === "landscape") {
         return true;
       } else {
         return false;
@@ -298,6 +300,140 @@ export default function PlayGame(props) {
             )}
           </Box>
         </Box>
+        {checkLockScreen() && !videoGame && (
+          <Dialog sx={{ zIndex: "100000000" }} fullScreen={true} open={true}>
+            {continueGame === true ? (
+              <Box
+                sx={{
+                  backgroundColor: "#1c191e",
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    backgroundColor: "#37285c",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    height: "56px",
+                    width: "100%",
+                    boxSizing: "border-box",
+                    padding: "10px",
+                    color: "white",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: getFontSizeTitleDependOnWidth(width),
+                      height: getFontSizeTitleDependOnWidth(width),
+                    }}
+                    alt="..."
+                    src={images.BackButtonLobby}
+                  />
+                  <Typography>Tournament</Typography>
+                </Box>
+                <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
+                  <Box
+                    onClick={() => {
+                      setContinueGame(false);
+                    }}
+                    sx={{
+                      width: "100%",
+                      height: "280px",
+                      backgroundColor: "#423965",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: `${parseFloat(width / 2.6)}px`,
+                        height: "40px",
+                        background: "linear-gradient(#9c39f1,#c049ed)",
+                        borderRadius: "25px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "0px 10px 0px 5px",
+                      }}
+                    >
+                      <Typography sx={{ color: "white" }}>Continue</Typography>
+                      <img
+                        width={width / 18}
+                        src={images.conitnuePlayButton}
+                        alt="..."
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "#423965",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {" "}
+                    <Box sx={{}}>
+                      <Box
+                        sx={{ width: "200px", height: "200px" }}
+                        component={"img"}
+                        src={images.RotateScreen}
+                      ></Box>
+                      <Typography sx={{ color: "white", marginTop: "20px" }}>
+                        Rotate Your Screen
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box
+                  onClick={() => {
+                    setContinueGame(true);
+                  }}
+                  sx={{
+                    position: "fixed",
+                    top: "40%",
+                    width: "90px",
+                    height: "40px",
+                    display: "flex",
+                    padding: "10px",
+                    alignItems: "center",
+                    backgroundImage: "linear-gradient(#6844de,#8c39ff)",
+                    borderRadius: "0px 50px 50px 0px",
+                  }}
+                >
+                  <Box
+                    sx={{ width: "20px", height: "20px" }}
+                    component={"img"}
+                    src={images.BackButtonLobby}
+                  ></Box>
+                  <Typography sx={{ color: "white" }}>Lobby</Typography>
+                </Box>
+              </Box>
+            )}
+          </Dialog>
+        )}
         {device === "Desktop" && (
           <Box
             sx={{

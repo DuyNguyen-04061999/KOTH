@@ -42,6 +42,20 @@ export const profileLogoutSuccessFully = (data) => {
   };
 };
 
+export const editProfile = (data) => {
+  return {
+    type: "EDIT_PROFILE",
+    payload: data,
+  };
+};
+
+export const exitEditProfile = (data) => {
+  return {
+    type: "EXIT_EDIT_PROFILE",
+    payload: data,
+  };
+};
+
 const profileReducer = (
   state = {
     isProfileDialog: false,
@@ -62,7 +76,8 @@ const profileReducer = (
     city: "",
     state: "",
     zipCode:"",
-    birthDay:""
+    birthDay:"",
+    isEditProfile: false
   },
   action
 ) => {
@@ -72,6 +87,10 @@ const profileReducer = (
       return { ...state };
     case "TOGGLE_PROFILE_DIALOG":
       return { ...state, isProfileDialog: !state.isProfileDialog };
+    case "EDIT_PROFILE":
+      return { ...state, isEditProfile: true };
+    case "EXIT_EDIT_PROFILE":
+      return { ...state, isEditProfile: false };
     case "SAVE_DATA_PROFILE":
       return {
         ...state,
