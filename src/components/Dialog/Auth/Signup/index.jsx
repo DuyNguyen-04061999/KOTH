@@ -1099,7 +1099,7 @@ export default function Signup(props) {
           <Input
             id="input-with-icon-adornment"
             type="text"
-            placeholder="Referral Code (optional)"
+            placeholder="Promo Code (optional)"
             onChange={(e) => {
               setRef(e.target.value);
             }}
