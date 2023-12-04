@@ -121,7 +121,7 @@ export default function Dialoglg() {
               className="d-flex align-items-center"
             >
               <BgWithTooltip
-                title="Promotion Extra: The extra you will use in all promotion."
+                title="Promotions Extra: The extra you will use in all promotions."
                 placement="bottom"
                 enterTouchDelay={0}
                 sx={{
