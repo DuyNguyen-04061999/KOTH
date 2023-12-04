@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
-import { getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { getRefactorDetailAuthPromotion, getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
@@ -49,7 +49,14 @@ export default function PlayGame(props) {
             setStartGame(false);
           }, 1000);
           setTimeout(() => {
-            dispatch(getRefactorDetailPromotion(id));
+            if (tokenUser || localStorage.getItem("token")) {
+              dispatch(getRefactorDetailAuthPromotion({
+                id,
+                token: tokenUser
+              }));
+            } else {
+              dispatch(getRefactorDetailPromotion(id));
+            }
             dispatch(toggleOpenResultEndGame(score || 0));
             dispatch(toggleStartGame(false));
           }, 1500);
@@ -61,7 +68,7 @@ export default function PlayGame(props) {
 
     // clean up
     return () => window.removeEventListener("message", handler);
-  }, [setStartGame, dispatch, id]);
+  }, [setStartGame, dispatch, id, tokenUser]);
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
@@ -106,28 +113,28 @@ export default function PlayGame(props) {
     dispatch,
     device,
   ]);
-  const checkLockScreen = () => {
-    if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-      if (
-        (device === "Mobile" || device === "Tablet") &&
-        orientation === "portrait"
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-      if (
-        (device === "Mobile" || device === "Tablet") &&
-        orientation === "landscape"
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return false;
-  };
+  // const checkLockScreen = () => {
+  //   if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
+  //     if (
+  //       (device === "Mobile" || device === "Tablet") &&
+  //       orientation === "portrait"
+  //     ) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
+  //     if (
+  //       (device === "Mobile" || device === "Tablet") &&
+  //       orientation === "landscape"
+  //     ) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  //   return false;
+  // };
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {

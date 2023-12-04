@@ -78,13 +78,13 @@ export default function JoinTournament() {
     listJoinedTour,
     isFullInfo,
   } = useSelector((state) => state.userReducer);
-  
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
   const [currentResult, setCurrentResult] = useState(false);
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
   const { detailTournament } = useSelector((state) => state.playgameReducer);
+
   const {
     isStartGameInPromotion,
     startGamePromotion,
@@ -3470,7 +3470,7 @@ export default function JoinTournament() {
                               ) &&
                               JSON.parse(
                                 detailTournament?.tournamentInformations
-                              )?.length > 3 && (
+                              )?.length >= 1 && (
                                 <Typography
                                   sx={{
                                     color: "#fff",

@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { updateProfileUser } from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -70,12 +71,12 @@ export default function DialogProfile(props) {
     birthDay,
     firstName,
     lastName,
+    isEditProfile
   } = useSelector((state) => state.profileReducer);
   const dispatch = useDispatch();
   // const { listSetting } = useSelector((state) => state.settingReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   const [dName, setDName] = useState(nickName || "");
-  const [dNameError, setDNameError] = useState("");
   // const day = new Date();
   const [value, setValue] = useState(
     birthDay ? dayjs(birthDay) : dayjs(new Date())
@@ -108,7 +109,7 @@ export default function DialogProfile(props) {
     setValue(dayjs(birthDay) || new Date());
   }, [nickName, address1, address2, city, state, zipCode, birthDay]);
 
-  const [disabledInp, setDisabledInp] = useState(true);
+  const [disabledInp, setDisabledInp] = useState(false);
   // const [socket, setSocket] = useState(null);
   // useEffect(() => {
   //   const socket = _socket;
@@ -147,6 +148,14 @@ export default function DialogProfile(props) {
       setDisabledBtn(true)
     }
   },[dName])
+
+  
+  useEffect(() => {
+    if(isEditProfile) {
+      setTab(1)
+      setDisabledBtn(false);
+    }
+  }, [isEditProfile])
 
   const returnIcon = () => {
     return (
@@ -1011,7 +1020,11 @@ export default function DialogProfile(props) {
                     marginBottom: "5px !important",
                   }}
                 >
-                  Address line 2
+                  Address line 2 <Box component={"span"} sx={{
+                    fontSize: "12px"
+                  }}>
+                  (Optional)
+                  </Box>
                 </Typography>
                 <FormControl
                   variant="standard"
@@ -1624,6 +1637,7 @@ export default function DialogProfile(props) {
                         text={"CANCEL"}
                         onClick={() => {
                           setTab(0);
+                          dispatch(exitEditProfile())
                           setDisabledInp(true);
                           setAddressLine1(address1 || "");
                           setAddressLine2(address2 || "");
@@ -1667,6 +1681,7 @@ export default function DialogProfile(props) {
         open={open}
         onClose={() => {
           setTab(0);
+          dispatch(exitEditProfile())
           setDisabledInp(true);
           setAddressLine1(address1 || "");
           setAddressLine2(address2 || "");
