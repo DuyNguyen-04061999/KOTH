@@ -15,6 +15,7 @@ import {
 import { clickTabChat } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
+  exitEditProfile,
   saveDataProfile,
 } from "../reducers/profileReducer";
 import {
@@ -150,6 +151,7 @@ function* updateProfileSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(closeProfileDialog());
+        yield put(exitEditProfile());
         yield put(
           showToastNotification({
             type: "success",
