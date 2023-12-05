@@ -1427,7 +1427,7 @@ export default function DialogProfile(props) {
                             fontSize: "13px",
                           },
                           "& .MuiInputBase-input": {
-                            padding: "0px",
+                            padding: "4px !important",
                           },
                           "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root":
                             {
@@ -1583,7 +1583,7 @@ export default function DialogProfile(props) {
                             color: "white",
                           },
                           "& .MuiInputBase-input": {
-                            padding: "0px",
+                            padding: "10px !important",
                           },
                           "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root":
                             {
