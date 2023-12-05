@@ -1336,7 +1336,7 @@ export default function DialogProfile(props) {
                         }}
                         value={zCode}
                         disabled={disabledInp}
-                        placeholder="Enter Your ZipCode"
+                        placeholder="Enter ZipCode"
                         sx={{
                           "&:before": {
                             borderBottom: " 0px solid !important ",
@@ -1352,6 +1352,7 @@ export default function DialogProfile(props) {
                           },
                           color: "white",
                           fontSize: "14px",
+                          paddingRight: "20px",
                           "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
                             padding: "0px !important",
                           },
