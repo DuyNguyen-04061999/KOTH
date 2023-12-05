@@ -209,7 +209,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Promotion
+                      Promotions
                     </span>
                     <Box sx={{ marginLeft: "auto", marginRight: "24px" }}>
                       <svg
