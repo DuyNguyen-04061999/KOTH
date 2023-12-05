@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -11,7 +12,6 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-import {useTranslation} from "react-i18next";
 
 export default function HotTournament() {
   const { width } = useWindowDimensions();
@@ -115,7 +115,7 @@ export default function HotTournament() {
                     : device === "Tablet"
                     ? "32px !important"
                     : "0px !important",
-                paddingTop: width < 576 ? "24px !important" : "50px !important",
+                marginTop: width < 576 ? "24px !important" : "50px !important",
               }}
             >
               <Typography

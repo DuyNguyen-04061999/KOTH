@@ -184,7 +184,7 @@ export default function ListPackage(props) {
             width: "100%",
             height: "auto",
             border: "none",
-            padding: "5px",
+            padding: "6px 12px",
           }}
         >
           <Box
@@ -324,47 +324,57 @@ export default function ListPackage(props) {
                   )}
                   {packageName === "Subscription" ? (
                     <Box>
-                      {listSetting?.saleValue && listSetting?.saleValue === 2 && (
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            color: "#FF7A00",
-                            fontWeight: "700",
-                            marginLeft: "4px !important",
-                          }}
-                        >
-                          {Number(packageFreeTicketTournament)*Number(listSetting?.saleValue || 1)} Free extra/day
-                        </Typography>
-                      )}
+                      {listSetting?.saleValue &&
+                        listSetting?.saleValue === 2 && (
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#FF7A00",
+                              fontWeight: "700",
+                              marginLeft: "4px !important",
+                            }}
+                          >
+                            {Number(packageFreeTicketTournament) *
+                              Number(listSetting?.saleValue || 1)}{" "}
+                            {t("Free extra/day")}
+                          </Typography>
+                        )}
                       <Typography
                         variant="body1"
                         sx={{
                           fontSize: "11px",
                           color: "white",
-                          textDecorationLine: listSetting?.saleValue && listSetting?.saleValue === 2 ? "line-through" : "unset",
+                          textDecorationLine:
+                            listSetting?.saleValue &&
+                            listSetting?.saleValue === 2
+                              ? "line-through"
+                              : "unset",
                           fontWeight: "500 !important",
                           marginLeft: "4px !important",
                           textAlign: "start",
                         }}
                       >
-                   {t(`${packageFreeTicketTournament} Free Extra/day`)}
+                        {packageFreeTicketTournament} {t(`Free extra/day`)}
                       </Typography>
                     </Box>
                   ) : (
                     <Box>
                       {" "}
-                      {listSetting?.saleValue && listSetting?.saleValue === 2 && (
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            color: "#FF7A00",
-                            fontWeight: "700",
-                            marginLeft: "4px !important",
-                          }}
-                        >
-                          {Number(packageFreeTicketTournament)*Number(listSetting?.saleValue || 1)} extra plays
-                        </Typography>
-                      )}
+                      {listSetting?.saleValue &&
+                        listSetting?.saleValue === 2 && (
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#FF7A00",
+                              fontWeight: "700",
+                              marginLeft: "4px !important",
+                            }}
+                          >
+                            {Number(packageFreeTicketTournament) *
+                              Number(listSetting?.saleValue || 1)}{" "}
+                            extra plays
+                          </Typography>
+                        )}
                       <Typography
                         variant="body1"
                         sx={{
@@ -373,7 +383,11 @@ export default function ListPackage(props) {
                           textAlign: "start",
                           fontWeight: "500 !important",
                           marginLeft: "4px !important",
-                          textDecorationLine: listSetting?.saleValue && listSetting?.saleValue === 2 ? "line-through" : "unset",
+                          textDecorationLine:
+                            listSetting?.saleValue &&
+                            listSetting?.saleValue === 2
+                              ? "line-through"
+                              : "unset",
                         }}
                       >
                         {Number(packageFreeTicketTournament)} extra plays
@@ -388,8 +402,7 @@ export default function ListPackage(props) {
                       justifyContent: "flex-start",
                       alignItems: "center",
                       marginBottom: "5px",
-                      marginTop:
-                        packageName === "Subscription" ? "0px" : "5px",
+                      marginTop: packageName === "Subscription" ? "0px" : "5px",
                     }}
                   >
                     <svg
@@ -415,7 +428,7 @@ export default function ListPackage(props) {
                       sx={{
                         fontSize: "16px",
                         color: "white",
-
+                        textAlign:"start",
                         fontWeight: "500 !important",
                         marginLeft: "4px !important",
                       }}
@@ -455,7 +468,7 @@ export default function ListPackage(props) {
                       sx={{
                         fontSize: "16px",
                         color: "white",
-
+                        textAlign:"start",
                         fontWeight: "500 !important",
                       }}
                     >
@@ -500,7 +513,7 @@ export default function ListPackage(props) {
                       sx={{
                         fontSize: "16px",
                         color: "white",
-
+                        textAlign:"start",
                         fontWeight: "500 !important",
                       }}
                     >
@@ -541,7 +554,7 @@ export default function ListPackage(props) {
                       sx={{
                         fontSize: "16px",
                         color: "white",
-
+                        textAlign:"start",
                         fontWeight: "500 !important",
                       }}
                     >
@@ -618,7 +631,14 @@ export default function ListPackage(props) {
                 </Box>
               )}
               <Typography sx={{ fontSize: "12px", color: "#7848ED" }}>
-                Sale period: {listSetting?.saleValue && listSetting?.saleValue > 1 ? `${moment(listSetting?.saleStartAt || new Date())?.format("MM/DD/YYYY")} - ${moment(listSetting?.saleEndAt || new Date())?.format("MM/DD/YYYY")}` : ""}
+                Sale period:{" "}
+                {listSetting?.saleValue && listSetting?.saleValue > 1
+                  ? `${moment(listSetting?.saleStartAt || new Date())?.format(
+                      "MM/DD/YYYY"
+                    )} - ${moment(listSetting?.saleEndAt || new Date())?.format(
+                      "MM/DD/YYYY"
+                    )}`
+                  : ""}
               </Typography>
               <Box sx={{ margin: "12px 0px", width: "80%" }}>
                 <AnimButton

@@ -1,5 +1,4 @@
 import { ArrowForwardIos } from "@mui/icons-material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LanguageIcon from "@mui/icons-material/Language";
 import {
   AvatarGroup,
@@ -19,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { locales } from "../../i18n/i18n";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
@@ -49,7 +47,10 @@ import {
   finishGame,
   finishVideo,
 } from "../../redux-saga-middleware/reducers/promotionReducer";
-import { changeCurrentLanguage, getSettingReady } from "../../redux-saga-middleware/reducers/settingReducer";
+import {
+  changeCurrentLanguage,
+  getSettingReady,
+} from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import {
@@ -119,8 +120,8 @@ const drawerWidth = 310;
 
 export default function Layout(props) {
   const { i18n } = useTranslation();
-  const currentLanguage = locales[i18n.language];
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
+  const { systemLanguage } = useSelector((state) => state.settingReducer);
   const { isWalletDialog, isTransactionDialog } = useSelector(
     (state) => state.walletReducer
   );
@@ -308,13 +309,16 @@ export default function Layout(props) {
     }
   }, [dispatch]);
 
-  const {currentLang } = useSelector(state => state.settingReducer);
-
   const handleChangeLang = (lang) => {
     i18n.changeLanguage(lang);
-    setOpenDropdown(false);
     dispatch(changeCurrentLanguage(lang));
+    setOpenDropdown(false);
   };
+
+  useEffect(() => {
+    i18n.changeLanguage(systemLanguage);
+    dispatch(changeCurrentLanguage(systemLanguage));
+  }, [dispatch,i18n,systemLanguage]);
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token");
@@ -336,7 +340,7 @@ export default function Layout(props) {
   useEffect(() => {
     dispatch(randomRenderPopup());
     dispatch(openDoubleDayDialog());
-  }, []);
+  }, [dispatch]);
 
   return ReactDOM.createPortal(
     <Box
@@ -344,7 +348,7 @@ export default function Layout(props) {
       component="div"
       sx={{
         position: "relative",
-        backgroundColor: "#1a151e",
+        backgroundColor: "#211d28",
       }}
     >
       <Box
@@ -380,9 +384,9 @@ export default function Layout(props) {
       <DialogGift />
       <NotiFunds />
       <>
-        {randomRender == 1 ? (
+        {randomRender === 1 ? (
           <DoubleDayPackDialog />
-        ) : randomRender == 2 ? (
+        ) : randomRender === 2 ? (
           <DoubleDayDialog />
         ) : (
           <DoubleDayPackDialog />
@@ -506,12 +510,18 @@ export default function Layout(props) {
             </Box>
           )}
           <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : ""}</Box>
+          <AvatarGroup className="d-flex align-items-center">
+            <AuthDialog />
+          </AvatarGroup>
           <ClickAwayListener onClickAway={handleCloseDropDown}>
             <Box
               sx={{
                 position: "relative",
                 marginRight: "16px",
-                display: width < 576 ? "none" : "block",
+                marginLeft: "8px",
+                backgroundColor: "#68399E",
+                borderRadius: "50%",
+                padding: "5px",
               }}
             >
               <Box
@@ -523,58 +533,66 @@ export default function Layout(props) {
                 onClick={() => setOpenDropdown(!openDropdown)}
               >
                 <LanguageIcon />
-                <Typography sx={{ marginLeft: "6px", color: "white" }}>
-                  {currentLanguage}
-                </Typography>
-                <KeyboardArrowDownIcon />
               </Box>
 
               <Box
                 id="basic-menu"
                 sx={{
                   position: "absolute",
-                  backgroundColor: "#7648ED",
+                  backgroundColor: "#181223",
                   display: openDropdown ? "block" : "none",
-                  top: "40px",
+                  top: "46px",
+                  right: width < 576 ? "-16px" : "-64px",
+                  padding: width < 576 ? "8px 6px" : "16px 12px",
+                  minWidth:"160px"
                 }}
                 component={"div"}
               >
                 <MenuItem
-                  sx={{ cursor: "pointer", padding: "16px" }}
-                  onClick={() => handleChangeLang("tur")}
-                >
-                  <Box
-                    component={"img"}
-                    src={images.turkishICon}
-                    sx={{ width: "20px", marginRight: "8px" }}
-                  ></Box>
-                  <Typography
-                    sx={{ color: "white", fontSize: "16px", fontWeight: "700" }}
-                  >
-                    Türkçe
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  sx={{ cursor: "pointer", padding: "16px" }}
+                  sx={{
+                    cursor: "pointer",
+                    padding: "8px 12px",
+                    borderRadius: "4px",
+                    transition: ".3s ease",
+                    ":hover": { backgroundColor: "#7648ED" },
+                  }}
                   onClick={() => handleChangeLang("en")}
                 >
                   <Box
                     component={"img"}
                     src={images.englishIcon}
-                    sx={{ width: "20px", marginRight: "8px" }}
+                    sx={{ width: "24px", marginRight: "4px" }}
                   ></Box>
                   <Typography
-                    sx={{ color: "white", fontSize: "16px", fontWeight: "700" }}
+                    sx={{ color: "white", fontSize: "16px" }}
                   >
                     English
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  sx={{
+                    cursor: "pointer",
+                    padding: "8px 12px",
+                    transition: ".3s ease",
+                    borderRadius: "4px",
+                    ":hover": { backgroundColor: "#7648ED" },
+                  }}
+                  onClick={() => handleChangeLang("tur")}
+                >
+                  <Box
+                    component={"img"}
+                    src={images.turkishICon}
+                    sx={{ width: "24px", marginRight: "4px" }}
+                  ></Box>
+                  <Typography
+                    sx={{ color: "white", fontSize: "16px" }}
+                  >
+                    Türkçe
                   </Typography>
                 </MenuItem>
               </Box>
             </Box>
           </ClickAwayListener>
-          <AvatarGroup className="d-flex align-items-center">
-            <AuthDialog />
-          </AvatarGroup>
 
           <div className="icon-toggle">
             {!chatPopup ? (

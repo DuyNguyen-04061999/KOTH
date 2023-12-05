@@ -333,7 +333,7 @@ const ChatDrawer = () => {
                   type="text"
                   id="sendmessages_chat_drawer"
                   onKeyDown={handleOnKeyDown}
-                  placeholder="Type your message... "
+                  placeholder={t("Type your message") + '...'}
                 />
               </Box>
               <Box

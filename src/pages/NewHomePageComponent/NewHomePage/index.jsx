@@ -139,7 +139,7 @@ export default function NewHomePage() {
               ? "32px !important"
               : "0px !important",
           paddingTop: width < 576 ? "24px !important" : "50px !important",
-          backgroundColor: "#1a151e",
+          backgroundColor: "#211d28",
         }}
       >
         <Box

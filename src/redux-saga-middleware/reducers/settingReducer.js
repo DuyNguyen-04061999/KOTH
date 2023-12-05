@@ -32,17 +32,16 @@ const settingReducer = (
   state = {
     isGetSetting: false,
     listSetting: {},
-    currentLanguage: 'en',
+    systemLanguage: "en",
   },
   action
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case REHYDRATE:
-    {
-      const { settingReducer } = payload || {}
-      const { currentLanguage } = settingReducer || ""
-      return {...state, currentLanguage: currentLanguage || "en"}
+    case REHYDRATE: {
+      const { settingReducer } = payload || {};
+      const { systemLanguage } = settingReducer || "";
+      return { ...state, systemLanguage: systemLanguage };
     }
     case "GET_SETTING_READY":
       return {
@@ -64,7 +63,7 @@ const settingReducer = (
     case "CHANGE_CURRENT_LANGUAGE":
       return {
         ...state,
-        currentLanguage: payload,
+        systemLanguage: payload,
       };
     default:
       return { ...state };

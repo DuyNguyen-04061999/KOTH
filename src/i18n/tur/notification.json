@@ -1,0 +1,22 @@
+{
+    "Username already taken. Please choose a different one.":"Kullanıcı adı zaten alınmış. Lütfen farklı bir tane seçin.",
+    "Email already in use. Please log in or use a different email.":"Bu e-posta zaten kullanımda. Lütfen giriş yapın veya farklı bir e-posta kullanın.",
+    "Phone number already in use. Please log in or use a different phone number.":"Bu telefon numarası zaten kullanımda. Lütfen giriş yapın veya farklı bir telefon numarası kullanın.",
+    "Please complete all required information before signing up.":"Lütfen kaydolmadan önce tüm gerekli bilgileri doldurun.",
+    "Registration successful! Welcome to Play4promo.":"Kayıt başarılı! Play4promo'ya hoş geldiniz.",
+    "Invalid Referral Code. Please double-check the code and input again or leave this field blank to sign up.":"Geçersiz Yönlendirme Kodu. Lütfen kodu kontrol edip tekrar girin veya kaydolmak için bu alanı boş bırakın.",
+    "This username does not exist. Please try again.":"Bu kullanıcı adı mevcut değil. Lütfen tekrar deneyin.",
+    "The password you entered is invalid. Please try again.":"Girdiğiniz şifre geçersiz. Lütfen tekrar deneyin.",
+    "Please enter your username and password to sign in.":"Lütfen giriş yapmak için kullanıcı adınızı ve şifrenizi girin.",
+    "You're currently logged in on another device. Please sign out there to continue here.":"Şu anda başka bir cihazda oturum açtınız. Lütfen burada devam etmek için orada oturumu kapatın.",
+    "Login successfully!":"Giriş başarılı!",
+    "You have been successfully logged out.":"Başarıyla çıkış yaptınız.",
+    "Invalid OTP. Please check and re-enter the code.":"Geçersiz OTP. Lütfen kodu kontrol edip tekrar girin.",
+    "OTP Verified. You're successfully verified!":"OTP Doğrulandı. Başarıyla doğrulandınız!",
+    "The email provided does not match the username.":"Sağlanan e-posta kullanıcı adıyla eşleşmiyor.",
+    "The phone number provided does not match the username.":"Sağlanan telefon numarası kullanıcı adıyla eşleşmiyor.",
+    "Current and new password should not be the same. Please try another one!":"Mevcut ve yeni şifre aynı olmamalıdır. Lütfen başka bir tane deneyin!",
+    "Reset password successfully!":"Şifre sıfırlama başarılı!",
+    "Payment Successful. Your payment has been successfully processed.":"Ödeme Başarılı. Ödemeniz başarıyla işlendi.",
+    "Payment Fail. There's something wrong. Please try again.":"Ödeme Başarısız. Bir şeyler yanlış gitti. Lütfen tekrar deneyin."
+}

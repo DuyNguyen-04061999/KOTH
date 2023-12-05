@@ -56,10 +56,10 @@ export default function Browser(props) {
         TransitionComponent={Transition}
         sx={{
           "& .MuiDialog-paper": {
-            backgroundColor: "#1a151e",
+            backgroundColor: "#211d28",
           },
           ".css-m9glnp-MuiPaper-root-MuiDialog-paper": {
-            backgroundColor: "#1a151e",
+            backgroundColor: "#211d28",
           },
         }}
       >
@@ -109,54 +109,6 @@ export default function Browser(props) {
           <Box className="pb-5" sx={{ padding: 1.5 }}>
             <Box>
               <Box className="text-white">
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    transition:
-                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    borderRadius: "5px",
-                    color: "#A89CD7",
-                  }}
-                  onClick={() => {
-                    handleChangeLang();
-                    handleShowMenu();
-                  }}
-                  className="nav-home pt-2 pb-2 ps-2 mb-3"
-                >
-                  <Box
-                    component={"img"}
-                    src={
-                      i18n.language === "en"
-                        ? images.turkishICon
-                        : i18n.language === "tur"
-                        ? images.englishIcon
-                        : null
-                    }
-                    sx={{
-                      width: "24px",
-                      marginRight: "12px",
-                    }}
-                  />
-                  <span
-                    className="hover-nav"
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "15px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {i18n.language === "tur"
-                      ? "English"
-                      : i18n.language === "en"
-                      ? "Turkish"
-                      : ""}
-                  </span>
-                </Box>
                 <Box
                   sx={{
                     cursor: "pointer",

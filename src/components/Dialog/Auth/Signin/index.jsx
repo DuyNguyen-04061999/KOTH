@@ -90,7 +90,7 @@ export default function Dialoglg() {
       {token === "" || token === null || token === undefined ? (
         <Box className="btn-group">
           <button className="btn-sign-up signin" onClick={handleClickSignIn}>
-            <span style={{ textTransform: "uppercase" }}>{t("Sign In")}</span>
+            <span style={{ textTransform: "uppercase",fontFamily:"Cyntho Next" }}>{t("Sign In")}</span>
           </button>
           {token && (
             <div

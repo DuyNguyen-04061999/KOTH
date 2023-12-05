@@ -4,12 +4,12 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 // import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import { imageHome } from "../../../../utils/images";
-import {useTranslation} from "react-i18next";
 
 export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     const {t} = useTranslation('global');
@@ -74,7 +74,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         sx={{
           height: "20px",
           width: "20px",
-          bgcolor: "#1a151e",
+          bgcolor: "#211d28",
           position: "absolute",
           borderRadius: "50%",
           top: width < 576 ? "234px" : "282px",
@@ -85,7 +85,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         sx={{
           height: "20px",
           width: "20px",
-          bgcolor: "#1a151e",
+          bgcolor: "#211d28",
           position: "absolute",
           borderRadius: "50%",
           top: width < 576 ? "234px" : "282px",
@@ -110,6 +110,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         ) : (
           <>
             <LazyLoadImage
+            draggable={false}
               style={{
                 maxHeight: width < 576 ? "156px" : "184px",
                 minHeight: width < 576 ? "156px" : "184px",
@@ -279,6 +280,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               }}
             >
               <LazyLoadImage
+                draggable={false}
                 style={{
                   width: width > 576 ? "20px" : "16px",
                   height: width > 576 ? "20px" : "16px",

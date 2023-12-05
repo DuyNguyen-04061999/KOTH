@@ -576,7 +576,6 @@ export default function JoinTournament() {
                               sx={{
                                 display: "flex",
                                 alignItems: "center",
-                                width: "150px",
                               }}
                             >
                               <Typography
@@ -1538,7 +1537,7 @@ export default function JoinTournament() {
                 <Box
                   sx={{
                     display: "flex",
-                    backgroundColor: "#1A151E",
+                    backgroundColor: "#211d28",
                     marginBottom: `${parseFloat(width / 66)}px`,
                     justifyContent: "space-between",
                     paddingTop: "36px",
@@ -1846,7 +1845,7 @@ export default function JoinTournament() {
                                 sx={{
                                   height: "20px",
                                   width: "20px",
-                                  bgcolor: "#1a151e",
+                                  bgcolor: "#211d28",
                                   position: "absolute",
                                   borderRadius: "50%",
                                   top: "-10px",
@@ -1857,7 +1856,7 @@ export default function JoinTournament() {
                                 sx={{
                                   height: "20px",
                                   width: "20px",
-                                  bgcolor: "#1a151e",
+                                  bgcolor: "#211d28",
                                   position: "absolute",
                                   borderRadius: "50%",
                                   bottom: "-10px",
@@ -1908,7 +1907,7 @@ export default function JoinTournament() {
                         marginTop: "36px",
                       }}
                     >
-                      Game for Promotion
+                      {t('Game for promotion')}
                     </Typography>
 
                     <Box
@@ -2936,7 +2935,7 @@ export default function JoinTournament() {
                                     sx={{
                                       height: "20px",
                                       width: "20px",
-                                      bgcolor: "#1a151e",
+                                      bgcolor: "#211d28",
                                       position: "absolute",
                                       borderRadius: "50%",
                                       top: "-10px",
@@ -2947,7 +2946,7 @@ export default function JoinTournament() {
                                     sx={{
                                       height: "20px",
                                       width: "20px",
-                                      bgcolor: "#1a151e",
+                                      bgcolor: "#211d28",
                                       position: "absolute",
                                       borderRadius: "50%",
                                       bottom: "-10px",

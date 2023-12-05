@@ -27,5 +27,11 @@
   "Back": "Back",
   "Next": "Next",
   "Participants": "Participants",
-  "Free Extra": "Free Extra"
+  "Free Extra": "Free Extra",
+  "No":"No ",
+  "available at the moment":"available at the moment",
+  "ended promotions": "ended promotions",
+  "hot promotions": "hot promotions",
+  "ongoing promotions": "ongoing promotions",
+  "upcoming promotions": "upcoming promotions"
 }

@@ -7,8 +7,8 @@ import {
   createTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { images } from "../../../utils/images";
 import SlickSlider from "../../../components/SlickSlider";
+import { images } from "../../../utils/images";
 const theme = createTheme({
   typography: {
     
@@ -34,7 +34,7 @@ export default function TournamentMobile() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ paddingBottom: "70px", backgroundColor: "#1a151e" }}>
+      <Box sx={{ paddingBottom: "70px", backgroundColor: "#211d28" }}>
         <SlickSlider
           images={[
             images.bannerTournament,

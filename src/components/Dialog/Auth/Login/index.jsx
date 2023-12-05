@@ -2,6 +2,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
@@ -19,6 +20,7 @@ const Login = () => {
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin } = useSelector((state) => state.userReducer);
+  const {t} = useTranslation('auth');
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -93,7 +95,7 @@ const Login = () => {
           className="text-center text-white mt-4 mb-4"
           style={{ fontWeight: "700", fontSize: "32px" }}
         >
-          Sign In
+          {t('Sign in')}
         </Typography>
       </Box>
       <Box
@@ -119,7 +121,7 @@ const Login = () => {
             <Input
               type="text"
               value={username}
-              placeholder="Email / Phone Number"
+              placeholder={t('Email') + "/" + t('Phone number')}
               onChange={handleChangeUsername}
               sx={{
                 "&:before": {
@@ -161,7 +163,7 @@ const Login = () => {
         >
           <img src={sign.up02} alt="..." width={15} height={"auto"} />
           <Input
-            placeholder="Password"
+            placeholder={t("Password")}
             type={displayPassword === false ? "password" : "text"}
             name="password"
             value={password}
@@ -224,7 +226,7 @@ const Login = () => {
             }}
             onClick={() => dispatch(clickTab("forgetPass"))}
           >
-            Forgot Password?
+            {t("Forgot Password")}?
           </Typography>
         </Box>
         <Box
@@ -242,7 +244,7 @@ const Login = () => {
           ) : disabledBtn ? (
             <AnimButton
               onClick={sendLogin}
-              text="SIGN IN"
+              text={t("Sign in")}
               type="disable"
               isHasIcon
               isSubmitBtn
@@ -250,7 +252,7 @@ const Login = () => {
           ) : (
             <AnimButton
               onClick={sendLogin}
-              text="SIGN IN"
+              text={t("Sign in")}
               type="primary"
               isHasIcon
               isSubmitBtn
@@ -265,7 +267,7 @@ const Login = () => {
                 fontWeight: "600",
               }}
             >
-              New User?
+              {t('New User?')}
             </Typography>
             <Typography
               onClick={() => {
@@ -273,7 +275,7 @@ const Login = () => {
               }}
               sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "600" }}
             >
-              Create Account
+              {t('Create Account')}
             </Typography>
           </Box>
         </Box>

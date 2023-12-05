@@ -7,12 +7,12 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import { getRefactorDetailPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import { sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
-import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 export default function PlayGame(props) {
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
@@ -662,7 +662,7 @@ export default function PlayGame(props) {
                       sx={{
                         height: "20px",
                         width: "20px",
-                        bgcolor: "#1a151e",
+                        bgcolor: "#211d28",
                         position: "absolute",
                         borderRadius: "50%",
                         top: "-10px",
@@ -673,7 +673,7 @@ export default function PlayGame(props) {
                       sx={{
                         height: "20px",
                         width: "20px",
-                        bgcolor: "#1a151e",
+                        bgcolor: "#211d28",
                         position: "absolute",
                         borderRadius: "50%",
                         bottom: "-10px",
