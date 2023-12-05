@@ -109,7 +109,7 @@ export default function DialogProfile(props) {
     setValue(dayjs(birthDay) || new Date());
   }, [nickName, address1, address2, city, state, zipCode, birthDay]);
 
-  const [disabledInp, setDisabledInp] = useState(false);
+  const [disabledInp, setDisabledInp] = useState(true);
   // const [socket, setSocket] = useState(null);
   // useEffect(() => {
   //   const socket = _socket;
