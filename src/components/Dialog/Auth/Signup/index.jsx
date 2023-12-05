@@ -743,7 +743,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must be at least 6 characters long.{" "}
+              {t("Password must be at least 6 characters long.")}{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center ms-1 text-white">
@@ -800,7 +800,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must have at least one special character.{" "}
+              {t("Password must have at least one special character.")}{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center ms-1 text-white">
@@ -854,7 +854,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must have at least one digit ('0-9').{" "}
+              {t("Password must have at least one digit ('0-9').")}{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center ms-1 text-white">
@@ -908,7 +908,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must have at least one upper case.{" "}
+              {t("Password must have at least one upper case.")}{" "}
             </Typography>{" "}
           </Box>{" "}
         </Box>
