@@ -636,7 +636,7 @@ export default function DialogProfile(props) {
                               textOverflow: "clip",
                             }}
                           >
-                            {email.slice(0, 15)}
+                            {email.slice(0, 25)}
                           </Typography>
                         )}
                       </Box>
