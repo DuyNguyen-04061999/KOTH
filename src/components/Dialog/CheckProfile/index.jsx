@@ -90,7 +90,7 @@ export default function CheckProfile(props) {
               }}
               className="text-start text-white"
             >
-              Great job on your Promotions play! Complete your profile by
+              Great job on your Promotion play! Complete your profile by
               adding your shipping address and birthday. This ensures you're
               eligible to receive rewards. Click 'Complete Profile' now!
             </Typography>
