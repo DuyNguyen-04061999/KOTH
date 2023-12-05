@@ -189,7 +189,7 @@ export default function Navbar() {
                       overflow: "hidden",
                     }}
                   >
-                    Promotion
+                    Promotions
                   </Typography>
                   <Box sx={{ marginLeft: "18px" }}>
                     <svg

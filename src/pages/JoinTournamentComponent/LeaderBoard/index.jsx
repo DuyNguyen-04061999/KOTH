@@ -8,9 +8,8 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const [top3, setTop3] = useState([]);
   const { width, height } = useWindowDimensions();
-  const { user } = useSelector((state) => state.userReducer);
-  const { nickName } = useSelector((state) => state.profileReducer);
-  const userName = user?.userName || "";
+  const { nickNameLogin } = useSelector((state) => state.profileReducer);
+
   const [start, setStart] = useState(3);
   const [end, setEnd] = useState(6);
 
@@ -517,7 +516,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 })}{" "}
             {detailTournament?.tournamentResult
               ?.filter((n) => {
-                return n?.userNickName === nickName;
+                return n?.userNickName === nickNameLogin;
               })
               .map((item, index) => {
                 return (
@@ -554,7 +553,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               ?.map((item, index) => {
                                 return item?.userNickName;
                               })
-                              .indexOf(userName) + 1}
+                              .indexOf(nickNameLogin) + 1}
                           </Box>
                           <Box sx={{ display: "flex", width: "70%" }}>
                             <Box
@@ -1077,7 +1076,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   >
                     {detailTournament?.tournamentResult
                       ?.filter((n) => {
-                        return n?.userNickName === userName;
+                        return n?.userNickName === nickNameLogin;
                       })
                       .map((item, index) => {
                         return (
@@ -1097,7 +1096,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                   ?.map((item, index) => {
                                     return item?.userNickName;
                                   })
-                                  .indexOf(userName) + 1}
+                                  .indexOf(nickNameLogin) + 1}
                               </Box>
                               <Box
                                 sx={{
@@ -1279,6 +1278,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     fontSize: "12px",
                     marginTop: "10px",
                   }}
+                  className="ps-2"
                 >
                   No data yet !
                 </Typography>
@@ -1665,7 +1665,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
           <Box sx={{ padding: "0px 0px 50px 0px" }}>
             {detailTournament?.tournamentResult
               ?.filter((n) => {
-                return n?.userNickName === userName;
+                return n?.userNickName === nickNameLogin;
               })
               .map((item, index) => {
                 return (
@@ -1685,7 +1685,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           ?.map((item, index) => {
                             return item?.userNickName;
                           })
-                          .indexOf(userName) + 1}
+                          .indexOf(nickNameLogin) + 1}
                       </Box>
                       <Box
                         sx={{
@@ -2179,7 +2179,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   >
                     {detailTournament?.tournamentResult
                       ?.filter((n) => {
-                        return n?.userNickName === userName;
+                        return n?.userNickName === nickNameLogin;
                       })
                       .map((item, index) => {
                         return (
@@ -2199,7 +2199,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                   ?.map((item, index) => {
                                     return item?.userNickName;
                                   })
-                                  .indexOf(userName) + 1}
+                                  .indexOf(nickNameLogin) + 1}
                               </Box>
                               <Box
                                 sx={{
@@ -2282,7 +2282,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             }
                           } else {
                             if (start > 3) {
-                              updatePagination(-3);
+                              updatePagination(-4);
                             }
                           }
                         }}
@@ -2353,7 +2353,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 start + 3 <
                                 detailTournament?.tournamentResult?.length
                               ) {
-                                updatePagination(3);
+                                updatePagination(4);
                               }
                             }
                           }}

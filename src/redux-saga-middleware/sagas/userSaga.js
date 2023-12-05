@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, delay, put, takeEvery } from "redux-saga/effects";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
@@ -16,7 +16,9 @@ import { clickTabChat } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
   exitEditProfile,
+  removeNickNameWhenLogout,
   saveDataProfile,
+  saveNickNameWhenLogin,
 } from "../reducers/profileReducer";
 import {
   forgetPasswordFail,
@@ -158,11 +160,11 @@ function* updateProfileSaga(dataRequest) {
             message: "Update profile successfully!",
           })
         );
+        yield delay(3000);
         yield put(
           updateProfileUserSuccess({
             avatar: data?.data?.avatar,
             nickName: data?.data?.nickName,
-
           })
         );
       } else {
@@ -203,6 +205,7 @@ function* logoutSaga(dataRequest) {
         _socket.emit("logoutSocial");
         yield put(logoutSuccess());
         yield put(clickTabChat(true));
+        yield put(removeNickNameWhenLogout());
         yield put(
           showToastNotification({
             type: authNotification.signOut.logoutSuccess.type,
@@ -241,6 +244,7 @@ function* userInfoSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(getUserInfoSuccess(data?.data));
+        yield put(saveNickNameWhenLogin(data?.data?.nickName));
         if (
           data?.data?.user?.userVerifiedEmail === 0 && data?.data?.user?.userVerifiedPhone === 0
         ) {
