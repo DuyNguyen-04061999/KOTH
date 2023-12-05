@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, delay, put, takeEvery } from "redux-saga/effects";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
@@ -160,11 +160,11 @@ function* updateProfileSaga(dataRequest) {
             message: "Update profile successfully!",
           })
         );
+        yield delay(3000);
         yield put(
           updateProfileUserSuccess({
             avatar: data?.data?.avatar,
             nickName: data?.data?.nickName,
-
           })
         );
       } else {
