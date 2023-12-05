@@ -258,7 +258,7 @@ export default function PlayGame(props) {
                       }`
                 }
               ></iframe>
-            ) : (
+            ) : loading ? (
               <iframe
                 allow="fullscreen"
                 style={
@@ -296,7 +296,7 @@ export default function PlayGame(props) {
                       detailTournament?.tournamentInfors?.skin?.id
                 }
               ></iframe>
-            )}
+            ) : (<></>)}
           </Box>
         </Box>
         {checkLockScreen() && !videoGame && (
