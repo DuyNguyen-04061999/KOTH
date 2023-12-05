@@ -4,7 +4,6 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 // import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
@@ -107,7 +106,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           />
         ) : (
           <>
-            <LazyLoadImage
+            <Box
+            component={"img"}
               style={{
                 maxHeight: width < 576 ? "156px" : "184px",
                 minHeight: width < 576 ? "156px" : "184px",
@@ -116,12 +116,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 position: "relative",
                 overflow: "hidden",
               }}
-              effect="blur"
-              wrapperProps={{
-                style: {
-                  transitionDelay: "0.5s",
-                },
-              }}
+              // effect="blur"
+              // wrapperProps={{
+              //   style: {
+              //     transitionDelay: "0.5s",
+              //   },
+              // }}
               src={
                 tourInfo?.tournamentAvatar
                   ? process.env.REACT_APP_SOCKET_SERVER +
@@ -129,7 +129,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                     tourInfo?.tournamentAvatar
                   : imageHome.brandImage
               }
-            ></LazyLoadImage>
+            ></Box>
             <Box
               sx={{
                 width: "100%",
@@ -276,20 +276,22 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 marginBottom: "2px",
               }}
             >
-              <LazyLoadImage
+              <Box
+                component={"img"}
                 style={{
                   width: width > 576 ? "20px" : "16px",
                   height: width > 576 ? "20px" : "16px",
                   marginRight: width > 576 ? "8px" : "4px",
                 }}
-                wrapperProps={{
-                  style: {
-                    transitionDelay: "0.5s",
-                  },
-                }}
+                // wrapperProps={{
+                //   style: {
+                //     transitionDelay: "0.5s",
+                //   },
+                // }}
+                // effect="blur"
+
                 src={imageHome.iconMember}
-                effect="blur"
-              ></LazyLoadImage>
+              ></Box>
               <Typography
                 sx={{
                   ...styleTypography,
@@ -338,7 +340,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               animation="wave"
             />
           ) : (
-            <LazyLoadImage
+            <Box
+              component={"img"}
               style={{
                 width: width < 576 ? `40px` : "49px",
                 height: width < 576 ? `40px` : "49px",
@@ -356,13 +359,13 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                     tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
                   : imageHome.brandImage
               }
-              effect="blur"
-              wrapperProps={{
-                style: {
-                  transitionDelay: "0.5s",
-                },
-              }}
-            ></LazyLoadImage>
+              // effect="blur"
+              // wrapperProps={{
+              //   style: {
+              //     transitionDelay: "0.5s",
+              //   },
+              // }}
+            ></Box>
           )}
           <Box
             sx={{
@@ -420,193 +423,5 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         </Box>
       </Box>
     </Box>
-    // <Box
-    //   sx={{
-    //     width: "100%",
-    //     display: "flex",
-    //     justifyContent: "center !important",
-    //   }}
-    // >
-    //   {" "}
-    //   <Box
-    //     sx={{
-    //       backgroundImage: `url(${imageHome.Voucher_tournament_mobile})`,
-    //       width:
-    //         width < 576
-    //           ? `${parseFloat(width / 2.5)}px`
-    //           : `${parseFloat(width / 10.43)}px`,
-    //       height:
-    //         width < 576
-    //           ? `${parseFloat(width / 1.2)}px`
-    //           : `${parseFloat(width / 5.3)}px`,
-    //       backgroundSize: "cover",
-    //       backgroundRepeat: "no-repeat",
-    //       display: "flex",
-    //       flexDirection: "column",
-    //       justifyContent: "space-between",
-    //       borderRadius: "8px",
-    //       backgroundPosition: "center",
-    //     }}
-    //   >
-    //     <Box
-    //       sx={{
-    //         width: "100%",
-    //         borderRadius: "8px 8px 0px 0px",
-    //         minHeight: "156px",
-    //         maxHeight: "156px",
-    //         objectFit: "cover",
-    //       }}
-    //       component={"img"}
-    //       src={
-    //         tourInfo?.tournamentBackground
-    //           ? process.env.REACT_APP_SOCKET_SERVER +
-    //             "/" +
-    //             tourInfo?.tournamentBackground
-    //           : imageHome.brandImage
-    //       }
-    //     ></Box>
-    //     <Box
-    //       sx={{
-    //         padding: "0px 8px",
-    //         display: "flex",
-    //         justifyContent: countdown ? "space-between" : "flex-end",
-    //         flexDirection: "column",
-    //         marginBottom: "-8px"
-    //       }}
-    //     >
-    //       <Typography
-    //         sx={{
-    //           ...styleTypography,
-    //           overflow: "hidden",
-    //           color: "#000",
-    //           textOverflow: "eclipse",
-    //           fontSize: "14px",
-    //           fontStyle: "normal",
-    //           fontWeight: "500",
-    //           lineHeight: "normal",
-    //         }}
-    //       >
-    //         {tourInfo?.tournamentName}
-    //       </Typography>
-    //       <Box
-    //         sx={{
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           marginTop: "30px",
-    //         }}
-    //       >
-    //         {countdown && (
-    //           <Typography
-    //             sx={{
-    //               ...styleTypography,
-    //               fontSize: width < 576 ? "13px" : "16px",
-    //               color: "#5747EA",
-    //               fontWeight: "700 !important",
-    //             }}
-    //           >
-    //             {width < 576
-    //               ? `${days}d:${hours}h:${minutes}m`
-    //               : `${days}d:${hours}h:${minutes}m:${seconds}s`}
-    //           </Typography>
-    //         )}
-
-    //         <Box sx={{ display: "flex", alignItems: "center" }}>
-    //           <Box
-    //             sx={{ width: "14px", height: "14px", marginRight: "5px" }}
-    //             component={"img"}
-    //             src={imageHome.iconMember}
-    //           ></Box>
-    //           <Typography
-    //             sx={{
-    //               ...styleTypography,
-    //               fontSize: width < 576 ? "12px" : "16px",
-    //             }}
-    //           >
-    //             {tourInfo?.tournamentQuantity !== 0 ? (
-    //               tourInfo?.tournamentQuantity
-    //             ) : (
-    //               <InfinityIcon
-    //                 sx={{
-    //                   width: 15,
-    //                   height: 15,
-    //                 }}
-    //               />
-    //             )}
-    //           </Typography>
-    //         </Box>
-    //       </Box>
-    //     </Box>
-    //     <Box
-    //       sx={{
-    //         display: "flex",
-    //         padding: "22px 8px 10px 10px",
-    //         justifyContent: "space-between",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       <Box
-    //         sx={{
-    //           width: width < 576 ? `${parseFloat(width / 9.75)}px` : "49px",
-    //           height: width < 576 ? `${parseFloat(width / 9.75)}px` : "49px",
-    //           borderRadius: "4px",
-    //         }}
-    //         component={"img"}
-    //         src={
-    //           tourInfo &&
-    //           tourInfo?.tourSkins &&
-    //           tourInfo?.tourSkins?.length > 0 &&
-    //           tourInfo?.tourSkins[0]?.skinGame &&
-    //           tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-    //             ? process.env.REACT_APP_SOCKET_SERVER +
-    //               "/" +
-    //               tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-    //             : imageHome.brandImage
-    //         }
-    //       ></Box>
-    //       <Box>
-    //         <Typography
-    //           sx={{
-    //             ...styleTypography,
-    //             fontSize: width < 576 ? "12px" : "14px",
-    //             fontStyle: "normal",
-    //             fontWeight: "500",
-    //             lineHeight: "120%",
-    //             overflow: "hidden",
-    //             textOverflow: "ellipsis",
-    //             maxHeight: "1rem",
-    //             whiteSpace: "nowrap",
-    //             maxWidth: "90px"
-    //           }}
-    //         >
-    //           {tourInfo &&
-    //           tourInfo?.tourSkins &&
-    //           tourInfo?.tourSkins?.length > 0 &&
-    //           tourInfo?.tourSkins[0]?.skinGame &&
-    //           tourInfo?.tourSkins[0]?.skinGame?.gameName
-    //             ? tourInfo?.tourSkins[0]?.skinGame?.gameName
-    //             : "game Name"}
-    //         </Typography>
-    //         <button
-    //           onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
-    //           style={{
-    //             border: "none",
-    //             outline: "none",
-    //             width: width < 576 ? `${parseFloat(width / 4.33)}px` : "104px",
-    //             borderRadius: "5px",
-    //             background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-    //             color: "#ffff",
-    //             fontSize: "12px",
-    //           }}
-    //         >
-    //           {tourInfo && tourInfo?.tournamentStatus === 0
-    //             ? "See More"
-    //             : tourInfo?.tournamentStatus === 1
-    //             ? "Play Now"
-    //             : ""}
-    //         </button>
-    //       </Box>
-    //     </Box>
-    //   </Box>
-    // </Box>
   );
 }
