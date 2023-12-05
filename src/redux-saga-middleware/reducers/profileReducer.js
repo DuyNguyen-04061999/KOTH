@@ -56,6 +56,20 @@ export const exitEditProfile = (data) => {
   };
 };
 
+export const removeNickNameWhenLogout = (data) => {
+  return {
+    type: "REMOVE_NICKNAME_WHEN_LOGOUT",
+    payload: data,
+  };
+};
+
+export const saveNickNameWhenLogin = (data) => {
+  return {
+    type: "SAVE_NICKNAME_WHEN_LOGIN",
+    payload: data,
+  };
+};
+
 const profileReducer = (
   state = {
     isProfileDialog: false,
@@ -77,14 +91,21 @@ const profileReducer = (
     state: "",
     zipCode:"",
     birthDay:"",
-    isEditProfile: false
+    isEditProfile: false,
+    nickNameLogin: ""
   },
   action
 ) => {
   let { type, payload } = action;
   switch (type) {
     case REHYDRATE:
-      return { ...state };
+      {
+        const { profileReducer } = payload || {}
+        const { nickNameLogin } = profileReducer || ""
+        return {...state, nickNameLogin: nickNameLogin || ""}
+      }
+    case "SAVE_NICKNAME_WHEN_LOGIN": return {...state, nickNameLogin: payload || ""}
+    case "REMOVE_NICKNAME_WHEN_LOGOUT": return {...state, nickNameLogin: "" }
     case "TOGGLE_PROFILE_DIALOG":
       return { ...state, isProfileDialog: !state.isProfileDialog };
     case "EDIT_PROFILE":
@@ -110,7 +131,8 @@ const profileReducer = (
         city:payload.city,
         state:payload.state,
         zipCode:payload.zipCode,
-        birthDay:payload.birthDay
+        birthDay:payload.birthDay,
+        nickNameLogin: payload.nickName || ""
       };
     case "DELETE_FRIEND_SUCCES_FULLY":
       return { ...state, deleteFriendValue: payload };
@@ -129,6 +151,7 @@ const profileReducer = (
         firstName: "",
         lastName: "",
         deleteFriendValue: "",
+        nickNameLogin: ""
       };
     case "CLOSE_PROFILE_DIALOG":
       return { ...state, isProfileDialog: false };
