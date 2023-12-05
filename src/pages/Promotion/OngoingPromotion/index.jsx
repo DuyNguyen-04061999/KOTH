@@ -126,7 +126,7 @@ export default function HotTournament() {
                   fontWeight: 700,
                 }}
               >
-                {t('Ongoing Promotion')}
+                {t('Ongoing Promotions')}
               </Typography>
               <Box
                 sx={{
@@ -201,7 +201,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                {t('Ongoing Promotion')}
+                {t('Ongoing Promotions')}
               </Typography>
               <Box
                 sx={{

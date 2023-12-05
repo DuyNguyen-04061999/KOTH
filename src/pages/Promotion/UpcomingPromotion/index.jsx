@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -18,7 +19,6 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-import {useTranslation} from "react-i18next";
 const theme = createTheme({
   typography: {},
   components: {
@@ -145,7 +145,7 @@ export default function UpcomingPromotion() {
                   fontWeight: 700,
                 }}
               >
-                {t('Upcoming Promotion')}
+                {t('Upcoming Promotions')}
               </Typography>
               <Box
                 sx={{
@@ -222,7 +222,7 @@ export default function UpcomingPromotion() {
                   fontSize: "24px",
                 }}
               >
-                {t('Upcoming Promotion')}
+                {t('Upcoming Promotions')}
               </Typography>
               <Box
                 sx={{

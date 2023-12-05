@@ -189,7 +189,7 @@ export default function NewHomePage() {
                   }}
                 >
                   {/* HOT TOURNAMENTS{" "} */}
-                  {t("Hot Promotion")}
+                  {t("Hot Promotions")}
                 </Typography>
               </Box>
               <Box
@@ -251,7 +251,7 @@ export default function NewHomePage() {
                     fontFamily: "Cyntho Next",
                   }}
                 >
-                  {t("Ongoing Promotion")}
+                  {t("Ongoing Promotions")}
                 </Typography>
               </Box>
               <Box
@@ -309,7 +309,7 @@ export default function NewHomePage() {
                     fontFamily: "Cyntho Next",
                   }}
                 >
-                  {t("Upcoming Promotion")}
+                  {t("Upcoming Promotions")}
                 </Typography>
               </Box>
               <Box
@@ -400,7 +400,207 @@ export default function NewHomePage() {
               width={"100%"}
             />
           ) : (
-            <BannerTour
+            <SlickSlider
+              appendDot={true}
+              images={
+                []
+              }
+              tours={threeBrandTour}
+            />
+          )}
+        </Box>
+        <Box
+          sx={{
+            marginTop: width < 576 ? "24px" : "64px",
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: width < 576 ? "24px" : "32px",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "16px" : "24px",
+                  fontWeight: "700 !important",
+                  marginLeft: "0px !important",
+                  color: "#fff",
+                  lineHeight: "130%",
+                  fontFamily: "Cyntho Next",
+                }}
+              >
+                {/* HOT TOURNAMENTS{" "} */}
+                {t("Hot Promotions")}
+              </Typography>
+            </Box>
+            <Box
+              onClick={() => {
+                navigate("/hot-promotion");
+              }}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "12px" : "16px",
+                  fontWeight: "200 !important",
+                  color: "#BE48ED",
+                  fontFamily: "Cyntho Next",
+                  cursor: "pointer",
+                }}
+              >
+                {t("View All")}
+              </Typography>
+              <Box
+                sx={{
+                  width: "12px",
+                  height: "12px",
+                  marginLeft: width < 576 ? "3px" : "8px",
+                }}
+                component={"img"}
+                src={images.viewAllButton}
+              ></Box>
+            </Box>
+          </Box>
+          <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
+            <ListPromotion
+              listData={hotTournament}
+              loadingState={isFetchHot}
+              typePromo={"hot"}
+              noData={noDataHot}
+            />
+          </Box>
+        </Box>{" "}
+        <Box
+          sx={{
+            marginTop: width < 576 ? "24px" : "64px",
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: width < 576 ? "24px" : "32px",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "16px" : "24px",
+                  fontWeight: "700 !important",
+                  marginLeft: "0px !important",
+                  color: "#fff",
+                  lineHeight: "130%",
+                  fontFamily: "Cyntho Next",
+                }}
+              >
+                {t("Ongoing Promotions")}
+              </Typography>
+            </Box>
+            <Box
+              onClick={() => {
+                navigate("/ongoing-promotion");
+              }}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "12px" : "16px",
+                  fontWeight: "200 !important",
+                  color: "#BE48ED",
+                  fontFamily: "Cyntho Next",
+                  cursor: "pointer",
+                }}
+              >
+                View All
+              </Typography>
+              <Box
+                sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
+                component={"img"}
+                src={images.viewAllButton}
+              ></Box>
+            </Box>
+          </Box>
+          <Box sx={{ marginTop: width < 576 ? "24px" : "32px" }}>
+            <ListPromotion
+              listData={ongoingTournament}
+              loadingState={isFetchOngoing}
+              typePromo={"ongoing"}
+              noData={noDataOncoming}
+            />
+          </Box>
+        </Box>{" "}
+        <Box
+          sx={{
+            marginTop: width < 576 ? "24px" : "64px",
+            marginBottom: width < 576 ? "24px" : "32px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "16px" : "24px",
+                  fontWeight: "700 !important",
+                  marginLeft: "0px !important",
+                  color: "#fff",
+                  lineHeight: "130%",
+                  fontFamily: "Cyntho Next",
+                }}
+              >
+                {t("Upcoming Promotions")}{" "}
+              </Typography>
+            </Box>
+            <Box
+              onClick={() => {
+                navigate("/upcoming-promotion");
+              }}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "12px" : "16px",
+                  fontWeight: "200 !important",
+                  color: "#BE48ED",
+                  fontFamily: "Cyntho Next",
+                  cursor: "pointer",
+                }}
+              >
+                {t("View All")}
+              </Typography>
+              <Box
+                sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
+                component={"img"}
+                src={images.viewAllButton}
+              ></Box>
+            </Box>
+          </Box>
+          <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
+            <ListPromotion
+              listData={upcomingTournament}
+              loadingState={isFetchUpcoming}
+              noData={noDataUpcoming}
+              typePromo={"upcoming"}
+            />
+          </Box>
+        </Box>{" "}
+        {/* Banner Top1 */}
+        {width < 576 ? (
+          isFetchHotWeek ? (
+            <Box
+              sx={{
+                marginTop: width < 576 ? "48px" : "32px",
+                marginBottom: width < 576 ? "0px" : "32px",
+              }}
+            >
+              <BannerLoading height={width < 576 ? "214px" : "363px"} />
+            </Box>
+          ) : (
+            <BannerTourMobile
               tournamentName={
                 hotWeekTour && hotWeekTour?.tournamentName
                   ? hotWeekTour?.tournamentName
@@ -435,31 +635,91 @@ export default function NewHomePage() {
               }
               tourId={hotWeekTour && hotWeekTour?.id}
             />
-          )}
-          <Box
-            sx={{
-              marginTop: width < 576 ? "24px" : "64px",
-              marginBottom: width < 576 ? "24px" : "32px",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography
-                  sx={{
-                    textAlign: "start",
-                    fontSize: width < 576 ? "16px" : "24px",
-                    fontWeight: "700 !important",
-                    marginLeft: "0px !important",
-                    color: "#fff",
-                    lineHeight: "130%",
-                    fontFamily: "Cyntho Next",
-                  }}
-                >
-                  {t("Ended Promotion")}
-                </Typography>
-              </Box>
+          )
+        ) : isFetchHotWeek ? (
+          <BannerLoading
+            height={width < 576 ? "214px" : "363px"}
+            width={"100%"}
+          />
+        ) : (
+          <BannerTour
+            tournamentName={
+              hotWeekTour && hotWeekTour?.tournamentName
+                ? hotWeekTour?.tournamentName
+                : "Galaxy Z-flip 5"
+            }
+            rewardName={
+              hotWeekTour &&
+              hotWeekTour?.rewardTournament &&
+              hotWeekTour?.rewardTournament?.rewardTitle
+                ? hotWeekTour?.rewardTournament?.rewardTitle
+                : ""
+            }
+            sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+            userName={
+              hotWeekTour &&
+              hotWeekTour?.bestUser &&
+              hotWeekTour?.bestUser?.tUser &&
+              hotWeekTour?.bestUser?.tUser?.userNickName
+            }
+            endTime={hotWeekTour?.tournamentEndAt}
+            userScore={hotWeekTour?.bestUser?.score}
+            userAvatar={
+              hotWeekTour &&
+              hotWeekTour?.bestUser &&
+              hotWeekTour?.bestUser?.tUser &&
+              hotWeekTour?.bestUser?.tUser?.userAccount &&
+              hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                ? process.env.REACT_APP_SOCKET_SERVER +
+                  "/" +
+                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                : images.pool
+            }
+            tourId={hotWeekTour && hotWeekTour?.id}
+          />
+        )}
+        <Box
+          sx={{
+            marginTop: width < 576 ? "24px" : "64px",
+            marginBottom: width < 576 ? "24px" : "32px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "16px" : "24px",
+                  fontWeight: "700 !important",
+                  marginLeft: "0px !important",
+                  color: "#fff",
+                  lineHeight: "130%",
+                  fontFamily: "Cyntho Next",
+                }}
+              >
+             {t("Ended Promotions")}
+              </Typography>
+            </Box>
+            <Box
+              onClick={() => {
+                navigate("/ended-promotion");
+              }}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "12px" : "16px",
+                  fontWeight: "200 !important",
+                  color: "#BE48ED",
+                  fontFamily: "Cyntho Next",
+                  cursor: "pointer",
+                }}
+              >
+                {t("View All")}
+              </Typography>
               <Box
                 onClick={() => {
                   navigate("/ended-promotion");

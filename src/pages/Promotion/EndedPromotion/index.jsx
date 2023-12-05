@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -18,7 +19,6 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-import {useTranslation} from "react-i18next";
 const theme = createTheme({
   typography: {},
   components: {
@@ -141,7 +141,7 @@ export default function HotTournament() {
                   fontWeight: 700,
                 }}
               >
-                {t('Ended Promotion')}
+                {t('Ended Promotions')}
               </Typography>
               <Box
                 sx={{
@@ -214,7 +214,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                {t('Ended Promotion')}
+                {t('Ended Promotions')}
               </Typography>
               <Box
                 sx={{

@@ -126,7 +126,7 @@ const DialogGift = () => {
               >
                 We're thrilled to have you here! To kick off your journey, we're
                 gifting you Value extra pack with 20 bonus extras. Use them
-                across any promotion to compete and unlock rewards. Click 'Claim
+                across any promotions to compete and unlock rewards. Click 'Claim
                 Now' to get your exclusive offer!
               </Typography>
             </Box>

@@ -30,9 +30,11 @@ export default function NewFooter() {
   };
 
   return (
-    <Box sx={{
-      marginTop:"70px"
-    }}>
+    <Box
+      sx={{
+        marginTop: "70px",
+      }}
+    >
       {" "}
       {/* Footer */}
       <Box>
@@ -134,11 +136,12 @@ export default function NewFooter() {
             {t("Contact Us")}
           </Typography>
           <Box
-            component={"a"}
-            href="mailto:support@play4promo.com"
-            target="_blank"
             sx={{
               textDecoration: "none",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#fff",
             }}
           >
             <Typography
