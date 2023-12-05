@@ -27,15 +27,15 @@ export default function ResultEndGame() {
     dispatch(toggleStartGame(false));
     dispatch(finishGame())
     dispatch(finishVideo())
+    if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {
+      dispatch(updateCountExtraAfterPlayGame(1))
+    }
+    
     if (tokenUser || localStorage.getItem("token")) {
       dispatch(getRefactorDetailAuthPromotion({
         id,
         token: tokenUser
       }))
-    }
-
-    if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {
-      dispatch(updateCountExtraAfterPlayGame(1))
     }
   };
 

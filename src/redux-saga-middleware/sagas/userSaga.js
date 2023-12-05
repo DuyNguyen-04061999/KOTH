@@ -16,7 +16,10 @@ import {
 import { clickTabChat } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
+  exitEditProfile,
+  removeNickNameWhenLogout,
   saveDataProfile,
+  saveNickNameWhenLogin,
 } from "../reducers/profileReducer";
 import {
   forgetPasswordFail,
@@ -77,8 +80,10 @@ function* loginSaga(dataRequest) {
         );
         localStorage.setItem("token", data?.data?.token);
         localStorage.setItem("refreshToken", data?.data?.refreshToken);
-        yield put(updateUserToken(data?.data?.token));
-        yield put(getUserInfoReady(data?.data?.token));
+        yield put(updateUserToken(data?.data?.token))
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000)
       } else {
         yield put(loginFail());
         yield put(
@@ -174,6 +179,7 @@ function* updateProfileSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(closeProfileDialog());
+        yield put(exitEditProfile());
         yield put(
           showToastNotification({
             type: "success",
@@ -227,6 +233,7 @@ function* logoutSaga(dataRequest) {
         _socket.emit("logoutSocial");
         yield put(logoutSuccess());
         yield put(clickTabChat(true));
+        yield put(removeNickNameWhenLogout());
         yield put(
           showToastNotification({
             type: authNotification.signOut.logoutSuccess.type,
@@ -275,6 +282,7 @@ function* userInfoSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(getUserInfoSuccess(data?.data));
+        yield put(saveNickNameWhenLogin(data?.data?.nickName));
         if (
           data?.data?.user?.userVerifiedEmail === 0 &&
           data?.data?.user?.userVerifiedPhone === 0
@@ -466,6 +474,7 @@ function* resetPasswordSaga(dataRequest) {
           })
         );
         yield put(closeLoginDialog());
+        yield put(clickTab("login"));
       } else {
         yield put(resetPasswordFail());
         yield put(

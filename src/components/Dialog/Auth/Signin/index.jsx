@@ -15,8 +15,7 @@ import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/
 import {
   // getCityAndStateProfile,
   getMyInfor,
-  getUserInfoReady,
-  logoutReady,
+  logoutReady
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
@@ -59,10 +58,10 @@ export default function Dialoglg() {
     const socket = _socket;
     setSocket(socket);
   }, []);
-  const { isUpdateProfile, currentTab } = useSelector(
+  const { isUpdateProfile } = useSelector(
     (state) => state.authReducer
   );
-  const { user, uPack, tokenUser } = useSelector((state) => state.userReducer);
+  const { user, uPack } = useSelector((state) => state.userReducer);
   useEffect(() => {}, [isUpdateProfile]);
   const dispatch = useDispatch();
 
@@ -80,11 +79,11 @@ export default function Dialoglg() {
   const { width, height } = useWindowDimensions();
 
   const token = localStorage.getItem("token");
-  useEffect(() => {
-    if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
-      dispatch(getUserInfoReady(token || tokenUser));
-    }
-  }, [token, dispatch, tokenUser, currentTab]);
+  // useEffect(() => {
+  //   if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
+  //     dispatch(getUserInfoReady(token || tokenUser));
+  //   }
+  // }, [token, dispatch, tokenUser, currentTab]);
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (
