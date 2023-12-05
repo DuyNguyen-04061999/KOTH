@@ -105,6 +105,7 @@ const ListPromotion = (props) => {
                   justifyContent: "center",
                   gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
                   gridRowGap: "50px",
+                  overflowX: "hidden"
                 }}
               >
                 {listData?.map((item, index) => {
