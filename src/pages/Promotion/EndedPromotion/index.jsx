@@ -139,7 +139,7 @@ export default function HotTournament() {
                   fontWeight: 700,
                 }}
               >
-                Ended Promotion
+                Ended Promotions
               </Typography>
               <Box
                 sx={{
@@ -212,7 +212,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                Ended Promotion
+                Ended Promotions
               </Typography>
               <Box
                 sx={{
