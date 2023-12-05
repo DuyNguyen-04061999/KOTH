@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
 import { inpChat } from "../../../utils/cssFrom";
@@ -70,6 +71,11 @@ export default function ChatGlobal(props) {
           chatInput.current.reset();
         }
       }
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Cannot send message while playing game! Please try later!"
+      }))
     }
     
   };
@@ -86,6 +92,11 @@ export default function ChatGlobal(props) {
           chatInput.current.reset();
         }
       }
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Cannot send message while playing game! Please try later!"
+      }))
     }
     
   };

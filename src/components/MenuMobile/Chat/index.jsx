@@ -8,6 +8,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { popup } from "../../../utils/images";
 import ChatFriendList from "../../Chat/ChatFriendList";
@@ -84,6 +85,11 @@ export default function DialogChat(props) {
           }
         }
       } 
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Cannot send message while playing game! Please try later!"
+      }))
     }
     
   };
@@ -100,6 +106,11 @@ export default function DialogChat(props) {
           }
         }
       }
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Cannot send message while playing game! Please try later!"
+      }))
     }
     
   };

@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { changeRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openLoginDialog,
@@ -84,6 +85,11 @@ const ChatDrawer = () => {
           }
         }
       }
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Cannot send message while playing game! Please try later!"
+      }))
     }
   };
   const handleOnClickSendMessage = () => {
@@ -106,6 +112,11 @@ const ChatDrawer = () => {
           }
         }
       }
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Cannot send message while playing game! Please try later!"
+      }))
     }
   };
 
