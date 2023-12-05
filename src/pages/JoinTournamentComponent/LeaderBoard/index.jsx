@@ -1278,6 +1278,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                     fontSize: "12px",
                     marginTop: "10px",
                   }}
+                  className="ps-2"
                 >
                   No data yet !
                 </Typography>
@@ -2281,7 +2282,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             }
                           } else {
                             if (start > 3) {
-                              updatePagination(-3);
+                              updatePagination(-4);
                             }
                           }
                         }}
@@ -2352,7 +2353,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 start + 3 <
                                 detailTournament?.tournamentResult?.length
                               ) {
-                                updatePagination(3);
+                                updatePagination(4);
                               }
                             }
                           }}
