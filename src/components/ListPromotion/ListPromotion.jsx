@@ -1,6 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import React from "react";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { useLocation } from "react-router-dom";
 import ItemComponent from "../../pages/NewHomePageComponent/NewHomePage/ItemComponent";
 import useWindowDimensions from "../../utils/useWindowDimensions";
@@ -24,7 +25,7 @@ const ListPromotion = (props) => {
     return (
       <Box>
         {width < 576 ? (
-          <Box className="scrolling-carousel-example1-container">
+          <LazyLoadComponent className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
             {loadingState &&   <ListItemLoading></ListItemLoading> }
               {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
@@ -40,7 +41,7 @@ const ListPromotion = (props) => {
                   );
                 })}
             </ScrollingCarousel>
-          </Box>
+          </LazyLoadComponent>
         ) : (
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>

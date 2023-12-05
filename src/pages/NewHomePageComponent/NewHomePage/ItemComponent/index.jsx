@@ -4,7 +4,6 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 // import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
@@ -107,7 +106,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           />
         ) : (
           <>
-            <LazyLoadImage
+            <Box
+            component={"img"}
               style={{
                 maxHeight: width < 576 ? "156px" : "184px",
                 minHeight: width < 576 ? "156px" : "184px",
@@ -116,12 +116,12 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 position: "relative",
                 overflow: "hidden",
               }}
-              effect="blur"
-              wrapperProps={{
-                style: {
-                  transitionDelay: "0.5s",
-                },
-              }}
+              // effect="blur"
+              // wrapperProps={{
+              //   style: {
+              //     transitionDelay: "0.5s",
+              //   },
+              // }}
               src={
                 tourInfo?.tournamentAvatar
                   ? process.env.REACT_APP_SOCKET_SERVER +
@@ -129,7 +129,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                     tourInfo?.tournamentAvatar
                   : imageHome.brandImage
               }
-            ></LazyLoadImage>
+            ></Box>
             <Box
               sx={{
                 width: "100%",
@@ -276,20 +276,22 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 marginBottom: "2px",
               }}
             >
-              <LazyLoadImage
+              <Box
+                component={"img"}
                 style={{
                   width: width > 576 ? "20px" : "16px",
                   height: width > 576 ? "20px" : "16px",
                   marginRight: width > 576 ? "8px" : "4px",
                 }}
-                wrapperProps={{
-                  style: {
-                    transitionDelay: "0.5s",
-                  },
-                }}
+                // wrapperProps={{
+                //   style: {
+                //     transitionDelay: "0.5s",
+                //   },
+                // }}
+                // effect="blur"
+
                 src={imageHome.iconMember}
-                effect="blur"
-              ></LazyLoadImage>
+              ></Box>
               <Typography
                 sx={{
                   ...styleTypography,
@@ -338,7 +340,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               animation="wave"
             />
           ) : (
-            <LazyLoadImage
+            <Box
+              component={"img"}
               style={{
                 width: width < 576 ? `40px` : "49px",
                 height: width < 576 ? `40px` : "49px",
@@ -356,13 +359,13 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                     tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
                   : imageHome.brandImage
               }
-              effect="blur"
-              wrapperProps={{
-                style: {
-                  transitionDelay: "0.5s",
-                },
-              }}
-            ></LazyLoadImage>
+              // effect="blur"
+              // wrapperProps={{
+              //   style: {
+              //     transitionDelay: "0.5s",
+              //   },
+              // }}
+            ></Box>
           )}
           <Box
             sx={{
