@@ -183,7 +183,7 @@ export default function NewHomePage() {
                 }}
               >
                 {/* HOT TOURNAMENTS{" "} */}
-                Hot Promotion
+                Hot Promotions
               </Typography>
             </Box>
             <Box
@@ -245,7 +245,7 @@ export default function NewHomePage() {
                   fontFamily: "Cyntho Next",
                 }}
               >
-                Ongoing Promotion
+                Ongoing Promotions
               </Typography>
             </Box>
             <Box
@@ -303,7 +303,7 @@ export default function NewHomePage() {
                   fontFamily: "Cyntho Next",
                 }}
               >
-                Upcoming Promotion{" "}
+                Upcoming Promotions{" "}
               </Typography>
             </Box>
             <Box
@@ -451,7 +451,7 @@ export default function NewHomePage() {
                   fontFamily: "Cyntho Next",
                 }}
               >
-                Ended Promotion{" "}
+                Ended Promotions{" "}
               </Typography>
             </Box>
             <Box

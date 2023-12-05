@@ -418,7 +418,7 @@ export default function ListPackage(props) {
                         marginLeft: "4px !important",
                       }}
                     >
-                      Use on any promotion
+                      Use on any promotions
                     </Typography>
                   </Box>
                 )}

@@ -28,9 +28,11 @@ export default function NewFooter() {
   };
 
   return (
-    <Box sx={{
-      marginTop:"70px"
-    }}>
+    <Box
+      sx={{
+        marginTop: "70px",
+      }}
+    >
       {" "}
       {/* Footer */}
       <Box>
@@ -132,22 +134,20 @@ export default function NewFooter() {
             Contact Us
           </Typography>
           <Box
-            component={"a"}
-            href="mailto:support@play4promo.com"
-            target="_blank"
             sx={{
               textDecoration: "none",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#fff",
             }}
           >
-            <Typography
-              sx={{
-                color: "#fff",
-                fontSize: width < 576 ? "12px" : "14px",
-                textAlign: "center",
-              }}
-            >
+            <Box sx={{
+              textDecoration:"none",
+              color:"#fff"
+            }} component={"a"} href="mailto:support@play4promo.com" target="_blank">
               Get help: support@play4promo.com
-            </Typography>
+            </Box>
           </Box>
         </Box>
         <Box
@@ -175,7 +175,7 @@ export default function NewFooter() {
             lineHeight: "normal",
             marginTop: "20px",
             textAlign: "center",
-            letterSpacing:"1px"
+            letterSpacing: "1px",
           }}
         >
           "Experience the thrill of competing and winning at Play4Promo, where
