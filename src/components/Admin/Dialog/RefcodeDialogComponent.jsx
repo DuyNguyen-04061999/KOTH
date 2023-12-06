@@ -149,7 +149,7 @@ export default function RefcodeDialogComponent() {
                                     color: "#8C8D9B",
                                     fontSize: "16px"
                                 }}>
-                                    Refcode has been changed successfully.
+                                    Promo code has been changed successfully.
                                 </Typography>
                             </Box>
                         </Box>
@@ -176,7 +176,7 @@ export default function RefcodeDialogComponent() {
                                     color: "#8C8D9B",
                                     fontSize: "16px"
                                 }}>
-                                    {messageRefcode || "This refcode already exists. Please choose a new refcode"}
+                                    {messageRefcode || "This promo code already exists. Please choose a new promo code"}
                                 </Typography>
                             </Box>
                         </Box>
