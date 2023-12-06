@@ -426,7 +426,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "16px",
+                        fontSize: "14px",
                         color: "white",
                         textAlign:"start",
                         fontWeight: "500 !important",
@@ -466,7 +466,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "16px",
+                        fontSize: "14px",
                         color: "white",
                         textAlign:"start",
                         fontWeight: "500 !important",
@@ -511,7 +511,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "16px",
+                        fontSize: "14px",
                         color: "white",
                         textAlign:"start",
                         fontWeight: "500 !important",
@@ -552,7 +552,7 @@ export default function ListPackage(props) {
                     <Typography
                       variant="body1"
                       sx={{
-                        fontSize: "16px",
+                        fontSize: "14px",
                         color: "white",
                         textAlign:"start",
                         fontWeight: "500 !important",

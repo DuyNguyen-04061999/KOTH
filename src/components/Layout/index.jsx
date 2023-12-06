@@ -365,7 +365,8 @@ export default function Layout(props) {
             openMess ||
             openMenu ||
             isLoginDialog ||
-            isTransactionDialog
+            isTransactionDialog ||
+            isProfileDialog
               ? "none"
               : "block",
         }}

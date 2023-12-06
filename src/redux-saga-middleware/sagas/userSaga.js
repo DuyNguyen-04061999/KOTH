@@ -1,5 +1,4 @@
 import { call, getContext, put, takeEvery } from "redux-saga/effects";
-import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
@@ -186,6 +185,7 @@ function* updateProfileSaga(dataRequest) {
             message: i18n?.t("Update profile successfully!", { ns: "auth" }),
           })
         );
+        yield delay(3000);
         yield put(
           updateProfileUserSuccess({
             avatar: data?.data?.avatar,

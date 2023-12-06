@@ -1336,7 +1336,7 @@ export default function DialogProfile(props) {
                         }}
                         value={zCode}
                         disabled={disabledInp}
-                        placeholder="Enter Your ZipCode"
+                        placeholder="Enter ZipCode"
                         sx={{
                           "&:before": {
                             borderBottom: " 0px solid !important ",
@@ -1352,6 +1352,7 @@ export default function DialogProfile(props) {
                           },
                           color: "white",
                           fontSize: "14px",
+                          paddingRight: "20px",
                           "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
                             padding: "0px !important",
                           },
@@ -1431,7 +1432,7 @@ export default function DialogProfile(props) {
                             fontSize: "13px",
                           },
                           "& .MuiInputBase-input": {
-                            padding: "0px",
+                            padding: "4px !important",
                           },
                           "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root":
                             {
@@ -1587,7 +1588,7 @@ export default function DialogProfile(props) {
                             color: "white",
                           },
                           "& .MuiInputBase-input": {
-                            padding: "0px",
+                            padding: "10px !important",
                           },
                           "& .css-ooyo55-MuiInputBase-root-MuiOutlinedInput-root":
                             {
