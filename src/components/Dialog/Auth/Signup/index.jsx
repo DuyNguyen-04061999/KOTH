@@ -3,6 +3,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
@@ -24,6 +25,7 @@ const BgWithTooltip = withStyles({
   },
 })(Tooltip);
 export default function Signup(props) {
+  const { t } = useTranslation("auth");
   const [gender] = useState(0);
   const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState("");
@@ -240,7 +242,7 @@ export default function Signup(props) {
               fontSize: width < 992 ? "20px" : "24px",
             }}
           >
-            Sign Up
+            {t("Sign up")}
           </Typography>
         </Box>
 
@@ -266,7 +268,7 @@ export default function Signup(props) {
                 setEmail(e.target.value);
               }}
               value={email}
-              placeholder="Email"
+              placeholder={t("Email")}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -296,7 +298,7 @@ export default function Signup(props) {
                   <Box>
                     {" "}
                     <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                      Correct example: superman0@gmail.com
+                      {t("Correct example: superman0@gmail.com")}
                     </Typography>
                   </Box>
                 }
@@ -384,7 +386,7 @@ export default function Signup(props) {
                 setPhone(e.target.value);
               }}
               value={phone}
-              placeholder="Phone number"
+              placeholder={t("Phone number")}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -479,7 +481,7 @@ export default function Signup(props) {
                 setFirstName(e.target.value);
               }}
               value={firstName}
-              placeholder="First name"
+              placeholder={t("First name")}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -519,7 +521,7 @@ export default function Signup(props) {
                 setLastName(e.target.value);
               }}
               value={lastName}
-              placeholder="Last name"
+              placeholder={t("Last name")}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -590,8 +592,9 @@ export default function Signup(props) {
                   <Box>
                     {" "}
                     <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                      Your display name must be 12 characters or less and not contain special characters. 
-                      Display name are case sensitive (e.g., Examplename)
+                      Your display name must be 12 characters or less and not
+                      contain special characters. Display name are case
+                      sensitive (e.g., Examplename)
                     </Typography>
                   </Box>
                 }
@@ -751,7 +754,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must be at least 6 characters long.{" "}
+              {t("Password must be at least 6 characters long.")}{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center ms-1 text-white">
@@ -802,13 +805,13 @@ export default function Signup(props) {
               sx={{
                 color: passOneLetter === true ? "green" : "white",
                 fontSize: 12,
-                textOverflow:"clip",
-                wordBreak:"break-word",
-                textAlign:"left"
+                textOverflow: "clip",
+                wordBreak: "break-word",
+                textAlign: "left",
               }}
             >
               {" "}
-              Password must have at least one special character.{" "}
+              {t("Password must have at least one special character.")}{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center ms-1 text-white">
@@ -862,7 +865,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must have at least one digit ('0-9').{" "}
+              {t("Password must have at least one digit ('0-9').")}{" "}
             </Typography>{" "}
           </Box>{" "}
           <Box className="d-flex align-items-center ms-1 text-white">
@@ -916,7 +919,7 @@ export default function Signup(props) {
               }}
             >
               {" "}
-              Password must have at least one upper case.{" "}
+              {t("Password must have at least one upper case.")}{" "}
             </Typography>{" "}
           </Box>{" "}
         </Box>
@@ -1113,7 +1116,7 @@ export default function Signup(props) {
           <Input
             id="input-with-icon-adornment"
             type="text"
-            placeholder="Promo code (optional)"
+            placeholder={t("Promo code (optional)")}
             onChange={(e) => {
               setRef(e.target.value);
             }}
@@ -1171,7 +1174,7 @@ export default function Signup(props) {
                 color: "white",
               }}
             >
-              I agree with Play4promo{" "}
+              {t("I agree with Play4promo")}
               <span
                 className="cursor-pointer"
                 onClick={() => navigateFooter(1)}
@@ -1182,9 +1185,9 @@ export default function Signup(props) {
                   cursor: "pointer",
                 }}
               >
-                Terms & Agreement
+                {t("Terms & Agreement")}
               </span>{" "}
-              services.
+              {t("services")}
             </Typography>
           </Box>
         </Box>
@@ -1197,18 +1200,18 @@ export default function Signup(props) {
         >
           <div className="btn-conteiner">
             {disabledBtn ? (
-              <AnimButton type="disable" text="Sign Up" isHasIcon />
+              <AnimButton type="disable" text={t("Sign up")} isHasIcon />
             ) : isRegister ? (
               <AnimButton
                 onClick={handleSubmitSignUp}
-                text="Sign Up"
+                text={t("Sign up")}
                 type="loading"
                 isHasIcon
               />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}
-                text="Sign Up"
+                text={t("Sign up")}
                 type="primary"
                 isHasIcon
                 isSubmitBtn
@@ -1228,7 +1231,7 @@ export default function Signup(props) {
               sx={{ color: "white", fontSize: width < 992 ? "12px" : "16px" }}
             >
               {" "}
-              Already registered?
+              {t("Already registered?")}
             </Typography>
             <Typography
               onClick={() => {
@@ -1241,7 +1244,7 @@ export default function Signup(props) {
                 fontSize: width < 992 ? "12px" : "16px",
               }}
             >
-              Sign In
+              {t("Sign in")}
             </Typography>
           </Box>
         </Box>

@@ -668,7 +668,7 @@ export default function PlayGame(props) {
                       sx={{
                         height: "20px",
                         width: "20px",
-                        bgcolor: "#1a151e",
+                        bgcolor: "#211d28",
                         position: "absolute",
                         borderRadius: "50%",
                         top: "-10px",
@@ -679,7 +679,7 @@ export default function PlayGame(props) {
                       sx={{
                         height: "20px",
                         width: "20px",
-                        bgcolor: "#1a151e",
+                        bgcolor: "#211d28",
                         position: "absolute",
                         borderRadius: "50%",
                         bottom: "-10px",

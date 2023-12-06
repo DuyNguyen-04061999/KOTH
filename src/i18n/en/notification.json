@@ -1,0 +1,22 @@
+{
+    "Username already taken. Please choose a different one.":"Username already taken. Please choose a different one.",
+    "Email already in use. Please log in or use a different email.":"Email already in use. Please log in or use a different email.",
+    "Phone number already in use. Please log in or use a different phone number.":"Phone number already in use. Please log in or use a different phone number.",
+    "Please complete all required information before signing up.":"Please complete all required information before signing up.",
+    "Registration successful! Welcome to Play4promo.":"Registration successful! Welcome to Play4promo.",
+    "Invalid Referral Code. Please double-check the code and input again or leave this field blank to sign up.":"Invalid Referral Code. Please double-check the code and input again or leave this field blank to sign up.",
+    "This username does not exist. Please try again.":"This username does not exist. Please try again.",
+    "The password you entered is invalid. Please try again.":"The password you entered is invalid. Please try again.",
+    "Please enter your username and password to sign in.":"Please enter your username and password to sign in.",
+    "You're currently logged in on another device. Please sign out there to continue here.":"You're currently logged in on another device. Please sign out there to continue here.",
+    "Login successfully!":"Login successfully!",
+    "You have been successfully logged out.":"You have been successfully logged out.",
+    "Invalid OTP. Please check and re-enter the code.":"Invalid OTP. Please check and re-enter the code.",
+    "OTP Verified. You're successfully verified!":"OTP Verified. You're successfully verified!",
+    "The email provided does not match the username.":"The email provided does not match the username.",
+    "The phone number provided does not match the username.":"The phone number provided does not match the username.",
+    "Current and new password should not be the same. Please try another one!":"Current and new password should not be the same. Please try another one!",
+    "Reset password successfully!":"Reset password successfully!",
+    "Payment Successful. Your payment has been successfully processed.":"Payment Successful. Your payment has been successfully processed.",
+    "Payment Fail. There's something wrong. Please try again.":"Payment Fail. There's something wrong. Please try again."
+}

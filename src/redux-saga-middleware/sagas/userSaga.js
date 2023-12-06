@@ -1,4 +1,5 @@
-import { call, delay, put, takeEvery } from "redux-saga/effects";
+import { call, delay, getContext, put, takeEvery } from "redux-saga/effects";
+import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
@@ -52,10 +53,12 @@ import {
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
+
 const userService = new UserService();
 
 var loginCount = 0;
 function* loginSaga(dataRequest) {
+  const i18n = yield getContext("i18n");
   try {
     loginCount += 1;
     if (loginCount === 1) {
@@ -70,7 +73,9 @@ function* loginSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: authNotification.signIn.signInSuccess.type,
-            message: authNotification.signIn.signInSuccess.message,
+            message: i18n?.t(authNotification.signIn.signInSuccess.message, {
+              ns: "noti",
+            }),
           })
         );
         localStorage.setItem("token", data?.data?.token);
@@ -84,7 +89,9 @@ function* loginSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "error",
-            message: "Login failed! Something went wrong!",
+            message: i18n?.t("Login failed! Something went wrong!", {
+              ns: "noti",
+            }),
           })
         );
       }
@@ -96,7 +103,12 @@ function* loginSaga(dataRequest) {
     yield put(
       showToastNotification({
         type: error?.type || "error",
-        message: error?.message || "Login failed! Something went wrong!",
+        message: i18n?.t(
+          error?.message || "Login failed! Something went wrong!",
+          {
+            ns: "noti",
+          }
+        ),
       })
     );
   }
@@ -104,6 +116,7 @@ function* loginSaga(dataRequest) {
 
 var registerCount = 0;
 function* registerSaga(dataRequest) {
+  const i18n = yield getContext("i18n");
   try {
     registerCount += 1;
     if (registerCount === 1) {
@@ -114,7 +127,12 @@ function* registerSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "success",
-            message: "Registration successful! Welcome to Play4promo.",
+            message: i18n?.t(
+              "Registration successful! Welcome to Play4promo.",
+              {
+                ns: "noti",
+              }
+            ),
           })
         );
         yield put(clickTab("otpVerifyAccount"));
@@ -125,7 +143,9 @@ function* registerSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "error",
-            message: "Register failed! Something went wrong!",
+            message: i18n?.t("Register failed! Something went wrong!", {
+              ns: "noti",
+            }),
           })
         );
       }
@@ -137,7 +157,12 @@ function* registerSaga(dataRequest) {
     yield put(
       showToastNotification({
         type: error?.type || "error",
-        message: error?.message || "Register failed! Something went wrong!",
+        message: i18n?.t(
+          error?.message || "Register failed! Something went wrong!",
+          {
+            ns: "noti",
+          }
+        ),
       })
     );
   }
@@ -145,6 +170,7 @@ function* registerSaga(dataRequest) {
 
 let updateCount = 0;
 function* updateProfileSaga(dataRequest) {
+  const i18n = yield getContext("i18n");
   try {
     updateCount += 1;
     if (updateCount === 1) {
@@ -157,7 +183,7 @@ function* updateProfileSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "success",
-            message: "Update profile successfully!",
+            message: i18n?.t("Update profile successfully!", { ns: "auth" }),
           })
         );
         yield delay(3000);
@@ -171,7 +197,9 @@ function* updateProfileSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "error",
-            message: "Update profile failed! Something went wrong!",
+            message: i18n?.t("Update profile failed! Something went wrong!", {
+              ns: "auth",
+            }),
           })
         );
         yield put(updateProfileUserFail());
@@ -193,6 +221,7 @@ function* updateProfileSaga(dataRequest) {
 
 var logOutCount = 0;
 function* logoutSaga(dataRequest) {
+  const i18n = yield getContext("i18n");
   try {
     logOutCount += 1;
     if (logOutCount === 1) {
@@ -209,7 +238,12 @@ function* logoutSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: authNotification.signOut.logoutSuccess.type,
-            message: payload && payload === "refresh" ? "Reconnect system successfully!" : authNotification.signOut.logoutSuccess.message,
+            message: i18n?.t(
+              payload && payload === "refresh"
+                ? "Reconnect system successfully!"
+                : authNotification.signOut.logoutSuccess.message,
+              { ns: "noti" }
+            ),
           })
         );
       } else {
@@ -217,7 +251,9 @@ function* logoutSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "error",
-            message: "Logout failed! Something when wrong!",
+            message: i18n?.t("Logout failed! Something when wrong!", {
+              ns: "noti",
+            }),
           })
         );
       }
@@ -229,7 +265,10 @@ function* logoutSaga(dataRequest) {
     yield put(
       showToastNotification({
         type: error?.type || "error",
-        message: error?.message || "Logout failed! Something when wrong!",
+        message: i18n?.t(
+          error?.message || "Logout failed! Something when wrong!",
+          { ns: "noti" }
+        ),
       })
     );
   }
@@ -246,7 +285,8 @@ function* userInfoSaga(dataRequest) {
         yield put(getUserInfoSuccess(data?.data));
         yield put(saveNickNameWhenLogin(data?.data?.nickName));
         if (
-          data?.data?.user?.userVerifiedEmail === 0 && data?.data?.user?.userVerifiedPhone === 0
+          data?.data?.user?.userVerifiedEmail === 0 &&
+          data?.data?.user?.userVerifiedPhone === 0
         ) {
           yield put(updateVerifyOTPType("reVerify"));
           yield put(openVerifyDialog());
@@ -278,7 +318,10 @@ function* sendOtpSaga(dataRequest) {
           yield put(
             showToastNotification({
               type: authNotification.otpForgotPassword.validOTP.type,
-              message: authNotification.otpForgotPassword.validOTP.message,
+              message: i18n?.t(
+                authNotification.otpForgotPassword.validOTP.message,
+                { ns: "noti" }
+              ),
             })
           );
         } else if (payload?.type === "register") {
@@ -286,7 +329,10 @@ function* sendOtpSaga(dataRequest) {
           yield put(
             showToastNotification({
               type: authNotification.verifyAccount.verifySuccess.type,
-              message: authNotification.verifyAccount.verifySuccess.message,
+              message: i18n?.t(
+                authNotification.verifyAccount.verifySuccess.message,
+                { ns: "noti" }
+              ),
             })
           );
           localStorage.setItem("token", data?.data?.token);
@@ -297,15 +343,16 @@ function* sendOtpSaga(dataRequest) {
           yield put(updateUserToken(data?.data?.token));
           yield put(getUserInfoReady(data?.data?.token));
           yield put(closeLoginDialog());
-          yield put(openDialogGif())
-
+          yield put(openDialogGif());
         }
       } else {
         yield put(sendOtpFail());
         yield put(
           showToastNotification({
             type: "warning",
-            message: "Send OTP failed! Something went wrong!",
+            message: i18n?.t("Send OTP failed! Something went wrong!", {
+              ns: "noti",
+            }),
           })
         );
       }
@@ -317,7 +364,10 @@ function* sendOtpSaga(dataRequest) {
     yield put(
       showToastNotification({
         type: error?.type || "error",
-        message: error?.message || "Send OTP failed! Something went wrong!",
+        message: i18n?.t(
+          error?.message || "Send OTP failed! Something went wrong!",
+          { ns: "noti" }
+        ),
       })
     );
   }
@@ -336,7 +386,7 @@ function* resendOtpSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "success",
-            message: "OTP resend!",
+            message: i18n?.t("OTP resend!", { ns: "noti" }),
           })
         );
       } else {
@@ -344,7 +394,9 @@ function* resendOtpSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "warning",
-            message: "Resend OTP failed! Something went wrong!",
+            message: i18n?.t("Resend OTP failed! Something went wrong!", {
+              ns: "noti",
+            }),
           })
         );
       }
@@ -377,7 +429,7 @@ function* forgetPasswordSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "success",
-            message: "Forget password successfully!",
+            message: i18n?.t("Forget password successfully!", { ns: "noti" }),
           })
         );
       } else {
@@ -385,7 +437,9 @@ function* forgetPasswordSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "warning",
-            message: "Forget password failed! Something went wrong!",
+            message: i18n?.t("Forget password failed! Something went wrong!", {
+              ns: "noti",
+            }),
           })
         );
       }
@@ -417,7 +471,7 @@ function* resetPasswordSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "success",
-            message: "Change password successfully",
+            message: i18n?.t("Change password successfully", { ns: "noti" }),
           })
         );
         yield put(closeLoginDialog());
@@ -427,7 +481,9 @@ function* resetPasswordSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "warning",
-            message: "Reset password failed! Something went wrong!",
+            message: i18n?.t("Reset password failed! Something went wrong!", {
+              ns: "noti",
+            }),
           })
         );
       }
@@ -439,8 +495,10 @@ function* resetPasswordSaga(dataRequest) {
     yield put(
       showToastNotification({
         type: error?.type || "error",
-        message:
+        message: i18n?.t(
           error?.message || "Reset password failed! Something went wrong!",
+          { ns: "noti" }
+        ),
       })
     );
   }
@@ -551,8 +609,8 @@ function* getMyInforSaga(dataRequest) {
             address2: user?.userAccount?.accountAddressTwo,
             city: user?.userAccount?.accountCity,
             state: user?.userAccount?.accountState,
-            zipCode:  user?.userAccount?.accountZipCode,
-            birthDay: user?.userAccount?.accountBirthday
+            zipCode: user?.userAccount?.accountZipCode,
+            birthDay: user?.userAccount?.accountBirthday,
           })
         );
       } else {
@@ -566,24 +624,24 @@ function* getMyInforSaga(dataRequest) {
   }
 }
 
-let getCityAndStateProfile = 0
+let getCityAndStateProfile = 0;
 function* getCityAndStateProfilSaga(dataRequest) {
   try {
-    getCityAndStateProfile +=1
-    if(getCityAndStateProfile === 1) {
-      const {payload} = dataRequest
-      const res = yield call(userService.getCityAndStateProfile, payload)
-      const {status, data} = res
-      if(status === 200 || status === 201) {
-        yield put(getCityAndStateProfileSuccess(data))
+    getCityAndStateProfile += 1;
+    if (getCityAndStateProfile === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.getCityAndStateProfile, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(getCityAndStateProfileSuccess(data));
       } else {
-        yield put(getCityAndStateProfileFail())
+        yield put(getCityAndStateProfileFail());
       }
     }
-    getCityAndStateProfile = 0
+    getCityAndStateProfile = 0;
   } catch (error) {
-    getCityAndStateProfile = 0
-    yield put(getCityAndStateProfileFail())
+    getCityAndStateProfile = 0;
+    yield put(getCityAndStateProfileFail());
   }
 }
 
@@ -600,7 +658,7 @@ function* authSaga() {
   yield takeEvery("RE_VERIFY_ACCOUNT", reVerifyAccountSaga);
   yield takeEvery("GET_USER_BY_USERNAME", getUserByUsernameSaga);
   yield takeEvery("GET_MY_INFOR", getMyInforSaga);
-  yield takeEvery("GET_CITY_AND_STATE_PROFILE", getCityAndStateProfilSaga)
+  yield takeEvery("GET_CITY_AND_STATE_PROFILE", getCityAndStateProfilSaga);
 }
 
 export default authSaga;

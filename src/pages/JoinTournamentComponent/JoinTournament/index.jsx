@@ -12,6 +12,7 @@ import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,9 +97,8 @@ export default function JoinTournament() {
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const navigate = useNavigate();
-
   const location = useLocation();
-
+  const { t } = useTranslation("join_tour");
   const handleClickOpen = () => {
     navigate("/packages");
     dispatch(updateFromRouter(location.pathname));
@@ -209,41 +209,53 @@ export default function JoinTournament() {
     dispatch(startGameInPromotionFail());
   }, [dispatch]);
 
-
-  const [meta, setMeta] = useState({})
+  const [meta, setMeta] = useState({});
 
   useEffect(() => {
     setMeta({
       title: `${detailTournament?.tournamentName}`,
-      description: `${detailTournament?.tournamentInfors?.rewardInfors
-        ?.rewardTitle || "SS Z-Flip 5 free voucher"}.&nbsp;${detailTournament?.tournamentInfors?.owner?.brandName || "Play4promo"}.&nbsp;${moment(
-          detailTournament?.tournamentInfors
-            ?.rewardInfors?.rewardValidityDate
-        )?.format("MMM-DD-YYYY") || "Nov-10-2023"}`,
+      description: `${
+        detailTournament?.tournamentInfors?.rewardInfors?.rewardTitle ||
+        "SS Z-Flip 5 free voucher"
+      }.&nbsp;${
+        detailTournament?.tournamentInfors?.owner?.brandName || "Play4promo"
+      }.&nbsp;${
+        moment(
+          detailTournament?.tournamentInfors?.rewardInfors?.rewardValidityDate
+        )?.format("MMM-DD-YYYY") || "Nov-10-2023"
+      }`,
       meta: {
-          charset: 'utf-8',
-          name: {
-              keywords: `play4promo,play,promo,${detailTournament?.tournamentName}`
-          },
-          property: {
-            'og:title': `${detailTournament?.tournamentName || "Promotion Name"}`,
-            'og:url': window.location.href,
-            'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : detailTournament?.tournamentBackgroundMobile ? 
-            process.env.REACT_APP_SOCKET_SERVER +
-            "/" +
-            detailTournament?.tournamentBackgroundMobile : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
-            'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : detailTournament?.tournamentBackgroundMobile ? 
-            process.env.REACT_APP_SOCKET_SERVER +
-            "/" +
-            detailTournament?.tournamentBackgroundMobile : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
-            'og:image:type': 'image/png',
-            'og:image:width': `144`,
-            'og:image:height': `144`,
-            'og:image:alt': 'Play4promo Photo'
-          },
+        charset: "utf-8",
+        name: {
+          keywords: `play4promo,play,promo,${detailTournament?.tournamentName}`,
+        },
+        property: {
+          "og:title": `${detailTournament?.tournamentName || "Promotion Name"}`,
+          "og:url": window.location.href,
+          "og:image:secure_url":
+            process.env.REACT_APP_ENV === "development"
+              ? imageDesktop.logoCT
+              : detailTournament?.tournamentBackgroundMobile
+              ? process.env.REACT_APP_SOCKET_SERVER +
+                "/" +
+                detailTournament?.tournamentBackgroundMobile
+              : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+          "og:image":
+            process.env.REACT_APP_ENV === "development"
+              ? imageDesktop.logoCT
+              : detailTournament?.tournamentBackgroundMobile
+              ? process.env.REACT_APP_SOCKET_SERVER +
+                "/" +
+                detailTournament?.tournamentBackgroundMobile
+              : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+          "og:image:type": "image/png",
+          "og:image:width": `144`,
+          "og:image:height": `144`,
+          "og:image:alt": "Play4promo Photo",
+        },
       },
-    })
-  }, [detailTournament])
+    });
+  }, [detailTournament]);
 
   return (
     <DocumentMeta {...meta}>
@@ -490,20 +502,20 @@ export default function JoinTournament() {
                               <AnimButton
                                 onClick={handlePlayTour}
                                 type="loading"
-                                text="Play"
+                                text={t("Play")}
                               />
                             ) : (
                               <AnimButton
                                 onClick={handlePlayTour}
                                 type="highlight"
-                                text="Play"
+                                text={t("Play")}
                               />
                             )}
                           </Box>
                           <Box sx={{ width: "150px" }}>
                             <AnimButton
                               onClick={handleClickOpen}
-                              text="Buy Extra"
+                              text={t("Buy Extra")}
                               type="primary"
                             />
                           </Box>
@@ -564,7 +576,6 @@ export default function JoinTournament() {
                               sx={{
                                 display: "flex",
                                 alignItems: "center",
-                                width: "150px",
                               }}
                             >
                               <Typography
@@ -585,7 +596,7 @@ export default function JoinTournament() {
                                   fontWeight: "700",
                                 }}
                               >
-                                Free Extra:
+                                {t("Free Extra")}:
                               </Typography>
                               <BgWithTooltip
                                 title="Free Extra will be reset at 11:59 PM per day, so make sure to use them all."
@@ -701,7 +712,7 @@ export default function JoinTournament() {
                                   fontWeight: "700",
                                 }}
                               >
-                                Start
+                                {t("Start")}
                               </Typography>
                             </Box>
                             <Box
@@ -799,7 +810,7 @@ export default function JoinTournament() {
                                   fontWeight: "700",
                                 }}
                               >
-                                End
+                                {t("End")}
                               </Typography>
                             </Box>
 
@@ -893,7 +904,7 @@ export default function JoinTournament() {
                               fontWeight: "700",
                             }}
                           >
-                            Participants
+                            {t("Participants")}
                           </Typography>
                           <Typography
                             sx={{
@@ -1296,7 +1307,7 @@ export default function JoinTournament() {
                               fontWeight: "700 !important",
                             }}
                           >
-                            Participants
+                            {t("Participants")}
                           </Typography>
                           <Typography
                             sx={{
@@ -1526,7 +1537,7 @@ export default function JoinTournament() {
                 <Box
                   sx={{
                     display: "flex",
-                    backgroundColor: "#1A151E",
+                    backgroundColor: "#211d28",
                     marginBottom: `${parseFloat(width / 66)}px`,
                     justifyContent: "space-between",
                     paddingTop: "36px",
@@ -1624,7 +1635,7 @@ export default function JoinTournament() {
                                 : "18px",
                           }}
                         >
-                          Reward
+                         {t('Valid by')}
                         </Box>
                         <Box
                           sx={{
@@ -1634,7 +1645,7 @@ export default function JoinTournament() {
                             fontSize: "14px",
                           }}
                         >
-                          Play game to get this voucher
+                 {t('Play game to get this voucher')}
                         </Box>
                       </Box>
                       {isGetDetailPromotion || isGetDetailAuthPromotion ? (
@@ -1699,7 +1710,7 @@ export default function JoinTournament() {
                                       textAlign: "start",
                                     }}
                                   >
-                                    Recipient
+                                    {t('Recipient')}
                                   </Typography>
                                   <Typography
                                     style={{
@@ -1758,7 +1769,7 @@ export default function JoinTournament() {
                                       textAlign: "start",
                                     }}
                                   >
-                                    Valid by
+                                    {t('Valid by')}
                                   </Typography>
                                   <Typography
                                     style={{
@@ -1834,7 +1845,7 @@ export default function JoinTournament() {
                                 sx={{
                                   height: "20px",
                                   width: "20px",
-                                  bgcolor: "#1a151e",
+                                  bgcolor: "#211d28",
                                   position: "absolute",
                                   borderRadius: "50%",
                                   top: "-10px",
@@ -1845,7 +1856,7 @@ export default function JoinTournament() {
                                 sx={{
                                   height: "20px",
                                   width: "20px",
-                                  bgcolor: "#1a151e",
+                                  bgcolor: "#211d28",
                                   position: "absolute",
                                   borderRadius: "50%",
                                   bottom: "-10px",
@@ -1896,7 +1907,7 @@ export default function JoinTournament() {
                         marginTop: "36px",
                       }}
                     >
-                      Game for Promotion
+                      {t('Game for promotion')}
                     </Typography>
 
                     <Box
@@ -1984,7 +1995,7 @@ export default function JoinTournament() {
                                 : "28px",
                           }}
                         >
-                          Final Result
+                          {t('Final Result')}
                         </Typography>
                         {detailTournament?.tournamentStatus === 2 ? (
                           ""
@@ -2004,7 +2015,7 @@ export default function JoinTournament() {
                               cursor: "pointer",
                             }}
                           >
-                            View All
+                            {t('View All')}
                           </Typography>
                         )}
                       </Box>
@@ -2092,9 +2103,7 @@ export default function JoinTournament() {
                         className="ms-2"
                         sx={{ color: "#e75857", textAlign: "left" }}
                       >
-                        Persons under the age of 18 should use this Website only
-                        with the supervision of an Adult. Payment Information
-                        must be provided by or with the permission of an Adult
+{t('Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult')}
                       </Typography>
                     </Box>
                     {detailTournament &&
@@ -2452,7 +2461,7 @@ export default function JoinTournament() {
                                   marginLeft: "5px !important",
                                 }}
                               >
-                                Start
+                                {t("Start")}
                               </Typography>
                             </Box>
                             <Box
@@ -2518,7 +2527,7 @@ export default function JoinTournament() {
                                   marginLeft: "5px !important",
                                 }}
                               >
-                                End
+                                {t("End")}
                               </Typography>
                             </Box>
                             <Box
@@ -2594,7 +2603,7 @@ export default function JoinTournament() {
                                 fontWeight: "700",
                               }}
                             >
-                              Free Extra:
+                              {t("Free Extra")}:
                             </Typography>
                             <Box
                               display={"flex"}
@@ -2710,7 +2719,7 @@ export default function JoinTournament() {
                                     : "18px",
                               }}
                             >
-                              Reward
+                              {t('Reward')}
                             </Box>
                             <Box
                               sx={{
@@ -2720,7 +2729,7 @@ export default function JoinTournament() {
                                 fontSize: "14px",
                               }}
                             >
-                              Play game to get this voucher
+                              {t('Play game to get this voucher')}
                             </Box>
                           </Box>
                           <Box className="d-flex p-2 ps-3 pe-3">
@@ -2788,7 +2797,7 @@ export default function JoinTournament() {
                                           textAlign: "start",
                                         }}
                                       >
-                                        Recipient
+                                            {t('Recipient')}
                                       </Typography>
                                       <Typography
                                         style={{
@@ -2819,7 +2828,7 @@ export default function JoinTournament() {
                                           textAlign: "start",
                                         }}
                                       >
-                                        Sponsored by
+                                        {t('Sponsored by')}
                                       </Typography>
                                       <Typography
                                         style={{
@@ -2850,7 +2859,7 @@ export default function JoinTournament() {
                                           textAlign: "start",
                                         }}
                                       >
-                                        Valid by
+                                        {t('Valid by')}
                                       </Typography>
                                       <Typography
                                         style={{
@@ -2926,7 +2935,7 @@ export default function JoinTournament() {
                                     sx={{
                                       height: "20px",
                                       width: "20px",
-                                      bgcolor: "#1a151e",
+                                      bgcolor: "#211d28",
                                       position: "absolute",
                                       borderRadius: "50%",
                                       top: "-10px",
@@ -2937,7 +2946,7 @@ export default function JoinTournament() {
                                     sx={{
                                       height: "20px",
                                       width: "20px",
-                                      bgcolor: "#1a151e",
+                                      bgcolor: "#211d28",
                                       position: "absolute",
                                       borderRadius: "50%",
                                       bottom: "-10px",
@@ -3386,10 +3395,7 @@ export default function JoinTournament() {
                                     fontSize: "12px",
                                   }}
                                 >
-                                  Persons under the age of 18 should use this
-                                  Website only with the supervision of an Adult.
-                                  Payment Information must be provided by or
-                                  with the permission of an Adult
+                                  {t('Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult')}
                                 </Typography>
                               </Box>
                               {detailTournament &&
@@ -3513,7 +3519,7 @@ export default function JoinTournament() {
                             fontSize: "14px",
                           }}
                         >
-                          Final Result
+                          {t('Final Result')}
                         </Typography>
                         {detailTournament?.tournamentStatus === 2 ? (
                           ""
@@ -3530,7 +3536,7 @@ export default function JoinTournament() {
                               setCurrentResult(true);
                             }}
                           >
-                            View all
+                            {t('View All')}
                           </Typography>
                         )}
                       </Box>
@@ -3585,7 +3591,7 @@ export default function JoinTournament() {
                           fontSize: "14px",
                         }}
                       >
-                        Final Result
+                        {t("Final Result")}
                       </Typography>
                       {detailTournament?.tournamentStatus === 2 ? (
                         ""
@@ -3602,7 +3608,7 @@ export default function JoinTournament() {
                             setCurrentResult(true);
                           }}
                         >
-                          View all
+                         {t('View All')}
                           <Box
                             component={"img"}
                             sx={{

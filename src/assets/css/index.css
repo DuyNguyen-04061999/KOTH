@@ -11,7 +11,7 @@ body {
   overscroll-behavior: none;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  background-color: #1a151e !important;
+  background-color: #211d28 !important;
   touch-action: pan-x pan-y;
 }
 

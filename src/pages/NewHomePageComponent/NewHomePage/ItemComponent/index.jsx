@@ -4,12 +4,14 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 // import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
 import { imageHome } from "../../../../utils/images";
 
 export default function ItemComponent({ countdown, tourInfo, isLoading }) {
+    const {t} = useTranslation('global');
   const { width } = useWindowDimensions();
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
@@ -71,7 +73,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         sx={{
           height: "20px",
           width: "20px",
-          bgcolor: "#1a151e",
+          bgcolor: "#211d28",
           position: "absolute",
           borderRadius: "50%",
           top: width < 576 ? "234px" : "282px",
@@ -82,7 +84,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         sx={{
           height: "20px",
           width: "20px",
-          bgcolor: "#1a151e",
+          bgcolor: "#211d28",
           position: "absolute",
           borderRadius: "50%",
           top: width < 576 ? "234px" : "282px",
@@ -232,11 +234,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 }}
               >
                 {tourInfo?.tournamentStatus === 0
-                  ? "Starting in: "
+                  ? `${t('Starting in')}: `
                   : tourInfo?.tournamentStatus === 1
-                  ? "Ends in: "
+                  ? `${t('End in')}: `
                   : tourInfo?.tournamentStatus === 2
-                  ? "Winner: "
+                  ? `${t('Winner')}: `
                   : ""}
               </Box>
               {isLoading ? (
@@ -416,7 +418,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
               {tourInfo && tourInfo?.tournamentStatus === 0
                 ? "See More"
                 : tourInfo?.tournamentStatus === 1
-                ? "Play Now"
+                ? `${t("Play Now")}`
                 : "See More"}
             </button>
           </Box>
