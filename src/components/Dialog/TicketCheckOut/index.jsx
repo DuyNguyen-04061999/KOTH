@@ -617,7 +617,7 @@ export default function TicketCheckOut() {
                 </Typography>
                 <Box
                   sx={{
-                    width: "350px",
+                    width: width > 576 ? "350px" : "100%",
                   }}
                 >
                   <span

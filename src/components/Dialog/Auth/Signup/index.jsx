@@ -107,15 +107,10 @@ export default function Signup(props) {
   const [passOneLetter, setPassOneLetter] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
-  const [isValidDisplaynameRegex, setIsValidDisplaynameRegex] = useState(true);
+
   const handleDisplaynameChange = (event) => {
     const newNickname = event.target.value;
     setDisplayName(newNickname);
-
-    // Check if the new nickname contains only alphanumeric characters
-    const regex = /^[a-zA-Z0-9]+$/;
-    const containsSpecialCharacters = !regex.test(newNickname);
-    setIsValidDisplaynameRegex(!containsSpecialCharacters);
   };
 
   const handleChangePass = (e) => {
@@ -149,8 +144,7 @@ export default function Signup(props) {
       !validateEmail(email) ||
       !validateNickName(displayName) ||
       !validatePhoneNumber(phone) ||
-      !agree || 
-      isValidDisplaynameRegex === false
+      !agree
     ) {
       setDisabledBtn(true);
     } else {
@@ -213,7 +207,6 @@ export default function Signup(props) {
     }
   };
 
-
   useEffect(() => {
     if (password === c_password) {
       setPassSai(false);
@@ -225,7 +218,7 @@ export default function Signup(props) {
   useEffect(() => {
     setValidEmail(validateEmail(email));
     setValidPhone(validatePhoneNumber(phone));
-    setValidDisplayName(displayName?.length >= 1 && displayName?.length <= 12);
+    setValidDisplayName(validateNickName(displayName));
     setValidFirstName(firstName?.length >= 1);
     setValidLastName(lastName?.length >= 1);
   }, [email, phone, displayName, firstName, lastName]);
@@ -576,14 +569,14 @@ export default function Signup(props) {
                 "&:hover": {
                   border: "none",
                 },
-                color: isValidDisplaynameRegex ? "#4FBF67" : "white",
+                color: validDisplayName ? "#4FBF67" : "white",
                 fontWeight: "500",
                 padding: "0px 0px 0px 16px !important",
                 width: "100%",
               }}
             />{" "}
-            {isValidDisplaynameRegex && <CheckIconSVG />}
-            {!isValidDisplaynameRegex && (
+            {validDisplayName && <CheckIconSVG />}
+            {!validDisplayName && (
               <BgWithTooltip
                 enterTouchDelay={0}
                 enterDelay={0}
@@ -619,7 +612,7 @@ export default function Signup(props) {
               </BgWithTooltip>
             )}
           </Box>
-          {!isValidDisplaynameRegex && displayName !== "" && (
+          {!validDisplayName && displayName !== "" && (
             <Typography
               sx={{
                 textAlign: "start",
