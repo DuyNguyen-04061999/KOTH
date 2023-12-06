@@ -83,8 +83,7 @@ const Revenue = () => {
       if (roles?.includes("master")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Manager",
           "Agents",
           "Players",
