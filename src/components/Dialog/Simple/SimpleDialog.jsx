@@ -2,7 +2,6 @@ import { Close } from "@mui/icons-material";
 import { Box, Dialog, Grid } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -159,7 +158,8 @@ export default function SimpleDialog(props) {
                       position: "relative",
                     }}
                   >
-                    <LazyLoadImage
+                    <Box
+                      component={"img"}
                       src={
                         getAppType() === "promote"
                           ? sign.bannersignin
@@ -173,12 +173,12 @@ export default function SimpleDialog(props) {
                         objectFit: "cover",
                         objectPosition: "90% center",
                       }}
-                      effect="blur"
-                      wrapperProps={{
-                        style: {
-                          transitionDelay: "0.5s",
-                        },
-                      }}
+                      // effect="blur"
+                      // wrapperProps={{
+                      //   style: {
+                      //     transitionDelay: "0.5s",
+                      //   },
+                      // }}
                     />
                     <Box
                       component={"img"}

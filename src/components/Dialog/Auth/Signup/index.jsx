@@ -218,7 +218,7 @@ export default function Signup(props) {
   useEffect(() => {
     setValidEmail(validateEmail(email));
     setValidPhone(validatePhoneNumber(phone));
-    setValidDisplayName(displayName?.length >= 1 && displayName?.length <= 12);
+    setValidDisplayName(validateNickName(displayName));
     setValidFirstName(firstName?.length >= 1);
     setValidLastName(lastName?.length >= 1);
   }, [email, phone, displayName, firstName, lastName]);
