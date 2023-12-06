@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { imageDesktop } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function NewFooter() {
+  const { t } = useTranslation("global");
   const { width } = useWindowDimensions();
   const typographyStyle = {
     textAlign: "start",
@@ -50,7 +52,7 @@ export default function NewFooter() {
               textAlign: "center",
             }}
           >
-            Support
+            {t("Support")}
           </Typography>
           <Box
             sx={{
@@ -71,25 +73,25 @@ export default function NewFooter() {
                 onClick={() => navigateFooter(0)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
-                Help center
+                {t("Help Center")}
               </Typography>
               <Typography
                 onClick={() => navigateFooter(2)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
-                Fairness
+                {t("Fairness")}
               </Typography>
               <Typography
                 onClick={() => navigateFooter(4)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
-                FAQ
+                {t("FAQ")}
               </Typography>
               <Typography
                 onClick={() => navigateFooter(0)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
-                Privacy Policy
+                {t("Privacy Policy")}
               </Typography>
             </Box>
             <Box
@@ -104,13 +106,13 @@ export default function NewFooter() {
                 onClick={() => navigateFooter(1)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
-                Term of service
+                {t("Term of service")}
               </Typography>
               <Typography
                 onClick={() => navigateFooter(3)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
-                Design resources
+                {t("Design resources")}
               </Typography>
             </Box>
           </Box>
@@ -131,7 +133,7 @@ export default function NewFooter() {
               textAlign: "center",
             }}
           >
-            Contact Us
+            {t("Contact Us")}
           </Typography>
           <Box
             sx={{
@@ -142,12 +144,15 @@ export default function NewFooter() {
               color: "#fff",
             }}
           >
-            <Box sx={{
-              textDecoration:"none",
-              color:"#fff"
-            }} component={"a"} href="mailto:support@play4promo.com" target="_blank">
-              Get help: support@play4promo.com
-            </Box>
+            <Typography
+              sx={{
+                color: "#fff",
+                fontSize: width < 576 ? "12px" : "14px",
+                textAlign: "center",
+              }}
+            >
+              {t("Get help")}: support@play4promo.com
+            </Typography>
           </Box>
         </Box>
         <Box
@@ -178,10 +183,7 @@ export default function NewFooter() {
             letterSpacing: "1px",
           }}
         >
-          "Experience the thrill of competing and winning at Play4Promo, where
-          tournaments, promotions, and your dedication will lead to unlocking
-          exciting sponsored rewards . Our policies guarantee a seamless and
-          rewarding voucher redemption process for an enhanced journey."
+          {t("Footer Para")}
         </Typography>
         <Typography
           sx={{

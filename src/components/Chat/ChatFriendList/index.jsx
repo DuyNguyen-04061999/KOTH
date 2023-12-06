@@ -95,7 +95,7 @@ export default function ChatFriendList() {
                     alt="..."
                     width={45}
                     height={45}
-                    style={{ borderRadius: "50%", backgroundColor: "#1a151e" }}
+                    style={{ borderRadius: "50%", backgroundColor: "#211d28" }}
                     className="m-2"
                   />
                 </Box>

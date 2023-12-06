@@ -1,6 +1,7 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import React, { Suspense, lazy, useEffect } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BannerTour, BannerTourMobile } from "../../../components/Banner";
@@ -17,7 +18,7 @@ const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
-
+  const { t } = useTranslation("home");
   const {
     hotTournament,
     hotWeekTour,
@@ -157,7 +158,7 @@ export default function NewHomePage() {
               ? "32px !important"
               : "0px !important",
           paddingTop: width < 576 ? "24px !important" : "50px !important",
-          backgroundColor: "#1a151e",
+          backgroundColor: "#211d28",
         }}
       >
         <Box
@@ -240,7 +241,7 @@ export default function NewHomePage() {
                   }}
                 >
                   {/* HOT TOURNAMENTS{" "} */}
-                  Hot Promotions
+                  {t("Hot Promotions")}
                 </Typography>
               </Box>
               <Box
@@ -259,7 +260,7 @@ export default function NewHomePage() {
                     cursor: "pointer",
                   }}
                 >
-                  View All
+                  {t("View All")}
                 </Typography>
                 <Box
                   sx={{
@@ -327,7 +328,7 @@ export default function NewHomePage() {
                     fontFamily: "Cyntho Next",
                   }}
                 >
-                  Ongoing Promotions
+                  {t("Ongoing Promotions")}
                 </Typography>
               </Box>
               <Box
@@ -346,7 +347,7 @@ export default function NewHomePage() {
                     cursor: "pointer",
                   }}
                 >
-                  View All
+                  {t("View All")}
                 </Typography>
                 <Box
                   sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
@@ -385,7 +386,7 @@ export default function NewHomePage() {
                     fontFamily: "Cyntho Next",
                   }}
                 >
-                  Upcoming Promotions{" "}
+                  {t("Upcoming Promotions")}
                 </Typography>
               </Box>
               <Box
@@ -404,7 +405,7 @@ export default function NewHomePage() {
                     cursor: "pointer",
                   }}
                 >
-                  View All
+                  {t("View All")}
                 </Typography>
                 <Box
                   sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
@@ -422,61 +423,20 @@ export default function NewHomePage() {
               />
             </Box>
           </Box>{" "}
-          {/* Banner Top1 */}
-          {width < 576 ? (
-            isFetchHotWeek ? (
-              <Box
-                sx={{
-                  marginTop: width < 576 ? "48px" : "32px",
-                  marginBottom: width < 576 ? "0px" : "32px",
-                }}
-              >
-                <BannerLoading height={width < 576 ? "214px" : "363px"} />
-              </Box>
-            ) : (
-              <BannerTourMobile
-                tournamentName={
-                  hotWeekTour && hotWeekTour?.tournamentName
-                    ? hotWeekTour?.tournamentName
-                    : "Galaxy Z-flip 5"
-                }
-                rewardName={
-                  hotWeekTour &&
-                  hotWeekTour?.rewardTournament &&
-                  hotWeekTour?.rewardTournament?.rewardTitle
-                    ? hotWeekTour?.rewardTournament?.rewardTitle
-                    : ""
-                }
-                sponsorName={hotWeekTour?.tournamentBrand?.brandName}
-                userName={
-                  hotWeekTour &&
-                  hotWeekTour?.bestUser &&
-                  hotWeekTour?.bestUser?.tUser &&
-                  hotWeekTour?.bestUser?.tUser?.userNickName
-                }
-                endTime={hotWeekTour?.tournamentEndAt}
-                userScore={hotWeekTour?.bestUser?.score}
-                userAvatar={
-                  hotWeekTour &&
-                  hotWeekTour?.bestUser &&
-                  hotWeekTour?.bestUser?.tUser &&
-                  hotWeekTour?.bestUser?.tUser?.userAccount &&
-                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                    ? process.env.REACT_APP_SOCKET_SERVER +
-                      "/" +
-                      hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                    : images.pool
-                }
-                tourId={hotWeekTour && hotWeekTour?.id}
-              />
-            )
-          ) : isFetchHotWeek ? (
-            <BannerLoading
-              height={width < 576 ? "214px" : "363px"}
-              width={"100%"}
-            />
+        </Box>
+        {/* Banner Top1 */}
+        {width < 576 ? (
+          isFetchHotWeek ? (
+            <Box
+              sx={{
+                marginTop: width < 576 ? "48px" : "32px",
+                marginBottom: width < 576 ? "0px" : "32px",
+              }}
+            >
+              <BannerLoading height={width < 576 ? "214px" : "363px"} />
+            </Box>
           ) : (
-            <BannerTour
+            <BannerTourMobile
               tournamentName={
                 hotWeekTour && hotWeekTour?.tournamentName
                   ? hotWeekTour?.tournamentName
@@ -511,38 +471,80 @@ export default function NewHomePage() {
               }
               tourId={hotWeekTour && hotWeekTour?.id}
             />
-          )}
-          <Box
-            sx={{
-              marginTop: width < 576 ? "24px" : "64px",
-              marginBottom: width < 576 ? "24px" : "32px",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography
-                  sx={{
-                    textAlign: "start",
-                    fontSize: width < 576 ? "16px" : "24px",
-                    fontWeight: "700 !important",
-                    marginLeft: "0px !important",
-                    color: "#fff",
-                    lineHeight: "130%",
-                    fontFamily: "Cyntho Next",
-                  }}
-                >
-                  Ended Promotions{" "}
-                </Typography>
-              </Box>
-              <Box
-                onClick={() => {
-                  navigate("/ended-promotion");
+          )
+        ) : isFetchHotWeek ? (
+          <BannerLoading
+            height={width < 576 ? "214px" : "363px"}
+            width={"100%"}
+          />
+        ) : (
+          <BannerTour
+            tournamentName={
+              hotWeekTour && hotWeekTour?.tournamentName
+                ? hotWeekTour?.tournamentName
+                : "Galaxy Z-flip 5"
+            }
+            rewardName={
+              hotWeekTour &&
+              hotWeekTour?.rewardTournament &&
+              hotWeekTour?.rewardTournament?.rewardTitle
+                ? hotWeekTour?.rewardTournament?.rewardTitle
+                : ""
+            }
+            sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+            userName={
+              hotWeekTour &&
+              hotWeekTour?.bestUser &&
+              hotWeekTour?.bestUser?.tUser &&
+              hotWeekTour?.bestUser?.tUser?.userNickName
+            }
+            endTime={hotWeekTour?.tournamentEndAt}
+            userScore={hotWeekTour?.bestUser?.score}
+            userAvatar={
+              hotWeekTour &&
+              hotWeekTour?.bestUser &&
+              hotWeekTour?.bestUser?.tUser &&
+              hotWeekTour?.bestUser?.tUser?.userAccount &&
+              hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                ? process.env.REACT_APP_SOCKET_SERVER +
+                  "/" +
+                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                : images.pool
+            }
+            tourId={hotWeekTour && hotWeekTour?.id}
+          />
+        )}
+        <Box
+          sx={{
+            marginTop: width < 576 ? "24px" : "64px",
+            marginBottom: width < 576 ? "24px" : "32px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "16px" : "24px",
+                  fontWeight: "700 !important",
+                  marginLeft: "0px !important",
+                  color: "#fff",
+                  lineHeight: "130%",
+                  fontFamily: "Cyntho Next",
                 }}
-                sx={{ display: "flex", alignItems: "center" }}
               >
-                <Typography
+             {t("Ended Promotions")}
+              </Typography>
+            </Box>
+            <Box
+              onClick={() => {
+                navigate("/ended-promotion");
+              }}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Typography
                   sx={{
                     textAlign: "start",
                     fontSize: width < 576 ? "12px" : "16px",
@@ -552,16 +554,17 @@ export default function NewHomePage() {
                     cursor: "pointer",
                   }}
                 >
-                  View All
+                  {t("View All")}
                 </Typography>
                 <Box
                   sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
                   component={"img"}
                   src={images.viewAllButton}
                 ></Box>
-              </Box>
             </Box>
-            <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
+            
+          </Box>{" "}
+          <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               <ListPromotion
                 listData={endedTournament}
                 loadingState={isFetchEnded}
@@ -569,7 +572,6 @@ export default function NewHomePage() {
                 noData={noDataEnd}
               />
             </Box>
-          </Box>{" "}
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />
         </Box>

@@ -19,7 +19,6 @@ import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 import MainLayout from "../../components/MainLayout/MainLayout";
-import NewFooter from "../NewFooter";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
@@ -186,7 +185,7 @@ export default function DailyTournament() {
                   }}
                 />
               )}
-              <NewFooter />
+
             </Container>
           ) : (
             <Container
@@ -291,7 +290,6 @@ export default function DailyTournament() {
                   }}
                 />
               )}
-              <NewFooter />
             </Container>
           )
         }

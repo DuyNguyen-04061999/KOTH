@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -29,6 +30,7 @@ const theme = createTheme({
   },
 });
 export default function HotTournament() {
+  const {t} = useTranslation(('ended_promo'))
   const { width } = useWindowDimensions();
   const typographyStyle = {
     textAlign: "start",
@@ -139,7 +141,7 @@ export default function HotTournament() {
                   fontWeight: 700,
                 }}
               >
-                Ended Promotions
+                {t('Ended Promotions')}
               </Typography>
               <Box
                 sx={{
@@ -212,7 +214,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                Ended Promotions
+                {t('Ended Promotions')}
               </Typography>
               <Box
                 sx={{

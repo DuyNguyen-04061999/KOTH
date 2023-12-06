@@ -2,6 +2,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -12,6 +13,7 @@ import DialogConfirm from "./DialogConfirm";
 import ListPackage from "./ListPackage";
 
 export default function Package() {
+  const { t } = useTranslation("package");
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.packageReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
@@ -105,7 +107,7 @@ export default function Package() {
                     color: "#fff",
                   }}
                 >
-                  Packages
+                  {t("Packages")}
                 </Typography>
               ) : (
                 ""
@@ -139,7 +141,7 @@ export default function Package() {
                             : "30px",
                       }}
                     >
-                      Subscription Pack
+                      {t("Subscription Pack")}
                     </Typography>
                   </Box>
                   <Box
@@ -200,7 +202,7 @@ export default function Package() {
                             : "30px",
                       }}
                     >
-                      Extra Pack
+                      {t("Extra Pack")}
                     </Typography>
                   </Box>
                   <Box
@@ -260,7 +262,7 @@ export default function Package() {
                   color: "#fff",
                 }}
               >
-                Packages
+                {t("Packages")}
               </Typography>
             ) : (
               ""

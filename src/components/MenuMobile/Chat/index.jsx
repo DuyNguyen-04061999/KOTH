@@ -6,6 +6,7 @@ import { images280423_l } from "../../../utils/images280423_l";
 import { imageChat } from "../../../utils/imagesChat";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
@@ -48,6 +49,7 @@ export default function DialogChat(props) {
   const [renderTab, setRenderTab] = useState(false);
   const [colorTab, setColorTab] = useState(false);
   const [socket, setSocket] = useState(null);
+  const { t } = useTranslation("global");
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -74,7 +76,7 @@ export default function DialogChat(props) {
     setChat(e.target.value);
   };
   const handleOnKeyDown = (e) => {
-    if(!startGameCheck) {
+    if (!startGameCheck) {
       if (token === null || token === "") {
         dispatch(toggleLoginDialog());
       } else {
@@ -91,11 +93,10 @@ export default function DialogChat(props) {
         message: "Cannot send message while playing game! Please try later!"
       }))
     }
-    
   };
 
   const handleOnClickSendMessageWorld = () => {
-    if(!startGameCheck) {
+    if (!startGameCheck) {
       if (token === null || token === "") {
         dispatch(toggleLoginDialog());
       } else {
@@ -112,7 +113,6 @@ export default function DialogChat(props) {
         message: "Cannot send message while playing game! Please try later!"
       }))
     }
-    
   };
 
   return (
@@ -136,26 +136,25 @@ export default function DialogChat(props) {
           <Box className="p-2" sx={{ backgroundColor: "#42285b" }}>
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center">
-               
                 <div className="d-flex align-items-center">
-                <div
-                  onClick={() => {
-                    handleShow();
-                  }}
-                >
-                  <img
-                    src={popup.vecter}
-                    alt="Arrow"
-                    width={20}
-                    height={20}
-                  />
-                </div>
+                  <div
+                    onClick={() => {
+                      handleShow();
+                    }}
+                  >
+                    <img
+                      src={popup.vecter}
+                      alt="Arrow"
+                      width={20}
+                      height={20}
+                    />
+                  </div>
                   <span
                     style={{
                       color: "white",
-                      marginLeft:"10px",
-                      fontSize:"14px",
-                      marginTop:"2px"
+                      marginLeft: "10px",
+                      fontSize: "14px",
+                      marginTop: "2px",
                     }}
                   >
                     Chat room
@@ -170,7 +169,7 @@ export default function DialogChat(props) {
                     backgroundColor: colorTab === false ? "#61388e" : "#261a35",
                     width: "75px",
                     height: "32px",
-                    borderRadius:"5px 0px 0px 5px"
+                    borderRadius: "5px 0px 0px 5px",
                   }}
                 >
                   {renderTab === false ? (
@@ -195,7 +194,7 @@ export default function DialogChat(props) {
                       marginLeft: "5px",
                     }}
                   >
-                    <b>Global</b>
+                    <b>{t("Global")}</b>
                   </span>
                 </div>
                 <div
@@ -205,7 +204,7 @@ export default function DialogChat(props) {
                     backgroundColor: colorTab === true ? "#61388e" : "#261a35",
                     width: "75px",
                     height: "32px",
-                    borderRadius:"0px 5px 5px 0px"
+                    borderRadius: "0px 5px 5px 0px",
                   }}
                 >
                   {renderTab === true ? (
@@ -230,7 +229,7 @@ export default function DialogChat(props) {
                       marginLeft: "5px",
                     }}
                   >
-                    <b>Private</b>
+                    <b>{t("Private")}</b>
                   </span>
                 </div>
               </div>
@@ -278,7 +277,6 @@ export default function DialogChat(props) {
                 }}
               >
                 <Test
-                
                   type="text"
                   value={chat}
                   id="sendmessages_mobile_chat"
