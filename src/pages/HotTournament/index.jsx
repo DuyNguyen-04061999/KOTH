@@ -14,7 +14,6 @@ import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 import MainLayout from "../../components/MainLayout/MainLayout";
 import SlickSlider from "../../components/SlickSlider";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import NewFooter from "../NewFooter";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
@@ -167,7 +166,6 @@ export default function HotTournament() {
                   }}
                 />
               )}
-              <NewFooter />
             </Container>
           ) : (
             <Container
@@ -259,7 +257,6 @@ export default function HotTournament() {
                   }}
                 />
               )}
-              <NewFooter />
             </Container>
           )
         }

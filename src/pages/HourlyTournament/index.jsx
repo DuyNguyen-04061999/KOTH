@@ -13,7 +13,6 @@ import MainLayout from "../../components/MainLayout/MainLayout";
 import SliderTime from "../../components/SliderTime";
 import { images, video } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import NewFooter from "../NewFooter";
 import CountDownTournament from "../NewHomePageComponent/CountDownTournament";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 const theme = createTheme({
@@ -177,7 +176,6 @@ export default function HourlyTournament() {
                     })}
                 </Box>
               </Box>
-              <NewFooter />
             </ThemeProvider>
           </Container>
         ) : (

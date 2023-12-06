@@ -1,5 +1,6 @@
 import { Badge } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
@@ -24,6 +25,7 @@ export default function NavMobile() {
   const { chatWorld, badgechat, openMess, openMenu } = useSelector(
     (state) => state.chatReducer
   );
+  const { t } = useTranslation("global");
 
   // const { device } = useSelector((state) => state.deviceReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
@@ -109,7 +111,7 @@ export default function NavMobile() {
                           marginTop: "4px",
                         }}
                       >
-                        Home
+                        {t("Home")}
                       </p>
                     </div>
                   </div>
@@ -177,7 +179,7 @@ export default function NavMobile() {
                           marginTop: "4px",
                         }}
                       >
-                        Packages
+                        {t("Packages")}
                       </p>
                     </div>
                   </div>
@@ -274,7 +276,7 @@ export default function NavMobile() {
                               marginTop: "4px",
                             }}
                           >
-                            Chat
+                            {t("Chat")}
                           </p>
                         </div>
                         <div
@@ -332,7 +334,7 @@ export default function NavMobile() {
                           marginTop: "4px",
                         }}
                       >
-                        Menu
+                        {t("Menu")}
                       </p>
                     </div>
                   </div>

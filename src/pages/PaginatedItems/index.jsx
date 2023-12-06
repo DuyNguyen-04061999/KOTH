@@ -3,6 +3,7 @@ import { makeStyles } from "@mui/styles";
 import React from "react";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import {useTranslation} from "react-i18next";
 
 export default function PaginatedItems({
   changeOffSet,
@@ -10,6 +11,7 @@ export default function PaginatedItems({
   defaultPage,
 }) {
   const { width } = useWindowDimensions();
+  const {t} = useTranslation('global');
   const useStyles = makeStyles(() => ({
     ul: {
       "& .MuiPaginationItem-root": {
@@ -150,7 +152,7 @@ export default function PaginatedItems({
                       fontSize: "16px",
                     }}
                   >
-                    Next
+                      {t('Next')}
                   </Typography>
                   <Box
                     sx={{ width: "8px", height: "12px" }}
@@ -185,7 +187,7 @@ export default function PaginatedItems({
                       fontSize: "16px",
                     }}
                   >
-                    Back
+                      {t('Back')}
                   </Typography>
                 </Box>
               ),

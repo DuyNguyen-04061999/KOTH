@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -14,6 +15,7 @@ import PaginatedItems from "../../PaginatedItems";
 
 export default function HotTournament() {
   const { width } = useWindowDimensions();
+  const {t} = useTranslation('ongoing_promo');
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -113,7 +115,7 @@ export default function HotTournament() {
                     : device === "Tablet"
                     ? "32px !important"
                     : "0px !important",
-                paddingTop: width < 576 ? "24px !important" : "50px !important",
+                marginTop: width < 576 ? "24px !important" : "50px !important",
               }}
             >
               <Typography
@@ -124,7 +126,7 @@ export default function HotTournament() {
                   fontWeight: 700,
                 }}
               >
-                Ongoing Promotions
+                {t('Ongoing Promotions')}
               </Typography>
               <Box
                 sx={{
@@ -199,7 +201,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                Ongoing Promotions
+                {t('Ongoing Promotions')}
               </Typography>
               <Box
                 sx={{

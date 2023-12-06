@@ -2,6 +2,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { resetPasswordReady } from "../../../../redux-saga-middleware/reducers/userReducer";
@@ -11,6 +12,7 @@ import AnimButton from "../../../AnimButton";
 
 export default function CreatePassword() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const {t} = useTranslation("auth");
   // const { forgotPassInfo, nameReset } = useSelector((state) => state.authReducer);
   const { forgotPassUsername, nameReset } = useSelector(
     (state) => state.authReducer
@@ -129,7 +131,7 @@ export default function CreatePassword() {
             fontWeight: "700",
           }}
         >
-          Reset Password
+          {t("Reset Password")}
         </Typography>
         <Typography
           sx={{
@@ -139,8 +141,7 @@ export default function CreatePassword() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          Password must be at least 6 characters long and contain at least one
-          speacial letter, one digit and one upper case.
+          {t("Password must be at least 6 characters long and contain at least one speacial letter, one digit and one upper case.")}
         </Typography>
       </Box>
       <Box
@@ -184,7 +185,7 @@ export default function CreatePassword() {
               <input
                 onChange={(e) => setPassword(e.target.value)}
                 type={displayPassword ? "text" : "password"}
-                placeholder="Password"
+                placeholder={t("Password")}
                 style={{
                   width: "100%",
                   backgroundColor: "#181223",
@@ -485,7 +486,7 @@ export default function CreatePassword() {
               <input
                 onChange={(e) => setRePassword(e.target.value)}
                 type={displayRePassword ? "text" : "password"}
-                placeholder="Confirm password"
+                placeholder={t("Confirm password")}
                 style={{
                   width: "100%",
                   backgroundColor: "#181223",
@@ -538,27 +539,27 @@ export default function CreatePassword() {
         sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}
       >
         <Box sx={{ width: "100%" }}>
-          {rePasswordError !== "" &&
+          {(rePasswordError !== "" &&
           passwordError !== "" &&
           password === "" &&
-          rePassword === "" ? (
+          rePassword === "") ? (
             <AnimButton
-              type={"disable"}
-              text={"NEXT"}
+              type="disable"
+              text={t("NEXT")}
               onClick={handleCreatePass}
               isSubmitBtn
             />
           ) : isResetPassword ? (
             <AnimButton
               type={"loading"}
-              text={"NEXT"}
+              text={t("NEXT")}
               onClick={handleCreatePass}
               isSubmitBtn
             />
           ) : (
             <AnimButton
               type={"primary"}
-              text={"NEXT"}
+              text={t("NEXT")}
               onClick={handleCreatePass}
               isSubmitBtn
             />
