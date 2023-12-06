@@ -91,8 +91,7 @@ const HomePage = () => {
       if (roles?.includes("distributor")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Code/Link",
           "Manager",
           "Players",

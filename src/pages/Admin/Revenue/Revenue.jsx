@@ -97,8 +97,7 @@ const Revenue = () => {
       if (roles?.includes("distributor")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Manager",
           "Players",
           "Revenue",

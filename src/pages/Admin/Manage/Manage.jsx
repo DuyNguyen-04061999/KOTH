@@ -96,8 +96,7 @@ const ManageDistributor = () => {
         setHeaderList([
           "",
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Give Permission",
           "Code/Link",
           "Manager",
