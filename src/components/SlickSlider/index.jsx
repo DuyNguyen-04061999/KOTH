@@ -2,18 +2,21 @@ import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
-  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type } = props;
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type, onClick, typeR } = props;
+  const dispatch = useDispatch()
+  const token = localStorage.getItem("token");
 
   const settings = {
     dots: true,
@@ -83,6 +86,7 @@ export default function SlickSlider(props) {
     return images?.pepperBanner;
   }
 
+
   return img?.length > 0 ? (
     <Slider {...settings}>
       {img?.map((item, index) => {
@@ -91,6 +95,16 @@ export default function SlickSlider(props) {
             key={index}
             sx={{
               height: width < 576 ? "208px" : "363px",
+            }}
+            onClick={() => {
+              if(typeR === "banner") {
+                if(index === 0) {
+                  navigate("/packages")
+                }
+                else if( token === "" || token === null || token === undefined ) {
+                  dispatch(toggleLoginDialog())
+                }
+              }
             }}
           >
             <LazyLoadImage

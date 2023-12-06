@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import React, { Suspense, lazy, useEffect } from "react";
 import DocumentMeta from "react-document-meta";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,8 @@ import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
+import { getListBanner } from "../../../redux-saga-middleware/reducers/appReducer";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function NewHomePage() {
@@ -35,8 +37,16 @@ export default function NewHomePage() {
     noDataOncoming,
     noDataEnd,
   } = useSelector((state) => state.tournamentReducer);
-
+  const { device } = useSelector((state) => state.deviceReducer);
+  const { listBanner } = useSelector((state) => state.appReducer);
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getListBanner());
+  }, []);
+
+
   useEffect(() => {
     dispatch({
       type: "CALL_LIST_TOURNAMENT",
@@ -109,14 +119,23 @@ export default function NewHomePage() {
               keywords: `play4promo,play,promo`,
             },
       property: {
-        'og:title': process.env.REACT_APP_ENV === "production" ? 'Play4promo' : "Play4promo staging",
-        'og:url': window.location.href,
-        'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
-        'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
-        'og:image:type': 'image/png',
-        'og:image:width': `144`,
-        'og:image:height': `144`,
-        'og:image:alt': 'Play4promo Photo'
+        "og:title":
+          process.env.REACT_APP_ENV === "production"
+            ? "Play4promo"
+            : "Play4promo staging",
+        "og:url": window.location.href,
+        "og:image:secure_url":
+          process.env.REACT_APP_ENV === "development"
+            ? imageDesktop.logoCT
+            : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+        "og:image":
+          process.env.REACT_APP_ENV === "development"
+            ? imageDesktop.logoCT
+            : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+        "og:image:type": "image/png",
+        "og:image:width": `144`,
+        "og:image:height": `144`,
+        "og:image:alt": "Play4promo Photo",
       },
     },
   };
@@ -167,6 +186,39 @@ export default function NewHomePage() {
               />
             )}
           </Box>
+          {device === "Desktop" ? (
+            <Box>
+              <Grid container columnSpacing={2} rowSpacing={2}>
+                {listBanner?.map((i, index) => {
+                  return (
+                    <Grid item md={4} xs={6} key={index}>
+                      <Box
+                        onClick={() => {
+                          if(index === 0) {
+                            navigate("/packages")
+                          }
+                          else if( token === "" || token === null || token === undefined ) {
+                            dispatch(toggleLoginDialog())
+                          }
+                        }}
+                        component={"img"}
+                        src={
+                          listBanner
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              i?.bannerLink
+                            : i?.bannerLink
+                        }
+                        sx={{ width: "100%", height: "auto" }}
+                      ></Box>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </Box>
+          ) : (
+            ""
+          )}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "64px",
@@ -230,6 +282,31 @@ export default function NewHomePage() {
               />
             </Box>
           </Box>{" "}
+          {device === "Mobile" ? (
+            <Box
+              sx={{
+                marginBottom: width < 576 ? "24px" : "32px",
+              }}
+            >
+              {isFetchThreeTour ? (
+                <BannerLoading
+                  height={width < 576 ? "214px" : "363px"}
+                  width={"100%"}
+                />
+              ) : (
+                <SlickSlider
+                  appendDot={true}
+                  images={listBanner?.map((item) => {
+                    return item?.bannerLinkMobile;
+                  })}
+                  type={"tour"}
+                  typeR={"banner"}
+                />
+              )}
+            </Box>
+          ) : (
+            ""
+          )}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "64px",
