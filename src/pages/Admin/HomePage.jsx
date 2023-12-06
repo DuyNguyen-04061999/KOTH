@@ -78,8 +78,7 @@ const HomePage = () => {
       if (roles?.includes("master")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Manager",
           "Agents",
           "Players",
@@ -92,8 +91,7 @@ const HomePage = () => {
       if (roles?.includes("distributor")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Code/Link",
           "Manager",
           "Players",

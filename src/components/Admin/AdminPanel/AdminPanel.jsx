@@ -604,7 +604,7 @@ const AdminPanel = () => {
                                     textAlign: "center",
                                 }}
                             >
-                                RefCode
+                                Promo Code
                             </Typography>
                             <Typography
                                 sx={{

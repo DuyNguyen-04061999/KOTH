@@ -13,7 +13,7 @@ export default function AdminTotals(props) {
           alignItems: "center",
           marginTop: "30px",
           gap: "32px",
-          flexWrap: width < 576 ? "wrap" : "nowrap",
+          flexWrap: width < 576 ? "wrap" : "wrap",
           padding: width < 576 && "0 18px"
         }}
       >
@@ -22,7 +22,7 @@ export default function AdminTotals(props) {
             key={index}
             sx={{
               boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.25)",
-              width: width < 576 ? "100%" : "25%",
+              width: width < 576 ? "100%" : "30%",
               height: "112px",
               borderRadius: "24px",
               backgroundColor: "#FFF",
@@ -51,7 +51,21 @@ export default function AdminTotals(props) {
                   lineHeight: "32px",
                 }}
               >
-                {item?.type === "Master Revenue" || item?.type === "System Revenue" || item?.type === "revenue" ? "$" : ""} {item?.type === "Master Revenue" || item?.type === "System Revenue" || item?.type === "revenue" ? `${item.count > 0 ? Number(item.count).toFixed(2) : 0}` : item.count} 
+                {item?.type === "Master Revenue Overall" ||
+                 item?.type === "System Revenue Overall" || 
+                 item?.type === "Master Revenue Previous Month" || 
+                 item?.type === "System Revenue Previous Month" || 
+                 item?.type === "Master Revenue This Month" || 
+                 item?.type === "System Revenue This Month" || 
+                 item?.type === "revenue" ? "$" : ""} 
+                 
+                 {item?.type === "Master Revenue Overall" || 
+                 item?.type === "System Revenue Overall" || 
+                 item?.type === "Master Revenue Previous Month" || 
+                 item?.type === "System Revenue Previous Month" || 
+                 item?.type === "Master Revenue This Month" || 
+                 item?.type === "System Revenue This Month" || 
+                 item?.type === "revenue" ? `${item.count > 0 ? Number(item.count).toFixed(2) : 0}` : item.count} 
               </Box>
             </Box>
             {/* <Box

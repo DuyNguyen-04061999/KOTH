@@ -65,6 +65,9 @@ const FilterRevenue = () => {
     const {listRefs} = useSelector((state) => state.adminSubDistributorReducer);
     const {listEndUser} = useSelector((state) => state.adminAgentReducer);
     const [data, setData] = useState([]);
+    const { name } = useSelector(state => state?.adminAuthReducer)
+    const location = window.location.host.replace("admin.", "");
+    const urlRedirect = process.env.REACT_APP_ENV === "development" ? `http://${location}/influencers/${name}` : `https://${location}/influencers/${name}`;
 
     useEffect(() => {
         if (roles && roles?.length && roles[0]) {
@@ -515,8 +518,8 @@ const FilterRevenue = () => {
     }
 
     const handleCopyRef = () => {
-        copy(ref)
-        dispatch(showToastNotify({type: "success", message: "Copy ref code successfully!"}))
+        copy(urlRedirect || ref)
+        dispatch(showToastNotify({type: "success", message: "Copy promo code successfully!"}))
     }
 
     return (
@@ -562,7 +565,7 @@ const FilterRevenue = () => {
                                 color: "#8F909E",
                                 fontSize: "14px",
                                 fontWeight: "700",
-                            }}>{ref}</Typography>
+                            }}>{urlRedirect || ref}</Typography>
                             <Box onClick={() => handleCopyRef()}>
                                 <CopyIconSVG className="ms-2 me-2"/>
                             </Box>

@@ -125,7 +125,7 @@ const NestedTable = (props) => {
       "Level",
       "Revenue",
       "Ticket",
-      "Ref Code",
+      "Promo Code",
       "Date",
       "Amount Account",
       "Status",
