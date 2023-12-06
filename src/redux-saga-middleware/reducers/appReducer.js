@@ -106,6 +106,27 @@ export const randomRenderPopup = (data) => {
   }
 }
 
+export const getListBanner = (data) => {
+  return {
+    type: "GET_LIST_BANNER",
+    payload: data
+  }
+}
+
+export const getListBannerSuccess = (data) => {
+  return {
+    type: "GET_LIST_BANNER_SUCCESS",
+    payload: data
+  }
+}
+
+export const getListBannerFail = (data) => {
+  return {
+    type: "GET_LIST_BANNER_FAIL",
+    payload: data
+  }
+}
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -119,6 +140,8 @@ const appReducer = (
     isDialogGif: false,
     showDoubleDayDialog: false,
     randomRender: null,
+    isFecthListBanner: false,
+    listBanner: []
   },
   action
 ) => {
@@ -153,6 +176,11 @@ const appReducer = (
     case "CLOSE_DIALOG_DOUBLEDAY": return {...state, showDoubleDayDialog: false}
     case "RANDOM_RENDER_POPUP":
       return {...state, randomRender: payload}
+    case "GET_LIST_BANNER" : return {...state, isFecthListBanner:true}
+    case "GET_LIST_BANNER_SUCCESS" : 
+      console.log(payload);
+    return {...state, isFecthListBanner:false, listBanner: payload.list}
+    case "GET_LIST_BANNER_FAIL" : return {...state, isFecthListBanner:false}
     default:
       return { ...state };
   }

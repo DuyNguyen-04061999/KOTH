@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import AppService from "../services/appService";
-import { getListBetFail, getListBetSuccess, getListFaqFail, getListFaqSuccess } from "../reducers/appReducer";
+import { getListBannerFail, getListBannerSuccess, getListBetFail, getListBetSuccess, getListFaqFail, getListFaqSuccess } from "../reducers/appReducer";
 const appService = new AppService();
 
 function* getListFaqSaga(dataRequest) {
@@ -34,9 +34,25 @@ function* getListBetSaga(dataRequest) {
     }
 }
 
+function* getListBannerSaga(dataRequest) {
+    try {
+        const {payload} = dataRequest;
+        const res = yield call(appService.getListBanner, payload)
+        const {status, data} = res
+        if( status === 200 || status === 201) {
+            yield put(getListBannerSuccess(data))
+        } else {
+            yield put(getListBannerFail())
+        }
+    } catch (err) {
+        yield put(getListBannerFail())
+    }
+}
+
 function* appSaga() {
     yield takeEvery("GET_LIST_FAQ", getListFaqSaga)
     yield takeEvery("GET_LIST_BET", getListBetSaga)
+    yield takeEvery("GET_LIST_BANNER", getListBannerSaga)
 }
 
 export default appSaga
