@@ -709,24 +709,6 @@ export default function NewHomePage() {
               sx={{ display: "flex", alignItems: "center" }}
             >
               <Typography
-                sx={{
-                  textAlign: "start",
-                  fontSize: width < 576 ? "12px" : "16px",
-                  fontWeight: "200 !important",
-                  color: "#BE48ED",
-                  fontFamily: "Cyntho Next",
-                  cursor: "pointer",
-                }}
-              >
-                {t("View All")}
-              </Typography>
-              <Box
-                onClick={() => {
-                  navigate("/ended-promotion");
-                }}
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <Typography
                   sx={{
                     textAlign: "start",
                     fontSize: width < 576 ? "12px" : "16px",
@@ -743,9 +725,10 @@ export default function NewHomePage() {
                   component={"img"}
                   src={images.viewAllButton}
                 ></Box>
-              </Box>
             </Box>
-            <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
+            
+          </Box>{" "}
+          <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
               <ListPromotion
                 listData={endedTournament}
                 loadingState={isFetchEnded}
@@ -753,7 +736,6 @@ export default function NewHomePage() {
                 noData={noDataEnd}
               />
             </Box>
-          </Box>{" "}
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />
         </Box>
