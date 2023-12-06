@@ -12,7 +12,7 @@ const checkNumberUsername = (username) => {
   return /\d*/.test(username);
 };
 export const checkSpecialCharacter = (username) => {
-  return /[^A-Za-z0-9_]/.test(username);
+  return /[^[a-zA-Z]+\.[a-zA-Z]{4,10}^]/.test(username);
 };
 export const checkWhiteSpace = (username) => {
   return /\s/.test(username);
