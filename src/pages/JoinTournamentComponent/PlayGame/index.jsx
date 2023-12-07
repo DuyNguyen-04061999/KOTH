@@ -1,9 +1,9 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import _socket from "../../../redux-saga-middleware/config/socket";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
@@ -12,7 +12,9 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
+
 export default function PlayGame(props) {
+  const screen = useFullScreenHandle();
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
@@ -24,7 +26,6 @@ export default function PlayGame(props) {
   const { width } = useWindowDimensions();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [socket, setSocket] = useState(null);
 
   function isJson(str) {
     try {
@@ -34,10 +35,6 @@ export default function PlayGame(props) {
     }
     return true;
   }
-
-  useEffect(() => {
-    setSocket(_socket);
-  }, []);
 
   useEffect(() => {
     const handler = (res) => {
@@ -70,49 +67,6 @@ export default function PlayGame(props) {
     return () => window.removeEventListener("message", handler);
   }, [setStartGame, dispatch, id, tokenUser]);
 
-  useEffect(() => {
-    const checkFullMobileScreen = () => {
-      // if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-      //   if (
-      //     (device === "Mobile" || device === "Tablet") &&
-      //     orientation === "landscape"
-      //   ) {
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-      //   if (
-      //     (device === "Mobile" || device === "Tablet") &&
-      //     orientation === "portrait"
-      //   ) {
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // }
-      // return false;
-      if (device === "Mobile") {
-        return true;
-      }
-    };
-    socket?.on("startGameInTournamentSuccess", (data) => {
-      if (checkFullMobileScreen()) {
-        setIsFullScreen(true);
-      }
-    });
-
-    return () => {
-      socket?.off("joinTournamentSuccess");
-    };
-  }, [
-    socket,
-    orientation,
-    detailTournament?.tournamentInfors?.game?.gameScreenType,
-    width,
-    dispatch,
-    device,
-  ]);
   const checkLockScreen = () => {
     if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
       if (device === "Tablet" && orientation === "portrait") {
@@ -134,15 +88,30 @@ export default function PlayGame(props) {
   useEffect(() => {
     if (startGameCheck && !videoGame) {
       setLoading(true);
+      screen.enter()
     }
-  }, [startGameCheck, videoGame]);
+  }, [startGameCheck, videoGame, screen]);
+
+  useEffect(() => {
+    const checkFullMobileScreen = () => {
+      if (device === "Mobile") {
+        return true;
+      }
+    };
+    if (checkFullMobileScreen() && loading) {
+      setIsFullScreen(true);
+    }
+  }, [
+    loading,
+    device
+  ]);
 
   return (
     <Box
       sx={
         !videoGame && device === "Mobile"
           ? detailTournament?.tournamentInfors?.game?.gameScreenType
-            ? orientation === "portrait"
+            ? loading && orientation === "portrait"
               ? {
                   transform: " rotate(-90deg)",
                   transformOrigin: "left top",
@@ -154,7 +123,7 @@ export default function PlayGame(props) {
                   left: "0px",
                 }
               : {}
-            : orientation === "landscape"
+            : loading && orientation === "landscape"
             ? {
                 transform: " rotate(-90deg)",
                 transformOrigin: "left top",
@@ -213,6 +182,7 @@ export default function PlayGame(props) {
                 />
               )}
             </Box>
+            <FullScreen handle={screen}>
             {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
             loading ? (
               <iframe
@@ -297,6 +267,7 @@ export default function PlayGame(props) {
                 }
               ></iframe>
             ) : (<></>)}
+            </FullScreen>
           </Box>
         </Box>
         {checkLockScreen() && !videoGame && (

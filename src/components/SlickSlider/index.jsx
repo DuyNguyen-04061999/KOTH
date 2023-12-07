@@ -5,16 +5,16 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
+import { toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import { toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 
 export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
-  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type, onClick, typeR } = props;
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type, typeR } = props;
   const dispatch = useDispatch()
   const token = localStorage.getItem("token");
 
@@ -94,7 +94,7 @@ export default function SlickSlider(props) {
           <Box
             key={index}
             sx={{
-              height: width < 576 ? "208px" : "363px",
+              height: width < 576 ? "208px" : "100%",
             }}
             onClick={() => {
               if(typeR === "banner") {

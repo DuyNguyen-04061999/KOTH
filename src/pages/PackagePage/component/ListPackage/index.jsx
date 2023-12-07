@@ -145,6 +145,7 @@ export default function ListPackage(props) {
           marginLeft: "8px",
           marginRight: "8px",
           height: "fit-content",
+          minWidth: "315px"
         }}
         className={
           packageName === "Combo Extra 1"
@@ -372,7 +373,7 @@ export default function ListPackage(props) {
                           >
                             {Number(packageFreeTicketTournament) *
                               Number(listSetting?.saleValue || 1)}{" "}
-                            extra plays
+                            {t("Extra plays")}
                           </Typography>
                         )}
                       <Typography
@@ -390,7 +391,8 @@ export default function ListPackage(props) {
                               : "unset",
                         }}
                       >
-                        {Number(packageFreeTicketTournament)} extra plays
+                        {Number(packageFreeTicketTournament)} {t("Extra plays")}
+
                       </Typography>
                     </Box>
                   )}

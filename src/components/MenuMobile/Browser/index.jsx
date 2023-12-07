@@ -19,7 +19,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 export default function Browser(props) {
-  const { t, i18n } = useTranslation("navigation");
+  const { t } = useTranslation("navigation");
   const { open, handleShowMenu } = props;
   const { isDropdownNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
@@ -27,13 +27,13 @@ export default function Browser(props) {
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
 
-  const handleChangeLang = () => {
-    if (i18n.language === "en") {
-      i18n.changeLanguage("tur");
-    } else if (i18n.language === "tur") {
-      i18n.changeLanguage("en");
-    }
-  };
+  // const handleChangeLang = () => {
+  //   if (i18n.language === "en") {
+  //     i18n.changeLanguage("tur");
+  //   } else if (i18n.language === "tur") {
+  //     i18n.changeLanguage("en");
+  //   }
+  // };
 
   useEffect(() => {
     const socket = _socket;

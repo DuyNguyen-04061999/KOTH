@@ -8,12 +8,12 @@ import { BannerTour, BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
+import { getListBanner } from "../../../redux-saga-middleware/reducers/appReducer";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
-import { getListBanner } from "../../../redux-saga-middleware/reducers/appReducer";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function NewHomePage() {
@@ -44,7 +44,7 @@ export default function NewHomePage() {
 
   useEffect(() => {
     dispatch(getListBanner());
-  }, []);
+  }, [dispatch]);
 
 
   useEffect(() => {

@@ -51,8 +51,8 @@ export default function Package() {
   const meta = {
     title:
       process.env.REACT_APP_ENV === "production"
-        ? "Play4promo packages"
-        : "Play4promo staging packages",
+        ? "Play4promo"
+        : "Play4promo staging",
     description:
       "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
     meta: {
@@ -69,8 +69,8 @@ export default function Package() {
       property: {
         "og:title":
           process.env.REACT_APP_ENV === "production"
-            ? "Play4promo packages"
-            : "Play4promo staging packages",
+            ? "Play4promo"
+            : "Play4promo staging",
         "og:url": window.location.href,
         "og:image:secure_url":
           process.env.REACT_APP_ENV === "development"
