@@ -233,7 +233,6 @@ export default function DialogProfile(props) {
     }
   };
 
-  console.log(stateProfile);
   const renderUserInfo = () => {
     return (
       <Grid container>
