@@ -98,7 +98,7 @@ export default function DialogProfile(props) {
   const [dName, setDName] = useState(nickName);
   const [fName, setFName] = useState(firstName);
   const [lName, setLName] = useState(lastName);
-  const [value, setValue] = useState(birthDay);
+  const [value, setValue] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [avatarImage, setAvatarImage] = useState(avatarUrl);
   const [avatar, setAvatar] = useState("");
@@ -126,7 +126,7 @@ export default function DialogProfile(props) {
     setStateOption(state);
     setZcode(zipCode);
     setValue(dayjs(birthDay));
-  }, [nickName, address1, address2, city, state, zipCode, birthDay]);
+  }, [nickName, address1, address2, city, state, zipCode, birthDay, firstName, lastName]);
 
   const [disabledInp, setDisabledInp] = useState(true);
   // const [socket, setSocket] = useState(null);
@@ -199,7 +199,7 @@ export default function DialogProfile(props) {
 
   useEffect(() => {
     dispatch(getCityAndStateProfile());
-  }, []);
+  }, [dispatch]);
 
   function GetOriginalLengthInBytes(base64string) {
     const bits = base64string.length * 6;
@@ -233,6 +233,7 @@ export default function DialogProfile(props) {
     }
   };
 
+  console.log(stateProfile);
   const renderUserInfo = () => {
     return (
       <Grid container>
@@ -1916,7 +1917,8 @@ export default function DialogProfile(props) {
                   </Typography>
                   <Autocomplete
                     disabled={tab === 0}
-                    value={stateOption}
+                    value={stateProfile[stateProfile?.findIndex(s => s?.name === stateOption)] || stateOption}
+                    defaultValue={stateOption}
                     sx={{
                       width: "100%",
                       backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
@@ -1931,7 +1933,8 @@ export default function DialogProfile(props) {
                     autoHighlight
                     disableClearable
                     onChange={handleChangeState}
-                    getOptionLabel={(option) => option}
+                    isOptionEqualToValue={(option, value) => option && option.name === value.name}
+                    getOptionLabel={(option) => (option && option.name) || ''}
                     renderOption={(props, option) => (
                       <Box
                         component="li"
@@ -1943,10 +1946,6 @@ export default function DialogProfile(props) {
                     renderInput={(params) => (
                       <CssTextField
                         {...params}
-                        inputProps={{
-                          ...params.inputProps,
-                          autoComplete: 'new-password',
-                        }}
                       />
                     )}
                   ></Autocomplete>
