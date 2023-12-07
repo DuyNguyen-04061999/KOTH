@@ -84,13 +84,29 @@ export default function PlayGame(props) {
     return false;
   };
 
+  const getMobileOS = () => {
+    const ua = navigator.userAgent;
+    if (/android/i.test(ua)) {
+      return "Android";
+    } else if (
+      /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    ) {
+      return "iOS";
+    }
+    return "Window";
+  };
+  const os = getMobileOS();
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (startGameCheck && !videoGame) {
       setLoading(true);
-      screen.enter()
+      if(device && device === "Mobile" && os && os === "Android") {
+        screen.enter()
+      }
     }
-  }, [startGameCheck, videoGame, screen]);
+  }, [startGameCheck, videoGame, screen, device, os]);
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
@@ -105,6 +121,8 @@ export default function PlayGame(props) {
     loading,
     device
   ]);
+
+  
 
   return (
     <Box
@@ -182,7 +200,95 @@ export default function PlayGame(props) {
                 />
               )}
             </Box>
-            <FullScreen handle={screen}>
+            {device && os && device === "Mobile" && os === "Android" ? (
+              <FullScreen handle={screen}>
+              {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
+              loading ? (
+                <iframe
+                  allow="fullscreen"
+                  style={
+                    device === "Desktop"
+                      ? {
+                          width: "100%",
+                          height: videoGame ? "700px" : "800px",
+                          background: "black",
+                          display: videoGame ? "none" : "block",
+                        }
+                      : {
+                          position: "fixed",
+                          top: "0",
+                          left: "0",
+                          bottom: "0",
+                          right: "0",
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                          margin: "0",
+                          padding: "0",
+                          overflow: "hidden",
+                          zIndex: "999999",
+                          display: videoGame ? "none" : "block",
+                        }
+                  }
+                  title="Playgame"
+                  src={
+                    process.env.REACT_APP_ENV === "development"
+                      ? `https://storage.googleapis.com/web-system-files/cocos/backtwo/index.html?token=${
+                          tokenUser || localStorage.getItem("token")
+                        }&tournamentId=${detailTournament?.id}&skinId=${
+                          detailTournament?.tournamentInfors?.skin?.id
+                        }`
+                      : `${
+                          detailTournament?.tournamentInfors?.game?.gameHost
+                        }?token=${
+                          tokenUser || localStorage.getItem("token")
+                        }&tournamentId=${detailTournament?.id}&skinId=${
+                          detailTournament?.tournamentInfors?.skin?.id
+                        }`
+                  }
+                ></iframe>
+              ) : loading ? (
+                <iframe
+                  allow="fullscreen"
+                  style={
+                    device === "Desktop"
+                      ? {
+                          width: "100%",
+                          height: videoGame ? "700px" : "800px",
+                          background: "black",
+                          display: videoGame ? "none" : "block",
+                        }
+                      : {
+                          position: "fixed",
+                          top: "0",
+                          left: "0",
+                          bottom: "0",
+                          right: "0",
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                          margin: "0",
+                          padding: "0",
+                          overflow: "hidden",
+                          zIndex: "999999",
+                          display: videoGame ? "none" : "block",
+                        }
+                  }
+                  title="Playgame"
+                  src={
+                    process.env.REACT_APP_ENV === "development"
+                      ? "http://localhost:3000/play-game-tournament/87/4"
+                      : window.location.origin +
+                        "/play-game-tournament/" +
+                        id +
+                        "/" +
+                        detailTournament?.tournamentInfors?.skin?.id
+                  }
+                ></iframe>
+              ) : (<></>)}
+              </FullScreen>
+            ) : (
+              <>
             {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
             loading ? (
               <iframe
@@ -267,7 +373,8 @@ export default function PlayGame(props) {
                 }
               ></iframe>
             ) : (<></>)}
-            </FullScreen>
+            </>
+            )}
           </Box>
         </Box>
         {checkLockScreen() && !videoGame && (
