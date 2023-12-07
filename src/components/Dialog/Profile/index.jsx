@@ -1,11 +1,13 @@
 import CloseIcon from "@mui/icons-material/Close";
 import {
+  Autocomplete,
   Box,
   Dialog,
   FormControl,
   Grid,
   Input,
   Slide,
+  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -13,7 +15,7 @@ import { forwardRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import _socket from "../../../redux-saga-middleware/config/socket";
-import { withStyles } from "@mui/styles";
+import { styled, withStyles } from "@mui/styles";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -22,7 +24,10 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
-import { updateProfileUser } from "../../../redux-saga-middleware/reducers/userReducer";
+import {
+  getCityAndStateProfile,
+  updateProfileUser,
+} from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { validateNickName } from "../../../utils/validateNickName";
@@ -43,17 +48,31 @@ const BgWithTooltip = withStyles({
   },
 })(Tooltip);
 
+const CssTextField = styled(TextField)({
+  "& .MuiOutlinedInput-root": {
+    color: "white",
+    fontSize: "14px",
+    width: "100%",
+    height: "100% !important",
+    "& input": {
+      WebkitTextFillColor: "#8a8197",
+    },
+  },
+  "& .MuiAutocomplete-popupIndicator": {
+    color: "#7848ed !important",
+  },
+  "& .MuiInputBase-root": {
+    padding: "0 16px !important",
+    height: "100% !important",
+  },
+});
 export default function DialogProfile(props) {
   const { width, height } = useWindowDimensions();
   const { open, handleShowProfile } = props;
   const { user } = useSelector((state) => state.userReducer);
   const { uPack } = useSelector((state) => state.userReducer);
   const { loadingState } = useSelector((state) => state.loadingReducer);
-  const {
-    tokenUser,
-    // cityProfile,
-    // stateProfile
-  } = useSelector((state) => state.userReducer);
+  const { tokenUser, stateProfile } = useSelector((state) => state.userReducer);
   // const { friendList } = useSelector((state) => state.chatReducer);
   const {
     id,
@@ -71,42 +90,42 @@ export default function DialogProfile(props) {
     birthDay,
     firstName,
     lastName,
-    isEditProfile
+    isEditProfile,
   } = useSelector((state) => state.profileReducer);
   const dispatch = useDispatch();
   // const { listSetting } = useSelector((state) => state.settingReducer);
   const { device } = useSelector((state) => state.deviceReducer);
-  const [dName, setDName] = useState(nickName || "");
-  // const day = new Date();
-  const [value, setValue] = useState(
-    birthDay ? dayjs(birthDay) : dayjs(new Date())
-  );
+  const [dName, setDName] = useState(nickName);
+  const [fName, setFName] = useState(firstName);
+  const [lName, setLName] = useState(lastName);
+  const [value, setValue] = useState(birthDay);
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [avatarImage, setAvatarImage] = useState(avatarUrl);
   const [avatar, setAvatar] = useState("");
   const handleImageChange = (imageFile) => {
     setAvatarImage(imageFile.replace("data:image/png;base64,", ""));
   };
-  const [addressLine1, setAddressLine1] = useState(address1 || "");
-  const [addressLine2, setAddressLine2] = useState(address2 || "");
-  const [zCode, setZcode] = useState(zipCode || "");
-  const [cityOption, setCityOption] = useState(city || "");
-  const [stateOption, setStateOption] = useState(state || "");
+  const [addressLine1, setAddressLine1] = useState(address1);
+  const [addressLine2, setAddressLine2] = useState(address2);
+  const [zCode, setZcode] = useState("");
+  const [cityOption, setCityOption] = useState(city);
+  const [stateOption, setStateOption] = useState(state);
   // const handleChangeState = (event) => {
   //   setStateOption(event.target.value);
   // };
   // const handleChange = (event) => {
   //   setCityOption(event.target.value);
   // };
-
   useEffect(() => {
-    setDName(nickName || "");
-    setAddressLine1(address1 || "");
-    setAddressLine2(address2 || "");
-    setCityOption(city || "");
-    setStateOption(state || "");
-    setZcode(zipCode || "");
-    setValue(dayjs(birthDay) || new Date());
+    setFName(firstName);
+    setLName(lastName);
+    setDName(nickName);
+    setAddressLine1(address1);
+    setAddressLine2(address2);
+    setCityOption(city);
+    setStateOption(state);
+    setZcode(zipCode);
+    setValue(dayjs(birthDay));
   }, [nickName, address1, address2, city, state, zipCode, birthDay]);
 
   const [disabledInp, setDisabledInp] = useState(true);
@@ -116,7 +135,11 @@ export default function DialogProfile(props) {
   //   setSocket(socket);
   // }, []);
   const [tab, setTab] = useState(0);
-
+  const handleChangeState = (event, newValue) => {
+    if (newValue) {
+      setStateOption(newValue?.name);
+    }
+  };
   // const checkExistInFriendList = () => {
   //   for (let i = 0; i < friendList.length; i++) {
   //     if (friendList[i].userName === userNameProfile) {
@@ -140,22 +163,20 @@ export default function DialogProfile(props) {
   //   }
   // };
 
-  useEffect(()=>{
-    if(validateNickName(dName)){
-      setDisabledBtn(false);
-    }
-    else {
-      setDisabledBtn(true)
-    }
-  },[dName])
-
-  
   useEffect(() => {
-    if(isEditProfile) {
-      setTab(1)
+    if (validateNickName(dName)) {
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
+  }, [dName]);
+
+  useEffect(() => {
+    if (isEditProfile) {
+      setTab(1);
       setDisabledBtn(false);
     }
-  }, [isEditProfile])
+  }, [isEditProfile]);
 
   const returnIcon = () => {
     return (
@@ -175,6 +196,10 @@ export default function DialogProfile(props) {
       </svg>
     );
   };
+
+  useEffect(() => {
+    dispatch(getCityAndStateProfile());
+  }, []);
 
   function GetOriginalLengthInBytes(base64string) {
     const bits = base64string.length * 6;
@@ -201,6 +226,8 @@ export default function DialogProfile(props) {
           state: stateOption,
           zipcode: zCode,
           birthday: value,
+          firstName: fName,
+          lastName: lName,
         })
       );
     }
@@ -220,7 +247,7 @@ export default function DialogProfile(props) {
           xs={12}
           sx={{
             backgroundColor: "#352658",
-            padding: "20px",
+            padding: "64px 24px",
             borderRadius: "10px",
           }}
         >
@@ -249,7 +276,11 @@ export default function DialogProfile(props) {
                 />
                 <Typography
                   className=" fs-3"
-                  sx={{ fontWeight: "700", fontSize: "24px", marginTop: device === "Mobile" ? "20px" : "" }}
+                  sx={{
+                    fontWeight: "700",
+                    fontSize: "24px",
+                    marginTop: device === "Mobile" ? "20px" : "",
+                  }}
                 >
                   {nickName}
                 </Typography>
@@ -313,101 +344,99 @@ export default function DialogProfile(props) {
               </Box>
             )}
           </Box>
-              {device === "Mobile" ? (
-                ""
-              ) : (
-                <Box>
-                <Box component={"form"} className="mt-2">
-                  <hr
-                    style={{
-                      border: "1px solid #A89CD7",
-                      marginBottom: "0.5rem",
-                      marginTop: "1.5rem",
+          {device === "Mobile" ? (
+            <Box>
+              <Box component={"form"} className="mt-2">
+                <hr
+                  style={{
+                    border: "1px solid #A89CD7",
+                    marginBottom: "0.5rem",
+                    marginTop: "1.5rem",
+                  }}
+                />
+                <Box className="Iduser d-flex align-items-center mb-2">
+                  <Box
+                    sx={{
+                      padding: "10px",
+                      borderRadius: "50%",
+                      backgroundColor: "#7C81F2",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: "8px",
+                      width: "32px",
+                      height: "32px",
                     }}
-                  />
-                  <Box className="Iduser d-flex align-items-center mb-2">
-                    <Box
-                      sx={{
-                        padding: "10px",
-                        borderRadius: "50%",
-                        backgroundColor: "#7C81F2",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginRight: "20px",
-                        width: "32px",
-                        height: "32px",
-                      }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="11"
+                      height="14"
+                      fill="none"
+                      viewBox="0 0 11 14"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="11"
-                        height="14"
-                        fill="none"
-                        viewBox="0 0 11 14"
-                      >
+                      <g>
+                        <path
+                          fill="#fff"
+                          stroke="#fff"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.636"
+                          d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                        ></path>
                         <g>
                           <path
                             fill="#fff"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                          ></path>
+                          <path
                             stroke="#fff"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth="1.636"
-                            d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
                           ></path>
-                          <g>
-                            <path
-                              fill="#fff"
-                              d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
-                            ></path>
-                            <path
-                              stroke="#fff"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="1.636"
-                              d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
-                            ></path>
-                          </g>
                         </g>
-                      </svg>
-                    </Box>
-                    <Box
+                      </g>
+                    </svg>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Typography
+                      variant="inherit"
                       sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
+                        color: "#BFBEED",
+                        fontWeight: "500",
+                        marginBottom: "5px !important",
+                        fontSize: "14px",
                       }}
                     >
-                      <Typography
-                        variant="inherit"
-                        sx={{
-                          color: "#BFBEED",
-                          fontWeight: "500",
-                          marginBottom: "5px !important",
-                          fontSize: "14px",
-                        }}
-                      >
-                        User ID
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: "500",
-                        }}
-                      >
-                        {id}
-                      </Typography>
-                    </Box>
+                      User ID
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {id}
+                    </Typography>
                   </Box>
-                  <hr
-                    style={{
-                      border: "1px solid #A89CD7",
-                      marginBottom: "0.5rem",
-                      marginTop: "0.5rem",
-                    }}
-                  />
-                  {tokenUser && userNameProfile === user?.userName && (
-                    <Box>
+                </Box>
+                <hr
+                  style={{
+                    border: "1px solid #A89CD7",
+                    marginBottom: "0.5rem",
+                    marginTop: "0.5rem",
+                  }}
+                />
+                {tokenUser && userNameProfile === user?.userName && (
+                  <Box>
                     <Box className="Last-name d-flex align-items-center mb-2">
                       <Box
                         sx={{
@@ -417,7 +446,7 @@ export default function DialogProfile(props) {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          marginRight: "20px",
+                          marginRight: "8px",
                           width: "32px",
                           height: "32px",
                         }}
@@ -498,7 +527,7 @@ export default function DialogProfile(props) {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          marginRight: "20px",
+                          marginRight: "8px",
                           width: "32px",
                           height: "32px",
                         }}
@@ -579,7 +608,7 @@ export default function DialogProfile(props) {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          marginRight: "20px",
+                          marginRight: "8px",
                           width: "32px",
                           height: "32px",
                         }}
@@ -604,7 +633,10 @@ export default function DialogProfile(props) {
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "flex-start",
-                          minWidth: 250,
+                          width: "300px",
+                          maxWidth: "100%",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
                         }}
                       >
                         <Typography
@@ -657,7 +689,7 @@ export default function DialogProfile(props) {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          marginRight: "20px",
+                          marginRight: "8px",
                           width: "32px",
                           height: "32px",
                         }}
@@ -712,9 +744,185 @@ export default function DialogProfile(props) {
                         marginTop: "0.5rem",
                       }}
                     />
-                    </Box>
-                  )}
-                  <Box className="First-name d-flex align-items-center mb-2">
+                  </Box>
+                )}
+                <Box className="First-name d-flex align-items-center mb-2">
+                  <Box
+                    sx={{
+                      padding: "10px",
+                      borderRadius: "50%",
+                      backgroundColor: "#7C81F2",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: "8px",
+                      width: "32px",
+                      height: "32px",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="11"
+                      height="14"
+                      fill="none"
+                      viewBox="0 0 11 14"
+                    >
+                      <g>
+                        <path
+                          fill="#fff"
+                          stroke="#fff"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.636"
+                          d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                        ></path>
+                        <g>
+                          <path
+                            fill="#fff"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                          ></path>
+                          <path
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.636"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Typography
+                      variant="inherit"
+                      sx={{
+                        color: "#BFBEED",
+                        fontWeight: "500",
+                        marginBottom: "5px !important",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Display name
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {nickName}
+                    </Typography>
+                  </Box>
+                </Box>
+                <hr
+                  style={{
+                    border: "1px solid #A89CD7",
+                    marginBottom: "0.5rem",
+                    marginTop: "0.5rem",
+                  }}
+                />
+              </Box>
+            </Box>
+          ) : (
+            <Box>
+              <Box component={"form"} className="mt-2">
+                <hr
+                  style={{
+                    border: "1px solid #A89CD7",
+                    marginBottom: "0.5rem",
+                    marginTop: "1.5rem",
+                  }}
+                />
+                <Box className="Iduser d-flex align-items-center mb-2">
+                  <Box
+                    sx={{
+                      padding: "10px",
+                      borderRadius: "50%",
+                      backgroundColor: "#7C81F2",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: "8px",
+                      width: "32px",
+                      height: "32px",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="11"
+                      height="14"
+                      fill="none"
+                      viewBox="0 0 11 14"
+                    >
+                      <g>
+                        <path
+                          fill="#fff"
+                          stroke="#fff"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.636"
+                          d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                        ></path>
+                        <g>
+                          <path
+                            fill="#fff"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                          ></path>
+                          <path
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.636"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Typography
+                      variant="inherit"
+                      sx={{
+                        color: "#BFBEED",
+                        fontWeight: "500",
+                        marginBottom: "5px !important",
+                        fontSize: "14px",
+                      }}
+                    >
+                      User ID
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {id}
+                    </Typography>
+                  </Box>
+                </Box>
+                <hr
+                  style={{
+                    border: "1px solid #A89CD7",
+                    marginBottom: "0.5rem",
+                    marginTop: "0.5rem",
+                  }}
+                />
+                {tokenUser && userNameProfile === user?.userName && (
+                  <Box>
+                    <Box className="Last-name d-flex align-items-center mb-2">
                       <Box
                         sx={{
                           padding: "10px",
@@ -723,7 +931,7 @@ export default function DialogProfile(props) {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          marginRight: "20px",
+                          marginRight: "8px",
                           width: "32px",
                           height: "32px",
                         }}
@@ -776,7 +984,7 @@ export default function DialogProfile(props) {
                             fontSize: "14px",
                           }}
                         >
-                          Display name
+                          Last name
                         </Typography>
                         <Typography
                           sx={{
@@ -784,7 +992,7 @@ export default function DialogProfile(props) {
                             fontWeight: "500",
                           }}
                         >
-                          {nickName}
+                          {lastName}
                         </Typography>
                       </Box>
                     </Box>
@@ -795,9 +1003,318 @@ export default function DialogProfile(props) {
                         marginTop: "0.5rem",
                       }}
                     />
+                    <Box className="First-name d-flex align-items-center mb-2">
+                      <Box
+                        sx={{
+                          padding: "10px",
+                          borderRadius: "50%",
+                          backgroundColor: "#7C81F2",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginRight: "8px",
+                          width: "32px",
+                          height: "32px",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="11"
+                          height="14"
+                          fill="none"
+                          viewBox="0 0 11 14"
+                        >
+                          <g>
+                            <path
+                              fill="#fff"
+                              stroke="#fff"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="1.636"
+                              d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                            ></path>
+                            <g>
+                              <path
+                                fill="#fff"
+                                d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                              ></path>
+                              <path
+                                stroke="#fff"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="1.636"
+                                d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
+                              ></path>
+                            </g>
+                          </g>
+                        </svg>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <Typography
+                          variant="inherit"
+                          sx={{
+                            color: "#BFBEED",
+                            fontWeight: "500",
+                            marginBottom: "5px !important",
+                            fontSize: "14px",
+                          }}
+                        >
+                          First name
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: "14px",
+                            fontWeight: "500",
+                          }}
+                        >
+                          {firstName}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <hr
+                      style={{
+                        border: "1px solid #A89CD7",
+                        marginBottom: "0.5rem",
+                        marginTop: "0.5rem",
+                      }}
+                    />
+                    <Box className="Email-address d-flex align-items-center mb-2">
+                      <Box
+                        sx={{
+                          padding: "10px",
+                          borderRadius: "50%",
+                          backgroundColor: "#7C81F2",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginRight: "8px",
+                          width: "32px",
+                          height: "32px",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="15"
+                          fill="none"
+                          viewBox="0 0 14 15"
+                        >
+                          <g>
+                            <g fill="#fff">
+                              <path d="M.373 2.82c.121.112.208.19.291.272L4.512 6.94c1.46 1.46 3.511 1.46 4.973 0 1.29-1.288 2.58-2.578 3.87-3.87.076-.075.157-.145.262-.243.241.328.37.724.368 1.131.013 1.966.026 3.932 0 5.9-.018 1.277-1.206 2.444-2.487 2.452-3 .016-6 .016-8.997 0C1.194 12.302.017 11.104.008 9.797c-.014-1.925-.007-3.85 0-5.778.002-.427.129-.844.365-1.199z"></path>
+                              <path d="M1.062 2.028c.454-.346.931-.531 1.457-.533 2.989-.009 5.977-.009 8.966 0 .524 0 1.002.185 1.443.532-.085.093-.147.169-.217.238a3013.51 3013.51 0 01-3.953 3.953c-1.06 1.058-2.463 1.056-3.525-.004-1.31-1.31-2.621-2.62-3.931-3.932-.07-.071-.138-.145-.24-.254z"></path>
+                            </g>
+                          </g>
+                        </svg>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                          width: "300px",
+                          maxWidth: "100%",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        <Typography
+                          variant="inherit"
+                          sx={{
+                            color: "#BFBEED",
+                            fontWeight: "500",
+                            marginBottom: "5px !important",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Email address
+                        </Typography>
+                        {device === "Mobile" ? (
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              textOverflow: "clip",
+                            }}
+                          >
+                            {email}
+                          </Typography>
+                        ) : (
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              textOverflow: "clip",
+                            }}
+                          >
+                            {email.slice(0, 25)}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                    <hr
+                      style={{
+                        border: "1px solid #A89CD7",
+                        marginBottom: "0.5rem",
+                        marginTop: "0.5rem",
+                      }}
+                    />
+                    <Box className="Mobile-number d-flex align-items-center mb-2">
+                      <Box
+                        sx={{
+                          padding: "10px",
+                          borderRadius: "50%",
+                          backgroundColor: "#7C81F2",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginRight: "8px",
+                          width: "32px",
+                          height: "32px",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="14"
+                          fill="none"
+                          viewBox="0 0 18 14"
+                        >
+                          <g>
+                            <g fill="#fff">
+                              <path d="M12.511 13.352c-2.327 1.02-4.054.919-5.854-.906-.987-1.002-1.633-2.222-2.172-3.5-.492-1.16-.863-2.355-.976-3.616-.016-.19 0-.382 0-.572-.009-1 .157-1.967.765-2.787.703-.953 1.68-1.544 2.79-1.91.52-.17 1 .027 1.319.468.1.13.182.272.243.424.345.942.622 1.9.606 2.916-.012.773-.328 1.347-1.093 1.616a5.773 5.773 0 00-.65.277c-.327.164-.47.422-.419.783.116.815.47 1.578 1.02 2.192.305.35.521.376.944.188.2-.088.401-.171.602-.26.542-.24 1.068-.183 1.515.184.98.806 1.623 1.858 2.017 3.05.202.625-.058 1.19-.657 1.453z"></path>
+                              <path d="M13.163 11.9c-.394-1.192-1.038-2.245-2.017-3.05-.447-.368-.973-.425-1.515-.185-.2.089-.4.172-.601.26-.424.188-.64.164-.946-.188a4.176 4.176 0 01-1.019-2.192c-.05-.361.094-.62.42-.783.211-.105.428-.198.65-.277.766-.269 1.083-.843 1.094-1.616.015-1.016-.262-1.974-.606-2.916A1.816 1.816 0 008.38.53C8.064.088 7.583-.11 7.063.061c-1.109.366-2.087.957-2.793 1.908-.605.82-.773 1.788-.764 2.789 0 .19-.014.382 0 .572.116 1.261.487 2.456.978 3.615.542 1.28 1.188 2.5 2.175 3.5 1.8 1.826 3.527 1.928 5.854.907.597-.262.857-.828.65-1.452zm-1.257.695c-.689.274-1.399.473-2.146.449-.929-.03-1.656-.508-2.295-1.126-1.011-.974-1.636-2.193-2.165-3.47-.492-1.181-.848-2.397-.874-3.77.045-.95.199-1.957 1.07-2.64.496-.39 1.063-.691 1.618-.997.313-.173.497-.105.617.241.191.538.344 1.089.456 1.648.076.385.064.79.055 1.187-.003.224-.153.378-.373.457-.164.058-.319.13-.479.195-1.062.43-1.456 1.12-1.209 2.24.19.896.615 1.724 1.232 2.4.577.626 1.22.738 2.002.382.182-.082.373-.146.546-.241.256-.138.476-.073.678.095.133.11.276.222.366.364.406.633.82 1.263 1.18 1.922.203.37.113.508-.28.665h.001z"></path>
+                            </g>
+                          </g>
+                        </svg>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <Typography
+                          variant="inherit"
+                          sx={{
+                            color: "#BFBEED",
+                            fontWeight: "500",
+                            marginBottom: "5px !important",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Mobile number
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: "14px",
+                            fontWeight: "500",
+                          }}
+                        >
+                          {phone}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <hr
+                      style={{
+                        border: "1px solid #A89CD7",
+                        marginBottom: "0.5rem",
+                        marginTop: "0.5rem",
+                      }}
+                    />
+                  </Box>
+                )}
+                <Box className="First-name d-flex align-items-center mb-2">
+                  <Box
+                    sx={{
+                      padding: "10px",
+                      borderRadius: "50%",
+                      backgroundColor: "#7C81F2",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: "8px",
+                      width: "32px",
+                      height: "32px",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="11"
+                      height="14"
+                      fill="none"
+                      viewBox="0 0 11 14"
+                    >
+                      <g>
+                        <path
+                          fill="#fff"
+                          stroke="#fff"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.636"
+                          d="M5.738 6.343a2.755 2.755 0 100-5.511 2.755 2.755 0 000 5.51z"
+                        ></path>
+                        <g>
+                          <path
+                            fill="#fff"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378"
+                          ></path>
+                          <path
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.636"
+                            d="M1.605 13.23v-1.377a2.755 2.755 0 012.756-2.755h2.755a2.755 2.755 0 012.755 2.755v1.378H1.605z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Typography
+                      variant="inherit"
+                      sx={{
+                        color: "#BFBEED",
+                        fontWeight: "500",
+                        marginBottom: "5px !important",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Display name
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {nickName}
+                    </Typography>
+                  </Box>
                 </Box>
+                <hr
+                  style={{
+                    border: "1px solid #A89CD7",
+                    marginBottom: "0.5rem",
+                    marginTop: "0.5rem",
+                  }}
+                />
               </Box>
-              )}
+            </Box>
+          )}
         </Grid>
         {tokenUser && userNameProfile === user?.userName && (
           <Grid item md={7} xs={12}>
@@ -811,6 +1328,178 @@ export default function DialogProfile(props) {
                 marginTop: width < 576 ? "20px" : "",
               }}
             >
+              <Box sx={{ display: "flex" }}>
+                <Box
+                  className="City mb-3 d-flex flex-column align-items-start"
+                  sx={{ width: "100%" }}
+                >
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Last Name
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <Input
+                      id="input-with-icon-adornment"
+                      type="text"
+                      onChange={(e) => setLName(e.target.value)}
+                      value={lName}
+                      disabled={disabledInp}
+                      placeholder="Enter Your Display Name"
+                      sx={{
+                        "&:before": {
+                          borderBottom: " 0px solid !important ",
+                          "&:hover": {
+                            borderBottom: "0px solid !important",
+                          },
+                        },
+                        "&:after": {
+                          borderBottom: "0px solid !important",
+                        },
+                        "&:hover": {
+                          border: "none",
+                        },
+                        color: "white",
+                        fontSize: "14px",
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                          padding: "0px !important",
+                        },
+                        "& .Mui-disabled": {
+                          WebkitTextFillColor: "white !important",
+                        },
+                      }}
+                    />
+                  </FormControl>{" "}
+                </Box>
+                <Box
+                  className="Firstname mb-3 ms-2 d-flex flex-column align-items-start"
+                  sx={{ width: "100%" }}
+                >
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    First Name
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <Input
+                      id="input-with-icon-adornment"
+                      type="text"
+                      onChange={(e) => setFName(e.target.value)}
+                      value={fName}
+                      disabled={disabledInp}
+                      placeholder="Enter Your Display Name"
+                      sx={{
+                        "&:before": {
+                          borderBottom: " 0px solid !important ",
+                          "&:hover": {
+                            borderBottom: "0px solid !important",
+                          },
+                        },
+                        "&:after": {
+                          borderBottom: "0px solid !important",
+                        },
+                        "&:hover": {
+                          border: "none",
+                        },
+                        color: "white",
+                        fontSize: "14px",
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                          padding: "0px !important",
+                        },
+                        "& .Mui-disabled": {
+                          WebkitTextFillColor: "white !important",
+                        },
+                      }}
+                    />{" "}
+                    {tab === 1 ? (
+                      <BgWithTooltip
+                        enterTouchDelay={0}
+                        title={
+                          <Box>
+                            {" "}
+                            <Typography
+                              sx={{ textAlign: "start", fontSize: "12px" }}
+                            >
+                              Your Display name must be 12 characters or less
+                              and not contain special characters. Nicknames are
+                              case sensitive (e.g., Examplename)
+                            </Typography>
+                          </Box>
+                        }
+                        placement="top"
+                        sx={{
+                          backgroundColor: "white",
+                          color: "red",
+                        }}
+                      >
+                        <Box
+                          style={{
+                            backgroundColor: "transparent",
+                            right: "10px",
+                            top: "8px",
+                            cursor: "pointer",
+                            position: "absolute",
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="22"
+                            height="22"
+                            fill="none"
+                            viewBox="0 0 22 22"
+                          >
+                            <g>
+                              <path
+                                stroke="#7C81F2"
+                                strokeWidth="1.5"
+                                d="M11 21c5.523 0 10-4.477 10-10S16.523 1 11 1 1 5.477 1 11s4.477 10 10 10z"
+                              ></path>
+                              <path
+                                stroke="#7C81F2"
+                                strokeLinecap="round"
+                                strokeWidth="1.5"
+                                d="M11 16v-6"
+                              ></path>
+                              <path
+                                fill="#7C81F2"
+                                d="M11 6a1 1 0 110 2 1 1 0 010-2z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </Box>
+                      </BgWithTooltip>
+                    ) : (
+                      ""
+                    )}
+                  </FormControl>{" "}
+                </Box>
+              </Box>
               <Box className="Display-Name mb-3 d-flex flex-column align-items-start">
                 <Typography
                   variant="inherit"
@@ -870,8 +1559,8 @@ export default function DialogProfile(props) {
                           <Typography
                             sx={{ textAlign: "start", fontSize: "12px" }}
                           >
-                            Your Display name must be 12 characters or less and not
-                            contain special characters. Nicknames are case
+                            Your Display name must be 12 characters or less and
+                            not contain special characters. Nicknames are case
                             sensitive (e.g., Examplename)
                           </Typography>
                         </Box>
@@ -1024,10 +1713,14 @@ export default function DialogProfile(props) {
                     marginBottom: "5px !important",
                   }}
                 >
-                  Address line 2 <Box component={"span"} sx={{
-                    fontSize: "12px"
-                  }}>
-                  (Optional)
+                  Address line 2{" "}
+                  <Box
+                    component={"span"}
+                    sx={{
+                      fontSize: "12px",
+                    }}
+                  >
+                    (Optional)
                   </Box>
                 </Typography>
                 <FormControl
@@ -1221,86 +1914,42 @@ export default function DialogProfile(props) {
                   >
                     State
                   </Typography>
-                  <FormControl
-                    variant="standard"
+                  <Autocomplete
+                    disabled={tab === 0}
+                    value={stateOption}
                     sx={{
                       width: "100%",
                       backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
-                      padding: "10px",
                       borderRadius: "5px",
+                      height: "100%",
+                      "& .MuiFormControl-root": {
+                        height: "100% !important",
+                      },
+                      color: "white",
                     }}
-                  >
-                    <Input
-                      type="text"
-                      onChange={(e) => {
-                        setStateOption(e.target.value);
-                      }}
-                      value={stateOption}
-                      disabled={disabledInp}
-                      placeholder="Enter Your State"
-                      sx={{
-                        "&:before": {
-                          borderBottom: " 0px solid !important ",
-                          "&:hover": {
-                            borderBottom: "0px solid !important",
-                          },
-                        },
-                        "&:after": {
-                          borderBottom: "0px solid !important",
-                        },
-                        "&:hover": {
-                          border: "none",
-                        },
-                        color: "white",
-                        fontSize: "14px",
-                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                          padding: "0px !important",
-                        },
-                        "& .Mui-disabled": {
-                          WebkitTextFillColor: "white !important",
-                        },
-                      }}
-                    />{" "}
-                    {stateOption === "" || stateOption === null ? (
+                    options={stateProfile}
+                    autoHighlight
+                    disableClearable
+                    onChange={handleChangeState}
+                    getOptionLabel={(option) => option}
+                    renderOption={(props, option) => (
                       <Box
-                        sx={{
-                          backgroundColor: "transparent",
-                          right: "15px",
-                          top: "6px",
-                          cursor: "pointer",
-                          position: "absolute",
-                        }}
+                        component="li"
+                        {...props}
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="7"
-                          height="20"
-                          fill="none"
-                          viewBox="0 0 7 20"
-                        >
-                          <g clipPath="url(#clip0_7173_204987)">
-                            <g>
-                              <g fill="#7848ED">
-                                <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
-                                <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
-                              </g>
-                            </g>
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_7173_204987">
-                              <path
-                                fill="#fff"
-                                d="M0 0H6.154V20H0z"
-                                transform="matrix(-1 0 0 1 7 0)"
-                              ></path>
-                            </clipPath>
-                          </defs>
-                        </svg>
+                        {option?.name} ({option?.isoCode})
                       </Box>
-                    ) : (
-                      ""
                     )}
-                  </FormControl>{" "}
+                    renderInput={(params) => (
+                      <CssTextField
+                        {...params}
+                        inputProps={{
+                          ...params.inputProps,
+                          autoComplete: 'new-password',
+                        }}
+                      />
+                    )}
+                  ></Autocomplete>
                 </Box>
               </Box>
               {device === "Mobile" ? (
@@ -1621,6 +2270,25 @@ export default function DialogProfile(props) {
                       />
                     </LocalizationProvider>
                   </Box>
+                  {tab !== 0 ? (
+                    <Box className="Caution mb-3 d-flex align-items-center">
+                      <Typography
+                        variant="inherit"
+                        sx={{
+                          color: "#e75857",
+                          fontWeight: "500",
+                          marginBottom: "5px !important",
+                          textAlign: "start",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Persons under the age of 18 should use this Website only
+                        with the supervision of an Adult.
+                      </Typography>
+                    </Box>
+                  ) : (
+                    <></>
+                  )}
                 </>
               )}
 
@@ -1642,7 +2310,7 @@ export default function DialogProfile(props) {
                         text={"CANCEL"}
                         onClick={() => {
                           setTab(0);
-                          dispatch(exitEditProfile())
+                          dispatch(exitEditProfile());
                           setDisabledInp(true);
                           setAddressLine1(address1 || "");
                           setAddressLine2(address2 || "");
@@ -1686,7 +2354,7 @@ export default function DialogProfile(props) {
         open={open}
         onClose={() => {
           setTab(0);
-          dispatch(exitEditProfile())
+          dispatch(exitEditProfile());
           setDisabledInp(true);
           setAddressLine1(address1 || "");
           setAddressLine2(address2 || "");
