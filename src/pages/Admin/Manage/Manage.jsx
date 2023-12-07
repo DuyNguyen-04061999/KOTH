@@ -85,10 +85,11 @@ const ManageDistributor = () => {
           "Manager",
           "Agents",
           "Players",
-          "Revenue",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Register Date",
           "Last Login",
-          // "Time Zone",
         ]);
       }
 
@@ -105,7 +106,6 @@ const ManageDistributor = () => {
           "Revenue",
           "Register Date",
           "Last Login",
-          // "Time Zone",
         ]);
       }
 
@@ -114,9 +114,7 @@ const ManageDistributor = () => {
           "",
           "ID",
           "Display Name",
-          // "Nick Name",
           "Manager",
-          // "Players",
           "Revenue",
           "Phone",
           "Email"

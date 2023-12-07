@@ -87,10 +87,11 @@ const Revenue = () => {
           "Manager",
           "Agents",
           "Players",
-          "Revenue",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Start Date",
           "Finish Date",
-          // "Time Zone",
         ]);
       }
 
@@ -104,7 +105,6 @@ const Revenue = () => {
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          // "Time Zone",
         ]);
       }
 
@@ -112,14 +112,11 @@ const Revenue = () => {
         setHeaderList([
           "ID",
           "Display Name",
-          // "Nick Name",
           "Manager",
-          // "Players",
           "Revenue",
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          // "Time Zone",
         ]);
       }
     } else {

@@ -212,7 +212,7 @@ export const RowTable = (props) => {
                   
                 </StyledTableCell>
               );
-            else if (item.toLowerCase() === "account")
+            else if (item.toLowerCase() === "display name")
               return (
                 <StyledTableCell key={index} sx={{ textAlign: "center" }}>
                   <Box
@@ -241,7 +241,7 @@ export const RowTable = (props) => {
                           {!open ? <AddIconSVG /> : <MinusIconSVG />}
                         </Box>
                       )}
-                    {row.account}
+                    {row.displayName}
                   </Box>
                 </StyledTableCell>
               );

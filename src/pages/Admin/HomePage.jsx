@@ -82,7 +82,9 @@ const HomePage = () => {
           "Manager",
           "Agents",
           "Players",
-          "Revenue",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Register Date",
           "Last Login",
         ]);
