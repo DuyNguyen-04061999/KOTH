@@ -250,7 +250,7 @@ export const RowTable = (props) => {
                 <StyledTableCell key={index}>
                   <Box sx={{ textAlign: "center" }}>
                     {/* {moment(row[`${trimAndCamelCase(item)}`], true)?.isValid() ? moment(row[`${trimAndCamelCase(item)}`])?.format("MM/DD/YYYY HH:mm") : row[`${trimAndCamelCase(item)}`]} */}
-                    {row[`${trimAndCamelCase(item)}`]}
+                    {item.toLowerCase() === "revenue overall" || item.toLowerCase() === "revenue current month" ? Number(row[`${trimAndCamelCase(item)}`])?.toFixed(2) : row[`${trimAndCamelCase(item)}`]}
                   </Box>
                 </StyledTableCell>
               );
