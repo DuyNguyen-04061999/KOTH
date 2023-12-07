@@ -97,7 +97,9 @@ const HomePage = () => {
           "Code/Link",
           "Manager",
           "Players",
-          "Revenue",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Register Date",
           "Last Login",
         ]);

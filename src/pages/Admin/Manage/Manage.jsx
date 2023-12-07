@@ -103,7 +103,9 @@ const ManageDistributor = () => {
           "Manager",
           "Players",
           "Referred By",
-          "Revenue",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Register Date",
           "Last Login",
         ]);

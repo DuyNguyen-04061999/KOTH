@@ -364,7 +364,7 @@ const AdminPanel = () => {
                             roles?.includes("master")
                                 ? "Master"
                                 : roles?.includes("distributor")
-                                    ? "Distributor"
+                                    ? name || "Distributor"
                                     : roles?.includes("sub_distributor")
                                         ? "Sub Distributor"
                                         : "Agent"
