@@ -14,7 +14,7 @@ export default function SlickSlider(props) {
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { width } = useWindowDimensions();
-  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type, onClick, typeR } = props;
+  const { images: img, appendDot, htmlCode, isHtmlCode, tours, type, typeR } = props;
   const dispatch = useDispatch()
   const token = localStorage.getItem("token");
 
