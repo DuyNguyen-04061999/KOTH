@@ -142,7 +142,7 @@ export default function PlayGame(props) {
       sx={
         !videoGame && device === "Mobile"
           ? detailTournament?.tournamentInfors?.game?.gameScreenType
-            ? orientation === "portrait"
+            ? loading && orientation === "portrait"
               ? {
                   transform: " rotate(-90deg)",
                   transformOrigin: "left top",
@@ -154,7 +154,7 @@ export default function PlayGame(props) {
                   left: "0px",
                 }
               : {}
-            : orientation === "landscape"
+            : loading && orientation === "landscape"
             ? {
                 transform: " rotate(-90deg)",
                 transformOrigin: "left top",
