@@ -542,7 +542,7 @@ const FilterRevenue = () => {
                                     ? name || "Distributor"
                                     : roles?.includes("sub_distributor")
                                         ? "Sub Distributor"
-                                        : "Agent"
+                                        : name || "Agent"
                         } Account`}
                 </Typography>
                 {roles?.includes("agent") ? (

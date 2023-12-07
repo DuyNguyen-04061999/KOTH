@@ -117,22 +117,24 @@ const ManageDistributor = () => {
           "ID",
           "Display Name",
           "Manager",
-          "Revenue",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Phone",
           "Email"
         ]);
       }
     } else {
       if (roles?.includes("master")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Level", "Revenue Overall"]);
       }
 
       if (roles?.includes("distributor")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Level", "Revenue Overall"]);
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Display Name", "Phone", "Revenue"]);
+        setHeaderList(["Display Name", "Phone", "Revenue Overall"]);
       }
     }
   }, [roles, width]);

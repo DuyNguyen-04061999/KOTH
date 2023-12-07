@@ -109,7 +109,9 @@ const HomePage = () => {
         setHeaderList([
           "ID",
           "Display Name",
-          "Revenue",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Manager",
           "Register Date",
           "Last Login",
@@ -117,15 +119,15 @@ const HomePage = () => {
       }
     } else {
       if (roles?.includes("master")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Level", "Revenue Overall"]);
       }
 
       if (roles?.includes("distributor")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Level", "Revenue Overall"]);
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Display Name", "Phone", "Revenue"]);
+        setHeaderList(["Display Name", "Phone", "Revenue Overall"]);
       }
     }
   }, [roles, width]);
