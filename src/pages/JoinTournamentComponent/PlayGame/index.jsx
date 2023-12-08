@@ -233,7 +233,7 @@ export default function PlayGame(props) {
                   title="Playgame"
                   src={
                     process.env.REACT_APP_ENV === "development"
-                      ? `https://storage.googleapis.com/web-system-files/cocos/backtwo/index.html?token=${
+                      ? `${process.env.REACT_APP_PROMOTION_URL + '/' + detailTournament?.tournamentInfors?.game?.gameHost}?token=${
                           tokenUser || localStorage.getItem("token")
                         }&tournamentId=${detailTournament?.id}&skinId=${
                           detailTournament?.tournamentInfors?.skin?.id
@@ -320,7 +320,7 @@ export default function PlayGame(props) {
                 title="Playgame"
                 src={
                   process.env.REACT_APP_ENV === "development"
-                    ? `https://storage.googleapis.com/web-system-files/cocos/backtwo/index.html?token=${
+                    ? `${process.env.REACT_APP_PROMOTION_URL + '/' + detailTournament?.tournamentInfors?.game?.gameHost}?token=${
                         tokenUser || localStorage.getItem("token")
                       }&tournamentId=${detailTournament?.id}&skinId=${
                         detailTournament?.tournamentInfors?.skin?.id
