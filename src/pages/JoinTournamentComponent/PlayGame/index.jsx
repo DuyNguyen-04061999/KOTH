@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import DeviceOrientation, { Orientation } from 'react-screen-orientation';
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
@@ -200,7 +201,10 @@ export default function PlayGame(props) {
                 />
               )}
             </Box>
+          
             {device && os && device === "Mobile" && os === "Android" ? (
+              <DeviceOrientation lockOrientation={'landscape'}>
+              <Orientation orientation='landscape'>
               <FullScreen handle={screen}>
               {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
               loading ? (
@@ -287,6 +291,8 @@ export default function PlayGame(props) {
                 ></iframe>
               ) : (<></>)}
               </FullScreen>
+                </Orientation>
+              </DeviceOrientation>
             ) : (
               <>
             {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
