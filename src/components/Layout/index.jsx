@@ -83,6 +83,7 @@ import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
 import "./index.scss";
+import DialogExclusive from "../Dialog/DialogExclusive";
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -389,6 +390,7 @@ export default function Layout(props) {
       <DialogVerify />
       <DialogSubscribe />
       <DialogGift />
+      <DialogExclusive />
       <NotiFunds />
       <>
         {randomRender === 1 ? (

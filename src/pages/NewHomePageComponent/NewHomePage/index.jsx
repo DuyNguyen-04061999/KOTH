@@ -41,7 +41,7 @@ export default function NewHomePage() {
   const { listBanner } = useSelector((state) => state.appReducer);
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(getListBanner());
   }, [dispatch]);

@@ -127,6 +127,20 @@ export const getListBannerFail = (data) => {
   }
 }
 
+export const openDialogExclusive = (data) => {
+  return {
+    type : "OPEN_DIALOG_EXCLUSIVE",
+    payload: data
+  }
+}
+
+export const closeDialogExclusive = (data) => {
+  return {
+    type : "CLOSE_DIALOG_EXCLUSIVE",
+    payload: data
+  }
+}
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -141,7 +155,8 @@ const appReducer = (
     showDoubleDayDialog: false,
     randomRender: null,
     isFecthListBanner: false,
-    listBanner: []
+    listBanner: [],
+    isDialogExclusive:false
   },
   action
 ) => {
@@ -177,9 +192,10 @@ const appReducer = (
     case "RANDOM_RENDER_POPUP":
       return {...state, randomRender: payload}
     case "GET_LIST_BANNER" : return {...state, isFecthListBanner:true}
-    case "GET_LIST_BANNER_SUCCESS" : 
-    return {...state, isFecthListBanner:false, listBanner: payload.list}
+    case "GET_LIST_BANNER_SUCCESS" : return {...state, isFecthListBanner: false, listBanner: payload.list || []}
     case "GET_LIST_BANNER_FAIL" : return {...state, isFecthListBanner:false}
+    case "OPEN_DIALOG_EXCLUSIVE" : return {...state, isDialogExclusive:true}
+    case "CLOSE_DIALOG_EXCLUSIVE" : return {...state, isDialogExclusive:false}
     default:
       return { ...state };
   }
