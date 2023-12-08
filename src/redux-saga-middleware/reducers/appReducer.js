@@ -178,7 +178,6 @@ const appReducer = (
       return {...state, randomRender: payload}
     case "GET_LIST_BANNER" : return {...state, isFecthListBanner:true}
     case "GET_LIST_BANNER_SUCCESS" : 
-      console.log(payload);
     return {...state, isFecthListBanner:false, listBanner: payload.list}
     case "GET_LIST_BANNER_FAIL" : return {...state, isFecthListBanner:false}
     default:
