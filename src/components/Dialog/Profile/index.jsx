@@ -50,12 +50,14 @@ const BgWithTooltip = withStyles({
 
 const CssTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
-    color: "white",
     fontSize: "14px",
     width: "100%",
     height: "100% !important",
     "& input": {
-      WebkitTextFillColor: "#8a8197",
+      color: "white",
+    },
+    "& input:disabled": {
+      WebkitTextFillColor: "white",
     },
   },
   "& .MuiAutocomplete-popupIndicator": {
@@ -99,6 +101,7 @@ export default function DialogProfile(props) {
   const [fName, setFName] = useState(firstName);
   const [lName, setLName] = useState(lastName);
   const [value, setValue] = useState("");
+  const [dateError, setDateError] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [avatarImage, setAvatarImage] = useState(avatarUrl);
   const [avatar, setAvatar] = useState("");
@@ -126,9 +129,17 @@ export default function DialogProfile(props) {
     setStateOption(state);
     setZcode(zipCode);
     setValue(dayjs(birthDay));
-  }, [nickName, address1, address2, city, state, zipCode, birthDay, firstName, lastName]);
-
-  const [disabledInp, setDisabledInp] = useState(true);
+  }, [
+    nickName,
+    address1,
+    address2,
+    city,
+    state,
+    zipCode,
+    birthDay,
+    firstName,
+    lastName,
+  ]);
   // const [socket, setSocket] = useState(null);
   // useEffect(() => {
   //   const socket = _socket;
@@ -140,6 +151,7 @@ export default function DialogProfile(props) {
       setStateOption(newValue?.name);
     }
   };
+
   // const checkExistInFriendList = () => {
   //   for (let i = 0; i < friendList.length; i++) {
   //     if (friendList[i].userName === userNameProfile) {
@@ -163,18 +175,29 @@ export default function DialogProfile(props) {
   //   }
   // };
 
+  const handleChangeDate = (value) => {
+    if (value < new Date()) {
+      setValue(value);
+      setDateError("");
+    } else {
+      setDateError("Please select a valid date!");
+    }
+  };
+
   useEffect(() => {
-    if (validateNickName(dName)) {
+    if (validateNickName(dName) && !dateError) {
       setDisabledBtn(false);
     } else {
       setDisabledBtn(true);
     }
-  }, [dName]);
+  }, [dName, dateError]);
+
+  console.log(isEditProfile);
+  console.log(tab);
 
   useEffect(() => {
     if (isEditProfile) {
       setTab(1);
-      setDisabledBtn(false);
     }
   }, [isEditProfile]);
 
@@ -247,7 +270,7 @@ export default function DialogProfile(props) {
           xs={12}
           sx={{
             backgroundColor: "#352658",
-            padding: "64px 24px",
+            padding: width < 576 ? "24px 16px" : "64px 24px",
             borderRadius: "10px",
           }}
         >
@@ -1357,8 +1380,8 @@ export default function DialogProfile(props) {
                       type="text"
                       onChange={(e) => setLName(e.target.value)}
                       value={lName}
-                      disabled={disabledInp}
-                      placeholder="Enter Your Display Name"
+                      disabled={tab === 0}
+                      placeholder="Enter Last Name"
                       sx={{
                         "&:before": {
                           borderBottom: " 0px solid !important ",
@@ -1412,8 +1435,8 @@ export default function DialogProfile(props) {
                       type="text"
                       onChange={(e) => setFName(e.target.value)}
                       value={fName}
-                      disabled={disabledInp}
-                      placeholder="Enter Your Display Name"
+                      disabled={tab === 0}
+                      placeholder="Enter First Name"
                       sx={{
                         "&:before": {
                           borderBottom: " 0px solid !important ",
@@ -1437,66 +1460,6 @@ export default function DialogProfile(props) {
                         },
                       }}
                     />{" "}
-                    {tab === 1 ? (
-                      <BgWithTooltip
-                        enterTouchDelay={0}
-                        title={
-                          <Box>
-                            {" "}
-                            <Typography
-                              sx={{ textAlign: "start", fontSize: "12px" }}
-                            >
-                              Your Display name must be 12 characters or less
-                              and not contain special characters. Nicknames are
-                              case sensitive (e.g., Examplename)
-                            </Typography>
-                          </Box>
-                        }
-                        placement="top"
-                        sx={{
-                          backgroundColor: "white",
-                          color: "red",
-                        }}
-                      >
-                        <Box
-                          style={{
-                            backgroundColor: "transparent",
-                            right: "10px",
-                            top: "8px",
-                            cursor: "pointer",
-                            position: "absolute",
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="22"
-                            height="22"
-                            fill="none"
-                            viewBox="0 0 22 22"
-                          >
-                            <g>
-                              <path
-                                stroke="#7C81F2"
-                                strokeWidth="1.5"
-                                d="M11 21c5.523 0 10-4.477 10-10S16.523 1 11 1 1 5.477 1 11s4.477 10 10 10z"
-                              ></path>
-                              <path
-                                stroke="#7C81F2"
-                                strokeLinecap="round"
-                                strokeWidth="1.5"
-                                d="M11 16v-6"
-                              ></path>
-                              <path
-                                fill="#7C81F2"
-                                d="M11 6a1 1 0 110 2 1 1 0 010-2z"
-                              ></path>
-                            </g>
-                          </svg>
-                        </Box>
-                      </BgWithTooltip>
-                    ) : (
-                      ""
-                    )}
                   </FormControl>{" "}
                 </Box>
               </Box>
@@ -1525,7 +1488,7 @@ export default function DialogProfile(props) {
                     type="text"
                     onChange={(e) => setDName(e.target.value)}
                     value={dName}
-                    disabled={disabledInp}
+                    disabled={tab === 0}
                     placeholder="Enter Your Display Name"
                     sx={{
                       "&:before": {
@@ -1638,7 +1601,7 @@ export default function DialogProfile(props) {
                       setAddressLine1(e.target.value);
                     }}
                     value={addressLine1}
-                    disabled={disabledInp}
+                    disabled={tab === 0}
                     placeholder="Enter Your Address"
                     sx={{
                       "&:before": {
@@ -1738,7 +1701,7 @@ export default function DialogProfile(props) {
                       setAddressLine2(e.target.value);
                     }}
                     value={addressLine2}
-                    disabled={disabledInp}
+                    disabled={tab === 0}
                     placeholder="Enter Your Address"
                     sx={{
                       "&:before": {
@@ -1763,45 +1726,6 @@ export default function DialogProfile(props) {
                       },
                     }}
                   />{" "}
-                  {addressLine2 === "" || addressLine2 === null ? (
-                    <Box
-                      sx={{
-                        backgroundColor: "transparent",
-                        right: "15px",
-                        top: "6px",
-                        cursor: "pointer",
-                        position: "absolute",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="7"
-                        height="20"
-                        fill="none"
-                        viewBox="0 0 7 20"
-                      >
-                        <g clipPath="url(#clip0_7173_204987)">
-                          <g>
-                            <g fill="#7848ED">
-                              <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
-                              <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
-                            </g>
-                          </g>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_7173_204987">
-                            <path
-                              fill="#fff"
-                              d="M0 0H6.154V20H0z"
-                              transform="matrix(-1 0 0 1 7 0)"
-                            ></path>
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </Box>
-                  ) : (
-                    ""
-                  )}
                 </FormControl>{" "}
               </Box>
               <Box sx={{ display: "flex" }}>
@@ -1834,7 +1758,7 @@ export default function DialogProfile(props) {
                         setCityOption(e.target.value);
                       }}
                       value={cityOption}
-                      disabled={disabledInp}
+                      disabled={tab === 0}
                       placeholder="Enter Your City"
                       sx={{
                         "&:before": {
@@ -1916,7 +1840,11 @@ export default function DialogProfile(props) {
                   </Typography>
                   <Autocomplete
                     disabled={tab === 0}
-                    value={stateProfile[stateProfile?.findIndex(s => s?.name === stateOption)] || stateOption}
+                    value={
+                      stateProfile[
+                        stateProfile?.findIndex((s) => s?.name === stateOption)
+                      ] || stateOption
+                    }
                     defaultValue={stateOption}
                     sx={{
                       width: "100%",
@@ -1932,19 +1860,19 @@ export default function DialogProfile(props) {
                     autoHighlight
                     disableClearable
                     onChange={handleChangeState}
-                    isOptionEqualToValue={(option, value) => option && option.name === value.name}
-                    getOptionLabel={(option) => (option && option.name) || ''}
+                    isOptionEqualToValue={(option, value) =>
+                      option && option.name === value.name
+                    }
+                    getOptionLabel={(option) => (option && option.name) || ""}
                     renderOption={(props, option) => (
-                      <Box
-                        component="li"
-                        {...props}
-                      >
+                      <Box component="li" {...props}>
                         {option?.name} ({option?.isoCode})
                       </Box>
                     )}
                     renderInput={(params) => (
                       <CssTextField
                         {...params}
+                        placeholder="Enter Your State"
                       />
                     )}
                   ></Autocomplete>
@@ -1982,7 +1910,7 @@ export default function DialogProfile(props) {
                           setZcode(e.target.value);
                         }}
                         value={zCode}
-                        disabled={disabledInp}
+                        disabled={tab === 0}
                         placeholder="Enter ZipCode"
                         sx={{
                           "&:before": {
@@ -2017,33 +1945,7 @@ export default function DialogProfile(props) {
                             cursor: "pointer",
                             position: "absolute",
                           }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="7"
-                            height="20"
-                            fill="none"
-                            viewBox="0 0 7 20"
-                          >
-                            <g clipPath="url(#clip0_7173_204987)">
-                              <g>
-                                <g fill="#7848ED">
-                                  <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
-                                  <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
-                                </g>
-                              </g>
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_7173_204987">
-                                <path
-                                  fill="#fff"
-                                  d="M0 0H6.154V20H0z"
-                                  transform="matrix(-1 0 0 1 7 0)"
-                                ></path>
-                              </clipPath>
-                            </defs>
-                          </svg>
-                        </Box>
+                        ></Box>
                       ) : (
                         ""
                       )}
@@ -2062,9 +1964,9 @@ export default function DialogProfile(props) {
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
-                        disabled={disabledInp}
+                        disabled={tab === 0}
                         value={value}
-                        onChange={(newValue) => setValue(newValue)}
+                        onChange={(value) => handleChangeDate(value)}
                         slots={{
                           openPickerIcon: returnIcon,
                         }}
@@ -2111,6 +2013,19 @@ export default function DialogProfile(props) {
                         }}
                       />
                     </LocalizationProvider>
+                    {dateError ? (
+                      <Typography
+                        sx={{
+                          fontSize: "10px",
+                          marginTop: "6px",
+                          color: "#e75857",
+                        }}
+                      >
+                        {dateError}
+                      </Typography>
+                    ) : (
+                      <></>
+                    )}
                   </Box>
                 </Box>
               ) : (
@@ -2141,7 +2056,7 @@ export default function DialogProfile(props) {
                           setZcode(e.target.value);
                         }}
                         value={zCode}
-                        disabled={disabledInp}
+                        disabled={tab === 0}
                         placeholder="Enter Your ZipCode"
                         sx={{
                           "&:before": {
@@ -2167,41 +2082,61 @@ export default function DialogProfile(props) {
                         }}
                       />{" "}
                       {zCode === "" || zCode === null ? (
-                        <Box
+                        <BgWithTooltip
+                          enterTouchDelay={0}
+                          title={
+                            <Box>
+                              {" "}
+                              <Typography
+                                sx={{ textAlign: "start", fontSize: "12px" }}
+                              >
+                                Zip Code (Postal Code) is applicable only for US
+                                addresses
+                              </Typography>
+                            </Box>
+                          }
+                          placement="top"
                           sx={{
-                            backgroundColor: "transparent",
-                            right: "15px",
-                            top: "6px",
-                            cursor: "pointer",
-                            position: "absolute",
+                            backgroundColor: "white",
+                            color: "red",
                           }}
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="7"
-                            height="20"
-                            fill="none"
-                            viewBox="0 0 7 20"
+                          <Box
+                            style={{
+                              backgroundColor: "transparent",
+                              right: "10px",
+                              top: "8px",
+                              cursor: "pointer",
+                              position: "absolute",
+                            }}
                           >
-                            <g clipPath="url(#clip0_7173_204987)">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="22"
+                              height="22"
+                              fill="none"
+                              viewBox="0 0 22 22"
+                            >
                               <g>
-                                <g fill="#7848ED">
-                                  <path d="M3.909 0c-.41.001-.82.027-1.227.079C1.472.303.728 1.303.864 2.569c.287 2.69.59 5.38.909 8.067.162 1.359 1.01 2.14 2.22 2.111 1.143-.019 1.949-.848 2.098-2.156.299-2.658.596-5.315.89-7.97C7.125 1.31 6.38.277 5.125.066A10.42 10.42 0 003.91 0z"></path>
-                                  <path d="M3.928 20c1.22 0 2.305-1.098 2.336-2.377a2.5 2.5 0 00-.683-1.722 2.358 2.358 0 00-1.659-.739 2.318 2.318 0 00-1.618.731 2.456 2.456 0 00-.665 1.686c0 .63.238 1.235.665 1.687a2.318 2.318 0 001.618.73l.006.005z"></path>
-                                </g>
-                              </g>
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_7173_204987">
                                 <path
-                                  fill="#fff"
-                                  d="M0 0H6.154V20H0z"
-                                  transform="matrix(-1 0 0 1 7 0)"
+                                  stroke="#7C81F2"
+                                  strokeWidth="1.5"
+                                  d="M11 21c5.523 0 10-4.477 10-10S16.523 1 11 1 1 5.477 1 11s4.477 10 10 10z"
                                 ></path>
-                              </clipPath>
-                            </defs>
-                          </svg>
-                        </Box>
+                                <path
+                                  stroke="#7C81F2"
+                                  strokeLinecap="round"
+                                  strokeWidth="1.5"
+                                  d="M11 16v-6"
+                                ></path>
+                                <path
+                                  fill="#7C81F2"
+                                  d="M11 6a1 1 0 110 2 1 1 0 010-2z"
+                                ></path>
+                              </g>
+                            </svg>
+                          </Box>
+                        </BgWithTooltip>
                       ) : (
                         ""
                       )}
@@ -2220,9 +2155,9 @@ export default function DialogProfile(props) {
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
-                        disabled={disabledInp}
+                        disabled={tab === 0}
                         value={value}
-                        onChange={(newValue) => setValue(newValue)}
+                        onChange={(newValue) => handleChangeDate(newValue)}
                         slots={{
                           openPickerIcon: returnIcon,
                         }}
@@ -2267,6 +2202,19 @@ export default function DialogProfile(props) {
                         }}
                       />
                     </LocalizationProvider>
+                    {dateError ? (
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          marginTop: "6px",
+                          color: "#e75857",
+                        }}
+                      >
+                        {dateError}
+                      </Typography>
+                    ) : (
+                      <></>
+                    )}
                   </Box>
                   {tab !== 0 ? (
                     <Box className="Caution mb-3 d-flex align-items-center">
@@ -2297,7 +2245,6 @@ export default function DialogProfile(props) {
                     text={"EDIT"}
                     onClick={() => {
                       setTab(1);
-                      setDisabledInp(false);
                     }}
                   />
                 ) : (
@@ -2309,7 +2256,6 @@ export default function DialogProfile(props) {
                         onClick={() => {
                           setTab(0);
                           dispatch(exitEditProfile());
-                          setDisabledInp(true);
                           setAddressLine1(address1 || "");
                           setAddressLine2(address2 || "");
                           setCityOption(city || "");
@@ -2353,7 +2299,6 @@ export default function DialogProfile(props) {
         onClose={() => {
           setTab(0);
           dispatch(exitEditProfile());
-          setDisabledInp(true);
           setAddressLine1(address1 || "");
           setAddressLine2(address2 || "");
           setCityOption(city || "");
