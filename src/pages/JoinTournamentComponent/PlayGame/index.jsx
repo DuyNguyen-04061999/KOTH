@@ -241,14 +241,14 @@ export default function PlayGame(props) {
                           tokenUser || localStorage.getItem("token")
                         }&tournamentId=${detailTournament?.id}&skinId=${
                           detailTournament?.tournamentInfors?.skin?.id
-                        }`
+                        }&env=${process.env.REACT_APP_ENV}`
                       : `${
                           detailTournament?.tournamentInfors?.game?.gameHost
                         }?token=${
                           tokenUser || localStorage.getItem("token")
                         }&tournamentId=${detailTournament?.id}&skinId=${
                           detailTournament?.tournamentInfors?.skin?.id
-                        }`
+                        }&env=${process.env.REACT_APP_ENV}`
                   }
                 ></iframe>
               ) : loading ? (
@@ -330,14 +330,14 @@ export default function PlayGame(props) {
                         tokenUser || localStorage.getItem("token")
                       }&tournamentId=${detailTournament?.id}&skinId=${
                         detailTournament?.tournamentInfors?.skin?.id
-                      }`
+                      }&env=${process.env.REACT_APP_ENV}`
                     : `${
                         detailTournament?.tournamentInfors?.game?.gameHost
                       }?token=${
                         tokenUser || localStorage.getItem("token")
                       }&tournamentId=${detailTournament?.id}&skinId=${
                         detailTournament?.tournamentInfors?.skin?.id
-                      }`
+                      }&env=${process.env.REACT_APP_ENV}`
                 }
               ></iframe>
             ) : loading ? (
