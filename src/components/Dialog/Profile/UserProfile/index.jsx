@@ -79,7 +79,7 @@ export default function DialogUserProfile(props) {
             sx={{
               right: "40%",
               bottom: -5,
-              background: "#1a151e",
+              background: "#211d28",
             }}
           >
             <EditIcon />
@@ -276,7 +276,7 @@ export default function DialogUserProfile(props) {
         onClose={handleShowProfile}
         sx={{
           ".css-m9glnp-MuiPaper-root-MuiDialog-paper": {
-            backgroundColor: "#1a151e",
+            backgroundColor: "#211d28",
           },
           "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
             width: "100%",
@@ -288,7 +288,7 @@ export default function DialogUserProfile(props) {
             className="pb-5"
             display={"flex"}
             flexDirection={"column"}
-            sx={{ backgroundColor: "#1a151e" }}
+            sx={{ backgroundColor: "#211d28" }}
           >
             <Box
               className="box-head"

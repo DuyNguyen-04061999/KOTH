@@ -10,7 +10,7 @@ export default function AnimButton(props) {
     style,
     isHasIcon,
     isSubmitBtn,
-    disabledBtn
+    disabledBtn,
   } = props;
   const ArrrowIcon = () => (
     <span className="icon-arrow">
@@ -180,7 +180,7 @@ export default function AnimButton(props) {
     case "highlight":
       return (
         <Button
-        type={isSubmitBtn && "submit"}
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#BE48ED",
             color: "white",
@@ -214,7 +214,7 @@ export default function AnimButton(props) {
     case "success":
       return (
         <Button
-        type={isSubmitBtn && "submit"}
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#4FBF67",
             color: "white",
@@ -248,7 +248,7 @@ export default function AnimButton(props) {
     case "error":
       return (
         <Button
-        type={isSubmitBtn && "submit"}
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#F05153",
             color: "white",
@@ -282,7 +282,7 @@ export default function AnimButton(props) {
     case "full-width":
       return (
         <Button
-        type={isSubmitBtn && "submit"}
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#7848ED",
             color: "white",
@@ -311,10 +311,66 @@ export default function AnimButton(props) {
           </p>
         </Button>
       );
+    case "active":
+      return (
+        <Button
+          type={isSubmitBtn && "submit"}
+          sx={{
+            backgroundColor:isHasIcon ? "#7848ED" : "#443565",
+            color: "white",
+            padding: "11px 20px",
+            borderRadius: "20px",
+            border: "0px solid",
+            width: "100%",
+            fontWeight: "700",
+            transition: ".3s ease",
+            " :hover": {
+              backgroundColor:isHasIcon ? "#7848ED" : "#443565",
+            },
+            display: "flex",
+            alignItems: "center",
+            fontSize: "16px",  
+            ...style,
+          }}
+          onClick={onClick}
+          // disableRipple
+          disabled={disabledBtn}
+        >
+          <p
+            style={{
+              textTransform: "none",
+              marginRight:"5px"
+            }}
+          >
+            {text}
+          </p>
+
+          {isHasIcon ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="13"
+              fill="none"
+              viewBox="0 0 17 13"
+            >
+              <g>
+                <g>
+                  <path
+                    fill="#fff"
+                    d="M6.1 8.1L2.9 4.9.5 7.3l5.6 5.6L16.5 2.5 14.1.1l-8 8z"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+          ) : (
+            <></>
+          )}
+        </Button>
+      );
     default:
       return (
         <Button
-        type={isSubmitBtn && "submit"}
+          type={isSubmitBtn && "submit"}
           sx={{
             backgroundColor: "#7848ED",
             color: "white",

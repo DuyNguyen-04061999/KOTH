@@ -65,6 +65,9 @@ const FilterRevenue = () => {
     const {listRefs} = useSelector((state) => state.adminSubDistributorReducer);
     const {listEndUser} = useSelector((state) => state.adminAgentReducer);
     const [data, setData] = useState([]);
+    const { name } = useSelector(state => state?.adminAuthReducer)
+    const location = window.location.host.replace("admin.", "");
+    const urlRedirect = process.env.REACT_APP_ENV === "development" ? `http://${location}/influencers/${name}` : `https://${location}/influencers/${name}`;
 
     useEffect(() => {
         if (roles && roles?.length && roles[0]) {
@@ -515,8 +518,8 @@ const FilterRevenue = () => {
     }
 
     const handleCopyRef = () => {
-        copy(ref)
-        dispatch(showToastNotify({type: "success", message: "Copy ref code successfully!"}))
+        copy(urlRedirect || ref)
+        dispatch(showToastNotify({type: "success", message: "Copy promo code successfully!"}))
     }
 
     return (
@@ -536,39 +539,46 @@ const FilterRevenue = () => {
                             roles?.includes("master")
                                 ? "Master"
                                 : roles?.includes("distributor")
-                                    ? "Distributor"
+                                    ? name || "Distributor"
                                     : roles?.includes("sub_distributor")
                                         ? "Sub Distributor"
-                                        : "Agent"
+                                        : name || "Agent"
                         } Account`}
                 </Typography>
                 {roles?.includes("agent") ? (
-                    <Box sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}>
-                        <Box sx={{
-                            display: width < 576 ? "none" : "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            backgroundColor: "#F7F7F7",
-                            border: "2px solid #E6E6E6",
-                            padding: "10px 15px",
-                            minWidth: "300px",
-                            borderRadius: "16px",
-                            marginRight: "24px",
+                    <Box>
+                        <Box component={"span"} sx={{
+                            fontSize: "12px"
                         }}>
-                            <Typography sx={{
-                                color: "#8F909E",
-                                fontSize: "14px",
-                                fontWeight: "700",
-                            }}>{ref}</Typography>
-                            <Box onClick={() => handleCopyRef()}>
-                                <CopyIconSVG className="ms-2 me-2"/>
-                            </Box>
+                            Promo Code
                         </Box>
-                        <Box onClick={() => dispatch(openScanQRCode())}>
-                            <QRCodeIconSVG/>
+                        <Box sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}>
+                            <Box sx={{
+                                display: width < 576 ? "none" : "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                backgroundColor: "#F7F7F7",
+                                border: "2px solid #E6E6E6",
+                                padding: "10px 15px",
+                                minWidth: "300px",
+                                borderRadius: "16px",
+                                marginRight: "24px",
+                            }}>
+                                <Typography sx={{
+                                    color: "#8F909E",
+                                    fontSize: "14px",
+                                    fontWeight: "700",
+                                }}>{urlRedirect || ref}</Typography>
+                                <Box onClick={() => handleCopyRef()}>
+                                    <CopyIconSVG className="ms-2 me-2"/>
+                                </Box>
+                            </Box>
+                            <Box onClick={() => dispatch(openScanQRCode())}>
+                                <QRCodeIconSVG/>
+                            </Box>
                         </Box>
                     </Box>
                 ) : ""}

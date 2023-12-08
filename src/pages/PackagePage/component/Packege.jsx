@@ -2,6 +2,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -12,6 +13,7 @@ import DialogConfirm from "./DialogConfirm";
 import ListPackage from "./ListPackage";
 
 export default function Package() {
+  const { t } = useTranslation("package");
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.packageReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
@@ -49,8 +51,8 @@ export default function Package() {
   const meta = {
     title:
       process.env.REACT_APP_ENV === "production"
-        ? "Play4promo packages"
-        : "Play4promo staging packages",
+        ? "Play4promo"
+        : "Play4promo staging",
     description:
       "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
     meta: {
@@ -67,8 +69,8 @@ export default function Package() {
       property: {
         "og:title":
           process.env.REACT_APP_ENV === "production"
-            ? "Play4promo packages"
-            : "Play4promo staging packages",
+            ? "Play4promo"
+            : "Play4promo staging",
         "og:url": window.location.href,
         "og:image:secure_url":
           process.env.REACT_APP_ENV === "development"
@@ -105,7 +107,7 @@ export default function Package() {
                     color: "#fff",
                   }}
                 >
-                  Packages
+                  {t("Packages")}
                 </Typography>
               ) : (
                 ""
@@ -139,7 +141,7 @@ export default function Package() {
                             : "30px",
                       }}
                     >
-                      Subscription Pack
+                      {t("Subscription Pack")}
                     </Typography>
                   </Box>
                   <Box
@@ -200,7 +202,7 @@ export default function Package() {
                             : "30px",
                       }}
                     >
-                      Extra Pack
+                      {t("Extra Pack")}
                     </Typography>
                   </Box>
                   <Box
@@ -260,7 +262,7 @@ export default function Package() {
                   color: "#fff",
                 }}
               >
-                Packages
+                {t("Packages")}
               </Typography>
             ) : (
               ""
@@ -295,7 +297,7 @@ export default function Package() {
                   padding:
                     (pathname && pathname?.includes("home")) || pathname === "/"
                       ? "0px"
-                      : "40px",
+                      : "0px",
                   marginTop:
                     (pathname && pathname?.includes("home")) || pathname === "/"
                       ? "24px"

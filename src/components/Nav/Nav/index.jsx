@@ -1,11 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import {
-  updateFromRouter
-} from "../../../redux-saga-middleware/reducers/appReducer";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTab,
   showDropdown,
@@ -18,6 +17,7 @@ import "../Nav/Nav.scss";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
+  const { t } = useTranslation('navigation');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -134,7 +134,7 @@ export default function Navbar() {
                     overflow: "hidden",
                   }}
                 >
-                  Home
+                  {t("Home")}
                 </Typography>
               </Box>
               <hr
@@ -189,7 +189,7 @@ export default function Navbar() {
                       overflow: "hidden",
                     }}
                   >
-                    Promotions
+                    {t("Promotion")}
                   </Typography>
                   <Box sx={{ marginLeft: "18px" }}>
                     <svg
@@ -299,7 +299,7 @@ export default function Navbar() {
                       overflow: "hidden",
                     }}
                   >
-                    Hot
+                    {t("Hot")}
                   </Typography>
                 </Box>
                 <hr
@@ -371,7 +371,7 @@ export default function Navbar() {
                       overflow: "hidden",
                     }}
                   >
-                    Ongoing
+                    {t("Ongoing")}
                   </Typography>
                 </Box>
                 <Box
@@ -434,7 +434,7 @@ export default function Navbar() {
                       overflow: "hidden",
                     }}
                   >
-                    Upcoming
+                   {t("Upcoming")}
                   </Typography>
                 </Box>
                 <Box
@@ -497,7 +497,7 @@ export default function Navbar() {
                       overflow: "hidden",
                     }}
                   >
-                    Ended
+                    {t("Ended")}
                   </Typography>
                 </Box>
               </Box>
@@ -565,7 +565,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("packages") && "white",
                   }}
                 >
-                  Packages
+                {t("Packages")}
                 </Typography>
               </Box>
             </Box>
@@ -808,7 +808,7 @@ export default function Navbar() {
                     pathname && pathname?.includes("help-center") && "white",
                 }}
               >
-                Help Center
+                {t("Help Center")}
               </Typography>
             </Box>
           ) : (
@@ -951,7 +951,7 @@ export default function Navbar() {
                   color: pathname && pathname?.includes("support") && "white",
                 }}
               >
-                Support
+                {t("Support")}
               </Typography>
             </Box>
           ) : (

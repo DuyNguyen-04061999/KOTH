@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -28,7 +29,8 @@ const theme = createTheme({
     },
   },
 });
-export default function HotTournament() {
+export default function UpcomingPromotion() {
+  const {t} = useTranslation('upcoming_promo');
   const { width } = useWindowDimensions();
   const typographyStyle = {
     textAlign: "start",
@@ -143,7 +145,7 @@ export default function HotTournament() {
                   fontWeight: 700,
                 }}
               >
-                Upcoming Promotions
+                {t('Upcoming Promotions')}
               </Typography>
               <Box
                 sx={{
@@ -220,7 +222,7 @@ export default function HotTournament() {
                   fontSize: "24px",
                 }}
               >
-                Upcoming Promotions
+                {t('Upcoming Promotions')}
               </Typography>
               <Box
                 sx={{

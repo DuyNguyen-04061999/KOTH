@@ -1,9 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const ListEmpty = (props) => {
   const { textData } = props;
-
+  const { t } = useTranslation();
   return (
     <Box
       className="pt-4 pb-4 rounded"
@@ -66,7 +67,7 @@ const ListEmpty = (props) => {
           letterSpacing: "0.8px",
         }}
       >
-        No {textData} promotions available
+        {t("No")} {t(textData)} {t("promotions available")}
       </Typography>{" "}
       <Typography
         className="text-center"
@@ -78,7 +79,7 @@ const ListEmpty = (props) => {
           letterSpacing: "0.8px",
         }}
       >
-        at the moment
+        {t("at the moment")}
       </Typography>
     </Box>
   );

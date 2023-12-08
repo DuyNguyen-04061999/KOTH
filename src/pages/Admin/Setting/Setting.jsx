@@ -55,17 +55,17 @@ const Setting = () => {
   const handleChangeRefcode = (e) => {
     e.preventDefault();
     if(!newRefcode) {
-      dispatch(showToastNotify({ type: "warning", message: "Enter new refcode !" }))
+      dispatch(showToastNotify({ type: "warning", message: "Enter new promo code !" }))
       return
     }  else if (/\s/.test(newRefcode)) {
-      dispatch(showToastNotify({ type: "warning", message: "Refcode invalid !" }))
+      dispatch(showToastNotify({ type: "warning", message: "Promo code invalid !" }))
       return
     } else if (newRefcode?.length > 15) {
-      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too long ! Maximum 15 characters" }))
+      dispatch(openRefcodeNotify({ type: "error", message: "Promo code too long ! Maximum 15 characters" }))
       // dispatch(showToastNotify({ type: "warning", message: "Refcode too long !" }))
     } else if (newRefcode?.length < 5) {
       // dispatch(showToastNotify({ type: "warning", message: "Refcode too short !" }))
-      dispatch(openRefcodeNotify({ type: "error", message: "Refcode too short ! Minimum 5 characters" }))
+      dispatch(openRefcodeNotify({ type: "error", message: "Promo code too short ! Minimum 5 characters" }))
     } else {
       dispatch(updateAccount({ newRefcode }))
       setNewRefcode("")
@@ -303,7 +303,7 @@ const Setting = () => {
                 backgroundColor: "#F7F7F7",
               }}
             >
-              Change Refcode
+              Change promo code
             </Box>
             <Box
               component={"form"}
@@ -345,7 +345,7 @@ const Setting = () => {
                       letterSpacing: "0.9px",
                     }}
                   >
-                    Current Refcode
+                    Current promo code
                   </Box>
                   <Box
                     component={"input"}
@@ -390,7 +390,7 @@ const Setting = () => {
                       letterSpacing: "0.9px",
                     }}
                   >
-                    New Refcode <Box component={"span"} className="text-danger">
+                    New promo code <Box component={"span"} className="text-danger">
                       {"("} Min 5 - Max 15 Characters {")"}
                     </Box>
                   </Box>
@@ -406,7 +406,7 @@ const Setting = () => {
                       letterSpacing: "0.3em",
                     }}
                     type="text"
-                    autoComplete="New Refcode"
+                    autoComplete="New promo code"
                     value={newRefcode}
                     onChange={(e) => setNewRefcode(e?.target?.value?.toLowerCase())}
                   />
@@ -431,7 +431,7 @@ const Setting = () => {
                   }}
                   onClick={handleChangeRefcode}
                 >
-                  Update Refcode
+                  Update promo code
                 </Button>
               </Box>
             </Box>

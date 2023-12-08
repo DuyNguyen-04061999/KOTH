@@ -25,6 +25,7 @@ import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
+import { useTranslation } from "react-i18next";
 import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import "./index.scss";
 
@@ -43,6 +44,7 @@ export default function Dialoglg() {
     (state) => state.paymentReducer
   );
   const { countTicket, userAvatar } = useSelector((state) => state.userReducer);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (transData === 0) {
@@ -87,7 +89,7 @@ export default function Dialoglg() {
       {token === "" || token === null || token === undefined ? (
         <Box className="btn-group">
           <button className="btn-sign-up signin" onClick={handleClickSignIn}>
-            <span>SIGN IN</span>
+            <span style={{ textTransform: "uppercase",fontFamily:"Cyntho Next" }}>{t("Sign In")}</span>
           </button>
           {token && (
             <div
@@ -419,8 +421,8 @@ export default function Dialoglg() {
                       className="text-white ps-2 pe-2"
                     >
                       {user?.userNickName?.length > 10
-                          ? user?.userNickName.slice(0, 10) + "..."
-                          : user?.userNickName}
+                        ? user?.userNickName.slice(0, 10) + "..."
+                        : user?.userNickName}
                     </Typography>
                   </Box>
                   {uPack ? (
@@ -560,7 +562,7 @@ export default function Dialoglg() {
                             marginLeft: "4px",
                           }}
                         >
-                          User Info
+                          {t('User Info')}
                         </button>
                       </Dropdown.Item>
                     </Grid>
@@ -657,7 +659,7 @@ export default function Dialoglg() {
                         marginLeft: "4px",
                       }}
                     >
-                      Logout
+                      {t('Logout')}
                     </button>
                   </Dropdown.Item>
                 </Box>

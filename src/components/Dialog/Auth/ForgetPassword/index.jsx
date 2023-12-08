@@ -1,9 +1,12 @@
 import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
-  forgetPasswordReady, updateVerifyOTPType
+  forgetPasswordReady,
+  updateVerifyOTPType,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -16,10 +19,10 @@ export default function ForgetPassword() {
   const { isForgetPassword } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [username, setUsername] = useState("");
-  const [optionEmail, setOptionEmail] = useState(true);
+  const [optionEmail, setOptionEmail] = useState(false);
   const dispatch = useDispatch();
-  
-   useEffect(() => {
+  const { t } = useTranslation("auth");
+  useEffect(() => {
     dispatch(
       updateVerifyOTPType(optionEmail ? "forget_email" : "forget_phone")
     );
@@ -27,20 +30,26 @@ export default function ForgetPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateEmail(username)) {
-      setOptionEmail(true)
-      dispatch(
-        forgetPasswordReady({
-          email: username,
-        })
-      );
-    } else if (validatePhoneNumber(username)) {
-      setOptionEmail(false)
+    // if (validateEmail(username)) {
+    //   setOptionEmail(true);
+    //   dispatch(
+    //     forgetPasswordReady({
+    //       email: username,
+    //     })
+    //   );
+    // } else 
+    if (validatePhoneNumber(username)) {
+      setOptionEmail(false);
       dispatch(
         forgetPasswordReady({
           phone: username,
         })
       );
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Phone number invalid!"
+      }))
     }
   };
 
@@ -70,7 +79,7 @@ export default function ForgetPassword() {
             fontWeight: "700",
           }}
         >
-          Forgot Password
+          {t("Forgot Password")}?
         </Typography>
         <Typography
           sx={{
@@ -80,8 +89,9 @@ export default function ForgetPassword() {
             marginTop: device === "Desktop" ? "12px" : "8px",
           }}
         >
-          Please enter the email/phone number that associated with your account.
-          We will send you a verification code.
+          {t(
+            "Please enter the phone number that associated with your account. We will send you a verification code."
+          )}
         </Typography>
       </Box>
       <Box
@@ -137,12 +147,12 @@ export default function ForgetPassword() {
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-              placeholder="Email/Phone number"
+              placeholder={t("Phone number")}
+              // placeholder={t("Email") + "/" + t("Phone number")}
               type="text"
             />
           </FormControl>
         </Box>
-       
       </Box>
       <Box
         sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}
@@ -150,25 +160,23 @@ export default function ForgetPassword() {
         <Box sx={{ width: "48%" }}>
           <AnimButton
             type="ghost"
-            text="BACK"
+            text={t("BACK")}
             onClick={() => dispatch(clickTab("login"))}
-          >
-            Back
-          </AnimButton>
+          ></AnimButton>
         </Box>
         <Box sx={{ width: "48%" }}>
           {/* {!(
             (optionEmail && username && email && !emailError) ||
             (!optionEmail && username && phoneNumber && !phoneNumberError)
           ) ? ( */}
-          {username && !validateEmail(username) && !validatePhoneNumber(username) ? (
-            <AnimButton type="disable" text="NEXT" />
+          {!validateEmail(username) && !validatePhoneNumber(username) ? (
+            <AnimButton type="disable" text={t("NEXT")} />
           ) : isForgetPassword ? (
-            <AnimButton type="loading" text="NEXT" isSubmitBtn />
+            <AnimButton type="loading" text={t("NEXT")} isSubmitBtn />
           ) : (
             <AnimButton
               type="primary"
-              text="NEXT"
+              text={t("NEXT")}
               onClick={handleSubmit}
               isSubmitBtn
             />
@@ -187,7 +195,7 @@ export default function ForgetPassword() {
         <Typography
           sx={{ fontSize: width < 576 ? "12px" : "14px", color: "white" }}
         >
-          Already have an account?
+          {t("Already have an account?")}
         </Typography>
         <Typography
           onClick={() => dispatch(clickTab("login"))}
@@ -198,7 +206,7 @@ export default function ForgetPassword() {
             color: "#FF9F38",
           }}
         >
-          Sign in
+          {t("Sign in")}
         </Typography>
       </Box>
     </Box>

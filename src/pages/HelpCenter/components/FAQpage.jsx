@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { makeStyles } from "@mui/styles";
-import { Typography, Grid, Box } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
+import React, { useState } from "react";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const useStyles = makeStyles((theme) => ({
@@ -328,7 +328,7 @@ const HelpCenterPage = () => {
           sx={{
             color: "#9485b7",
             backgroundColor: "#2a2535",
-            borderRight: "5px solid #1a151e",
+            borderRight: "5px solid #211d28",
           }}
         >
           {renderTitle}
