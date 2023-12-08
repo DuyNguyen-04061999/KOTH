@@ -192,9 +192,6 @@ export default function DialogProfile(props) {
     }
   }, [dName, dateError]);
 
-  console.log(isEditProfile);
-  console.log(tab);
-
   useEffect(() => {
     if (isEditProfile) {
       setTab(1);
