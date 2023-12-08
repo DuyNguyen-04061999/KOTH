@@ -190,27 +190,48 @@ export default function NewHomePage() {
             <Box>
               <Grid container columnSpacing={2} rowSpacing={2}>
                 {listBanner?.map((i, index) => {
+                  console.log(i);
                   return (
                     <Grid item md={4} xs={6} key={index}>
-                      <Box
-                        onClick={() => {
-                          if(index === 0) {
-                            navigate("/packages")
-                          }
-                          else if( token === "" || token === null || token === undefined ) {
-                            dispatch(toggleLoginDialog())
-                          }
-                        }}
+                      {i?.bannerType !== "contact" ? (
+                        <Box
+                          onClick={() => {
+                            if(i?.bannerType === "package") {
+                              navigate("/packages")
+                            } else if( i?.bannerType === "new") {
+                              if(!token) {
+                                dispatch(toggleLoginDialog())
+                              } else {
+
+                              }
+                            }
+                          }}
                         component={"img"}
                         src={
-                          listBanner
+                          i?.bannerLink
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
                               i?.bannerLink
-                            : i?.bannerLink
+                            : images.BannerTour
                         }
                         sx={{ width: "100%", height: "auto" }}
                       ></Box>
+                      ) : (
+                        <Box component={"a"} href="mailto:support@play4promo.com">
+                          <Box
+                            component={"img"}
+                            src={
+                              i?.bannerLink
+                              ? process.env.REACT_APP_SOCKET_SERVER +
+                                "/" +
+                                i?.bannerLink
+                              : images.BannerTour
+                            }
+                            sx={{ width: "100%", height: "auto" }}
+                        ></Box>
+                        </Box>
+                        
+                      )}
                     </Grid>
                   );
                 })}
@@ -301,9 +322,7 @@ export default function NewHomePage() {
               ) : (
                 <SlickSlider
                   appendDot={true}
-                  images={listBanner?.map((item) => {
-                    return item?.bannerLinkMobile;
-                  })}
+                  images={listBanner}
                   type={"tour"}
                   typeR={"banner"}
                 />

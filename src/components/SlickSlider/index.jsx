@@ -86,8 +86,84 @@ export default function SlickSlider(props) {
     return images?.pepperBanner;
   }
 
+  if(typeR === "banner") {
+    return <Slider {...settings}>
+    {img?.map((item, index) => {
+      return (
+        <Box key={index}>
+        {item?.bannerType !== "contact" ? (
+          <Box
+            key={index}
+            sx={{
+              height: width < 576 ? "208px" : "100%",
+            }}
+            onClick={() => {
+              if(item?.bannerType === "package") {
+                navigate("/packages")
+              } else if( item?.bannerType === "new") {
+                if(!token) {
+                  dispatch(toggleLoginDialog())
+                } else {
 
-  return img?.length > 0 ? (
+                }
+              }
+            }}
+        >
+          <LazyLoadImage
+            style={{
+              width: "100%",
+              height: "100%",
+              cursor: "pointer",
+              borderRadius: "8px",
+              objectFit: "contain",
+            }}
+            effect="blur"
+            wrapperProps={{
+              style: {
+                transitionDelay: "0.5s",
+              },
+            }}
+            src={
+              type && type === "tour"
+                ? process.env.REACT_APP_SOCKET_SERVER + "/" + item?.bannerLinkMobile
+                : item?.bannerLinkMobile
+            }
+          ></LazyLoadImage>
+        </Box>
+        ) : <Box
+              key={index}
+              sx={{
+                height: width < 576 ? "208px" : "100%",
+              }}
+              component={"a"}
+              href="mailto:support@play4promo.com"
+          >
+            <LazyLoadImage
+              style={{
+                width: "100%",
+                height: "100%",
+                cursor: "pointer",
+                borderRadius: "8px",
+                objectFit: "contain",
+              }}
+              effect="blur"
+              wrapperProps={{
+                style: {
+                  transitionDelay: "0.5s",
+                },
+              }}
+              src={
+                type && type === "tour"
+                ? process.env.REACT_APP_SOCKET_SERVER + "/" + item?.bannerLinkMobile
+                : item?.bannerLinkMobile
+              }
+            ></LazyLoadImage>
+          </Box>}
+        </Box>
+      );
+    })}
+  </Slider>
+  } return img?.length > 0 ? (
     <Slider {...settings}>
       {img?.map((item, index) => {
         return (
