@@ -96,7 +96,7 @@ export default function SlickSlider(props) {
           <Box
             key={index}
             sx={{
-              height: width < 576 ? "208px" : "100%",
+              height: "100%",
             }}
             onClick={() => {
               if(item?.bannerType === "package") {
@@ -135,7 +135,7 @@ export default function SlickSlider(props) {
         ) : <Box
               key={index}
               sx={{
-                height: width < 576 ? "208px" : "100%",
+                height: "100%",
               }}
               component={"a"}
               href="mailto:support@play4promo.com"
