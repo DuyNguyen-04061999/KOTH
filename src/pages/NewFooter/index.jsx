@@ -136,6 +136,8 @@ export default function NewFooter() {
             {t("Contact Us")}
           </Typography>
           <Box
+            component={"a"}
+            href="mailto:support@play4promo.com"
             sx={{
               textDecoration: "none",
               display: "flex",

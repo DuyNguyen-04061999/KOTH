@@ -192,7 +192,7 @@ const appReducer = (
     case "RANDOM_RENDER_POPUP":
       return {...state, randomRender: payload}
     case "GET_LIST_BANNER" : return {...state, isFecthListBanner:true}
-    case "GET_LIST_BANNER_SUCCESS" : return {...state, isFecthListBanner:false, listBanner: payload.list}
+    case "GET_LIST_BANNER_SUCCESS" : return {...state, isFecthListBanner: false, listBanner: payload.list || []}
     case "GET_LIST_BANNER_FAIL" : return {...state, isFecthListBanner:false}
     case "OPEN_DIALOG_EXCLUSIVE" : return {...state, isDialogExclusive:true}
     case "CLOSE_DIALOG_EXCLUSIVE" : return {...state, isDialogExclusive:false}

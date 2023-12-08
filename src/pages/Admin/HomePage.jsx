@@ -82,6 +82,7 @@ const HomePage = () => {
           "Manager",
           "Agents",
           "Players",
+          "Total Deposit",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
@@ -97,6 +98,7 @@ const HomePage = () => {
           "Code/Link",
           "Manager",
           "Players",
+          "Total Deposit",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
@@ -109,6 +111,7 @@ const HomePage = () => {
         setHeaderList([
           "ID",
           "Display Name",
+          "Total Deposit",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",

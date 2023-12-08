@@ -285,7 +285,8 @@ function* userInfoSaga(dataRequest) {
         yield put(getUserInfoSuccess(data?.data));
         yield put(saveNickNameWhenLogin(data?.data?.nickName));
         if (
-          data?.data?.user?.userVerifiedEmail === 0 &&
+          // data?.data?.user?.userVerifiedEmail === 0 &&
+          // data?.data?.user?.userVerifiedPhone === 0
           data?.data?.user?.userVerifiedPhone === 0
         ) {
           yield put(updateVerifyOTPType("reVerify"));

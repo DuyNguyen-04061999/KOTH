@@ -8,13 +8,12 @@ import { BannerTour, BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
-import { getListBanner } from "../../../redux-saga-middleware/reducers/appReducer";
+import { getListBanner, openDialogExclusive } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
-import FilterPromotion from "../../../components/filterPromotion";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function NewHomePage() {
@@ -193,25 +192,45 @@ export default function NewHomePage() {
                 {listBanner?.map((i, index) => {
                   return (
                     <Grid item md={4} xs={6} key={index}>
-                      <Box
-                        onClick={() => {
-                          if(index === 0) {
-                            navigate("/packages")
-                          }
-                          else if( token === "" || token === null || token === undefined ) {
-                            dispatch(toggleLoginDialog())
-                          }
-                        }}
+                      {i?.bannerType !== "contact" ? (
+                        <Box
+                          onClick={() => {
+                            if(i?.bannerType === "package") {
+                              navigate("/packages")
+                            } else if( i?.bannerType === "new") {
+                              if(!token) {
+                                dispatch(toggleLoginDialog())
+                              } else {
+                                dispatch(openDialogExclusive())
+                              }
+                            }
+                          }}
                         component={"img"}
                         src={
-                          listBanner
+                          i?.bannerLink
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
                               i?.bannerLink
-                            : i?.bannerLink
+                            : images.BannerTour
                         }
                         sx={{ width: "100%", height: "auto" }}
                       ></Box>
+                      ) : (
+                        <Box component={"a"} href="mailto:support@play4promo.com">
+                          <Box
+                            component={"img"}
+                            src={
+                              i?.bannerLink
+                              ? process.env.REACT_APP_SOCKET_SERVER +
+                                "/" +
+                                i?.bannerLink
+                              : images.BannerTour
+                            }
+                            sx={{ width: "100%", height: "auto" }}
+                        ></Box>
+                        </Box>
+                        
+                      )}
                     </Grid>
                   );
                 })}
@@ -220,11 +239,11 @@ export default function NewHomePage() {
           ) : (
             ""
           )}
-          <Box sx={{
+          {/* <Box sx={{
             marginTop: width < 576 ? "24px" : "34px",
           }}>
             <FilterPromotion />
-          </Box>
+          </Box> */}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "34px",
@@ -302,9 +321,7 @@ export default function NewHomePage() {
               ) : (
                 <SlickSlider
                   appendDot={true}
-                  images={listBanner?.map((item) => {
-                    return item?.bannerLinkMobile;
-                  })}
+                  images={listBanner}
                   type={"tour"}
                   typeR={"banner"}
                 />

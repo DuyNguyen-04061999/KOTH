@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../components/MainLayout/MainLayout";
 import TitleHomeDesktopComponent from "../../components/Title/TitleHomeDesktopComponent";
-import _socket from "../../redux-saga-middleware/config/socket";
 import { getFontSizeDependOnWidth } from "../../utils/config";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
@@ -15,7 +14,6 @@ import "./index.scss";
 export default function Tournament() {
   const { width } = useWindowDimensions();
   const MarginTop = parseFloat(width / 100);
-  const [socket, setSocket] = useState(null);
   const [tournaments, setTournaments] = useState([]);
   const { userRole } = useSelector((state) => state.authReducer);
   
@@ -24,30 +22,35 @@ export default function Tournament() {
   const [tourType, setTourType] = useState(false);
   const [agree, setAgree] = useState(false);
   const [type, setType] = useState("");
-  useEffect(() => {
-    setSocket(_socket);
-  }, []);
 
   useEffect(() => {
-    
-  });
+    // Function to fetch data
+    const fetchData = async () => {
+      try {
+        // Make a request using the Fetch API
+        const response = await fetch(`${process.env.REACT_APP_PROMOTION_URL}/api/promotions/get-list-promotion-test`)
+        
+        // Check if the request was successful (status code 200)
+        if (response.ok) {
+          // Parse the response JSON
+          const result = await response.json();
+          
+          // Set the data in the state
+          const { list } = result
+          setTournaments(list || [])
+        } else {
+          // Handle errors, e.g., set an error state
+          console.error('Error fetching data:', response.statusText);
+        }
+      } catch (error) {
+        // Handle network errors or other exceptions
+        console.error('Error fetching data:', error.message);
+      }
+    };
 
-  useEffect(() => {
-    socket?.on("createTournamentSuccess", (data) => {
-      setTournaments((pre) => {
-        const dt = pre?.filter((i) => i?.id !== data?.id);
-        return [...dt, data];
-      });
-    });
-
-    socket?.on("joinTournamentSuccess", (data) => {});
-
-    socket?.on("getListTournamentSuccess", (data) => {
-      setTournaments(data);
-    });
-
-    return () => {};
-  }, [socket]);
+    // Call the fetchData function
+    fetchData();
+  }, []); // 
 
   const renderTournamentList = tournaments?.map((item, index) => {
     if (item.tournamentTest === 1) {

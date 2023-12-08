@@ -297,7 +297,7 @@ export default function Package() {
                   padding:
                     (pathname && pathname?.includes("home")) || pathname === "/"
                       ? "0px"
-                      : "40px",
+                      : "0px",
                   marginTop:
                     (pathname && pathname?.includes("home")) || pathname === "/"
                       ? "24px"

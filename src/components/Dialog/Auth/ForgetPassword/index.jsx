@@ -2,6 +2,7 @@ import { Box, FormControl, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   forgetPasswordReady,
@@ -18,7 +19,7 @@ export default function ForgetPassword() {
   const { isForgetPassword } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [username, setUsername] = useState("");
-  const [optionEmail, setOptionEmail] = useState(true);
+  const [optionEmail, setOptionEmail] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation("auth");
   useEffect(() => {
@@ -29,20 +30,26 @@ export default function ForgetPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateEmail(username)) {
-      setOptionEmail(true);
-      dispatch(
-        forgetPasswordReady({
-          email: username,
-        })
-      );
-    } else if (validatePhoneNumber(username)) {
+    // if (validateEmail(username)) {
+    //   setOptionEmail(true);
+    //   dispatch(
+    //     forgetPasswordReady({
+    //       email: username,
+    //     })
+    //   );
+    // } else 
+    if (validatePhoneNumber(username)) {
       setOptionEmail(false);
       dispatch(
         forgetPasswordReady({
           phone: username,
         })
       );
+    } else {
+      dispatch(showToastNotification({
+        type: "warning",
+        message: "Phone number invalid!"
+      }))
     }
   };
 
@@ -83,7 +90,7 @@ export default function ForgetPassword() {
           }}
         >
           {t(
-            "Please enter the email/phone number that associated with your account. We will send you a verification code."
+            "Please enter the phone number that associated with your account. We will send you a verification code."
           )}
         </Typography>
       </Box>
@@ -140,7 +147,8 @@ export default function ForgetPassword() {
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-              placeholder={t("Email") + "/" + t("Phone number")}
+              placeholder={t("Phone number")}
+              // placeholder={t("Email") + "/" + t("Phone number")}
               type="text"
             />
           </FormControl>
