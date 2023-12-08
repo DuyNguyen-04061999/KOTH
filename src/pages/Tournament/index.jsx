@@ -52,8 +52,6 @@ export default function Tournament() {
     fetchData();
   }, []); // 
 
-  console.log(tournaments);
-
   const renderTournamentList = tournaments?.map((item, index) => {
     if (item.tournamentTest === 1) {
       return (

@@ -8,7 +8,7 @@ import { BannerTour, BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
-import { getListBanner } from "../../../redux-saga-middleware/reducers/appReducer";
+import { getListBanner, openDialogExclusive } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
@@ -190,7 +190,6 @@ export default function NewHomePage() {
             <Box>
               <Grid container columnSpacing={2} rowSpacing={2}>
                 {listBanner?.map((i, index) => {
-                  console.log(i);
                   return (
                     <Grid item md={4} xs={6} key={index}>
                       {i?.bannerType !== "contact" ? (
@@ -202,7 +201,7 @@ export default function NewHomePage() {
                               if(!token) {
                                 dispatch(toggleLoginDialog())
                               } else {
-
+                                dispatch(openDialogExclusive())
                               }
                             }
                           }}

@@ -5,6 +5,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
+import { openDialogExclusive } from "../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
@@ -104,6 +105,7 @@ export default function SlickSlider(props) {
                 if(!token) {
                   dispatch(toggleLoginDialog())
                 } else {
+                  dispatch(openDialogExclusive())
 
                 }
               }
