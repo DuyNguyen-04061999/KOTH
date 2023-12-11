@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import AnimButton from "../AnimButton";
 import { useTranslation } from "react-i18next";
@@ -7,16 +7,22 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { KeyboardArrowDown } from "@mui/icons-material";
+import useWindowDimensions from "../../utils/useWindowDimensions";
+import * as React from "react";
+import Drawer from "@mui/material/Drawer";
 
 export default function FilterPromotion(props) {
   const { t } = useTranslation("auth");
   const [activeDaily, setActiveDaily] = useState(false);
   const [activeWeekly, setActiveWeekly] = useState(false);
   const [activeMonthly, setActiveMonthly] = useState(false);
-  const [activeJoined,setActiveJoined] = useState(false)
+  // const [activeJoined,setActiveJoined] = useState(false)
+  const [clear, setClear] = useState(false);
+  const [deleteAll, setDeleteAll] = useState(false);
   const { device } = useSelector((state) => state.deviceReducer);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
+  const { width } = useWindowDimensions();
   const open = Boolean(anchorEl);
   const [value, setValue] = useState("End in soonest");
   const handleClick = (event) => {
@@ -26,21 +32,261 @@ export default function FilterPromotion(props) {
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    if (
+      activeDaily === true ||
+      activeMonthly === true ||
+      activeWeekly === true
+    ) {
+      setClear(true);
+    } else {
+      setClear(false);
+    }
+  }, [activeDaily, activeMonthly, activeWeekly]);
+
   useEffect(() => {}, [activeDaily, activeWeekly, activeMonthly]);
+
+  const [openFilter, setOpenFilter] = useState(false);
+  console.log(openFilter);
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenFilter(true);
+  };
+
+  const renderItemDrawer = () => {
+    return (
+      <>
+        <Box>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            sx={{
+              backgroundColor: "#42285B",
+              padding:"10px"
+            }}
+          >
+            <Box display={"flex"} alignItems={"center"} onClick={() => {
+              setOpenFilter(false)
+            }}>
+              <KeyboardArrowDown
+                sx={{
+                  color: "white",
+                }}
+              />
+              <Typography sx={{ color: "white", fontSize: "14px" }}>
+                Filter
+              </Typography>
+            </Box>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              sx={{
+                backgroundColor: "#2E233D",
+                padding: "5px",
+                borderRadius: "4px",
+              }}
+              onClick={() => {
+                setActiveDaily(false);
+                setActiveMonthly(false);
+                setActiveWeekly(false);
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: "14px",
+                  marginRight: "10px",
+                  marginLeft: "0px !important",
+                }}
+              >
+                Clear all
+              </Typography>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                fill="none"
+                viewBox="0 0 12 13"
+              >
+                <g fill="#fff">
+                  <path d="M12 11L1.5.5 0 2l10.5 10.5L12 11z"></path>
+                  <path d="M10.5.5L0 11l1.5 1.5L12 2 10.5.5z"></path>
+                </g>
+              </svg>
+            </Box>
+          </Box>
+          <Box padding={2}>
+            <hr
+              style={{
+                color: "white",
+                border: "2",
+                background: "white",
+                borderColor: "white",
+                height: "1px",
+              }}
+            />
+            <Box marginBottom={1} marginTop={2}>
+              <Button
+                sx={{
+                  borderRadius: "4px",
+                  color: "white",
+                  backgroundColor: activeDaily ? "#7648ED" : "transparent",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  textTransform: "none",
+                  transition: ".3s ease",
+                  " :hover": {
+                    backgroundColor: activeDaily ? "#7848ED" : "#443565",
+                  },
+                }}
+                onClick={() => {
+                  setActiveDaily(!activeDaily);
+                }}
+              >
+                <Typography sx={{ fontSize: "12px" }}>Daily</Typography>
+                {activeDaily ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="13"
+                    fill="none"
+                    viewBox="0 0 17 13"
+                  >
+                    <g>
+                      <g>
+                        <path
+                          fill="#fff"
+                          d="M6.1 8.1L2.9 4.9.5 7.3l5.6 5.6L16.5 2.5 14.1.1l-8 8z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                ) : (
+                  ""
+                )}
+              </Button>
+            </Box>
+            <Box marginBottom={1}>
+              <Button
+                sx={{
+                  borderRadius: "4px",
+                  color: "white",
+                  backgroundColor: activeWeekly ? "#7648ED" : "transparent",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  textTransform: "none",
+                  transition: ".3s ease",
+                  " :hover": {
+                    backgroundColor: activeWeekly ? "#7848ED" : "#443565",
+                  },
+                }}
+                onClick={() => {
+                  setActiveWeekly(!activeWeekly);
+                }}
+              >
+                <Typography sx={{ fontSize: "12px" }}>Weekly</Typography>
+                {activeWeekly ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="13"
+                    fill="none"
+                    viewBox="0 0 17 13"
+                  >
+                    <g>
+                      <g>
+                        <path
+                          fill="#fff"
+                          d="M6.1 8.1L2.9 4.9.5 7.3l5.6 5.6L16.5 2.5 14.1.1l-8 8z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                ) : (
+                  ""
+                )}
+              </Button>
+            </Box>
+            <Box marginBottom={2}>
+              <Button
+                sx={{
+                  borderRadius: "4px",
+                  color: "white",
+                  backgroundColor: activeMonthly ? "#7648ED" : "transparent",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  textTransform: "none",
+                  transition: ".3s ease",
+                  " :hover": {
+                    backgroundColor: activeMonthly ? "#7848ED" : "#443565",
+                  },
+                }}
+                onClick={() => {
+                  setActiveMonthly(!activeMonthly);
+                }}
+              >
+                <Typography sx={{ fontSize: "12px" }}>Monthly</Typography>
+                {activeMonthly ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="13"
+                    fill="none"
+                    viewBox="0 0 17 13"
+                  >
+                    <g>
+                      <g>
+                        <path
+                          fill="#fff"
+                          d="M6.1 8.1L2.9 4.9.5 7.3l5.6 5.6L16.5 2.5 14.1.1l-8 8z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                ) : (
+                  ""
+                )}
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </>
+    );
+  };
 
   return (
     <>
-      <Box sx={{
-        display: device === "Mobile" ? "flex" : "",
-        justifyContent:"space-between"
-      }}>
+      <Box
+        sx={{
+          display: device === "Mobile" ? "flex" : "",
+          justifyContent: "space-between",
+        }}
+      >
         <Box display={"flex"} alignItems={"center"}>
-          <Box display={"flex"}>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            sx={{
+              backgroundColor: width < 576 ? "#7848ED" : "",
+              borderRadius: width < 576 ? "10px" : "",
+              padding: width < 576 ? "6px" : "",
+            }}
+            onClick={ device === "Mobile" ? toggleDrawer(true) : ""}
+          >
             <Box>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="25"
+                width={width < 576 ? "20" : "24"}
+                height={width < 576 ? "21" : "25"}
                 fill="none"
                 viewBox="0 0 24 25"
               >
@@ -69,7 +315,7 @@ export default function FilterPromotion(props) {
               <Typography
                 sx={{
                   color: "white",
-                  fontSize: "24px",
+                  fontSize: width < 576 ? "16px" : "24px",
                   fontWeight: "700 !important",
                   lineHeight: "130%",
                 }}
@@ -81,7 +327,7 @@ export default function FilterPromotion(props) {
           <Box display={"flex"}>
             {device === "Desktop" ? (
               <>
-                <Box sx={{ marginLeft:"10px" }}>
+                <Box sx={{ marginLeft: "10px" }}>
                   <AnimButton
                     type={"active"}
                     text={t("Daily")}
@@ -92,7 +338,7 @@ export default function FilterPromotion(props) {
                     }}
                   />
                 </Box>
-                <Box sx={{ marginLeft:"10px" }}>
+                <Box sx={{ marginLeft: "10px" }}>
                   <AnimButton
                     type={"active"}
                     text={t("Weekly")}
@@ -103,7 +349,7 @@ export default function FilterPromotion(props) {
                     }}
                   />
                 </Box>
-                <Box sx={{ marginLeft:"10px" }}>
+                <Box sx={{ marginLeft: "10px" }}>
                   <AnimButton
                     type={"active"}
                     text={t("Monthly")}
@@ -114,7 +360,7 @@ export default function FilterPromotion(props) {
                     }}
                   />
                 </Box>
-                <Box sx={{ marginLeft:"10px" }}>
+                {/* <Box sx={{ marginLeft:"10px" }}>
                   <AnimButton
                     type={"active"}
                     text={t("Promotions Joined")}
@@ -124,15 +370,24 @@ export default function FilterPromotion(props) {
                         setActiveJoined(!activeJoined)
                     }}
                   />
-                </Box>
-                <Box sx={{ marginLeft:"10px" }}>
-                  <AnimButton
-                    type={"active"}
-                    text={t("Clear All")}
-                    isSubmitBtn
-                    isHasIcon
-                  />
-                </Box> 
+                </Box> */}
+                {clear === true ? (
+                  <Box sx={{ marginLeft: "10px" }}>
+                    <AnimButton
+                      type={"active"}
+                      text={t("Clear All")}
+                      isSubmitBtn
+                      isHasIcon
+                      onClick={() => {
+                        setActiveDaily(false);
+                        setActiveMonthly(false);
+                        setActiveWeekly(false);
+                      }}
+                    />
+                  </Box>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               ""
@@ -195,6 +450,21 @@ export default function FilterPromotion(props) {
             </MenuItem>
           </Menu>
         </Box>
+        <Drawer
+          anchor={"bottom"}
+          open={openFilter}
+          onClose={() => {
+            setOpenFilter(false);
+          }}
+          sx={{
+            "& .MuiDrawer-paper": {
+              backgroundColor: "#181223",
+              bottom: "60px",
+            },
+          }}
+        >
+          {renderItemDrawer()}
+        </Drawer>
       </Box>
     </>
   );

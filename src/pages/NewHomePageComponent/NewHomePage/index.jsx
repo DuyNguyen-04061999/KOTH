@@ -14,6 +14,7 @@ import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
+import FilterPromotion from "../../../components/filterPromotion";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function NewHomePage() {
@@ -239,11 +240,11 @@ export default function NewHomePage() {
           ) : (
             ""
           )}
-          {/* <Box sx={{
+          <Box sx={{
             marginTop: width < 576 ? "24px" : "34px",
           }}>
             <FilterPromotion />
-          </Box> */}
+          </Box>
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "34px",
@@ -282,7 +283,7 @@ export default function NewHomePage() {
                     fontWeight: "200 !important",
                     color: "#BE48ED",
                     fontFamily: "Cyntho Next",
-                    cursor: "pointer",
+                    cursor: "pointer", 
                   }}
                 >
                   {t("View All")}
