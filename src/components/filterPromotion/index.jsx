@@ -68,12 +68,16 @@ export default function FilterPromotion(props) {
             justifyContent={"space-between"}
             sx={{
               backgroundColor: "#42285B",
-              padding:"10px"
+              padding: "10px",
             }}
           >
-            <Box display={"flex"} alignItems={"center"} onClick={() => {
-              setOpenFilter(false)
-            }}>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              onClick={() => {
+                setOpenFilter(false);
+              }}
+            >
               <KeyboardArrowDown
                 sx={{
                   color: "white",
@@ -272,58 +276,112 @@ export default function FilterPromotion(props) {
         }}
       >
         <Box display={"flex"} alignItems={"center"}>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            sx={{
-              backgroundColor: width < 576 ? "#7848ED" : "",
-              borderRadius: width < 576 ? "10px" : "",
-              padding: width < 576 ? "6px" : "",
-            }}
-            onClick={ device === "Mobile" ? toggleDrawer(true) : ""}
-          >
-            <Box>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={width < 576 ? "20" : "24"}
-                height={width < 576 ? "21" : "25"}
-                fill="none"
-                viewBox="0 0 24 25"
-              >
-                <g clipPath="url(#clip0_7671_14783)">
-                  <g>
-                    <path
-                      fill="#fff"
-                      fillRule="evenodd"
-                      d="M3 5a1.5 1.5 0 011.5-1.5h15A1.5 1.5 0 0121 5v2.086a2 2 0 01-.586 1.414L15 13.914v7.424a1.1 1.1 0 01-1.592.984l-3.717-1.858A1.25 1.25 0 019 19.346v-5.432L3.586 8.5A2 2 0 013 7.086V5zm2 .5v1.586l5.56 5.56a1.502 1.502 0 01.44 1.061v5.175l2 1v-6.175c0-.398.158-.78.44-1.06L19 7.085V5.5H5z"
-                      clipRule="evenodd"
-                    ></path>
+          {device === "Mobile" ? (
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              sx={{
+                backgroundColor: width < 576 ? "#7848ED" : "",
+                borderRadius: width < 576 ? "10px" : "",
+                padding: width < 576 ? "6px" : "",
+              }}
+              onClick={toggleDrawer(true)}
+            >
+              <Box>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={width < 576 ? "20" : "24"}
+                  height={width < 576 ? "21" : "25"}
+                  fill="none"
+                  viewBox="0 0 24 25"
+                >
+                  <g clipPath="url(#clip0_7671_14783)">
+                    <g>
+                      <path
+                        fill="#fff"
+                        fillRule="evenodd"
+                        d="M3 5a1.5 1.5 0 011.5-1.5h15A1.5 1.5 0 0121 5v2.086a2 2 0 01-.586 1.414L15 13.914v7.424a1.1 1.1 0 01-1.592.984l-3.717-1.858A1.25 1.25 0 019 19.346v-5.432L3.586 8.5A2 2 0 013 7.086V5zm2 .5v1.586l5.56 5.56a1.502 1.502 0 01.44 1.061v5.175l2 1v-6.175c0-.398.158-.78.44-1.06L19 7.085V5.5H5z"
+                        clipRule="evenodd"
+                      ></path>
+                    </g>
                   </g>
-                </g>
-                <defs>
-                  <clipPath id="clip0_7671_14783">
-                    <path
-                      fill="#fff"
-                      d="M0 0H24V24H0z"
-                      transform="translate(0 .5)"
-                    ></path>
-                  </clipPath>
-                </defs>
-              </svg>
+                  <defs>
+                    <clipPath id="clip0_7671_14783">
+                      <path
+                        fill="#fff"
+                        d="M0 0H24V24H0z"
+                        transform="translate(0 .5)"
+                      ></path>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </Box>
+              <Box>
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontSize: width < 576 ? "16px" : "24px",
+                    fontWeight: "700 !important",
+                    lineHeight: "130%",
+                  }}
+                >
+                  Filters
+                </Typography>
+              </Box>
             </Box>
-            <Box>
-              <Typography
-                sx={{
-                  color: "white",
-                  fontSize: width < 576 ? "16px" : "24px",
-                  fontWeight: "700 !important",
-                  lineHeight: "130%",
-                }}
-              >
-                Filters
-              </Typography>
+          ) : (
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              sx={{
+                backgroundColor: width < 576 ? "#7848ED" : "",
+                borderRadius: width < 576 ? "10px" : "",
+                padding: width < 576 ? "6px" : "",
+              }}
+            >
+              <Box>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={width < 576 ? "20" : "24"}
+                  height={width < 576 ? "21" : "25"}
+                  fill="none"
+                  viewBox="0 0 24 25"
+                >
+                  <g clipPath="url(#clip0_7671_14783)">
+                    <g>
+                      <path
+                        fill="#fff"
+                        fillRule="evenodd"
+                        d="M3 5a1.5 1.5 0 011.5-1.5h15A1.5 1.5 0 0121 5v2.086a2 2 0 01-.586 1.414L15 13.914v7.424a1.1 1.1 0 01-1.592.984l-3.717-1.858A1.25 1.25 0 019 19.346v-5.432L3.586 8.5A2 2 0 013 7.086V5zm2 .5v1.586l5.56 5.56a1.502 1.502 0 01.44 1.061v5.175l2 1v-6.175c0-.398.158-.78.44-1.06L19 7.085V5.5H5z"
+                        clipRule="evenodd"
+                      ></path>
+                    </g>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_7671_14783">
+                      <path
+                        fill="#fff"
+                        d="M0 0H24V24H0z"
+                        transform="translate(0 .5)"
+                      ></path>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </Box>
+              <Box>
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontSize: width < 576 ? "16px" : "24px",
+                    fontWeight: "700 !important",
+                    lineHeight: "130%",
+                  }}
+                >
+                  Filters
+                </Typography>
+              </Box>
             </Box>
-          </Box>
+          )}
           <Box display={"flex"}>
             {device === "Desktop" ? (
               <>
