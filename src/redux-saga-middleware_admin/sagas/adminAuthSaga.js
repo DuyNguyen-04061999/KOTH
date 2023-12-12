@@ -32,6 +32,7 @@ function* resetPasswordSaga(dataRequest) {
         if(res && res.status === 200) {
             yield put(resetPasswordSuccess())
             yield put(closeResetPassDialog())
+            yield put(showToastNotify({ type: "success", message: "Update password successfully!" }))
         } else {
             yield put(showToastNotify({ type: "error", message: "Reset password failed!" }))
             yield put(resetPasswordFail())
