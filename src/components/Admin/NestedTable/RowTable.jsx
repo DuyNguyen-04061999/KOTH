@@ -241,7 +241,7 @@ export const RowTable = (props) => {
                           {!open ? <AddIconSVG /> : <MinusIconSVG />}
                         </Box>
                       )}
-                    {row.displayName}
+                    {row?.level !== "End User" ? row?.account : ""}
                   </Box>
                 </StyledTableCell>
               );

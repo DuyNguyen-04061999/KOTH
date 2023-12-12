@@ -80,7 +80,7 @@ const ManageDistributor = () => {
       if (roles?.includes("master")) {
         setHeaderList([
           "",
-          "ID",
+          // "ID",
           "Account",
           "Display Name",
           "Manager",
