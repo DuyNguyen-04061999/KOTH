@@ -100,11 +100,13 @@ const Revenue = () => {
 
       if (roles?.includes("distributor")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Manager",
           "Players",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",

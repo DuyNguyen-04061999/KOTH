@@ -95,12 +95,14 @@ const HomePage = () => {
 
       if (roles?.includes("distributor")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Code/Link",
           "Manager",
           "Players",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",

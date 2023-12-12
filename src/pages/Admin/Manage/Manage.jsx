@@ -99,7 +99,8 @@ const ManageDistributor = () => {
       if (roles?.includes("distributor")) {
         setHeaderList([
           "",
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Give Permission",
           "Code/Link",
@@ -107,6 +108,7 @@ const ManageDistributor = () => {
           "Players",
           "Referred By",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
