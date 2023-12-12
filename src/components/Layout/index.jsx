@@ -32,7 +32,7 @@ import {
   addRefCodeRegister,
   clickTab,
   clickTabNav,
-  openLoginDialog
+  openLoginDialog,
 } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   closeChatPopup,
@@ -136,13 +136,11 @@ export default function Layout(props) {
     (state) => state.chatReducer
   );
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const { router, startGameCheck, fromRouter } = useSelector(
-    (state) => state.appReducer
-  );
+  const { router, startGameCheck, fromRouter, countDownDoubleDay } =
+    useSelector((state) => state.appReducer);
   const { openMenu } = useSelector((state) => state.chatReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const { device } = useSelector((state) => state.deviceReducer);
@@ -219,15 +217,17 @@ export default function Layout(props) {
             `/api/get-refcode-by-username/${userName}`
           );
           if (response && response?.data && response?.data?.ref) {
-            if(!token && !localStorage.getItem("token")) {
+            if (!token && !localStorage.getItem("token")) {
               dispatch(addRefCodeRegister(response?.data?.ref));
               dispatch(clickTab("signup"));
               dispatch(openLoginDialog());
             } else {
-              dispatch(showToastNotification({
-                type: "warning",
-                message: "Please logout and register again!"
-              }))
+              dispatch(
+                showToastNotification({
+                  type: "warning",
+                  message: "Please logout and register again!",
+                })
+              );
             }
           }
         } catch (error) {
@@ -345,9 +345,15 @@ export default function Layout(props) {
   }, [socket, token, dispatch, startGameCheck]);
 
   useEffect(() => {
-    dispatch(randomRenderPopup());
-    dispatch(openDoubleDayDialog());
-  }, [dispatch]);
+    let currentDay = new Date();
+    let closedPopupDay = new Date(countDownDoubleDay);
+    let timeDifference = Math.abs(currentDay.getTime() - closedPopupDay.getTime());
+    let oneDayInMillis = 24 * 60 * 60 * 1000;
+    if (timeDifference > oneDayInMillis) {
+      dispatch(randomRenderPopup());
+      dispatch(openDoubleDayDialog());
+    }
+  }, [dispatch,countDownDoubleDay]);
 
   return ReactDOM.createPortal(
     <Box

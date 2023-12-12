@@ -62,7 +62,6 @@ export const toggleStartGame = (data) => {
   };
 };
 
-
 export const updateFromRouter = (data) => {
   return {
     type: "UPDATE_FROM_ROUTER",
@@ -73,38 +72,45 @@ export const updateFromRouter = (data) => {
 export const openDialogGif = (data) => {
   return {
     type: "OPEN_DIALOG_GIF",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 export const closeDialogGif = (data) => {
   return {
     type: "CLOSE_DIALOG_GIF",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 export const openDoubleDayDialog = (data) => {
   return {
-    type:"OPEN_DIALOG_DOUBLEDAY",
-    payload: data
-  }
-}
+    type: "OPEN_DIALOG_DOUBLEDAY",
+    payload: data,
+  };
+};
 
 export const closeDoubleDayDialog = (data) => {
   return {
-    type:"CLOSE_DIALOG_DOUBLEDAY",
-    payload: data
-  }
-}
+    type: "CLOSE_DIALOG_DOUBLEDAY",
+    payload: data,
+  };
+};
 
 export const randomRenderPopup = (data) => {
   const random = Math.floor(Math.random() * 2) + 1;
   return {
-    type:"RANDOM_RENDER_POPUP",
-    payload: random
-  }
-}
+    type: "RANDOM_RENDER_POPUP",
+    payload: random,
+  };
+};
+
+export const saveTimeCloseDialog = (data) => {
+  return {
+    type: "SAVE_TIME_CLOSE_DIALOG",
+    payload: data,
+  };
+};
 
 export const getListBanner = (data) => {
   return {
@@ -153,6 +159,7 @@ const appReducer = (
     fromRouter: "",
     isDialogGif: false,
     showDoubleDayDialog: false,
+    countDownDoubleDay: 0,
     randomRender: null,
     isFecthListBanner: false,
     listBanner: [],
@@ -162,8 +169,11 @@ const appReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case REHYDRATE:
-      return { ...state };
+    case REHYDRATE: {
+      const { appReducer } = payload || {};
+      const { countDownDoubleDay } = appReducer || 0;
+      return { ...state, countDownDoubleDay: countDownDoubleDay || 0 };
+    }
     case "GET_LIST_FAQ":
       return { ...state, isFetchListFaq: true };
     case "GET_LIST_FAQ_SUCCESS":
@@ -183,14 +193,20 @@ const appReducer = (
     case "TOGGLE_START_GAME":
       return { ...state, startGameCheck: payload };
     case "UPDATE_FROM_ROUTER": {
-      return {...state, fromRouter: payload}
+      return { ...state, fromRouter: payload };
     }
-    case "OPEN_DIALOG_GIF": return {...state, isDialogGif: true}
-    case "CLOSE_DIALOG_GIF": return {...state, isDialogGif: false}
-    case "OPEN_DIALOG_DOUBLEDAY": return {...state, showDoubleDayDialog: true}
-    case "CLOSE_DIALOG_DOUBLEDAY": return {...state, showDoubleDayDialog: false}
+    case "OPEN_DIALOG_GIF":
+      return { ...state, isDialogGif: true };
+    case "CLOSE_DIALOG_GIF":
+      return { ...state, isDialogGif: false };
+    case "OPEN_DIALOG_DOUBLEDAY":
+      return { ...state, showDoubleDayDialog: true };
+    case "CLOSE_DIALOG_DOUBLEDAY":
+      return { ...state, showDoubleDayDialog: false };
     case "RANDOM_RENDER_POPUP":
-      return {...state, randomRender: payload}
+      return { ...state, randomRender: payload };
+    case "SAVE_TIME_CLOSE_DIALOG":
+      return { ...state, countDownDoubleDay: payload };
     case "GET_LIST_BANNER" : return {...state, isFecthListBanner:true}
     case "GET_LIST_BANNER_SUCCESS" : return {...state, isFecthListBanner: false, listBanner: payload.list || []}
     case "GET_LIST_BANNER_FAIL" : return {...state, isFecthListBanner:false}
