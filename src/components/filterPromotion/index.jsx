@@ -1,26 +1,23 @@
-import { Box, List, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import AnimButton from "../AnimButton";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { KeyboardArrowDown } from "@mui/icons-material";
+import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
+import Drawer from "@mui/material/Drawer";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { KeyboardArrowDown } from "@mui/icons-material";
-import useWindowDimensions from "../../utils/useWindowDimensions";
 import * as React from "react";
-import Drawer from "@mui/material/Drawer";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import useWindowDimensions from "../../utils/useWindowDimensions";
+import AnimButton from "../AnimButton";
 
 export default function FilterPromotion(props) {
   const { t } = useTranslation("auth");
   const [activeDaily, setActiveDaily] = useState(false);
   const [activeWeekly, setActiveWeekly] = useState(false);
   const [activeMonthly, setActiveMonthly] = useState(false);
-  // const [activeJoined,setActiveJoined] = useState(false)
   const [clear, setClear] = useState(false);
-  const [deleteAll, setDeleteAll] = useState(false);
   const { device } = useSelector((state) => state.deviceReducer);
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const { width } = useWindowDimensions();
   const open = Boolean(anchorEl);
@@ -47,7 +44,7 @@ export default function FilterPromotion(props) {
   useEffect(() => {}, [activeDaily, activeWeekly, activeMonthly]);
 
   const [openFilter, setOpenFilter] = useState(false);
-  console.log(openFilter);
+  
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
