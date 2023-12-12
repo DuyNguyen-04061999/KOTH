@@ -316,7 +316,7 @@ export default function AnimButton(props) {
         <Button
           type={isSubmitBtn && "submit"}
           sx={{
-            backgroundColor:isHasIcon ? "#7848ED" : "#443565",
+            backgroundColor: isHasIcon ? "#7848ED" : "#443565",
             color: "white",
             padding: "11px 20px",
             borderRadius: "20px",
@@ -325,11 +325,11 @@ export default function AnimButton(props) {
             fontWeight: "700",
             transition: ".3s ease",
             " :hover": {
-              backgroundColor:isHasIcon ? "#7848ED" : "#443565",
+              backgroundColor: isHasIcon ? "#7848ED" : "#443565",
             },
             display: "flex",
             alignItems: "center",
-            fontSize: "16px",  
+            fontSize: "16px",
             ...style,
           }}
           onClick={onClick}
@@ -339,7 +339,7 @@ export default function AnimButton(props) {
           <p
             style={{
               textTransform: "none",
-              marginRight:"5px"
+              marginRight: "5px",
             }}
           >
             {text}
@@ -366,6 +366,41 @@ export default function AnimButton(props) {
             <></>
           )}
         </Button>
+      );
+    case "christmas":
+      return (
+        <Button
+        type={isSubmitBtn && "submit"}
+        sx={{
+          backgroundColor: "#C02F40",
+          color: "white",
+          padding: "11px 5px",
+          borderRadius: "8px",
+          border: "0px solid",
+          width: "100%",
+          fontWeight: "700",
+          transition: ".3s ease",
+          ":hover": {
+            background: "#C02F40",
+          },
+          display: "flex",
+          alignItems: "center",
+          fontSize: "16px",
+          ...style,
+        }}
+        onClick={onClick}
+        // disableRipple
+        disabled={disabledBtn}
+      >
+        <p
+          style={{
+            textTransform: "none",
+          }}
+        >
+          {text}
+        </p>
+        {isHasIcon ? <ArrrowIcon /> : <></>}
+      </Button>
       );
     default:
       return (

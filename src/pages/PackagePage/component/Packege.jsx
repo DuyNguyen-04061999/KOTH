@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, useTheme } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { imageDesktop } from "../../../utils/images";
+import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
@@ -38,13 +38,12 @@ export default function Package() {
   useEffect(() => {
     const itemPackage = listPackage?.filter(
       (item) =>
-        item?.packageName === "Subscription" ||
         item?.packageName === "Combo Extra 1" ||
+        item?.packageName ===  "Subscription" ||
         item?.packageName === "Combo Extra 2"
     );
-    setItem(itemPackage?.reverse());
+    setItem(itemPackage?.sort());
   }, [listPackage]);
-
   const location = useLocation();
   const { pathname } = location;
 
@@ -88,6 +87,8 @@ export default function Package() {
     },
   };
 
+  const theme = useTheme()
+
   return (
     <DocumentMeta {...meta}>
       <>
@@ -113,6 +114,14 @@ export default function Package() {
                 ""
               )}
             </Box>
+            {theme?.theme === "christmas" ? (
+                <Box sx={{
+                  marginTop:"20px",
+                  marginBottom:"50px"
+                }}>
+                  <Box component={"img"} src={images.bgchristmas} alt="..." sx={{width:"100%", height:"auto"}}></Box>
+                </Box>
+              ) : ""}
             <Container
               maxWidth={"lg"}
               sx={{
@@ -120,8 +129,9 @@ export default function Package() {
               }}
             >
               <Box>
+            
                 <Box className="subscription_pack">
-                  <Box>
+                  {/* <Box>
                     <Typography
                       className="pt-2"
                       sx={{
@@ -143,7 +153,7 @@ export default function Package() {
                     >
                       {t("Subscription Pack")}
                     </Typography>
-                  </Box>
+                  </Box> */}
                   <Box
                     sx={{
                       display: "flex",
@@ -157,9 +167,7 @@ export default function Package() {
                           : "30px",
                     }}
                   >
-                    {listPackage
-                      ?.filter((item) => item?.packageName === "Subscription")
-                      ?.map((i, index) => {
+                    {item?.map((i, index) => {
                         return (
                           <Box
                             key={index}
@@ -181,7 +189,7 @@ export default function Package() {
                       })}
                   </Box>
                 </Box>
-                <Box className="extra_pack" sx={{ marginTop: "50px" }}>
+                {/* <Box className="extra_pack" sx={{ marginTop: "50px" }}>
                   <Box>
                     <Typography
                       className="pt-2"
@@ -245,7 +253,7 @@ export default function Package() {
                         );
                       })}
                   </Box>
-                </Box>
+                </Box> */}
               </Box>
             </Container>
           </div>
@@ -267,6 +275,14 @@ export default function Package() {
             ) : (
               ""
             )}
+            {theme?.theme === "christmas" ? (
+                <Box sx={{
+                  marginTop:"20px",
+                  marginBottom:"10px"
+                }}>
+                  <Box component={"img"} src={images.bgchristmas} alt="..." sx={{width:"100%", height:"auto"}}></Box>
+                </Box>
+              ) : ""}
             <Box style={{ padding: "10px" }}>
               <Box
                 sx={{

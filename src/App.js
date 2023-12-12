@@ -367,6 +367,7 @@ function App() {
     button: {
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
     },
+    theme: "christmas"
   });
 
   useEffect(() => {
