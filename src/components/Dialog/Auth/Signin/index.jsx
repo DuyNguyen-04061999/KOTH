@@ -192,7 +192,7 @@ export default function Dialoglg() {
             </Box>
           ) : (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <ExtraCountDown />
+              {/* <ExtraCountDown /> */}
               <Box
                 sx={{
                   backgroundColor: "#68399E",

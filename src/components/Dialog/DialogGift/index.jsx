@@ -26,7 +26,7 @@ const DialogGift = ({bonusName = "Value extra pack", bonusQuantity = 20, isSecon
   return ReactDOM.createPortal(
     <div>
       <Dialog
-        open={isDialogGif}
+        open={false}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
