@@ -27,7 +27,6 @@ import DialogProfile from "../../Profile";
 
 import { useTranslation } from "react-i18next";
 import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
-import ExtraCountDown from "../../../ExtraCountDown";
 import "./index.scss";
 
 const BgWithTooltip = withStyles({
@@ -112,7 +111,7 @@ export default function Dialoglg() {
         >
           {width < 576 ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-               <ExtraCountDown />
+               {/* <ExtraCountDown /> */}
               <Box
                 sx={{
                   backgroundColor: width > 576 ? "#170f1e" : "#68399E",
