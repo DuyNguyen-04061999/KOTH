@@ -114,7 +114,7 @@ export default function OTPResetPassword() {
             marginTop: device === "Desktop" ? "12px" : "0px",
           }}
         >
-          A verification code has been send to {forgotPassEmail}, enter it
+          A verification code has been send to your phone number, enter it
           below.
         </Typography>
       </Box>

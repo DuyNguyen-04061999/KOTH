@@ -212,7 +212,7 @@ export const RowTable = (props) => {
                   
                 </StyledTableCell>
               );
-            else if (item.toLowerCase() === "account")
+            else if (item.toLowerCase() === "display name")
               return (
                 <StyledTableCell key={index} sx={{ textAlign: "center" }}>
                   <Box
@@ -241,7 +241,7 @@ export const RowTable = (props) => {
                           {!open ? <AddIconSVG /> : <MinusIconSVG />}
                         </Box>
                       )}
-                    {row.account}
+                    {row.displayName}
                   </Box>
                 </StyledTableCell>
               );
@@ -250,7 +250,11 @@ export const RowTable = (props) => {
                 <StyledTableCell key={index}>
                   <Box sx={{ textAlign: "center" }}>
                     {/* {moment(row[`${trimAndCamelCase(item)}`], true)?.isValid() ? moment(row[`${trimAndCamelCase(item)}`])?.format("MM/DD/YYYY HH:mm") : row[`${trimAndCamelCase(item)}`]} */}
-                    {row[`${trimAndCamelCase(item)}`]}
+                    {item.toLowerCase() === "revenue overall" || 
+                    item.toLowerCase() === "revenue current month" ||
+                    item.toLowerCase() === "total deposit" ||
+                    item.toLowerCase() === "referral bonus revenue 5%" 
+                    ? Number(row[`${trimAndCamelCase(item)}`])?.toFixed(2) : row[`${trimAndCamelCase(item)}`]}
                   </Box>
                 </StyledTableCell>
               );

@@ -14,9 +14,8 @@ function* getListPackageSaga(dataRequest) {
             const {payload} = dataRequest;
             const res = yield call(packageService.getListPackage, payload)
             const{ status, data} = res
-            
             if(status === 200 || status === 201) {
-                yield put(getListPackageSuccess(data?.data?.list || []))
+                yield put(getListPackageSuccess(data?.data?.list || data || []))
             } else {
                 yield put(getListPackageFail())
             }

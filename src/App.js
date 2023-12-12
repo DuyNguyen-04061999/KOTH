@@ -11,6 +11,7 @@ import PageLoading from "./components/LoadingComponent/PageLoading/PageLoading";
 import { CustomRouter, history } from "./components/Router";
 import { ScrollToTopURL } from "./components/ScrollToTop";
 import ToastNotification from "./components/Toast/ToastNotification";
+import SystemBalance from "./pages/Balance/SystemBalance";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
@@ -83,6 +84,7 @@ const SuspenseWrapper = (props) => {
   const { child } = props;
   return <Suspense fallback={<PageLoading />}>{child}</Suspense>;
 };
+
 
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
@@ -548,6 +550,10 @@ function App() {
                   <Route
                     path="game/:id/delete-skins"
                     element={<SuspenseWrapper child={<DeleteSkinPage />} />}
+                  />
+                  <Route
+                    path="system/balance"
+                    element={<SuspenseWrapper child={<SystemBalance />} />}
                   />
                   {getAppType() === "promote" && (
                     <Route

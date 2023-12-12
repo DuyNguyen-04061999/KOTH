@@ -1,5 +1,6 @@
 import { Box, Dialog, Slide, Typography } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
@@ -18,12 +19,21 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 export default function Browser(props) {
+  const { t } = useTranslation("navigation");
   const { open, handleShowMenu } = props;
   const { isDropdownNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
+
+  // const handleChangeLang = () => {
+  //   if (i18n.language === "en") {
+  //     i18n.changeLanguage("tur");
+  //   } else if (i18n.language === "tur") {
+  //     i18n.changeLanguage("en");
+  //   }
+  // };
 
   useEffect(() => {
     const socket = _socket;
@@ -46,10 +56,10 @@ export default function Browser(props) {
         TransitionComponent={Transition}
         sx={{
           "& .MuiDialog-paper": {
-            backgroundColor: "#1a151e",
+            backgroundColor: "#211d28",
           },
           ".css-m9glnp-MuiPaper-root-MuiDialog-paper": {
-            backgroundColor: "#1a151e",
+            backgroundColor: "#211d28",
           },
         }}
       >
@@ -93,7 +103,7 @@ export default function Browser(props) {
                 marginLeft: "10px !important",
               }}
             >
-              Menu
+              {t("Menu")}
             </Typography>
           </Box>
           <Box className="pb-5" sx={{ padding: 1.5 }}>
@@ -158,7 +168,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Home
+                    {t("Home")}
                   </span>
                 </Box>
                 <Box
@@ -209,7 +219,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Promotions
+                      {t("Promotion")}
                     </span>
                     <Box sx={{ marginLeft: "auto", marginRight: "24px" }}>
                       <svg
@@ -321,7 +331,7 @@ export default function Browser(props) {
                             : "",
                       }}
                     >
-                      Hot
+                      {t("Hot")}
                     </span>
                   </Box>
 
@@ -394,7 +404,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Ongoing
+                      {t("Ongoing")}
                     </span>
                   </Box>
                   <Box
@@ -456,7 +466,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Upcoming
+                      {t("Upcoming")}
                     </span>
                   </Box>
                   <Box
@@ -518,7 +528,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      Ended
+                      {t("Ended")}
                     </span>
                   </Box>
                 </Box>
@@ -586,7 +596,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Packages
+                    {t("Packages")}
                   </span>
                 </Box>
                 {getAppType() && getAppType() === "promote" ? (
@@ -813,7 +823,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Help Center
+                    {t("Help Center")}
                   </span>
                 </Box>
                 <Box
@@ -889,7 +899,7 @@ export default function Browser(props) {
                       overflow: "hidden",
                     }}
                   >
-                    Support
+                    {t("Support")}
                   </span>
                 </Box>
               </Box>

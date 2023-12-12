@@ -44,7 +44,7 @@ export const AvatarPicker = (props) => {
   const handleChange = async (event) => {
     dispatch(openLoading());
     const fileSize = event.target.files[0]?.size
-    handleSetAvatar(event.target.files[0]);
+    
     let reader = new FileReader();
 
     const imageType =
@@ -58,6 +58,7 @@ export const AvatarPicker = (props) => {
       reader.onload = function (e) {
         handleChangeImage(reader.result, imageType);
         setFile(reader.result);
+        handleSetAvatar(event.target.files[0]);
       };
       reader.readAsDataURL(event.target.files[0]);
       setTimeout(() => {
@@ -71,7 +72,7 @@ export const AvatarPicker = (props) => {
       dispatch(
         showToastNotification({
           type: "error",
-          message: "Please attach correct format of file",
+          message: "Please attach the correct file format or size.",
         })
       );
     }

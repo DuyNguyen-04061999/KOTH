@@ -521,7 +521,7 @@ const userReducer = (
     case "TOGGLE_CHECK_PROFILE_DIALOG": return {...state, isCheckProfileDialog: !state.isCheckProfileDialog}
     case  "GET_CITY_AND_STATE_PROFILE" : return {...state,isFetchCity: true}
     case  "GET_CITY_AND_STATE_PROFILE_SUCCESS" :
-    return {...state,isFetchCity: false, cityProfile:payload.listCity, stateProfile: payload.listState}
+    return {...state,isFetchCity: false, cityProfile:payload.listCity || payload || [], stateProfile: payload.listState || payload || []}
     case  "GET_CITY_AND_STATE_PROFILE_FAIL" : return {...state,isFetchCity: false}
     default:
       return state;

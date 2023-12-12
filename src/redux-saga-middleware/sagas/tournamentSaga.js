@@ -117,8 +117,7 @@ function* getListGameForTournamentSaga(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.listGameForTournament, payload);
-    const { status, data } = res;
-    console.log(data);
+    const { status } = res;
     if (status === 200) {
       yield put(getListGameForTournamentSuccess());
     }
@@ -132,7 +131,6 @@ function* getSkinForTournamentSaga(dataRequest) {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.listSkinForTournament, payload);
     const { status, data } = res;
-    console.log(data);
     if (status === 200) {
       yield put(getSkinForTournamentSuccess(data));
     } else {
@@ -148,7 +146,6 @@ function* getListBrandForTournamentSaga(dataRequest) {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.listBrandForTournament, payload);
     const { status, data } = res;
-    console.log(data);
     if (status === 200) {
       yield put(getBrandTournamentSuccess(data));
     } else {

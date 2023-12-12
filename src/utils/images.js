@@ -377,6 +377,8 @@ import doubleDayBanner from "../assets/images/doubleDay.jpg";
 import doubleDayBanneMB from "../assets/images/doubleDayMB.jpg";
 import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
 import doubleDayPackBannerMB from "../assets/images/doubleDayPackMB.jpg";
+import englishIcon from "../assets/images/englishIcon.png";
+import turkishICon from "../assets/images/turkishIcon.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -612,6 +614,8 @@ export const images = {
   layerend: layerend,
   imageTutorial: imageTutorial,
   skrillIcon: skrillIcon,
+  turkishICon: turkishICon,
+  englishIcon: englishIcon,
   doubleDayBanner: doubleDayBanner,
   doubleDayPackBanner: doubleDayPackBanner,
   doubleDayPackBannerMB: doubleDayPackBannerMB,

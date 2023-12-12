@@ -24,6 +24,7 @@ function* getSettingSaga(dataRequest) {
   }
 }
 
+
 function* settingSaga() {
   yield takeEvery("GET_SETTING_READY", getSettingSaga);
 }

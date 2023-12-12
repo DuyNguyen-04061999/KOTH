@@ -83,30 +83,32 @@ const Revenue = () => {
       if (roles?.includes("master")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Manager",
           "Agents",
           "Players",
-          "Revenue",
+          "Total Deposit",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Start Date",
           "Finish Date",
-          // "Time Zone",
         ]);
       }
 
       if (roles?.includes("distributor")) {
         setHeaderList([
           "ID",
-          "Account",
-          "Nick Name",
+          "Display Name",
           "Manager",
           "Players",
-          "Revenue",
+          "Total Deposit",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          // "Time Zone",
         ]);
       }
 
@@ -114,27 +116,27 @@ const Revenue = () => {
         setHeaderList([
           "ID",
           "Display Name",
-          // "Nick Name",
           "Manager",
-          // "Players",
-          "Revenue",
+          "Total Deposit",
+          "Revenue Overall",
+          "Revenue Current Month",
+          "Subscribers",
           "Referral Bonus Revenue 5%",
           "Register Date",
           "Last Login",
-          // "Time Zone",
         ]);
       }
     } else {
       if (roles?.includes("master")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Level", "Revenue Overall"]);
       }
 
       if (roles?.includes("distributor")) {
-        setHeaderList(["Account", "Level", "Revenue"]);
+        setHeaderList(["Display Name", "Level", "Revenue Overall"]);
       }
 
       if (roles?.includes("agent")) {
-        setHeaderList(["Display Name", "Phone", "Revenue"]);
+        setHeaderList(["Display Name", "Phone", "Revenue Overall"]);
       }
     }
   }, [roles, width]);

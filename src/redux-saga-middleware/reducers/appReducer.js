@@ -112,6 +112,41 @@ export const saveTimeCloseDialog = (data) => {
   };
 };
 
+export const getListBanner = (data) => {
+  return {
+    type: "GET_LIST_BANNER",
+    payload: data
+  }
+}
+
+export const getListBannerSuccess = (data) => {
+  return {
+    type: "GET_LIST_BANNER_SUCCESS",
+    payload: data
+  }
+}
+
+export const getListBannerFail = (data) => {
+  return {
+    type: "GET_LIST_BANNER_FAIL",
+    payload: data
+  }
+}
+
+export const openDialogExclusive = (data) => {
+  return {
+    type : "OPEN_DIALOG_EXCLUSIVE",
+    payload: data
+  }
+}
+
+export const closeDialogExclusive = (data) => {
+  return {
+    type : "CLOSE_DIALOG_EXCLUSIVE",
+    payload: data
+  }
+}
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -126,6 +161,9 @@ const appReducer = (
     showDoubleDayDialog: false,
     countDownDoubleDay: 0,
     randomRender: null,
+    isFecthListBanner: false,
+    listBanner: [],
+    isDialogExclusive:false
   },
   action
 ) => {
@@ -169,6 +207,11 @@ const appReducer = (
       return { ...state, randomRender: payload };
     case "SAVE_TIME_CLOSE_DIALOG":
       return { ...state, countDownDoubleDay: payload };
+    case "GET_LIST_BANNER" : return {...state, isFecthListBanner:true}
+    case "GET_LIST_BANNER_SUCCESS" : return {...state, isFecthListBanner: false, listBanner: payload.list || []}
+    case "GET_LIST_BANNER_FAIL" : return {...state, isFecthListBanner:false}
+    case "OPEN_DIALOG_EXCLUSIVE" : return {...state, isDialogExclusive:true}
+    case "CLOSE_DIALOG_EXCLUSIVE" : return {...state, isDialogExclusive:false}
     default:
       return { ...state };
   }
