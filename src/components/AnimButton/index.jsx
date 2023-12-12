@@ -316,7 +316,7 @@ export default function AnimButton(props) {
         <Button
           type={isSubmitBtn && "submit"}
           sx={{
-            backgroundColor:isHasIcon ? "#7848ED" : "#443565",
+            backgroundColor: isHasIcon ? "#7848ED" : "#443565",
             color: "white",
             padding: "11px 20px",
             borderRadius: "20px",
@@ -325,11 +325,11 @@ export default function AnimButton(props) {
             fontWeight: "700",
             transition: ".3s ease",
             " :hover": {
-              backgroundColor:isHasIcon ? "#7848ED" : "#443565",
+              backgroundColor: isHasIcon ? "#7848ED" : "#443565",
             },
             display: "flex",
             alignItems: "center",
-            fontSize: "16px",  
+            fontSize: "16px",
             ...style,
           }}
           onClick={onClick}
@@ -339,7 +339,7 @@ export default function AnimButton(props) {
           <p
             style={{
               textTransform: "none",
-              marginRight:"5px"
+              marginRight: "5px",
             }}
           >
             {text}
@@ -360,6 +360,58 @@ export default function AnimButton(props) {
                     d="M6.1 8.1L2.9 4.9.5 7.3l5.6 5.6L16.5 2.5 14.1.1l-8 8z"
                   ></path>
                 </g>
+              </g>
+            </svg>
+          ) : (
+            <></>
+          )}
+        </Button>
+      );
+    case "close":
+      return (
+        <Button
+          type={isSubmitBtn && "submit"}
+          sx={{
+            backgroundColor: isHasIcon ? "#7848ED" : "#443565",
+            color: "white",
+            padding: "11px 20px",
+            borderRadius: "20px",
+            border: "0px solid",
+            width: "100%",
+            fontWeight: "700",
+            transition: ".3s ease",
+            " :hover": {
+              backgroundColor: isHasIcon ? "#7848ED" : "#443565",
+            },
+            display: "flex",
+            alignItems: "center",
+            fontSize: "16px",
+            ...style,
+          }}
+          onClick={onClick}
+          // disableRipple
+          disabled={disabledBtn}
+        >
+          <p
+            style={{
+              textTransform: "none",
+              marginRight: "5px",
+            }}
+          >
+            {text}
+          </p>
+
+          {isHasIcon ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="13"
+              fill="none"
+              viewBox="0 0 12 13"
+            >
+              <g fill="#fff">
+                <path d="M12 11L1.5.5 0 2l10.5 10.5L12 11z"></path>
+                <path d="M10.5.5L0 11l1.5 1.5L12 2 10.5.5z"></path>
               </g>
             </svg>
           ) : (

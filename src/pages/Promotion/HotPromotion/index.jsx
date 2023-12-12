@@ -19,6 +19,7 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
+import FilterPromotion from "../../../components/filterPromotion";
 const theme = createTheme({
   typography: {},
   components: {
@@ -33,7 +34,7 @@ const theme = createTheme({
   },
 });
 export default function HotTournament() {
-  const {t} = useTranslation("hot_promo")
+  const { t } = useTranslation("hot_promo");
   const { width } = useWindowDimensions();
   const typographyStyle = {
     textAlign: "start",
@@ -91,172 +92,207 @@ export default function HotTournament() {
   });
 
   const meta = {
-    title: process.env.REACT_APP_ENV === "production" ? 'Play4promo hot promotions' : "Play4promo staging hot promotions",
-    description: "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
+    title:
+      process.env.REACT_APP_ENV === "production"
+        ? "Play4promo hot promotions"
+        : "Play4promo staging hot promotions",
+    description:
+      "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
     meta: {
-      charset: 'utf-8',
-      name: process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com" ? {
-        robots: "noindex",
-        keywords: `play4promo,play,promo`
-      } : {
-        keywords: `play4promo,play,promo`
-      },
+      charset: "utf-8",
+      name:
+        process.env.REACT_APP_URL_DOMAIN === "socket.play4promote.com"
+          ? {
+              robots: "noindex",
+              keywords: `play4promo,play,promo`,
+            }
+          : {
+              keywords: `play4promo,play,promo`,
+            },
       property: {
-        'og:title': process.env.REACT_APP_ENV === "production" ? 'Play4promo hot promotions' : "Play4promo staging hot promotions",
-        'og:url': window.location.href,
-        'og:image:secure_url': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
-        'og:image': process.env.REACT_APP_ENV === "development" ? imageDesktop.logoCT : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
-        'og:image:type': 'image/png',
-        'og:image:width': `144`,
-        'og:image:height': `144`,
-        'og:image:alt': 'Play4promo Photo'
+        "og:title":
+          process.env.REACT_APP_ENV === "production"
+            ? "Play4promo hot promotions"
+            : "Play4promo staging hot promotions",
+        "og:url": window.location.href,
+        "og:image:secure_url":
+          process.env.REACT_APP_ENV === "development"
+            ? imageDesktop.logoCT
+            : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+        "og:image":
+          process.env.REACT_APP_ENV === "development"
+            ? imageDesktop.logoCT
+            : "https://storage.googleapis.com/web-system-files/logos/lggame.png",
+        "og:image:type": "image/png",
+        "og:image:width": `144`,
+        "og:image:height": `144`,
+        "og:image:alt": "Play4promo Photo",
       },
     },
-  }
+  };
 
   return (
     <DocumentMeta {...meta}>
       <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <MainLayout
-        type="Home"
-        children={
-          width > 576 ? (
-            <Container
-              maxWidth="lg"
-              sx={{
-                paddingLeft:
-                  device === "Mobile"
-                    ? "24px !important"
-                    : device === "Tablet"
-                    ? "42px !important"
-                    : "0px !important",
-                paddingRight:
-                  device === "Mobile"
-                    ? "24px !important"
-                    : device === "Tablet"
-                    ? "32px !important"
-                    : "0px !important",
-                paddingTop: width < 576 ? "24px !important" : "50px !important",
-              }}
-            >
-              <Typography
+        <CssBaseline />
+        <MainLayout
+          type="Home"
+          children={
+            width > 576 ? (
+              <Container
+                maxWidth="lg"
                 sx={{
-                  ...typographyStyle,
-                  fontSize: "36px",
-                  fontFamily: "Cyntho Next",
-                  fontWeight: 700,
+                  paddingLeft:
+                    device === "Mobile"
+                      ? "24px !important"
+                      : device === "Tablet"
+                      ? "42px !important"
+                      : "0px !important",
+                  paddingRight:
+                    device === "Mobile"
+                      ? "24px !important"
+                      : device === "Tablet"
+                      ? "32px !important"
+                      : "0px !important",
+                  paddingTop:
+                    width < 576 ? "24px !important" : "50px !important",
                 }}
               >
-                {t('Hot Promotions')}
-              </Typography>
-              <Box
-                sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
-                  marginTop: width < 576 ? "24px" : "32px",
-                }}
-              >
-                {" "}
-                {isFetchHot || data === null ? (
-                  <BannerLoading height={363} />
-                ) : (
-                  <SlickSlider
-                    type="tour"
-                    appendDot={true}
-                    images={width < 576 ? imgHotMobile : imgHot}
-                  />
-                )}
-              </Box>
-              <Box
-                sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
-                }}
-              >
-                <ListPromotion
-                  listData={data}
-                  loadingState={isFetchHot}
-                  itemOffSet={hotPag}
-                  typePromo={"hot"}
-                  itemQuantity={itemQuantity}
-                  noData={noDataHot}
-                />
-              </Box>
-              <Box sx={{ margin: "36px 0px" }}>
-                {!isFetchHot &&
-                  data !== null &&
-                  data?.length > 0 &&
-                  itemQuantity && (
-                    <PaginatedItems
-                      defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
-                      pageCount={Math.ceil(data.length / itemQuantity)}
-                      changeOffSet={(value) => {
-                        dispatch(updateHotPage((value - 1) * itemQuantity));
-                      }}
+                <Typography
+                  sx={{
+                    ...typographyStyle,
+                    fontSize: "36px",
+                    fontFamily: "Cyntho Next",
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("Hot Promotions")}
+                </Typography>
+                <Box
+                  sx={{
+                    marginBottom: width < 576 ? "24px" : "32px",
+                    marginTop: width < 576 ? "24px" : "32px",
+                  }}
+                >
+                  {" "}
+                  {isFetchHot || data === null ? (
+                    <BannerLoading height={363} />
+                  ) : (
+                    <SlickSlider
+                      type="tour"
+                      appendDot={true}
+                      images={width < 576 ? imgHotMobile : imgHot}
                     />
                   )}
-              </Box>
-              <NewFooter />
-            </Container>
-          ) : (
-            <Container
-              maxWidth="lg"
-              sx={{
-                paddingLeft:
-                  width < 576
-                    ? "24px !important"
-                    : width < 1024
-                    ? "42px !important"
-                    : "0px !important",
-                paddingRight:
-                  width < 576
-                    ? "24px !important"
-                    : width < 1024
-                    ? "32px !important"
-                    : "0px !important",
-                paddingTop: width < 576 ? "24px !important" : "50px !important",
-                paddingBottom: "50px",
-              }}
-            >
-              <Typography
-                sx={{
-                  ...typographyStyle,
-                  fontSize: "24px",
-                }}
-              >
-                {t('Hot Promotions')}
-              </Typography>
-              <Box
-                sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
-                  marginTop: width < 576 ? "24px" : "32px",
-                }}
-              >
-                {" "}
-                {isFetchHot || data === null ? (
-                  <BannerLoading height={208} />
-                ) : (
-                  <SlickSlider
-                    type="tour"
-                    appendDot={true}
-                    images={width < 576 ? imgHotMobile : imgHot}
+                </Box>
+                <Box
+                  sx={{
+                    marginBottom: width < 576 ? "24px" : "32px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      marginTop: width < 576 ? "24px" : "34px",
+                      marginBottom : width < 576 ? "24px" : "34px"
+                    }}
+                  >
+                    <FilterPromotion />
+                  </Box>
+                  <ListPromotion
+                    listData={data}
+                    loadingState={isFetchHot}
+                    itemOffSet={hotPag}
+                    typePromo={"hot"}
+                    itemQuantity={itemQuantity}
+                    noData={noDataHot}
                   />
-                )}
-              </Box>
-              <Box
+                </Box>
+                <Box sx={{ margin: "36px 0px" }}>
+                  {!isFetchHot &&
+                    data !== null &&
+                    data?.length > 0 &&
+                    itemQuantity && (
+                      <PaginatedItems
+                        defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
+                        pageCount={Math.ceil(data.length / itemQuantity)}
+                        changeOffSet={(value) => {
+                          dispatch(updateHotPage((value - 1) * itemQuantity));
+                        }}
+                      />
+                    )}
+                </Box>
+                <NewFooter />
+              </Container>
+            ) : (
+              <Container
+                maxWidth="lg"
                 sx={{
-                  marginBottom: width < 576 ? "24px" : "32px",
+                  paddingLeft:
+                    width < 576
+                      ? "24px !important"
+                      : width < 1024
+                      ? "42px !important"
+                      : "0px !important",
+                  paddingRight:
+                    width < 576
+                      ? "24px !important"
+                      : width < 1024
+                      ? "32px !important"
+                      : "0px !important",
+                  paddingTop:
+                    width < 576 ? "24px !important" : "50px !important",
+                  paddingBottom: "50px",
                 }}
               >
-                <ListPromotion
-                  listData={data}
-                  loadingState={isFetchHot}
-                  itemOffSet={hotPag}
-                  typePromo={"hot"}
-                  itemQuantity={itemQuantity}
-                  noData={noDataHot}
-                />
-              </Box>
-              {/* <Box
+                <Typography
+                  sx={{
+                    ...typographyStyle,
+                    fontSize: "24px",
+                  }}
+                >
+                  {t("Hot Promotions")}
+                </Typography>
+                <Box
+                  sx={{
+                    marginBottom: width < 576 ? "24px" : "32px",
+                    marginTop: width < 576 ? "24px" : "32px",
+                  }}
+                >
+                  {" "}
+                  {isFetchHot || data === null ? (
+                    <BannerLoading height={208} />
+                  ) : (
+                    <SlickSlider
+                      type="tour"
+                      appendDot={true}
+                      images={width < 576 ? imgHotMobile : imgHot}
+                    />
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    marginBottom: width < 576 ? "24px" : "32px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      marginTop: width < 576 ? "24px" : "34px",
+                      marginBottom : width < 576 ? "24px" : "34px"
+
+                    }}
+                  >
+                    <FilterPromotion />
+                  </Box>
+                  <ListPromotion
+                    listData={data}
+                    loadingState={isFetchHot}
+                    itemOffSet={hotPag}
+                    typePromo={"hot"}
+                    itemQuantity={itemQuantity}
+                    noData={noDataHot}
+                  />
+                </Box>
+                {/* <Box
                 sx={{
                   marginTop: "48px",
                   marginBottom: "0px",
@@ -298,26 +334,26 @@ export default function HotTournament() {
                   />
                 )}
               </Box> */}
-              <Box sx={{ margin: "36px 0px" }}>
-                {!isFetchHot &&
-                  data !== null &&
-                  data?.length > 0 &&
-                  itemQuantity && (
-                    <PaginatedItems
-                      defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
-                      pageCount={Math.ceil(data.length / itemQuantity)}
-                      changeOffSet={(value) => {
-                        dispatch(updateHotPage((value - 1) * itemQuantity));
-                      }}
-                    />
-                  )}
-              </Box>
-              <NewFooter />
-            </Container>
-          )
-        }
-      />
-    </ThemeProvider>
+                <Box sx={{ margin: "36px 0px" }}>
+                  {!isFetchHot &&
+                    data !== null &&
+                    data?.length > 0 &&
+                    itemQuantity && (
+                      <PaginatedItems
+                        defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
+                        pageCount={Math.ceil(data.length / itemQuantity)}
+                        changeOffSet={(value) => {
+                          dispatch(updateHotPage((value - 1) * itemQuantity));
+                        }}
+                      />
+                    )}
+                </Box>
+                <NewFooter />
+              </Container>
+            )
+          }
+        />
+      </ThemeProvider>
     </DocumentMeta>
   );
 }

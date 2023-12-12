@@ -19,6 +19,7 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
+import FilterPromotion from "../../../components/filterPromotion";
 const theme = createTheme({
   typography: {},
   components: {
@@ -165,6 +166,15 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
+                <Box
+                    sx={{
+                      marginTop: width < 576 ? "24px" : "34px",
+                      marginBottom : width < 576 ? "24px" : "34px"
+
+                    }}
+                  >
+                    <FilterPromotion />
+                  </Box>
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchEnded}
@@ -238,6 +248,15 @@ export default function HotTournament() {
                   marginBottom: width < 576 ? "24px" : "32px",
                 }}
               >
+                <Box
+                    sx={{
+                      marginTop: width < 576 ? "24px" : "34px",
+                      marginBottom : width < 576 ? "24px" : "34px"
+
+                    }}
+                  >
+                    <FilterPromotion />
+                  </Box>
                 <ListPromotion
                   listData={data}
                   loadingState={isFetchEnded}
