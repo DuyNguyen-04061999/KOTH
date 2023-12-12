@@ -122,6 +122,7 @@ const Revenue = () => {
           "Display Name",
           "Manager",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",

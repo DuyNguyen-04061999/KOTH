@@ -116,6 +116,7 @@ const HomePage = () => {
           "ID",
           "Display Name",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
