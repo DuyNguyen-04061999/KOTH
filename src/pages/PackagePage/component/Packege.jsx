@@ -1,4 +1,4 @@
-import { Box, Container, Typography, useTheme } from "@mui/material";
+import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
@@ -162,7 +162,48 @@ export default function Package() {
                       {t("Subscription Pack")}
                     </Typography>
                   </Box> */}
-                  <Box
+                  {theme?.theme === "christmas" ? (
+                    <Grid
+                    container
+                    columnSpacing={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                      marginTop:
+                        (location && location?.pathname?.includes("home")) ||
+                        pathname === "/"
+                          ? "20px"
+                          : "30px",
+                    }}
+                  >
+                    {item?.map((i, index) => {
+                      return (
+                        <Grid
+                          item
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          xl={4}
+                          key={index}
+                        >
+                          <ListPackage
+                            packageName={i?.packageName}
+                            packageAvatar={i?.packageAvatar}
+                            packagePrice={i?.packagePrice}
+                            packageFreeTicketTournament={
+                              i?.packageFreeTicketTournament
+                            }
+                            packageReduceWatchAds={i?.packageReduceWatchAds}
+                            id={i?.id}
+                          />
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                  ) : (
+                    <Box
                     sx={{
                       display: "flex",
                       flexDirection: "row",
@@ -196,6 +237,7 @@ export default function Package() {
                       );
                     })}
                   </Box>
+                  )}
                 </Box>
                 {/* <Box className="extra_pack" sx={{ marginTop: "50px" }}>
                   <Box>

@@ -143,7 +143,8 @@ export default function ListPackage(props) {
             marginLeft: "8px",
             marginRight: "8px",
             height: "fit-content",
-            minWidth: "315px",
+            minWidth: width < 576 ? "315px" : "",
+            width: width > 576 ? "auto" : "",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -155,6 +156,7 @@ export default function ListPackage(props) {
                 : "" || packageName === "Combo Extra 2"
                 ? "5px solid #BDE8F1"
                 : "",
+                marginBottom:"10px"
           }}
         >
           <Typography
