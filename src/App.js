@@ -346,30 +346,6 @@ function App() {
     store.dispatch(updateDevice(device));
   }, [os, device]);
 
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        x300: 300,
-        mobile: 576,
-        sm: 600,
-        tablet: 640,
-        md: 900,
-        laptop: 1024,
-        lg: 1200,
-        desktop: 1200,
-        xl: 1536,
-      },
-    },
-    typography: {
-      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
-    },
-    button: {
-      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
-    },
-    theme: "christmas"
-  });
-
   useEffect(() => {
     store.dispatch(getListPackage());
   }, []);
@@ -418,6 +394,30 @@ function App() {
       return () => window.removeEventListener('load', onPageLoad);
     }
   }, [currentTab, tokenUser]);
+
+  const [theme, setTheme] = useState(createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        x300: 300,
+        mobile: 576,
+        sm: 600,
+        tablet: 640,
+        md: 900,
+        laptop: 1024,
+        lg: 1200,
+        desktop: 1200,
+        xl: 1536,
+      },
+    },
+    typography: {
+      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+    },
+    button: {
+      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+    },
+    theme: "christmas"
+  }))
 
   return (
     <ThemeProvider theme={theme}>
