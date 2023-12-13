@@ -367,6 +367,42 @@ export default function AnimButton(props) {
           )}
         </Button>
       );
+    case "christmas":
+      return (
+        <Button
+        type={isSubmitBtn && "submit"}
+        sx={{
+          backgroundColor: "#C02F40",
+          color: "white",
+          padding: "11px 5px",
+          borderRadius: "8px",
+          border: "0px solid",
+          width: "100%",
+          fontWeight: "700",
+          transition: ".3s ease",
+          ":hover": {
+            background: "#C02F40",
+          },
+          display: "flex",
+          alignItems: "center",
+          fontSize: "16px",
+          ...style,
+        }}
+        onClick={onClick}
+        // disableRipple
+        disabled={disabledBtn}
+      >
+        <p
+          style={{
+            textTransform: "none",
+            fontSize:"14px"
+          }}
+        >
+          {text}
+        </p>
+        {isHasIcon ? <ArrrowIcon /> : <></>}
+      </Button>
+      )
     case "close":
       return (
         <Button
