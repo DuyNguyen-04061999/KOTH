@@ -86,7 +86,7 @@ export default function ListPackage(props) {
         dispatch(
           toggleCheckWallet({
             type: "combo1",
-            gold: 0.99,
+            gold: packagePrice,
             total: 5,
           })
         );
@@ -108,7 +108,7 @@ export default function ListPackage(props) {
         dispatch(
           toggleCheckWallet({
             type: "combo2",
-            gold: 3.96,
+            gold: packagePrice,
             total: 20,
           })
         );
@@ -158,9 +158,9 @@ export default function ListPackage(props) {
           }}
         >
           <Typography
-            variant="h5"
+            variant="h1"
             sx={{
-              fontSize: width < 1200 ? "14px" : "20px",
+              fontSize: width < 1200 ? "20px" : "20px",
               marginTop: "25px",
               marginBottom: "15px !important",
               color: "white",
@@ -642,7 +642,7 @@ export default function ListPackage(props) {
                     }
                     onClick={handleBuyPackage}
                     style={{
-                      padding: "4px 3px",
+                      padding: "10px 3px",
                       color: "white",
                       background:
                         uPack &&

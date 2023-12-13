@@ -395,6 +395,7 @@ export default function AnimButton(props) {
         <p
           style={{
             textTransform: "none",
+            fontSize:"14px"
           }}
         >
           {text}

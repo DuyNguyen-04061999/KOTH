@@ -119,7 +119,7 @@ export default function Browser(props) {
                     backgroundColor:
                       pathname && pathname?.includes("home")
                         ? "#7648ED"
-                        : "#462A71",
+                        : "transparent",
 
                     borderRadius: "5px",
                     color:
@@ -1041,7 +1041,7 @@ export default function Browser(props) {
                     backgroundColor:
                       pathname && pathname?.includes("packages")
                         ? "#7648ED"
-                        : "#462A71",
+                        : "transparent",
                     borderRadius: "5px",
                     color:
                       pathname && pathname?.includes("packages")

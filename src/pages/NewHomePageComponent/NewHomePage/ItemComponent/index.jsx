@@ -538,7 +538,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         </Box>
       </Box>
       )}
-      <Box component={"img"}
+      {theme?.theme === "christmas" ? (
+        <Box component={"img"}
         src={images.ribbon}
         alt="..."
         sx={{
@@ -548,6 +549,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           width:"100%"
         }}
       ></Box>
+      ) : ""}
     </Box>
   );
-}
+} 

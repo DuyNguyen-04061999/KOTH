@@ -39,7 +39,7 @@ export default function Package() {
     const itemPackage = listPackage?.filter(
       (item) =>
         item?.packageName === "Combo Extra 1" ||
-        item?.packageName ===  "Subscription" ||
+        item?.packageName === "Subscription" ||
         item?.packageName === "Combo Extra 2"
     );
     setItem(itemPackage?.sort());
@@ -87,7 +87,7 @@ export default function Package() {
     },
   };
 
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
     <DocumentMeta {...meta}>
@@ -115,13 +115,22 @@ export default function Package() {
               )}
             </Box>
             {theme?.theme === "christmas" ? (
-                <Box sx={{
-                  marginTop:"20px",
-                  marginBottom:"50px"
-                }}>
-                  <Box component={"img"} src={images.bgchristmas} alt="..." sx={{width:"100%", height:"auto"}}></Box>
-                </Box>
-              ) : ""}
+              <Box
+                sx={{
+                  marginTop: "20px",
+                  marginBottom: "50px",
+                }}
+              >
+                <Box
+                  component={"img"}
+                  src={images.bgchristmas}
+                  alt="..."
+                  sx={{ width: "100%", height: "auto" }}
+                ></Box>
+              </Box>
+            ) : (
+              ""
+            )}
             <Container
               maxWidth={"lg"}
               sx={{
@@ -129,7 +138,6 @@ export default function Package() {
               }}
             >
               <Box>
-            
                 <Box className="subscription_pack">
                   {/* <Box>
                     <Typography
@@ -168,25 +176,25 @@ export default function Package() {
                     }}
                   >
                     {item?.map((i, index) => {
-                        return (
-                          <Box
-                            key={index}
-                            width={width < 576 ? 250 : 300}
-                            height={width < 576 ? 430 : 600}
-                          >
-                            <ListPackage
-                              packageName={i?.packageName}
-                              packageAvatar={i?.packageAvatar}
-                              packagePrice={i?.packagePrice}
-                              packageFreeTicketTournament={
-                                i?.packageFreeTicketTournament
-                              }
-                              packageReduceWatchAds={i?.packageReduceWatchAds}
-                              id={i?.id}
-                            />
-                          </Box>
-                        );
-                      })}
+                      return (
+                        <Box
+                          key={index}
+                          width={width < 576 ? 250 : 300}
+                          height={width < 576 ? 430 : 600}
+                        >
+                          <ListPackage
+                            packageName={i?.packageName}
+                            packageAvatar={i?.packageAvatar}
+                            packagePrice={i?.packagePrice}
+                            packageFreeTicketTournament={
+                              i?.packageFreeTicketTournament
+                            }
+                            packageReduceWatchAds={i?.packageReduceWatchAds}
+                            id={i?.id}
+                          />
+                        </Box>
+                      );
+                    })}
                   </Box>
                 </Box>
                 {/* <Box className="extra_pack" sx={{ marginTop: "50px" }}>
@@ -258,7 +266,17 @@ export default function Package() {
             </Container>
           </div>
         ) : (
-          <div className="Package-home" style={{ marginTop: "48px" }}>
+          <div
+            className="Package-home"
+            style={{
+              marginTop: "48px",
+              padding:
+                (location && location?.pathname?.includes("home")) ||
+                pathname === "/"
+                  ? ""
+                  : "0px 30px 30px 30px",
+            }}
+          >
             {(location && location?.pathname?.includes("home")) ||
             pathname === "/" ? (
               <Typography
@@ -276,14 +294,23 @@ export default function Package() {
               ""
             )}
             {theme?.theme === "christmas" ? (
-                <Box sx={{
-                  marginTop:"20px",
-                  marginBottom:"10px"
-                }}>
-                  <Box component={"img"} src={images.bgchristmas} alt="..." sx={{width:"100%", height:"auto"}}></Box>
-                </Box>
-              ) : ""}
-            <Box style={{ padding: "10px" }}>
+              <Box
+                sx={{
+                  marginTop: "20px",
+                  marginBottom: "10px",
+                }}
+              >
+                <Box
+                  component={"img"}
+                  src={images.bgchristmas}
+                  alt="..."
+                  sx={{ width: "100%", height: "auto" }}
+                ></Box>
+              </Box>
+            ) : (
+              ""
+            )}
+            <Box style={{ marginTop: "30px" }}>
               <Box
                 sx={{
                   paddingBottom: "0px",
