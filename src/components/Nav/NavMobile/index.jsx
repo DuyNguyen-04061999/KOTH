@@ -79,10 +79,10 @@ export default function NavMobile() {
                           {theme?.theme === "christmas" ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="30"
-                              height="30"
+                              width="24"
+                              height="24"
                               fill="none"
-                              viewBox="0 0 30 30"
+                              viewBox="0 0 24 24"
                             >
                               <g filter="url(#filter0_d_7474_481425)">
                                 <g>
@@ -340,10 +340,10 @@ export default function NavMobile() {
                           {theme?.theme === "christmas" ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="30"
-                              height="30"
+                              width="24"
+                              height="24"
                               fill="none"
-                              viewBox="0 0 30 30"
+                              viewBox="0 0 24 24"
                             >
                               <g filter="url(#filter0_d_7474_481425)">
                                 <g>
@@ -630,10 +630,10 @@ export default function NavMobile() {
                           {theme?.theme === "christmas" ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="30"
-                              height="30"
+                              width="24"
+                              height="24"
                               fill="none"
-                              viewBox="0 0 30 30"
+                              viewBox="0 0 24 24"
                             >
                               <g filter="url(#filter0_d_7474_481490)">
                                 <g>
@@ -789,10 +789,10 @@ export default function NavMobile() {
                           {theme?.theme === "christmas" ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="30"
-                              height="30"
+                              width="24"
+                              height="24"
                               fill="none"
-                              viewBox="0 0 30 30"
+                              viewBox="0 0 24 24"
                             >
                               <g filter="url(#filter0_d_7474_481490)">
                                 <g>

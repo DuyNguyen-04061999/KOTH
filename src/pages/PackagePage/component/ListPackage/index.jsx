@@ -64,7 +64,7 @@ export default function ListPackage(props) {
         dispatch(
           toggleCheckWallet({
             type: "subscription",
-            gold: 19.99,
+            gold: packagePrice || 19.99,
             total: 1,
           })
         );
@@ -86,8 +86,8 @@ export default function ListPackage(props) {
         dispatch(
           toggleCheckWallet({
             type: "combo1",
-            gold: packagePrice,
-            total: 5,
+            gold: packagePrice || 0.99,
+            total: packageFreeTicketTournament || 5,
           })
         );
         dispatch(getIdPackage(id));
@@ -108,8 +108,8 @@ export default function ListPackage(props) {
         dispatch(
           toggleCheckWallet({
             type: "combo2",
-            gold: packagePrice,
-            total: 20,
+            gold: packagePrice || 3.96,
+            total: packageFreeTicketTournament || 20,
           })
         );
         dispatch(getIdPackage(id));
@@ -143,8 +143,8 @@ export default function ListPackage(props) {
             marginLeft: "8px",
             marginRight: "8px",
             height: "fit-content",
-            minWidth: width < 576 ? "315px" : "",
-            width: width > 576 ? "auto" : "",
+            minWidth: width < 768 ? "315px" : "",
+            width: width > 768 ? "auto" : "",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
