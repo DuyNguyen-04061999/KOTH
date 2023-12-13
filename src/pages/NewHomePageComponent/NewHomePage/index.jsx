@@ -15,6 +15,7 @@ import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
 import FilterPromotion from "../../../components/filterPromotion";
+import ListWinner from "../../../components/ListWinner";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function NewHomePage() {
@@ -596,6 +597,7 @@ export default function NewHomePage() {
                 noData={noDataEnd}
               />
             </Box>
+          <ListWinner />
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />
         </Box>
