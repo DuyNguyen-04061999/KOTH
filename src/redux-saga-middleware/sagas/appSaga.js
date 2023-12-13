@@ -1,6 +1,6 @@
-import { takeEvery, call, put } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { getListBannerFail, getListBannerSuccess, getListBetFail, getListBetSuccess, getListFaqFail, getListFaqSuccess, saveTimeCloseDialog } from "../reducers/appReducer";
 import AppService from "../services/appService";
-import { getListBannerFail, getListBannerSuccess, getListBetFail, getListBetSuccess, getListFaqFail, getListFaqSuccess } from "../reducers/appReducer";
 const appService = new AppService();
 
 function* getListFaqSaga(dataRequest) {
@@ -34,6 +34,14 @@ function* getListBetSaga(dataRequest) {
     }
 }
 
+function* closeDoubleDaySaga(dataRequest) {
+    const timer = new Date();
+    if(timer){
+        yield put(saveTimeCloseDialog(timer));
+
+    }
+}
+
 function* getListBannerSaga(dataRequest) {
     try {
         const {payload} = dataRequest;
@@ -52,6 +60,7 @@ function* getListBannerSaga(dataRequest) {
 function* appSaga() {
     yield takeEvery("GET_LIST_FAQ", getListFaqSaga)
     yield takeEvery("GET_LIST_BET", getListBetSaga)
+    yield takeEvery("CLOSE_DIALOG_DOUBLEDAY", closeDoubleDaySaga)
     yield takeEvery("GET_LIST_BANNER", getListBannerSaga)
 }
 
