@@ -274,7 +274,7 @@ export default function TicketCheckOut() {
                       variant="body2"
                     >
                       {typeWallet === "subscription"
-                        ? "$19.99"
+                        ? goldCombo || "$19.99"
                         : `$${goldCombo}`}
                     </Typography>
                   </Box>

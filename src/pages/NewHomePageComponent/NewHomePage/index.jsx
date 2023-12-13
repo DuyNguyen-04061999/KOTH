@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
 import React, { Suspense, lazy, useEffect } from "react";
 import DocumentMeta from "react-document-meta";
 import { useTranslation } from "react-i18next";
@@ -42,6 +42,7 @@ export default function NewHomePage() {
   const { listBanner } = useSelector((state) => state.appReducer);
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
+  const theme = useTheme()
   
   useEffect(() => {
     dispatch(getListBanner());
@@ -596,6 +597,7 @@ export default function NewHomePage() {
                 noData={noDataEnd}
               />
             </Box>
+             
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />
         </Box>
