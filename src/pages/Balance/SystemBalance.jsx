@@ -11,6 +11,8 @@ export default function SystemBalance() {
     const [selectedPromotionId, setSelectedPromotionId] = useState("")
 
     const [listUser, setListUser] = useState([])
+    const [listUserVerify, setListUserVerify] = useState([])
+    
     const [selectedUser, setSelectedUser] = useState("")
     const [selectedUserId, setSelectedUserId] = useState("")
 
@@ -24,15 +26,16 @@ export default function SystemBalance() {
 
     const [loading, setLoading] = useState(true);
     const [loadingUser, setLoadingUser] = useState(true);
+    const [loadingUserVerify, setLoadingUserVerify] = useState(true);
     const [dataExcel, setDataExcel] = useState([]);
     const [loadingExcel, setLoadingExcel] = useState(true);
     const navigate = useNavigate()
 
     useEffect(() => {
-        // const key = window.prompt("Please enter key!")
-        // if(key !== "somethingwenterror") {
-        //     navigate("/")
-        // }
+        const key = window.prompt("Please enter key!")
+        if(key !== "somethingwenterror") {
+            navigate("/")
+        }
     }, [navigate])
 
     const fetchDataPromotion = async (search) => {
@@ -77,6 +80,27 @@ export default function SystemBalance() {
         }
     };
 
+    const fetchDataUserVerify = async (search) => {
+        try {
+            setLoadingUserVerify(true);
+            const response = await fetch(search ? `${process.env.REACT_APP_PROMOTION_URL}/api/system/balance/list-user-verify?search=${search}` : 
+            `${process.env.REACT_APP_PROMOTION_URL}/api/system/balance/list-user-verify`)
+            if (response.ok) {
+                // Parse the response JSON
+                const result = await response.json();
+                setListUserVerify(result || [])
+            } else {
+                // Handle errors, e.g., set an error state
+                console.error('Error fetching data:', response.statusText);
+            }
+        } catch (error) {
+            // Handle network errors or other exceptions
+            console.error('Error fetching data:', error.message);
+        } finally {
+            setLoadingUserVerify(false);
+        }
+    };
+
     const handleGetExcel = async (type) => {
         try {
             setLoadingExcel(true);
@@ -103,6 +127,7 @@ export default function SystemBalance() {
         fetchDataPromotion();
         fetchDataUser()
         handleGetExcel()
+        fetchDataUserVerify()
     }, [])
 
     const autocompleteRef = useRef();
@@ -189,7 +214,7 @@ export default function SystemBalance() {
 
     return (
         <>
-            {loading && loadingUser && loadingExcel}
+            {loading && loadingUser && loadingExcel && loadingUserVerify}
             {!tokenUser ? <Navigate to={"/"}/> : (
                 <Box component={"div"} sx={{
                     minHeight: "100vh"
@@ -251,7 +276,7 @@ export default function SystemBalance() {
                             disablePortal
                             id="combo-list-user-verify"
                             className='mt-2'
-                            options={listUser}
+                            options={listUserVerify}
                             getOptionLabel={option => option?.userNickName || selectedUserVerify || ""}
                             sx={{ width: 400 }}
                             value={selectedUserVerify || ""}
