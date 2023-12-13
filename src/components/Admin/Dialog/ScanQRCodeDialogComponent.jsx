@@ -1,12 +1,14 @@
 import CloseIcon from "@mui/icons-material/Close";
+import DownloadIcon from "@mui/icons-material/Download";
+import ShareIcon from "@mui/icons-material/Share";
 import { Box, Dialog, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import copy from "copy-to-clipboard";
 import QRCode from "qrcode.react";
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotify } from "../../../redux-saga-middleware_admin/reducers/adminAlertReducer";
-import { closeScanQRCode } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
+import { closeScanQRCode, openShareQrCode } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
@@ -53,6 +55,26 @@ export default function ScanQRCodeDialogComponent(props) {
             })
         );
     };
+
+    const qrCodeRef = useRef(null);
+
+    const handleDownloadQrcode = () => {
+        const canvas = qrCodeRef.current.querySelector('.HpQrcode > canvas');
+
+        if (canvas) {
+          const dataUrl = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = `${name}_promo_qrcode.png`; // Set the desired filename
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+    }
+
+    const handleShareQrCode = () => {
+        dispatch(openShareQrCode())
+    }
 
     return (
         <Dialog open={isOpenQRCode} onClose={handleClose}>
@@ -101,6 +123,8 @@ export default function ScanQRCodeDialogComponent(props) {
                             border: "2px solid #E4E4E4",
                             borderRadius: "16px",
                         }}
+                        className='HpQrcode'
+                        ref={qrCodeRef}
                     >
                         <QRCode
                             value={urlRedirect}
@@ -181,6 +205,16 @@ export default function ScanQRCodeDialogComponent(props) {
                                 width: "25%",
                             }}
                         ></Box>
+                    </Box>
+                    <Box component={"div"} className="mb-2 d-flex">
+                        <Box component={"div"} className="p-2 bg-info rounded d-flex align-items-center cursor-pointer" onClick={handleDownloadQrcode}>
+                            <DownloadIcon sx={{ color: "#fff" }}/>
+                            <Typography sx={{ fontSize: 12 }} className="text-white">Download QR Code</Typography>
+                        </Box>
+                        <Box component={"div"} className="ms-2 bg-info p-2 rounded d-flex align-items-center cursor-pointer" onClick={handleShareQrCode}>
+                            <ShareIcon sx={{ color: "#fff" }}/>
+                            <Typography sx={{ fontSize: 12 }} className="text-white">Share QR Code</Typography>
+                        </Box>
                     </Box>
                     <Box
                         sx={{

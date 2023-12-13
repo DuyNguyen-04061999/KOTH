@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { getConfigs } from "../../redux-saga-middleware_admin/reducers/adminConfigReducer";
 // import AdminNavigation from "../../components/Admin/Navigation/AdminNavigation";
-import { ConfirmDialogComponent, GivePermissionDialogComponent, ResetPasswordDialogComponent, UpdateAccountDialogComponent } from "../../components/Admin/Dialog";
+import { ConfirmDialogComponent, GivePermissionDialogComponent, ResetPasswordDialogComponent, ShareQRCodeComponent, UpdateAccountDialogComponent } from "../../components/Admin/Dialog";
 import CreateAccountDialogComponent from "../../components/Admin/Dialog/CreateAccountDialogComponent";
 import ProvideTicketDialogComponent from "../../components/Admin/Dialog/ProvideTicketDialogComponent";
 import DrawerNavigation from "../../components/Admin/Navigation/DrawerNavigation";
@@ -38,6 +38,7 @@ export default function MainLayout() {
       <GivePermissionDialogComponent/>
       <UpdateAccountDialogComponent/>
       <ConfirmDialogComponent/>
+      <ShareQRCodeComponent/>
       <Box sx={{height: "100vh"}}>
         {" "}
         <Box
