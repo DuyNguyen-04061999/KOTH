@@ -7,7 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getListPromotionNew } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AnimButton from "../AnimButton";
 
@@ -21,7 +22,7 @@ export default function FilterPromotion(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const { width } = useWindowDimensions();
   const open = Boolean(anchorEl);
-  const [value, setValue] = useState("End in soonest");
+  const [value, setValue] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -55,6 +56,15 @@ export default function FilterPromotion(props) {
 
     setOpenFilter(true);
   };
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getListPromotionNew({ type: "hot", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+    dispatch(getListPromotionNew({ type: "ongoing", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+    dispatch(getListPromotionNew({ type: "upcoming", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+    dispatch(getListPromotionNew({ type: "ended", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+  }, [activeDaily, activeWeekly, activeMonthly, value, dispatch])
 
   const renderItemDrawer = () => {
     return (
@@ -469,7 +479,7 @@ export default function FilterPromotion(props) {
               textTransform: "none",
             }}
           >
-            {value}
+            {value ? "End in latest" : "End in soonest"}
             <KeyboardArrowDown />
           </Button>
           <Menu
@@ -489,7 +499,7 @@ export default function FilterPromotion(props) {
           >
             <MenuItem
               onClick={() => {
-                setValue("End in soonest");
+                setValue(false);
                 handleClose();
               }}
             >
@@ -497,7 +507,7 @@ export default function FilterPromotion(props) {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                setValue("End in latest");
+                setValue(true);
                 handleClose();
               }}
             >

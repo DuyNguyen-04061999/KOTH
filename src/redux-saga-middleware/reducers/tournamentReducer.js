@@ -315,6 +315,27 @@ export const toggleExtra = (data) => {
   }
 }
 
+export const getListPromotionNew  = (data) => {
+  return {
+    type : "GET_LIST_PROMOTION_NEW",
+    payload:data
+  }
+}
+
+export const getListPromotionNewSuccess  = (data) => {
+  return {
+    type : "GET_LIST_PROMOTION_NEW_SUCCESS",
+    payload:data
+  }
+}
+
+export const getListPromotionNewFail  = (data) => {
+  return {
+    type : "GET_LIST_PROMOTION_NEW_FAIL",
+    payload:data
+  }
+}
+
 const tournamentReducer = (
   state = {
     //success=true&&fail=false --> success, fail=true&&success=false --> fail, success=false && fail=false --> Loading
@@ -362,7 +383,8 @@ const tournamentReducer = (
     noDataEnd:false,
     noDataThreeBrand:false,
     noDataHotWeek:false,
-    noDataBrand:false
+    noDataBrand:false,
+    isgetListPromotionNew: false
     //--------------------------------------
   },
   action
@@ -624,6 +646,9 @@ const tournamentReducer = (
       ...state,
       isExtra: !state.isExtra
     }
+    case "GET_LIST_PROMOTION_NEW": return {...state, isgetListPromotionNew: true}
+    case "GET_LIST_PROMOTION_NEW_SUCCESS": return {...state, isgetListPromotionNew: false}
+    case "GET_LIST_PROMOTION_NEW_FAIL": return {...state, isgetListPromotionNew: false}
     default:
       return { ...state };
   }
