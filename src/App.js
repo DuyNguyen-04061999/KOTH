@@ -416,7 +416,7 @@ function App() {
     button: {
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
     },
-    theme: "christmas"
+    theme: "normal"
   }))
 
   const [loadingSetting, setLoadingSettting] = useState(false)
