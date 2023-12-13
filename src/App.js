@@ -419,6 +419,33 @@ function App() {
     theme: "christmas"
   }))
 
+  const [loadingSetting, setLoadingSettting] = useState(false)
+  const fetchGetSetting = async (type) => {
+    try {
+      setLoadingSettting(true);
+        const response = await fetch(`${process.env.REACT_APP_PROMOTION_URL}/api/settings`)
+        if (response.ok) {
+            // Parse the response JSON
+            const result = await response.json();
+            setTheme({...theme, theme: result?.theme || "normal"})
+        } else {
+            // Handle errors, e.g., set an error state
+            console.error('Error fetching data:', response.statusText);
+        }
+    } catch (error) {
+        // Handle network errors or other exceptions
+        console.error('Error fetching data:', error.message);
+    } finally {
+      setLoadingSettting(false);
+    }
+}
+
+useEffect(() => {    
+  console.log(loadingSetting);
+    // Call the fetchData function
+    if(!loadingSetting) fetchGetSetting()
+}, [])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
