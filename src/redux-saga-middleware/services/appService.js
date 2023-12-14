@@ -16,6 +16,12 @@ class AppService {
     const res = await PROMOTION_API.get("/api/get-banners")
     return res
   }
+
+  async getListWinner(dataRequest) {
+    const res = await PROMOTION_API.get("/api/promotions/get-list-winner-recently")
+    return res
+  }
 }
+
 
 export default AppService;

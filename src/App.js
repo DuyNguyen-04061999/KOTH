@@ -35,7 +35,7 @@ import {
   hideToastNotification,
   showToastNotification,
 } from "./redux-saga-middleware/reducers/alertReducer";
-import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
+import { getListBet, getListWinner } from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
   updateSubPackageId,
@@ -349,6 +349,7 @@ function App() {
 
   useEffect(() => {
     store.dispatch(getListPackage());
+    store.dispatch(getListWinner())
   }, []);
 
   useEffect(() => {
