@@ -1,30 +1,28 @@
-import { Box, List, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import AnimButton from "../AnimButton";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { KeyboardArrowDown } from "@mui/icons-material";
+import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
+import Drawer from "@mui/material/Drawer";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { KeyboardArrowDown } from "@mui/icons-material";
-import useWindowDimensions from "../../utils/useWindowDimensions";
 import * as React from "react";
-import Drawer from "@mui/material/Drawer";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { getListPromotionNew } from "../../redux-saga-middleware/reducers/tournamentReducer";
+import useWindowDimensions from "../../utils/useWindowDimensions";
+import AnimButton from "../AnimButton";
 
 export default function FilterPromotion(props) {
   const { t } = useTranslation("auth");
   const [activeDaily, setActiveDaily] = useState(false);
   const [activeWeekly, setActiveWeekly] = useState(false);
   const [activeMonthly, setActiveMonthly] = useState(false);
-  // const [activeJoined,setActiveJoined] = useState(false)
   const [clear, setClear] = useState(false);
-  const [deleteAll, setDeleteAll] = useState(false);
   const { device } = useSelector((state) => state.deviceReducer);
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const { width } = useWindowDimensions();
   const open = Boolean(anchorEl);
-  const [value, setValue] = useState("End in soonest");
+  const [value, setValue] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -47,7 +45,7 @@ export default function FilterPromotion(props) {
   useEffect(() => {}, [activeDaily, activeWeekly, activeMonthly]);
 
   const [openFilter, setOpenFilter] = useState(false);
-  console.log(openFilter);
+  
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -58,6 +56,15 @@ export default function FilterPromotion(props) {
 
     setOpenFilter(true);
   };
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getListPromotionNew({ type: "hot", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+    dispatch(getListPromotionNew({ type: "ongoing", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+    dispatch(getListPromotionNew({ type: "upcoming", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+    dispatch(getListPromotionNew({ type: "ended", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+  }, [activeDaily, activeWeekly, activeMonthly, value, dispatch])
 
   const renderItemDrawer = () => {
     return (
@@ -472,7 +479,7 @@ export default function FilterPromotion(props) {
               textTransform: "none",
             }}
           >
-            {value}
+            {value ? "End in latest" : "End in soonest"}
             <KeyboardArrowDown />
           </Button>
           <Menu
@@ -492,7 +499,7 @@ export default function FilterPromotion(props) {
           >
             <MenuItem
               onClick={() => {
-                setValue("End in soonest");
+                setValue(false);
                 handleClose();
               }}
             >
@@ -500,7 +507,7 @@ export default function FilterPromotion(props) {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                setValue("End in latest");
+                setValue(true);
                 handleClose();
               }}
             >

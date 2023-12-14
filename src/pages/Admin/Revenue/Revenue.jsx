@@ -82,12 +82,14 @@ const Revenue = () => {
     if (width > 576) {
       if (roles?.includes("master")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Manager",
           "Agents",
           "Players",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
@@ -98,11 +100,13 @@ const Revenue = () => {
 
       if (roles?.includes("distributor")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Manager",
           "Players",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
@@ -118,6 +122,7 @@ const Revenue = () => {
           "Display Name",
           "Manager",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",

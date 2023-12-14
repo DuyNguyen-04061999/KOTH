@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "../../components/MainLayout/MainLayout";
 import SliderTime from "../../components/SliderTime";
+import { getListPromotionNew } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import { images, video } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import CountDownTournament from "../NewHomePageComponent/CountDownTournament";
@@ -35,10 +36,6 @@ export default function HourlyTournament() {
   const dispatch = useDispatch();
   const [isFetchList, setIsFetchList] = useState(true);
   const { hourlyTournament } = useSelector((state) => state.tournamentReducer);
-  const [isFetching, setIsFetching] = useState(true);
-  if (!isFetchList) {
-    setTimeout(() => setIsFetching(false), 2000);
-  }
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
@@ -47,10 +44,8 @@ export default function HourlyTournament() {
   };
   useEffect(() => {
     if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hour",
-      });
+      dispatch(getListPromotionNew({ type: "hour" }))
+
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);

@@ -14,12 +14,13 @@ import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
+import FilterPromotion from "../../../components/filterPromotion";
 import { updateHotPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-import FilterPromotion from "../../../components/filterPromotion";
 const theme = createTheme({
   typography: {},
   components: {
@@ -68,10 +69,8 @@ export default function HotTournament() {
   }, [hotPag]);
 
   useEffect(() => {
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "hot",
-    });
+    dispatch(getListPromotionNew({ type: "hot" }))
+
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",
     });

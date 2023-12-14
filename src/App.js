@@ -14,6 +14,7 @@ import ToastNotification from "./components/Toast/ToastNotification";
 import SystemBalance from "./pages/Balance/SystemBalance";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
+import GameDetailIframePage from "./pages/GameManager/GameDetailIframePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import GamePage from "./pages/GameManager/GamePage";
@@ -416,8 +417,35 @@ function App() {
     button: {
       fontFamily: ["Cyntho Next", "sans-serif"].join(","),
     },
-    theme: "christmas"
+    theme: "normal"
   }))
+
+  const [loadingSetting, setLoadingSettting] = useState(false)
+  const fetchGetSetting = async (type) => {
+    try {
+      setLoadingSettting(true);
+        const response = await fetch(`${process.env.REACT_APP_PROMOTION_URL}/api/settings`)
+        if (response.ok) {
+            // Parse the response JSON
+            const result = await response.json();
+            setTheme({...theme, theme: result?.theme || "normal"})
+        } else {
+            // Handle errors, e.g., set an error state
+            console.error('Error fetching data:', response.statusText);
+        }
+    } catch (error) {
+        // Handle network errors or other exceptions
+        console.error('Error fetching data:', error.message);
+    } finally {
+      setLoadingSettting(false);
+    }
+}
+
+useEffect(() => {    
+  console.log(loadingSetting);
+    // Call the fetchData function
+    if(!loadingSetting) fetchGetSetting()
+}, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -433,6 +461,7 @@ function App() {
                   element={<PlayGamePage />}
                 />
                 <Route path="game/:id" element={<GameDetailPage />} />
+                <Route path="game/iframe/:id" element={<GameDetailIframePage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
                 <Route path="/" element={<Layout />}>
                   <Route

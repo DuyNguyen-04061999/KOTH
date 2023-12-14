@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Card, Grid, Typography } from '@mui/material'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { envs } from '../../utils/envs';
 import AddIcon from '@mui/icons-material/Add';
 import TrashIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { Box, Card, Grid, Typography } from '@mui/material';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { envs } from '../../utils/envs';
 
 export default function ListGamePage() {
   const [fetchGame, setFetchGame] = useState(true);
@@ -65,7 +65,7 @@ export default function ListGamePage() {
                         params.append('token', token);
 
                         navigate({
-                          pathname: `/game/${game?.id}`,
+                          pathname: `/game/iframe/${game?.id}`,
                           // search: `?${params.toString()}`,
                           // state: game?.GameFiles
                         });

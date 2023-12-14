@@ -9,10 +9,29 @@ class TournamentService {
   }
 
   async callListTournament(dataRequest) {
+    const { type, daily, monthly, weekly, soon } = dataRequest
+    const queryParams = [];
+    if(daily) {
+      queryParams.push(`daily=${1}`);
+    }
+
+    if(monthly) {
+      queryParams.push(`monthly=${1}`);
+    }
+
+    if(weekly) {
+      queryParams.push(`weekly=${1}`);
+    }
+
+    if(soon) {
+      queryParams.push(`soon=${1}`);
+    }
+    const queryString = queryParams.join("&");
+
     const pathname = window.location.pathname
     if(pathname && (pathname === "/home" || pathname === "/")) {
       const res = await PROMOTION_API.get(
-        `/api/promotions/list-promotion?typeTournament=${dataRequest}&type=home`,
+        `/api/promotions/list-promotion?typeTournament=${type}&type=home&${queryString}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -22,7 +41,7 @@ class TournamentService {
       return res;
     } else {
       const res = await PROMOTION_API.get(
-        `/api/promotions/list-promotion?typeTournament=${dataRequest}`,
+        `/api/promotions/list-promotion?typeTournament=${type}&${queryString}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -33,6 +52,7 @@ class TournamentService {
     }
     
   }
+  
   async listGameForTournament(dataRequest) {
     const res = await API.get("/api/games/list-game-tournament", dataRequest);
     return res;
