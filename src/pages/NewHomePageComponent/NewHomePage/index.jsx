@@ -158,7 +158,7 @@ export default function NewHomePage() {
             width < 576
               ? "24px !important"
               : 767 <= width <= 1280
-              ? "32px !important"
+              ? "50px !important"
               : "0px !important",
           paddingTop: width < 576 ? "24px !important" : "50px !important",
           backgroundColor: "#211d28",
