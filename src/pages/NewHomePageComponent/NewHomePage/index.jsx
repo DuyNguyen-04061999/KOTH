@@ -8,8 +8,10 @@ import { BannerTour, BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
+import FilterPromotion from "../../../components/filterPromotion";
 import { getListBanner, openDialogExclusive } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -51,42 +53,15 @@ export default function NewHomePage() {
 
 
   useEffect(() => {
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "weekly",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "hot",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "hourly",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "vip",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "standard",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "ongoing",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "upcoming",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "ended",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "daily",
-    });
+    // dispatch(getListPromotionNew({ type: "weekly" }))
+    dispatch(getListPromotionNew({ type: "hot" }))
+    // dispatch(getListPromotionNew({ type: "hourly" }))
+    // dispatch(getListPromotionNew({ type: "vip" }))
+    // dispatch(getListPromotionNew({ type: "standard" }))
+    dispatch(getListPromotionNew({ type: "ongoing" }))
+    dispatch(getListPromotionNew({ type: "upcoming" }))
+    dispatch(getListPromotionNew({ type: "ended" }))
+    // dispatch(getListPromotionNew({ type: "daily" }))
     dispatch({
       type: "CALL_BIGGEST_END_TOUR",
     });
@@ -164,6 +139,9 @@ export default function NewHomePage() {
           backgroundColor: "#211d28",
         }}
       >
+        {process.env.REACT_APP_TEST === "test" && <Box className="text-white mb-2" onClick={() => {
+          navigate("/list-game-manager")
+        }}>List Game Manager</Box>}
         <Box
           sx={{
             paddingBottom: "70px",

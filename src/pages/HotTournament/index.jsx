@@ -13,6 +13,7 @@ import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 import MainLayout from "../../components/MainLayout/MainLayout";
 import SlickSlider from "../../components/SlickSlider";
+import { getListPromotionNew } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import PaginatedItems from "../PaginatedItems";
@@ -46,10 +47,8 @@ export default function HotTournament() {
 
   useEffect(() => {
     if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hot",
-      });
+      dispatch(getListPromotionNew({ type: "hot" }))
+
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);

@@ -77,12 +77,14 @@ const HomePage = () => {
     if (width > 576) {
       if (roles?.includes("master")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Manager",
           "Agents",
           "Players",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
@@ -93,12 +95,14 @@ const HomePage = () => {
 
       if (roles?.includes("distributor")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Code/Link",
           "Manager",
           "Players",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",
@@ -112,6 +116,7 @@ const HomePage = () => {
           "ID",
           "Display Name",
           "Total Deposit",
+          "Total Deposit Current Month",
           "Revenue Overall",
           "Revenue Current Month",
           "Subscribers",

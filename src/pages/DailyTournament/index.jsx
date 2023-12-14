@@ -19,6 +19,7 @@ import BannerLoading from "../../components/LoadingComponent/BannerLoading";
 import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 import MainLayout from "../../components/MainLayout/MainLayout";
+import { getListPromotionNew } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
 import PaginatedItems from "../PaginatedItems";
 const theme = createTheme({
@@ -52,10 +53,7 @@ export default function DailyTournament() {
 
   useEffect(() => {
     if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "daily",
-      });
+      dispatch(getListPromotionNew({ type: "daily" }))
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
