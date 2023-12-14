@@ -86,7 +86,8 @@ export default function TicketCheckOut() {
             packageId: idPackage,
             quantity: sl,
             type: typePayment,
-            price: Number(totalMoney)?.toFixed(2)
+            price: Number(totalMoney)?.toFixed(2),
+            auto: autoRecurring
           })
         );
       setSl(1);
@@ -116,6 +117,8 @@ export default function TicketCheckOut() {
     setSocket(socket);
   }, [socket]);
   useEffect(() => {}, [socket]);
+
+  const [autoRecurring, setAutoRecurring] = useState(false)
 
   return createPortal(
     <>
@@ -570,6 +573,41 @@ export default function TicketCheckOut() {
                 height: "1px",
               }}
             />
+            <Box
+              className="d-flex align-items-start"
+              sx={{
+                paddingTop: "10px",
+                paddingBottom: "30px",
+              }}
+            >
+              <input
+                type="checkbox"
+                className="me-2 custom-checkbox-input checkout checkboxtext"
+                style={{ borderRadius: "50px", marginTop: "6px" }}
+                readOnly
+                onClick={() => {
+                  setAutoRecurring(!autoRecurring);
+                }}
+                checked={autoRecurring}
+              />
+              <Box
+                className="text-white"
+                sx={{ fontSize: "14px", fontWeight: "lighter !important" }}
+              >
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    fontWeight: "lighter !important",
+                    fontSize: "14px",
+                    marginLeft: "0px !important",
+                    color: agree === false ? "red" : "white",
+                  }}
+                >
+                  Auto Recurring
+                </Typography>
+              </Box>
+            </Box>
+
             <Box
               className="d-flex align-items-start"
               sx={{
