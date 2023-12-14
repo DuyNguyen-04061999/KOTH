@@ -112,7 +112,7 @@ export default function DialogProfile(props) {
   const [addressLine2, setAddressLine2] = useState(address2);
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState(city);
-  const [stateOption, setStateOption] = useState(state);
+  const [stateOption, setStateOption] = useState(state || "");
   // const handleChangeState = (event) => {
   //   setStateOption(event.target.value);
   // };
@@ -1840,9 +1840,9 @@ export default function DialogProfile(props) {
                     value={
                       stateProfile[
                         stateProfile?.findIndex((s) => s?.name === stateOption)
-                      ] || stateOption
+                      ] || stateOption || ""
                     }
-                    defaultValue={stateOption}
+                    defaultValue={stateOption || ""}
                     sx={{
                       width: "100%",
                       backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
