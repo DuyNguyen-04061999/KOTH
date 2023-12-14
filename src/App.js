@@ -14,6 +14,7 @@ import ToastNotification from "./components/Toast/ToastNotification";
 import SystemBalance from "./pages/Balance/SystemBalance";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
+import GameDetailIframePage from "./pages/GameManager/GameDetailIframePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import GamePage from "./pages/GameManager/GamePage";
@@ -460,6 +461,7 @@ useEffect(() => {
                   element={<PlayGamePage />}
                 />
                 <Route path="game/:id" element={<GameDetailPage />} />
+                <Route path="game/iframe/:id" element={<GameDetailIframePage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
                 <Route path="/" element={<Layout />}>
                   <Route
