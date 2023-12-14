@@ -187,6 +187,7 @@ export default function Package() {
                             }
                             packageReduceWatchAds={i?.packageReduceWatchAds}
                             id={i?.id}
+                            avatarChristmas={i?.packageAvatarChristmas}
                           />
                         </Grid>
                       );
@@ -222,6 +223,7 @@ export default function Package() {
                             }
                             packageReduceWatchAds={i?.packageReduceWatchAds}
                             id={i?.id}
+                            avatarChristmas={i?.packageAvatarChristmas}
                           />
                         </Box>
                       );
@@ -329,6 +331,7 @@ export default function Package() {
                             }
                             packageReduceWatchAds={i?.packageReduceWatchAds}
                             id={i?.id}
+                            avatarChristmas={i?.packageAvatarChristmas}
                           />
                         </Box>
                       );
@@ -348,6 +351,7 @@ export default function Package() {
                             }
                             packageReduceWatchAds={i?.packageReduceWatchAds}
                             id={i?.id}
+                            avatarChristmas={i?.packageAvatarChristmas}
                           />
                         </Box>
                       );
