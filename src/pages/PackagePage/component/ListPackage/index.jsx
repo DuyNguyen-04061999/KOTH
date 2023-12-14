@@ -32,6 +32,7 @@ export default function ListPackage(props) {
     packageFreeTicketTournament,
     packageReduceWatchAds,
     id,
+    avatarChristmas
   } = props;
   const [socket, setSocket] = useState(null);
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
@@ -216,11 +217,11 @@ export default function ListPackage(props) {
                       <Box
                         component={"img"}
                         src={
-                          // packageAvatar
-                          //   ? process.env.REACT_APP_SOCKET_SERVER +
-                          //     "/" +
-                          //     packageAvatar
-                          //   :
+                          avatarChristmas
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              avatarChristmas
+                            :
                           images.christbg
                         }
                         alt="..."
