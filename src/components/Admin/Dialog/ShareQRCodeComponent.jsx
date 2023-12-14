@@ -1,13 +1,14 @@
+import CloseIcon from "@mui/icons-material/Close";
 import { Box, Dialog, FormControl, Input, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    FacebookShareButton,
-    RedditShareButton,
-    TelegramShareButton,
-    TwitterShareButton,
+  FacebookShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
 } from "react-share";
 import { toast } from "react-toastify";
 import { closeShareQrCode } from "../../../redux-saga-middleware_admin/reducers/adminDialogReducer";
@@ -49,7 +50,7 @@ export default function ShareQrCodeComponent() {
       >
         <Box
           sx={{
-            backgroundColor: "#271C39",
+            backgroundColor: "#fff",
             width: width > 576 ? "430px" : "100%",
             height: "100%",
             overflow: "auto",
@@ -58,6 +59,23 @@ export default function ShareQrCodeComponent() {
             padding: "20px 10px",
           }}
         >
+          <Box
+                sx={{
+                    position: "absolute",
+                    top: "20px",
+                    right: "20px",
+                    padding: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    boxShadow: "1px 20px 25px 5px #E4E4E4",
+                    borderRadius: "50%",
+                }}
+                onClick={handleClose}
+            >
+                <CloseIcon/>
+            </Box>
           <Box
             sx={{
               display: "flex",
@@ -88,7 +106,7 @@ export default function ShareQrCodeComponent() {
               marginBottom: "50px",
             }}
           >
-            <Typography sx={{ fontSize: "18px", color: "white" }}>
+            <Typography sx={{ fontSize: "18px", color: "#000" }}>
               Share Promo Code
             </Typography>
           </Box>
@@ -111,7 +129,7 @@ export default function ShareQrCodeComponent() {
             >
               <Box
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: "#E4F7FD",
                   borderRadius: "50%",
                   display: "flex",
                   justifyContent: "center",
@@ -140,7 +158,7 @@ export default function ShareQrCodeComponent() {
                   </svg>
                 </TwitterShareButton>
               </Box>
-              <Typography sx={{ color: "white", fontSize: "12px" }}>
+              <Typography sx={{ color: "#000", fontSize: "12px" }}>
                 Twitter
               </Typography>
             </Box>
@@ -155,7 +173,7 @@ export default function ShareQrCodeComponent() {
             >
               <Box
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: "#E6F2FE",
                   padding: "5px",
                   borderRadius: "50%",
                   display: "flex",
@@ -185,7 +203,7 @@ export default function ShareQrCodeComponent() {
                   </svg>
                 </FacebookShareButton>
               </Box>
-              <Typography sx={{ color: "white", fontSize: "12px" }}>
+              <Typography sx={{ color: "#000", fontSize: "12px" }}>
                 Facebook
               </Typography>
             </Box>
@@ -200,7 +218,7 @@ export default function ShareQrCodeComponent() {
             >
               <Box
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: "#FFF1E4",
                   padding: "5px",
                   borderRadius: "50%",
                   display: "flex",
@@ -234,7 +252,7 @@ export default function ShareQrCodeComponent() {
                   </svg>
                 </RedditShareButton>
               </Box>
-              <Typography sx={{ color: "white", fontSize: "12px" }}>
+              <Typography sx={{ color: "#000", fontSize: "12px" }}>
                 Reddit
               </Typography>
             </Box>
@@ -249,7 +267,7 @@ export default function ShareQrCodeComponent() {
             >
               <Box
                 sx={{
-                  backgroundColor: "white",
+                  backgroundColor: "#E5F3FC",
                   padding: "5px",
                   borderRadius: "50%",
                   display: "flex",
@@ -279,14 +297,14 @@ export default function ShareQrCodeComponent() {
                   </svg>
                 </TelegramShareButton>
               </Box>
-              <Typography sx={{ color: "white", fontSize: "12px" }}>
+              <Typography sx={{ color: "#000", fontSize: "12px" }}>
                 Telegram
               </Typography>
             </Box>
           </Box>
           <Box>
             <Typography
-              sx={{ color: "white", marginBottom: "10px !important" }}
+              sx={{ color: "#000", marginBottom: "10px !important" }}
             >
               Promo code link
             </Typography>
@@ -294,13 +312,13 @@ export default function ShareQrCodeComponent() {
               variant="standard"
               sx={{
                 width: "100%",
-                backgroundColor: "#3d2c63",
+                backgroundColor: "#E5F3FC",
                 borderRadius: "5px",
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                color: "white",
+                color: "#000",
               }}
             >
               <Input
@@ -310,7 +328,7 @@ export default function ShareQrCodeComponent() {
                 sx={{
                     width: "100%",
                   "& .MuiInputBase-input.Mui-disabled": {
-                    WebkitTextFillColor: "#fff",
+                    WebkitTextFillColor: "#000",
                   },
                   "&:before": {
                     borderBottom: "0px solid",
@@ -324,7 +342,7 @@ export default function ShareQrCodeComponent() {
                   "&:hover": {
                     border: "none",
                   },
-                  color: "#fff",
+                  color: "#000",
                   marginLeft: "10px",
                   fontWeight: "500",
                   fontSize: "14px",
