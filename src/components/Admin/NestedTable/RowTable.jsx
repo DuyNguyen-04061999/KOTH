@@ -254,7 +254,8 @@ export const RowTable = (props) => {
                     item.toLowerCase() === "revenue current month" ||
                     item.toLowerCase() === "total deposit" ||
                     item.toLowerCase() === "total deposit current month" ||
-                    item.toLowerCase() === "referral bonus revenue 5%" 
+                    item.toLowerCase() === "referral bonus revenue 5%" ||
+                    (item.toLowerCase()?.includes("revenue") && !isNaN(Number(row[`${trimAndCamelCase(item)}`])))
                     ? Number(row[`${trimAndCamelCase(item)}`])?.toFixed(2) : row[`${trimAndCamelCase(item)}`]}
                   </Box>
                 </StyledTableCell>
