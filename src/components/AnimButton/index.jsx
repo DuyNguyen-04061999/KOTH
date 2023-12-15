@@ -370,39 +370,39 @@ export default function AnimButton(props) {
     case "christmas":
       return (
         <Button
-        type={isSubmitBtn && "submit"}
-        sx={{
-          backgroundColor: "#C02F40",
-          color: "white",
-          padding: "11px 5px",
-          borderRadius: "8px",
-          border: "0px solid",
-          width: "100%",
-          fontWeight: "700",
-          transition: ".3s ease",
-          ":hover": {
-            background: "#C02F40",
-          },
-          display: "flex",
-          alignItems: "center",
-          fontSize: "16px",
-          ...style,
-        }}
-        onClick={onClick}
-        // disableRipple
-        disabled={disabledBtn}
-      >
-        <p
-          style={{
-            textTransform: "none",
-            fontSize:"14px"
+          type={isSubmitBtn && "submit"}
+          sx={{
+            backgroundColor: "#C02F40",
+            color: "white",
+            padding: "11px 5px",
+            borderRadius: "8px",
+            border: "0px solid",
+            width: "100%",
+            fontWeight: "700",
+            transition: ".3s ease",
+            ":hover": {
+              background: "#C02F40",
+            },
+            display: "flex",
+            alignItems: "center",
+            fontSize: "16px",
+            ...style,
           }}
+          onClick={onClick}
+          // disableRipple
+          disabled={disabledBtn}
         >
-          {text}
-        </p>
-        {isHasIcon ? <ArrrowIcon /> : <></>}
-      </Button>
-      )
+          <p
+            style={{
+              textTransform: "none",
+              fontSize: "14px",
+            }}
+          >
+            {text}
+          </p>
+          {isHasIcon ? <ArrrowIcon /> : <></>}
+        </Button>
+      );
     case "close":
       return (
         <Button
@@ -440,14 +440,14 @@ export default function AnimButton(props) {
           {isHasIcon ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="12"
+              width="11"
               height="13"
               fill="none"
-              viewBox="0 0 12 13"
+              viewBox="0 0 11 13"
             >
               <g fill="#fff">
-                <path d="M12 11L1.5.5 0 2l10.5 10.5L12 11z"></path>
-                <path d="M10.5.5L0 11l1.5 1.5L12 2 10.5.5z"></path>
+                <path d="M10.75 11L1.562.5.25 2l9.188 10.5L10.75 11z"></path>
+                <path d="M9.438.5L.25 11l1.313 1.5L10.75 2 9.437.5z"></path>
               </g>
             </svg>
           ) : (
