@@ -331,7 +331,7 @@ export default function TicketCheckOut() {
                     <input
                       type="number"
                       className="input_check"
-                      max={4}
+                      max={10}
                       min={1}
                       disabled={
                         typeWallet === "subscription" ||
@@ -355,7 +355,7 @@ export default function TicketCheckOut() {
                       variant="contained"
                       disabled={typeWallet === "subscription"}
                       onClick={() => {
-                        if (sl > 3) {
+                        if (sl > 9) {
                         } else {
                           setSl(sl + 1);
                         }
@@ -573,7 +573,7 @@ export default function TicketCheckOut() {
                 height: "1px",
               }}
             />
-            <Box
+            {/* <Box
               className="d-flex align-items-start"
               sx={{
                 paddingTop: "10px",
@@ -606,7 +606,7 @@ export default function TicketCheckOut() {
                   Auto Recurring
                 </Typography>
               </Box>
-            </Box>
+            </Box> */}
 
             <Box
               className="d-flex align-items-start"
