@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPanel from "../../../components/Admin/AdminPanel/AdminPanel";
@@ -148,12 +148,12 @@ const ManageDistributor = () => {
   }, [roles, width]);
 
   return (
-    <Container>
+    <Box component={"div"} className="p-5">
       <AdminPanel></AdminPanel> <DetailAccountDialogComponent />
       <Box sx={{ marginTop: "40px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

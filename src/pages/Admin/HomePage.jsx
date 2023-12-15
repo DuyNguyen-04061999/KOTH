@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
@@ -141,12 +141,12 @@ const HomePage = () => {
   }, [roles, width]);
 
   return (
-    <Container>
+    <Box component={"div"} className="p-5">
       <AdminPanel></AdminPanel>
       <Box sx={{ marginTop: "36px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
-    </Container>
+    </Box>
   );
 };
 
