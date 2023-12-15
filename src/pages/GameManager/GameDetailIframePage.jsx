@@ -43,6 +43,17 @@ export default function GameDetailIframePage(props) {
   };
   const os = getMobileOS();
 
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (game && !fetchGame) {
+      setLoading(true);
+      if(device && device === "Mobile" && os && os === "Android") {
+        screen.enter()
+      }
+    }
+  }, [screen, device, os, fetchGame, game]);
+
   return (
     <Fragment>
       {!fetchGame && game ? (
@@ -50,7 +61,7 @@ export default function GameDetailIframePage(props) {
           sx={
             device === "Mobile"
               ? game?.gameScreenType
-                ? orientation === "portrait"
+                ? loading && orientation === "portrait"
                   ? {
                       transform: " rotate(-90deg)",
                       transformOrigin: "left top",
@@ -62,7 +73,7 @@ export default function GameDetailIframePage(props) {
                       left: "0px",
                     }
                   : {}
-                : orientation === "landscape"
+                : loading && orientation === "landscape"
                 ? {
                     transform: " rotate(-90deg)",
                     transformOrigin: "left top",
@@ -138,6 +149,7 @@ export default function GameDetailIframePage(props) {
                             overflow: "hidden",
                             zIndex: "999999",
                             display: "block",
+                            paddingLeft: "50px"
                           }
                     }
                     title="Playgame"
@@ -173,6 +185,7 @@ export default function GameDetailIframePage(props) {
                             overflow: "hidden",
                             zIndex: "999999",
                             display: "block",
+                            paddingLeft: "50px"
                           }
                     }
                     title="Playgame"

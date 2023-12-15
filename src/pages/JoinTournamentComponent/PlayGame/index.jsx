@@ -232,6 +232,7 @@ export default function PlayGame(props) {
                           overflow: "hidden",
                           zIndex: "999999",
                           display: videoGame ? "none" : "block",
+                          paddingLeft: "50px"
                         }
                   }
                   title="Playgame"
@@ -276,6 +277,7 @@ export default function PlayGame(props) {
                           overflow: "hidden",
                           zIndex: "999999",
                           display: videoGame ? "none" : "block",
+                          paddingLeft: "50px"
                         }
                   }
                   title="Playgame"
@@ -321,6 +323,7 @@ export default function PlayGame(props) {
                         overflow: "hidden",
                         zIndex: "999999",
                         display: videoGame ? "none" : "block",
+                        paddingLeft: "50px"
                       }
                 }
                 title="Playgame"
@@ -365,6 +368,7 @@ export default function PlayGame(props) {
                         overflow: "hidden",
                         zIndex: "999999",
                         display: videoGame ? "none" : "block",
+                        paddingLeft: "50px"
                       }
                 }
                 title="Playgame"
