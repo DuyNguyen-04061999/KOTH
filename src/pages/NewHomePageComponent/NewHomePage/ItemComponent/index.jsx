@@ -1,4 +1,4 @@
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Skeleton, Typography, useTheme } from "@mui/material";
 import React from "react";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 // import InspirationTTF from "../../../../assets/font/CynthoNextMedium.otf";
@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import { CalculateDistance } from "../../../../components/CountDownTimer/utils/CalculateDistance";
-import { imageHome } from "../../../../utils/images";
+import { imageHome, images } from "../../../../utils/images";
 
 export default function ItemComponent({ countdown, tourInfo, isLoading }) {
     const {t} = useTranslation('global');
@@ -16,6 +16,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
   const [days, setDay] = useState(null);
+  const theme = useTheme()
   let countEndDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
   let countStartDate = new Date(moment(tourInfo?.tournamentStartAt)).getTime();
   let timeNow = new Date().getTime();
@@ -313,7 +314,119 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           </Box>
         </Box>
       </Box>
-      <Box
+      {theme?.theme === "christmas" ? (
+        <Box
+        sx={{
+          width: "100%",
+          height: width < 576 ? "64px" : "69px",
+          bgcolor: "#E7D7B3" ,
+          color: "#000000",
+          borderEndEndRadius: "8px",
+          borderEndStartRadius: "8px",
+          borderTop: "dashed 2px black",
+          transition: "0.3s ease-out",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            padding: "12px 8px 6px 8px",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {isLoading ? (
+            <Skeleton
+              variant="rectangular"
+              width={40}
+              height={40}
+              animation="wave"
+            />
+          ) : (
+            <Box
+              component={"img"}
+              style={{
+                width: width < 576 ? `40px` : "49px",
+                height: width < 576 ? `40px` : "49px",
+                borderRadius: "4px",
+                objectFit: "cover",
+              }}
+              src={
+                tourInfo &&
+                tourInfo?.tourSkins &&
+                tourInfo?.tourSkins?.length > 0 &&
+                tourInfo?.tourSkins[0]?.skinGame &&
+                tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                  : imageHome.brandImage
+              }
+              // effect="blur"
+              // wrapperProps={{
+              //   style: {
+              //     transitionDelay: "0.5s",
+              //   },
+              // }}
+            ></Box>
+          )}
+          <Box
+            sx={{
+              marginLeft: "5px",
+            }}
+          >
+            <Typography
+              sx={{
+                ...styleTypography,
+                fontSize: width < 576 ? "12px" : "14px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                lineHeight: "120%",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                maxHeight: "1rem",
+                whiteSpace: "nowrap",
+                maxWidth: "100px",
+                fontFamily: "Cyntho Next",
+              }}
+            >
+              {isLoading ? (
+                <Skeleton variant="text" />
+              ) : tourInfo &&
+                tourInfo?.tourSkins &&
+                tourInfo?.tourSkins?.length > 0 &&
+                tourInfo?.tourSkins[0]?.skinGame &&
+                tourInfo?.tourSkins[0]?.skinGame?.gameName ? (
+                tourInfo?.tourSkins[0]?.skinGame?.gameName
+              ) : (
+                "game Name"
+              )}
+            </Typography>
+            <button
+              onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
+              disabled={isLoading}
+              style={{
+                border: "none",
+                outline: "none",
+                width: width < 576 ? `90px` : "104px",
+                borderRadius: "5px",
+                background: "#C02F40",
+                color: "#ffff",
+                fontSize: width < 576 ? "12px" : "14px",
+                minHeight: "24px",
+              }}
+            >
+              {tourInfo && tourInfo?.tournamentStatus === 0
+                ? "See More"
+                : tourInfo?.tournamentStatus === 1
+                ? `${t("Play Now")}`
+                : "See More"}
+            </button>
+          </Box>
+        </Box>
+      </Box>
+      ) : (
+        <Box
         className={isHovered === true ? "hover-card" : ""}
         sx={{
           width: "100%",
@@ -424,6 +537,19 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
           </Box>
         </Box>
       </Box>
+      )}
+      {theme?.theme === "christmas" ? (
+        <Box component={"img"}
+        src={images.ribbon}
+        alt="..."
+        sx={{
+          position:"absolute",
+          top:"43%",
+          left:0,
+          width:"100%"
+        }}
+      ></Box>
+      ) : ""}
     </Box>
   );
-}
+} 

@@ -379,6 +379,12 @@ import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
 import doubleDayPackBannerMB from "../assets/images/doubleDayPackMB.jpg";
 import englishIcon from "../assets/images/englishIcon.png";
 import turkishICon from "../assets/images/turkishIcon.png";
+import christ1 from "../assets/images/banners/christ1.png"
+import christ2 from "../assets/images/banners/christ2.png"
+import christ3 from "../assets/images/banners/christ3.png"
+import christbg from "../assets/images/banners/christbg.png"
+import ribbon from "../assets/images/banners/ribbon.png"
+import bgchristmas from "../assets/images/banners/bgchristmas.png"
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -620,6 +626,12 @@ export const images = {
   doubleDayPackBanner: doubleDayPackBanner,
   doubleDayPackBannerMB: doubleDayPackBannerMB,
   doubleDayBanneMB: doubleDayBanneMB,
+  christ1:christ1,
+  christ2:christ2,
+  christ3:christ3,
+  christbg:christbg,
+  ribbon:ribbon,
+  bgchristmas:bgchristmas,
 };
 
 export const navigationImages = {

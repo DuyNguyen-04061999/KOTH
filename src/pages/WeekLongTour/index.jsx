@@ -13,6 +13,7 @@ import ListItemLoading from "../../components/LoadingComponent/ItemLoading";
 import ListEmpty from "../../components/LoadingComponent/ListEmpty";
 import MainLayout from "../../components/MainLayout/MainLayout";
 import SlickSlider from "../../components/SlickSlider";
+import { getListPromotionNew } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import NewFooter from "../NewFooter";
 import ItemComponent from "../NewHomePageComponent/NewHomePage/ItemComponent";
@@ -55,10 +56,8 @@ export default function WeekLongTour() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "weekly",
-      });
+      dispatch(getListPromotionNew({ type: "weekly" }))
+
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);

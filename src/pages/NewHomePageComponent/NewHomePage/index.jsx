@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BannerTour, BannerTourMobile } from "../../../components/Banner";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
+import ListWinner from "../../../components/ListWinner";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
+import FilterPromotion from "../../../components/filterPromotion";
 import { getListBanner, openDialogExclusive } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -48,42 +51,15 @@ export default function NewHomePage() {
 
 
   useEffect(() => {
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "weekly",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "hot",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "hourly",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "vip",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "standard",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "ongoing",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "upcoming",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "ended",
-    });
-    dispatch({
-      type: "CALL_LIST_TOURNAMENT",
-      payload: "daily",
-    });
+    // dispatch(getListPromotionNew({ type: "weekly" }))
+    dispatch(getListPromotionNew({ type: "hot" }))
+    // dispatch(getListPromotionNew({ type: "hourly" }))
+    // dispatch(getListPromotionNew({ type: "vip" }))
+    // dispatch(getListPromotionNew({ type: "standard" }))
+    dispatch(getListPromotionNew({ type: "ongoing" }))
+    dispatch(getListPromotionNew({ type: "upcoming" }))
+    dispatch(getListPromotionNew({ type: "ended" }))
+    // dispatch(getListPromotionNew({ type: "daily" }))
     dispatch({
       type: "CALL_BIGGEST_END_TOUR",
     });
@@ -155,12 +131,15 @@ export default function NewHomePage() {
             width < 576
               ? "24px !important"
               : 767 <= width <= 1280
-              ? "32px !important"
+              ? "50px !important"
               : "0px !important",
           paddingTop: width < 576 ? "24px !important" : "50px !important",
           backgroundColor: "#211d28",
         }}
       >
+        {process.env.REACT_APP_TEST === "test" && <Box className="text-white mb-2" onClick={() => {
+          navigate("/list-game-manager")
+        }}>List Game Manager</Box>}
         <Box
           sx={{
             paddingBottom: "70px",
@@ -194,6 +173,7 @@ export default function NewHomePage() {
                     <Grid item md={4} xs={6} key={index}>
                       {i?.bannerType !== "contact" ? (
                         <Box
+                          className="cursor-pointer"
                           onClick={() => {
                             if(i?.bannerType === "package") {
                               navigate("/packages")
@@ -216,7 +196,9 @@ export default function NewHomePage() {
                         sx={{ width: "100%", height: "auto" }}
                       ></Box>
                       ) : (
-                        <Box component={"a"} href="mailto:support@play4promo.com">
+                        <Box
+                        className="cursor-pointer"
+                        component={"a"} href="mailto:support@play4promo.com">
                           <Box
                             component={"img"}
                             src={
@@ -239,11 +221,11 @@ export default function NewHomePage() {
           ) : (
             ""
           )}
-          {/* <Box sx={{
+          <Box sx={{
             marginTop: width < 576 ? "24px" : "34px",
           }}>
             <FilterPromotion />
-          </Box> */}
+          </Box>
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "34px",
@@ -282,7 +264,7 @@ export default function NewHomePage() {
                     fontWeight: "200 !important",
                     color: "#BE48ED",
                     fontFamily: "Cyntho Next",
-                    cursor: "pointer",
+                    cursor: "pointer", 
                   }}
                 >
                   {t("View All")}
@@ -595,6 +577,7 @@ export default function NewHomePage() {
                 noData={noDataEnd}
               />
             </Box>
+          <ListWinner />
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />
         </Box>

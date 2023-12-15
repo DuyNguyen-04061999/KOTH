@@ -14,6 +14,7 @@ import ToastNotification from "./components/Toast/ToastNotification";
 import SystemBalance from "./pages/Balance/SystemBalance";
 import ChangeLog from "./pages/ChangeLog/ChangeLog";
 import DeleteSkinPage from "./pages/GameManager/DeleteSkinPage";
+import GameDetailIframePage from "./pages/GameManager/GameDetailIframePage";
 import GameDetailPage from "./pages/GameManager/GameDetailPage";
 import GameEditPage from "./pages/GameManager/GameEditPage";
 import GamePage from "./pages/GameManager/GamePage";
@@ -34,7 +35,7 @@ import {
   hideToastNotification,
   showToastNotification,
 } from "./redux-saga-middleware/reducers/alertReducer";
-import { getListBet } from "./redux-saga-middleware/reducers/appReducer";
+import { getListBet, getListWinner } from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
   updateSubPackageId,
@@ -346,31 +347,9 @@ function App() {
     store.dispatch(updateDevice(device));
   }, [os, device]);
 
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        x300: 300,
-        mobile: 576,
-        sm: 600,
-        tablet: 640,
-        md: 900,
-        laptop: 1024,
-        lg: 1200,
-        desktop: 1200,
-        xl: 1536,
-      },
-    },
-    typography: {
-      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
-    },
-    button: {
-      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
-    },
-  });
-
   useEffect(() => {
     store.dispatch(getListPackage());
+    store.dispatch(getListWinner())
   }, []);
 
   useEffect(() => {
@@ -418,6 +397,57 @@ function App() {
     }
   }, [currentTab, tokenUser]);
 
+  const [theme, setTheme] = useState(createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        x300: 300,
+        mobile: 576,
+        sm: 600,
+        tablet: 640,
+        md: 900,
+        laptop: 1024,
+        lg: 1200,
+        desktop: 1200,
+        xl: 1536,
+      },
+    },
+    typography: {
+      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+    },
+    button: {
+      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+    },
+    theme: "normal"
+  }))
+
+  const [loadingSetting, setLoadingSettting] = useState(false)
+  const fetchGetSetting = async (type) => {
+    try {
+      setLoadingSettting(true);
+        const response = await fetch(`${process.env.REACT_APP_PROMOTION_URL}/api/settings`)
+        if (response.ok) {
+            // Parse the response JSON
+            const result = await response.json();
+            setTheme({...theme, theme: result?.theme || "normal"})
+        } else {
+            // Handle errors, e.g., set an error state
+            console.error('Error fetching data:', response.statusText);
+        }
+    } catch (error) {
+        // Handle network errors or other exceptions
+        console.error('Error fetching data:', error.message);
+    } finally {
+      setLoadingSettting(false);
+    }
+}
+
+useEffect(() => {    
+  console.log(loadingSetting);
+    // Call the fetchData function
+    if(!loadingSetting) fetchGetSetting()
+}, [])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -432,6 +462,7 @@ function App() {
                   element={<PlayGamePage />}
                 />
                 <Route path="game/:id" element={<GameDetailPage />} />
+                <Route path="game/iframe/:id" element={<GameDetailIframePage />} />
                 <Route path="list-game-manager" element={<ListGamePage />} />
                 <Route path="/" element={<Layout />}>
                   <Route

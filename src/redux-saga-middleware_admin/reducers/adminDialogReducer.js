@@ -140,6 +140,20 @@ export const closeScanQRCode = (data) => {
   }
 }
 
+export const openShareQrCode = (data) => {
+  return {
+    type: "OPEN_SHARE_QR_CODE",
+    payload: data
+  }
+}
+
+export const closeShareQrCode = (data) => {
+  return {
+    type: "CLOSE_SHARE_QR_CODE",
+    payload: data
+  }
+}
+
 const adminDialogReducer = (
   state = {
     isCreateDialog: false,
@@ -154,7 +168,8 @@ const adminDialogReducer = (
     isRefcodeDialog : false,
     typeRefcode: "error",
     messageRefcode: "",
-    isOpenQRCode:false,
+    isOpenQRCode: false,
+    isShareQrCode: false
   },
   action
 ) => {
@@ -190,6 +205,8 @@ const adminDialogReducer = (
     case "CLOSE_SCAN_QR_CODE": return {...state, isOpenQRCode: false}
     case "OPEN_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: true, typeRefcode: payload?.type || "", messageRefcode: payload?.message || ""}
     case "CLOSE_REF_CODE_NOTIFY": return {...state, isRefcodeDialog: false, typeRefcode: "", messageRefcode: ""}
+    case "OPEN_SHARE_QR_CODE": return {...state, isShareQrCode: true}
+    case "CLOSE_SHARE_QR_CODE": return {...state, isShareQrCode: false}
     default:
       return { ...state };
   }

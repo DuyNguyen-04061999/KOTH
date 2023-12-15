@@ -112,7 +112,7 @@ export default function DialogProfile(props) {
   const [addressLine2, setAddressLine2] = useState(address2);
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState(city);
-  const [stateOption, setStateOption] = useState(state);
+  const [stateOption, setStateOption] = useState(state || "");
   // const handleChangeState = (event) => {
   //   setStateOption(event.target.value);
   // };
@@ -942,7 +942,7 @@ export default function DialogProfile(props) {
                 />
                 {tokenUser && userNameProfile === user?.userName && (
                   <Box>
-                    <Box className="Last-name d-flex align-items-center mb-2">
+                    {/* <Box className="Last-name d-flex align-items-center mb-2">
                       <Box
                         sx={{
                           padding: "10px",
@@ -1015,15 +1015,15 @@ export default function DialogProfile(props) {
                           {lastName}
                         </Typography>
                       </Box>
-                    </Box>
-                    <hr
+                    </Box> */}
+                    {/* <hr
                       style={{
                         border: "1px solid #A89CD7",
                         marginBottom: "0.5rem",
                         marginTop: "0.5rem",
                       }}
-                    />
-                    <Box className="First-name d-flex align-items-center mb-2">
+                    /> */}
+                    {/* <Box className="First-name d-flex align-items-center mb-2">
                       <Box
                         sx={{
                           padding: "10px",
@@ -1096,14 +1096,14 @@ export default function DialogProfile(props) {
                           {firstName}
                         </Typography>
                       </Box>
-                    </Box>
-                    <hr
+                    </Box> */}
+                    {/* <hr
                       style={{
                         border: "1px solid #A89CD7",
                         marginBottom: "0.5rem",
                         marginTop: "0.5rem",
                       }}
-                    />
+                    /> */}
                     <Box className="Email-address d-flex align-items-center mb-2">
                       <Box
                         sx={{
@@ -1242,16 +1242,16 @@ export default function DialogProfile(props) {
                         </Typography>
                       </Box>
                     </Box>
-                    <hr
+                    {/* <hr
                       style={{
                         border: "1px solid #A89CD7",
                         marginBottom: "0.5rem",
                         marginTop: "0.5rem",
                       }}
-                    />
+                    /> */}
                   </Box>
                 )}
-                <Box className="First-name d-flex align-items-center mb-2">
+                {/* <Box className="First-name d-flex align-items-center mb-2">
                   <Box
                     sx={{
                       padding: "10px",
@@ -1324,7 +1324,7 @@ export default function DialogProfile(props) {
                       {nickName}
                     </Typography>
                   </Box>
-                </Box>
+                </Box> */}
                 <hr
                   style={{
                     border: "1px solid #A89CD7",
@@ -1349,63 +1349,8 @@ export default function DialogProfile(props) {
               }}
             >
               <Box sx={{ display: "flex" }}>
-                <Box
-                  className="City mb-3 d-flex flex-column align-items-start"
-                  sx={{ width: "100%" }}
-                >
-                  <Typography
-                    variant="inherit"
-                    sx={{
-                      color: "#ffff",
-                      fontWeight: "500",
-                      marginBottom: "5px !important",
-                    }}
-                  >
-                    Last Name
-                  </Typography>
-                  <FormControl
-                    variant="standard"
-                    sx={{
-                      width: "100%",
-                      backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
-                      padding: "10px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    <Input
-                      id="input-with-icon-adornment"
-                      type="text"
-                      onChange={(e) => setLName(e.target.value)}
-                      value={lName}
-                      disabled={tab === 0}
-                      placeholder="Enter Last Name"
-                      sx={{
-                        "&:before": {
-                          borderBottom: " 0px solid !important ",
-                          "&:hover": {
-                            borderBottom: "0px solid !important",
-                          },
-                        },
-                        "&:after": {
-                          borderBottom: "0px solid !important",
-                        },
-                        "&:hover": {
-                          border: "none",
-                        },
-                        color: "white",
-                        fontSize: "14px",
-                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                          padding: "0px !important",
-                        },
-                        "& .Mui-disabled": {
-                          WebkitTextFillColor: "white !important",
-                        },
-                      }}
-                    />
-                  </FormControl>{" "}
-                </Box>
-                <Box
-                  className="Firstname mb-3 ms-2 d-flex flex-column align-items-start"
+              <Box
+                  className="Firstname mb-3 d-flex flex-column align-items-start"
                   sx={{ width: "100%" }}
                 >
                   <Typography
@@ -1459,6 +1404,62 @@ export default function DialogProfile(props) {
                     />{" "}
                   </FormControl>{" "}
                 </Box>
+                <Box
+                  className="City mb-3 ms-2 d-flex flex-column align-items-start"
+                  sx={{ width: "100%" }}
+                >
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Last Name
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <Input
+                      id="input-with-icon-adornment"
+                      type="text"
+                      onChange={(e) => setLName(e.target.value)}
+                      value={lName}
+                      disabled={tab === 0}
+                      placeholder="Enter Last Name"
+                      sx={{
+                        "&:before": {
+                          borderBottom: " 0px solid !important ",
+                          "&:hover": {
+                            borderBottom: "0px solid !important",
+                          },
+                        },
+                        "&:after": {
+                          borderBottom: "0px solid !important",
+                        },
+                        "&:hover": {
+                          border: "none",
+                        },
+                        color: "white",
+                        fontSize: "14px",
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                          padding: "0px !important",
+                        },
+                        "& .Mui-disabled": {
+                          WebkitTextFillColor: "white !important",
+                        },
+                      }}
+                    />
+                  </FormControl>{" "}
+                </Box>
+               
               </Box>
               <Box className="Display-Name mb-3 d-flex flex-column align-items-start">
                 <Typography
@@ -1840,9 +1841,9 @@ export default function DialogProfile(props) {
                     value={
                       stateProfile[
                         stateProfile?.findIndex((s) => s?.name === stateOption)
-                      ] || stateOption
+                      ] || stateOption || ""
                     }
-                    defaultValue={stateOption}
+                    defaultValue={stateOption || ""}
                     sx={{
                       width: "100%",
                       backgroundColor: tab === 0 ? "#3D2D53" : "#181223",

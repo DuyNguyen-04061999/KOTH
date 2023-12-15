@@ -63,6 +63,7 @@ export default function AdminTotals(props) {
                  item?.type === "System Revenue Current Month" || 
                  item?.type === "System Revenue Previous Month" || 
                  item?.type === "Revenue Overall" || 
+                 (item?.type?.includes("Revenue") && !isNaN(item?.count)) || 
                  item?.type === "revenue" ? "$" : ""} 
                  
                  {item?.type === "Master Revenue Overall" || 
@@ -77,6 +78,7 @@ export default function AdminTotals(props) {
                  item?.type === "System Revenue Current Month" || 
                  item?.type === "System Revenue Previous Month" || 
                  item?.type === "Revenue Overall" || 
+                 (item?.type?.includes("Revenue") && !isNaN(item?.count)) || 
                  item?.type === "revenue" ? `${item.count > 0 ? Number(item.count).toFixed(2) : 0}` : item.count} 
               </Box>
             </Box>

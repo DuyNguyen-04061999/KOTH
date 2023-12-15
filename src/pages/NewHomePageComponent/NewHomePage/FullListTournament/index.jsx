@@ -7,6 +7,7 @@ import ListItemLoading from "../../../../components/LoadingComponent/ItemLoading
 import ListEmpty from "../../../../components/LoadingComponent/ListEmpty";
 import SlickSlider from "../../../../components/SlickSlider";
 import SliderTime from "../../../../components/SliderTime";
+import { getListPromotionNew } from "../../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageHome, images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import PaginatedItems from "../../../PaginatedItems";
@@ -31,24 +32,21 @@ export default function FullListTournament({ handleOnClose, open, type }) {
   const dispatch = useDispatch();
   const [itemOffSet, setItemOffSet] = useState(0);
   const [tourList, setTourList] = useState([]);
+  const [moment, setMoment] = useState(null);
+
+  useEffect(() => {
+    import('moment').then(momentModule => {
+      setMoment(momentModule);
+    });
+  }, []);
+  
   useEffect(() => {
     if (isFetchList) {
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "week",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hot",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "hour",
-      });
-      dispatch({
-        type: "CALL_LIST_TOURNAMENT",
-        payload: "day",
-      });
+      dispatch(getListPromotionNew({ type: "weekly" }))
+      dispatch(getListPromotionNew({ type: "hot" }))
+      dispatch(getListPromotionNew({ type: "hourly" }))
+      dispatch(getListPromotionNew({ type: "daily" }))
+
       setIsFetchList(false);
     }
   }, [dispatch, isFetchList]);
@@ -82,21 +80,16 @@ export default function FullListTournament({ handleOnClose, open, type }) {
     selectedDay,
     hourList,
     selectedHour,
+    moment
   ]);
 
   useEffect(() => {
     setHourList(hourlyTournament.map((item) => moment(item?.timeStart)));
     setDayList(dailyTournament.map((item) => item?.timeStart));
-  }, [hourlyTournament, dailyTournament]);
+  }, [hourlyTournament, dailyTournament, moment]);
   const navigate = useNavigate();
 
-  const [moment, setMoment] = useState(null);
-
-  useEffect(() => {
-    import('moment').then(momentModule => {
-      setMoment(momentModule);
-    });
-  }, []);
+  
   return (
     <Dialog sx={{ zIndex: "1320" }} fullScreen={true} open={open}>
       <Box

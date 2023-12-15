@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPanel from "../../../components/Admin/AdminPanel/AdminPanel";
@@ -80,14 +80,16 @@ const ManageDistributor = () => {
       if (roles?.includes("master")) {
         setHeaderList([
           "",
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Manager",
           "Agents",
           "Players",
-          "Total Deposit",
-          "Revenue Overall",
-          "Revenue Current Month",
+          "System Revenue (100%) Overall",
+          "Distributor Revenue (42%) Overall",
+          "System Revenue (100%) This Month",
+          "Distributor Revenue (42%) This Month",
           "Subscribers",
           "Register Date",
           "Last Login",
@@ -97,16 +99,18 @@ const ManageDistributor = () => {
       if (roles?.includes("distributor")) {
         setHeaderList([
           "",
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Give Permission",
           "Code/Link",
           "Manager",
           "Players",
           "Referred By",
-          "Total Deposit",
-          "Revenue Overall",
-          "Revenue Current Month",
+          "System Revenue (100%) Overall",
+          "Agent Revenue (25%) Overall",
+          "System Revenue (100%) This Month",
+          "Agent Revenue (25%) This Month",
           "Subscribers",
           "Register Date",
           "Last Login",
@@ -119,9 +123,10 @@ const ManageDistributor = () => {
           "ID",
           "Display Name",
           "Manager",
-          "Total Deposit",
-          "Revenue Overall",
-          "Revenue Current Month",
+          "System Revenue (100%) Overall",
+          "Agent Revenue (25%) Overall",
+          "System Revenue (100%) This Month",
+          "Agent Revenue (25%) This Month",
           "Subscribers",
           "Phone",
           "Email"
@@ -143,12 +148,12 @@ const ManageDistributor = () => {
   }, [roles, width]);
 
   return (
-    <Container>
+    <Box component={"div"} className="p-5">
       <AdminPanel></AdminPanel> <DetailAccountDialogComponent />
       <Box sx={{ marginTop: "40px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

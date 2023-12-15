@@ -1,3 +1,61 @@
+## [1.4.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.3.0...v1.4.0) (2023-12-15)
+
+
+### Features
+
+* Add avatar christmas package ([42bb108](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/42bb108130b793e612d316fbd00c802822478943))
+* add theme christmas ([e1aafbf](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e1aafbf6ccd40d0932977ae2a204a554760386b5))
+* Add tool balance page ([7b8ac68](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7b8ac68eaeb683b4b4d4ad5b94a91f8f359c5e89))
+* Add total deposit current month master ([b1fcaba](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b1fcabac4a623a76f651cf097a69351912d7e545))
+* Added count down banner popup ([fbc356b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/fbc356bca4f7a62cdb404a8caae60f2af0ca0c4e))
+* Create filter ([98f47ae](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/98f47ae89beebcfd498fa831e6e1ab3c73e014cf))
+* Create table winner list ([e0ec0e4](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e0ec0e499b57f6e72a08be6df6a97df2665b3a2f))
+* days 2 edit theme christmas ([a8a9644](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/a8a96442b2cc5df7875cdc442ce753e0f36e1921))
+* Disabled claim reward ([7bfa37d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7bfa37d50e85b933de566f465726ae5dd1a7bade))
+
+
+### Bug Fixes
+
+* Add link to game manager ([05ec37a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/05ec37a412c06762f7efc4aaed4eaa0fa1824f75))
+* Add notify when update password successfully ([4408869](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4408869d529114f27ef9624b4825662428450683))
+* Add theme ([cae56a8](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/cae56a8830a06df8f42fc26bedb893888aff3786))
+* Admin spacing ([790f478](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/790f478803a2ba0ac6b1e099cdbb74437a5b1d2f))
+* Banner height ([6c3e6c8](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6c3e6c8142e597c9b48f29099e23d0b4657b4eea))
+* Comment ExtraCountDown ([d2457a6](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d2457a692e48c983f821750d76a79e87344439fa))
+* Condition show chatbot ([597a8a3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/597a8a39bcae44cefc28981c5505a75f57da325e))
+* delete first name, last name, display name to left ([39c5377](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/39c537769002a8ca2a07d99a9e5514934067d86f))
+* fix banner package ([4f92f61](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4f92f61b9d06ddf8faa5ea77ebac8468ad320c01))
+* Fix bugs ([a2eb5de](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/a2eb5de07df7e67698456a44d1f3d88789eeb14b))
+* fix contact email ([cbca63b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/cbca63b734562e8cc3001d77ca6a799aede8008a))
+* Fix cursor pointer three banner ([cfca02d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/cfca02d7ba7dce6593d2a79f467d00ed24335beb))
+* fix device tablet ([669f8c7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/669f8c70b477e40841903d2572a351cd01ef8132))
+* fix filter device mobile ([6a21658](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6a21658f835a0deed1042b8c177f47d383249e7a))
+* Fix list winner ([bc7fdc9](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/bc7fdc9e39382ea3bcbf672a6920f138fea1d0e6))
+* Fix package mobile ([c99e43c](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/c99e43c6f07e695bdf78d42cc6a90ae75eba3299))
+* Fix scroll winner list ([28b6c65](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/28b6c65ee6cfbf89c77098f67308d14d2e05b00c))
+* onclick in filter ([f82b460](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f82b4603c20ab5f1a712920d806b0d4b4e9960fc))
+* Remove console.log ([436b789](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/436b78902d0919339ac4726e30e01b20492e1ff7))
+* Update admin ([dee76c3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/dee76c3bc334f76acda052d8af4b525e459f68f4))
+* Update admin agent role ([6eb1ec6](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6eb1ec6ee5081c9f524f8d26ce3e2f09aa88ec21))
+* Update admin distributor role ([0df7c13](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0df7c13a045bd09208d78257fc5e410b56a01760))
+* Update admin master role ([2f2b360](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/2f2b3605c0b8f5a82965d9abb32ad3e37204e75d))
+* Update autocomplete ([cec0bc8](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/cec0bc8684eb9e29430fd47d37fa4725a9efbb25))
+* Update banner ([dcf0866](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/dcf0866d3147691abb1ce373ecfbff942515ab7d))
+* Update buy now button ([9d19358](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/9d1935842585c56dad1498f050e760d934486683))
+* Update filter promotion ([c81a0f5](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/c81a0f5149e4e6dcba6298d6b048f9c1b0152592))
+* Update filter promotion ([73cccd7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/73cccd749c1859a32bc4a2d7f5391cf66e5a5bb0))
+* Update game play ([e521ab2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e521ab2e51f2b94775a4e95b88d63765b770c866))
+* Update game screen ([e272543](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e272543ecdd9b8c8f0f890ea72324308c6e279f8))
+* Update game test page ([c2e16d7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/c2e16d75a48e4e73d7055af15359af5379409aad))
+* Update new home page ([9b0e578](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/9b0e57804f40d5f8974e8f75d1903a84e248d7ee))
+* Update normal theme default ([246a3fa](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/246a3fa56491f84ee4c9d506ce1315cd717aad84))
+* Update share and download qr code agent role ([6bdc623](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6bdc623fdc6c39dff22163e6f148263d4d2f6d21))
+* Update share promotion code ([3bb667f](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/3bb667fdbeda1e34360267e1c67a6fdc051ad9fb))
+* Update test game page ([b281636](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b2816369ec356d95d821a17549e1a71994dfcad7))
+* Update theme ([6f99350](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6f99350ec428abb4f8ddb94677101101e4f011fa))
+* Update theme check ([7351b7a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7351b7a31efb11236faac777aa090ad2f141fa5c))
+* Update tool BA ([5b015c3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5b015c3c6ce76c3329b69ca7cb912c511c01ee8a))
+
 ## [1.3.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.2.0...1.3.0) (2023-12-08)
 
 

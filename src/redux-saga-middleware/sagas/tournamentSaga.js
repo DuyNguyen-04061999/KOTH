@@ -18,6 +18,7 @@ import {
   getHourlyTour,
   getListGameForTournamentFail,
   getListGameForTournamentSuccess,
+  getListPromotionNewSuccess,
   getOngoingTour,
   getOngoingTourFail,
   getOngoingTourSuccess,
@@ -59,53 +60,57 @@ function* getListTour(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.callListTournament, payload);
-    if (payload === "daily") {
-      yield put(getDailyTour(res.data));
-    } else if (payload === "weekly") {
-      yield put(getWeeklyTour(res.data));
-    } else if (payload === "hourly") {
-      yield put(getHourlyTour(res.data));
-    } else if (payload === "hot") {
-      yield put(getHotTour());
-      if (res.status === 200) {
-        yield put(getHotTourSuccess(res.data));
-      } else {
-        yield put(getHotTourFail());
-      }
-    } else if (payload === "vip") {
-      yield put(getVipTour());
-      if (res.status === 200) {
-        yield put(getVipTourSuccess(res.data));
-      } else {
-        yield put(getVipTourFail());
-      }
-    } else if (payload === "standard") {
-      yield put(getStandardTour());
-      if (res.status === 200) {
-        yield put(getStandardTourSuccess(res.data));
-      } else {
-        yield put(getStandardTourFail());
-      }
-    } else if (payload === "ongoing") {
-      yield put(getOngoingTour());
-      if (res.status === 200) {
-        yield put(getOngoingTourSuccess(res.data));
-      } else {
-        yield put(getOngoingTourFail());
-      }
-    } else if (payload === "upcoming") {
-      yield put(getUpcomingTour());
-      if (res.status === 200) {
-        yield put(getUpcomingTourSuccess(res.data));
-      } else {
-        yield put(getUpcomingTourFail());
-      }
-    } else if (payload === "ended") {
-      yield put(getEndedTour());
-      if (res.status === 200) {
-        yield put(getEndedTourSuccess(res.data));
-      } else {
-        yield put(getEndedTourFail());
+    const { type } = payload
+    if(res && (res.status === 200 || res.status === 201)) {
+      yield put(getListPromotionNewSuccess());
+      if (type === "daily") {
+        yield put(getDailyTour(res.data));
+      } else if (type === "weekly") {
+        yield put(getWeeklyTour(res.data));
+      } else if (type === "hourly") {
+        yield put(getHourlyTour(res.data));
+      } else if (type === "hot") {
+        yield put(getHotTour());
+        if (res.status === 200) {
+          yield put(getHotTourSuccess(res.data));
+        } else {
+          yield put(getHotTourFail());
+        }
+      } else if (type === "vip") {
+        yield put(getVipTour());
+        if (res.status === 200) {
+          yield put(getVipTourSuccess(res.data));
+        } else {
+          yield put(getVipTourFail());
+        }
+      } else if (type === "standard") {
+        yield put(getStandardTour());
+        if (res.status === 200) {
+          yield put(getStandardTourSuccess(res.data));
+        } else {
+          yield put(getStandardTourFail());
+        }
+      } else if (type === "ongoing") {
+        yield put(getOngoingTour());
+        if (res.status === 200) {
+          yield put(getOngoingTourSuccess(res.data));
+        } else {
+          yield put(getOngoingTourFail());
+        }
+      } else if (type === "upcoming") {
+        yield put(getUpcomingTour());
+        if (res.status === 200) {
+          yield put(getUpcomingTourSuccess(res.data));
+        } else {
+          yield put(getUpcomingTourFail());
+        }
+      } else if (type === "ended") {
+        yield put(getEndedTour());
+        if (res.status === 200) {
+          yield put(getEndedTourSuccess(res.data));
+        } else {
+          yield put(getEndedTourFail());
+        }
       }
     }
   } catch (error) {
@@ -203,7 +208,7 @@ function* tournamentSaga() {
   yield takeEvery("GET_BIGGEST_TOUR", getBiggesstEndTour);
   yield takeEvery("CALL_BRAND_TOUR", getBrandTour);
   yield takeEvery("CREATE_TOURNAMENT", postTournamentCreate);
-  yield takeEvery("CALL_LIST_TOURNAMENT", getListTour);
+  yield takeEvery("GET_LIST_PROMOTION_NEW", getListTour);
   yield takeEvery("GET_LIST_GAME_FOR_TOURNAMENT", getListGameForTournamentSaga);
   yield takeEvery("GET_SKIN_FOR_TOURNAMENT", getSkinForTournamentSaga);
   yield takeEvery("GET_BRAND_TOURNAMENT", getListBrandForTournamentSaga);

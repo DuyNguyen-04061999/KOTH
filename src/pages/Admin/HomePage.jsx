@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
@@ -77,14 +77,16 @@ const HomePage = () => {
     if (width > 576) {
       if (roles?.includes("master")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Manager",
           "Agents",
           "Players",
-          "Total Deposit",
-          "Revenue Overall",
-          "Revenue Current Month",
+          "System Revenue (100%) Overall",
+          "Distributor Revenue (42%) Overall",
+          "System Revenue (100%) This Month",
+          "Distributor Revenue (42%) This Month",
           "Subscribers",
           "Register Date",
           "Last Login",
@@ -93,14 +95,16 @@ const HomePage = () => {
 
       if (roles?.includes("distributor")) {
         setHeaderList([
-          "ID",
+          // "ID",
+          "Account",
           "Display Name",
           "Code/Link",
           "Manager",
           "Players",
-          "Total Deposit",
-          "Revenue Overall",
-          "Revenue Current Month",
+          "System Revenue (100%) Overall",
+          "Agent Revenue (25%) Overall",
+          "System Revenue (100%) This Month",
+          "Agent Revenue (25%) This Month",
           "Subscribers",
           "Register Date",
           "Last Login",
@@ -111,9 +115,10 @@ const HomePage = () => {
         setHeaderList([
           "ID",
           "Display Name",
-          "Total Deposit",
-          "Revenue Overall",
-          "Revenue Current Month",
+          "System Revenue (100%) Overall",
+          "Agent Revenue (25%) Overall",
+          "System Revenue (100%) This Month",
+          "Agent Revenue (25%) This Month",
           "Subscribers",
           "Manager",
           "Register Date",
@@ -136,12 +141,12 @@ const HomePage = () => {
   }, [roles, width]);
 
   return (
-    <Container>
+    <Box component={"div"} className="p-5">
       <AdminPanel></AdminPanel>
       <Box sx={{ marginTop: "36px" }}>
         <NestedTable headerList={headerList} data={data} />{" "}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

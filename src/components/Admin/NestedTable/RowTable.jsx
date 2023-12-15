@@ -62,7 +62,7 @@ const AddIconSVG = () => {
 };
 
 const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
-  
+  const { type } = props
   return ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#fff",
@@ -78,6 +78,8 @@ const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
       fontWeight: 500,
       lineHeight: "16px",
       maxWidth: "150px",
+      wordBreak: type === "email" ? "break-all" : "normal",
+      wordWrap: "unset"
     },
     ":first-child": {
       color: "#fc3c3c",
@@ -212,7 +214,7 @@ export const RowTable = (props) => {
                   
                 </StyledTableCell>
               );
-            else if (item.toLowerCase() === "display name")
+            else if (item.toLowerCase() === "account")
               return (
                 <StyledTableCell key={index} sx={{ textAlign: "center" }}>
                   <Box
@@ -241,19 +243,21 @@ export const RowTable = (props) => {
                           {!open ? <AddIconSVG /> : <MinusIconSVG />}
                         </Box>
                       )}
-                    {row.displayName}
+                    {row?.level !== "End User" ? row?.account : ""}
                   </Box>
                 </StyledTableCell>
               );
             else
               return (
-                <StyledTableCell key={index}>
+                <StyledTableCell key={index} type={item.toLowerCase() === "email" ? "email" : ""}>
                   <Box sx={{ textAlign: "center" }}>
                     {/* {moment(row[`${trimAndCamelCase(item)}`], true)?.isValid() ? moment(row[`${trimAndCamelCase(item)}`])?.format("MM/DD/YYYY HH:mm") : row[`${trimAndCamelCase(item)}`]} */}
                     {item.toLowerCase() === "revenue overall" || 
                     item.toLowerCase() === "revenue current month" ||
                     item.toLowerCase() === "total deposit" ||
-                    item.toLowerCase() === "referral bonus revenue 5%" 
+                    item.toLowerCase() === "total deposit current month" ||
+                    item.toLowerCase() === "referral bonus revenue 5%" ||
+                    (item.toLowerCase()?.includes("revenue") && !isNaN(Number(row[`${trimAndCamelCase(item)}`])))
                     ? Number(row[`${trimAndCamelCase(item)}`])?.toFixed(2) : row[`${trimAndCamelCase(item)}`]}
                   </Box>
                 </StyledTableCell>

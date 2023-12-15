@@ -211,7 +211,7 @@ const NestedTable = (props) => {
             : data
           ).map((row, index) => (
               <RowTable
-                key={row.account + index}
+                key={index}
                 index={index}
                 row={row}
                 headers={headerList}
@@ -220,7 +220,7 @@ const NestedTable = (props) => {
                     <>
                       {row.child.map((row, _index) => (
                         <RowTable
-                          key={row.account + _index}
+                          key={_index}
                           row={row}
                           index={_index}
                           headers={headerList}
@@ -229,7 +229,7 @@ const NestedTable = (props) => {
                               <>
                                 {row.child.map((row, __index) => (
                                   <RowTable
-                                    key={row.account + __index}
+                                    key={__index}
                                     index={__index}
                                     headers={headerList}
                                     row={row}
@@ -238,7 +238,7 @@ const NestedTable = (props) => {
                                         <>
                                           {row.child.map((row, ___index) => (
                                             <RowTable
-                                              key={row.account + ___index}
+                                              key={___index}
                                               index={___index}
                                               headers={headerList}
                                               row={row}
