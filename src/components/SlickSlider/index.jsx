@@ -220,6 +220,7 @@ export default function SlickSlider(props) {
                   key={index}
                   sx={{
                     height: width < 576 ? "182.4px" : "auto",
+                    minHeight: width > 1200 ? "325px" : "unset"
                   }}
                 >
                   <LazyLoadImage
