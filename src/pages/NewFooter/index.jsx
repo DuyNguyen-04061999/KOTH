@@ -135,26 +135,31 @@ export default function NewFooter() {
           >
             {t("Contact Us")}
           </Typography>
-          <Box
-            component={"a"}
-            href="mailto:support@play4promo.com"
-            sx={{
-              textDecoration: "none",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#fff",
-            }}
-          >
-            <Typography
+          <Box sx={{
+            display:"flex",
+            justifyContent:"center"
+          }}>
+            <Box
+              component={"a"}
+              href="mailto:support@play4promo.com"
               sx={{
+                textDecoration: "none",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 color: "#fff",
-                fontSize: width < 576 ? "12px" : "14px",
-                textAlign: "center",
               }}
             >
-              {t("Get help")}: support@play4promo.com
-            </Typography>
+              <Typography
+                sx={{
+                  color: "#fff",
+                  fontSize: width < 576 ? "12px" : "14px",
+                  textAlign: "center",
+                }}
+              >
+                {t("Get help")}: support@play4promo.com
+              </Typography>
+            </Box>
           </Box>
         </Box>
         <Box

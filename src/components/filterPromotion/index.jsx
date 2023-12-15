@@ -294,7 +294,7 @@ export default function FilterPromotion(props) {
         }}
       >
         <Box display={"flex"} alignItems={"center"}>
-          {device === "Mobile" ? (
+          {device === "Mobile" && width < 576 ? (
             <Box
               display={"flex"}
               alignItems={"center"}
@@ -401,7 +401,7 @@ export default function FilterPromotion(props) {
             </Box>
           )}
           <Box display={"flex"}>
-            {device === "Desktop" ? (
+            { width > 576 ? (
               <>
                 <Box sx={{ marginLeft: "10px" }}>
                   <AnimButton
@@ -411,6 +411,10 @@ export default function FilterPromotion(props) {
                     isHasIcon={activeDaily}
                     onClick={() => {
                       setActiveDaily(!activeDaily);
+                    }}
+                    style={{
+                      fontSize:width < 1024 && width > 576 ? "10px" : "16px",
+                      padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
                     }}
                   />
                 </Box>
@@ -423,6 +427,10 @@ export default function FilterPromotion(props) {
                     onClick={() => {
                       setActiveWeekly(!activeWeekly);
                     }}
+                    style={{
+                      fontSize:width < 1024 && width > 576 ? "10px" : "16px",
+                      padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
+                    }}
                   />
                 </Box>
                 <Box sx={{ marginLeft: "10px" }}>
@@ -433,6 +441,10 @@ export default function FilterPromotion(props) {
                     isHasIcon={activeMonthly}
                     onClick={() => {
                       setActiveMonthly(!activeMonthly);
+                    }}
+                    style={{
+                      fontSize:width < 1024 && width > 576 ? "10px" : "16px",
+                      padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
                     }}
                   />
                 </Box>
@@ -450,7 +462,7 @@ export default function FilterPromotion(props) {
                 {clear === true ? (
                   <Box sx={{ marginLeft: "10px" }}>
                     <AnimButton
-                      type={"active"}
+                      type={"close"}
                       text={t("Clear All")}
                       isSubmitBtn
                       isHasIcon
@@ -458,6 +470,10 @@ export default function FilterPromotion(props) {
                         setActiveDaily(false);
                         setActiveMonthly(false);
                         setActiveWeekly(false);
+                      }}
+                      style={{
+                        fontSize:width < 1024 && width > 576 ? "10px" : "16px",
+                        padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
                       }}
                     />
                   </Box>
@@ -535,7 +551,7 @@ export default function FilterPromotion(props) {
           sx={{
             "& .MuiDrawer-paper": {
               backgroundColor: "#181223",
-              bottom: "60px",
+              // bottom: "60px",
             },
           }}
         >

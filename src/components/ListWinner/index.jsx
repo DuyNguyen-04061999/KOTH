@@ -155,6 +155,7 @@ export default function ListWinner() {
             height: 365,
             backgroundColor: "#2E233D !important",
             color: "white !important",
+            overflowY:"hidden"
           }}
         >
           <Table sx={{ minWidth: device === "Mobile" ? 300 : 650 }} aria-label="simple table">
@@ -215,7 +216,7 @@ export default function ListWinner() {
                     component="th"
                     scope="row"
                   >
-                    {row.promotionTitle.slice(0,10)}
+                    {row.promotionTitle.slice(0,30)}
                   </TableCell>
                   {device === "Mobile" ? (
                     ""
