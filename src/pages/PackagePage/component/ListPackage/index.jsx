@@ -157,7 +157,14 @@ export default function ListPackage(props) {
                 : "" || packageName === "Combo Extra 2"
                 ? "5px solid #BDE8F1"
                 : "",
-                marginBottom:"10px"
+                marginBottom:"10px",
+            marginTop: packageName === "Combo Extra 1"
+            ? "16px"
+            : "" || packageName === "Subscription"
+            ? ""
+            : "" || packageName === "Combo Extra 2"
+            ? "16px"
+            : "",
           }}
         >
           <Typography

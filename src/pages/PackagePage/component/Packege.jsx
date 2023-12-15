@@ -87,6 +87,7 @@ export default function Package() {
     },
   };
 
+
   const theme = useTheme();
 
   useEffect(() => {
@@ -132,6 +133,8 @@ export default function Package() {
                 sx={{
                   marginTop: "20px",
                   marginBottom: "50px",
+                  marginRight: location && location?.pathname?.includes("home") ||pathname === "/" ? "0px" : "40px",
+                  marginLeft:location && location?.pathname?.includes("home") ||pathname === "/" ? "0px" : "40px"
                 }}
               >
                 <Box
