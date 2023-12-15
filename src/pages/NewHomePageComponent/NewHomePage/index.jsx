@@ -174,6 +174,7 @@ export default function NewHomePage() {
                     <Grid item md={4} xs={6} key={index}>
                       {i?.bannerType !== "contact" ? (
                         <Box
+                          className="cursor-pointer"
                           onClick={() => {
                             if(i?.bannerType === "package") {
                               navigate("/packages")
@@ -196,7 +197,9 @@ export default function NewHomePage() {
                         sx={{ width: "100%", height: "auto" }}
                       ></Box>
                       ) : (
-                        <Box component={"a"} href="mailto:support@play4promo.com">
+                        <Box
+                        className="cursor-pointer"
+                        component={"a"} href="mailto:support@play4promo.com">
                           <Box
                             component={"img"}
                             src={
