@@ -133,16 +133,26 @@ export default function Package() {
                 sx={{
                   marginTop: "20px",
                   marginBottom: "50px",
-                  marginRight: location && location?.pathname?.includes("home") ||pathname === "/" ? "0px" : "40px",
-                  marginLeft:location && location?.pathname?.includes("home") ||pathname === "/" ? "0px" : "40px"
                 }}
               >
-                <Box
+                {location && location?.pathname?.includes("packages") ? (
+                  <Container>
+                    <Box
                   component={"img"}
                   src={images.bgchristmas}
                   alt="..."
                   sx={{ width: "100%", height: "auto" }}
                 ></Box>
+                  </Container>
+                ) : (
+                  <Box
+                  component={"img"}
+                  src={images.bgchristmas}
+                  alt="..."
+                  sx={{ width: "100%", height: "auto" }}
+                ></Box>
+                )}
+               
               </Box>
             ) : (
               ""
