@@ -28,7 +28,7 @@ export default function GameDetailIframePage(props) {
   const screen = useFullScreenHandle();
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
-  const [isFullScreen] = useState(true);
+  const [isFullScreen,setIsFullScreen] = useState(false);
   const getMobileOS = () => {
     const ua = navigator.userAgent;
     if (/android/i.test(ua)) {
@@ -46,6 +46,12 @@ export default function GameDetailIframePage(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(true)
+    }, 3000)
+  })
+
+  useEffect(() => {
     if (game && !fetchGame) {
       setLoading(true);
       if(device && device === "Mobile" && os && os === "Android") {
@@ -54,6 +60,20 @@ export default function GameDetailIframePage(props) {
     }
   }, [screen, device, os, fetchGame, game]);
 
+  useEffect(() => {
+    const checkFullMobileScreen = () => {
+      if (device === "Mobile") {
+        return true;
+      }
+    };
+    if (checkFullMobileScreen() && loading) {
+      setIsFullScreen(true);
+    }
+  }, [
+    loading,
+    device
+  ]);
+  
   return (
     <Fragment>
       {!fetchGame && game ? (
@@ -149,7 +169,7 @@ export default function GameDetailIframePage(props) {
                             overflow: "hidden",
                             zIndex: "999999",
                             display: "block",
-                            paddingLeft: "50px"
+                            paddingLeft: device === "Mobile" && os === "iOS" && game?.gameScreenType ? "50px" : "0px"
                           }
                     }
                     title="Playgame"
@@ -185,7 +205,7 @@ export default function GameDetailIframePage(props) {
                             overflow: "hidden",
                             zIndex: "999999",
                             display: "block",
-                            paddingLeft: "50px"
+                            paddingLeft: device === "Mobile" && os === "iOS" && game?.gameScreenType ? "50px" : "0px"
                           }
                     }
                     title="Playgame"

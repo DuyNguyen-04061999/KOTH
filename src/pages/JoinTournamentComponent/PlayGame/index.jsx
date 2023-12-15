@@ -232,7 +232,7 @@ export default function PlayGame(props) {
                           overflow: "hidden",
                           zIndex: "999999",
                           display: videoGame ? "none" : "block",
-                          paddingLeft: "50px"
+                          paddingLeft: device === "Mobile" && os === "iOS" && detailTournament?.tournamentInfors?.game?.gameScreenType ? "50px" : "0px"
                         }
                   }
                   title="Playgame"
@@ -277,7 +277,7 @@ export default function PlayGame(props) {
                           overflow: "hidden",
                           zIndex: "999999",
                           display: videoGame ? "none" : "block",
-                          paddingLeft: "50px"
+                          paddingLeft: device === "Mobile" && os === "iOS" && detailTournament?.tournamentInfors?.game?.gameScreenType ? "50px" : "0px"
                         }
                   }
                   title="Playgame"
@@ -323,7 +323,7 @@ export default function PlayGame(props) {
                         overflow: "hidden",
                         zIndex: "999999",
                         display: videoGame ? "none" : "block",
-                        paddingLeft: "50px"
+                        paddingLeft: device === "Mobile" && os === "iOS" && detailTournament?.tournamentInfors?.game?.gameScreenType ? "50px" : "0px"
                       }
                 }
                 title="Playgame"
@@ -368,7 +368,7 @@ export default function PlayGame(props) {
                         overflow: "hidden",
                         zIndex: "999999",
                         display: videoGame ? "none" : "block",
-                        paddingLeft: "50px"
+                        paddingLeft: device === "Mobile" && os === "iOS" && detailTournament?.tournamentInfors?.game?.gameScreenType ? "50px" : "0px"
                       }
                 }
                 title="Playgame"
