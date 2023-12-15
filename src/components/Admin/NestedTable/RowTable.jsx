@@ -62,7 +62,7 @@ const AddIconSVG = () => {
 };
 
 const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
-  
+  const { type } = props
   return ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#fff",
@@ -78,6 +78,8 @@ const StyledTableCell = styled(TableCell)(({ theme, ...props }) => {
       fontWeight: 500,
       lineHeight: "16px",
       maxWidth: "150px",
+      wordBreak: type === "email" ? "break-all" : "normal",
+      wordWrap: "unset"
     },
     ":first-child": {
       color: "#fc3c3c",
@@ -247,7 +249,7 @@ export const RowTable = (props) => {
               );
             else
               return (
-                <StyledTableCell key={index}>
+                <StyledTableCell key={index} type={item.toLowerCase() === "email" ? "email" : ""}>
                   <Box sx={{ textAlign: "center" }}>
                     {/* {moment(row[`${trimAndCamelCase(item)}`], true)?.isValid() ? moment(row[`${trimAndCamelCase(item)}`])?.format("MM/DD/YYYY HH:mm") : row[`${trimAndCamelCase(item)}`]} */}
                     {item.toLowerCase() === "revenue overall" || 

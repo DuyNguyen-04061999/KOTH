@@ -64,6 +64,7 @@ import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
 import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import AuthDialog from "../Dialog/Auth/Signin";
+import DialogExclusive from "../Dialog/DialogExclusive";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import DoubleDayDialog from "../Dialog/DoubleDay";
@@ -83,7 +84,6 @@ import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
 import "./index.scss";
-import DialogExclusive from "../Dialog/DialogExclusive";
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -378,8 +378,7 @@ export default function Layout(props) {
               : "block",
         }}
       >
-        {!process.env.REACT_APP_TEST ||
-        process.env.REACT_APP_TEST !== "test" ? (
+        {process.env.REACT_APP_ENV !== "development" ? (
           <ChatBot />
         ) : (
           <></>

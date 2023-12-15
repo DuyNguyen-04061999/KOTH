@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FilterRevenue from "../../../components/Admin/FilterRevenue/FilterRevenue";
@@ -147,7 +147,7 @@ const Revenue = () => {
   }, [roles, width]);
 
   return (
-    <Container>
+    <Box component={"div"} className="p-5">
       <FilterRevenue />
       <Box sx={{ marginTop: "50px" }}>
         <NestedTable headerList={headerList} data={data} />
@@ -184,7 +184,7 @@ const Revenue = () => {
           </>
         )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 
