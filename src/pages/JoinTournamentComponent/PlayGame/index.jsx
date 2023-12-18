@@ -283,7 +283,7 @@ export default function PlayGame(props) {
                   title="Playgame"
                   src={
                     process.env.REACT_APP_ENV === "development"
-                      ? "http://localhost:3000/play-game-tournament/87/4"
+                      ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
                       : window.location.origin +
                         "/play-game-tournament/" +
                         id +
@@ -374,7 +374,7 @@ export default function PlayGame(props) {
                 title="Playgame"
                 src={
                   process.env.REACT_APP_ENV === "development"
-                    ? "http://localhost:3000/play-game-tournament/87/4"
+                    ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
                     : window.location.origin +
                       "/play-game-tournament/" +
                       id +
