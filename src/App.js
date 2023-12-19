@@ -358,12 +358,14 @@ function App() {
     const PayerID = params.get("PayerID");
     const paymentType = params.get("type");
     const paymentStatus = params.get("result");
+    const gameStatus = params.get("game");
 
     if (paymentType === "paypal" && paymentStatus === "success") {
       store.dispatch(
         checkoutPaypalSuccess({
           paymentId: paymentId,
           payerId: PayerID,
+          game: gameStatus ? true : false
         })
       );
     }
@@ -372,6 +374,7 @@ function App() {
       store.dispatch(
         checkoutPaypalCancel({
           paymentId: paymentId,
+          game: gameStatus ? true : false
         })
       );
     }
