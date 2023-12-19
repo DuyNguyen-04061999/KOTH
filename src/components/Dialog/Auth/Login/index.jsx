@@ -142,15 +142,6 @@ const Login = () => {
   }, [isLoginFail, fail, isLoginSuccess, success]);
   return (
     <Box>
-      <Box>
-        <Typography
-          variant="h5"
-          className="text-center text-white mt-4 mb-4"
-          style={{ fontWeight: "700", fontSize: "32px" }}
-        >
-          {t("Sign in")}
-        </Typography>
-      </Box>
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "320px", height: "240px" }}>
           <RiveComponent />
