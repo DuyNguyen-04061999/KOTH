@@ -1,6 +1,6 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -15,6 +15,7 @@ import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
 
 export default function PlayGame(props) {
+  const iframeRef = useRef(null);
   const screen = useFullScreenHandle();
   const { detailTournament, setStartGame, videoGame, setVideoGame } = props;
   const { device } = useSelector((state) => state.deviceReducer);
@@ -22,6 +23,8 @@ export default function PlayGame(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { chatPopup } = useSelector((state) => state.chatReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
+  const { isBuyPackageGameSuccess } = useSelector(state => state.appReducer)
+
   const [continueGame, setContinueGame] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { width } = useWindowDimensions();
@@ -36,6 +39,10 @@ export default function PlayGame(props) {
     }
     return true;
   }
+
+  const buyP = localStorage.getItem("buyPackage")
+  useEffect(() => {
+  }, [buyP, isBuyPackageGameSuccess])
 
   useEffect(() => {
     const handler = (res) => {
@@ -58,6 +65,9 @@ export default function PlayGame(props) {
             dispatch(toggleOpenResultEndGame(score || 0));
             dispatch(toggleStartGame(false));
           }, 1500);
+        } else if (type === "paypal_modal") {
+          // dispatch(openPaypalPackageDialog())
+          window.open(process.env.REACT_APP_PAYPAL_PACKAGE_URL, "_blank")
         }
       }
     };
@@ -122,8 +132,6 @@ export default function PlayGame(props) {
     loading,
     device
   ]);
-
-  
 
   return (
     <Box
@@ -209,6 +217,7 @@ export default function PlayGame(props) {
               {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
               loading ? (
                 <iframe
+                  ref={iframeRef}
                   allow="fullscreen"
                   style={
                     device === "Desktop"
@@ -254,6 +263,7 @@ export default function PlayGame(props) {
                 ></iframe>
               ) : loading ? (
                 <iframe
+                  ref={iframeRef}
                   allow="fullscreen"
                   style={
                     device === "Desktop"
@@ -300,6 +310,7 @@ export default function PlayGame(props) {
             {detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
             loading ? (
               <iframe
+                ref={iframeRef}
                 allow="fullscreen"
                 style={
                   device === "Desktop"
@@ -345,6 +356,7 @@ export default function PlayGame(props) {
               ></iframe>
             ) : loading ? (
               <iframe
+                ref={iframeRef}
                 allow="fullscreen"
                 style={
                   device === "Desktop"

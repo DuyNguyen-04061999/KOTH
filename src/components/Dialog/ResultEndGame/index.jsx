@@ -8,34 +8,39 @@ import { finishGame, finishVideo, getRefactorDetailAuthPromotion } from "../../.
 import {
   toggleCloseResultEndGame,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { updateCountExtraAfterPlayGame } from "../../../redux-saga-middleware/reducers/userReducer";
+import { getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
     (state) => state.tournamentReducer
   );
-  const { detailTournament } = useSelector((state) => state.playgameReducer);
+  // const { detailTournament } = useSelector((state) => state.playgameReducer);
 
-  const { tokenUser, countTicket } = useSelector((state) => state.userReducer);
+  const { 
+    tokenUser, 
+    // countTicket 
+  } = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();
 
   const { id } = useParams();
 
   const handleClose = () => {
+    localStorage.removeItem("buyPackage")
+    localStorage.removeItem("newNumberTicket")
     dispatch(toggleCloseResultEndGame());
     dispatch(toggleStartGame(false));
     dispatch(finishGame())
     dispatch(finishVideo())
-    if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {
-      dispatch(updateCountExtraAfterPlayGame(1))
-    }
-    
+    // if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {
+    //   dispatch(updateCountExtraAfterPlayGame(1))
+    // }
     if (tokenUser || localStorage.getItem("token")) {
       dispatch(getRefactorDetailAuthPromotion({
         id,
         token: tokenUser
       }))
+      dispatch(getUserInfoReady())
     }
   };
 
