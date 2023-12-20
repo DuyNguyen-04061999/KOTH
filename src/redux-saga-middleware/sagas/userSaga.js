@@ -47,15 +47,14 @@ import {
   resetPasswordSuccess,
   sendOtpFail,
   sendOtpSuccess,
+  updateLoginFail,
   updateProfileUserFail,
   updateProfileUserSuccess,
   updateUserToken,
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
-
 const userService = new UserService();
-
 var loginCount = 0;
 function* loginSaga(dataRequest) {
   const i18n = yield getContext("i18n");
@@ -66,6 +65,7 @@ function* loginSaga(dataRequest) {
       const res = yield call(userService.login, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
+        yield delay(500);
         yield put(loginSuccess(data?.data));
         _socket.emit("loginSocial", {
           token: data?.data?.token,
@@ -80,11 +80,12 @@ function* loginSaga(dataRequest) {
         );
         localStorage.setItem("token", data?.data?.token);
         localStorage.setItem("refreshToken", data?.data?.refreshToken);
-        yield put(updateUserToken(data?.data?.token))
+        yield put(updateUserToken(data?.data?.token));
         setTimeout(() => {
           window.location.reload();
-        }, 1000)
+        }, 2000);
       } else {
+        yield delay(500);
         yield put(loginFail());
         yield put(
           showToastNotification({
@@ -99,7 +100,9 @@ function* loginSaga(dataRequest) {
     loginCount = 0;
   } catch (error) {
     loginCount = 0;
+    yield delay(500);
     yield put(loginFail());
+    yield put(updateLoginFail(true));
     yield put(
       showToastNotification({
         type: error?.type || "error",

@@ -6,11 +6,15 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { loginReady } from "../../../../redux-saga-middleware/reducers/userReducer";
+import {
+  loginReady,
+  updateLoginFail,
+} from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,8 +23,10 @@ const Login = () => {
   const [usernameError, setUsernameError] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
-  const { isLogin } = useSelector((state) => state.userReducer);
-  const {t} = useTranslation('auth');
+  const { isLogin, isLoginFail, isLoginSuccess } = useSelector(
+    (state) => state.userReducer
+  );
+  const { t } = useTranslation("auth");
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -40,6 +46,8 @@ const Login = () => {
   };
 
   const sendLogin = (e) => {
+    setHandsUp(false);
+    setCheck(false);
     e.preventDefault();
     if (!username || !password) {
       dispatch(
@@ -71,36 +79,77 @@ const Login = () => {
     if (
       !validateEmail(username) &&
       !validatePhoneNumber(username) &&
-      username !== ""
+      username !== "" &&
+      password !== ""
     ) {
       setUsernameError("Please enter a valid email or phone number!");
     } else {
       setUsernameError("");
     }
-  }, [username]);
+  }, [username, password]);
 
   useEffect(() => {
-    if (usernameError || username === "") {
+    if (usernameError || username === "" || password === "") {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
     }
-  }, [usernameError, username]);
+  }, [usernameError, username, password]);
 
+  //---------------------------- Rive Project ----------------------------
+
+  const STATE_MACHINE_NAME = "State Machine 1";
+  const { rive, RiveComponent } = useRive({
+    src: "christmas_pepe.riv",
+    stateMachines: STATE_MACHINE_NAME,
+    autoplay: true,
+    onStateChange: (e) => {
+      console.log("e: ", e.data);
+    },
+  });
+  const checkState = useStateMachineInput(rive, STATE_MACHINE_NAME, "Look");
+  const lookState = useStateMachineInput(
+    rive,
+    STATE_MACHINE_NAME,
+    "Text_Number"
+  );
+  const handsUp = useStateMachineInput(rive, STATE_MACHINE_NAME, "Password");
+  const success = useStateMachineInput(rive, STATE_MACHINE_NAME, "Success");
+  const fail = useStateMachineInput(rive, STATE_MACHINE_NAME, "Fail");
+  const setCheck = (data) => {
+    checkState.value = data;
+  };
+  const setLook = (data) => {
+    if (!lookState || !checkState) {
+      return;
+    }
+    let numberOfChar = 0;
+    if (username && lookState) {
+      numberOfChar = parseFloat(username.split("").length);
+      lookState.value = numberOfChar;
+    }
+  };
+  const setHandsUp = (data) => {
+    handsUp.value = data;
+  };
+
+  //----------------------------------------------------------------------
+
+  useEffect(() => {
+    console.log("login Fail: ", isLoginFail);
+    isLoginFail && !isLoginSuccess && fail.fire();
+    !isLoginFail && isLoginSuccess && success.fire();
+  }, [isLoginFail, fail, isLoginSuccess, success]);
   return (
-    <Box >
-      <Box>
-        <Typography
-          variant="h5"
-          className="text-center text-white mt-4 mb-4"
-          style={{ fontWeight: "700", fontSize: "32px" }}
-        >
-          {t('Sign in')}
-        </Typography>
+    <Box>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <Box sx={{ width: "320px", height: "240px" }}>
+          <RiveComponent />
+        </Box>
       </Box>
       <Box
         component={"form"}
-        className="p-2 ps-2 pe-3"
+        className="pb-2 ps-2 pe-3"
         noValidate
         onSubmit={(e) => handleSubmit(e)}
       >
@@ -121,8 +170,18 @@ const Login = () => {
             <Input
               type="text"
               value={username}
-              placeholder={t('Email') + "/" + t('Phone number')}
-              onChange={handleChangeUsername}
+              placeholder={t("Email") + "/" + t("Phone number")}
+              onFocus={() => {
+                setHandsUp(false);
+                setCheck(true);
+              }}
+              onChange={(e) => {
+                setLook();
+                handleChangeUsername(e);
+              }}
+              onBlur={() => {
+                setCheck(false);
+              }}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -163,11 +222,22 @@ const Login = () => {
         >
           <img src={sign.up02} alt="..." width={15} height={"auto"} />
           <Input
+            onChange={(e) => {
+              setHandsUp(true);
+              handleChangePassword(e);
+            }}
+            onBlur={() => {
+              setHandsUp(false);
+              setCheck(false);
+            }}
+            onMouseLeave={() => {
+              setHandsUp(false);
+              setCheck(false);
+            }}
             placeholder={t("Password")}
             type={displayPassword === false ? "password" : "text"}
             name="password"
             value={password}
-            onChange={handleChangePassword}
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
@@ -230,6 +300,14 @@ const Login = () => {
           </Typography>
         </Box>
         <Box
+          onMouseOver={() => {
+            setHandsUp(false);
+            setCheck(false);
+          }}
+          onFocus={() => {
+            setHandsUp(false);
+            setCheck(false);
+          }}
           className="d-flex justify-content-center"
           sx={{ marginTop: "36px" }}
         >
@@ -267,7 +345,7 @@ const Login = () => {
                 fontWeight: "600",
               }}
             >
-              {t('New User?')}
+              {t("New User?")}
             </Typography>
             <Typography
               onClick={() => {
@@ -275,7 +353,7 @@ const Login = () => {
               }}
               sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "600" }}
             >
-              {t('Create Account')}
+              {t("Create Account")}
             </Typography>
           </Box>
         </Box>
