@@ -1584,6 +1584,10 @@ export default function Navbar() {
                 padding: "10px",
               }}
               onClick={() => {
+                dispatch({
+                  type: "SET_TAB_HELPCENTER",
+                  payload: 3,
+                });
                 navigate(`/help-center`);
               }}
             >
@@ -1616,7 +1620,7 @@ export default function Navbar() {
                     pathname && pathname?.includes("help-center") && "white",
                 }}
               >
-                {t("Help Center")}
+                How it Works
               </Typography>
             </Box>
           ) : (

@@ -51,8 +51,9 @@ export default function NewFooter() {
               fontSize: width < 576 ? "16px" : "25px",
               textAlign: "center",
             }}
+            onClick={() => navigate("/help-center")}
           >
-            {t("Support")}
+           Help Center
           </Typography>
           <Box
             sx={{
@@ -69,12 +70,6 @@ export default function NewFooter() {
                 gap: width < 1024 ? "24px" : "41.47px",
               }}
             >
-              <Typography
-                onClick={() => navigateFooter(0)}
-                sx={{ ...typographyStyle, cursor: "pointer" }}
-              >
-                {t("Help Center")}
-              </Typography>
               <Typography
                 onClick={() => navigateFooter(2)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
@@ -112,7 +107,7 @@ export default function NewFooter() {
                 onClick={() => navigateFooter(3)}
                 sx={{ ...typographyStyle, cursor: "pointer" }}
               >
-                {t("Design resources")}
+                How it Works
               </Typography>
             </Box>
           </Box>
