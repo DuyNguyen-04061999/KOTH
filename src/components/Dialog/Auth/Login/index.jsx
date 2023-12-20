@@ -103,9 +103,6 @@ const Login = () => {
     src: "christmas_pepe.riv",
     stateMachines: STATE_MACHINE_NAME,
     autoplay: true,
-    onStateChange: (e) => {
-      console.log("e: ", e.data);
-    },
   });
   const checkState = useStateMachineInput(rive, STATE_MACHINE_NAME, "Look");
   const lookState = useStateMachineInput(
@@ -117,7 +114,9 @@ const Login = () => {
   const success = useStateMachineInput(rive, STATE_MACHINE_NAME, "Success");
   const fail = useStateMachineInput(rive, STATE_MACHINE_NAME, "Fail");
   const setCheck = (data) => {
-    checkState.value = data;
+    if (checkState) {
+      checkState.value = data;
+    }
   };
   const setLook = (data) => {
     if (!lookState || !checkState) {
@@ -130,13 +129,14 @@ const Login = () => {
     }
   };
   const setHandsUp = (data) => {
-    handsUp.value = data;
+    if (handsUp) {
+      handsUp.value = data;
+    }
   };
 
   //----------------------------------------------------------------------
 
   useEffect(() => {
-    console.log("login Fail: ", isLoginFail);
     isLoginFail && !isLoginSuccess && fail.fire();
     !isLoginFail && isLoginSuccess && success.fire();
   }, [isLoginFail, fail, isLoginSuccess, success]);
