@@ -170,7 +170,7 @@ export default function HotTournament() {
                 >
                   {" "}
                   {isFetchHot || data === null ? (
-                    <BannerLoading height={363} />
+                    <BannerLoading height={width < 576 ? "214px" : width <= 1200 ? "152.44px" : "363px"} />
                   ) : (
                     <SlickSlider
                       type="tour"
@@ -207,7 +207,7 @@ export default function HotTournament() {
                     data?.length > 0 &&
                     itemQuantity && (
                       <PaginatedItems
-                        defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
+                        defaultPage={1}
                         pageCount={Math.ceil(data.length / itemQuantity)}
                         changeOffSet={(value) => {
                           dispatch(updateHotPage((value - 1) * itemQuantity));
@@ -292,7 +292,7 @@ export default function HotTournament() {
                     data?.length > 0 &&
                     itemQuantity && (
                       <PaginatedItems
-                        defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
+                        defaultPage={1}
                         pageCount={Math.ceil(data.length / itemQuantity)}
                         changeOffSet={(value) => {
                           dispatch(updateHotPage((value - 1) * itemQuantity));
