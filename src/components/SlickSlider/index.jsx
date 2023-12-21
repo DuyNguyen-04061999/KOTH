@@ -189,7 +189,7 @@ export default function SlickSlider(props) {
             key={index}
             sx={{
               height: width < 576 ? "208px" : "100%",
-              minHeight: width > 1200 ? "331px" : "unset",
+              minHeight: width > 1200 ? "331px" : width > 576 ? "152.44px" : "unset"
             }}
             onClick={() => {
               if (typeR === "banner") {
@@ -240,7 +240,7 @@ export default function SlickSlider(props) {
                   key={index}
                   sx={{
                     height: width < 576 ? "182.4px" : "auto",
-                    minHeight: width > 1200 ? "331px" : "unset",
+                    minHeight: width > 1200 ? "331px" : width > 576 ? "152.44px" : "unset"
                   }}
                 >
                   <LazyLoadImage

@@ -141,7 +141,7 @@ export default function ListPackage(props) {
             alignItems: "center",
             flexDirection: "column",
             position: "relative",
-            marginLeft: "8px",
+            marginLeft: "0px",
             marginRight: "8px",
             height: "fit-content",
             minWidth: width < 768 ? "315px" : "95%",
