@@ -313,6 +313,12 @@ export const toggleCheckProfileDialog = (data) => {
     payload: data,
   };
 };
+export const resetLoginState = (data) => {
+  return {
+    type: "LOGIN_RESET",
+    payload: data,
+  };
+};
 
 export const getCityAndStateProfile = (data) => {
   return {
@@ -391,6 +397,12 @@ const userReducer = (
       return {
         ...state,
         isLogin: true,
+        isLoginFail: false,
+        isLoginSuccess: false,
+      };
+    case "LOGIN_RESET":
+      return {
+        ...state,
         isLoginFail: false,
         isLoginSuccess: false,
       };

@@ -187,7 +187,7 @@ export default function HotTournament() {
                   <Box
                     sx={{
                       marginTop: width < 576 ? "24px" : "34px",
-                      marginBottom : width < 576 ? "24px" : "34px"
+                      marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
                     <FilterPromotion />
@@ -271,8 +271,7 @@ export default function HotTournament() {
                   <Box
                     sx={{
                       marginTop: width < 576 ? "24px" : "34px",
-                      marginBottom : width < 576 ? "24px" : "34px"
-
+                      marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
                     <FilterPromotion />

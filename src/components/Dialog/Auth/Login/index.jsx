@@ -8,7 +8,7 @@ import { showToastNotification } from "../../../../redux-saga-middleware/reducer
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
   loginReady,
-  updateLoginFail,
+  resetLoginState,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
@@ -137,9 +137,14 @@ const Login = () => {
   //----------------------------------------------------------------------
 
   useEffect(() => {
-    isLoginFail && !isLoginSuccess && fail.fire();
-    !isLoginFail && isLoginSuccess && success.fire();
+    isLoginFail && !isLoginSuccess && fail && fail.fire();
+    !isLoginFail && isLoginSuccess && success && success.fire();
   }, [isLoginFail, fail, isLoginSuccess, success]);
+
+  useEffect(() => {
+    dispatch(resetLoginState());
+  }, [dispatch]);
+
   return (
     <Box>
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
