@@ -391,6 +391,7 @@ import christmasBanner from "../assets/images/banners/bannerTour/christmasBanner
 import numberOne from "../assets/images/banners/bannerTour/christmasBanner/numberOne.png";
 import stIcon from "../assets/images/banners/bannerTour/christmasBanner/stIcon.png";
 import winnerFrame from "../assets/images/banners/bannerTour/christmasBanner/winnerFrame.png";
+import christmasMobileBanner from "../assets/images/banners/bannerTour/christmasBanner/christmasMobileBanner.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -431,6 +432,7 @@ export const imageHome = {
   winnerFrame: winnerFrame,
   numberOne: numberOne,
   stIcon: stIcon,
+  christmasMobileBanner: christmasMobileBanner,
 };
 
 export const navbar = {

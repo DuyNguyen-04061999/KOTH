@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
-import { imageHome, images } from "../../../utils/images";
+import { imageHome } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const BannerTour = (props) => {
@@ -231,15 +231,21 @@ const BannerTour = (props) => {
             </Typography>
           </Box>
         </Box>
-        <Box sx={{ display: "flex", marginLeft: "-30px" }}>
+        <Box sx={{ display: "flex" }}>
           <Box
-            sx={{ height: "150px" }}
+            sx={{ height: "120px" }}
             component={"img"}
             src={imageHome.numberOne}
           ></Box>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
             <Box
-              sx={{ height: "80px", width: "100px", marginLeft: "-40px" }}
+              sx={{ height: "60px", width: "80px", marginLeft: "-20px" }}
               component={"img"}
               src={imageHome.stIcon}
             ></Box>
@@ -249,7 +255,6 @@ const BannerTour = (props) => {
                   "polygon(4% 0, 95% 1%, 100% 30%, 100% 70%, 95% 100%, 4% 100%, 0% 70%, 0% 30%)",
                 width: "150px",
                 height: "30px",
-                marginLeft: "-20px",
                 background:
                   "linear-gradient(90deg, rgba(50,158,216,1) 7%, rgba(60,106,179,1) 94%)",
                 display: "flex",

@@ -163,7 +163,7 @@ export default function NewHomePage() {
           >
             {isFetchThreeTour ? (
               <BannerLoading
-                height={width < 576 ? "214px" : "363px"}
+                height={width < 576 ? "214px" : "331px"}
                 width={"100%"}
               />
             ) : (
