@@ -379,12 +379,19 @@ import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
 import doubleDayPackBannerMB from "../assets/images/doubleDayPackMB.jpg";
 import englishIcon from "../assets/images/englishIcon.png";
 import turkishICon from "../assets/images/turkishIcon.png";
-import christ1 from "../assets/images/banners/christ1.png"
-import christ2 from "../assets/images/banners/christ2.png"
-import christ3 from "../assets/images/banners/christ3.png"
-import christbg from "../assets/images/banners/christbg.png"
-import ribbon from "../assets/images/banners/ribbon.png"
-import bgchristmas from "../assets/images/banners/bgchristmas.png"
+import christ1 from "../assets/images/banners/christ1.png";
+import christ2 from "../assets/images/banners/christ2.png";
+import christ3 from "../assets/images/banners/christ3.png";
+import christbg from "../assets/images/banners/christbg.png";
+import ribbon from "../assets/images/banners/ribbon.png";
+import bgchristmas from "../assets/images/banners/bgchristmas.png";
+
+import avatarFrame from "../assets/images/banners/bannerTour/christmasBanner/avatarFrame.png";
+import christmasBanner from "../assets/images/banners/bannerTour/christmasBanner/christmasBanner.png";
+import numberOne from "../assets/images/banners/bannerTour/christmasBanner/numberOne.png";
+import stIcon from "../assets/images/banners/bannerTour/christmasBanner/stIcon.png";
+import winnerFrame from "../assets/images/banners/bannerTour/christmasBanner/winnerFrame.png";
+import christmasMobileBanner from "../assets/images/banners/bannerTour/christmasBanner/christmasMobileBanner.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -420,6 +427,12 @@ export const imageHome = {
   BannerWinAroundMobile: bannerWinAroundMobile,
   BGBannerCountDown: bgBannerCountDown,
   BannerGift: bannerGift,
+  avatarFrame: avatarFrame,
+  christmasBanner: christmasBanner,
+  winnerFrame: winnerFrame,
+  numberOne: numberOne,
+  stIcon: stIcon,
+  christmasMobileBanner: christmasMobileBanner,
 };
 
 export const navbar = {
@@ -626,12 +639,12 @@ export const images = {
   doubleDayPackBanner: doubleDayPackBanner,
   doubleDayPackBannerMB: doubleDayPackBannerMB,
   doubleDayBanneMB: doubleDayBanneMB,
-  christ1:christ1,
-  christ2:christ2,
-  christ3:christ3,
-  christbg:christbg,
-  ribbon:ribbon,
-  bgchristmas:bgchristmas,
+  christ1: christ1,
+  christ2: christ2,
+  christ3: christ3,
+  christbg: christbg,
+  ribbon: ribbon,
+  bgchristmas: bgchristmas,
 };
 
 export const navigationImages = {

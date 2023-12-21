@@ -69,7 +69,7 @@ export default function HotTournament() {
   }, [hotPag]);
 
   useEffect(() => {
-    dispatch(getListPromotionNew({ type: "hot" }))
+    dispatch(getListPromotionNew({ type: "hot" }));
 
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",
@@ -192,7 +192,7 @@ export default function HotTournament() {
                   <Box
                     sx={{
                       marginTop: width < 576 ? "24px" : "34px",
-                      marginBottom : width < 576 ? "24px" : "34px"
+                      marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
                     <FilterPromotion />
@@ -276,8 +276,7 @@ export default function HotTournament() {
                   <Box
                     sx={{
                       marginTop: width < 576 ? "24px" : "34px",
-                      marginBottom : width < 576 ? "24px" : "34px"
-
+                      marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
                     <FilterPromotion />

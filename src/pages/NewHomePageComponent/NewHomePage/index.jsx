@@ -10,7 +10,10 @@ import ListWinner from "../../../components/ListWinner";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
-import { getListBanner, openDialogExclusive } from "../../../redux-saga-middleware/reducers/appReducer";
+import {
+  getListBanner,
+  openDialogExclusive,
+} from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getAppType } from "../../../utils/helper";
@@ -44,21 +47,20 @@ export default function NewHomePage() {
   const { listBanner } = useSelector((state) => state.appReducer);
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(getListBanner());
   }, [dispatch]);
 
-
   useEffect(() => {
     // dispatch(getListPromotionNew({ type: "weekly" }))
-    dispatch(getListPromotionNew({ type: "hot" }))
+    dispatch(getListPromotionNew({ type: "hot" }));
     // dispatch(getListPromotionNew({ type: "hourly" }))
     // dispatch(getListPromotionNew({ type: "vip" }))
     // dispatch(getListPromotionNew({ type: "standard" }))
-    dispatch(getListPromotionNew({ type: "ongoing" }))
-    dispatch(getListPromotionNew({ type: "upcoming" }))
-    dispatch(getListPromotionNew({ type: "ended" }))
+    dispatch(getListPromotionNew({ type: "ongoing" }));
+    dispatch(getListPromotionNew({ type: "upcoming" }));
+    dispatch(getListPromotionNew({ type: "ended" }));
     // dispatch(getListPromotionNew({ type: "daily" }))
     dispatch({
       type: "CALL_BIGGEST_END_TOUR",
@@ -137,9 +139,16 @@ export default function NewHomePage() {
           backgroundColor: "#211d28",
         }}
       >
-        {process.env.REACT_APP_TEST === "test" && <Box className="text-white mb-2" onClick={() => {
-          navigate("/list-game-manager")
-        }}>List Game Manager</Box>}
+        {process.env.REACT_APP_TEST === "test" && (
+          <Box
+            className="text-white mb-2"
+            onClick={() => {
+              navigate("/list-game-manager");
+            }}
+          >
+            List Game Manager
+          </Box>
+        )}
         <Box
           sx={{
             paddingBottom: "70px",
@@ -154,7 +163,7 @@ export default function NewHomePage() {
           >
             {isFetchThreeTour ? (
               <BannerLoading
-                height={width < 576 ? "214px" : "363px"}
+                height={width < 576 ? "214px" : "331px"}
                 width={"100%"}
               />
             ) : (
@@ -175,43 +184,44 @@ export default function NewHomePage() {
                         <Box
                           className="cursor-pointer"
                           onClick={() => {
-                            if(i?.bannerType === "package") {
-                              navigate("/packages")
-                            } else if( i?.bannerType === "new") {
-                              if(!token) {
-                                dispatch(toggleLoginDialog())
+                            if (i?.bannerType === "package") {
+                              navigate("/packages");
+                            } else if (i?.bannerType === "new") {
+                              if (!token) {
+                                dispatch(toggleLoginDialog());
                               } else {
-                                dispatch(openDialogExclusive())
+                                dispatch(openDialogExclusive());
                               }
                             }
                           }}
-                        component={"img"}
-                        src={
-                          i?.bannerLink
-                            ? process.env.REACT_APP_SOCKET_SERVER +
-                              "/" +
-                              i?.bannerLink
-                            : images.BannerTour
-                        }
-                        sx={{ width: "100%", height: "auto" }}
-                      ></Box>
-                      ) : (
-                        <Box
-                        className="cursor-pointer"
-                        component={"a"} href="mailto:support@play4promo.com">
-                          <Box
-                            component={"img"}
-                            src={
-                              i?.bannerLink
+                          component={"img"}
+                          src={
+                            i?.bannerLink
                               ? process.env.REACT_APP_SOCKET_SERVER +
                                 "/" +
                                 i?.bannerLink
                               : images.BannerTour
+                          }
+                          sx={{ width: "100%", height: "auto" }}
+                        ></Box>
+                      ) : (
+                        <Box
+                          className="cursor-pointer"
+                          component={"a"}
+                          href="mailto:support@play4promo.com"
+                        >
+                          <Box
+                            component={"img"}
+                            src={
+                              i?.bannerLink
+                                ? process.env.REACT_APP_SOCKET_SERVER +
+                                  "/" +
+                                  i?.bannerLink
+                                : images.BannerTour
                             }
                             sx={{ width: "100%", height: "auto" }}
-                        ></Box>
+                          ></Box>
                         </Box>
-                        
                       )}
                     </Grid>
                   );
@@ -221,9 +231,11 @@ export default function NewHomePage() {
           ) : (
             ""
           )}
-          <Box sx={{
-            marginTop: width < 576 ? "24px" : "34px",
-          }}>
+          <Box
+            sx={{
+              marginTop: width < 576 ? "24px" : "34px",
+            }}
+          >
             <FilterPromotion />
           </Box>
           <Box
@@ -264,7 +276,7 @@ export default function NewHomePage() {
                     fontWeight: "200 !important",
                     color: "#BE48ED",
                     fontFamily: "Cyntho Next",
-                    cursor: "pointer", 
+                    cursor: "pointer",
                   }}
                 >
                   {t("View All")}
@@ -540,7 +552,7 @@ export default function NewHomePage() {
                   fontFamily: "Cyntho Next",
                 }}
               >
-             {t("Ended Promotions")}
+                {t("Ended Promotions")}
               </Typography>
             </Box>
             <Box
@@ -550,33 +562,32 @@ export default function NewHomePage() {
               sx={{ display: "flex", alignItems: "center" }}
             >
               <Typography
-                  sx={{
-                    textAlign: "start",
-                    fontSize: width < 576 ? "12px" : "16px",
-                    fontWeight: "200 !important",
-                    color: "#BE48ED",
-                    fontFamily: "Cyntho Next",
-                    cursor: "pointer",
-                  }}
-                >
-                  {t("View All")}
-                </Typography>
-                <Box
-                  sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
-                  component={"img"}
-                  src={images.viewAllButton}
-                ></Box>
+                sx={{
+                  textAlign: "start",
+                  fontSize: width < 576 ? "12px" : "16px",
+                  fontWeight: "200 !important",
+                  color: "#BE48ED",
+                  fontFamily: "Cyntho Next",
+                  cursor: "pointer",
+                }}
+              >
+                {t("View All")}
+              </Typography>
+              <Box
+                sx={{ width: "12px", height: "12px", marginLeft: "3px" }}
+                component={"img"}
+                src={images.viewAllButton}
+              ></Box>
             </Box>
-            
           </Box>{" "}
           <Box sx={{ marginTop: width < 576 ? "12px" : "32px" }}>
-              <ListPromotion
-                listData={endedTournament}
-                loadingState={isFetchEnded}
-                typePromo={"ended"}
-                noData={noDataEnd}
-              />
-            </Box>
+            <ListPromotion
+              listData={endedTournament}
+              loadingState={isFetchEnded}
+              typePromo={"ended"}
+              noData={noDataEnd}
+            />
+          </Box>
           <ListWinner />
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />
