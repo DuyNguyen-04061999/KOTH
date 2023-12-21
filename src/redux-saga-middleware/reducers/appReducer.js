@@ -168,6 +168,35 @@ export const getListWinnerFail = (data) => {
   };
 };
 
+export const openPaypalPackageDialog = (data) => {
+  return {
+    type: "OPEN_PAYPAL_PACKAGE_DIALOG",
+    payload: data,
+  };
+}
+
+export const closePaypalPackageDialog = (data) => {
+  return {
+    type: "CLOSE_PAYPAL_PACKAGE_DIALOG",
+    payload: data,
+  };
+}
+
+export const notifyToGameWhenBuyPackageSuccess = (data) => {
+  console.log(data);
+  return {
+    type: "NOTIFY_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS",
+    payload: data,
+  };
+}
+
+export const resetToGameWhenBuyPackageSuccess = (data) => {
+  return {
+    type: "RESET_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS",
+    payload: data,
+  };
+}
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -186,7 +215,9 @@ const appReducer = (
     listBanner: [],
     isDialogExclusive: false,
     listWinner:[],
-    isListWinner:false
+    isListWinner:false,
+    isPaypalPackageDialog: false,
+    isBuyPackageGameSuccess: false
   },
   action
 ) => {
@@ -250,6 +281,10 @@ const appReducer = (
       return { ...state, isListWinner: false, listWinner: payload };
     case "GET_LIST_WINNER_FAIL":
       return { ...state, isListWinner: false };
+    case "OPEN_PAYPAL_PACKAGE_DIALOG": return {...state, isPaypalPackageDialog: true}
+    case "CLOSE_PAYPAL_PACKAGE_DIALOG": return {...state, isPaypalPackageDialog: false}
+    case "NOTIFY_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS": return { ...state, isBuyPackageGameSuccess: true }
+    case "RESET_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS": return { ...state, isBuyPackageGameSuccess: false }
     default:
       return { ...state };
   }

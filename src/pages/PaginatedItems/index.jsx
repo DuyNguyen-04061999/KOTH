@@ -1,9 +1,9 @@
 import { Box, Pagination, PaginationItem, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
-import {useTranslation} from "react-i18next";
 
 export default function PaginatedItems({
   changeOffSet,

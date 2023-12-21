@@ -79,6 +79,9 @@ export default function TicketCheckOut() {
     dispatch(toggleCheckWallet());
   };
 
+  const params = new URLSearchParams(window.location.search);
+  const game = params.get("game");
+
   const btnSubscription = (event) => {
     event.currentTarget.disabled = true;
       dispatch(
@@ -87,7 +90,8 @@ export default function TicketCheckOut() {
             quantity: sl,
             type: typePayment,
             price: Number(totalMoney)?.toFixed(2),
-            auto: autoRecurring
+            auto: autoRecurring,
+            game: game ? true : false
           })
         );
       setSl(1);
@@ -100,7 +104,8 @@ export default function TicketCheckOut() {
         packageId: idPackage,
         quantity: sl,
         type: typePayment,
-        price: Number(totalMoney)?.toFixed(2)
+        price: Number(totalMoney)?.toFixed(2),
+        game: game ? true : false
        })
       );
       setSl(1);

@@ -9,130 +9,121 @@ import {
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router";
 import CountDownBannerHot from "../../../pages/NewHomePageComponent/CountDownBannerHot";
-import { imageHome } from "../../../utils/images";
+import { imageHome, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const BannerTourMobile = (props) => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
-  const {
-    tournamentName,
-    rewardName,
-    userAvatar,
-    userName,
-    endTime,
-    userScore,
-    tourId,
-  } = props;
+  const { rewardName, userAvatar, userName, endTime, userScore, tourId } =
+    props;
+  const defaultRewardName = "NAME OF PROMOTION REWARD";
   return (
     <LazyLoadComponent>
       <Box
         sx={{
-          width: "100%",
-          position: "relative",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: "214px",
-          background: `url(${imageHome.BannerTourBg})`,
+          height: "210px",
+          width: "100%",
+          background: `url(${imageHome.christmasMobileBanner})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          padding: "0 8px",
+          padding: width < 992 ? "10px 5px 10px 10px" : "30px 0 30px 46px",
         }}
       >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            width: "190px",
             alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "55%",
           }}
         >
-          <Box
-            sx={{
-              padding: "4px",
-              backgroundColor: "#FD9800",
-              borderRadius: "10px",
-              width: "160px",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "10px",
-                color: "white",
-                fontWeight: 700,
-                paddingLeft: "5px",
-                paddingRight: "5px",
-                lineHeight: 1.5,
-              }}
-            >
-              Promotion of the week
-            </Typography>
-          </Box>
           <Box>
-            <Typography
+            <Box
               sx={{
-                fontSize: "11px",
-                color: "white",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                height: "38px",
-                overflow: "hidden",
-                marginTop: "5px",
-                lineHeight: 1.5,
+                padding: "6px 6px",
+                backgroundColor: "#496BB4",
+                borderRadius: "10px",
               }}
             >
-              {tournamentName
-                ? tournamentName
-                : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
-            </Typography>
+              <Typography
+                sx={{
+                  color: "white",
+                  textTransform: "uppercase",
+                  fontSize: "9px",
+                  fontWeight: 700,
+                  lineHeight: 1.5,
+                  marginLeft: "0px !important",
+                }}
+              >
+                Promotion of the week
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: "8px",
+                  color: "#F6B403",
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  lineHeight: 1.5,
+                  marginTop: "5px",
+                }}
+              >
+                SPONSORED BY: PLAY 4 PROMO
+              </Typography>
+            </Box>
           </Box>
-
-          <Box sx={{ width: "180px", marginBottom: "12px" }}>
+          <Box sx={{ margin: "10px 0px" }}>
             <Typography
               sx={{
                 width: "100%",
-                fontSize: "22px",
-                fontWeight: 700,
+                fontSize: "13px",
+                fontWeight: "700",
                 textTransform: "uppercase",
-                background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                lineHeight: "0.9",
-                height: "38px",
+                // background: "linear-gradient(180deg, #FEE803 0%, #FD8700 100%)",
+                // backgroundClip: "text",
+                // WebkitBackgroundClip: "text",
+                // WebkitTextFillColor: "transparent",
                 overflow: "hidden",
-                marginTop: "10px",
+                textAlign: "center",
+                color: "#fff",
+                wordBreak: "break-word",
               }}
             >
-              {rewardName ? rewardName : "Galaxy Quest: Win a Z Flip 5 Galaxy"}
+              {(rewardName || defaultRewardName).length > 50
+                ? (rewardName || defaultRewardName).slice(0, 45) + " ..."
+                : rewardName || defaultRewardName}
             </Typography>
           </Box>
           <Box
             sx={{
-              backgroundColor: "#300854",
+              backgroundColor: "#E90488",
               borderRadius: "5px",
-              width: "fit-content",
               display: "flex",
               justifyContent: "space-between",
-              padding: "12px",
+              padding: "5px",
+              width: "100%",
+              alignItems: "center",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box
-                sx={{
-                  color: "#FFF",
-                  textAlign: "start",
-                  fontSize: "12px",
-                  marginLeft: "0px !important",
-                  marginRight: "5px",
-                  fontWeight: 800,
-                }}
-              >
-                <CountDownBannerHot
-                  expiryTime={moment(endTime || "2024-09-08T01:30:00.000Z")}
-                />
-              </Box>
+            <Box
+              sx={{
+                color: "#FFF",
+                textAlign: "start",
+                fontSize: "10px",
+                marginLeft: "0px !important",
+                fontWeight: 700,
+              }}
+            >
+              <CountDownBannerHot
+                expiryTime={moment(endTime || "20/10/2023")}
+              />
             </Box>
             <button
               onClick={() => {
@@ -146,154 +137,123 @@ const BannerTourMobile = (props) => {
                 border: "none",
                 borderRadius: "5px",
                 color: "#fff",
-                padding: "4px",
-                fontSize: "10px",
+                fontSize: width < 1024 ? "8px" : "20px",
                 cursor: "pointer",
-                fontWeight: 600,
-                paddingLeft: "10px",
-                paddingRight: "10px",
+                padding: "3px 8px",
+                width: "40%",
               }}
             >
-              Play now
+              PLAY NOW
             </button>
           </Box>
         </Box>
         <Box
           sx={{
-            width: "fit-content",
+            flexGrow: "1",
             height: "100%",
             position: "relative",
             display: "flex",
             flexDirection: "column",
+            justifyContent: "space-between",
             alignItems: "center",
+            padding: "5px 0px",
           }}
         >
           <Box
             sx={{
-              width: "fit-content",
-              height: "200px",
               display: "flex",
-              position: "absolute",
-              top: "26%",
-              zIndex: 100,
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <Box
               sx={{
-                width: "58px",
-                height: "49px",
-                background: `url(${imageHome.BannerTourScore})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                display: width > 425 ? "flex" : "none",
+                width: "100px",
+                height: "100px",
+                background:
+                  "linear-gradient(0deg, rgba(60,106,179,1) 0%,rgba(233,235,245,1) 45%, rgba(50,158,216,1) 62%)",
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
                 alignItems: "center",
-                justifyContent: "flex-start",
-                position: "absolute",
-                top: "-20px",
-                left: "-50px",
-                zIndex: 10,
+                justifyContent: "center",
+                clipPath:
+                  "polygon(50% 0%, 92% 0, 100% 8%, 100% 95%, 96% 100%, 4% 100%, 0 95%, 0 8%, 8% 0)",
               }}
             >
               <Box
                 sx={{
-                  transform: "rotate(-4deg)",
-                  textAlign: "center",
+                  width: "95px",
+                  height: "95px",
+                  clipPath:
+                    "polygon(50% 0%, 92% 0, 100% 8%, 100% 95%, 96% 100%, 4% 100%, 0 95%, 0 8%, 8% 0)",
+                }}
+                component={"img"}
+                src={userAvatar ? userAvatar : images.undefinedAvatar}
+              ></Box>
+            </Box>
+            <Box
+              sx={{
+                width: "80px",
+                height: "20px",
+                overflow: "hidden",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                background:
+                  "linear-gradient(270deg, #5840E9 0%,  #4AA1EC 100%)",
+                clipPath:
+                  "polygon( 0 0%,10% 0,100% 0,100% 10%,100% 76%,80% 157%,48% 268%,0% 76%,0% 0%)",
+              }}
+            >
+              <Typography
+                sx={{ color: "#fff", fontWeight: "500", fontSize: "12px" }}
+              >
+                {userName ? userName : "Super_"}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{ height: "50px" }}
+              component={"img"}
+              src={imageHome.numberOne}
+            ></Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                height: "100%",
+              }}
+            >
+              <Box
+                sx={{
+                  height: "20px",
+                  width: "20px",
+                }}
+                component={"img"}
+                src={imageHome.stIcon}
+              ></Box>
+              <Box
+                sx={{
+                  clipPath:
+                    "polygon(4% 0, 95% 1%, 100% 30%, 100% 70%, 95% 100%, 4% 100%, 0% 70%, 0% 30%)",
+                  padding: "4px 12px 4px 10px",
+                  background:
+                    "linear-gradient(90deg, rgba(50,158,216,1) 7%, rgba(60,106,179,1) 94%)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#ffff",
+                  fontStyle: "italic",
                 }}
               >
-                {" "}
-                <Typography
-                  sx={{
-                    textTransform: "uppercase",
-                    color: "#4A8ED7",
-                    fontSize: "6.292px",
-                    fontWeight: 800,
-                  }}
-                >
-                  Points
+                <Typography sx={{ fontWeight: "700", fontSize: "10px" }}>
+                  Score: {userScore || 99999}
                 </Typography>
-                <Typography
-                  sx={{
-                    textTransform: "uppercase",
-                    color: "#FD7E08",
-                    fontSize: "9.832px",
-                    fontWeight: 800,
-                  }}
-                >
-                  {userScore || 99999}
-                </Typography>{" "}
               </Box>
             </Box>
-            <Box
-              sx={{
-                width: "69px",
-                height: "78px",
-                border: "2px solid  rgba(246,212,0,1)",
-                boxShadow: "0px 0px 0px 8px #f5c40c",
-                borderRadius: "16px",
-                transform: "rotate(-9.075deg)",
-              }}
-            >
-              <LazyLoadImage
-                alt="..."
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "14px",
-                }}
-                src={userAvatar || imageHome.BannerWinAva}
-                effect="blur"
-                wrapperProps={{
-                  style: {
-                    transitionDelay: "0.5s",
-                  },
-                }}
-              ></LazyLoadImage>
-            </Box>
-            <Box
-              sx={{
-                width: "34px",
-                height: "45px",
-                background: `url(${imageHome.BannerTourTop1})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                position: "absolute",
-                top: "-20px",
-                right: "-40px",
-                display: width > 425 ? "block" : "none",
-              }}
-            ></Box>
-          </Box>
-          <Box
-            sx={{
-              background: `url(${imageHome.BannerTourName})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "contain",
-              backgroundPosition: "center",
-              width: "135px",
-              height: "57px",
-              position: "relative",
-              marginTop: "auto",
-              marginBottom: "20px",
-            }}
-          >
-            <Typography
-              sx={{
-                position: "absolute",
-                top: "85%",
-                left: "45%",
-                transform: "translate(-50%,-50%)",
-                color: "#4A8ED7",
-                fontSize: "10px",
-                fontWeight: 800,
-                textTransform: "uppercase",
-                width: "max-content",
-              }}
-            >
-              {userName || "SUPER_"}
-            </Typography>
           </Box>
         </Box>
       </Box>

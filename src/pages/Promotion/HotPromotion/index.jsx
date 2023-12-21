@@ -16,7 +16,7 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateHotPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getHotTour, getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -26,10 +26,7 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        // "@font-face": {
-        //   fontFamily: "Cyntho Next",
-        //   src: `url(${InspirationTTF}) format("truetype")`,
-        // },
+       
       },
     },
   },
@@ -48,12 +45,9 @@ export default function HotTournament() {
     (state) => state.tournamentReducer
   );
   const [data, setData] = useState(null);
-  // const [itemOffSet, setItemOffSet] = useState(0);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
-  // const { hotWeekTour, isFetchHotWeek } = useSelector(
-  //   (state) => state.tournamentReducer
-  // );
+
   const { hotPag } = useSelector((state) => state.promotionReducer);
   useEffect(() => {
     if (width > 576) {
@@ -69,6 +63,7 @@ export default function HotTournament() {
   }, [hotPag]);
 
   useEffect(() => {
+    dispatch(getHotTour())
     dispatch(getListPromotionNew({ type: "hot" }))
 
     dispatch({
@@ -175,7 +170,7 @@ export default function HotTournament() {
                 >
                   {" "}
                   {isFetchHot || data === null ? (
-                    <BannerLoading height={363} />
+                    <BannerLoading height={width < 576 ? "214px" : width <= 1200 ? "152.44px" : "363px"} />
                   ) : (
                     <SlickSlider
                       type="tour"
@@ -192,7 +187,7 @@ export default function HotTournament() {
                   <Box
                     sx={{
                       marginTop: width < 576 ? "24px" : "34px",
-                      marginBottom : width < 576 ? "24px" : "34px"
+                      marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
                     <FilterPromotion />
@@ -212,7 +207,7 @@ export default function HotTournament() {
                     data?.length > 0 &&
                     itemQuantity && (
                       <PaginatedItems
-                        defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
+                        defaultPage={1}
                         pageCount={Math.ceil(data.length / itemQuantity)}
                         changeOffSet={(value) => {
                           dispatch(updateHotPage((value - 1) * itemQuantity));
@@ -276,8 +271,7 @@ export default function HotTournament() {
                   <Box
                     sx={{
                       marginTop: width < 576 ? "24px" : "34px",
-                      marginBottom : width < 576 ? "24px" : "34px"
-
+                      marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
                     <FilterPromotion />
@@ -291,55 +285,13 @@ export default function HotTournament() {
                     noData={noDataHot}
                   />
                 </Box>
-                {/* <Box
-                sx={{
-                  marginTop: "48px",
-                  marginBottom: "0px",
-                }}
-              >
-                {isFetchHotWeek ? (
-                  <Box>
-                    <BannerLoading height={"214px"} />
-                  </Box>
-                ) : (
-                  <BannerTourMobile
-                    tournamentName={
-                      hotWeekTour && hotWeekTour?.tournamentName
-                        ? hotWeekTour?.tournamentName
-                        : "Galaxy Z-flip 5"
-                    }
-                    sponsorName={hotWeekTour?.tournamentBrand?.brandName}
-                    userName={
-                      hotWeekTour &&
-                      hotWeekTour?.bestUser &&
-                      hotWeekTour?.bestUser?.tUser &&
-                      hotWeekTour?.bestUser?.tUser?.userName
-                    }
-                    endTime={hotWeekTour?.tournamentEndAt}
-                    userScore={hotWeekTour?.bestUser?.score}
-                    userAvatar={
-                      hotWeekTour &&
-                      hotWeekTour?.bestUser &&
-                      hotWeekTour?.bestUser?.tUser &&
-                      hotWeekTour?.bestUser?.tUser?.userAccount &&
-                      hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          hotWeekTour?.bestUser?.tUser?.userAccount
-                            ?.accountAvatar
-                        : images.pool
-                    }
-                    tourId={hotWeekTour && hotWeekTour?.id}
-                  />
-                )}
-              </Box> */}
                 <Box sx={{ margin: "36px 0px" }}>
                   {!isFetchHot &&
                     data !== null &&
                     data?.length > 0 &&
                     itemQuantity && (
                       <PaginatedItems
-                        defaultPage={Math.ceil(hotPag / itemQuantity) + 1}
+                        defaultPage={1}
                         pageCount={Math.ceil(data.length / itemQuantity)}
                         changeOffSet={(value) => {
                           dispatch(updateHotPage((value - 1) * itemQuantity));

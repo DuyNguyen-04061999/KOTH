@@ -26,7 +26,7 @@ import {
   changeRouter,
   openDoubleDayDialog,
   randomRenderPopup,
-  toggleStartGame,
+  toggleStartGame
 } from "../../redux-saga-middleware/reducers/appReducer";
 import {
   addRefCodeRegister,
@@ -52,6 +52,7 @@ import {
   getSettingReady,
 } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
+import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import {
   closeTransactionDialog,
@@ -72,6 +73,7 @@ import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import NotiFunds from "../Dialog/NotiFunds";
+import PackagePaypalDialog from "../Dialog/Packages/PackagePaypalDialog";
 import DialogProfile from "../Dialog/Profile";
 import ShareTour from "../Dialog/ShareTour";
 import SimpleDialog from "../Dialog/Simple/SimpleDialog";
@@ -157,6 +159,21 @@ export default function Layout(props) {
   }, [dispatch]);
 
   useEffect(() => {
+    const handlePopState = (event) => {
+      // Handle popstate event here
+      dispatch(toggleCloseResultEndGame())
+    };
+
+    // Add event listener for popstate
+    window.addEventListener('popstate', handlePopState);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [dispatch]); 
+
+  useEffect(() => {
     if (router) {
       const tokenLocal = localStorage.getItem("token");
       if (!tokenLocal && !token) {
@@ -172,6 +189,9 @@ export default function Layout(props) {
       dispatch(toggleStartGame(false));
       dispatch(finishGame());
       dispatch(finishVideo());
+      // dispatch(resetToGameWhenBuyPackageSuccess());
+      localStorage.removeItem("buyPackage")
+      localStorage.removeItem("newNumberTicket")
     }
   }, [dispatch, router]);
 
@@ -397,6 +417,7 @@ export default function Layout(props) {
       <DialogGift />
       <DialogExclusive />
       <NotiFunds />
+      <PackagePaypalDialog/>
       <>
         {randomRender === 1 ? (
           <DoubleDayPackDialog />

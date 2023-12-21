@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { showToastNotification } from "../reducers/alertReducer";
+import { notifyToGameWhenBuyPackageSuccess } from "../reducers/appReducer";
 import {
   checkoutPaypalCancelComplete,
   checkoutPaypalCancelFail,
@@ -47,6 +48,7 @@ function* getCheckOutSaga(dataRequest) {
 function* getCheckOutSagaSuccess(dataRequest) {
     try {
         const { payload } = dataRequest;
+        const { game }  = payload
         const res = yield call(checkoutService.getCheckoutSuccess, payload);
         const { status, data } = res;
         if (status === 200 || status === 201) {
@@ -59,6 +61,12 @@ function* getCheckOutSagaSuccess(dataRequest) {
           yield put(toggleAlertStripeProcess({
             type: "success"
           }));
+          if(game) {
+            yield put(notifyToGameWhenBuyPackageSuccess())
+            localStorage.setItem("buyPackage", true)
+            localStorage.setItem("newNumberTicket", Number(data?.data?.quantity || 0))
+            window.close()
+          }
         } else {
           yield put(checkoutPaypalSuccessFail());
           yield put(toggleAlertStripeProcess({
@@ -76,6 +84,7 @@ function* getCheckOutSagaSuccess(dataRequest) {
 function* getCheckOutSagaCancel(dataRequest) {
     try {
         const { payload } = dataRequest;
+        const { game }  = payload
         const res = yield call(checkoutService.getCheckoutCancel, payload);
         const { status, data } = res;
         if (status === 200 || status === 201) {
@@ -83,6 +92,9 @@ function* getCheckOutSagaCancel(dataRequest) {
           yield put(toggleAlertStripeProcess({
             type: "error"
           }));
+          if(game) {
+            window.open(process.env.REACT_APP_PAYPAL_PACKAGE_URL, "_self")
+          }
         } else {
           yield put(checkoutPaypalCancelFail());
           yield put(showToastNotification({

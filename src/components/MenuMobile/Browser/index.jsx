@@ -23,6 +23,8 @@ export default function Browser(props) {
   const { open, handleShowMenu } = props;
   const { isDropdownNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
+  const { tabHelpCenter } = useSelector(state => state.helpcenterReducer)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
@@ -1054,8 +1056,7 @@ export default function Browser(props) {
                     handleShowMenu();
                   }}
                 >
-                 {pathname && pathname?.includes("packages") ? (
-                  <>
+                 <>
                     {theme?.theme === "christmas" ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1210,163 +1211,6 @@ export default function Browser(props) {
                       />
                     )}
                   </>
-                ) : (
-                  <>
-                    {theme?.theme === "christmas" ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
-                        fill="none"
-                        viewBox="0 0 30 30"
-                      >
-                        <g filter="url(#filter0_d_7474_481490)">
-                          <g>
-                            <g>
-                              <g>
-                                <path
-                                  fill="#C22026"
-                                  d="M23.436 20.05L15 23.995v-9.503l8.436-3.384v8.94z"
-                                ></path>
-                                <path
-                                  fill="#EB2335"
-                                  d="M6.563 20.05l8.436 3.946v-9.503l-8.437-3.384v8.94z"
-                                ></path>
-                                <path
-                                  fill="#007145"
-                                  d="M24 12.321l-9 3.947v-3.462l9-3.665v3.18z"
-                                ></path>
-                                <path
-                                  fill="#008A55"
-                                  d="M6 12.321l9 3.947v-3.462L6 9.14v3.18z"
-                                ></path>
-                                <path
-                                  fill="#00C477"
-                                  d="M6 9.14L15 6l9 3.14-9 3.665-9-3.666z"
-                                ></path>
-                                <path
-                                  fill="#FFAA39"
-                                  d="M20.208 13.984v7.581l-1.411.66v-7.622l1.41-.619z"
-                                ></path>
-                                <path
-                                  fill="#FFC943"
-                                  d="M20.208 10.688v3.299l-1.411.618v-3.343l1.41-.575z"
-                                ></path>
-                                <path
-                                  fill="#FAF180"
-                                  d="M20.204 10.683l-1.411.574-8.621-3.575 1.216-.424 8.816 3.425z"
-                                ></path>
-                                <path
-                                  fill="#FFC943"
-                                  d="M9.797 13.984v7.581l1.41.66v-7.622l-1.41-.619z"
-                                ></path>
-                                <path
-                                  fill="#FFC943"
-                                  d="M9.797 10.688v3.299l1.41.618v-3.343l-1.41-.575z"
-                                ></path>
-                                <path
-                                  fill="#FAF180"
-                                  d="M9.797 10.683l1.41.574 8.622-3.575-1.216-.424-8.816 3.425z"
-                                ></path>
-                                <path
-                                  fill="#000"
-                                  d="M23.434 12.57v.768l-8.436 3.89-8.435-3.89v-.768l8.435 3.7 8.436-3.7z"
-                                  opacity="0.3"
-                                ></path>
-                              </g>
-                              <g>
-                                <path
-                                  fill="#000"
-                                  d="M18.116 8.336c-1.23 0-2.112.57-2.597.992a.925.925 0 00-1.044 0c-.485-.422-1.368-.992-2.597-.992-2.186 0-2.096.811-2.096 1.175 0 .271.341 1.02 1.81 1.02.916 0 1.943-.155 2.787-.503.133.15.36.248.618.248s.485-.099.618-.248c.844.348 1.872.503 2.787.503 1.469 0 1.81-.75 1.81-1.02 0-.364.09-1.175-2.096-1.175z"
-                                  opacity="0.3"
-                                ></path>
-                                <path
-                                  fill="#EB2335"
-                                  d="M15.086 9.229s1.08-2.143 3.029-2.143c2.186 0 2.096 1.212 2.096 1.755 0 .405-.341 1.523-1.81 1.523-1.117 0-2.4-.341-3.315-1.135z"
-                                ></path>
-                                <path
-                                  fill="#C22026"
-                                  d="M19.328 8.957c.507.195.568.895.095 1.165-.257.147-.59.244-1.023.244-.807 0-1.7-.178-2.478-.576.512-.517 1.25-1.017 2.191-1.017.525 0 .92.07 1.215.184z"
-                                ></path>
-                                <path
-                                  fill="#7D121C"
-                                  d="M18.4 10.142a5.4 5.4 0 01-2.08-.414C16.88 9.245 17.48 9 18.113 9c.424 0 .775.047 1.055.14.379.128.42.655.06.83a1.85 1.85 0 01-.827.172z"
-                                ></path>
-                                <path
-                                  fill="#EB2335"
-                                  d="M14.907 9.229s-1.08-2.143-3.029-2.143c-2.186 0-2.096 1.212-2.096 1.755 0 .405.341 1.523 1.81 1.523 1.117 0 2.4-.341 3.315-1.135z"
-                                ></path>
-                                <path
-                                  fill="#C22026"
-                                  d="M10.668 8.958c-.508.195-.568.895-.096 1.165.257.147.591.244 1.023.244.809 0 1.7-.178 2.478-.576-.511-.517-1.25-1.018-2.191-1.018-.525 0-.919.07-1.214.185z"
-                                ></path>
-                                <path
-                                  fill="#7D121C"
-                                  d="M11.592 10.142a5.4 5.4 0 002.08-.414C13.113 9.245 12.512 9 11.88 9c-.423 0-.775.047-1.054.14-.379.128-.422.655-.061.83.21.104.481.172.828.172z"
-                                ></path>
-                                <path
-                                  fill="#FAF180"
-                                  d="M14.995 10.242c.536 0 .97-.486.97-1.086 0-.6-.434-1.086-.97-1.086-.537 0-.972.486-.972 1.086 0 .6.435 1.086.972 1.086z"
-                                ></path>
-                                <path
-                                  fill="#FFC943"
-                                  d="M15.966 9.159c0 .597-.435 1.086-.971 1.086-.537 0-.972-.487-.972-1.086 0-.043.003-.085.007-.128.056.54.467.959.965.959.497 0 .908-.419.964-.959.005.043.007.085.007.128z"
-                                ></path>
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                        <defs>
-                          <filter
-                            id="filter0_d_7474_481490"
-                            width="30"
-                            height="30"
-                            x="0"
-                            y="0"
-                            colorInterpolationFilters="sRGB"
-                            filterUnits="userSpaceOnUse"
-                          >
-                            <feFlood
-                              floodOpacity="0"
-                              result="BackgroundImageFix"
-                            ></feFlood>
-                            <feColorMatrix
-                              in="SourceAlpha"
-                              result="hardAlpha"
-                              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                            ></feColorMatrix>
-                            <feOffset></feOffset>
-                            <feGaussianBlur stdDeviation="3"></feGaussianBlur>
-                            <feComposite
-                              in2="hardAlpha"
-                              operator="out"
-                            ></feComposite>
-                            <feColorMatrix values="0 0 0 0 1 0 0 0 0 0.733333 0 0 0 0 0.2 0 0 0 0.6 0"></feColorMatrix>
-                            <feBlend
-                              in2="BackgroundImageFix"
-                              result="effect1_dropShadow_7474_481490"
-                            ></feBlend>
-                            <feBlend
-                              in="SourceGraphic"
-                              in2="effect1_dropShadow_7474_481490"
-                              result="shape"
-                            ></feBlend>
-                          </filter>
-                        </defs>
-                      </svg>
-                    ) : (
-                      <Box
-                        component={"img"}
-                        src={navbar.navPackage}
-                        sx={{
-                          width: "18px",
-                          height: "18px",
-                          marginRight: "8px",
-                        }}
-                      />
-                    )}
-                  </>
-                )}
                   {/* <img
               src={popup.packageicon}
               alt="..."
@@ -1564,14 +1408,18 @@ export default function Browser(props) {
                   </Box>
                 )}
                 <Box
-                  className="cursor-pointer mb-3"
+                  className="cursor-pointer mb-3 p-2"
                   sx={{
                     display: "flex",
                     alignItems: "center",
+                    backgroundColor:
+                     pathname && pathname?.includes("help-center") && tabHelpCenter !== 3
+                        ? "#7648ED"
+                        : "transparent",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     color:
-                      pathname && pathname?.includes("help-center")
+                      pathname && pathname?.includes("help-center") && tabHelpCenter !== 3
                         ? "white"
                         : "#A89CD7",
                   }}
@@ -1580,7 +1428,7 @@ export default function Browser(props) {
                     handleShowMenu();
                   }}
                 >
-                  {pathname && pathname?.includes("help-center") ? (
+                  {pathname && pathname?.includes("help-center") && tabHelpCenter !== 3 ? (
                     <Box
                       component={"img"}
                       src={navbar.navHelpCenterActive}
@@ -1617,16 +1465,66 @@ export default function Browser(props) {
                   </span>
                 </Box>
                 <Box
+                  className="cursor-pointer mb-3 p-2"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor:
+                      pathname && pathname?.includes("help-center") && tabHelpCenter === 3
+                        ? "#7648ED"
+                        : "transparent",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    color:
+                      pathname && pathname?.includes("help-center") && tabHelpCenter === 3
+                        ? "white"
+                        : "#A89CD7",
+                  }}
+                  onClick={() => {
+                    dispatch({
+                      type: "SET_TAB_HELPCENTER",
+                      payload: 3,
+                    });
+                    navigate(`/help-center`);
+                    handleShowMenu();
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 28 24"
+                  >
+                    <path
+                      fill={pathname && pathname?.includes("help-center") && tabHelpCenter === 3 ? "#fff" : "#A89CD7"}
+                      stroke={pathname && pathname?.includes("help-center") && tabHelpCenter === 3 ? "#fff" : "#A89CD7"}
+                      d="M9.472 9.583l-.41.075V10.125a.062.062 0 11-.124 0v-.563A.062.062 0 019 9.5c1.118 0 2.188-.776 2.188-1.906 0-1.131-1.07-1.907-2.188-1.907s-2.188.776-2.188 1.907v.281a.062.062 0 11-.125 0v-.281c0-1.072.987-2.032 2.313-2.032s2.313.96 2.313 2.032c0 .94-.753 1.789-1.84 1.989zm-.79 2.942l-.462-.192.462.192a.344.344 0 11.636.263.344.344 0 01-.636-.263zM15.687 9V9A6.688 6.688 0 109 15.688h0A6.695 6.695 0 0015.689 9zm.126 0A6.812 6.812 0 119 2.188 6.82 6.82 0 0115.813 9z"
+                    ></path>
+                  </svg>
+                  <span
+                    className="hover-nav ms-2"
+                    style={{
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    How it Works
+                  </span>
+                </Box>
+                <Box
                   className="cursor-pointer mt-2"
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     transition:
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    color:
-                      pathname && pathname?.includes("help-center")
-                        ? "white"
-                        : "#A89CD7",
+                    color: "#A89CD7",
                   }}
                   onClick={() => {
                     if (window?.FB && window?.FB?.CustomerChat) {
@@ -1635,7 +1533,7 @@ export default function Browser(props) {
                     handleShowMenu();
                   }}
                 >
-                  <Box className="p-1">
+                  <Box className="ps-2 pe-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"

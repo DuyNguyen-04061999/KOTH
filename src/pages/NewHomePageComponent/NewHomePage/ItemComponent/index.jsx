@@ -11,12 +11,12 @@ import { CalculateDistance } from "../../../../components/CountDownTimer/utils/C
 import { imageHome, images } from "../../../../utils/images";
 
 export default function ItemComponent({ countdown, tourInfo, isLoading }) {
-    const {t} = useTranslation('global');
+  const { t } = useTranslation("global");
   const { width } = useWindowDimensions();
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
   const [days, setDay] = useState(null);
-  const theme = useTheme()
+  const theme = useTheme();
   let countEndDate = new Date(moment(tourInfo?.tournamentEndAt)).getTime();
   let countStartDate = new Date(moment(tourInfo?.tournamentStartAt)).getTime();
   let timeNow = new Date().getTime();
@@ -110,7 +110,7 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
         ) : (
           <>
             <Box
-            component={"img"}
+              component={"img"}
               style={{
                 maxHeight: width < 576 ? "156px" : "184px",
                 minHeight: width < 576 ? "156px" : "184px",
@@ -142,8 +142,8 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 top: 0,
                 backgroundColor: "rgba(0,0,0,0.6)",
                 display: tourInfo?.tournamentStatus === 2 ? "block" : "none",
-                borderStartEndRadius:"7px",
-                borderStartStartRadius:"7px"
+                borderStartEndRadius: "7px",
+                borderStartStartRadius: "7px",
               }}
             />
           </>
@@ -235,11 +235,11 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
                 }}
               >
                 {tourInfo?.tournamentStatus === 0
-                  ? `${t('Starting in')}: `
+                  ? `${t("Starting in")}: `
                   : tourInfo?.tournamentStatus === 1
-                  ? `${t('End in')}: `
+                  ? `${t("End in")}: `
                   : tourInfo?.tournamentStatus === 2
-                  ? `${t('Winner')}: `
+                  ? `${t("Winner")}: `
                   : ""}
               </Box>
               {isLoading ? (
@@ -316,240 +316,244 @@ export default function ItemComponent({ countdown, tourInfo, isLoading }) {
       </Box>
       {theme?.theme === "christmas" ? (
         <Box
-        sx={{
-          width: "100%",
-          height: width < 576 ? "64px" : "69px",
-          bgcolor: "#E7D7B3" ,
-          color: "#000000",
-          borderEndEndRadius: "8px",
-          borderEndStartRadius: "8px",
-          borderTop: "dashed 2px black",
-          transition: "0.3s ease-out",
-        }}
-      >
-        <Box
           sx={{
-            display: "flex",
-            padding: "12px 8px 6px 8px",
-            justifyContent: "space-between",
-            alignItems: "center",
+            width: "100%",
+            height: width < 576 ? "64px" : "69px",
+            bgcolor: "#E7D7B3",
+            color: "#000000",
+            borderEndEndRadius: "8px",
+            borderEndStartRadius: "8px",
+            borderTop: "dashed 2px black",
+            transition: "0.3s ease-out",
           }}
         >
-          {isLoading ? (
-            <Skeleton
-              variant="rectangular"
-              width={40}
-              height={40}
-              animation="wave"
-            />
-          ) : (
-            <Box
-              component={"img"}
-              style={{
-                width: width < 576 ? `40px` : "49px",
-                height: width < 576 ? `40px` : "49px",
-                borderRadius: "4px",
-                objectFit: "cover",
-              }}
-              src={
-                tourInfo &&
-                tourInfo?.tourSkins &&
-                tourInfo?.tourSkins?.length > 0 &&
-                tourInfo?.tourSkins[0]?.skinGame &&
-                tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-                  ? process.env.REACT_APP_SOCKET_SERVER +
-                    "/" +
-                    tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-                  : imageHome.brandImage
-              }
-              // effect="blur"
-              // wrapperProps={{
-              //   style: {
-              //     transitionDelay: "0.5s",
-              //   },
-              // }}
-            ></Box>
-          )}
           <Box
             sx={{
-              marginLeft: "5px",
+              display: "flex",
+              padding: "12px 8px 6px 8px",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <Typography
+            {isLoading ? (
+              <Skeleton
+                variant="rectangular"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+            ) : (
+              <Box
+                component={"img"}
+                style={{
+                  width: width < 576 ? `40px` : "49px",
+                  height: width < 576 ? `40px` : "49px",
+                  borderRadius: "4px",
+                  objectFit: "cover",
+                }}
+                src={
+                  tourInfo &&
+                  tourInfo?.tourSkins &&
+                  tourInfo?.tourSkins?.length > 0 &&
+                  tourInfo?.tourSkins[0]?.skinGame &&
+                  tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                    : imageHome.brandImage
+                }
+                // effect="blur"
+                // wrapperProps={{
+                //   style: {
+                //     transitionDelay: "0.5s",
+                //   },
+                // }}
+              ></Box>
+            )}
+            <Box
               sx={{
-                ...styleTypography,
-                fontSize: width < 576 ? "12px" : "14px",
-                fontStyle: "normal",
-                fontWeight: "500",
-                lineHeight: "120%",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                maxHeight: "1rem",
-                whiteSpace: "nowrap",
-                maxWidth: "100px",
-                fontFamily: "Cyntho Next",
+                marginLeft: "5px",
               }}
             >
-              {isLoading ? (
-                <Skeleton variant="text" />
-              ) : tourInfo &&
-                tourInfo?.tourSkins &&
-                tourInfo?.tourSkins?.length > 0 &&
-                tourInfo?.tourSkins[0]?.skinGame &&
-                tourInfo?.tourSkins[0]?.skinGame?.gameName ? (
-                tourInfo?.tourSkins[0]?.skinGame?.gameName
-              ) : (
-                "game Name"
-              )}
-            </Typography>
-            <button
-              onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
-              disabled={isLoading}
-              style={{
-                border: "none",
-                outline: "none",
-                width: width < 576 ? `90px` : "104px",
-                borderRadius: "5px",
-                background: "#C02F40",
-                color: "#ffff",
-                fontSize: width < 576 ? "12px" : "14px",
-                minHeight: "24px",
-              }}
-            >
-              {tourInfo && tourInfo?.tournamentStatus === 0
-                ? "See More"
-                : tourInfo?.tournamentStatus === 1
-                ? `${t("Play Now")}`
-                : "See More"}
-            </button>
+              <Typography
+                sx={{
+                  ...styleTypography,
+                  fontSize: width < 576 ? "12px" : "14px",
+                  fontStyle: "normal",
+                  fontWeight: "500",
+                  lineHeight: "120%",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxHeight: "1rem",
+                  whiteSpace: "nowrap",
+                  maxWidth: "100px",
+                  fontFamily: "Cyntho Next",
+                }}
+              >
+                {isLoading ? (
+                  <Skeleton variant="text" />
+                ) : tourInfo &&
+                  tourInfo?.tourSkins &&
+                  tourInfo?.tourSkins?.length > 0 &&
+                  tourInfo?.tourSkins[0]?.skinGame &&
+                  tourInfo?.tourSkins[0]?.skinGame?.gameName ? (
+                  tourInfo?.tourSkins[0]?.skinGame?.gameName
+                ) : (
+                  "game Name"
+                )}
+              </Typography>
+              <button
+                onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
+                disabled={isLoading}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: width < 576 ? `90px` : "104px",
+                  borderRadius: "5px",
+                  background: "#C02F40",
+                  color: "#ffff",
+                  fontSize: width < 576 ? "12px" : "14px",
+                  minHeight: "24px",
+                }}
+              >
+                {tourInfo && tourInfo?.tournamentStatus === 0
+                  ? "See More"
+                  : tourInfo?.tournamentStatus === 1
+                  ? `${t("Play Now")}`
+                  : "See More"}
+              </button>
+            </Box>
           </Box>
         </Box>
-      </Box>
       ) : (
         <Box
-        className={isHovered === true ? "hover-card" : ""}
-        sx={{
-          width: "100%",
-          height: width < 576 ? "64px" : "69px",
-          bgcolor: isHovered === true ? "#42285B" : "#C0C0C0",
-          color: isHovered === true ? "white" : "black",
-          borderEndEndRadius: "8px",
-          borderEndStartRadius: "8px",
-          borderTop: "dashed 2px black",
-          transition: "0.3s ease-out",
-        }}
-      >
-        <Box
+          className={isHovered === true ? "hover-card" : ""}
           sx={{
-            display: "flex",
-            padding: "12px 8px 6px 8px",
-            justifyContent: "space-between",
-            alignItems: "center",
+            width: "100%",
+            height: width < 576 ? "64px" : "69px",
+            bgcolor: isHovered === true ? "#42285B" : "#C0C0C0",
+            color: isHovered === true ? "white" : "black",
+            borderEndEndRadius: "8px",
+            borderEndStartRadius: "8px",
+            borderTop: "dashed 2px black",
+            transition: "0.3s ease-out",
           }}
         >
-          {isLoading ? (
-            <Skeleton
-              variant="rectangular"
-              width={40}
-              height={40}
-              animation="wave"
-            />
-          ) : (
-            <Box
-              component={"img"}
-              style={{
-                width: width < 576 ? `40px` : "49px",
-                height: width < 576 ? `40px` : "49px",
-                borderRadius: "4px",
-                objectFit: "cover",
-              }}
-              src={
-                tourInfo &&
-                tourInfo?.tourSkins &&
-                tourInfo?.tourSkins?.length > 0 &&
-                tourInfo?.tourSkins[0]?.skinGame &&
-                tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-                  ? process.env.REACT_APP_SOCKET_SERVER +
-                    "/" +
-                    tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
-                  : imageHome.brandImage
-              }
-              // effect="blur"
-              // wrapperProps={{
-              //   style: {
-              //     transitionDelay: "0.5s",
-              //   },
-              // }}
-            ></Box>
-          )}
           <Box
             sx={{
-              marginLeft: "5px",
+              display: "flex",
+              padding: "12px 8px 6px 8px",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <Typography
+            {isLoading ? (
+              <Skeleton
+                variant="rectangular"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+            ) : (
+              <Box
+                component={"img"}
+                style={{
+                  width: width < 576 ? `40px` : "49px",
+                  height: width < 576 ? `40px` : "49px",
+                  borderRadius: "4px",
+                  objectFit: "cover",
+                }}
+                src={
+                  tourInfo &&
+                  tourInfo?.tourSkins &&
+                  tourInfo?.tourSkins?.length > 0 &&
+                  tourInfo?.tourSkins[0]?.skinGame &&
+                  tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      tourInfo?.tourSkins[0]?.skinGame?.gameAvatar
+                    : imageHome.brandImage
+                }
+                // effect="blur"
+                // wrapperProps={{
+                //   style: {
+                //     transitionDelay: "0.5s",
+                //   },
+                // }}
+              ></Box>
+            )}
+            <Box
               sx={{
-                ...styleTypography,
-                fontSize: width < 576 ? "12px" : "14px",
-                fontStyle: "normal",
-                fontWeight: "500",
-                lineHeight: "120%",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                maxHeight: "1rem",
-                whiteSpace: "nowrap",
-                maxWidth: "100px",
-                fontFamily: "Cyntho Next",
+                marginLeft: "5px",
               }}
             >
-              {isLoading ? (
-                <Skeleton variant="text" />
-              ) : tourInfo &&
-                tourInfo?.tourSkins &&
-                tourInfo?.tourSkins?.length > 0 &&
-                tourInfo?.tourSkins[0]?.skinGame &&
-                tourInfo?.tourSkins[0]?.skinGame?.gameName ? (
-                tourInfo?.tourSkins[0]?.skinGame?.gameName
-              ) : (
-                "game Name"
-              )}
-            </Typography>
-            <button
-              onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
-              disabled={isLoading}
-              style={{
-                border: "none",
-                outline: "none",
-                width: width < 576 ? `90px` : "104px",
-                borderRadius: "5px",
-                background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-                color: "#ffff",
-                fontSize: width < 576 ? "12px" : "14px",
-                minHeight: "24px",
-              }}
-            >
-              {tourInfo && tourInfo?.tournamentStatus === 0
-                ? "See More"
-                : tourInfo?.tournamentStatus === 1
-                ? `${t("Play Now")}`
-                : "See More"}
-            </button>
+              <Typography
+                sx={{
+                  ...styleTypography,
+                  fontSize: width < 576 ? "12px" : "14px",
+                  fontStyle: "normal",
+                  fontWeight: "500",
+                  lineHeight: "120%",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxHeight: "1rem",
+                  whiteSpace: "nowrap",
+                  maxWidth: "100px",
+                  fontFamily: "Cyntho Next",
+                }}
+              >
+                {isLoading ? (
+                  <Skeleton variant="text" />
+                ) : tourInfo &&
+                  tourInfo?.tourSkins &&
+                  tourInfo?.tourSkins?.length > 0 &&
+                  tourInfo?.tourSkins[0]?.skinGame &&
+                  tourInfo?.tourSkins[0]?.skinGame?.gameName ? (
+                  tourInfo?.tourSkins[0]?.skinGame?.gameName
+                ) : (
+                  "game Name"
+                )}
+              </Typography>
+              <button
+                onClick={() => navigate("/promotion-detail/" + tourInfo?.id)}
+                disabled={isLoading}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: width < 576 ? `90px` : "104px",
+                  borderRadius: "5px",
+                  background:
+                    "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                  color: "#ffff",
+                  fontSize: width < 576 ? "12px" : "14px",
+                  minHeight: "24px",
+                }}
+              >
+                {tourInfo && tourInfo?.tournamentStatus === 0
+                  ? "See More"
+                  : tourInfo?.tournamentStatus === 1
+                  ? `${t("Play Now")}`
+                  : "See More"}
+              </button>
+            </Box>
           </Box>
         </Box>
-      </Box>
       )}
       {theme?.theme === "christmas" ? (
-        <Box component={"img"}
-        src={images.ribbon}
-        alt="..."
-        sx={{
-          position:"absolute",
-          top:"43%",
-          left:0,
-          width:"100%"
-        }}
-      ></Box>
-      ) : ""}
+        <Box
+          component={"img"}
+          src={images.ribbon}
+          alt="..."
+          sx={{
+            position: "absolute",
+            top: "43%",
+            left: 0,
+            width: "100%",
+          }}
+        ></Box>
+      ) : (
+        ""
+      )}
     </Box>
   );
-} 
+}

@@ -16,7 +16,7 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getEndedTour, getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -49,6 +49,7 @@ export default function HotTournament() {
   const [itemQuantity, setItemQuantity] = useState(0);
   const { endedPage } = useSelector((state) => state.promotionReducer);
   useEffect(() => {
+    dispatch(getEndedTour())
     dispatch(getListPromotionNew({ type: "ended" }))
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",
@@ -150,7 +151,7 @@ export default function HotTournament() {
               >
                 {" "}
                 {isFetchEnded || data === null ? (
-                  <BannerLoading height={363} />
+                  <BannerLoading height={width < 576 ? "214px" : width <= 1200 ? "152.44px" : "363px"} />
                 ) : (
                   <SlickSlider
                     type="tour"
@@ -187,7 +188,7 @@ export default function HotTournament() {
                 data?.length > 0 &&
                 itemQuantity && (
                   <PaginatedItems
-                    defaultPage={Math.ceil(endedPage / itemQuantity) + 1}
+                    defaultPage={1}
                     pageCount={Math.ceil(data.length / itemQuantity)}
                     changeOffSet={(value) => {
                       dispatch(updateEndedPage((value - 1) * itemQuantity));
@@ -270,7 +271,7 @@ export default function HotTournament() {
                   data?.length > 0 &&
                   itemQuantity && (
                     <PaginatedItems
-                      defaultPage={Math.ceil(endedPage / itemQuantity) + 1}
+                      defaultPage={1}
                       pageCount={Math.ceil(data.length / itemQuantity)}
                       changeOffSet={(value) => {
                         dispatch(updateEndedPage((value - 1) * itemQuantity));

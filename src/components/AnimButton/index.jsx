@@ -11,7 +11,9 @@ export default function AnimButton(props) {
     isHasIcon,
     isSubmitBtn,
     disabledBtn,
+    upperCase,
   } = props;
+  console.log("upperCase: ", upperCase);
   const ArrrowIcon = () => (
     <span className="icon-arrow">
       <svg
@@ -76,7 +78,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -108,7 +110,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -139,7 +141,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -169,7 +171,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -203,7 +205,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -237,7 +239,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -271,7 +273,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -304,7 +306,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
             }}
           >
             {text}
@@ -338,7 +340,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
               marginRight: "5px",
             }}
           >
@@ -394,7 +396,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
               fontSize: "14px",
             }}
           >
@@ -430,7 +432,7 @@ export default function AnimButton(props) {
         >
           <p
             style={{
-              textTransform: "none",
+              textTransform: upperCase ? "uppercase" : "none",
               marginRight: "5px",
             }}
           >
