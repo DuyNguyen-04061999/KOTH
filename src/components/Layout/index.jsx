@@ -52,6 +52,7 @@ import {
   getSettingReady,
 } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
+import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import {
   closeTransactionDialog,
@@ -156,6 +157,21 @@ export default function Layout(props) {
     const socket = _socket;
     setSocket(socket);
   }, [dispatch]);
+
+  useEffect(() => {
+    const handlePopState = (event) => {
+      // Handle popstate event here
+      dispatch(toggleCloseResultEndGame())
+    };
+
+    // Add event listener for popstate
+    window.addEventListener('popstate', handlePopState);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [dispatch]); 
 
   useEffect(() => {
     if (router) {
