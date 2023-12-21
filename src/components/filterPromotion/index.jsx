@@ -176,7 +176,7 @@ export default function FilterPromotion(props) {
                   setActiveDaily(!activeDaily);
                 }}
               >
-                <Typography sx={{ fontSize: "12px" }}>Daily</Typography>
+                <Typography sx={{ fontSize: "14px" }}>Daily</Typography>
                 {activeDaily ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +218,7 @@ export default function FilterPromotion(props) {
                   setActiveWeekly(!activeWeekly);
                 }}
               >
-                <Typography sx={{ fontSize: "12px" }}>Weekly</Typography>
+                <Typography sx={{ fontSize: "14px" }}>Weekly</Typography>
                 {activeWeekly ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +260,7 @@ export default function FilterPromotion(props) {
                   setActiveMonthly(!activeMonthly);
                 }}
               >
-                <Typography sx={{ fontSize: "12px" }}>Monthly</Typography>
+                <Typography sx={{ fontSize: "14px" }}>Monthly</Typography>
                 {activeMonthly ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
