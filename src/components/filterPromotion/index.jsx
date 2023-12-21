@@ -8,7 +8,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { getListPromotionNew } from "../../redux-saga-middleware/reducers/tournamentReducer";
+import { getEndedTour, getHotTour, getListPromotionNew, getOngoingTour, getUpcomingTour } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AnimButton from "../AnimButton";
 
@@ -67,12 +67,16 @@ export default function FilterPromotion(props) {
       dispatch(getListPromotionNew({ type: "upcoming", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
       dispatch(getListPromotionNew({ type: "ended", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
     } else if (pathname?.includes("hot-promotion")) {
+      dispatch(getHotTour())
       dispatch(getListPromotionNew({ type: "hot", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
     } else if (pathname?.includes("ongoing-promotion")) {
+      dispatch(getOngoingTour())
       dispatch(getListPromotionNew({ type: "ongoing", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
     } else if (pathname?.includes("upcoming-promotion")) {
+      dispatch(getUpcomingTour())
       dispatch(getListPromotionNew({ type: "upcoming", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
     } else if (pathname?.includes("ended-promotion")) {
+      dispatch(getEndedTour())
       dispatch(getListPromotionNew({ type: "ended", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
     }
   }, [activeDaily, activeWeekly, activeMonthly, value, dispatch])

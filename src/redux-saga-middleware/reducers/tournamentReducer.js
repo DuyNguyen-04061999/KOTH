@@ -347,7 +347,7 @@ const tournamentReducer = (
     isFetchHot: true,
     isFetchVip: true,
     isFetchStandard: true,
-    isFetchOngoing: true,
+    isFetchOngoing: false,
     isFetchUpcoming: true,
     isFetchEnded: true,
     dailyTournament: [],
@@ -484,10 +484,12 @@ const tournamentReducer = (
         isFetchStandard: false,
       };
     case "GET_LIST_ONGOING_TOURNAMENT":
-      return {
-        ...state,
-        isFetchOngoing: true,
-      };
+      {
+        return {
+          ...state,
+          isFetchOngoing: true,
+        };
+      }
     case "GET_LIST_ONGOING_TOURNAMENT_SUCCESS":
       return {
         ...state,

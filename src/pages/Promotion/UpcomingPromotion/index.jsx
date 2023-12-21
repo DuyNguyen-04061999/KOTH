@@ -16,7 +16,7 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateUpcomingPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getListPromotionNew, getUpcomingTour } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -64,6 +64,7 @@ export default function UpcomingPromotion() {
   }, [upcomingPag]);
 
   useEffect(() => {
+    dispatch(getUpcomingTour())
     dispatch(getListPromotionNew({ type: "upcoming" }))
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",

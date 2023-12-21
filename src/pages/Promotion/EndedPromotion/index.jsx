@@ -16,7 +16,7 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getEndedTour, getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -49,6 +49,7 @@ export default function HotTournament() {
   const [itemQuantity, setItemQuantity] = useState(0);
   const { endedPage } = useSelector((state) => state.promotionReducer);
   useEffect(() => {
+    dispatch(getEndedTour())
     dispatch(getListPromotionNew({ type: "ended" }))
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",

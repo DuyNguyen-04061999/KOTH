@@ -9,7 +9,7 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateOngoingPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getListPromotionNew, getOngoingTour } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -32,9 +32,7 @@ export default function HotTournament() {
   const { ongoingPag } = useSelector((state) => state.promotionReducer);
   const [data, setData] = useState(null);
   const [itemQuantity, setItemQuantity] = useState(0);
-  // const { hotWeekTour, isFetchHotWeek } = useSelector(
-  //   (state) => state.tournamentReducer
-  // );
+
   useEffect(() => {
     if (width > 576) {
       setItemQuantity(12);
@@ -44,6 +42,7 @@ export default function HotTournament() {
   }, [width, dispatch]);
 
   useEffect(() => {
+    dispatch(getOngoingTour())
     dispatch(getListPromotionNew({ type: "ongoing" }))
 
     dispatch({
@@ -57,9 +56,12 @@ export default function HotTournament() {
 
   useEffect(() => {
     if (ongoingTournament) {
+      dispatch(
+        updateOngoingPage(0)
+      );
       setData(ongoingTournament);
     }
-  }, [ongoingTournament]);
+  }, [ongoingTournament, dispatch]);
 
   const imgHot = data?.map((e) => {
     return e.tournamentBackground;
@@ -270,22 +272,25 @@ export default function HotTournament() {
                     noData={noDataOncoming}
                   />
                 </Box>
-                <Box sx={{ margin: "36px 0px" }}>
-                  {!isFetchOngoing &&
-                    data !== null &&
-                    data?.length > 0 &&
-                    itemQuantity && (
-                      <PaginatedItems
-                        defaultPage={Math.ceil(ongoingPag / itemQuantity) + 1}
-                        pageCount={Math.ceil(data.length / itemQuantity)}
-                        changeOffSet={(value) => {
-                          dispatch(
-                            updateOngoingPage((value - 1) * itemQuantity)
-                          );
-                        }}
-                      />
-                    )}
-                </Box>
+                {!isFetchOngoing && (
+                  <Box sx={{ margin: "36px 0px" }}>
+                    {!isFetchOngoing &&
+                      data !== null &&
+                      data?.length > 0 &&
+                      itemQuantity && (
+                        <PaginatedItems
+                          defaultPage={Math.ceil(ongoingPag / itemQuantity) + 1}
+                          pageCount={Math.ceil(data.length / itemQuantity)}
+                          changeOffSet={(value) => {
+                            dispatch(
+                              updateOngoingPage((value - 1) * itemQuantity)
+                            );
+                          }}
+                        />
+                      )}
+                  </Box>
+                )}
+                
                 <NewFooter />
               </Container>
             )
