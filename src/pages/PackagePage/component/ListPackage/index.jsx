@@ -32,7 +32,7 @@ export default function ListPackage(props) {
     packageFreeTicketTournament,
     packageReduceWatchAds,
     id,
-    avatarChristmas
+    avatarChristmas,
   } = props;
   const [socket, setSocket] = useState(null);
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
@@ -157,24 +157,26 @@ export default function ListPackage(props) {
                 : "" || packageName === "Combo Extra 2"
                 ? "5px solid #BDE8F1"
                 : "",
-                marginBottom:"10px",
-            marginTop: packageName === "Combo Extra 1"
-            ? "16px"
-            : "" || packageName === "Subscription"
-            ? ""
-            : "" || packageName === "Combo Extra 2"
-            ? "16px"
-            : "",
+            marginBottom: "10px",
+            marginTop:
+              packageName === "Combo Extra 1"
+                ? "16px"
+                : "" || packageName === "Subscription"
+                ? ""
+                : "" || packageName === "Combo Extra 2"
+                ? "16px"
+                : "",
           }}
         >
           <Typography
             variant="h1"
             sx={{
-              fontSize: width < 1200 ? "20px" : "20px",
+              fontSize: width < 1200 ? "20px" : "30px",
               marginTop: "25px",
               marginBottom: "15px !important",
               color: "white",
               textOverflow: "ellipsis",
+              fontWeight: "600",
             }}
           >
             {packageName === "Combo Extra 1"
@@ -228,8 +230,7 @@ export default function ListPackage(props) {
                             ? process.env.REACT_APP_SOCKET_SERVER +
                               "/" +
                               avatarChristmas
-                            :
-                          images.christbg
+                            : images.christbg
                         }
                         alt="..."
                       ></Box>
@@ -339,7 +340,7 @@ export default function ListPackage(props) {
                               listSetting?.saleValue === 2
                                 ? "line-through"
                                 : "unset",
-                            fontWeight: "500 !important",
+                            fontWeight: "700 !important",
                             marginLeft: "4px !important",
                             textAlign: "start",
                           }}
@@ -371,7 +372,7 @@ export default function ListPackage(props) {
                             fontSize: "11px",
                             color: "#C02F40",
                             textAlign: "start",
-                            fontWeight: "500 !important",
+                            fontWeight: "700 !important",
                             marginLeft: "4px !important",
                             textDecorationLine:
                               listSetting?.saleValue &&
@@ -421,7 +422,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "#414345",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                           marginLeft: "4px !important",
                         }}
                       >
@@ -461,7 +462,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "#414345",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                         }}
                       >
                         {t("Applies to all promotions")}
@@ -469,9 +470,9 @@ export default function ListPackage(props) {
                     </Box>
                   ) : (
                     <Box
-                      // sx={{
-                      //   height: "16.5px",
-                      // }}
+                    // sx={{
+                    //   height: "16.5px",
+                    // }}
                     ></Box>
                   )}
                   {packageName === "Subscription" ? (
@@ -506,7 +507,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "#414345",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                         }}
                       >
                         {t("Every day for a month")}
@@ -547,7 +548,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "#414345",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                         }}
                       >
                         {t("Save over 20% more")}
@@ -555,9 +556,9 @@ export default function ListPackage(props) {
                     </Box>
                   ) : (
                     <Box
-                      // sx={{
-                      //   height: "20.5px",
-                      // }}
+                    // sx={{
+                    //   height: "20.5px",
+                    // }}
                     ></Box>
                   )}
                 </Box>
@@ -572,7 +573,7 @@ export default function ListPackage(props) {
                   >
                     <Typography
                       sx={{
-                        fontWeight: "500 !important",
+                        fontWeight: "700 !important",
                         fontSize: "16px !important",
                       }}
                     >
@@ -591,8 +592,8 @@ export default function ListPackage(props) {
                   >
                     <Typography
                       sx={{
-                        fontWeight: "500 !important",
-                        fontSize: "16px !important",
+                        fontWeight: "900 !important",
+                        fontSize: "24px !important",
                       }}
                     >
                       ${packagePrice}
@@ -600,7 +601,7 @@ export default function ListPackage(props) {
                     {packageName === "Subscription" ? (
                       <Typography
                         sx={{
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                           fontSize: "12px !important",
                           color: "#979797",
                           marginTop: "5px !important",
@@ -611,7 +612,7 @@ export default function ListPackage(props) {
                     ) : (
                       <Typography
                         sx={{
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                           fontSize: "12px !important",
                           color: "#979797",
                           marginTop: "12px !important",
@@ -634,12 +635,14 @@ export default function ListPackage(props) {
                 </Typography>
                 <Box sx={{ margin: "12px 0px", width: "80%" }}>
                   <AnimButton
+                    upperCase={true}
                     text={
                       uPack &&
                       uPack?.remain !== "Expired" &&
                       packageName === "Subscription"
                         ? "Current pack"
-                        : uPack?.remain === "Expired" && packageName === "Subscription"
+                        : uPack?.remain === "Expired" &&
+                          packageName === "Subscription"
                         ? "Upgrade Pack"
                         : t("Buy Now")
                     }
@@ -909,7 +912,7 @@ export default function ListPackage(props) {
                               listSetting?.saleValue === 2
                                 ? "line-through"
                                 : "unset",
-                            fontWeight: "500 !important",
+                            fontWeight: "700 !important",
                             marginLeft: "4px !important",
                             textAlign: "start",
                           }}
@@ -941,7 +944,7 @@ export default function ListPackage(props) {
                             fontSize: "11px",
                             color: "white",
                             textAlign: "start",
-                            fontWeight: "500 !important",
+                            fontWeight: "700 !important",
                             marginLeft: "4px !important",
                             textDecorationLine:
                               listSetting?.saleValue &&
@@ -991,7 +994,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "white",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                           marginLeft: "4px !important",
                         }}
                       >
@@ -1031,7 +1034,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "white",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                         }}
                       >
                         {t("Applies to all promotions")}
@@ -1076,7 +1079,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "white",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                         }}
                       >
                         {t("Every day for a month")}
@@ -1117,7 +1120,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "white",
                           textAlign: "start",
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                         }}
                       >
                         {t("Save over 20% more")}
@@ -1142,7 +1145,7 @@ export default function ListPackage(props) {
                   >
                     <Typography
                       sx={{
-                        fontWeight: "500 !important",
+                        fontWeight: "700 !important",
                         fontSize: "16px !important",
                       }}
                     >
@@ -1161,8 +1164,8 @@ export default function ListPackage(props) {
                   >
                     <Typography
                       sx={{
-                        fontWeight: "500 !important",
-                        fontSize: "16px !important",
+                        fontWeight: "900 !important",
+                        fontSize: "24px !important",
                       }}
                     >
                       ${packagePrice}
@@ -1170,7 +1173,7 @@ export default function ListPackage(props) {
                     {packageName === "Subscription" ? (
                       <Typography
                         sx={{
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                           fontSize: "12px !important",
                           color: "#979797",
                           marginTop: "5px !important",
@@ -1181,7 +1184,7 @@ export default function ListPackage(props) {
                     ) : (
                       <Typography
                         sx={{
-                          fontWeight: "500 !important",
+                          fontWeight: "700 !important",
                           fontSize: "12px !important",
                           color: "#979797",
                           marginTop: "12px !important",
@@ -1204,6 +1207,7 @@ export default function ListPackage(props) {
                 </Typography>
                 <Box sx={{ margin: "12px 0px", width: "80%" }}>
                   <AnimButton
+                    upperCase={true}
                     text={
                       uPack &&
                       uPack?.remain !== "Expired" &&
