@@ -235,6 +235,7 @@ function* logoutSaga(dataRequest) {
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
         _socket.emit("logoutSocial");
+        yield put(clickTab("login"));
         yield put(logoutSuccess());
         yield put(clickTabChat(true));
         yield put(removeNickNameWhenLogout());
@@ -349,6 +350,7 @@ function* sendOtpSaga(dataRequest) {
           yield put(closeLoginDialog());
           yield put(openDialogGif());
         }
+        yield put(clickTab("login"));
       } else {
         yield put(sendOtpFail());
         yield put(
