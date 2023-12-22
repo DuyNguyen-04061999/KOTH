@@ -15,6 +15,7 @@ import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+import { riveFile } from "../../../../utils/rive";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ const Login = () => {
 
   const STATE_MACHINE_NAME = "State Machine 1";
   const { rive, RiveComponent } = useRive({
-    src: "christmas_pepe.riv",
+    src: riveFile.christmas_pepe,
     stateMachines: STATE_MACHINE_NAME,
     autoplay: true,
   });
@@ -144,7 +145,6 @@ const Login = () => {
   useEffect(() => {
     dispatch(resetLoginState());
   }, [dispatch]);
-
   return (
     <Box>
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -228,7 +228,6 @@ const Login = () => {
           <img src={sign.up02} alt="..." width={15} height={"auto"} />
           <Input
             onChange={(e) => {
-              setHandsUp(true);
               handleChangePassword(e);
             }}
             onBlur={() => {
@@ -238,6 +237,9 @@ const Login = () => {
             onMouseLeave={() => {
               setHandsUp(false);
               setCheck(false);
+            }}
+            onFocus={() => {
+              setHandsUp(true);
             }}
             placeholder={t("Password")}
             type={displayPassword === false ? "password" : "text"}
