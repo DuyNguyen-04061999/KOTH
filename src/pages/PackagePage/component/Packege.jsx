@@ -354,7 +354,9 @@ export default function Package() {
                   <Box>
                     {item?.map((i, index) => {
                       return (
-                        <Box key={index} className="mb-5">
+                        <Box key={index} className="mb-5 d-flex justify-content-center" sx={{
+                          width: width === 768 ? "100%" : "unset",
+                        }}>
                           <ListPackage
                             packageName={i?.packageName}
                             packageAvatar={i?.packageAvatar}

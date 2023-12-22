@@ -1,14 +1,14 @@
-import { useSelector } from "react-redux";
+import { Box, Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Box, Typography } from "@mui/material";
-import useWindowDimensions from "../../utils/useWindowDimensions";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function ListWinner() {
   const { listWinner } = useSelector((state) => state.appReducer);
@@ -16,109 +16,6 @@ export default function ListWinner() {
   const { device } = useSelector((state) => state.deviceReducer);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const dummyData = [
-    {
-      gameName: 1,
-      playerName: "Item 1",
-      prizeName: "Description for Item 1",
-      promotionTitle: "Hôm",
-      score: 100,
-    },
-    {
-      gameName: 2,
-      playerName: "Item 1",
-      prizeName: "ádwasdaadasff",
-      promotionTitle: "nay",
-      score: 100,
-    },
-    {
-      gameName: 3,
-      playerName: "Item 1",
-      prizeName: "gbfghgfhfg",
-      promotionTitle: "ăn",
-      score: 100,
-    },
-    {
-      gameName: 4,
-      playerName: "Item 1",
-      prizeName: "kiuoililio",
-      promotionTitle: "gìasfsdfsdfsdaqwwrqwm,kjolouiujyjthrthtrh",
-      score: 100,
-    },
-    {
-      gameName: 5,
-      playerName: "Item 1",
-      prizeName: "zxcsdfsdf",
-      promotionTitle: "đâyccvhrtyurturtregrfweqwfghtyittyjytj",
-      score: 100,
-    },
-    {
-      gameName: 6,
-      playerName: "Item 1",
-      prizeName: "sdf112234",
-      promotionTitle: "bờ12312312312312312312312321rttrhrthrthrthtr",
-      score: 100,
-    },
-    {
-      gameName: 7,
-      playerName: "Item 1",
-      prizeName: "hhgsdfge5555",
-      promotionTitle: "rồ",
-      score: 100,
-    },
-    {
-      gameName: 8,
-      playerName: "Item 1",
-      prizeName: "sdfsdfhy1",
-      promotionTitle: "ơi",
-      score: 100,
-    },
-    {
-      gameName: 9,
-      playerName: "Item 1",
-      prizeName: "mbnmbnmhghgh",
-      promotionTitle: "ăn",
-      score: 100,
-    },
-    {
-      gameName: 10,
-      playerName: "Item 1",
-      prizeName: "cvbcbdfbdf",
-      promotionTitle: "bún",
-      score: 100,
-    },
-    {
-      gameName: 11,
-      playerName: "Item 1",
-      prizeName: "cxvsđsfdsfsdfsdf",
-      promotionTitle: "đâu",
-      score: 100,
-    },
-    {
-      gameName: 12,
-      playerName: "Item 1",
-      prizeName: "tytry234234",
-      promotionTitle: "mắm",
-      score: 100,
-    },
-    {
-      gameName: 13,
-      playerName: "Item 1",
-      prizeName: "ukiuyi7667",
-      promotionTitle: "tôm",
-      score: 100,
-    },
-    {
-      gameName: 14,
-      playerName: "Item 1",
-      prizeName: "ádfwefs1",
-      promotionTitle: "hem",
-      score: 100,
-    },
-
-    // Add more items as needed
-  ];
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -208,6 +105,7 @@ export default function ListWinner() {
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
                     backgroundColor: index % 2 === 0 ? "#443565" : "",
+                    height: "auto"
                   }}
                 >
                   <TableCell
