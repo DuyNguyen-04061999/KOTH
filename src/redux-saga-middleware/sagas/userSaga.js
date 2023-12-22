@@ -349,8 +349,8 @@ function* sendOtpSaga(dataRequest) {
           yield put(getUserInfoReady(data?.data?.token));
           yield put(closeLoginDialog());
           yield put(openDialogGif());
+          yield put(clickTab("login"));
         }
-        yield put(clickTab("login"));
       } else {
         yield put(sendOtpFail());
         yield put(
