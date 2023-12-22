@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Box, Typography } from "@mui/material";
 import { CalculateDistance } from "../../../components/CountDownTimer/utils/CalculateDistance";
+import { useSelector } from "react-redux";
 
 export default function CountDownBannerHot({
   expiryTime = "8/16/2023 07:00:00",
@@ -10,6 +11,7 @@ export default function CountDownBannerHot({
   const [hours, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
   const [days, setDay] = useState(null);
+  const { device } = useSelector((state) => state.deviceReducer);
   useEffect(() => {
     let timeInterval = setInterval(() => {
       let countdownDate = new Date(expiryTime).getTime();
@@ -74,14 +76,14 @@ export default function CountDownBannerHot({
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Typography
         sx={{
-          fontSize: "25.052px",
+          fontSize: device === "Tablet" ? "15px" : "25.052px",
           color: "white",
           marginLeft: "0px !important",
-          lineHeight:1.5
+          lineHeight: 1.5,
         }}
       >
         {days && days}d : {hours && hours}h : {minutes && minutes}m
-        </Typography>
+      </Typography>
     </Box>
   );
 }

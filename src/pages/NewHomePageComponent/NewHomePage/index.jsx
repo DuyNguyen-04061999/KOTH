@@ -163,7 +163,9 @@ export default function NewHomePage() {
           >
             {isFetchThreeTour ? (
               <BannerLoading
-                height={width < 576 ? "214px" : width <= 1200 ? "152.44px" : "331px"}
+                height={
+                  width < 576 ? "214px" : width <= 1200 ? "152.44px" : "331px"
+                }
                 width={"100%"}
               />
             ) : (
@@ -442,7 +444,7 @@ export default function NewHomePage() {
           </Box>{" "}
         </Box>
         {/* Banner Top1 */}
-        {width < 576 ? (
+        {device === "Mobile" ? (
           isFetchHotWeek ? (
             <Box
               sx={{
