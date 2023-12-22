@@ -1635,7 +1635,7 @@ export default function JoinTournament() {
                                 : "18px",
                           }}
                         >
-                         {t('Valid by')}
+                          {t("Reward")}
                         </Box>
                         <Box
                           sx={{
@@ -1645,7 +1645,7 @@ export default function JoinTournament() {
                             fontSize: "14px",
                           }}
                         >
-                 {t('Play game to get this voucher')}
+                          {t("Play game to get this voucher")}
                         </Box>
                       </Box>
                       {isGetDetailPromotion || isGetDetailAuthPromotion ? (
@@ -1710,7 +1710,7 @@ export default function JoinTournament() {
                                       textAlign: "start",
                                     }}
                                   >
-                                    {t('Recipient')}
+                                    {t("Recipient")}
                                   </Typography>
                                   <Typography
                                     style={{
@@ -1769,7 +1769,7 @@ export default function JoinTournament() {
                                       textAlign: "start",
                                     }}
                                   >
-                                    {t('Valid by')}
+                                    {t("Valid by")}
                                   </Typography>
                                   <Typography
                                     style={{
@@ -1907,7 +1907,7 @@ export default function JoinTournament() {
                         marginTop: "36px",
                       }}
                     >
-                      {t('Game for promotion')}
+                      {t("Game for promotion")}
                     </Typography>
 
                     <Box
@@ -1995,7 +1995,9 @@ export default function JoinTournament() {
                                 : "28px",
                           }}
                         >
-                          {t('Final Result')}
+                          {detailTournament?.tournamentStatus === 2
+                            ? t("Final Result")
+                            : t("Current Result")}
                         </Typography>
                         {detailTournament?.tournamentStatus === 2 ? (
                           ""
@@ -2015,7 +2017,7 @@ export default function JoinTournament() {
                               cursor: "pointer",
                             }}
                           >
-                            {t('View All')}
+                            {t("View All")}
                           </Typography>
                         )}
                       </Box>
@@ -2103,7 +2105,9 @@ export default function JoinTournament() {
                         className="ms-2"
                         sx={{ color: "#e75857", textAlign: "left" }}
                       >
-{t('Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult')}
+                        {t(
+                          "Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult"
+                        )}
                       </Typography>
                     </Box>
                     {detailTournament &&
@@ -2719,7 +2723,7 @@ export default function JoinTournament() {
                                     : "18px",
                               }}
                             >
-                              {t('Reward')}
+                              {t("Reward")}
                             </Box>
                             <Box
                               sx={{
@@ -2729,7 +2733,7 @@ export default function JoinTournament() {
                                 fontSize: "14px",
                               }}
                             >
-                              {t('Play game to get this voucher')}
+                              {t("Play game to get this voucher")}
                             </Box>
                           </Box>
                           <Box className="d-flex p-2 ps-3 pe-3">
@@ -2797,7 +2801,7 @@ export default function JoinTournament() {
                                           textAlign: "start",
                                         }}
                                       >
-                                            {t('Recipient')}
+                                        {t("Recipient")}
                                       </Typography>
                                       <Typography
                                         style={{
@@ -2828,7 +2832,7 @@ export default function JoinTournament() {
                                           textAlign: "start",
                                         }}
                                       >
-                                        {t('Sponsored by')}
+                                        {t("Sponsored by")}
                                       </Typography>
                                       <Typography
                                         style={{
@@ -2859,7 +2863,7 @@ export default function JoinTournament() {
                                           textAlign: "start",
                                         }}
                                       >
-                                        {t('Valid by')}
+                                        {t("Valid by")}
                                       </Typography>
                                       <Typography
                                         style={{
@@ -3395,7 +3399,9 @@ export default function JoinTournament() {
                                     fontSize: "12px",
                                   }}
                                 >
-                                  {t('Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult')}
+                                  {t(
+                                    "Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult"
+                                  )}
                                 </Typography>
                               </Box>
                               {detailTournament &&
@@ -3519,7 +3525,9 @@ export default function JoinTournament() {
                             fontSize: "14px",
                           }}
                         >
-                          {t('Final Result')}
+                          {detailTournament?.tournamentStatus === 2
+                            ? t("Final Result")
+                            : t("Current Result")}
                         </Typography>
                         {detailTournament?.tournamentStatus === 2 ? (
                           ""
@@ -3536,7 +3544,7 @@ export default function JoinTournament() {
                               setCurrentResult(true);
                             }}
                           >
-                            {t('View All')}
+                            {t("View All")}
                           </Typography>
                         )}
                       </Box>
@@ -3591,7 +3599,9 @@ export default function JoinTournament() {
                           fontSize: "14px",
                         }}
                       >
-                        {t("Final Result")}
+                        {detailTournament?.tournamentStatus === 2
+                          ? t("Final Result")
+                          : t("Current Result")}
                       </Typography>
                       {detailTournament?.tournamentStatus === 2 ? (
                         ""
@@ -3608,7 +3618,7 @@ export default function JoinTournament() {
                             setCurrentResult(true);
                           }}
                         >
-                         {t('View All')}
+                          {t("View All")}
                           <Box
                             component={"img"}
                             sx={{
