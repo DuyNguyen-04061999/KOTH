@@ -13,7 +13,7 @@ export default function AnimButton(props) {
     disabledBtn,
     upperCase,
   } = props;
-  console.log("upperCase: ", upperCase);
+  
   const ArrrowIcon = () => (
     <span className="icon-arrow">
       <svg
