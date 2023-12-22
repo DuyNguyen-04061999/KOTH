@@ -11,10 +11,9 @@ import { useSelector } from "react-redux";
 const BannerTour = (props) => {
   const { rewardName, userAvatar, userName, endTime, userScore, tourId } =
     props;
-  const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
   const navigate = useNavigate();
-  console.log("device: ", device);
+  const defaultRewardName = "NAME OF PROMOTION REWARD";
   return (
     <Box
       sx={{
@@ -23,10 +22,14 @@ const BannerTour = (props) => {
         justifyContent: "space-between",
         height: "324px",
         width: "100%",
-        background: `url(${imageHome.christmasBanner})`,
+        background: `url(${
+          device === "Tablet"
+            ? imageHome.christmasMobileBanner
+            : imageHome.christmasBanner
+        })`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        padding: device === "Tablet" ? "10px" : "30px 0 30px 46px",
+        padding: device === "Tablet" ? "20px" : "30px 0 30px 46px",
       }}
     >
       <Box
@@ -105,15 +108,18 @@ const BannerTour = (props) => {
               overflow: "hidden",
               textAlign: "center",
               color: "#fff",
+              wordBreak: "break-word",
             }}
           >
-            {rewardName || "NAME OF PROMOTION REWARD"}
+            {(rewardName || defaultRewardName).length > 45
+              ? (rewardName || defaultRewardName).slice(0, 40) + " ..."
+              : rewardName || defaultRewardName}
           </Typography>
         </Box>
         <Box
           sx={{
             backgroundColor: "#E90488",
-            borderRadius: "30px",
+            borderRadius: "10px",
             width: device === "Tablet" ? "90%" : "440px",
             display: "flex",
             justifyContent: "space-between",
@@ -121,11 +127,11 @@ const BannerTour = (props) => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            {/* <Box
+            <Box
               sx={{
                 color: "#FFF",
                 textAlign: "start",
-                fontSize: "14px",
+                fontSize: "14px ",
                 marginLeft: "0px !important",
                 marginRight: "5px",
                 fontWeight: 800,
@@ -134,7 +140,7 @@ const BannerTour = (props) => {
               <CountDownBannerHot
                 expiryTime={moment(endTime || "20/10/2023")}
               />
-            </Box> */}
+            </Box>
           </Box>
           <button
             onClick={() => {
@@ -146,13 +152,12 @@ const BannerTour = (props) => {
               background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
               outline: "none",
               border: "none",
-              borderRadius: "20px",
+              borderRadius: "10px",
               color: "#fff",
-              padding: "0px 32px",
-              fontSize: device === "Tablet" ? "12px" : "20px",
+              padding: device === "Tablet" ? "0px 20px" : "0px 32px",
+              fontSize: device === "Tablet" ? "10px" : "20px",
               cursor: "pointer",
               fontWeight: 600,
-              width: device === "Tablet" ? "70px" : "auto",
             }}
           >
             Play now
@@ -166,7 +171,8 @@ const BannerTour = (props) => {
           position: "relative",
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-end",
+          alignItems: device === "Tablet" ? "center" : "flex-end",
+          flexDirection: device === "Tablet" ? "column" : "none",
         }}
       >
         <Box
@@ -179,8 +185,8 @@ const BannerTour = (props) => {
         >
           <Box
             sx={{
-              width: device === "Tablet" ? "50px" : "208px",
-              height: device === "Tablet" ? "47px" : "203px",
+              width: device === "Tablet" ? "150px" : "208px",
+              height: device === "Tablet" ? "145px" : "203px",
               background:
                 "linear-gradient(127deg, rgba(60,106,179,1) 0%, rgba(50,158,216,1) 26%, rgba(233,235,245,1) 62%)",
               display: "flex",
@@ -194,8 +200,8 @@ const BannerTour = (props) => {
           >
             <Box
               sx={{
-                width: "200px",
-                height: "195px",
+                width: device === "Tablet" ? "143px" : "200px",
+                height: device === "Tablet" ? "137px" : "195px",
                 clipPath:
                   "polygon(50% 0%, 92% 0, 100% 8%, 100% 95%, 96% 100%, 4% 100%, 0 95%, 0 8%, 8% 0)",
               }}
@@ -205,8 +211,8 @@ const BannerTour = (props) => {
           </Box>
           <Box
             sx={{
-              width: "140px",
-              height: "30px",
+              width: device === "Tablet" ? "100px" : "140px",
+              height: device === "Tablet" ? "25px" : "30px",
               overflow: "hidden",
               display: "flex",
               justifyContent: "center",
@@ -218,15 +224,25 @@ const BannerTour = (props) => {
             }}
           >
             <Typography
-              sx={{ color: "#fff", fontWeight: "500", fontSize: "15px" }}
+              sx={{
+                color: "#fff",
+                fontWeight: "500",
+                fontSize: device === "Tablet" ? "10px" : "15px",
+                marginLeft: "0px !important",
+              }}
             >
               {userName ? userName : "Super_"}
             </Typography>
           </Box>
         </Box>
-        <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{
+            display: "flex",
+            marginTop: device === "Tablet" ? "10px" : "0px",
+          }}
+        >
           <Box
-            sx={{ height: "120px" }}
+            sx={{ height: device === "Tablet" ? "70px" : "120px" }}
             component={"img"}
             src={imageHome.numberOne}
           ></Box>
@@ -238,7 +254,11 @@ const BannerTour = (props) => {
             }}
           >
             <Box
-              sx={{ height: "60px", width: "80px", marginLeft: "-20px" }}
+              sx={{
+                height: device === "Tablet" ? "30px" : "60px",
+                width: device === "Tablet" ? "40px" : "80px",
+                marginLeft: device === "Tablet" ? "-10px" : "-20px",
+              }}
               component={"img"}
               src={imageHome.stIcon}
             ></Box>
@@ -246,8 +266,8 @@ const BannerTour = (props) => {
               sx={{
                 clipPath:
                   "polygon(4% 0, 95% 1%, 100% 30%, 100% 70%, 95% 100%, 4% 100%, 0% 70%, 0% 30%)",
-                width: "150px",
-                height: "30px",
+                width: device === "Tablet" ? "120px" : "150px",
+                height: device === "Tablet" ? "25px" : "30px",
                 background:
                   "linear-gradient(90deg, rgba(50,158,216,1) 7%, rgba(60,106,179,1) 94%)",
                 display: "flex",
@@ -257,7 +277,13 @@ const BannerTour = (props) => {
                 fontStyle: "italic",
               }}
             >
-              <Typography sx={{ fontWeight: "700" }}>
+              <Typography
+                sx={{
+                  fontWeight: "700",
+                  fontSize: device === "Tablet" ? "15px" : "20px",
+                  marginLeft: "0px !important",
+                }}
+              >
                 Score: {userScore || 99999}
               </Typography>
             </Box>
