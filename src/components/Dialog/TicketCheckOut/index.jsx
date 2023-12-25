@@ -37,6 +37,8 @@ export default function TicketCheckOut() {
   const [feeMoney, setFeeMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [sl, setSl] = useState(1);
+  const [autoRecurring, setAutoRecurring] = useState(false)
+
   useEffect(() => {
     if (typePayment === "skrill") {
       setFeeCheckout({
@@ -122,8 +124,6 @@ export default function TicketCheckOut() {
     setSocket(socket);
   }, [socket]);
   useEffect(() => {}, [socket]);
-
-  const [autoRecurring, setAutoRecurring] = useState(false)
 
   return createPortal(
     <>
@@ -578,40 +578,42 @@ export default function TicketCheckOut() {
                 height: "1px",
               }}
             />
-            {/* <Box
-              className="d-flex align-items-start"
-              sx={{
-                paddingTop: "10px",
-                paddingBottom: "30px",
-              }}
-            >
-              <input
-                type="checkbox"
-                className="me-2 custom-checkbox-input checkout checkboxtext"
-                style={{ borderRadius: "50px", marginTop: "6px" }}
-                readOnly
-                onClick={() => {
-                  setAutoRecurring(!autoRecurring);
-                }}
-                checked={autoRecurring}
-              />
+            {typeWallet === "subscription" && (
               <Box
-                className="text-white"
-                sx={{ fontSize: "14px", fontWeight: "lighter !important" }}
+                className="d-flex align-items-start"
+                sx={{
+                  paddingTop: "10px",
+                  paddingBottom: "30px",
+                }}
               >
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    fontWeight: "lighter !important",
-                    fontSize: "14px",
-                    marginLeft: "0px !important",
-                    color: agree === false ? "red" : "white",
+                <input
+                  type="checkbox"
+                  className="me-2 custom-checkbox-input checkout checkboxtext"
+                  style={{ borderRadius: "50px", marginTop: "6px" }}
+                  readOnly
+                  onClick={() => {
+                    setAutoRecurring(!autoRecurring);
                   }}
+                  checked={autoRecurring}
+                />
+                <Box
+                  className="text-white"
+                  sx={{ fontSize: "14px", fontWeight: "lighter !important" }}
                 >
-                  Auto Recurring
-                </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      fontWeight: "lighter !important",
+                      fontSize: "14px",
+                      marginLeft: "0px !important",
+                      color: agree === false ? "red" : "white",
+                    }}
+                  >
+                    Auto Recurring
+                  </Typography>
+                </Box>
               </Box>
-            </Box> */}
+            )}
 
             <Box
               className="d-flex align-items-start"
