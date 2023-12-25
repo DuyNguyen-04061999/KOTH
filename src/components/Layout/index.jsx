@@ -375,6 +375,8 @@ export default function Layout(props) {
     }
   }, [dispatch,countDownDoubleDay]);
 
+  const params = new URLSearchParams(window.location.search);
+
   return ReactDOM.createPortal(
     <Box
       className="tong"
@@ -417,7 +419,9 @@ export default function Layout(props) {
       <DialogGift />
       <DialogExclusive />
       <NotiFunds />
-      <PackagePaypalDialog/>
+      {params && params?.get("game") && params?.get("game") === "revive" && (
+        <PackagePaypalDialog/>
+      )}
       <>
         {randomRender === 1 ? (
           <DoubleDayPackDialog />

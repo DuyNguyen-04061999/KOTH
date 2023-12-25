@@ -12,7 +12,8 @@ import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
 import ListPackage from "./ListPackage";
 
-export default function Package() {
+export default function Package(props) {
+  const { type } = props
   const { t } = useTranslation("package");
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.packageReducer);
@@ -108,7 +109,9 @@ export default function Package() {
       <>
         <DialogConfirm />
         {width > 768 ? (
-          <div className="Package-home pb-5 ">
+          <div className="Package-home pb-5" style={{
+            backgroundColor: type === "game_revive" ? "#211d28" : "unset"
+          }}>
             <Box className="text-white">
               {(location && location?.pathname?.includes("home")) ||
               pathname === "/" ? (
@@ -251,7 +254,8 @@ export default function Package() {
           <div
             className="Package-home"
             style={{
-              marginTop: "48px",
+              backgroundColor: type === "game_revive" ? "#211d28" : "unset",
+              marginTop: type === "game_revive" ? "0px" : "48px",
               padding:
                 (location && location?.pathname?.includes("home")) ||
                 pathname === "/"
@@ -356,6 +360,7 @@ export default function Package() {
                       return (
                         <Box key={index} className="mb-5 d-flex justify-content-center" sx={{
                           width: width === 768 ? "100%" : "unset",
+                          padding: width === 768 ? "100px" : "unset"
                         }}>
                           <ListPackage
                             packageName={i?.packageName}
