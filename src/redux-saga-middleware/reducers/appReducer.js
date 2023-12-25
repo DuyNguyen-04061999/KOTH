@@ -216,7 +216,7 @@ const appReducer = (
     isDialogExclusive: false,
     listWinner:[],
     isListWinner:false,
-    isPaypalPackageDialog: false,
+    isPaypalPackageDialog: true,
     isBuyPackageGameSuccess: false
   },
   action
