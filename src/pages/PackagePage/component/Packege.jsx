@@ -356,6 +356,7 @@ export default function Package() {
                       return (
                         <Box key={index} className="mb-5 d-flex justify-content-center" sx={{
                           width: width === 768 ? "100%" : "unset",
+                          padding: width === 768 ? "100px" : "unset"
                         }}>
                           <ListPackage
                             packageName={i?.packageName}
