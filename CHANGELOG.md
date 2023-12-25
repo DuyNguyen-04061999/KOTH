@@ -1,3 +1,30 @@
+## [1.5.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.4.0...1.5.0) (2023-12-21)
+
+
+### Features
+
+* Fix error no value in rive canvas ([5c0cb67](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5c0cb671210b8794d347db90539b7321267bba8c))
+* Fix fontsize text in package ([d955846](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d955846fd9a7f386bff48d926e94a9dd0b4527f7))
+* Integrate PePe mascot to Sign In ([f9593b2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f9593b2c947ce7d022eb978d85be56d0d3b10892))
+* Remove login title ([0cfc1c3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0cfc1c390c88d50aa6ced9aff4e0029188c2ad7b))
+* Update game flow continue ([79ed018](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/79ed01825033dd1e2c1d562dedbc7bb8874356c5))
+* winner banner desktop ([d9eab30](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d9eab30fb0b653af6a1817346ca9a88f21a83f0a))
+* winner banner mobile ([5116468](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/51164680dff5800a6837e1d18ed1efc7d3d9f0c5))
+
+
+### Bug Fixes
+
+* Update auth dialog ([5865854](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/586585426a3f32607c675c7374fdd3f4b0f22bff))
+* Update banner loading ([6ceb736](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6ceb7368f6f5d33b6265fc9c0ceb63ac50cdf769))
+* Update canvas library ([d093fcf](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d093fcf3af9bd185672a8d1e0e6260cf6d012e74))
+* Update env development gameplay ([6ed31a7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6ed31a703ba7d5de5d0a42c3150f6166f3415258))
+* Update filter font size ([7649f86](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7649f86bf3d7185f559451410602c9e0210649ae))
+* Update help center ([7b5aab9](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7b5aab928e3fb73c6a621c1dc506af1b997e6877))
+* Update help center ([f610e0b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f610e0b8f2bc22240f9c95e490d45f51aca41978))
+* Update list promotion filter pagination ([17ab399](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/17ab399eb9266c61de0bbc5d0da55d6618bc22dc))
+* Update package ([5385a31](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5385a31982999cd305da951c21b3ffd2f64f7e03))
+* Update popstate handle ([68cd47d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/68cd47daed143bb350c4b3b60bfec3a518d3c006))
+
 ## [1.4.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.3.0...v1.4.0) (2023-12-15)
 
 

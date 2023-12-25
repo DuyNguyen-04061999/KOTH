@@ -20,6 +20,7 @@ import OTPResetPassword from "../Auth/OTPResetPassword";
 import { default as OTPVerifyAccount } from "../Auth/OTPVerifyAccount";
 import Signup from "../Auth/Signup";
 import "./../Auth/Signin/index.scss";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function SimpleDialog(props) {
   const { currentTab, isLoginDialog } = useSelector(
@@ -156,29 +157,15 @@ export default function SimpleDialog(props) {
                       color: "white",
                       height: width < 992 && width > 576 ? "100%" : "100%",
                       position: "relative",
+                      minWidth: "450px",
                     }}
                   >
-                    <Box
-                      component={"img"}
-                      src={
-                        getAppType() === "promote"
-                          ? sign.bannersignin
-                          : images?.signInCrypto
-                      }
-                      alt="..."
+                    <LazyLoadImage
+                      alt={"Hello"}
+                      effect="blur"
+                      height="100%"
                       width={"100%"}
-                      height={"100%"}
-                      style={{
-                        backgroundColor: "#3a2b6d",
-                        objectFit: "cover",
-                        objectPosition: "90% center",
-                      }}
-                      // effect="blur"
-                      // wrapperProps={{
-                      //   style: {
-                      //     transitionDelay: "0.5s",
-                      //   },
-                      // }}
+                      src={sign.bannersignin}
                     />
                     <Box
                       component={"img"}
