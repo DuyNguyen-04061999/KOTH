@@ -294,6 +294,9 @@ import titleImage from "../assets/imagesHome/titleImage.png";
 import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
 import top1Icon from "../assets/imagesHome/top1Icon.png";
 import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
+import imageSignIn from "../assets/imagesHome/imageSignIn.png";
+import signInBgBanner from "../assets/imagesHome/signInBgBanner.png";
+import signInTitle from "../assets/imagesHome/signInTitle.png";
 
 import AdminLogo from "../assets/images/lggame.png";
 import AdminLogoSvg from "../assets/images/logogame.svg";
@@ -433,6 +436,9 @@ export const imageHome = {
   numberOne: numberOne,
   stIcon: stIcon,
   christmasMobileBanner: christmasMobileBanner,
+  imageSignIn: imageSignIn,
+  signInBgBanner: signInBgBanner,
+  signInTitle: signInTitle,
 };
 
 export const navbar = {
