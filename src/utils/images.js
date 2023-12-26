@@ -352,6 +352,7 @@ import NavPackage from "../assets/images/navbar/package.png";
 import NavPromotion from "../assets/images/navbar/promotion.png";
 import NavStandard from "../assets/images/navbar/standard.png";
 import NavUpcoming from "../assets/images/navbar/upcoming.png";
+import activeNavPromotion from "../assets/images/navbar/activeNavPromotion.png";
 import NavVip from "../assets/images/navbar/vip.png";
 
 import NavEndedActive from "../assets/images/navbar/endedActive.png";
@@ -444,6 +445,7 @@ export const imageHome = {
 export const navbar = {
   navHome: NavHome,
   navPromotion: NavPromotion,
+  activeNavPromotion: activeNavPromotion,
   navHot: NavHot,
   navVip: NavVip,
   navStandard: NavStandard,

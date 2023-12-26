@@ -52,7 +52,6 @@ export default function Navbar() {
   }, [isNavTablet, isNav]);
 
   const theme = useTheme();
-  console.log("isNav: ", isNav);
   return (
     <Box style={{ height: `100%` }} className={`nav-section1 ${tablet}`}>
       <Box
@@ -651,12 +650,8 @@ export default function Navbar() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "space-between" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    pathname && pathname?.includes("asdasfsd")
-                      ? "#7648ED"
-                      : "#462A71",
-
+                  transition: "0.2s",
+                  backgroundColor: isDropdownNav ? "#462A71" : "",
                   borderRadius: "5px",
                   padding: "10px",
                   marginTop: "16px",
@@ -673,7 +668,11 @@ export default function Navbar() {
                 >
                   <Box
                     component={"img"}
-                    src={navbar.navPromotion}
+                    src={
+                      isDropdownNav
+                        ? navbar.activeNavPromotion
+                        : navbar.navPromotion
+                    }
                     sx={{ width: "18px", height: "18px", marginRight: "8px" }}
                   />
                   <Typography
@@ -687,6 +686,7 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color: isDropdownNav ? "#fff" : "",
                     }}
                   >
                     {t("Promotion")}
@@ -772,20 +772,6 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-3"
                 >
-                  {pathname && pathname?.includes("hot-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navHotActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navHot}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
-
                   <Typography
                     className="hover-nav"
                     style={{
@@ -835,19 +821,6 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-3"
                 >
-                  {pathname && pathname?.includes("ongoing-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navOngoingActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navOngoing}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
                   <Typography
                     className="hover-nav"
                     style={{
@@ -897,20 +870,6 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-3"
                 >
-                  {pathname && pathname?.includes("upcoming-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navUpcomingActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navUpcoming}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
-
                   <Typography
                     className="hover-nav"
                     style={{
@@ -960,20 +919,6 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-2"
                 >
-                  {pathname && pathname?.includes("ended-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navEndedActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navEnded}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
-
                   <Typography
                     className="hover-nav"
                     style={{

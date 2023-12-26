@@ -87,7 +87,11 @@ export default function Dialoglg() {
       {token === "" || token === null || token === undefined ? (
         <Box className="btn-group">
           <button className="btn-sign-up signin" onClick={handleClickSignIn}>
-            <span style={{ textTransform: "uppercase",fontFamily:"Cyntho Next" }}>{t("Sign In")}</span>
+            <span
+              style={{ textTransform: "uppercase", fontFamily: "Cyntho Next" }}
+            >
+              {t("Sign In")}
+            </span>
           </button>
           {token && (
             <div
@@ -111,14 +115,14 @@ export default function Dialoglg() {
         >
           {width < 576 ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-               {/* <ExtraCountDown /> */}
+              {/* <ExtraCountDown /> */}
               <Box
                 sx={{
                   backgroundColor: width > 576 ? "#170f1e" : "#68399E",
                   borderRadius:
                     width > 576 ? "5px !important" : "20px !important",
                   marginRight: "10px",
-                  padding:"0px 4px"
+                  padding: "0px 4px",
                 }}
                 className="d-flex align-items-center"
               >
@@ -199,7 +203,7 @@ export default function Dialoglg() {
                   backgroundColor: "#68399E",
                   borderRadius: "20px !important",
                   marginRight: "10px",
-                  padding:"0px 4px"
+                  padding: "0px 4px",
                 }}
                 className="d-flex align-items-center"
               >
@@ -568,7 +572,7 @@ export default function Dialoglg() {
                             marginLeft: "4px",
                           }}
                         >
-                          {t('User Info')}
+                          {t("User Info")}
                         </button>
                       </Dropdown.Item>
                     </Grid>
@@ -665,7 +669,7 @@ export default function Dialoglg() {
                         marginLeft: "4px",
                       }}
                     >
-                      {t('Logout')}
+                      {t("Logout")}
                     </button>
                   </Dropdown.Item>
                 </Box>
