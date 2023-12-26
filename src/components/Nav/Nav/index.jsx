@@ -26,7 +26,6 @@ export default function Navbar() {
   const { isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
-
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -53,7 +52,6 @@ export default function Navbar() {
   }, [isNavTablet, isNav]);
 
   const theme = useTheme();
-
   return (
     <Box style={{ height: `100%` }} className={`nav-section1 ${tablet}`}>
       <Box
@@ -365,7 +363,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -623,7 +620,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -645,29 +641,17 @@ export default function Navbar() {
                   {t("Home")}
                 </Typography>
               </Box>
-              <hr
-                style={{
-                  color: "white",
-                  border: "2",
-                  background: "white",
-                  borderColor: "white",
-                  height: "2px",
-                }}
-              />
               <Box
                 sx={{
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: isNav === true ? "space-between" : "center",
-                  transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                  backgroundColor:
-                    pathname && pathname?.includes("asdasfsd")
-                      ? "#7648ED"
-                      : "#462A71",
-
+                  transition: "0.2s",
+                  backgroundColor: isDropdownNav ? "#462A71" : "",
                   borderRadius: "5px",
                   padding: "10px",
+                  marginTop: "16px",
                 }}
                 onClick={toggleDropdown}
                 className="nav-home"
@@ -681,7 +665,11 @@ export default function Navbar() {
                 >
                   <Box
                     component={"img"}
-                    src={navbar.navPromotion}
+                    src={
+                      isDropdownNav
+                        ? navbar.activeNavPromotion
+                        : navbar.navPromotion
+                    }
                     sx={{ width: "18px", height: "18px", marginRight: "8px" }}
                   />
                   <Typography
@@ -695,11 +683,12 @@ export default function Navbar() {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
+                      color: isDropdownNav ? "#fff" : "",
                     }}
                   >
                     {t("Promotion")}
                   </Typography>
-                  <Box sx={{ marginLeft: "18px" }}>
+                  <Box sx={{ marginLeft: isNav && "18px" }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -740,7 +729,6 @@ export default function Navbar() {
               <Box
                 sx={{
                   display: isDropdownNav === true ? "block" : "none",
-                  // height: isDropdownNav === true ? "220px" : "0px",
                   transition: "all 0.5s",
                 }}
                 className={`dropdown-content ${
@@ -752,8 +740,8 @@ export default function Navbar() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
-                    // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    justifyContent: "flex-start",
+                    marginLeft: "0px !important",
                     transition: "0.3s ease",
                     backgroundColor:
                       pathname &&
@@ -764,7 +752,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("hot-promotion")
                         ? "white"
                         : "#A89CD7",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     ":hover": {
                       backgroundColor: "#7648ED",
                       boxShadow:
@@ -780,27 +768,12 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-3"
                 >
-                  {pathname && pathname?.includes("hot-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navHotActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navHot}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
-
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -810,22 +783,12 @@ export default function Navbar() {
                     {t("Hot")}
                   </Typography>
                 </Box>
-                <hr
-                  style={{
-                    color: "white",
-                    border: "2",
-                    background: "white",
-                    borderColor: "white",
-                    height: "1px",
-                    width: isNav ? "70%" : "",
-                  }}
-                />
                 <Box
                   sx={{
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "0.3s ease",
                     backgroundColor:
@@ -841,7 +804,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("ongoing-promotion")
                         ? "white"
                         : "#A89CD7",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     ":hover": {
                       backgroundColor: "#7648ED",
                       boxShadow:
@@ -853,26 +816,12 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-3"
                 >
-                  {pathname && pathname?.includes("ongoing-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navOngoingActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navOngoing}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -887,7 +836,7 @@ export default function Navbar() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "0.3s ease",
                     backgroundColor:
@@ -903,7 +852,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("upcoming-promotion")
                         ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
                         : "",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     ":hover": {
                       backgroundColor: "#7648ED",
                       boxShadow:
@@ -915,27 +864,12 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-3"
                 >
-                  {pathname && pathname?.includes("upcoming-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navUpcomingActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navUpcoming}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
-
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -950,7 +884,7 @@ export default function Navbar() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "0.3s ease",
                     backgroundColor:
@@ -962,7 +896,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("ended-promotion")
                         ? "white"
                         : "#A89CD7",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     boxShadow:
                       pathname && pathname?.includes("ended-promotion")
                         ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
@@ -978,27 +912,12 @@ export default function Navbar() {
                   }}
                   className="nav-home mt-2"
                 >
-                  {pathname && pathname?.includes("ended-promotion") ? (
-                    <Box
-                      component={"img"}
-                      src={navbar.navEndedActive}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  ) : (
-                    <Box
-                      component={"img"}
-                      src={navbar.navEnded}
-                      sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                    />
-                  )}
-
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -1009,15 +928,6 @@ export default function Navbar() {
                   </Typography>
                 </Box>
               </Box>
-              <hr
-                style={{
-                  color: "white",
-                  border: "2",
-                  background: "white",
-                  borderColor: "white",
-                  height: "2px",
-                }}
-              />
               <Box
                 sx={{
                   cursor: "pointer",
@@ -1037,7 +947,8 @@ export default function Navbar() {
                       ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
                       : "",
                   borderRadius: "5px",
-                  padding: "10px",
+                  padding: "10px 5px",
+                  marginTop: "16px",
                 }}
                 onClick={() => {
                   navigate("/packages");
@@ -1196,7 +1107,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -1352,7 +1262,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -1371,6 +1280,7 @@ export default function Navbar() {
                     overflow: "hidden",
                     color:
                       pathname && pathname?.includes("packages") && "white",
+                    paddingLeft: "6px",
                   }}
                 >
                   {t("Packages")}
@@ -1384,7 +1294,6 @@ export default function Navbar() {
             ""
           ) : (
             <Box className="nav-pages">
-              <hr style={{ color: "white" }} />
               <Box
                 sx={{
                   cursor: "pointer",
@@ -1501,15 +1410,7 @@ export default function Navbar() {
               </Box>
             </Box>
           )}
-          <hr
-            style={{
-              color: "white",
-              border: "2",
-              background: "white",
-              borderColor: "white",
-              height: "2px",
-            }}
-          />
+
           {getAppType() && getAppType() === "promote" ? (
             ""
           ) : (
@@ -1582,6 +1483,7 @@ export default function Navbar() {
                     : "",
                 borderRadius: "5px",
                 padding: "10px",
+                marginTop: "16px",
               }}
               onClick={() => {
                 dispatch({
@@ -1595,13 +1497,13 @@ export default function Navbar() {
                 <Box
                   component={"img"}
                   src={navbar.navHelpCenterActive}
-                  sx={{ width: "18px", height: "18px", marginRight: "8px" }}
+                  sx={{ width: "18px", height: "18px" }}
                 />
               ) : (
                 <Box
                   component={"img"}
                   src={navbar.navHelpCenter}
-                  sx={{ width: "18px", height: "18px", marginRight: "8px" }}
+                  sx={{ width: "18px", height: "18px" }}
                 />
               )}
 
@@ -1618,6 +1520,7 @@ export default function Navbar() {
                   overflow: "hidden",
                   color:
                     pathname && pathname?.includes("help-center") && "white",
+                  paddingLeft: "10px",
                 }}
               >
                 How it Works
@@ -1697,7 +1600,7 @@ export default function Navbar() {
                     : "",
                 borderRadius: "5px",
                 padding: "10px",
-                marginTop: "0.5rem",
+                marginTop: "16px",
                 textDecoration: "none",
                 color: "#A89CD7",
               }}
@@ -1715,7 +1618,7 @@ export default function Navbar() {
                 height="18"
                 fill="none"
                 viewBox="0 0 18 18"
-                style={{ marginRight: "8px" }}
+                style={{}}
               >
                 <g>
                   <g>
@@ -1755,12 +1658,12 @@ export default function Navbar() {
                   cursor: "pointer",
                   fontWeight: "700",
                   fontSize: "15px",
-                  marginLeft: "5px",
                   display: isNav === true ? "block" : "none",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   color: pathname && pathname?.includes("support") && "white",
+                  paddingLeft: "10px",
                 }}
               >
                 {t("Support")}

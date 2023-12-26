@@ -53,7 +53,7 @@ export default function NewFooter() {
             }}
             onClick={() => navigate("/help-center")}
           >
-           Help Center
+            Help Center
           </Typography>
           <Box
             sx={{
@@ -130,10 +130,12 @@ export default function NewFooter() {
           >
             {t("Contact Us")}
           </Typography>
-          <Box sx={{
-            display:"flex",
-            justifyContent:"center"
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <Box
               component={"a"}
               href="mailto:support@play4promo.com"
