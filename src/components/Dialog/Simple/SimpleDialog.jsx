@@ -42,7 +42,6 @@ export default function SimpleDialog(props) {
       }
     }, 500);
   };
-  console.log("Device: ", device);
   return ReactDOM.createPortal(
     <>
       {device === "Mobile" ? (

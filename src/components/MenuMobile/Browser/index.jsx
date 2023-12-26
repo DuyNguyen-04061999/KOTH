@@ -699,7 +699,11 @@ export default function Browser(props) {
                   >
                     <Box
                       component={"img"}
-                      src={navbar.navPromotion}
+                      src={
+                        isDropdownNav
+                          ? navbar.activeNavPromotion
+                          : navbar.navPromotion
+                      }
                       sx={{
                         width: "20px",
                         height: "20px",
@@ -717,6 +721,7 @@ export default function Browser(props) {
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
+                        color: isDropdownNav ? "#fff" : "",
                       }}
                     >
                       {t("Promotion")}
@@ -793,27 +798,6 @@ export default function Browser(props) {
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-2"
                   >
-                    {pathname && pathname?.includes("hot-promotion") ? (
-                      <Box
-                        component={"img"}
-                        src={navbar.navHotActive}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    ) : (
-                      <Box
-                        component={"img"}
-                        src={navbar.navHot}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    )}
                     <span
                       className="hover-nav"
                       style={{
@@ -821,7 +805,7 @@ export default function Browser(props) {
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
-                        marginLeft: "5px",
+                        marginLeft: "20px",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -834,16 +818,6 @@ export default function Browser(props) {
                       {t("Hot")}
                     </span>
                   </Box>
-
-                  <hr
-                    style={{
-                      color: "white",
-                      border: "2",
-                      background: "white",
-                      borderColor: "white",
-                      height: "1px",
-                    }}
-                  />
 
                   <Box
                     sx={{
@@ -869,28 +843,6 @@ export default function Browser(props) {
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >
-                    {pathname && pathname?.includes("ongoing-promotion") ? (
-                      <Box
-                        component={"img"}
-                        src={navbar.navOngoingActive}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    ) : (
-                      <Box
-                        component={"img"}
-                        src={navbar.navOngoing}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    )}
-
                     <span
                       className="hover-nav"
                       style={{
@@ -898,7 +850,7 @@ export default function Browser(props) {
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
-                        marginLeft: "5px",
+                        marginLeft: "20px",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -931,28 +883,6 @@ export default function Browser(props) {
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >
-                    {pathname && pathname?.includes("upcoming-promotion") ? (
-                      <Box
-                        component={"img"}
-                        src={navbar.navUpcomingActive}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    ) : (
-                      <Box
-                        component={"img"}
-                        src={navbar.navUpcoming}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    )}
-
                     <span
                       className="hover-nav"
                       style={{
@@ -960,7 +890,7 @@ export default function Browser(props) {
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
-                        marginLeft: "5px",
+                        marginLeft: "20px",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -993,28 +923,6 @@ export default function Browser(props) {
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >
-                    {pathname && pathname?.includes("ended-promotion") ? (
-                      <Box
-                        component={"img"}
-                        src={navbar.navEndedActive}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    ) : (
-                      <Box
-                        component={"img"}
-                        src={navbar.navEnded}
-                        sx={{
-                          width: "20px",
-                          height: "20px",
-                          marginRight: "12px",
-                        }}
-                      />
-                    )}
-
                     <span
                       className="hover-nav"
                       style={{
@@ -1022,7 +930,7 @@ export default function Browser(props) {
                         cursor: "pointer",
                         fontWeight: "700",
                         fontSize: "15px",
-                        marginLeft: "5px",
+                        marginLeft: "20px",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -1237,7 +1145,6 @@ export default function Browser(props) {
                   ""
                 ) : (
                   <Box className="nav-pages">
-                    <hr style={{ color: "white" }} />
                     <Box
                       sx={{
                         cursor: "pointer",
@@ -1351,15 +1258,7 @@ export default function Browser(props) {
                     </Box>
                   </Box>
                 )}
-                <hr
-                  style={{
-                    color: "white",
-                    border: "2",
-                    background: "white",
-                    borderColor: "white",
-                    height: "1px",
-                  }}
-                />
+
                 {getAppType() && getAppType() === "promote" ? (
                   ""
                 ) : (
