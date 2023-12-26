@@ -683,13 +683,15 @@ export default function DialogProfile(props) {
                     </Typography>
                   </Box>
                 </Box>
-                <hr
-                  style={{
-                    border: "1px solid #A89CD7",
-                    marginBottom: "0.5rem",
-                    marginTop: "0.5rem",
-                  }}
-                />
+                {tokenUser && userNameProfile === user?.userName && (
+                  <hr
+                    style={{
+                      border: "1px solid #A89CD7",
+                      marginBottom: "0.5rem",
+                      marginTop: "0.5rem",
+                    }}
+                  />
+                )}
                 {tokenUser && userNameProfile === user?.userName && (
                   <Box>
                     <Box className="Email-address d-flex align-items-center mb-2">
@@ -856,7 +858,7 @@ export default function DialogProfile(props) {
               }}
             >
               <Box sx={{ display: "flex" }}>
-              <Box
+                <Box
                   className="Firstname mb-3 d-flex flex-column align-items-start"
                   sx={{ width: "100%" }}
                 >
@@ -966,7 +968,6 @@ export default function DialogProfile(props) {
                     />
                   </FormControl>{" "}
                 </Box>
-               
               </Box>
               <Box className="Display-Name mb-3 d-flex flex-column align-items-start">
                 <Typography
@@ -1348,7 +1349,9 @@ export default function DialogProfile(props) {
                     value={
                       stateProfile[
                         stateProfile?.findIndex((s) => s?.name === stateOption)
-                      ] || stateOption || ""
+                      ] ||
+                      stateOption ||
+                      ""
                     }
                     defaultValue={stateOption || ""}
                     sx={{
@@ -1813,8 +1816,13 @@ export default function DialogProfile(props) {
           setValue(dayjs(birthDay) || new Date());
           handleShowProfile();
         }}
-        maxWidth={"md"}
+        maxWidth={"lg"}
         TransitionComponent={Transition}
+        PaperProps={{
+          sx: {
+            width: width > 576 ? "300px" : "unset",
+          },
+        }}
         sx={{
           "& .MuiPaper-root-MuiDialog-paper": {
             backgroundColor: "#291e3b",

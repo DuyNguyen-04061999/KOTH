@@ -1,4 +1,6 @@
 import AddFriendIcon from "@mui/icons-material/Person";
+import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
+import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Avatar, Box } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -120,6 +122,22 @@ export default function ChatWorldList() {
       gameId: gameId,
     });
   };
+
+  const { friendList } = useSelector((state) => state.chatReducer);
+
+  const checkExistInFriendList = () => {
+    for (let i = 0; i < friendList.length; i++) {
+      if (friendList[i].userName === user?.userName) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleDeleteFriend = () => {};
+
+  const handleAddFriend = () => {};
+
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -574,7 +592,7 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {/* {tokenUser &&
+          {tokenUser &&
             (checkExistInFriendList() === true ? (
               <MenuItem
                 sx={{
@@ -614,7 +632,7 @@ export default function ChatWorldList() {
                   Add Friend
                 </Box>
               </MenuItem>
-            ))} */}
+            ))}
         </Menu>
         {renderChat}
         <span ref={endOfMessageRef}></span>

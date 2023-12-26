@@ -1,4 +1,5 @@
 import AddFriendIcon from "@mui/icons-material/Person";
+import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Box, Dialog, Menu, MenuItem } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,7 +46,7 @@ export default function ChatGlobal(props) {
   const { contacter } = useSelector((state) => state.chatReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
-  
+
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -60,9 +61,13 @@ export default function ChatGlobal(props) {
   }, [tokenUser]);
 
   const handleOnKeyDownEnter = (e) => {
-    if(!startGameCheck) {
-      if(chatInput?.current){
-        if (e.key === "Enter" && chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+    if (!startGameCheck) {
+      if (chatInput?.current) {
+        if (
+          e.key === "Enter" &&
+          chatInput.current.childNodes[0].value &&
+          chatInput.current.childNodes[0].value.trim() !== ""
+        ) {
           socket?.emit("chat", {
             type: "Private",
             toId: contacter.id,
@@ -72,18 +77,22 @@ export default function ChatGlobal(props) {
         }
       }
     } else {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Cannot send message while playing game! Please try later!"
-      }))
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message: "Cannot send message while playing game! Please try later!",
+        })
+      );
     }
-    
   };
 
   const handleSendMessage = () => {
-    if(!startGameCheck) {
-      if(chatInput?.current){
-        if (chatInput.current.childNodes[0].value && chatInput.current.childNodes[0].value.trim() !== "") {
+    if (!startGameCheck) {
+      if (chatInput?.current) {
+        if (
+          chatInput.current.childNodes[0].value &&
+          chatInput.current.childNodes[0].value.trim() !== ""
+        ) {
           socket?.emit("chat", {
             type: "Private",
             toId: contacter.id,
@@ -93,12 +102,13 @@ export default function ChatGlobal(props) {
         }
       }
     } else {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Cannot send message while playing game! Please try later!"
-      }))
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message: "Cannot send message while playing game! Please try later!",
+        })
+      );
     }
-    
   };
 
   const checkHeightResponsive = () => {
@@ -134,6 +144,9 @@ export default function ChatGlobal(props) {
       // socket?.off()
     };
   }, [socket, handleShow]);
+
+  const handleDeleteFriend = () => {};
+
   return (
     <>
       {width > 576 ? (
@@ -167,9 +180,11 @@ export default function ChatGlobal(props) {
                 className="p-2 text-white"
                 onClick={() => {
                   dispatch(toggleProfileDialog(true));
-                  dispatch(getUserByUsername({
-                    username: contacter.userName,
-                  }));
+                  dispatch(
+                    getUserByUsername({
+                      username: contacter.userName,
+                    })
+                  );
                 }}
                 sx={{
                   background: "linear-gradient(180deg, #843ff0, #7748ed)",
@@ -182,7 +197,7 @@ export default function ChatGlobal(props) {
                 View Profile
               </Box>
             </MenuItem>
-            {/* <MenuItem onClick={handleOnClickDeleteFriend}>
+            <MenuItem onClick={() => {}}>
               <Box
                 className="p-2 text-white cursor-pointer"
                 onClick={() => {
@@ -201,7 +216,7 @@ export default function ChatGlobal(props) {
                 <DeleteFriendIcon className="me-2 pb-1" />
                 Delete Friend
               </Box>
-            </MenuItem> */}
+            </MenuItem>
           </Menu>
           <Box
             sx={{
@@ -325,9 +340,11 @@ export default function ChatGlobal(props) {
                 className="p-2 text-white"
                 onClick={() => {
                   dispatch(toggleProfileDialog(true));
-                  dispatch(getUserByUsername({
-                    username: contacter.userName,
-                  }));
+                  dispatch(
+                    getUserByUsername({
+                      username: contacter.userName,
+                    })
+                  );
                 }}
                 sx={{
                   background: "linear-gradient(180deg, #843ff0, #7748ed)",
@@ -340,7 +357,7 @@ export default function ChatGlobal(props) {
                 View Profile
               </Box>
             </MenuItem>
-            {/* <MenuItem onClick={handleOnClickDeleteFriend}>
+            <MenuItem onClick={handleDeleteFriend}>
               <Box
                 className="p-2 text-white cursor-pointer"
                 onClick={() => {
@@ -359,7 +376,7 @@ export default function ChatGlobal(props) {
                 <DeleteFriendIcon className="me-2 pb-1" />
                 Delete Friend
               </Box>
-            </MenuItem> */}
+            </MenuItem>
           </Menu>
           <Box
             sx={{
