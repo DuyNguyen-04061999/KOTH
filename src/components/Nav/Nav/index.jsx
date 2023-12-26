@@ -644,15 +644,7 @@ export default function Navbar() {
                   {t("Home")}
                 </Typography>
               </Box>
-              <hr
-                style={{
-                  color: "white",
-                  border: "2",
-                  background: "white",
-                  borderColor: "white",
-                  height: "2px",
-                }}
-              />
+
               <Box
                 sx={{
                   cursor: "pointer",
@@ -667,6 +659,7 @@ export default function Navbar() {
 
                   borderRadius: "5px",
                   padding: "10px",
+                  marginTop: "16px",
                 }}
                 onClick={toggleDropdown}
                 className="nav-home"
@@ -763,7 +756,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("hot-promotion")
                         ? "white"
                         : "#A89CD7",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     ":hover": {
                       backgroundColor: "#7648ED",
                       boxShadow:
@@ -809,16 +802,6 @@ export default function Navbar() {
                     {t("Hot")}
                   </Typography>
                 </Box>
-                <hr
-                  style={{
-                    color: "white",
-                    border: "2",
-                    background: "white",
-                    borderColor: "white",
-                    height: "1px",
-                    width: isNav ? "70%" : "",
-                  }}
-                />
                 <Box
                   sx={{
                     cursor: "pointer",
@@ -840,7 +823,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("ongoing-promotion")
                         ? "white"
                         : "#A89CD7",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     ":hover": {
                       backgroundColor: "#7648ED",
                       boxShadow:
@@ -902,7 +885,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("upcoming-promotion")
                         ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
                         : "",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     ":hover": {
                       backgroundColor: "#7648ED",
                       boxShadow:
@@ -961,7 +944,7 @@ export default function Navbar() {
                       pathname && pathname?.includes("ended-promotion")
                         ? "white"
                         : "#A89CD7",
-                    padding: "10px",
+                    padding: "10px 10px 10px 15px",
                     boxShadow:
                       pathname && pathname?.includes("ended-promotion")
                         ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
@@ -1008,15 +991,7 @@ export default function Navbar() {
                   </Typography>
                 </Box>
               </Box>
-              <hr
-                style={{
-                  color: "white",
-                  border: "2",
-                  background: "white",
-                  borderColor: "white",
-                  height: "2px",
-                }}
-              />
+
               <Box
                 sx={{
                   cursor: "pointer",
@@ -1036,7 +1011,8 @@ export default function Navbar() {
                       ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
                       : "",
                   borderRadius: "5px",
-                  padding: "10px",
+                  padding: "10px 5px",
+                  marginTop: "16px",
                 }}
                 onClick={() => {
                   navigate("/packages");
@@ -1383,7 +1359,6 @@ export default function Navbar() {
             ""
           ) : (
             <Box className="nav-pages">
-              <hr style={{ color: "white" }} />
               <Box
                 sx={{
                   cursor: "pointer",
@@ -1500,15 +1475,7 @@ export default function Navbar() {
               </Box>
             </Box>
           )}
-          <hr
-            style={{
-              color: "white",
-              border: "2",
-              background: "white",
-              borderColor: "white",
-              height: "2px",
-            }}
-          />
+
           {getAppType() && getAppType() === "promote" ? (
             ""
           ) : (
@@ -1581,6 +1548,7 @@ export default function Navbar() {
                     : "",
                 borderRadius: "5px",
                 padding: "10px",
+                marginTop: "16px",
               }}
               onClick={() => {
                 dispatch({
