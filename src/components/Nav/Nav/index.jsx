@@ -363,7 +363,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -621,7 +620,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -643,7 +641,6 @@ export default function Navbar() {
                   {t("Home")}
                 </Typography>
               </Box>
-
               <Box
                 sx={{
                   cursor: "pointer",
@@ -691,7 +688,7 @@ export default function Navbar() {
                   >
                     {t("Promotion")}
                   </Typography>
-                  <Box sx={{ marginLeft: "18px" }}>
+                  <Box sx={{ marginLeft: isNav && "18px" }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -732,7 +729,6 @@ export default function Navbar() {
               <Box
                 sx={{
                   display: isDropdownNav === true ? "block" : "none",
-                  // height: isDropdownNav === true ? "220px" : "0px",
                   transition: "all 0.5s",
                 }}
                 className={`dropdown-content ${
@@ -744,8 +740,8 @@ export default function Navbar() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
-                    // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    justifyContent: "flex-start",
+                    marginLeft: "0px !important",
                     transition: "0.3s ease",
                     backgroundColor:
                       pathname &&
@@ -775,10 +771,9 @@ export default function Navbar() {
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -793,7 +788,7 @@ export default function Navbar() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "0.3s ease",
                     backgroundColor:
@@ -824,10 +819,9 @@ export default function Navbar() {
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -842,7 +836,7 @@ export default function Navbar() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "0.3s ease",
                     backgroundColor:
@@ -873,10 +867,9 @@ export default function Navbar() {
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -891,7 +884,7 @@ export default function Navbar() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: isNav === true ? "flex-start" : "center",
+                    justifyContent: "flex-start",
                     // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     transition: "0.3s ease",
                     backgroundColor:
@@ -922,10 +915,9 @@ export default function Navbar() {
                   <Typography
                     className="hover-nav"
                     style={{
-                      display: isNav === true ? "block" : "none",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontSize: "15px",
+                      fontSize: isNav ? "15px" : "13px",
                       marginLeft: "5px",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -936,7 +928,6 @@ export default function Navbar() {
                   </Typography>
                 </Box>
               </Box>
-
               <Box
                 sx={{
                   cursor: "pointer",
@@ -1116,7 +1107,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -1272,7 +1262,6 @@ export default function Navbar() {
                         sx={{
                           width: "18px",
                           height: "18px",
-                          marginRight: "8px",
                         }}
                       />
                     )}
@@ -1291,6 +1280,7 @@ export default function Navbar() {
                     overflow: "hidden",
                     color:
                       pathname && pathname?.includes("packages") && "white",
+                    paddingLeft: "6px",
                   }}
                 >
                   {t("Packages")}
@@ -1507,13 +1497,13 @@ export default function Navbar() {
                 <Box
                   component={"img"}
                   src={navbar.navHelpCenterActive}
-                  sx={{ width: "18px", height: "18px", marginRight: "8px" }}
+                  sx={{ width: "18px", height: "18px" }}
                 />
               ) : (
                 <Box
                   component={"img"}
                   src={navbar.navHelpCenter}
-                  sx={{ width: "18px", height: "18px", marginRight: "8px" }}
+                  sx={{ width: "18px", height: "18px" }}
                 />
               )}
 
@@ -1530,6 +1520,7 @@ export default function Navbar() {
                   overflow: "hidden",
                   color:
                     pathname && pathname?.includes("help-center") && "white",
+                  paddingLeft: "10px",
                 }}
               >
                 How it Works
@@ -1609,7 +1600,7 @@ export default function Navbar() {
                     : "",
                 borderRadius: "5px",
                 padding: "10px",
-                marginTop: "0.5rem",
+                marginTop: "16px",
                 textDecoration: "none",
                 color: "#A89CD7",
               }}
@@ -1627,7 +1618,7 @@ export default function Navbar() {
                 height="18"
                 fill="none"
                 viewBox="0 0 18 18"
-                style={{ marginRight: "8px" }}
+                style={{}}
               >
                 <g>
                   <g>
@@ -1667,12 +1658,12 @@ export default function Navbar() {
                   cursor: "pointer",
                   fontWeight: "700",
                   fontSize: "15px",
-                  marginLeft: "5px",
                   display: isNav === true ? "block" : "none",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   color: pathname && pathname?.includes("support") && "white",
+                  paddingLeft: "10px",
                 }}
               >
                 {t("Support")}

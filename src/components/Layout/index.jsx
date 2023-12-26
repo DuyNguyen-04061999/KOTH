@@ -727,7 +727,7 @@ export default function Layout(props) {
           sm={12}
           md={12}
           lg={12}
-          pl={device === "Mobile" ? 0 : 12}
+          pl={device === "Mobile" ? (orientation === "landscape" ? 10 : 0) : 10}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",

@@ -364,10 +364,11 @@
   }
 }
 
-.hover-dropdown{
-  &:hover{
-    transition: 0.3s ease-out;
-    background-color: #462A71;
+.hover-dropdown {
+  &:hover {
+    transition: 0.1s ease-out;
+    background-color: #462a71;
     border-radius: 5px;
+    color: #ffffff;
   }
 }
