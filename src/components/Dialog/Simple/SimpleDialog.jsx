@@ -10,8 +10,7 @@ import {
   closeVerifyDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { logoutReady } from "../../../redux-saga-middleware/reducers/userReducer";
-import { getAppType } from "../../../utils/helper";
-import { imageHome, images, sign } from "../../../utils/images";
+import { imageHome, sign } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import CreatePassword from "../Auth/CreatePassword";
 import ForgetPassword from "../Auth/ForgetPassword";
@@ -20,7 +19,6 @@ import OTPResetPassword from "../Auth/OTPResetPassword";
 import { default as OTPVerifyAccount } from "../Auth/OTPVerifyAccount";
 import Signup from "../Auth/Signup";
 import "./../Auth/Signin/index.scss";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function SimpleDialog(props) {
   const { currentTab, isLoginDialog } = useSelector(
@@ -42,6 +40,7 @@ export default function SimpleDialog(props) {
       }
     }, 500);
   };
+
   return ReactDOM.createPortal(
     <>
       {device === "Mobile" ? (
