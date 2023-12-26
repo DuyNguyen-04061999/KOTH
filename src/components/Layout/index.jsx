@@ -26,7 +26,7 @@ import {
   changeRouter,
   openDoubleDayDialog,
   randomRenderPopup,
-  toggleStartGame
+  toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
 import {
   addRefCodeRegister,
@@ -161,17 +161,17 @@ export default function Layout(props) {
   useEffect(() => {
     const handlePopState = (event) => {
       // Handle popstate event here
-      dispatch(toggleCloseResultEndGame())
+      dispatch(toggleCloseResultEndGame());
     };
 
     // Add event listener for popstate
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener("popstate", handlePopState);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("popstate", handlePopState);
     };
-  }, [dispatch]); 
+  }, [dispatch]);
 
   useEffect(() => {
     if (router) {
@@ -190,8 +190,8 @@ export default function Layout(props) {
       dispatch(finishGame());
       dispatch(finishVideo());
       // dispatch(resetToGameWhenBuyPackageSuccess());
-      localStorage.removeItem("buyPackage")
-      localStorage.removeItem("newNumberTicket")
+      localStorage.removeItem("buyPackage");
+      localStorage.removeItem("newNumberTicket");
     }
   }, [dispatch, router]);
 
@@ -345,7 +345,7 @@ export default function Layout(props) {
   useEffect(() => {
     i18n.changeLanguage(systemLanguage);
     dispatch(changeCurrentLanguage(systemLanguage));
-  }, [dispatch,i18n,systemLanguage]);
+  }, [dispatch, i18n, systemLanguage]);
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token");
@@ -367,13 +367,15 @@ export default function Layout(props) {
   useEffect(() => {
     let currentDay = new Date();
     let closedPopupDay = new Date(countDownDoubleDay);
-    let timeDifference = Math.abs(currentDay.getTime() - closedPopupDay.getTime());
+    let timeDifference = Math.abs(
+      currentDay.getTime() - closedPopupDay.getTime()
+    );
     let oneDayInMillis = 24 * 60 * 60 * 1000;
     if (timeDifference > oneDayInMillis) {
       dispatch(randomRenderPopup());
       dispatch(openDoubleDayDialog());
     }
-  }, [dispatch,countDownDoubleDay]);
+  }, [dispatch, countDownDoubleDay]);
 
   const params = new URLSearchParams(window.location.search);
 
@@ -400,11 +402,7 @@ export default function Layout(props) {
               : "block",
         }}
       >
-        {process.env.REACT_APP_ENV !== "development" ? (
-          <ChatBot />
-        ) : (
-          <></>
-        )}
+        {process.env.REACT_APP_ENV !== "development" ? <ChatBot /> : <></>}
       </Box>
 
       <SimpleDialog />
@@ -420,7 +418,7 @@ export default function Layout(props) {
       <DialogExclusive />
       <NotiFunds />
       {params && params?.get("game") && params?.get("game") === "revive" && (
-        <PackagePaypalDialog/>
+        <PackagePaypalDialog />
       )}
       <>
         {randomRender === 1 ? (
@@ -583,7 +581,7 @@ export default function Layout(props) {
                   top: "46px",
                   right: width < 576 ? "-16px" : "-64px",
                   padding: width < 576 ? "8px 6px" : "16px 12px",
-                  minWidth:"160px"
+                  minWidth: "160px",
                 }}
                 component={"div"}
               >
@@ -602,9 +600,7 @@ export default function Layout(props) {
                     src={images.englishIcon}
                     sx={{ width: "24px", marginRight: "4px" }}
                   ></Box>
-                  <Typography
-                    sx={{ color: "white", fontSize: "16px" }}
-                  >
+                  <Typography sx={{ color: "white", fontSize: "16px" }}>
                     English
                   </Typography>
                 </MenuItem>
@@ -623,9 +619,7 @@ export default function Layout(props) {
                     src={images.turkishICon}
                     sx={{ width: "24px", marginRight: "4px" }}
                   ></Box>
-                  <Typography
-                    sx={{ color: "white", fontSize: "16px" }}
-                  >
+                  <Typography sx={{ color: "white", fontSize: "16px" }}>
                     Türkçe
                   </Typography>
                 </MenuItem>
@@ -730,9 +724,10 @@ export default function Layout(props) {
         <Grid
           item
           xs={12}
-          sm={11}
-          md={isNav === true && device === "Desktop" ? 10.4 : 11.4}
-          lg={isNav === true && device === "Desktop" ? 10.1 : 11.4}
+          sm={12}
+          md={12}
+          lg={12}
+          pl={device === "Mobile" ? 0 : 12}
           sx={{
             minHeight: "100vh",
             transition: "visibility 0s, all 0.2s ease-in-out",
@@ -742,7 +737,6 @@ export default function Layout(props) {
         >
           <Main
             id="layout-main"
-            open={chatPopup}
             sx={{
               marginRight:
                 device === "Tablet" ||

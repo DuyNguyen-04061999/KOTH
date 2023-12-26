@@ -26,7 +26,6 @@ export default function Navbar() {
   const { isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
-
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -53,7 +52,7 @@ export default function Navbar() {
   }, [isNavTablet, isNav]);
 
   const theme = useTheme();
-
+  console.log("isNav: ", isNav);
   return (
     <Box style={{ height: `100%` }} className={`nav-section1 ${tablet}`}>
       <Box
