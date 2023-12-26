@@ -43,6 +43,7 @@ import {
 import {
   pushChatWorld,
   pushfriendList,
+  updateFriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   checkoutPaypalCancel,
@@ -57,6 +58,7 @@ import {
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
+import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
 import { getUserInfoReady, updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
@@ -257,26 +259,26 @@ function App() {
         store.dispatch(updateCountTicket(quantity || 0));
       });
 
-      // socket?.on("addFriendSuccess", (data) => {
-      //   store.dispatch(
-      //     showToastNotification({
-      //       type: "success",
-      //       message: "Add friend successfully!",
-      //     })
-      //   );
-      //   store.dispatch(updateFriendList(data));
-      // });
+      socket?.on("addFriendSuccess", (data) => {
+        store.dispatch(
+          showToastNotification({
+            type: "success",
+            message: "Add friend successfully!",
+          })
+        );
+        store.dispatch(updateFriendList(data));
+      });
 
-      // socket?.on("deleteFriendSuccess", (data) => {
-      //   store.dispatch(
-      //     showToastNotification({
-      //       type: "success",
-      //       message: "Delete friend successfully!",
-      //     })
-      //   );
-      //   socket?.emit("listFriend");
-      //   store.dispatch(deleteFriendSuccesFully("success"));
-      // });
+      socket?.on("deleteFriendSuccess", (data) => {
+        store.dispatch(
+          showToastNotification({
+            type: "success",
+            message: "Delete friend successfully!",
+          })
+        );
+        socket?.emit("listFriend");
+        store.dispatch(deleteFriendSuccesFully("success"));
+      });
 
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));

@@ -145,7 +145,11 @@ export default function ChatGlobal(props) {
     };
   }, [socket, handleShow]);
 
-  const handleDeleteFriend = () => {};
+  const handleDeleteFriend = () => {
+    socket.emit("deleteFriend", {
+      username: contacter.userName,
+    });
+  };
 
   return (
     <>
@@ -197,7 +201,7 @@ export default function ChatGlobal(props) {
                 View Profile
               </Box>
             </MenuItem>
-            <MenuItem onClick={() => {}}>
+            <MenuItem onClick={handleDeleteFriend}>
               <Box
                 className="p-2 text-white cursor-pointer"
                 onClick={() => {

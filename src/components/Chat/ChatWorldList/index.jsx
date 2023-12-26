@@ -125,18 +125,26 @@ export default function ChatWorldList() {
 
   const { friendList } = useSelector((state) => state.chatReducer);
 
-  const checkExistInFriendList = () => {
+  const checkExistInFriendList = (messagefromName) => {
     for (let i = 0; i < friendList.length; i++) {
-      if (friendList[i].userName === user?.userName) {
+      if (friendList[i].userName === messagefromName) {
         return true;
       }
     }
     return false;
   };
 
-  const handleDeleteFriend = () => {};
+  const handleDeleteFriend = (username) => {
+    socket.emit("deleteFriend", {
+      username: username,
+    });
+  };
 
-  const handleAddFriend = () => {};
+  const handleAddFriend = (username) => {
+    socket.emit("addFriend", {
+      username: username,
+    });
+  };
 
   const renderChat = isFetching ? (
     <UserChatLoadingList />
@@ -593,7 +601,7 @@ export default function ChatWorldList() {
             </Box>
           </MenuItem>
           {tokenUser &&
-            (checkExistInFriendList() === true ? (
+            (checkExistInFriendList(messagefromName) === true ? (
               <MenuItem
                 sx={{
                   padding: "5px",
@@ -601,7 +609,7 @@ export default function ChatWorldList() {
               >
                 <Box
                   className="p-1 text-white cursor-pointer"
-                  onClick={handleDeleteFriend}
+                  onClick={() => handleDeleteFriend(messagefromName)}
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "100%",
@@ -620,7 +628,7 @@ export default function ChatWorldList() {
                 }}
               >
                 <Box
-                  onClick={handleAddFriend}
+                  onClick={() => handleAddFriend(messagefromName)}
                   className="p-1 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
