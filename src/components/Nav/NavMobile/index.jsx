@@ -1,4 +1,4 @@
-import { Badge, useTheme } from "@mui/material";
+import { Badge, Box, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import {
   updateOpenMenu,
   updateOpenMess,
 } from "../../../redux-saga-middleware/reducers/chatReducer";
+import { openNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { getAppType } from "../../../utils/helper";
@@ -49,6 +50,19 @@ export default function NavMobile() {
 
   const theme = useTheme();
 
+  const { listNotifiaction } = useSelector(
+    (state) => state.notificationReducer
+  );
+  const checkNotificationRead = () => {
+    let check = false;
+    for (let index = 0; index < listNotifiaction.length; index++) {
+      const element = listNotifiaction[index];
+      if (!element?.notificationRead) {
+        check = true;
+      }
+    }
+    return check;
+  };
   return (
     <>
       {!startGameCheck && width < 576 ? (
@@ -973,6 +987,7 @@ export default function NavMobile() {
                       </p>
                     </div>
                   </div>
+
                   <div
                     className="items"
                     style={{
@@ -1022,6 +1037,65 @@ export default function NavMobile() {
                         <div
                           className={badgechat === false ? "bage-content" : ""}
                         ></div>
+                      </Badge>
+                    </div>
+                  </div>
+                  <div
+                    className="items"
+                    style={{
+                      backgroundColor: "unset",
+                    }}
+                  >
+                    <div
+                      onClick={() => {
+                        dispatch(updateOpenMess(false));
+                        setOpenSearch(false);
+                        dispatch(updateOpenMenu(false));
+                        dispatch(openNotificationDialog());
+                      }}
+                    >
+                      <Badge
+                        badgeContent={""}
+                        color="error"
+                        invisible
+                        className="cursor-pointer"
+                      >
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="22"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 22 24"
+                          >
+                            <path
+                              fill="#fff"
+                              d="M11.203 19.153H5.15c-2.513 0-3.952-2.487-2.677-4.64a8.448 8.448 0 001.178-4.362c.007-1.278-.034-2.567.119-3.827C4.153 3.172 7.01.513 10.139.069c4.186-.6 8.677 2.794 8.66 7.739 0 1.406.017 2.825.212 4.214.118.835.524 1.658.93 2.422.577 1.082.695 2.138.082 3.204-.612 1.065-1.59 1.516-2.819 1.51-2-.016-4.002-.005-6-.005zm-.01-1.831c1.998 0 3.999-.026 5.997.01 1.222.022 1.729-1.11 1.137-1.995a7.476 7.476 0 01-1.26-3.62c-.094-1.287-.034-2.584-.12-3.873-.05-.743-.154-1.513-.403-2.208-.92-2.542-3.48-4.053-6.182-3.733-2.437.295-4.505 2.36-4.796 4.933-.138 1.211-.08 2.448-.09 3.673-.011 1.699-.403 3.311-1.319 4.732-.706 1.09-.044 2.146 1.24 2.1 1.93-.07 3.863-.019 5.795-.019zM11.222 24c-1.648-.072-2.966-.754-3.89-2.146-.38-.572-.302-1.1.183-1.412.485-.313.962-.177 1.363.404 1.21 1.742 3.46 1.738 4.682-.01.395-.565.888-.7 1.37-.376.48.324.538.842.156 1.413-.918 1.374-2.223 2.048-3.864 2.127z"
+                            ></path>
+                          </svg>
+                          <p
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "white",
+                              marginTop: "4px",
+                            }}
+                          >
+                            Notifications
+                          </p>
+                        </div>
+                        {checkNotificationRead() && (
+                          <Box
+                            className="position-absolute rounded-circle"
+                            sx={{
+                              right: 20,
+                              top: -2,
+                              width: 12,
+                              height: 12,
+                              backgroundColor: "#f05153",
+                            }}
+                          ></Box>
+                        )}
                       </Badge>
                     </div>
                   </div>

@@ -26,9 +26,9 @@ import MenuChat from "../../../MenuMobile/Chat";
 import DialogProfile from "../../Profile";
 
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import "./index.scss";
-import { useNavigate } from "react-router-dom";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -750,21 +750,21 @@ export default function Dialoglg() {
                             viewBox="0 0 15 15"
                             fill="none"
                           >
-                            <g clip-path="url(#clip0_8499_18842)">
+                            <g clipPath="url(#clip0_8499_18842)">
                               <path
                                 d="M10.625 11.5195H8.125L5.34375 13.3695C5.24989 13.4321 5.1408 13.468 5.02813 13.4734C4.91545 13.4789 4.80342 13.4536 4.70397 13.4004C4.60452 13.3471 4.5214 13.2679 4.46346 13.1711C4.40553 13.0743 4.37495 12.9636 4.375 12.8508V11.5195C2.5 11.5195 1.25 10.2695 1.25 8.39453V4.64453C1.25 2.76953 2.5 1.51953 4.375 1.51953H10.625C12.5 1.51953 13.75 2.76953 13.75 4.64453V8.39453C13.75 10.2695 12.5 11.5195 10.625 11.5195Z"
                                 stroke={hover === 2 ? "#fff" : "#A89CD7"}
-                                stroke-width="1.5"
-                                stroke-miterlimit="10"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="1.5"
+                                strokeMiterlimit="10"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               />
                               <path
                                 d="M7.49844 7.09961V6.96836C7.49844 6.54336 7.76094 6.31836 8.02344 6.13711C8.27969 5.96211 8.53594 5.73711 8.53594 5.32461C8.53594 4.74961 8.07344 4.28711 7.49844 4.28711C6.92344 4.28711 6.46094 4.74961 6.46094 5.32461M7.49531 8.59336H7.50156"
                                 stroke={hover === 2 ? "#fff" : "#A89CD7"}
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               />
                             </g>
                             <defs>

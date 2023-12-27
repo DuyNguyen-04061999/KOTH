@@ -177,7 +177,7 @@ const HelpCenterComponent = () => {
               ) : (
                 <>
                   {" "}
-                  <Typography
+                  <Box
                     style={{
                       fontSize: "16px",
                       fontWeight: "bold",
@@ -223,7 +223,7 @@ const HelpCenterComponent = () => {
                     ) : (
                       ""
                     )}
-                  </Typography>
+                  </Box>
                   <Typography
                     style={{
                       fontSize: "14px",
