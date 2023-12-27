@@ -6,10 +6,12 @@ import appReducer from "../reducers/appReducer";
 import authReducer from "../reducers/authReducer";
 import chatReducer from "../reducers/chatReducer";
 import deviceReducer from "../reducers/deviceReducer";
+import dialogReducer from "../reducers/dialogReducer";
 import gameReducer from "../reducers/gameReducer";
 import helpcenterReducer from "../reducers/helpcenterReducer";
 import loadingReducer from "../reducers/loadingReducer";
 import luckyWheelReducer from "../reducers/luckyWheelReducer";
+import notificationReducer from "../reducers/notificationReducer";
 import packageReducer from "../reducers/packageReducer";
 import payPalReducer from "../reducers/payPalReducer";
 import paymentReducer from "../reducers/paymentReducer";
@@ -51,7 +53,9 @@ let rootReducer = combineReducers({
   packageReducer,
   payPalReducer,
   promotionReducer,
-  settingReducer
+  settingReducer,
+  dialogReducer,
+  notificationReducer
 });
 
 const persistConfig = {
