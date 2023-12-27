@@ -50,6 +50,19 @@ export default function NavMobile() {
 
   const theme = useTheme();
 
+  const { listNotifiaction } = useSelector(
+    (state) => state.notificationReducer
+  );
+  const checkNotificationRead = () => {
+    let check = false;
+    for (let index = 0; index < listNotifiaction.length; index++) {
+      const element = listNotifiaction[index];
+      if (!element?.notificationRead) {
+        check = true;
+      }
+    }
+    return check;
+  };
   return (
     <>
       {!startGameCheck && width < 576 ? (
@@ -1071,16 +1084,18 @@ export default function NavMobile() {
                             Notifications
                           </p>
                         </div>
-                        <Box
-                          className="position-absolute rounded-circle"
-                          sx={{
-                            right: 20,
-                            top: -2,
-                            width: 12,
-                            height: 12,
-                            backgroundColor: "#f05153",
-                          }}
-                        ></Box>
+                        {checkNotificationRead() && (
+                          <Box
+                            className="position-absolute rounded-circle"
+                            sx={{
+                              right: 20,
+                              top: -2,
+                              width: 12,
+                              height: 12,
+                              backgroundColor: "#f05153",
+                            }}
+                          ></Box>
+                        )}
                       </Badge>
                     </div>
                   </div>

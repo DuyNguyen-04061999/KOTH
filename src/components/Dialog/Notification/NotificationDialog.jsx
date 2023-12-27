@@ -1,3 +1,4 @@
+import BackIcon from "@mui/icons-material/ArrowBack";
 import { Box, Dialog } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +12,7 @@ export default function NotificationDialog() {
   const { listNotifiaction } = useSelector(
     (state) => state.notificationReducer
   );
-  console.log(listNotifiaction);
+
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -43,10 +44,12 @@ export default function NotificationDialog() {
                 marginTop: "55px",
                 borderRadius: 0,
                 height: height,
-                background: "#443565",
+                background: "#2E233D",
+                overflow: "auto",
               }
             : {
-                background: "#443565",
+                background: "#2E233D",
+                overflow: "auto",
               },
       }}
       hideBackdrop={true}
@@ -58,9 +61,10 @@ export default function NotificationDialog() {
           backgroundColor: "#42285B",
         }}
       >
+        {width < 576 && <BackIcon onClick={handleClose} />}
         Notifications
       </Box>
-      <Box className="p-2">
+      <Box className="p-2 ps-3 pe-3">
         {listNotifiaction && listNotifiaction?.length > 0 ? (
           listNotifiaction?.map((noti, index) => {
             return (
