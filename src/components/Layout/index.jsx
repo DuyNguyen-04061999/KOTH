@@ -1,3 +1,4 @@
+import Hotjar from "@hotjar/browser";
 import { ArrowForwardIos } from "@mui/icons-material";
 import LanguageIcon from "@mui/icons-material/Language";
 import {
@@ -89,6 +90,7 @@ import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
 import "./index.scss";
+
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -189,6 +191,7 @@ export default function Layout(props) {
 
   useEffect(() => {
     if (router) {
+      Hotjar.stateChange(router);
       dispatch(toggleStartGame(false));
       dispatch(finishGame());
       dispatch(finishVideo());
