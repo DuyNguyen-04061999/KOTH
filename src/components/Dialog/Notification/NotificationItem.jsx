@@ -1,18 +1,20 @@
 import { Box } from "@mui/material";
+import moment from "moment";
 import React from "react";
 import { images } from "../../../utils/images";
 
 export default function NotificationItem(props) {
   const {
     content,
-    id,
-    otherId,
-    promotionId,
-    read,
-    status,
+    // id,
+    // otherId,
+    // promotionId,
+    // read,
+    // status,
     type,
-    userId,
+    // userId,
     otherAvatar,
+    createdAt,
   } = props;
 
   switch (type) {
@@ -69,7 +71,7 @@ export default function NotificationItem(props) {
                   color: "#9384B7",
                 }}
               >
-                11/20/2023, 11:21 am
+                {moment(createdAt)?.format("M/D/YYYY, hh:mm a")}
               </Box>
               <Box
                 component={"div"}
@@ -104,7 +106,38 @@ export default function NotificationItem(props) {
         );
       } else return <></>;
     }
-    default:
-      return <></>;
+    default: {
+      if (content) {
+        return (
+          <Box
+            component={"div"}
+            className="text-white d-flex p-2"
+            sx={{
+              background: "#2E233D",
+              borderBottom: "solid 1px #443565",
+            }}
+          >
+            <Box
+              className="ms-2"
+              sx={{
+                fontSize: 14,
+              }}
+            >
+              {content}
+              <Box
+                component={"div"}
+                className="mt-1 mb-1"
+                sx={{
+                  fontSize: 12,
+                  color: "#9384B7",
+                }}
+              >
+                {moment(createdAt)?.format("M/D/YYYY, hh:mm a")}
+              </Box>
+            </Box>
+          </Box>
+        );
+      } else return <></>;
+    }
   }
 }

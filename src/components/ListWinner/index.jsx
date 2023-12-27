@@ -13,7 +13,7 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function ListWinner() {
   const { listWinner } = useSelector((state) => state.appReducer);
-  console.log(listWinner);
+
   const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
 

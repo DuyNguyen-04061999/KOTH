@@ -79,11 +79,12 @@ export default function NotificationDialog() {
                 promotionId={noti?.promotionId}
                 id={noti?.id}
                 otherAvatar={noti?.nOther?.userAccount?.accountAvatar}
+                createdAt={noti?.createdAt}
               />
             );
           })
         ) : (
-          <Box className="p-2">No Data Yet!</Box>
+          <Box className="p-2 text-white">No Data Yet!</Box>
         )}
       </Box>
     </Dialog>
