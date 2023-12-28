@@ -182,7 +182,7 @@ export default function ListPackage(props) {
           <Typography
             variant="h1"
             sx={{
-              fontSize: width < 1200 ? "20px" : "30px",
+              fontSize: width < 1200 ? "20px" : "20px",
               marginTop: "25px",
               marginBottom: "15px !important",
               color: "white",
@@ -609,7 +609,7 @@ export default function ListPackage(props) {
           <Typography
             variant="h5"
             sx={{
-              fontSize: width < 1200 ? "14px" : "20px",
+              fontSize: width < 1200 ? "14px" : "16px",
               marginTop: "5px",
               marginBottom: "15px !important",
               color: "white",
