@@ -22,9 +22,7 @@ export default function NotificationDialog() {
   useEffect(() => {
     dispatch(getListNotification());
   }, [dispatch]);
-
   const { width, height } = useWindowDimensions();
-
   return (
     <Dialog
       fullScreen={width < 576}
@@ -37,7 +35,7 @@ export default function NotificationDialog() {
         sx:
           width > 576
             ? {
-                width: "300px",
+                width: "320px",
                 padding: 0,
                 margin: 0,
                 marginLeft: "auto !important",
