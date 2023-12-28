@@ -22,7 +22,7 @@ const Test = styled.input`
   padding: 10px 20px !important;
   color: #fff !important;
   font-weight: lighter !important;
-  font-family:"Cyntho Next";
+  font-family: "Cyntho Next";
   &:focus {
     outline: none;
   }
@@ -38,7 +38,7 @@ export default function ChatFriendList() {
   const { friendList, chatWorld } = useSelector((state) => state.chatReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  
+
   const handleChangeSearchChat = (e) => {
     setSearchFeild(e.target.value);
   };
@@ -107,7 +107,7 @@ export default function ChatFriendList() {
                         marginBottom: "0px !important",
                         fontSize: "12px",
                         fontWeight: "500 !important",
-                        letterSpacing:"1px"
+                        letterSpacing: "1px",
                       }}
                     >
                       {e.userNickName}
@@ -200,7 +200,7 @@ export default function ChatFriendList() {
                     color: "#7C81F2",
                     fontSize: "15px",
                     fontWeight: "500 !important",
-                    letterSpacing:"1px"
+                    letterSpacing: "1px",
                   }}
                 >
                   {e?.userNickName}
@@ -209,7 +209,7 @@ export default function ChatFriendList() {
                   style={{
                     color: "white",
                     fontWeight: "500 !important",
-                    letterSpacing:"1px"
+                    letterSpacing: "1px",
                   }}
                 >
                   {e?.receiveMessages?.map((e_m, i_e_m) => (
@@ -235,9 +235,7 @@ export default function ChatFriendList() {
                   ))
                 ) : (
                   <span>
-                    {moment(e?._gg_koth_user_friends?.createdAt).format(
-                      "LT"
-                    )}
+                    {moment(e?._gg_koth_user_friends?.createdAt).format("LT")}
                   </span>
                 )}
               </p>
@@ -282,7 +280,7 @@ export default function ChatFriendList() {
               border: "0px solid #3f3970",
               borderRadius: "4px",
               fontWeight: "lighter !important",
-              fontSize: "14px"
+              fontSize: "14px",
             }}
             onChange={handleChangeSearchChat}
             placeholder="Search"
