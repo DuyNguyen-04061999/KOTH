@@ -9,7 +9,10 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateOngoingPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getListPromotionNew, getOngoingTour } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  getListPromotionNew,
+  getOngoingTour,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -42,8 +45,8 @@ export default function HotTournament() {
   }, [width, dispatch]);
 
   useEffect(() => {
-    dispatch(getOngoingTour())
-    dispatch(getListPromotionNew({ type: "ongoing" }))
+    dispatch(getOngoingTour());
+    dispatch(getListPromotionNew({ type: "ongoing" }));
 
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",
@@ -56,9 +59,7 @@ export default function HotTournament() {
 
   useEffect(() => {
     if (ongoingTournament) {
-      dispatch(
-        updateOngoingPage(0)
-      );
+      dispatch(updateOngoingPage(0));
       setData(ongoingTournament);
     }
   }, [ongoingTournament, dispatch]);
@@ -155,7 +156,15 @@ export default function HotTournament() {
                 >
                   {" "}
                   {isFetchOngoing || data === null ? (
-                    <BannerLoading height={width < 576 ? "214px" : width <= 1200 ? "152.44px" : "363px"} />
+                    <BannerLoading
+                      height={
+                        width < 576
+                          ? "182.4px"
+                          : width <= 1200
+                          ? "152.44px"
+                          : "331px"
+                      }
+                    />
                   ) : (
                     <SlickSlider
                       type="tour"
@@ -290,7 +299,7 @@ export default function HotTournament() {
                       )}
                   </Box>
                 )}
-                
+
                 <NewFooter />
               </Container>
             )

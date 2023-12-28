@@ -188,8 +188,10 @@ export default function SlickSlider(props) {
           <Box
             key={index}
             sx={{
-              height: width < 576 ? "208px" : "100%",
-              minHeight: width > 1200 ? "331px" : width > 576 ? "152.44px" : "unset"
+              height:
+                width < 576 ? "182.4px" : width <= 1200 ? "152.44px" : "331px",
+              minHeight:
+                width < 576 ? "182.4px" : width <= 1200 ? "152.44px" : "331px",
             }}
             onClick={() => {
               if (typeR === "banner") {
@@ -208,10 +210,20 @@ export default function SlickSlider(props) {
             <LazyLoadImage
               style={{
                 width: "100%",
-                height: "331px",
+                height:
+                  width < 576
+                    ? "182.4px"
+                    : width <= 1200
+                    ? "152.44px"
+                    : "331px",
+                minHeight:
+                  width < 576
+                    ? "182.4px"
+                    : width <= 1200
+                    ? "152.44px"
+                    : "331px",
                 cursor: "pointer",
                 borderRadius: "8px",
-                objectFit: "contain",
               }}
               effect="blur"
               wrapperProps={{
@@ -240,7 +252,12 @@ export default function SlickSlider(props) {
                   key={index}
                   sx={{
                     height: width < 576 ? "182.4px" : "auto",
-                    minHeight: width > 1200 ? "331px" : width > 576 ? "152.44px" : "unset"
+                    minHeight:
+                      width < 576
+                        ? "182.4px"
+                        : width <= 1200
+                        ? "152.44px"
+                        : "331px",
                   }}
                 >
                   <LazyLoadImage
@@ -249,10 +266,15 @@ export default function SlickSlider(props) {
                     }}
                     style={{
                       width: "100%",
-                      height: width > 576 ? "331px" : "182.4px",
+                      height:
+                        width < 576
+                          ? "182.4px"
+                          : width <= 1200
+                          ? "152.44px"
+                          : "331px",
                       cursor: "pointer",
                       borderRadius: "8px",
-                      objectFit: "contain",
+                      // objectFit: "contain",
                     }}
                     src={
                       (device === "Mobile" ||

@@ -16,7 +16,10 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateHotPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getHotTour, getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  getHotTour,
+  getListPromotionNew,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -25,9 +28,7 @@ const theme = createTheme({
   typography: {},
   components: {
     MuiCssBaseline: {
-      styleOverrides: {
-       
-      },
+      styleOverrides: {},
     },
   },
 });
@@ -63,8 +64,8 @@ export default function HotTournament() {
   }, [hotPag]);
 
   useEffect(() => {
-    dispatch(getHotTour())
-    dispatch(getListPromotionNew({ type: "hot" }))
+    dispatch(getHotTour());
+    dispatch(getListPromotionNew({ type: "hot" }));
 
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",
@@ -170,7 +171,15 @@ export default function HotTournament() {
                 >
                   {" "}
                   {isFetchHot || data === null ? (
-                    <BannerLoading height={width < 576 ? "214px" : width <= 1200 ? "152.44px" : "363px"} />
+                    <BannerLoading
+                      height={
+                        width < 576
+                          ? "182.4px"
+                          : width <= 1200
+                          ? "152.44px"
+                          : "331px"
+                      }
+                    />
                   ) : (
                     <SlickSlider
                       type="tour"
