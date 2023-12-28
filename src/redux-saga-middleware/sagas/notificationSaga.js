@@ -52,7 +52,6 @@ function* cancelFriendSaga(dataRequest) {
       const { payload } = dataRequest;
       const res = yield call(notificationService.cancelFriend, payload);
       const { status, data } = res;
-      console.log(data);
       if (status === 200 || status === 201) {
         yield put(updateListNotification(data));
       } else {
