@@ -8,6 +8,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NotificationItem from "./NotificationItem";
 
 export default function NotificationDialog() {
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const { isNotificationDialog } = useSelector((state) => state.dialogReducer);
   const { listNotifiaction } = useSelector(
     (state) => state.notificationReducer
@@ -20,8 +21,10 @@ export default function NotificationDialog() {
   };
 
   useEffect(() => {
-    dispatch(getListNotification());
-  }, [dispatch]);
+    if (tokenUser) {
+      dispatch(getListNotification());
+    }
+  }, [dispatch, tokenUser]);
   const { width, height } = useWindowDimensions();
   return (
     <Dialog

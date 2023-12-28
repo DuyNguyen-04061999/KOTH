@@ -651,7 +651,13 @@ export default function Layout(props) {
           {width > 576 && (
             <Badge
               badgeContent={""}
-              onClick={() => dispatch(openNotificationDialog())}
+              onClick={() => {
+                if (token) {
+                  dispatch(openNotificationDialog());
+                } else {
+                  dispatch(openLoginDialog());
+                }
+              }}
               color="error"
               invisible
               className="me-3 cursor-pointer"
