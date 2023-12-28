@@ -189,9 +189,9 @@ export default function SlickSlider(props) {
             key={index}
             sx={{
               height:
-                width < 576 ? "182.4px" : width <= 1200 ? "152.44px" : "331px",
+                width < 576 ? "182.4px" : width <= 1200 ? "214px" : "331px",
               minHeight:
-                width < 576 ? "182.4px" : width <= 1200 ? "152.44px" : "331px",
+                width < 576 ? "182.4px" : width <= 1200 ? "214px" : "331px",
             }}
             onClick={() => {
               if (typeR === "banner") {
@@ -211,17 +211,9 @@ export default function SlickSlider(props) {
               style={{
                 width: "100%",
                 height:
-                  width < 576
-                    ? "182.4px"
-                    : width <= 1200
-                    ? "152.44px"
-                    : "331px",
+                  width < 576 ? "182.4px" : width <= 1200 ? "214px" : "331px",
                 minHeight:
-                  width < 576
-                    ? "182.4px"
-                    : width <= 1200
-                    ? "152.44px"
-                    : "331px",
+                  width < 576 ? "182.4px" : width <= 1200 ? "214px" : "331px",
                 cursor: "pointer",
                 borderRadius: "8px",
               }}
@@ -256,7 +248,7 @@ export default function SlickSlider(props) {
                       width < 576
                         ? "182.4px"
                         : width <= 1200
-                        ? "152.44px"
+                        ? "214px"
                         : "331px",
                   }}
                 >
@@ -270,7 +262,7 @@ export default function SlickSlider(props) {
                         width < 576
                           ? "182.4px"
                           : width <= 1200
-                          ? "152.44px"
+                          ? "214px"
                           : "331px",
                       cursor: "pointer",
                       borderRadius: "8px",
