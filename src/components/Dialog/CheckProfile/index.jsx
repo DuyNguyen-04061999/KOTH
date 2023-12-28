@@ -1,8 +1,12 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editProfile, toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import {
+  editProfile,
+  toggleProfileDialog,
+} from "../../../redux-saga-middleware/reducers/profileReducer";
 import { startGameInPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { toggleExtra } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import {
   getMyInfor,
   toggleCheckProfileDialog,
@@ -10,21 +14,30 @@ import {
 import AnimButton from "../../AnimButton";
 
 export default function CheckProfile(props) {
-  const { isCheckProfileDialog } = useSelector((state) => state.userReducer);
+  const { isCheckProfileDialog, countTicket } = useSelector(
+    (state) => state.userReducer
+  );
+  const { detailTournament } = useSelector((state) => state.playgameReducer);
+
   const dispatch = useDispatch();
   const { id } = props;
   const handleClose = () => {
     dispatch(toggleCheckProfileDialog());
-    dispatch(
-      startGameInPromotion({
-        tournamentId: id,
-      })
-    );
+    if (detailTournament?.extra === 0 && countTicket === 0) {
+      dispatch(toggleExtra());
+      return;
+    } else {
+      dispatch(
+        startGameInPromotion({
+          tournamentId: id,
+        })
+      );
+    }
   };
   const handleComplete = () => {
     dispatch(toggleCheckProfileDialog());
     dispatch(toggleProfileDialog());
-    dispatch(editProfile())
+    dispatch(editProfile());
     dispatch(getMyInfor());
   };
 
@@ -90,9 +103,9 @@ export default function CheckProfile(props) {
               }}
               className="text-start text-white"
             >
-              Great job on your Promotion play! Complete your profile by
-              adding your shipping address and birthday. This ensures you're
-              eligible to receive rewards. Click 'Complete Profile' now!
+              Great job on your Promotion play! Complete your profile by adding
+              your shipping address and birthday. This ensures you're eligible
+              to receive rewards. Click 'Complete Profile' now!
             </Typography>
           </Box>
           <Box display={"flex"}>
@@ -112,7 +125,7 @@ export default function CheckProfile(props) {
               <AnimButton
                 type="primary"
                 text="Complete"
-                onClick={handleComplete} 
+                onClick={handleComplete}
               />
             </Box>
           </Box>
@@ -122,4 +135,3 @@ export default function CheckProfile(props) {
     </>
   );
 }
- 

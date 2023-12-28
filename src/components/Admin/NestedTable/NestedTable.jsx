@@ -10,7 +10,7 @@ import {
   TableRow,
   Typography,
   tableClasses,
-  tableHeadClasses
+  tableHeadClasses,
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,83 +38,113 @@ const StyleTable = styled(Table)(({ theme }) => ({
 const BackIcon = () => {
   return (
     <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="17"
-        height="12"
-        fill="none"
-        viewBox="0 0 17 12"
-      >
-        <path
-          stroke="#336AEA"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M16 6H1M6 1L1 6l5 5"
-        ></path>
-      </svg>
-  )
-}
+      xmlns="http://www.w3.org/2000/svg"
+      width="17"
+      height="12"
+      fill="none"
+      viewBox="0 0 17 12"
+    >
+      <path
+        stroke="#336AEA"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M16 6H1M6 1L1 6l5 5"
+      ></path>
+    </svg>
+  );
+};
 
 const NextIcon = () => {
   return (
     <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="17"
-        height="12"
-        fill="none"
-        viewBox="0 0 17 12"
-      >
-        <path
-          stroke="#fff"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M1 6h15M11 1l5 5-5 5"
-        ></path>
-      </svg>
-  )
-}
+      xmlns="http://www.w3.org/2000/svg"
+      width="17"
+      height="12"
+      fill="none"
+      viewBox="0 0 17 12"
+    >
+      <path
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M1 6h15M11 1l5 5-5 5"
+      ></path>
+    </svg>
+  );
+};
 
 const CustomPagination = (props) => {
-  const { page, totalPage, onChangePage } = props
+  const { page, totalPage, onChangePage } = props;
 
   return (
     <Box component={"div"} className="d-flex justify-content-between mb-2 mt-3">
       <Box component={"div"}></Box>
       <Box component={"div"}>
         <Box component={"div"} className="d-flex">
-            <Box onClick={() => page > 0 ? onChangePage(page - 1) : false} component={"div"} className="rounded p-2 d-flex justify-content-center cursor-pointer" sx={{
+          <Box
+            onClick={() => (page > 0 ? onChangePage(page - 1) : false)}
+            component={"div"}
+            className="rounded p-2 d-flex justify-content-center cursor-pointer"
+            sx={{
               border: "1px solid #336AEA",
               width: 30,
-              height: 30
-            }}><BackIcon/></Box>
-            <Box onClick={() => page < totalPage - 1 ? onChangePage(page + 1) : false} component={"div"} className="rounded p-2 d-flex justify-content-center align-items-center ms-3 cursor-pointer" sx={{
+              height: 30,
+            }}
+          >
+            <BackIcon />
+          </Box>
+          <Box
+            onClick={() =>
+              page < totalPage - 1 ? onChangePage(page + 1) : false
+            }
+            component={"div"}
+            className="rounded p-2 d-flex justify-content-center align-items-center ms-3 cursor-pointer"
+            sx={{
               background: "#336AEA",
               height: 30,
-            }}>
-              <Typography className="me-2 text-white" sx={{ fontSize: 12 }}>Next Page</Typography>
-              <NextIcon/>
-            </Box>
+            }}
+          >
+            <Typography className="me-2 text-white" sx={{ fontSize: 12 }}>
+              Next Page
+            </Typography>
+            <NextIcon />
+          </Box>
         </Box>
       </Box>
       <Box component={"div"}>
         <Box component={"div"} className="d-flex align-items-center">
-            <Typography sx={{
+          <Typography
+            sx={{
               color: "#808191",
-              fontSize: 12
-            }}>Page</Typography>
-            <Box component={"div"} className="ps-3 pe-3 ms-2 me-2 rounded" sx={{
+              fontSize: 12,
+            }}
+          >
+            Page
+          </Typography>
+          <Box
+            component={"div"}
+            className="ps-3 pe-3 ms-2 me-2 rounded"
+            sx={{
               border: "1.5px solid #C8C8C8",
-            }}>{page + 1 || 0}</Box>
-            <Typography sx={{
+            }}
+          >
+            {page + 1 || 0}
+          </Box>
+          <Typography
+            sx={{
               color: "#808191",
-              fontSize: 12
-            }}>of {totalPage || 0}</Typography>
+              fontSize: 12,
+            }}
+          >
+            of {totalPage || 0}
+          </Typography>
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 const NestedTable = (props) => {
   const {
@@ -150,8 +180,8 @@ const NestedTable = (props) => {
   // }
 
   const onChangePage = (page) => {
-    setPage(page)
-  }
+    setPage(page);
+  };
 
   return (
     <Box sx={{}}>
@@ -166,10 +196,8 @@ const NestedTable = (props) => {
           "::-webkit-scrollbar": {
             height: "5px",
           },
-          "::webkit-scrollbar-thumb": {
-            
-          },
-          overflowX: "auto"
+          "::webkit-scrollbar-thumb": {},
+          overflowX: "auto",
         }}
         style={{ boxShadow: "unset" }}
         component={Paper}
@@ -207,9 +235,9 @@ const NestedTable = (props) => {
               </tr>
             )}
             {(rowsPerPage > 0
-            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : data
-          ).map((row, index) => (
+              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : data
+            ).map((row, index) => (
               <RowTable
                 key={index}
                 index={index}
@@ -273,10 +301,10 @@ const NestedTable = (props) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
         labelRowsPerPage={""}
       /> */}
-      <CustomPagination 
-        onChangePage={onChangePage} 
+      <CustomPagination
+        onChangePage={onChangePage}
         page={page}
-        totalPage={Math.round(Number(data.length/rowsPerPage))}
+        totalPage={Math.round(Number(data.length / rowsPerPage + 1))}
       />
       {detailAccount && (
         <Box
@@ -299,7 +327,10 @@ const NestedTable = (props) => {
           {detailAccount && (
             <Button
               onClick={() => {
-                if (detailAccount && window.location.pathname?.includes("manage")) {
+                if (
+                  detailAccount &&
+                  window.location.pathname?.includes("manage")
+                ) {
                   dispatch(openDetailDialog());
                 }
               }}

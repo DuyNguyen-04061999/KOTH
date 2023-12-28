@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
 import moment from "moment";
 import React from "react";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 import AddFriendComponent from "./AddFriendComponent";
-import NewMessage from "./NewMessage";
 import PromotionNotification from "./PromotionNotification";
 
 export default function NotificationItem(props) {
@@ -12,13 +13,17 @@ export default function NotificationItem(props) {
     id,
     // otherId,
     promotionId,
-    read,
+    // read,
     status,
     type,
     // userId,
     otherAvatar,
     createdAt,
   } = props;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   switch (type) {
     case 1: {
       if (content) {
@@ -33,20 +38,7 @@ export default function NotificationItem(props) {
         );
       } else return <></>;
     }
-    // case 2: {
-    //   if (content) {
-    //     return (
-    //       <NewMessage
-    //         content={content}
-    //         id={id}
-    //         status={status}
-    //         otherAvatar={otherAvatar}
-    //         createdAt={createdAt}
-    //         read={read}
-    //       />
-    //     );
-    //   } else return <></>;
-    // }
+    case 2:
     case 3: {
       if (content) {
         return (
@@ -54,6 +46,7 @@ export default function NotificationItem(props) {
             content={content}
             promotionId={promotionId}
             createdAt={createdAt}
+            type={type}
           />
         );
       } else return <></>;
@@ -67,6 +60,12 @@ export default function NotificationItem(props) {
             sx={{
               background: "#2E233D",
               borderBottom: "solid 1px #443565",
+            }}
+            onClick={() => {
+              if (promotionId) {
+                dispatch(closeNotificationDialog(false));
+                navigate("/promotion-detail/" + promotionId);
+              }
             }}
           >
             <Box

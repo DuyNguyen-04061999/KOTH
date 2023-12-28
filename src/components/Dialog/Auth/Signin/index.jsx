@@ -490,6 +490,7 @@ export default function Dialoglg() {
                       </Box>
                     ) : (
                       <Typography
+                        onClick={() => navigate("/packages")}
                         sx={{
                           fontSize: "10px",
                           textAlign: "center",

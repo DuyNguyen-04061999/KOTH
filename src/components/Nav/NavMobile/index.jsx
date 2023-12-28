@@ -4,7 +4,10 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  openLoginDialog,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import {
   showBadgeChat,
   updateOpenMenu,
@@ -1051,7 +1054,11 @@ export default function NavMobile() {
                         dispatch(updateOpenMess(false));
                         setOpenSearch(false);
                         dispatch(updateOpenMenu(false));
-                        dispatch(openNotificationDialog());
+                        if (token) {
+                          dispatch(openNotificationDialog());
+                        } else {
+                          dispatch(openLoginDialog());
+                        }
                       }}
                     >
                       <Badge

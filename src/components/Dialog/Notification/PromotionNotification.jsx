@@ -1,12 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
-import { useDispatch } from "react-redux";
 
 export default function PromotionNotification(props) {
-  const { createdAt, content, promotionId } = props;
+  const { createdAt, content, promotionId, type } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -26,7 +26,9 @@ export default function PromotionNotification(props) {
           fontWeight: "700",
         }}
       >
-        Promotion is about to start
+        {type === 2
+          ? "Promotion is about to start"
+          : "Promotion is about to end"}
       </Typography>
       <Box
         component={"div"}
