@@ -92,6 +92,13 @@ export const updateOpenMenu = (data) => {
   };
 };
 
+export const updateFriendNickName = (data) => {
+  return {
+    type: "UPDATE_FRIEND_NICKNAME",
+    payload: data,
+  };
+};
+
 const chatReducer = (
   state = {
     chatWorld: [],
@@ -105,6 +112,7 @@ const chatReducer = (
     badgechat: false,
     openMess: false,
     openMenu: false,
+    userFriendNickName: ""
   },
   action
 ) => {
@@ -119,9 +127,10 @@ const chatReducer = (
     case "UPDATE_CONTACTER_USERNAME": {
       return {
         ...state,
-        contacter: payload,
+        contacter: payload
       };
     }
+    case "UPDATE_FRIEND_NICKNAME": return {...state, userFriendNickName: payload || ""}
     case "PUSH_FRIEND_LIST": {
       return {
         ...state,
