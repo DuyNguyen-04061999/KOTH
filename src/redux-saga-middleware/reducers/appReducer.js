@@ -197,6 +197,27 @@ export const resetToGameWhenBuyPackageSuccess = (data) => {
   };
 }
 
+export const findPeople = (data) => {
+    return {
+      type: "FIND_PEOPLE",
+      payload: data,
+    }
+}
+
+export const findPeopleSuccess = (data) => {
+    return {
+      type: "FIND_PEOPLE_SUCCESS",
+      payload: data,
+    }
+}
+
+export const findPeopleFail = (data) => {
+    return {
+      type: "FIND_PEOPLE_FAIL",
+      payload: data,
+    }
+}
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -217,7 +238,9 @@ const appReducer = (
     listWinner:[],
     isListWinner:false,
     isPaypalPackageDialog: true,
-    isBuyPackageGameSuccess: false
+    isBuyPackageGameSuccess: false,
+    isFindPeople: false,
+    listFindPeople: []
   },
   action
 ) => {
@@ -285,6 +308,9 @@ const appReducer = (
     case "CLOSE_PAYPAL_PACKAGE_DIALOG": return {...state, isPaypalPackageDialog: false}
     case "NOTIFY_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS": return { ...state, isBuyPackageGameSuccess: true }
     case "RESET_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS": return { ...state, isBuyPackageGameSuccess: false }
+    case "FIND_PEOPLE": return {...state, isFindPeople: true}
+    case "FIND_PEOPLE_SUCCESS": return {...state, isFindPeople: false, listFindPeople: payload || []}
+    case "FIND_PEOPLE_FAIL": return {...state, isFindPeople: false}
     default:
       return { ...state };
   }
