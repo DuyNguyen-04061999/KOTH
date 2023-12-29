@@ -4,9 +4,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
+import { readNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
 
 export default function PromotionNotification(props) {
-  const { createdAt, content, promotionId, type } = props;
+  const { createdAt, content, promotionId, type, id } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -45,6 +46,11 @@ export default function PromotionNotification(props) {
       <Typography
         onClick={() => {
           dispatch(closeNotificationDialog(false));
+          dispatch(
+            readNotification({
+              id: id,
+            })
+          );
           navigate("/promotion-detail/" + promotionId);
         }}
         sx={{
