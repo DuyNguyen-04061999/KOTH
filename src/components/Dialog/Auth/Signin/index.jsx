@@ -497,6 +497,7 @@ export default function Dialoglg() {
                           marginLeft: "0px !important",
                           color: "#FF9F38",
                         }}
+                        className="cursor-pointer"
                       >
                         Click here
                       </Typography>

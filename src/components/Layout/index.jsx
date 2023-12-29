@@ -802,6 +802,7 @@ export default function Layout(props) {
           <Main
             id="layout-main"
             sx={{
+              marginLeft: width > 576 && width < 1200 ? "20px" : "unset",
               marginRight:
                 device === "Tablet" ||
                 (device === "Mobile" && orientation === "landscape") ||

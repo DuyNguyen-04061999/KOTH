@@ -54,6 +54,7 @@ export default function NotificationDialog() {
               },
       }}
       hideBackdrop={true}
+      disableScrollLock
     >
       <Box
         component={"div"}

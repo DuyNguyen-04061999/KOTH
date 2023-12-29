@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Box, Typography } from "@mui/material";
-import { CalculateDistance } from "../../../components/CountDownTimer/utils/CalculateDistance";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { CalculateDistance } from "../../../components/CountDownTimer/utils/CalculateDistance";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function CountDownBannerHot({
   expiryTime = "8/16/2023 07:00:00",
@@ -25,7 +25,7 @@ export default function CountDownBannerHot({
     };
   }, [expiryTime]);
   return width < 576 ? (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
       <Typography
         sx={{
           fontSize: "10px",
@@ -76,7 +76,7 @@ export default function CountDownBannerHot({
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Typography
         sx={{
-          fontSize: device === "Tablet" ? "15px" : "25.052px",
+          fontSize: device === "Tablet" ? "15px" : "15px",
           color: "white",
           marginLeft: "0px !important",
           lineHeight: 1.5,
