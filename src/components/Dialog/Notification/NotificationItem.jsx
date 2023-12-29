@@ -47,6 +47,7 @@ export default function NotificationItem(props) {
             promotionId={promotionId}
             createdAt={createdAt}
             type={type}
+            id={id}
           />
         );
       } else return <></>;

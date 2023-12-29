@@ -1,6 +1,7 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Typography } from "@mui/material";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,11 +12,10 @@ import {
   resetLoginState,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { sign } from "../../../../utils/images";
+import { riveFile } from "../../../../utils/rive";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
-import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
-import { riveFile } from "../../../../utils/rive";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -145,8 +145,17 @@ const Login = () => {
   useEffect(() => {
     dispatch(resetLoginState());
   }, [dispatch]);
+
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
+
   return (
-    <Box>
+    <Box
+      sx={{
+        marginTop:
+          orientation === "landscape" && device === "Mobile" ? "75px" : "unset",
+      }}
+    >
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "320px", height: "240px" }}>
           <RiveComponent />

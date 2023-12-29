@@ -11,7 +11,9 @@ const DoubleDayDialog = () => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { showDoubleDayDialog, randomRender } = useSelector((state) => state.appReducer);
+  const { showDoubleDayDialog, randomRender } = useSelector(
+    (state) => state.appReducer
+  );
   const handleClose = () => {
     dispatch(closeDoubleDayDialog());
   };
@@ -26,16 +28,14 @@ const DoubleDayDialog = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <Box
-              sx={{ position: "relative", cursor: "pointer" }}
-            >
+            <Box sx={{ position: "relative", cursor: "pointer" }}>
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.doubleDayBanneMB}
-                onClick={() =>{
+                src={images.doubleDayBanneMBNew}
+                onClick={() => {
                   handleClose();
-                  navigate("/packages")
+                  navigate("/packages");
                 }}
               ></Box>
               <Box
@@ -60,16 +60,14 @@ const DoubleDayDialog = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <Box
-              sx={{ position: "relative", cursor: "pointer" }}
-            >
+            <Box sx={{ position: "relative", cursor: "pointer" }}>
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.doubleDayBanner}
-                onClick={() =>{
+                src={images.doubleDayBannerNew}
+                onClick={() => {
                   handleClose();
-                  navigate("/packages")
+                  navigate("/packages");
                 }}
               ></Box>
               <Box

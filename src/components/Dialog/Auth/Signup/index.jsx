@@ -224,7 +224,12 @@ export default function Signup(props) {
   }, [email, phone, displayName, firstName, lastName]);
 
   return (
-    <Box className="signup">
+    <Box
+      className="signup"
+      sx={{
+        marginTop: "50px",
+      }}
+    >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
         <Box>
           <Typography

@@ -17,9 +17,19 @@ class AppService {
     return res
   }
 
-  async getListWinner(dataRequest) {
-    const res = await PROMOTION_API.get("/api/promotions/get-list-winner-recently")
-    return res
+  async findPeople (dataRequest) {
+    const res = await PROMOTION_API.get(
+      `/api/socials/find-user/${dataRequest}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+          authorization: localStorage.getItem("token"),
+          "x-access-refactor-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    return res;
   }
 }
 

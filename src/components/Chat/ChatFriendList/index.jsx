@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import styled from "styled-components";
 import "./index.scss";
 // import { Search } from "@mui/icons-material";
+import PlusIcon from "@mui/icons-material/Add";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateContacterUsername } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import FindUser from "../../Dialog/FindUser/FindUser";
 import ChatGlobal from "../ChatGlobal";
 
 const Test = styled.input`
@@ -37,6 +39,12 @@ export default function ChatFriendList() {
   const [searchFeild, setSearchFeild] = useState("");
   const { friendList, chatWorld } = useSelector((state) => state.chatReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
+  const [openFindPeople, setOpenFindPeople] = useState(false);
+
+  const closeFindPeopleDialog = () => {
+    setOpenFindPeople(false);
+  };
+
   const dispatch = useDispatch();
 
   const handleChangeSearchChat = (e) => {
@@ -64,6 +72,46 @@ export default function ChatFriendList() {
   const renderListFriend1 = () => {
     return (
       <>
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+          className=" pe-4"
+          onClick={() => {
+            setOpenFindPeople(true);
+          }}
+        >
+          <Box>
+            <Box
+              width={45}
+              height={45}
+              style={{ borderRadius: "50%", backgroundColor: "#7848ED" }}
+              className="m-2 d-flex justify-content-center align-items-center"
+            >
+              <PlusIcon
+                sx={{
+                  color: "#fff",
+                  fontSize: 30,
+                }}
+              />
+            </Box>
+          </Box>
+          <Box>
+            <Box>
+              <h6
+                style={{
+                  color: "white",
+                  marginBottom: "0px !important",
+                  fontSize: "12px",
+                  fontWeight: "500 !important",
+                  letterSpacing: "1px",
+                }}
+              >
+                Add more
+              </h6>
+            </Box>
+          </Box>
+        </Box>
         {listFriend && listFriend?.length > 0 ? (
           listFriend.map((e, index) => {
             return (
@@ -323,6 +371,7 @@ export default function ChatFriendList() {
           /> */}
         </Box>
       </Box>
+      {openFindPeople && <FindUser onCancel={closeFindPeopleDialog} />}
       <Box className="ps-3 pe-3">
         <div
           className="slider"

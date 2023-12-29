@@ -40,6 +40,21 @@ class NotificationService {
     );
     return res;
   }
+
+  async readNotification (dataRequest) {
+    const res = await PROMOTION_API.post(
+      `/api/notification/read/${dataRequest?.id}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+          authorization: localStorage.getItem("token"),
+          "x-access-refactor-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    return res;
+  }
 }
 
 export default NotificationService;

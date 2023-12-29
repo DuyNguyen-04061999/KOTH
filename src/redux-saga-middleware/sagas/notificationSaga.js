@@ -27,10 +27,12 @@ function* getListNotificationSaga(dataRequest) {
     yield put(getListNotificationFail());
   }
 }
+
+var acceptFriend = 0;
 function* acceptFriendSaga(dataRequest) {
   try {
-    notifyCount += 1;
-    if (notifyCount === 1) {
+    acceptFriend += 1;
+    if (acceptFriend === 1) {
       const { payload } = dataRequest;
       const res = yield call(notificationService.acceptFriend, payload);
       const { status, data } = res;
@@ -39,16 +41,18 @@ function* acceptFriendSaga(dataRequest) {
       } else {
       }
     }
-    notifyCount = 0;
+    acceptFriend = 0;
   } catch (error) {
-    notifyCount = 0;
+    acceptFriend = 0;
     yield put(getListNotificationFail());
   }
 }
+
+var cancelFriend = 0;
 function* cancelFriendSaga(dataRequest) {
   try {
-    notifyCount += 1;
-    if (notifyCount === 1) {
+    cancelFriend += 1;
+    if (cancelFriend === 1) {
       const { payload } = dataRequest;
       const res = yield call(notificationService.cancelFriend, payload);
       const { status, data } = res;
@@ -57,16 +61,38 @@ function* cancelFriendSaga(dataRequest) {
       } else {
       }
     }
-    notifyCount = 0;
+    cancelFriend = 0;
   } catch (error) {
-    notifyCount = 0;
+    cancelFriend = 0;
     yield put(getListNotificationFail());
   }
 }
+
+var readNoti = 0;
+function* readNotificationSaga(dataRequest) {
+  try {
+    readNoti += 1;
+    if (readNoti === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(notificationService.readNotification, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(updateListNotification(data));
+      } else {
+      }
+    }
+    readNoti = 0;
+  } catch (error) {
+    readNoti = 0;
+    yield put(getListNotificationFail());
+  }
+}
+
 function* notificationSaga() {
   yield takeEvery("GET_LIST_NOTIFICATION", getListNotificationSaga);
   yield takeEvery("ACCEPT_FRIEND_REQUEST", acceptFriendSaga);
   yield takeEvery("CANCEL_FRIEND_REQUEST", cancelFriendSaga);
+  yield takeEvery("READ_NOTIFICATION", readNotificationSaga);
 }
 
 export default notificationSaga;
