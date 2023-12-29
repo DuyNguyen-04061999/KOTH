@@ -45,8 +45,7 @@ import {
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
-  pushfriendList,
-  updateFriendList,
+  pushfriendList
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   checkoutPaypalCancel,
@@ -60,6 +59,7 @@ import {
   changeOrientation,
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
+import { addListNotificationSuccess } from "./redux-saga-middleware/reducers/notificationReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
 import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
 import {
@@ -71,7 +71,6 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-import { addListNotificationSuccess } from "./redux-saga-middleware/reducers/notificationReducer";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
