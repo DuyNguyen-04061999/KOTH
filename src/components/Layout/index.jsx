@@ -392,7 +392,7 @@ export default function Layout(props) {
   useEffect(() => {
     let currentDay = new Date();
     if (
-      (compareDate(currentDay, "12/29/2023") ||
+      (compareDate(currentDay, "01/01/2024") ||
         compareDate(currentDay, "01/02/2024") ||
         compareDate(currentDay, "01/03/2024")) &&
       !compareDate(currentDay, countDownNewYear)
