@@ -7,7 +7,10 @@ import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateContacterUsername } from "../../../redux-saga-middleware/reducers/chatReducer";
+import {
+  updateContacterUsername,
+  updateFriendNickName,
+} from "../../../redux-saga-middleware/reducers/chatReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import FindUser from "../../Dialog/FindUser/FindUser";
@@ -123,6 +126,7 @@ export default function ChatFriendList() {
                 className=" pe-2"
                 onClick={() => {
                   dispatch(updateContacterUsername(e?.userName, e?.id));
+                  dispatch(updateFriendNickName(e?.userNickName));
                   if (width < 576) {
                     setOpenMess(true);
                   } else {
@@ -220,6 +224,7 @@ export default function ChatFriendList() {
             }}
             onClick={() => {
               dispatch(updateContacterUsername(e?.userName, e?.id));
+              dispatch(updateFriendNickName(e?.userNickName));
               if (width < 576) {
                 setOpenMess(true);
               } else {

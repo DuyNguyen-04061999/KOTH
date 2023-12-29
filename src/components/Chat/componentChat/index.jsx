@@ -11,7 +11,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 export default function ComponentChat() {
   const [friendMessages, setFriendMess] = useState([]);
 
-  const { chatWorld, contacter, chatPopup } = useSelector(
+  const { chatWorld, contacter, chatPopup, userFriendNickName } = useSelector(
     (state) => state.chatReducer
   );
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
@@ -20,7 +20,7 @@ export default function ComponentChat() {
 
   const { width, height } = useWindowDimensions();
   const { user } = useSelector((state) => state.userReducer);
-  const userName = user?.userName || ""
+  const userName = user?.userName || "";
   const [socket, setSocket] = useState(null);
   const [gameId] = useState(0);
   const [roomId] = useState(0);
@@ -49,7 +49,7 @@ export default function ComponentChat() {
   };
 
   useEffect(() => {
-    let chatCurrent  = chatBox.current
+    let chatCurrent = chatBox.current;
     if (chatCurrent) {
       chatCurrent.addEventListener("scroll", handleScroll);
     }
@@ -279,7 +279,7 @@ export default function ComponentChat() {
                     fontWeight: "500 !important",
                   }}
                 >
-                  <b style={{}}>{e?.messageFromName}</b>
+                  <b style={{}}>{userFriendNickName}</b>
                 </span>
                 <Box>
                   <span

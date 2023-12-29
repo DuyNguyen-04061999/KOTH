@@ -300,6 +300,8 @@ function App() {
     }
     return () => {
       socket?.off("warning");
+      socket?.off("addFriendSuccess");
+      socket?.off("deleteFriendSuccess");
       socket?.disconnect();
     };
   }, [socket, tokenUser]);
