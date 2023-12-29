@@ -78,6 +78,7 @@ export default function SimpleDialog(props) {
                     right: "10px",
                     color: "gray",
                     fontSize: "30px",
+                    zIndex: 1,
                   }}
                   onClick={handleClose}
                 />
@@ -85,7 +86,9 @@ export default function SimpleDialog(props) {
               {currentTab === "login" ? (
                 <Login />
               ) : currentTab === "signup" ? (
-                <Signup />
+                <Box className="mt-5">
+                  <Signup />
+                </Box>
               ) : currentTab === "forgetPass" ? (
                 <ForgetPassword></ForgetPassword>
               ) : currentTab === "otpVerifyAccount" ? (
