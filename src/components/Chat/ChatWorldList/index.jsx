@@ -1,4 +1,6 @@
 import AddFriendIcon from "@mui/icons-material/Person";
+import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
+import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Avatar, Box } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -120,6 +122,30 @@ export default function ChatWorldList() {
       gameId: gameId,
     });
   };
+
+  const { friendList } = useSelector((state) => state.chatReducer);
+
+  const checkExistInFriendList = (messagefromName) => {
+    for (let i = 0; i < friendList.length; i++) {
+      if (friendList[i].userName === messagefromName) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleDeleteFriend = (username) => {
+    socket.emit("deleteFriend", {
+      username: username,
+    });
+  };
+
+  const handleAddFriend = (username) => {
+    socket.emit("addFriend", {
+      username: username,
+    });
+  };
+
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -574,8 +600,8 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {/* {tokenUser &&
-            (checkExistInFriendList() === true ? (
+          {tokenUser &&
+            (checkExistInFriendList(messagefromName) === true ? (
               <MenuItem
                 sx={{
                   padding: "5px",
@@ -583,7 +609,7 @@ export default function ChatWorldList() {
               >
                 <Box
                   className="p-1 text-white cursor-pointer"
-                  onClick={handleDeleteFriend}
+                  onClick={() => handleDeleteFriend(messagefromName)}
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "100%",
@@ -602,7 +628,7 @@ export default function ChatWorldList() {
                 }}
               >
                 <Box
-                  onClick={handleAddFriend}
+                  onClick={() => handleAddFriend(messagefromName)}
                   className="p-1 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
@@ -614,7 +640,7 @@ export default function ChatWorldList() {
                   Add Friend
                 </Box>
               </MenuItem>
-            ))} */}
+            ))}
         </Menu>
         {renderChat}
         <span ref={endOfMessageRef}></span>

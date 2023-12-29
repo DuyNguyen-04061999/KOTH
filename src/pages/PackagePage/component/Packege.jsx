@@ -12,7 +12,8 @@ import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
 import ListPackage from "./ListPackage";
 
-export default function Package() {
+export default function Package(props) {
+  const { type } = props;
   const { t } = useTranslation("package");
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.packageReducer);
@@ -87,7 +88,6 @@ export default function Package() {
     },
   };
 
-
   const theme = useTheme();
 
   useEffect(() => {
@@ -97,18 +97,31 @@ export default function Package() {
         item?.packageName === "Subscription" ||
         item?.packageName === "Combo Extra 2"
     );
-    if(width > 768 && width < 1200 && itemPackage && itemPackage?.length >= 3) {
-      [itemPackage[1], itemPackage[2]] = [itemPackage[2], itemPackage[1]].sort();
+    if (
+      width > 768 &&
+      width < 1200 &&
+      itemPackage &&
+      itemPackage?.length >= 3
+    ) {
+      [itemPackage[1], itemPackage[2]] = [
+        itemPackage[2],
+        itemPackage[1],
+      ].sort();
       setItem(itemPackage);
-    } else setItem(itemPackage)
-  }, [width, listPackage])
+    } else setItem(itemPackage);
+  }, [width, listPackage]);
 
   return (
     <DocumentMeta {...meta}>
       <>
         <DialogConfirm />
         {width > 768 ? (
-          <div className="Package-home pb-5 ">
+          <div
+            className="Package-home pb-5"
+            style={{
+              backgroundColor: type === "game_revive" ? "#211d28" : "unset",
+            }}
+          >
             <Box className="text-white">
               {(location && location?.pathname?.includes("home")) ||
               pathname === "/" ? (
@@ -138,21 +151,20 @@ export default function Package() {
                 {location && location?.pathname?.includes("packages") ? (
                   <Container>
                     <Box
-                  component={"img"}
-                  src={images.bgchristmas}
-                  alt="..."
-                  sx={{ width: "100%", height: "auto" }}
-                ></Box>
+                      component={"img"}
+                      src={images.bgchristmas}
+                      alt="..."
+                      sx={{ width: "100%", height: "auto" }}
+                    ></Box>
                   </Container>
                 ) : (
                   <Box
-                  component={"img"}
-                  src={images.bgchristmas}
-                  alt="..."
-                  sx={{ width: "100%", height: "auto" }}
-                ></Box>
+                    component={"img"}
+                    src={images.bgchristmas}
+                    alt="..."
+                    sx={{ width: "100%", height: "auto" }}
+                  ></Box>
                 )}
-               
               </Box>
             ) : (
               ""
@@ -167,81 +179,76 @@ export default function Package() {
                 <Box className="subscription_pack">
                   {theme?.theme === "christmas" ? (
                     <Grid
-                    container
-                    columnSpacing={1}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-around",
-                      marginTop:
-                        (location && location?.pathname?.includes("home")) ||
-                        pathname === "/"
-                          ? "20px"
-                          : "30px",
-                    }}
-                  >
-                    {item?.map((i, index) => {
-                      return (
-                        <Grid
-                          item
-                          sm={6}
-                          md={6}
-                          lg={4}
-                          xl={4}
-                          key={index}
-                        >
-                          <ListPackage
-                            packageName={i?.packageName}
-                            packageAvatar={i?.packageAvatar}
-                            packagePrice={i?.packagePrice}
-                            packageFreeTicketTournament={
-                              i?.packageFreeTicketTournament
-                            }
-                            packageReduceWatchAds={i?.packageReduceWatchAds}
-                            id={i?.id}
-                            avatarChristmas={i?.packageAvatarChristmas}
-                          />
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
+                      container
+                      columnSpacing={1}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        marginTop:
+                          (location && location?.pathname?.includes("home")) ||
+                          pathname === "/"
+                            ? "20px"
+                            : "30px",
+                      }}
+                    >
+                      {item?.map((i, index) => {
+                        return (
+                          <Grid item sm={6} md={6} lg={4} xl={4} key={index}>
+                            <ListPackage
+                              packageName={i?.packageName}
+                              packageAvatar={i?.packageAvatar}
+                              packagePrice={i?.packagePrice}
+                              packageFreeTicketTournament={
+                                i?.packageFreeTicketTournament
+                              }
+                              packageReduceWatchAds={i?.packageReduceWatchAds}
+                              id={i?.id}
+                              avatarChristmas={i?.packageAvatarChristmas}
+                              des={i?.packageDescription}
+                            />
+                          </Grid>
+                        );
+                      })}
+                    </Grid>
                   ) : (
                     <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-around",
-                      marginTop:
-                        (location && location?.pathname?.includes("home")) ||
-                        pathname === "/"
-                          ? "20px"
-                          : "30px",
-                    }}
-                  >
-                    {item?.map((i, index) => {
-                      return (
-                        <Box
-                          key={index}
-                          width={width < 576 ? 250 : 300}
-                          height={width < 576 ? 430 : 600}
-                        >
-                          <ListPackage
-                            packageName={i?.packageName}
-                            packageAvatar={i?.packageAvatar}
-                            packagePrice={i?.packagePrice}
-                            packageFreeTicketTournament={
-                              i?.packageFreeTicketTournament
-                            }
-                            packageReduceWatchAds={i?.packageReduceWatchAds}
-                            id={i?.id}
-                            avatarChristmas={i?.packageAvatarChristmas}
-                          />
-                        </Box>
-                      );
-                    })}
-                  </Box>
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        marginTop:
+                          (location && location?.pathname?.includes("home")) ||
+                          pathname === "/"
+                            ? "20px"
+                            : "30px",
+                      }}
+                    >
+                      {item?.map((i, index) => {
+                        return (
+                          <Box
+                            key={index}
+                            width={width < 576 ? 250 : 300}
+                            height={width < 576 ? 430 : 600}
+                          >
+                            <ListPackage
+                              packageName={i?.packageName}
+                              packageAvatar={i?.packageAvatar}
+                              packagePrice={i?.packagePrice}
+                              packageFreeTicketTournament={
+                                i?.packageFreeTicketTournament
+                              }
+                              packageReduceWatchAds={i?.packageReduceWatchAds}
+                              id={i?.id}
+                              avatarChristmas={i?.packageAvatarChristmas}
+                              des={i?.packageDescription}
+                            />
+                          </Box>
+                        );
+                      })}
+                    </Box>
                   )}
                 </Box>
               </Box>
@@ -251,7 +258,8 @@ export default function Package() {
           <div
             className="Package-home"
             style={{
-              marginTop: "48px",
+              backgroundColor: type === "game_revive" ? "#211d28" : "unset",
+              marginTop: type === "game_revive" ? "0px" : "48px",
               padding:
                 (location && location?.pathname?.includes("home")) ||
                 pathname === "/"
@@ -330,7 +338,11 @@ export default function Package() {
                 }}
               >
                 {(location && location?.pathname?.includes("home")) ||
-                pathname === "/" || (location && location?.pathname?.includes("packages") && width < 768 && width > 380) ? (
+                pathname === "/" ||
+                (location &&
+                  location?.pathname?.includes("packages") &&
+                  width < 768 &&
+                  width > 380) ? (
                   <ScrollingCarousel>
                     {item?.map((i, index) => {
                       return (
@@ -345,6 +357,7 @@ export default function Package() {
                             packageReduceWatchAds={i?.packageReduceWatchAds}
                             id={i?.id}
                             avatarChristmas={i?.packageAvatarChristmas}
+                            des={i?.packageDescription}
                           />
                         </Box>
                       );
@@ -354,9 +367,14 @@ export default function Package() {
                   <Box>
                     {item?.map((i, index) => {
                       return (
-                        <Box key={index} className="mb-5 d-flex justify-content-center" sx={{
-                          width: width === 768 ? "100%" : "unset",
-                        }}>
+                        <Box
+                          key={index}
+                          className="mb-5 d-flex justify-content-center"
+                          sx={{
+                            width: width === 768 ? "100%" : "unset",
+                            padding: width === 768 ? "100px" : "unset",
+                          }}
+                        >
                           <ListPackage
                             packageName={i?.packageName}
                             packageAvatar={i?.packageAvatar}
@@ -367,6 +385,7 @@ export default function Package() {
                             packageReduceWatchAds={i?.packageReduceWatchAds}
                             id={i?.id}
                             avatarChristmas={i?.packageAvatarChristmas}
+                            des={i?.packageDescription}
                           />
                         </Box>
                       );

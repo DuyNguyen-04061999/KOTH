@@ -33,7 +33,9 @@ export default function ListPackage(props) {
     packageReduceWatchAds,
     id,
     avatarChristmas,
+    des,
   } = props;
+
   const [socket, setSocket] = useState(null);
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
 
@@ -123,6 +125,15 @@ export default function ListPackage(props) {
   };
   const theme = useTheme();
 
+  function isJson(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   return (
     <>
       {theme?.theme === "christmas" ? (
@@ -171,7 +182,7 @@ export default function ListPackage(props) {
           <Typography
             variant="h1"
             sx={{
-              fontSize: width < 1200 ? "20px" : "30px",
+              fontSize: width < 1200 ? "20px" : "20px",
               marginTop: "25px",
               marginBottom: "15px !important",
               color: "white",
@@ -387,179 +398,55 @@ export default function ListPackage(props) {
                       </Box>
                     )}
                   </Box>
-                  {packageName !== "Subscription" && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        marginBottom: "5px",
-                        marginTop:
-                          packageName === "Subscription" ? "0px" : "5px",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
+                  {isJson(des) &&
+                  JSON.parse(des) &&
+                  JSON.parse(des)?.length > 0 ? (
+                    JSON.parse(des)?.map((d, i_d) => (
+                      <Box
+                        key={i_d}
                         sx={{
-                          fontSize: "14px",
-                          color: "#414345",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                          marginLeft: "4px !important",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          marginBottom: "5px",
+                          marginTop:
+                            packageName === "Subscription" ? "0px" : "5px",
                         }}
                       >
-                        {t("Use on any promotion")}
-                      </Typography>
-                    </Box>
-                  )}
-                  {packageName === "Subscription" ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontSize: "14px",
-                          color: "#414345",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                        }}
-                      >
-                        {t("Applies to all promotions")}
-                      </Typography>
-                    </Box>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          fill="none"
+                          viewBox="0 0 18 18"
+                        >
+                          <g>
+                            <path
+                              fill="#14C58A"
+                              d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
+                            ></path>
+                            <path
+                              fill="#fff"
+                              d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
+                            ></path>
+                          </g>
+                        </svg>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            fontSize: "14px",
+                            color: "#414345",
+                            textAlign: "start",
+                            fontWeight: "700 !important",
+                            marginLeft: "4px !important",
+                          }}
+                        >
+                          {d}
+                        </Typography>
+                      </Box>
+                    ))
                   ) : (
-                    <Box
-                    // sx={{
-                    //   height: "16.5px",
-                    // }}
-                    ></Box>
-                  )}
-                  {packageName === "Subscription" ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontSize: "14px",
-                          color: "#414345",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                        }}
-                      >
-                        {t("Every day for a month")}
-                      </Typography>
-                    </Box>
-                  ) : (
-                    <Box></Box>
-                  )}
-                  {packageName === "Subscription" ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontSize: "14px",
-                          color: "#414345",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                        }}
-                      >
-                        {t("Save over 20% more")}
-                      </Typography>
-                    </Box>
-                  ) : (
-                    <Box
-                    // sx={{
-                    //   height: "20.5px",
-                    // }}
-                    ></Box>
+                    <></>
                   )}
                 </Box>
                 {packagePrice === 0 ? (
@@ -722,7 +609,7 @@ export default function ListPackage(props) {
           <Typography
             variant="h5"
             sx={{
-              fontSize: width < 1200 ? "14px" : "20px",
+              fontSize: width < 1200 ? "14px" : "16px",
               marginTop: "5px",
               marginBottom: "15px !important",
               color: "white",
@@ -959,179 +846,55 @@ export default function ListPackage(props) {
                       </Box>
                     )}
                   </Box>
-                  {packageName !== "Subscription" && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        marginBottom: "5px",
-                        marginTop:
-                          packageName === "Subscription" ? "0px" : "5px",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
+                  {isJson(des) &&
+                  JSON.parse(des) &&
+                  JSON.parse(des)?.length > 0 ? (
+                    JSON.parse(des)?.map((d, i_d) => (
+                      <Box
+                        key={i_d}
                         sx={{
-                          fontSize: "14px",
-                          color: "white",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                          marginLeft: "4px !important",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          marginBottom: "5px",
+                          marginTop:
+                            packageName === "Subscription" ? "0px" : "5px",
                         }}
                       >
-                        {t("Use on any promotion")}
-                      </Typography>
-                    </Box>
-                  )}
-                  {packageName === "Subscription" ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontSize: "14px",
-                          color: "white",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                        }}
-                      >
-                        {t("Applies to all promotions")}
-                      </Typography>
-                    </Box>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          fill="none"
+                          viewBox="0 0 18 18"
+                        >
+                          <g>
+                            <path
+                              fill="#14C58A"
+                              d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
+                            ></path>
+                            <path
+                              fill="#fff"
+                              d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
+                            ></path>
+                          </g>
+                        </svg>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            fontSize: "14px",
+                            color: "#414345",
+                            textAlign: "start",
+                            fontWeight: "700 !important",
+                            marginLeft: "4px !important",
+                          }}
+                        >
+                          {d}
+                        </Typography>
+                      </Box>
+                    ))
                   ) : (
-                    <Box
-                      sx={{
-                        height: "16.5px",
-                      }}
-                    ></Box>
-                  )}
-                  {packageName === "Subscription" ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontSize: "14px",
-                          color: "white",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                        }}
-                      >
-                        {t("Every day for a month")}
-                      </Typography>
-                    </Box>
-                  ) : (
-                    <Box></Box>
-                  )}
-                  {packageName === "Subscription" ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <g>
-                          <path
-                            fill="#14C58A"
-                            d="M8.717.599a8.297 8.297 0 108.296 8.296A8.306 8.306 0 008.718.6z"
-                          ></path>
-                          <path
-                            fill="#fff"
-                            d="M13.941 6.096L8.99 11.543a.78.78 0 01-.49.23.86.86 0 01-.545-.12L4.418 9.362c-.313-.203-.363-.572-.113-.825s.705-.294 1.017-.091l2.949 1.912 4.505-4.955c.148-.18.406-.28.67-.259.266.02.496.158.6.357a.5.5 0 01-.105.595z"
-                          ></path>
-                        </g>
-                      </svg>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontSize: "14px",
-                          color: "white",
-                          textAlign: "start",
-                          fontWeight: "700 !important",
-                        }}
-                      >
-                        {t("Save over 20% more")}
-                      </Typography>
-                    </Box>
-                  ) : (
-                    <Box
-                      sx={{
-                        height: "20.5px",
-                      }}
-                    ></Box>
+                    <></>
                   )}
                 </Box>
                 {packagePrice === 0 ? (

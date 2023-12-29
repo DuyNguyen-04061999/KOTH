@@ -2,8 +2,9 @@ import {
     Box,
     Dialog
 } from "@mui/material";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Package } from "../../../pages/PackagePage/component";
 import { closePaypalPackageDialog } from '../../../redux-saga-middleware/reducers/appReducer';
 
 export default function PackagePaypalDialog() {
@@ -11,19 +12,33 @@ export default function PackagePaypalDialog() {
     const dispatch = useDispatch()
     const handleClose = () => {
         dispatch(closePaypalPackageDialog())
+        window.close()
     }
 
+    useEffect(() => {
+        const handlePopState = (event) => {
+          // Handle popstate event here
+            window.close()
+        };
+    
+        // Add event listener for popstate
+        window.addEventListener('popstate', handlePopState);
+    
+        // Clean up the event listener when the component unmounts
+        return () => {
+          window.removeEventListener('popstate', handlePopState);
+        };
+      }); 
+
     return (
-        <Dialog open={isPaypalPackageDialog} onClose={handleClose} maxWidth={"md"} sx={{
+        <Dialog open={isPaypalPackageDialog} onClose={handleClose} maxWidth={"lg"} sx={{
             
-        }}>
+        }} fullWidth>
             <Box component={"div"} sx={{
                 height: "100%",
                 width: "100%"
             }}>
-                <iframe title="paypal" sandbox="allow-top-navigation-by-user-activation allow-same-origin allow-scripts allow-popups allow-forms" src={process.env.REACT_APP_PAYPAL_PACKAGE_URL} height={"500"} width={"500"}>
-
-                </iframe>
+                <Package type="game_revive"/>
             </Box>
         </Dialog>
     )

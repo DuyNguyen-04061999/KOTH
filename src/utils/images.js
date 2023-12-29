@@ -288,8 +288,13 @@ import bannerTop1Mobile from "../assets/imagesHome/bannerTop1Mobile.png";
 import banner_win_Mobile from "../assets/imagesHome/banner_win_Mobile.png";
 import brandAvatar from "../assets/imagesHome/brandAvatar.png";
 import hatMobile from "../assets/imagesHome/hatMobile.png";
+import hpny_popup_dk from "../assets/imagesHome/hpny_popup_dk.png";
+import hpny_popup_mb from "../assets/imagesHome/hpny_popup_mb.png";
+import imageSignIn from "../assets/imagesHome/imageSignIn.png";
 import megaholicMobile from "../assets/imagesHome/megaholicMobile.png";
 import ringMobile from "../assets/imagesHome/ringMobile.png";
+import signInBgBanner from "../assets/imagesHome/signInBgBanner.png";
+import signInTitle from "../assets/imagesHome/signInTitle.png";
 import titleImage from "../assets/imagesHome/titleImage.png";
 import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
 import top1Icon from "../assets/imagesHome/top1Icon.png";
@@ -340,6 +345,7 @@ import NavFilterActive from "../assets/images/DocumentActive.png";
 import NavSettingActive from "../assets/images/SettingActive.png";
 import payPalIcon from "../assets/images/payPalIcon.png";
 
+import activeNavPromotion from "../assets/images/navbar/activeNavPromotion.png";
 import NavEnded from "../assets/images/navbar/ended.png";
 import NavHelpCenter from "../assets/images/navbar/helpcenter.png";
 import NavHome from "../assets/images/navbar/home.png";
@@ -377,21 +383,26 @@ import doubleDayBanner from "../assets/images/doubleDay.jpg";
 import doubleDayBanneMB from "../assets/images/doubleDayMB.jpg";
 import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
 import doubleDayPackBannerMB from "../assets/images/doubleDayPackMB.jpg";
-import englishIcon from "../assets/images/englishIcon.png";
-import turkishICon from "../assets/images/turkishIcon.png";
+//
+import bgchristmas from "../assets/images/banners/bgchristmas.png";
 import christ1 from "../assets/images/banners/christ1.png";
 import christ2 from "../assets/images/banners/christ2.png";
 import christ3 from "../assets/images/banners/christ3.png";
 import christbg from "../assets/images/banners/christbg.png";
 import ribbon from "../assets/images/banners/ribbon.png";
-import bgchristmas from "../assets/images/banners/bgchristmas.png";
+import doubleDayPackBannerNew from "../assets/images/double/desktop_popup1@2x.png";
+import doubleDayBannerNew from "../assets/images/double/desktop_popup2@2x.png";
+import doubleDayPackBannerMBNew from "../assets/images/double/mobile_popup1@2x.png";
+import doubleDayBanneMBNew from "../assets/images/double/mobile_popup2@2x.png";
+import englishIcon from "../assets/images/englishIcon.png";
+import turkishICon from "../assets/images/turkishIcon.png";
 
 import avatarFrame from "../assets/images/banners/bannerTour/christmasBanner/avatarFrame.png";
 import christmasBanner from "../assets/images/banners/bannerTour/christmasBanner/christmasBanner.png";
+import christmasMobileBanner from "../assets/images/banners/bannerTour/christmasBanner/christmasMobileBanner.png";
 import numberOne from "../assets/images/banners/bannerTour/christmasBanner/numberOne.png";
 import stIcon from "../assets/images/banners/bannerTour/christmasBanner/stIcon.png";
 import winnerFrame from "../assets/images/banners/bannerTour/christmasBanner/winnerFrame.png";
-import christmasMobileBanner from "../assets/images/banners/bannerTour/christmasBanner/christmasMobileBanner.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -433,11 +444,17 @@ export const imageHome = {
   numberOne: numberOne,
   stIcon: stIcon,
   christmasMobileBanner: christmasMobileBanner,
+  imageSignIn: imageSignIn,
+  signInBgBanner: signInBgBanner,
+  signInTitle: signInTitle,
+  hpny_popup_dk: hpny_popup_dk,
+  hpny_popup_mb: hpny_popup_mb,
 };
 
 export const navbar = {
   navHome: NavHome,
   navPromotion: NavPromotion,
+  activeNavPromotion: activeNavPromotion,
   navHot: NavHot,
   navVip: NavVip,
   navStandard: NavStandard,
@@ -639,6 +656,10 @@ export const images = {
   doubleDayPackBanner: doubleDayPackBanner,
   doubleDayPackBannerMB: doubleDayPackBannerMB,
   doubleDayBanneMB: doubleDayBanneMB,
+  doubleDayBannerNew: doubleDayBannerNew,
+  doubleDayPackBannerNew: doubleDayPackBannerNew,
+  doubleDayPackBannerMBNew: doubleDayPackBannerMBNew,
+  doubleDayBanneMBNew: doubleDayBanneMBNew,
   christ1: christ1,
   christ2: christ2,
   christ3: christ3,

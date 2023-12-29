@@ -1,4 +1,6 @@
+import { PersonAddAlt1 } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import {
   Autocomplete,
   Box,
@@ -6,22 +8,23 @@ import {
   FormControl,
   Grid,
   Input,
+  MenuItem,
   Slide,
   TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
-import { forwardRef, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
-// import _socket from "../../../redux-saga-middleware/config/socket";
 import { styled, withStyles } from "@mui/styles";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
+import { forwardRef, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
 import {
@@ -140,11 +143,11 @@ export default function DialogProfile(props) {
     firstName,
     lastName,
   ]);
-  // const [socket, setSocket] = useState(null);
-  // useEffect(() => {
-  //   const socket = _socket;
-  //   setSocket(socket);
-  // }, []);
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, []);
   const [tab, setTab] = useState(0);
   const handleChangeState = (event, newValue) => {
     if (newValue) {
@@ -251,6 +254,29 @@ export default function DialogProfile(props) {
         })
       );
     }
+  };
+
+  const { friendList } = useSelector((state) => state.chatReducer);
+
+  const checkExistInFriendList = () => {
+    for (let i = 0; i < friendList.length; i++) {
+      if (friendList[i].userName === userNameProfile) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleDeleteFriend = (username) => {
+    socket.emit("deleteFriend", {
+      username: userNameProfile,
+    });
+  };
+
+  const handleAddFriend = (username) => {
+    socket.emit("addFriend", {
+      username: userNameProfile,
+    });
   };
 
   const renderUserInfo = () => {
@@ -602,6 +628,50 @@ export default function DialogProfile(props) {
           ) : (
             <Box>
               <Box component={"form"} className="mt-2">
+                {tokenUser &&
+                  userNameProfile !== user?.userName &&
+                  (checkExistInFriendList() === true ? (
+                    <MenuItem
+                      sx={{
+                        padding: "5px",
+                      }}
+                    >
+                      <Box
+                        className="p-1 text-white cursor-pointer d-flex justify-content-center pt-2 pb-2"
+                        onClick={handleDeleteFriend}
+                        sx={{
+                          background:
+                            "linear-gradient(180deg, #843ff0, #7748ed)",
+                          width: "100%",
+                          fontWeight: "bold",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        <DeleteFriendIcon className="me-2 pb-1" />
+                        <span> Delete Friend</span>
+                      </Box>
+                    </MenuItem>
+                  ) : (
+                    <MenuItem
+                      sx={{
+                        padding: "5px",
+                      }}
+                    >
+                      <Box
+                        onClick={handleAddFriend}
+                        className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                        sx={{
+                          background:
+                            "linear-gradient(180deg, #843ff0, #7748ed)",
+                          width: "100%",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        <PersonAddAlt1 className="me-2 pb-1" />
+                        Add Friend
+                      </Box>
+                    </MenuItem>
+                  ))}
                 <hr
                   style={{
                     border: "1px solid #A89CD7",
@@ -683,13 +753,16 @@ export default function DialogProfile(props) {
                     </Typography>
                   </Box>
                 </Box>
-                <hr
-                  style={{
-                    border: "1px solid #A89CD7",
-                    marginBottom: "0.5rem",
-                    marginTop: "0.5rem",
-                  }}
-                />
+
+                {tokenUser && userNameProfile === user?.userName && (
+                  <hr
+                    style={{
+                      border: "1px solid #A89CD7",
+                      marginBottom: "0.5rem",
+                      marginTop: "0.5rem",
+                    }}
+                  />
+                )}
                 {tokenUser && userNameProfile === user?.userName && (
                   <Box>
                     <Box className="Email-address d-flex align-items-center mb-2">
@@ -856,7 +929,7 @@ export default function DialogProfile(props) {
               }}
             >
               <Box sx={{ display: "flex" }}>
-              <Box
+                <Box
                   className="Firstname mb-3 d-flex flex-column align-items-start"
                   sx={{ width: "100%" }}
                 >
@@ -966,7 +1039,6 @@ export default function DialogProfile(props) {
                     />
                   </FormControl>{" "}
                 </Box>
-               
               </Box>
               <Box className="Display-Name mb-3 d-flex flex-column align-items-start">
                 <Typography
@@ -1348,7 +1420,9 @@ export default function DialogProfile(props) {
                     value={
                       stateProfile[
                         stateProfile?.findIndex((s) => s?.name === stateOption)
-                      ] || stateOption || ""
+                      ] ||
+                      stateOption ||
+                      ""
                     }
                     defaultValue={stateOption || ""}
                     sx={{
@@ -1813,8 +1887,16 @@ export default function DialogProfile(props) {
           setValue(dayjs(birthDay) || new Date());
           handleShowProfile();
         }}
-        maxWidth={"md"}
+        maxWidth={"lg"}
         TransitionComponent={Transition}
+        PaperProps={{
+          sx: {
+            width:
+              width > 576 && userNameProfile !== user?.userName
+                ? "300px"
+                : "unset",
+          },
+        }}
         sx={{
           "& .MuiPaper-root-MuiDialog-paper": {
             backgroundColor: "#291e3b",

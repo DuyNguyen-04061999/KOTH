@@ -8,10 +8,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
 export default function ListWinner() {
   const { listWinner } = useSelector((state) => state.appReducer);
+
   const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
 
@@ -39,7 +41,7 @@ export default function ListWinner() {
           <Typography
             sx={{
               color: "white",
-              fontSize: "24px",
+              fontSize: width < 576 ? "14px" : "24px",
               fontWeight: "700 !important",
             }}
           >
@@ -52,10 +54,13 @@ export default function ListWinner() {
             height: 365,
             backgroundColor: "#2E233D !important",
             color: "white !important",
-            overflowY:"hidden"
+            overflowY: "hidden",
           }}
         >
-          <Table sx={{ minWidth: device === "Mobile" ? 300 : 650 }} aria-label="simple table">
+          <Table
+            sx={{ minWidth: device === "Mobile" ? 300 : 650 }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell
@@ -105,22 +110,22 @@ export default function ListWinner() {
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
                     backgroundColor: index % 2 === 0 ? "#443565" : "",
-                    height: "auto"
+                    height: "auto",
                   }}
                 >
                   <TableCell
-                    sx={{ borderBottom: "none", color: "white", }}
+                    sx={{ borderBottom: "none", color: "white" }}
                     align="left"
                     component="th"
                     scope="row"
                   >
-                    {row.promotionTitle.slice(0,30)}
+                    {row.promotionTitle.slice(0, 30)}
                   </TableCell>
                   {device === "Mobile" ? (
                     ""
                   ) : (
                     <TableCell
-                      sx={{ borderBottom: "none", color: "white"}}
+                      sx={{ borderBottom: "none", color: "white" }}
                       align="left"
                     >
                       {row.prizeName}
@@ -130,13 +135,54 @@ export default function ListWinner() {
                     sx={{ borderBottom: "none", color: "white" }}
                     align="left"
                   >
-                    {row.playerName}
+                    <Box className="d-flex">
+                      {row?.isVip && (
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            backgroundColor: "#FFBB33",
+                            color: "white",
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: "12px",
+                              marginLeft: "0px !important",
+                              paddingRight: "5px",
+                              paddingLeft: "5px",
+                            }}
+                          >
+                            VIP
+                          </Typography>
+                        </Box>
+                      )}
+                      {row.playerName}
+                    </Box>
                   </TableCell>
                   <TableCell
                     sx={{ borderBottom: "none", color: "white" }}
                     align="left"
                   >
-                    {row.gameName}
+                    {row?.gameAvatar && (
+                      <Box
+                        component={"img"}
+                        sx={{
+                          width: 25,
+                          height: 25,
+                        }}
+                        className="rounded me-2"
+                        src={
+                          row?.gameAvatar
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              row?.gameAvatar
+                            : images.undefinedAvatar
+                        }
+                      ></Box>
+                    )}
+                    {row?.gameName}
                   </TableCell>
                   {device === "Mobile" ? (
                     ""

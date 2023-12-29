@@ -28,13 +28,11 @@ const DoubleDayPackDialog = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <Box
-              sx={{ position: "relative", cursor: "pointer" }}
-            >
+            <Box sx={{ position: "relative", cursor: "pointer" }}>
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.doubleDayPackBannerMB}
+                src={images.doubleDayPackBannerMBNew}
                 onClick={() => {
                   handleClose();
                   navigate("/packages");
@@ -62,13 +60,11 @@ const DoubleDayPackDialog = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <Box
-              sx={{ position: "relative", cursor: "pointer" }}
-            >
+            <Box sx={{ position: "relative", cursor: "pointer" }}>
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.doubleDayPackBanner}
+                src={images.doubleDayPackBannerNew}
                 onClick={() => {
                   handleClose();
                   navigate("/packages");

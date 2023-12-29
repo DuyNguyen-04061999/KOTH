@@ -1,3 +1,4 @@
+import Hotjar from '@hotjar/browser';
 import { call, delay, getContext, put, takeEvery } from "redux-saga/effects";
 import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
@@ -54,6 +55,7 @@ import {
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
+
 const userService = new UserService();
 var loginCount = 0;
 function* loginSaga(dataRequest) {
@@ -286,6 +288,10 @@ function* userInfoSaga(dataRequest) {
       const res = yield call(userService.userInfo, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
+        Hotjar.identify(data?.data?.user?.id, {
+        //thong tin neu can tracking
+          full_name: data?.data?.user?.userFullName,
+        });
         yield put(getUserInfoSuccess(data?.data));
         yield put(saveNickNameWhenLogin(data?.data?.nickName));
         if (

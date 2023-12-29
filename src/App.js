@@ -35,14 +35,17 @@ import {
   hideToastNotification,
   showToastNotification,
 } from "./redux-saga-middleware/reducers/alertReducer";
-import { getListBet, getListWinner } from "./redux-saga-middleware/reducers/appReducer";
+import {
+  getListBet,
+  getListWinner,
+} from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
   updateSubPackageId,
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
-  pushfriendList,
+  pushfriendList
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   checkoutPaypalCancel,
@@ -56,8 +59,13 @@ import {
   changeOrientation,
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
+import { addListNotificationSuccess } from "./redux-saga-middleware/reducers/notificationReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import { getUserInfoReady, updateCountTicket } from "./redux-saga-middleware/reducers/userReducer";
+import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
+import {
+  getUserInfoReady,
+  updateCountTicket,
+} from "./redux-saga-middleware/reducers/userReducer";
 import { detectDevice } from "./utils/detectDevice";
 import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
@@ -85,7 +93,6 @@ const SuspenseWrapper = (props) => {
   const { child } = props;
   return <Suspense fallback={<PageLoading />}>{child}</Suspense>;
 };
-
 
 function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
@@ -257,26 +264,26 @@ function App() {
         store.dispatch(updateCountTicket(quantity || 0));
       });
 
-      // socket?.on("addFriendSuccess", (data) => {
-      //   store.dispatch(
-      //     showToastNotification({
-      //       type: "success",
-      //       message: "Add friend successfully!",
-      //     })
-      //   );
-      //   store.dispatch(updateFriendList(data));
-      // });
+      socket?.on("addFriendSuccess", (data) => {
+        store.dispatch(
+          showToastNotification({
+            type: "success",
+            message: "You get a new notification",
+          })
+        );
+        store.dispatch(addListNotificationSuccess(data));
+      });
 
-      // socket?.on("deleteFriendSuccess", (data) => {
-      //   store.dispatch(
-      //     showToastNotification({
-      //       type: "success",
-      //       message: "Delete friend successfully!",
-      //     })
-      //   );
-      //   socket?.emit("listFriend");
-      //   store.dispatch(deleteFriendSuccesFully("success"));
-      // });
+      socket?.on("deleteFriendSuccess", (data) => {
+        store.dispatch(
+          showToastNotification({
+            type: "success",
+            message: "Delete friend successfully!",
+          })
+        );
+        socket?.emit("listFriend");
+        store.dispatch(deleteFriendSuccesFully("success"));
+      });
 
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
@@ -349,7 +356,7 @@ function App() {
 
   useEffect(() => {
     store.dispatch(getListPackage());
-    store.dispatch(getListWinner())
+    store.dispatch(getListWinner());
   }, []);
 
   useEffect(() => {
@@ -359,13 +366,15 @@ function App() {
     const paymentType = params.get("type");
     const paymentStatus = params.get("result");
     const gameStatus = params.get("game");
+    const subId = params.get("subscription_id");
 
     if (paymentType === "paypal" && paymentStatus === "success") {
       store.dispatch(
         checkoutPaypalSuccess({
           paymentId: paymentId,
+          subId: subId,
           payerId: PayerID,
-          game: gameStatus ? true : false
+          game: gameStatus ? true : false,
         })
       );
     }
@@ -374,7 +383,8 @@ function App() {
       store.dispatch(
         checkoutPaypalCancel({
           paymentId: paymentId,
-          game: gameStatus ? true : false
+          subId: subId,
+          game: gameStatus ? true : false,
         })
       );
     }
@@ -391,65 +401,69 @@ function App() {
     };
 
     // Check if the page has already loaded
-    if (document.readyState === 'complete') {
+    if (document.readyState === "complete") {
       onPageLoad();
     } else {
-      window.addEventListener('load', onPageLoad, false);
+      window.addEventListener("load", onPageLoad, false);
       // Remove the event listener when component unmounts
-      return () => window.removeEventListener('load', onPageLoad);
+      return () => window.removeEventListener("load", onPageLoad);
     }
   }, [currentTab, tokenUser]);
 
-  const [theme, setTheme] = useState(createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        x300: 300,
-        mobile: 576,
-        sm: 600,
-        tablet: 640,
-        md: 900,
-        laptop: 1024,
-        lg: 1200,
-        desktop: 1200,
-        xl: 1536,
+  const [theme, setTheme] = useState(
+    createTheme({
+      breakpoints: {
+        values: {
+          xs: 0,
+          x300: 300,
+          mobile: 576,
+          sm: 600,
+          tablet: 640,
+          md: 900,
+          laptop: 1024,
+          lg: 1200,
+          desktop: 1200,
+          xl: 1536,
+        },
       },
-    },
-    typography: {
-      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
-    },
-    button: {
-      fontFamily: ["Cyntho Next", "sans-serif"].join(","),
-    },
-    theme: "normal"
-  }))
+      typography: {
+        fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+      },
+      button: {
+        fontFamily: ["Cyntho Next", "sans-serif"].join(","),
+      },
+      theme: "normal",
+    })
+  );
 
-  const [loadingSetting, setLoadingSettting] = useState(false)
+  const [loadingSetting, setLoadingSettting] = useState(false);
   const fetchGetSetting = async (type) => {
     try {
       setLoadingSettting(true);
-        const response = await fetch(`${process.env.REACT_APP_PROMOTION_URL}/api/settings`)
-        if (response.ok) {
-            // Parse the response JSON
-            const result = await response.json();
-            setTheme({...theme, theme: result?.theme || "normal"})
-        } else {
-            // Handle errors, e.g., set an error state
-            console.error('Error fetching data:', response.statusText);
-        }
+      const response = await fetch(
+        `${process.env.REACT_APP_PROMOTION_URL}/api/settings`
+      );
+      if (response.ok) {
+        // Parse the response JSON
+        const result = await response.json();
+        setTheme({ ...theme, theme: result?.theme || "normal" });
+      } else {
+        // Handle errors, e.g., set an error state
+        console.error("Error fetching data:", response.statusText);
+      }
     } catch (error) {
-        // Handle network errors or other exceptions
-        console.error('Error fetching data:', error.message);
+      // Handle network errors or other exceptions
+      console.error("Error fetching data:", error.message);
     } finally {
       setLoadingSettting(false);
     }
-}
+  };
 
-useEffect(() => {    
-  console.log(loadingSetting);
+  useEffect(() => {
+    console.log(loadingSetting);
     // Call the fetchData function
-    if(!loadingSetting) fetchGetSetting()
-}, [])
+    if (!loadingSetting) fetchGetSetting();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -460,12 +474,12 @@ useEffect(() => {
               {" "}
               <ScrollToTopURL />
               <Routes>
-                <Route
-                  path="/playgame/:id"
-                  element={<PlayGamePage />}
-                />
+                <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />
-                <Route path="game/iframe/:id" element={<GameDetailIframePage />} />
+                <Route
+                  path="game/iframe/:id"
+                  element={<GameDetailIframePage />}
+                />
                 <Route path="list-game-manager" element={<ListGamePage />} />
                 <Route path="/" element={<Layout />}>
                   <Route
