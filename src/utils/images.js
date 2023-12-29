@@ -297,6 +297,8 @@ import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
 import imageSignIn from "../assets/imagesHome/imageSignIn.png";
 import signInBgBanner from "../assets/imagesHome/signInBgBanner.png";
 import signInTitle from "../assets/imagesHome/signInTitle.png";
+import hpny_popup_mb from "../assets/imagesHome/hpny_popup_mb.png";
+import hpny_popup_dk from "../assets/imagesHome/hpny_popup_dk.png";
 
 import AdminLogo from "../assets/images/lggame.png";
 import AdminLogoSvg from "../assets/images/logogame.svg";
@@ -440,6 +442,8 @@ export const imageHome = {
   imageSignIn: imageSignIn,
   signInBgBanner: signInBgBanner,
   signInTitle: signInTitle,
+  hpny_popup_dk: hpny_popup_dk,
+  hpny_popup_mb: hpny_popup_mb,
 };
 
 export const navbar = {

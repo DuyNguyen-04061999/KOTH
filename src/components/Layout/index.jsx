@@ -27,6 +27,7 @@ import { showToastNotification } from "../../redux-saga-middleware/reducers/aler
 import {
   changeRouter,
   openDoubleDayDialog,
+  openNewYearPopup,
   randomRenderPopup,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
@@ -90,6 +91,9 @@ import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
 import "./index.scss";
+import HappyNewYearPopup from "../Dialog/HappyNewYearPopup";
+import { compareDate } from "../../utils/config";
+import moment from "moment";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -157,7 +161,9 @@ export default function Layout(props) {
     setOpenDropdown(false);
   };
 
-  const { randomRender } = useSelector((state) => state.appReducer);
+  const { randomRender, countDownNewYear, showPopupBewYear } = useSelector(
+    (state) => state.appReducer
+  );
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -383,6 +389,18 @@ export default function Layout(props) {
     }
   }, [dispatch, countDownDoubleDay]);
 
+  useEffect(() => {
+    let currentDay = new Date();
+    if (
+      (compareDate(currentDay, "12/29/2023") ||
+        compareDate(currentDay, "01/02/2024") ||
+        compareDate(currentDay, "01/03/2024")) &&
+      !compareDate(currentDay, countDownNewYear)
+    ) {
+      dispatch(openNewYearPopup());
+    }
+  }, [dispatch, countDownNewYear]);
+
   const params = new URLSearchParams(window.location.search);
 
   const { listNotifiaction } = useSelector(
@@ -398,7 +416,6 @@ export default function Layout(props) {
     }
     return check;
   };
-
   return ReactDOM.createPortal(
     <Box
       className="tong"
@@ -438,6 +455,7 @@ export default function Layout(props) {
       <DialogExclusive />
       <NotiFunds />
       <NotificationDialog />
+      <HappyNewYearPopup />
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}
