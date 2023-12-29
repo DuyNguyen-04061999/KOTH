@@ -111,6 +111,12 @@ export const saveTimeCloseDialog = (data) => {
     payload: data,
   };
 };
+export const saveTimeCloseNewYearDialog = (data) => {
+  return {
+    type: "SAVE_TIME_CLOSE_DIALOG_NEW_YEAR",
+    payload: data,
+  };
+};
 
 export const getListBanner = (data) => {
   return {
@@ -173,14 +179,14 @@ export const openPaypalPackageDialog = (data) => {
     type: "OPEN_PAYPAL_PACKAGE_DIALOG",
     payload: data,
   };
-}
+};
 
 export const closePaypalPackageDialog = (data) => {
   return {
     type: "CLOSE_PAYPAL_PACKAGE_DIALOG",
     payload: data,
   };
-}
+};
 
 export const notifyToGameWhenBuyPackageSuccess = (data) => {
   console.log(data);
@@ -188,14 +194,25 @@ export const notifyToGameWhenBuyPackageSuccess = (data) => {
     type: "NOTIFY_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS",
     payload: data,
   };
-}
+};
 
 export const resetToGameWhenBuyPackageSuccess = (data) => {
   return {
     type: "RESET_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS",
     payload: data,
   };
-}
+};
+export const openNewYearPopup = () => {
+  return {
+    type: "OPEN_NEWYEAR_POPUP",
+  };
+};
+export const closeNewYearPopup = (data) => {
+  return {
+    type: "CLOSE_NEWYEAR_POPUP",
+    payload: data,
+  };
+};
 
 const appReducer = (
   state = {
@@ -214,10 +231,12 @@ const appReducer = (
     isFecthListBanner: false,
     listBanner: [],
     isDialogExclusive: false,
-    listWinner:[],
-    isListWinner:false,
+    listWinner: [],
+    isListWinner: false,
     isPaypalPackageDialog: true,
-    isBuyPackageGameSuccess: false
+    isBuyPackageGameSuccess: false,
+    countDownNewYear: 0,
+    showPopupBewYear: false,
   },
   action
 ) => {
@@ -225,8 +244,12 @@ const appReducer = (
   switch (type) {
     case REHYDRATE: {
       const { appReducer } = payload || {};
-      const { countDownDoubleDay } = appReducer || 0;
-      return { ...state, countDownDoubleDay: countDownDoubleDay || 0 };
+      const { countDownDoubleDay, countDownNewYear } = appReducer || 0;
+      return {
+        ...state,
+        countDownDoubleDay: countDownDoubleDay || 0,
+        countDownNewYear: countDownNewYear || 0,
+      };
     }
     case "GET_LIST_FAQ":
       return { ...state, isFetchListFaq: true };
@@ -257,10 +280,16 @@ const appReducer = (
       return { ...state, showDoubleDayDialog: true };
     case "CLOSE_DIALOG_DOUBLEDAY":
       return { ...state, showDoubleDayDialog: false };
+    case "OPEN_NEWYEAR_POPUP":
+      return { ...state, showPopupBewYear: true };
+    case "CLOSE_NEWYEAR_POPUP":
+      return { ...state, showPopupBewYear: false };
     case "RANDOM_RENDER_POPUP":
       return { ...state, randomRender: payload };
     case "SAVE_TIME_CLOSE_DIALOG":
       return { ...state, countDownDoubleDay: payload };
+    case "SAVE_TIME_CLOSE_DIALOG_NEW_YEAR":
+      return { ...state, countDownNewYear: payload };
     case "GET_LIST_BANNER":
       return { ...state, isFecthListBanner: true };
     case "GET_LIST_BANNER_SUCCESS":
@@ -281,10 +310,14 @@ const appReducer = (
       return { ...state, isListWinner: false, listWinner: payload };
     case "GET_LIST_WINNER_FAIL":
       return { ...state, isListWinner: false };
-    case "OPEN_PAYPAL_PACKAGE_DIALOG": return {...state, isPaypalPackageDialog: true}
-    case "CLOSE_PAYPAL_PACKAGE_DIALOG": return {...state, isPaypalPackageDialog: false}
-    case "NOTIFY_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS": return { ...state, isBuyPackageGameSuccess: true }
-    case "RESET_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS": return { ...state, isBuyPackageGameSuccess: false }
+    case "OPEN_PAYPAL_PACKAGE_DIALOG":
+      return { ...state, isPaypalPackageDialog: true };
+    case "CLOSE_PAYPAL_PACKAGE_DIALOG":
+      return { ...state, isPaypalPackageDialog: false };
+    case "NOTIFY_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS":
+      return { ...state, isBuyPackageGameSuccess: true };
+    case "RESET_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS":
+      return { ...state, isBuyPackageGameSuccess: false };
     default:
       return { ...state };
   }

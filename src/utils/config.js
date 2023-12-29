@@ -66,3 +66,10 @@ export const convertToInternationalCurrencySystem = (labelValue) => {
     ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
     : Math.abs(Number(labelValue));
 };
+export const compareDate = (date1, date2) => {
+  return (
+    new Date(date1).getDate() === new Date(date2).getDate() &&
+    new Date(date1).getMonth() === new Date(date2).getMonth() &&
+    new Date(date1).getYear() === new Date(date2).getYear()
+  );
+};
