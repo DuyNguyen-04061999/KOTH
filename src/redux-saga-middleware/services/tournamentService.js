@@ -89,7 +89,6 @@ class TournamentService {
   async callListJoinedPromotion(dataRequest) {
     const { daily, monthly, weekly, soon } = dataRequest;
     const queryParams = [];
-    console.log(daily, monthly, weekly, soon);
     if (daily) {
       queryParams.push(`daily=${1}`);
     }

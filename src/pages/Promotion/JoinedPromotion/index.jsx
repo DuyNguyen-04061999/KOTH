@@ -113,7 +113,6 @@ export default function JoinedPromotion() {
       },
     },
   };
-  console.log("joinedTournament: ", joinedTournament, isFetchJoined);
   return (
     <DocumentMeta {...meta}>
       <>
