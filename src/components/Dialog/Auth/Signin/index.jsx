@@ -469,7 +469,7 @@ export default function Dialoglg() {
                           marginTop: "5px",
                         }}
                       >
-                        Not yet a VIP member?
+                        Not a VIP member yet?
                       </Typography>
                     )}
                     {uPack ? (
