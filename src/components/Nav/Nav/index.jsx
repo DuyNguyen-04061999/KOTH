@@ -85,7 +85,7 @@ export default function Navbar() {
                   transition: "0.3s ease",
                   backgroundColor:
                     (pathname && pathname?.includes("home")) || pathname === "/"
-                      ? "#7648ED"
+                      ? "#7848ED"
                       : "",
                   borderRadius: "5px",
                   color:
@@ -93,14 +93,8 @@ export default function Navbar() {
                       ? "white"
                       : "#A89CD7",
                   ":hover": {
-                    backgroundColor: "#7648ED",
-                    boxShadow:
-                      "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
+                    backgroundColor: "#7848ED",
                   },
-                  boxShadow:
-                    (pathname && pathname?.includes("home")) || pathname === "/"
-                      ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                      : "",
                 }}
                 onClick={() => {
                   navigate("/home");
@@ -746,7 +740,7 @@ export default function Navbar() {
                     backgroundColor:
                       pathname &&
                       pathname?.includes("hot-promotion") &&
-                      "#7648ED",
+                      "#7848ED",
                     borderRadius: "5px",
                     color:
                       pathname && pathname?.includes("hot-promotion")
@@ -754,14 +748,8 @@ export default function Navbar() {
                         : "#A89CD7",
                     padding: "10px 10px 10px 15px",
                     ":hover": {
-                      backgroundColor: "#7648ED",
-                      boxShadow:
-                        "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
+                      backgroundColor: "#7848ED",
                     },
-                    boxShadow:
-                      pathname &&
-                      pathname?.includes("hot-promotion") &&
-                      "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset",
                   }}
                   onClick={() => {
                     navigate("/hot-promotion");
@@ -794,21 +782,16 @@ export default function Navbar() {
                     backgroundColor:
                       pathname &&
                       pathname?.includes("ongoing-promotion") &&
-                      "#7648ED",
+                      "#7848ED",
                     borderRadius: "5px",
-                    boxShadow:
-                      pathname && pathname?.includes("ongoing-promotion")
-                        ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                        : "",
+
                     color:
                       pathname && pathname?.includes("ongoing-promotion")
                         ? "white"
                         : "#A89CD7",
                     padding: "10px 10px 10px 15px",
                     ":hover": {
-                      backgroundColor: "#7648ED",
-                      boxShadow:
-                        "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
+                      backgroundColor: "#7848ED",
                     },
                   }}
                   onClick={() => {
@@ -842,21 +825,15 @@ export default function Navbar() {
                     backgroundColor:
                       pathname &&
                       pathname?.includes("upcoming-promotion") &&
-                      "#7648ED",
+                      "#7848ED",
                     borderRadius: "5px",
                     color:
                       pathname && pathname?.includes("upcoming-promotion")
                         ? "white"
                         : "#A89CD7",
-                    boxShadow:
-                      pathname && pathname?.includes("upcoming-promotion")
-                        ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                        : "",
                     padding: "10px 10px 10px 15px",
                     ":hover": {
-                      backgroundColor: "#7648ED",
-                      boxShadow:
-                        "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
+                      backgroundColor: "#7848ED",
                     },
                   }}
                   onClick={() => {
@@ -890,21 +867,16 @@ export default function Navbar() {
                     backgroundColor:
                       pathname &&
                       pathname?.includes("ended-promotion") &&
-                      "#7648ED",
+                      "#7848ED",
                     borderRadius: "5px",
                     color:
                       pathname && pathname?.includes("ended-promotion")
                         ? "white"
                         : "#A89CD7",
                     padding: "10px 10px 10px 15px",
-                    boxShadow:
-                      pathname && pathname?.includes("ended-promotion")
-                        ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                        : "",
+
                     ":hover": {
-                      backgroundColor: "#7648ED",
-                      boxShadow:
-                        "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
+                      backgroundColor: "#7848ED",
                     },
                   }}
                   onClick={() => {
@@ -936,16 +908,10 @@ export default function Navbar() {
                   justifyContent: isNav === true ? "flex-start" : "center",
                   transition: "0.4s ease",
                   ":hover": {
-                    boxShadow:
-                      "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
-                    backgroundColor: "#7648ED",
+                    backgroundColor: "#7848ED",
                   },
                   backgroundColor:
-                    pathname && pathname?.includes("package") ? "#7648ED" : "",
-                  boxShadow:
-                    pathname && pathname?.includes("packages")
-                      ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                      : "",
+                    pathname && pathname?.includes("package") ? "#7848ED" : "",
                   borderRadius: "5px",
                   padding: "10px 5px",
                   marginTop: "16px",
@@ -1469,18 +1435,13 @@ export default function Navbar() {
                 // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                 transition: "0.4s ease",
                 ":hover": {
-                  boxShadow:
-                    "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
-                  backgroundColor: "#7648ED",
+                  backgroundColor: "#7848ED",
                 },
                 backgroundColor:
                   pathname && pathname?.includes("help-center")
-                    ? "#7648ED"
+                    ? "#7848ED"
                     : "",
-                boxShadow:
-                  pathname && pathname?.includes("help-center")
-                    ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                    : "",
+
                 borderRadius: "5px",
                 padding: "10px",
                 marginTop: "16px",
@@ -1584,20 +1545,13 @@ export default function Navbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: isNav === true ? "flex-start" : "center",
-                // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                 transition: "0.4s ease",
                 ":hover": {
-                  boxShadow:
-                    "-2px -2px 5px #7648ED, 2px 2px 5px #462A71, inset 2px 2px 5px #462A71, inset -5px -5px 10px #7648ED",
-                  backgroundColor: "#7648ED",
+                  backgroundColor: "#7848ED",
                   color: "#A89CD7",
                 },
                 backgroundColor:
-                  pathname && pathname?.includes("support") ? "#7648ED" : "",
-                boxShadow:
-                  pathname && pathname?.includes("support")
-                    ? "2px 3px 3px 0px rgba(0, 0, 0, 0.35) inset, -2px -2px 4px 0px rgba(168, 168, 168, 0.20) inset"
-                    : "",
+                  pathname && pathname?.includes("support") ? "#7848ED" : "",
                 borderRadius: "5px",
                 padding: "10px",
                 marginTop: "16px",
