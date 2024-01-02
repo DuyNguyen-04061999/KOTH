@@ -86,9 +86,28 @@ class TournamentService {
     );
     return res;
   }
-  async callListJoinedPromotion() {
+  async callListJoinedPromotion(dataRequest) {
+    const { daily, monthly, weekly, soon } = dataRequest;
+    const queryParams = [];
+    console.log(daily, monthly, weekly, soon);
+    if (daily) {
+      queryParams.push(`daily=${1}`);
+    }
+
+    if (monthly) {
+      queryParams.push(`monthly=${1}`);
+    }
+
+    if (weekly) {
+      queryParams.push(`weekly=${1}`);
+    }
+
+    if (soon) {
+      queryParams.push(`soon=${1}`);
+    }
+    const queryString = queryParams.join("&");
     const res = await PROMOTION_API.get(
-      "api/promotions/get-list-joined-promotion"
+      `api/promotions/get-list-joined-promotion?${queryString}`
     );
     return res;
   }

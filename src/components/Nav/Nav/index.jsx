@@ -7,6 +7,7 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTab,
+  openLoginDialog,
   showDropdown,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -923,7 +924,11 @@ export default function Navbar() {
                     },
                   }}
                   onClick={() => {
-                    navigate("/joined-promotion");
+                    if (token) {
+                      navigate("/joined-promotion");
+                    } else {
+                      dispatch(openLoginDialog());
+                    }
                   }}
                   className="nav-home mt-2"
                 >

@@ -7,6 +7,7 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTab,
+  openLoginDialog,
   showDropdown,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -958,8 +959,12 @@ export default function Browser(props) {
                       borderRadius: "5px",
                     }}
                     onClick={() => {
-                      navigate("/joined-promotion");
-                      handleShowMenu();
+                      if (token) {
+                        navigate("/joined-promotion");
+                        handleShowMenu();
+                      } else {
+                        dispatch(openLoginDialog());
+                      }
                     }}
                     className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
                   >

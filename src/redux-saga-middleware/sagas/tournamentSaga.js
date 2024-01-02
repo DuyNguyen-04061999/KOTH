@@ -16,6 +16,9 @@ import {
   getHotTourSuccess,
   getHottestWeekTourSuccess,
   getHourlyTour,
+  getJoinedTour,
+  getJoinedTourFail,
+  getJoinedTourSuccess,
   getListGameForTournamentFail,
   getListGameForTournamentSuccess,
   getListPromotionNewSuccess,
@@ -204,15 +207,17 @@ function* getThreeBrandTour() {
     console.log(error);
   }
 }
-function* getListJoinedPromotion() {
+function* getListJoinedPromotion(dataRequest) {
   try {
-    yield put(getEndedTour());
-    const res = yield call(tournamentService.callListJoinedPromotion);
-    console.log(res);
+    yield put(getJoinedTour());
+    const res = yield call(
+      tournamentService.callListJoinedPromotion,
+      dataRequest
+    );
     if (res.status === 200) {
-      yield put(getEndedTourSuccess(res.data));
+      yield put(getJoinedTourSuccess(res.data));
     } else {
-      yield put(getEndedTourFail());
+      yield put(getJoinedTourFail());
     }
   } catch (error) {
     console.log(error);

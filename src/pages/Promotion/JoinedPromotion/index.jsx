@@ -9,7 +9,10 @@ import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateJoinedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { getOngoingTour } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  getJoinedTour,
+  getOngoingTour,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -42,7 +45,7 @@ export default function JoinedPromotion() {
   }, [width, dispatch]);
 
   useEffect(() => {
-    dispatch(getOngoingTour());
+    dispatch(getJoinedTour());
     dispatch({
       type: "GET_LIST_JOINED_PROMOTION",
     });
@@ -110,7 +113,7 @@ export default function JoinedPromotion() {
       },
     },
   };
-
+  console.log("joinedTournament: ", joinedTournament, isFetchJoined);
   return (
     <DocumentMeta {...meta}>
       <>
@@ -154,7 +157,6 @@ export default function JoinedPromotion() {
                     marginTop: width < 576 ? "24px" : "32px",
                   }}
                 >
-                  {" "}
                   {isFetchJoined || data === null ? (
                     <BannerLoading
                       height={
@@ -191,7 +193,7 @@ export default function JoinedPromotion() {
                     loadingState={isFetchJoined}
                     itemOffSet={joinedPag}
                     itemQuantity={itemQuantity}
-                    typePromo={"ongoing"}
+                    typePromo={"joined"}
                     noData={noDataJoined}
                   />
                 </Box>
@@ -240,7 +242,7 @@ export default function JoinedPromotion() {
                     fontSize: "24px",
                   }}
                 >
-                  {t(" Joined Prmotions")}
+                  {t("Joined Prmotions")}
                 </Typography>
                 <Box
                   sx={{

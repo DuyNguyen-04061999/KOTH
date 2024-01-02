@@ -83,7 +83,7 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-
+  console.log("data: ", endedTournament);
   const meta = {
     title:
       process.env.REACT_APP_ENV === "production"
