@@ -899,6 +899,49 @@ export default function Navbar() {
                     {t("Ended")}
                   </Typography>
                 </Box>
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    transition: "0.3s ease",
+                    backgroundColor:
+                      pathname &&
+                      pathname?.includes("joined-promotion") &&
+                      "#7848ED",
+                    borderRadius: "5px",
+                    color:
+                      pathname && pathname?.includes("joined-promotion")
+                        ? "white"
+                        : "#A89CD7",
+                    padding: "10px 10px 10px 15px",
+
+                    ":hover": {
+                      backgroundColor: "#7848ED",
+                    },
+                  }}
+                  onClick={() => {
+                    navigate("/joined-promotion");
+                  }}
+                  className="nav-home mt-2"
+                >
+                  <Typography
+                    className="hover-nav"
+                    style={{
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: isNav ? "15px" : "13px",
+                      marginLeft: "5px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {t("Joined")}
+                  </Typography>
+                </Box>
               </Box>
               <Box
                 sx={{
