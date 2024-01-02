@@ -7,6 +7,7 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   clickTab,
+  openLoginDialog,
   showDropdown,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
@@ -937,6 +938,50 @@ export default function Browser(props) {
                       }}
                     >
                       {t("Ended")}
+                    </span>
+                  </Box>
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      transition:
+                        "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                      backgroundColor:
+                        pathname && pathname?.includes("joined-promotion")
+                          ? "#7648ED"
+                          : "transparent",
+                      color:
+                        pathname && pathname?.includes("joined-promotion")
+                          ? "white"
+                          : "#A89CD7",
+                      borderRadius: "5px",
+                    }}
+                    onClick={() => {
+                      if (token) {
+                        navigate("/joined-promotion");
+                        handleShowMenu();
+                      } else {
+                        dispatch(openLoginDialog());
+                      }
+                    }}
+                    className="nav-home pt-2 pb-2 ps-2 mb-3 mt-3"
+                  >
+                    <span
+                      className="hover-nav"
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontSize: "15px",
+                        marginLeft: "20px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {t("Joined")}
                     </span>
                   </Box>
                 </Box>

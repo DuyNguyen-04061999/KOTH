@@ -8,7 +8,14 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { getEndedTour, getHotTour, getListPromotionNew, getOngoingTour, getUpcomingTour } from "../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  getEndedTour,
+  getHotTour,
+  getJoinedTour,
+  getListPromotionNew,
+  getOngoingTour,
+  getUpcomingTour,
+} from "../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AnimButton from "../AnimButton";
 
@@ -45,7 +52,7 @@ export default function FilterPromotion(props) {
   useEffect(() => {}, [activeDaily, activeWeekly, activeMonthly]);
 
   const [openFilter, setOpenFilter] = useState(false);
-  
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -57,29 +64,102 @@ export default function FilterPromotion(props) {
     setOpenFilter(true);
   };
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const { pathname } = window.location
-    if(pathname && (pathname === "/" || pathname === "/home")) {
-      dispatch(getListPromotionNew({ type: "hot", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
-      dispatch(getListPromotionNew({ type: "ongoing", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
-      dispatch(getListPromotionNew({ type: "upcoming", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
-      dispatch(getListPromotionNew({ type: "ended", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+    const { pathname } = window.location;
+    if (pathname && (pathname === "/" || pathname === "/home")) {
+      dispatch(
+        getListPromotionNew({
+          type: "hot",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
+      dispatch(
+        getListPromotionNew({
+          type: "ongoing",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
+      dispatch(
+        getListPromotionNew({
+          type: "upcoming",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
+      dispatch(
+        getListPromotionNew({
+          type: "ended",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
     } else if (pathname?.includes("hot-promotion")) {
-      dispatch(getHotTour())
-      dispatch(getListPromotionNew({ type: "hot", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+      dispatch(getHotTour());
+      dispatch(
+        getListPromotionNew({
+          type: "hot",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
     } else if (pathname?.includes("ongoing-promotion")) {
-      dispatch(getOngoingTour())
-      dispatch(getListPromotionNew({ type: "ongoing", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+      dispatch(getOngoingTour());
+      dispatch(
+        getListPromotionNew({
+          type: "ongoing",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
     } else if (pathname?.includes("upcoming-promotion")) {
-      dispatch(getUpcomingTour())
-      dispatch(getListPromotionNew({ type: "upcoming", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+      dispatch(getUpcomingTour());
+      dispatch(
+        getListPromotionNew({
+          type: "upcoming",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
     } else if (pathname?.includes("ended-promotion")) {
-      dispatch(getEndedTour())
-      dispatch(getListPromotionNew({ type: "ended", daily: activeDaily, weekly: activeWeekly, monthly: activeMonthly, soon: value }))
+      dispatch(getEndedTour());
+      dispatch(
+        getListPromotionNew({
+          type: "ended",
+          daily: activeDaily,
+          weekly: activeWeekly,
+          monthly: activeMonthly,
+          soon: value,
+        })
+      );
+    } else if (pathname?.includes("joined-promotion")) {
+      dispatch(getJoinedTour());
+      dispatch({
+        type: "GET_LIST_JOINED_PROMOTION",
+        daily: activeDaily,
+        weekly: activeWeekly,
+        monthly: activeMonthly,
+        soon: value,
+      });
     }
-  }, [activeDaily, activeWeekly, activeMonthly, value, dispatch])
+  }, [activeDaily, activeWeekly, activeMonthly, value, dispatch]);
 
   const renderItemDrawer = () => {
     return (
@@ -405,7 +485,7 @@ export default function FilterPromotion(props) {
             </Box>
           )}
           <Box display={"flex"}>
-            { width > 576 ? (
+            {width > 576 ? (
               <>
                 <Box sx={{ marginLeft: "10px" }}>
                   <AnimButton
@@ -417,8 +497,9 @@ export default function FilterPromotion(props) {
                       setActiveDaily(!activeDaily);
                     }}
                     style={{
-                      fontSize:width < 1024 && width > 576 ? "10px" : "16px",
-                      padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
+                      fontSize: width < 1024 && width > 576 ? "10px" : "16px",
+                      padding:
+                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
                     }}
                   />
                 </Box>
@@ -432,8 +513,9 @@ export default function FilterPromotion(props) {
                       setActiveWeekly(!activeWeekly);
                     }}
                     style={{
-                      fontSize:width < 1024 && width > 576 ? "10px" : "16px",
-                      padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
+                      fontSize: width < 1024 && width > 576 ? "10px" : "16px",
+                      padding:
+                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
                     }}
                   />
                 </Box>
@@ -447,8 +529,9 @@ export default function FilterPromotion(props) {
                       setActiveMonthly(!activeMonthly);
                     }}
                     style={{
-                      fontSize:width < 1024 && width > 576 ? "10px" : "16px",
-                      padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
+                      fontSize: width < 1024 && width > 576 ? "10px" : "16px",
+                      padding:
+                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
                     }}
                   />
                 </Box>
@@ -476,8 +559,9 @@ export default function FilterPromotion(props) {
                         setActiveWeekly(false);
                       }}
                       style={{
-                        fontSize:width < 1024 && width > 576 ? "10px" : "16px",
-                        padding: width < 1024 && width > 576 ? "4px 5px" : "11px 20px"
+                        fontSize: width < 1024 && width > 576 ? "10px" : "16px",
+                        padding:
+                          width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
                       }}
                     />
                   </Box>

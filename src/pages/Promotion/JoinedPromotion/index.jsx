@@ -1,11 +1,4 @@
-import {
-  Box,
-  Container,
-  CssBaseline,
-  ThemeProvider,
-  Typography,
-  createTheme,
-} from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
 import { useTranslation } from "react-i18next";
@@ -15,43 +8,48 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
-import { updateEndedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { updateJoinedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
-  getEndedTour,
-  getListPromotionNew,
+  getJoinedTour,
+  getOngoingTour,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-const theme = createTheme({
-  typography: {},
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {},
-    },
-  },
-});
-export default function HotTournament() {
-  const { t } = useTranslation("ended_promo");
+
+export default function JoinedPromotion() {
   const { width } = useWindowDimensions();
+  const { t } = useTranslation("ongoing_promo");
   const typographyStyle = {
     textAlign: "start",
     fontWeight: "200 !important",
     marginLeft: "0px !important",
     color: "#fff",
   };
+  const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
-  const { endedTournament, isFetchEnded, noDataEnd } = useSelector(
+  const { joinedTournament, isFetchJoined, noDataJoined } = useSelector(
     (state) => state.tournamentReducer
   );
+  const { joinedPag } = useSelector((state) => state.promotionReducer);
   const [data, setData] = useState(null);
-  const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(0);
-  const { endedPage } = useSelector((state) => state.promotionReducer);
+
   useEffect(() => {
-    dispatch(getEndedTour());
-    dispatch(getListPromotionNew({ type: "ended" }));
+    if (width > 576) {
+      setItemQuantity(12);
+    } else {
+      setItemQuantity(4);
+    }
+  }, [width, dispatch]);
+
+  useEffect(() => {
+    dispatch(getJoinedTour());
+    dispatch({
+      type: "GET_LIST_JOINED_PROMOTION",
+    });
+
     dispatch({
       type: "GET_HOTTEST_WEEK_TOUR",
     });
@@ -59,22 +57,14 @@ export default function HotTournament() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [endedPage]);
+  }, [joinedPag]);
 
   useEffect(() => {
-    if (width > 576) {
-      setItemQuantity(12);
+    if (joinedTournament) {
+      dispatch(updateJoinedPage(0));
+      setData(joinedTournament);
     }
-    if (width < 576) {
-      setItemQuantity(4);
-    }
-  }, [width]);
-
-  useEffect(() => {
-    if (endedTournament) {
-      setData(endedTournament);
-    }
-  }, [endedTournament]);
+  }, [joinedTournament, dispatch]);
 
   const imgHot = data?.map((e) => {
     return e.tournamentBackground;
@@ -83,12 +73,12 @@ export default function HotTournament() {
   const imgHotMobile = data?.map((e) => {
     return e.tournamentBackgroundMobile;
   });
-  console.log("data: ", endedTournament);
+
   const meta = {
     title:
       process.env.REACT_APP_ENV === "production"
-        ? "Play4promo ended promotions"
-        : "Play4promo staging ended promotions",
+        ? "Play4promo ongoing promotions"
+        : "Play4promo staging ongoing promotions",
     description:
       "Unlock exciting voucher rewards with Play4Promo's promotions and gaming thrills.",
     meta: {
@@ -105,8 +95,8 @@ export default function HotTournament() {
       property: {
         "og:title":
           process.env.REACT_APP_ENV === "production"
-            ? "Play4promo ended promotions"
-            : "Play4promo staging ended promotions",
+            ? "Play4promo ongoing promotions"
+            : "Play4promo staging ongoing promotions",
         "og:url": window.location.href,
         "og:image:secure_url":
           process.env.REACT_APP_ENV === "development"
@@ -123,11 +113,9 @@ export default function HotTournament() {
       },
     },
   };
-
   return (
     <DocumentMeta {...meta}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <>
         <MainLayout
           type="Home"
           children={
@@ -147,7 +135,7 @@ export default function HotTournament() {
                       : device === "Tablet"
                       ? "32px !important"
                       : "0px !important",
-                  paddingTop:
+                  marginTop:
                     width < 576 ? "24px !important" : "50px !important",
                 }}
               >
@@ -159,7 +147,8 @@ export default function HotTournament() {
                     fontWeight: 700,
                   }}
                 >
-                  {t("Ended Promotions")}
+                  {/* {t(" Joined Prmotions")} */}
+                  Joined Promotions
                 </Typography>
                 <Box
                   sx={{
@@ -167,8 +156,7 @@ export default function HotTournament() {
                     marginTop: width < 576 ? "24px" : "32px",
                   }}
                 >
-                  {" "}
-                  {isFetchEnded || data === null ? (
+                  {isFetchJoined || data === null ? (
                     <BannerLoading
                       height={
                         width < 576
@@ -201,25 +189,29 @@ export default function HotTournament() {
                   </Box>
                   <ListPromotion
                     listData={data}
-                    loadingState={isFetchEnded}
-                    itemOffSet={endedPage}
+                    loadingState={isFetchJoined}
+                    itemOffSet={joinedPag}
                     itemQuantity={itemQuantity}
-                    typePromo={"Ended"}
-                    noData={noDataEnd}
+                    typePromo={"joined"}
+                    noData={noDataJoined}
                   />
                 </Box>
-                {!isFetchEnded &&
-                  data !== null &&
-                  data?.length > 0 &&
-                  itemQuantity && (
-                    <PaginatedItems
-                      defaultPage={1}
-                      pageCount={Math.ceil(data.length / itemQuantity)}
-                      changeOffSet={(value) => {
-                        dispatch(updateEndedPage((value - 1) * itemQuantity));
-                      }}
-                    />
-                  )}
+                <Box sx={{ margin: "36px 0px" }}>
+                  {!isFetchJoined &&
+                    data !== null &&
+                    data?.length > 0 &&
+                    itemQuantity && (
+                      <PaginatedItems
+                        defaultPage={1}
+                        pageCount={Math.ceil(data.length / itemQuantity)}
+                        changeOffSet={(value) => {
+                          dispatch(
+                            updateJoinedPage((value - 1) * itemQuantity)
+                          );
+                        }}
+                      />
+                    )}
+                </Box>
                 <NewFooter />
               </Container>
             ) : (
@@ -249,7 +241,7 @@ export default function HotTournament() {
                     fontSize: "24px",
                   }}
                 >
-                  {t("Ended Promotions")}
+                  {t("Joined Prmotions")}
                 </Typography>
                 <Box
                   sx={{
@@ -258,7 +250,7 @@ export default function HotTournament() {
                   }}
                 >
                   {" "}
-                  {isFetchEnded || data === null ? (
+                  {isFetchJoined || data === null ? (
                     <BannerLoading height={208} />
                   ) : (
                     <SlickSlider
@@ -283,33 +275,38 @@ export default function HotTournament() {
                   </Box>
                   <ListPromotion
                     listData={data}
-                    loadingState={isFetchEnded}
-                    itemOffSet={endedPage}
+                    loadingState={isFetchJoined}
+                    itemOffSet={joinedPag}
                     itemQuantity={itemQuantity}
-                    typePromo={"Ended"}
-                    noData={noDataEnd}
+                    typePromo={"ongoing"}
+                    noData={noDataJoined}
                   />
                 </Box>
-                <Box sx={{ margin: "36px 0px" }}>
-                  {!isFetchEnded &&
-                    data !== null &&
-                    data?.length > 0 &&
-                    itemQuantity && (
-                      <PaginatedItems
-                        defaultPage={1}
-                        pageCount={Math.ceil(data.length / itemQuantity)}
-                        changeOffSet={(value) => {
-                          dispatch(updateEndedPage((value - 1) * itemQuantity));
-                        }}
-                      />
-                    )}
-                </Box>
+                {!isFetchJoined && (
+                  <Box sx={{ margin: "36px 0px" }}>
+                    {!isFetchJoined &&
+                      data !== null &&
+                      data?.length > 0 &&
+                      itemQuantity && (
+                        <PaginatedItems
+                          defaultPage={1}
+                          pageCount={Math.ceil(data.length / itemQuantity)}
+                          changeOffSet={(value) => {
+                            dispatch(
+                              updateJoinedPage((value - 1) * itemQuantity)
+                            );
+                          }}
+                        />
+                      )}
+                  </Box>
+                )}
+
                 <NewFooter />
               </Container>
             )
           }
         />
-      </ThemeProvider>
+      </>
     </DocumentMeta>
   );
 }
