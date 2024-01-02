@@ -69,6 +69,26 @@ export const getHotTourFail = (data) => {
     payload: data,
   };
 };
+export const getJoinedTour = (data) => {
+  return {
+    type: "GET_LIST_JOINED_TOURNAMENT",
+    payload: data,
+  };
+};
+
+export const getJoinedTourSuccess = (data) => {
+  return {
+    type: "GET_LIST_JOINED_TOURNAMENT_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getJoinedTourFail = (data) => {
+  return {
+    type: "GET_LIST_JOINED_TOURNAMENT_FAIL",
+    payload: data,
+  };
+};
 
 export const getVipTour = (data) => {
   return {
@@ -310,31 +330,31 @@ export const saveBoughtTournament = (data) => {
 
 export const toggleExtra = (data) => {
   return {
-    type : "TOGGLE_EXTRA",
-    payload:data
-  }
-}
+    type: "TOGGLE_EXTRA",
+    payload: data,
+  };
+};
 
-export const getListPromotionNew  = (data) => {
+export const getListPromotionNew = (data) => {
   return {
-    type : "GET_LIST_PROMOTION_NEW",
-    payload:data
-  }
-}
+    type: "GET_LIST_PROMOTION_NEW",
+    payload: data,
+  };
+};
 
-export const getListPromotionNewSuccess  = (data) => {
+export const getListPromotionNewSuccess = (data) => {
   return {
-    type : "GET_LIST_PROMOTION_NEW_SUCCESS",
-    payload:data
-  }
-}
+    type: "GET_LIST_PROMOTION_NEW_SUCCESS",
+    payload: data,
+  };
+};
 
-export const getListPromotionNewFail  = (data) => {
+export const getListPromotionNewFail = (data) => {
   return {
-    type : "GET_LIST_PROMOTION_NEW_FAIL",
-    payload:data
-  }
-}
+    type: "GET_LIST_PROMOTION_NEW_FAIL",
+    payload: data,
+  };
+};
 
 const tournamentReducer = (
   state = {
@@ -350,10 +370,12 @@ const tournamentReducer = (
     isFetchOngoing: false,
     isFetchUpcoming: true,
     isFetchEnded: true,
+    isFetchJoined: true,
     dailyTournament: [],
     weeklyTournament: [],
     hourlyTournament: [],
     hotTournament: [],
+    joinedTournament: [],
     vipTournament: [],
     standardTournament: [],
     ongoingTournament: [],
@@ -376,15 +398,16 @@ const tournamentReducer = (
     endGameScore: 0,
     idTour: "",
     boughtTour: "",
-    isExtra:false,
+    isExtra: false,
     noDataUpcoming: false,
-    noDataHot:false,
-    noDataOncoming:false,
-    noDataEnd:false,
-    noDataThreeBrand:false,
-    noDataHotWeek:false,
-    noDataBrand:false,
-    isgetListPromotionNew: false
+    noDataHot: false,
+    noDataOncoming: false,
+    noDataEnd: false,
+    noDataJoined: false,
+    noDataThreeBrand: false,
+    noDataHotWeek: false,
+    noDataBrand: false,
+    isgetListPromotionNew: false,
     //--------------------------------------
   },
   action
@@ -429,7 +452,7 @@ const tournamentReducer = (
         ...state,
         hotTournament: payload,
         isFetchHot: false,
-        noDataHot:  (!payload || (payload && payload?.length <= 0)) ? true : false
+        noDataHot: !payload || (payload && payload?.length <= 0) ? true : false,
       };
     case "GET_LIST_HOT_TOURNAMENT_FAIL":
       return {
@@ -483,24 +506,43 @@ const tournamentReducer = (
         ...state,
         isFetchStandard: false,
       };
-    case "GET_LIST_ONGOING_TOURNAMENT":
-      {
-        return {
-          ...state,
-          isFetchOngoing: true,
-        };
-      }
+    case "GET_LIST_ONGOING_TOURNAMENT": {
+      return {
+        ...state,
+        isFetchOngoing: true,
+      };
+    }
     case "GET_LIST_ONGOING_TOURNAMENT_SUCCESS":
       return {
         ...state,
         ongoingTournament: payload,
         isFetchOngoing: false,
-        noDataOncoming:  (!payload || (payload && payload?.length <= 0)) ? true : false
+        noDataOncoming:
+          !payload || (payload && payload?.length <= 0) ? true : false,
       };
     case "GET_LIST_ONGOING_TOURNAMENT_FAIL":
       return {
         ...state,
         isFetchOngoing: false,
+      };
+    case "GET_LIST_JOINED_TOURNAMENT": {
+      return {
+        ...state,
+        isFetchJoined: true,
+      };
+    }
+    case "GET_LIST_JOINED_TOURNAMENT_SUCCESS":
+      return {
+        ...state,
+        joinedTournament: payload,
+        isFetchJoined: false,
+        noDataJoined:
+          !payload || (payload && payload?.length <= 0) ? true : false,
+      };
+    case "GET_LIST_JOINED_TOURNAMENT_FAIL":
+      return {
+        ...state,
+        isFetchJoined: false,
       };
     case "GET_LIST_UPCOMING_TOURNAMENT":
       return {
@@ -512,7 +554,8 @@ const tournamentReducer = (
         ...state,
         upcomingTournament: payload,
         isFetchUpcoming: false,
-        noDataUpcoming: (!payload || (payload && payload?.length <= 0)) ? true : false
+        noDataUpcoming:
+          !payload || (payload && payload?.length <= 0) ? true : false,
       };
     case "GET_LIST_UPCOMING_TOURNAMENT_FAIL":
       return {
@@ -529,7 +572,7 @@ const tournamentReducer = (
         ...state,
         endedTournament: payload,
         isFetchEnded: false,
-        noDataEnd:  (!payload || (payload && payload?.length <= 0)) ? true : false
+        noDataEnd: !payload || (payload && payload?.length <= 0) ? true : false,
       };
     case "GET_LIST_ENDED_TOURNAMENT_FAIL":
       return {
@@ -603,23 +646,23 @@ const tournamentReducer = (
     case "GET_BRAND_TOUR_SUCCESS":
       return {
         ...state,
-        isFecthBrand:false,
+        isFecthBrand: false,
         brandTour: payload,
-        noDataBrand:true
+        noDataBrand: true,
       };
     case "GET_HOTTEST_WEEK_TOUR_SUCCESS":
       return {
         ...state,
         isFetchHotWeek: false,
         hotWeekTour: payload,
-        noDataHotWeek:true
+        noDataHotWeek: true,
       };
     case "GET_THREE_BRAND_TOUR_SUCCESS":
       return {
         ...state,
         isFetchThreeTour: false,
         threeBrandTour: payload,
-        noDataThreeBrand: true
+        noDataThreeBrand: true,
       };
     case "TOGGLE_OPEN_RESULT_END_GAME":
       return {
@@ -643,14 +686,17 @@ const tournamentReducer = (
         ...state,
         boughtTour: payload,
       };
-    case "TOGGLE_EXTRA" : 
-    return {
-      ...state,
-      isExtra: !state.isExtra
-    }
-    case "GET_LIST_PROMOTION_NEW": return {...state, isgetListPromotionNew: true}
-    case "GET_LIST_PROMOTION_NEW_SUCCESS": return {...state, isgetListPromotionNew: false}
-    case "GET_LIST_PROMOTION_NEW_FAIL": return {...state, isgetListPromotionNew: false}
+    case "TOGGLE_EXTRA":
+      return {
+        ...state,
+        isExtra: !state.isExtra,
+      };
+    case "GET_LIST_PROMOTION_NEW":
+      return { ...state, isgetListPromotionNew: true };
+    case "GET_LIST_PROMOTION_NEW_SUCCESS":
+      return { ...state, isgetListPromotionNew: false };
+    case "GET_LIST_PROMOTION_NEW_FAIL":
+      return { ...state, isgetListPromotionNew: false };
     default:
       return { ...state };
   }

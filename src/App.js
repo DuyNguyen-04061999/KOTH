@@ -45,7 +45,7 @@ import {
 } from "./redux-saga-middleware/reducers/authReducer";
 import {
   pushChatWorld,
-  pushfriendList
+  pushfriendList,
 } from "./redux-saga-middleware/reducers/chatReducer";
 import {
   checkoutPaypalCancel,
@@ -88,6 +88,7 @@ const LazyUpcomingPromo = lazy(() =>
   import("./pages/Promotion/UpcomingPromotion")
 );
 const LazyEndedPromo = lazy(() => import("./pages/Promotion/EndedPromotion"));
+const LazyJoinedPromo = lazy(() => import("./pages/Promotion/JoinedPromotion"));
 
 const SuspenseWrapper = (props) => {
   const { child } = props;
@@ -550,6 +551,10 @@ function App() {
                   <Route
                     path="/ended-promotion"
                     element={<SuspenseWrapper child={<LazyEndedPromo />} />}
+                  />
+                  <Route
+                    path="/joined-promotion"
+                    element={<SuspenseWrapper child={<LazyJoinedPromo />} />}
                   />
                   <Route
                     path="/help-center"

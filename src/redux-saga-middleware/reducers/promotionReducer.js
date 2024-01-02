@@ -115,6 +115,12 @@ export const updateUpcomingPage = (data) => {
     payload: data,
   };
 };
+export const updateJoinedPage = (data) => {
+  return {
+    type: "UPDATE_JOINED_PAGE",
+    payload: data,
+  };
+};
 export const updateEndedPage = (data) => {
   return {
     type: "UPDATE_ENDED_PAGE",
@@ -130,6 +136,7 @@ const promotionReducer = (
     startGamePromotion: false,
     startVideoPromotion: false,
     ongoingPag: 0,
+    joinedPag: 0,
     hotPag: 0,
     upcomingPag: 0,
     endedPage: 0,
@@ -148,6 +155,8 @@ const promotionReducer = (
       return { ...state, upcomingPag: payload };
     case "UPDATE_ENDED_PAGE":
       return { ...state, endedPage: payload };
+    case "UPDATE_JOINED_PAGE":
+      return { ...state, joinedPag: payload };
     case "GET_REFACTOR_DETAIL_PROMOTION":
       return { ...state, isGetDetailPromotion: true };
     case "GET_REFACTOR_DETAIL_PROMOTION_SUCCESS":

@@ -8,7 +8,6 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 import ListItemLoading from "../LoadingComponent/ItemLoading";
 import ListEmpty from "../LoadingComponent/ListEmpty";
 
-
 const ListPromotion = (props) => {
   const { width } = useWindowDimensions();
   const {
@@ -17,19 +16,25 @@ const ListPromotion = (props) => {
     typePromo,
     itemOffSet = 0,
     itemQuantity = 12,
-    noData
+    noData,
   } = props;
 
   const { pathname } = useLocation();
-  if (pathname.includes("home") || pathname === "/") { 
+  if (pathname.includes("home") || pathname === "/") {
     return (
       <Box>
         {width < 576 ? (
           <LazyLoadComponent className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-            {loadingState &&   <ListItemLoading></ListItemLoading> }
-              {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
-              {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
+              {loadingState && <ListItemLoading></ListItemLoading>}
+              {noData && !loadingState && (
+                <ListEmpty textData={typePromo}></ListEmpty>
+              )}
+              {!noData &&
+                !loadingState &&
+                listData &&
+                listData.length > 0 &&
+                listData?.map((item, index) => {
                   return (
                     <Box key={index}>
                       <ItemComponent
@@ -45,9 +50,15 @@ const ListPromotion = (props) => {
         ) : (
           <Box className="scrolling-carousel-example1-container">
             <ScrollingCarousel>
-              {loadingState &&   <ListItemLoading></ListItemLoading> }
-              {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
-              {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
+              {loadingState && <ListItemLoading></ListItemLoading>}
+              {noData && !loadingState && (
+                <ListEmpty textData={typePromo}></ListEmpty>
+              )}
+              {!noData &&
+                !loadingState &&
+                listData &&
+                listData.length > 0 &&
+                listData?.map((item, index) => {
                   return (
                     <Box key={index}>
                       <ItemComponent
@@ -69,25 +80,32 @@ const ListPromotion = (props) => {
         {width < 576 ? (
           <Grid container rowSpacing={2}>
             {loadingState && <ListItemLoading></ListItemLoading>}
-            {noData && !loadingState && <ListEmpty textData={typePromo}></ListEmpty>}
-            {!noData && !loadingState && listData && listData.length > 0 &&   listData?.map((item, index) => {
-                  return (
-                    index >= itemOffSet &&
-                    index <= itemOffSet + itemQuantity - 1 && (
-                      <Grid item xs={6} key={index}>
-                        <ItemComponent
-                          // key={index}
-                          tourInfo={item}
-                          countdown={true}
-                        />
-                      </Grid>
-                    )
-                  );
-                })}
+            {noData && !loadingState && (
+              <ListEmpty textData={typePromo}></ListEmpty>
+            )}
+            {!noData &&
+              !loadingState &&
+              listData &&
+              listData.length > 0 &&
+              listData?.map((item, index) => {
+                return (
+                  index >= itemOffSet &&
+                  index <= itemOffSet + itemQuantity - 1 && (
+                    <Grid item xs={6} key={index}>
+                      <ItemComponent
+                        // key={index}
+                        tourInfo={item}
+                        countdown={true}
+                      />
+                    </Grid>
+                  )
+                );
+              })}
           </Grid>
         ) : (
           <Box>
-            {loadingState && <Box
+            {loadingState && (
+              <Box
                 sx={{
                   display: width < 576 ? "flex" : "grid",
                   flexWrap: "wrap",
@@ -97,16 +115,20 @@ const ListPromotion = (props) => {
                 }}
               >
                 <ListItemLoading></ListItemLoading>
-              </Box>}
-            {noData && !loadingState &&  <ListEmpty textData={typePromo}></ListEmpty>}
-            {!noData && !loadingState && listData && listData.length > 0 &&  <Box
+              </Box>
+            )}
+            {noData && !loadingState && (
+              <ListEmpty textData={typePromo}></ListEmpty>
+            )}
+            {!noData && !loadingState && listData && listData.length > 0 && (
+              <Box
                 sx={{
                   display: width < 576 ? "flex" : "grid",
                   flexWrap: "wrap",
                   justifyContent: "center",
                   gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
                   gridRowGap: "50px",
-                  overflowX: "hidden"
+                  overflowX: "hidden",
                 }}
               >
                 {listData?.map((item, index) => {
@@ -117,7 +139,12 @@ const ListPromotion = (props) => {
                         sx={{
                           display: "flex",
                           justifyContent: "center",
-                          width: width < 576 ? "20%" : width < 1200 ? "100%" : "auto",
+                          width:
+                            width < 576
+                              ? "20%"
+                              : width < 1200
+                              ? "100%"
+                              : "auto",
                           marginRight:
                             width > 576 && width < 1200 ? "100px" : "none",
                         }}
@@ -128,8 +155,8 @@ const ListPromotion = (props) => {
                     )
                   );
                 })}
-              </Box>}
-            
+              </Box>
+            )}
           </Box>
         )}
       </Box>

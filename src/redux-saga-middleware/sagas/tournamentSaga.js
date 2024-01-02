@@ -60,8 +60,8 @@ function* getListTour(dataRequest) {
   try {
     const { payload } = dataRequest;
     const res = yield call(tournamentService.callListTournament, payload);
-    const { type } = payload
-    if(res && (res.status === 200 || res.status === 201)) {
+    const { type } = payload;
+    if (res && (res.status === 200 || res.status === 201)) {
       yield put(getListPromotionNewSuccess());
       if (type === "daily") {
         yield put(getDailyTour(res.data));
@@ -204,11 +204,26 @@ function* getThreeBrandTour() {
     console.log(error);
   }
 }
+function* getListJoinedPromotion() {
+  try {
+    yield put(getEndedTour());
+    const res = yield call(tournamentService.callListJoinedPromotion);
+    console.log(res);
+    if (res.status === 200) {
+      yield put(getEndedTourSuccess(res.data));
+    } else {
+      yield put(getEndedTourFail());
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 function* tournamentSaga() {
   yield takeEvery("GET_BIGGEST_TOUR", getBiggesstEndTour);
   yield takeEvery("CALL_BRAND_TOUR", getBrandTour);
   yield takeEvery("CREATE_TOURNAMENT", postTournamentCreate);
   yield takeEvery("GET_LIST_PROMOTION_NEW", getListTour);
+  yield takeEvery("GET_LIST_JOINED_PROMOTION", getListJoinedPromotion);
   yield takeEvery("GET_LIST_GAME_FOR_TOURNAMENT", getListGameForTournamentSaga);
   yield takeEvery("GET_SKIN_FOR_TOURNAMENT", getSkinForTournamentSaga);
   yield takeEvery("GET_BRAND_TOURNAMENT", getListBrandForTournamentSaga);

@@ -9,27 +9,27 @@ class TournamentService {
   }
 
   async callListTournament(dataRequest) {
-    const { type, daily, monthly, weekly, soon } = dataRequest
+    const { type, daily, monthly, weekly, soon } = dataRequest;
     const queryParams = [];
-    if(daily) {
+    if (daily) {
       queryParams.push(`daily=${1}`);
     }
 
-    if(monthly) {
+    if (monthly) {
       queryParams.push(`monthly=${1}`);
     }
 
-    if(weekly) {
+    if (weekly) {
       queryParams.push(`weekly=${1}`);
     }
 
-    if(soon) {
+    if (soon) {
       queryParams.push(`soon=${1}`);
     }
     const queryString = queryParams.join("&");
 
-    const pathname = window.location.pathname
-    if(pathname && (pathname === "/home" || pathname === "/")) {
+    const pathname = window.location.pathname;
+    if (pathname && (pathname === "/home" || pathname === "/")) {
       const res = await PROMOTION_API.get(
         `/api/promotions/list-promotion?typeTournament=${type}&type=home&${queryString}`,
         {
@@ -50,9 +50,8 @@ class TournamentService {
       );
       return res;
     }
-    
   }
-  
+
   async listGameForTournament(dataRequest) {
     const res = await API.get("/api/games/list-game-tournament", dataRequest);
     return res;
@@ -66,7 +65,9 @@ class TournamentService {
     return res;
   }
   async callBiggestEndTour() {
-    const res = await PROMOTION_API.get("/api/promotions/biggest-end-promotion");
+    const res = await PROMOTION_API.get(
+      "/api/promotions/biggest-end-promotion"
+    );
     return res;
   }
   async callBrandTour() {
@@ -74,24 +75,33 @@ class TournamentService {
     return res;
   }
   async callHottestWeekTour() {
-    const res = await PROMOTION_API.get("/api/promotions/hottest-week-promotion");
+    const res = await PROMOTION_API.get(
+      "/api/promotions/hottest-week-promotion"
+    );
     return res;
   }
   async callThreeBrandTour() {
-    const res = await PROMOTION_API.get("/api/promotions/three-brand-promotion");
+    const res = await PROMOTION_API.get(
+      "/api/promotions/three-brand-promotion"
+    );
+    return res;
+  }
+  async callListJoinedPromotion() {
+    const res = await PROMOTION_API.get(
+      "api/promotions/get-list-joined-promotion"
+    );
     return res;
   }
 
-  async detailPromotion (dataRequest) {
-    const { id } = dataRequest
-    const res = await API.get(`/api/promotions/detail/${id}`, 
-    {
+  async detailPromotion(dataRequest) {
+    const { id } = dataRequest;
+    const res = await API.get(`/api/promotions/detail/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    return res
+    return res;
   }
 }
 
