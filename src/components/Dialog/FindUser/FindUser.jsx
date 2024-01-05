@@ -1,5 +1,5 @@
 import { Box, ClickAwayListener, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
@@ -8,25 +8,39 @@ import {
   findPeopleSuccess,
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import { images } from "../../../utils/images";
+import ConfirmSendRequest from "./ConfirmSendRequest";
+import {
+  callListSendingRequest,
+  cancelRequestingFriend,
+} from "../../../redux-saga-middleware/reducers/addFriendReducer";
+import LoadingPopup from "./LoadingPopup";
 
 export default function FindUser(props) {
   const { onCancel } = props;
   const [searchValue, setSearchValue] = useState("");
   const [socket, setSocket] = useState("");
   const [userSelected, setUserSelected] = useState("");
+  const [username, setUserName] = useState("");
+  const [openConfirm, setOpenCofirm] = useState(false);
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, []);
+
   const dispatch = useDispatch();
   const { listFindPeople } = useSelector((state) => state.appReducer);
-
+  const { friendList } = useSelector((state) => state.chatReducer);
+  const { listSendingRequest, cancelRequestReady } = useSelector(
+    (state) => state.addFriendReducer
+  );
   const handleConfirm = () => {
     if (searchValue) {
       dispatch(findPeople(searchValue));
     }
   };
-
+  useEffect(() => {
+    dispatch(callListSendingRequest());
+  }, [dispatch]);
   const handleCancel = () => {
     onCancel();
     setUserSelected("");
@@ -38,14 +52,6 @@ export default function FindUser(props) {
     dispatch(findPeopleSuccess([]));
 
     setSearchValue(e.target.value);
-  };
-
-  const handleAddFriend = () => {
-    if (userSelected) {
-      socket.emit("addFriend", {
-        username: userSelected,
-      });
-    }
   };
 
   useEffect(() => {
@@ -61,8 +67,7 @@ export default function FindUser(props) {
       });
     }
     return () => {};
-  }, [socket, dispatch]);
-
+  }, [socket, dispatch, handleCancel]);
   return (
     <ClickAwayListener onClickAway={handleCancel}>
       <Box
@@ -109,39 +114,93 @@ export default function FindUser(props) {
             >
               {listFindPeople?.map((people, i_p) => (
                 <Box
-                  onClick={() => {
-                    setUserSelected(people?.userName);
-                  }}
                   key={i_p}
                   className="d-flex mt-3 p-2"
                   sx={{
-                    background:
-                      userSelected === people?.userName ? "#7648ED" : "#181223",
+                    borderRadius: "5px",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  <Box
-                    component={"img"}
-                    sx={{
-                      width: 35,
-                      height: 35,
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      component={"img"}
+                      sx={{
+                        width: 32,
+                        height: 32,
+                      }}
+                      className="rounded-circle"
+                      src={
+                        people?.userAccount?.accountAvatar
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            people?.userAccount?.accountAvatar
+                          : images.undefinedAvatar
+                      }
+                    ></Box>
+                    <Box
+                      className="text-white ms-2"
+                      sx={{
+                        fontSize: "14px",
+                      }}
+                    >
+                      {people?.userNickName?.length > 11
+                        ? people?.userNickName?.slice(0, 11) + " ..."
+                        : people?.userNickName}
+                    </Box>
+                  </Box>
+                  <button
+                    onClick={() => {
+                      if (
+                        !friendList
+                          ?.map((item) => {
+                            return item.id;
+                          })
+                          .includes(people?.id) &&
+                        !listSendingRequest
+                          ?.map((item) => {
+                            return item.id;
+                          })
+                          .includes(people?.id)
+                      ) {
+                        setUserName(people?.userName);
+                        setOpenCofirm(true);
+                      } else if (
+                        listSendingRequest
+                          ?.map((item) => {
+                            return item.id;
+                          })
+                          .includes(people?.id)
+                      ) {
+                        dispatch(cancelRequestingFriend(people?.userName));
+                      }
                     }}
-                    className="rounded-circle"
-                    src={
-                      people?.userAccount?.accountAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          people?.userAccount?.accountAvatar
-                        : images.undefinedAvatar
-                    }
-                  ></Box>
-                  <Box
-                    className="text-white ms-2"
-                    sx={{
-                      fontSize: "20px",
+                    style={{
+                      backgroundColor: "#271C39",
+                      color: "#7C81F2",
+                      borderRadius: "4px",
+                      padding: "6px",
+                      border: "none",
+                      outline: "none",
+                      fontSize: "12px",
                     }}
                   >
-                    {people?.userNickName}
-                  </Box>
+                    {friendList &&
+                    friendList
+                      ?.map((item) => {
+                        return item.id;
+                      })
+                      .includes(people?.id)
+                      ? "View profile"
+                      : listSendingRequest &&
+                        listSendingRequest
+                          ?.map((item) => {
+                            return item.id;
+                          })
+                          .includes(people?.id)
+                      ? "Cancel request"
+                      : "Add friend"}
+                  </button>
                 </Box>
               ))}
             </Box>
@@ -150,31 +209,20 @@ export default function FindUser(props) {
           ) : (
             <></>
           )}
-          <Box className="d-flex justify-content-between mt-4">
-            <Box
-              onClick={handleCancel}
-              sx={{
-                width: "45%",
-                border: "solid 1px #7848ED",
-                color: "#7848ED",
-              }}
-              className="p-2 rounded text-center cursor-pointer"
-            >
-              Cancel
-            </Box>
-            {listFindPeople && listFindPeople?.length > 0 ? (
+          {listFindPeople && listFindPeople?.length === 0 && (
+            <Box className="d-flex justify-content-between mt-4">
               <Box
-                onClick={handleAddFriend}
+                onClick={handleCancel}
                 sx={{
                   width: "45%",
-                  color: "#fff",
-                  background: userSelected ? "#7848ED" : "#979797",
+                  border: "solid 1px #7848ED",
+                  color: "#7848ED",
                 }}
                 className="p-2 rounded text-center cursor-pointer"
               >
-                {"Add Friend"}
+                Cancel
               </Box>
-            ) : (
+
               <Box
                 onClick={handleConfirm}
                 sx={{
@@ -186,9 +234,17 @@ export default function FindUser(props) {
               >
                 {"Confirm"}
               </Box>
-            )}
-          </Box>
-        </Box>
+            </Box>
+          )}
+        </Box>{" "}
+        <ConfirmSendRequest
+          username={username}
+          open={openConfirm}
+          onClose={() => {
+            setOpenCofirm(false);
+          }}
+        />
+        {cancelRequestReady && <LoadingPopup />}
       </Box>
     </ClickAwayListener>
   );
