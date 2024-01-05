@@ -42,7 +42,10 @@ export default function ConfirmSendRequest(props) {
         </Box>
         <Typography sx={{ color: "#fff" }}>
           Send a friend request to{" "}
-          <span style={{ color: "#7C81F2" }}>{username}</span> ?
+          <span style={{ color: "#7C81F2" }}>
+            {username?.length > 11 ? username.slice(0, 11) + " ..." : username}
+          </span>{" "}
+          ?
         </Typography>
         <Box
           sx={{

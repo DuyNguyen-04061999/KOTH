@@ -469,7 +469,19 @@ export default function Dialoglg() {
                           marginTop: "5px",
                         }}
                       >
-                        Not a VIP member yet?
+                        VIP Upgrade:{" "}
+                        <span
+                          onClick={() => navigate("/packages")}
+                          style={{
+                            fontSize: "10px",
+                            textAlign: "center",
+                            marginLeft: "0px !important",
+                            color: "#FF9F38",
+                          }}
+                          className="cursor-pointer"
+                        >
+                          Click here
+                        </span>
                       </Typography>
                     )}
                     {uPack ? (
@@ -489,18 +501,7 @@ export default function Dialoglg() {
                         </Typography>
                       </Box>
                     ) : (
-                      <Typography
-                        onClick={() => navigate("/packages")}
-                        sx={{
-                          fontSize: "10px",
-                          textAlign: "center",
-                          marginLeft: "0px !important",
-                          color: "#FF9F38",
-                        }}
-                        className="cursor-pointer"
-                      >
-                        Click here
-                      </Typography>
+                      ""
                     )}
                   </Box>
                   <hr
