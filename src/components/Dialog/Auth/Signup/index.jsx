@@ -222,12 +222,18 @@ export default function Signup(props) {
     setValidFirstName(firstName?.length >= 1);
     setValidLastName(lastName?.length >= 1);
   }, [email, phone, displayName, firstName, lastName]);
-
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
   return (
     <Box
       className="signup"
       sx={{
-        marginTop: "50px",
+        marginTop:
+          orientation === "landscape" && device === "Mobile"
+            ? "200px"
+            : "unset",
+        paddingTop: orientation === "landscape" && device === "Mobile"
+            ? "200px" : "unset",
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>

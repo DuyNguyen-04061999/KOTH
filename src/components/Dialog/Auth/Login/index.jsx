@@ -153,7 +153,9 @@ const Login = () => {
     <Box
       sx={{
         marginTop:
-          orientation === "landscape" && device === "Mobile" ? "75px" : "unset",
+          orientation === "landscape" && device === "Mobile"
+            ? "200px"
+            : "unset",
       }}
     >
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
