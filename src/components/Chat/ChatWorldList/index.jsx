@@ -18,6 +18,10 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 import "./index.scss";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
+import {
+  callListSendingRequest,
+  cancelRequestingFriend,
+} from "../../../redux-saga-middleware/reducers/addFriendReducer";
 
 export default function ChatWorldList() {
   const chatBox = useRef(null);
@@ -542,7 +546,7 @@ export default function ChatWorldList() {
             message: "Send request successfully!",
           })
         );
-        window.location.reload();
+        dispatch(callListSendingRequest());
       });
     }
     return () => {};
@@ -643,6 +647,9 @@ export default function ChatWorldList() {
                 })
                 .includes(messagefromName) ? (
               <MenuItem
+                onClick={() => {
+                  dispatch(cancelRequestingFriend(messagefromName));
+                }}
                 sx={{
                   padding: "5px",
                 }}
@@ -650,13 +657,13 @@ export default function ChatWorldList() {
                 <Box
                   className="p-1 text-white"
                   sx={{
-                    background: "#979797",
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
                     width: "100%",
                     borderRadius: "4px",
                   }}
                 >
                   <PersonAddAlt1 className="me-2 pb-1" />
-                  Add Friend
+                  Cancel Request
                 </Box>
               </MenuItem>
             ) : (
