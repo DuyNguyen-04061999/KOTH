@@ -41,7 +41,7 @@ class NotificationService {
     return res;
   }
 
-  async readNotification (dataRequest) {
+  async readNotification(dataRequest) {
     const res = await PROMOTION_API.post(
       `/api/notification/read/${dataRequest?.id}`,
       {

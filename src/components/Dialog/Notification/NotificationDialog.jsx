@@ -82,6 +82,7 @@ export default function NotificationDialog() {
                 id={noti?.id}
                 otherAvatar={noti?.nOther?.userAccount?.accountAvatar}
                 createdAt={noti?.createdAt}
+                title={noti?.notificationTitle}
               />
             );
           })
