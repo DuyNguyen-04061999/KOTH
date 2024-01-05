@@ -139,7 +139,7 @@ export default function NewHomePage() {
           backgroundColor: "#211d28",
         }}
       >
-        {process.env.REACT_APP_TEST === "test" && (
+        {/* {process.env.REACT_APP_TEST === "test" && (
           <Box
             className="text-white mb-2"
             onClick={() => {
@@ -148,7 +148,7 @@ export default function NewHomePage() {
           >
             List Game Manager
           </Box>
-        )}
+        )} */}
         <Box
           sx={{
             paddingBottom: "70px",

@@ -1,27 +1,23 @@
 import { Box, ClickAwayListener, TextField } from "@mui/material";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { cancelRequestingFriend } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import {
   findPeople,
   findPeopleSuccess,
 } from "../../../redux-saga-middleware/reducers/appReducer";
-import { images } from "../../../utils/images";
-import ConfirmSendRequest from "./ConfirmSendRequest";
-import {
-  callListSendingRequest,
-  cancelRequestingFriend,
-} from "../../../redux-saga-middleware/reducers/addFriendReducer";
-import LoadingPopup from "./LoadingPopup";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
+import { images } from "../../../utils/images";
+import ConfirmSendRequest from "./ConfirmSendRequest";
+import LoadingPopup from "./LoadingPopup";
 
 export default function FindUser(props) {
   const { onCancel } = props;
   const [searchValue, setSearchValue] = useState("");
   const [socket, setSocket] = useState("");
-  const [userSelected, setUserSelected] = useState("");
   const [username, setUserName] = useState("");
   const [openConfirm, setOpenCofirm] = useState(false);
   useEffect(() => {
@@ -41,12 +37,11 @@ export default function FindUser(props) {
     }
   };
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     onCancel();
-    setUserSelected("");
     setSearchValue("");
     dispatch(findPeopleSuccess([]));
-  };
+  }, [dispatch, onCancel]);
 
   const handleChangeSearch = (e) => {
     dispatch(findPeopleSuccess([]));

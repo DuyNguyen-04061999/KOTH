@@ -23,6 +23,7 @@ import "slick-carousel/slick/slick.css";
 import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
+import { callListSendingRequest } from "../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
 import {
   changeRouter,
@@ -62,6 +63,7 @@ import {
   closeTransactionDialog,
   toggleWalletDialog,
 } from "../../redux-saga-middleware/reducers/walletReducer";
+import { compareDate } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
 import useWindowDimensions from "../../utils/useWindowDimensions";
@@ -75,6 +77,7 @@ import DialogSubscribe from "../Dialog/DialogSubscribe";
 import DoubleDayDialog from "../Dialog/DoubleDay";
 import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import GameLogDialog from "../Dialog/GameLog/GameLog";
+import HappyNewYearPopup from "../Dialog/HappyNewYearPopup";
 import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import NotiFunds from "../Dialog/NotiFunds";
 import NotificationDialog from "../Dialog/Notification/NotificationDialog";
@@ -91,10 +94,6 @@ import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
 import "./index.scss";
-import HappyNewYearPopup from "../Dialog/HappyNewYearPopup";
-import { compareDate } from "../../utils/config";
-import moment from "moment";
-import { callListSendingRequest } from "../../redux-saga-middleware/reducers/addFriendReducer";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -162,7 +161,7 @@ export default function Layout(props) {
     setOpenDropdown(false);
   };
 
-  const { randomRender, countDownNewYear, showPopupBewYear } = useSelector(
+  const { randomRender, countDownNewYear } = useSelector(
     (state) => state.appReducer
   );
   useEffect(() => {
@@ -185,8 +184,10 @@ export default function Layout(props) {
     };
   }, [dispatch]);
   useEffect(() => {
-    dispatch(callListSendingRequest());
-  }, [dispatch]);
+    if (token) {
+      dispatch(callListSendingRequest());
+    }
+  }, [dispatch, token]);
   useEffect(() => {
     if (router) {
       const tokenLocal = localStorage.getItem("token");

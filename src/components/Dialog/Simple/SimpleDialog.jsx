@@ -28,6 +28,7 @@ export default function SimpleDialog(props) {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
   const handleClose = () => {
     dispatch(closeLoginDialog());
     dispatch(closeVerifyDialog());
@@ -43,7 +44,7 @@ export default function SimpleDialog(props) {
 
   return ReactDOM.createPortal(
     <>
-      {device === "Mobile" ? (
+      {device === "Mobile" && width < 576 ? (
         <>
           <Dialog
             onClose={handleClose}
@@ -155,22 +156,18 @@ export default function SimpleDialog(props) {
                     sx={{
                       backgroundColor: "#19133e",
                       color: "white",
-                      height: width < 992 && width > 576 ? "100%" : "100%",
+                      height: "100%",
                       position: "relative",
                       minWidth: device === "Desktop" ? "450px" : "50%",
                     }}
                   >
-                    {/* <LazyLoadImage
-                      alt={"Hello"}
-                      effect="blur"
-                      height="100%"
-                      width={"100%"}
-                      src={sign.bannersignin}
-                    /> */}
                     <Box
                       sx={{
                         width: "100%",
-                        height: "100%",
+                        height:
+                          device === "Mobile" && orientation === "landscape"
+                            ? "auto"
+                            : "100%",
                         backgroundImage: `url(${imageHome.signInBgBanner})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",

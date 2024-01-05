@@ -10,6 +10,11 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import {
+  callListSendingRequest,
+  cancelRequestingFriend,
+} from "../../../redux-saga-middleware/reducers/addFriendReducer";
+import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
@@ -17,11 +22,6 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 import "./index.scss";
-import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
-import {
-  callListSendingRequest,
-  cancelRequestingFriend,
-} from "../../../redux-saga-middleware/reducers/addFriendReducer";
 
 export default function ChatWorldList() {
   const chatBox = useRef(null);
@@ -546,11 +546,13 @@ export default function ChatWorldList() {
             message: "Send request successfully!",
           })
         );
-        dispatch(callListSendingRequest());
+        if (tokenUser) {
+          dispatch(callListSendingRequest());
+        }
       });
     }
     return () => {};
-  }, [socket, dispatch]);
+  }, [socket, dispatch, tokenUser]);
   return (
     <Box sx={{ position: "relative" }}>
       <Box

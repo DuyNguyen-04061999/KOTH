@@ -7,7 +7,7 @@ import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers
 import { readNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
 
 export default function PromotionNotification(props) {
-  const { createdAt, content, promotionId, type, id, title } = props;
+  const { createdAt, content, promotionId, id, title } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (

@@ -73,7 +73,7 @@ export default function CountDownBannerHot({
       </Typography>{" "}
     </Box>
   ) : (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
       <Typography
         sx={{
           fontSize: device === "Tablet" ? "15px" : "15px",

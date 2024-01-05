@@ -109,7 +109,7 @@ const BannerTour = (props) => {
           sx={{
             backgroundColor: "#E90488",
             borderRadius: "10px",
-            width: checkTablet() ? "90%" : "440px",
+            width: checkTablet() ? "100%" : "440px",
             display: "flex",
             justifyContent: "space-between",
             padding: "10px 20px",
@@ -148,7 +148,7 @@ const BannerTour = (props) => {
               cursor: "pointer",
               fontWeight: 600,
               whiteSpace: "nowrap",
-              minWidth: "30%",
+              minWidth: "50%",
             }}
           >
             Play now
