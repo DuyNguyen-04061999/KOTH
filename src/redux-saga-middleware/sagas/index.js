@@ -11,6 +11,7 @@ import settingSaga from "./settingSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
 import { default as authSaga, default as userSaga } from "./userSaga";
+import addFriendSaga from "./addFriendSaga";
 
 function* watchAll() {
   yield all([
@@ -26,7 +27,8 @@ function* watchAll() {
     settingSaga(),
     refreshSaga(),
     checkoutSaga(),
-    notificationSaga()
+    notificationSaga(),
+    addFriendSaga(),
   ]);
 }
 
