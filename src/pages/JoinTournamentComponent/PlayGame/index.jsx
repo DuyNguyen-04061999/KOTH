@@ -21,7 +21,6 @@ export default function PlayGame(props) {
   const { device } = useSelector((state) => state.deviceReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
-  const { chatPopup } = useSelector((state) => state.chatReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isBuyPackageGameSuccess } = useSelector((state) => state.appReducer);
 

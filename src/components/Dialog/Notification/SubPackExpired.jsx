@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 
 export default function SubPackExpired(props) {
-  const { createdAt, content, promotionId, type, id, title } = props;
+  const { createdAt, content, title } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (

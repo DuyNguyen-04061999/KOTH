@@ -1,11 +1,11 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import addFriendService from "../services/addFriendService";
 import {
   cancelRequestFail,
   cancelRequestReady,
   cancelRequestSuccess,
   getListSendingRequest,
 } from "../reducers/addFriendReducer";
+import addFriendService from "../services/addFriendService";
 var sendingCount = 0;
 var cancelRequest = 0;
 const AddFriendService = new addFriendService();
@@ -13,7 +13,6 @@ function* callListSendingFriendSaga(dataRequest) {
   try {
     sendingCount += 1;
     if (sendingCount === 1) {
-      const { payload } = dataRequest;
       const res = yield call(AddFriendService.callListSendingRequest);
       const { status, data } = res;
       if (status === 200 || status === 201) {

@@ -1,13 +1,8 @@
-import { Box } from "@mui/material";
-import moment from "moment";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 import AddFriendComponent from "./AddFriendComponent";
 import PromotionNotification from "./PromotionNotification";
-import WinPromotion from "./WinPromotion";
 import SubPackExpired from "./SubPackExpired";
+import WinPromotion from "./WinPromotion";
 
 export default function NotificationItem(props) {
   const {
@@ -23,9 +18,6 @@ export default function NotificationItem(props) {
     createdAt,
     title,
   } = props;
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   switch (type) {
     case 1: {
