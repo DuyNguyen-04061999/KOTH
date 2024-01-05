@@ -190,7 +190,7 @@ export default function PlayGame(props) {
           <Box
             sx={{
               position: "relative",
-              height: videoGame ? (chatPopup ? "600px" : "700px") : "800px",
+              height: "800px",
             }}
           >
             {" "}
