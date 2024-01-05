@@ -13,7 +13,6 @@ class addFriendService {
     return res;
   }
   async callCancelFriendRequest(dataRequest) {
-    console.log(dataRequest);
     const res = await PROMOTION_API.post(
       "/api/socials/cancel-friend",
       { name: dataRequest },

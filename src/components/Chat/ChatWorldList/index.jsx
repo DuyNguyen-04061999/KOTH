@@ -17,6 +17,7 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 import "./index.scss";
+import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 
 export default function ChatWorldList() {
   const chatBox = useRef(null);
@@ -124,6 +125,7 @@ export default function ChatWorldList() {
   };
 
   const { friendList } = useSelector((state) => state.chatReducer);
+  const { listSendingRequest } = useSelector((state) => state.addFriendReducer);
 
   const checkExistInFriendList = (messagefromName) => {
     for (let i = 0; i < friendList.length; i++) {
@@ -145,7 +147,6 @@ export default function ChatWorldList() {
       username: username,
     });
   };
-
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -532,6 +533,20 @@ export default function ChatWorldList() {
     }
     return height;
   };
+  useEffect(() => {
+    if (socket) {
+      socket?.on("addFriendRequestSuccess", (data) => {
+        dispatch(
+          showToastNotification({
+            type: "success",
+            message: "Send request successfully!",
+          })
+        );
+        window.location.reload();
+      });
+    }
+    return () => {};
+  }, [socket, dispatch]);
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -619,6 +634,29 @@ export default function ChatWorldList() {
                 >
                   <DeleteFriendIcon className="me-2 pb-1" />
                   <span> Delete Friend</span>
+                </Box>
+              </MenuItem>
+            ) : listSendingRequest &&
+              listSendingRequest
+                ?.map((item) => {
+                  return item.userName;
+                })
+                .includes(messagefromName) ? (
+              <MenuItem
+                sx={{
+                  padding: "5px",
+                }}
+              >
+                <Box
+                  className="p-1 text-white"
+                  sx={{
+                    background: "#979797",
+                    width: "100%",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <PersonAddAlt1 className="me-2 pb-1" />
+                  Add Friend
                 </Box>
               </MenuItem>
             ) : (
