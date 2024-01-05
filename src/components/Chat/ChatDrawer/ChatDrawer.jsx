@@ -88,10 +88,12 @@ const ChatDrawer = () => {
         }
       }
     } else {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Cannot send message while playing game! Please try later!"
-      }))
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message: "Cannot send message while playing game! Please try later!",
+        })
+      );
     }
   };
   const handleOnClickSendMessage = () => {
@@ -115,10 +117,12 @@ const ChatDrawer = () => {
         }
       }
     } else {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Cannot send message while playing game! Please try later!"
-      }))
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message: "Cannot send message while playing game! Please try later!",
+        })
+      );
     }
   };
 
@@ -344,7 +348,7 @@ const ChatDrawer = () => {
                   type="text"
                   id="sendmessages_chat_drawer"
                   onKeyDown={handleOnKeyDown}
-                  placeholder={t("Type your message") + '...'}
+                  placeholder={t("Type your message") + "..."}
                 />
               </Box>
               <Box

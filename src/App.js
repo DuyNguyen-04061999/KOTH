@@ -266,6 +266,7 @@ function App() {
       });
 
       socket?.on("addFriendSuccess", (data) => {
+        console.log(data);
         store.dispatch(
           showToastNotification({
             type: "success",

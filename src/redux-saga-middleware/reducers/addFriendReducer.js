@@ -46,9 +46,6 @@ const addFriendReducer = (
       return {
         ...state,
         listSendingRequest: payload,
-        cancelRequestReady: false,
-        cancelRequestSuccess: false,
-        cancelRequestFail: false,
       };
     case "CANCEL_REUQEST_READY":
       return {
