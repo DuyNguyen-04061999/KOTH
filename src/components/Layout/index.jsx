@@ -94,6 +94,7 @@ import "./index.scss";
 import HappyNewYearPopup from "../Dialog/HappyNewYearPopup";
 import { compareDate } from "../../utils/config";
 import moment from "moment";
+import { callListSendingRequest } from "../../redux-saga-middleware/reducers/addFriendReducer";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -183,7 +184,9 @@ export default function Layout(props) {
       window.removeEventListener("popstate", handlePopState);
     };
   }, [dispatch]);
-
+  useEffect(() => {
+    dispatch(callListSendingRequest());
+  }, [dispatch]);
   useEffect(() => {
     if (router) {
       const tokenLocal = localStorage.getItem("token");

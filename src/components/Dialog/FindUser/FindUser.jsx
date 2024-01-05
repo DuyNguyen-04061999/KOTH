@@ -14,6 +14,8 @@ import {
   cancelRequestingFriend,
 } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import LoadingPopup from "./LoadingPopup";
+import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
 
 export default function FindUser(props) {
   const { onCancel } = props;
@@ -38,9 +40,7 @@ export default function FindUser(props) {
       dispatch(findPeople(searchValue));
     }
   };
-  useEffect(() => {
-    dispatch(callListSendingRequest());
-  }, [dispatch]);
+
   const handleCancel = () => {
     onCancel();
     setUserSelected("");
@@ -57,6 +57,7 @@ export default function FindUser(props) {
   useEffect(() => {
     if (socket) {
       socket?.on("addFriendRequestSuccess", (data) => {
+        console.log("Data: ", data);
         handleCancel();
         dispatch(
           showToastNotification({
@@ -173,6 +174,19 @@ export default function FindUser(props) {
                           .includes(people?.id)
                       ) {
                         dispatch(cancelRequestingFriend(people?.userName));
+                      } else if (
+                        friendList
+                          ?.map((item) => {
+                            return item.id;
+                          })
+                          .includes(people?.id)
+                      ) {
+                        dispatch(toggleProfileDialog(true));
+                        dispatch(
+                          getUserByUsername({
+                            username: people?.userName,
+                          })
+                        );
                       }
                     }}
                     style={{
