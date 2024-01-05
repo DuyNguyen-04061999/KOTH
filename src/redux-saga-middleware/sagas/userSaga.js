@@ -196,6 +196,7 @@ function* updateProfileSaga(dataRequest) {
           updateProfileUserSuccess({
             avatar: data?.data?.avatar,
             nickName: data?.data?.nickName,
+            checkFullInfor: data?.data?.checkFullInfor
           })
         );
       } else {

@@ -4,10 +4,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
-import { readNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
 
-export default function PromotionNotification(props) {
-  const { createdAt, content, promotionId, id, title } = props;
+export default function SubPackExpired(props) {
+  const { createdAt, content, title } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -43,13 +42,8 @@ export default function PromotionNotification(props) {
       <Box sx={{ fontSize: "12px", color: "#fff" }}>{content}</Box>
       <Typography
         onClick={() => {
-          dispatch(closeNotificationDialog(false));
-          dispatch(
-            readNotification({
-              id: id,
-            })
-          );
-          navigate("/promotion-detail/" + promotionId);
+          dispatch(closeNotificationDialog());
+          navigate("/packages");
         }}
         sx={{
           marginLeft: "0px !important",
@@ -60,7 +54,7 @@ export default function PromotionNotification(props) {
           cursor: "pointer",
         }}
       >
-        Join now
+        Renew now
       </Typography>
     </Box>
   );

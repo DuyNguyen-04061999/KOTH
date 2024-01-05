@@ -27,6 +27,7 @@ import tournamentReducer from "../reducers/tournamentReducer";
 import userReducer from "../reducers/userReducer";
 import videoReducer from "../reducers/videoReducer";
 import walletReducer from "../reducers/walletReducer";
+import addFriendReducer from "../reducers/addFriendReducer";
 import rootSaga from "../sagas";
 import sagaMiddleware from "./configSaga";
 let rootReducer = combineReducers({
@@ -55,7 +56,8 @@ let rootReducer = combineReducers({
   promotionReducer,
   settingReducer,
   dialogReducer,
-  notificationReducer
+  notificationReducer,
+  addFriendReducer,
 });
 
 const persistConfig = {
@@ -73,4 +75,3 @@ sagaMiddleware.run(rootSaga);
 const action = (type) => store.dispatch({ type });
 
 export { action, persistor, store };
-

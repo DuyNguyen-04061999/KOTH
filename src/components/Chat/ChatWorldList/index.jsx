@@ -10,6 +10,11 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import {
+  callListSendingRequest,
+  cancelRequestingFriend,
+} from "../../../redux-saga-middleware/reducers/addFriendReducer";
+import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
@@ -124,6 +129,7 @@ export default function ChatWorldList() {
   };
 
   const { friendList } = useSelector((state) => state.chatReducer);
+  const { listSendingRequest } = useSelector((state) => state.addFriendReducer);
 
   const checkExistInFriendList = (messagefromName) => {
     for (let i = 0; i < friendList.length; i++) {
@@ -145,7 +151,6 @@ export default function ChatWorldList() {
       username: username,
     });
   };
-
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -532,6 +537,22 @@ export default function ChatWorldList() {
     }
     return height;
   };
+  useEffect(() => {
+    if (socket) {
+      socket?.on("addFriendRequestSuccess", (data) => {
+        dispatch(
+          showToastNotification({
+            type: "success",
+            message: "Send request successfully!",
+          })
+        );
+        if (tokenUser) {
+          dispatch(callListSendingRequest());
+        }
+      });
+    }
+    return () => {};
+  }, [socket, dispatch, tokenUser]);
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -619,6 +640,32 @@ export default function ChatWorldList() {
                 >
                   <DeleteFriendIcon className="me-2 pb-1" />
                   <span> Delete Friend</span>
+                </Box>
+              </MenuItem>
+            ) : listSendingRequest &&
+              listSendingRequest
+                ?.map((item) => {
+                  return item.userName;
+                })
+                .includes(messagefromName) ? (
+              <MenuItem
+                onClick={() => {
+                  dispatch(cancelRequestingFriend(messagefromName));
+                }}
+                sx={{
+                  padding: "5px",
+                }}
+              >
+                <Box
+                  className="p-1 text-white"
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <PersonAddAlt1 className="me-2 pb-1" />
+                  Cancel Request
                 </Box>
               </MenuItem>
             ) : (

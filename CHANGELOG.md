@@ -1,3 +1,32 @@
+## [1.7.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.6.0...1.7.0) (2024-01-05)
+
+
+### Features
+
+* Add friend in global chat ([408faa6](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/408faa62a37ea5df72f8f9f489c19952c256e6da))
+* Add friend in global chat ([d47e0e1](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d47e0e174d6167fe7af93543a27a1776d745d137))
+* Add joined promotion to navbar ([f5be61e](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f5be61e5e04a6de6390ead297bbc6124a3d9d6af))
+* cancel add friend request ([4e12935](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4e129353a063f8e933a99790548389fb41b2acec))
+* Fix text VIP ([d3f9da8](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d3f9da8ca521dd4305a7a51d6d175eec69292c28))
+* Joined promotions ([ad848f4](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ad848f4a48f3d6568511827911fb6774e7c55247))
+* Joined promotions ([a7f6d3f](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/a7f6d3f01a4cc6c9ecc1a40a108f1bf50f932557))
+* Remove console.log ([3735056](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/3735056f1b04cf7f19c608bec6711e78ed9c1154))
+* Style active navbar ([c2c197b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/c2c197bc9e303d90b5079ff962abd67314cd534f))
+
+
+### Bug Fixes
+
+* Fix bugs login, check infor ([7040759](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7040759bb0d390be4e5f91abb0161c05a77bdf8d))
+* Fix height play game ([b349eaf](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b349eaf6acc091995a3e03fab9544a34c7630be9))
+* Fix login dialog ([4ea752c](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4ea752c775c2aa11217f599521c7c18d61175972))
+* Play game ([840a655](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/840a6554029f2813a291b441fb3aaf8f89edd908))
+* Remove console.log ([5003560](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/50035601639863694b257eb0a2fc3eced61bee0a))
+* Remove console.log ([0dc71de](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0dc71de4d7f806c37d98e0cc03e241ae7ad04db0))
+* Update friend name ([5e58f63](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5e58f636a96cfd2f100b9f9e8102511db6d2e593))
+* Update list winner ([8523c05](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8523c0576694c49dd1169e146bf32fdfa9b91b84))
+* Update package ([ac84e0b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ac84e0b9fce4988f183eb2b0aed62f6e7e488c65))
+* Update ticket to extra ([fe2d367](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/fe2d3674e9e4e2c8ef75b5272a225aa11de60d9b))
+
 ## [1.6.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.5.0...1.6.0) (2023-12-29)
 
 
