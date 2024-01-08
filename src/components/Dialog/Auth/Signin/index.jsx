@@ -79,11 +79,6 @@ export default function Dialoglg() {
   const { width, height } = useWindowDimensions();
 
   const token = localStorage.getItem("token");
-  // useEffect(() => {
-  //   if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
-  //     dispatch(getUserInfoReady(token || tokenUser));
-  //   }
-  // }, [token, dispatch, tokenUser, currentTab]);
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (

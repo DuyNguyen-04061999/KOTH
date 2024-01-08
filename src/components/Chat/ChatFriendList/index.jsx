@@ -15,6 +15,7 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import FindUser from "../../Dialog/FindUser/FindUser";
 import ChatGlobal from "../ChatGlobal";
+import _socket from "../../../redux-saga-middleware/config/socket";
 
 const Test = styled.input`
   display: flex;
@@ -39,6 +40,7 @@ const Test = styled.input`
 export default function ChatFriendList() {
   const [openMess, setOpenMess] = useState(false);
   const { width, height } = useWindowDimensions();
+  const [socket, setSocket] = useState(null);
   const [searchFeild, setSearchFeild] = useState("");
   const { friendList, chatWorld } = useSelector((state) => state.chatReducer);
   const { tokenUser } = useSelector((state) => state.userReducer);
@@ -53,7 +55,15 @@ export default function ChatFriendList() {
   const handleChangeSearchChat = (e) => {
     setSearchFeild(e.target.value);
   };
-
+  useEffect(() => {
+    const socket = _socket;
+    setSocket(socket);
+  }, [dispatch]);
+  useEffect(() => {
+    if (tokenUser) {
+      socket?.emit("listFriend");
+    }
+  }, [socket, tokenUser, dispatch]);
   const [listFriend, setListFriend] = useState([]);
   useEffect(() => {
     setListFriend(friendList);

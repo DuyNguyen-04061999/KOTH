@@ -28,7 +28,7 @@ import { getStripe } from "../../../redux-saga-middleware/reducers/stripeReducer
 import {
   closeTransactionDialog,
   openTransactionDialog,
-  toggleWalletDialog
+  toggleWalletDialog,
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { getAppType } from "../../../utils/helper";
