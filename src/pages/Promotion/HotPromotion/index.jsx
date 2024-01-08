@@ -10,9 +10,11 @@ import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
+import history from "../../../components/Router/history";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateHotPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
@@ -24,6 +26,7 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
+
 const theme = createTheme({
   typography: {},
   components: {
@@ -33,6 +36,10 @@ const theme = createTheme({
   },
 });
 export default function HotTournament() {
+  const location = useLocation();
+  const useQuery = () => new URLSearchParams(location.search);
+  const query = useQuery();
+
   const { t } = useTranslation("hot_promo");
   const { width } = useWindowDimensions();
   const typographyStyle = {
@@ -74,9 +81,16 @@ export default function HotTournament() {
 
   useEffect(() => {
     if (hotTournament) {
+      dispatch(
+        updateHotPage(
+          Number(query?.get("page")) && Number(query?.get("page")) !== 1
+            ? itemQuantity
+            : 0
+        )
+      );
       setData(hotTournament);
     }
-  }, [hotTournament]);
+  }, [hotTournament, dispatch]);
 
   const imgHot = data?.map((e) => {
     return e.tournamentBackground;
@@ -216,9 +230,14 @@ export default function HotTournament() {
                     data?.length > 0 &&
                     itemQuantity && (
                       <PaginatedItems
-                        defaultPage={1}
+                        defaultPage={Number(query?.get("page")) || 1}
                         pageCount={Math.ceil(data.length / itemQuantity)}
                         changeOffSet={(value) => {
+                          const params = new URLSearchParams({ page: value });
+                          history.replace({
+                            pathname: location.pathname,
+                            search: params.toString(),
+                          });
                           dispatch(updateHotPage((value - 1) * itemQuantity));
                         }}
                       />
@@ -300,9 +319,14 @@ export default function HotTournament() {
                     data?.length > 0 &&
                     itemQuantity && (
                       <PaginatedItems
-                        defaultPage={1}
+                        defaultPage={Number(query?.get("page")) || 1}
                         pageCount={Math.ceil(data.length / itemQuantity)}
                         changeOffSet={(value) => {
+                          const params = new URLSearchParams({ page: value });
+                          history.replace({
+                            pathname: location.pathname,
+                            search: params.toString(),
+                          });
                           dispatch(updateHotPage((value - 1) * itemQuantity));
                         }}
                       />

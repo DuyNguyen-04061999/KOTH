@@ -3,16 +3,15 @@ import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
+import history from "../../../components/Router/history";
 import SlickSlider from "../../../components/SlickSlider";
 import FilterPromotion from "../../../components/filterPromotion";
 import { updateJoinedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import {
-  getJoinedTour,
-  getOngoingTour,
-} from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { getJoinedTour } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
@@ -20,6 +19,10 @@ import PaginatedItems from "../../PaginatedItems";
 import { useNavigate } from "react-router";
 
 export default function JoinedPromotion() {
+  const location = useLocation();
+  const useQuery = () => new URLSearchParams(location.search);
+  const query = useQuery();
+
   const { width } = useWindowDimensions();
   const { t } = useTranslation("ongoing_promo");
   const typographyStyle = {
@@ -82,7 +85,13 @@ export default function JoinedPromotion() {
 
   useEffect(() => {
     if (joinedTournament) {
-      dispatch(updateJoinedPage(0));
+      dispatch(
+        updateJoinedPage(
+          Number(query?.get("page")) && Number(query?.get("page")) !== 1
+            ? itemQuantity
+            : 0
+        )
+      );
       setData(joinedTournament);
     }
   }, [joinedTournament, dispatch]);
@@ -223,9 +232,14 @@ export default function JoinedPromotion() {
                     data?.length > 0 &&
                     itemQuantity && (
                       <PaginatedItems
-                        defaultPage={1}
+                        defaultPage={Number(query?.get("page")) || 1}
                         pageCount={Math.ceil(data.length / itemQuantity)}
                         changeOffSet={(value) => {
+                          const params = new URLSearchParams({ page: value });
+                          history.replace({
+                            pathname: location.pathname,
+                            search: params.toString(),
+                          });
                           dispatch(
                             updateJoinedPage((value - 1) * itemQuantity)
                           );
@@ -310,9 +324,14 @@ export default function JoinedPromotion() {
                       data?.length > 0 &&
                       itemQuantity && (
                         <PaginatedItems
-                          defaultPage={1}
+                          defaultPage={Number(query?.get("page")) || 1}
                           pageCount={Math.ceil(data.length / itemQuantity)}
                           changeOffSet={(value) => {
+                            const params = new URLSearchParams({ page: value });
+                            history.replace({
+                              pathname: location.pathname,
+                              search: params.toString(),
+                            });
                             dispatch(
                               updateJoinedPage((value - 1) * itemQuantity)
                             );
