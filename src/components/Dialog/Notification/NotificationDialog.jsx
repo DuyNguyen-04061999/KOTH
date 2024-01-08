@@ -6,6 +6,7 @@ import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers
 import { getListNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NotificationItem from "./NotificationItem";
+import moment from "moment";
 
 export default function NotificationDialog() {
   const { tokenUser } = useSelector((state) => state.userReducer);
@@ -26,6 +27,7 @@ export default function NotificationDialog() {
     }
   }, [dispatch, tokenUser]);
   const { width, height } = useWindowDimensions();
+
   return (
     <Dialog
       fullScreen={width < 576}
