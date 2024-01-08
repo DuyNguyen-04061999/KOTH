@@ -699,7 +699,7 @@ export default function Layout(props) {
                   ></path>
                 </svg>
               </div>
-              {checkNotificationRead() && (
+              {checkNotificationRead() && token && (
                 <Box
                   className="position-absolute rounded-circle"
                   sx={{

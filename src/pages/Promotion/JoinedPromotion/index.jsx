@@ -16,6 +16,7 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
+import { useNavigate } from "react-router";
 
 export default function JoinedPromotion() {
   const location = useLocation();
@@ -30,15 +31,16 @@ export default function JoinedPromotion() {
     marginLeft: "0px !important",
     color: "#fff",
   };
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
   const { joinedTournament, isFetchJoined, noDataJoined } = useSelector(
     (state) => state.tournamentReducer
   );
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const { joinedPag } = useSelector((state) => state.promotionReducer);
   const [data, setData] = useState(null);
   const [itemQuantity, setItemQuantity] = useState(0);
-
   useEffect(() => {
     if (width > 576) {
       setItemQuantity(12);
@@ -46,6 +48,25 @@ export default function JoinedPromotion() {
       setItemQuantity(4);
     }
   }, [width, dispatch]);
+
+  useEffect(() => {
+    if (joinedTournament && joinedTournament.length > 0) {
+      var newArray = [];
+      for (let i = 0; i < joinedTournament?.length; i++) {
+        if (joinedTournament[i].tournamentStatus === 1) {
+          newArray.unshift(joinedTournament[i]);
+        } else if (joinedTournament[i].tournamentStatus === 2) {
+          newArray.push(joinedTournament[i]);
+        }
+      }
+      setData(newArray);
+    }
+  }, [joinedTournament]);
+  useEffect(() => {
+    if (!tokenUser) {
+      navigate("/");
+    }
+  }, [tokenUser, navigate]);
 
   useEffect(() => {
     dispatch(getJoinedTour());
