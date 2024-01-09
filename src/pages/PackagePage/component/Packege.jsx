@@ -213,12 +213,17 @@ export default function Package(props) {
                       })}
                     </Grid>
                   ) : (
-                    <Box
+                    <Grid
+                      container
+                      columnSpacing={1}
                       sx={{
                         display: "flex",
                         flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "space-around",
+                        justifyContent:
+                          width > 576 && width < 1200
+                            ? "center"
+                            : "space-around",
                         marginTop:
                           (location && location?.pathname?.includes("home")) ||
                           pathname === "/"
@@ -228,10 +233,19 @@ export default function Package(props) {
                     >
                       {item?.map((i, index) => {
                         return (
-                          <Box
+                          <Grid
+                            item
+                            sm={6}
+                            md={6}
+                            lg={4}
+                            xl={4}
                             key={index}
-                            width={width < 576 ? 250 : 300}
-                            height={width < 576 ? 430 : 600}
+                            sx={{
+                              display: "flex",
+                              alignContent: "center",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
                           >
                             <ListPackage
                               packageName={i?.packageName}
@@ -245,10 +259,10 @@ export default function Package(props) {
                               avatarChristmas={i?.packageAvatarChristmas}
                               des={i?.packageDescription}
                             />
-                          </Box>
+                          </Grid>
                         );
                       })}
-                    </Box>
+                    </Grid>
                   )}
                 </Box>
               </Box>

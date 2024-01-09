@@ -602,6 +602,8 @@ export default function ListPackage(props) {
             marginRight: "8px",
             height: "fit-content",
             minWidth: "315px",
+            marginBottom: "20px",
+            maxWidth: width > 576 && width < 1200 ? "315px" : "unset",
           }}
           className={
             packageName === "Combo Extra 1"
