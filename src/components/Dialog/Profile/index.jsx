@@ -1,4 +1,4 @@
-import { PersonAddAlt1 } from "@mui/icons-material";
+import { PersonAddAlt1, PersonRemoveAlt1 } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import {
@@ -25,6 +25,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { cancelRequestingFriend } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
 import {
@@ -78,6 +79,8 @@ export default function DialogProfile(props) {
   const { uPack } = useSelector((state) => state.userReducer);
   const { loadingState } = useSelector((state) => state.loadingReducer);
   const { tokenUser, stateProfile } = useSelector((state) => state.userReducer);
+  const { listSendingRequest } = useSelector((state) => state.addFriendReducer);
+
   // const { friendList } = useSelector((state) => state.chatReducer);
   const {
     id,
@@ -97,6 +100,7 @@ export default function DialogProfile(props) {
     lastName,
     isEditProfile,
   } = useSelector((state) => state.profileReducer);
+
   const dispatch = useDispatch();
   // const { listSetting } = useSelector((state) => state.settingReducer);
   const { device } = useSelector((state) => state.deviceReducer);
@@ -277,6 +281,10 @@ export default function DialogProfile(props) {
     socket.emit("addFriend", {
       username: userNameProfile,
     });
+  };
+
+  const handleCancelFriend = (username) => {
+    dispatch(cancelRequestingFriend(userNameProfile));
   };
 
   const renderUserInfo = () => {
@@ -657,19 +665,40 @@ export default function DialogProfile(props) {
                         padding: "5px",
                       }}
                     >
-                      <Box
-                        onClick={handleAddFriend}
-                        className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                        sx={{
-                          background:
-                            "linear-gradient(180deg, #843ff0, #7748ed)",
-                          width: "100%",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        <PersonAddAlt1 className="me-2 pb-1" />
-                        Add Friend
-                      </Box>
+                      {listSendingRequest &&
+                      listSendingRequest
+                        ?.map((item) => {
+                          return item.userName;
+                        })
+                        .includes(userNameProfile) ? (
+                        <Box
+                          onClick={handleCancelFriend}
+                          className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                          sx={{
+                            background:
+                              "linear-gradient(180deg, #843ff0, #7748ed)",
+                            width: "100%",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <PersonRemoveAlt1 className="me-2 pb-1" />
+                          Cancel Friend
+                        </Box>
+                      ) : (
+                        <Box
+                          onClick={handleAddFriend}
+                          className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                          sx={{
+                            background:
+                              "linear-gradient(180deg, #843ff0, #7748ed)",
+                            width: "100%",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <PersonAddAlt1 className="me-2 pb-1" />
+                          Add Friend
+                        </Box>
+                      )}
                     </MenuItem>
                   ))}
                 <hr

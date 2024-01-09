@@ -159,7 +159,7 @@ export default function FindUser(props) {
                           })
                           .includes(people?.id)
                       ) {
-                        setUserName(people?.userName);
+                        setUserName(people?.userNickName);
                         setOpenCofirm(true);
                       } else if (
                         listSendingRequest
@@ -214,7 +214,7 @@ export default function FindUser(props) {
               ))}
             </Box>
           ) : (
-            <Box className="text-white text-center">Not Data Yet!</Box>
+            <Box className="text-white text-center">User not found!</Box>
           )}
           {listFindPeople && listFindPeople?.length === 0 && (
             <Box className="d-flex justify-content-between mt-4">

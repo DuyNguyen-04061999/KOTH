@@ -1,3 +1,4 @@
+import { PersonRemoveAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
 import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
@@ -664,7 +665,7 @@ export default function ChatWorldList() {
                     borderRadius: "4px",
                   }}
                 >
-                  <PersonAddAlt1 className="me-2 pb-1" />
+                  <PersonRemoveAlt1 className="me-2 pb-1" />
                   Cancel Request
                 </Box>
               </MenuItem>
