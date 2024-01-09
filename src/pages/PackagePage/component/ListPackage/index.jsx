@@ -664,14 +664,14 @@ export default function ListPackage(props) {
                   {isFetchListPackage ? (
                     <BannerLoading
                       width={width < 1200 && width > 576 ? 130 : 200}
-                      height={width < 1200 && width > 576 ? 130 : 170}
+                      height={width < 1200 && width > 576 ? 200 : 170}
                     />
                   ) : (
                     <LazyLoadComponent>
                       <video
                         controls={false}
                         width={width < 1200 && width > 576 ? 130 : 200}
-                        height={width < 1200 && width > 576 ? 130 : 170}
+                        height={width < 1200 && width > 576 ? 200 : 170}
                         alt=""
                         style={{
                           mixBlendMode: width < 576 ? "normal" : "difference",
