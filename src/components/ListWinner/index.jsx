@@ -41,7 +41,7 @@ export default function ListWinner() {
           <Typography
             sx={{
               color: "white",
-              fontSize: width < 576 ? "14px" : "24px",
+              fontSize: width < 576 ? "16px" : "24px",
               fontWeight: "700 !important",
             }}
           >

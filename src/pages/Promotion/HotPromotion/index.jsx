@@ -84,7 +84,7 @@ export default function HotTournament() {
       dispatch(
         updateHotPage(
           Number(query?.get("page")) && Number(query?.get("page")) !== 1
-            ? itemQuantity
+            ? (Number(query?.get("page")) - 1) * itemQuantity
             : 0
         )
       );

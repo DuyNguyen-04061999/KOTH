@@ -1155,7 +1155,11 @@ export default function Browser(props) {
                     ) : (
                       <Box
                         component={"img"}
-                        src={navbar.navPackageActive}
+                        src={
+                          pathname && pathname?.includes("packages")
+                            ? navbar.navPackageActive
+                            : navbar.navPackage
+                        }
                         sx={{
                           width: "18px",
                           height: "18px",

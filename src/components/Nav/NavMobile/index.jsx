@@ -1091,7 +1091,7 @@ export default function NavMobile() {
                             Notifications
                           </p>
                         </div>
-                        {checkNotificationRead() && (
+                        {checkNotificationRead() && token && (
                           <Box
                             className="position-absolute rounded-circle"
                             sx={{

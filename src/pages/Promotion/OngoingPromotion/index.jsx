@@ -67,13 +67,13 @@ export default function HotTournament() {
       dispatch(
         updateOngoingPage(
           Number(query?.get("page")) && Number(query?.get("page")) !== 1
-            ? itemQuantity
+            ? (Number(query?.get("page")) - 1) * itemQuantity
             : 0
         )
       );
       setData(ongoingTournament);
     }
-  }, [ongoingTournament, dispatch]);
+  }, [ongoingTournament, dispatch, itemQuantity]);
 
   const imgHot = data?.map((e) => {
     return e.tournamentBackground;
