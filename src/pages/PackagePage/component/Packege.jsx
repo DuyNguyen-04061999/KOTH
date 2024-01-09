@@ -129,7 +129,7 @@ export default function Package(props) {
                   className="pt-5 pb-4"
                   sx={{
                     textAlign: "start",
-                    fontSize: width < 576 ? "14px" : "24px",
+                    fontSize: width < 576 ? "16px" : "24px",
                     fontWeight: "700 !important",
                     marginLeft: "0px !important",
                     color: "#fff",
@@ -286,7 +286,7 @@ export default function Package(props) {
               <Typography
                 sx={{
                   textAlign: "start",
-                  fontSize: width < 576 ? "14px" : "24px",
+                  fontSize: width < 576 ? "16px" : "24px",
                   fontWeight: "700 !important",
                   marginLeft: "0px !important",
                   color: "#fff",

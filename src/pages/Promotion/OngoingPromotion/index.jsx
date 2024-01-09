@@ -67,7 +67,7 @@ export default function HotTournament() {
       dispatch(
         updateOngoingPage(
           Number(query?.get("page")) && Number(query?.get("page")) !== 1
-            ? itemQuantity
+            ? Number(query?.get("page"))
             : 0
         )
       );
