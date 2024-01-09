@@ -310,7 +310,7 @@ function App() {
       socket?.off("deleteFriendSuccess");
       socket?.disconnect();
     };
-  }, [socket, tokenUser, startGameCheck]);
+  }, [socket]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
