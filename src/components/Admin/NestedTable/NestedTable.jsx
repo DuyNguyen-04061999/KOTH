@@ -229,11 +229,11 @@ const NestedTable = (props) => {
             </TableRow>
           </StyledTableHead>
           <TableBody>
-            {emptyRows > 0 && (
+            {/* {emptyRows > 0 && (
               <tr style={{ height: 41 * emptyRows }}>
                 <td colSpan={3} aria-hidden />
               </tr>
-            )}
+            )} */}
             {(rowsPerPage > 0
               ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : data
