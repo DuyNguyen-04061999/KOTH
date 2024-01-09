@@ -1894,7 +1894,7 @@ export default function DialogProfile(props) {
             width:
               width > 576 && userNameProfile !== user?.userName
                 ? "300px"
-                : "unset",
+                : "100%",
           },
         }}
         sx={{
