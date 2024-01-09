@@ -1,15 +1,15 @@
-import BackIcon from "@mui/icons-material/ArrowBack";
 import { Box, Dialog, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 import { getListNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NotificationItem from "./NotificationItem";
-import { images } from "../../../utils/images";
 
 export default function NotificationDialog() {
   const { tokenUser } = useSelector((state) => state.userReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
   const { isNotificationDialog } = useSelector((state) => state.dialogReducer);
   const { listNotifiaction } = useSelector(
     (state) => state.notificationReducer
@@ -43,7 +43,7 @@ export default function NotificationDialog() {
                 padding: 0,
                 margin: 0,
                 marginLeft: "auto !important",
-                marginTop: "55px",
+                marginTop: device === "Tablet" ? "45px" : "55px",
                 borderRadius: 0,
                 height: height,
                 background: "#2E233D",
@@ -97,7 +97,7 @@ export default function NotificationDialog() {
             );
           })
         ) : (
-          <Box className="p-2 text-white">No Data Yet!</Box>
+          <Box className="p-2 text-white">User not found!</Box>
         )}
       </Box>
     </Dialog>
