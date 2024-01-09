@@ -1,7 +1,6 @@
 import { PersonRemoveAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
 import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
-import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
 import { Avatar, Box } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -623,41 +622,41 @@ export default function ChatWorldList() {
             </Box>
           </MenuItem>
           {tokenUser &&
-            (checkExistInFriendList(messagefromName) === true ? (
-              <MenuItem
+          listSendingRequest &&
+          listSendingRequest
+            ?.map((item) => {
+              return item.userName;
+            })
+            .includes(messagefromName) ? (
+            <MenuItem
+              onClick={() => {
+                dispatch(cancelRequestingFriend(messagefromName));
+              }}
+              sx={{
+                padding: "5px",
+              }}
+            >
+              <Box
+                className="p-1 text-white"
                 sx={{
-                  padding: "5px",
+                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                  width: "100%",
+                  borderRadius: "4px",
                 }}
               >
+                <PersonRemoveAlt1 className="me-2 pb-1" />
+                Cancel Request
+              </Box>
+            </MenuItem>
+          ) : (
+            <MenuItem
+              sx={{
+                padding: "5px",
+              }}
+            >
+              {checkExistInFriendList(messagefromName) ? (
                 <Box
-                  className="p-1 text-white cursor-pointer"
                   onClick={() => handleDeleteFriend(messagefromName)}
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "100%",
-                    fontWeight: "bold",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <DeleteFriendIcon className="me-2 pb-1" />
-                  <span> Delete Friend</span>
-                </Box>
-              </MenuItem>
-            ) : listSendingRequest &&
-              listSendingRequest
-                ?.map((item) => {
-                  return item.userName;
-                })
-                .includes(messagefromName) ? (
-              <MenuItem
-                onClick={() => {
-                  dispatch(cancelRequestingFriend(messagefromName));
-                }}
-                sx={{
-                  padding: "5px",
-                }}
-              >
-                <Box
                   className="p-1 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
@@ -666,15 +665,9 @@ export default function ChatWorldList() {
                   }}
                 >
                   <PersonRemoveAlt1 className="me-2 pb-1" />
-                  Cancel Request
+                  Delete Friend
                 </Box>
-              </MenuItem>
-            ) : (
-              <MenuItem
-                sx={{
-                  padding: "5px",
-                }}
-              >
+              ) : (
                 <Box
                   onClick={() => handleAddFriend(messagefromName)}
                   className="p-1 text-white"
@@ -687,8 +680,9 @@ export default function ChatWorldList() {
                   <PersonAddAlt1 className="me-2 pb-1" />
                   Add Friend
                 </Box>
-              </MenuItem>
-            ))}
+              )}
+            </MenuItem>
+          )}
         </Menu>
         {renderChat}
         <span ref={endOfMessageRef}></span>

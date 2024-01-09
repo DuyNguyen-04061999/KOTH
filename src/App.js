@@ -266,25 +266,29 @@ function App() {
       });
 
       socket?.on("addFriendSuccess", (data) => {
-        console.log(data);
-        store.dispatch(
-          showToastNotification({
-            type: "success",
-            message: "You get a new notification",
-          })
-        );
-        store.dispatch(addListNotificationSuccess(data));
+        if(!startGameCheck) {
+          store.dispatch(
+            showToastNotification({
+              type: "success",
+              message: "You get a new notification",
+            })
+          );
+          store.dispatch(addListNotificationSuccess(data));
+        }
+        
       });
 
       socket?.on("deleteFriendSuccess", (data) => {
-        store.dispatch(
-          showToastNotification({
-            type: "success",
-            message: "Delete friend successfully!",
-          })
-        );
-        socket?.emit("listFriend");
-        store.dispatch(deleteFriendSuccesFully("success"));
+        if(!startGameCheck) {
+          store.dispatch(
+            showToastNotification({
+              type: "success",
+              message: "Delete friend successfully!",
+            })
+          );
+          socket?.emit("listFriend");
+          store.dispatch(deleteFriendSuccesFully("success"));
+        }
       });
 
       socket?.on("gameWin", ({ type, value }) => {
@@ -306,7 +310,7 @@ function App() {
       socket?.off("deleteFriendSuccess");
       socket?.disconnect();
     };
-  }, [socket, tokenUser]);
+  }, [socket, tokenUser, startGameCheck]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
