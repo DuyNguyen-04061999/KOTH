@@ -379,6 +379,11 @@ import bannersigninTablet from "../assets/images/signinTablet.png";
 import bannerGift from "../assets/images/giftBanner.png";
 import skrillIcon from "../assets/images/skrill.png";
 
+import activeLike from "../assets/images/activeLike.png";
+import activeDisLike from "../assets/images/activeDisLike.png";
+import passiveLike from "../assets/images/passiveLike.png";
+import passiveDisLike from "../assets/images/passiveDisLike.png";
+
 import doubleDayBanner from "../assets/images/doubleDay.jpg";
 import doubleDayBanneMB from "../assets/images/doubleDayMB.jpg";
 import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
@@ -448,6 +453,10 @@ export const imageHome = {
   signInBgBanner: signInBgBanner,
   signInTitle: signInTitle,
   hpny_popup_dk: hpny_popup_dk,
+  activeLike: activeLike,
+  activeDisLike: activeDisLike,
+  passiveLike: passiveLike,
+  passiveDisLike: passiveDisLike,
   hpny_popup_mb: hpny_popup_mb,
 };
 
