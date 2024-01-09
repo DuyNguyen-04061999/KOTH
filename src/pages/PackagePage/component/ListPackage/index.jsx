@@ -996,7 +996,8 @@ export default function ListPackage(props) {
                       uPack?.remain !== "Expired" &&
                       packageName === "Subscription"
                         ? "Current pack"
-                        : uPack?.remain === "Expired"
+                        : uPack?.remain === "Expired" &&
+                          packageName === "Subscription"
                         ? "Upgrade Pack"
                         : t("Buy Now")
                     }

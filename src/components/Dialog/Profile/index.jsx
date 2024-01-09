@@ -340,7 +340,7 @@ export default function DialogProfile(props) {
                 </Typography>
                 {userNameProfile === user?.userName && tokenUser && (
                   <Box>
-                    {uPack !== null ? (
+                    {uPack !== null && uPack.remain !== "Expired" ? (
                       <Box
                         display={"flex"}
                         justifyContent={"center"}
