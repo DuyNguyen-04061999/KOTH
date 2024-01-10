@@ -604,6 +604,8 @@ export default function ListPackage(props) {
             minWidth: width > 576 && width < 1200 ? "100%" : "315px",
             marginBottom: "20px",
             maxWidth: width > 576 && width < 1200 ? "315px" : "unset",
+            marginTop:
+              width < 1200 && packageName !== "Subscription" ? "25px" : "unset",
           }}
           className={
             packageName === "Combo Extra 1"
