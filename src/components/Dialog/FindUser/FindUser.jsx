@@ -213,8 +213,10 @@ export default function FindUser(props) {
                 </Box>
               ))}
             </Box>
-          ) : (
+          ) : searchValue ? (
             <Box className="text-white text-center">User not found!</Box>
+          ) : (
+            <></>
           )}
           {listFindPeople && listFindPeople?.length === 0 && (
             <Box className="d-flex justify-content-between mt-4">

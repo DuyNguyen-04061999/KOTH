@@ -97,7 +97,7 @@ export default function NotificationDialog() {
             );
           })
         ) : (
-          <Box className="p-2 text-white">User not found!</Box>
+          <Box className="p-2 text-white">Notifications not found!</Box>
         )}
       </Box>
     </Dialog>
