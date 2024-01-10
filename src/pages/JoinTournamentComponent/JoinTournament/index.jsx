@@ -56,6 +56,7 @@ import GameInTournament from "../GameInTournament";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
+import Comments from "../../../components/Comments/Comments";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -2151,6 +2152,7 @@ export default function JoinTournament() {
                 )}
               </Box>
               <GamePreview />
+              <Comments />
               <NewFooter />
             </Container>
           ) : (
@@ -3565,6 +3567,7 @@ export default function JoinTournament() {
                     </Box>
                   </Box>
                   <GamePreview />
+                  <Comments />
                   <NewFooter />
                   <Box
                     sx={{
