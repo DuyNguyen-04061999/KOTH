@@ -24,6 +24,7 @@ import ResultEndGame from "../../../components/Dialog/ResultEndGame";
 import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import LikeDislikeGame from "../../../components/LikeDislikeGame";
 import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
@@ -55,6 +56,7 @@ import GameInTournament from "../GameInTournament";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
+import Comments from "../../../components/Comments/Comments";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -2150,6 +2152,7 @@ export default function JoinTournament() {
                 )}
               </Box>
               <GamePreview />
+              <Comments />
               <NewFooter />
             </Container>
           ) : (
@@ -2997,6 +3000,9 @@ export default function JoinTournament() {
                           }
                         />
                       </Box>
+                      <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <LikeDislikeGame />
+                      </Box>
                       <Box
                         sx={{
                           width: "100%",
@@ -3561,6 +3567,7 @@ export default function JoinTournament() {
                     </Box>
                   </Box>
                   <GamePreview />
+                  <Comments />
                   <NewFooter />
                   <Box
                     sx={{
