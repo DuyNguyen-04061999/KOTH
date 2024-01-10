@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
@@ -16,7 +17,6 @@ import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NewFooter from "../../NewFooter";
 import PaginatedItems from "../../PaginatedItems";
-import { useNavigate } from "react-router";
 
 export default function JoinedPromotion() {
   const location = useLocation();
@@ -88,7 +88,7 @@ export default function JoinedPromotion() {
       dispatch(
         updateJoinedPage(
           Number(query?.get("page")) && Number(query?.get("page")) !== 1
-            ? itemQuantity
+            ? (Number(query?.get("page")) - 1) * itemQuantity
             : 0
         )
       );
@@ -276,7 +276,8 @@ export default function JoinedPromotion() {
                     fontSize: "24px",
                   }}
                 >
-                  {t("Joined Prmotions")}
+                  {/* {t("Joined Prmotions")} */}
+                  Joined Promotions
                 </Typography>
                 <Box
                   sx={{

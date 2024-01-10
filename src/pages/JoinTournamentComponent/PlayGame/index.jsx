@@ -160,723 +160,971 @@ export default function PlayGame(props) {
           : {}
       }
     >
-      <Box
-        sx={{
-          width: "100%",
-          height: "auto",
-          display: "flex",
-          paddingTop: "50px",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
+      {device !== "Mobile" ? (
         <Box
           sx={{
-            width: isFullScreen
-              ? "100%"
-              : device === "Mobile" || device === "Tablet"
-              ? "100%"
-              : "80%",
-            height: isFullScreen ? "100%" : "auto",
-            position: isFullScreen ? "fixed" : "relative",
-            backgroundColor: isFullScreen ? "black" : "none",
-            top: isFullScreen ? "0px" : "none",
-            left: isFullScreen ? "0px" : "none",
-            zIndex: isFullScreen ? "5005" : "none",
+            width: "100%",
+            height: "auto",
+            display: "flex",
+            paddingTop: "50px",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
           }}
         >
           <Box
             sx={{
-              position: "relative",
-              height: "800px",
+              width: isFullScreen
+                ? "100%"
+                : device === "Mobile" || device === "Tablet"
+                ? "100%"
+                : "80%",
+              height: isFullScreen ? "100%" : "auto",
+              position: isFullScreen ? "fixed" : "relative",
+              backgroundColor: isFullScreen ? "black" : "none",
+              top: isFullScreen ? "0px" : "none",
+              left: isFullScreen ? "0px" : "none",
+              zIndex: isFullScreen ? "5005" : "none",
             }}
           >
-            {" "}
-            <Box sx={{ position: "absolute" }}>
+            <Box
+              sx={{
+                position: "relative",
+                height: "800px",
+              }}
+            >
               {" "}
-              {detailTournament?.tournamentVideo && videoGame && (
-                <VideoComponent
-                  detailTournament={detailTournament}
-                  setVideoGame={(data) => {
-                    setVideoGame(data);
-                  }}
-                />
+              <Box sx={{ position: "absolute" }}>
+                {" "}
+                {detailTournament?.tournamentVideo && videoGame && (
+                  <VideoComponent
+                    detailTournament={detailTournament}
+                    setVideoGame={(data) => {
+                      setVideoGame(data);
+                    }}
+                  />
+                )}
+              </Box>
+              {device && os && device === "Mobile" && os === "Android" ? (
+                <DeviceOrientation lockOrientation={"landscape"}>
+                  <Orientation orientation="landscape">
+                    <FullScreen handle={screen}>
+                      {detailTournament?.tournamentInfors?.game?.gameEngine ===
+                        "cocos" && loading ? (
+                        <iframe
+                          ref={iframeRef}
+                          allow="fullscreen"
+                          style={
+                            device === "Desktop"
+                              ? {
+                                  width: "100%",
+                                  height: videoGame ? "700px" : "800px",
+                                  background: "black",
+                                  display: videoGame ? "none" : "block",
+                                }
+                              : {
+                                  position: "fixed",
+                                  top: "0",
+                                  left: "0",
+                                  bottom: "0",
+                                  right: "0",
+                                  width: "100%",
+                                  height: "100%",
+                                  border: "none",
+                                  margin: "0",
+                                  padding: "0",
+                                  overflow: "hidden",
+                                  zIndex: "999999",
+                                  display: videoGame ? "none" : "block",
+                                  paddingLeft:
+                                    device === "Mobile" &&
+                                    os === "iOS" &&
+                                    detailTournament?.tournamentInfors?.game
+                                      ?.gameScreenType
+                                      ? "50px"
+                                      : "0px",
+                                }
+                          }
+                          title="Playgame"
+                          src={
+                            process.env.REACT_APP_ENV === "development"
+                              ? `${
+                                  process.env.REACT_APP_PROMOTION_URL +
+                                  "/" +
+                                  detailTournament?.tournamentInfors?.game
+                                    ?.gameHost
+                                }?token=${
+                                  tokenUser || localStorage.getItem("token")
+                                }&tournamentId=${detailTournament?.id}&skinId=${
+                                  detailTournament?.tournamentInfors?.skin?.id
+                                }&env=${process.env.REACT_APP_ENV}`
+                              : `${
+                                  detailTournament?.tournamentInfors?.game
+                                    ?.gameHost
+                                }?token=${
+                                  tokenUser || localStorage.getItem("token")
+                                }&tournamentId=${detailTournament?.id}&skinId=${
+                                  detailTournament?.tournamentInfors?.skin?.id
+                                }&env=${process.env.REACT_APP_ENV}`
+                          }
+                        ></iframe>
+                      ) : loading ? (
+                        <iframe
+                          ref={iframeRef}
+                          allow="fullscreen"
+                          style={
+                            device === "Desktop"
+                              ? {
+                                  width: "100%",
+                                  height: videoGame ? "700px" : "800px",
+                                  background: "black",
+                                  display: videoGame ? "none" : "block",
+                                }
+                              : {
+                                  position: "fixed",
+                                  top: "0",
+                                  left: "0",
+                                  bottom: "0",
+                                  right: "0",
+                                  width: "100%",
+                                  height: "100%",
+                                  border: "none",
+                                  margin: "0",
+                                  padding: "0",
+                                  overflow: "hidden",
+                                  zIndex: "999999",
+                                  display: videoGame ? "none" : "block",
+                                  paddingLeft:
+                                    device === "Mobile" &&
+                                    os === "iOS" &&
+                                    detailTournament?.tournamentInfors?.game
+                                      ?.gameScreenType
+                                      ? "50px"
+                                      : "0px",
+                                }
+                          }
+                          title="Playgame"
+                          src={
+                            process.env.REACT_APP_ENV === "development"
+                              ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
+                              : window.location.origin +
+                                "/play-game-tournament/" +
+                                id +
+                                "/" +
+                                detailTournament?.tournamentInfors?.skin?.id
+                          }
+                        ></iframe>
+                      ) : (
+                        <></>
+                      )}
+                    </FullScreen>
+                  </Orientation>
+                </DeviceOrientation>
+              ) : (
+                <>
+                  {detailTournament?.tournamentInfors?.game?.gameEngine ===
+                    "cocos" && loading ? (
+                    <iframe
+                      ref={iframeRef}
+                      allow="fullscreen"
+                      style={
+                        device === "Desktop"
+                          ? {
+                              width: "100%",
+                              height: videoGame ? "700px" : "800px",
+                              background: "black",
+                              display: videoGame ? "none" : "block",
+                            }
+                          : {
+                              position: "fixed",
+                              top: "0",
+                              left: "0",
+                              bottom: "0",
+                              right: "0",
+                              width: "100%",
+                              height: "100%",
+                              border: "none",
+                              margin: "0",
+                              padding: "0",
+                              overflow: "hidden",
+                              zIndex: "999999",
+                              display: videoGame ? "none" : "block",
+                              paddingLeft:
+                                device === "Mobile" &&
+                                os === "iOS" &&
+                                detailTournament?.tournamentInfors?.game
+                                  ?.gameScreenType
+                                  ? "50px"
+                                  : "0px",
+                            }
+                      }
+                      title="Playgame"
+                      src={
+                        process.env.REACT_APP_ENV === "development"
+                          ? `${
+                              process.env.REACT_APP_PROMOTION_URL +
+                              "/" +
+                              detailTournament?.tournamentInfors?.game?.gameHost
+                            }?token=${
+                              tokenUser || localStorage.getItem("token")
+                            }&tournamentId=${detailTournament?.id}&skinId=${
+                              detailTournament?.tournamentInfors?.skin?.id
+                            }&env=${process.env.REACT_APP_ENV}`
+                          : `${
+                              detailTournament?.tournamentInfors?.game?.gameHost
+                            }?token=${
+                              tokenUser || localStorage.getItem("token")
+                            }&tournamentId=${detailTournament?.id}&skinId=${
+                              detailTournament?.tournamentInfors?.skin?.id
+                            }&env=${process.env.REACT_APP_ENV}`
+                      }
+                    ></iframe>
+                  ) : loading ? (
+                    <iframe
+                      ref={iframeRef}
+                      allow="fullscreen"
+                      style={
+                        device === "Desktop"
+                          ? {
+                              width: "100%",
+                              height: videoGame ? "700px" : "800px",
+                              background: "black",
+                              display: videoGame ? "none" : "block",
+                            }
+                          : {
+                              position: "fixed",
+                              top: "0",
+                              left: "0",
+                              bottom: "0",
+                              right: "0",
+                              width: "100%",
+                              height: "100%",
+                              border: "none",
+                              margin: "0",
+                              padding: "0",
+                              overflow: "hidden",
+                              zIndex: "999999",
+                              display: videoGame ? "none" : "block",
+                              paddingLeft:
+                                device === "Mobile" &&
+                                os === "iOS" &&
+                                detailTournament?.tournamentInfors?.game
+                                  ?.gameScreenType
+                                  ? "50px"
+                                  : "0px",
+                            }
+                      }
+                      title="Playgame"
+                      src={
+                        process.env.REACT_APP_ENV === "development"
+                          ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
+                          : window.location.origin +
+                            "/play-game-tournament/" +
+                            id +
+                            "/" +
+                            detailTournament?.tournamentInfors?.skin?.id
+                      }
+                    ></iframe>
+                  ) : (
+                    <></>
+                  )}
+                </>
               )}
             </Box>
-            {device && os && device === "Mobile" && os === "Android" ? (
-              <DeviceOrientation lockOrientation={"landscape"}>
-                <Orientation orientation="landscape">
-                  <FullScreen handle={screen}>
-                    {detailTournament?.tournamentInfors?.game?.gameEngine ===
-                      "cocos" && loading ? (
-                      <iframe
-                        ref={iframeRef}
-                        allow="fullscreen"
-                        style={
-                          device === "Desktop"
-                            ? {
-                                width: "100%",
-                                height: videoGame ? "700px" : "800px",
-                                background: "black",
-                                display: videoGame ? "none" : "block",
-                              }
-                            : {
-                                position: "fixed",
-                                top: "0",
-                                left: "0",
-                                bottom: "0",
-                                right: "0",
-                                width: "100%",
-                                height: "100%",
-                                border: "none",
-                                margin: "0",
-                                padding: "0",
-                                overflow: "hidden",
-                                zIndex: "999999",
-                                display: videoGame ? "none" : "block",
-                                paddingLeft:
-                                  device === "Mobile" &&
-                                  os === "iOS" &&
-                                  detailTournament?.tournamentInfors?.game
-                                    ?.gameScreenType
-                                    ? "50px"
-                                    : "0px",
-                              }
-                        }
-                        title="Playgame"
-                        src={
-                          process.env.REACT_APP_ENV === "development"
-                            ? `${
-                                process.env.REACT_APP_PROMOTION_URL +
-                                "/" +
-                                detailTournament?.tournamentInfors?.game
-                                  ?.gameHost
-                              }?token=${
-                                tokenUser || localStorage.getItem("token")
-                              }&tournamentId=${detailTournament?.id}&skinId=${
-                                detailTournament?.tournamentInfors?.skin?.id
-                              }&env=${process.env.REACT_APP_ENV}`
-                            : `${
-                                detailTournament?.tournamentInfors?.game
-                                  ?.gameHost
-                              }?token=${
-                                tokenUser || localStorage.getItem("token")
-                              }&tournamentId=${detailTournament?.id}&skinId=${
-                                detailTournament?.tournamentInfors?.skin?.id
-                              }&env=${process.env.REACT_APP_ENV}`
-                        }
-                      ></iframe>
-                    ) : loading ? (
-                      <iframe
-                        ref={iframeRef}
-                        allow="fullscreen"
-                        style={
-                          device === "Desktop"
-                            ? {
-                                width: "100%",
-                                height: videoGame ? "700px" : "800px",
-                                background: "black",
-                                display: videoGame ? "none" : "block",
-                              }
-                            : {
-                                position: "fixed",
-                                top: "0",
-                                left: "0",
-                                bottom: "0",
-                                right: "0",
-                                width: "100%",
-                                height: "100%",
-                                border: "none",
-                                margin: "0",
-                                padding: "0",
-                                overflow: "hidden",
-                                zIndex: "999999",
-                                display: videoGame ? "none" : "block",
-                                paddingLeft:
-                                  device === "Mobile" &&
-                                  os === "iOS" &&
-                                  detailTournament?.tournamentInfors?.game
-                                    ?.gameScreenType
-                                    ? "50px"
-                                    : "0px",
-                              }
-                        }
-                        title="Playgame"
-                        src={
-                          process.env.REACT_APP_ENV === "development"
-                            ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
-                            : window.location.origin +
-                              "/play-game-tournament/" +
-                              id +
-                              "/" +
-                              detailTournament?.tournamentInfors?.skin?.id
-                        }
-                      ></iframe>
-                    ) : (
-                      <></>
-                    )}
-                  </FullScreen>
-                </Orientation>
-              </DeviceOrientation>
-            ) : (
-              <>
-                {detailTournament?.tournamentInfors?.game?.gameEngine ===
-                  "cocos" && loading ? (
-                  <iframe
-                    ref={iframeRef}
-                    allow="fullscreen"
-                    style={
-                      device === "Desktop"
-                        ? {
-                            width: "100%",
-                            height: videoGame ? "700px" : "800px",
-                            background: "black",
-                            display: videoGame ? "none" : "block",
-                          }
-                        : {
-                            position: "fixed",
-                            top: "0",
-                            left: "0",
-                            bottom: "0",
-                            right: "0",
-                            width: "100%",
-                            height: "100%",
-                            border: "none",
-                            margin: "0",
-                            padding: "0",
-                            overflow: "hidden",
-                            zIndex: "999999",
-                            display: videoGame ? "none" : "block",
-                            paddingLeft:
-                              device === "Mobile" &&
-                              os === "iOS" &&
-                              detailTournament?.tournamentInfors?.game
-                                ?.gameScreenType
-                                ? "50px"
-                                : "0px",
-                          }
-                    }
-                    title="Playgame"
-                    src={
-                      process.env.REACT_APP_ENV === "development"
-                        ? `${
-                            process.env.REACT_APP_PROMOTION_URL +
-                            "/" +
-                            detailTournament?.tournamentInfors?.game?.gameHost
-                          }?token=${
-                            tokenUser || localStorage.getItem("token")
-                          }&tournamentId=${detailTournament?.id}&skinId=${
-                            detailTournament?.tournamentInfors?.skin?.id
-                          }&env=${process.env.REACT_APP_ENV}`
-                        : `${
-                            detailTournament?.tournamentInfors?.game?.gameHost
-                          }?token=${
-                            tokenUser || localStorage.getItem("token")
-                          }&tournamentId=${detailTournament?.id}&skinId=${
-                            detailTournament?.tournamentInfors?.skin?.id
-                          }&env=${process.env.REACT_APP_ENV}`
-                    }
-                  ></iframe>
-                ) : loading ? (
-                  <iframe
-                    ref={iframeRef}
-                    allow="fullscreen"
-                    style={
-                      device === "Desktop"
-                        ? {
-                            width: "100%",
-                            height: videoGame ? "700px" : "800px",
-                            background: "black",
-                            display: videoGame ? "none" : "block",
-                          }
-                        : {
-                            position: "fixed",
-                            top: "0",
-                            left: "0",
-                            bottom: "0",
-                            right: "0",
-                            width: "100%",
-                            height: "100%",
-                            border: "none",
-                            margin: "0",
-                            padding: "0",
-                            overflow: "hidden",
-                            zIndex: "999999",
-                            display: videoGame ? "none" : "block",
-                            paddingLeft:
-                              device === "Mobile" &&
-                              os === "iOS" &&
-                              detailTournament?.tournamentInfors?.game
-                                ?.gameScreenType
-                                ? "50px"
-                                : "0px",
-                          }
-                    }
-                    title="Playgame"
-                    src={
-                      process.env.REACT_APP_ENV === "development"
-                        ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
-                        : window.location.origin +
-                          "/play-game-tournament/" +
-                          id +
-                          "/" +
-                          detailTournament?.tournamentInfors?.skin?.id
-                    }
-                  ></iframe>
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
           </Box>
-        </Box>
-        {checkLockScreen() && !videoGame && (
-          <Dialog sx={{ zIndex: "100000000" }} fullScreen={true} open={true}>
-            {continueGame === true ? (
-              <Box
-                sx={{
-                  backgroundColor: "#1c191e",
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
+          {checkLockScreen() && !videoGame && (
+            <Dialog sx={{ zIndex: "100000000" }} fullScreen={true} open={true}>
+              {continueGame === true ? (
                 <Box
                   sx={{
-                    backgroundColor: "#37285c",
+                    backgroundColor: "#1c191e",
                     display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    height: "56px",
+                    flexDirection: "column",
                     width: "100%",
-                    boxSizing: "border-box",
-                    padding: "10px",
-                    color: "white",
+                    height: "100%",
                   }}
                 >
-                  <img
-                    style={{
-                      width: getFontSizeTitleDependOnWidth(width),
-                      height: getFontSizeTitleDependOnWidth(width),
-                    }}
-                    alt="..."
-                    src={images.BackButtonLobby}
-                  />
-                  <Typography>Tournament</Typography>
-                </Box>
-                <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
                   <Box
-                    onClick={() => {
-                      setContinueGame(false);
+                    sx={{
+                      backgroundColor: "#37285c",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      height: "56px",
+                      width: "100%",
+                      boxSizing: "border-box",
+                      padding: "10px",
+                      color: "white",
                     }}
+                  >
+                    <img
+                      style={{
+                        width: getFontSizeTitleDependOnWidth(width),
+                        height: getFontSizeTitleDependOnWidth(width),
+                      }}
+                      alt="..."
+                      src={images.BackButtonLobby}
+                    />
+                    <Typography>Tournament</Typography>
+                  </Box>
+                  <Box sx={{ padding: "10px", boxSizing: "border-box" }}>
+                    <Box
+                      onClick={() => {
+                        setContinueGame(false);
+                      }}
+                      sx={{
+                        width: "100%",
+                        height: "280px",
+                        backgroundColor: "#423965",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: `${parseFloat(width / 2.6)}px`,
+                          height: "40px",
+                          background: "linear-gradient(#9c39f1,#c049ed)",
+                          borderRadius: "25px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "0px 10px 0px 5px",
+                        }}
+                      >
+                        <Typography sx={{ color: "white" }}>
+                          Continue
+                        </Typography>
+                        <img
+                          width={width / 18}
+                          src={images.conitnuePlayButton}
+                          alt="..."
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <Box
                     sx={{
                       width: "100%",
-                      height: "280px",
-                      backgroundColor: "#423965",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      height: "100%",
                     }}
                   >
                     <Box
                       sx={{
-                        width: `${parseFloat(width / 2.6)}px`,
-                        height: "40px",
-                        background: "linear-gradient(#9c39f1,#c049ed)",
-                        borderRadius: "25px",
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "#423965",
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
-                        padding: "0px 10px 0px 5px",
                       }}
                     >
-                      <Typography sx={{ color: "white" }}>Continue</Typography>
+                      {" "}
+                      <Box sx={{}}>
+                        <Box
+                          sx={{ width: "200px", height: "200px" }}
+                          component={"img"}
+                          src={images.RotateScreen}
+                        ></Box>
+                        <Typography sx={{ color: "white", marginTop: "20px" }}>
+                          Rotate Your Screen
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box
+                    onClick={() => {
+                      setContinueGame(true);
+                    }}
+                    sx={{
+                      position: "fixed",
+                      top: "40%",
+                      width: "90px",
+                      height: "40px",
+                      display: "flex",
+                      padding: "10px",
+                      alignItems: "center",
+                      backgroundImage: "linear-gradient(#6844de,#8c39ff)",
+                      borderRadius: "0px 50px 50px 0px",
+                    }}
+                  >
+                    <Box
+                      sx={{ width: "20px", height: "20px" }}
+                      component={"img"}
+                      src={images.BackButtonLobby}
+                    ></Box>
+                    <Typography sx={{ color: "white" }}>Lobby</Typography>
+                  </Box>
+                </Box>
+              )}
+            </Dialog>
+          )}
+          {device === "Desktop" && (
+            <Box
+              sx={{
+                display: "flex",
+                width: "80%",
+                marginTop: "30px",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    color: "white",
+                    marginBottom: "30px",
+                  }}
+                >
+                  <>
+                    <Typography
+                      sx={{
+                        margin: "0px !important",
+                        fontSize:
+                          576 < width && width < 1200
+                            ? `${width / 42}px`
+                            : "28px",
+                        wordBreak: "break-all",
+                        textAlign: "left",
+                      }}
+                    >
+                      {detailTournament?.tournamentName?.length > 50
+                        ? detailTournament?.tournamentName.slice(0, 50) + " ..."
+                        : detailTournament?.tournamentName}
+                    </Typography>
+                  </>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    maxWidth: "480px",
+                  }}
+                >
+                  {" "}
+                  <Box
+                    sx={{
+                      textAlign: "start",
+                      fontWeight: "lighter",
+                      color: "#fff",
+                      fontSize:
+                        576 < width && width < 1200
+                          ? `${width / 55}px`
+                          : "18px",
+                    }}
+                  >
+                    Reward
+                  </Box>
+                  <Box
+                    sx={{
+                      textAlign: "start",
+                      fontWeight: "lighter !important",
+                      color: "#fff",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Play game to get this voucher
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    bgcolor: "white",
+                    width: "100%",
+                    height: "147px",
+                    marginTop: "24px",
+                    position: "relative",
+                    display: "flex",
+                    borderRadius: "8px",
+                    maxWidth: "480px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "65%",
+                      height: "100%",
+                      borderRadius: "1px 0px 0px 8px",
+                      padding: "16px 14px",
+                    }}
+                  >
+                    <Box>
+                      <h5
+                        style={{
+                          color: "#BE48ED",
+                          fontSize:
+                            576 < width && width < 1200 ? "18px" : "16px",
+                          maxHeight: "24px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {" "}
+                        {detailTournament?.tournamentInfors?.rewardInfors
+                          ?.rewardTitle || "SS Z-Flip 5 free voucher"}
+                      </h5>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        // justifyContent: "space-between",
+                        marginTop: "15.2px",
+                      }}
+                    >
+                      <Box>
+                        <Box>
+                          {" "}
+                          <h6
+                            style={{
+                              fontSize: "10px",
+                              marginBottom: "0px !important",
+                              color: "#525252",
+                            }}
+                          >
+                            Recipient
+                          </h6>
+                          <span
+                            style={{
+                              fontSize:
+                                576 < width && width < 1200 ? "12px" : "14px",
+                            }}
+                          >
+                            {sliceString(
+                              detailTournament?.tournamentInfors?.rewardInfors
+                                ?.rewardRecipient
+                            ) || "Recipient"}
+                          </span>
+                        </Box>
+                        <Box sx={{ marginTop: "7.6px" }}>
+                          {" "}
+                          <h6
+                            style={{
+                              fontSize: "10px",
+                              marginBottom: "0px !important",
+                              color: "#525252",
+                            }}
+                          >
+                            Sponsored by
+                          </h6>
+                          <span
+                            style={{
+                              fontSize:
+                                576 < width && width < 1200 ? "12px" : "14px",
+                            }}
+                          >
+                            {detailTournament?.tournamentInfors?.owner
+                              ?.brandName || "Samsung"}
+                          </span>
+                        </Box>
+                      </Box>
+                      <Box
+                        sx={{
+                          marginLeft: width < 1024 ? "10px" : "60px",
+                        }}
+                      >
+                        {" "}
+                        <Box>
+                          {" "}
+                          <h6
+                            style={{
+                              fontSize: "10px",
+                              marginBottom: "0px !important",
+                              color: "#525252",
+                            }}
+                          >
+                            Valid by
+                          </h6>
+                          <span
+                            style={{
+                              fontSize:
+                                576 < width && width < 1200 ? "12px" : "14px",
+                            }}
+                          >
+                            {moment(
+                              detailTournament?.tournamentInfors?.rewardInfors
+                                ?.rewardValidityDate
+                            )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
+                          </span>
+                        </Box>
+                        <Box sx={{ marginTop: "7.6px" }}>
+                          {" "}
+                          <h6
+                            style={{
+                              fontSize: "10px",
+                              marginBottom: "0px !important",
+                              color: "#525252",
+                            }}
+                          >
+                            Conditions
+                          </h6>
+                          <span
+                            className="cursor-pointer"
+                            href="#"
+                            style={{
+                              color: "#0096FF",
+                              fontSize:
+                                576 < width && width < 1024 ? "12px" : "14px",
+                            }}
+                          >
+                            See more
+                          </span>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "35%",
+                      height: "100%",
+                      borderLeft: "dashed 1px #0D0804",
+                      borderRadius: "0px 8px 8px 0px",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: "relative",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          height: "20px",
+                          width: "20px",
+                          bgcolor: "#211d28",
+                          position: "absolute",
+                          borderRadius: "50%",
+                          top: "-10px",
+                          left: "-10px",
+                        }}
+                      ></Box>
+                      <Box
+                        sx={{
+                          height: "20px",
+                          width: "20px",
+                          bgcolor: "#211d28",
+                          position: "absolute",
+                          borderRadius: "50%",
+                          bottom: "-10px",
+                          left: "-10px",
+                        }}
+                      ></Box>
                       <img
-                        width={width / 18}
-                        src={images.conitnuePlayButton}
+                        style={{
+                          borderRadius: "8px",
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        src={
+                          detailTournament?.tournamentInfors?.rewardInfors
+                            ?.rewardAvatar
+                            ? process.env.REACT_APP_SOCKET_SERVER +
+                              "/" +
+                              detailTournament?.tournamentInfors?.rewardInfors
+                                ?.rewardAvatar
+                            : images.GameTournament
+                        }
                         alt="..."
+                        width={"95%"}
+                        height={"90%"}
                       />
                     </Box>
                   </Box>
                 </Box>
               </Box>
-            ) : (
               <Box
                 sx={{
-                  width: "100%",
-                  height: "100%",
+                  marginTop: videoGame ? "75px" : "unset",
+                  marginBottom: videoGame ? "20px" : "unset",
                 }}
               >
-                <Box
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      backgroundColor: "#423965",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {" "}
-                    <Box sx={{}}>
-                      <Box
-                        sx={{ width: "200px", height: "200px" }}
-                        component={"img"}
-                        src={images.RotateScreen}
-                      ></Box>
-                      <Typography sx={{ color: "white", marginTop: "20px" }}>
-                        Rotate Your Screen
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  onClick={() => {
-                    setContinueGame(true);
-                  }}
-                  sx={{
-                    position: "fixed",
-                    top: "40%",
-                    width: "90px",
-                    height: "40px",
-                    display: "flex",
-                    padding: "10px",
-                    alignItems: "center",
-                    backgroundImage: "linear-gradient(#6844de,#8c39ff)",
-                    borderRadius: "0px 50px 50px 0px",
-                  }}
-                >
-                  <Box
-                    sx={{ width: "20px", height: "20px" }}
-                    component={"img"}
-                    src={images.BackButtonLobby}
-                  ></Box>
-                  <Typography sx={{ color: "white" }}>Lobby</Typography>
-                </Box>
-              </Box>
-            )}
-          </Dialog>
-        )}
-        {device === "Desktop" && (
-          <Box
-            sx={{
-              display: "flex",
-              width: "80%",
-              marginTop: "30px",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "start",
-                  color: "white",
-                  marginBottom: "30px",
-                }}
-              >
-                <>
-                  <Typography
-                    sx={{
-                      margin: "0px !important",
-                      fontSize:
-                        576 < width && width < 1200
-                          ? `${width / 42}px`
-                          : "28px",
-                      wordBreak: "break-all",
-                      textAlign: "left",
-                    }}
-                  >
-                    {detailTournament?.tournamentName?.length > 50
-                      ? detailTournament?.tournamentName.slice(0, 50) + " ..."
-                      : detailTournament?.tournamentName}
-                  </Typography>
-                </>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  maxWidth: "480px",
-                }}
-              >
-                {" "}
-                <Box
+                <Typography
                   sx={{
                     textAlign: "start",
-                    fontWeight: "lighter",
                     color: "#fff",
+                    marginLeft: "0px !important",
                     fontSize:
-                      576 < width && width < 1200 ? `${width / 55}px` : "18px",
+                      576 < width && width < 1200 ? `${width / 42}px` : "18px",
                   }}
                 >
-                  Reward
-                </Box>
-                <Box
-                  sx={{
-                    textAlign: "start",
-                    fontWeight: "lighter !important",
-                    color: "#fff",
-                    fontSize: "14px",
-                  }}
-                >
-                  Play game to get this voucher
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  bgcolor: "white",
-                  width: "100%",
-                  height: "147px",
-                  marginTop: "24px",
-                  position: "relative",
-                  display: "flex",
-                  borderRadius: "8px",
-                  maxWidth: "480px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "65%",
-                    height: "100%",
-                    borderRadius: "1px 0px 0px 8px",
-                    padding: "16px 14px",
-                  }}
-                >
-                  <Box>
-                    <h5
-                      style={{
-                        color: "#BE48ED",
-                        fontSize: 576 < width && width < 1200 ? "18px" : "16px",
-                        maxHeight: "24px",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {" "}
-                      {detailTournament?.tournamentInfors?.rewardInfors
-                        ?.rewardTitle || "SS Z-Flip 5 free voucher"}
-                    </h5>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      // justifyContent: "space-between",
-                      marginTop: "15.2px",
-                    }}
-                  >
-                    <Box>
-                      <Box>
-                        {" "}
-                        <h6
-                          style={{
-                            fontSize: "10px",
-                            marginBottom: "0px !important",
-                            color: "#525252",
-                          }}
-                        >
-                          Recipient
-                        </h6>
-                        <span
-                          style={{
-                            fontSize:
-                              576 < width && width < 1200 ? "12px" : "14px",
-                          }}
-                        >
-                          {sliceString(
-                            detailTournament?.tournamentInfors?.rewardInfors
-                              ?.rewardRecipient
-                          ) || "Recipient"}
-                        </span>
-                      </Box>
-                      <Box sx={{ marginTop: "7.6px" }}>
-                        {" "}
-                        <h6
-                          style={{
-                            fontSize: "10px",
-                            marginBottom: "0px !important",
-                            color: "#525252",
-                          }}
-                        >
-                          Sponsored by
-                        </h6>
-                        <span
-                          style={{
-                            fontSize:
-                              576 < width && width < 1200 ? "12px" : "14px",
-                          }}
-                        >
-                          {detailTournament?.tournamentInfors?.owner
-                            ?.brandName || "Samsung"}
-                        </span>
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        marginLeft: width < 1024 ? "10px" : "60px",
-                      }}
-                    >
-                      {" "}
-                      <Box>
-                        {" "}
-                        <h6
-                          style={{
-                            fontSize: "10px",
-                            marginBottom: "0px !important",
-                            color: "#525252",
-                          }}
-                        >
-                          Valid by
-                        </h6>
-                        <span
-                          style={{
-                            fontSize:
-                              576 < width && width < 1200 ? "12px" : "14px",
-                          }}
-                        >
-                          {moment(
-                            detailTournament?.tournamentInfors?.rewardInfors
-                              ?.rewardValidityDate
-                          )?.format("MMM-DD-YYYY") || "Nov-10-2023"}
-                        </span>
-                      </Box>
-                      <Box sx={{ marginTop: "7.6px" }}>
-                        {" "}
-                        <h6
-                          style={{
-                            fontSize: "10px",
-                            marginBottom: "0px !important",
-                            color: "#525252",
-                          }}
-                        >
-                          Conditions
-                        </h6>
-                        <span
-                          className="cursor-pointer"
-                          href="#"
-                          style={{
-                            color: "#0096FF",
-                            fontSize:
-                              576 < width && width < 1024 ? "12px" : "14px",
-                          }}
-                        >
-                          See more
-                        </span>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    width: "35%",
-                    height: "100%",
-                    borderLeft: "dashed 1px #0D0804",
-                    borderRadius: "0px 8px 8px 0px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      position: "relative",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        height: "20px",
-                        width: "20px",
-                        bgcolor: "#211d28",
-                        position: "absolute",
-                        borderRadius: "50%",
-                        top: "-10px",
-                        left: "-10px",
-                      }}
-                    ></Box>
-                    <Box
-                      sx={{
-                        height: "20px",
-                        width: "20px",
-                        bgcolor: "#211d28",
-                        position: "absolute",
-                        borderRadius: "50%",
-                        bottom: "-10px",
-                        left: "-10px",
-                      }}
-                    ></Box>
-                    <img
-                      style={{
-                        borderRadius: "8px",
-                        objectFit: "cover",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                      src={
-                        detailTournament?.tournamentInfors?.rewardInfors
-                          ?.rewardAvatar
-                          ? process.env.REACT_APP_SOCKET_SERVER +
-                            "/" +
-                            detailTournament?.tournamentInfors?.rewardInfors
-                              ?.rewardAvatar
-                          : images.GameTournament
-                      }
-                      alt="..."
-                      width={"95%"}
-                      height={"90%"}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                marginTop: videoGame ? "75px" : "unset",
-                marginBottom: videoGame ? "20px" : "unset",
-              }}
-            >
-              <Typography
-                sx={{
-                  textAlign: "start",
-                  color: "#fff",
-                  marginLeft: "0px !important",
-                  fontSize:
-                    576 < width && width < 1200 ? `${width / 42}px` : "18px",
-                }}
-              >
-                Game for promotion
-              </Typography>
+                  Game for promotion
+                </Typography>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  marginTop: "16px",
-                }}
-              >
-                <GameInTournament
-                  game={
-                    detailTournament?.tournamentInfors?.skin?.skinGame || null
-                  }
-                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    marginTop: "16px",
+                  }}
+                >
+                  <GameInTournament
+                    game={
+                      detailTournament?.tournamentInfors?.skin?.skinGame || null
+                    }
+                  />
+                </Box>
               </Box>
             </Box>
+          )}{" "}
+        </Box>
+      ) : (
+        <>
+          <Box sx={{ position: "absolute" }}>
+            {" "}
+            {detailTournament?.tournamentVideo && videoGame && (
+              <VideoComponent
+                detailTournament={detailTournament}
+                setVideoGame={(data) => {
+                  setVideoGame(data);
+                }}
+              />
+            )}
           </Box>
-        )}{" "}
-      </Box>
+          {device && os && device === "Mobile" && os === "Android" ? (
+            <DeviceOrientation lockOrientation={"landscape"}>
+              <Orientation orientation="landscape">
+                <FullScreen handle={screen}>
+                  {detailTournament?.tournamentInfors?.game?.gameEngine ===
+                    "cocos" && loading ? (
+                    <iframe
+                      ref={iframeRef}
+                      allow="fullscreen"
+                      style={
+                        device === "Desktop"
+                          ? {
+                              width: "100%",
+                              height: videoGame ? "700px" : "800px",
+                              background: "black",
+                              display: videoGame ? "none" : "block",
+                            }
+                          : {
+                              position: "fixed",
+                              top: "0",
+                              left: "0",
+                              bottom: "0",
+                              right: "0",
+                              width: "100%",
+                              height: "100%",
+                              border: "none",
+                              margin: "0",
+                              padding: "0",
+                              overflow: "hidden",
+                              zIndex: "999999",
+                              display: videoGame ? "none" : "block",
+                              paddingLeft:
+                                device === "Mobile" &&
+                                os === "iOS" &&
+                                detailTournament?.tournamentInfors?.game
+                                  ?.gameScreenType &&
+                                orientation !== "landscape"
+                                  ? "50px"
+                                  : "0px",
+                            }
+                      }
+                      title="Playgame"
+                      src={
+                        process.env.REACT_APP_ENV === "development"
+                          ? `${
+                              process.env.REACT_APP_PROMOTION_URL +
+                              "/" +
+                              detailTournament?.tournamentInfors?.game?.gameHost
+                            }?token=${
+                              tokenUser || localStorage.getItem("token")
+                            }&tournamentId=${detailTournament?.id}&skinId=${
+                              detailTournament?.tournamentInfors?.skin?.id
+                            }&env=${process.env.REACT_APP_ENV}`
+                          : `${
+                              detailTournament?.tournamentInfors?.game?.gameHost
+                            }?token=${
+                              tokenUser || localStorage.getItem("token")
+                            }&tournamentId=${detailTournament?.id}&skinId=${
+                              detailTournament?.tournamentInfors?.skin?.id
+                            }&env=${process.env.REACT_APP_ENV}`
+                      }
+                    ></iframe>
+                  ) : loading ? (
+                    <iframe
+                      ref={iframeRef}
+                      allow="fullscreen"
+                      style={
+                        device === "Desktop"
+                          ? {
+                              width: "100%",
+                              height: videoGame ? "700px" : "800px",
+                              background: "black",
+                              display: videoGame ? "none" : "block",
+                            }
+                          : {
+                              position: "fixed",
+                              top: "0",
+                              left: "0",
+                              bottom: "0",
+                              right: "0",
+                              width: "100%",
+                              height: "100%",
+                              border: "none",
+                              margin: "0",
+                              padding: "0",
+                              overflow: "hidden",
+                              zIndex: "999999",
+                              display: videoGame ? "none" : "block",
+                              paddingLeft:
+                                device === "Mobile" &&
+                                os === "iOS" &&
+                                detailTournament?.tournamentInfors?.game
+                                  ?.gameScreenType &&
+                                orientation !== "landscape"
+                                  ? "50px"
+                                  : "0px",
+                            }
+                      }
+                      title="Playgame"
+                      src={
+                        process.env.REACT_APP_ENV === "development"
+                          ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
+                          : window.location.origin +
+                            "/play-game-tournament/" +
+                            id +
+                            "/" +
+                            detailTournament?.tournamentInfors?.skin?.id
+                      }
+                    ></iframe>
+                  ) : (
+                    <></>
+                  )}
+                </FullScreen>
+              </Orientation>
+            </DeviceOrientation>
+          ) : (
+            <>
+              {detailTournament?.tournamentInfors?.game?.gameEngine ===
+                "cocos" && loading ? (
+                <iframe
+                  ref={iframeRef}
+                  allow="fullscreen"
+                  style={
+                    device === "Desktop"
+                      ? {
+                          width: "100%",
+                          height: videoGame ? "700px" : "800px",
+                          background: "black",
+                          display: videoGame ? "none" : "block",
+                        }
+                      : {
+                          position: "fixed",
+                          top: "0",
+                          left: "0",
+                          bottom: "0",
+                          right: "0",
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                          margin: "0",
+                          padding: "0",
+                          overflow: "hidden",
+                          zIndex: "999999",
+                          display: videoGame ? "none" : "block",
+                          paddingLeft:
+                            device === "Mobile" &&
+                            os === "iOS" &&
+                            detailTournament?.tournamentInfors?.game
+                              ?.gameScreenType &&
+                            orientation !== "landscape"
+                              ? "50px"
+                              : "0px",
+                        }
+                  }
+                  title="Playgame"
+                  src={
+                    process.env.REACT_APP_ENV === "development"
+                      ? `${
+                          process.env.REACT_APP_PROMOTION_URL +
+                          "/" +
+                          detailTournament?.tournamentInfors?.game?.gameHost
+                        }?token=${
+                          tokenUser || localStorage.getItem("token")
+                        }&tournamentId=${detailTournament?.id}&skinId=${
+                          detailTournament?.tournamentInfors?.skin?.id
+                        }&env=${process.env.REACT_APP_ENV}`
+                      : `${
+                          detailTournament?.tournamentInfors?.game?.gameHost
+                        }?token=${
+                          tokenUser || localStorage.getItem("token")
+                        }&tournamentId=${detailTournament?.id}&skinId=${
+                          detailTournament?.tournamentInfors?.skin?.id
+                        }&env=${process.env.REACT_APP_ENV}`
+                  }
+                ></iframe>
+              ) : loading ? (
+                <iframe
+                  ref={iframeRef}
+                  allow="fullscreen"
+                  style={
+                    device === "Desktop"
+                      ? {
+                          width: "100%",
+                          height: videoGame ? "700px" : "800px",
+                          background: "black",
+                          display: videoGame ? "none" : "block",
+                        }
+                      : {
+                          position: "fixed",
+                          top: "0",
+                          left: "0",
+                          bottom: "0",
+                          right: "0",
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                          margin: "0",
+                          padding: "0",
+                          overflow: "hidden",
+                          zIndex: "999999",
+                          display: videoGame ? "none" : "block",
+                          paddingLeft:
+                            device === "Mobile" &&
+                            os === "iOS" &&
+                            detailTournament?.tournamentInfors?.game
+                              ?.gameScreenType &&
+                            orientation !== "landscape"
+                              ? "50px"
+                              : "0px",
+                        }
+                  }
+                  title="Playgame"
+                  src={
+                    process.env.REACT_APP_ENV === "development"
+                      ? `${process.env.REACT_APP_UNITY_GAME_URL}/play-game-tournament/${id}/${detailTournament?.tournamentInfors?.skin?.id}`
+                      : window.location.origin +
+                        "/play-game-tournament/" +
+                        id +
+                        "/" +
+                        detailTournament?.tournamentInfors?.skin?.id
+                  }
+                ></iframe>
+              ) : (
+                <></>
+              )}
+            </>
+          )}
+        </>
+      )}
     </Box>
   );
 }

@@ -602,6 +602,8 @@ export default function ListPackage(props) {
             marginRight: "8px",
             height: "fit-content",
             minWidth: "315px",
+            marginBottom: "20px",
+            maxWidth: width > 576 && width < 1200 ? "315px" : "unset",
           }}
           className={
             packageName === "Combo Extra 1"
@@ -662,14 +664,14 @@ export default function ListPackage(props) {
                   {isFetchListPackage ? (
                     <BannerLoading
                       width={width < 1200 && width > 576 ? 130 : 200}
-                      height={width < 1200 && width > 576 ? 130 : 170}
+                      height={width < 1200 && width > 576 ? 200 : 170}
                     />
                   ) : (
                     <LazyLoadComponent>
                       <video
                         controls={false}
                         width={width < 1200 && width > 576 ? 130 : 200}
-                        height={width < 1200 && width > 576 ? 130 : 170}
+                        height={width < 1200 && width > 576 ? 200 : 170}
                         alt=""
                         style={{
                           mixBlendMode: width < 576 ? "normal" : "difference",
@@ -994,7 +996,8 @@ export default function ListPackage(props) {
                       uPack?.remain !== "Expired" &&
                       packageName === "Subscription"
                         ? "Current pack"
-                        : uPack?.remain === "Expired"
+                        : uPack?.remain === "Expired" &&
+                          packageName === "Subscription"
                         ? "Upgrade Pack"
                         : t("Buy Now")
                     }
