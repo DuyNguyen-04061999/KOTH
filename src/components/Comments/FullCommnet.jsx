@@ -1,77 +1,56 @@
 import { Box, Dialog, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { images } from "../../utils/images";
 import CommentItem from "./CommentItem";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 
-export default function FullCommnet(props) {
-  const { open, onClose } = props;
+export default function FullCommnet() {
   const { width } = useWindowDimensions();
+  const [showMore, setShowMore] = useState(false);
+  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6];
   return (
-    <Dialog
-      PaperProps={{
-        style: {
-          backgroundColor: "#1D1329",
-          boxShadow: "none",
-          width: "100%",
-          padding: "16px 25px",
-          boxSizing: "border-box",
-          display: "flex",
-          flexDirection: "column",
-        },
-      }}
-      fullScreen={width < 576 ? true : false}
-      open={open}
-      onClose={onClose}
-    >
+    <Box>
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        sx={
+          showMore
+            ? {
+                marginTop: "10px",
+                height: "400px",
+                overflow: "auto",
+                "&::-webkit-scrollbar": { width: "3px" },
+                "&::-webkit-scrollbar-thumb": {
+                  background: "#888",
+                  borderRadius: "4px",
+                },
+                "&::-webkit-scrollbar-track": { background: "transparent" },
+              }
+            : { marginTop: "10px" }
+        }
       >
-        <Typography
-          sx={{
-            fontSize: width < 576 ? "16px" : "20px",
-            color: "#fff",
-            fontWeight: "700",
+        {showMore
+          ? array.map((item, index) => {
+              return <CommentItem type="other" />;
+            })
+          : array.slice(0, 2).map((item, index) => {
+              return <CommentItem type="other" />;
+            })}
+      </Box>
+      <Box sx={{ marginTop: "10px" }}>
+        <span
+          onClick={() => {
+            setShowMore((prev) => {
+              return !prev;
+            });
+          }}
+          style={{
+            color: "#7861B9",
+            fontSize: width < 576 ? "12px" : "14px",
+            cursor: "pointer",
           }}
         >
-          Comments
-        </Typography>
-        <Box
-          onClick={onClose}
-          sx={{ width: "20px", height: "20px", cursor: "pointer" }}
-          component={"img"}
-          src={images.closeButtonInvite}
-        ></Box>
+          {!showMore ? "Show all comments" : "Show less comments"}
+        </span>
       </Box>
-      <CommentItem type="personal" />
-      <Box
-        sx={{
-          width: "100%",
-          height: "1px",
-          border: "0.5px solid #9384B7",
-          margin: "30px 0px 0px ",
-        }}
-      ></Box>
-      <Box
-        sx={{
-          height: "400px",
-          overflow: "auto",
-          "&::-webkit-scrollbar": { width: "2px" },
-          "&::-webkit-scrollbar-track": { background: "transparent" },
-          "&::-webkit-scrollbar-thumb": { background: "#888" },
-          marginTop: "10px",
-          flexGrow: 1,
-        }}
-      >
-        {" "}
-        {[1, 2, 3, 1, 1, 1].map((item) => {
-          return <CommentItem type="other" />;
-        })}
-      </Box>
-    </Dialog>
+    </Box>
   );
 }
