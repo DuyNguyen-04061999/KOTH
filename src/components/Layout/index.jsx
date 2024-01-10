@@ -46,8 +46,12 @@ import {
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
 import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
+import { addListNotificationSuccess } from "../../redux-saga-middleware/reducers/notificationReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
-import { toggleProfileDialog } from "../../redux-saga-middleware/reducers/profileReducer";
+import {
+  deleteFriendSuccesFully,
+  toggleProfileDialog,
+} from "../../redux-saga-middleware/reducers/profileReducer";
 import {
   finishGame,
   finishVideo,
@@ -141,7 +145,7 @@ export default function Layout(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
   const { isNav } = useSelector((state) => state.authReducer);
-  const { tokenUser: token } = useSelector((state) => state.userReducer);
+  const { tokenUser: token, user } = useSelector((state) => state.userReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, badgechat, openMess } = useSelector(
     (state) => state.chatReducer
@@ -341,9 +345,10 @@ export default function Layout(props) {
     if (socket && (token || tokenLocal)) {
       socket?.emit("loginSocial", {
         token: token || tokenLocal,
+        username: user?.userName,
       });
     }
-  }, [token, socket]);
+  }, [token, socket, user]);
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token");
@@ -374,9 +379,36 @@ export default function Layout(props) {
           dispatch(updateChatWorld(data));
         }
       });
+
+      socket?.on("addFriendSuccess", (data) => {
+        if (!startGameCheck) {
+          dispatch(
+            showToastNotification({
+              type: "success",
+              message: "You get a new notification",
+            })
+          );
+          dispatch(addListNotificationSuccess(data));
+        }
+      });
+
+      socket?.on("deleteFriendSuccess", (data) => {
+        if (!startGameCheck) {
+          dispatch(
+            showToastNotification({
+              type: "success",
+              message: "Delete friend successfully!",
+            })
+          );
+          socket?.emit("listFriend");
+          dispatch(deleteFriendSuccesFully("success"));
+        }
+      });
     }
     return () => {
       socket?.off("chatSuccess");
+      socket?.off("deleteFriendSuccess");
+      socket?.off("addFriendSuccess");
     };
   }, [socket, token, dispatch, startGameCheck]);
 

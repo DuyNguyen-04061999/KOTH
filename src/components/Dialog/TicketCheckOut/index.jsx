@@ -23,7 +23,7 @@ export default function TicketCheckOut() {
   );
   const { idPackage } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
-  
+
   const { listPackage } = useSelector((state) => state.packageReducer);
   const [feeCheckout, setFeeCheckout] = useState({
     origin: 4.4 / 100,
@@ -37,7 +37,7 @@ export default function TicketCheckOut() {
   const [feeMoney, setFeeMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [sl, setSl] = useState(1);
-  const [autoRecurring, setAutoRecurring] = useState(false)
+  const [autoRecurring, setAutoRecurring] = useState(false);
 
   useEffect(() => {
     if (typePayment === "skrill") {
@@ -86,32 +86,32 @@ export default function TicketCheckOut() {
 
   const btnSubscription = (event) => {
     event.currentTarget.disabled = true;
-      dispatch(
-          getCheckOut({
-            packageId: idPackage,
-            quantity: sl,
-            type: typePayment,
-            price: Number(totalMoney)?.toFixed(2),
-            auto: autoRecurring,
-            game: game ? true : false
-          })
-        );
-      setSl(1);
-      // dispatch(toggleCheckWallet());
-  };
-  const btnBuyTicket = (event) => {
-    event.currentTarget.disabled = true;
-      dispatch(
-       getCheckOut({
+    dispatch(
+      getCheckOut({
         packageId: idPackage,
         quantity: sl,
         type: typePayment,
         price: Number(totalMoney)?.toFixed(2),
-        game: game ? true : false
-       })
-      );
-      setSl(1);
-      // dispatch(toggleCheckWallet());
+        auto: autoRecurring,
+        game: game ? true : false,
+      })
+    );
+    setSl(1);
+    // dispatch(toggleCheckWallet());
+  };
+  const btnBuyTicket = (event) => {
+    event.currentTarget.disabled = true;
+    dispatch(
+      getCheckOut({
+        packageId: idPackage,
+        quantity: sl,
+        type: typePayment,
+        price: Number(totalMoney)?.toFixed(2),
+        game: game ? true : false,
+      })
+    );
+    setSl(1);
+    // dispatch(toggleCheckWallet());
   };
 
   useEffect(() => {
@@ -202,7 +202,7 @@ export default function TicketCheckOut() {
                 </Typography>
               </Box>
             </Box>
-            
+
             <hr
               style={{
                 color: "white",
@@ -245,7 +245,8 @@ export default function TicketCheckOut() {
                           fontSize: "14px",
                         }}
                       >
-                        Total Extra: {4 * Number(listSetting?.saleValue || 1)} Free Extra/day
+                        Total Extra: {4 * Number(listSetting?.saleValue || 1)}{" "}
+                        Free Extra/day
                       </Typography>
                     </Box>
                   ) : (
@@ -261,7 +262,11 @@ export default function TicketCheckOut() {
                           color: "#BE48ED ",
                         }}
                       >
-                        {typeWallet === "subscription" ? "Subscription Pack" : typeWallet === "combo1" ? "Standard Extra Pack" : "Value Extra Pack"}
+                        {typeWallet === "subscription"
+                          ? "Subscription Pack"
+                          : typeWallet === "combo1"
+                          ? "Standard Extra Pack"
+                          : "Value Extra Pack"}
                       </Typography>
                       <Typography
                         sx={{
@@ -270,7 +275,9 @@ export default function TicketCheckOut() {
                           fontSize: "14px",
                         }}
                       >
-                        Total Extra: {totalExtra * sl * Number(listSetting?.saleValue || 1)} Extra
+                        Total Extra:{" "}
+                        {totalExtra * sl * Number(listSetting?.saleValue || 1)}{" "}
+                        Extra
                       </Typography>
                     </Box>
                   )}
@@ -523,12 +530,14 @@ export default function TicketCheckOut() {
               }}
             >
               <Typography sx={{ fontSize: "14px" }}>
-                {typeWallet === "subscription" ? "Subscription Pack x 1" : "Combo Pack x 1"}
+                {typeWallet === "subscription"
+                  ? "Subscription Pack x 1"
+                  : "Combo Pack x 1"}
               </Typography>
               <Typography sx={{ color: "white", fontSize: "14px" }}>
-                  {" "}
-                  ${formatMoney(Number.parseFloat(sl * goldCombo))}
-                </Typography>
+                {" "}
+                ${formatMoney(Number.parseFloat(sl * goldCombo))}
+              </Typography>
             </Box>
             <Box
               className="mt-2 mb-2"
@@ -542,15 +551,20 @@ export default function TicketCheckOut() {
               <Typography sx={{ fontSize: "14px" }}>
                 Processing Fee
                 {feeCheckout && (
-                  <Box component={"span"} className="ms-2" sx={{
-                    color: "#A89CD7",
-                    fontSize: "12px"
-                  }}>
-                    {"(" + feeCheckout?.origin + "%"} + {"$"}{feeCheckout?.bonus + ")"}
+                  <Box
+                    component={"span"}
+                    className="ms-2"
+                    sx={{
+                      color: "#A89CD7",
+                      fontSize: "12px",
+                    }}
+                  >
+                    {"(" + feeCheckout?.origin + "%"} + {"$"}
+                    {feeCheckout?.bonus + ")"}
                   </Box>
                 )}
-                </Typography>
-              <Typography sx={{ color: "white", fontSize: "14px", }}>
+              </Typography>
+              <Typography sx={{ color: "white", fontSize: "14px" }}>
                 ${feeCheckout ? feeMoney?.toFixed(2) : 0}
               </Typography>
             </Box>
@@ -564,9 +578,11 @@ export default function TicketCheckOut() {
               }}
             >
               <Typography sx={{ fontSize: "18px" }}>Total payment</Typography>
-              <Typography sx={{ color: "#BF48ED", fontSize: "18px", fontWeight: 600  }}>
+              <Typography
+                sx={{ color: "#BF48ED", fontSize: "18px", fontWeight: 600 }}
+              >
                 {" "}
-                {feeCheckout ? (Number((sl*goldCombo) + feeMoney)).toFixed(2) : 0}
+                {feeCheckout ? Number(sl * goldCombo + feeMoney).toFixed(2) : 0}
               </Typography>
             </Box>
             <hr
@@ -609,7 +625,7 @@ export default function TicketCheckOut() {
                       color: agree === false ? "red" : "white",
                     }}
                   >
-                    Auto Recurring
+                    Automatic Renewal of Subscription Pack
                   </Typography>
                 </Box>
               </Box>
