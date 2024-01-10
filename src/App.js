@@ -31,6 +31,7 @@ import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
+import { callListSendingRequest } from "./redux-saga-middleware/reducers/addFriendReducer";
 import {
   hideToastNotification,
   showToastNotification,
@@ -59,7 +60,7 @@ import {
   changeOrientation,
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
-import { addListNotificationSuccess } from "./redux-saga-middleware/reducers/notificationReducer";
+import { addListNotificationSuccess, getListNotification } from "./redux-saga-middleware/reducers/notificationReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
 import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
 import {
@@ -119,9 +120,10 @@ function App() {
     if (socket && (tokenUser || token)) {
       socket?.emit("loginSocial", {
         token: tokenUser || token,
+        username: user?.userName
       });
     }
-  }, [tokenUser, socket]);
+  }, [tokenUser, socket, user]);
 
   const { width } = useWindowDimensions();
 
@@ -229,6 +231,7 @@ function App() {
         if (tokenUser || token) {
           socket?.emit("loginSocial", {
             token: tokenUser || token,
+            username: user?.userName
           });
         }
       });
@@ -246,6 +249,7 @@ function App() {
         if (tokenUser || token) {
           socket?.emit("loginSocial", {
             token: tokenUser || token,
+            username: user?.userName
           });
         }
       });
@@ -291,6 +295,19 @@ function App() {
         }
       });
 
+      socket?.on(`cancelFriendRequestSuccess`, (data) => {
+        if(token || tokenUser) {
+          store.dispatch(getListNotification());
+        }
+      });
+
+      socket?.on(`acceptFriendRequestSuccess`, (data) => {
+        if(token || tokenUser) {
+          socket?.emit("listFriend");
+          store.dispatch(callListSendingRequest());
+        }
+      });
+
       socket?.on("gameWin", ({ type, value }) => {
         store.dispatch(updateReward({ type, value }));
       });
@@ -324,6 +341,7 @@ function App() {
       if (socket && (tokenUser || token)) {
         socket?.emit("loginSocial", {
           token: tokenUser || token,
+          username: user?.userName
         });
       }
     };

@@ -141,7 +141,7 @@ export default function Layout(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
   const { isNav } = useSelector((state) => state.authReducer);
-  const { tokenUser: token } = useSelector((state) => state.userReducer);
+  const { tokenUser: token, user } = useSelector((state) => state.userReducer);
   const { isGameLogDialog } = useSelector((state) => state.gameReducer);
   const { chatPopup, badgechat, openMess } = useSelector(
     (state) => state.chatReducer
@@ -341,9 +341,10 @@ export default function Layout(props) {
     if (socket && (token || tokenLocal)) {
       socket?.emit("loginSocial", {
         token: token || tokenLocal,
+        username: user?.userName,
       });
     }
-  }, [token, socket]);
+  }, [token, socket, user]);
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("token");
