@@ -601,7 +601,7 @@ export default function ListPackage(props) {
             marginLeft: "8px",
             marginRight: "8px",
             height: "fit-content",
-            minWidth: "315px",
+            minWidth: width > 576 && width < 1200 ? "100%" : "315px",
             marginBottom: "20px",
             maxWidth: width > 576 && width < 1200 ? "315px" : "unset",
           }}
