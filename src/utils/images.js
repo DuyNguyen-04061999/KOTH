@@ -83,6 +83,7 @@ import depositPassive from "../assets/images/depositPassive.png";
 import dogcoin from "../assets/images/dogcoin.png";
 import domino from "../assets/images/domino.png";
 import endAtTour from "../assets/images/endAtTour.png";
+import sortIcon from "../assets/images/sortIcon.png";
 import expandIcon from "../assets/images/expandIcon.png";
 import eyeIcon from "../assets/images/eyeIcon.png";
 import gameHotTournament from "../assets/images/gameHotTournament.png";
@@ -485,6 +486,7 @@ export const navbar = {
 
 export const images = {
   bn1: DummyBanner1,
+  sortIcon: sortIcon,
   btn_back: btn_back,
   bn2: DummyBanner2,
   bn3: DummyBanner3,
