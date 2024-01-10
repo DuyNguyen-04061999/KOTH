@@ -19,6 +19,7 @@ export default function FindUser(props) {
   const [searchValue, setSearchValue] = useState("");
   const [socket, setSocket] = useState("");
   const [username, setUserName] = useState("");
+  const [userNickName, setUserNickName] = useState("");
   const [openConfirm, setOpenCofirm] = useState(false);
   useEffect(() => {
     const socket = _socket;
@@ -52,7 +53,6 @@ export default function FindUser(props) {
   useEffect(() => {
     if (socket) {
       socket?.on("addFriendRequestSuccess", (data) => {
-        console.log("Data: ", data);
         handleCancel();
         dispatch(
           showToastNotification({
@@ -159,7 +159,8 @@ export default function FindUser(props) {
                           })
                           .includes(people?.id)
                       ) {
-                        setUserName(people?.userNickName);
+                        setUserNickName(people?.userNickName);
+                        setUserName(people?.userName);
                         setOpenCofirm(true);
                       } else if (
                         listSendingRequest
@@ -248,6 +249,7 @@ export default function FindUser(props) {
         </Box>{" "}
         <ConfirmSendRequest
           username={username}
+          userNickName={userNickName}
           open={openConfirm}
           onClose={() => {
             setOpenCofirm(false);

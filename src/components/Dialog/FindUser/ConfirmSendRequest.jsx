@@ -1,11 +1,11 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { images } from "../../../utils/images";
-import _socket from "../../../redux-saga-middleware/config/socket";
 import { useSelector } from "react-redux";
+import _socket from "../../../redux-saga-middleware/config/socket";
+import { images } from "../../../utils/images";
 
 export default function ConfirmSendRequest(props) {
-  const { username, open, onClose } = props;
+  const { username, open, onClose, userNickName } = props;
   const [socket, setSocket] = useState("");
   const { device } = useSelector((state) => state.deviceReducer);
   useEffect(() => {
@@ -43,7 +43,9 @@ export default function ConfirmSendRequest(props) {
         <Typography sx={{ color: "#fff" }}>
           Send a friend request to{" "}
           <span style={{ color: "#7C81F2" }}>
-            {username?.length > 11 ? username.slice(0, 11) + " ..." : username}
+            {userNickName?.length > 11
+              ? userNickName.slice(0, 11) + " ..."
+              : userNickName}
           </span>{" "}
           ?
         </Typography>
