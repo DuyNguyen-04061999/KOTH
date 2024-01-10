@@ -11,7 +11,7 @@ export default function CommentItem({ type }) {
         width: "100%",
         display: "flex",
         alignItems: "flex-start",
-        marginTop: "30px",
+        marginTop: width < 576 ? "20px" : "30px",
         padding: "0px 10px 0px 0px",
       }}
     >
@@ -52,7 +52,7 @@ export default function CommentItem({ type }) {
         width: "100%",
         display: "flex",
         alignItems: "flex-start",
-        marginTop: "30px",
+        marginTop: width < 576 ? "20px" : "30px",
         padding: "0px 10px 0px 0px",
       }}
     >
@@ -76,7 +76,7 @@ export default function CommentItem({ type }) {
           style={{
             width: "100%",
             resize: "none",
-            height: "100px",
+            height: width < 576 ? "50px" : "100px",
             backgroundColor: "transparent",
             border: "none",
             outline: "none",
@@ -85,11 +85,17 @@ export default function CommentItem({ type }) {
             color: "#fff",
           }}
         ></textarea>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "10px",
+          }}
+        >
           <button
             style={{
               width: width < 576 ? "90px" : "140px",
-              height: "35px",
+              height: width < 576 ? "30px" : "35px",
               fontSize: width < 576 ? "10px" : "13px",
               borderRadius: "4px",
               marginRight: "15px",
@@ -105,7 +111,7 @@ export default function CommentItem({ type }) {
           <button
             style={{
               width: width < 576 ? "90px" : "140px",
-              height: "35px",
+              height: width < 576 ? "30px" : "35px",
               fontSize: width < 576 ? "10px" : "13px",
               borderRadius: "4px",
               backgroundColor: "#7848ED",
