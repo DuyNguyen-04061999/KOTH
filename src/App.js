@@ -60,9 +60,8 @@ import {
   changeOrientation,
   updateReward,
 } from "./redux-saga-middleware/reducers/gameReducer";
-import { addListNotificationSuccess, getListNotification } from "./redux-saga-middleware/reducers/notificationReducer";
+import { getListNotification } from "./redux-saga-middleware/reducers/notificationReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
-import { deleteFriendSuccesFully } from "./redux-saga-middleware/reducers/profileReducer";
 import {
   getUserInfoReady,
   updateCountTicket,
@@ -269,31 +268,31 @@ function App() {
         store.dispatch(updateCountTicket(quantity || 0));
       });
 
-      socket?.on("addFriendSuccess", (data) => {
-        if(!startGameCheck) {
-          store.dispatch(
-            showToastNotification({
-              type: "success",
-              message: "You get a new notification",
-            })
-          );
-          store.dispatch(addListNotificationSuccess(data));
-        }
+      // socket?.on("addFriendSuccess", (data) => {
+      //   if(!startGameCheck) {
+      //     store.dispatch(
+      //       showToastNotification({
+      //         type: "success",
+      //         message: "You get a new notification",
+      //       })
+      //     );
+      //     store.dispatch(addListNotificationSuccess(data));
+      //   }
         
-      });
+      // });
 
-      socket?.on("deleteFriendSuccess", (data) => {
-        if(!startGameCheck) {
-          store.dispatch(
-            showToastNotification({
-              type: "success",
-              message: "Delete friend successfully!",
-            })
-          );
-          socket?.emit("listFriend");
-          store.dispatch(deleteFriendSuccesFully("success"));
-        }
-      });
+      // socket?.on("deleteFriendSuccess", (data) => {
+      //   if(!startGameCheck) {
+      //     store.dispatch(
+      //       showToastNotification({
+      //         type: "success",
+      //         message: "Delete friend successfully!",
+      //       })
+      //     );
+      //     socket?.emit("listFriend");
+      //     store.dispatch(deleteFriendSuccesFully("success"));
+      //   }
+      // });
 
       socket?.on(`cancelFriendRequestSuccess`, (data) => {
         if(token || tokenUser) {
