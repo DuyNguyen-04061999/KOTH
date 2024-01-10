@@ -11,7 +11,13 @@ import {
   Slide,
   Typography,
 } from "@mui/material";
-import React, { Fragment, forwardRef, useCallback, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
@@ -71,11 +77,9 @@ export default function SelectRoom() {
   } = useSelector((state) => state.gameReducer);
   const { roomNav } = useSelector((state) => state.roomReducer);
   const [dogeGold, setDogeGold] = useState(0);
-  const { token, userId, userGold } = useSelector(
-    (state) => state.authReducer
-  );
+  const { token, userId, userGold } = useSelector((state) => state.authReducer);
   const { user } = useSelector((state) => state.userReducer);
-  const userName = user?.userName || ""
+  const userName = user?.userName || "";
   const { listBet, router } = useSelector((state) => state.appReducer);
   const { friendList } = useSelector((state) => state.chatReducer);
   const { state } = useLocation();

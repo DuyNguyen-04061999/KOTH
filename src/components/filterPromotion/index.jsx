@@ -18,6 +18,7 @@ import {
 } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AnimButton from "../AnimButton";
+import { images } from "../../utils/images";
 
 export default function FilterPromotion(props) {
   const { t } = useTranslation("auth");
@@ -499,7 +500,7 @@ export default function FilterPromotion(props) {
                     style={{
                       fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                       padding:
-                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                        width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                     }}
                   />
                 </Box>
@@ -515,7 +516,7 @@ export default function FilterPromotion(props) {
                     style={{
                       fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                       padding:
-                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                        width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                     }}
                   />
                 </Box>
@@ -531,21 +532,10 @@ export default function FilterPromotion(props) {
                     style={{
                       fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                       padding:
-                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                        width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                     }}
                   />
                 </Box>
-                {/* <Box sx={{ marginLeft:"10px" }}>
-                  <AnimButton
-                    type={"active"}
-                    text={t("Promotions Joined")}
-                    isSubmitBtn
-                    isHasIcon={activeJoined}
-                    onClick={() => {
-                        setActiveJoined(!activeJoined)
-                    }}
-                  />
-                </Box> */}
                 {clear === true ? (
                   <Box sx={{ marginLeft: "10px" }}>
                     <AnimButton
@@ -561,7 +551,7 @@ export default function FilterPromotion(props) {
                       style={{
                         fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                         padding:
-                          width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                          width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                       }}
                     />
                   </Box>
@@ -573,62 +563,79 @@ export default function FilterPromotion(props) {
               ""
             )}
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
+          <Box
             sx={{
-              color: "white",
-              " :hover": {
-                backgroundColor: "inherit",
-              },
-              textTransform: "none",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              flexGrow: 1,
             }}
           >
-            {value ? "End in latest" : "End in soonest"}
-            <KeyboardArrowDown />
-          </Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-            sx={{
-              "& .MuiMenu-paper": {
-                backgroundColor: "#443565 !important",
+            {width > 576 && <Box component={"img"} src={images.sortIcon}></Box>}
+            {width > 576 && (
+              <Typography
+                sx={{
+                  color: "#fff",
+                  fontSize: "15px",
+                  marginRight: "10px",
+                  fontWeight: "700",
+                }}
+              >
+                Filter by
+              </Typography>
+            )}
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              sx={{
                 color: "white",
-              },
-            }}
-          >
-            <MenuItem
-              onClick={() => {
-                setValue(false);
-                handleClose();
+                " :hover": {
+                  backgroundColor: "#443565",
+                },
+                textTransform: "none",
+                backgroundColor: "#443565",
+                padding: "5px 12px",
               }}
             >
-              End in soonest
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setValue(true);
-                handleClose();
+              {value ? "End in latest" : "End in soonest"}
+              <KeyboardArrowDown />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              sx={{
+                "& .MuiMenu-paper": {
+                  backgroundColor: "#443565 !important",
+                  color: "white",
+                },
               }}
             >
-              End in latest
-            </MenuItem>
-          </Menu>
+              <MenuItem
+                onClick={() => {
+                  setValue(false);
+                  handleClose();
+                }}
+              >
+                End in soonest
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setValue(true);
+                  handleClose();
+                }}
+              >
+                End in latest
+              </MenuItem>
+            </Menu>
+          </Box>
         </Box>
         <Drawer
           anchor={"bottom"}

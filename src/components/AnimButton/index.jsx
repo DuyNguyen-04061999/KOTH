@@ -13,7 +13,7 @@ export default function AnimButton(props) {
     disabledBtn,
     upperCase,
   } = props;
-  
+
   const ArrrowIcon = () => (
     <span className="icon-arrow">
       <svg
@@ -332,6 +332,7 @@ export default function AnimButton(props) {
             display: "flex",
             alignItems: "center",
             fontSize: "16px",
+
             ...style,
           }}
           onClick={onClick}
@@ -341,7 +342,7 @@ export default function AnimButton(props) {
           <p
             style={{
               textTransform: upperCase ? "uppercase" : "none",
-              marginRight: "5px",
+              marginRight: isHasIcon ? "5px" : "0px",
             }}
           >
             {text}
@@ -433,7 +434,7 @@ export default function AnimButton(props) {
           <p
             style={{
               textTransform: upperCase ? "uppercase" : "none",
-              marginRight: "5px",
+              marginRight: isHasIcon ? "5px" : "0px",
             }}
           >
             {text}
