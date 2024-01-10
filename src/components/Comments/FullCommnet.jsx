@@ -1,8 +1,7 @@
-import { Box, Dialog, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { images } from "../../utils/images";
-import CommentItem from "./CommentItem";
+import { Box } from "@mui/material";
+import React, { useState } from "react";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import CommentItem from "./CommentItem";
 
 export default function FullCommnet() {
   const { width } = useWindowDimensions();
@@ -29,10 +28,10 @@ export default function FullCommnet() {
       >
         {showMore
           ? array.map((item, index) => {
-              return <CommentItem type="other" />;
+              return <CommentItem type="other" key={index} />;
             })
           : array.slice(0, 2).map((item, index) => {
-              return <CommentItem type="other" />;
+              return <CommentItem type="other" key={index} />;
             })}
       </Box>
       <Box sx={{ marginTop: "10px" }}>
