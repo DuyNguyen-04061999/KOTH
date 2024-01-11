@@ -24,7 +24,7 @@ let adminReducer = combineReducers({
   adminAgentReducer,
   adminDialogReducer,
   adminRevenueReducer,
-  adminAlertReducer
+  adminAlertReducer,
 });
 
 const persistConfig = {
@@ -42,4 +42,3 @@ sagaMiddleware.run(rootSaga);
 const action = (type) => storeAdmin.dispatch({ type });
 
 export { action, persistorAdmin, storeAdmin };
-

@@ -2,11 +2,15 @@ import { Box } from "@mui/material";
 import React, { useState } from "react";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import CommentItem from "./CommentItem";
+import { useSelector } from "react-redux";
 
 export default function FullCommnet() {
   const { width } = useWindowDimensions();
   const [showMore, setShowMore] = useState(false);
-  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6];
+  const { listCommentPromo, postingComment } = useSelector(
+    (state) => state.commentReducer
+  );
+  const { user, userAvatar } = useSelector((state) => state.userReducer);
   return (
     <Box>
       <Box
@@ -14,7 +18,7 @@ export default function FullCommnet() {
           showMore
             ? {
                 marginTop: "10px",
-                height: "400px",
+                maxHeight: "400px",
                 overflow: "auto",
                 "&::-webkit-scrollbar": { width: "3px" },
                 "&::-webkit-scrollbar-thumb": {
@@ -26,13 +30,42 @@ export default function FullCommnet() {
             : { marginTop: "10px" }
         }
       >
+        {postingComment !== "" && (
+          <CommentItem
+            userNickName={user?.userNickName}
+            content={postingComment}
+            type="posting"
+            userAvatar={userAvatar}
+          />
+        )}
         {showMore
-          ? array.map((item, index) => {
-              return <CommentItem type="other" key={index} />;
+          ? listCommentPromo?.toReversed()?.map((item, index) => {
+              return (
+                <CommentItem
+                  userNickName={item?.commentUser?.userNickName}
+                  createdAt={item?.createdAt}
+                  content={item?.content}
+                  type="other"
+                  key={index}
+                  userAvatar={item?.commentUser?.userAccount?.accountAvatar}
+                />
+              );
             })
-          : array.slice(0, 2).map((item, index) => {
-              return <CommentItem type="other" key={index} />;
-            })}
+          : listCommentPromo
+              ?.toReversed()
+              ?.slice(0, 2)
+              .map((item, index) => {
+                return (
+                  <CommentItem
+                    userNickName={item?.commentUser?.userNickName}
+                    createdAt={item?.createdAt}
+                    content={item?.content}
+                    type="other"
+                    key={index}
+                    userAvatar={item?.commentUser?.userAccount?.accountAvatar}
+                  />
+                );
+              })}
       </Box>
       <Box sx={{ marginTop: "10px" }}>
         <span
