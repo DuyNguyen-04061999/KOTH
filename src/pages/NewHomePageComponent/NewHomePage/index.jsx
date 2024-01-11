@@ -31,17 +31,17 @@ export default function NewHomePage() {
     threeBrandTour,
     ongoingTournament,
     upcomingTournament,
-    endedTournament,
+    // endedTournament,
     isFetchThreeTour,
     isFetchHotWeek,
     isFetchHot,
     isFetchOngoing,
     isFetchUpcoming,
-    isFetchEnded,
+    // isFetchEnded,
     noDataUpcoming,
     noDataHot,
     noDataOncoming,
-    noDataEnd,
+    // noDataEnd,
   } = useSelector((state) => state.tournamentReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   const { listBanner } = useSelector((state) => state.appReducer);
@@ -60,7 +60,7 @@ export default function NewHomePage() {
     // dispatch(getListPromotionNew({ type: "standard" }))
     dispatch(getListPromotionNew({ type: "ongoing" }));
     dispatch(getListPromotionNew({ type: "upcoming" }));
-    dispatch(getListPromotionNew({ type: "ended" }));
+    // dispatch(getListPromotionNew({ type: "ended" }));
     // dispatch(getListPromotionNew({ type: "daily" }))
     dispatch({
       type: "CALL_BIGGEST_END_TOUR",
@@ -541,7 +541,7 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography
                 sx={{
@@ -589,7 +589,7 @@ export default function NewHomePage() {
               typePromo={"ended"}
               noData={noDataEnd}
             />
-          </Box>
+          </Box> */}
           <ListWinner />
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />
