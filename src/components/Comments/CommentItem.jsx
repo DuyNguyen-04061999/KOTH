@@ -1,10 +1,19 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addCommentPromotion } from "../../redux-saga-middleware/reducers/commentReducer";
+import moment from "moment";
 
-export default function CommentItem({ type }) {
+export default function CommentItem(props) {
+  const { type, content, createdAt, userNickName, userAvatar } = props;
+  const { postingComment } = useSelector((state) => state.commentReducer);
   const { width } = useWindowDimensions();
+  const { id } = useParams();
+  const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
   return type === "other" ? (
     <Box
       sx={{
@@ -18,7 +27,11 @@ export default function CommentItem({ type }) {
       <Box
         sx={{ width: "32px", height: "32px", borderRadius: "50%" }}
         component={"img"}
-        src={images.Aa}
+        src={
+          userAvatar
+            ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
+            : images.undefinedAvatar
+        }
       ></Box>
       <Box sx={{ marginLeft: "10px" }}>
         <Box
@@ -28,8 +41,12 @@ export default function CommentItem({ type }) {
             textAlign: "start",
           }}
         >
-          Pikachu{" "}
-          <span style={{ fontSize: "11px", color: "#9384B7" }}>11:20 am</span>
+          {userNickName}
+          <span
+            style={{ fontSize: "11px", color: "#9384B7", marginLeft: "10px" }}
+          >
+            {moment(createdAt).format("MM/DD HH:mm")}
+          </span>
         </Box>
         <Box
           sx={{
@@ -38,15 +55,11 @@ export default function CommentItem({ type }) {
             color: "#fff",
           }}
         >
-          But let's not forget the hidden gems, the indie darlings, the games
-          that never got the recognition they deserved! That little platformer
-          with the hand-drawn art and the killer soundtrack? Pure indie magic!
-          Or that narrative-driven RPG where you play as a sentient teapot?
-          Instant classic, in my book.
+          {content}
         </Box>
       </Box>
     </Box>
-  ) : (
+  ) : type === "personal" ? (
     <Box
       sx={{
         width: "100%",
@@ -59,7 +72,11 @@ export default function CommentItem({ type }) {
       <Box
         sx={{ width: "32px", height: "32px", borderRadius: "50%" }}
         component={"img"}
-        src={images.Aa}
+        src={
+          userAvatar
+            ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
+            : images.undefinedAvatar
+        }
       ></Box>
       <Box
         sx={{
@@ -72,6 +89,10 @@ export default function CommentItem({ type }) {
         }}
       >
         <textarea
+          value={comment}
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
           placeholder="Write your comment ..."
           style={{
             width: "100%",
@@ -109,12 +130,24 @@ export default function CommentItem({ type }) {
             Cancel
           </button>
           <button
+            onClick={() => {
+              if (comment !== "" && postingComment === "") {
+                dispatch(
+                  addCommentPromotion({
+                    promoId: id,
+                    comment: comment,
+                  })
+                );
+                setComment("");
+              }
+            }}
             style={{
               width: width < 576 ? "90px" : "140px",
               height: width < 576 ? "30px" : "35px",
               fontSize: width < 576 ? "10px" : "13px",
               borderRadius: "4px",
-              backgroundColor: "#7848ED",
+              backgroundColor:
+                comment === "" || postingComment !== "" ? "#979797" : "#7848ED",
               color: "#fff",
               outline: "none",
               border: "none",
@@ -123,6 +156,51 @@ export default function CommentItem({ type }) {
           >
             Send
           </button>
+        </Box>
+      </Box>
+    </Box>
+  ) : (
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        alignItems: "flex-start",
+        marginTop: width < 576 ? "20px" : "30px",
+        padding: "0px 10px 0px 0px",
+      }}
+    >
+      <Box
+        sx={{ width: "32px", height: "32px", borderRadius: "50%" }}
+        component={"img"}
+        src={
+          userAvatar
+            ? process.env.REACT_APP_SOCKET_SERVER + "/" + userAvatar
+            : images.undefinedAvatar
+        }
+      ></Box>
+      <Box sx={{ marginLeft: "10px" }}>
+        <Box
+          sx={{
+            fontSize: width < 576 ? "12px" : "14px",
+            color: "#7C81F2",
+            textAlign: "start",
+          }}
+        >
+          {userNickName}
+          <span
+            style={{ fontSize: "11px", color: "#9384B7", marginLeft: "10px" }}
+          >
+            Posting...
+          </span>
+        </Box>
+        <Box
+          sx={{
+            fontSize: width < 576 ? "12px" : "14px",
+            textAlign: "start",
+            color: "#fff",
+          }}
+        >
+          {content}
         </Box>
       </Box>
     </Box>
