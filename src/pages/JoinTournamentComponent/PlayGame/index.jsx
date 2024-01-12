@@ -212,6 +212,7 @@ export default function PlayGame(props) {
                       {detailTournament?.tournamentInfors?.game?.gameEngine ===
                         "cocos" && loading ? (
                         <iframe
+                          data-hj-allow-iframe=""
                           ref={iframeRef}
                           allow="fullscreen"
                           style={
@@ -270,6 +271,7 @@ export default function PlayGame(props) {
                         ></iframe>
                       ) : loading ? (
                         <iframe
+                          data-hj-allow-iframe=""
                           ref={iframeRef}
                           allow="fullscreen"
                           style={
@@ -325,6 +327,7 @@ export default function PlayGame(props) {
                   {detailTournament?.tournamentInfors?.game?.gameEngine ===
                     "cocos" && loading ? (
                     <iframe
+                      data-hj-allow-iframe=""
                       ref={iframeRef}
                       allow="fullscreen"
                       style={
@@ -381,6 +384,7 @@ export default function PlayGame(props) {
                     ></iframe>
                   ) : loading ? (
                     <iframe
+                      data-hj-allow-iframe=""
                       ref={iframeRef}
                       allow="fullscreen"
                       style={
@@ -903,6 +907,7 @@ export default function PlayGame(props) {
                   {detailTournament?.tournamentInfors?.game?.gameEngine ===
                     "cocos" && loading ? (
                     <iframe
+                      data-hj-allow-iframe=""
                       ref={iframeRef}
                       allow="fullscreen"
                       style={
@@ -960,6 +965,7 @@ export default function PlayGame(props) {
                     ></iframe>
                   ) : loading ? (
                     <iframe
+                      data-hj-allow-iframe=""
                       ref={iframeRef}
                       allow="fullscreen"
                       style={
@@ -1016,6 +1022,7 @@ export default function PlayGame(props) {
               {detailTournament?.tournamentInfors?.game?.gameEngine ===
                 "cocos" && loading ? (
                 <iframe
+                  data-hj-allow-iframe=""
                   ref={iframeRef}
                   allow="fullscreen"
                   style={
@@ -1073,6 +1080,7 @@ export default function PlayGame(props) {
                 ></iframe>
               ) : loading ? (
                 <iframe
+                  data-hj-allow-iframe=""
                   ref={iframeRef}
                   allow="fullscreen"
                   style={

@@ -144,6 +144,7 @@ export default function GameDetailIframePage(props) {
                       <Orientation orientation="landscape">
                         <FullScreen handle={screen}>
                           <iframe
+                            data-hj-allow-iframe=""
                             allow="fullscreen"
                             style={
                               device === "Desktop"
@@ -187,6 +188,7 @@ export default function GameDetailIframePage(props) {
                     </DeviceOrientation>
                   ) : (
                     <iframe
+                      data-hj-allow-iframe=""
                       allow="fullscreen"
                       style={
                         device === "Desktop"
@@ -232,6 +234,7 @@ export default function GameDetailIframePage(props) {
                   <Orientation orientation="landscape">
                     <FullScreen handle={screen}>
                       <iframe
+                        data-hj-allow-iframe=""
                         allow="fullscreen"
                         style={
                           device === "Desktop"
@@ -275,6 +278,7 @@ export default function GameDetailIframePage(props) {
                 </DeviceOrientation>
               ) : (
                 <iframe
+                  data-hj-allow-iframe=""
                   allow="fullscreen"
                   style={
                     device === "Desktop"
