@@ -401,59 +401,63 @@ export default function DialogProfile(props) {
           {device === "Mobile" ? (
             <Box>
               <Box component={"form"} className="mt-2">
-                <Box>
-                  {listSendingRequest &&
-                  listSendingRequest
-                    ?.map((item) => {
-                      return item.userName;
-                    })
-                    .includes(userNameProfile) ? (
-                    <Box
-                      onClick={handleCancelFriend}
-                      className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                      sx={{
-                        background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                        width: "100%",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      <PersonRemoveAlt1 className="me-2 pb-1" />
-                      Cancel Friend
-                    </Box>
-                  ) : (
-                    <>
-                      {checkExistInFriendList() ? (
-                        <Box
-                          onClick={handleDeleteFriend}
-                          className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                          sx={{
-                            background:
-                              "linear-gradient(180deg, #843ff0, #7748ed)",
-                            width: "100%",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          <PersonRemoveAlt1 className="me-2 pb-1" />
-                          Delete Friend
-                        </Box>
-                      ) : (
-                        <Box
-                          onClick={handleAddFriend}
-                          className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                          sx={{
-                            background:
-                              "linear-gradient(180deg, #843ff0, #7748ed)",
-                            width: "100%",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          <PersonAddAlt1 className="me-2 pb-1" />
-                          Add Friend
-                        </Box>
-                      )}
-                    </>
-                  )}
-                </Box>
+                {tokenUser && userNameProfile !== user?.userName && (
+                  <Box>
+                    {listSendingRequest &&
+                    listSendingRequest
+                      ?.map((item) => {
+                        return item.userName;
+                      })
+                      .includes(userNameProfile) ? (
+                      <Box
+                        onClick={handleCancelFriend}
+                        className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                        sx={{
+                          background:
+                            "linear-gradient(180deg, #843ff0, #7748ed)",
+                          width: "100%",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        <PersonRemoveAlt1 className="me-2 pb-1" />
+                        Cancel Friend
+                      </Box>
+                    ) : (
+                      <>
+                        {checkExistInFriendList() ? (
+                          <Box
+                            onClick={handleDeleteFriend}
+                            className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                            sx={{
+                              background:
+                                "linear-gradient(180deg, #843ff0, #7748ed)",
+                              width: "100%",
+                              borderRadius: "4px",
+                            }}
+                          >
+                            <PersonRemoveAlt1 className="me-2 pb-1" />
+                            Delete Friend
+                          </Box>
+                        ) : (
+                          <Box
+                            onClick={handleAddFriend}
+                            className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                            sx={{
+                              background:
+                                "linear-gradient(180deg, #843ff0, #7748ed)",
+                              width: "100%",
+                              borderRadius: "4px",
+                            }}
+                          >
+                            <PersonAddAlt1 className="me-2 pb-1" />
+                            Add Friend
+                          </Box>
+                        )}
+                      </>
+                    )}
+                  </Box>
+                )}
+
                 <hr
                   style={{
                     border: "1px solid #A89CD7",
