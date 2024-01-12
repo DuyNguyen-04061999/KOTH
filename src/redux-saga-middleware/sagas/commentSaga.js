@@ -15,7 +15,6 @@ function* getListCommentSaga(datarequest) {
     const { status, data } = res;
     if (status === 200 || status === 201) {
       yield put(updateListComment(data));
-      console.log(data);
     }
   } catch (error) {
     console.log(error);
