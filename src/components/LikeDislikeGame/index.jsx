@@ -1,18 +1,47 @@
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { imageHome } from "../../utils/images";
-export default function LikeDislikeGame() {
-  const [isLike, setIsLike] = useState(false);
-  const [isDisLike, setIsDisLike] = useState(false);
+import { useDispatch, useSelector } from "react-redux";
+import {
+  dislikeGamePromotion,
+  getListLikeDislike,
+  likeGamePromotion,
+  unDisLikeGamePromotion,
+  unLikeGamePromotion,
+} from "../../redux-saga-middleware/reducers/likeDislikeReducer";
+export default function LikeDislikeGame(props) {
+  const { gameId } = props;
+  const dispatch = useDispatch();
+  const { listGameLiked, listGameDisLiked } = useSelector(
+    (state) => state.likeDislikeReducer
+  );
+  useEffect(() => {
+    dispatch(getListLikeDislike());
+  }, [dispatch]);
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
-          sx={{ width: "20px", height: "20px" }}
+          onClick={() => {
+            if (!listGameLiked?.includes(gameId)) {
+              dispatch(likeGamePromotion(gameId));
+            } else {
+              dispatch(unLikeGamePromotion(gameId));
+            }
+          }}
+          sx={{ width: "20px", height: "20px", cursor: "pointer" }}
           component={"img"}
-          src={!isLike ? imageHome.passiveLike : imageHome.activeLike}
+          src={
+            !listGameLiked?.includes(gameId)
+              ? imageHome.passiveLike
+              : imageHome.activeLike
+          }
         ></Box>
-        <Typography sx={{ color: isLike ? "#F05153" : "#979797" }}>
+        <Typography
+          sx={{
+            color: listGameLiked?.includes(gameId) ? "#F05153" : "#979797",
+          }}
+        >
           50
         </Typography>
       </Box>
@@ -26,11 +55,26 @@ export default function LikeDislikeGame() {
       ></Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
-          sx={{ width: "20px", height: "20px" }}
+          onClick={() => {
+            if (!listGameDisLiked?.includes(gameId)) {
+              dispatch(dislikeGamePromotion(gameId));
+            } else {
+              dispatch(unDisLikeGamePromotion(gameId));
+            }
+          }}
+          sx={{ width: "20px", height: "20px", cursor: "pointer" }}
           component={"img"}
-          src={!isDisLike ? imageHome.passiveDisLike : imageHome.activeDisLike}
+          src={
+            !listGameDisLiked?.includes(gameId)
+              ? imageHome.passiveDisLike
+              : imageHome.activeDisLike
+          }
         ></Box>
-        <Typography sx={{ color: isDisLike ? "#F05153" : "#979797" }}>
+        <Typography
+          sx={{
+            color: listGameDisLiked?.includes(gameId) ? "#F05153" : "#979797",
+          }}
+        >
           50
         </Typography>
       </Box>{" "}

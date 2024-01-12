@@ -105,7 +105,6 @@ export default function JoinTournament() {
     navigate("/packages");
     dispatch(updateFromRouter(location.pathname));
   };
-
   const [minLength, setMinLength] = useState(0);
   useEffect(() => {
     dispatch(updateDetailTour(detailTournament));
@@ -3001,7 +3000,9 @@ export default function JoinTournament() {
                         />
                       </Box>
                       <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <LikeDislikeGame />
+                        <LikeDislikeGame
+                          gameId={detailTournament?.tournamentInfors?.game?.id}
+                        />
                       </Box>
                       <Box
                         sx={{
