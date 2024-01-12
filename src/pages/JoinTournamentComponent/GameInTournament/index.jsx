@@ -118,7 +118,7 @@ export default function GameInTournament(props) {
                           : "32px !important",
                     }}
                   >
-                    <LikeDislikeGame />
+                    <LikeDislikeGame gameId={game?.id} />
                   </Box>
                 </Box>
               )}
