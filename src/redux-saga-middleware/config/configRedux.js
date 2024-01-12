@@ -28,6 +28,7 @@ import userReducer from "../reducers/userReducer";
 import videoReducer from "../reducers/videoReducer";
 import walletReducer from "../reducers/walletReducer";
 import addFriendReducer from "../reducers/addFriendReducer";
+import commentReducer from "../reducers/commentReducer";
 import rootSaga from "../sagas";
 import sagaMiddleware from "./configSaga";
 let rootReducer = combineReducers({
@@ -58,6 +59,7 @@ let rootReducer = combineReducers({
   dialogReducer,
   notificationReducer,
   addFriendReducer,
+  commentReducer,
 });
 
 const persistConfig = {

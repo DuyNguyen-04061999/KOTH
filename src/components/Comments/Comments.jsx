@@ -1,12 +1,20 @@
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import CommentItem from "./CommentItem";
-import { images } from "../../utils/images";
 import FullCommnet from "./FullCommnet";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import { useDispatch, useSelector } from "react-redux";
+import { getListComment } from "../../redux-saga-middleware/reducers/commentReducer";
+import { useParams } from "react-router-dom";
 
 export default function Comments() {
   const { width } = useWindowDimensions();
+  const { userAvatar } = useSelector((state) => state.userReducer);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getListComment(id));
+  }, [dispatch, id]);
   return (
     <Box
       sx={{
@@ -31,7 +39,7 @@ export default function Comments() {
           Comments
         </Typography>
       </Box>
-      <CommentItem type="personal" />{" "}
+      <CommentItem userAvatar={userAvatar} type="personal" />{" "}
       <Box
         sx={{
           width: "100%",
