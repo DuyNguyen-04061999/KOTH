@@ -360,7 +360,11 @@ export default function Package(props) {
                   <ScrollingCarousel>
                     {item?.map((i, index) => {
                       return (
-                        <Box key={index} className="mb-3">
+                        <Box
+                          key={index}
+                          className="mb-3"
+                          sx={{ margin: "0px 10px" }}
+                        >
                           <ListPackage
                             packageName={i?.packageName}
                             packageAvatar={i?.packageAvatar}

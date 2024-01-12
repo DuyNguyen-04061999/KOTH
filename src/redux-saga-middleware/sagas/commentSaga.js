@@ -29,7 +29,6 @@ function* addCommentSaga(datarequest) {
       const res = yield call(commentService.callAddComment, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
-        yield delay(2000);
         yield put(successSendComment(data));
       }
     }
