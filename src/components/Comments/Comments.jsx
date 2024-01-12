@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 export default function Comments() {
   const { width } = useWindowDimensions();
-  const { userAvatar } = useSelector((state) => state.userReducer);
+  const { userAvatar, tokenUser } = useSelector((state) => state.userReducer);
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Comments() {
           Comments
         </Typography>
       </Box>
-      <CommentItem userAvatar={userAvatar} type="personal" />{" "}
+      {tokenUser && <CommentItem userAvatar={userAvatar} type="personal" />}
       <Box
         sx={{
           width: "100%",
