@@ -21,6 +21,12 @@ export default function FindUser(props) {
   const [username, setUserName] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [openConfirm, setOpenCofirm] = useState(false);
+  const [openConfirmCheck, setOpenCofirmCheck] = useState(false);
+
+  const handleOpenConfirmCheck = () => {
+    setOpenCofirmCheck(true);
+  };
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -34,6 +40,7 @@ export default function FindUser(props) {
   );
   const handleConfirm = () => {
     if (searchValue) {
+      handleOpenConfirmCheck();
       dispatch(findPeople(searchValue));
     }
   };
@@ -45,6 +52,7 @@ export default function FindUser(props) {
   }, [dispatch, onCancel]);
 
   const handleChangeSearch = (e) => {
+    setOpenCofirmCheck(false);
     dispatch(findPeopleSuccess([]));
 
     setSearchValue(e.target.value);
@@ -214,7 +222,7 @@ export default function FindUser(props) {
                 </Box>
               ))}
             </Box>
-          ) : searchValue ? (
+          ) : openConfirmCheck ? (
             <Box className="text-white text-center">User not found!</Box>
           ) : (
             <></>
@@ -254,6 +262,7 @@ export default function FindUser(props) {
           onClose={() => {
             setOpenCofirm(false);
           }}
+          handleOpenConfirmCheck={handleOpenConfirmCheck}
         />
         {cancelRequestReady && <LoadingPopup />}
       </Box>
