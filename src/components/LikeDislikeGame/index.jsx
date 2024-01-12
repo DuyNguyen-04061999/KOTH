@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { imageHome } from "../../utils/images";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   dislikeGamePromotion,
@@ -9,12 +8,14 @@ import {
   unDisLikeGamePromotion,
   unLikeGamePromotion,
 } from "../../redux-saga-middleware/reducers/likeDislikeReducer";
+import { imageHome } from "../../utils/images";
 export default function LikeDislikeGame(props) {
   const { gameId } = props;
   const dispatch = useDispatch();
   const { listGameLiked, listGameDisLiked } = useSelector(
     (state) => state.likeDislikeReducer
   );
+
   useEffect(() => {
     dispatch(getListLikeDislike());
   }, [dispatch]);
@@ -42,7 +43,9 @@ export default function LikeDislikeGame(props) {
             color: listGameLiked?.includes(gameId) ? "#F05153" : "#979797",
           }}
         >
-          50
+          {listGameLiked && listGameLiked?.length > 0
+            ? listGameLiked?.length
+            : 0}
         </Typography>
       </Box>
       <Box
@@ -75,7 +78,9 @@ export default function LikeDislikeGame(props) {
             color: listGameDisLiked?.includes(gameId) ? "#F05153" : "#979797",
           }}
         >
-          50
+          {listGameDisLiked && listGameDisLiked?.length > 0
+            ? listGameDisLiked?.length
+            : 0}
         </Typography>
       </Box>{" "}
     </Box>
