@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
-import React from "react";
-import { images } from "../../../utils/images";
 import moment from "moment";
+import React from "react";
 import { useDispatch } from "react-redux";
 import {
   acceptFriendRequest,
   deleteFriendRequest,
 } from "../../../redux-saga-middleware/reducers/notificationReducer";
+import { images } from "../../../utils/images";
 
 export default function AddFriendComponent(props) {
   const { content, id, status, otherAvatar, createdAt } = props;
@@ -50,6 +50,7 @@ export default function AddFriendComponent(props) {
         className="ms-2"
         sx={{
           fontSize: 14,
+          width: "80%",
         }}
       >
         {content}
@@ -63,42 +64,44 @@ export default function AddFriendComponent(props) {
         >
           {moment(createdAt)?.format("M/D/YYYY, hh:mm a")}
         </Box>
-        {status === 0 && (
-          <Box
-            onClick={() => {
-              dispatch(deleteFriendRequest(id));
-            }}
-            component={"div"}
-            className="d-flex mt-2 justify-content-between"
-          >
-            <Box
-              component={"div"}
-              className="p-2 d-flex justify-content-center rounded me-2 ps-3 pe-3 cursor-pointer"
-              sx={{
-                width: "45%",
-                border: "solid 1px #7848ED",
-                color: "#7848ED",
-              }}
-            >
-              Cancel
-            </Box>
+        <Box sx={{}}>
+          {status === 0 && (
             <Box
               onClick={() => {
-                dispatch(acceptFriendRequest(id));
+                dispatch(deleteFriendRequest(id));
               }}
               component={"div"}
-              className="p-2 d-flex justify-content-center rounded me-2 ps-3 pe-3 cursor-pointer"
-              sx={{
-                width: "45%",
-                border: "solid 1px #7848ED",
-                color: "#fff",
-                backgroundColor: "#7848ED",
-              }}
+              className="d-flex mt-2 justify-content-between"
             >
-              Accept
+              <Box
+                component={"div"}
+                className="p-2 d-flex justify-content-center rounded me-2 ps-3 pe-3 cursor-pointer"
+                sx={{
+                  width: "45%",
+                  border: "solid 1px #7848ED",
+                  color: "#7848ED",
+                }}
+              >
+                Cancel
+              </Box>
+              <Box
+                onClick={() => {
+                  dispatch(acceptFriendRequest(id));
+                }}
+                component={"div"}
+                className="p-2 d-flex justify-content-center rounded me-2 ps-3 pe-3 cursor-pointer"
+                sx={{
+                  width: "45%",
+                  border: "solid 1px #7848ED",
+                  color: "#fff",
+                  backgroundColor: "#7848ED",
+                }}
+              >
+                Accept
+              </Box>
             </Box>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
     </Box>
   );

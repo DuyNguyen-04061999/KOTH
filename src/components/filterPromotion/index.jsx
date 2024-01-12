@@ -16,9 +16,9 @@ import {
   getOngoingTour,
   getUpcomingTour,
 } from "../../redux-saga-middleware/reducers/tournamentReducer";
+import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AnimButton from "../AnimButton";
-import { images } from "../../utils/images";
 
 export default function FilterPromotion(props) {
   const { t } = useTranslation("auth");
@@ -378,7 +378,14 @@ export default function FilterPromotion(props) {
           justifyContent: "space-between",
         }}
       >
-        <Box display={"flex"} alignItems={"center"}>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          sx={{
+            width: "100%",
+          }}
+        >
           {device === "Mobile" && width < 576 ? (
             <Box
               display={"flex"}
@@ -571,8 +578,10 @@ export default function FilterPromotion(props) {
               flexGrow: 1,
             }}
           >
-            {width > 576 && <Box component={"img"} src={images.sortIcon}></Box>}
-            {width > 576 && (
+            {width > 1200 && (
+              <Box component={"img"} src={images.sortIcon}></Box>
+            )}
+            {width > 1200 && (
               <Typography
                 sx={{
                   color: "#fff",

@@ -109,7 +109,13 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   marginTop: "10px",
                 }}
               >
-                {top3 && top3[1] && top3[1]?.userNickName
+                {top3 &&
+                top3[1] &&
+                top3[1]?.userNickName &&
+                top3[1]?.userNickName &&
+                top3[1]?.userNickName?.length > 10
+                  ? top3[1]?.userNickName?.slice(0, 8) + "..."
+                  : top3[1]?.userNickName?.length < 10
                   ? top3[1]?.userNickName
                   : "Username1"}
               </Typography>
@@ -129,7 +135,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 className="textReward"
                 sx={{
                   textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "16px" : "18px",
+                  fontSize: 576 < width && width < 1200 ? "12px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
                   color: "#9D39F1",
@@ -206,7 +212,13 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   marginTop: "10px",
                 }}
               >
-                {top3 && top3[0] && top3[0]?.userNickName
+                {top3 &&
+                top3[0] &&
+                top3[0]?.userNickName &&
+                top3[0]?.userNickName &&
+                top3[0]?.userNickName?.length > 10
+                  ? top3[0]?.userNickName?.slice(0, 8) + "..."
+                  : top3[0]?.userNickName?.length < 10
                   ? top3[0]?.userNickName
                   : "Username2"}
               </Typography>
@@ -226,7 +238,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 className="textReward"
                 sx={{
                   textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "20px" : "25px",
+                  fontSize: 576 < width && width < 1200 ? "12px" : "25px",
                   fontStyle: "normal",
                   marginTop: "10px",
                   color: "#9D39F1",
@@ -301,7 +313,13 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   marginTop: "10px",
                 }}
               >
-                {top3 && top3[2] && top3[2]?.userNickName
+                {top3 &&
+                top3[2] &&
+                top3[2]?.userNickName &&
+                top3[2]?.userNickName &&
+                top3[2]?.userNickName?.length > 10
+                  ? top3[2]?.userNickName?.slice(0, 8) + "..."
+                  : top3[2]?.userNickName?.length < 10
                   ? top3[2]?.userNickName
                   : "Username3"}
               </Typography>
@@ -321,7 +339,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 className="textReward"
                 sx={{
                   textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "16px" : "18px",
+                  fontSize: 576 < width && width < 1200 ? "12px" : "18px",
                   fontStyle: "normal",
                   marginTop: "10px",
                   color: "#9D39F1",
@@ -373,8 +391,14 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             }
                             sx={{
                               borderRadius: "50%",
-                              width: "40px",
-                              height: "40px",
+                              width:
+                                576 < width && width < 1200
+                                  ? width / 24
+                                  : "40px",
+                              height:
+                                576 < width && width < 1200
+                                  ? width / 24
+                                  : "40px",
                               marginRight: "5px",
                               objectFit: "cover",
                             }}
@@ -388,6 +412,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                 maxWidth: "100%",
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 64}px`
+                                    : "16px",
                               }}
                             >
                               {item?.userNickName}
@@ -396,9 +424,12 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               sx={{
                                 textAlign: "start",
                                 color: "rgba(191, 190, 237, 0.60)",
-                                fontSize: "12px",
+                                fontSize:
+                                  576 < width && width < 1200
+                                    ? `${width / 66}px`
+                                    : "14px",
                                 fontWeight: "lighter !important",
-                                marginTop: "-4px !important",
+                                marginTop: "1px !important",
                               }}
                             >
                               {moment(item?.updatedAt).format("MM/DD/YYYY")}
@@ -411,6 +442,9 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                             width: "20%",
                             display: "flex",
                             justifyContent: "flex-end",
+                            fontSize: "12px",
+                            marginBottom:
+                              width > 576 && width < 1200 ? "10px" : "unset",
                           }}
                         >
                           {item?.score}
@@ -602,7 +636,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                                       ? `${width / 66}px`
                                       : "14px",
                                   fontWeight: "lighter !important",
-                                  marginTop: "-4px !important",
+                                  marginTop: "1px !important",
                                 }}
                               >
                                 {moment(item?.updatedAt).format("MM/DD/YYYY")}
@@ -615,6 +649,9 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                               width: "20%",
                               display: "flex",
                               justifyContent: "flex-end",
+                              fontSize: "12px",
+                              marginBottom:
+                                width > 576 && width < 1200 ? "10px" : "unset",
                             }}
                           >
                             {item?.score}
