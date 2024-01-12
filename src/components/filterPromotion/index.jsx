@@ -625,9 +625,15 @@ export default function FilterPromotion(props) {
                   backgroundColor: "#443565 !important",
                   color: "white",
                 },
+                "&& .Mui-selected": {
+                  backgroundColor: "pink",
+                },
               }}
             >
               <MenuItem
+                sx={{
+                  backgroundColor: !value ? "#BE48ED" : "#443565",
+                }}
                 onClick={() => {
                   setValue(false);
                   handleClose();
@@ -636,6 +642,9 @@ export default function FilterPromotion(props) {
                 End in soonest
               </MenuItem>
               <MenuItem
+                sx={{
+                  backgroundColor: value ? "#BE48ED" : "#443565",
+                }}
                 onClick={() => {
                   setValue(true);
                   handleClose();
