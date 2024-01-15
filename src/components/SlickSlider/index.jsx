@@ -20,7 +20,7 @@ export default function SlickSlider(props) {
     appendDot,
     htmlCode,
     isHtmlCode,
-    tours,
+    tours, 
     type,
     typeR,
   } = props;
