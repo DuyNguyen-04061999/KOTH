@@ -136,6 +136,7 @@ export default function ListWinner() {
                     align="left"
                   >
                     <Box className="d-flex">
+                      {row.playerName}
                       {row?.isVip && (
                         <Box
                           sx={{
@@ -158,7 +159,6 @@ export default function ListWinner() {
                           </Typography>
                         </Box>
                       )}
-                      {row.playerName}
                     </Box>
                   </TableCell>
                   <TableCell
@@ -171,8 +171,9 @@ export default function ListWinner() {
                         sx={{
                           width: 25,
                           height: 25,
+                          borderRadius: "100%",
                         }}
-                        className="rounded me-2"
+                        className="me-2"
                         src={
                           row?.gameAvatar
                             ? process.env.REACT_APP_SOCKET_SERVER +
