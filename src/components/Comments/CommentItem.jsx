@@ -14,6 +14,7 @@ export default function CommentItem(props) {
   const { id } = useParams();
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+  const isWhitespaceString = (str) => !str.replace(/\s/g, "").length;
   return type === "other" ? (
     <Box
       sx={{
@@ -114,6 +115,9 @@ export default function CommentItem(props) {
           }}
         >
           <button
+            onClick={() => {
+              setComment("");
+            }}
             style={{
               width: width < 576 ? "90px" : "140px",
               height: width < 576 ? "30px" : "35px",
@@ -131,11 +135,15 @@ export default function CommentItem(props) {
           </button>
           <button
             onClick={() => {
-              if (comment !== "" && postingComment === "") {
+              if (
+                comment !== "" &&
+                postingComment === "" &&
+                !isWhitespaceString(comment)
+              ) {
                 dispatch(
                   addCommentPromotion({
                     promoId: id,
-                    comment: comment,
+                    comment: comment.trim(),
                   })
                 );
                 setComment("");
@@ -147,7 +155,11 @@ export default function CommentItem(props) {
               fontSize: width < 576 ? "10px" : "13px",
               borderRadius: "4px",
               backgroundColor:
-                comment === "" || postingComment !== "" ? "#979797" : "#7848ED",
+                comment === "" ||
+                postingComment !== "" ||
+                isWhitespaceString(comment)
+                  ? "#979797"
+                  : "#7848ED",
               color: "#fff",
               outline: "none",
               border: "none",
