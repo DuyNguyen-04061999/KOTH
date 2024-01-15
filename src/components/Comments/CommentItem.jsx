@@ -54,6 +54,7 @@ export default function CommentItem(props) {
             fontSize: width < 576 ? "12px" : "14px",
             textAlign: "start",
             color: "#fff",
+            wordBreak: "break-all",
           }}
         >
           {content}
@@ -110,64 +111,82 @@ export default function CommentItem(props) {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
+            alignItems: "center",
             marginTop: "10px",
           }}
         >
-          <button
-            onClick={() => {
-              setComment("");
-            }}
-            style={{
-              width: width < 576 ? "90px" : "140px",
-              height: width < 576 ? "30px" : "35px",
-              fontSize: width < 576 ? "10px" : "13px",
-              borderRadius: "4px",
-              marginRight: "15px",
-              backgroundColor: "#271C39",
-              color: "#7848ED",
-              border: "1px solid #7848ED",
-              fontFamily: "Cyntho Next",
-              outline: "none",
+          <Box
+            sx={{
+              color: "#979797",
+              display: "flex",
+              alignItems: "flex-end",
             }}
           >
-            Cancel
-          </button>
-          <button
-            onClick={() => {
-              if (
-                comment !== "" &&
-                postingComment === "" &&
-                !isWhitespaceString(comment)
-              ) {
-                dispatch(
-                  addCommentPromotion({
-                    promoId: id,
-                    comment: comment.trim(),
-                  })
-                );
+            <Typography sx={{ fontSize: "12px" }}>
+              {" "}
+              {comment.trim().length}/256
+            </Typography>
+          </Box>
+          <Box>
+            {" "}
+            <button
+              onClick={() => {
                 setComment("");
-              }
-            }}
-            style={{
-              width: width < 576 ? "90px" : "140px",
-              height: width < 576 ? "30px" : "35px",
-              fontSize: width < 576 ? "10px" : "13px",
-              borderRadius: "4px",
-              backgroundColor:
-                comment === "" ||
-                postingComment !== "" ||
-                isWhitespaceString(comment)
-                  ? "#979797"
-                  : "#7848ED",
-              color: "#fff",
-              outline: "none",
-              border: "none",
-              fontFamily: "Cyntho Next",
-            }}
-          >
-            Send
-          </button>
+              }}
+              style={{
+                width: width < 576 ? "90px" : "140px",
+                height: width < 576 ? "30px" : "35px",
+                fontSize: width < 576 ? "10px" : "13px",
+                borderRadius: "4px",
+                marginRight: "15px",
+                backgroundColor: "#271C39",
+                color: "#7848ED",
+                border: "1px solid #7848ED",
+                fontFamily: "Cyntho Next",
+                outline: "none",
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                if (
+                  comment !== "" &&
+                  postingComment === "" &&
+                  !isWhitespaceString(comment) &&
+                  comment.trim().length <= 256
+                ) {
+                  dispatch(
+                    addCommentPromotion({
+                      promoId: id,
+                      comment: comment.trim(),
+                    })
+                  );
+                  setComment("");
+                }
+              }}
+              style={{
+                width: width < 576 ? "90px" : "140px",
+                height: width < 576 ? "30px" : "35px",
+                fontSize: width < 576 ? "10px" : "13px",
+                borderRadius: "4px",
+                backgroundColor:
+                  comment === "" ||
+                  postingComment !== "" ||
+                  isWhitespaceString(comment) ||
+                  comment.trim().length > 256
+                    ? "#979797"
+                    : "#7848ED",
+                color: "#fff",
+                outline: "none",
+                border: "none",
+                fontFamily: "Cyntho Next",
+              }}
+            >
+              Send
+            </button>
+          </Box>
         </Box>
       </Box>
     </Box>
