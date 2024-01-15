@@ -123,7 +123,7 @@ export default function CommentItem(props) {
               alignItems: "flex-end",
             }}
           >
-            <Typography sx={{ fontSize: "12px" }}>
+            <Typography sx={{ fontSize: width < 576 ? "10px" : "12px" }}>
               {" "}
               {comment.trim().length}/256
             </Typography>
