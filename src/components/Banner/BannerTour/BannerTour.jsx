@@ -30,6 +30,8 @@ const BannerTour = (props) => {
         justifyContent: "space-between",
         height: "324px",
         width: "100%",
+        marginBottom: width < 576 ? "24px" : "32px",
+        marginTop: width < 576 ? "24px" : "64px",
         background: `url(${
           checkTablet()
             ? imageHome.christmasMobileBanner
