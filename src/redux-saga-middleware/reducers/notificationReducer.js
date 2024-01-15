@@ -46,31 +46,31 @@ export const deleteFriendRequest = (data) => {
 };
 
 export const readNotification = (data) => {
-    return {
-        type: "READ_NOTIFICATION",
-        payload: data,
-    };
-}
+  return {
+    type: "READ_NOTIFICATION",
+    payload: data,
+  };
+};
 
 export const readNotificationSuccess = (data) => {
-    return {
-        type: "READ_NOTIFICATION_SUCCESS",
-        payload: data,
-    };
-}
+  return {
+    type: "READ_NOTIFICATION_SUCCESS",
+    payload: data,
+  };
+};
 
 export const readNotificationFail = (data) => {
-    return {
-        type: "READ_NOTIFICATION_FAIL",
-        payload: data,
-    };
-}
+  return {
+    type: "READ_NOTIFICATION_FAIL",
+    payload: data,
+  };
+};
 
 const notificationReducer = (
   state = {
     isFetchListNotification: false,
     listNotifiaction: [],
-    isReadNotification: false
+    isReadNotification: false,
   },
   action
 ) => {
@@ -87,7 +87,7 @@ const notificationReducer = (
     case "ADD_LIST_NOTIFICATION":
       return {
         ...state,
-        listNotifiaction: [...state.listNotifiaction, payload],
+        listNotifiaction: [payload, ...state.listNotifiaction],
       };
     case "UPDATE_LIST_NOTIFICATION":
       return {
@@ -95,14 +95,17 @@ const notificationReducer = (
         listNotifiaction: state.listNotifiaction.map((item, index) => {
           if (item.id === payload.id) {
             return payload;
-          } else return item;   
+          } else return item;
         }),
       };
     case "GET_LIST_NOTIFICATION_FAIL":
       return { ...state, isFetchListNotification: false };
-    case "READ_NOTIFICATION": return {...state}
-    case "READ_NOTIFICATION_SUCCESS": return {...state}
-    case "READ_NOTIFICATION_FAIL": return {...state}
+    case "READ_NOTIFICATION":
+      return { ...state };
+    case "READ_NOTIFICATION_SUCCESS":
+      return { ...state };
+    case "READ_NOTIFICATION_FAIL":
+      return { ...state };
     default:
       return { ...state };
   }

@@ -19,7 +19,14 @@ export default function FindUser(props) {
   const [searchValue, setSearchValue] = useState("");
   const [socket, setSocket] = useState("");
   const [username, setUserName] = useState("");
+  const [userNickName, setUserNickName] = useState("");
   const [openConfirm, setOpenCofirm] = useState(false);
+  const [openConfirmCheck, setOpenCofirmCheck] = useState(false);
+
+  const handleOpenConfirmCheck = () => {
+    setOpenCofirmCheck(true);
+  };
+
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -33,6 +40,7 @@ export default function FindUser(props) {
   );
   const handleConfirm = () => {
     if (searchValue) {
+      handleOpenConfirmCheck();
       dispatch(findPeople(searchValue));
     }
   };
@@ -44,6 +52,7 @@ export default function FindUser(props) {
   }, [dispatch, onCancel]);
 
   const handleChangeSearch = (e) => {
+    setOpenCofirmCheck(false);
     dispatch(findPeopleSuccess([]));
 
     setSearchValue(e.target.value);
@@ -52,7 +61,6 @@ export default function FindUser(props) {
   useEffect(() => {
     if (socket) {
       socket?.on("addFriendRequestSuccess", (data) => {
-        console.log("Data: ", data);
         handleCancel();
         dispatch(
           showToastNotification({
@@ -83,7 +91,7 @@ export default function FindUser(props) {
           <Box className="text-center text-white">Search People</Box>
           <Box className="mt-2 mb-2">
             <TextField
-              placeholder="Enter nickname or ID"
+              placeholder="Enter display name or ID"
               value={searchValue}
               onChange={handleChangeSearch}
               sx={{
@@ -159,6 +167,7 @@ export default function FindUser(props) {
                           })
                           .includes(people?.id)
                       ) {
+                        setUserNickName(people?.userNickName);
                         setUserName(people?.userName);
                         setOpenCofirm(true);
                       } else if (
@@ -213,8 +222,8 @@ export default function FindUser(props) {
                 </Box>
               ))}
             </Box>
-          ) : searchValue ? (
-            <Box className="text-white text-center">Not Data Yet!</Box>
+          ) : openConfirmCheck ? (
+            <Box className="text-white text-center">User not found!</Box>
           ) : (
             <></>
           )}
@@ -248,10 +257,12 @@ export default function FindUser(props) {
         </Box>{" "}
         <ConfirmSendRequest
           username={username}
+          userNickName={userNickName}
           open={openConfirm}
           onClose={() => {
             setOpenCofirm(false);
           }}
+          handleOpenConfirmCheck={handleOpenConfirmCheck}
         />
         {cancelRequestReady && <LoadingPopup />}
       </Box>

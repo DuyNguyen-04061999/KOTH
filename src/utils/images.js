@@ -83,6 +83,7 @@ import depositPassive from "../assets/images/depositPassive.png";
 import dogcoin from "../assets/images/dogcoin.png";
 import domino from "../assets/images/domino.png";
 import endAtTour from "../assets/images/endAtTour.png";
+import sortIcon from "../assets/images/sortIcon.png";
 import expandIcon from "../assets/images/expandIcon.png";
 import eyeIcon from "../assets/images/eyeIcon.png";
 import gameHotTournament from "../assets/images/gameHotTournament.png";
@@ -379,6 +380,11 @@ import bannersigninTablet from "../assets/images/signinTablet.png";
 import bannerGift from "../assets/images/giftBanner.png";
 import skrillIcon from "../assets/images/skrill.png";
 
+import activeLike from "../assets/images/activeLike.png";
+import activeDisLike from "../assets/images/activeDisLike.png";
+import passiveLike from "../assets/images/passiveLike.png";
+import passiveDisLike from "../assets/images/passiveDisLike.png";
+
 import doubleDayBanner from "../assets/images/doubleDay.jpg";
 import doubleDayBanneMB from "../assets/images/doubleDayMB.jpg";
 import doubleDayPackBanner from "../assets/images/doubleDayPack.jpg";
@@ -448,6 +454,10 @@ export const imageHome = {
   signInBgBanner: signInBgBanner,
   signInTitle: signInTitle,
   hpny_popup_dk: hpny_popup_dk,
+  activeLike: activeLike,
+  activeDisLike: activeDisLike,
+  passiveLike: passiveLike,
+  passiveDisLike: passiveDisLike,
   hpny_popup_mb: hpny_popup_mb,
 };
 
@@ -476,6 +486,7 @@ export const navbar = {
 
 export const images = {
   bn1: DummyBanner1,
+  sortIcon: sortIcon,
   btn_back: btn_back,
   bn2: DummyBanner2,
   bn3: DummyBanner3,

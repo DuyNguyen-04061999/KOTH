@@ -31,17 +31,17 @@ export default function NewHomePage() {
     threeBrandTour,
     ongoingTournament,
     upcomingTournament,
-    endedTournament,
+    // endedTournament,
     isFetchThreeTour,
     isFetchHotWeek,
     isFetchHot,
     isFetchOngoing,
     isFetchUpcoming,
-    isFetchEnded,
+    // isFetchEnded,
     noDataUpcoming,
     noDataHot,
     noDataOncoming,
-    noDataEnd,
+    // noDataEnd,
   } = useSelector((state) => state.tournamentReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   const { listBanner } = useSelector((state) => state.appReducer);
@@ -60,7 +60,7 @@ export default function NewHomePage() {
     // dispatch(getListPromotionNew({ type: "standard" }))
     dispatch(getListPromotionNew({ type: "ongoing" }));
     dispatch(getListPromotionNew({ type: "upcoming" }));
-    dispatch(getListPromotionNew({ type: "ended" }));
+    // dispatch(getListPromotionNew({ type: "ended" }));
     // dispatch(getListPromotionNew({ type: "daily" }))
     dispatch({
       type: "CALL_BIGGEST_END_TOUR",
@@ -384,10 +384,100 @@ export default function NewHomePage() {
               />
             </Box>
           </Box>{" "}
+          {/* Banner Top1 */}
+          {device === "Mobile" ? (
+            isFetchHotWeek ? (
+              <Box
+                sx={{
+                  marginTop: width < 576 ? "48px" : "32px",
+                  marginBottom: width < 576 ? "0px" : "32px",
+                }}
+              >
+                <BannerLoading height={width < 576 ? "214px" : "363px"} />
+              </Box>
+            ) : (
+              <BannerTourMobile
+                tournamentName={
+                  hotWeekTour && hotWeekTour?.tournamentName
+                    ? hotWeekTour?.tournamentName
+                    : "Galaxy Z-flip 5"
+                }
+                rewardName={
+                  hotWeekTour &&
+                  hotWeekTour?.rewardTournament &&
+                  hotWeekTour?.rewardTournament?.rewardTitle
+                    ? hotWeekTour?.rewardTournament?.rewardTitle
+                    : ""
+                }
+                sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+                userName={
+                  hotWeekTour &&
+                  hotWeekTour?.bestUser &&
+                  hotWeekTour?.bestUser?.tUser &&
+                  hotWeekTour?.bestUser?.tUser?.userNickName
+                }
+                endTime={hotWeekTour?.tournamentEndAt}
+                userScore={hotWeekTour?.bestUser?.score}
+                userAvatar={
+                  hotWeekTour &&
+                  hotWeekTour?.bestUser &&
+                  hotWeekTour?.bestUser?.tUser &&
+                  hotWeekTour?.bestUser?.tUser?.userAccount &&
+                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                    ? process.env.REACT_APP_SOCKET_SERVER +
+                      "/" +
+                      hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                    : images.pool
+                }
+                tourId={hotWeekTour && hotWeekTour?.id}
+              />
+            )
+          ) : isFetchHotWeek ? (
+            <BannerLoading
+              height={width < 576 ? "214px" : "363px"}
+              width={"100%"}
+            />
+          ) : (
+            <BannerTour
+              tournamentName={
+                hotWeekTour && hotWeekTour?.tournamentName
+                  ? hotWeekTour?.tournamentName
+                  : "Galaxy Z-flip 5"
+              }
+              rewardName={
+                hotWeekTour &&
+                hotWeekTour?.rewardTournament &&
+                hotWeekTour?.rewardTournament?.rewardTitle
+                  ? hotWeekTour?.rewardTournament?.rewardTitle
+                  : ""
+              }
+              sponsorName={hotWeekTour?.tournamentBrand?.brandName}
+              userName={
+                hotWeekTour &&
+                hotWeekTour?.bestUser &&
+                hotWeekTour?.bestUser?.tUser &&
+                hotWeekTour?.bestUser?.tUser?.userNickName
+              }
+              endTime={hotWeekTour?.tournamentEndAt}
+              userScore={hotWeekTour?.bestUser?.score}
+              userAvatar={
+                hotWeekTour &&
+                hotWeekTour?.bestUser &&
+                hotWeekTour?.bestUser?.tUser &&
+                hotWeekTour?.bestUser?.tUser?.userAccount &&
+                hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  ? process.env.REACT_APP_SOCKET_SERVER +
+                    "/" +
+                    hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
+                  : images.pool
+              }
+              tourId={hotWeekTour && hotWeekTour?.id}
+            />
+          )}
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "64px",
-              marginBottom: width < 576 ? "24px" : "32px",
+              // marginBottom: width < 576 ? "24px" : "32px",
               display: "flex",
               flexDirection: "column",
             }}
@@ -443,96 +533,6 @@ export default function NewHomePage() {
             </Box>
           </Box>{" "}
         </Box>
-        {/* Banner Top1 */}
-        {device === "Mobile" ? (
-          isFetchHotWeek ? (
-            <Box
-              sx={{
-                marginTop: width < 576 ? "48px" : "32px",
-                marginBottom: width < 576 ? "0px" : "32px",
-              }}
-            >
-              <BannerLoading height={width < 576 ? "214px" : "363px"} />
-            </Box>
-          ) : (
-            <BannerTourMobile
-              tournamentName={
-                hotWeekTour && hotWeekTour?.tournamentName
-                  ? hotWeekTour?.tournamentName
-                  : "Galaxy Z-flip 5"
-              }
-              rewardName={
-                hotWeekTour &&
-                hotWeekTour?.rewardTournament &&
-                hotWeekTour?.rewardTournament?.rewardTitle
-                  ? hotWeekTour?.rewardTournament?.rewardTitle
-                  : ""
-              }
-              sponsorName={hotWeekTour?.tournamentBrand?.brandName}
-              userName={
-                hotWeekTour &&
-                hotWeekTour?.bestUser &&
-                hotWeekTour?.bestUser?.tUser &&
-                hotWeekTour?.bestUser?.tUser?.userNickName
-              }
-              endTime={hotWeekTour?.tournamentEndAt}
-              userScore={hotWeekTour?.bestUser?.score}
-              userAvatar={
-                hotWeekTour &&
-                hotWeekTour?.bestUser &&
-                hotWeekTour?.bestUser?.tUser &&
-                hotWeekTour?.bestUser?.tUser?.userAccount &&
-                hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                  ? process.env.REACT_APP_SOCKET_SERVER +
-                    "/" +
-                    hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                  : images.pool
-              }
-              tourId={hotWeekTour && hotWeekTour?.id}
-            />
-          )
-        ) : isFetchHotWeek ? (
-          <BannerLoading
-            height={width < 576 ? "214px" : "363px"}
-            width={"100%"}
-          />
-        ) : (
-          <BannerTour
-            tournamentName={
-              hotWeekTour && hotWeekTour?.tournamentName
-                ? hotWeekTour?.tournamentName
-                : "Galaxy Z-flip 5"
-            }
-            rewardName={
-              hotWeekTour &&
-              hotWeekTour?.rewardTournament &&
-              hotWeekTour?.rewardTournament?.rewardTitle
-                ? hotWeekTour?.rewardTournament?.rewardTitle
-                : ""
-            }
-            sponsorName={hotWeekTour?.tournamentBrand?.brandName}
-            userName={
-              hotWeekTour &&
-              hotWeekTour?.bestUser &&
-              hotWeekTour?.bestUser?.tUser &&
-              hotWeekTour?.bestUser?.tUser?.userNickName
-            }
-            endTime={hotWeekTour?.tournamentEndAt}
-            userScore={hotWeekTour?.bestUser?.score}
-            userAvatar={
-              hotWeekTour &&
-              hotWeekTour?.bestUser &&
-              hotWeekTour?.bestUser?.tUser &&
-              hotWeekTour?.bestUser?.tUser?.userAccount &&
-              hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                ? process.env.REACT_APP_SOCKET_SERVER +
-                  "/" +
-                  hotWeekTour?.bestUser?.tUser?.userAccount?.accountAvatar
-                : images.pool
-            }
-            tourId={hotWeekTour && hotWeekTour?.id}
-          />
-        )}
         <Box
           sx={{
             marginTop: width < 576 ? "24px" : "64px",
@@ -541,7 +541,7 @@ export default function NewHomePage() {
             flexDirection: "column",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography
                 sx={{
@@ -589,7 +589,7 @@ export default function NewHomePage() {
               typePromo={"ended"}
               noData={noDataEnd}
             />
-          </Box>
+          </Box> */}
           <ListWinner />
           {getAppType() === "promote" ? <Package /> : <></>}
           <Suspense fallback="loading..." children={<NewFooter />} />

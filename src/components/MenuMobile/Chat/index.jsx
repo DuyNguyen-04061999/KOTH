@@ -86,12 +86,14 @@ export default function DialogChat(props) {
             setChat("");
           }
         }
-      } 
+      }
     } else {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Cannot send message while playing game! Please try later!"
-      }))
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message: "Cannot send message while playing game! Please try later!",
+        })
+      );
     }
   };
 
@@ -108,10 +110,12 @@ export default function DialogChat(props) {
         }
       }
     } else {
-      dispatch(showToastNotification({
-        type: "warning",
-        message: "Cannot send message while playing game! Please try later!"
-      }))
+      dispatch(
+        showToastNotification({
+          type: "warning",
+          message: "Cannot send message while playing game! Please try later!",
+        })
+      );
     }
   };
 

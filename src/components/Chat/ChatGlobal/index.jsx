@@ -225,7 +225,7 @@ export default function ChatGlobal(props) {
           <Box
             sx={{
               background: "#2e233d",
-              height: "100vh",
+              height: height,
               overflow: "hidden",
               position: "absolute",
               top: width < 576 ? "-49px" : "-60px",

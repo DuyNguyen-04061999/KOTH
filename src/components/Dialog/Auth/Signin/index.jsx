@@ -79,11 +79,6 @@ export default function Dialoglg() {
   const { width, height } = useWindowDimensions();
 
   const token = localStorage.getItem("token");
-  // useEffect(() => {
-  //   if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
-  //     dispatch(getUserInfoReady(token || tokenUser));
-  //   }
-  // }, [token, dispatch, tokenUser, currentTab]);
   return (
     <div className="dialog">
       {token === "" || token === null || token === undefined ? (
@@ -341,7 +336,7 @@ export default function Dialoglg() {
                           ? user?.userNickName.slice(0, 8) + " ..."
                           : user?.userNickName}
                       </Typography>
-                      {uPack ? (
+                      {uPack && uPack.remain !== "Expired" ? (
                         <Box
                           display={"flex"}
                           justifyContent={"center"}
@@ -438,7 +433,7 @@ export default function Dialoglg() {
                           : user?.userNickName}
                       </Typography>
                     </Box>
-                    {uPack ? (
+                    {uPack && uPack?.remain !== "Expired" ? (
                       <Box
                         display={"flex"}
                         justifyContent={"center"}
@@ -497,7 +492,7 @@ export default function Dialoglg() {
                             fontWeight: "300",
                           }}
                         >
-                          Remaining days: {uPack?.remain || "12"}
+                          Remaining days: {uPack?.remain || "Expired"}
                         </Typography>
                       </Box>
                     ) : (
@@ -515,52 +510,6 @@ export default function Dialoglg() {
                       container
                       sx={{ padding: "10px 15px 0px 15px", maxWidth: "300px" }}
                     >
-                      {/* <Grid item xs={12} className="hover-dropdown">
-                      <Dropdown.Item
-                        style={{
-                          paddingRight: "0px",
-                          paddingLeft: "5px",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                        onClick={() => {
-                          if (!token) {
-                            dispatch(toggleLoginDialog());
-                          } else {
-                            dispatch(toggleWalletDialog());
-                          }
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="22"
-                          height="22"
-                          fill="none"
-                          viewBox="0 0 15 16"
-                        >
-                          <g
-                            stroke="#A89CD7"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1.5"
-                          >
-                            <path d="M11.275 8.969a1.255 1.255 0 00-.375 1.019c.056.675.675 1.168 1.35 1.168h1.188v.744a2.355 2.355 0 01-2.35 2.35H3.913a2.355 2.355 0 01-2.35-2.35V7.694a2.355 2.355 0 012.35-2.35h7.175a2.355 2.355 0 012.35 2.35v.9h-1.263c-.35 0-.669.137-.9.375z"></path>
-                            <path d="M1.563 8.257V5.4a1.78 1.78 0 011.15-1.668l4.962-1.875a1.187 1.187 0 011.606 1.112v2.375M4.375 8H8.75m5.35 1.232v1.287a.642.642 0 01-.626.638H12.25c-.675 0-1.293-.494-1.35-1.17a1.255 1.255 0 01.375-1.018c.232-.237.55-.375.9-.375h1.3c.35.013.625.294.625.638z"></path>
-                          </g>
-                        </svg>
-                        <button
-                          className="btn-logout"
-                          style={{
-                            fontWeight: "700",
-                            color: "#A89CD7",
-                            letterSpacing: "0.5px",
-                            marginLeft: "4px",
-                          }}
-                        >
-                          Wallet
-                        </button>
-                      </Dropdown.Item>
-                    </Grid> */}
                       <Grid item xs={12} className="hover-dropdown">
                         <Dropdown.Item
                           onMouseOver={() => {

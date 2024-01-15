@@ -1,14 +1,15 @@
-import BackIcon from "@mui/icons-material/ArrowBack";
-import { Box, Dialog } from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 import { getListNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import NotificationItem from "./NotificationItem";
 
 export default function NotificationDialog() {
   const { tokenUser } = useSelector((state) => state.userReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
   const { isNotificationDialog } = useSelector((state) => state.dialogReducer);
   const { listNotifiaction } = useSelector(
     (state) => state.notificationReducer
@@ -42,7 +43,7 @@ export default function NotificationDialog() {
                 padding: 0,
                 margin: 0,
                 marginLeft: "auto !important",
-                marginTop: "55px",
+                marginTop: device === "Tablet" ? "45px" : "55px",
                 borderRadius: 0,
                 height: height,
                 background: "#2E233D",
@@ -61,10 +62,19 @@ export default function NotificationDialog() {
         className="p-2 text-white"
         sx={{
           backgroundColor: "#42285B",
+          display: "flex",
+          alignItems: "center",
         }}
       >
-        {width < 576 && <BackIcon onClick={handleClose} />}
-        Notifications
+        {width < 576 && (
+          <Box
+            onClick={handleClose}
+            sx={{ width: "20px", height: "20px" }}
+            component={"img"}
+            src={images.BackButtonLobby}
+          ></Box>
+        )}
+        <Typography> Notifications</Typography>
       </Box>
       <Box className="p-2 ps-3 pe-3">
         {listNotifiaction && listNotifiaction?.length > 0 ? (
@@ -87,7 +97,7 @@ export default function NotificationDialog() {
             );
           })
         ) : (
-          <Box className="p-2 text-white">No Data Yet!</Box>
+          <Box className="p-2 text-white">Notifications not found!</Box>
         )}
       </Box>
     </Dialog>

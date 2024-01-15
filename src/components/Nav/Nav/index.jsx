@@ -1491,7 +1491,7 @@ export default function Navbar() {
                     : "",
 
                 borderRadius: "5px",
-                padding: "10px",
+                padding: "10px 5px",
                 marginTop: "16px",
               }}
               onClick={() => {
@@ -1529,7 +1529,7 @@ export default function Navbar() {
                   overflow: "hidden",
                   color:
                     pathname && pathname?.includes("help-center") && "white",
-                  paddingLeft: "10px",
+                  paddingLeft: "5px",
                 }}
               >
                 How it Works
@@ -1601,7 +1601,7 @@ export default function Navbar() {
                 backgroundColor:
                   pathname && pathname?.includes("support") ? "#7848ED" : "",
                 borderRadius: "5px",
-                padding: "10px",
+                padding: "10px 5px",
                 marginTop: "16px",
                 textDecoration: "none",
                 color: "#A89CD7",
@@ -1665,7 +1665,7 @@ export default function Navbar() {
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   color: pathname && pathname?.includes("support") && "white",
-                  paddingLeft: "10px",
+                  paddingLeft: "5px",
                 }}
               >
                 {t("Support")}

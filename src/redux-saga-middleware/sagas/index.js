@@ -10,8 +10,10 @@ import refreshSaga from "./refreshSaga";
 import settingSaga from "./settingSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
+import commentSaga from "./commentSaga";
 import { default as authSaga, default as userSaga } from "./userSaga";
 import addFriendSaga from "./addFriendSaga";
+import likeDislikeSaga from "./likeDislikeSaga";
 
 function* watchAll() {
   yield all([
@@ -29,6 +31,8 @@ function* watchAll() {
     checkoutSaga(),
     notificationSaga(),
     addFriendSaga(),
+    commentSaga(),
+    likeDislikeSaga(),
   ]);
 }
 

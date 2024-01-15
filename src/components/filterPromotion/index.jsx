@@ -16,6 +16,7 @@ import {
   getOngoingTour,
   getUpcomingTour,
 } from "../../redux-saga-middleware/reducers/tournamentReducer";
+import { images } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import AnimButton from "../AnimButton";
 
@@ -377,7 +378,14 @@ export default function FilterPromotion(props) {
           justifyContent: "space-between",
         }}
       >
-        <Box display={"flex"} alignItems={"center"}>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          sx={{
+            width: "100%",
+          }}
+        >
           {device === "Mobile" && width < 576 ? (
             <Box
               display={"flex"}
@@ -432,57 +440,61 @@ export default function FilterPromotion(props) {
               </Box>
             </Box>
           ) : (
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              sx={{
-                backgroundColor: width < 576 ? "#7848ED" : "",
-                borderRadius: width < 576 ? "10px" : "",
-                padding: width < 576 ? "6px" : "",
-              }}
-            >
-              <Box>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={width < 576 ? "20" : "24"}
-                  height={width < 576 ? "21" : "25"}
-                  fill="none"
-                  viewBox="0 0 24 25"
-                >
-                  <g clipPath="url(#clip0_7671_14783)">
-                    <g>
-                      <path
-                        fill="#fff"
-                        fillRule="evenodd"
-                        d="M3 5a1.5 1.5 0 011.5-1.5h15A1.5 1.5 0 0121 5v2.086a2 2 0 01-.586 1.414L15 13.914v7.424a1.1 1.1 0 01-1.592.984l-3.717-1.858A1.25 1.25 0 019 19.346v-5.432L3.586 8.5A2 2 0 013 7.086V5zm2 .5v1.586l5.56 5.56a1.502 1.502 0 01.44 1.061v5.175l2 1v-6.175c0-.398.158-.78.44-1.06L19 7.085V5.5H5z"
-                        clipRule="evenodd"
-                      ></path>
-                    </g>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_7671_14783">
-                      <path
-                        fill="#fff"
-                        d="M0 0H24V24H0z"
-                        transform="translate(0 .5)"
-                      ></path>
-                    </clipPath>
-                  </defs>
-                </svg>
-              </Box>
-              <Box>
-                <Typography
+            <>
+              {width > 1200 && (
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
                   sx={{
-                    color: "white",
-                    fontSize: width < 576 ? "16px" : "24px",
-                    fontWeight: "700 !important",
-                    lineHeight: "130%",
+                    backgroundColor: width < 576 ? "#7848ED" : "",
+                    borderRadius: width < 576 ? "10px" : "",
+                    padding: width < 576 ? "6px" : "",
                   }}
                 >
-                  Filters
-                </Typography>
-              </Box>
-            </Box>
+                  <Box>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={width < 576 ? "20" : "24"}
+                      height={width < 576 ? "21" : "25"}
+                      fill="none"
+                      viewBox="0 0 24 25"
+                    >
+                      <g clipPath="url(#clip0_7671_14783)">
+                        <g>
+                          <path
+                            fill="#fff"
+                            fillRule="evenodd"
+                            d="M3 5a1.5 1.5 0 011.5-1.5h15A1.5 1.5 0 0121 5v2.086a2 2 0 01-.586 1.414L15 13.914v7.424a1.1 1.1 0 01-1.592.984l-3.717-1.858A1.25 1.25 0 019 19.346v-5.432L3.586 8.5A2 2 0 013 7.086V5zm2 .5v1.586l5.56 5.56a1.502 1.502 0 01.44 1.061v5.175l2 1v-6.175c0-.398.158-.78.44-1.06L19 7.085V5.5H5z"
+                            clipRule="evenodd"
+                          ></path>
+                        </g>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_7671_14783">
+                          <path
+                            fill="#fff"
+                            d="M0 0H24V24H0z"
+                            transform="translate(0 .5)"
+                          ></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </Box>
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: "white",
+                        fontSize: width < 576 ? "16px" : "24px",
+                        fontWeight: "700 !important",
+                        lineHeight: "130%",
+                      }}
+                    >
+                      Filters
+                    </Typography>
+                  </Box>
+                </Box>
+              )}
+            </>
           )}
           <Box display={"flex"}>
             {width > 576 ? (
@@ -499,7 +511,7 @@ export default function FilterPromotion(props) {
                     style={{
                       fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                       padding:
-                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                        width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                     }}
                   />
                 </Box>
@@ -515,7 +527,7 @@ export default function FilterPromotion(props) {
                     style={{
                       fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                       padding:
-                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                        width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                     }}
                   />
                 </Box>
@@ -531,21 +543,10 @@ export default function FilterPromotion(props) {
                     style={{
                       fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                       padding:
-                        width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                        width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                     }}
                   />
                 </Box>
-                {/* <Box sx={{ marginLeft:"10px" }}>
-                  <AnimButton
-                    type={"active"}
-                    text={t("Promotions Joined")}
-                    isSubmitBtn
-                    isHasIcon={activeJoined}
-                    onClick={() => {
-                        setActiveJoined(!activeJoined)
-                    }}
-                  />
-                </Box> */}
                 {clear === true ? (
                   <Box sx={{ marginLeft: "10px" }}>
                     <AnimButton
@@ -561,7 +562,7 @@ export default function FilterPromotion(props) {
                       style={{
                         fontSize: width < 1024 && width > 576 ? "10px" : "16px",
                         padding:
-                          width < 1024 && width > 576 ? "4px 5px" : "11px 20px",
+                          width < 1024 && width > 576 ? "4px 5px" : "4px 12px",
                       }}
                     />
                   </Box>
@@ -573,62 +574,90 @@ export default function FilterPromotion(props) {
               ""
             )}
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
+          <Box
             sx={{
-              color: "white",
-              " :hover": {
-                backgroundColor: "inherit",
-              },
-              textTransform: "none",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              flexGrow: 1,
             }}
           >
-            {value ? "End in latest" : "End in soonest"}
-            <KeyboardArrowDown />
-          </Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-            sx={{
-              "& .MuiMenu-paper": {
-                backgroundColor: "#443565 !important",
+            {width > 1200 && (
+              <Box component={"img"} src={images.sortIcon}></Box>
+            )}
+            {width > 1200 && (
+              <Typography
+                sx={{
+                  color: "#fff",
+                  fontSize: "15px",
+                  marginRight: "10px",
+                  fontWeight: "700",
+                }}
+              >
+                Filter by
+              </Typography>
+            )}
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              sx={{
                 color: "white",
-              },
-            }}
-          >
-            <MenuItem
-              onClick={() => {
-                setValue(false);
-                handleClose();
+                " :hover": {
+                  backgroundColor: "#443565",
+                },
+                textTransform: "none",
+                backgroundColor: "#443565",
+                padding: "5px 12px",
               }}
             >
-              End in soonest
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setValue(true);
-                handleClose();
+              {value ? "End in latest" : "End in soonest"}
+              <KeyboardArrowDown />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              sx={{
+                "& .MuiMenu-paper": {
+                  backgroundColor: "#443565 !important",
+                  color: "white",
+                },
+                "&& .Mui-selected": {
+                  backgroundColor: "pink",
+                },
               }}
             >
-              End in latest
-            </MenuItem>
-          </Menu>
+              <MenuItem
+                sx={{
+                  backgroundColor: !value ? "#BE48ED" : "#443565",
+                }}
+                onClick={() => {
+                  setValue(false);
+                  handleClose();
+                }}
+              >
+                End in soonest
+              </MenuItem>
+              <MenuItem
+                sx={{
+                  backgroundColor: value ? "#BE48ED" : "#443565",
+                }}
+                onClick={() => {
+                  setValue(true);
+                  handleClose();
+                }}
+              >
+                End in latest
+              </MenuItem>
+            </Menu>
+          </Box>
         </Box>
         <Drawer
           anchor={"bottom"}
