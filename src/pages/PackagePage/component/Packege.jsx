@@ -18,7 +18,6 @@ export default function Package(props) {
   const { width } = useWindowDimensions();
   const { listPackage } = useSelector((state) => state.packageReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
-  const { device } = useSelector((state) => state.deviceReducer);
   const [socket, setSocket] = useState(null);
   const [item, setItem] = useState([]);
   useEffect(() => {
@@ -116,7 +115,7 @@ export default function Package(props) {
     <DocumentMeta {...meta}>
       <>
         <DialogConfirm />
-        {device === "Desktop" ? (
+        {width > 768 ? (
           <div
             className="Package-home pb-5"
             style={{
