@@ -16,13 +16,18 @@ export default function LikeDislikeGame(props) {
   const { listGameLiked, listGameDisLiked, countLikeDislike } = useSelector(
     (state) => state.likeDislikeReducer
   );
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const [likeCount, setLikeCount] = useState(0);
   const [disLikeCount, setDisLikeCount] = useState(0);
 
   useEffect(() => {
-    dispatch(getListLikeDislike());
-    dispatch(getLikeDislikeCount(gameId));
-  }, [dispatch, gameId]);
+    if (tokenUser) {
+      dispatch(getListLikeDislike());
+    }
+    if (gameId) {
+      dispatch(getLikeDislikeCount(gameId));
+    }
+  }, [dispatch, gameId, tokenUser]);
 
   useEffect(() => {
     setLikeCount(countLikeDislike?.countGameLiked);
