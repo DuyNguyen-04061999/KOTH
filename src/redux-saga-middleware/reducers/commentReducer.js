@@ -4,6 +4,7 @@ export const getListComment = (data) => {
     payload: data,
   };
 };
+
 export const addCommentPromotion = (data) => {
   return {
     type: "ADD_COMMENT_IN_PROMOTION",
@@ -85,6 +86,7 @@ const commentReducer = (
         postingComment: payload?.comment,
       };
     }
+
     default:
       return { ...state };
   }

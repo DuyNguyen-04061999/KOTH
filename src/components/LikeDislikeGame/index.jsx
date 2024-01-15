@@ -1,8 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   dislikeGamePromotion,
+  getLikeDislikeCount,
   getListLikeDislike,
   likeGamePromotion,
   unDisLikeGamePromotion,
@@ -12,23 +13,73 @@ import { imageHome } from "../../utils/images";
 export default function LikeDislikeGame(props) {
   const { gameId } = props;
   const dispatch = useDispatch();
-  const { listGameLiked, listGameDisLiked } = useSelector(
+  const { listGameLiked, listGameDisLiked, countLikeDislike } = useSelector(
     (state) => state.likeDislikeReducer
   );
+  const [likeCount, setLikeCount] = useState(0);
+  const [disLikeCount, setDisLikeCount] = useState(0);
 
   useEffect(() => {
     dispatch(getListLikeDislike());
-  }, [dispatch]);
+    dispatch(getLikeDislikeCount(gameId));
+  }, [dispatch, gameId]);
+
+  useEffect(() => {
+    setLikeCount(countLikeDislike?.countGameLiked);
+    setDisLikeCount(countLikeDislike?.countGameDisLiked);
+  }, [countLikeDislike]);
+  const handleOnClickLikeGame = () => {
+    if (!listGameLiked?.includes(gameId)) {
+      if (listGameDisLiked?.includes(gameId)) {
+        setLikeCount((prev) => {
+          return prev + 1;
+        });
+        setDisLikeCount((prev) => {
+          return prev - 1;
+        });
+      } else {
+        setLikeCount((prev) => {
+          return prev + 1;
+        });
+      }
+      dispatch(likeGamePromotion(gameId));
+    } else {
+      dispatch(unLikeGamePromotion(gameId));
+      setLikeCount((prev) => {
+        return prev - 1;
+      });
+    }
+  };
+
+  const handleOnClickDislikeGame = () => {
+    if (!listGameDisLiked?.includes(gameId)) {
+      if (listGameLiked?.includes(gameId)) {
+        setLikeCount((prev) => {
+          return prev - 1;
+        });
+        setDisLikeCount((prev) => {
+          return prev + 1;
+        });
+      } else {
+        setDisLikeCount((prev) => {
+          return prev + 1;
+        });
+      }
+      dispatch(dislikeGamePromotion(gameId));
+    } else {
+      dispatch(unDisLikeGamePromotion(gameId));
+      setDisLikeCount((prev) => {
+        return prev - 1;
+      });
+    }
+  };
+
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           onClick={() => {
-            if (!listGameLiked?.includes(gameId)) {
-              dispatch(likeGamePromotion(gameId));
-            } else {
-              dispatch(unLikeGamePromotion(gameId));
-            }
+            handleOnClickLikeGame();
           }}
           sx={{ width: "20px", height: "20px", cursor: "pointer" }}
           component={"img"}
@@ -43,9 +94,7 @@ export default function LikeDislikeGame(props) {
             color: listGameLiked?.includes(gameId) ? "#F05153" : "#979797",
           }}
         >
-          {listGameLiked && listGameLiked?.length > 0
-            ? listGameLiked?.length
-            : 0}
+          {likeCount}
         </Typography>
       </Box>
       <Box
@@ -59,11 +108,7 @@ export default function LikeDislikeGame(props) {
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           onClick={() => {
-            if (!listGameDisLiked?.includes(gameId)) {
-              dispatch(dislikeGamePromotion(gameId));
-            } else {
-              dispatch(unDisLikeGamePromotion(gameId));
-            }
+            handleOnClickDislikeGame();
           }}
           sx={{ width: "20px", height: "20px", cursor: "pointer" }}
           component={"img"}
@@ -78,9 +123,7 @@ export default function LikeDislikeGame(props) {
             color: listGameDisLiked?.includes(gameId) ? "#F05153" : "#979797",
           }}
         >
-          {listGameDisLiked && listGameDisLiked?.length > 0
-            ? listGameDisLiked?.length
-            : 0}
+          {disLikeCount}
         </Typography>
       </Box>{" "}
     </Box>
