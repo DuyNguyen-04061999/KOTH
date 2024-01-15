@@ -82,6 +82,20 @@ class likeDislikeService {
     );
     return res;
   }
+  async callLikeDislikeCount(dataRequest) {
+    const res = await PROMOTION_API.get(
+      `/api/games/list-game-likes-dislikes/${dataRequest}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+          authorization: localStorage.getItem("token"),
+          "x-access-refactor-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    return res;
+  }
 }
 
 export default likeDislikeService;
