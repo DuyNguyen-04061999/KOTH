@@ -15,6 +15,7 @@ import {
   cancelRequestingFriend,
 } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
+import { openLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
@@ -147,9 +148,14 @@ export default function ChatWorldList() {
   };
 
   const handleAddFriend = (username) => {
-    socket.emit("addFriend", {
-      username: username,
-    });
+    if(!tokenUser) {
+      dispatch(openLoginDialog())
+    } else {
+      socket.emit("addFriend", {
+        username: username,
+      });
+    }
+   
   };
   const renderChat = isFetching ? (
     <UserChatLoadingList />
@@ -654,7 +660,7 @@ export default function ChatWorldList() {
                 padding: "5px",
               }}
             >
-              {checkExistInFriendList(messagefromName) ? (
+              {checkExistInFriendList(messagefromName) && tokenUser ? (
                 <Box
                   onClick={() => handleDeleteFriend(messagefromName)}
                   className="p-1 text-white"
