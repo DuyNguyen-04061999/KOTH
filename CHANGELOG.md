@@ -1,4 +1,67 @@
-## [1.7.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.6.0...1.7.0) (2024-01-05)
+## [1.8.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.7.0...v1.8.0) (2024-1-15)
+
+
+### Features
+
+* Add data-hj-allow-iframe="" ([b917f46](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b917f4630e95d9bd8c3c226c230af85e9a852526))
+* change background color of selected option ([4a2b3a4](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4a2b3a4f4306acb71307113a82e9ad92a60c5244))
+* Change nickname to display name ([3aa19c3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/3aa19c3033a36b5723ffb60b6044082b2a2ebd0c))
+* Change style of filter promotion ([1b7700d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/1b7700d6e5836be526b5f5fa8d51e46ceb6ebdfd))
+* Check token in comment ([c8cb1cd](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/c8cb1cd271aa1b20c1c65ec990cdaf58e8f104d1))
+* comment feature ([cfff7a9](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/cfff7a9465cae848aabd222eb4adc9574cfba0d6))
+* Comment in promotion ([daa1139](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/daa11395aa26d7986654e4142e90c2b2099e0023))
+* Comment in promotion detail ([e8025b5](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e8025b5df638da7d21cd02919ec9fea1511a8cd3))
+* Fix bug of entering white space in comment ([424b0ce](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/424b0ce4a71a5b5e4fb1ae0d08c9a7a332490390))
+* Fix like dislike bugs in game promotion ([e693a1b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e693a1b074298e4436bed16d83ea1d29cc3e59dd))
+* Fix notification UI ([304d443](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/304d4433113c9d7da269be3f73bca14a658a0616))
+* Fix the distance between packages ([caf6129](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/caf6129b5ff2801780a900e3fadab2352737f01d))
+* Fix the order of notification ([ce73c90](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ce73c9064175a13b0e6742d8d8a1c2fce9b4a524))
+* Hide add friend button in user info ([98e9c32](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/98e9c329ed553481f11a33b9ef52237c427c55f0))
+* Like and dislike game UI ([5ef399a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5ef399a2704e63f43e470b99d06dc05aec5304eb))
+* Like dislike game in promotion page ([a5ea441](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/a5ea4418e38c5bb46f1e932349d639c132fbc8f8))
+* Remove delay in call API add comment ([8e2fea0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8e2fea0cb0d5a7c1e84228606f3e874f6c756b1d))
+* Rener incoming promotions first ([137f2ae](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/137f2aed180e49cbc01829d4b77a5030dcef7922))
+* Word limit and cancel button in comment ([f65a9a2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f65a9a292e53ae893afbf7aca6d42b09bbd27fb4))
+* Word limit in mobile ([d521b07](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d521b07c41cbc1530d26a2b9cc0447f8128dee2f))
+
+
+### Bug Fixes
+
+* Add key props ([00720d1](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/00720d1f5caad96b13dc4afb133eb579dcbc236c))
+* Content notification ([8e87bcf](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8e87bcf153225a8949ea2e57d249a940a7ffa804))
+* Fix find user ([53ab93a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/53ab93a3d3968be0ecade381932c53505fc5db2a))
+* Fix UI package ([2d65b64](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/2d65b640aee87519c0e1eeccb1d5d941fda7e383))
+* Fix user profile ([a72a418](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/a72a418e70b917938b50e127b7986f916fcbb016))
+* format code ([0160b1a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0160b1a4fbf78dd3d1c2fbd99eb48d47f2b45c3d))
+* Padding nav ([e737040](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/e737040b8104861bf8ce103299813229494082e2))
+* Remove list ended promotion at home page ([a41d527](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/a41d527c04f8d945468da95454a1c18c972599b8))
+* Update add and cancel friend request ([41d0b6b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/41d0b6b20aa5c4cf278947721280d65604af5096))
+* Update admin ([202388e](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/202388e97932badab610d5ddef6dda4551a52701))
+* Update admin ([d0b97d0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d0b97d050a01bea88fc4e2e7cbac6013fd9c3f5b))
+* Update auto recurring text ([ac71fed](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ac71fed2d35a7cd4bfa1df3886e62b2767c23b29))
+* Update chat private ([11b0a7e](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/11b0a7efb1f1d64e4f64c1e318967f1ec314c542))
+* Update filter ([0cd81f4](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0cd81f495ecc349786368cc7e0e06afd42cdcbce))
+* Update finduser and leaderboard ([866d908](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/866d908340f45cbdbcdc6f340ca596e1f2814720))
+* Update font size ([bfcef23](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/bfcef238cb0c0c0e45353871a5e5a771091d7636))
+* Update friend flow ([42571a4](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/42571a4fe1c750dabb1dd227e19147c71a37acb6))
+* Update friend logic ([0c0e89e](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0c0e89e88632bdcbf775a7564ccc399700d56acc))
+* Update game like and dislike ([4b093f0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4b093f06c99bd0f42dd19b907861b548327d62f6))
+* Update like and dislike ([f55762d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f55762d8f3048c452caab55e5924b3495b5b0c47))
+* Update list promotion page ([38e6c74](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/38e6c74f76b8171d73c64080c78c2d348ae0102b))
+* Update list winner ([5c05fa6](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5c05fa6ed41a94533f3f28f637e6c253d86c3e75))
+* Update new home page ([8684501](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/868450132ee3f7b1d7f9b8b9bdcf9a163a6ab719))
+* Update package ([a42bd66](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/a42bd665a3e45f3ff7b142eacc6f9c719cc2bbe7))
+* Update package ([bc04705](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/bc04705208d95603d53fb4200a60589ea5261e9f))
+* Update package ([f5a37fa](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f5a37faf98d2a70392f84e2bd1e6abeeb31b7dbc))
+* Update packages ([29dccda](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/29dccdac7db4f70600c24b3ef42381542dc5ae8c))
+* Update packages ([5f3aac8](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5f3aac8225c44b430ba31d7c942ece56d2e9dab7))
+* Update play game ([bdcace8](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/bdcace8a703f8b19b2013c93de3dc47a580e7ce7))
+* Update promotion page ([cdbbb52](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/cdbbb5287ed4ba7f0cc09f50723c4e57e907852f))
+* Update socket connect ([4b65126](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4b6512652216062225f80b9fa90ec8f89c074e9f))
+* Update socket events ([6d5afad](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/6d5afad3a93612af3e9df689399adbbff9636479))
+* Update vip ([24acb15](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/24acb15b3a303e7dc3282998a954a8c06bdf0ef5))
+
+## [1.7.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.6.0...1.7.0) (2024-1-5)
 
 
 ### Features
@@ -165,7 +228,7 @@
 * Update theme check ([7351b7a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7351b7a31efb11236faac777aa090ad2f141fa5c))
 * Update tool BA ([5b015c3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5b015c3c6ce76c3329b69ca7cb912c511c01ee8a))
 
-## [1.3.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.2.0...1.3.0) (2023-12-08)
+## [1.3.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.2.0...1.3.0) (2023-12-8)
 
 
 ### Features
@@ -263,7 +326,7 @@
 * Update state ([0a221f6](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0a221f6bd1506c98b4d559d12f5495ef2acebae0))
 * Update verify sms ([f0084c7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f0084c7a3052988cb3c635ccc33588777b39c364))
 
-## [1.2.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.1.0...1.2.0) (2023-12-01)
+## [1.2.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.1.0...1.2.0) (2023-12-1)
 
 
 ### Features
@@ -579,7 +642,7 @@
 * Update otp flow ([8007711](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/800771137438e2f9fb520417a1a9c0c6a7065e28))
 * Update profile after buy subscription ([20dda91](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/20dda9160c3be9226fdca2bb16ed13d6c3109b37))
 
-## [0.14.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/0.13.0...0.14.0) (2023-11-03)
+## [0.14.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/0.13.0...0.14.0) (2023-11-3)
 
 
 ### Features
@@ -956,7 +1019,7 @@
 
 * Revert "Display background color button "Log out" when logged in successfully" ([f8caab1](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f8caab106bab954eeaab3faad5697e9074f40b0b))
 
-## [0.9.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/4c321b38789b48246033b0f44328626ebd1b2915...0.9.0) (2023-09-15)
+## [0.9.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/4c321b38789b48246033b0f44328626ebd1b2915...0.9.0) (2023-9-15)
 
 
 ### Features
