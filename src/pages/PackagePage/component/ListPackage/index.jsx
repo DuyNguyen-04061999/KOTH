@@ -662,7 +662,9 @@ export default function ListPackage(props) {
                   alignItems: "center",
                 }}
               >
-                <Box>
+                <Box className="blend-container" sx={{
+                  mixBlendMode:"exclusion"
+                }}>
                   {isFetchListPackage ? (
                     <BannerLoading
                       width={width < 1200 && width > 576 ? 130 : 200}
