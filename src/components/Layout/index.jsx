@@ -150,6 +150,7 @@ export default function Layout(props) {
   const { chatPopup, badgechat, openMess } = useSelector(
     (state) => state.chatReducer
   );
+  const { isNotificationDialog } = useSelector((state) => state.dialogReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter, countDownDoubleDay } =
     useSelector((state) => state.appReducer);
@@ -452,6 +453,7 @@ export default function Layout(props) {
     }
     return check;
   };
+  console.log(isNotificationDialog);
   return ReactDOM.createPortal(
     <Box
       className="tong"
@@ -470,7 +472,8 @@ export default function Layout(props) {
             openMenu ||
             isLoginDialog ||
             isTransactionDialog ||
-            isProfileDialog
+            isProfileDialog ||
+            isNotificationDialog
               ? "none"
               : "block",
         }}
