@@ -594,7 +594,7 @@ export default function FilterPromotion(props) {
                   fontWeight: "700",
                 }}
               >
-                Filter by
+                Sort by
               </Typography>
             )}
             <Button
