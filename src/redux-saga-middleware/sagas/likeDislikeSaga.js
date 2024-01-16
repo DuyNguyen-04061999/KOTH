@@ -1,7 +1,8 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, delay, put, takeEvery } from "redux-saga/effects";
 import likeDislikeService from "../services/likeDislikeService";
 import {
   updateDislikeGame,
+  updateIsReady,
   updateLikeDislikeCount,
   updateLikeGame,
   updateListLikeDislike,
@@ -30,6 +31,8 @@ function* likeGamePromotionSaga(dataRequest) {
     if (status === 200 || status === 201) {
       yield put(updateLikeGame(data?.listGameLiked));
       yield put(updateDislikeGame(data?.listGameDisLiked));
+      yield delay(500);
+      yield put(updateIsReady(false));
     }
   } catch (error) {
     console.log(error);
@@ -42,6 +45,8 @@ function* unLikeGameSaga(dataRequest) {
     const { status, data } = res;
     if (status === 200 || status === 201) {
       yield put(updateLikeGame(data?.listGameLiked));
+      yield delay(500);
+      yield put(updateIsReady(false));
     }
   } catch (error) {
     console.log(error);
@@ -55,6 +60,8 @@ function* dislikeGamePromotionSaga(dataRequest) {
     if (status === 200 || status === 201) {
       yield put(updateLikeGame(data?.listGameLiked));
       yield put(updateDislikeGame(data?.listGameDisLiked));
+      yield delay(500);
+      yield put(updateIsReady(false));
     }
   } catch (error) {
     console.log(error);
@@ -67,6 +74,8 @@ function* unDislikeGamePromotionSaga(dataRequest) {
     const { status, data } = res;
     if (status === 200 || status === 201) {
       yield put(updateDislikeGame(data?.listGameDisLiked));
+      yield delay(500);
+      yield put(updateIsReady(false));
     }
   } catch (error) {
     console.log(error);

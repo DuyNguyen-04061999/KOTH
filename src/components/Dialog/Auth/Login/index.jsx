@@ -239,12 +239,14 @@ const Login = () => {
           <img src={sign.up02} alt="..." width={15} height={"auto"} />
           <Input
             onChange={(e) => {
+              setHandsUp(true);
               handleChangePassword(e);
             }}
             onBlur={() => {
               setHandsUp(false);
               setCheck(false);
             }}
+            z
             onMouseLeave={() => {
               setHandsUp(false);
               setCheck(false);

@@ -57,11 +57,18 @@ export const getLikeDislikeCount = (data) => {
     payload: data,
   };
 };
+export const updateIsReady = (data) => {
+  return {
+    type: "UPDATE_IS_READY",
+    payload: data,
+  };
+};
 const likeDislikeReducer = (
   state = {
     listGameLiked: [],
     listGameDisLiked: [],
     countLikeDislike: null,
+    isReady: false,
   },
   action
 ) => {
@@ -89,6 +96,12 @@ const likeDislikeReducer = (
       return {
         ...state,
         countLikeDislike: payload,
+      };
+    }
+    case "UPDATE_IS_READY": {
+      return {
+        ...state,
+        isReady: payload,
       };
     }
     default:
