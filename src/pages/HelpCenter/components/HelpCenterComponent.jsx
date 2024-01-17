@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { json } from "react-router-dom";
 
 const HelpCenterComponent = () => {
   const { tabHelpCenter, listFAQPromote, isFetching } = useSelector(
@@ -184,9 +183,13 @@ const HelpCenterComponent = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    {listFAQ?.length > 0 && listFAQ?.map(item => {
-                    JSON.parse(item.faqDesc)?.length > 0 && JSON.parse(item.faqDesc)?.map(title => (<p>{title}</p>))
-                    })}
+                    {listFAQ?.length > 0 &&
+                      listFAQ?.map((item) => {
+                        JSON.parse(item.faqDesc)?.length > 0 &&
+                          JSON.parse(item.faqDesc)?.map((title) => (
+                            <p>{title}</p>
+                          ));
+                      })}
                     {listFAQ?.length &&
                     listFAQ[tabHelpCenter]?.faqTitle ===
                       "Privacy And Policy" ? (

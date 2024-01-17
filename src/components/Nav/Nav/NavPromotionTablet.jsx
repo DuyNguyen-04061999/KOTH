@@ -1,10 +1,10 @@
 import { Box, ClickAwayListener, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { navbar } from "../../../utils/images";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { closeDropdown } from "../../../redux-saga-middleware/reducers/authReducer";
+import { navbar } from "../../../utils/images";
 
 export default function NavPromotionTablet(props) {
   const { isNav, isDropdownNav, toggleDropdown } = props;

@@ -1,18 +1,15 @@
 import {
-  takeEvery,
   call,
   put,
-  delay,
-  fork,
-  takeLatest,
+  takeEvery
 } from "redux-saga/effects";
-import COMMENT_SERVICE from "../services/commentService";
 import {
   failSendComment,
   readySendComment,
   successSendComment,
   updateListComment,
 } from "../reducers/commentReducer";
+import COMMENT_SERVICE from "../services/commentService";
 const commentService = new COMMENT_SERVICE();
 var addCount = 0;
 function* getListCommentSaga(datarequest) {

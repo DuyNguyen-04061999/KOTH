@@ -43,7 +43,7 @@ export default function ListGamePage() {
   const handleEditGame = (game) => {
     navigate("/game/edit/" + game?.id, { state: game });
   };
-  console.log(games);
+
   return (
     <Box component={"div"} className="p-2">
       <Box onClick={() => navigate("/upload")} className="mb-2">
