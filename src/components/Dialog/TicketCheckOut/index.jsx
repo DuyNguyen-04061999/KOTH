@@ -37,7 +37,7 @@ export default function TicketCheckOut() {
   const [feeMoney, setFeeMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [sl, setSl] = useState(1);
-  const [autoRecurring, setAutoRecurring] = useState(false);
+  const [autoRecurring, setAutoRecurring] = useState(true);
 
   useEffect(() => {
     if (typePayment === "skrill") {
@@ -135,6 +135,9 @@ export default function TicketCheckOut() {
             borderRadius: "11px !important",
           },
           zIndex: "1320",
+          "& .MuiPaper-root" : {
+            backgroundColor:"transparent !important",
+          }
         }}
         maxWidth="2000px !important"
         onClose={() => {
