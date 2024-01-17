@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { navbar } from "../../../utils/images";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { closeDropdown } from "../../../redux-saga-middleware/reducers/authReducer";
 
 export default function NavPromotionTablet(props) {
   const { isNav, isDropdownNav, toggleDropdown } = props;
@@ -10,8 +12,13 @@ export default function NavPromotionTablet(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
+  const dispatch = useDispatch();
   return (
-    <ClickAwayListener onClickAway={toggleDropdown}>
+    <ClickAwayListener
+      onClickAway={() => {
+        dispatch(closeDropdown());
+      }}
+    >
       <Box sx={{ position: "relative", zIndex: "1202" }}>
         {" "}
         <Box
