@@ -453,7 +453,7 @@ export default function Layout(props) {
     }
     return check;
   };
-  console.log(isNotificationDialog);
+
   return ReactDOM.createPortal(
     <Box
       className="tong"

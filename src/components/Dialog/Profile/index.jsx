@@ -40,7 +40,6 @@ import AnimButton from "../../AnimButton";
 import LoadingEffect from "../../LoadingComponent";
 import AvatarPicker from "./AvatarPicker";
 import "./index.scss";
-import ParagraphLoading from "../../LoadingComponent/ParagraphLoading";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
