@@ -115,7 +115,7 @@ export default function Package(props) {
     <DocumentMeta {...meta}>
       <>
         <DialogConfirm />
-        {width > 768 ? (
+        {width > 576 ? (
           <div
             className="Package-home pb-5"
             style={{
@@ -339,7 +339,7 @@ export default function Package(props) {
                   ></Box>
                 </Box>
               </Box>
-              <Box
+              <Box 
                 sx={{
                   padding:
                     (pathname && pathname?.includes("home")) || pathname === "/"
