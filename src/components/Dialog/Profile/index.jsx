@@ -83,7 +83,6 @@ export default function DialogProfile(props) {
   const { tokenUser, stateProfile } = useSelector((state) => state.userReducer);
   const { listSendingRequest } = useSelector((state) => state.addFriendReducer);
 
-  // const { friendList } = useSelector((state) => state.chatReducer);
   const {
     id,
     email,
@@ -91,7 +90,6 @@ export default function DialogProfile(props) {
     userNameProfile,
     avatarUrl,
     nickName,
-    // userNickNameProfile,
     address1,
     address2,
     city,
@@ -104,7 +102,6 @@ export default function DialogProfile(props) {
   } = useSelector((state) => state.profileReducer);
 
   const dispatch = useDispatch();
-  // const { listSetting } = useSelector((state) => state.settingReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   const [dName, setDName] = useState(nickName);
   const [fName, setFName] = useState(firstName);
@@ -122,12 +119,7 @@ export default function DialogProfile(props) {
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState(city);
   const [stateOption, setStateOption] = useState(state || "");
-  // const handleChangeState = (event) => {
-  //   setStateOption(event.target.value);
-  // };
-  // const handleChange = (event) => {
-  //   setCityOption(event.target.value);
-  // };
+
   useEffect(() => {
     setFName(firstName);
     setLName(lastName);
@@ -160,29 +152,6 @@ export default function DialogProfile(props) {
       setStateOption(newValue?.name);
     }
   };
-
-  // const checkExistInFriendList = () => {
-  //   for (let i = 0; i < friendList.length; i++) {
-  //     if (friendList[i].userName === userNameProfile) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // };
-
-  // const setTabEdit = (e) => {
-  //   e.preventDefault();
-  //   if (!listSetting?.updateProfileEnabled) {
-  //     dispatch(
-  //       showToastNotification({
-  //         type: systemNotification.maintenance.serviceClose.type,
-  //         message: systemNotification.maintenance.serviceClose.message,
-  //       })
-  //     );
-  //   } else {
-  //     setTab(1);
-  //   }
-  // };
 
   const handleChangeDate = (value) => {
     if (value < new Date()) {
