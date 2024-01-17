@@ -72,7 +72,6 @@ import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
 import useWindowDimensions from "../../utils/useWindowDimensions";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
-import ChatBot from "../ChatBot";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import AuthDialog from "../Dialog/Auth/Signin";
 import DialogExclusive from "../Dialog/DialogExclusive";
@@ -463,7 +462,7 @@ export default function Layout(props) {
         backgroundColor: "#211d28",
       }}
     >
-      <Box
+      {/* <Box
         sx={{
           display:
             startGameCheck ||
@@ -479,7 +478,7 @@ export default function Layout(props) {
         }}
       >
         {process.env.REACT_APP_ENV !== "development" ? <ChatBot /> : <></>}
-      </Box>
+      </Box> */}
 
       <SimpleDialog />
       <TicketCheckOut />
