@@ -86,7 +86,15 @@ const commentReducer = (
         postingComment: payload?.comment,
       };
     }
-
+    case "GET_LIST_COMMENT_IN_PROMOTION": {
+      return {
+        ...state,
+        isReadySendComment: false,
+        isSuccessSendComment: false,
+        isFailSendComment: false,
+        postingComment: "",
+      };
+    }
     default:
       return { ...state };
   }
