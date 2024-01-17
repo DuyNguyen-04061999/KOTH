@@ -1,4 +1,11 @@
-import { takeEvery, call, put, delay } from "redux-saga/effects";
+import {
+  takeEvery,
+  call,
+  put,
+  delay,
+  fork,
+  takeLatest,
+} from "redux-saga/effects";
 import COMMENT_SERVICE from "../services/commentService";
 import {
   failSendComment,
@@ -39,6 +46,7 @@ function* addCommentSaga(datarequest) {
     addCount = 0;
   }
 }
+
 function* commentSaga() {
   yield takeEvery("GET_LIST_COMMENT_IN_PROMOTION", getListCommentSaga);
   yield takeEvery("ADD_COMMENT_IN_PROMOTION", addCommentSaga);

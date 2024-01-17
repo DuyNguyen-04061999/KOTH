@@ -2068,7 +2068,7 @@ export default function JoinTournament() {
                     textAlign: "start",
                     fontWeight: "800",
                     color: "white",
-                    fontSize: "24px",
+                    fontSize: "20px",
                   }}
                 >
                   Informations
