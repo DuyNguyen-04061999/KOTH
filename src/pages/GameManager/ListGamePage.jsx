@@ -70,7 +70,10 @@ export default function ListGamePage() {
                   className="img-fluid"
                   width={"100%"}
                   onClick={() => {
-                    if (game?.GameFiles && game?.GameFiles?.length > 0) {
+                    if (
+                      (game?.GameFiles && game?.GameFiles?.length > 0) ||
+                      game?.gameEngine === "cocos"
+                    ) {
                       localStorage.setItem("game", JSON.stringify(game));
                       const params = new URLSearchParams();
                       params.append("token", token);
