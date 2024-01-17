@@ -135,6 +135,9 @@ export default function TicketCheckOut() {
             borderRadius: "11px !important",
           },
           zIndex: "1320",
+          "& .MuiPaper-root" : {
+            backgroundColor:"transparent !important",
+          }
         }}
         maxWidth="2000px !important"
         onClose={() => {
