@@ -675,7 +675,7 @@ export default function ListPackage(props) {
                       <video
                         controls={false}
                         width={width < 1200 && width > 576 ? 130 : 200}
-                        height={width < 1200 && width > 576 ? 200 : 170}
+                        height={width < 1200 && width > 576 ? 170 : 170}
                         alt=""
                         style={{
                           mixBlendMode: width < 576 ? "normal" : "difference",
@@ -979,7 +979,7 @@ export default function ListPackage(props) {
                   </Box>
                 )}
                 {listSetting?.saleValue && listSetting?.saleValue > 1 ? (
-                  <Typography sx={{ fontSize: "12px", color: "#7848ED" }}>
+                  <Typography sx={{ fontSize: width < 1200 && width > 576 ?  "8px" : "12px", color: "#7848ED" }}>
                     Sale period:{" "}
                     {listSetting?.saleValue && listSetting?.saleValue > 1
                       ? `${moment(
