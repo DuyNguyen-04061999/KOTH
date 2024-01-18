@@ -11,6 +11,7 @@ export default function FullCommnet() {
     (state) => state.commentReducer
   );
   const { user, userAvatar } = useSelector((state) => state.userReducer);
+
   return (
     <Box>
       <Box
@@ -39,20 +40,26 @@ export default function FullCommnet() {
           />
         )}
         {showMore
-          ? listCommentPromo?.toReversed()?.map((item, index) => {
-              return (
-                <CommentItem
-                  userNickName={item?.commentUser?.userNickName}
-                  createdAt={item?.createdAt}
-                  content={item?.content}
-                  type="other"
-                  key={index}
-                  userAvatar={item?.commentUser?.userAccount?.accountAvatar}
-                />
-              );
-            })
+          ? listCommentPromo
+              ?.sort((a, b) => {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+              })
+              ?.map((item, index) => {
+                return (
+                  <CommentItem
+                    userNickName={item?.commentUser?.userNickName}
+                    createdAt={item?.createdAt}
+                    content={item?.content}
+                    type="other"
+                    key={index}
+                    userAvatar={item?.commentUser?.userAccount?.accountAvatar}
+                  />
+                );
+              })
           : listCommentPromo
-              ?.toReversed()
+              ?.sort((a, b) => {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+              })
               ?.slice(0, 2)
               .map((item, index) => {
                 return (
