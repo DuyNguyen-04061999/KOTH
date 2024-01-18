@@ -121,6 +121,7 @@ export default function CommentItem(props) {
               color: "#979797",
               display: "flex",
               alignItems: "flex-end",
+              width:"100%"
             }}
           >
             <Typography sx={{ fontSize: width < 576 ? "10px" : "12px" }}>
@@ -128,7 +129,9 @@ export default function CommentItem(props) {
               {comment.trim().length}/256
             </Typography>
           </Box>
-          <Box>
+          <Box sx={{
+            display:"flex"
+          }}>
             {" "}
             <button
               onClick={() => {

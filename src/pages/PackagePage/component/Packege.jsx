@@ -98,7 +98,7 @@ export default function Package(props) {
         item?.packageName === "Combo Extra 2"
     );
     if (
-      width > 768 &&
+      width > 576 &&
       width < 1200 &&
       itemPackage &&
       itemPackage?.length >= 3
