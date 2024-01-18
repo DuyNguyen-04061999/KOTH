@@ -65,9 +65,9 @@ export default function NewFooter() {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: width < 576 ? "center" : "space-between",
                 padding: width < 576 ? "20px 10px 0px" : "unset",
-                gap: width < 1024 ? "24px" : "41.47px",
+                gap: width < 1024 ? (width < 576 ? "40px" : "24px") : "41.47px",
               }}
             >
               <Typography
