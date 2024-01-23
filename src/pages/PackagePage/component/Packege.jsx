@@ -27,24 +27,6 @@ export default function Package(props) {
 
   useEffect(() => {}, [socket, token]);
 
-  useEffect(() => {
-    if (listPackage && listPackage?.length > 0) {
-      const list = listPackage?.filter(
-        (item) => item?.packageName === "Subscription"
-      );
-      setItem(list);
-    }
-  }, [listPackage]);
-
-  useEffect(() => {
-    const itemPackage = listPackage?.filter(
-      (item) =>
-        item?.packageName === "Combo Extra 1" ||
-        item?.packageName === "Subscription" ||
-        item?.packageName === "Combo Extra 2"
-    );
-    setItem(itemPackage?.sort());
-  }, [listPackage]);
   const location = useLocation();
   const { pathname } = location;
 
@@ -88,28 +70,9 @@ export default function Package(props) {
     },
   };
 
-  const theme = useTheme();
-
   useEffect(() => {
-    const itemPackage = listPackage?.filter(
-      (item) =>
-        item?.packageName === "Combo Extra 1" ||
-        item?.packageName === "Subscription" ||
-        item?.packageName === "Combo Extra 2"
-    );
-    if (
-      width > 576 &&
-      width < 1200 &&
-      itemPackage &&
-      itemPackage?.length >= 3
-    ) {
-      [itemPackage[1], itemPackage[2]] = [
-        itemPackage[2],
-        itemPackage[1],
-      ].sort();
-      setItem(itemPackage);
-    } else setItem(itemPackage);
-  }, [width, listPackage]);
+    setItem(listPackage);
+  }, [listPackage]);
 
   return (
     <DocumentMeta {...meta}>
@@ -141,34 +104,6 @@ export default function Package(props) {
                 ""
               )}
             </Box>
-            {theme?.theme === "christmas" ? (
-              <Box
-                sx={{
-                  marginTop: "20px",
-                  marginBottom: "50px",
-                }}
-              >
-                {location && location?.pathname?.includes("packages") ? (
-                  <Container>
-                    <Box
-                      component={"img"}
-                      src={images.bgchristmas}
-                      alt="..."
-                      sx={{ width: "100%", height: "auto" }}
-                    ></Box>
-                  </Container>
-                ) : (
-                  <Box
-                    component={"img"}
-                    src={images.bgchristmas}
-                    alt="..."
-                    sx={{ width: "100%", height: "auto" }}
-                  ></Box>
-                )}
-              </Box>
-            ) : (
-              ""
-            )}
             <Container
               maxWidth={"lg"}
               sx={{
@@ -177,93 +112,55 @@ export default function Package(props) {
             >
               <Box>
                 <Box className="subscription_pack">
-                  {theme?.theme === "christmas" ? (
-                    <Grid
-                      container
-                      columnSpacing={1}
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-around",
-                        marginTop:
-                          (location && location?.pathname?.includes("home")) ||
-                          pathname === "/"
-                            ? "20px"
-                            : "30px",
-                      }}
-                    >
-                      {item?.map((i, index) => {
-                        return (
-                          <Grid item sm={6} md={6} lg={4} xl={4} key={index}>
-                            <ListPackage
-                              packageName={i?.packageName}
-                              packageAvatar={i?.packageAvatar}
-                              packagePrice={i?.packagePrice}
-                              packageFreeTicketTournament={
-                                i?.packageFreeTicketTournament
-                              }
-                              packageReduceWatchAds={i?.packageReduceWatchAds}
-                              id={i?.id}
-                              avatarChristmas={i?.packageAvatarChristmas}
-                              des={i?.packageDescription}
-                            />
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                  ) : (
-                    <Grid
-                      container
-                      columnSpacing={1}
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent:
-                          width > 576 && width < 1200
-                            ? "center"
-                            : "space-around",
-                        marginTop:
-                          (location && location?.pathname?.includes("home")) ||
-                          pathname === "/"
-                            ? "20px"
-                            : "30px",
-                      }}
-                    >
-                      {item?.map((i, index) => {
-                        return (
-                          <Grid
-                            item
-                            sm={6}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            key={index}
-                            sx={{
-                              display: "flex",
-                              alignContent: "center",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <ListPackage
-                              packageName={i?.packageName}
-                              packageAvatar={i?.packageAvatar}
-                              packagePrice={i?.packagePrice}
-                              packageFreeTicketTournament={
-                                i?.packageFreeTicketTournament
-                              }
-                              packageReduceWatchAds={i?.packageReduceWatchAds}
-                              id={i?.id}
-                              avatarChristmas={i?.packageAvatarChristmas}
-                              des={i?.packageDescription}
-                            />
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                  )}
+                  <Grid
+                    container
+                    columnSpacing={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent:
+                        width > 576 && width < 1200 ? "center" : "space-around",
+                      marginTop:
+                        (location && location?.pathname?.includes("home")) ||
+                        pathname === "/"
+                          ? "20px"
+                          : "30px",
+                    }}
+                  >
+                    {item?.map((i, index) => {
+                      return (
+                        <Grid
+                          item
+                          sm={6}
+                          md={6}
+                          lg={4}
+                          xl={4}
+                          key={index}
+                          sx={{
+                            display: "flex",
+                            alignContent: "center",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <ListPackage
+                            packageName={i?.packageName}
+                            packageAvatar={i?.packageAvatar}
+                            packagePrice={i?.packagePrice}
+                            packageFreeTicketTournament={
+                              i?.packageFreeTicketTournament
+                            }
+                            packageReduceWatchAds={i?.packageReduceWatchAds}
+                            id={i?.id}
+                            avatarChristmas={i?.packageAvatarChristmas}
+                            des={i?.packageDescription}
+                            packageCategory={i?.packageCategory}
+                          />
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
                 </Box>
               </Box>
             </Container>
@@ -297,23 +194,6 @@ export default function Package(props) {
             ) : (
               ""
             )}
-            {theme?.theme === "christmas" ? (
-              <Box
-                sx={{
-                  marginTop: "20px",
-                  marginBottom: "10px",
-                }}
-              >
-                <Box
-                  component={"img"}
-                  src={images.bgchristmas}
-                  alt="..."
-                  sx={{ width: "100%", height: "auto" }}
-                ></Box>
-              </Box>
-            ) : (
-              ""
-            )}
             <Box style={{ marginTop: "30px" }}>
               <Box
                 sx={{
@@ -339,7 +219,7 @@ export default function Package(props) {
                   ></Box>
                 </Box>
               </Box>
-              <Box 
+              <Box
                 sx={{
                   padding:
                     (pathname && pathname?.includes("home")) || pathname === "/"
