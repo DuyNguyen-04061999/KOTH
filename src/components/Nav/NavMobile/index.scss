@@ -1,4 +1,4 @@
-.bage-content{
+.bage-content {
   position: absolute;
   top: -2px;
   right: -2px;
@@ -6,7 +6,7 @@
   height: 12px;
   border-radius: 50%;
   z-index: 1200;
-  background-color: #F05153;
+  background-color: #f05153;
 }
 
 @media only screen and (min-device-width: 576px) and (max-device-width: 992px) {
@@ -20,7 +20,7 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    z-index: 1200;  
+    z-index: 1200;
     .content_nav {
       width: 100%;
       .nav-mobile {
@@ -140,6 +140,3 @@
     background-color: yellow;
   }
 }
-
-
-
