@@ -84,7 +84,7 @@ function* loginSaga(dataRequest) {
         localStorage.setItem("refreshToken", data?.data?.refreshToken);
         yield put(updateUserToken(data?.data?.token));
         setTimeout(() => {
-          window.location.reload();
+          // window.location.reload();
         }, 2000);
       } else {
         yield delay(500);

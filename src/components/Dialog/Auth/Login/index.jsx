@@ -246,7 +246,6 @@ const Login = () => {
               setHandsUp(false);
               setCheck(false);
             }}
-            z
             onMouseLeave={() => {
               setHandsUp(false);
               setCheck(false);
