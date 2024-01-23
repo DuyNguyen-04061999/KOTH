@@ -70,7 +70,7 @@ PROMOTION_API.interceptors.response.use(
                 token: res.data.data.token,
               });
               setTimeout(() => {
-                // window.location.reload();
+                window.location.reload();
               }, 1000)
             } else {
               store.dispatch(logoutReady());
