@@ -195,7 +195,7 @@ export default function HotTournament() {
                       marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
-                    <FilterPromotion />
+                    {/* <FilterPromotion /> */}
                   </Box>
                   <ListPromotion
                     listData={data}
@@ -286,7 +286,7 @@ export default function HotTournament() {
                       marginBottom: width < 576 ? "24px" : "34px",
                     }}
                   >
-                    <FilterPromotion />
+                    {/* <FilterPromotion /> */}
                   </Box>
                   <ListPromotion
                     listData={data}
