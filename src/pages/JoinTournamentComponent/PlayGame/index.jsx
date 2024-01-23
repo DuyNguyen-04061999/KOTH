@@ -128,6 +128,30 @@ export default function PlayGame(props) {
     }
   }, [loading, device]);
 
+  const linkCocosDev = `${
+    // process.env.REACT_APP_PROMOTION_URL +
+    // "/" +
+    detailTournament?.tournamentInfors?.game?.gameHost
+  }?token=${tokenUser || localStorage.getItem("token")}&tournamentId=${
+    detailTournament?.id
+  }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
+    process.env.REACT_APP_ENV
+  }&maxScore=${detailTournament?.maxScore}&numberTicket=${
+    detailTournament?.numberTicket
+  }&mileStone=${JSON.stringify(
+    detailTournament?.tournamentInfors?.game?.gameCategory?.mileStones
+  )}`;
+  const linkCocosPro = `${
+    detailTournament?.tournamentInfors?.game?.gameHost
+  }?token=${tokenUser || localStorage.getItem("token")}&tournamentId=${
+    detailTournament?.id
+  }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
+    process.env.REACT_APP_ENV
+  }&maxScore=${detailTournament?.maxScore}&numberTicket=${
+    detailTournament?.numberTicket
+  }&mileStone=${JSON.stringify(
+    detailTournament?.tournamentInfors?.game?.gameCategory?.mileStones
+  )}`;
   return (
     <Box
       sx={
@@ -249,24 +273,8 @@ export default function PlayGame(props) {
                           title="Playgame"
                           src={
                             process.env.REACT_APP_ENV === "development"
-                              ? `${
-                                  process.env.REACT_APP_PROMOTION_URL +
-                                  "/" +
-                                  detailTournament?.tournamentInfors?.game
-                                    ?.gameHost
-                                }?token=${
-                                  tokenUser || localStorage.getItem("token")
-                                }&tournamentId=${detailTournament?.id}&skinId=${
-                                  detailTournament?.tournamentInfors?.skin?.id
-                                }&env=${process.env.REACT_APP_ENV}`
-                              : `${
-                                  detailTournament?.tournamentInfors?.game
-                                    ?.gameHost
-                                }?token=${
-                                  tokenUser || localStorage.getItem("token")
-                                }&tournamentId=${detailTournament?.id}&skinId=${
-                                  detailTournament?.tournamentInfors?.skin?.id
-                                }&env=${process.env.REACT_APP_ENV}`
+                              ? linkCocosDev
+                              : linkCocosPro
                           }
                         ></iframe>
                       ) : loading ? (
@@ -364,22 +372,8 @@ export default function PlayGame(props) {
                       title="Playgame"
                       src={
                         process.env.REACT_APP_ENV === "development"
-                          ? `${
-                              process.env.REACT_APP_PROMOTION_URL +
-                              "/" +
-                              detailTournament?.tournamentInfors?.game?.gameHost
-                            }?token=${
-                              tokenUser || localStorage.getItem("token")
-                            }&tournamentId=${detailTournament?.id}&skinId=${
-                              detailTournament?.tournamentInfors?.skin?.id
-                            }&env=${process.env.REACT_APP_ENV}`
-                          : `${
-                              detailTournament?.tournamentInfors?.game?.gameHost
-                            }?token=${
-                              tokenUser || localStorage.getItem("token")
-                            }&tournamentId=${detailTournament?.id}&skinId=${
-                              detailTournament?.tournamentInfors?.skin?.id
-                            }&env=${process.env.REACT_APP_ENV}`
+                          ? linkCocosDev
+                          : linkCocosPro
                       }
                     ></iframe>
                   ) : loading ? (
@@ -945,22 +939,8 @@ export default function PlayGame(props) {
                       title="Playgame"
                       src={
                         process.env.REACT_APP_ENV === "development"
-                          ? `${
-                              process.env.REACT_APP_PROMOTION_URL +
-                              "/" +
-                              detailTournament?.tournamentInfors?.game?.gameHost
-                            }?token=${
-                              tokenUser || localStorage.getItem("token")
-                            }&tournamentId=${detailTournament?.id}&skinId=${
-                              detailTournament?.tournamentInfors?.skin?.id
-                            }&env=${process.env.REACT_APP_ENV}`
-                          : `${
-                              detailTournament?.tournamentInfors?.game?.gameHost
-                            }?token=${
-                              tokenUser || localStorage.getItem("token")
-                            }&tournamentId=${detailTournament?.id}&skinId=${
-                              detailTournament?.tournamentInfors?.skin?.id
-                            }&env=${process.env.REACT_APP_ENV}`
+                          ? linkCocosDev
+                          : linkCocosPro
                       }
                     ></iframe>
                   ) : loading ? (
@@ -1060,22 +1040,8 @@ export default function PlayGame(props) {
                   title="Playgame"
                   src={
                     process.env.REACT_APP_ENV === "development"
-                      ? `${
-                          process.env.REACT_APP_PROMOTION_URL +
-                          "/" +
-                          detailTournament?.tournamentInfors?.game?.gameHost
-                        }?token=${
-                          tokenUser || localStorage.getItem("token")
-                        }&tournamentId=${detailTournament?.id}&skinId=${
-                          detailTournament?.tournamentInfors?.skin?.id
-                        }&env=${process.env.REACT_APP_ENV}`
-                      : `${
-                          detailTournament?.tournamentInfors?.game?.gameHost
-                        }?token=${
-                          tokenUser || localStorage.getItem("token")
-                        }&tournamentId=${detailTournament?.id}&skinId=${
-                          detailTournament?.tournamentInfors?.skin?.id
-                        }&env=${process.env.REACT_APP_ENV}`
+                      ? linkCocosDev
+                      : linkCocosPro
                   }
                 ></iframe>
               ) : loading ? (
