@@ -135,9 +135,9 @@ export default function TicketCheckOut() {
             borderRadius: "11px !important",
           },
           zIndex: "1320",
-          "& .MuiPaper-root" : {
-            backgroundColor:"transparent !important",
-          }
+          "& .MuiPaper-root": {
+            backgroundColor: "transparent !important",
+          },
         }}
         maxWidth="2000px !important"
         onClose={() => {
@@ -625,7 +625,7 @@ export default function TicketCheckOut() {
                       fontWeight: "lighter !important",
                       fontSize: "14px",
                       marginLeft: "0px !important",
-                      color: agree === false ? "red" : "white",
+                      color: autoRecurring ? "#fff" : "#fc3c3c",
                     }}
                   >
                     Automatic Renewal of Subscription Pack
