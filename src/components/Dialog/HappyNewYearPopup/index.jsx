@@ -14,28 +14,6 @@ export default function HappyNewYearPopup() {
       onClose={() => {
         dispatch(closeNewYearPopup(new Date()));
       }}
-    >
-      <Box
-        component={"img"}
-        src={
-          device === "Desktop"
-            ? imageHome.hpny_popup_dk
-            : imageHome.hpny_popup_mb
-        }
-      ></Box>
-      <Box
-        onClick={() => {
-          dispatch(closeNewYearPopup(new Date()));
-        }}
-        sx={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          cursor: "pointer",
-        }}
-        component={"img"}
-        src={images.closeVoucher}
-      ></Box>
-    </Dialog>
+    ></Dialog>
   );
 }
