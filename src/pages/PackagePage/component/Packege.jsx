@@ -29,7 +29,7 @@ export default function Package(props) {
 
   const location = useLocation();
   const { pathname } = location;
-
+  console.log(item);
   const meta = {
     title:
       process.env.REACT_APP_ENV === "production"
@@ -78,7 +78,7 @@ export default function Package(props) {
     <DocumentMeta {...meta}>
       <>
         <DialogConfirm />
-        {width > 576 ? (
+        {width > 1200 ? (
           <div
             className="Package-home pb-5"
             style={{
@@ -256,22 +256,48 @@ export default function Package(props) {
                             id={i?.id}
                             avatarChristmas={i?.packageAvatarChristmas}
                             des={i?.packageDescription}
+                            packageCategory={i?.packageCategory}
                           />
                         </Box>
                       );
                     })}
                   </ScrollingCarousel>
                 ) : (
-                  <Box>
+                  // <Box>
+                  //   {item?.map((i, index) => {
+                  //     return (
+                  //       <Box
+                  //         key={index}
+                  //         className="mb-5 d-flex justify-content-center"
+                  //         sx={{
+                  //           width: width === 768 ? "100%" : "unset",
+                  //           padding: width === 768 ? "100px" : "unset",
+                  //         }}
+                  //       >
+                  //         <ListPackage
+                  //            packageName={i?.packageName}
+                  //            packageAvatar={i?.packageAvatar}
+                  //            packagePrice={i?.packagePrice}
+                  //            packageFreeTicketTournament={
+                  //              i?.packageFreeTicketTournament
+                  //            }
+                  //            packageReduceWatchAds={i?.packageReduceWatchAds}
+                  //            id={i?.id}
+                  //            avatarChristmas={i?.packageAvatarChristmas}
+                  //            des={i?.packageDescription}
+                  //            packageCategory={i?.packageCategory}
+                  //         />
+                  //       </Box>
+                  //     );
+                  //   })}
+                  // </Box>
+                  <ScrollingCarousel>
                     {item?.map((i, index) => {
                       return (
                         <Box
                           key={index}
-                          className="mb-5 d-flex justify-content-center"
-                          sx={{
-                            width: width === 768 ? "100%" : "unset",
-                            padding: width === 768 ? "100px" : "unset",
-                          }}
+                          className="mb-3"
+                          sx={{ margin: "0px 10px" }}
                         >
                           <ListPackage
                             packageName={i?.packageName}
@@ -284,11 +310,12 @@ export default function Package(props) {
                             id={i?.id}
                             avatarChristmas={i?.packageAvatarChristmas}
                             des={i?.packageDescription}
+                            packageCategory={i?.packageCategory}
                           />
                         </Box>
                       );
                     })}
-                  </Box>
+                  </ScrollingCarousel>
                 )}
               </Box>
             </Box>

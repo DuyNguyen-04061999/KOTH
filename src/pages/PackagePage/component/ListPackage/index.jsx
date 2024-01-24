@@ -43,7 +43,7 @@ export default function ListPackage(props) {
 
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
   const { t } = useTranslation("package");
-
+  
   const { listSetting } = useSelector((state) => state.settingReducer);
 
   const { width } = useWindowDimensions();
@@ -193,9 +193,9 @@ export default function ListPackage(props) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            borderRadius: "15px",
+            borderRadius: "10px",
             width: "100%",
-            height: "460px",
+            height: "480px",
             border: "none",
             padding: "6px 12px",
           }}
@@ -211,13 +211,16 @@ export default function ListPackage(props) {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                alignItems: "stretch",
                 width: "100%",
                 height: "100%",
                 justifyContent: "space-between",
               }}
             >
-              <Box>
+              <Box sx={{
+                display:"flex",
+                justifyContent:"center"
+              }}>
                 {isFetchListPackage ? (
                   <BannerLoading
                     width={width < 1200 && width > 576 ? 130 : 200}
@@ -233,10 +236,10 @@ export default function ListPackage(props) {
                       }}
                       component={"img"}
                       src={
-                        avatarChristmas
+                        packageAvatar
                           ? process.env.REACT_APP_SOCKET_SERVER +
                             "/" +
-                            avatarChristmas
+                            packageAvatar
                           : images.christbg
                       }
                       alt="..."
@@ -338,11 +341,12 @@ export default function ListPackage(props) {
                             color: "#FF7A00",
                             fontWeight: "700",
                             marginLeft: "4px !important",
+                            textAlign:"left"
                           }}
                         >
                           {Number(packageFreeTicketTournament) *
                             Number(listSetting?.saleValue || 1)}{" "}
-                          {t("Free extra/day")}
+                          {("Free extra/day")}
                         </Typography>
                       ) : (
                         <></>
@@ -406,129 +410,6 @@ export default function ListPackage(props) {
                   )}
                 </Box>
               </Box>
-              {/* text */}
-              {/* <Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginBottom: "5px",
-                    marginTop: "5px",
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <g>
-                      <path
-                        fill="#14C58A"
-                        d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
-                      ></path>
-                      <path
-                        fill="#fff"
-                        d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
-                      ></path>
-                    </g>
-                  </svg>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontSize: "12px",
-                      color: "#fff",
-                      textAlign: "start",
-                      fontWeight: "500 !important",
-                      marginLeft: "6px !important",
-                    }}
-                  >
-                    Use on any promotion
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginBottom: "5px",
-                    marginTop: "5px",
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <g>
-                      <path
-                        fill="#14C58A"
-                        d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
-                      ></path>
-                      <path
-                        fill="#fff"
-                        d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
-                      ></path>
-                    </g>
-                  </svg>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontSize: "12px",
-                      color: "#fff",
-                      textAlign: "start",
-                      fontWeight: "500 !important",
-                      marginLeft: "6px !important",
-                    }}
-                  >
-                    Applies to all promotions
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginBottom: "5px",
-                    marginTop: "5px",
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <g>
-                      <path
-                        fill="#14C58A"
-                        d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
-                      ></path>
-                      <path
-                        fill="#fff"
-                        d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
-                      ></path>
-                    </g>
-                  </svg>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontSize: "12px",
-                      color: "#fff",
-                      textAlign: "start",
-                      fontWeight: "500 !important",
-                      marginLeft: "6px !important",
-                    }}
-                  >
-                    Save over 20% more
-                  </Typography>
-                </Box>
-              </Box> */}
               {isJson(des) && JSON.parse(des) && JSON.parse(des)?.length > 0 ? (
                 JSON.parse(des)?.map((d, i_d) => (
                   <Box
@@ -625,7 +506,7 @@ export default function ListPackage(props) {
                   : ""}
               </Typography>
               <Box
-                sx={{ marginTop: "6px", width: "80%", marginBottom: "20px" }}
+                sx={{ marginTop: "6px", width: "auto", marginBottom: "20px" }}
               >
                 <AnimButton
                   upperCase={false}
