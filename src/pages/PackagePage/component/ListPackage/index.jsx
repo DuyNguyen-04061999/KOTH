@@ -301,7 +301,6 @@ export default function ListPackage(props) {
                       placement="bottom-start"
                       enterTouchDelay={0}
                       sx={{
-                        // backgroundColor: "white",
                         color: "white",
                       }}
                     >
@@ -457,7 +456,6 @@ export default function ListPackage(props) {
               ) : (
                 <></>
               )}
-              {/* text */}
               <Box
                 className="mb-2"
                 sx={{
