@@ -37,13 +37,12 @@ export default function ListPackage(props) {
     packageCategory,
   } = props;
 
-
   const [socket, setSocket] = useState(null);
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
 
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
   const { t } = useTranslation("package");
-  
+
   const { listSetting } = useSelector((state) => state.settingReducer);
 
   const { width } = useWindowDimensions();
@@ -140,13 +139,13 @@ export default function ListPackage(props) {
       <Box
         sx={{
           background:
-          packageName === "Combo Extra 1"
-          ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
-          : "" || packageCategory === "sub"
-          ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
-          : "" || packageCategory === "normal"
-          ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
-          : "",
+            packageName === "Combo Extra 1"
+              ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
+              : "" || packageCategory === "sub"
+              ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
+              : "" || packageCategory === "normal"
+              ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
+              : "",
           padding: "14px 20px 20px 20px",
           borderRadius: "24px",
           display: "flex",
@@ -165,12 +164,12 @@ export default function ListPackage(props) {
         }}
         className={
           packageName === "Combo Extra 1"
-          ? "gradient-border-rounded"
-          : "" || packageCategory === "sub"
-          ? "gradient-border-rounded1"
-          : "" || packageCategory === "normal"
-          ? "gradient-border-rounded2"
-          : ""
+            ? "gradient-border-rounded"
+            : "" || packageCategory === "sub"
+            ? "gradient-border-rounded1"
+            : "" || packageCategory === "normal"
+            ? "gradient-border-rounded2"
+            : ""
         }
       >
         <Typography
@@ -211,16 +210,20 @@ export default function ListPackage(props) {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "stretch",
+                alignItems: "center",
                 width: "100%",
                 height: "100%",
                 justifyContent: "space-between",
+                paddingLeft: "20px",
+                paddingRight: "20px",
               }}
             >
-              <Box sx={{
-                display:"flex",
-                justifyContent:"center"
-              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 {isFetchListPackage ? (
                   <BannerLoading
                     width={width < 1200 && width > 576 ? 130 : 200}
@@ -332,20 +335,19 @@ export default function ListPackage(props) {
                   )}
                   {packageCategory === "sub" ? (
                     <Box>
-                      {listSetting?.saleValue &&
-                      listSetting?.saleValue >= 1 ? (
+                      {listSetting?.saleValue && listSetting?.saleValue >= 1 ? (
                         <Typography
                           sx={{
                             fontSize: "14px",
                             color: "#FF7A00",
                             fontWeight: "700",
                             marginLeft: "4px !important",
-                            textAlign:"left"
+                            textAlign: "left",
                           }}
                         >
                           {Number(packageFreeTicketTournament) *
                             Number(listSetting?.saleValue || 1)}{" "}
-                          {("Free extra/day")}
+                          {"Free extra/day"}
                         </Typography>
                       ) : (
                         <></>
@@ -371,8 +373,7 @@ export default function ListPackage(props) {
                   ) : (
                     <Box>
                       {" "}
-                      {listSetting?.saleValue &&
-                      listSetting?.saleValue >= 1 ? (
+                      {listSetting?.saleValue && listSetting?.saleValue >= 1 ? (
                         <Typography
                           sx={{
                             fontSize: "14px",
@@ -409,53 +410,58 @@ export default function ListPackage(props) {
                   )}
                 </Box>
               </Box>
-              {isJson(des) && JSON.parse(des) && JSON.parse(des)?.length > 0 ? (
-                JSON.parse(des)?.map((d, i_d) => (
-                  <Box
-                    key={i_d}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      marginBottom: "5px",
-                      marginTop: packageName === "Subscription" ? "0px" : "5px",
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                    >
-                      <g>
-                        <path
-                          fill="#14C58A"
-                          d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
-                        ></path>
-                        <path
-                          fill="#fff"
-                          d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
-                        ></path>
-                      </g>
-                    </svg>
-                    <Typography
-                      variant="body1"
+              <Box>
+                {isJson(des) &&
+                JSON.parse(des) &&
+                JSON.parse(des)?.length > 0 ? (
+                  JSON.parse(des)?.map((d, i_d) => (
+                    <Box
+                      key={i_d}
                       sx={{
-                        fontSize: "14px",
-                        color: "#fff",
-                        textAlign: "start",
-                        fontWeight: "700 !important",
-                        marginLeft: "6px !important",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        marginBottom: "5px",
+                        marginTop:
+                          packageName === "Subscription" ? "0px" : "5px",
                       }}
                     >
-                      {d}
-                    </Typography>
-                  </Box>
-                ))
-              ) : (
-                <></>
-              )}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        fill="none"
+                        viewBox="0 0 18 18"
+                      >
+                        <g>
+                          <path
+                            fill="#14C58A"
+                            d="M9.058.548a8.297 8.297 0 108.297 8.296A8.306 8.306 0 009.058.548z"
+                          ></path>
+                          <path
+                            fill="#fff"
+                            d="M14.283 6.046l-4.952 5.446a.78.78 0 01-.489.231.86.86 0 01-.546-.12L4.76 9.31c-.312-.202-.363-.572-.113-.824.25-.253.705-.294 1.017-.092l2.95 1.912 4.504-4.955c.148-.18.406-.279.671-.259.265.02.495.158.598.357a.5.5 0 01-.104.596z"
+                          ></path>
+                        </g>
+                      </svg>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: "14px",
+                          color: "#fff",
+                          textAlign: "start",
+                          fontWeight: "700 !important",
+                          marginLeft: "6px !important",
+                        }}
+                      >
+                        {d}
+                      </Typography>
+                    </Box>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </Box>
               <Box
                 className="mb-2"
                 sx={{
@@ -504,7 +510,7 @@ export default function ListPackage(props) {
                   : ""}
               </Typography>
               <Box
-                sx={{ marginTop: "6px", width: "auto", marginBottom: "20px" }}
+                sx={{ marginTop: "6px", width: "100%", marginBottom: "20px" }}
               >
                 <AnimButton
                   upperCase={false}
