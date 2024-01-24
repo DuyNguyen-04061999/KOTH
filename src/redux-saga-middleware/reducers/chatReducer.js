@@ -40,12 +40,6 @@ export const updateContacterUsername = (userName, id) => {
   };
 };
 
-export const toggleInviteGameDialog = (data) => {
-  return {
-    type: "TOGGLE_INVITE_GAME_DIALOG",
-    payload: data,
-  };
-};
 export const openChatPopup = () => {
   return {
     type: "OPEN_CHAT_POPUP",
@@ -104,7 +98,6 @@ const chatReducer = (
     chatWorld: [],
     friendList: [],
     contacter: {},
-    isInviteGameDialog: false,
     typeInvite: "",
     chatPopup: true,
     privateChatPopup: false,
@@ -112,7 +105,7 @@ const chatReducer = (
     badgechat: false,
     openMess: false,
     openMenu: false,
-    userFriendNickName: ""
+    userFriendNickName: "",
   },
   action
 ) => {
@@ -127,10 +120,11 @@ const chatReducer = (
     case "UPDATE_CONTACTER_USERNAME": {
       return {
         ...state,
-        contacter: payload
+        contacter: payload,
       };
     }
-    case "UPDATE_FRIEND_NICKNAME": return {...state, userFriendNickName: payload || ""}
+    case "UPDATE_FRIEND_NICKNAME":
+      return { ...state, userFriendNickName: payload || "" };
     case "PUSH_FRIEND_LIST": {
       return {
         ...state,
@@ -149,12 +143,6 @@ const chatReducer = (
         friendList: [...state.friendList, payload],
       };
     }
-    case "TOGGLE_INVITE_GAME_DIALOG":
-      return {
-        ...state,
-        isInviteGameDialog: !state.isInviteGameDialog,
-        typeInvite: payload?.type || "",
-      };
     case "OPEN_CHAT_POPUP": {
       return {
         ...state,
@@ -194,7 +182,6 @@ const chatReducer = (
         ...state,
         friendList: [],
         contacter: {},
-        isInviteGameDialog: false,
         typeInvite: "",
         chatPopup: false,
         privateChatPopup: false,

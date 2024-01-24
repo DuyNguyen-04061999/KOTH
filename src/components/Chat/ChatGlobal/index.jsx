@@ -12,7 +12,6 @@ import { inpChat } from "../../../utils/cssFrom";
 import { images, popup } from "../../../utils/images";
 import { images280423_l } from "../../../utils/images280423_l";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import InviteGameDialog from "../../Dialog/Invitegame/InviteGame";
 import ComponentChat from "../componentChat";
 
 const ChatRoot = styled.input`
@@ -317,12 +316,6 @@ export default function ChatGlobal(props) {
               </Box>
             </Box>
           </Box>
-          <InviteGameDialog
-            open={openGame}
-            handleShow={() => {
-              setOpenGame(false);
-            }}
-          />
         </Box>
       ) : (
         <Dialog open={openMess} fullScreen>
@@ -480,12 +473,6 @@ export default function ChatGlobal(props) {
               </Box>
             </Box>
           </Box>
-          <InviteGameDialog
-            open={openGame}
-            handleShow={() => {
-              setOpenGame(false);
-            }}
-          />
         </Dialog>
       )}
     </>

@@ -22,12 +22,10 @@ import ListGamePage from "./pages/GameManager/ListGamePage";
 import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
-import GameLobby from "./pages/GamePlay";
 import HomePage from "./pages/Home";
 import PlayGamePage from "./pages/PlayGamePage";
 import Refresh from "./pages/Refresh";
 import Tournament from "./pages/Tournament";
-import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
@@ -119,7 +117,7 @@ function App() {
     if (socket && (tokenUser || token)) {
       socket?.emit("loginSocial", {
         token: tokenUser || token,
-        username: user?.userName
+        username: user?.userName,
       });
     }
   }, [tokenUser, socket, user]);
@@ -230,7 +228,7 @@ function App() {
         if (tokenUser || token) {
           socket?.emit("loginSocial", {
             token: tokenUser || token,
-            username: user?.userName
+            username: user?.userName,
           });
         }
       });
@@ -248,7 +246,7 @@ function App() {
         if (tokenUser || token) {
           socket?.emit("loginSocial", {
             token: tokenUser || token,
-            username: user?.userName
+            username: user?.userName,
           });
         }
       });
@@ -278,7 +276,7 @@ function App() {
       //     );
       //     store.dispatch(addListNotificationSuccess(data));
       //   }
-        
+
       // });
 
       // socket?.on("deleteFriendSuccess", (data) => {
@@ -295,13 +293,13 @@ function App() {
       // });
 
       socket?.on(`cancelFriendRequestSuccess`, (data) => {
-        if(token || tokenUser) {
+        if (token || tokenUser) {
           store.dispatch(getListNotification());
         }
       });
 
       socket?.on(`acceptFriendRequestSuccess`, (data) => {
-        if(token || tokenUser) {
+        if (token || tokenUser) {
           socket?.emit("listFriend");
           store.dispatch(callListSendingRequest());
         }
@@ -340,7 +338,7 @@ function App() {
       if (socket && (tokenUser || token)) {
         socket?.emit("loginSocial", {
           token: tokenUser || token,
-          username: user?.userName
+          username: user?.userName,
         });
       }
     };
@@ -541,11 +539,7 @@ function App() {
                     path="/promotion-detail/:id/influencers/:userName"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   ></Route>
-                  <Route path="/gamelobby/:id" element={<GameLobby />} />
-                  {/* <Route
-                    path="/selectroom/:id"
-                    element={<SelectRoomContainer />}
-                  /> */}
+
                   <Route
                     path="/promotion-detail/:id"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
@@ -642,12 +636,7 @@ function App() {
                       }
                     ></Route>
                   )}
-                  <Route
-                    path="transactions/:id"
-                    element={
-                      <SuspenseWrapper child={<TransactionDetailPage />} />
-                    }
-                  />
+
                   <Route path="*" element={<Navigate to="/home" />} />
                 </Route>
               </Routes>
