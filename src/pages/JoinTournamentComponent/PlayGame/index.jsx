@@ -152,6 +152,37 @@ export default function PlayGame(props) {
   }&mileStone=${JSON.stringify(
     detailTournament?.tournamentInfors?.game?.gameCategory?.mileStones
   )}`;
+
+  const [isBoughtPackage, setIsBoughtPackage] = useState(false);
+
+  useEffect(() => {
+    // Function to be executed at each interval
+    if (
+      detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
+      iframeRef
+    ) {
+      const incrementCount = () => {
+        const buyP = localStorage.getItem("buyPackage");
+        const newNumberTicket = localStorage.getItem("newNumberTicket");
+        if (buyP && newNumberTicket) {
+          if (!isBoughtPackage) {
+            const iframe = document.querySelector("iframe");
+            iframe.contentWindow.postMessage("Hello", "*");
+            setIsBoughtPackage(true);
+          }
+        }
+      };
+
+      // Set up the interval (in milliseconds)
+      const intervalId = setInterval(incrementCount, 1000); // Execute every 1000 milliseconds (1 second)
+
+      // Clean up the interval on component unmount
+      return () => clearInterval(intervalId);
+    }
+
+    // Dependency array is empty, meaning this effect runs once on mount
+  }, [detailTournament, isBoughtPackage]);
+
   return (
     <Box
       sx={
