@@ -29,7 +29,6 @@ export default function Package(props) {
 
   const location = useLocation();
   const { pathname } = location;
-  console.log(item);
   const meta = {
     title:
       process.env.REACT_APP_ENV === "production"
