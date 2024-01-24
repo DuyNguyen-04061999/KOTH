@@ -23,8 +23,6 @@ import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
 import HomePage from "./pages/Home";
-import PlayGamePage from "./pages/PlayGamePage";
-import Refresh from "./pages/Refresh";
 import Tournament from "./pages/Tournament";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
@@ -497,7 +495,6 @@ function App() {
               {" "}
               <ScrollToTopURL />
               <Routes>
-                <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route
                   path="game/iframe/:id"
@@ -579,10 +576,6 @@ function App() {
                   <Route
                     path="/change-log"
                     element={<SuspenseWrapper child={<ChangeLog />} />}
-                  />
-                  <Route
-                    path="/test-refresh"
-                    element={<SuspenseWrapper child={<Refresh />} />}
                   />
                   {/* <Route path="/countdowntimer" element={<CountDownTimer />} /> */}
                   <Route

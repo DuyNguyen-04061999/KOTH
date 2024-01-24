@@ -74,7 +74,6 @@ import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import DoubleDayDialog from "../Dialog/DoubleDay";
 import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
-import GameLogDialog from "../Dialog/GameLog/GameLog";
 import NotiFunds from "../Dialog/NotiFunds";
 import NotificationDialog from "../Dialog/Notification/NotificationDialog";
 import PackagePaypalDialog from "../Dialog/Packages/PackagePaypalDialog";
@@ -129,23 +128,14 @@ export default function Layout(props) {
   const { i18n } = useTranslation();
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const { systemLanguage } = useSelector((state) => state.settingReducer);
-  const { isWalletDialog, isTransactionDialog } = useSelector(
-    (state) => state.walletReducer
-  );
-  const { isLoginDialog } = useSelector((state) => state.authReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
   const { isNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token, user } = useSelector((state) => state.userReducer);
-  const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, badgechat, openMess } = useSelector(
-    (state) => state.chatReducer
-  );
-  const { isNotificationDialog } = useSelector((state) => state.dialogReducer);
+  const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter, countDownDoubleDay } =
     useSelector((state) => state.appReducer);
-  const { openMenu } = useSelector((state) => state.chatReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -167,14 +157,11 @@ export default function Layout(props) {
 
   useEffect(() => {
     const handlePopState = (event) => {
-      // Handle popstate event here
       dispatch(toggleCloseResultEndGame());
     };
 
-    // Add event listener for popstate
     window.addEventListener("popstate", handlePopState);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("popstate", handlePopState);
     };
@@ -201,7 +188,6 @@ export default function Layout(props) {
       dispatch(toggleStartGame(false));
       dispatch(finishGame());
       dispatch(finishVideo());
-      // dispatch(resetToGameWhenBuyPackageSuccess());
       localStorage.removeItem("buyPackage");
       localStorage.removeItem("newNumberTicket");
     }
@@ -504,12 +490,7 @@ export default function Layout(props) {
           }}
         />
       )}
-      <GameLogDialog
-        open={isGameLogDialog}
-        handleClose={() => {
-          dispatch(toggleGameLogDialog());
-        }}
-      />
+
       <AppBar
         position="sticky"
         className={
