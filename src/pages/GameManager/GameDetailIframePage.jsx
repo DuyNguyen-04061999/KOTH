@@ -180,7 +180,9 @@ export default function GameDetailIframePage(props) {
                             src={
                               process.env.REACT_APP_ENV === "development"
                                 ? `https://play4promote.com/game/43`
-                                : `${window.location.origin}/game/${id}`
+                                : game?.gameEngine !== "cocos"
+                                ? `${window.location.origin}/game/${id}`
+                                : game?.gameHost
                             }
                           ></iframe>
                         </FullScreen>
@@ -221,7 +223,13 @@ export default function GameDetailIframePage(props) {
                             }
                       }
                       title="Playgame"
-                      src={`${window.location.origin}/game/${id}`}
+                      src={
+                        process.env.REACT_APP_ENV === "development"
+                          ? `https://play4promote.com/game/43`
+                          : game?.gameEngine !== "cocos"
+                          ? `${window.location.origin}/game/${id}`
+                          : game?.gameHost
+                      }
                     ></iframe>
                   )}
                 </Box>
@@ -270,7 +278,9 @@ export default function GameDetailIframePage(props) {
                         src={
                           process.env.REACT_APP_ENV === "development"
                             ? `https://play4promote.com/game/43`
-                            : `${window.location.origin}/game/${id}`
+                            : game?.gameEngine !== "cocos"
+                            ? `${window.location.origin}/game/${id}`
+                            : game?.gameHost
                         }
                       ></iframe>
                     </FullScreen>
@@ -311,7 +321,13 @@ export default function GameDetailIframePage(props) {
                         }
                   }
                   title="Playgame"
-                  src={`${window.location.origin}/game/${id}`}
+                  src={
+                    process.env.REACT_APP_ENV === "development"
+                      ? `https://play4promote.com/game/43`
+                      : game?.gameEngine !== "cocos"
+                      ? `${window.location.origin}/game/${id}`
+                      : game?.gameHost
+                  }
                 ></iframe>
               )}
             </>

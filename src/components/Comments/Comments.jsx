@@ -23,6 +23,7 @@ export default function Comments() {
         width: "100%",
         backgroundColor: width < 576 ? "none" : "#1D1329",
         borderRadius: "12px",
+        marginTop: "20px",
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -33,7 +34,7 @@ export default function Comments() {
             fontWeight: "700",
             textAlign: "start",
             marginLeft: "0px !important",
-            fontSize: width < 576 ? "14px" : "16px",
+            fontSize: width < 576 ? "14px" : "20px",
           }}
         >
           Comments

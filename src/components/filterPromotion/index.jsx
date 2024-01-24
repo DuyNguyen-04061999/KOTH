@@ -594,7 +594,7 @@ export default function FilterPromotion(props) {
                   fontWeight: "700",
                 }}
               >
-                Filter by
+                Sort by
               </Typography>
             )}
             <Button
@@ -613,7 +613,7 @@ export default function FilterPromotion(props) {
                 padding: "5px 12px",
               }}
             >
-              {value ? "End in latest" : "End in soonest"}
+              {value ? "Ending latest" : "Ending soonest"}
               <KeyboardArrowDown />
             </Button>
             <Menu
@@ -643,7 +643,7 @@ export default function FilterPromotion(props) {
                   handleClose();
                 }}
               >
-                End in soonest
+                Ending soonest
               </MenuItem>
               <MenuItem
                 sx={{
@@ -654,7 +654,7 @@ export default function FilterPromotion(props) {
                   handleClose();
                 }}
               >
-                End in latest
+                Ending latest
               </MenuItem>
             </Menu>
           </Box>

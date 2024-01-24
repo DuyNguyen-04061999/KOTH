@@ -1,8 +1,8 @@
 .home-page {
   .banner-top {
     padding-bottom: 7px;
-    .fa-div-focus{
-      &:focus-visible{
+    .fa-div-focus {
+      &:focus-visible {
         outline: none;
       }
     }
@@ -98,7 +98,6 @@
                 }
               }
             }
-           
           }
           .theme-pvp {
             position: absolute;
@@ -126,7 +125,7 @@
       }
     }
   }
-  .leaderboard{
+  .leaderboard {
     // padding: 10px !important;
     padding-top: 27px;
     padding-bottom: 27px;
@@ -139,7 +138,7 @@
           img {
             margin-right: 5px;
           }
-          .icon-recomment{
+          .icon-recomment {
             width: 20px;
             height: 16px;
             margin-right: 5px;
@@ -163,7 +162,7 @@
           h1 {
             margin-left: 10px;
             color: white;
-            // 
+            //
             margin-bottom: 0px;
             position: relative;
           }
@@ -177,29 +176,29 @@
         }
       }
     }
-    .board{
-      .board-top{
-        .content-board{
+    .board {
+      .board-top {
+        .content-board {
           display: flex;
           justify-content: space-around;
           align-items: flex-end;
-          .two-st{
-            .br-two-st{
+          .two-st {
+            .br-two-st {
               position: relative;
-              .top-name{
-                .text-st{
+              .top-name {
+                .text-st {
                   // position: absolute;
                   // top: -65px;
                   // left: 83px;
                   // display: flex;
                   // line-height: 1;
-                  h6{
+                  h6 {
                     font-weight: 600;
                     color: white;
                     margin-bottom: 0 !important;
                     font-size: 30px;
                   }
-                  p{
+                  p {
                     color: white;
                     font-weight: 500;
                     font-size: 15px;
@@ -210,7 +209,7 @@
                 //   top: -20px;
                 //   left: 60px;
                 // }
-                .desc{
+                .desc {
                   // position: absolute;
                   // top: 70px;
                   // left: 9px;
@@ -218,14 +217,14 @@
                   // flex-direction: column;
                   // align-items: center;
                   // width: 180px;
-                  .user{
+                  .user {
                     margin: 0 !important;
                   }
-                  .gold{
+                  .gold {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    p{
+                    p {
                       color: yellow;
                     }
                   }
@@ -233,34 +232,34 @@
               }
             }
           }
-          .one-st{
-            .br-one-st{
+          .one-st {
+            .br-one-st {
               position: relative;
-              .top-name{
-                .text-st{
+              .top-name {
+                .text-st {
                   // position: absolute;
                   // top: -65px;
                   // left: 83px;
                   // display: flex;
                   // line-height: 1;
-                  h6{
+                  h6 {
                     font-weight: 600;
                     color: yellow;
                     margin-bottom: 0 !important;
                     font-size: 30px;
                   }
-                  p{
+                  p {
                     color: yellow;
                     font-weight: 500;
                     font-size: 15px;
                   }
                 }
-                .name-win{
+                .name-win {
                   // position: absolute;
                   // top: -20px;
                   // left: 60px;
                 }
-                .desc{
+                .desc {
                   // position: absolute;
                   // top: 70px;
                   // left: 9px;
@@ -268,14 +267,14 @@
                   // flex-direction: column;
                   // align-items: center;
                   // width: 180px;
-                  .user{
+                  .user {
                     margin: 0 !important;
                   }
-                  .gold{
+                  .gold {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    p{
+                    p {
                       color: yellow;
                     }
                   }
@@ -283,34 +282,34 @@
               }
             }
           }
-          .three-st{
-            .br-three-st{
+          .three-st {
+            .br-three-st {
               position: relative;
-              .top-name{
-                .text-st{
+              .top-name {
+                .text-st {
                   // position: absolute;
                   // top: -65px;
                   // left: 83px;
                   // display: flex;
                   // line-height: 1;
-                  h6{
+                  h6 {
                     font-weight: 600;
                     color: orange;
                     margin-bottom: 0 !important;
                     font-size: 30px;
                   }
-                  p{
+                  p {
                     color: orange;
                     font-weight: 500;
                     font-size: 15px;
                   }
                 }
-                .name-win{
+                .name-win {
                   // position: absolute;
                   // top: -20px;
                   // left: 60px;
                 }
-                .desc{
+                .desc {
                   // position: absolute;
                   // top: 70px;
                   // left: 9px;
@@ -318,14 +317,14 @@
                   // flex-direction: column;
                   // align-items: center;
                   // width: 180px;
-                  .user{
+                  .user {
                     margin: 0 !important;
                   }
-                  .gold{
+                  .gold {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    p{
+                    p {
                       color: yellow;
                     }
                   }
@@ -374,9 +373,8 @@
   --card-height: 65vh;
 }
 
-
 // @font-face {
-//   
+//
 //   src: local("NextBold"),
 //     url("../../../assets/font/CynthoNextBold.otf") format("truetype");
 //   font-weight: bold;
@@ -455,7 +453,7 @@
               h1 {
                 margin-left: 10px;
                 color: white;
-                // 
+                //
                 margin-bottom: 0px;
               }
             }
@@ -476,7 +474,7 @@
   }
   h1.title-text-desktop {
     margin-left: 10px;
-    
+
     margin-bottom: 0px;
     color: white;
   }
@@ -551,7 +549,7 @@
                 margin-right: 5px;
                 margin-bottom: 5px;
               }
-              .icon-recomment{
+              .icon-recomment {
                 width: 20px;
                 height: 16px;
                 margin-right: 5px;
@@ -575,7 +573,7 @@
               h1 {
                 margin-left: 10px;
                 color: white;
-                
+
                 margin-bottom: 0px;
               }
             }
@@ -643,7 +641,7 @@
       }
     }
 
-    .leaderboard{
+    .leaderboard {
       padding: 10px !important;
       .title {
         padding: 5px 0px !important;
@@ -657,7 +655,7 @@
               margin-right: 5px;
               margin-bottom: 5px;
             }
-            .icon-recomment{
+            .icon-recomment {
               width: 20px;
               height: 16px;
               margin-right: 5px;
@@ -681,7 +679,7 @@
             h1 {
               margin-left: 10px;
               color: white;
-              
+
               margin-bottom: 0px;
             }
           }
@@ -694,36 +692,36 @@
           }
         }
       }
-      .board{
-        .board-top{
-          .content-board{
+      .board {
+        .board-top {
+          .content-board {
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            .two-st{
-              .br-two-st{
+            .two-st {
+              .br-two-st {
                 position: relative;
-                .top-name{
-                  .text-st{
+                .top-name {
+                  .text-st {
                     position: absolute;
                     top: -37px;
                     left: 42px;
                     display: flex;
-                    h6{
+                    h6 {
                       font-weight: 600;
                       color: white;
                     }
-                    p{
+                    p {
                       color: white;
                       font-weight: 100;
                     }
                   }
-                  .name-win{
+                  .name-win {
                     position: absolute;
                     top: -10px;
                     left: 35px;
                   }
-                  .desc{
+                  .desc {
                     position: absolute;
                     top: 30px;
                     left: 9px;
@@ -731,14 +729,14 @@
                     flex-direction: column;
                     align-items: center;
                     width: 82px;
-                    .user{
+                    .user {
                       margin: 0 !important;
                     }
-                    .gold{
+                    .gold {
                       display: flex;
                       justify-content: center;
                       align-items: center;
-                      p{
+                      p {
                         color: yellow;
                       }
                     }
@@ -746,30 +744,30 @@
                 }
               }
             }
-            .one-st{
-              .br-one-st{
+            .one-st {
+              .br-one-st {
                 position: relative;
-                .top-name{
-                  .text-st{
+                .top-name {
+                  .text-st {
                     position: absolute;
                     top: -37px;
                     left: 42px;
                     display: flex;
-                    h6{
+                    h6 {
                       font-weight: 600;
                       color: yellow;
                     }
-                    p{
+                    p {
                       color: yellow;
                       font-weight: 100;
                     }
                   }
-                  .name-win{
+                  .name-win {
                     position: absolute;
                     top: -10px;
                     left: 35px;
                   }
-                  .desc{
+                  .desc {
                     position: absolute;
                     top: 30px;
                     left: 9px;
@@ -777,14 +775,14 @@
                     flex-direction: column;
                     align-items: center;
                     width: 82px;
-                    .user{
+                    .user {
                       margin: 0 !important;
                     }
-                    .gold{
+                    .gold {
                       display: flex;
                       justify-content: center;
                       align-items: center;
-                      p{
+                      p {
                         color: yellow;
                       }
                     }
@@ -792,30 +790,30 @@
                 }
               }
             }
-            .three-st{
-              .br-three-st{
+            .three-st {
+              .br-three-st {
                 position: relative;
-                .top-name{
-                  .text-st{
+                .top-name {
+                  .text-st {
                     position: absolute;
                     top: -37px;
                     left: 42px;
                     display: flex;
-                    h6{
+                    h6 {
                       font-weight: 600;
                       color: orange;
                     }
-                    p{
+                    p {
                       color: orange;
                       font-weight: 100;
                     }
                   }
-                  .name-win{
+                  .name-win {
                     position: absolute;
                     top: -10px;
                     left: 35px;
                   }
-                  .desc{
+                  .desc {
                     position: absolute;
                     top: 30px;
                     left: 9px;
@@ -823,14 +821,14 @@
                     flex-direction: column;
                     align-items: center;
                     width: 82px;
-                    .user{
+                    .user {
                       margin: 0 !important;
                     }
-                    .gold{
+                    .gold {
                       display: flex;
                       justify-content: center;
                       align-items: center;
-                      p{
+                      p {
                         color: yellow;
                       }
                     }
@@ -842,7 +840,7 @@
         }
       }
     }
-   
+
     .recommend {
       padding: 10px !important;
       .top-slider {
@@ -887,7 +885,7 @@
               h1 {
                 margin-left: 10px;
                 color: #00ffe9;
-                
+
                 margin-bottom: 0px;
                 box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                   rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -957,7 +955,7 @@
             h1 {
               margin-left: 10px;
               color: #00ffe9;
-              
+
               margin-bottom: 0px;
               box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                 rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -1017,7 +1015,7 @@
             h1 {
               margin-left: 10px;
               color: #00ffe9;
-              
+
               margin-bottom: 0px;
               box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                 rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -1085,7 +1083,7 @@
             h1 {
               margin-left: 10px;
               color: #00ffe9;
-              
+
               margin-bottom: 0px;
               box-shadow: rgba(0, 255, 233, 1) 0px 50px 100px -20px,
                 rgba(0, 255, 233, 1) 0px 30px 60px -30px;
@@ -1156,7 +1154,7 @@
   h1.title-text-desktop {
     margin-left: 10px;
     color: white;
-    
+
     margin-bottom: 0px;
   }
 }
@@ -1193,12 +1191,12 @@
 h1.title-text-desktop {
   margin-left: 10px;
   color: white;
-  
+
   margin-bottom: 0px;
 }
 
-.slick-dots li button:before{
-  font-family: 'slick';
+.slick-dots li button:before {
+  font-family: "slick";
   font-size: 10px !important;
   line-height: 20px;
   position: absolute;
@@ -1206,14 +1204,15 @@ h1.title-text-desktop {
   left: 0;
   width: 40px;
   height: 40px;
-  content: '•';
+  content: "•";
   text-align: center;
-  opacity: .25;
+  opacity: 0.25;
   color: rgb(188, 188, 188) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}.slick-dots li.slick-active button:before {
-  opacity: .75;
+}
+.slick-dots li.slick-active button:before {
+  opacity: 0.75;
   color: rgb(255, 255, 255) !important;
 }
 
@@ -1229,4 +1228,3 @@ h1.title-text-desktop {
     transform: rotateY(360deg);
   }
 }
-

@@ -1,6 +1,6 @@
 {
   "name": "koth_client",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "private": true,
   "proxy": "http://192.168.1.144:3008",
   "dependencies": {
@@ -31,11 +31,11 @@
     "node-sass": "^8.0.0",
     "prop-types": "^15.8.1",
     "qrcode.react": "^3.1.0",
-    "react": "^18.2.0",
+    "react": ">=16.8.0",
     "react-bootstrap": "^2.7.2",
     "react-csv": "^2.2.2",
     "react-document-meta": "^3.0.0-beta.2",
-    "react-dom": "^18.2.0",
+    "react-dom": ">=16.8.0",
     "react-full-screen": "^1.1.1",
     "react-ga4": "^2.1.0",
     "react-i18next": "^13.5.0",
@@ -66,12 +66,15 @@
     "test": "craco test",
     "eject": "craco eject",
     "build:staging": "dotenv -e .env.staging craco build",
-    "build:dev": "dotenv -e .env craco build"
+    "build:dev": "dotenv -e .env craco build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -90,8 +93,22 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
+    "@storybook/addon-essentials": "^7.6.10",
+    "@storybook/addon-interactions": "^7.6.10",
+    "@storybook/addon-links": "^7.6.10",
+    "@storybook/addon-onboarding": "^1.0.10",
+    "@storybook/blocks": "^7.6.10",
+    "@storybook/react": "^7.6.10",
+    "@storybook/react-webpack5": "^7.6.10",
+    "@storybook/test": "^7.6.10",
     "@types/socket.io-client": "^3.0.0",
     "dotenv-cli": "^7.2.1",
-    "file-loader": "^6.2.0"
+    "eslint-plugin-storybook": "^0.6.15",
+    "file-loader": "^6.2.0",
+    "storybook": "^7.6.10"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   }
 }

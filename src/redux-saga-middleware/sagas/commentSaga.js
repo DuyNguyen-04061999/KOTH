@@ -1,11 +1,15 @@
-import { takeEvery, call, put, delay } from "redux-saga/effects";
-import COMMENT_SERVICE from "../services/commentService";
+import {
+  call,
+  put,
+  takeEvery
+} from "redux-saga/effects";
 import {
   failSendComment,
   readySendComment,
   successSendComment,
   updateListComment,
 } from "../reducers/commentReducer";
+import COMMENT_SERVICE from "../services/commentService";
 const commentService = new COMMENT_SERVICE();
 var addCount = 0;
 function* getListCommentSaga(datarequest) {
@@ -39,6 +43,7 @@ function* addCommentSaga(datarequest) {
     addCount = 0;
   }
 }
+
 function* commentSaga() {
   yield takeEvery("GET_LIST_COMMENT_IN_PROMOTION", getListCommentSaga);
   yield takeEvery("ADD_COMMENT_IN_PROMOTION", addCommentSaga);

@@ -10,6 +10,7 @@ import DocumentMeta from "react-document-meta";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import { isJson } from "../../../utils/helper";
 import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
@@ -183,7 +184,18 @@ const HelpCenterComponent = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqTitle}
+                    {/* {listFAQ?.length > 0 &&
+                      listFAQ?.map((item, i_) => {
+                        return (
+                          <Box key={i_}>
+                            {isJson(item.faqDesc) &&
+                              JSON.parse(item.faqDesc)?.length > 0 &&
+                              JSON.parse(item.faqDesc)?.map(
+                                (title, i_title) => <p key={i_title}>{title}</p>
+                              )}
+                          </Box>
+                        );
+                      })} */}
                     {listFAQ?.length &&
                     listFAQ[tabHelpCenter]?.faqTitle ===
                       "Privacy And Policy" ? (
@@ -224,15 +236,25 @@ const HelpCenterComponent = () => {
                       ""
                     )}
                   </Box>
-                  <Typography
+                  <Box
                     style={{
                       fontSize: "14px",
                       textAlign: "start",
                       marginTop: "12px",
                     }}
                   >
-                    {listFAQ?.length > 0 && listFAQ[tabHelpCenter]?.faqDesc}
-                  </Typography>
+                    {listFAQ?.length &&
+                    listFAQ[tabHelpCenter]?.faqDesc &&
+                    !isJson(listFAQ[tabHelpCenter]?.faqDesc)
+                      ? listFAQ[tabHelpCenter]?.faqDesc
+                      : isJson(listFAQ[tabHelpCenter]?.faqDesc) &&
+                        listFAQ[tabHelpCenter]?.faqDesc &&
+                        JSON.parse(listFAQ[tabHelpCenter]?.faqDesc)?.length > 0
+                      ? JSON.parse(listFAQ[tabHelpCenter]?.faqDesc)?.map(
+                          (des, i_des) => <p key={i_des}>{des}</p>
+                        )
+                      : ""}
+                  </Box>
                   {listFAQ?.length &&
                     listFAQ?.map((item, index) => (
                       <TabPanel value={tabHelpCenter} key={index} index={index}>
@@ -251,19 +273,20 @@ const HelpCenterComponent = () => {
                                 {item?.faqQuestion}
                               </Typography>
                               <Box>
-                                {JSON.parse(item?.faqAnswer)?.map((e, i) => (
-                                  <Typography
-                                    key={i}
-                                    style={{
-                                      fontSize: "12px",
-                                      color: "#fff",
-                                      textAlign: "start",
-                                      marginTop: "6px",
-                                    }}
-                                  >
-                                    {e}
-                                  </Typography>
-                                ))}
+                                {isJson(item?.faqAnswer) &&
+                                  JSON.parse(item?.faqAnswer)?.map((e, i) => (
+                                    <Typography
+                                      key={i}
+                                      style={{
+                                        fontSize: "12px",
+                                        color: "#fff",
+                                        textAlign: "start",
+                                        marginTop: "6px",
+                                      }}
+                                    >
+                                      {e}
+                                    </Typography>
+                                  ))}
                               </Box>
                             </Box>
                           );
@@ -401,15 +424,26 @@ const HelpCenterComponent = () => {
                         ""
                       )}
                     </Box>
-                    <Typography
+                    <Box
                       style={{
                         fontSize: "16px",
                         textAlign: "start",
                         marginTop: "24px",
                       }}
                     >
-                      {listFAQ?.length && listFAQ[tabHelpCenter]?.faqDesc}
-                    </Typography>
+                      {listFAQ?.length &&
+                      listFAQ[tabHelpCenter]?.faqDesc &&
+                      !isJson(listFAQ[tabHelpCenter]?.faqDesc)
+                        ? listFAQ[tabHelpCenter]?.faqDesc
+                        : isJson(listFAQ[tabHelpCenter]?.faqDesc) &&
+                          listFAQ[tabHelpCenter]?.faqDesc &&
+                          JSON.parse(listFAQ[tabHelpCenter]?.faqDesc)?.length >
+                            0
+                        ? JSON.parse(listFAQ[tabHelpCenter]?.faqDesc)?.map(
+                            (des, i_des) => <p key={i_des}>{des}</p>
+                          )
+                        : ""}
+                    </Box>
                     {listFAQ?.length &&
                       listFAQ?.map((item, index) => (
                         <TabPanel
@@ -432,19 +466,20 @@ const HelpCenterComponent = () => {
                                   {item?.faqQuestion}
                                 </Typography>
                                 <Box>
-                                  {JSON.parse(item?.faqAnswer)?.map((e, i) => (
-                                    <Typography
-                                      key={i}
-                                      style={{
-                                        fontSize: "14px",
-                                        textAlign: "start",
-                                        marginTop: "12px",
-                                        color: "#fff",
-                                      }}
-                                    >
-                                      {e}
-                                    </Typography>
-                                  ))}
+                                  {isJson(item?.faqAnswer) &&
+                                    JSON.parse(item?.faqAnswer)?.map((e, i) => (
+                                      <Typography
+                                        key={i}
+                                        style={{
+                                          fontSize: "14px",
+                                          textAlign: "start",
+                                          marginTop: "12px",
+                                          color: "#fff",
+                                        }}
+                                      >
+                                        {e}
+                                      </Typography>
+                                    ))}
                                 </Box>
                               </Box>
                             );

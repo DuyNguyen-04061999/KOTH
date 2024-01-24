@@ -118,6 +118,12 @@ export const showDropdown = (data) => {
     payload: data,
   };
 };
+export const closeDropdown = (data) => {
+  return {
+    type: "CLOSE_DROPDOWN",
+    payload: data,
+  };
+};
 
 export const getNavTablet = (data) => {
   return {
@@ -379,6 +385,8 @@ const authReducer = (
       return { ...state, idPackage: payload };
     case "SHOW_DROPDOWN":
       return { ...state, isDropdownNav: !state.isDropdownNav };
+    case "CLOSE_DROPDOWN":
+      return { ...state, isDropdownNav: false };
     case "GET_NAV_TABLET":
       return { ...state, isNavTablet: payload };
     case "TOGGLE_FORGOT_PASS_DIALOG":
@@ -401,10 +409,10 @@ const authReducer = (
       return { ...state, isLoginDialog: true };
     case "CLOSE_LOGIN_DIALOG":
       return { ...state, isLoginDialog: false };
-      case "OPEN_SUBSCRIBE_DIALOG":
-        return { ...state, isSubscribeDialog: true };
-      case "CLOSE_SUBSCRIBE_DIALOG":
-        return { ...state, isSubscribeDialog: false };
+    case "OPEN_SUBSCRIBE_DIALOG":
+      return { ...state, isSubscribeDialog: true };
+    case "CLOSE_SUBSCRIBE_DIALOG":
+      return { ...state, isSubscribeDialog: false };
     case "UPDATE_U_PACK":
       return { ...state, uPack: payload || {} };
     case "UPDATE_USERNAME_WHEN_RESET": {

@@ -15,6 +15,7 @@ import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gam
 import { getAppType } from "../../../utils/helper";
 import { images, navbar } from "../../../utils/images";
 import "../Nav/Nav.scss";
+import NavPromotionTablet from "./NavPromotionTablet";
 // import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
@@ -27,6 +28,7 @@ export default function Navbar() {
   const { isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
   );
+  const { device } = useSelector((state) => state.deviceReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -636,318 +638,335 @@ export default function Navbar() {
                   {t("Home")}
                 </Typography>
               </Box>
-              <Box
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: isNav === true ? "space-between" : "center",
-                  transition: "0.2s",
-                  backgroundColor: isDropdownNav ? "#462A71" : "",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  marginTop: "16px",
-                }}
-                onClick={toggleDropdown}
-                className="nav-home"
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
+              {device === "Tablet" && !isNav ? (
+                <NavPromotionTablet
+                  isNav={isNav}
+                  isDropdownNav={isDropdownNav}
+                  toggleDropdown={toggleDropdown}
+                />
+              ) : (
+                <>
+                  {" "}
                   <Box
-                    component={"img"}
-                    src={
-                      isDropdownNav
-                        ? navbar.activeNavPromotion
-                        : navbar.navPromotion
-                    }
-                    sx={{ width: "18px", height: "18px", marginRight: "8px" }}
-                  />
-                  <Typography
-                    className="hover-nav"
-                    style={{
-                      display: isNav === true ? "block" : "none",
+                    sx={{
                       cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: "15px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      color: isDropdownNav ? "#fff" : "",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent:
+                        isNav === true ? "space-between" : "center",
+                      transition: "0.2s",
+                      backgroundColor: isDropdownNav ? "#462A71" : "",
+                      borderRadius: "5px",
+                      padding: "10px",
+                      marginTop: "16px",
                     }}
+                    onClick={toggleDropdown}
+                    className="nav-home"
                   >
-                    {t("Promotion")}
-                  </Typography>
-                  <Box sx={{ marginLeft: isNav && "18px" }}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                      style={{
-                        transform:
-                          isDropdownNav === true
-                            ? "rotate(0deg)"
-                            : "rotate(-88deg)",
-                        transition: "all 0.3s",
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
                       }}
                     >
-                      <g clipPath="url(#clip0_2059_14801)">
-                        <g>
-                          <g>
-                            <path
-                              fill="#A89CD7"
-                              d="M6.997 8.348l5.238-5.237a.76.76 0 01.541-.223.76.76 0 01.542.223l.458.46a.76.76 0 01.224.54.76.76 0 01-.224.542L7.54 10.89a.76.76 0 01-.543.223.76.76 0 01-.543-.223l-6.23-6.23A.76.76 0 010 4.117a.76.76 0 01.224-.541l.458-.46a.767.767 0 011.083 0l5.232 5.232z"
-                            ></path>
+                      <Box
+                        component={"img"}
+                        src={
+                          isDropdownNav
+                            ? navbar.activeNavPromotion
+                            : navbar.navPromotion
+                        }
+                        sx={{
+                          width: "18px",
+                          height: "18px",
+                          marginRight: "8px",
+                        }}
+                      />
+                      <Typography
+                        className="hover-nav"
+                        style={{
+                          display: isNav === true ? "block" : "none",
+                          cursor: "pointer",
+                          fontWeight: "700",
+                          fontSize: "15px",
+                          marginLeft: "5px",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          color: isDropdownNav ? "#fff" : "",
+                        }}
+                      >
+                        {t("Promotion")}
+                      </Typography>
+                      <Box sx={{ marginLeft: isNav && "18px" }}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                          style={{
+                            transform:
+                              isDropdownNav === true
+                                ? "rotate(0deg)"
+                                : "rotate(-88deg)",
+                            transition: "all 0.3s",
+                          }}
+                        >
+                          <g clipPath="url(#clip0_2059_14801)">
+                            <g>
+                              <g>
+                                <path
+                                  fill="#A89CD7"
+                                  d="M6.997 8.348l5.238-5.237a.76.76 0 01.541-.223.76.76 0 01.542.223l.458.46a.76.76 0 01.224.54.76.76 0 01-.224.542L7.54 10.89a.76.76 0 01-.543.223.76.76 0 01-.543-.223l-6.23-6.23A.76.76 0 010 4.117a.76.76 0 01.224-.541l.458-.46a.767.767 0 011.083 0l5.232 5.232z"
+                                ></path>
+                              </g>
+                            </g>
                           </g>
-                        </g>
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_2059_14801">
-                          <path
-                            fill="#fff"
-                            d="M0 0H14V14H0z"
-                            transform="matrix(0 -1 -1 0 14 14)"
-                          ></path>
-                        </clipPath>
-                      </defs>
-                    </svg>
+                          <defs>
+                            <clipPath id="clip0_2059_14801">
+                              <path
+                                fill="#fff"
+                                d="M0 0H14V14H0z"
+                                transform="matrix(0 -1 -1 0 14 14)"
+                              ></path>
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      </Box>
+                    </Box>
                   </Box>
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: isDropdownNav === true ? "block" : "none",
-                  transition: "all 0.5s",
-                }}
-                className={`dropdown-content ${
-                  isDropdownNav === true ? "show" : ""
-                }`}
-              >
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    marginLeft: "0px !important",
-                    transition: "0.3s ease",
-                    backgroundColor:
-                      pathname &&
-                      pathname?.includes("hot-promotion") &&
-                      "#7848ED",
-                    borderRadius: "5px",
-                    color:
-                      pathname && pathname?.includes("hot-promotion")
-                        ? "white"
-                        : "#A89CD7",
-                    padding: "10px 10px 10px 15px",
-                    ":hover": {
-                      backgroundColor: "#7848ED",
-                    },
-                  }}
-                  onClick={() => {
-                    navigate("/hot-promotion");
-                  }}
-                  className="nav-home mt-3"
-                >
-                  <Typography
-                    className="hover-nav"
-                    style={{
-                      cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: isNav ? "15px" : "13px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
+                  <Box
+                    sx={{
+                      display: isDropdownNav === true ? "block" : "none",
+                      transition: "all 0.5s",
                     }}
+                    className={`dropdown-content ${
+                      isDropdownNav === true ? "show" : ""
+                    }`}
                   >
-                    {t("Hot")}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    transition: "0.3s ease",
-                    backgroundColor:
-                      pathname &&
-                      pathname?.includes("ongoing-promotion") &&
-                      "#7848ED",
-                    borderRadius: "5px",
+                    <Box
+                      sx={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        marginLeft: "0px !important",
+                        transition: "0.3s ease",
+                        backgroundColor:
+                          pathname &&
+                          pathname?.includes("hot-promotion") &&
+                          "#7848ED",
+                        borderRadius: "5px",
+                        color:
+                          pathname && pathname?.includes("hot-promotion")
+                            ? "white"
+                            : "#A89CD7",
+                        padding: "10px 10px 10px 15px",
+                        ":hover": {
+                          backgroundColor: "#7848ED",
+                        },
+                      }}
+                      onClick={() => {
+                        navigate("/hot-promotion");
+                      }}
+                      className="nav-home mt-3"
+                    >
+                      <Typography
+                        className="hover-nav"
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: "700",
+                          fontSize: isNav ? "15px" : "13px",
+                          marginLeft: "5px",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {t("Hot")}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                        transition: "0.3s ease",
+                        backgroundColor:
+                          pathname &&
+                          pathname?.includes("ongoing-promotion") &&
+                          "#7848ED",
+                        borderRadius: "5px",
 
-                    color:
-                      pathname && pathname?.includes("ongoing-promotion")
-                        ? "white"
-                        : "#A89CD7",
-                    padding: "10px 10px 10px 15px",
-                    ":hover": {
-                      backgroundColor: "#7848ED",
-                    },
-                  }}
-                  onClick={() => {
-                    navigate("/ongoing-promotion");
-                  }}
-                  className="nav-home mt-3"
-                >
-                  <Typography
-                    className="hover-nav"
-                    style={{
-                      cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: isNav ? "15px" : "13px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {t("Ongoing")}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    transition: "0.3s ease",
-                    backgroundColor:
-                      pathname &&
-                      pathname?.includes("upcoming-promotion") &&
-                      "#7848ED",
-                    borderRadius: "5px",
-                    color:
-                      pathname && pathname?.includes("upcoming-promotion")
-                        ? "white"
-                        : "#A89CD7",
-                    padding: "10px 10px 10px 15px",
-                    ":hover": {
-                      backgroundColor: "#7848ED",
-                    },
-                  }}
-                  onClick={() => {
-                    navigate("/upcoming-promotion");
-                  }}
-                  className="nav-home mt-3"
-                >
-                  <Typography
-                    className="hover-nav"
-                    style={{
-                      cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: isNav ? "15px" : "13px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {t("Upcoming")}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    transition: "0.3s ease",
-                    backgroundColor:
-                      pathname &&
-                      pathname?.includes("ended-promotion") &&
-                      "#7848ED",
-                    borderRadius: "5px",
-                    color:
-                      pathname && pathname?.includes("ended-promotion")
-                        ? "white"
-                        : "#A89CD7",
-                    padding: "10px 10px 10px 15px",
+                        color:
+                          pathname && pathname?.includes("ongoing-promotion")
+                            ? "white"
+                            : "#A89CD7",
+                        padding: "10px 10px 10px 15px",
+                        ":hover": {
+                          backgroundColor: "#7848ED",
+                        },
+                      }}
+                      onClick={() => {
+                        navigate("/ongoing-promotion");
+                      }}
+                      className="nav-home mt-3"
+                    >
+                      <Typography
+                        className="hover-nav"
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: "700",
+                          fontSize: isNav ? "15px" : "13px",
+                          marginLeft: "5px",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {t("Ongoing")}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                        transition: "0.3s ease",
+                        backgroundColor:
+                          pathname &&
+                          pathname?.includes("upcoming-promotion") &&
+                          "#7848ED",
+                        borderRadius: "5px",
+                        color:
+                          pathname && pathname?.includes("upcoming-promotion")
+                            ? "white"
+                            : "#A89CD7",
+                        padding: "10px 10px 10px 15px",
+                        ":hover": {
+                          backgroundColor: "#7848ED",
+                        },
+                      }}
+                      onClick={() => {
+                        navigate("/upcoming-promotion");
+                      }}
+                      className="nav-home mt-3"
+                    >
+                      <Typography
+                        className="hover-nav"
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: "700",
+                          fontSize: isNav ? "15px" : "13px",
+                          marginLeft: "5px",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {t("Upcoming")}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                        transition: "0.3s ease",
+                        backgroundColor:
+                          pathname &&
+                          pathname?.includes("ended-promotion") &&
+                          "#7848ED",
+                        borderRadius: "5px",
+                        color:
+                          pathname && pathname?.includes("ended-promotion")
+                            ? "white"
+                            : "#A89CD7",
+                        padding: "10px 10px 10px 15px",
 
-                    ":hover": {
-                      backgroundColor: "#7848ED",
-                    },
-                  }}
-                  onClick={() => {
-                    navigate("/ended-promotion");
-                  }}
-                  className="nav-home mt-2"
-                >
-                  <Typography
-                    className="hover-nav"
-                    style={{
-                      cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: isNav ? "15px" : "13px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {t("Ended")}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-                    transition: "0.3s ease",
-                    backgroundColor:
-                      pathname &&
-                      pathname?.includes("joined-promotion") &&
-                      "#7848ED",
-                    borderRadius: "5px",
-                    color:
-                      pathname && pathname?.includes("joined-promotion")
-                        ? "white"
-                        : "#A89CD7",
-                    padding: "10px 10px 10px 15px",
+                        ":hover": {
+                          backgroundColor: "#7848ED",
+                        },
+                      }}
+                      onClick={() => {
+                        navigate("/ended-promotion");
+                      }}
+                      className="nav-home mt-2"
+                    >
+                      <Typography
+                        className="hover-nav"
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: "700",
+                          fontSize: isNav ? "15px" : "13px",
+                          marginLeft: "5px",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {t("Ended")}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                        transition: "0.3s ease",
+                        backgroundColor:
+                          pathname &&
+                          pathname?.includes("joined-promotion") &&
+                          "#7848ED",
+                        borderRadius: "5px",
+                        color:
+                          pathname && pathname?.includes("joined-promotion")
+                            ? "white"
+                            : "#A89CD7",
+                        padding: "10px 10px 10px 15px",
 
-                    ":hover": {
-                      backgroundColor: "#7848ED",
-                    },
-                  }}
-                  onClick={() => {
-                    if (token) {
-                      navigate("/joined-promotion");
-                    } else {
-                      dispatch(openLoginDialog());
-                    }
-                  }}
-                  className="nav-home mt-2"
-                >
-                  <Typography
-                    className="hover-nav"
-                    style={{
-                      cursor: "pointer",
-                      fontWeight: "700",
-                      fontSize: isNav ? "15px" : "13px",
-                      marginLeft: "5px",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {t("Joined")}
-                  </Typography>
-                </Box>
-              </Box>
+                        ":hover": {
+                          backgroundColor: "#7848ED",
+                        },
+                      }}
+                      onClick={() => {
+                        if (token) {
+                          navigate("/joined-promotion");
+                        } else {
+                          dispatch(openLoginDialog());
+                        }
+                      }}
+                      className="nav-home mt-2"
+                    >
+                      <Typography
+                        className="hover-nav"
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: "700",
+                          fontSize: isNav ? "15px" : "13px",
+                          marginLeft: "5px",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {t("Joined")}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </>
+              )}
+
               <Box
                 sx={{
                   cursor: "pointer",

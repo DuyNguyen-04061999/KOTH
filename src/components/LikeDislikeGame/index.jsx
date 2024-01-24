@@ -8,8 +8,13 @@ import {
   likeGamePromotion,
   unDisLikeGamePromotion,
   unLikeGamePromotion,
+  updateDislikeGame,
+  updateIsReady,
+  updateLikeGame,
 } from "../../redux-saga-middleware/reducers/likeDislikeReducer";
 import { imageHome } from "../../utils/images";
+import LoadingLikeDislike from "./LoadingLikeDislike";
+import { openLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 export default function LikeDislikeGame(props) {
   const { gameId } = props;
   const dispatch = useDispatch();
@@ -23,6 +28,9 @@ export default function LikeDislikeGame(props) {
   useEffect(() => {
     if (tokenUser) {
       dispatch(getListLikeDislike());
+    } else {
+      dispatch(updateLikeGame([]));
+      dispatch(updateDislikeGame([]));
     }
     if (gameId) {
       dispatch(getLikeDislikeCount(gameId));
@@ -34,53 +42,64 @@ export default function LikeDislikeGame(props) {
     setDisLikeCount(countLikeDislike?.countGameDisLiked);
   }, [countLikeDislike]);
   const handleOnClickLikeGame = () => {
-    if (!listGameLiked?.includes(gameId)) {
-      if (listGameDisLiked?.includes(gameId)) {
+    if (tokenUser) {
+      dispatch(updateIsReady(true));
+      if (!listGameLiked?.includes(gameId)) {
+        if (listGameDisLiked?.includes(gameId)) {
+          setLikeCount((prev) => {
+            return prev + 1;
+          });
+          setDisLikeCount((prev) => {
+            return prev - 1;
+          });
+        } else {
+          setLikeCount((prev) => {
+            return prev + 1;
+          });
+        }
+        dispatch(likeGamePromotion(gameId));
+      } else {
+        dispatch(unLikeGamePromotion(gameId));
         setLikeCount((prev) => {
-          return prev + 1;
-        });
-        setDisLikeCount((prev) => {
           return prev - 1;
         });
-      } else {
-        setLikeCount((prev) => {
-          return prev + 1;
-        });
       }
-      dispatch(likeGamePromotion(gameId));
     } else {
-      dispatch(unLikeGamePromotion(gameId));
-      setLikeCount((prev) => {
-        return prev - 1;
-      });
+      dispatch(openLoginDialog());
     }
   };
 
   const handleOnClickDislikeGame = () => {
-    if (!listGameDisLiked?.includes(gameId)) {
-      if (listGameLiked?.includes(gameId)) {
-        setLikeCount((prev) => {
+    if (tokenUser) {
+      dispatch(updateIsReady(true));
+      if (!listGameDisLiked?.includes(gameId)) {
+        if (listGameLiked?.includes(gameId)) {
+          setLikeCount((prev) => {
+            return prev - 1;
+          });
+          setDisLikeCount((prev) => {
+            return prev + 1;
+          });
+        } else {
+          setDisLikeCount((prev) => {
+            return prev + 1;
+          });
+        }
+        dispatch(dislikeGamePromotion(gameId));
+      } else {
+        dispatch(unDisLikeGamePromotion(gameId));
+        setDisLikeCount((prev) => {
           return prev - 1;
         });
-        setDisLikeCount((prev) => {
-          return prev + 1;
-        });
-      } else {
-        setDisLikeCount((prev) => {
-          return prev + 1;
-        });
       }
-      dispatch(dislikeGamePromotion(gameId));
     } else {
-      dispatch(unDisLikeGamePromotion(gameId));
-      setDisLikeCount((prev) => {
-        return prev - 1;
-      });
+      dispatch(openLoginDialog());
     }
   };
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
+      <LoadingLikeDislike />
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           onClick={() => {

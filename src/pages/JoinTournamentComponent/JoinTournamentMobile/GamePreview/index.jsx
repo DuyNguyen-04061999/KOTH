@@ -9,6 +9,7 @@ import Slider from "react-slick";
 import BannerLoading from "../../../../components/LoadingComponent/BannerLoading";
 import { images } from "../../../../utils/images";
 import ImageGamePre from "../ImgGamePre";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 export default function GamePreview() {
   const settings = {
     arrows: false,
@@ -20,6 +21,7 @@ export default function GamePreview() {
   const { isGetDetailPromotion, isGetDetailAuthPromotion } = useSelector(
     (state) => state.promotionReducer
   );
+  const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
   const [open, setOpen] = useState(false);
   const [newArray, setNewArray] = useState([]);
@@ -83,6 +85,9 @@ export default function GamePreview() {
       <Box
         sx={{
           paddingBottom: device === "Desktop" ? "20px" : "0px",
+          backgroundColor: width < 576 ? "none" : "#1D1329",
+          borderRadius: "12px",
+          padding: width < 576 ? "10px 0px" : "16px 25px",
         }}
         className="mt-3"
       >
