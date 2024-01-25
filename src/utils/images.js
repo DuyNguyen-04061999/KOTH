@@ -134,7 +134,6 @@ import game7 from "../assets/imagesLayout/game7.png";
 import iconrecoment from "../assets/imagesLayout/icon recommended.png";
 import icontopwinner from "../assets/imagesLayout/icon topwinner.png";
 import iconbattlegame from "../assets/imagesLayout/iconbattle games.png";
-import playbanner from "../assets/imagesLayout/playbanner.png";
 import popuptext from "../assets/imagesLayout/popuptext.svg";
 //------------popup---------------
 
@@ -163,7 +162,6 @@ import SearchActiveIcon from "../assets/imagesLayout/SearchActiveIcon.png";
 //---------------signin-signup-------------------
 import copybutton from "../assets/imagesDesktop/copybutton.png";
 import editbutton from "../assets/imagesDesktop/editbutton.png";
-import commingsoon2 from "../assets/imagesLayout/ComingSoon.png";
 import bannersignin from "../assets/imagesLayout/Sign/bannerSignin.png";
 import chose2 from "../assets/imagesLayout/Sign/chose.png";
 import chose1 from "../assets/imagesLayout/Sign/chose_button.png";
@@ -185,21 +183,17 @@ import videoTutorial from "../assets/videoHover/videoTutorial.mp4";
 
 import btnnav from "../assets/imagesDesktop/button.svg";
 import inviteG from "../assets/imagesDesktop/inviteGame.png";
-import proWallet from "../assets/imagesLayout/popup/13pro.png";
 import goldleaderboard from "../assets/imagesLayout/popup/Gold.png";
 import packageicon from "../assets/imagesLayout/popup/Group.svg";
 import vecter from "../assets/imagesLayout/popup/Vector.svg";
 import ava1 from "../assets/imagesLayout/popup/ava1.png";
 import bg01 from "../assets/imagesLayout/popup/bg01.png";
 import brleaderboard from "../assets/imagesLayout/popup/br.png";
-import checkCircle from "../assets/imagesLayout/popup/check-circle.svg";
 import crown from "../assets/imagesLayout/popup/crown.svg";
-import heart from "../assets/imagesLayout/popup/heart.svg";
 import iconleaderboard from "../assets/imagesLayout/popup/icon.png.png";
 import top1 from "../assets/imagesLayout/popup/top1.png";
 import top2 from "../assets/imagesLayout/popup/top2.png";
 import top3 from "../assets/imagesLayout/popup/top3.png";
-// import walletopen from "../assets/imagesLayout/popup/walletopen.png";
 import LogoAnim from "../assets/videoHover/logo-anim version2.mp4";
 
 import GamePreview1 from "../assets/images/GamePreview1.png";
@@ -587,7 +581,6 @@ export const images2 = {
   icontopwinner: icontopwinner,
   iconbattlegame: iconbattlegame,
   popuptext: popuptext,
-  playbanner: playbanner,
   iconleaderboard: iconleaderboard,
   brleaderboard: brleaderboard,
 };
@@ -608,8 +601,6 @@ export const popup = {
   HomeActiveIcon: HomeActiveIcon,
   packageicon: packageicon,
   //---------------
-  heart: heart,
-  checkCircle: checkCircle,
   vecter: vecter,
   bg01: bg01,
   crown: crown,
