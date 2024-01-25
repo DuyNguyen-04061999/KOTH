@@ -492,7 +492,7 @@ export default function ListPackage(props) {
                       uPack?.remain !== "Expired" &&
                       packageCategory === Type.Subscription
                         ? "disable"
-                        : "christmas"
+                        : "primary"
                     }
                     onClick={handleBuyPackage}
                     style={{
@@ -503,7 +503,7 @@ export default function ListPackage(props) {
                         uPack?.remain !== "Expired" &&
                         packageCategory === Type.Subscription
                           ? "Gray"
-                          : "#C02F40",
+                          : "#9747FF",
                       backdropFilter: " blur(4px)",
                       fontSize: "11px ",
                     }}
