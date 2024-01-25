@@ -451,21 +451,27 @@ export default function ListPackage(props) {
                   <></>
                 )}
               </Box>
-              <Typography
-                sx={{
-                  fontSize: width < 1200 && width > 576 ? "8px" : "12px",
-                  color: "#7848ED",
-                }}
-              >
-                Sale period:{" "}
-                {listSetting?.saleValue && listSetting?.saleValue > 1
-                  ? `${moment(listSetting?.saleStartAt || new Date())?.format(
-                      "MM/DD/YYYY"
-                    )} - ${moment(listSetting?.saleEndAt || new Date())?.format(
-                      "MM/DD/YYYY"
-                    )}`
-                  : ""}
-              </Typography>
+              {listSetting?.saleValue && 
+                listSetting?.saleValue > 1 ? (
+                  <Typography
+                  sx={{
+                    fontSize: width < 1200 && width > 576 ? "8px" : "12px",
+                    color: "#7848ED",
+                  }}
+                >
+                  Sale period:{" "}
+                  {listSetting?.saleValue && listSetting?.saleValue > 1
+                    ? `${moment(listSetting?.saleStartAt || new Date())?.format(
+                        "MM/DD/YYYY"
+                      )} - ${moment(listSetting?.saleEndAt || new Date())?.format(
+                        "MM/DD/YYYY"
+                      )}`
+                    : ""}
+                </Typography>
+                ) : (
+                  <></>
+                )
+              }
               <Box
                 sx={{ marginTop: "6px", width: "100%", marginBottom: "20px" }}
               >
