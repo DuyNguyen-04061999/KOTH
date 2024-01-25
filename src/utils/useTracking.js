@@ -1,14 +1,14 @@
-import Hotjar from '@hotjar/browser';
+import Hotjar from "@hotjar/browser";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
-const { REACT_APP_HOTJAR_SITE_ID, REACT_APP_HOTJAR_VERSION } = process.env
+const { REACT_APP_HOTJAR_SITE_ID, REACT_APP_HOTJAR_VERSION } = process.env;
 
 const siteId = REACT_APP_HOTJAR_SITE_ID;
 const hotjarVersion = REACT_APP_HOTJAR_VERSION;
 
 export const useTracking = (trackingId) => {
-  Hotjar.init(siteId, hotjarVersion)
+  Hotjar.init(siteId, hotjarVersion);
   ReactGA.initialize(trackingId);
 
   ReactGA.send({

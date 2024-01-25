@@ -358,7 +358,6 @@ export const getListPromotionNewFail = (data) => {
 
 const tournamentReducer = (
   state = {
-    //success=true&&fail=false --> success, fail=true&&success=false --> fail, success=false && fail=false --> Loading
     isCreateTournamentSuccess: true,
     isCreateTournamentFail: true,
     tournamentRes: [],
