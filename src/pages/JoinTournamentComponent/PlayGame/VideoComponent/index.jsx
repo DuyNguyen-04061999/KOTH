@@ -120,9 +120,13 @@ export default function VideoComponent(props) {
             ?.includes("reveal") && (
             <Box
               onClick={() => {
-                ReactGA.send({
-                  hitType: "click_reveal_link",
-                  page: "https://revealsuits.com",
+                ReactGA.event({
+                  category: "click_reveal_link",
+                  action: "click",
+                  label: "https://revealsuits.com", // optional
+                  value: 99, // optional, must be a number
+                  nonInteraction: true, // optional, true/false
+                  transport: "xhr", // optional, beacon/xhr/image
                 });
                 window.open("https://revealsuits.com", "_blank");
               }}
@@ -210,7 +214,7 @@ export default function VideoComponent(props) {
                 device === "Mobile" && orientation === "landscape"
                   ? "fixed"
                   : "absolute",
-              top: width < 576 ? "40%" : "50%",
+              top: width < 576 ? "22%" : "50%",
               right: "10px",
               display: "flex",
               alignItems: "center",

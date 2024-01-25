@@ -2135,11 +2135,15 @@ export default function JoinTournament() {
                               <Typography
                                 onClick={() => {
                                   if (item?.includes(".com")) {
-                                    ReactGA.send({
-                                      hitType: "click_reveal_link_infors",
-                                      page: `https://${String(
+                                    ReactGA.event({
+                                      category: "click_infors",
+                                      action: "click",
+                                      label: `https://${String(
                                         item
-                                      )?.toLowerCase()}`,
+                                      )?.toLowerCase()}`, // optional
+                                      value: 99, // optional, must be a number
+                                      nonInteraction: true, // optional, true/false
+                                      transport: "xhr", // optional, beacon/xhr/image
                                     });
                                     window.open(
                                       `https://${String(item)?.toLowerCase()}`,
@@ -3460,12 +3464,15 @@ export default function JoinTournament() {
                                       <Typography
                                         onClick={() => {
                                           if (item?.includes(".com")) {
-                                            ReactGA.send({
-                                              hitType:
-                                                "click_reveal_link_infors",
-                                              page: `https://${String(
+                                            ReactGA.event({
+                                              category: "click_infors",
+                                              action: "click",
+                                              label: `https://${String(
                                                 item
-                                              )?.toLowerCase()}`,
+                                              )?.toLowerCase()}`, // optional
+                                              value: 99, // optional, must be a number
+                                              nonInteraction: true, // optional, true/false
+                                              transport: "xhr", // optional, beacon/xhr/image
                                             });
                                             window.open(
                                               `https://${String(
