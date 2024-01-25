@@ -108,6 +108,20 @@ export default function VideoComponent(props) {
             type="video/mp4"
           />
         </video>
+        {detailTournament?.id === "62" && (
+          <Box
+            component={"div"}
+            onClick={() => alert("ads")}
+            sx={{
+              position: "absolute",
+              width: "100%",
+              height: device === "Desktop" ? "80%" : "35%",
+              background: "red",
+              top: 0,
+              zIndex: 1,
+            }}
+          ></Box>
+        )}
         {second !== null && (
           <Box
             onClick={() => {
