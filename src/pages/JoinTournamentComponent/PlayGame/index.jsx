@@ -52,14 +52,6 @@ export default function PlayGame(props) {
             setStartGame(false);
           }, 1000);
           setTimeout(() => {
-            // if (tokenUser || localStorage.getItem("token")) {
-            //   dispatch(getRefactorDetailAuthPromotion({
-            //     id,
-            //     token: tokenUser
-            //   }));
-            // } else {
-            //   dispatch(getRefactorDetailPromotion(id));
-            // }
             dispatch(toggleOpenResultEndGame(score || 0));
             dispatch(toggleStartGame(false));
           }, 1500);

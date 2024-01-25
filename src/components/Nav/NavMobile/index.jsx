@@ -21,7 +21,6 @@ import { popup } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import MenuBrowser from "../../MenuMobile/Browser";
 import MenuChat from "../../MenuMobile/Chat";
-import MenuSearch from "../../MenuMobile/Search";
 import "./index.scss";
 
 export default function NavMobile() {
@@ -1176,14 +1175,6 @@ export default function NavMobile() {
                 }}
                 handleColor={() => {}}
               />
-              <MenuSearch
-                open={openSearch}
-                handleShowSearch={() => {
-                  navigate("/home");
-                  setOpenSearch(false);
-                }}
-                handleColor={() => {}}
-              />
             </div>
           ) : (
             <div className="content_nav">
@@ -1328,14 +1319,6 @@ export default function NavMobile() {
                 open={openMenu}
                 handleShowMenu={() => {
                   dispatch(updateOpenMenu(false));
-                }}
-                handleColor={() => {}}
-              />
-              <MenuSearch
-                open={openSearch}
-                handleShowSearch={() => {
-                  navigate("/home");
-                  setOpenSearch(false);
                 }}
                 handleColor={() => {}}
               />
