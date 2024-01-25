@@ -292,7 +292,7 @@ export default function ListPackage(props) {
                   )}
                   {packageCategory === "sub" ? (
                     <Box>
-                      {listSetting?.saleValue && listSetting?.saleValue >= 1 ? (
+                      {listSetting?.saleValue && listSetting?.saleValue > 1 ? (
                         <Typography
                           sx={{
                             fontSize: "14px",
@@ -316,7 +316,7 @@ export default function ListPackage(props) {
                           color: "white",
                           textDecorationLine:
                             listSetting?.saleValue &&
-                            listSetting?.saleValue >= 1
+                            listSetting?.saleValue > 1
                               ? "line-through"
                               : "unset",
                           fontWeight: "700 !important",
@@ -330,7 +330,7 @@ export default function ListPackage(props) {
                   ) : (
                     <Box>
                       {" "}
-                      {listSetting?.saleValue && listSetting?.saleValue >= 1 ? (
+                      {listSetting?.saleValue && listSetting?.saleValue > 1 ? (
                         <Typography
                           sx={{
                             fontSize: "14px",
@@ -356,7 +356,7 @@ export default function ListPackage(props) {
                           marginLeft: "6px !important",
                           textDecorationLine:
                             listSetting?.saleValue &&
-                            listSetting?.saleValue >= 1
+                            listSetting?.saleValue > 1
                               ? "line-through"
                               : "unset",
                         }}
