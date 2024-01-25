@@ -65,8 +65,7 @@ function* getCheckOutSagaSuccess(dataRequest) {
             yield put(notifyToGameWhenBuyPackageSuccess())
             localStorage.setItem("buyPackage", true)
             localStorage.setItem("newNumberTicket", Number(data?.data?.quantity || 0))
-            console.log(123);
-            // window.close()
+            window.close()
           }
         } else {
           yield put(checkoutPaypalSuccessFail());
