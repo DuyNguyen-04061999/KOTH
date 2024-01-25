@@ -162,10 +162,8 @@ import SearchActiveIcon from "../assets/imagesLayout/SearchActiveIcon.png";
 //---------------signin-signup-------------------
 import copybutton from "../assets/imagesDesktop/copybutton.png";
 import editbutton from "../assets/imagesDesktop/editbutton.png";
-import bannersignin from "../assets/imagesLayout/Sign/bannerSignin.png";
 import chose2 from "../assets/imagesLayout/Sign/chose.png";
 import chose1 from "../assets/imagesLayout/Sign/chose_button.png";
-import pic from "../assets/imagesLayout/Sign/pic.png";
 import signintopbar from "../assets/imagesLayout/Sign/signin topbar button.png";
 
 import up01 from "../assets/imagesLayout/01.svg";
@@ -607,9 +605,7 @@ export const popup = {
 };
 
 export const sign = {
-  pic: pic,
   signintopbar: signintopbar,
-  bannersignin: bannersignin,
   chose1: chose1,
   chose2: chose2,
   up01: up01,
