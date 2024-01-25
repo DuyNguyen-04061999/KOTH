@@ -52,7 +52,7 @@ const luckyWheelReducer = (
     countEveryday: 0,
     rewardHistory: [],
     totalAmount: 0,
-    expiryTime: 6/10/2023 ,
+    expiryTime: 6 / 10 / 2023,
   },
   action
 ) => {

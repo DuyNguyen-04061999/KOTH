@@ -13,7 +13,6 @@ export default function SubscriptionDialog() {
     dispatch(toggleSubscriptionDialog(false));
   };
 
-
   return ReactDOM.createPortal(
     <>
       <Dialog
@@ -62,6 +61,7 @@ export default function SubscriptionDialog() {
         </Box>
         <Package />
       </Dialog>
-    </>, document.body
+    </>,
+    document.body
   );
 }

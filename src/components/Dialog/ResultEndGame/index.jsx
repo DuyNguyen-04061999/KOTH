@@ -4,21 +4,22 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
-import { finishGame, finishVideo, getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
-  toggleCloseResultEndGame,
-} from "../../../redux-saga-middleware/reducers/tournamentReducer";
+  finishGame,
+  finishVideo,
+  getRefactorDetailAuthPromotion,
+} from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { toggleCloseResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
     (state) => state.tournamentReducer
   );
-  // const { detailTournament } = useSelector((state) => state.playgameReducer);
 
-  const { 
-    tokenUser, 
-    // countTicket 
+  const {
+    tokenUser,
+    // countTicket
   } = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();
@@ -26,25 +27,22 @@ export default function ResultEndGame() {
   const { id } = useParams();
 
   const handleClose = () => {
-    localStorage.removeItem("buyPackage")
-    localStorage.removeItem("newNumberTicket")
+    localStorage.removeItem("buyPackage");
+    localStorage.removeItem("newNumberTicket");
     dispatch(toggleCloseResultEndGame());
     dispatch(toggleStartGame(false));
-    dispatch(finishGame())
-    dispatch(finishVideo())
-    // if(detailTournament && (!detailTournament?.extra || detailTournament?.extra <= 0) && countTicket > 0) {
-    //   dispatch(updateCountExtraAfterPlayGame(1))
-    // }
+    dispatch(finishGame());
+    dispatch(finishVideo());
     if (tokenUser || localStorage.getItem("token")) {
-      dispatch(getRefactorDetailAuthPromotion({
-        id,
-        token: tokenUser
-      }))
-      dispatch(getUserInfoReady())
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token: tokenUser,
+        })
+      );
+      dispatch(getUserInfoReady());
     }
   };
-
-  // isResultEndGame
 
   return (
     <div>
@@ -63,7 +61,7 @@ export default function ResultEndGame() {
         }}
       >
         <Box
-        component={"div"}
+          component={"div"}
           id="results"
           sx={{
             width: "100%",
@@ -96,16 +94,11 @@ export default function ResultEndGame() {
               <div className="heading-tertiary">Your Result</div>
               <div className="result-box">
                 <div className="heading-primary">{endGameScore || 0}</div>
-                {/* <p className="result">of 100</p> */}
               </div>
               <div className="result-text-box">
                 <div className="heading-secondary">
                   excellent work, keep going
                 </div>
-                {/* <p className="paragraph">
-                  You scored higher than 65% of the people who have taken these
-                  tests.
-                </p> */}
               </div>
               <div className="summary__cta">
                 <button
