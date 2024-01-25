@@ -3375,7 +3375,7 @@ export default function JoinTournament() {
                                 fontSize: "14px",
                               }}
                             >
-                              Information
+                              Information about this promotion
                             </Typography>
                           </Box>
                         )}
