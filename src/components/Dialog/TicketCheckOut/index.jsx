@@ -70,6 +70,7 @@ export default function TicketCheckOut() {
 
   const cancelButton = () => {
     dispatch(closeCheckWallet(false));
+    setSl(1);
   };
 
   const navigateFooter = (value) => {
@@ -309,8 +310,7 @@ export default function TicketCheckOut() {
                       disabled={
                         typeWallet === "sub"
                           ? true
-                          : false ||
-                            typeWallet === "normal" 
+                          : false || typeWallet === "normal"
                           ? false
                           : true
                       }
@@ -325,8 +325,7 @@ export default function TicketCheckOut() {
                         backgroundColor:
                           typeWallet === "sub"
                             ? "gray !important"
-                            : "" ||
-                              typeWallet === "normal" 
+                            : "" || typeWallet === "normal"
                             ? "#7848ED"
                             : "",
                         borderRadius: "0px",
@@ -346,17 +345,13 @@ export default function TicketCheckOut() {
                       className="input_check"
                       max={10}
                       min={1}
-                      disabled={
-                        typeWallet === "sub" ||
-                        typeWallet === "normal" 
-                      }
+                      disabled={typeWallet === "sub" || typeWallet === "normal"}
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor:
                           typeWallet === "sub"
                             ? "#3D2D53"
-                            : "" ||
-                              typeWallet === "normal" 
+                            : "" || typeWallet === "normal"
                             ? "#181223"
                             : "",
                       }}
@@ -377,8 +372,7 @@ export default function TicketCheckOut() {
                         backgroundColor:
                           typeWallet === "sub"
                             ? "gray !important"
-                            : "" ||
-                              typeWallet === "normal"
+                            : "" || typeWallet === "normal"
                             ? "#7848ED !important"
                             : "",
                         borderRadius: "0px",

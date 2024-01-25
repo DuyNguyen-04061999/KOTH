@@ -48,6 +48,8 @@ export default function ListPackage(props) {
     Subscription: "sub",
     Normal: "normal",
   }
+
+  console.log(listSetting?.saleValue);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -98,9 +100,9 @@ export default function ListPackage(props) {
           background:
             packageName === "Combo Extra 1"
               ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
-              : "" || packageCategory === "sub"
+              : "" || packageCategory === Type.Subscription
               ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
-              : "" || packageCategory === "normal"
+              : "" || packageCategory === Type.Normal
               ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
               : "",
           padding: "14px 20px 20px 20px",
@@ -122,9 +124,9 @@ export default function ListPackage(props) {
         className={
           packageName === "Combo Extra 1"
             ? "gradient-border-rounded"
-            : "" || packageCategory === "sub"
+            : "" || packageCategory === Type.Subscription
             ? "gradient-border-rounded1"
-            : "" || packageCategory === "normal"
+            : "" || packageCategory === Type.Normal
             ? "gradient-border-rounded2"
             : ""
         }
@@ -227,10 +229,10 @@ export default function ListPackage(props) {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     marginBottom: "15px",
-                    marginTop: packageCategory === "sub" ? "10px" : "25px",
+                    marginTop: packageCategory === Type.Subscription ? "10px" : "25px",
                   }}
                 >
-                  {packageCategory === "sub" ? (
+                  {packageCategory === Type.Subscription ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -290,7 +292,7 @@ export default function ListPackage(props) {
                       </svg>
                     </BgWithTooltip>
                   )}
-                  {packageCategory === "sub" ? (
+                  {packageCategory === Type.Subscription ? (
                     <Box>
                       {listSetting?.saleValue && listSetting?.saleValue > 1 ? (
                         <Typography
@@ -380,7 +382,7 @@ export default function ListPackage(props) {
                         alignItems: "center",
                         marginBottom: "5px",
                         marginTop:
-                          packageCategory === "sub" ? "0px" : "5px",
+                          packageCategory === Type.Subscription ? "0px" : "5px",
                       }}
                     >
                       <svg
@@ -407,7 +409,7 @@ export default function ListPackage(props) {
                           fontSize: "14px",
                           color: "#fff",
                           textAlign: "start",
-                          fontWeight: "700 !important",
+                          fontWeight: "500 !important",
                           marginLeft: "6px !important",
                         }}
                       >
@@ -436,7 +438,7 @@ export default function ListPackage(props) {
                 >
                   ${packagePrice}
                 </Typography>
-                {packageCategory === "sub" ? (
+                {packageCategory === Type.Subscription ? (
                   <Typography
                     sx={{
                       fontWeight: "700 !important",
@@ -476,11 +478,11 @@ export default function ListPackage(props) {
                 sx={{ marginTop: "6px", width: "100%", marginBottom: "20px" }}
               >
                  <AnimButton
-                    upperCase={true}
+                    upperCase={false}
                     text={
                       uPack &&
                       uPack?.remain !== "Expired" &&
-                      packageCategory === "Subscription"
+                      packageCategory === Type.Subscription
                         ? "Current pack"
                         : uPack?.remain === "Expired" &&
                           packageName === Type.Subscription
@@ -496,7 +498,7 @@ export default function ListPackage(props) {
                     }
                     onClick={handleBuyPackage}
                     style={{
-                      padding: "10px 3px",
+                      padding: "4px 3px",
                       color: "white",
                       background:
                         uPack &&
@@ -513,7 +515,7 @@ export default function ListPackage(props) {
           </Box>
         </Box>
         <Box className={"saleMobile"}>
-          {packageCategory === "sub" ? (
+          {packageCategory === Type.Subscription ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="100"
