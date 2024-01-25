@@ -475,19 +475,39 @@ export default function ListPackage(props) {
               <Box
                 sx={{ marginTop: "6px", width: "100%", marginBottom: "20px" }}
               >
-                <AnimButton
-                  upperCase={false}
-                  text={t("Buy Now")}
-                  type={"primary"}
-                  onClick={handleBuyPackage}
-                  style={{
-                    padding: "4px 3px",
-                    color: "white",
-                    background: "#9747FF",
-                    backdropFilter: " blur(4px)",
-                    fontSize: "11px ",
-                  }}
-                ></AnimButton>
+                 <AnimButton
+                    upperCase={true}
+                    text={
+                      uPack &&
+                      uPack?.remain !== "Expired" &&
+                      packageCategory === "Subscription"
+                        ? "Current pack"
+                        : uPack?.remain === "Expired" &&
+                          packageName === Type.Subscription
+                        ? "Upgrade Pack"
+                        : t("Buy Now")
+                    }
+                    type={
+                      uPack &&
+                      uPack?.remain !== "Expired" &&
+                      packageCategory === Type.Subscription
+                        ? "disable"
+                        : "christmas"
+                    }
+                    onClick={handleBuyPackage}
+                    style={{
+                      padding: "10px 3px",
+                      color: "white",
+                      background:
+                        uPack &&
+                        uPack?.remain !== "Expired" &&
+                        packageCategory === Type.Subscription
+                          ? "Gray"
+                          : "#C02F40",
+                      backdropFilter: " blur(4px)",
+                      fontSize: "11px ",
+                    }}
+                  ></AnimButton>
               </Box>
             </Box>
           </Box>
