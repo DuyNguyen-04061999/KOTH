@@ -44,80 +44,37 @@ export default function ListPackage(props) {
   const { t } = useTranslation("package");
 
   const { listSetting } = useSelector((state) => state.settingReducer);
-
+  const Type = {
+    Subscription: "sub",
+    Normal: "normal",
+  }
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
-
   const handleBuyPackage = () => {
-    if (packageName === "Subscription") {
-      if (token) {
-        dispatch(
-          saveDataPackage({
-            packageName,
-            packageAvatar,
-            packagePrice,
-            packageFreeTicketTournament,
-            packageReduceWatchAds,
-            id,
-          })
-        );
-        dispatch(
-          toggleCheckWallet({
-            type: "subscription",
-            gold: packagePrice || 19.99,
-            total: 1,
-          })
-        );
-        dispatch(getIdPackage(id));
-      }
-    }
-    if (packageName === "Combo Extra 1") {
-      if (token) {
-        dispatch(
-          saveDataPackage({
-            packageName,
-            packageAvatar,
-            packagePrice,
-            packageFreeTicketTournament,
-            packageReduceWatchAds,
-            id,
-          })
-        );
-        dispatch(
-          toggleCheckWallet({
-            type: "combo1",
-            gold: packagePrice || 0.99,
-            total: packageFreeTicketTournament || 5,
-          })
-        );
-        dispatch(getIdPackage(id));
-      }
-    }
-    if (packageName === "Combo Extra 2") {
-      if (token) {
-        dispatch(
-          saveDataPackage({
-            packageName,
-            packageAvatar,
-            packagePrice,
-            packageFreeTicketTournament,
-            packageReduceWatchAds,
-            id,
-          })
-        );
-        dispatch(
-          toggleCheckWallet({
-            type: "combo2",
-            gold: packagePrice || 3.96,
-            total: packageFreeTicketTournament || 20,
-          })
-        );
-        dispatch(getIdPackage(id));
-      }
+    if (token) {
+      dispatch(
+        saveDataPackage({
+          packageName,
+          packageAvatar,
+          packagePrice,
+          packageFreeTicketTournament,
+          packageReduceWatchAds,
+          id,
+          packageCategory
+        })
+      );
+      dispatch(
+        toggleCheckWallet({
+          type: packageCategory,
+          gold: packagePrice ,
+          total: packageFreeTicketTournament,
+        })
+      );
+      dispatch(getIdPackage(id));
     }
     if (token === null || token === "") {
       dispatch(toggleLoginDialog());
@@ -423,7 +380,7 @@ export default function ListPackage(props) {
                         alignItems: "center",
                         marginBottom: "5px",
                         marginTop:
-                          packageName === "Subscription" ? "0px" : "5px",
+                          packageCategory === "sub" ? "0px" : "5px",
                       }}
                     >
                       <svg

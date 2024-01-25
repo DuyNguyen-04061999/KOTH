@@ -33,7 +33,7 @@ export default function TicketCheckOut() {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  const [agree, setAgree] = useState(false);
+  const [agree, setAgree] = useState(true);
   const [feeMoney, setFeeMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [sl, setSl] = useState(1);
@@ -229,7 +229,7 @@ export default function TicketCheckOut() {
                 }}
               >
                 <Box sx={{ color: "white" }}>
-                  {typeWallet === "subscription" ? (
+                  {typeWallet === "sub" ? (
                     <Box
                       display={"flex"}
                       flexDirection={"column"}
@@ -265,9 +265,9 @@ export default function TicketCheckOut() {
                           color: "#BE48ED ",
                         }}
                       >
-                        {typeWallet === "subscription"
+                        {typeWallet === "sub"
                           ? "Subscription Pack"
-                          : typeWallet === "combo1"
+                          : typeWallet === "normal"
                           ? "Standard Extra Pack"
                           : "Value Extra Pack"}
                       </Typography>
@@ -291,7 +291,7 @@ export default function TicketCheckOut() {
                       sx={{ color: "#BE48ED", textAlign: "end" }}
                       variant="body2"
                     >
-                      {typeWallet === "subscription"
+                      {typeWallet === "sub"
                         ? goldCombo || "$19.99"
                         : `$${goldCombo}`}
                     </Typography>
@@ -307,11 +307,10 @@ export default function TicketCheckOut() {
                     <Button
                       variant="contained"
                       disabled={
-                        typeWallet === "subscription"
+                        typeWallet === "sub"
                           ? true
                           : false ||
-                            typeWallet === "combo1" ||
-                            typeWallet === "combo2"
+                            typeWallet === "normal" 
                           ? false
                           : true
                       }
@@ -324,11 +323,10 @@ export default function TicketCheckOut() {
                       sx={{
                         color: "white",
                         backgroundColor:
-                          typeWallet === "subscription"
+                          typeWallet === "sub"
                             ? "gray !important"
                             : "" ||
-                              typeWallet === "combo1" ||
-                              typeWallet === "combo2"
+                              typeWallet === "normal" 
                             ? "#7848ED"
                             : "",
                         borderRadius: "0px",
@@ -349,18 +347,16 @@ export default function TicketCheckOut() {
                       max={10}
                       min={1}
                       disabled={
-                        typeWallet === "subscription" ||
-                        typeWallet === "combo1" ||
-                        typeWallet === "combo2"
+                        typeWallet === "sub" ||
+                        typeWallet === "normal" 
                       }
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor:
-                          typeWallet === "subscription"
+                          typeWallet === "sub"
                             ? "#3D2D53"
                             : "" ||
-                              typeWallet === "combo1" ||
-                              typeWallet === "combo2"
+                              typeWallet === "normal" 
                             ? "#181223"
                             : "",
                       }}
@@ -368,7 +364,7 @@ export default function TicketCheckOut() {
                     />
                     <Button
                       variant="contained"
-                      disabled={typeWallet === "subscription"}
+                      disabled={typeWallet === "sub"}
                       onClick={() => {
                         if (sl > 9) {
                         } else {
@@ -379,11 +375,10 @@ export default function TicketCheckOut() {
                       sx={{
                         color: "white",
                         backgroundColor:
-                          typeWallet === "subscription"
+                          typeWallet === "sub"
                             ? "gray !important"
                             : "" ||
-                              typeWallet === "combo1" ||
-                              typeWallet === "combo2"
+                              typeWallet === "normal"
                             ? "#7848ED !important"
                             : "",
                         borderRadius: "0px",
@@ -533,7 +528,7 @@ export default function TicketCheckOut() {
               }}
             >
               <Typography sx={{ fontSize: "14px" }}>
-                {typeWallet === "subscription"
+                {typeWallet === "sub"
                   ? "Subscription Pack x 1"
                   : "Combo Pack x 1"}
               </Typography>
@@ -597,7 +592,7 @@ export default function TicketCheckOut() {
                 height: "1px",
               }}
             />
-            {typeWallet === "subscription" && (
+            {typeWallet === "sub" && (
               <Box
                 className="d-flex align-items-start"
                 sx={{
@@ -711,7 +706,7 @@ export default function TicketCheckOut() {
                     <AnimButton type="disable" text="Place Order" />
                   ) : (
                     <>
-                      {typeWallet === "subscription" ? (
+                      {typeWallet === "sub" ? (
                         <AnimButton
                           type="primary"
                           onClick={btnSubscription}
