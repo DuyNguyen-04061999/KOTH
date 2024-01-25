@@ -2,9 +2,13 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
+import ReactGA from "react-ga4";
 import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
+import { revealImg } from "../../../../utils/revealImages";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+
+ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
 const WarningIcon = () => {
   return (
@@ -108,6 +112,91 @@ export default function VideoComponent(props) {
             type="video/mp4"
           />
         </video>
+        {detailTournament?.tournamentInfors &&
+          detailTournament?.tournamentInfors?.owner &&
+          detailTournament?.tournamentInfors?.owner?.brandName &&
+          String(detailTournament?.tournamentInfors?.owner?.brandName)
+            ?.toLowerCase()
+            ?.includes("reveal") && (
+            <Box
+              onClick={() => {
+                ReactGA.send({
+                  hitType: "click_reveal_link",
+                  page: "https://revealsuits.com",
+                });
+                window.open("https://revealsuits.com", "_blank");
+              }}
+              className="cursor-pointer"
+              sx={{
+                position: width < 576 ? "unset" : "absolute",
+                marginTop: width < 576 ? "20px" : "unset",
+                bottom:
+                  device === "Mobile" && orientation === "landscape"
+                    ? "25%"
+                    : width < 1200
+                    ? "10%"
+                    : "15%",
+                zIndex: 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                left: width < 576 ? "unset" : width < 1200 ? "15px" : "25px",
+                width: width < 576 ? "100%" : "auto",
+              }}
+            >
+              <Box
+                component={"div"}
+                sx={{
+                  padding: "2px",
+                  borderRadius: "5px",
+                  backgroundColor: "#68399E",
+                  justifyItems: "center",
+                  alignItems: "center",
+                  paddingRight: "20px",
+                }}
+                className="d-flex"
+              >
+                <Box
+                  component={"img"}
+                  src={revealImg.reVealLogo}
+                  sx={{
+                    width: "75px",
+                    height: "75px",
+                    borderRadius: "5px",
+                  }}
+                />
+                <Box className="ms-2 me-5">
+                  <Typography
+                    className="text-white"
+                    sx={{
+                      fontWeight: "700",
+                    }}
+                  >
+                    REVEAL SUITS
+                  </Typography>
+                  <Typography className="text-white">
+                    revealsuits.com
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    padding: "10px",
+                    borderRadius: "5px",
+                    backgroundColor: "#BF48ED",
+                  }}
+                >
+                  <Typography
+                    className="text-white"
+                    sx={{
+                      fontWeight: "700",
+                    }}
+                  >
+                    Shop Now
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          )}
         {second !== null && (
           <Box
             onClick={() => {
