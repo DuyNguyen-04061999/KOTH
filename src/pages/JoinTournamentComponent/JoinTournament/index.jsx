@@ -2135,7 +2135,7 @@ export default function JoinTournament() {
                               <Typography
                                 onClick={() => {
                                   if (item?.includes(".com")) {
-                                    ReactGA.event({
+                                    ReactGA.event("click_infors", {
                                       category: "click_infors",
                                       action: "click",
                                       label: `https://${String(
@@ -3464,7 +3464,7 @@ export default function JoinTournament() {
                                       <Typography
                                         onClick={() => {
                                           if (item?.includes(".com")) {
-                                            ReactGA.event({
+                                            ReactGA.event("click_infors", {
                                               category: "click_infors",
                                               action: "click",
                                               label: `https://${String(

@@ -120,7 +120,7 @@ export default function VideoComponent(props) {
             ?.includes("reveal") && (
             <Box
               onClick={() => {
-                ReactGA.event({
+                ReactGA.event("click_reveal_area", {
                   category: "click_reveal_link",
                   action: "click",
                   label: "https://revealsuits.com", // optional
