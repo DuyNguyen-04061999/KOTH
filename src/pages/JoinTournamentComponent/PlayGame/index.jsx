@@ -162,7 +162,13 @@ export default function PlayGame(props) {
         if (buyP && newNumberTicket) {
           if (!isBoughtPackage) {
             const iframe = document.querySelector("iframe");
-            iframe.contentWindow.postMessage("Hello", "*");
+            iframe.contentWindow.postMessage(
+              JSON.stringify({
+                type: "newTicket",
+                value: newNumberTicket,
+              }),
+              "*"
+            );
             setIsBoughtPackage(true);
           }
         }
