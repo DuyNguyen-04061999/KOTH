@@ -33,12 +33,8 @@ import "../scss/home.scss";
 
 export default function Home() {
   const { width } = useWindowDimensions();
-  const { userRole, leaderBoard } = useSelector(
-    (state) => state.authReducer
-  );
-  const { tokenUser: token } = useSelector(
-    (state) => state.userReducer
-  );
+  const { userRole, leaderBoard } = useSelector((state) => state.authReducer);
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { listGame } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -49,10 +45,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if(getAppType() !== "promote") {
+    if (getAppType() !== "promote") {
       dispatch(getListGame());
     }
-
   }, [dispatch, socket]);
 
   const navigate = useNavigate();

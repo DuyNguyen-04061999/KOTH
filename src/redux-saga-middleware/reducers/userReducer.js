@@ -461,7 +461,6 @@ const userReducer = (
         isRegister: false,
         registerEmail: payload?.email,
         registerPhone: payload?.phone,
-        // tokenUser: payload?.token,
         typeVerifyOTP: "register",
       };
     case "REGISTER_FAIL":

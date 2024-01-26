@@ -254,23 +254,6 @@ export default function DialogChat(props) {
                 padding: "18px 15px",
               }}
             >
-              {/* <Box
-                onClick={() => {
-                  dispatch(
-                    toggleInviteGameDialog({
-                      type: "world",
-                    })
-                  );
-                }}
-              >
-                <img
-                  src={imageChat.invitegame}
-                  alt="..."
-                  width={45}
-                  height={30}
-                  className="me-2"
-                />
-              </Box> */}
               <Box
                 component={"form"}
                 sx={{
