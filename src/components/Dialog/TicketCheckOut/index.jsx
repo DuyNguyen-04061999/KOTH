@@ -24,7 +24,10 @@ export default function TicketCheckOut() {
   const { idPackage } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
 
-  const { listPackage } = useSelector((state) => state.packageReducer);
+  const { listPackage, dataPackage } = useSelector(
+    (state) => state.packageReducer
+  );
+  const { packageName } = dataPackage;
   const [feeCheckout, setFeeCheckout] = useState({
     origin: 4.4 / 100,
     bonus: 0.3,
@@ -230,7 +233,7 @@ export default function TicketCheckOut() {
                 }}
               >
                 <Box sx={{ color: "white" }}>
-                  {typeWallet === "sub" ? (
+                  {typeWallet?.includes("sub") ? (
                     <Box
                       display={"flex"}
                       flexDirection={"column"}
@@ -266,11 +269,7 @@ export default function TicketCheckOut() {
                           color: "#BE48ED ",
                         }}
                       >
-                        {typeWallet === "sub"
-                          ? "Subscription Pack"
-                          : typeWallet === "normal"
-                          ? "Standard Extra Pack"
-                          : "Value Extra Pack"}
+                        {packageName}
                       </Typography>
                       <Typography
                         sx={{
@@ -292,7 +291,7 @@ export default function TicketCheckOut() {
                       sx={{ color: "#BE48ED", textAlign: "end" }}
                       variant="body2"
                     >
-                      {typeWallet === "sub"
+                      {typeWallet?.includes("sub")
                         ? goldCombo || "$19.99"
                         : `$${goldCombo}`}
                     </Typography>
@@ -308,9 +307,9 @@ export default function TicketCheckOut() {
                     <Button
                       variant="contained"
                       disabled={
-                        typeWallet === "sub"
+                        typeWallet?.includes("sub")
                           ? true
-                          : false || typeWallet === "normal"
+                          : false || typeWallet?.includes("normal")
                           ? false
                           : true
                       }
@@ -322,12 +321,11 @@ export default function TicketCheckOut() {
                       }}
                       sx={{
                         color: "white",
-                        backgroundColor:
-                          typeWallet === "sub"
-                            ? "gray !important"
-                            : "" || typeWallet === "normal"
-                            ? "#7848ED"
-                            : "",
+                        backgroundColor: typeWallet?.includes("sub")
+                          ? "gray !important"
+                          : "" || typeWallet?.includes("normal")
+                          ? "#7848ED"
+                          : "",
                         borderRadius: "0px",
                         padding: "0px",
                         minWidth: "auto",
@@ -345,21 +343,23 @@ export default function TicketCheckOut() {
                       className="input_check"
                       max={10}
                       min={1}
-                      disabled={typeWallet === "sub" || typeWallet === "normal"}
+                      disabled={
+                        typeWallet?.includes("sub") ||
+                        typeWallet?.includes("normal")
+                      }
                       onChange={handleChangeValue}
                       style={{
-                        backgroundColor:
-                          typeWallet === "sub"
-                            ? "#3D2D53"
-                            : "" || typeWallet === "normal"
-                            ? "#181223"
-                            : "",
+                        backgroundColor: typeWallet?.includes("sub")
+                          ? "#3D2D53"
+                          : "" || typeWallet?.includes("normal")
+                          ? "#181223"
+                          : "",
                       }}
                       value={sl}
                     />
                     <Button
                       variant="contained"
-                      disabled={typeWallet === "sub"}
+                      disabled={typeWallet?.includes("sub")}
                       onClick={() => {
                         if (sl > 9) {
                         } else {
@@ -369,12 +369,11 @@ export default function TicketCheckOut() {
                       }}
                       sx={{
                         color: "white",
-                        backgroundColor:
-                          typeWallet === "sub"
-                            ? "gray !important"
-                            : "" || typeWallet === "normal"
-                            ? "#7848ED !important"
-                            : "",
+                        backgroundColor: typeWallet?.includes("sub")
+                          ? "gray !important"
+                          : "" || typeWallet?.includes("normal")
+                          ? "#7848ED !important"
+                          : "",
                         borderRadius: "0px",
                         padding: "0px",
                         minWidth: "auto",
@@ -522,7 +521,7 @@ export default function TicketCheckOut() {
               }}
             >
               <Typography sx={{ fontSize: "14px" }}>
-                {typeWallet === "sub"
+                {typeWallet?.includes("sub")
                   ? "Subscription Pack x 1"
                   : "Combo Pack x 1"}
               </Typography>
@@ -586,7 +585,7 @@ export default function TicketCheckOut() {
                 height: "1px",
               }}
             />
-            {typeWallet === "sub" && (
+            {typeWallet?.includes("sub") && (
               <Box
                 className="d-flex align-items-start"
                 sx={{
@@ -700,7 +699,7 @@ export default function TicketCheckOut() {
                     <AnimButton type="disable" text="Place Order" />
                   ) : (
                     <>
-                      {typeWallet === "sub" ? (
+                      {typeWallet?.includes("sub") ? (
                         <AnimButton
                           type="primary"
                           onClick={btnSubscription}

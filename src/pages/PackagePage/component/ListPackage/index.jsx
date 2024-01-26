@@ -47,9 +47,8 @@ export default function ListPackage(props) {
   const Type = {
     Subscription: "sub",
     Normal: "normal",
-  }
+  };
 
-  console.log(listSetting?.saleValue);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -66,13 +65,13 @@ export default function ListPackage(props) {
           packageFreeTicketTournament,
           packageReduceWatchAds,
           id,
-          packageCategory
+          packageCategory,
         })
       );
       dispatch(
         toggleCheckWallet({
           type: packageCategory,
-          gold: packagePrice ,
+          gold: packagePrice,
           total: packageFreeTicketTournament,
         })
       );
@@ -229,7 +228,8 @@ export default function ListPackage(props) {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     marginBottom: "15px",
-                    marginTop: packageCategory === Type.Subscription ? "10px" : "25px",
+                    marginTop:
+                      packageCategory === Type.Subscription ? "10px" : "25px",
                   }}
                 >
                   {packageCategory === Type.Subscription ? (
@@ -317,8 +317,7 @@ export default function ListPackage(props) {
                           fontSize: "11px",
                           color: "white",
                           textDecorationLine:
-                            listSetting?.saleValue &&
-                            listSetting?.saleValue > 1
+                            listSetting?.saleValue && listSetting?.saleValue > 1
                               ? "line-through"
                               : "unset",
                           fontWeight: "700 !important",
@@ -357,8 +356,7 @@ export default function ListPackage(props) {
                           fontWeight: "700 !important",
                           marginLeft: "6px !important",
                           textDecorationLine:
-                            listSetting?.saleValue &&
-                            listSetting?.saleValue > 1
+                            listSetting?.saleValue && listSetting?.saleValue > 1
                               ? "line-through"
                               : "unset",
                         }}
@@ -453,9 +451,8 @@ export default function ListPackage(props) {
                   <></>
                 )}
               </Box>
-              {listSetting?.saleValue && 
-                listSetting?.saleValue > 1 ? (
-                  <Typography
+              {listSetting?.saleValue && listSetting?.saleValue > 1 ? (
+                <Typography
                   sx={{
                     fontSize: width < 1200 && width > 576 ? "8px" : "12px",
                     color: "#7848ED",
@@ -465,51 +462,50 @@ export default function ListPackage(props) {
                   {listSetting?.saleValue && listSetting?.saleValue > 1
                     ? `${moment(listSetting?.saleStartAt || new Date())?.format(
                         "MM/DD/YYYY"
-                      )} - ${moment(listSetting?.saleEndAt || new Date())?.format(
-                        "MM/DD/YYYY"
-                      )}`
+                      )} - ${moment(
+                        listSetting?.saleEndAt || new Date()
+                      )?.format("MM/DD/YYYY")}`
                     : ""}
                 </Typography>
-                ) : (
-                  <></>
-                )
-              }
+              ) : (
+                <></>
+              )}
               <Box
                 sx={{ marginTop: "6px", width: "100%", marginBottom: "20px" }}
               >
-                 <AnimButton
-                    upperCase={false}
-                    text={
+                <AnimButton
+                  upperCase={false}
+                  text={
+                    uPack &&
+                    uPack?.remain !== "Expired" &&
+                    packageCategory === Type.Subscription
+                      ? "Current pack"
+                      : uPack?.remain === "Expired" &&
+                        packageName === Type.Subscription
+                      ? "Upgrade Pack"
+                      : t("Buy Now")
+                  }
+                  type={
+                    uPack &&
+                    uPack?.remain !== "Expired" &&
+                    packageCategory === Type.Subscription
+                      ? "disable"
+                      : "primary"
+                  }
+                  onClick={handleBuyPackage}
+                  style={{
+                    padding: "4px 3px",
+                    color: "white",
+                    background:
                       uPack &&
                       uPack?.remain !== "Expired" &&
                       packageCategory === Type.Subscription
-                        ? "Current pack"
-                        : uPack?.remain === "Expired" &&
-                          packageName === Type.Subscription
-                        ? "Upgrade Pack"
-                        : t("Buy Now")
-                    }
-                    type={
-                      uPack &&
-                      uPack?.remain !== "Expired" &&
-                      packageCategory === Type.Subscription
-                        ? "disable"
-                        : "primary"
-                    }
-                    onClick={handleBuyPackage}
-                    style={{
-                      padding: "4px 3px",
-                      color: "white",
-                      background:
-                        uPack &&
-                        uPack?.remain !== "Expired" &&
-                        packageCategory === Type.Subscription
-                          ? "Gray"
-                          : "#9747FF",
-                      backdropFilter: " blur(4px)",
-                      fontSize: "11px ",
-                    }}
-                  ></AnimButton>
+                        ? "Gray"
+                        : "#9747FF",
+                    backdropFilter: " blur(4px)",
+                    fontSize: "11px ",
+                  }}
+                ></AnimButton>
               </Box>
             </Box>
           </Box>
