@@ -16,6 +16,7 @@ import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
+import ReactGA from "react-ga4";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -196,6 +197,12 @@ export default function Signup(props) {
           nickName: displayName,
         })
       );
+        ReactGA.event("complete_signup", {
+            category: "complete_signup",
+            action: "click",
+            nonInteraction: true,
+            transport: "xhr",
+        });
     } else {
       dispatch(
         showToastNotification({

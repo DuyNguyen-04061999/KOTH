@@ -38,7 +38,7 @@ import {
   finishGame,
   finishVideo,
   getRefactorDetailAuthPromotion,
-  getRefactorDetailPromotion,
+  getRefactorDetailPromotion, saveCurrentPromotionShare,
   startGameInPromotion,
   startGameInPromotionFail,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
@@ -528,6 +528,13 @@ export default function JoinTournament() {
                     </Box>
                     <Box
                       onClick={() => {
+                        ReactGA.event("click_share_link", {
+                          category: "click_share_link ",
+                          action: "click",
+                          nonInteraction: true,
+                          transport: "xhr",
+                        });
+                        dispatch(saveCurrentPromotionShare(detailTournament))
                         dispatch(toggleShareTour());
                       }}
                       className="cursor-pointer"

@@ -127,6 +127,21 @@ export const updateEndedPage = (data) => {
     payload: data,
   };
 };
+
+export const saveCurrentPromotionShare = (data) => {
+  return {
+    type: "SAVE_CURRENT_PROMO_SHARE",
+    payload: data,
+  };
+};
+
+export const clearCurrentPromotionShare = (data) => {
+  return {
+    type: "CLEAR_CURRENT_PROMO_SHARE",
+    payload: data,
+  };
+};
+
 const promotionReducer = (
   state = {
     isGetDetailPromotion: false,
@@ -140,6 +155,7 @@ const promotionReducer = (
     hotPag: 0,
     upcomingPag: 0,
     endedPage: 0,
+    currentPromotionShare:{},
   },
   action
 ) => {
@@ -177,6 +193,10 @@ const promotionReducer = (
       return { ...state, isJoinPromotion: false };
     case "START_GAME_IN_PROMOTION":
       return { ...state, isStartGameInPromotion: true };
+    case "SAVE_CURRENT_PROMO_SHARE":
+      return { ...state, currentPromotionShare: payload };
+    case "CLEAR_CURRENT_PROMO_SHARE":
+      return { ...state, currentPromotionShare: {} };
     case "START_GAME_IN_PROMOTION_SUCCESS":
       return {
         ...state,
