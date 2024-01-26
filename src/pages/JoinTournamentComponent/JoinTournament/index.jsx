@@ -12,6 +12,7 @@ import { withStyles } from "@mui/styles";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
+import ReactGA from "react-ga4";
 import { useTranslation } from "react-i18next";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -57,6 +58,8 @@ import GameInTournament from "../GameInTournament";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
+
+ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -2071,7 +2074,7 @@ export default function JoinTournament() {
                     fontSize: "20px",
                   }}
                 >
-                  Informations
+                  Information about this promotion
                 </Typography>
                 {isGetDetailPromotion || isGetDetailAuthPromotion ? (
                   <ParagraphLoading />
@@ -2130,6 +2133,24 @@ export default function JoinTournament() {
                               }}
                             >
                               <Typography
+                                onClick={() => {
+                                  if (item?.includes(".com")) {
+                                    ReactGA.event("click_infors", {
+                                      category: "click_infors",
+                                      action: "click",
+                                      label: `https://${String(
+                                        item
+                                      )?.toLowerCase()}`, // optional
+                                      value: 99, // optional, must be a number
+                                      nonInteraction: true, // optional, true/false
+                                      transport: "xhr", // optional, beacon/xhr/image
+                                    });
+                                    window.open(
+                                      `https://${String(item)?.toLowerCase()}`,
+                                      "_blank"
+                                    );
+                                  }
+                                }}
                                 sx={{
                                   textAlign: "start",
                                   fontWeight: "500 !important",
@@ -2139,6 +2160,12 @@ export default function JoinTournament() {
                                       ? `${width / 71}px`
                                       : "16px",
                                   whiteSpace: "pre-wrap",
+                                  textDecoration: item?.includes(".com")
+                                    ? "underline"
+                                    : "unset",
+                                  cursor: item?.includes(".com")
+                                    ? "pointer"
+                                    : "unset",
                                 }}
                               >
                                 {item ? item : ""}
@@ -3352,7 +3379,7 @@ export default function JoinTournament() {
                                 fontSize: "14px",
                               }}
                             >
-                              Information
+                              Information about this promotion
                             </Typography>
                           </Box>
                         )}
@@ -3435,14 +3462,40 @@ export default function JoinTournament() {
                                       }}
                                     >
                                       <Typography
+                                        onClick={() => {
+                                          if (item?.includes(".com")) {
+                                            ReactGA.event("click_infors", {
+                                              category: "click_infors",
+                                              action: "click",
+                                              label: `https://${String(
+                                                item
+                                              )?.toLowerCase()}`, // optional
+                                              value: 99, // optional, must be a number
+                                              nonInteraction: true, // optional, true/false
+                                              transport: "xhr", // optional, beacon/xhr/image
+                                            });
+                                            window.open(
+                                              `https://${String(
+                                                item
+                                              )?.toLowerCase()}`,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
                                         sx={{
                                           textAlign: "start",
                                           fontWeight: "500 !important",
                                           fontSize: "13px",
                                           whiteSpace: "pre-wrap",
+                                          textDecoration: item?.includes(".com")
+                                            ? "underline"
+                                            : "unset",
+                                          cursor: item?.includes(".com")
+                                            ? "pointer"
+                                            : "unset",
                                         }}
                                       >
-                                        {item}
+                                        {item ? item : ""}
                                       </Typography>
                                     </Box>
                                   );

@@ -24,7 +24,10 @@ export default function TicketCheckOut() {
   const { idPackage } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
 
-  const { listPackage } = useSelector((state) => state.packageReducer);
+  const { listPackage, dataPackage } = useSelector(
+    (state) => state.packageReducer
+  );
+  const { packageName } = dataPackage;
   const [feeCheckout, setFeeCheckout] = useState({
     origin: 4.4 / 100,
     bonus: 0.3,
@@ -70,6 +73,7 @@ export default function TicketCheckOut() {
 
   const cancelButton = () => {
     dispatch(closeCheckWallet(false));
+    setSl(1);
   };
 
   const navigateFooter = (value) => {
@@ -229,7 +233,7 @@ export default function TicketCheckOut() {
                 }}
               >
                 <Box sx={{ color: "white" }}>
-                  {typeWallet === "subscription" ? (
+                  {typeWallet?.includes("sub") ? (
                     <Box
                       display={"flex"}
                       flexDirection={"column"}
@@ -265,11 +269,7 @@ export default function TicketCheckOut() {
                           color: "#BE48ED ",
                         }}
                       >
-                        {typeWallet === "subscription"
-                          ? "Subscription Pack"
-                          : typeWallet === "combo1"
-                          ? "Standard Extra Pack"
-                          : "Value Extra Pack"}
+                        {packageName}
                       </Typography>
                       <Typography
                         sx={{
@@ -291,7 +291,7 @@ export default function TicketCheckOut() {
                       sx={{ color: "#BE48ED", textAlign: "end" }}
                       variant="body2"
                     >
-                      {typeWallet === "subscription"
+                      {typeWallet?.includes("sub")
                         ? goldCombo || "$19.99"
                         : `$${goldCombo}`}
                     </Typography>
@@ -307,11 +307,9 @@ export default function TicketCheckOut() {
                     <Button
                       variant="contained"
                       disabled={
-                        typeWallet === "subscription"
+                        typeWallet?.includes("sub")
                           ? true
-                          : false ||
-                            typeWallet === "combo1" ||
-                            typeWallet === "combo2"
+                          : false || typeWallet?.includes("normal")
                           ? false
                           : true
                       }
@@ -323,14 +321,11 @@ export default function TicketCheckOut() {
                       }}
                       sx={{
                         color: "white",
-                        backgroundColor:
-                          typeWallet === "subscription"
-                            ? "gray !important"
-                            : "" ||
-                              typeWallet === "combo1" ||
-                              typeWallet === "combo2"
-                            ? "#7848ED"
-                            : "",
+                        backgroundColor: typeWallet?.includes("sub")
+                          ? "gray !important"
+                          : "" || typeWallet?.includes("normal")
+                          ? "#7848ED"
+                          : "",
                         borderRadius: "0px",
                         padding: "0px",
                         minWidth: "auto",
@@ -349,26 +344,22 @@ export default function TicketCheckOut() {
                       max={10}
                       min={1}
                       disabled={
-                        typeWallet === "subscription" ||
-                        typeWallet === "combo1" ||
-                        typeWallet === "combo2"
+                        typeWallet?.includes("sub") ||
+                        typeWallet?.includes("normal")
                       }
                       onChange={handleChangeValue}
                       style={{
-                        backgroundColor:
-                          typeWallet === "subscription"
-                            ? "#3D2D53"
-                            : "" ||
-                              typeWallet === "combo1" ||
-                              typeWallet === "combo2"
-                            ? "#181223"
-                            : "",
+                        backgroundColor: typeWallet?.includes("sub")
+                          ? "#3D2D53"
+                          : "" || typeWallet?.includes("normal")
+                          ? "#181223"
+                          : "",
                       }}
                       value={sl}
                     />
                     <Button
                       variant="contained"
-                      disabled={typeWallet === "subscription"}
+                      disabled={typeWallet?.includes("sub")}
                       onClick={() => {
                         if (sl > 9) {
                         } else {
@@ -378,14 +369,11 @@ export default function TicketCheckOut() {
                       }}
                       sx={{
                         color: "white",
-                        backgroundColor:
-                          typeWallet === "subscription"
-                            ? "gray !important"
-                            : "" ||
-                              typeWallet === "combo1" ||
-                              typeWallet === "combo2"
-                            ? "#7848ED !important"
-                            : "",
+                        backgroundColor: typeWallet?.includes("sub")
+                          ? "gray !important"
+                          : "" || typeWallet?.includes("normal")
+                          ? "#7848ED !important"
+                          : "",
                         borderRadius: "0px",
                         padding: "0px",
                         minWidth: "auto",
@@ -533,9 +521,9 @@ export default function TicketCheckOut() {
               }}
             >
               <Typography sx={{ fontSize: "14px" }}>
-                {typeWallet === "subscription"
+                {typeWallet?.includes("sub")
                   ? "Subscription Pack x 1"
-                  : "Combo Pack x 1"}
+                  : `Combo Pack x ${sl}` }
               </Typography>
               <Typography sx={{ color: "white", fontSize: "14px" }}>
                 {" "}
@@ -597,7 +585,7 @@ export default function TicketCheckOut() {
                 height: "1px",
               }}
             />
-            {typeWallet === "subscription" && (
+            {typeWallet?.includes("sub") && (
               <Box
                 className="d-flex align-items-start"
                 sx={{
@@ -711,7 +699,7 @@ export default function TicketCheckOut() {
                     <AnimButton type="disable" text="Place Order" />
                   ) : (
                     <>
-                      {typeWallet === "subscription" ? (
+                      {typeWallet?.includes("sub") ? (
                         <AnimButton
                           type="primary"
                           onClick={btnSubscription}
