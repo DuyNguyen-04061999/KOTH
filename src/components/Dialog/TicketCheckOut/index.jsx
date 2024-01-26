@@ -33,7 +33,7 @@ export default function TicketCheckOut() {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
-  const [agree, setAgree] = useState(true);
+  const [agree, setAgree] = useState(false);
   const [feeMoney, setFeeMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [sl, setSl] = useState(1);
@@ -524,7 +524,7 @@ export default function TicketCheckOut() {
               <Typography sx={{ fontSize: "14px" }}>
                 {typeWallet === "sub"
                   ? "Subscription Pack x 1"
-                  : "Combo Pack x 1"}
+                  : `Combo Pack x ${sl}` }
               </Typography>
               <Typography sx={{ color: "white", fontSize: "14px" }}>
                 {" "}
