@@ -42,7 +42,8 @@ const addFriendReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case REHYDRATE: return {...state}
+    case REHYDRATE:
+      return { ...state };
     case "GET_LIST_SENDING":
       return {
         ...state,
