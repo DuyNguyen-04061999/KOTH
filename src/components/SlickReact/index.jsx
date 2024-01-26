@@ -29,7 +29,7 @@ export default function SlickReact() {
     infinite: true,
     autoplay: true,
     interval: 1000,
-    autoplaySpeed: 4000, // adjust the speed of the autoplay here
+    autoplaySpeed: 4000,
     slidesToShow: 3,
     slidesToScroll: 1,
     swipe: false,

@@ -44,7 +44,6 @@ import {
   updateChatWorld,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
-import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { addListNotificationSuccess } from "../../redux-saga-middleware/reducers/notificationReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import {
@@ -226,7 +225,6 @@ export default function Layout(props) {
   }, [listSetting, dispatch]);
 
   const { userName } = useParams();
-
   useEffect(() => {
     const getRefCodeByUserName = async () => {
       if (userName) {
@@ -276,23 +274,6 @@ export default function Layout(props) {
   useEffect(() => {
     dispatch(getSettingReady());
   }, [dispatch]);
-
-  useEffect(() => {
-    const handleKeyboardOpen = () => {
-      // Check if the virtual keyboard is open (adjust the threshold if needed)
-      if (window.innerHeight < window.outerHeight) {
-        // Adjust the timeout delay if needed
-      }
-    };
-
-    // Add event listener for the focus event
-    window.addEventListener("focus", handleKeyboardOpen);
-
-    // Clean up the event listener on unmount
-    return () => {
-      window.removeEventListener("focus", handleKeyboardOpen);
-    };
-  }, []);
 
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
