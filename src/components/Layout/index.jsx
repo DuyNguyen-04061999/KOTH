@@ -27,7 +27,6 @@ import { showToastNotification } from "../../redux-saga-middleware/reducers/aler
 import {
   changeRouter,
   openDoubleDayDialog,
-  openNewYearPopup,
   randomRenderPopup,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
@@ -392,7 +391,6 @@ export default function Layout(props) {
         compareDate(currentDay, "01/03/2024")) &&
       !compareDate(currentDay, countDownNewYear)
     ) {
-      dispatch(openNewYearPopup());
     }
   }, [dispatch, countDownNewYear]);
 
