@@ -18,14 +18,11 @@ const ChangeLog = () => {
       .catch((err) => console.log(err));
   }, [fileName]);
 
-
   return (
     <MainLayout
       children={
-        <Box sx={{ color: "white", marginTop:"24px" }}>
-          {
-            file ? <Markdown>{file}</Markdown> : <Box>Loading ...</Box>
-          }
+        <Box sx={{ color: "white", marginTop: "24px" }}>
+          {file ? <Markdown>{file}</Markdown> : <Box>Loading ...</Box>}
         </Box>
       }
     ></MainLayout>
