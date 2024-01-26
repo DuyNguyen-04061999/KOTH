@@ -16,6 +16,7 @@ import { riveFile } from "../../../../utils/rive";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
+import ReactGA from "react-ga4";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -369,6 +370,12 @@ const Login = () => {
             <Typography
               onClick={() => {
                 dispatch(clickTab("signup"));
+                ReactGA.event("start_signup", {
+                  category: "start_signup",
+                  action: "click",
+                  nonInteraction: true,
+                  transport: "xhr",
+                });
               }}
               sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "600" }}
             >

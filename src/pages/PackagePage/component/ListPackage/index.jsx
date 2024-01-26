@@ -16,6 +16,7 @@ import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/pack
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import ReactGA from "react-ga4";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -76,10 +77,15 @@ export default function ListPackage(props) {
         })
       );
       dispatch(getIdPackage(id));
+        ReactGA.event("start_subscription", {
+            category: "start_subscription",
+            action: "click",
+            nonInteraction: true,
+            transport: "xhr",
+        });
     }
     if (token === null || token === "") {
       dispatch(toggleLoginDialog());
-      return;
     }
   };
   const theme = useTheme();
