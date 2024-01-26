@@ -202,17 +202,6 @@ export const resetToGameWhenBuyPackageSuccess = (data) => {
     payload: data,
   };
 };
-export const openNewYearPopup = () => {
-  return {
-    type: "OPEN_NEWYEAR_POPUP",
-  };
-};
-export const closeNewYearPopup = (data) => {
-  return {
-    type: "CLOSE_NEWYEAR_POPUP",
-    payload: data,
-  };
-};
 
 export const findPeople = (data) => {
   return {
@@ -259,7 +248,6 @@ const appReducer = (
     isFindPeople: false,
     listFindPeople: [],
     countDownNewYear: 0,
-    showPopupBewYear: false,
   },
   action
 ) => {
@@ -303,10 +291,6 @@ const appReducer = (
       return { ...state, showDoubleDayDialog: true };
     case "CLOSE_DIALOG_DOUBLEDAY":
       return { ...state, showDoubleDayDialog: false };
-    case "OPEN_NEWYEAR_POPUP":
-      return { ...state, showPopupBewYear: true };
-    case "CLOSE_NEWYEAR_POPUP":
-      return { ...state, showPopupBewYear: false };
     case "RANDOM_RENDER_POPUP":
       return { ...state, randomRender: payload };
     case "SAVE_TIME_CLOSE_DIALOG":

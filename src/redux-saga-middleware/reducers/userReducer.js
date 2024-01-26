@@ -348,7 +348,6 @@ const userReducer = (
     userChangeAvatar: "",
     resetInputValue: "",
     leaderBoard: [],
-    mess: "",
     idPackage: "",
     refCodeRegister: "",
     user: {},

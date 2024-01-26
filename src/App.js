@@ -22,7 +22,6 @@ import ListGamePage from "./pages/GameManager/ListGamePage";
 import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
-import HomePage from "./pages/Home";
 import Tournament from "./pages/Tournament";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
@@ -52,10 +51,7 @@ import {
   updateDevice,
   updateDeviceType,
 } from "./redux-saga-middleware/reducers/deviceReducer";
-import {
-  changeOrientation,
-  updateReward,
-} from "./redux-saga-middleware/reducers/gameReducer";
+import { changeOrientation } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListNotification } from "./redux-saga-middleware/reducers/notificationReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
 import {
@@ -184,12 +180,6 @@ function App() {
     if (socket) {
       socket?.once("connect", (data) => {});
 
-      socket?.on("disconnect", (data) => {});
-
-      socket?.on("heartbeat", (data) => {});
-
-      socket?.on("error", (data) => {});
-
       socket?.on("warning", (data, type) => {
         if (type && type !== "get") {
           store.dispatch(
@@ -200,8 +190,6 @@ function App() {
           );
         }
       });
-
-      socket?.on("success", (data) => {});
 
       socket?.on("getListFriendSuccess", (data) => {
         store.dispatch(pushfriendList(data));
@@ -270,17 +258,8 @@ function App() {
         }
       });
 
-      socket?.on("gameWin", ({ type, value }) => {
-        store.dispatch(updateReward({ type, value }));
-      });
       socket?.on("buySubscriptionSuccess", (id) => {
         store.dispatch(updateSubPackageId(id));
-      });
-      socket?.on("gameDefeated", ({ type, value }) => {
-        store.dispatch(updateReward({ type, value }));
-      });
-      socket?.on("gameDraw", ({ type, value }) => {
-        store.dispatch(updateReward({ type, value }));
       });
     }
     return () => {
@@ -289,7 +268,7 @@ function App() {
       socket?.off("deleteFriendSuccess");
       socket?.disconnect();
     };
-  }, [socket]);
+  }, [socket, tokenUser, user?.userName]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -467,7 +446,7 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage />} />
+                        <></>
                       )
                     }
                   ></Route>
@@ -477,7 +456,7 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage />} />
+                        <></>
                       )
                     }
                   ></Route>
@@ -536,7 +515,6 @@ function App() {
                     path="/change-log"
                     element={<SuspenseWrapper child={<ChangeLog />} />}
                   />
-                  {/* <Route path="/countdowntimer" element={<CountDownTimer />} /> */}
                   <Route
                     path="upload"
                     element={<SuspenseWrapper child={<UploadPage />} />}

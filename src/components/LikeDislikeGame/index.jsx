@@ -149,7 +149,7 @@ export default function LikeDislikeGame(props) {
         >
           {disLikeCount}
         </Typography>
-      </Box>{" "}
+      </Box>
     </Box>
   );
 }

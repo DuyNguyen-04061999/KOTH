@@ -25,7 +25,6 @@ import stripeReducer from "../reducers/stripeReducer";
 import toastReducer from "../reducers/toastReducer";
 import tournamentReducer from "../reducers/tournamentReducer";
 import userReducer from "../reducers/userReducer";
-import videoReducer from "../reducers/videoReducer";
 import walletReducer from "../reducers/walletReducer";
 import addFriendReducer from "../reducers/addFriendReducer";
 import commentReducer from "../reducers/commentReducer";
@@ -49,7 +48,6 @@ let rootReducer = combineReducers({
   stripeReducer,
   helpcenterReducer,
   deviceReducer,
-  videoReducer,
   playgameReducer,
   userReducer,
   refreshReducer,

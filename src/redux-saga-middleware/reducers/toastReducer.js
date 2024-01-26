@@ -20,7 +20,6 @@ const toastReducer = (
   state = {
     isShowToast: false,
     messageToast: "",
-    typeToast: "success",
   },
   action
 ) => {

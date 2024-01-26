@@ -58,13 +58,6 @@ export const getListGameByType = (data) => {
   };
 };
 
-export const getGameLog = (data) => {
-  return {
-    type: "GET_GAME_LOG",
-    payload: data,
-  };
-};
-
 export const getSearchGame = (data) => {
   return {
     type: "GET_SEARCH_GAME",
@@ -82,13 +75,6 @@ export const getSearchGameSuccess = (data) => {
 export const getSearchGameFail = (data) => {
   return {
     type: "GET_SEARCH_GAME_FAIL",
-    payload: data,
-  };
-};
-
-export const addGameLog = (data) => {
-  return {
-    type: "ADD_GAME_LOG",
     payload: data,
   };
 };
@@ -128,45 +114,10 @@ export const updateListDisLikeGame = (data) => {
   };
 };
 
-export const updateLocationChanges = (data) => {
-  return {
-    type: "UPDATE_LOCATION_CHANGES",
-    payload: data,
-  };
-};
-
-export const openInvitefriendPopup = (data) => {
-  return {
-    type: "OPEN_INVITE_GAME_POPUP",
-  };
-};
-
-export const closeInvitefriendPopup = (data) => {
-  return {
-    type: "CLOSE_INVITE_GAME_POPUP",
-  };
-};
-
 export const changeOrientation = (data) => {
   return {
     type: "CHANGE_ORIENTATION",
     payload: data,
-  };
-};
-export const updateReward = (data) => {
-  return {
-    type: "UPDATE_END_GAME",
-    payload: data,
-  };
-};
-export const openRewardPopup = (data) => {
-  return {
-    type: "OPEN_REWARD_POPUP",
-  };
-};
-export const closeRewardPopup = (data) => {
-  return {
-    type: "CLOSE_REWARD_POPUP",
   };
 };
 
@@ -177,7 +128,6 @@ const gameReducer = (
     isFetchDetailGame: false,
     detailGame: {},
     isGameLogDialog: false,
-    listGameLog: [],
     typeGame: "",
     listGameByType: [],
     isFetchSearchGame: false,
@@ -186,22 +136,16 @@ const gameReducer = (
     typeLike: "",
     listLikeGame: [],
     listDislikeGame: [],
-    currentLoca: "",
-    previousLoca: "",
-    inviteFriendDialog: false,
     orientation: "portrait",
-    typeReward: null,
-    reward: 0,
-    popupReward: false,
   },
   action
 ) => {
   const { type, payload } = action;
   switch (type) {
     case REHYDRATE: {
-      const { gameReducer } = payload || {}
-      const { orientation } = gameReducer || {}
-      return {...state, orientation: orientation || "portrait"}
+      const { gameReducer } = payload || {};
+      const { orientation } = gameReducer || {};
+      return { ...state, orientation: orientation || "portrait" };
     }
     case "GET_LIST_GAME":
       return { ...state, isFetchListGame: true };
@@ -217,8 +161,6 @@ const gameReducer = (
       return { ...state, isFetchDetailGame: false };
     case "TOGGLE_GAME_LOG_DIALOG":
       return { ...state, isGameLogDialog: !state.isGameLogDialog };
-    case "GET_GAME_LOG":
-      return { ...state, listGameLog: payload };
     case "GET_LIST_GAME_BY_TYPE":
       return {
         ...state,
@@ -231,8 +173,6 @@ const gameReducer = (
       return { ...state, isFetchSearchGame: false, listGameByType: payload };
     case "GET_SEARCH_GAME_FAIL":
       return { ...state, isFetchSearchGame: false };
-    case "ADD_GAME_LOG":
-      return { ...state, listGameLog: [...state.listGameLog, payload] };
     case "GAME_LOGOUT_SUCCESS_FULLY":
       return {
         ...state,
@@ -240,7 +180,6 @@ const gameReducer = (
         isFetchDetailGame: false,
         detailGame: {},
         isGameLogDialog: false,
-        listGameLog: [],
         typeGame: "",
         listGameByType: [],
         isFetchSearchGame: false,
@@ -266,49 +205,10 @@ const gameReducer = (
         listDislikeGame: payload,
       };
     }
-    case "UPDATE_LOCATION_CHANGES": {
-      return {
-        ...state,
-        currentLoca: payload.currentLoca,
-        previousLoca: payload.previousLoca,
-      };
-    }
-    case "OPEN_INVITE_GAME_POPUP": {
-      return {
-        ...state,
-        inviteFriendDialog: true,
-      };
-    }
-    case "CLOSE_INVITE_GAME_POPUP": {
-      return {
-        ...state,
-        inviteFriendDialog: false,
-      };
-    }
     case "CHANGE_ORIENTATION": {
       return {
         ...state,
         orientation: payload,
-      };
-    }
-    case "UPDATE_END_GAME": {
-      return {
-        ...state,
-        typeReward: payload.type,
-        reward: payload.value,
-        popupReward: true
-      };
-    }
-    case "OPEN_REWARD_POPUP": {
-      return {
-        ...state,
-        popupReward: true,
-      };
-    }
-    case "CLOSE_REWARD_POPUP": {
-      return {
-        ...state,
-        popupReward: false,
       };
     }
     default:
