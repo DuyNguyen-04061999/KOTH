@@ -16,14 +16,12 @@ import { getAppType } from "../../../utils/helper";
 import { images, navbar } from "../../../utils/images";
 import "../Nav/Nav.scss";
 import NavPromotionTablet from "./NavPromotionTablet";
-// import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function Navbar() {
   const { t } = useTranslation("navigation");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const { width } = useWindowDimensions();
   const [tablet, setTablet] = useState("");
   const { isNav, isDropdownNav, isNavTablet } = useSelector(
     (state) => state.authReducer
@@ -39,7 +37,6 @@ export default function Navbar() {
   const location = useLocation();
   const { pathname } = location;
 
-  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     dispatch(showDropdown(false));
   };

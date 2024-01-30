@@ -1,4 +1,4 @@
-import { Box, Dialog, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -22,7 +22,6 @@ export default function PlayGame(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isBuyPackageGameSuccess } = useSelector((state) => state.appReducer);
-
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();
