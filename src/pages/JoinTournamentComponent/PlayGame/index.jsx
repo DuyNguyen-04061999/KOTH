@@ -1,4 +1,4 @@
-import { Box, Dialog, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 import DeviceOrientation, { Orientation } from "react-screen-orientation";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getFontSizeTitleDependOnWidth } from "../../../utils/config";
 import { sliceString } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -23,8 +22,6 @@ export default function PlayGame(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { isBuyPackageGameSuccess } = useSelector((state) => state.appReducer);
-
-  const [continueGame, setContinueGame] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { width } = useWindowDimensions();
   const { id } = useParams();

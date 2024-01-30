@@ -261,7 +261,7 @@ const authReducer = (
     isDialogConfirm: false,
     idPackage: "",
     userPackageId: "",
-    isDropdownNav: true,
+    isDropdownNav: false,
     isNavTablet: true,
     uPack: {},
     forgetPassDialog: false,
