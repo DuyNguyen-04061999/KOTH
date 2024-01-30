@@ -77,12 +77,12 @@ export default function ListPackage(props) {
         })
       );
       dispatch(getIdPackage(id));
-        ReactGA.event("start_subscription", {
-            category: "start_subscription",
-            action: "click",
-            nonInteraction: true,
-            transport: "xhr",
-        });
+      ReactGA.event("start_subscription", {
+        category: "start_subscription",
+        action: "click",
+        nonInteraction: true,
+        transport: "xhr",
+      });
     }
     if (token === null || token === "") {
       dispatch(toggleLoginDialog());
@@ -215,9 +215,6 @@ export default function ListPackage(props) {
                 )}
               </Box>
               <Box>
-                <Typography sx={{ color: "#FF7A00", fontWeight: "700" }}>
-                  Happy First Month
-                </Typography>
                 <Typography sx={{ color: "#FF7A00", fontWeight: "700" }}>
                   Enjoy Double Play{" "}
                 </Typography>
