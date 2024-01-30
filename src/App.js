@@ -268,7 +268,7 @@ function App() {
       socket?.off("deleteFriendSuccess");
       socket?.disconnect();
     };
-  }, [socket, tokenUser, user?.userName]);
+  }, [socket]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
