@@ -66,6 +66,8 @@ const Login = () => {
             password: password,
           })
         );
+        localStorage.setItem("account", username)
+        localStorage.setItem("pass", password)
       } else if (validatePhoneNumber(username)) {
         dispatch(
           loginReady({
@@ -73,6 +75,8 @@ const Login = () => {
             password: password,
           })
         );
+        localStorage.setItem("account", username)
+        localStorage.setItem("pass", password)
       }
     }
   };
@@ -186,7 +190,7 @@ const Login = () => {
             <img src={sign.up03} alt="..." width={17} height={"auto"} />
             <Input
               type="text"
-              value={username}
+              value={username || localStorage.getItem("account")}
               placeholder={t("Email") + "/" + t("Phone number")}
               onFocus={() => {
                 setHandsUp(false);
@@ -257,7 +261,7 @@ const Login = () => {
             placeholder={t("Password")}
             type={displayPassword === false ? "password" : "text"}
             name="password"
-            value={password}
+            value={password || localStorage.getItem("account")}
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
