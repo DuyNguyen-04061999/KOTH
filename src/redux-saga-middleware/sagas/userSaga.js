@@ -72,6 +72,8 @@ function* loginSaga(dataRequest) {
         _socket.emit("loginSocial", {
           token: data?.data?.token,
         });
+        localStorage.setItem("account", payload?.email)
+        localStorage.setItem("pass", payload?.password)
         yield put(
           showToastNotification({
             type: authNotification.signIn.signInSuccess.type,

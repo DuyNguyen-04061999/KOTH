@@ -20,8 +20,8 @@ import ReactGA from "react-ga4";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(localStorage?.getItem("account") || "");
+  const [password, setPassword] = useState(localStorage?.getItem("pass") || "");
   const [usernameError, setUsernameError] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
@@ -89,7 +89,6 @@ const Login = () => {
       setUsernameError("");
     }
   }, [username, password]);
-
   useEffect(() => {
     if (usernameError || username === "" || password === "") {
       setDisabledBtn(true);
@@ -186,7 +185,7 @@ const Login = () => {
             <img src={sign.up03} alt="..." width={17} height={"auto"} />
             <Input
               type="text"
-              value={username}
+              defaultValue={username || localStorage.getItem("account")}
               placeholder={t("Email") + "/" + t("Phone number")}
               onFocus={() => {
                 setHandsUp(false);
@@ -257,7 +256,8 @@ const Login = () => {
             placeholder={t("Password")}
             type={displayPassword === false ? "password" : "text"}
             name="password"
-            value={password}
+            // value={password}           
+            defaultValue={password ||localStorage.getItem("pass")}
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
