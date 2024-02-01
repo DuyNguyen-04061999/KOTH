@@ -214,11 +214,7 @@ export default function ListPackage(props) {
                   </LazyLoadComponent>
                 )}
               </Box>
-              <Box>
-                <Typography sx={{ color: "#FF7A00", fontWeight: "700" }}>
-                  Enjoy Double Play{" "}
-                </Typography>
-              </Box>
+
               {/* salse */}
               <Box
                 sx={{
