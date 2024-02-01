@@ -452,7 +452,7 @@ export default function Layout(props) {
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}
-      <>
+      {/* <>
         {randomRender === 1 ? (
           <DoubleDayPackDialog />
         ) : randomRender === 2 ? (
@@ -460,7 +460,7 @@ export default function Layout(props) {
         ) : (
           <DoubleDayPackDialog />
         )}
-      </>
+      </> */}
       {isProfileDialog && (
         <DialogProfile
           open={isProfileDialog}
