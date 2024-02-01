@@ -241,7 +241,10 @@ export default function PlayGame(props) {
             <Box
               sx={{
                 position: "relative",
-                height: "800px",
+                height: videoGame ? "800px" : "600px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               {" "}
