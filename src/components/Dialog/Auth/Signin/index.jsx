@@ -299,7 +299,7 @@ export default function Dialoglg() {
                   <img
                     style={{
                       borderRadius: 50,
-                      border: uPack ? "2px solid #FD9E0F" : "",
+                      border: uPack && uPack.remain !== "Expired" ? "2px solid #FD9E0F" : "",
                       objectFit: "cover",
                     }}
                     alt="Remy Sharp"
@@ -404,7 +404,7 @@ export default function Dialoglg() {
                       ) : (
                         <img
                           style={{
-                            border: uPack ? "4px solid #FD9E0F" : "",
+                            border: uPack && uPack.remain !== "Expired" ? "4px solid #FD9E0F" : "",
                             borderRadius: 50,
                             width: width < 576 ? "50px" : "68px",
                             height: width < 576 ? "50px" : "68px",
