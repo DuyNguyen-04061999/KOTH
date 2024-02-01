@@ -99,7 +99,7 @@ export default function ListPackage(props) {
     return true;
   }
   return (
-    <>
+    <Box>
       <Box
         sx={{
           background:
@@ -110,7 +110,7 @@ export default function ListPackage(props) {
               : "" || packageCategory === Type.Normal
               ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
               : "",
-          padding: "14px 20px 20px 20px",
+          padding: packageCategory === Type?.Subscription ? "14px 20px 20px 20px" : "14px 20px 20px 20px",
           borderRadius: "24px",
           display: "flex",
           alignItems: "center",
@@ -124,7 +124,7 @@ export default function ListPackage(props) {
           // maxWidth: width > 576 && width < 1200 ? "315px" : "unset",
           marginTop: width < 1200 ? "25px" : "unset",
           width: "300px",
-          minHeight: "550px",
+          minHeight: packageCategory === Type?.Subscription ? "600px" : "550px",
         }}
         className={
           packageName === "Combo Extra 1"
@@ -158,7 +158,7 @@ export default function ListPackage(props) {
             alignItems: "center",
             borderRadius: "10px",
             width: "100%",
-            height: "480px",
+            height: packageCategory === Type?.Subscription ? "530px" : "480px",
             border: "none",
             padding: "6px 12px",
           }}
@@ -197,8 +197,8 @@ export default function ListPackage(props) {
                   <LazyLoadComponent>
                     <Box
                       sx={{
-                        width: "130px",
-                        height: "115px",
+                        width: "100%",
+                        height: "100%",
                         marginTop: "10px",
                       }}
                       component={"img"}
@@ -226,9 +226,9 @@ export default function ListPackage(props) {
                     display: "flex",
                     justifyContent: "flex-start",
                     alignItems: "center",
-                    marginBottom: "15px",
-                    marginTop:
-                      packageCategory === Type.Subscription ? "10px" : "25px",
+                    // marginBottom: "15px",
+                    // marginTop:
+                    //   packageCategory === Type.Subscription ? "10px" : "25px",
                   }}
                 >
                   {packageCategory === Type.Subscription ? (
@@ -568,6 +568,6 @@ export default function ListPackage(props) {
           )}
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
