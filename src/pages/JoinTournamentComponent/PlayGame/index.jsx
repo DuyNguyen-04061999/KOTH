@@ -53,7 +53,6 @@ export default function PlayGame(props) {
             dispatch(toggleStartGame(false));
           }, 1500);
         } else if (type === "paypal_modal") {
-          // dispatch(openPaypalPackageDialog())
           window.open(process.env.REACT_APP_PAYPAL_PACKAGE_URL, "_blank");
         }
       }
@@ -65,22 +64,22 @@ export default function PlayGame(props) {
     return () => window.removeEventListener("message", handler);
   }, [setStartGame, dispatch, id, tokenUser]);
 
-  const checkLockScreen = () => {
-    if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
-      if (device === "Tablet" && orientation === "portrait") {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
-      if (device === "Tablet" && orientation === "landscape") {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return false;
-  };
+  // const checkLockScreen = () => {
+  //   if (detailTournament?.tournamentInfors?.game?.gameScreenType === 1) {
+  //     if (device === "Tablet" && orientation === "portrait") {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } else if (!detailTournament?.tournamentInfors?.game?.gameScreenType) {
+  //     if (device === "Tablet" && orientation === "landscape") {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  //   return false;
+  // };
 
   const getMobileOS = () => {
     const ua = navigator.userAgent;
@@ -242,7 +241,10 @@ export default function PlayGame(props) {
             <Box
               sx={{
                 position: "relative",
-                height: "800px",
+                height: videoGame ? "800px" : "600px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               {" "}
@@ -265,8 +267,8 @@ export default function PlayGame(props) {
                     ref={iframeRef}
                     allow="fullscreen"
                     style={{
-                      width: "100%",
-                      height: videoGame ? "700px" : "auto",
+                      width: "1031px",
+                      height: videoGame ? "700px" : "580px",
                       background: "black",
                       display: videoGame ? "none" : "block",
                       aspectRatio: !videoGame ? "16/9" : "none",
@@ -284,8 +286,8 @@ export default function PlayGame(props) {
                     ref={iframeRef}
                     allow="fullscreen"
                     style={{
-                      width: "100%",
-                      height: videoGame ? "700px" : "auto",
+                      width: "1031px",
+                      height: videoGame ? "700px" : "580px",
                       background: "black",
                       display: videoGame ? "none" : "block",
                       aspectRatio: !videoGame ? "16/9" : "none",
@@ -311,7 +313,7 @@ export default function PlayGame(props) {
             <Box
               sx={{
                 display: "flex",
-                width: "80%",
+                width: "1031px",
                 marginTop: "30px",
                 justifyContent: "space-between",
               }}
