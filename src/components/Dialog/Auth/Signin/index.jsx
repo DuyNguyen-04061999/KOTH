@@ -17,7 +17,6 @@ import {
   getMyInfor,
   logoutReady,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
-import { toggleWalletDialog } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { getAppType } from "../../../../utils/helper";
 import { images } from "../../../../utils/images";
 import { images260423_l } from "../../../../utils/images260423_l";
@@ -300,7 +299,7 @@ export default function Dialoglg() {
                   <img
                     style={{
                       borderRadius: 50,
-                      border: uPack ? "2px solid #FD9E0F" : "",
+                      border: uPack && uPack.remain !== "Expired" ? "2px solid #FD9E0F" : "",
                       objectFit: "cover",
                     }}
                     alt="Remy Sharp"
@@ -405,7 +404,7 @@ export default function Dialoglg() {
                       ) : (
                         <img
                           style={{
-                            border: uPack ? "4px solid #FD9E0F" : "",
+                            border: uPack && uPack.remain !== "Expired" ? "4px solid #FD9E0F" : "",
                             borderRadius: 50,
                             width: width < 576 ? "50px" : "68px",
                             height: width < 576 ? "50px" : "68px",
@@ -589,37 +588,6 @@ export default function Dialoglg() {
                           </Dropdown.Item>
                         )}
                       </Grid>
-                      <Grid item xs={6}>
-                        {getAppType() === "promote" ? (
-                          ""
-                        ) : (
-                          <Dropdown.Item
-                            style={{ paddingRight: "0px", paddingLeft: "0px" }}
-                            onClick={() => {
-                              if (!token) {
-                                dispatch(toggleLoginDialog());
-                              } else {
-                                // dispatch(openTransactionDialog());
-                                dispatch(toggleWalletDialog());
-                              }
-                            }}
-                          >
-                            <SyncAlt
-                              className="icon-dropdown"
-                              sx={{ color: "#b1b0dd", fontSize: "1.2em" }}
-                            />
-                            <button
-                              className="btn-logout"
-                              style={{
-                                paddingRight: "0px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Transaction
-                            </button>
-                          </Dropdown.Item>
-                        )}
-                      </Grid>
                     </Grid>
                   </Box>
                   <Box className="item">
@@ -627,52 +595,6 @@ export default function Dialoglg() {
                       container
                       sx={{ padding: "5px 15px", maxWidth: "300px" }}
                     >
-                      {/* <Grid item xs={12} className="hover-dropdown">
-                      <Dropdown.Item
-                        style={{
-                          paddingRight: "0px",
-                          paddingLeft: "5px",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                        onClick={() => {
-                          if (!token) {
-                            dispatch(toggleLoginDialog());
-                          } else {
-                            dispatch(toggleWalletDialog());
-                          }
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="22"
-                          height="22"
-                          fill="none"
-                          viewBox="0 0 15 16"
-                        >
-                          <g
-                            stroke="#A89CD7"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1.5"
-                          >
-                            <path d="M11.275 8.969a1.255 1.255 0 00-.375 1.019c.056.675.675 1.168 1.35 1.168h1.188v.744a2.355 2.355 0 01-2.35 2.35H3.913a2.355 2.355 0 01-2.35-2.35V7.694a2.355 2.355 0 012.35-2.35h7.175a2.355 2.355 0 012.35 2.35v.9h-1.263c-.35 0-.669.137-.9.375z"></path>
-                            <path d="M1.563 8.257V5.4a1.78 1.78 0 011.15-1.668l4.962-1.875a1.187 1.187 0 011.606 1.112v2.375M4.375 8H8.75m5.35 1.232v1.287a.642.642 0 01-.626.638H12.25c-.675 0-1.293-.494-1.35-1.17a1.255 1.255 0 01.375-1.018c.232-.237.55-.375.9-.375h1.3c.35.013.625.294.625.638z"></path>
-                          </g>
-                        </svg>
-                        <button
-                          className="btn-logout"
-                          style={{
-                            fontWeight: "700",
-                            color: "#A89CD7",
-                            letterSpacing: "0.5px",
-                            marginLeft: "4px",
-                          }}
-                        >
-                          Wallet
-                        </button>
-                      </Dropdown.Item>
-                    </Grid> */}
                       <Grid item xs={12} className="hover-dropdown">
                         <Dropdown.Item
                           onMouseOver={() => {
@@ -752,52 +674,6 @@ export default function Dialoglg() {
                       container
                       sx={{ padding: "15px 15px", maxWidth: "300px" }}
                     >
-                      {/* <Grid item xs={12} className="hover-dropdown">
-                      <Dropdown.Item
-                        style={{
-                          paddingRight: "0px",
-                          paddingLeft: "5px",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                        onClick={() => {
-                          if (!token) {
-                            dispatch(toggleLoginDialog());
-                          } else {
-                            dispatch(toggleWalletDialog());
-                          }
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="22"
-                          height="22"
-                          fill="none"
-                          viewBox="0 0 15 16"
-                        >
-                          <g
-                            stroke="#A89CD7"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1.5"
-                          >
-                            <path d="M11.275 8.969a1.255 1.255 0 00-.375 1.019c.056.675.675 1.168 1.35 1.168h1.188v.744a2.355 2.355 0 01-2.35 2.35H3.913a2.355 2.355 0 01-2.35-2.35V7.694a2.355 2.355 0 012.35-2.35h7.175a2.355 2.355 0 012.35 2.35v.9h-1.263c-.35 0-.669.137-.9.375z"></path>
-                            <path d="M1.563 8.257V5.4a1.78 1.78 0 011.15-1.668l4.962-1.875a1.187 1.187 0 011.606 1.112v2.375M4.375 8H8.75m5.35 1.232v1.287a.642.642 0 01-.626.638H12.25c-.675 0-1.293-.494-1.35-1.17a1.255 1.255 0 01.375-1.018c.232-.237.55-.375.9-.375h1.3c.35.013.625.294.625.638z"></path>
-                          </g>
-                        </svg>
-                        <button
-                          className="btn-logout"
-                          style={{
-                            fontWeight: "700",
-                            color: "#A89CD7",
-                            letterSpacing: "0.5px",
-                            marginLeft: "4px",
-                          }}
-                        >
-                          Wallet
-                        </button>
-                      </Dropdown.Item>
-                    </Grid> */}
                       <Grid item xs={12} className="hover-dropdown">
                         <Dropdown.Item
                           onMouseOver={() => {

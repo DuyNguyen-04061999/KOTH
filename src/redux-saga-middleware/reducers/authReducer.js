@@ -91,13 +91,6 @@ export const logoutSuccessFully = (data) => {
   };
 };
 
-export const getLeaderBoardSuccess = (data) => {
-  return {
-    type: "GET_LEADERBOARD_SUCCESS",
-    payload: data,
-  };
-};
-
 export const toggleDialogConfirm = (data) => {
   return {
     type: "TOGGLE_DIALOG_CONFIRM",
@@ -263,13 +256,12 @@ const authReducer = (
     userChangeAvatar: "",
     isNav: true,
     resetInputValue: "",
-    leaderBoard: [],
     userId: "",
     mess: "",
     isDialogConfirm: false,
     idPackage: "",
     userPackageId: "",
-    isDropdownNav: true,
+    isDropdownNav: false,
     isNavTablet: true,
     uPack: {},
     forgetPassDialog: false,
@@ -374,8 +366,6 @@ const authReducer = (
         userChangeAvatar: "",
         userPackageId: "",
       };
-    case "GET_LEADERBOARD_SUCCESS":
-      return { ...state, leaderBoard: payload };
     case "TOGGLE_DIALOG_CONFIRM":
       return {
         ...state,

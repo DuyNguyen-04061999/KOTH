@@ -9,17 +9,21 @@ import { imageHome } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 
-const DialogGift = ({bonusName = "Value extra pack", bonusQuantity = 20, isSecondDay = false}) => {
-  const dispatch = useDispatch()
+const DialogGift = ({
+  bonusName = "Value extra pack",
+  bonusQuantity = 20,
+  isSecondDay = false,
+}) => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducer);
   const { isDialogGif } = useSelector((state) => state.appReducer);
 
   const handleClose = () => {
-    dispatch(closeDialogGif())
+    dispatch(closeDialogGif());
   };
 
   const handleConfirm = () => {
-    dispatch(closeDialogGif())
+    dispatch(closeDialogGif());
   };
   const { width } = useWindowDimensions();
 
@@ -122,13 +126,19 @@ const DialogGift = ({bonusName = "Value extra pack", bonusQuantity = 20, isSecon
                 sx={{
                   fontSize: width < 576 ? "10px" : "14px",
                   color: "white",
-                  fontWeight:"500",
-                  lineHeight:"24px"
+                  fontWeight: "500",
+                  lineHeight: "24px",
                 }}
               >
                 We're thrilled to have you here! To kick off your journey, we're
-                gifting you <span style={{color:"#FB3"}}>{bonusName}</span> with <span style={{color:"#FB3"}}>{bonusQuantity} bonus extras.</span> Use them
-                across any promotions to compete and unlock rewards. Click <span style={{color:"#FB3"}}>'Claim Now'</span>  to get your exclusive offer!
+                gifting you <span style={{ color: "#FB3" }}>{bonusName}</span>{" "}
+                with{" "}
+                <span style={{ color: "#FB3" }}>
+                  {bonusQuantity} bonus extras.
+                </span>{" "}
+                Use them across any promotions to compete and unlock rewards.
+                Click <span style={{ color: "#FB3" }}>'Claim Now'</span> to get
+                your exclusive offer!
               </Typography>
             </Box>
           </Box>

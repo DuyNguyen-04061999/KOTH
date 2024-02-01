@@ -22,12 +22,7 @@ import ListGamePage from "./pages/GameManager/ListGamePage";
 import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
-import GameLobby from "./pages/GamePlay";
-import HomePage from "./pages/Home";
-import PlayGamePage from "./pages/PlayGamePage";
-import Refresh from "./pages/Refresh";
 import Tournament from "./pages/Tournament";
-import TransactionDetailPage from "./pages/Transaction/TransactionDetailPage";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
 import _socket from "./redux-saga-middleware/config/socket";
@@ -56,10 +51,7 @@ import {
   updateDevice,
   updateDeviceType,
 } from "./redux-saga-middleware/reducers/deviceReducer";
-import {
-  changeOrientation,
-  updateReward,
-} from "./redux-saga-middleware/reducers/gameReducer";
+import { changeOrientation } from "./redux-saga-middleware/reducers/gameReducer";
 import { getListNotification } from "./redux-saga-middleware/reducers/notificationReducer";
 import { getListPackage } from "./redux-saga-middleware/reducers/packageReducer";
 import {
@@ -119,7 +111,7 @@ function App() {
     if (socket && (tokenUser || token)) {
       socket?.emit("loginSocial", {
         token: tokenUser || token,
-        username: user?.userName
+        username: user?.userName,
       });
     }
   }, [tokenUser, socket, user]);
@@ -188,12 +180,6 @@ function App() {
     if (socket) {
       socket?.once("connect", (data) => {});
 
-      socket?.on("disconnect", (data) => {});
-
-      socket?.on("heartbeat", (data) => {});
-
-      socket?.on("error", (data) => {});
-
       socket?.on("warning", (data, type) => {
         if (type && type !== "get") {
           store.dispatch(
@@ -204,8 +190,6 @@ function App() {
           );
         }
       });
-
-      socket?.on("success", (data) => {});
 
       socket?.on("getListFriendSuccess", (data) => {
         store.dispatch(pushfriendList(data));
@@ -219,18 +203,11 @@ function App() {
         store.dispatch(pushChatWorld(data));
       });
 
-      // socket?.on("chatSuccess", (data) => {
-      //   if (token || tokenUser) {
-      //     socket?.emit("listFriend");
-      //   }
-      //   store.dispatch(updateChatWorld(data));
-      // });
-
       socket?.on("disconnect", (data) => {
         if (tokenUser || token) {
           socket?.emit("loginSocial", {
             token: tokenUser || token,
-            username: user?.userName
+            username: user?.userName,
           });
         }
       });
@@ -248,7 +225,7 @@ function App() {
         if (tokenUser || token) {
           socket?.emit("loginSocial", {
             token: tokenUser || token,
-            username: user?.userName
+            username: user?.userName,
           });
         }
       });
@@ -268,56 +245,21 @@ function App() {
         store.dispatch(updateCountTicket(quantity || 0));
       });
 
-      // socket?.on("addFriendSuccess", (data) => {
-      //   if(!startGameCheck) {
-      //     store.dispatch(
-      //       showToastNotification({
-      //         type: "success",
-      //         message: "You get a new notification",
-      //       })
-      //     );
-      //     store.dispatch(addListNotificationSuccess(data));
-      //   }
-        
-      // });
-
-      // socket?.on("deleteFriendSuccess", (data) => {
-      //   if(!startGameCheck) {
-      //     store.dispatch(
-      //       showToastNotification({
-      //         type: "success",
-      //         message: "Delete friend successfully!",
-      //       })
-      //     );
-      //     socket?.emit("listFriend");
-      //     store.dispatch(deleteFriendSuccesFully("success"));
-      //   }
-      // });
-
       socket?.on(`cancelFriendRequestSuccess`, (data) => {
-        if(token || tokenUser) {
+        if (token || tokenUser) {
           store.dispatch(getListNotification());
         }
       });
 
       socket?.on(`acceptFriendRequestSuccess`, (data) => {
-        if(token || tokenUser) {
+        if (token || tokenUser) {
           socket?.emit("listFriend");
           store.dispatch(callListSendingRequest());
         }
       });
 
-      socket?.on("gameWin", ({ type, value }) => {
-        store.dispatch(updateReward({ type, value }));
-      });
       socket?.on("buySubscriptionSuccess", (id) => {
         store.dispatch(updateSubPackageId(id));
-      });
-      socket?.on("gameDefeated", ({ type, value }) => {
-        store.dispatch(updateReward({ type, value }));
-      });
-      socket?.on("gameDraw", ({ type, value }) => {
-        store.dispatch(updateReward({ type, value }));
       });
     }
     return () => {
@@ -340,7 +282,7 @@ function App() {
       if (socket && (tokenUser || token)) {
         socket?.emit("loginSocial", {
           token: tokenUser || token,
-          username: user?.userName
+          username: user?.userName,
         });
       }
     };
@@ -416,21 +358,17 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // callback function to call when event triggers
     const onPageLoad = () => {
       const token = localStorage.getItem("token");
       if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
         store.dispatch(getUserInfoReady(token || tokenUser));
       }
-      // do something else
     };
 
-    // Check if the page has already loaded
     if (document.readyState === "complete") {
       onPageLoad();
     } else {
       window.addEventListener("load", onPageLoad, false);
-      // Remove the event listener when component unmounts
       return () => window.removeEventListener("load", onPageLoad);
     }
   }, [currentTab, tokenUser]);
@@ -469,15 +407,12 @@ function App() {
         `${process.env.REACT_APP_PROMOTION_URL}/api/settings`
       );
       if (response.ok) {
-        // Parse the response JSON
         const result = await response.json();
         setTheme({ ...theme, theme: result?.theme || "normal" });
       } else {
-        // Handle errors, e.g., set an error state
         console.error("Error fetching data:", response.statusText);
       }
     } catch (error) {
-      // Handle network errors or other exceptions
       console.error("Error fetching data:", error.message);
     } finally {
       setLoadingSettting(false);
@@ -486,7 +421,6 @@ function App() {
 
   useEffect(() => {
     console.log(loadingSetting);
-    // Call the fetchData function
     if (!loadingSetting) fetchGetSetting();
   }, []);
 
@@ -499,7 +433,6 @@ function App() {
               {" "}
               <ScrollToTopURL />
               <Routes>
-                <Route path="/playgame/:id" element={<PlayGamePage />} />
                 <Route path="game/:id" element={<GameDetailPage />} />
                 <Route
                   path="game/iframe/:id"
@@ -513,7 +446,7 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage />} />
+                        <></>
                       )
                     }
                   ></Route>
@@ -523,7 +456,7 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<HomePage />} />
+                        <></>
                       )
                     }
                   ></Route>
@@ -541,11 +474,7 @@ function App() {
                     path="/promotion-detail/:id/influencers/:userName"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
                   ></Route>
-                  <Route path="/gamelobby/:id" element={<GameLobby />} />
-                  {/* <Route
-                    path="/selectroom/:id"
-                    element={<SelectRoomContainer />}
-                  /> */}
+
                   <Route
                     path="/promotion-detail/:id"
                     element={<SuspenseWrapper child={<LazyJoinTour />} />}
@@ -586,11 +515,6 @@ function App() {
                     path="/change-log"
                     element={<SuspenseWrapper child={<ChangeLog />} />}
                   />
-                  <Route
-                    path="/test-refresh"
-                    element={<SuspenseWrapper child={<Refresh />} />}
-                  />
-                  {/* <Route path="/countdowntimer" element={<CountDownTimer />} /> */}
                   <Route
                     path="upload"
                     element={<SuspenseWrapper child={<UploadPage />} />}
@@ -642,12 +566,7 @@ function App() {
                       }
                     ></Route>
                   )}
-                  <Route
-                    path="transactions/:id"
-                    element={
-                      <SuspenseWrapper child={<TransactionDetailPage />} />
-                    }
-                  />
+
                   <Route path="*" element={<Navigate to="/home" />} />
                 </Route>
               </Routes>

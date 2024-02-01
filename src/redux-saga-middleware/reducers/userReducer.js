@@ -348,7 +348,6 @@ const userReducer = (
     userChangeAvatar: "",
     resetInputValue: "",
     leaderBoard: [],
-    mess: "",
     idPackage: "",
     refCodeRegister: "",
     user: {},
@@ -461,7 +460,6 @@ const userReducer = (
         isRegister: false,
         registerEmail: payload?.email,
         registerPhone: payload?.phone,
-        // tokenUser: payload?.token,
         typeVerifyOTP: "register",
       };
     case "REGISTER_FAIL":

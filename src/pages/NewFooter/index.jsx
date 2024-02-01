@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { imageDesktop } from "../../utils/images";
 import useWindowDimensions from "../../utils/useWindowDimensions";
+import ReactGA from "react-ga4";
 
 export default function NewFooter() {
   const { t } = useTranslation("global");
@@ -145,6 +146,14 @@ export default function NewFooter() {
                 justifyContent: "center",
                 alignItems: "center",
                 color: "#fff",
+              }}
+              onClick={() => {
+                  ReactGA.event("click_contact", {
+                      category: "click_contact",
+                      action: "click",
+                      nonInteraction: true,
+                      transport: "xhr",
+                  });
               }}
             >
               <Typography

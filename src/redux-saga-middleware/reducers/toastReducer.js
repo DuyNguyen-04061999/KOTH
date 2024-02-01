@@ -20,7 +20,6 @@ const toastReducer = (
   state = {
     isShowToast: false,
     messageToast: "",
-    typeToast: "success",
   },
   action
 ) => {
@@ -31,9 +30,7 @@ const toastReducer = (
     case "SHOW_TOAST":
       return {
         ...state,
-        // isShowToast: true,
         messageToast: payload.type,
-        // typeToast: payload.type,
       };
     case "HIDE_TOAST":
       return {

@@ -12,8 +12,8 @@ import { inpChat } from "../../../utils/cssFrom";
 import { images, popup } from "../../../utils/images";
 import { images280423_l } from "../../../utils/images280423_l";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import InviteGameDialog from "../../Dialog/Invitegame/InviteGame";
 import ComponentChat from "../componentChat";
+import PriorityHigh from '@mui/icons-material/PriorityHigh'
 
 const ChatRoot = styled.input`
   display: flex;
@@ -272,7 +272,7 @@ export default function ChatGlobal(props) {
                   color: "rgb(160 88 199)",
                 }}
               >
-                <img src={images.I} width={25} alt="" onClick={handleClick} />
+                <PriorityHigh onClick={handleClick} />
               </Box>
             </Box>
             <Box component="div" hidden={!showChat}>
@@ -317,12 +317,6 @@ export default function ChatGlobal(props) {
               </Box>
             </Box>
           </Box>
-          <InviteGameDialog
-            open={openGame}
-            handleShow={() => {
-              setOpenGame(false);
-            }}
-          />
         </Box>
       ) : (
         <Dialog open={openMess} fullScreen>
@@ -480,12 +474,6 @@ export default function ChatGlobal(props) {
               </Box>
             </Box>
           </Box>
-          <InviteGameDialog
-            open={openGame}
-            handleShow={() => {
-              setOpenGame(false);
-            }}
-          />
         </Dialog>
       )}
     </>

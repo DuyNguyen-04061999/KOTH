@@ -9,7 +9,6 @@ import ListPromotion from "../../../components/ListPromotion/ListPromotion";
 import ListWinner from "../../../components/ListWinner";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import SlickSlider from "../../../components/SlickSlider";
-import FilterPromotion from "../../../components/filterPromotion";
 import {
   getListBanner,
   openDialogExclusive,
@@ -117,7 +116,6 @@ export default function NewHomePage() {
       },
     },
   };
-
   return (
     <DocumentMeta {...meta}>
       <Container

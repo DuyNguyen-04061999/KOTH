@@ -20,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import PopUpReward from "../../pages/SelectRoomContainer/PopUpReward";
 import { API } from "../../redux-saga-middleware/axios/api";
 import _socket from "../../redux-saga-middleware/config/socket";
 import { callListSendingRequest } from "../../redux-saga-middleware/reducers/addFriendReducer";
@@ -28,7 +27,6 @@ import { showToastNotification } from "../../redux-saga-middleware/reducers/aler
 import {
   changeRouter,
   openDoubleDayDialog,
-  openNewYearPopup,
   randomRenderPopup,
   toggleStartGame,
 } from "../../redux-saga-middleware/reducers/appReducer";
@@ -45,7 +43,6 @@ import {
   updateChatWorld,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
-import { toggleGameLogDialog } from "../../redux-saga-middleware/reducers/gameReducer";
 import { addListNotificationSuccess } from "../../redux-saga-middleware/reducers/notificationReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import {
@@ -63,10 +60,6 @@ import {
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
-import {
-  closeTransactionDialog,
-  toggleWalletDialog,
-} from "../../redux-saga-middleware/reducers/walletReducer";
 import { compareDate } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
@@ -79,9 +72,6 @@ import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import DoubleDayDialog from "../Dialog/DoubleDay";
 import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
-import GameLogDialog from "../Dialog/GameLog/GameLog";
-import HappyNewYearPopup from "../Dialog/HappyNewYearPopup";
-import InviteGameDialog from "../Dialog/Invitegame/InviteGame";
 import NotiFunds from "../Dialog/NotiFunds";
 import NotificationDialog from "../Dialog/Notification/NotificationDialog";
 import PackagePaypalDialog from "../Dialog/Packages/PackagePaypalDialog";
@@ -92,7 +82,6 @@ import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import SubscriptionDialog from "../Dialog/Subscription";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
-import MenuWallet from "../MenuMobile/Wallet";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
@@ -137,23 +126,14 @@ export default function Layout(props) {
   const { i18n } = useTranslation();
   const { isProfileDialog } = useSelector((state) => state.profileReducer);
   const { systemLanguage } = useSelector((state) => state.settingReducer);
-  const { isWalletDialog, isTransactionDialog } = useSelector(
-    (state) => state.walletReducer
-  );
-  const { isLoginDialog } = useSelector((state) => state.authReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
   const { isNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token, user } = useSelector((state) => state.userReducer);
-  const { isGameLogDialog } = useSelector((state) => state.gameReducer);
-  const { chatPopup, badgechat, openMess } = useSelector(
-    (state) => state.chatReducer
-  );
-  const { isNotificationDialog } = useSelector((state) => state.dialogReducer);
+  const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter, countDownDoubleDay } =
     useSelector((state) => state.appReducer);
-  const { openMenu } = useSelector((state) => state.chatReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -175,14 +155,11 @@ export default function Layout(props) {
 
   useEffect(() => {
     const handlePopState = (event) => {
-      // Handle popstate event here
       dispatch(toggleCloseResultEndGame());
     };
 
-    // Add event listener for popstate
     window.addEventListener("popstate", handlePopState);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("popstate", handlePopState);
     };
@@ -209,7 +186,6 @@ export default function Layout(props) {
       dispatch(toggleStartGame(false));
       dispatch(finishGame());
       dispatch(finishVideo());
-      // dispatch(resetToGameWhenBuyPackageSuccess());
       localStorage.removeItem("buyPackage");
       localStorage.removeItem("newNumberTicket");
     }
@@ -248,7 +224,6 @@ export default function Layout(props) {
   }, [listSetting, dispatch]);
 
   const { userName } = useParams();
-
   useEffect(() => {
     const getRefCodeByUserName = async () => {
       if (userName) {
@@ -298,23 +273,6 @@ export default function Layout(props) {
   useEffect(() => {
     dispatch(getSettingReady());
   }, [dispatch]);
-
-  useEffect(() => {
-    const handleKeyboardOpen = () => {
-      // Check if the virtual keyboard is open (adjust the threshold if needed)
-      if (window.innerHeight < window.outerHeight) {
-        // Adjust the timeout delay if needed
-      }
-    };
-
-    // Add event listener for the focus event
-    window.addEventListener("focus", handleKeyboardOpen);
-
-    // Clean up the event listener on unmount
-    return () => {
-      window.removeEventListener("focus", handleKeyboardOpen);
-    };
-  }, []);
 
   const useQuery = () => new URLSearchParams(location.search);
   const query = useQuery();
@@ -433,7 +391,6 @@ export default function Layout(props) {
         compareDate(currentDay, "01/03/2024")) &&
       !compareDate(currentDay, countDownNewYear)
     ) {
-      dispatch(openNewYearPopup());
     }
   }, [dispatch, countDownNewYear]);
 
@@ -484,7 +441,6 @@ export default function Layout(props) {
       <TicketCheckOut />
       <StripeAlertComponent />
       <ShareTour />
-      <PopUpReward />
       <SubscriptionDialog />
       <TouramentShow />
       <DialogVerify />
@@ -493,11 +449,10 @@ export default function Layout(props) {
       <DialogExclusive />
       <NotiFunds />
       <NotificationDialog />
-      <HappyNewYearPopup />
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}
-      <>
+      {/* <>
         {randomRender === 1 ? (
           <DoubleDayPackDialog />
         ) : randomRender === 2 ? (
@@ -505,7 +460,7 @@ export default function Layout(props) {
         ) : (
           <DoubleDayPackDialog />
         )}
-      </>
+      </> */}
       {isProfileDialog && (
         <DialogProfile
           open={isProfileDialog}
@@ -514,20 +469,7 @@ export default function Layout(props) {
           }}
         />
       )}
-      <InviteGameDialog />
-      <GameLogDialog
-        open={isGameLogDialog}
-        handleClose={() => {
-          dispatch(toggleGameLogDialog());
-        }}
-      />
-      <MenuWallet
-        open={isWalletDialog || isTransactionDialog}
-        handleClose={() => {
-          dispatch(toggleWalletDialog());
-          dispatch(closeTransactionDialog());
-        }}
-      />
+
       <AppBar
         position="sticky"
         className={

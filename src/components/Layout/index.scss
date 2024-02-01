@@ -17,7 +17,7 @@
   }
 }
 
-.badge-chat-des{
+.badge-chat-des {
   position: absolute;
   top: -2px;
   right: -2px;
@@ -25,7 +25,7 @@
   height: 12px;
   border-radius: 50%;
   z-index: 1301;
-  background-color: #F05153;
+  background-color: #f05153;
 }
 
 .logocongty {
@@ -135,17 +135,17 @@
   text-transform: uppercase;
 }
 
-.globalIn{
+.globalIn {
   z-index: 3;
 }
-.globalOut{
+.globalOut {
   z-index: 3;
 }
 
-.PriviteIn{
+.PriviteIn {
   z-index: 3;
 }
-.PriviteOut{
+.PriviteOut {
   z-index: 3;
 }
 
@@ -159,13 +159,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #7f42ec; /* Thumb color */
+  background: #7f42ec;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7f42ec; /* Thumb color on hover */
+  background: #7f42ec;
 }
-/* Hide the default checkbox */
 .containerHamburger input {
   position: absolute;
   opacity: 0;
@@ -275,7 +274,6 @@
   animation: bellRing 0.9s both;
 }
 
-/* bell ringing animation keyframes*/
 @keyframes bellRing {
   0%,
   100% {

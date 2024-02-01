@@ -14,6 +14,7 @@ import { toggleAlertStripeProcess } from "../reducers/stripeReducer";
 import { getUserInfoReady, updateCountTicket } from "../reducers/userReducer";
 import { toggleCheckWallet } from "../reducers/walletReducer";
 import CheckoutService from "../services/checkoutService";
+import ReactGA from "react-ga4";
 
 const checkoutService = new CheckoutService();
 function* getCheckOutSaga(dataRequest) {
@@ -52,6 +53,12 @@ function* getCheckOutSagaSuccess(dataRequest) {
         const res = yield call(checkoutService.getCheckoutSuccess, payload);
         const { status, data } = res;
         if (status === 200 || status === 201) {
+            ReactGA.event("complete_subscription", {
+                category: "complete_subscription",
+                action: "click",
+                nonInteraction: true,
+                transport: "xhr",
+            });
           yield put(buyPackageSuccess(data))
           yield put(checkoutPaypalSuccessComplete(data));
           yield put(updateCountTicket(data?.data?.quantity || 0))
