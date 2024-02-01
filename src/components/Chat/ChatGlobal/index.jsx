@@ -425,7 +425,7 @@ export default function ChatGlobal(props) {
                   color: "rgb(160 88 199)",
                 }}
               >
-                <img src={images.I} width={25} alt="" onClick={handleClick} />
+                <PriorityHigh onClick={handleClick} />
               </Box>
             </Box>
             <Box
