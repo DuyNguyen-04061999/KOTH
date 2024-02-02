@@ -101,21 +101,13 @@ export default function VideoComponent(props) {
             setVideoGame(false);
           }}
         >
-          {/* <source
+          <source
             src={
               detailTournament?.tournamentVideo
                 ? process.env.REACT_APP_SOCKET_SERVER +
                   "/" +
                   detailTournament?.tournamentVideo
                 : video.LogoAnim
-            }
-            type="video/mp4"
-          /> */}
-          <source
-            src={
-              `https://storage.googleapis.com/web-system-files` +
-              "/" +
-              detailTournament?.tournamentVideo
             }
             type="video/mp4"
           />
