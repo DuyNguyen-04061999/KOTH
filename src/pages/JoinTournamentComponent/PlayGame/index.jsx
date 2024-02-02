@@ -182,7 +182,7 @@ export default function PlayGame(props) {
   return (
     <Box
       sx={
-        !videoGame && device === "Mobile"
+        !videoGame && (device === "Mobile" || device === "Tablet")
           ? detailTournament?.tournamentInfors?.game?.gameScreenType
             ? loading && orientation === "portrait"
               ? {
@@ -627,7 +627,6 @@ export default function PlayGame(props) {
       ) : (
         <>
           <Box sx={{ position: "absolute" }}>
-            {" "}
             {detailTournament?.tournamentVideo && videoGame && (
               <VideoComponent
                 detailTournament={detailTournament}
