@@ -10,7 +10,7 @@ export default function NotificationItem(props) {
     id,
     // otherId,
     promotionId,
-    // read,
+    read,
     status,
     type,
     // userId,
@@ -29,6 +29,7 @@ export default function NotificationItem(props) {
             status={status}
             otherAvatar={otherAvatar}
             createdAt={createdAt}
+            read={read}
           />
         );
       } else return <></>;
@@ -46,6 +47,7 @@ export default function NotificationItem(props) {
             type={type}
             id={id}
             title={title}
+            read={read}
           />
         );
       } else return <></>;
@@ -67,6 +69,7 @@ export default function NotificationItem(props) {
             type={type}
             id={id}
             title={title}
+            read={read}
           />
         );
       } else return <></>;

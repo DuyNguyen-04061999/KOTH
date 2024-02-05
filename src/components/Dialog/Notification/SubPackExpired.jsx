@@ -4,15 +4,21 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
+import { readNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
 
 export default function SubPackExpired(props) {
-  const { createdAt, content, title } = props;
+  const { createdAt, content, title, id } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <Box
       component={"div"}
       className="text-white"
+      onClick={() => {
+        dispatch(readNotification({
+          id: id
+        }))
+      }}
       sx={{
         background: "#2E233D",
         padding: "16px 0px",
