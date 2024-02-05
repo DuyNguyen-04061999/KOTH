@@ -17,11 +17,13 @@ import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 import ReactGA from "react-ga4";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState(localStorage?.getItem("account") || "");
+  const [username, setUsername] = useState(
+    localStorage?.getItem("account") || ""
+  );
   const [password, setPassword] = useState(localStorage?.getItem("pass") || "");
   const [usernameError, setUsernameError] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
@@ -65,7 +67,7 @@ const Login = () => {
           loginReady({
             email: username,
             password: password,
-            remember: remember
+            remember: remember,
           })
         );
       } else if (validatePhoneNumber(username)) {
@@ -73,7 +75,7 @@ const Login = () => {
           loginReady({
             phone: username,
             password: password,
-            remember: remember
+            remember: remember,
           })
         );
       }
@@ -104,7 +106,7 @@ const Login = () => {
 
   const STATE_MACHINE_NAME = "State Machine 1";
   const { rive, RiveComponent } = useRive({
-    src: riveFile.christmas_pepe,
+    src: riveFile.casual_pepe,
     stateMachines: STATE_MACHINE_NAME,
     autoplay: true,
   });
@@ -152,41 +154,43 @@ const Login = () => {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { device } = useSelector((state) => state.deviceReducer);
 
-  const [remember, setRemember] = useState(false)
+  const [remember, setRemember] = useState(false);
 
-
-  const BpIcon = styled('span')(({ theme }) => ({
+  const BpIcon = styled("span")(({ theme }) => ({
     borderRadius: 3,
     width: 16,
     height: 16,
     boxShadow:
-      theme.palette.mode === 'dark'
-        ? '0 0 0 1px rgb(16 22 26 / 40%)'
-        : 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
-    backgroundColor: theme.palette.mode === 'dark' ? '#394b59' : '#f5f8fa',
+      theme.palette.mode === "dark"
+        ? "0 0 0 1px rgb(16 22 26 / 40%)"
+        : "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+    backgroundColor: theme.palette.mode === "dark" ? "#394b59" : "#f5f8fa",
     backgroundImage:
-      theme.palette.mode === 'dark'
-        ? 'linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))'
-        : 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
-    '.Mui-focusVisible &': {
-      outline: '2px auto rgba(19,124,189,.6)',
+      theme.palette.mode === "dark"
+        ? "linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))"
+        : "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
+    ".Mui-focusVisible &": {
+      outline: "2px auto rgba(19,124,189,.6)",
       outlineOffset: 2,
     },
-    'input:hover ~ &': {
-      backgroundColor: theme.palette.mode === 'dark' ? '#30404d' : '#ebf1f5',
+    "input:hover ~ &": {
+      backgroundColor: theme.palette.mode === "dark" ? "#30404d" : "#ebf1f5",
     },
-    'input:disabled ~ &': {
-      boxShadow: 'none',
+    "input:disabled ~ &": {
+      boxShadow: "none",
       background:
-        theme.palette.mode === 'dark' ? 'rgba(57,75,89,.5)' : 'rgba(206,217,224,.5)',
+        theme.palette.mode === "dark"
+          ? "rgba(57,75,89,.5)"
+          : "rgba(206,217,224,.5)",
     },
   }));
-  
+
   const BpCheckedIcon = styled(BpIcon)({
-    backgroundColor: '#7848ED',
-    backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
-    '&::before': {
-      display: 'block',
+    backgroundColor: "#7848ED",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+    "&::before": {
+      display: "block",
       width: 16,
       height: 16,
       backgroundImage:
@@ -195,18 +199,18 @@ const Login = () => {
         "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
       content: '""',
     },
-    'input:hover ~ &': {
-      backgroundColor: '#106ba3',
+    "input:hover ~ &": {
+      backgroundColor: "#106ba3",
     },
   });
-  
+
   // Inspired by blueprintjs
   function BpCheckbox(props) {
-    const { checked,  onChange } = props
+    const { checked, onChange } = props;
     return (
       <Checkbox
         sx={{
-          '&:hover': { bgcolor: 'transparent' },
+          "&:hover": { bgcolor: "transparent" },
         }}
         disableRipple
         color="default"
@@ -214,7 +218,7 @@ const Login = () => {
         icon={<BpIcon />}
         checked={checked}
         onChange={() => onChange()}
-        inputProps={{ 'aria-label': 'Checkbox demo' }}
+        inputProps={{ "aria-label": "Checkbox demo" }}
         {...props}
       />
     );
@@ -327,8 +331,8 @@ const Login = () => {
             placeholder={t("Password")}
             type={displayPassword === false ? "password" : "text"}
             name="password"
-            // value={password}           
-            defaultValue={password ||localStorage.getItem("pass")}
+            // value={password}
+            defaultValue={password || localStorage.getItem("pass")}
             sx={{
               "&:before": {
                 borderBottom: "0px solid !important",
@@ -376,10 +380,14 @@ const Login = () => {
             justifyContent: "space-between",
             margin: "12px 0",
           }}
-        ><Box className="text-white">
-          <BpCheckbox onChange={() => setRemember(!remember)} checked={remember}/>
-        Remember me?
-      </Box>
+        >
+          <Box className="text-white">
+            <BpCheckbox
+              onChange={() => setRemember(!remember)}
+              checked={remember}
+            />
+            Remember me?
+          </Box>
           <Typography
             sx={{
               color: "#FF9F38",
