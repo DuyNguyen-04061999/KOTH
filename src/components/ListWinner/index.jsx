@@ -51,7 +51,7 @@ export default function ListWinner() {
         <TableContainer
           component={Paper}
           sx={{
-            height: 365,
+            height: 400,
             backgroundColor: "#2E233D !important",
             color: "white !important",
             overflowY: "hidden",

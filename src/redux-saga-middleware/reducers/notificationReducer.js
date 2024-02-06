@@ -101,11 +101,11 @@ const notificationReducer = (
     case "GET_LIST_NOTIFICATION_FAIL":
       return { ...state, isFetchListNotification: false };
     case "READ_NOTIFICATION":
-      return { ...state };
+      return { ...state, isReadNotification: true };
     case "READ_NOTIFICATION_SUCCESS":
-      return { ...state };
+      return { ...state, isReadNotification: false};
     case "READ_NOTIFICATION_FAIL":
-      return { ...state };
+      return { ...state, isReadNotification: false };
     default:
       return { ...state };
   }

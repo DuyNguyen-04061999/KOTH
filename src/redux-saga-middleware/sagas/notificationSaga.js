@@ -2,6 +2,8 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   getListNotificationFail,
   getListNotificationSuccess,
+  readNotificationFail,
+  readNotificationSuccess,
   updateListNotification,
 } from "../reducers/notificationReducer";
 import NotificationService from "../services/notificationService";
@@ -78,12 +80,15 @@ function* readNotificationSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(updateListNotification(data));
+        yield put(readNotificationSuccess(data))
       } else {
+        yield put(readNotificationFail())
       }
     }
     readNoti = 0;
   } catch (error) {
     readNoti = 0;
+    yield put(readNotificationFail())
     yield put(getListNotificationFail());
   }
 }
