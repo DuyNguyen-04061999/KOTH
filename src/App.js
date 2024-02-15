@@ -420,7 +420,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(loadingSetting);
     if (!loadingSetting) fetchGetSetting();
   }, []);
 
