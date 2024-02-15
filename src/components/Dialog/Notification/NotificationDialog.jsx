@@ -14,6 +14,7 @@ export default function NotificationDialog() {
   const { listNotifiaction } = useSelector(
     (state) => state.notificationReducer
   );
+
   const dispatch = useDispatch();
 
   const handleClose = () => {

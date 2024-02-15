@@ -55,6 +55,7 @@ import {
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
+import ReactGA from "react-ga4";
 
 const userService = new UserService();
 var loginCount = 0;
@@ -150,6 +151,12 @@ function* registerSaga(dataRequest) {
         yield put(clickTab("otpVerifyAccount"));
         yield put(registerSuccess({ ...payload, ...data?.data }));
         yield put(saveCreateAccInfo(payload));
+        ReactGA.event("complete_signup", {
+          category: "complete_signup",
+          action: "click",
+          nonInteraction: true,
+          transport: "xhr",
+        });
       } else {
         yield put(registerFail());
         yield put(
