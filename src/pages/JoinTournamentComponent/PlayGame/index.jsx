@@ -144,14 +144,13 @@ export default function PlayGame(props) {
   const [isBoughtPackage, setIsBoughtPackage] = useState(false);
 
   useEffect(() => {
-    console.log("buyPackage");
 
     // Function to be executed at each interval
     if (
       detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
       iframeRef
     ) {
-      console.log("Iframe");
+
       const incrementCount = () => {
         const buyP = localStorage.getItem("buyPackage");
         const newNumberTicket = localStorage.getItem("newNumberTicket");
