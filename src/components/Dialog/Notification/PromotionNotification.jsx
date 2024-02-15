@@ -12,7 +12,6 @@ export default function PromotionNotification(props) {
   const dispatch = useDispatch();
   return (
     <Box
-      component={"div"}
       className="text-white"
       sx={{
         background: "#2E233D",
@@ -25,6 +24,7 @@ export default function PromotionNotification(props) {
           textAlign: "start",
           marginLeft: "0px !important",
           fontWeight: "700",
+          width:"80%"
         }}
       >
         {title}
