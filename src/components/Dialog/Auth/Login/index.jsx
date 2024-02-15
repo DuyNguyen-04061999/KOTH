@@ -1,8 +1,10 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Box, FormControl, Input, Typography, Checkbox } from "@mui/material";
+import { Box, Checkbox, FormControl, Input, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 import React, { useEffect, useState } from "react";
+import ReactGA from "react-ga4";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
@@ -16,8 +18,6 @@ import { riveFile } from "../../../../utils/rive";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
-import ReactGA from "react-ga4";
-import { styled } from "@mui/material/styles";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -155,6 +155,12 @@ const Login = () => {
   const { device } = useSelector((state) => state.deviceReducer);
 
   const [remember, setRemember] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("account") && localStorage.getItem("pass")) {
+      setRemember(true);
+    }
+  }, []);
 
   const BpIcon = styled("span")(({ theme }) => ({
     borderRadius: 3,
