@@ -72,8 +72,8 @@ export default function ChatFriendList() {
   useEffect(() => {
     const list = friendList?.filter(
       (i) =>
-        i?.userName.includes(searchFeild) ||
-        i?.userName.includes(searchFeild?.toLowerCase())
+        i?.userNickName.includes(searchFeild) ||
+        i?.userNickName.includes(searchFeild?.toLowerCase())
     );
     setListFriend(list);
   }, [searchFeild, friendList]);
