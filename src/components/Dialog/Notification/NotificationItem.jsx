@@ -59,7 +59,8 @@ export default function NotificationItem(props) {
     case 10:
     case 11:
     case 12:
-    case 13: {
+    case 13:
+    case 15: {
       if (content) {
         return (
           <WinPromotion
