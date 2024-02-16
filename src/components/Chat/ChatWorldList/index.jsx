@@ -148,14 +148,13 @@ export default function ChatWorldList() {
   };
 
   const handleAddFriend = (username) => {
-    if(!tokenUser) {
-      dispatch(openLoginDialog())
+    if (!tokenUser) {
+      dispatch(openLoginDialog());
     } else {
       socket.emit("addFriend", {
         username: username,
       });
     }
-   
   };
   const renderChat = isFetching ? (
     <UserChatLoadingList />
@@ -570,7 +569,7 @@ export default function ChatWorldList() {
           minHeight: checkHeightResponsive(),
           overflow: "auto",
           backgroundColor: "#2e233d",
-          scrollbarWidth: "thin",
+          // scrollbarWidth: "thin",
           paddingBottom: "20px",
 
           "&::-webkit-scrollbar": {

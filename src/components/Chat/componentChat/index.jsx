@@ -439,7 +439,7 @@ export default function ComponentChat() {
         overflow: "auto",
         overflowX: "hidden",
         overflowY: "scroll",
-        scrollbarWidth: "thin",
+        // scrollbarWidth: "thin",
         "&::-webkit-scrollbar": {
           width: "0rem",
         },

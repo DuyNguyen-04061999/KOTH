@@ -7,6 +7,7 @@ import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   updateContacterUsername,
   updateFriendNickName,
@@ -15,7 +16,6 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import FindUser from "../../Dialog/FindUser/FindUser";
 import ChatGlobal from "../ChatGlobal";
-import _socket from "../../../redux-saga-middleware/config/socket";
 
 const Test = styled.input`
   display: flex;
@@ -403,7 +403,7 @@ export default function ChatFriendList() {
         className="chat-content p-3"
         sx={{
           overflow: "hidden scroll !important",
-          scrollbarWidth: "thin",
+          // scrollbarWidth: "thin",
           backgroundColor: "#2e233d",
           "&::-webkit-scrollbar": {
             width: "0rem",
