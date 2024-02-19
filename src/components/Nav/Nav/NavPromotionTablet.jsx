@@ -1,9 +1,12 @@
 import { Box, ClickAwayListener, Typography } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { closeDropdown } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  closeDropdown,
+  openLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import { navbar } from "../../../utils/images";
 
 export default function NavPromotionTablet(props) {
@@ -13,6 +16,9 @@ export default function NavPromotionTablet(props) {
   const location = useLocation();
   const { pathname } = location;
   const dispatch = useDispatch();
+
+  const { tokenUser: token } = useSelector((state) => state.userReducer);
+
   return (
     <ClickAwayListener
       onClickAway={() => {
@@ -199,7 +205,11 @@ export default function NavPromotionTablet(props) {
             </Box>
             <Box
               onClick={() => {
-                navigate("/joined-promotion");
+                if (token) {
+                  navigate("/joined-promotion");
+                } else {
+                  dispatch(openLoginDialog());
+                }
               }}
               sx={{
                 padding: "10px",
