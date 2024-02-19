@@ -119,7 +119,7 @@ export default function ListWinner() {
                     component="th"
                     scope="row"
                   >
-                    {row.promotionTitle.slice(0, 30)}
+                    {row.promotionTitle?.slice(0, 30)}
                   </TableCell>
                   {device === "Mobile" ? (
                     ""
