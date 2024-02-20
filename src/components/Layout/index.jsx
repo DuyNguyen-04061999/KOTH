@@ -41,7 +41,7 @@ import {
   showBadgeChat,
   updateChatWorld,
 } from "../../redux-saga-middleware/reducers/chatReducer";
-import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
+// import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
 import { addListNotificationSuccess } from "../../redux-saga-middleware/reducers/notificationReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import {
@@ -69,8 +69,8 @@ import AuthDialog from "../Dialog/Auth/Signin";
 import DialogExclusive from "../Dialog/DialogExclusive";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
-import DoubleDayDialog from "../Dialog/DoubleDay";
-import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
+// import DoubleDayDialog from "../Dialog/DoubleDay";
+// import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import NotiFunds from "../Dialog/NotiFunds";
 import NotificationDialog from "../Dialog/Notification/NotificationDialog";
 import PackagePaypalDialog from "../Dialog/Packages/PackagePaypalDialog";
@@ -131,9 +131,6 @@ export default function Layout(props) {
   const { isNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token, user } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
-  const { listNotifiaction } = useSelector(
-    (state) => state.notificationReducer
-  );
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter, countDownDoubleDay } =
     useSelector((state) => state.appReducer);

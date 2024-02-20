@@ -18,13 +18,11 @@ export default function NotificationBage() {
       const element = listNotifiaction[index];
       if (
         !element?.notificationRead &&
-        secondNotiComparison(element?.updatedAt, new Date())
+        secondNotiComparison(element?.createdAt, new Date()) &&
+        (!localStorage.getItem("newNotiId") ||
+          listNotifiaction[0]?.id !== localStorage.getItem("newNotiId"))
       ) {
         setRead(false);
-        console.log(
-          "Difference: ",
-          (new Date() - new Date(element?.updatedAt)) / 1000
-        );
         return;
       }
     }
@@ -36,6 +34,7 @@ export default function NotificationBage() {
         if (token) {
           dispatch(openNotificationDialog());
           setRead(true);
+          localStorage.setItem("newNotiId", listNotifiaction[0]?.id);
         } else {
           dispatch(openLoginDialog());
         }
