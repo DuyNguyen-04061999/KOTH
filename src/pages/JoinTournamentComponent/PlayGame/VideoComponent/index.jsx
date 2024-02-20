@@ -70,8 +70,10 @@ export default function VideoComponent(props) {
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
-        height: "100%",
         position: "relative",
+        width: "1031px",
+        aspectRatio: "16/9",
+        height: "auto",
       }}
     >
       <Box
@@ -102,12 +104,16 @@ export default function VideoComponent(props) {
           }}
         >
           <source
+            // src={
+            //   detailTournament?.tournamentVideo
+            //     ? process.env.REACT_APP_SOCKET_SERVER +
+            //       "/" +
+            //       detailTournament?.tournamentVideo
+            //     : video.LogoAnim
+            // }
             src={
+              "https://storage.googleapis.com/web-system-files/" +
               detailTournament?.tournamentVideo
-                ? process.env.REACT_APP_SOCKET_SERVER +
-                  "/" +
-                  detailTournament?.tournamentVideo
-                : video.LogoAnim
             }
             type="video/mp4"
           />
