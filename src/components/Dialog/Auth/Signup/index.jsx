@@ -1,7 +1,15 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import {
+  Box,
+  FormControl,
+  Input,
+  Tooltip,
+  Typography,
+  TextField,
+  Autocomplete,
+} from "@mui/material";
+import { withStyles, styled } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +23,9 @@ import { validateNickName } from "../../../../utils/validateNickName";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import "./index.scss";
 import ReactGA from "react-ga4";
 
@@ -25,9 +36,30 @@ const BgWithTooltip = withStyles({
     padding: "10px",
   },
 })(Tooltip);
+
+const CssTextField = styled(TextField)({
+  "& .MuiOutlinedInput-root": {
+    fontSize: "14px",
+    width: "100%",
+    height: "100% !important",
+    "& input": {
+      color: "white",
+    },
+    "& input:disabled": {
+      WebkitTextFillColor: "white",
+    },
+  },
+  "& .MuiAutocomplete-popupIndicator": {
+    color: "#7848ed !important",
+  },
+  "& .MuiInputBase-root": {
+    padding: "0 16px !important",
+    height: "100% !important",
+  },
+});
 export default function Signup(props) {
   const { t } = useTranslation("auth");
-  const [gender] = useState(0);
+  // const [gender] = useState(0);
   const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -108,6 +140,21 @@ export default function Signup(props) {
   const [passOneLetter, setPassOneLetter] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
+  const [age, setAge] = useState(undefined);
+  const options = ["Male", "Female"];
+  const handleChangeGender = (event, newValue) => {
+    if (newValue) {
+      setAge(newValue);
+    }
+  };
+
+  console.log(age);
+
+  const [gender, setGender] = useState("");
+
+  const handleChange = (event) => {
+    setGender(event.target.value);
+  };
 
   const handleDisplaynameChange = (event) => {
     const newNickname = event.target.value;
@@ -233,8 +280,10 @@ export default function Signup(props) {
           orientation === "landscape" && device === "Mobile"
             ? "200px"
             : "unset",
-        paddingTop: orientation === "landscape" && device === "Mobile"
-            ? "200px" : "unset",
+        paddingTop:
+          orientation === "landscape" && device === "Mobile"
+            ? "200px"
+            : "unset",
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -547,28 +596,145 @@ export default function Signup(props) {
             />{" "}
           </FormControl>
         </Box>
-        <FormControl
-          variant="standard"
+        <Box
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
-            padding: width > 576 ? "6px 10px" : "5px",
-            borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
-            flexDirection: "column",
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
-          <Box
-            sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+          <FormControl
+            variant="standard"
+            sx={{
+              width: "48%",
+              backgroundColor: "#1a132d",
+              padding: width > 576 ? "6px 12px" : "5px",
+              borderRadius: width > 576 ? "5px" : "4px",
+              marginBottom: width > 992 ? "16px" : "12px",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
           >
-            <img src={sign.up01} alt="..." width={18} height={18} />
-            <Input
-              type="text"
-              name="displayname"
-              onChange={handleDisplaynameChange}
-              value={displayName}
-              placeholder="Display Name"
+            <Box
               sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <img src={sign.up01} alt="..." width={18} height={18} />
+              <Input
+                type="text"
+                name="displayname"
+                onChange={handleDisplaynameChange}
+                value={displayName}
+                placeholder="Display Name"
+                sx={{
+                  "&:before": {
+                    borderBottom: " 0px solid !important ",
+                    "&:hover": {
+                      borderBottom: "0px solid !important",
+                    },
+                  },
+                  "&:after": {
+                    borderBottom: "0px solid !important",
+                  },
+                  "&:hover": {
+                    border: "none",
+                  },
+                  color: validDisplayName ? "#4FBF67" : "white",
+                  fontWeight: "500",
+                  padding: "0px 0px 0px 16px !important",
+                  width: "100%",
+                }}
+              />{" "}
+              {validDisplayName && <CheckIconSVG />}
+              {!validDisplayName && (
+                <BgWithTooltip
+                  enterTouchDelay={0}
+                  enterDelay={0}
+                  enterNextDelay={0}
+                  title={
+                    <Box>
+                      {" "}
+                      <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                        Your display name must be 12 characters or less and not
+                        contain special characters. Display name are case
+                        sensitive (e.g., Examplename)
+                      </Typography>
+                    </Box>
+                  }
+                  placement="left"
+                  sx={{
+                    backgroundColor: "white",
+                    color: "red",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      backgroundColor: "#1a132d",
+                      position: "absolute",
+                      right: "10px",
+                      top: "8px",
+                      cursor: "pointer",
+                      zIndex: 1,
+                    }}
+                    component={"img"}
+                    src={images.ToolTipIcon}
+                  ></Box>
+                </BgWithTooltip>
+              )}
+            </Box>
+            {!validDisplayName && displayName !== "" && (
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  color: "#F05153",
+                  fontSize: "13px",
+                }}
+              >
+                Please enter a valid display name
+              </Typography>
+            )}{" "}
+          </FormControl>
+          <FormControl
+            variant="standard"
+            sx={{
+              width: "48%",
+              backgroundColor: "#1a132d",
+              borderRadius: width > 576 ? "5px" : "4px",
+              marginBottom: width > 992 ? "16px" : "12px",
+              flexDirection: "row",
+              alignItems: "center",
+              paddingLeft:"10px",
+              paddingRight:"10px",
+              color:"white",
+              "& .MuiInputBase-root" : {
+                color:"white"
+              },
+            }}
+          >
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={gender}
+              label="gender"
+              inputProps={{
+                MenuProps: {
+                  PaperProps: {
+                    sx: {
+                       backgroundColor: '#443565',
+                       color:"white"
+                    }
+                  }
+                }
+            }}
+              onChange={handleChange}
+              sx={{
+                "& .MuiSelect-nativeInput" : {
+                  position:"relative",
+                  width:"2%"
+                },
                 "&:before": {
                   borderBottom: " 0px solid !important ",
                   "&:hover": {
@@ -581,61 +747,46 @@ export default function Signup(props) {
                 "&:hover": {
                   border: "none",
                 },
-                color: validDisplayName ? "#4FBF67" : "white",
-                fontWeight: "500",
-                padding: "0px 0px 0px 16px !important",
-                width: "100%",
-              }}
-            />{" "}
-            {validDisplayName && <CheckIconSVG />}
-            {!validDisplayName && (
-              <BgWithTooltip
-                enterTouchDelay={0}
-                enterDelay={0}
-                enterNextDelay={0}
-                title={
-                  <Box>
-                    {" "}
-                    <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                      Your display name must be 12 characters or less and not
-                      contain special characters. Display name are case
-                      sensitive (e.g., Examplename)
-                    </Typography>
-                  </Box>
-                }
-                placement="left"
-                sx={{
-                  backgroundColor: "white",
-                  color: "red",
-                }}
-              >
-                <Box
-                  sx={{
-                    backgroundColor: "#1a132d",
-                    position: "absolute",
-                    right: "10px",
-                    top: "8px",
-                    cursor: "pointer",
-                    zIndex: 1,
-                  }}
-                  component={"img"}
-                  src={images.ToolTipIcon}
-                ></Box>
-              </BgWithTooltip>
-            )}
-          </Box>
-          {!validDisplayName && displayName !== "" && (
-            <Typography
-              sx={{
-                textAlign: "start",
-                color: "#F05153",
-                fontSize: "13px",
+                "& .MuiSvgIcon-root": {
+                  color: "#7C81F2"
+              }
               }}
             >
-              Please enter a valid display name
-            </Typography>
-          )}{" "}
-        </FormControl>
+              <MenuItem value={"male"}>Male</MenuItem>
+              <MenuItem value={"female"}>Female</MenuItem>
+              {/* <MenuItem value={30}>Thirty</MenuItem> */}
+            </Select>
+          </FormControl>
+          {/* <Autocomplete
+            value={"male"}
+            defaultValue={"male"}
+            sx={{
+              width: "48%",
+              backgroundColor: "#1a132d",
+              padding: width > 576 ? "6px 12px" : "5px",
+              borderRadius: width > 576 ? "5px" : "4px",
+              marginBottom: width > 992 ? "16px" : "12px",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+            options={options}
+            autoHighlight
+            disableClearable
+            onChange={handleChangeGender}
+            isOptionEqualToValue={(option, value) =>
+              option && option.name === value.name
+            }
+            // getOptionLabel={(option) => (option && option.name) || ""}
+            // renderOption={(props, option) => (
+            //   <Box component="li" {...props}>
+            //     {option?.name} ({option?.isoCode})
+            //   </Box>
+            // )}
+            renderInput={(params) => (
+              <CssTextField {...params} placeholder="Enter Your State" />
+            )}
+          ></Autocomplete> */}
+        </Box>
         <FormControl
           variant="standard"
           sx={{
