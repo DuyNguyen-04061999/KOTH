@@ -144,13 +144,11 @@ export default function PlayGame(props) {
   const [isBoughtPackage, setIsBoughtPackage] = useState(false);
 
   useEffect(() => {
-
     // Function to be executed at each interval
     if (
       detailTournament?.tournamentInfors?.game?.gameEngine === "cocos" &&
       iframeRef
     ) {
-
       const incrementCount = () => {
         const buyP = localStorage.getItem("buyPackage");
         const newNumberTicket = localStorage.getItem("newNumberTicket");
@@ -240,7 +238,7 @@ export default function PlayGame(props) {
             <Box
               sx={{
                 position: "relative",
-                height: videoGame ? "800px" : "600px",
+                height: "600px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

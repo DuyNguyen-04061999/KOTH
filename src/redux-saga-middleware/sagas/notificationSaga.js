@@ -80,15 +80,15 @@ function* readNotificationSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(updateListNotification(data));
-        yield put(readNotificationSuccess(data))
+        yield put(readNotificationSuccess(data));
       } else {
-        yield put(readNotificationFail())
+        yield put(readNotificationFail());
       }
     }
     readNoti = 0;
   } catch (error) {
     readNoti = 0;
-    yield put(readNotificationFail())
+    yield put(readNotificationFail());
     yield put(getListNotificationFail());
   }
 }
