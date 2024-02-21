@@ -13,7 +13,10 @@ import {
   getListBanner,
   openDialogExclusive,
 } from "../../../redux-saga-middleware/reducers/appReducer";
-import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  clickTab,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
@@ -174,7 +177,7 @@ export default function NewHomePage() {
               />
             )}
           </Box>
-          {device === "Desktop" ? (
+          {device === "Desktop" || device === "Tablet" ? (
             <Box>
               <Grid container columnSpacing={2} rowSpacing={2}>
                 {listBanner?.map((i, index) => {
@@ -188,6 +191,7 @@ export default function NewHomePage() {
                               navigate("/packages");
                             } else if (i?.bannerType === "new") {
                               if (!token) {
+                                dispatch(clickTab("signup"));
                                 dispatch(toggleLoginDialog());
                               } else {
                                 dispatch(openDialogExclusive());
