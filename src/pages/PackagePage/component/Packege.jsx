@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import { useEffect, useState } from "react";
 import DocumentMeta from "react-document-meta";
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { imageDesktop, images } from "../../../utils/images";
+import { imageDesktop } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import "../scss/index.scss";
 import DialogConfirm from "./DialogConfirm";
@@ -242,7 +242,11 @@ export default function Package(props) {
                         <Box
                           key={index}
                           className="mb-3"
-                          sx={{ margin: "0px 10px" }}
+                          sx={{
+                            margin: "0px 10px",
+                            marginTop:
+                              i?.packageCategory !== "sub" ? "20px" : "0px",
+                          }}
                         >
                           <ListPackage
                             packageName={i?.packageName}
@@ -296,7 +300,11 @@ export default function Package(props) {
                         <Box
                           key={index}
                           className="mb-3"
-                          sx={{ margin: "0px 10px" }}
+                          sx={{
+                            margin: "0px 10px",
+                            marginTop:
+                              i?.packageCategory !== "sub" ? "20px" : "0px",
+                          }}
                         >
                           <ListPackage
                             packageName={i?.packageName}
