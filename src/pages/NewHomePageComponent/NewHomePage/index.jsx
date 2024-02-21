@@ -174,7 +174,7 @@ export default function NewHomePage() {
               />
             )}
           </Box>
-          {device === "Desktop" ? (
+          {device === "Desktop" || device === "Tablet" ? (
             <Box>
               <Grid container columnSpacing={2} rowSpacing={2}>
                 {listBanner?.map((i, index) => {

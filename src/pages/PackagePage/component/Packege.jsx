@@ -300,7 +300,11 @@ export default function Package(props) {
                         <Box
                           key={index}
                           className="mb-3"
-                          sx={{ margin: "0px 10px" }}
+                          sx={{
+                            margin: "0px 10px",
+                            marginTop:
+                              i?.packageCategory !== "sub" ? "20px" : "0px",
+                          }}
                         >
                           <ListPackage
                             packageName={i?.packageName}
