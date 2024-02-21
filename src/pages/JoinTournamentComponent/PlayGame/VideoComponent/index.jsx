@@ -70,8 +70,10 @@ export default function VideoComponent(props) {
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
-        height: "100%",
         position: "relative",
+        width: "1031px",
+        aspectRatio: "16/9",
+        height: "auto",
       }}
     >
       <Box
