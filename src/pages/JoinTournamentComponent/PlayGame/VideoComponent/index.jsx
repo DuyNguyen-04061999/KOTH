@@ -70,8 +70,10 @@ export default function VideoComponent(props) {
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
-        height: "100%",
         position: "relative",
+        width: "1031px",
+        aspectRatio: "16/9",
+        height: "auto",
       }}
     >
       <Box
@@ -214,7 +216,7 @@ export default function VideoComponent(props) {
                 device === "Mobile" && orientation === "landscape"
                   ? "fixed"
                   : "absolute",
-              top: width < 576 ? "22%" : "50%",
+              top: width < 576 ? "31%" : "50%",
               right: "10px",
               display: "flex",
               alignItems: "center",

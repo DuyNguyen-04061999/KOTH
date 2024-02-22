@@ -1,7 +1,8 @@
-import { Box, Tooltip, Typography, useTheme } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import ReactGA from "react-ga4";
 import { useTranslation } from "react-i18next";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +17,6 @@ import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/pack
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import ReactGA from "react-ga4";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -24,6 +24,12 @@ const BgWithTooltip = withStyles({
     backgroundColor: "white",
   },
 })(Tooltip);
+
+export const Type = {
+  Subscription: "sub",
+  Value: "normal value",
+  Standard: "normal standard",
+};
 
 export default function ListPackage(props) {
   const {
@@ -33,7 +39,6 @@ export default function ListPackage(props) {
     packageFreeTicketTournament,
     packageReduceWatchAds,
     id,
-    avatarChristmas,
     des,
     packageCategory,
   } = props;
@@ -45,10 +50,6 @@ export default function ListPackage(props) {
   const { t } = useTranslation("package");
 
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const Type = {
-    Subscription: "sub",
-    Normal: "normal",
-  };
 
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -88,7 +89,6 @@ export default function ListPackage(props) {
       dispatch(toggleLoginDialog());
     }
   };
-  const theme = useTheme();
 
   function isJson(str) {
     try {
@@ -98,26 +98,25 @@ export default function ListPackage(props) {
     }
     return true;
   }
+
   return (
     <Box>
       <Box
         sx={{
           background:
-            packageName === "Combo Extra 1"
-              ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D "
+            packageCategory === Type?.Standard
+              ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D"
               : "" || packageCategory === Type.Subscription
-              ? "linear-gradient(215deg, #EB6FFF 7.26%, #82F0FF 34.46%, #A470FF 53.35%, #3CC4E2 68.88%, #C271FF 86.45%, #3CC4E2 100%)"
-              : "" || packageCategory === Type.Normal
+              ? "linear-gradient(194deg, #EB6FFF 10.05%, #82F0FF 36.19%, #A470FF 54.35%, #3CC4E2 69.28%, #C271FF 86.16%, #3CC4E2 99.19%)"
+              : "" || packageCategory === Type.Value
               ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
               : "",
-          padding: packageCategory === Type?.Subscription ? "14px 20px 20px 20px" : "14px 20px 20px 20px",
+          padding: "19px",
           borderRadius: "24px",
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
           position: "relative",
-          marginLeft: "8px",
-          marginRight: "8px",
           height: "fit-content",
           // minWidth: width > 576 && width < 1200 ? "100%" : "315px",
           marginBottom: "20px",
@@ -127,11 +126,11 @@ export default function ListPackage(props) {
           minHeight: packageCategory === Type?.Subscription ? "600px" : "550px",
         }}
         className={
-          packageName === "Combo Extra 1"
+          packageCategory === Type?.Standard
             ? "gradient-border-rounded"
             : "" || packageCategory === Type.Subscription
             ? "gradient-border-rounded1"
-            : "" || packageCategory === Type.Normal
+            : "" || packageCategory === Type.Value
             ? "gradient-border-rounded2"
             : ""
         }
@@ -139,12 +138,16 @@ export default function ListPackage(props) {
         <Typography
           variant="h1"
           sx={{
-            fontSize: width < 1200 ? "20px" : "20px",
-            marginTop: "15px",
+            fontSize: "20px",
             marginBottom: "10px !important",
-            color: "white",
+            color:
+              packageCategory === Type?.Subscription
+                ? "white"
+                : packageCategory === Type?.Standard
+                ? "#383B80"
+                : "#3A2922",
             textOverflow: "ellipsis",
-            fontWeight: "600",
+            fontWeight: "700",
           }}
         >
           {packageName}
@@ -204,7 +207,7 @@ export default function ListPackage(props) {
                       component={"img"}
                       src={
                         packageAvatar
-                          ? process.env.REACT_APP_SOCKET_SERVER +
+                          ? "https://storage.googleapis.com/web-system-files/packages" +
                             "/" +
                             packageAvatar
                           : images.christbg
@@ -480,7 +483,7 @@ export default function ListPackage(props) {
                     packageCategory === Type.Subscription
                       ? "Current pack"
                       : uPack?.remain === "Expired" &&
-                        packageName === Type.Subscription
+                        packageCategory === Type.Subscription
                       ? "Upgrade Pack"
                       : t("Buy Now")
                   }

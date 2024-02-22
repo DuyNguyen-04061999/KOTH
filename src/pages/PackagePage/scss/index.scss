@@ -67,10 +67,9 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 1rem; 
-    padding: 4px; /* тут padding замість border-width */
-    background: linear-gradient(120deg, #CDFFE1  0%, #4D7DBC
-    100%);
+    border-radius: 24px;
+    padding: 3px; /* тут padding замість border-width */
+    background: #CDFFE1;
     /* 
     * Магічні властивості, де
     * [1] – охоплює лише область вмісту (без padding, який в нас замість border)
@@ -88,10 +87,9 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 1rem; 
-    padding: 4px; /* тут padding замість border-width */
-    background: linear-gradient(120deg, #FEFCFF  0%, #DF85FE
-    100%);
+    border-radius: 24px;
+    padding: 3px; /* тут padding замість border-width */
+    background: rgba(254, 252, 255, 0.86);
     /* 
     * Магічні властивості, де
     * [1] – охоплює лише область вмісту (без padding, який в нас замість border)
@@ -109,9 +107,9 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 1rem; 
-    padding: 4px; /* тут padding замість border-width */
-    background: linear-gradient(120deg, #FEFFEF 0%, #F7FF98 100%);
+    border-radius: 24px;
+    padding: 3px; /* тут padding замість border-width */
+    background: #FEFFEF;
     /* 
     * Магічні властивості, де
     * [1] – охоплює лише область вмісту (без padding, який в нас замість border)

@@ -9,6 +9,7 @@ import {
   Grid,
   Input,
   MenuItem,
+  Select,
   Skeleton,
   Slide,
   TextField,
@@ -98,6 +99,7 @@ export default function DialogProfile(props) {
     firstName,
     lastName,
     isEditProfile,
+    gender: gd,
   } = useSelector((state) => state.profileReducer);
 
   const dispatch = useDispatch();
@@ -118,6 +120,11 @@ export default function DialogProfile(props) {
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState(city);
   const [stateOption, setStateOption] = useState(state || "");
+  const [gender, setGender] = useState(0);
+
+  const handleChange = (event) => {
+    setGender(Number(event.target.value));
+  };
 
   useEffect(() => {
     setFName(firstName);
@@ -129,6 +136,7 @@ export default function DialogProfile(props) {
     setStateOption(state);
     setZcode(zipCode);
     setValue(dayjs(birthDay));
+    setGender(gd);
   }, [
     nickName,
     address1,
@@ -139,6 +147,7 @@ export default function DialogProfile(props) {
     birthDay,
     firstName,
     lastName,
+    gd,
   ]);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -225,6 +234,7 @@ export default function DialogProfile(props) {
           birthday: value,
           firstName: fName,
           lastName: lName,
+          gender: gender,
         })
       );
     }
@@ -1191,131 +1201,252 @@ export default function DialogProfile(props) {
                   )}
                 </Box>
               </Box>
-              <Box className="Display-Name mb-3 d-flex flex-column align-items-start">
-                <Typography
-                  variant="inherit"
-                  sx={{
-                    color: "#ffff",
-                    fontWeight: "500",
-                    marginBottom: "5px !important",
-                  }}
+              <Box sx={{ display: "flex" }}>
+                <Box
+                  className="Display-Name mb-3 d-flex flex-column align-items-start"
+                  sx={{ width: "100%" }}
                 >
-                  Display Name
-                </Typography>
-                {isGetMyInfo ? (
-                  <>
-                    <Typography
-                      component={"div"}
-                      variant="h4"
-                      sx={{ width: "100%" }}
-                    >
-                      <Skeleton animation="wave" />
-                    </Typography>
-                  </>
-                ) : (
-                  <>
-                    <FormControl
-                      variant="standard"
-                      sx={{
-                        width: "100%",
-                        backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
-                        padding: "10px",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <Input
-                        id="input-with-icon-adornment"
-                        type="text"
-                        onChange={(e) => setDName(e.target.value)}
-                        value={dName}
-                        disabled={tab === 0}
-                        placeholder="Enter Your Display Name"
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Display Name
+                  </Typography>
+                  {isGetMyInfo ? (
+                    <>
+                      <Typography
+                        component={"div"}
+                        variant="h4"
+                        sx={{ width: "100%" }}
+                      >
+                        <Skeleton animation="wave" />
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Box
                         sx={{
-                          "&:before": {
-                            borderBottom: " 0px solid !important ",
-                            "&:hover": {
-                              borderBottom: "0px solid !important",
-                            },
-                          },
-                          "&:after": {
-                            borderBottom: "0px solid !important",
-                          },
-                          "&:hover": {
-                            border: "none",
-                          },
-                          color: "white",
-                          fontSize: "14px",
-                          "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
-                            padding: "0px !important",
-                          },
-                          "& .Mui-disabled": {
-                            WebkitTextFillColor: "white !important",
-                          },
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
                         }}
-                      />{" "}
-                      {tab === 1 ? (
-                        <BgWithTooltip
-                          enterTouchDelay={0}
-                          title={
-                            <Box>
-                              {" "}
-                              <Typography
-                                sx={{ textAlign: "start", fontSize: "12px" }}
-                              >
-                                Your Display name must be 12 characters or less
-                                and not contain special characters. Nicknames
-                                are case sensitive (e.g., Examplename)
-                              </Typography>
-                            </Box>
-                          }
-                          placement="top"
+                      >
+                        <FormControl
+                          variant="standard"
                           sx={{
-                            backgroundColor: "white",
-                            color: "red",
+                            width: "100%",
+                            backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                            padding: "10px",
+                            borderRadius: "5px",
                           }}
                         >
-                          <Box
-                            style={{
-                              backgroundColor: "transparent",
-                              right: "10px",
-                              top: "8px",
-                              cursor: "pointer",
-                              position: "absolute",
+                          <Input
+                            id="input-with-icon-adornment"
+                            type="text"
+                            onChange={(e) => setDName(e.target.value)}
+                            value={dName}
+                            disabled={tab === 0}
+                            placeholder="Enter Your Display Name"
+                            sx={{
+                              "&:before": {
+                                borderBottom: " 0px solid !important ",
+                                "&:hover": {
+                                  borderBottom: "0px solid !important",
+                                },
+                              },
+                              "&:after": {
+                                borderBottom: "0px solid !important",
+                              },
+                              "&:hover": {
+                                border: "none",
+                              },
+                              color: "white",
+                              fontSize: "14px",
+                              "& .css-1x51dt5-MuiInputBase-input-MuiInput-input":
+                                {
+                                  padding: "0px !important",
+                                },
+                              "& .Mui-disabled": {
+                                WebkitTextFillColor: "white !important",
+                              },
+                            }}
+                          />{" "}
+                          {tab === 1 ? (
+                            <BgWithTooltip
+                              enterTouchDelay={0}
+                              title={
+                                <Box>
+                                  {" "}
+                                  <Typography
+                                    sx={{
+                                      textAlign: "start",
+                                      fontSize: "12px",
+                                    }}
+                                  >
+                                    Your Display name must be 12 characters or
+                                    less and not contain special characters.
+                                    Nicknames are case sensitive (e.g.,
+                                    Examplename)
+                                  </Typography>
+                                </Box>
+                              }
+                              placement="top"
+                              sx={{
+                                backgroundColor: "white",
+                                color: "red",
+                              }}
+                            >
+                              <Box
+                                style={{
+                                  backgroundColor: "transparent",
+                                  right: "10px",
+                                  top: "8px",
+                                  cursor: "pointer",
+                                  position: "absolute",
+                                }}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="22"
+                                  height="22"
+                                  fill="none"
+                                  viewBox="0 0 22 22"
+                                >
+                                  <g>
+                                    <path
+                                      stroke="#7C81F2"
+                                      strokeWidth="1.5"
+                                      d="M11 21c5.523 0 10-4.477 10-10S16.523 1 11 1 1 5.477 1 11s4.477 10 10 10z"
+                                    ></path>
+                                    <path
+                                      stroke="#7C81F2"
+                                      strokeLinecap="round"
+                                      strokeWidth="1.5"
+                                      d="M11 16v-6"
+                                    ></path>
+                                    <path
+                                      fill="#7C81F2"
+                                      d="M11 6a1 1 0 110 2 1 1 0 010-2z"
+                                    ></path>
+                                  </g>
+                                </svg>
+                              </Box>
+                            </BgWithTooltip>
+                          ) : (
+                            ""
+                          )}
+                        </FormControl>{" "}
+                      </Box>
+                    </>
+                  )}
+                </Box>
+                <Box
+                  className="Gender mb-3 ms-2 d-flex flex-column align-items-start"
+                  sx={{ width: "100%" }}
+                >
+                  <Typography
+                    variant="inherit"
+                    sx={{
+                      color: "#ffff",
+                      fontWeight: "500",
+                      marginBottom: "5px !important",
+                    }}
+                  >
+                    Gender
+                  </Typography>
+                  {isGetMyInfo ? (
+                    <>
+                      <Typography
+                        component={"div"}
+                        variant="h4"
+                        sx={{ width: "100%" }}
+                      >
+                        <Skeleton animation="wave" />
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Box
+                        sx={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <FormControl
+                          disabled={tab === 0 ? true : false}
+                          variant="standard"
+                          sx={{
+                            width: "100%",
+                            backgroundColor: tab === 0 ? "#3D2D53" : "#181223",
+                            borderRadius: width > 576 ? "5px" : "4px",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            color: "white",
+                            marginBottom: "0px !important",
+                            "& .MuiInputBase-root": {
+                              color: "white",
+                            },
+                            "& .MuiInputBase-input.Mui-disabled": {
+                              WebkitTextFillColor: "white",
+                            },
+                            paddingTop: "5px",
+                            paddingBottom: "3px",
+                          }}
+                        >
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={gender}
+                            label="gender"
+                            inputProps={{
+                              MenuProps: {
+                                PaperProps: {
+                                  sx: {
+                                    backgroundColor: "#443565",
+                                    color: "white",
+                                  },
+                                },
+                              },
+                            }}
+                            onChange={handleChange}
+                            sx={{
+                              width: "100%",
+                              "& .MuiSelect-nativeInput": {
+                                position: "relative",
+                                width: "2%",
+                              },
+                              "&:before": {
+                                borderBottom: " 0px solid !important ",
+                                "&:hover": {
+                                  borderBottom: "0px solid !important",
+                                },
+                              },
+                              "&:after": {
+                                borderBottom: "0px solid !important",
+                              },
+                              "&:hover": {
+                                border: "none",
+                              },
+                              "& .MuiSvgIcon-root": {
+                                color: "#7C81F2",
+                              },
+                              paddingLeft: "10px",
+                              paddingRight: "10px",
                             }}
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="22"
-                              height="22"
-                              fill="none"
-                              viewBox="0 0 22 22"
-                            >
-                              <g>
-                                <path
-                                  stroke="#7C81F2"
-                                  strokeWidth="1.5"
-                                  d="M11 21c5.523 0 10-4.477 10-10S16.523 1 11 1 1 5.477 1 11s4.477 10 10 10z"
-                                ></path>
-                                <path
-                                  stroke="#7C81F2"
-                                  strokeLinecap="round"
-                                  strokeWidth="1.5"
-                                  d="M11 16v-6"
-                                ></path>
-                                <path
-                                  fill="#7C81F2"
-                                  d="M11 6a1 1 0 110 2 1 1 0 010-2z"
-                                ></path>
-                              </g>
-                            </svg>
-                          </Box>
-                        </BgWithTooltip>
-                      ) : (
-                        ""
-                      )}
-                    </FormControl>{" "}
-                  </>
-                )}
+                            <MenuItem value={"0"}>Male</MenuItem>
+                            <MenuItem value={"1"}>Female</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Box>
+                    </>
+                  )}
+                </Box>
               </Box>
               <Box className="Address-line-1 mb-3 d-flex flex-column align-items-start">
                 <Typography

@@ -1,6 +1,8 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +18,6 @@ import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
-import ReactGA from "react-ga4";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -25,9 +26,10 @@ const BgWithTooltip = withStyles({
     padding: "10px",
   },
 })(Tooltip);
+
 export default function Signup(props) {
   const { t } = useTranslation("auth");
-  const [gender] = useState(0);
+  // const [gender] = useState(0);
   const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -108,6 +110,12 @@ export default function Signup(props) {
   const [passOneLetter, setPassOneLetter] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
+
+  const [gender, setGender] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setGender(Number(event.target.value));
+  };
 
   const handleDisplaynameChange = (event) => {
     const newNickname = event.target.value;
@@ -233,8 +241,10 @@ export default function Signup(props) {
           orientation === "landscape" && device === "Mobile"
             ? "200px"
             : "unset",
-        paddingTop: orientation === "landscape" && device === "Mobile"
-            ? "200px" : "unset",
+        paddingTop:
+          orientation === "landscape" && device === "Mobile"
+            ? "200px"
+            : "unset",
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -250,7 +260,6 @@ export default function Signup(props) {
             {t("Sign up")}
           </Typography>
         </Box>
-
         <FormControl
           variant="standard"
           sx={{
@@ -552,14 +561,20 @@ export default function Signup(props) {
           sx={{
             width: "100%",
             backgroundColor: "#1a132d",
-            padding: width > 576 ? "6px 10px" : "5px",
+            padding: width > 576 ? "6px 12px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
             marginBottom: width > 992 ? "16px" : "12px",
-            flexDirection: "column",
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
           <Box
-            sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+            }}
           >
             <img src={sign.up01} alt="..." width={18} height={18} />
             <Input
@@ -624,17 +639,96 @@ export default function Signup(props) {
               </BgWithTooltip>
             )}
           </Box>
-          {!validDisplayName && displayName !== "" && (
-            <Typography
+        </FormControl>
+        {!validDisplayName && displayName !== "" && (
+          <Typography
+            sx={{
+              textAlign: "start",
+              color: "#F05153",
+              fontSize: "13px",
+            }}
+          >
+            Please enter a valid display name
+          </Typography>
+        )}{" "}
+        <FormControl
+          variant="standard"
+          sx={{
+            marginTop: !validDisplayName && displayName ? "16px" : "",
+            width: "100%",
+            backgroundColor: "#1a132d",
+            borderRadius: width > 576 ? "5px" : "4px",
+            marginBottom: width > 992 ? "16px" : "12px",
+            flexDirection: "row",
+            alignItems: "center",
+            padding: width > 576 ? "6px 12px" : "5px",
+
+            color: "white",
+            "& .MuiInputBase-root": {
+              color: "white",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <img src={sign.up01} alt="..." width={18} height={18} />
+
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={gender}
+              label="gender"
+              inputProps={{
+                MenuProps: {
+                  sx: {
+                    zIndex: 1321,
+                  },
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: "#443565",
+                      color: "white",
+                    },
+                  },
+                },
+              }}
+              onChange={handleChange}
               sx={{
-                textAlign: "start",
-                color: "#F05153",
-                fontSize: "13px",
+                marginLeft: "12px",
+                padding: "0px",
+                marginTop: "3px",
+                width: "100%",
+                "& .MuiSelect-nativeInput": {
+                  position: "relative",
+                  width: "2%",
+                },
+                "&:before": {
+                  borderBottom: " 0px solid !important ",
+                  "&:hover": {
+                    borderBottom: "0px solid !important",
+                  },
+                },
+                "&:after": {
+                  borderBottom: "0px solid !important",
+                },
+                "&:hover": {
+                  border: "none",
+                },
+                "& .MuiSvgIcon-root": {
+                  color: "#7C81F2",
+                },
               }}
             >
-              Please enter a valid display name
-            </Typography>
-          )}{" "}
+              <MenuItem value={"0"}>Male</MenuItem>
+              <MenuItem value={"1"}>Female</MenuItem>
+              {/* <MenuItem value={30}>Thirty</MenuItem> */}
+            </Select>
+          </Box>
         </FormControl>
         <FormControl
           variant="standard"

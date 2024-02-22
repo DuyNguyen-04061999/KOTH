@@ -1,4 +1,5 @@
 import Hotjar from '@hotjar/browser';
+import ReactGA from "react-ga4";
 import { call, delay, getContext, put, takeEvery } from "redux-saga/effects";
 import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
@@ -55,7 +56,6 @@ import {
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
-import ReactGA from "react-ga4";
 
 const userService = new UserService();
 var loginCount = 0;
@@ -73,7 +73,7 @@ function* loginSaga(dataRequest) {
         _socket.emit("loginSocial", {
           token: data?.data?.token,
         });
-        if(payload?.remember) {
+        if (payload?.remember) {
           localStorage.setItem("account", payload?.email || payload?.phone || "")
           localStorage.setItem("pass", payload?.password)
         } else {
@@ -304,7 +304,7 @@ function* userInfoSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         Hotjar.identify(data?.data?.user?.id, {
-        //thong tin neu can tracking
+          //thong tin neu can tracking
           full_name: data?.data?.user?.userFullName,
         });
         yield put(getUserInfoSuccess(data?.data));
@@ -597,6 +597,7 @@ function* getUserByUsernameSaga(dataRequest) {
             firstName: user?.userFirstName || "",
             lastName: user?.userLastName || "",
             nickName: user?.userNickName || "",
+            gender: user?.userGender,
           })
         );
       } else {
@@ -638,6 +639,7 @@ function* getMyInforSaga(dataRequest) {
             state: user?.userAccount?.accountState,
             zipCode: user?.userAccount?.accountZipCode,
             birthDay: user?.userAccount?.accountBirthday,
+            gender: user?.userGender,
           })
         );
       } else {
