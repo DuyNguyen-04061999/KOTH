@@ -1,15 +1,9 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import {
-  Box,
-  FormControl,
-  Input,
-  Tooltip,
-  Typography,
-  TextField,
-  Autocomplete,
-} from "@mui/material";
-import { withStyles, styled } from "@mui/styles";
+import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,11 +17,7 @@ import { validateNickName } from "../../../../utils/validateNickName";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import "./index.scss";
-import ReactGA from "react-ga4";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -37,26 +27,6 @@ const BgWithTooltip = withStyles({
   },
 })(Tooltip);
 
-const CssTextField = styled(TextField)({
-  "& .MuiOutlinedInput-root": {
-    fontSize: "14px",
-    width: "100%",
-    height: "100% !important",
-    "& input": {
-      color: "white",
-    },
-    "& input:disabled": {
-      WebkitTextFillColor: "white",
-    },
-  },
-  "& .MuiAutocomplete-popupIndicator": {
-    color: "#7848ed !important",
-  },
-  "& .MuiInputBase-root": {
-    padding: "0 16px !important",
-    height: "100% !important",
-  },
-});
 export default function Signup(props) {
   const { t } = useTranslation("auth");
   // const [gender] = useState(0);
@@ -140,20 +110,11 @@ export default function Signup(props) {
   const [passOneLetter, setPassOneLetter] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
-  const [age, setAge] = useState(undefined);
-  const options = ["Male", "Female"];
-  const handleChangeGender = (event, newValue) => {
-    if (newValue) {
-      setAge(newValue);
-    }
-  };
 
-  console.log(age);
+  const [gender, setGender] = useState(0);
 
-  const [gender, setGender] = useState("");
-
-  const handleChange = (event) => {
-    setGender(event.target.value);
+  const handleChange = (event, newValue) => {
+    setGender(Number(event.target.value));
   };
 
   const handleDisplaynameChange = (event) => {
@@ -706,11 +667,11 @@ export default function Signup(props) {
               marginBottom: width > 992 ? "16px" : "12px",
               flexDirection: "row",
               alignItems: "center",
-              paddingLeft:"10px",
-              paddingRight:"10px",
-              color:"white",
-              "& .MuiInputBase-root" : {
-                color:"white"
+              paddingLeft: "10px",
+              paddingRight: "10px",
+              color: "white",
+              "& .MuiInputBase-root": {
+                color: "white",
               },
             }}
           >
@@ -723,17 +684,17 @@ export default function Signup(props) {
                 MenuProps: {
                   PaperProps: {
                     sx: {
-                       backgroundColor: '#443565',
-                       color:"white"
-                    }
-                  }
-                }
-            }}
+                      backgroundColor: "#443565",
+                      color: "white",
+                    },
+                  },
+                },
+              }}
               onChange={handleChange}
               sx={{
-                "& .MuiSelect-nativeInput" : {
-                  position:"relative",
-                  width:"2%"
+                "& .MuiSelect-nativeInput": {
+                  position: "relative",
+                  width: "2%",
                 },
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -748,12 +709,12 @@ export default function Signup(props) {
                   border: "none",
                 },
                 "& .MuiSvgIcon-root": {
-                  color: "#7C81F2"
-              }
+                  color: "#7C81F2",
+                },
               }}
             >
-              <MenuItem value={"male"}>Male</MenuItem>
-              <MenuItem value={"female"}>Female</MenuItem>
+              <MenuItem value={"0"}>Male</MenuItem>
+              <MenuItem value={"1"}>Female</MenuItem>
               {/* <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>

@@ -9,12 +9,12 @@ import {
   Grid,
   Input,
   MenuItem,
+  Select,
   Skeleton,
   Slide,
   TextField,
   Tooltip,
   Typography,
-  Select,
 } from "@mui/material";
 import { styled, withStyles } from "@mui/styles";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -99,6 +99,7 @@ export default function DialogProfile(props) {
     firstName,
     lastName,
     isEditProfile,
+    gender: gd,
   } = useSelector((state) => state.profileReducer);
 
   const dispatch = useDispatch();
@@ -119,10 +120,10 @@ export default function DialogProfile(props) {
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState(city);
   const [stateOption, setStateOption] = useState(state || "");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(0);
 
   const handleChange = (event) => {
-    setGender(event.target.value);
+    setGender(Number(event.target.value));
   };
 
   useEffect(() => {
@@ -135,6 +136,7 @@ export default function DialogProfile(props) {
     setStateOption(state);
     setZcode(zipCode);
     setValue(dayjs(birthDay));
+    setGender(gd);
   }, [
     nickName,
     address1,
@@ -145,6 +147,7 @@ export default function DialogProfile(props) {
     birthDay,
     firstName,
     lastName,
+    gd,
   ]);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -231,6 +234,7 @@ export default function DialogProfile(props) {
           birthday: value,
           firstName: fName,
           lastName: lName,
+          gender: gender,
         })
       );
     }
@@ -1197,8 +1201,11 @@ export default function DialogProfile(props) {
                   )}
                 </Box>
               </Box>
-              <Box sx={{display:"flex"}}>
-                <Box className="Display-Name mb-3 d-flex flex-column align-items-start" sx={{width:"100%"}}>
+              <Box sx={{ display: "flex" }}>
+                <Box
+                  className="Display-Name mb-3 d-flex flex-column align-items-start"
+                  sx={{ width: "100%" }}
+                >
                   <Typography
                     variant="inherit"
                     sx={{
@@ -1337,7 +1344,10 @@ export default function DialogProfile(props) {
                     </>
                   )}
                 </Box>
-                <Box className="Gender mb-3 ms-2 d-flex flex-column align-items-start" sx={{width:"100%"}}>
+                <Box
+                  className="Gender mb-3 ms-2 d-flex flex-column align-items-start"
+                  sx={{ width: "100%" }}
+                >
                   <Typography
                     variant="inherit"
                     sx={{
@@ -1384,8 +1394,8 @@ export default function DialogProfile(props) {
                             "& .MuiInputBase-input.Mui-disabled": {
                               WebkitTextFillColor: "white",
                             },
-                            paddingTop:"5px",
-                            paddingBottom:"3px"
+                            paddingTop: "5px",
+                            paddingBottom: "3px",
                           }}
                         >
                           <Select
@@ -1405,6 +1415,7 @@ export default function DialogProfile(props) {
                             }}
                             onChange={handleChange}
                             sx={{
+                              width: "100%",
                               "& .MuiSelect-nativeInput": {
                                 position: "relative",
                                 width: "2%",
@@ -1428,8 +1439,8 @@ export default function DialogProfile(props) {
                               paddingRight: "10px",
                             }}
                           >
-                            <MenuItem value={"male"}>Male</MenuItem>
-                            <MenuItem value={"female"}>Female</MenuItem>
+                            <MenuItem value={"0"}>Male</MenuItem>
+                            <MenuItem value={"1"}>Female</MenuItem>
                           </Select>
                         </FormControl>
                       </Box>
