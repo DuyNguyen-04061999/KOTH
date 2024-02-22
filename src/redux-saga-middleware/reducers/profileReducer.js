@@ -89,10 +89,11 @@ const profileReducer = (
     address2: "",
     city: "",
     state: "",
-    zipCode:"",
-    birthDay:"",
+    zipCode: "",
+    birthDay: "",
     isEditProfile: false,
-    nickNameLogin: ""
+    nickNameLogin: "",
+    gender: 0
   },
   action
 ) => {
@@ -102,10 +103,10 @@ const profileReducer = (
       {
         const { profileReducer } = payload || {}
         const { nickNameLogin } = profileReducer || ""
-        return {...state, nickNameLogin: nickNameLogin || ""}
+        return { ...state, nickNameLogin: nickNameLogin || "" }
       }
-    case "SAVE_NICKNAME_WHEN_LOGIN": return {...state, nickNameLogin: payload || ""}
-    case "REMOVE_NICKNAME_WHEN_LOGOUT": return {...state, nickNameLogin: "" }
+    case "SAVE_NICKNAME_WHEN_LOGIN": return { ...state, nickNameLogin: payload || "" }
+    case "REMOVE_NICKNAME_WHEN_LOGOUT": return { ...state, nickNameLogin: "" }
     case "TOGGLE_PROFILE_DIALOG":
       return { ...state, isProfileDialog: !state.isProfileDialog };
     case "EDIT_PROFILE":
@@ -125,14 +126,15 @@ const profileReducer = (
         firstName: payload.firstName,
         lastName: payload.lastName,
         nickName: payload.nickName,
-        displayName:payload.displayName,
-        address1:payload.address1,
-        address2:payload.address2,
-        city:payload.city,
-        state:payload.state,
-        zipCode:payload.zipCode,
-        birthDay:payload.birthDay,
-        nickNameLogin: payload.nickName || ""
+        displayName: payload.displayName,
+        address1: payload.address1,
+        address2: payload.address2,
+        city: payload.city,
+        state: payload.state,
+        zipCode: payload.zipCode,
+        birthDay: payload.birthDay,
+        nickNameLogin: payload.nickName || "",
+        gender: payload.gender
       };
     case "DELETE_FRIEND_SUCCES_FULLY":
       return { ...state, deleteFriendValue: payload };
