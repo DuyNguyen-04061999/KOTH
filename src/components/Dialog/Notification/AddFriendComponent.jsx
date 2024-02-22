@@ -9,12 +9,12 @@ import {
 import { images } from "../../../utils/images";
 
 export default function AddFriendComponent(props) {
-  const { content, id, status, otherAvatar, createdAt } = props;
+  const { content, id, status, otherAvatar, createdAt, read } = props;
   const dispatch = useDispatch();
   return (
     <Box
       component={"div"}
-      className="text-white d-flex"
+      className="text-white d-flex position-relative"
       sx={{
         background: "#2E233D",
         padding: "16px 0px",
@@ -103,6 +103,21 @@ export default function AddFriendComponent(props) {
           )}
         </Box>
       </Box>
+      {read === 0 ? (
+        <Box
+          sx={{
+            width: 10,
+            height: 10,
+            borderRadius: "50%",
+            backgroundColor: "#FF9F38",
+            position: "absolute",
+            top: 20,
+            right: 15,
+          }}
+        ></Box>
+      ) : (
+        ""
+      )}
     </Box>
   );
 }
