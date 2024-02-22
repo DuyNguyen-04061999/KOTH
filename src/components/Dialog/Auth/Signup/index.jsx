@@ -686,6 +686,9 @@ export default function Signup(props) {
               label="gender"
               inputProps={{
                 MenuProps: {
+                  sx: {
+                    zIndex: 1321,
+                  },
                   PaperProps: {
                     sx: {
                       backgroundColor: "#443565",
