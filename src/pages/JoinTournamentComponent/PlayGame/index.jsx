@@ -124,9 +124,9 @@ export default function PlayGame(props) {
     detailTournament?.id
   }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
     process.env.REACT_APP_ENV
-  }&maxScore=${detailTournament?.maxScore}&numberTicket=${
-    detailTournament?.numberTicket
-  }&mileStone=${JSON.stringify(
+  }&maxScore=${detailTournament?.maxScore}&currentScore=${
+    detailTournament?.currentScore
+  }&numberTicket=${detailTournament?.numberTicket}&mileStone=${JSON.stringify(
     detailTournament?.tournamentInfors?.game?.gameCategory?.mileStones
   )}`;
   const linkCocosPro = `${
@@ -135,9 +135,9 @@ export default function PlayGame(props) {
     detailTournament?.id
   }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
     process.env.REACT_APP_ENV
-  }&maxScore=${detailTournament?.maxScore}&numberTicket=${
-    detailTournament?.numberTicket
-  }&mileStone=${JSON.stringify(
+  }&maxScore=${detailTournament?.maxScore}&currentScore=${
+    detailTournament?.currentScore
+  }&numberTicket=${detailTournament?.numberTicket}&mileStone=${JSON.stringify(
     detailTournament?.tournamentInfors?.game?.gameCategory?.mileStones
   )}`;
 
