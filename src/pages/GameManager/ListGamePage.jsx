@@ -1,7 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import TrashIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Box, Card, Dialog, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,6 +13,8 @@ export default function ListGamePage() {
   const [games, setGames] = useState([]);
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.authReducer);
+  const [skins, setSkins] = useState([]);
+  const [gameSelect, setGameSelect] = useState(null);
 
   useEffect(() => {
     if (fetchGame)
@@ -43,12 +45,41 @@ export default function ListGamePage() {
   const handleEditGame = (game) => {
     navigate("/game/edit/" + game?.id, { state: game });
   };
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <Box component={"div"} className="p-2">
       <Box onClick={() => navigate("/upload")} className="mb-2">
         <AddIcon color="success" />
       </Box>
+      <Dialog open={openModal}>
+        <Box className="p-2">Select skins</Box>
+        <Box className="p-2 cursor-pointer">
+          {skins && skins?.length > 0 ? (
+            skins?.map((skin, i_skin) => {
+              return (
+                <Box
+                  key={i_skin}
+                  onClick={() => {
+                    if (gameSelect) {
+                      localStorage.setItem("game", JSON.stringify(gameSelect));
+                      const params = new URLSearchParams();
+                      params.append("token", token);
+                      navigate({
+                        pathname: `/game/iframe/${gameSelect?.id}/${skin?.id}`,
+                      });
+                    }
+                  }}
+                >
+                  {skin?.skinName}
+                </Box>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </Box>
+      </Dialog>
       <Grid container spacing={2}>
         {games &&
           games?.length > 0 &&
@@ -61,7 +92,30 @@ export default function ListGamePage() {
                 cursor: "pointer",
               }}
             >
-              <Card className="rounded bg-info position-relative">
+              <Card
+                className="rounded bg-info position-relative"
+                onClick={() => {
+                  if (
+                    (game?.GameFiles && game?.GameFiles?.length > 0) ||
+                    game?.gameEngine === "cocos"
+                  ) {
+                    const { gameSkins } = game;
+                    setSkins(gameSkins);
+                    setGameSelect(game);
+                    setOpenModal(true);
+
+                    // localStorage.setItem("game", JSON.stringify(game));
+                    // const params = new URLSearchParams();
+                    // params.append("token", token);
+
+                    // navigate({
+                    //   pathname: `/game/iframe/${game?.id}`,
+                    //   // search: `?${params.toString()}`,
+                    //   // state: game?.GameFiles
+                    // });
+                  }
+                }}
+              >
                 <img
                   src={
                     process.env.REACT_APP_SOCKET_SERVER + "/" + game?.gameAvatar
@@ -69,22 +123,6 @@ export default function ListGamePage() {
                   alt=""
                   className="img-fluid"
                   width={"100%"}
-                  onClick={() => {
-                    if (
-                      (game?.GameFiles && game?.GameFiles?.length > 0) ||
-                      game?.gameEngine === "cocos"
-                    ) {
-                      localStorage.setItem("game", JSON.stringify(game));
-                      const params = new URLSearchParams();
-                      params.append("token", token);
-
-                      navigate({
-                        pathname: `/game/iframe/${game?.id}`,
-                        // search: `?${params.toString()}`,
-                        // state: game?.GameFiles
-                      });
-                    }
-                  }}
                 />
                 <Typography
                   className="position-absolute text-white text-bold text-center"
