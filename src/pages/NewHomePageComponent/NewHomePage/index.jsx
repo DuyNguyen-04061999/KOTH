@@ -22,6 +22,7 @@ import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Package } from "../../PackagePage/component";
+import {ScrollingCarousel} from "@trendyol-js/react-carousel";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function NewHomePage() {
@@ -179,58 +180,110 @@ export default function NewHomePage() {
           </Box>
           {device === "Desktop" || device === "Tablet" ? (
             <Box>
-              <Grid container columnSpacing={2} rowSpacing={2}>
-                {listBanner?.map((i, index) => {
-                  return (
-                    <Grid item md={4} xs={6} key={index}>
-                      {i?.bannerType !== "contact" ? (
-                        <Box
-                          className="cursor-pointer"
-                          onClick={() => {
-                            if (i?.bannerType === "package") {
-                              navigate("/packages");
-                            } else if (i?.bannerType === "new") {
-                              if (!token) {
-                                dispatch(clickTab("signup"));
-                                dispatch(toggleLoginDialog());
-                              } else {
-                                dispatch(openDialogExclusive());
-                              }
-                            }
-                          }}
-                          component={"img"}
-                          src={
-                            i?.bannerLink
-                              ? process.env.REACT_APP_SOCKET_SERVER +
-                                "/" +
-                                i?.bannerLink
-                              : images.BannerTour
-                          }
-                          sx={{ width: "100%", height: "auto" }}
-                        ></Box>
-                      ) : (
-                        <Box
-                          className="cursor-pointer"
-                          component={"a"}
-                          href="mailto:support@play4promo.com"
-                        >
-                          <Box
-                            component={"img"}
-                            src={
-                              i?.bannerLink
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  i?.bannerLink
-                                : images.BannerTour
-                            }
-                            sx={{ width: "100%", height: "auto" }}
-                          ></Box>
-                        </Box>
-                      )}
-                    </Grid>
-                  );
-                })}
-              </Grid>
+                <ScrollingCarousel>
+                    {listBanner?.map((i, index) => {
+                        return (
+                            <Grid item md={4} xs={6} key={index}>
+                                {i?.bannerType !== "contact" ? (
+                                    <Box
+                                        className="cursor-pointer"
+                                        onClick={() => {
+                                            if (i?.bannerType === "package") {
+                                                navigate("/packages");
+                                            } else if (i?.bannerType === "new") {
+                                                if (!token) {
+                                                    dispatch(clickTab("signup"));
+                                                    dispatch(toggleLoginDialog());
+                                                } else {
+                                                    dispatch(openDialogExclusive());
+                                                }
+                                            }
+                                        }}
+                                        component={"img"}
+                                        src={
+                                            i?.bannerLink
+                                                ? process.env.REACT_APP_SOCKET_SERVER +
+                                                "/" +
+                                                i?.bannerLink
+                                                : images.BannerTour
+                                        }
+                                        sx={{width: "100%", height: "auto"}}
+                                    ></Box>
+                                ) : (
+                                    <Box
+                                        className="cursor-pointer"
+                                        component={"a"}
+                                        href="mailto:support@play4promo.com"
+                                    >
+                                        <Box
+                                            component={"img"}
+                                            src={
+                                                i?.bannerLink
+                                                    ? process.env.REACT_APP_SOCKET_SERVER +
+                                                    "/" +
+                                                    i?.bannerLink
+                                                    : images.BannerTour
+                                            }
+                                            sx={{width: "100%", height: "auto"}}
+                                        ></Box>
+                                    </Box>
+                                )}
+                            </Grid>
+                        );
+                    })}
+                </ScrollingCarousel>
+                {/*<Grid container columnSpacing={2} rowSpacing={2}>*/}
+                {/*  {listBanner?.map((i, index) => {*/}
+                {/*    return (*/}
+                {/*      <Grid item md={4} xs={6} key={index}>*/}
+                {/*        {i?.bannerType !== "contact" ? (*/}
+                {/*          <Box*/}
+                {/*            className="cursor-pointer"*/}
+                {/*            onClick={() => {*/}
+                {/*              if (i?.bannerType === "package") {*/}
+                {/*                navigate("/packages");*/}
+                {/*              } else if (i?.bannerType === "new") {*/}
+                {/*                if (!token) {*/}
+                {/*                  dispatch(clickTab("signup"));*/}
+                {/*                  dispatch(toggleLoginDialog());*/}
+                {/*                } else {*/}
+                {/*                  dispatch(openDialogExclusive());*/}
+                {/*                }*/}
+                {/*              }*/}
+                {/*            }}*/}
+                {/*            component={"img"}*/}
+                {/*            src={*/}
+                {/*              i?.bannerLink*/}
+                {/*                ? process.env.REACT_APP_SOCKET_SERVER +*/}
+                {/*                  "/" +*/}
+                {/*                  i?.bannerLink*/}
+                {/*                : images.BannerTour*/}
+                {/*            }*/}
+                {/*            sx={{ width: "100%", height: "auto" }}*/}
+                {/*          ></Box>*/}
+                {/*        ) : (*/}
+                {/*          <Box*/}
+                {/*            className="cursor-pointer"*/}
+                {/*            component={"a"}*/}
+                {/*            href="mailto:support@play4promo.com"*/}
+                {/*          >*/}
+                {/*            <Box*/}
+                {/*              component={"img"}*/}
+                {/*              src={*/}
+                {/*                i?.bannerLink*/}
+                {/*                  ? process.env.REACT_APP_SOCKET_SERVER +*/}
+                {/*                    "/" +*/}
+                {/*                    i?.bannerLink*/}
+                {/*                  : images.BannerTour*/}
+                {/*              }*/}
+                {/*              sx={{ width: "100%", height: "auto" }}*/}
+                {/*            ></Box>*/}
+                {/*          </Box>*/}
+                {/*        )}*/}
+                {/*      </Grid>*/}
+                {/*    );*/}
+                {/*  })}*/}
+                {/*</Grid>*/}
             </Box>
           ) : (
             ""
