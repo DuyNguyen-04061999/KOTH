@@ -126,7 +126,7 @@ function App() {
     }
   }, [width]);
 
-  useEffect(() => {});
+  useEffect(() => { });
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
 
@@ -165,7 +165,7 @@ function App() {
     };
   }, [startGameCheck]);
 
-  useEffect(() => {}, [orientation, startGameCheck]);
+  useEffect(() => { }, [orientation, startGameCheck]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -178,7 +178,7 @@ function App() {
     const token = localStorage.getItem("token");
 
     if (socket) {
-      socket?.once("connect", (data) => {});
+      socket?.once("connect", (data) => { });
 
       socket?.on("warning", (data, type) => {
         if (type && type !== "get") {
@@ -432,9 +432,9 @@ function App() {
               {" "}
               <ScrollToTopURL />
               <Routes>
-                <Route path="game/:id" element={<GameDetailPage />} />
+                <Route path="game/:id/:skinId" element={<GameDetailPage />} />
                 <Route
-                  path="game/iframe/:id"
+                  path="game/iframe/:id/:skinId"
                   element={<GameDetailIframePage />}
                 />
                 <Route path="list-game-manager" element={<ListGamePage />} />
