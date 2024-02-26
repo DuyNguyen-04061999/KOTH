@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import DeviceOrientation, { Orientation } from "react-screen-orientation";
 
 export default function GameDetailIframePage(props) {
-  const { id } = useParams();
+  const { id, skinId } = useParams();
   const [fetchGame, setFetchGame] = useState(true);
   const [game, setGame] = useState(null);
 
@@ -179,9 +179,9 @@ export default function GameDetailIframePage(props) {
                             title="Playgame"
                             src={
                               process.env.REACT_APP_ENV === "development"
-                                ? `https://play4promote.com/game/43`
+                                ? `${window.location.origin}/game/${id}/${skinId}`
                                 : game?.gameEngine !== "cocos"
-                                ? `${window.location.origin}/game/${id}`
+                                ? `${window.location.origin}/game/${id}/${skinId}`
                                 : game?.gameHost
                             }
                           ></iframe>
@@ -225,9 +225,9 @@ export default function GameDetailIframePage(props) {
                       title="Playgame"
                       src={
                         process.env.REACT_APP_ENV === "development"
-                          ? `https://play4promote.com/game/43`
+                          ? `${window.location.origin}/game/${id}/${skinId}`
                           : game?.gameEngine !== "cocos"
-                          ? `${window.location.origin}/game/${id}`
+                          ? `${window.location.origin}/game/${id}/${skinId}`
                           : game?.gameHost
                       }
                     ></iframe>
@@ -277,9 +277,9 @@ export default function GameDetailIframePage(props) {
                         title="Playgame"
                         src={
                           process.env.REACT_APP_ENV === "development"
-                            ? `https://play4promote.com/game/43`
+                            ? `${window.location.origin}/game/${id}/${skinId}`
                             : game?.gameEngine !== "cocos"
-                            ? `${window.location.origin}/game/${id}`
+                            ? `${window.location.origin}/game/${id}/${skinId}`
                             : game?.gameHost
                         }
                       ></iframe>
@@ -323,9 +323,9 @@ export default function GameDetailIframePage(props) {
                   title="Playgame"
                   src={
                     process.env.REACT_APP_ENV === "development"
-                      ? `https://play4promote.com/game/43`
+                      ? `${window.location.origin}/game/${id}/${skinId}`
                       : game?.gameEngine !== "cocos"
-                      ? `${window.location.origin}/game/${id}`
+                      ? `${window.location.origin}/game/${id}/${skinId}`
                       : game?.gameHost
                   }
                 ></iframe>
