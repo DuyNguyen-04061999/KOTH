@@ -52,7 +52,7 @@ export default function ListGamePage() {
       <Box onClick={() => navigate("/upload")} className="mb-2">
         <AddIcon color="success" />
       </Box>
-      <Dialog open={openModal}>
+      <Dialog open={openModal} onClose={() => setOpenModal(false)}>
         <Box className="p-2">Select skins</Box>
         <Box className="p-2 cursor-pointer">
           {skins && skins?.length > 0 ? (
