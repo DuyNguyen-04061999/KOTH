@@ -176,6 +176,7 @@ export default function PlayGame(props) {
 
     // Dependency array is empty, meaning this effect runs once on mount
   }, [detailTournament, isBoughtPackage]);
+
   return (
     <Box
       sx={
@@ -183,8 +184,18 @@ export default function PlayGame(props) {
           ? detailTournament?.tournamentInfors?.game?.gameScreenType
             ? loading && orientation === "portrait"
               ? {
-                  transform: " rotate(-90deg)",
-                  transformOrigin: "left top",
+                  transform:
+                    detailTournament?.tournamentInfors?.game?.gameEngine ===
+                      "cocos" &&
+                    detailTournament?.tournamentInfors?.game?.gameScreenType
+                      ? "unset"
+                      : "rotate(-90deg)",
+                  transformOrigin:
+                    detailTournament?.tournamentInfors?.game?.gameEngine ===
+                      "cocos" &&
+                    detailTournament?.tournamentInfors?.game?.gameScreenType
+                      ? "unset"
+                      : "left top",
                   width: "100vh",
                   height: "100vw",
                   overflowX: "hidden",
@@ -195,8 +206,18 @@ export default function PlayGame(props) {
               : {}
             : loading && orientation === "landscape"
             ? {
-                transform: " rotate(-90deg)",
-                transformOrigin: "left top",
+                transform:
+                  detailTournament?.tournamentInfors?.game?.gameEngine ===
+                    "cocos" &&
+                  detailTournament?.tournamentInfors?.game?.gameScreenType
+                    ? "unset"
+                    : "rotate(-90deg)",
+                transformOrigin:
+                  detailTournament?.tournamentInfors?.game?.gameEngine ===
+                    "cocos" &&
+                  detailTournament?.tournamentInfors?.game?.gameScreenType
+                    ? "unset"
+                    : "left top",
                 width: "100vh",
                 height: "100vw",
                 overflowX: "hidden",
