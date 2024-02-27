@@ -597,7 +597,7 @@ export default function Layout(props) {
                     padding: "8px 12px",
                     borderRadius: "4px",
                     transition: ".3s ease",
-                    ":hover": { backgroundColor: "#7648ED" },
+                    ":hover": { backgroundColor: "#df07f6" },
                   }}
                   onClick={() => handleChangeLang("en")}
                 >

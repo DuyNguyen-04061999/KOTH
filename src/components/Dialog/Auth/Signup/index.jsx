@@ -59,7 +59,12 @@ export default function Signup(props) {
     setDisplayPasswordC(!displayPasswordC);
   };
 
-  const handleSubmitSignUp = (e) => {
+    useEffect(() => {
+        const combinedText = firstName + lastName;
+        setDisplayName(combinedText);
+    }, [firstName, lastName]);
+
+    const handleSubmitSignUp = (e) => {
     e.preventDefault();
     if (!listSetting?.signupEnabled) {
       dispatch(
