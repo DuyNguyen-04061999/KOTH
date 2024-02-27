@@ -103,21 +103,21 @@ export default function AddFriendComponent(props) {
           )}
         </Box>
       </Box>
-      {read === 0 ? (
-        <Box
-          sx={{
-            width: 10,
-            height: 10,
-            borderRadius: "50%",
-            backgroundColor: "#FF9F38",
-            position: "absolute",
-            top: 20,
-            right: 15,
-          }}
-        ></Box>
-      ) : (
-        ""
-      )}
+        {read === 0 ? (
+            <Box
+                sx={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: "50%",
+                    backgroundColor: "#FF9F38",
+                    position: "absolute",
+                    top: 20,
+                    right: 15,
+                }}
+            ></Box>
+        ) : (
+            ""
+        )}
     </Box>
   );
 }
