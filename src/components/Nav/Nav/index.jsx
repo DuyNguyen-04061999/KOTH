@@ -1622,11 +1622,11 @@ export default function Navbar() {
                 textDecoration: "none",
                 color: "#A89CD7",
               }}
-              onClick={() => {
-                if (window?.FB && window?.FB?.CustomerChat) {
-                  window.FB.CustomerChat.show(true);
-                }
-              }}
+              // onClick={() => {
+              //   if (window?.FB && window?.FB?.CustomerChat) {
+              //     window.FB.CustomerChat.show(true);
+              //   }
+              // }}
               href="mailto:support@play4promo.com"
             >
               <svg
