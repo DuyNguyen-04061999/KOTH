@@ -102,8 +102,8 @@ const BannerTour = (props) => {
               wordBreak: "break-word",
             }}
           >
-            {(rewardName || defaultRewardName).length > 45
-              ? (rewardName || defaultRewardName).slice(0, 40) + " ..."
+            {(rewardName || defaultRewardName).length > 14
+              ? (rewardName || defaultRewardName).slice(0, 14) + " ..."
               : rewardName || defaultRewardName}
           </Typography>
         </Box>
@@ -117,7 +117,7 @@ const BannerTour = (props) => {
             padding: "10px 20px",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center", width:"50%", justifyContent:"center" }}>
             <Box
               sx={{
                 color: "#FFF",
@@ -133,28 +133,30 @@ const BannerTour = (props) => {
               />
             </Box>
           </Box>
-          <button
-            onClick={() => {
-              if (tourId !== "undefined" && tourId) {
-                navigate(`/promotion-detail/${tourId}`);
-              }
-            }}
-            style={{
-              background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-              outline: "none",
-              border: "none",
-              borderRadius: "10px",
-              color: "#fff",
-              padding: checkTablet() ? "0px 20px" : "0px 32px",
-              fontSize: checkTablet() ? "10px" : "20px",
-              cursor: "pointer",
-              fontWeight: 600,
-              whiteSpace: "nowrap",
-              minWidth: "50%",
-            }}
-          >
-            Play now
-          </button>
+            <Box sx={{width:"50%"}}>
+                <button
+                    onClick={() => {
+                        if (tourId !== "undefined" && tourId) {
+                            navigate(`/promotion-detail/${tourId}`);
+                        }
+                    }}
+                    style={{
+                        background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                        outline: "none",
+                        border: "none",
+                        borderRadius: "10px",
+                        color: "#fff",
+                        padding: checkTablet() ? "0px 20px" : "0px 32px",
+                        fontSize: checkTablet() ? "10px" : "20px",
+                        cursor: "pointer",
+                        fontWeight: 600,
+                        whiteSpace: "nowrap",
+                        width: "100%",
+                    }}
+                >
+                    UPPER CASE
+                </button>
+            </Box>
         </Box>
       </Box>
       <Box

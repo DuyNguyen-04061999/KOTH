@@ -111,7 +111,7 @@ export default function ListPackage(props) {
               : "" || packageCategory === Type.Value
               ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
               : "",
-          padding: "19px",
+          padding: "20px",
           borderRadius: "24px",
           display: "flex",
           alignItems: "center",
@@ -496,14 +496,14 @@ export default function ListPackage(props) {
                   }
                   onClick={handleBuyPackage}
                   style={{
-                    padding: "4px 3px",
+                    padding: "8px 3px",
                     color: "white",
                     background:
                       uPack &&
                       uPack?.remain !== "Expired" &&
                       packageCategory === Type.Subscription
                         ? "Gray"
-                        : "#9747FF",
+                        : "#BE48ED",
                     backdropFilter: " blur(4px)",
                     fontSize: "11px ",
                   }}

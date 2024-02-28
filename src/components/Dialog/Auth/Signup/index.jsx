@@ -144,7 +144,7 @@ export default function Signup(props) {
     setPassOneLetter(containsSpecialCharacter);
   };
 
-  useEffect(() => {
+  useEffect(() => {  
     if (
       gender === "" ||
       displayName === "" ||

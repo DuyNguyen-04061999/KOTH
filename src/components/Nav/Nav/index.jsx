@@ -1627,8 +1627,7 @@ export default function Navbar() {
                   window.FB.CustomerChat.show(true);
                 }
               }}
-              // href="https://t.me/+LaxB-V2ovfNiNzNl"
-              // target="_blank"
+              href="mailto:support@play4promo.com"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1691,25 +1690,6 @@ export default function Navbar() {
             ""
           )}
         </Box>
-        {/* <Box
-          sx={{
-            display: isNav === true ? "block" : "none",
-          }}
-        >
-          <hr style={{ color: "white" }} />
-          <Box className="nav-currencies">
-            <Box>
-              <Typography>Currencies</Typography>
-            </Box>
-            <Box className="coin-total d-flex justify-content-evenly pt-3 pb-4">
-              <img src={popup.Doge2} alt="..." width={25} height={25} />
-              <img src={images.BNB} alt="..." width={25} height={25} />
-              <img src={images.BTC} alt="..." width={25} height={25} />
-              <img src={popup.LCoin} alt="..." width={25} height={25} />
-              <img src={popup.TCoin} alt="..." width={25} height={25} />
-            </Box>
-          </Box>
-        </Box> */}
       </Box>
     </Box>
   );
