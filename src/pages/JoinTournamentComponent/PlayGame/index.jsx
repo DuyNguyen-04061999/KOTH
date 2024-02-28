@@ -184,18 +184,8 @@ export default function PlayGame(props) {
           ? detailTournament?.tournamentInfors?.game?.gameScreenType
             ? loading && orientation === "portrait"
               ? {
-                  transform:
-                    detailTournament?.tournamentInfors?.game?.gameEngine ===
-                      "cocos" &&
-                    detailTournament?.tournamentInfors?.game?.gameScreenType
-                      ? "unset"
-                      : "rotate(-90deg)",
-                  transformOrigin:
-                    detailTournament?.tournamentInfors?.game?.gameEngine ===
-                      "cocos" &&
-                    detailTournament?.tournamentInfors?.game?.gameScreenType
-                      ? "unset"
-                      : "left top",
+                  transform: "rotate(-90deg)",
+                  transformOrigin: "left top",
                   width: "100vh",
                   height: "100vw",
                   overflowX: "hidden",
@@ -206,18 +196,8 @@ export default function PlayGame(props) {
               : {}
             : loading && orientation === "landscape"
             ? {
-                transform:
-                  detailTournament?.tournamentInfors?.game?.gameEngine ===
-                    "cocos" &&
-                  detailTournament?.tournamentInfors?.game?.gameScreenType
-                    ? "unset"
-                    : "rotate(-90deg)",
-                transformOrigin:
-                  detailTournament?.tournamentInfors?.game?.gameEngine ===
-                    "cocos" &&
-                  detailTournament?.tournamentInfors?.game?.gameScreenType
-                    ? "unset"
-                    : "left top",
+                transform: "rotate(-90deg)",
+                transformOrigin: "left top",
                 width: "100vh",
                 height: "100vw",
                 overflowX: "hidden",
