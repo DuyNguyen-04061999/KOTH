@@ -154,7 +154,7 @@ const BannerTour = (props) => {
                         width: "100%",
                     }}
                 >
-                    UPPER CASE
+                    PLAY NOW
                 </button>
             </Box>
         </Box>

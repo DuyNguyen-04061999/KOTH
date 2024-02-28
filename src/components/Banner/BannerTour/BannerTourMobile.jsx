@@ -143,7 +143,7 @@ const BannerTourMobile = (props) => {
                 width: "40%",
               }}
             >
-              UPPER CASE
+              PLAY NOW
             </button>
           </Box>
         </Box>
