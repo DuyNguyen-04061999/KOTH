@@ -226,10 +226,7 @@ const HelpCenterComponent = () => {
                             fontSize: width < 576 ? "12px" : "16px",
                           }}
                         >
-                          Persons under the age of 18 should use this Website
-                          only with the supervision of an Adult. Payment
-                          Information must be provided by or with the permission
-                          of an Adult
+                          Persons under the age of 18 required to use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult
                         </Typography>
                       </Box>
                     ) : (
@@ -414,10 +411,7 @@ const HelpCenterComponent = () => {
                             className="ms-2"
                             sx={{ color: "#e75857", textAlign: "left" }}
                           >
-                            Persons under the age of 18 should use this Website
-                            only with the supervision of an Adult. Payment
-                            Information must be provided by or with the
-                            permission of an Adult
+                           Persons under the age of 18 required to use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult
                           </Typography>
                         </Box>
                       ) : (

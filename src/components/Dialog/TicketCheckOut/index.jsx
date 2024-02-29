@@ -678,9 +678,7 @@ export default function TicketCheckOut() {
                       color: "#7848ED",
                     }}
                   >
-                    Persons under the age of 18 should use this Website only
-                    with the supervision of an Adult. Payment Information must
-                    be provided by or with the permission of an Adult.
+                    Persons under the age of 18 required to use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult
                   </span>
                 </Box>
               </Box>

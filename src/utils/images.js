@@ -321,6 +321,10 @@ import numberOne from "../assets/images/banners/bannerTour/christmasBanner/numbe
 import stIcon from "../assets/images/banners/bannerTour/christmasBanner/stIcon.png";
 import winnerFrame from "../assets/images/banners/bannerTour/christmasBanner/winnerFrame.png";
 
+import stackingDK from "../assets/images/banners/stackingDK.png"
+import stackingMB from "../assets/images/banners/stackingMB.png"
+
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -551,6 +555,9 @@ export const images = {
   christbg: christbg,
   ribbon: ribbon,
   bgchristmas: bgchristmas,
+
+  stackingDK:stackingDK,
+  stackingMB:stackingMB
 };
 
 export const navigationImages = {
