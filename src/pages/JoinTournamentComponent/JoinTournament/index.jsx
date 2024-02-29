@@ -2117,7 +2117,7 @@ export default function JoinTournament() {
                         sx={{ color: "#e75857", textAlign: "left" }}
                       >
                         {t(
-                          "Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult"
+                          "Persons under the age of 18 required to use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult"
                         )}
                       </Typography>
                     </Box>
@@ -3441,7 +3441,7 @@ export default function JoinTournament() {
                                   }}
                                 >
                                   {t(
-                                    "Persons under the age of 18 should use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult"
+                                    "Persons under the age of 18 required to use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult"
                                   )}
                                 </Typography>
                               </Box>

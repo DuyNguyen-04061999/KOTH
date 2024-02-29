@@ -14,6 +14,9 @@ const DoubleDayDialog = () => {
   const { showDoubleDayDialog, randomRender } = useSelector(
     (state) => state.appReducer
   );
+
+  console.log(showDoubleDayDialog);
+
   const handleClose = () => {
     dispatch(closeDoubleDayDialog());
   };
@@ -32,7 +35,7 @@ const DoubleDayDialog = () => {
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.doubleDayBanneMBNew}
+                src={images.stackingMB}
                 onClick={() => {
                   handleClose();
                   navigate("/packages");
@@ -64,7 +67,7 @@ const DoubleDayDialog = () => {
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.doubleDayBannerNew}
+                src={images.stackingDK}
                 onClick={() => {
                   handleClose();
                   navigate("/packages");
