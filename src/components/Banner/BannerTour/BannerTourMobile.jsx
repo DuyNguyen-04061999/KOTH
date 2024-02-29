@@ -96,8 +96,8 @@ const BannerTourMobile = (props) => {
                 wordBreak: "break-word",
               }}
             >
-              {(rewardName || defaultRewardName).length > 50
-                ? (rewardName || defaultRewardName).slice(0, 45) + " ..."
+              {(rewardName || defaultRewardName).length > 14
+                ? (rewardName || defaultRewardName).slice(0, 14) + " ..."
                 : rewardName || defaultRewardName}
             </Typography>
           </Box>
@@ -106,7 +106,7 @@ const BannerTourMobile = (props) => {
               backgroundColor: "#E90488",
               borderRadius: "5px",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               padding: "5px",
               width: "100%",
               alignItems: "center",
