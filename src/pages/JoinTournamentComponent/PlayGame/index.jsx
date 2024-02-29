@@ -99,11 +99,17 @@ export default function PlayGame(props) {
   useEffect(() => {
     if (startGameCheck && !videoGame) {
       setLoading(true);
-      if (device && device === "Mobile" && os && os === "Android") {
+      if (
+        device &&
+        device === "Mobile" &&
+        os &&
+        os === "Android" &&
+        detailTournament?.tournamentInfors?.game?.gameScreenType
+      ) {
         screen.enter();
       }
     }
-  }, [startGameCheck, videoGame, screen, device, os]);
+  }, [startGameCheck, videoGame, screen, device, os, detailTournament]);
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
@@ -349,7 +355,7 @@ export default function PlayGame(props) {
                       allow="fullscreen"
                       style={{
                         width: "100%",
-                        height: videoGame ? "700px" : "580px",
+                        height: expand ? "100%" : videoGame ? "700px" : "580px",
                         background: "black",
                         display: videoGame ? "none" : "block",
                         aspectRatio: !videoGame ? "16/9" : "none",
@@ -727,7 +733,11 @@ export default function PlayGame(props) {
                     <iframe
                       data-hj-allow-iframe=""
                       ref={iframeRef}
-                      allow="fullscreen"
+                      allow={
+                        detailTournament?.tournamentInfors?.game?.gameScreenType
+                          ? "fullscreen"
+                          : "unset"
+                      }
                       style={{
                         position: "fixed",
                         top: "0",
