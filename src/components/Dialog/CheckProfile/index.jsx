@@ -1,5 +1,5 @@
 import { Box, Dialog, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   editProfile,
@@ -17,11 +17,13 @@ export default function CheckProfile(props) {
   const { isCheckProfileDialog, countTicket } = useSelector(
     (state) => state.userReducer
   );
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const { detailTournament } = useSelector((state) => state.playgameReducer);
 
   const dispatch = useDispatch();
   const { id } = props;
   const handleClose = () => {
+    setIsButtonDisabled(true);
     dispatch(toggleCheckProfileDialog());
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
@@ -33,6 +35,10 @@ export default function CheckProfile(props) {
         })
       );
     }
+    setTimeout(() => {
+      // Re-enable the button after some time
+      setIsButtonDisabled(false);
+    }, 1000); // Adjust the time as needed
   };
   const handleComplete = () => {
     dispatch(toggleCheckProfileDialog());
@@ -114,7 +120,7 @@ export default function CheckProfile(props) {
                 width: "100%",
               }}
             >
-              <AnimButton type="ghost" text="Cancel" onClick={handleClose} />
+              <AnimButton type="ghost" text="Cancel" disabledBtn={isButtonDisabled} onClick={handleClose} />
             </Box>
             <Box
               sx={{
