@@ -440,11 +440,11 @@ export default function Layout(props) {
       )}
       <>
         {randomRender === 1 ? (
-          <DoubleDayPackDialog />
+          <DoubleDayDialog />
         ) : randomRender === 2 ? (
           <DoubleDayDialog />
         ) : (
-          <DoubleDayPackDialog />
+          <DoubleDayDialog />
         )}
       </>
       {isProfileDialog && (
