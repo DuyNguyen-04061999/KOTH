@@ -18,6 +18,7 @@ import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
+import { getListDisplayName } from "../../../../redux-saga-middleware/reducers/appReducer";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -31,7 +32,7 @@ export default function Signup(props) {
   const { t } = useTranslation("auth");
   // const [gender] = useState(0);
   const dispatch = useDispatch();
-  const [displayName, setDisplayName] = useState("");
+  const [displayName, setDisplayName] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
@@ -52,6 +53,7 @@ export default function Signup(props) {
   const { refCodeRegister } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { isRegister } = useSelector((state) => state.userReducer);
+  const {listDisplayName} = useSelector((state) => state.appReducer)
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
   };
@@ -59,12 +61,12 @@ export default function Signup(props) {
     setDisplayPasswordC(!displayPasswordC);
   };
 
-    useEffect(() => {
-        const combinedText = firstName + lastName;
-        setDisplayName(combinedText);
-    }, [firstName, lastName]);
+  // useEffect(() => {
+  //   const combinedText = firstName + lastName;
+  //   setDisplayName(combinedText);
+  // }, [firstName, lastName]);
 
-    const handleSubmitSignUp = (e) => {
+  const handleSubmitSignUp = (e) => {
     e.preventDefault();
     if (!listSetting?.signupEnabled) {
       dispatch(
@@ -115,6 +117,7 @@ export default function Signup(props) {
   const [passOneLetter, setPassOneLetter] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
+  const [displaynameValue,setDisplaynameValue] = useState('')
 
   const [gender, setGender] = useState(0);
 
@@ -122,9 +125,8 @@ export default function Signup(props) {
     setGender(Number(event.target.value));
   };
 
-  const handleDisplaynameChange = (event) => {
-    const newNickname = event.target.value;
-    setDisplayName(newNickname);
+  const handleDisplaynameChange = (event, newValue) => {
+    setDisplaynameValue(event?.target?.value)
   };
 
   const handleChangePass = (e) => {
@@ -144,7 +146,22 @@ export default function Signup(props) {
     setPassOneLetter(containsSpecialCharacter);
   };
 
-  useEffect(() => {  
+  useEffect(() => {
+    if(firstName !== "" && lastName !== "") {
+      dispatch(getListDisplayName({
+        firstName: firstName,
+        lastName: lastName
+      }))
+    }
+  },[firstName,lastName])
+
+  useEffect(() => {
+    if(listDisplayName) {
+      setDisplayName(listDisplayName)
+    }
+  },[listDisplayName])
+
+  useEffect(() => {
     if (
       gender === "" ||
       displayName === "" ||
@@ -195,6 +212,8 @@ export default function Signup(props) {
     passOneNumber,
     passOneLetter,
   ]);
+
+  console.log(displayName);
 
   const sendRegister = () => {
     if (!disabledBtn) {
@@ -250,7 +269,7 @@ export default function Signup(props) {
           orientation === "landscape" && device === "Mobile"
             ? "200px"
             : "unset",
-        height:"inherit"
+        height: "inherit",
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -572,6 +591,10 @@ export default function Signup(props) {
             marginBottom: width > 992 ? "16px" : "12px",
             flexDirection: "row",
             alignItems: "center",
+            color:"white",
+            "& .MuiInputBase-root": {
+              color: "white",
+            },
           }}
         >
           <Box
@@ -580,10 +603,61 @@ export default function Signup(props) {
               flexDirection: "row",
               alignItems: "center",
               width: "100%",
+              color:"white"
             }}
           >
             <img src={sign.up01} alt="..." width={18} height={18} />
-            <Input
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={displaynameValue}
+              label="Display Name"
+              inputProps={{
+                MenuProps: {
+                  sx: {
+                    zIndex: 1321,
+                  },
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: "#443565",
+                      color: "white",
+                    },
+                  },
+                },
+              }}
+              onChange={handleDisplaynameChange}
+              sx={{
+                marginLeft: "12px",
+                padding: "0px",
+                marginTop: "3px",
+                width: "100%",
+                "& .MuiSelect-nativeInput": {
+                  position: "relative",
+                  width: "2%",
+                },
+                "&:before": {
+                  borderBottom: " 0px solid !important ",
+                  "&:hover": {
+                    borderBottom: "0px solid !important",
+                  },
+                },
+                "&:after": {
+                  borderBottom: "0px solid !important",
+                },
+                "&:hover": {
+                  border: "none",
+                },
+                "& .MuiSvgIcon-root": {
+                  color: "#7C81F2",
+                },
+              }}
+              placeholder="Enter Your Display Name"
+            >
+              {displayName?.map((e,index) => {
+                return <MenuItem key={index} value={e}>{e}</MenuItem>
+              })}
+            </Select>
+            {/* <Input
               type="text"
               name="displayname"
               onChange={handleDisplaynameChange}
@@ -607,7 +681,7 @@ export default function Signup(props) {
                 padding: "0px 0px 0px 16px !important",
                 width: "100%",
               }}
-            />{" "}
+            />{" "} */}
             {validDisplayName && <CheckIconSVG />}
             {!validDisplayName && (
               <BgWithTooltip
