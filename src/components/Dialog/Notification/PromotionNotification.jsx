@@ -7,7 +7,8 @@ import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers
 import { readNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
 
 export default function PromotionNotification(props) {
-  const { createdAt, content, promotionId, id, title } = props;
+  const { createdAt, content, promotionId, id, title, read } = props;
+  console.log(title);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -17,18 +18,23 @@ export default function PromotionNotification(props) {
         background: "#2E233D",
         padding: "16px 0px",
         borderBottom: "solid 1px #443565",
+        position: "relative",
       }}
     >
-      <Typography
-        sx={{
-          textAlign: "start",
-          marginLeft: "0px !important",
-          fontWeight: "700",
-          width:"80%"
-        }}
-      >
-        {title}
-      </Typography>
+      <Box sx={{
+        maxWidth:"190px"
+      }}>
+        <Typography
+          sx={{
+            textAlign: "start",
+            marginLeft: "0px !important",
+            fontWeight: "700",
+            width: "80%",
+          }}
+        >
+          {title}
+        </Typography>
+      </Box>
       <Box
         component={"div"}
         className="mt-1 mb-1"
@@ -62,6 +68,21 @@ export default function PromotionNotification(props) {
       >
         Join now
       </Typography>
+      {read === 0 ? (
+        <Box
+          sx={{
+            width: 10,
+            height: 10,
+            borderRadius: "50%",
+            backgroundColor: "#FF9F38",
+            position: "absolute",
+            top: 20,
+            right: 15,
+          }}
+        ></Box>
+      ) : (
+        ""
+      )}
     </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -53,7 +53,18 @@ export default function AddFriendComponent(props) {
           width: "80%",
         }}
       >
-        {content}
+        <Box sx={{
+          maxWidth:"180px"
+        }}>
+          <Typography
+            sx={{
+              textAlign: "left",
+              fontSize: "14px",
+            }}
+          >
+            {content}
+          </Typography>
+        </Box>
         <Box
           component={"div"}
           className="mt-1 mb-1"
@@ -103,21 +114,21 @@ export default function AddFriendComponent(props) {
           )}
         </Box>
       </Box>
-        {read === 0 ? (
-            <Box
-                sx={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: "50%",
-                    backgroundColor: "#FF9F38",
-                    position: "absolute",
-                    top: 20,
-                    right: 15,
-                }}
-            ></Box>
-        ) : (
-            ""
-        )}
+      {read === 0 ? (
+        <Box
+          sx={{
+            width: 10,
+            height: 10,
+            borderRadius: "50%",
+            backgroundColor: "#FF9F38",
+            position: "absolute",
+            top: 20,
+            right: 15,
+          }}
+        ></Box>
+      ) : (
+        ""
+      )}
     </Box>
   );
 }

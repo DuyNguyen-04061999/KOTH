@@ -137,7 +137,7 @@ export default function AnimButton(props) {
             ...style,
           }}
           onClick={onClick}
-          disableRipple
+          disabled={disabledBtn}
         >
           <p
             style={{
