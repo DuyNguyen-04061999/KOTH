@@ -250,6 +250,7 @@ export default function Signup(props) {
           orientation === "landscape" && device === "Mobile"
             ? "200px"
             : "unset",
+        height:"inherit"
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
