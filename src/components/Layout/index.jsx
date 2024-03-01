@@ -69,8 +69,8 @@ import AuthDialog from "../Dialog/Auth/Signin";
 import DialogExclusive from "../Dialog/DialogExclusive";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
-// import DoubleDayDialog from "../Dialog/DoubleDay";
-// import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
+import DoubleDayDialog from "../Dialog/DoubleDay";
+import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import NotiFunds from "../Dialog/NotiFunds";
 import NotificationDialog from "../Dialog/Notification/NotificationDialog";
 import PackagePaypalDialog from "../Dialog/Packages/PackagePaypalDialog";
@@ -438,7 +438,7 @@ export default function Layout(props) {
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}
-      {/* <>
+      <>
         {randomRender === 1 ? (
           <DoubleDayPackDialog />
         ) : randomRender === 2 ? (
@@ -446,7 +446,7 @@ export default function Layout(props) {
         ) : (
           <DoubleDayPackDialog />
         )}
-      </> */}
+      </>
       {isProfileDialog && (
         <DialogProfile
           open={isProfileDialog}
@@ -597,7 +597,7 @@ export default function Layout(props) {
                     padding: "8px 12px",
                     borderRadius: "4px",
                     transition: ".3s ease",
-                    ":hover": { backgroundColor: "#7648ED" },
+                    ":hover": { backgroundColor: "#df07f6" },
                   }}
                   onClick={() => handleChangeLang("en")}
                 >

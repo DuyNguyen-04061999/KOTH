@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -8,7 +8,7 @@ import DeviceOrientation, { Orientation } from "react-screen-orientation";
 import { toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
 import { toggleOpenResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { sliceString } from "../../../utils/helper";
-import { images } from "../../../utils/images";
+import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
@@ -99,11 +99,17 @@ export default function PlayGame(props) {
   useEffect(() => {
     if (startGameCheck && !videoGame) {
       setLoading(true);
-      if (device && device === "Mobile" && os && os === "Android") {
+      if (
+        device &&
+        device === "Mobile" &&
+        os &&
+        os === "Android" &&
+        detailTournament?.tournamentInfors?.game?.gameScreenType
+      ) {
         screen.enter();
       }
     }
-  }, [startGameCheck, videoGame, screen, device, os]);
+  }, [startGameCheck, videoGame, screen, device, os, detailTournament]);
 
   useEffect(() => {
     const checkFullMobileScreen = () => {
@@ -124,9 +130,9 @@ export default function PlayGame(props) {
     detailTournament?.id
   }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
     process.env.REACT_APP_ENV
-  }&maxScore=${detailTournament?.maxScore}&numberTicket=${
-    detailTournament?.numberTicket
-  }&mileStone=${JSON.stringify(
+  }&maxScore=${detailTournament?.maxScore}&currentScore=${
+    detailTournament?.currentScore
+  }&numberTicket=${detailTournament?.numberTicket}&mileStone=${JSON.stringify(
     detailTournament?.tournamentInfors?.game?.gameCategory?.mileStones
   )}`;
   const linkCocosPro = `${
@@ -135,9 +141,9 @@ export default function PlayGame(props) {
     detailTournament?.id
   }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
     process.env.REACT_APP_ENV
-  }&maxScore=${detailTournament?.maxScore}&numberTicket=${
-    detailTournament?.numberTicket
-  }&mileStone=${JSON.stringify(
+  }&maxScore=${detailTournament?.maxScore}&currentScore=${
+    detailTournament?.currentScore
+  }&numberTicket=${detailTournament?.numberTicket}&mileStone=${JSON.stringify(
     detailTournament?.tournamentInfors?.game?.gameCategory?.mileStones
   )}`;
 
@@ -176,6 +182,19 @@ export default function PlayGame(props) {
 
     // Dependency array is empty, meaning this effect runs once on mount
   }, [detailTournament, isBoughtPackage]);
+
+  const [expand, setExpand] = useState(false);
+
+  const reportChange = useCallback(
+    (state, handle) => {
+      if (handle === screen) {
+        if (state === false && expand === true) {
+          setExpand(false);
+        }
+      }
+    },
+    [screen, expand]
+  );
   return (
     <Box
       sx={
@@ -183,7 +202,7 @@ export default function PlayGame(props) {
           ? detailTournament?.tournamentInfors?.game?.gameScreenType
             ? loading && orientation === "portrait"
               ? {
-                  transform: " rotate(-90deg)",
+                  transform: "rotate(-90deg)",
                   transformOrigin: "left top",
                   width: "100vh",
                   height: "100vw",
@@ -195,7 +214,7 @@ export default function PlayGame(props) {
               : {}
             : loading && orientation === "landscape"
             ? {
-                transform: " rotate(-90deg)",
+                transform: "rotate(-90deg)",
                 transformOrigin: "left top",
                 width: "100vh",
                 height: "100vw",
@@ -242,9 +261,74 @@ export default function PlayGame(props) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                marginBottom:
+                  detailTournament?.tournamentInfors?.game?.gameEngine ===
+                  "cocos"
+                    ? "50px"
+                    : "unset",
               }}
             >
-              {" "}
+              {detailTournament?.tournamentInfors?.game?.gameEngine ===
+                "cocos" && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    width: "1031px",
+                    bottom: width > 1368 ? "-45px" : "-35px",
+                    zIndex: 1,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "auto",
+                      boxSizing: "border-box",
+                      padding: "15px 20px",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      backgroundColor: "#2e2844",
+                      position: "relative",
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: "40px",
+                        position: "absolute",
+                        left: "20px",
+                      }}
+                      alt="..."
+                      src={imageDesktop.LogoCongTy}
+                    />
+                    {expand === false ? (
+                      <img
+                        alt=".."
+                        width={width < 576 ? width / 20 : width / 68}
+                        style={{
+                          marginLeft: width < 576 ? "20px" : "30px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          setExpand(true);
+                          screen.enter();
+                        }}
+                        src={images.expandIcon}
+                      />
+                    ) : (
+                      <img
+                        alt=".."
+                        width={width < 576 ? width / 20 : width / 68}
+                        style={{
+                          marginLeft: width < 576 ? "20px" : "30px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => setExpand(false)}
+                        src={images.ZoomInIcon}
+                      />
+                    )}
+                  </Box>
+                </Box>
+              )}
               <Box sx={{ position: "absolute" }}>
                 {" "}
                 {detailTournament?.tournamentVideo && videoGame && (
@@ -259,24 +343,31 @@ export default function PlayGame(props) {
               <>
                 {detailTournament?.tournamentInfors?.game?.gameEngine ===
                   "cocos" && loading ? (
-                  <iframe
-                    data-hj-allow-iframe=""
-                    ref={iframeRef}
-                    allow="fullscreen"
-                    style={{
-                      width: "1031px",
-                      height: videoGame ? "700px" : "580px",
-                      background: "black",
-                      display: videoGame ? "none" : "block",
-                      aspectRatio: !videoGame ? "16/9" : "none",
-                    }}
-                    title="Playgame"
-                    src={
-                      process.env.REACT_APP_ENV === "development"
-                        ? linkCocosDev
-                        : linkCocosPro
-                    }
-                  ></iframe>
+                  <FullScreen
+                    className="fullscreen_desktop"
+                    handle={screen}
+                    onChange={reportChange}
+                  >
+                    {" "}
+                    <iframe
+                      data-hj-allow-iframe=""
+                      ref={iframeRef}
+                      allow="fullscreen"
+                      style={{
+                        width: "100%",
+                        height: expand ? "100%" : videoGame ? "700px" : "580px",
+                        background: "black",
+                        display: videoGame ? "none" : "block",
+                        aspectRatio: !videoGame ? "16/9" : "none",
+                      }}
+                      title="Playgame"
+                      src={
+                        process.env.REACT_APP_ENV === "development"
+                          ? linkCocosDev
+                          : linkCocosPro
+                      }
+                    ></iframe>
+                  </FullScreen>
                 ) : loading ? (
                   <iframe
                     data-hj-allow-iframe=""
@@ -642,7 +733,11 @@ export default function PlayGame(props) {
                     <iframe
                       data-hj-allow-iframe=""
                       ref={iframeRef}
-                      allow="fullscreen"
+                      allow={
+                        detailTournament?.tournamentInfors?.game?.gameScreenType
+                          ? "fullscreen"
+                          : "unset"
+                      }
                       style={{
                         position: "fixed",
                         top: "0",

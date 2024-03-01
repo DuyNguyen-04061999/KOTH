@@ -1434,12 +1434,13 @@ export default function Browser(props) {
                       "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
                     color: "#A89CD7",
                   }}
-                  onClick={() => {
-                    if (window?.FB && window?.FB?.CustomerChat) {
-                      window.FB.CustomerChat.show(true);
-                    }
-                    handleShowMenu();
-                  }}
+                  // onClick={() => {
+                  //   if (window?.FB && window?.FB?.CustomerChat) {
+                  //     window.FB.CustomerChat.show(true);
+                  //   }
+                  //   handleShowMenu();
+                  // }}
+                  href="mailto:support@play4promo.com"
                 >
                   <Box className="ps-2 pe-1">
                     <svg

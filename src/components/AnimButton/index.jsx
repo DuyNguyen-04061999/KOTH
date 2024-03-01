@@ -59,7 +59,7 @@ export default function AnimButton(props) {
             backgroundColor: "#7848ED",
             color: "white",
             padding: "11px 5px",
-            borderRadius: "8px",
+            borderRadius: "5px",
             border: "0px solid",
             width: "100%",
             fontWeight: "700",
@@ -73,7 +73,7 @@ export default function AnimButton(props) {
             ...style,
           }}
           onClick={onClick}
-          // disableRipple
+          disableRipple
           disabled={disabledBtn}
         >
           <p
@@ -137,7 +137,7 @@ export default function AnimButton(props) {
             ...style,
           }}
           onClick={onClick}
-          disableRipple
+          disabled={disabledBtn}
         >
           <p
             style={{

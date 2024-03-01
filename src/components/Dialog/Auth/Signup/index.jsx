@@ -59,7 +59,12 @@ export default function Signup(props) {
     setDisplayPasswordC(!displayPasswordC);
   };
 
-  const handleSubmitSignUp = (e) => {
+    useEffect(() => {
+        const combinedText = firstName + lastName;
+        setDisplayName(combinedText);
+    }, [firstName, lastName]);
+
+    const handleSubmitSignUp = (e) => {
     e.preventDefault();
     if (!listSetting?.signupEnabled) {
       dispatch(
@@ -139,7 +144,7 @@ export default function Signup(props) {
     setPassOneLetter(containsSpecialCharacter);
   };
 
-  useEffect(() => {
+  useEffect(() => {  
     if (
       gender === "" ||
       displayName === "" ||
@@ -245,6 +250,7 @@ export default function Signup(props) {
           orientation === "landscape" && device === "Mobile"
             ? "200px"
             : "unset",
+        height:"inherit"
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>

@@ -28,18 +28,19 @@ export default function CountDownBannerHot({
     <Box sx={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
       <Typography
         sx={{
-          fontSize: "10px",
+          fontSize: "8px",
           color: "white",
-          marginLeft: "0px !important",
+          marginLeft: "0px !important", fontWeight:"bold"
         }}
       >
         {days && days}d
       </Typography>
       <Typography
         sx={{
-          fontSize: "4.695px",
+          fontSize: "10px",
           color: "white",
           margin: "0px 4px !important",
+            fontWeight:"bold"
         }}
       >
         :
@@ -49,15 +50,17 @@ export default function CountDownBannerHot({
           fontSize: "10px",
           color: "white",
           marginLeft: "0px !important",
+            fontWeight:"bold"
         }}
       >
         {hours && hours}h
       </Typography>{" "}
       <Typography
         sx={{
-          fontSize: "4.695px",
+          fontSize: "10px",
           color: "white",
           margin: "0px 4px !important",
+            fontWeight:"bold"
         }}
       >
         :
@@ -67,6 +70,7 @@ export default function CountDownBannerHot({
           fontSize: "10px",
           color: "white",
           marginLeft: "0px !important",
+            fontWeight:"bold"
         }}
       >
         {minutes}m
@@ -76,7 +80,7 @@ export default function CountDownBannerHot({
     <Box sx={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
       <Typography
         sx={{
-          fontSize: device === "Tablet" ? "15px" : "15px",
+          fontSize: device === "Tablet" ? "1vw" : "1vw",
           color: "white",
           marginLeft: "0px !important",
           lineHeight: 1.5,
