@@ -1,7 +1,7 @@
 import { PersonRemoveAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
 import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
-import { Avatar, Box } from "@mui/material";
+import { Avatar, Box , Button} from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
@@ -43,6 +43,7 @@ export default function ChatWorldList() {
   const [socket, setSocket] = useState(null);
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   useEffect(() => {
     endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -148,12 +149,17 @@ export default function ChatWorldList() {
   };
 
   const handleAddFriend = (username) => {
+    setIsButtonDisabled(true);
     if (!tokenUser) {
       dispatch(openLoginDialog());
     } else {
       socket.emit("addFriend", {
         username: username,
       });
+      setTimeout(() => {
+        // Re-enable the button after some time
+        setIsButtonDisabled(false);
+      }, 1000); // Adjust the time as needed
     }
   };
   const renderChat = isFetching ? (
@@ -673,7 +679,8 @@ export default function ChatWorldList() {
                   Delete Friend
                 </Box>
               ) : (
-                <Box
+                <Button
+                  disabled={isButtonDisabled}
                   onClick={() => handleAddFriend(messagefromName)}
                   className="p-1 text-white"
                   sx={{
@@ -683,8 +690,12 @@ export default function ChatWorldList() {
                   }}
                 >
                   <PersonAddAlt1 className="me-2 pb-1" />
-                  Add Friend
-                </Box>
+                  <Typography sx={{
+                    fontWeight:"700 !important",
+                    textTransform:"none",
+                    marginLeft:"0px !important"
+                  }}>Add Friend</Typography>
+                </Button>
               )}
             </MenuItem>
           )}

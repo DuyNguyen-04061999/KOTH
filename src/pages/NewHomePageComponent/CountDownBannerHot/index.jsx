@@ -37,7 +37,7 @@ export default function CountDownBannerHot({
       </Typography>
       <Typography
         sx={{
-          fontSize: "8px",
+          fontSize: "10px",
           color: "white",
           margin: "0px 4px !important",
             fontWeight:"bold"
@@ -47,7 +47,7 @@ export default function CountDownBannerHot({
       </Typography>
       <Typography
         sx={{
-          fontSize: "8px",
+          fontSize: "10px",
           color: "white",
           marginLeft: "0px !important",
             fontWeight:"bold"
@@ -57,7 +57,7 @@ export default function CountDownBannerHot({
       </Typography>{" "}
       <Typography
         sx={{
-          fontSize: "8px",
+          fontSize: "10px",
           color: "white",
           margin: "0px 4px !important",
             fontWeight:"bold"
@@ -67,7 +67,7 @@ export default function CountDownBannerHot({
       </Typography>
       <Typography
         sx={{
-          fontSize: "8px",
+          fontSize: "10px",
           color: "white",
           marginLeft: "0px !important",
             fontWeight:"bold"
