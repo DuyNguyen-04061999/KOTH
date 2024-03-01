@@ -16,6 +16,7 @@ import { getAppType } from "../../../utils/helper";
 import { images, navbar } from "../../../utils/images";
 import "../Nav/Nav.scss";
 import NavPromotionTablet from "./NavPromotionTablet";
+import { imagesReferral } from "../../../utils/imagesReferral";
 
 export default function Navbar() {
   const { t } = useTranslation("navigation");
@@ -1487,6 +1488,69 @@ export default function Navbar() {
                 Game Logs
               </Typography>
             </Box>
+          )}
+          {getAppType() === "promote" ? (
+            <Box
+              className="cursor-pointer"
+              sx={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: isNav === true ? "flex-start" : "center",
+                // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                transition: "0.4s ease",
+                ":hover": {
+                  backgroundColor: "#7848ED",
+                },
+                backgroundColor:
+                  pathname && pathname?.includes("referral") ? "#7848ED" : "",
+
+                borderRadius: "5px",
+                padding: "10px 5px",
+                marginTop: "16px",
+              }}
+              onClick={() => {
+                dispatch({
+                  type: "SET_TAB_HELPCENTER",
+                  payload: 3,
+                });
+                navigate(`/referral`);
+              }}
+            >
+              {pathname && pathname?.includes("referral") ? (
+                <Box
+                  component={"img"}
+                  src={imagesReferral.referralIconActive}
+                  sx={{ width: "18px", height: "18px" }}
+                />
+              ) : (
+                <Box
+                  component={"img"}
+                  src={imagesReferral.referralIcon}
+                  sx={{ width: "18px", height: "18px" }}
+                />
+              )}
+
+              <Typography
+                className="hover-nav"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  marginLeft: "5px",
+                  display: isNav === true ? "block" : "none",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  color: pathname && pathname?.includes("referral") && "white",
+                  paddingLeft: "5px",
+                }}
+              >
+                Referral
+              </Typography>
+            </Box>
+          ) : (
+            <></>
           )}
           {getAppType() === "promote" ? (
             <Box

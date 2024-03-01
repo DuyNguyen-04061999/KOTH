@@ -1,0 +1,108 @@
+import {
+  Box,
+  CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import Paper from "@mui/material/Paper";
+import { useSelector } from "react-redux";
+
+export default function TableTemplate({ row, data, isLoading }) {
+  const { device } = useSelector((state) => state.deviceReducer);
+  return (
+    <TableContainer
+      component={Paper}
+      sx={{
+        height: "auto",
+        backgroundColor: "#2E233D !important",
+        color: "white !important",
+        overflowY: "hidden",
+        marginTop: "35px",
+        marginBottom: "70px",
+      }}
+    >
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            {row?.map((item, index) => {
+              return (
+                <TableCell
+                  key={index}
+                  sx={{
+                    borderBottom: "none",
+                    color: "#9384B7",
+                    fontSize: device === "Mobile" ? "12px" : "14px",
+                    fontWeight: "700",
+                  }}
+                  align="center"
+                >
+                  {item?.header}
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((p, index) => (
+            <TableRow
+              key={index}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+                backgroundColor: index % 2 === 0 ? "#443565" : "",
+                height: "auto",
+              }}
+            >
+              {row?.map((item, index) => {
+                return (
+                  <TableCell
+                    key={index}
+                    sx={{
+                      borderBottom: "none",
+                      color: "white",
+                      fontSize: device === "Mobile" ? "12px" : "14px",
+                    }}
+                    align="center"
+                    component="th"
+                    scope="row"
+                  >
+                    {item?.condition(p[item?.field])}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {isLoading && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "20px",
+          }}
+        >
+          <CircularProgress color="secondary" />
+        </Box>
+      )}
+      {!isLoading && data?.length === 0 && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "20px",
+          }}
+        >
+          <Typography>No data loaded!</Typography>
+        </Box>
+      )}
+    </TableContainer>
+  );
+}
