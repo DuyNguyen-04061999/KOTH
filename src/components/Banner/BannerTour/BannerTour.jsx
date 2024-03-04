@@ -102,8 +102,8 @@ const BannerTour = (props) => {
               wordBreak: "break-word",
             }}
           >
-            {(rewardName || defaultRewardName).length > 14
-              ? (rewardName || defaultRewardName).slice(0, 14) + " ..."
+            {(rewardName || defaultRewardName).length > 45
+              ? (rewardName || defaultRewardName).slice(0, 40) + " ..."
               : rewardName || defaultRewardName}
           </Typography>
         </Box>
