@@ -38,7 +38,7 @@ const DoubleDayDialog = () => {
                 src={images.stackingMB}
                 onClick={() => {
                   handleClose();
-                  navigate("/packages");
+                  navigate("/promotion-detail/497");
                 }}
               ></Box>
               <Box
@@ -70,7 +70,7 @@ const DoubleDayDialog = () => {
                 src={images.stackingDK}
                 onClick={() => {
                   handleClose();
-                  navigate("/packages");
+                  navigate("/promotion-detail/497");
                 }}
               ></Box>
               <Box

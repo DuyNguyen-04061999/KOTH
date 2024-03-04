@@ -1375,6 +1375,7 @@ export default function DialogProfile(props) {
                           width: "100%",
                           display: "flex",
                           justifyContent: "space-between",
+                          height:"100% !important"
                         }}
                       >
                         <FormControl
