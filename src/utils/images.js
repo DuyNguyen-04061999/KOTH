@@ -216,6 +216,8 @@ import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
 import top1Icon from "../assets/imagesHome/top1Icon.png";
 import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
 
+import bannerSignup from "../assets/images/banners/bannerSignup.png"
+
 import AdminLogo from "../assets/images/lggame.png";
 import AdminLogoSvg from "../assets/images/logogame.svg";
 import bannertour5 from "../assets/imagesDesktop/bannertour5.png";
@@ -397,6 +399,7 @@ export const navbar = {
 };
 
 export const images = {
+  bannerSignup:bannerSignup,
   bn1: DummyBanner1,
   sortIcon: sortIcon,
   btn_back: btn_back,
