@@ -24,9 +24,8 @@ export default function Package(props) {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
-
+  console.log(listPackage);
   useEffect(() => {}, [socket, token]);
-
   const location = useLocation();
   const { pathname } = location;
   const meta = {

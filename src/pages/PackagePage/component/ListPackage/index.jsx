@@ -29,6 +29,9 @@ export const Type = {
   Subscription: "sub",
   Value: "normal value",
   Standard: "normal standard",
+  Quarterly: "quarterly flow",
+  Pro: "pro flow",
+  Prenium: "prenium flow",
 };
 
 export default function ListPackage(props) {
@@ -40,9 +43,10 @@ export default function ListPackage(props) {
     packageReduceWatchAds,
     id,
     des,
-    packageCategory,
+    // packageCategory,
   } = props;
-
+  const packageCategory = 'prenium flow'
+  console.log(packageCategory);
   const [socket, setSocket] = useState(null);
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
 
@@ -110,7 +114,7 @@ export default function ListPackage(props) {
               ? "linear-gradient(194deg, #EB6FFF 10.05%, #82F0FF 36.19%, #A470FF 54.35%, #3CC4E2 69.28%, #C271FF 86.16%, #3CC4E2 99.19%)"
               : "" || packageCategory === Type.Value
               ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
-              : "",
+              : "#0F041D",
           padding: "20px",
           borderRadius: "24px",
           display: "flex",
@@ -132,6 +136,8 @@ export default function ListPackage(props) {
             ? "gradient-border-rounded1"
             : "" || packageCategory === Type.Value
             ? "gradient-border-rounded2"
+            : "" || packageCategory === Type.Prenium 
+            ? "gradient-border-rounded3" 
             : ""
         }
       >
@@ -141,13 +147,16 @@ export default function ListPackage(props) {
             fontSize: "20px",
             marginBottom: "10px !important",
             color:
-              packageCategory === Type?.Subscription
-                ? "white"
+              packageCategory === Type?.Value
+                ? "#3A2922"
                 : packageCategory === Type?.Standard
                 ? "#383B80"
-                : "#3A2922",
+                : "white",
             textOverflow: "ellipsis",
-            fontWeight: packageCategory === Type?.Subscription ? "bold !important" : "500",
+            fontWeight:
+              packageCategory === Type?.Subscription
+                ? "bold !important"
+                : "500",
           }}
         >
           {packageName}
@@ -161,11 +170,15 @@ export default function ListPackage(props) {
             alignItems: "center",
             borderRadius: "10px",
             width: "100%",
-            height: packageCategory === Type?.Subscription ? "490px" : "400px",
+            height: packageCategory === Type?.Subscription ? "490px" : "435px",
             border: "none",
             padding: "6px 12px",
+            position: "relative",
           }}
         >
+           <Box
+            className="elipse"
+          ></Box>
           <Box
             className="title"
             sx={{
@@ -583,6 +596,9 @@ export default function ListPackage(props) {
             <></>
           )}
         </Box>
+        {/* <Box
+            className="elipse"
+          ></Box> */}
       </Box>
     </Box>
   );
