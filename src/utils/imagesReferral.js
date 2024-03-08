@@ -25,6 +25,8 @@ import PinnacleIconSmall from "../../src/assets/imagesReferral/PinnacleIconSmall
 import GoldIconSmall from "../../src/assets/imagesReferral/GoldIconSmall.png";
 import PlatinumIconSmall from "../../src/assets/imagesReferral/PlatinumIconSmall.png";
 import DiamondIconSmall from "../../src/assets/imagesReferral/DiamondIconSmall.png";
+import checkedIcon from "../../src/assets/imagesReferral/checkedIcon.png";
+import uncheckIcon from "../../src/assets/imagesReferral/uncheckIcon.png";
 export const imagesReferral = {
   referralIcon: referralIcon,
   referralIconActive: referralIconActive,
@@ -54,4 +56,7 @@ export const imagesReferral = {
   GoldIconSmall: GoldIconSmall,
   PlatinumIconSmall: PlatinumIconSmall,
   DiamondIconSmall: DiamondIconSmall,
+
+  checkedIcon: checkedIcon,
+  uncheckIcon: uncheckIcon,
 };

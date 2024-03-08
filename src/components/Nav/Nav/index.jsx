@@ -1510,10 +1510,6 @@ export default function Navbar() {
                 marginTop: "16px",
               }}
               onClick={() => {
-                dispatch({
-                  type: "SET_TAB_HELPCENTER",
-                  payload: 3,
-                });
                 navigate(`/referral`);
               }}
             >

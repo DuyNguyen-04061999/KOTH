@@ -5,8 +5,15 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { styled } from "@mui/material/styles";
+import { useSelector } from "react-redux";
 
-export default function PlayerLinearProgress({ type }) {
+export default function PlayerLinearProgress({
+  type,
+  currentNumber,
+  condition,
+  nextTierName,
+}) {
+  const { device } = useSelector((state) => state.deviceReducer);
   const BorderLinearProgress = styled(LinearProgress)(() => ({
     height: 5,
     borderRadius: 5,
@@ -22,11 +29,12 @@ export default function PlayerLinearProgress({ type }) {
   return (
     <Box
       sx={{
-        padding: "10px",
+        padding: device === "Mobile" ? "5px" : "10px",
         backgroundColor: "#412968",
         borderRadius: "4px",
         display: "flex",
         alignItems: "center",
+        boxSizing: "border-box",
       }}
     >
       <Box
@@ -36,11 +44,12 @@ export default function PlayerLinearProgress({ type }) {
           alignItems: "center",
           backgroundColor: "#6D55A3",
           borderRadius: "50%",
-          padding: "10px",
+          padding: device === "Mobile" ? "8px" : "10px",
           marginRight: "14px",
         }}
       >
         <Box
+          sx={device === "Mobile" && { width: "10px", height: "10px" }}
           component={"img"}
           src={
             type === "subscribe"
@@ -49,13 +58,19 @@ export default function PlayerLinearProgress({ type }) {
           }
         ></Box>
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "260px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "80%",
+        }}
+      >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
             sx={{
               color: "#fff",
               marginLeft: "0px !important",
-              fontSize: "14px",
+              fontSize: device === "Mobile" ? "10px" : "14px",
             }}
           >
             {type === "subscribe" ? "Players Subscribed" : "Players Registered"}
@@ -64,13 +79,22 @@ export default function PlayerLinearProgress({ type }) {
             sx={{
               color: "#fff",
               marginLeft: "0px !important",
-              fontSize: "14px",
+              fontSize: device === "Mobile" ? "10px" : "14px",
             }}
           >
-            5/10
+            {currentNumber || 0}/{condition || 0}
           </Typography>
         </Box>
-        <BorderLinearProgress variant="determinate" value={50} />
+        <BorderLinearProgress
+          variant="determinate"
+          value={
+            condition && currentNumber && condition !== 0 && currentNumber !== 0
+              ? (currentNumber / condition) * 100 >= 100
+                ? 100
+                : (currentNumber / condition) * 100
+              : 0
+          }
+        />
         <Typography
           sx={{
             color: "#9384B7",
@@ -79,7 +103,9 @@ export default function PlayerLinearProgress({ type }) {
             textAlign: "start",
           }}
         >
-          5 subscribers until Silver
+          {condition - currentNumber >= 0 ? condition - currentNumber : "0"}{" "}
+          {type === "subscribe" ? "subscribers" : "registers"} until{" "}
+          {nextTierName}
         </Typography>
       </Box>
     </Box>

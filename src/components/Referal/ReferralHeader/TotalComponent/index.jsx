@@ -2,8 +2,11 @@ import { Box } from "@mui/material";
 import React from "react";
 import TotalPlayerSubcribe from "./TotalPlayerSubcribe";
 import TotalReferralInfo from "./TotalReferralInfo";
+import { useSelector } from "react-redux";
 
 export default function TotalComponent() {
+  const { device } = useSelector((state) => state.deviceReducer);
+
   return (
     <Box
       sx={{
@@ -15,7 +18,7 @@ export default function TotalComponent() {
         alignItems: "center",
         justifyContent: "space-between",
         boxSizing: "border-box",
-        padding: "20px 25px",
+        padding: device === "Mobile" ? "20px 10px 20px 20px" : "20px 25px",
       }}
     >
       <TotalPlayerSubcribe />

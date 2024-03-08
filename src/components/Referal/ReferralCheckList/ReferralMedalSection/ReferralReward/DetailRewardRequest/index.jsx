@@ -5,7 +5,13 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import { styled } from "@mui/material/styles";
 
-export default function DetailRewardRequest({ barColor, title, width }) {
+export default function DetailRewardRequest({
+  barColor,
+  title,
+  width,
+  currentNumber,
+  condition,
+}) {
   const BorderLinearProgress = styled(LinearProgress)(() => ({
     height: 7,
     borderRadius: 5,
@@ -37,10 +43,19 @@ export default function DetailRewardRequest({ barColor, title, width }) {
             fontSize: "14px",
           }}
         >
-          5/10
+          {currentNumber || 0}/{condition || 0}
         </Typography>
       </Box>
-      <BorderLinearProgress variant="determinate" value={50} />
+      <BorderLinearProgress
+        variant="determinate"
+        value={
+          condition !== 0
+            ? (currentNumber / condition) * 100 >= 100
+              ? 100
+              : (currentNumber / condition) * 100
+            : 0
+        }
+      />
     </Box>
   );
 }

@@ -13,20 +13,22 @@ export default function ReferralCheckList() {
           textAlign: "start",
           color: "#fff",
           marginLeft: "0px !important",
-          fontSize: device === "Mobile" ? "15px" : "24px",
+          fontSize: device === "Mobile" ? "20px" : "24px",
+          fontWeight: "700",
         }}
       >
         Referral Checklist Log
       </Typography>
       <Box
         sx={{
-          border: "1px solid #374151",
+          border: device === "Mobile" ? "none" : "1px solid #374151",
           marginTop: "24px",
           boxSizing: "border-box",
-          padding: "24px",
-          borderRadius: "16px",
+          padding: device === "Mobile" ? "none" : "24px",
+          borderRadius: device === "Mobile" ? "none" : "16px",
           display: "flex",
           justifyContent: "space-between",
+          flexDirection: device === "Mobile" ? "column-reverse" : "row",
         }}
       >
         <MyLevelReferral />
@@ -35,11 +37,12 @@ export default function ReferralCheckList() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            marginBottom: "24px",
           }}
         >
           <Typography
             sx={{
-              fontSize: "16px",
+              fontSize: device === "Mobile" ? "12px" : "16px",
               color: "#7C81F2",
               fontWeight: "600",
               marginBottom: "12px !important",
@@ -49,7 +52,7 @@ export default function ReferralCheckList() {
           </Typography>
           <Typography
             sx={{
-              fontSize: "14px",
+              fontSize: device === "Mobile" ? "10px" : "14px",
               color: "#9CA3AF",
               fontWeight: "500",
               marginBottom: "12px",
@@ -60,7 +63,7 @@ export default function ReferralCheckList() {
           </Typography>
           <Typography
             sx={{
-              fontSize: "14px",
+              fontSize: device === "Mobile" ? "10px" : "14px",
               color: "#9CA3AF",
               fontWeight: "500",
               marginBottom: "12px",
