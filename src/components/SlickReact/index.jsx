@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Grid } from "@mui/material";
-import { imagesV2 } from "../../utils/images";
 import "./index.scss";
+import { Box } from "@mui/material";
+import ListPackage from "../../pages/PackagePage/component/ListPackage";
 
-export default function SlickReact() {
+export default function SlickReact(props) {
+  const { itemSub, appendDot } = props;
+  const [selectedIndex, setIndex] = useState(0);
+
   const NextArrow = (props) => {
     const { className, onClick } = props;
     return (
@@ -25,9 +28,9 @@ export default function SlickReact() {
   };
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
-    autoplay: true,
+    autoplay: false,
     interval: 1000,
     autoplaySpeed: 4000,
     slidesToShow: 3,
@@ -51,76 +54,73 @@ export default function SlickReact() {
         },
       },
     ],
+    beforeChange: (prev, next) => {
+      setIndex(next);
+    },
+    customPaging: (i) => (
+      <div
+        style={{
+          width: i === selectedIndex ? "20px" : "10px",
+          height: "4px",
+          background: i === selectedIndex ? "#ffff" : "#989898",
+          borderRadius: "5px",
+          transition: "0.4s",
+          marginTop: "15px",
+        }}
+      ></div>
+    ),
+    appendDots: (dots) => {
+      if (dots?.length >= 10) {
+        dots = dots?.slice(0, 5);
+      }
+      return (
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            bottom: "-10px",
+            position: "absolute",
+            padding: "5px",
+            height: "20px" ,
+            // backgroundColor:  "rgba(0, 0, 0, 0.24)" ,
+            backdropFilter: "blur(2px)",
+            marginBottom: "0px",
+            width: "100%",
+          }}
+        >
+          {dots}
+        </Box>
+      );
+    },
   };
   return (
     <>
       <Slider {...settings}>
-        <div>
-          <Grid container columnSpacing={2} className="box-content">
-            <Grid item xs={6} className="box-banner">
-              <img
-                src={imagesV2.bn2}
-                alt="..."
-                className="img-zoom"
-                style={{ width: "100%", height: "100%" }}
-                onClick={() => {}}
+        {itemSub?.map((i, index) => {
+          return (
+            <Box
+              key={index}
+              sx={{
+                display:"flex !important",
+                justifyContent:"center",
+                alignItems:"center"
+              }}
+            >
+              <ListPackage
+                packageName={i?.packageName}
+                packageAvatar={i?.packageAvatar}
+                packagePrice={i?.packagePrice}
+                packageFreeTicketTournament={i?.packageFreeTicketTournament}
+                packageReduceWatchAds={i?.packageReduceWatchAds}
+                id={i?.id}
+                avatarChristmas={i?.packageAvatarChristmas}
+                des={i?.packageDescription}
+                packageCategory={i?.packageCategory}
               />
-            </Grid>
-            <Grid item xs={6} className="box-banner">
-              <img
-                src={imagesV2.bn3}
-                alt="..."
-                className="img-zoom"
-                style={{ width: "100%", height: "100%" }}
-                onClick={() => {}}
-              />
-            </Grid>
-          </Grid>
-        </div>
-        <div>
-          <Grid container columnSpacing={2}>
-            <Grid item xs={6}>
-              <img
-                src={imagesV2.bn2}
-                alt="..."
-                className="img-zoom"
-                style={{ width: "100%", height: "100%" }}
-                onClick={() => {}}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <img
-                src={imagesV2.bn3}
-                alt="..."
-                className="img-zoom"
-                style={{ width: "100%", height: "100%" }}
-                onClick={() => {}}
-              />
-            </Grid>
-          </Grid>
-        </div>
-        <div>
-          <Grid container columnSpacing={2}>
-            <Grid item xs={6}>
-              <img
-                src={imagesV2.bn2}
-                alt="..."
-                className="img-zoom"
-                style={{ width: "100%", height: "100%" }}
-                onClick={() => {}}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <img
-                src={imagesV2.bn3}
-                alt="..."
-                className="img-zoom"
-                style={{ width: "100%", height: "100%" }}
-                onClick={() => {}}
-              />
-            </Grid>
-          </Grid>
-        </div>
+            </Box>
+          );
+        })}
       </Slider>
     </>
   );

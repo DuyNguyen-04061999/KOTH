@@ -29,9 +29,15 @@ export const Type = {
   Subscription: "sub",
   Value: "normal value",
   Standard: "normal standard",
-  Quarterly: "quarterly flow",
-  Pro: "pro flow",
-  Prenium: "prenium flow",
+};
+
+export const PackageName = {
+  Monthly: "Monthly Subscription",
+  Value: "Value Extra Pack",
+  Standard: "Standard Extra Pack",
+  Quarterly: "Quarterly Subscription",
+  Halfyear : "Half-year Subscription",
+  Yearly: "Yearly Subscription",
 };
 
 export default function ListPackage(props) {
@@ -43,9 +49,9 @@ export default function ListPackage(props) {
     packageReduceWatchAds,
     id,
     des,
-    // packageCategory,
+    packageCategory,
   } = props;
-  const packageCategory = 'prenium flow'
+  // const packageCategory = 'prenium flow'
   console.log(packageCategory);
   const [socket, setSocket] = useState(null);
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
@@ -104,17 +110,22 @@ export default function ListPackage(props) {
   }
 
   return (
-    <Box>
       <Box
         sx={{
           background:
-            packageCategory === Type?.Standard
-              ? "linear-gradient(180deg, #B8CCDF 0%, #CBDBF0 100%), #0F041D"
-              : "" || packageCategory === Type.Subscription
-              ? "linear-gradient(194deg, #EB6FFF 10.05%, #82F0FF 36.19%, #A470FF 54.35%, #3CC4E2 69.28%, #C271FF 86.16%, #3CC4E2 99.19%)"
-              : "" || packageCategory === Type.Value
-              ? "linear-gradient(0deg, #F3CA78 0%, #F3CA78 100%), linear-gradient(180deg, #FDCD6D 0%, #FF7765 100%), #0F041D"
-              : "#0F041D",
+            packageName === PackageName?.Standard
+              ? "linear-gradient(180deg, #0F041D 69.35%, #40464D 99.97%)"
+              : "" || packageName === PackageName.Monthly
+              ? "linear-gradient(180deg, #0F041D 69.58%, #083843 99.91%)"
+              : "" || packageName === PackageName.Value
+              ? "linear-gradient(180deg, #0F041D 69.35%, #4D3911 99.97%)"
+              : "" || packageName === PackageName.Quarterly 
+              ? "linear-gradient(180deg, #0F041D 69.58%, #460167 99.91%)"
+              : "" || packageName === PackageName.Halfyear 
+              ? "linear-gradient(180deg, #0F041D 69.58%, #3C1205 99.91%)"
+              : "" || packageName === PackageName.Yearly 
+              ? "linear-gradient(180deg, #0F041D 69.58%, #410634 99.91%)" 
+              : "",
           padding: "20px",
           borderRadius: "24px",
           display: "flex",
@@ -122,23 +133,29 @@ export default function ListPackage(props) {
           flexDirection: "column",
           position: "relative",
           height: "fit-content",
-          // minWidth: width > 576 && width < 1200 ? "100%" : "315px",
           marginBottom: "20px",
-          // maxWidth: width > 576 && width < 1200 ? "315px" : "unset",
           marginTop: width < 1200 ? "25px" : "unset",
           width: "300px",
-          minHeight: packageCategory === Type?.Subscription ? "553px" : "480px",
+          minHeight: 
+          // packageCategory === Type?.Subscription ? 
+          "553px" 
+          // : "480px"
+          ,
         }}
         className={
-          packageCategory === Type?.Standard
+          packageName === PackageName?.Standard
             ? "gradient-border-rounded"
-            : "" || packageCategory === Type.Subscription
+            : "" || packageName === PackageName.Monthly
             ? "gradient-border-rounded1"
-            : "" || packageCategory === Type.Value
+            : "" || packageName === PackageName.Value
             ? "gradient-border-rounded2"
-            : "" || packageCategory === Type.Prenium 
+            : "" || packageName === PackageName.Quarterly 
             ? "gradient-border-rounded3" 
-            : ""
+            : "" || packageName === PackageName.Halfyear
+            ? "gradient-border-rounded4"
+            :"" || packageName === PackageName.Yearly
+            ? "gradient-border-rounded5"
+            :""
         }
       >
         <Typography
@@ -147,38 +164,30 @@ export default function ListPackage(props) {
             fontSize: "20px",
             marginBottom: "10px !important",
             color:
-              packageCategory === Type?.Value
-                ? "#3A2922"
-                : packageCategory === Type?.Standard
-                ? "#383B80"
-                : "white",
+               "white",
             textOverflow: "ellipsis",
-            fontWeight:
-              packageCategory === Type?.Subscription
-                ? "bold !important"
-                : "500",
+            fontWeight: "bold !important"
           }}
         >
           {packageName}
         </Typography>
         <Box
-          className="card"
           sx={{
-            backgroundColor: "#0F041D",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             borderRadius: "10px",
             width: "100%",
-            height: packageCategory === Type?.Subscription ? "490px" : "435px",
+            height: 
+            // packageCategory === Type?.Subscription ? 
+            "490px" 
+            // : "435px"
+            ,
             border: "none",
             padding: "6px 12px",
             position: "relative",
           }}
         >
-           <Box
-            className="elipse"
-          ></Box>
           <Box
             className="title"
             sx={{
@@ -539,7 +548,7 @@ export default function ListPackage(props) {
           </Box>
         </Box>
         <Box className={"saleMobile"}>
-          {packageCategory === Type.Subscription ? (
+          {packageName === PackageName.Monthly ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="100"
@@ -596,10 +605,6 @@ export default function ListPackage(props) {
             <></>
           )}
         </Box>
-        {/* <Box
-            className="elipse"
-          ></Box> */}
       </Box>
-    </Box>
   );
 }
