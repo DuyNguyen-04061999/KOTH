@@ -52,7 +52,6 @@ export default function ListPackage(props) {
     packageCategory,
   } = props;
   // const packageCategory = 'prenium flow'
-  console.log(packageCategory);
   const [socket, setSocket] = useState(null);
   const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
 
@@ -137,9 +136,9 @@ export default function ListPackage(props) {
           marginTop: width < 1200 ? "25px" : "unset",
           width: "300px",
           minHeight: 
-          // packageCategory === Type?.Subscription ? 
-          "553px" 
-          // : "480px"
+          packageName === PackageName?.Standard || packageName === PackageName?.Value ? 
+          "504px" 
+          : "553px"
           ,
         }}
         className={
@@ -179,9 +178,9 @@ export default function ListPackage(props) {
             borderRadius: "10px",
             width: "100%",
             height: 
-            // packageCategory === Type?.Subscription ? 
-            "490px" 
-            // : "435px"
+             packageName === PackageName?.Standard || packageName === PackageName?.Value ? 
+            "430px" 
+             : "490px"
             ,
             border: "none",
             padding: "6px 12px",

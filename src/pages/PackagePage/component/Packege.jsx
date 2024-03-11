@@ -83,8 +83,7 @@ export default function Package(props) {
     );
     setItemNormal(normalarr);
   }, [listPackage]);
-  console.log(itemSub);
-  console.log(itemNormal);
+
   return (
     <DocumentMeta {...meta}>
       <>
@@ -124,56 +123,63 @@ export default function Package(props) {
               >
                 <Box>
                   <Box className="subscription_pack">
-                    <SlickReact itemSub={itemSub} appendDot={true} />
-                    {/* <Grid
-                    container
-                    columnSpacing={1}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent:
-                        width > 576 && width < 1200 ? "center" : "space-around",
-                      marginTop:
-                        (location && location?.pathname?.includes("home")) ||
-                        pathname === "/"
-                          ? "20px"
-                          : "30px",
-                    }}
-                  >
-                    {itemSub?.map((i, index) => {
-                      return (
-                        <Grid
-                          item
-                          sm={6}
-                          md={6}
-                          lg={4}
-                          xl={4}
-                          key={index}
-                          sx={{
-                            display: "flex",
-                            alignContent: "center",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <ListPackage
-                            packageName={i?.packageName}
-                            packageAvatar={i?.packageAvatar}
-                            packagePrice={i?.packagePrice}
-                            packageFreeTicketTournament={
-                              i?.packageFreeTicketTournament
-                            }
-                            packageReduceWatchAds={i?.packageReduceWatchAds}
-                            id={i?.id}
-                            avatarChristmas={i?.packageAvatarChristmas}
-                            des={i?.packageDescription}
-                            packageCategory={i?.packageCategory}
-                          />
-                        </Grid>
-                      );
-                    })}
-                  </Grid> */}
+                    {(location && location?.pathname?.includes("home")) ||
+                    pathname === "/" ? (
+                      <SlickReact itemSub={itemSub} appendDot={true} />
+                    ) : (
+                      <Grid
+                        container
+                        columnSpacing={1}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent:
+                            width > 576 && width < 1200
+                              ? "center"
+                              : "space-around",
+                          marginTop:
+                            (location &&
+                              location?.pathname?.includes("home")) ||
+                            pathname === "/"
+                              ? "20px"
+                              : "30px",
+                        }}
+                      >
+                        {itemSub?.map((i, index) => {
+                          return (
+                            <Grid 
+                              item
+                              sm={6}
+                              md={6}
+                              lg={4}
+                              xl={4}
+                              key={index}
+                              sx={{
+                                display: "flex",
+                                alignContent: "center",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <ListPackage
+                                packageName={i?.packageName}
+                                packageAvatar={i?.packageAvatar}
+                                packagePrice={i?.packagePrice}
+                                packageFreeTicketTournament={
+                                  i?.packageFreeTicketTournament
+                                }
+                                packageReduceWatchAds={i?.packageReduceWatchAds}
+                                id={i?.id}
+                                avatarChristmas={i?.packageAvatarChristmas}
+                                des={i?.packageDescription}
+                                packageCategory={i?.packageCategory}
+                              />
+                            </Grid>
+                          );
+                        })}
+                      </Grid>
+                    )}
                   </Box>
                 </Box>
               </Container>
@@ -430,7 +436,7 @@ export default function Package(props) {
               </Box>
             </Box>
             <Box>
-            {(location && location?.pathname?.includes("home")) ||
+              {(location && location?.pathname?.includes("home")) ||
               pathname === "/" ? (
                 <Typography
                   sx={{
