@@ -74,7 +74,8 @@ export default function Package(props) {
     const subarr = listPackage?.filter(
       (item) => item.packageCategory === "sub"
     );
-    setItemSub(subarr);
+    const sortSubArray = subarr.reverse()
+    setItemSub(sortSubArray)
   }, [listPackage]);
 
   useEffect(() => {
