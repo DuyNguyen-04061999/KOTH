@@ -30,7 +30,7 @@ export default function Referal() {
       dispatch(getListTierReady());
       dispatch(getCurrentBonuses());
     }
-  }, []);
+  }, [dispatch]);
   useEffect(() => {
     dispatch(updateCurrentLevel(getCurrentNextLevel(registerList, tierList)));
   }, [registerList, tierList, dispatch]);
