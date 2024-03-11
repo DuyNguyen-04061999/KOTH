@@ -63,6 +63,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import Referal from "./pages/Referal";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -126,7 +127,7 @@ function App() {
     }
   }, [width]);
 
-  useEffect(() => { });
+  useEffect(() => {});
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
 
@@ -165,7 +166,7 @@ function App() {
     };
   }, [startGameCheck]);
 
-  useEffect(() => { }, [orientation, startGameCheck]);
+  useEffect(() => {}, [orientation, startGameCheck]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -178,7 +179,7 @@ function App() {
     const token = localStorage.getItem("token");
 
     if (socket) {
-      socket?.once("connect", (data) => { });
+      socket?.once("connect", (data) => {});
 
       socket?.on("warning", (data, type) => {
         if (type && type !== "get") {
@@ -521,6 +522,10 @@ function App() {
                   <Route
                     path="game"
                     element={<SuspenseWrapper child={<GamePage />} />}
+                  />
+                  <Route
+                    path="referral"
+                    element={<SuspenseWrapper child={<Referal />} />}
                   />
                   {getAppType() === "promote" && (
                     <Route
