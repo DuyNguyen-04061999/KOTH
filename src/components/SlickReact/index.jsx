@@ -16,7 +16,7 @@ export default function SlickReact(props) {
       <div
         className={className}
         onClick={onClick}
-        style={{ ...style, position: "absolute", top: -20, right: 0,
+        style={{ ...style, position: "absolute", top: -30, right: 0,
         background:"transparent"
       }}
       >
@@ -30,7 +30,7 @@ export default function SlickReact(props) {
       <div
         className={className}
         onClick={onClick}
-        style={{ position: "absolute", top: -20, left: "93%" }}
+        style={{ position: "absolute", top: -30, left: "93%" }}
       >
   
       </div>

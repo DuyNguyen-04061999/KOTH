@@ -123,7 +123,7 @@ export default function Package(props) {
                 }}
               >
                 <Box>
-                  <Box className="subscription_pack">
+                  <Box className="subscription_pack" sx={{marginTop:"20px"}}>
                     {(location && location?.pathname?.includes("home")) ||
                     pathname === "/" ? (
                       <SlickReact itemSub={itemSub} appendDot={true} />
