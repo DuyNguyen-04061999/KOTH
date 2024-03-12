@@ -20,37 +20,51 @@ export const closeTransactionDialog = (data) => {
 export const walletLogoutSuccessFully = (data) => {
   return {
     type: "WALLET_LOGOUT_SUCCESS_FULLY",
-    payload:data
-  }
-}
+    payload: data,
+  };
+};
 
 export const toggleMetaMaskDialog = (data) => {
   return {
     type: "TOGGLE_METAMASK_DIALOG",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 export const saveTransactionData = (data) => {
   return {
     type: "SAVE_TRANSACTION_DATA",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
-export const toggleCheckWallet =(data) => {
+export const toggleCheckWallet = (data) => {
   return {
     type: "TOGGLE_CHECK_WALLET",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
-export const closeCheckWallet =(data) => {
+export const closeCheckWallet = (data) => {
   return {
     type: "CLOSE_CHECK_WALLET",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
+
+export const openRenewalNotiPopup = (data) => {
+  return {
+    type: "OPEN_RENEWAL_NOTI_POPUP",
+    payload: data,
+  };
+};
+
+export const closeRenewalNotiPopup = (data) => {
+  return {
+    type: "CLOSE_RENEWAL_NOTI_POPUP",
+    payload: data,
+  };
+};
 
 const walletReducer = (
   state = {
@@ -63,35 +77,60 @@ const walletReducer = (
     typeWallet: "",
     goldCombo: 0,
     totalExtra: 0,
-    price: 0
+    price: 0,
+    isCheckRenewalNoti: false,
   },
   action
 ) => {
-  let {
-    type,
-    payload
-  } = action;
+  let { type, payload } = action;
   switch (type) {
     case REHYDRATE:
       return { ...state };
     case "TOGGLE_WALLET_DIALOG":
-      return { ...state, isWalletDialog: !state.isWalletDialog, price: payload || 0 };
+      return {
+        ...state,
+        isWalletDialog: !state.isWalletDialog,
+        price: payload || 0,
+      };
     case "OPEN_TRANSACTION_DIALOG":
       return { ...state, isTransactionDialog: true };
     case "CLOSE_TRANSACTION_DIALOG":
       return { ...state, isTransactionDialog: false };
-    case "WALLET_LOGOUT_SUCCESS_FULLY" : {
+    case "WALLET_LOGOUT_SUCCESS_FULLY": {
       return {
         ...state,
         isWalletDialog: false,
         isTransactionDialog: false,
-      }
+      };
     }
-    case "TOGGLE_METAMASK_DIALOG": return {...state, isMetamaskDialog: !state.isMetamaskDialog}
-    case "SAVE_TRANSACTION_DATA": return {...state, transactionData: payload?.transactionData, depositData: payload?.depositData}
-    case "TOGGLE_CHECK_WALLET" : 
-      return {...state, isCheckWallet: !state.isCheckWallet, typeWallet:payload?.type, goldCombo:payload?.gold, totalExtra:payload?.total}
-    case "CLOSE_CHECK_WALLET" : return {...state, isCheckWallet: false}
+    case "TOGGLE_METAMASK_DIALOG":
+      return { ...state, isMetamaskDialog: !state.isMetamaskDialog };
+    case "SAVE_TRANSACTION_DATA":
+      return {
+        ...state,
+        transactionData: payload?.transactionData,
+        depositData: payload?.depositData,
+      };
+    case "TOGGLE_CHECK_WALLET":
+      return {
+        ...state,
+        isCheckWallet: !state.isCheckWallet,
+        typeWallet: payload?.type,
+        goldCombo: payload?.gold,
+        totalExtra: payload?.total,
+      };
+    case "CLOSE_CHECK_WALLET":
+      return { ...state, isCheckWallet: false };
+    case "OPEN_RENEWAL_NOTI_POPUP":
+      return {
+        ...state,
+        isCheckRenewalNoti: true,
+        typeWallet: payload?.type,
+        goldCombo: payload?.gold,
+        totalExtra: payload?.total,
+      };
+    case "CLOSE_RENEWAL_NOTI_POPUP":
+      return { ...state, isCheckRenewalNoti: false };
     default:
       return state;
   }

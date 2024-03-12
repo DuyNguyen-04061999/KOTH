@@ -86,6 +86,8 @@ import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
 import "./index.scss";
 import NotificationBage from "../NotificationBage";
+import RenewalBadgePopup from "../Dialog/Packages/NotiCheckout/renewalBadgePopup";
+import RenewalNotiPopup from "../Dialog/Packages/NotiCheckout/renewalNotiPopup";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -435,6 +437,8 @@ export default function Layout(props) {
       <DialogExclusive />
       <NotiFunds />
       <NotificationDialog />
+      <RenewalBadgePopup />
+      <RenewalNotiPopup />
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}
