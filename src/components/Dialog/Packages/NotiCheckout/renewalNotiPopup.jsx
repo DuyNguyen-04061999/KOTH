@@ -15,6 +15,8 @@ export default function RenewalNotiPopup(props) {
   const { isCheckRenewalNoti, typeWallet, goldCombo, totalExtra } = useSelector(
     (state) => state.walletReducer
   );
+  const { uPack } = useSelector((state) => state.userReducer);
+  const Remain = uPack?.remain
   const handleClose = () => {
     dispatch(closeRenewalNotiPopup());
   };
@@ -49,6 +51,7 @@ export default function RenewalNotiPopup(props) {
             backgroundColor: "#271C39",
             maxWidth: "490px",
             padding: "15px",
+            borderRadius: 2
           },
         }}
       >
@@ -67,7 +70,7 @@ export default function RenewalNotiPopup(props) {
               }}
               className="text-center"
             >
-              You have 27 days left on your current subscription. Adding this
+              You have {`${Remain?.slice(0,-1)}`} days left on your current subscription. Adding this
               pack will extend your total subscription to 50 day left on your
               current. Confirm purchase?"
             </Typography>

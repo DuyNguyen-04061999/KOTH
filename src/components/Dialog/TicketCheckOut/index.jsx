@@ -1,6 +1,15 @@
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import {Box, Button, Dialog, FormControl, Grid, MenuItem, Select, Typography} from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  FormControl,
+  Grid,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,8 +36,8 @@ export default function TicketCheckOut() {
   const { listPackage, dataPackage } = useSelector(
     (state) => state.packageReducer
   );
-  const {uPack} = useSelector((state) => state.userReducer)
-  const { packageName } = dataPackage;
+  const { uPack } = useSelector((state) => state.userReducer);
+  const { id, packageName } = dataPackage;
   const [feeCheckout, setFeeCheckout] = useState({
     origin: 4.4 / 100,
     bonus: 0.3,
@@ -42,8 +51,10 @@ export default function TicketCheckOut() {
   const [totalMoney, setTotalMoney] = useState(0);
   const [sl, setSl] = useState(1);
   const [autoRecurring, setAutoRecurring] = useState(true);
-  const [subscriptionValue, setSubscriptionValue] = useState("")
-  const [previousPackage, setPreviousPackage] = useState({})
+  const [subscriptionValue, setSubscriptionValue] = useState({});
+  const [renewOption, setRenewOption] = useState({});
+  const [previousPackage, setPreviousPackage] = useState({});
+  
   useEffect(() => {
     if (typePayment === "skrill") {
       setFeeCheckout({
@@ -58,12 +69,17 @@ export default function TicketCheckOut() {
     }
   }, [typePayment]);
 
-    useEffect(() => {
-        if (uPack) {
-            setPreviousPackage(uPack)
-        }
-    }, [uPack]);
+  useEffect(() => {
+    if(dataPackage) {
+      setSubscriptionValue(dataPackage)
+    }
+  }, [dataPackage])
 
+  useEffect(() => {
+    if (uPack) {
+      setPreviousPackage(uPack);
+    }
+  }, [uPack]);
 
   useEffect(() => {
     if (feeCheckout) {
@@ -94,11 +110,21 @@ export default function TicketCheckOut() {
     dispatch(toggleCheckWallet());
   };
 
-    const handleChangeSub = (event) => {
-        setSubscriptionValue(event.target.value)
+  const handleChangeSub = (event) => {
+    setRenewOption(event.target.value);
+  };
+
+  useEffect(() => {
+    if(Number(renewOption?.id) === Number(uPack?.id)){
+      localStorage.removeItem("packageRenew")
     }
-    
+    else{
+      localStorage.setItem("packageRenew", JSON.stringify(subscriptionValue));
+    }
+  }, [renewOption])
+
   const params = new URLSearchParams(window.location.search);
+
   const game = params.get("game");
 
   const btnSubscription = (event) => {
@@ -115,9 +141,6 @@ export default function TicketCheckOut() {
     );
     setSl(1);
     // dispatch(toggleCheckWallet());
-    if(packageName !== previousPackage?.packageName) {
-      localStorage.setItem("dataRenewal", subscriptionValue)
-    }
   };
 
   const btnBuyTicket = (event) => {
@@ -155,7 +178,7 @@ export default function TicketCheckOut() {
           "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
             borderRadius: "11px !important",
           },
-            zIndex: "1300",
+          zIndex: "1300",
           "& .MuiPaper-root": {
             backgroundColor: "transparent !important",
           },
@@ -260,7 +283,7 @@ export default function TicketCheckOut() {
                         className="mb-1"
                         sx={{ marginLeft: "0px !important", color: "#BE48ED " }}
                       >
-                          {packageName}
+                        {packageName}
                       </Typography>
                       <Typography
                         sx={{
@@ -540,7 +563,7 @@ export default function TicketCheckOut() {
               <Typography sx={{ fontSize: "14px" }}>
                 {typeWallet?.includes("sub")
                   ? "Subscription Pack x 1"
-                  : `Combo Pack x ${sl}` }
+                  : `Combo Pack x ${sl}`}
               </Typography>
               <Typography sx={{ color: "white", fontSize: "14px" }}>
                 {" "}
@@ -607,7 +630,7 @@ export default function TicketCheckOut() {
                 className="d-flex align-items-start"
                 sx={{
                   paddingTop: "10px",
-                    paddingBottom: "10px",
+                  paddingBottom: "10px",
                 }}
               >
                 <input
@@ -639,89 +662,87 @@ export default function TicketCheckOut() {
               </Box>
             )}
 
-              {/*  Dropdown Two subscription */}
-              <Box
-                  sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      height: "100% !important"
-                  }}
+            {/*  Dropdown Two subscription */}
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                height: "100% !important",
+              }}
+            >
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#181223",
+                  borderRadius: "4px",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  color: "white",
+                  marginBottom: "0px !important",
+                  "& .MuiInputBase-root": {
+                    color: "white",
+                  },
+                  "& .MuiInputBase-input.Mui-disabled": {
+                    WebkitTextFillColor: "white",
+                  },
+                  paddingTop: "5px",
+                  paddingBottom: "3px",
+                }}
               >
-                  <FormControl
-                      variant="standard"
-                      sx={{
-                          width: "100%",
-                          backgroundColor: "#181223",
-                          borderRadius: "4px",
-                          flexDirection: "row",
-                          alignItems: "center",
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={renewOption}
+                  inputProps={{
+                    MenuProps: {
+                      PaperProps: {
+                        sx: {
+                          backgroundColor: "#443565",
                           color: "white",
-                          marginBottom: "0px !important",
-                          "& .MuiInputBase-root": {
-                              color: "white",
-                          },
-                          "& .MuiInputBase-input.Mui-disabled": {
-                              WebkitTextFillColor: "white",
-                          },
-                          paddingTop: "5px",
-                          paddingBottom: "3px",
-                      }}
-                  >
-                      <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={subscriptionValue}
-                          inputProps={{
-                              MenuProps: {
-                                  PaperProps: {
-                                      sx: {
-                                          backgroundColor: "#443565",
-                                          color: "white",
-                                      },
-                                  },
-                              },
-                          }}
-                          onChange={handleChangeSub}
-                          sx={{
-                              width: "100%",
-                              "& .MuiSelect-nativeInput": {
-                                  position: "relative",
-                                  width: "2%",
-                              },
-                              "&:before": {
-                                  borderBottom: " 0px solid !important ",
-                                  "&:hover": {
-                                      borderBottom: "0px solid !important",
-                                  },
-                              },
-                              "&:after": {
-                                  borderBottom: "0px solid !important",
-                              },
-                              "&:hover": {
-                                  border: "none",
-                              },
-                              "& .MuiSvgIcon-root": {
-                                  color: "#7C81F2",
-                              },
-                              "& .MuiModal-root-MuiPopover-root-MuiMenu-root": {
-                                  zIndex: "1320 !important"
-                              },
-                              paddingLeft: "10px",
-                              paddingRight: "10px",
-                          }}
-                      >
-                          <MenuItem value={dataPackage}>{packageName}</MenuItem>
-                          {
-                            packageName !== previousPackage?.packageName ? (
-                              <MenuItem value={previousPackage}>{previousPackage?.packageName}</MenuItem>
-                            ) : (
-                              ""
-                            )
-                          }
-                      </Select>
-                  </FormControl>
-              </Box>
+                        },
+                      },
+                    },
+                  }}
+                  onChange={handleChangeSub}
+                  sx={{
+                    width: "100%",
+                    "& .MuiSelect-nativeInput": {
+                      position: "relative",
+                      width: "2%",
+                    },
+                    "&:before": {
+                      borderBottom: " 0px solid !important ",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    "& .MuiSvgIcon-root": {
+                      color: "#7C81F2",
+                    },
+                    "& .MuiModal-root-MuiPopover-root-MuiMenu-root": {
+                      zIndex: "1320 !important",
+                    },
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                  }}
+                >
+                  <MenuItem value={dataPackage}>{packageName}</MenuItem>
+                  {packageName !== previousPackage?.packageName ? (
+                    <MenuItem value={previousPackage}>
+                      {previousPackage?.packageName}
+                    </MenuItem>
+                  ) : (null)}
+                </Select>
+              </FormControl>
+            </Box>
 
             <Box
               className="d-flex align-items-start"
@@ -779,7 +800,9 @@ export default function TicketCheckOut() {
                       color: "#7848ED",
                     }}
                   >
-                    Persons under the age of 18 required to use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult
+                    Persons under the age of 18 required to use this Website
+                    only with the supervision of an Adult. Payment Information
+                    must be provided by or with the permission of an Adult
                   </span>
                 </Box>
               </Box>

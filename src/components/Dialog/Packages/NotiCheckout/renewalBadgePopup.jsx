@@ -3,25 +3,27 @@ import React, {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import AnimButton from "../../../AnimButton";
+import { closeRenewalBadgePopup } from "../../../../redux-saga-middleware/reducers/walletReducer";
 
 export default function RenewalBadgePopup(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const  [openRenewal,setOpen] = useState(false)
+    const {isChcekRenewalBadge} = useSelector((state) => state.walletReducer)
+
     const handleClose = () => {
-        setOpen(false)
+        dispatch(closeRenewalBadgePopup())
     };
 
     const location = useLocation()
 
     const handleConfrim = () => {
-        setOpen(true)
+        dispatch(closeRenewalBadgePopup())
     }
 
     return (
         <>
             <Dialog
-                open={openRenewal}
+                open={isChcekRenewalBadge}
                 onClose={handleClose}
                 sx={{
                     "& .css-hz1bth-MuiDialog-container": {
@@ -35,7 +37,7 @@ export default function RenewalBadgePopup(props) {
                         backgroundColor: "#271C39",
                         maxWidth: "490px",
                         padding: "15px",
-
+                        borderRadius: 2
                     },
                 }}
             >

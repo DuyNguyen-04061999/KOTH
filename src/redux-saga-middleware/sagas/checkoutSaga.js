@@ -49,6 +49,7 @@ function* getCheckOutSaga(dataRequest) {
 
 function* getCheckOutSagaSuccess(dataRequest) {
     try {
+        const packageRenewChanged = localStorage.getItem("packageRenewal")
         const {payload} = dataRequest;
         const {game} = payload
         const res = yield call(checkoutService.getCheckoutSuccess, payload);
@@ -74,6 +75,10 @@ function* getCheckOutSagaSuccess(dataRequest) {
                 localStorage.setItem("buyPackage", true)
                 localStorage.setItem("newNumberTicket", Number(data?.data?.quantity || 0))
                 window.close()
+            }
+
+            if(packageRenewChanged){
+                yield call(checkoutService.getCheckOutAutoCancel, {})
             }
         } else {
             yield put(checkoutPaypalSuccessFail());

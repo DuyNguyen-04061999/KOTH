@@ -66,6 +66,20 @@ export const closeRenewalNotiPopup = (data) => {
   };
 };
 
+export const openRenewalBadgePopup = (data) => {
+  return { 
+    type: "OPEN_RENEWAL_BADGE_POPUP",
+    payload: data
+  }
+}
+
+export const closeRenewalBadgePopup = (data) => {
+  return { 
+    type: "CLOSE_RENEWAL_BADGE_POPUP",
+    payload: data
+  }
+}
+
 const walletReducer = (
   state = {
     isWalletDialog: false,
@@ -79,6 +93,7 @@ const walletReducer = (
     totalExtra: 0,
     price: 0,
     isCheckRenewalNoti: false,
+    isChcekRenewalBadge:false
   },
   action
 ) => {
@@ -131,6 +146,10 @@ const walletReducer = (
       };
     case "CLOSE_RENEWAL_NOTI_POPUP":
       return { ...state, isCheckRenewalNoti: false };
+    case "OPEN_RENEWAL_BADGE_POPUP" : 
+      return {...state, isChcekRenewalBadge: true}
+    case "CLOSE_RENEWAL_BADGE_POPUP" : 
+      return {...state, isChcekRenewalBadge: false}
     default:
       return state;
   }
