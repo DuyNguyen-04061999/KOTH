@@ -423,7 +423,6 @@ function App() {
   useEffect(() => {
     if (!loadingSetting) fetchGetSetting();
   }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -525,7 +524,7 @@ function App() {
                   />
                   <Route
                     path="referral"
-                    element={<SuspenseWrapper child={<Referal />} />}
+                    element={tokenUser ? <Referal /> : <Navigate to="/home" />}
                   />
                   {getAppType() === "promote" && (
                     <Route

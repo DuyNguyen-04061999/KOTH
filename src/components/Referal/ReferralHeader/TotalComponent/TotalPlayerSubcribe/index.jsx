@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 export default function TotalPlayerSubcribe() {
   const { registerList } = useSelector((state) => state.referralReducer);
   const { device } = useSelector((state) => state.deviceReducer);
+
   return (
     <Box sx={{ position: "relative", height: "130px", width: "30%" }}>
       <Box

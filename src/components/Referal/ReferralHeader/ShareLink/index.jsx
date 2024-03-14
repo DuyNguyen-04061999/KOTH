@@ -7,11 +7,30 @@ import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import { sliceString } from "../../../../utils/stringSlice";
 export default function ShareLink() {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
-
+  const { user } = useSelector((state) => state.userReducer);
+  const currentUrl = window.location.href;
+  const copyref = `${currentUrl?.replace("/referral", "")}/influencers/${
+    user?.userName || ""
+  }`;
+  const { orientation } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
+  const limitString = () => {
+    if (
+      device === "Mobile" ||
+      (device === "Tablet" && orientation === "landscape")
+    ) {
+      return 25;
+    } else if (
+      device === "Desktop" ||
+      (device === "Tablet" && orientation === "portrait")
+    ) {
+      return 30;
+    }
+  };
   return (
     <Box sx={{ marginTop: "12px" }}>
       {device !== "Mobile" && (
@@ -41,9 +60,10 @@ export default function ShareLink() {
               alignItems: "center",
               justifyContent: "center",
               width: "100%",
+              overflow: "auto",
             }}
           >
-            https://play4promo.com/
+            {sliceString(copyref, limitString())}
           </Box>
           <Box
             sx={{
@@ -56,7 +76,7 @@ export default function ShareLink() {
             <Box
               sx={{ width: device === "Mobile" ? "15px" : "auto" }}
               onClick={() => {
-                copy("https://play4promo.com/");
+                copy(copyref);
                 toast.success("Copy link successfully!", {
                   icon: ({ theme, type }) => (
                     <img
@@ -90,7 +110,7 @@ export default function ShareLink() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "30%",
+            width: "28%",
           }}
         >
           <Box component={"img"} src={imagesReferral.LinkIcon}></Box>

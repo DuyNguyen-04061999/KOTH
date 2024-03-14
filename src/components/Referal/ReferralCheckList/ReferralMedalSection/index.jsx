@@ -13,17 +13,23 @@ export default function ReferralMedalSection() {
   useEffect(() => {
     setSelected(currentLevel?.nextTierName || "Bronze");
   }, [currentLevel]);
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const mobileCondition = () => {
+    return (
+      device === "Mobile" || (device === "Tablet" && orientation === "portrait")
+    );
+  };
   return (
     <>
       <Box
         sx={{
           marginTop: "24px",
-          marginBottom: device === "Mobile" ? "24px" : "",
-          display: device === "Mobile" ? "" : "flex",
+          marginBottom: mobileCondition() ? "24px" : "",
+          display: mobileCondition() ? "" : "flex",
           justifyContent: "space-between",
         }}
       >
-        {device === "Mobile" ? (
+        {mobileCondition() ? (
           <Box>
             <ScrollingCarousel className="scrolling-carousel-example1-container">
               {medalListIcon?.map((item, index) => {
@@ -64,7 +70,7 @@ export default function ReferralMedalSection() {
                   gradient={item.gradient}
                   name={item.name}
                 />
-                {device === "Mobile" ? (
+                {mobileCondition() ? (
                   ""
                 ) : (
                   <Box

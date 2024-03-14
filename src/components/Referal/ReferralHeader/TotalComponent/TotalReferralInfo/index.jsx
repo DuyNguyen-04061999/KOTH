@@ -11,6 +11,9 @@ export default function TotalReferralInfo() {
     totalPotentialBonuses,
   } = useSelector((state) => state.referralReducer);
   const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const mobileCondition =
+    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
   const { tokenUser } = useSelector((state) => state?.userReducer);
   const dispatch = useDispatch();
   const hanleOnClickClaimAll = () => {
@@ -19,7 +22,7 @@ export default function TotalReferralInfo() {
   return (
     <Box
       sx={{
-        width: device === "Mobile" ? "60%" : "220px",
+        width: device === "Mobile" || "Tablet" ? "60%" : "220px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -37,7 +40,7 @@ export default function TotalReferralInfo() {
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
             sx={{
-              fontSize: device === "Mobile" ? "12px" : "14px",
+              fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
               marginLeft: "0px !important",
               color: "#9CA3AF",
             }}
@@ -48,7 +51,7 @@ export default function TotalReferralInfo() {
             sx={{
               fontWeight: "700",
               color: "#fff",
-              fontSize: device === "Mobile" ? "12px" : "14px",
+              fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
             }}
           >
             {registerList?.length || 0}
@@ -58,7 +61,7 @@ export default function TotalReferralInfo() {
           <Typography
             sx={{
               color: "#9CA3AF",
-              fontSize: device === "Mobile" ? "12px" : "14px",
+              fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
               marginLeft: "0px !important",
             }}
           >
@@ -68,7 +71,7 @@ export default function TotalReferralInfo() {
             sx={{
               fontWeight: "700",
               color: "#fff",
-              fontSize: device === "Mobile" ? "12px" : "14px",
+              fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
             }}
           >
             {totalBonuses || 0}
@@ -78,7 +81,7 @@ export default function TotalReferralInfo() {
           <Typography
             sx={{
               color: "#9CA3AF",
-              fontSize: device === "Mobile" ? "12px" : "14px",
+              fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
               marginLeft: "0px !important",
             }}
           >
@@ -88,7 +91,7 @@ export default function TotalReferralInfo() {
             sx={{
               fontWeight: "700",
               color: "#FB3",
-              fontSize: device === "Mobile" ? "12px" : "14px",
+              fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
             }}
           >
             {totalPotentialBonuses || 0}
@@ -107,7 +110,7 @@ export default function TotalReferralInfo() {
             border: "none",
             outline: "none",
             borderRadius: "4px",
-            fontSize: device === "Mobile" ? "12px" : "14px",
+            fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
           }}
         >
           Claim All
@@ -123,7 +126,7 @@ export default function TotalReferralInfo() {
             border: "none",
             outline: "none",
             borderRadius: "4px",
-            fontSize: device === "Mobile" ? "12px" : "14px",
+            fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -142,7 +145,7 @@ export default function TotalReferralInfo() {
             border: "none",
             outline: "none",
             borderRadius: "4px",
-            fontSize: device === "Mobile" ? "12px" : "14px",
+            fontSize: device === "Mobile" || "Tablet" ? "12px" : "14px",
           }}
         >
           Claim All
