@@ -67,18 +67,39 @@ export const closeRenewalNotiPopup = (data) => {
 };
 
 export const openRenewalBadgePopup = (data) => {
-  return { 
+  return {
     type: "OPEN_RENEWAL_BADGE_POPUP",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 export const closeRenewalBadgePopup = (data) => {
-  return { 
+  return {
     type: "CLOSE_RENEWAL_BADGE_POPUP",
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
+
+export const deleteCurrentPackage = (data) => {
+  return {
+    type: "DELETE_CURRENT_PACKAGE",
+    payload: data,
+  };
+};
+
+export const deleteCurrentPackageSuccess = (data) => {
+  return {
+    type: "DELETE_CURRENT_PACKAGE_SUCCESS",
+    payload: data,
+  };
+};
+
+export const deleteCurrentPackageFail = (data) => {
+  return {
+    type: "DELETE_CURRENT_PACKAGE_FAIL",
+    payload: data,
+  };
+};
 
 const walletReducer = (
   state = {
@@ -93,7 +114,8 @@ const walletReducer = (
     totalExtra: 0,
     price: 0,
     isCheckRenewalNoti: false,
-    isChcekRenewalBadge:false
+    isChcekRenewalBadge: false,
+    isDeleteCurrentPackage: false,
   },
   action
 ) => {
@@ -146,10 +168,16 @@ const walletReducer = (
       };
     case "CLOSE_RENEWAL_NOTI_POPUP":
       return { ...state, isCheckRenewalNoti: false };
-    case "OPEN_RENEWAL_BADGE_POPUP" : 
-      return {...state, isChcekRenewalBadge: true}
-    case "CLOSE_RENEWAL_BADGE_POPUP" : 
-      return {...state, isChcekRenewalBadge: false}
+    case "OPEN_RENEWAL_BADGE_POPUP":
+      return { ...state, isChcekRenewalBadge: true };
+    case "CLOSE_RENEWAL_BADGE_POPUP":
+      return { ...state, isChcekRenewalBadge: false };
+    case "DELETE_CURRENT_PACKAGE":
+      return { ...state, isDeleteCurrentPackage: true };
+    case "DELETE_CURRENT_PACKAGE_SUCCESS":
+      return { ...state, isDeleteCurrentPackage: false };
+    case "DELETE_CURRENT_PACKAGE_FAIL":
+      return { ...state, isDeleteCurrentPackage: false };
     default:
       return state;
   }

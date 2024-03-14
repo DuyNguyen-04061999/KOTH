@@ -21,7 +21,6 @@ class CheckoutService {
   }
 
   async getCheckoutSuccess(dataRequest) {
-    console.log(dataRequest);
     const token = localStorage.getItem("token");
     const res = await PROMOTION_API.post(
       "/api/payments/paypal/buy-package/success",
@@ -43,12 +42,32 @@ class CheckoutService {
   }
 
   async getCheckOutAutoCancel(dataRequest) {
-    const packageRenewChanged = localStorage.getItem("packageRenewal")
+    const packageRenewChanged = localStorage.getItem("packageRenew")
     const token = localStorage.getItem("token");
     const res = await PROMOTION_API.post(
       "/api/payments/paypal/auto/cancel",
       {
         packageId: Number(packageRenewChanged),
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+          authorization: token,
+          "x-access-refactor-token": token,
+        },
+      }
+    );
+    return res
+  }
+
+  async cancelCurentPackage(dataRequest) {
+    const CancelPackage = localStorage.getItem("cancelPackage")
+    const token = localStorage.getItem("token");
+    const res = await PROMOTION_API.post(
+      "/api/payments/paypal/auto/cancel",
+      {
+      packageId: Number(CancelPackage),
       },
       {
         headers: {

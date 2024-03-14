@@ -122,7 +122,9 @@ export default function TicketCheckOut() {
       localStorage.setItem("packageRenew", JSON.stringify(subscriptionValue));
     }
   }, [renewOption])
-
+  console.log(renewOption);
+  console.log(subscriptionValue);
+  console.log(previousPackage);
   const params = new URLSearchParams(window.location.search);
 
   const game = params.get("game");
