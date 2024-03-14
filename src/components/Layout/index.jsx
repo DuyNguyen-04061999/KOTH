@@ -439,13 +439,14 @@ export default function Layout(props) {
         <PackagePaypalDialog />
       )}
       <>
-        {randomRender === 1 ? (
+        {/* {randomRender === 1 ? (
           <DoubleDayPackDialog />
         ) : randomRender === 2 ? (
           <DoubleDayDialog />
         ) : (
           <DoubleDayPackDialog />
-        )}
+        )} */}{" "}
+        <DoubleDayDialog />
       </>
       {isProfileDialog && (
         <DialogProfile

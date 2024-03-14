@@ -20,7 +20,12 @@ const DoubleDayDialog = () => {
   const handleClose = () => {
     dispatch(closeDoubleDayDialog());
   };
-
+  const {
+    hotTournament,
+    isFetchHot,
+    noDataHot,
+    // noDataEnd,
+  } = useSelector((state) => state.tournamentReducer);
   return ReactDOM.createPortal(
     <>
       {width < 576 ? (
@@ -37,8 +42,10 @@ const DoubleDayDialog = () => {
                 component={"img"}
                 src={images.stackingMB}
                 onClick={() => {
-                  handleClose();
-                  navigate("/promotion-detail/497");
+                  if (!isFetchHot && !noDataHot) {
+                    handleClose();
+                    navigate("/promotion-detail/" + hotTournament[0].id);
+                  }
                 }}
               ></Box>
               <Box
@@ -69,8 +76,10 @@ const DoubleDayDialog = () => {
                 component={"img"}
                 src={images.stackingDK}
                 onClick={() => {
-                  handleClose();
-                  navigate("/promotion-detail/497");
+                  if (!isFetchHot && !noDataHot) {
+                    handleClose();
+                    navigate("/promotion-detail/" + hotTournament[0].id);
+                  }
                 }}
               ></Box>
               <Box
