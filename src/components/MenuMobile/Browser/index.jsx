@@ -1443,8 +1443,13 @@ export default function Browser(props) {
                         : "#A89CD7",
                   }}
                   onClick={() => {
-                    handleShowMenu();
-                    navigate(`/referral`);
+                    if (!token) {
+                      dispatch(clickTab("login"));
+                      dispatch(toggleLoginDialog());
+                    } else {
+                      handleShowMenu();
+                      navigate(`/referral`);
+                    }
                   }}
                 >
                   {pathname && pathname?.includes("referral") ? (

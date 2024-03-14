@@ -15,6 +15,7 @@ import {
 import ReferralShare from "../../components/Referal/ReferralShare";
 import ReferralTierDialog from "../../components/Referal/ReferralTierDialog";
 import { getCurrentNextLevel } from "../../utils/referral";
+import { Navigate } from "react-router-dom";
 
 export default function Referal() {
   const { width } = useWindowDimensions();
@@ -34,13 +35,18 @@ export default function Referal() {
   useEffect(() => {
     dispatch(updateCurrentLevel(getCurrentNextLevel(registerList, tierList)));
   }, [registerList, tierList, dispatch]);
-  return (
+  return tokenUser ? (
     <MainLayout
       children={
         <Container
-          maxWidth={device === "Mobile" ? "none" : "lg"}
+          maxWidth="lg"
           sx={{
-            width: device === "Mobile" ? "none" : "1152px",
+            width:
+              device === "Mobile"
+                ? "none"
+                : device === "Tablet"
+                ? "100%"
+                : "1152px",
             boxSizing: "border-box",
             paddingTop: width < 576 ? "24px !important" : "50px !important",
             backgroundColor: "#211d28",
@@ -78,5 +84,7 @@ export default function Referal() {
       }
       type="Home"
     />
+  ) : (
+    <Navigate to="/home" />
   );
 }

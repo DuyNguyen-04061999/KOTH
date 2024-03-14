@@ -6,11 +6,13 @@ import {
   getResSubListSuccess,
   openTierRewardDialog,
   updateBonuses,
-  updateCurrentLevel,
   updateIsLoadingClaim,
   updateIsLoadingClaimAll,
   updateTierList,
 } from "../reducers/referralReducer";
+import { toast } from "react-toastify";
+import { images } from "../../utils/images";
+import { useSelector } from "react-redux";
 const referralService = new ReferralService();
 function* getResSubList() {
   try {
@@ -39,7 +41,6 @@ function* claimPhysicalRewardSaga(dataRequest) {
     const { payload } = dataRequest;
     yield delay(1000);
     const res = yield call(referralService.claimPhysicalReward, payload);
-    console.log(res?.data);
     if (res?.status === 200) {
       yield put(updateIsLoadingClaim(false));
       yield put(updateTierList(res?.data));
@@ -56,6 +57,17 @@ function* claimAllRewardSaga(dataRequest) {
     yield delay(1000);
     const res = yield call(referralService.claimAllReward);
     if (res.status === 201 || res?.status === 200) {
+      toast.success("Claim all rewards successfully!", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.successIcon}
+          />
+        ),
+        position: "top-center",
+        className: "success-background",
+      });
       yield put(updateIsLoadingClaimAll(false));
       yield put(updateBonuses(res?.data));
     }

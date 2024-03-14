@@ -54,7 +54,7 @@ export default function Signup(props) {
   const [validDisplayName, setValidDisplayName] = useState(false);
   const [validFirstName, setValidFirstName] = useState(false);
   const [validLastName, setValidLastName] = useState(false);
-  const [popupList,setPopupList] = useState(false)
+  const [popupList, setPopupList] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { isRegister } = useSelector((state) => state.userReducer);
@@ -132,7 +132,7 @@ export default function Signup(props) {
 
   const handleDisplaynameChange = (event, newValue) => {
     setDisplaynameValue(event?.target?.value);
-    setPopupList(false)
+    setPopupList(false);
   };
 
   const handleChangePass = (e) => {
@@ -160,7 +160,7 @@ export default function Signup(props) {
           lastName: lastName,
         })
       );
-      setPopupList(true)
+      setPopupList(true);
     }
   }, [firstName, lastName]);
 
@@ -221,7 +221,6 @@ export default function Signup(props) {
     passOneNumber,
     passOneLetter,
   ]);
-
 
   const sendRegister = () => {
     if (!disabledBtn) {
@@ -692,7 +691,7 @@ export default function Signup(props) {
             />{" "}
             <Box
               sx={{
-                display:popupList === true ? "inline-block" : "none",
+                display: popupList === true ? "inline-block" : "none",
                 position: "absolute",
                 top: 40,
                 left: 0,
@@ -705,10 +704,14 @@ export default function Signup(props) {
               <List>
                 {displayName?.map((e, index) => {
                   return (
-                    <ListItem disablePadding key={index} onClick={() => {
-                      setDisplaynameValue(e)
-                      setPopupList(false)
-                    }}>
+                    <ListItem
+                      disablePadding
+                      key={index}
+                      onClick={() => {
+                        setDisplaynameValue(e);
+                        setPopupList(false);
+                      }}
+                    >
                       <ListItemButton>
                         <ListItemText primary={e} />
                       </ListItemButton>

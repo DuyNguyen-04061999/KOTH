@@ -252,7 +252,6 @@ export default function Layout(props) {
     };
     getRefCodeByUserName();
   }, [userName, dispatch, token]);
-
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
