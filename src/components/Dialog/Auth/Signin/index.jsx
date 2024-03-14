@@ -16,6 +16,7 @@ import {
   // getCityAndStateProfile,
   getMyInfor,
   logoutReady,
+  removeTokenUser,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { getAppType } from "../../../../utils/helper";
 import { images } from "../../../../utils/images";

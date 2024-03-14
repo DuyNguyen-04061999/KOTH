@@ -6,7 +6,9 @@ import { useSelector } from "react-redux";
 
 export default function TotalComponent() {
   const { device } = useSelector((state) => state.deviceReducer);
-
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const mobileCondition =
+    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
   return (
     <Box
       sx={{
@@ -18,7 +20,7 @@ export default function TotalComponent() {
         alignItems: "center",
         justifyContent: "space-between",
         boxSizing: "border-box",
-        padding: device === "Mobile" ? "20px 10px 20px 20px" : "20px 25px",
+        padding: mobileCondition ? "20px 10px 20px 20px" : "20px 25px",
       }}
     >
       <TotalPlayerSubcribe />

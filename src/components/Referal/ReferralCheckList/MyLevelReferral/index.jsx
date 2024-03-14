@@ -9,6 +9,9 @@ export default function MyLevelReferral() {
     (state) => state.referralReducer
   );
   const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const mobileCondition =
+    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
   return (
     <Box
       sx={{
@@ -19,9 +22,8 @@ export default function MyLevelReferral() {
         marginRight: "22px",
         display: "flex",
         justifyContent: "space-between",
-        width: device === "Mobile" ? "100%" : "40%",
-        padding:
-          device === "Mobile" ? "15px 15px 15px 0px" : "20px 20px 20px 0px",
+        width: mobileCondition ? "100%" : device === "Tablet" ? "80%" : "40%",
+        padding: mobileCondition ? "15px 15px 15px 0px" : "20px 20px 20px 0px",
       }}
     >
       <Box
@@ -31,16 +33,33 @@ export default function MyLevelReferral() {
           justifyContent: "center",
         }}
       >
-        <Box
-          sx={{ width: device === "Mobile" ? "80px" : "auto" }}
-          component={"img"}
-          src={medalSmallIcon[currentLevel?.tierName || "Bronze"].imgSrc}
-        ></Box>
+        {!currentLevel?.tierName || currentLevel?.tierName === "" ? (
+          <Box
+            sx={{
+              width: mobileCondition ? "80px" : "106px",
+              height: mobileCondition ? "80px" : "106px",
+            }}
+          ></Box>
+        ) : (
+          <Box
+            sx={{
+              width: mobileCondition ? "80px" : "106px",
+              height: mobileCondition ? "80px" : "106px",
+            }}
+            component={"img"}
+            src={
+              currentLevel?.tierName
+                ? medalSmallIcon[currentLevel?.tierName].imgSrc
+                : undefined
+            }
+          ></Box>
+        )}
+
         <Box>
           <p
             style={{
               color: "#9CA3AF",
-              fontSize: device === "Mobile" ? "10px" : "12px",
+              fontSize: mobileCondition ? "10px" : "12px",
             }}
           >
             Your level
@@ -48,7 +67,7 @@ export default function MyLevelReferral() {
           <p
             style={{
               color: "#fff",
-              fontSize: device === "Mobile" ? "12px" : "14px",
+              fontSize: mobileCondition ? "12px" : "14px",
               fontWeight: "700",
               textTransform: "uppercase",
             }}
@@ -64,7 +83,7 @@ export default function MyLevelReferral() {
           justifyContent: currentLevel?.nextSignUpCondition
             ? "space-between"
             : "center",
-          width: "80%",
+          flexGrow: 1,
         }}
       >
         {currentLevel?.nextSubcribersCondition && (
@@ -86,7 +105,7 @@ export default function MyLevelReferral() {
             <Typography
               sx={{
                 color: "#9384B7",
-                fontSize: device === "Mobile" ? "12px" : "14px",
+                fontSize: mobileCondition ? "12px" : "14px",
                 textAlign: "start",
               }}
             >

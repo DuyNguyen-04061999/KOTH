@@ -6,6 +6,9 @@ import ReferralMedalSection from "./ReferralMedalSection";
 
 export default function ReferralCheckList() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const mobileCondition =
+    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
   return (
     <Box sx={{ marginTop: "32px" }}>
       <Typography
@@ -13,7 +16,7 @@ export default function ReferralCheckList() {
           textAlign: "start",
           color: "#fff",
           marginLeft: "0px !important",
-          fontSize: device === "Mobile" ? "20px" : "24px",
+          fontSize: mobileCondition ? "20px" : "24px",
           fontWeight: "700",
         }}
       >
@@ -42,7 +45,7 @@ export default function ReferralCheckList() {
         >
           <Typography
             sx={{
-              fontSize: device === "Mobile" ? "12px" : "16px",
+              fontSize: mobileCondition ? "12px" : "16px",
               color: "#7C81F2",
               fontWeight: "600",
               marginBottom: "12px !important",
@@ -52,7 +55,7 @@ export default function ReferralCheckList() {
           </Typography>
           <Typography
             sx={{
-              fontSize: device === "Mobile" ? "10px" : "14px",
+              fontSize: mobileCondition ? "10px" : "14px",
               color: "#9CA3AF",
               fontWeight: "500",
               marginBottom: "12px",
@@ -63,7 +66,7 @@ export default function ReferralCheckList() {
           </Typography>
           <Typography
             sx={{
-              fontSize: device === "Mobile" ? "10px" : "14px",
+              fontSize: mobileCondition ? "10px" : "14px",
               color: "#9CA3AF",
               fontWeight: "500",
               marginBottom: "12px",
