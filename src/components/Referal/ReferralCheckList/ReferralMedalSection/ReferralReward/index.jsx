@@ -14,6 +14,9 @@ export default function ReferralReward({ name }) {
     textAlign: "start",
     marginLeft: "0px !important",
   };
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const mobileCondition =
+    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
   useEffect(() => {
     if (tierList) {
       setTierInfo(
@@ -35,12 +38,12 @@ export default function ReferralReward({ name }) {
         alignItems: "center",
         borderRadius: "10px",
         padding: "20px",
-        flexDirection: device === "Mobile" ? "column" : "",
+        flexDirection: mobileCondition ? "column" : "",
       }}
     >
       <Box
         sx={{
-          width: device === "Mobile" ? "70%" : "30%",
+          width: mobileCondition ? "70%" : "30%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -48,8 +51,8 @@ export default function ReferralReward({ name }) {
       >
         <Box
           sx={{
-            width: device === "Mobile" ? "100%" : "auto",
-            height: device === "Mobile" ? "auto" : "350px",
+            width: mobileCondition ? "100%" : "auto",
+            height: mobileCondition ? "auto" : "350px",
           }}
           component={"img"}
           src={medalSmallIcon[name].bgSrc}
@@ -57,18 +60,18 @@ export default function ReferralReward({ name }) {
       </Box>
       <Box
         sx={{
-          width: device === "Mobile" ? "100%" : "45%",
-          marginLeft: device === "Mobile" ? "" : "100px",
+          width: mobileCondition ? "100%" : "45%",
+          marginLeft: mobileCondition ? "" : "100px",
         }}
       >
         <Typography
           sx={{
             color: "#7848ED",
-            fontSize: device === "Mobile" ? "16px" : "24px",
+            fontSize: mobileCondition ? "16px" : "24px",
             fontWeight: "700",
             ...textStyle,
             textTransform: "uppercase",
-            textAlign: device === "Mobile" ? "center" : "",
+            textAlign: mobileCondition ? "center" : "",
           }}
         >
           LEVEL {name}

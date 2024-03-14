@@ -14,6 +14,9 @@ export default function PlayerLinearProgress({
   nextTierName,
 }) {
   const { device } = useSelector((state) => state.deviceReducer);
+  const { orientation } = useSelector((state) => state.gameReducer);
+  const mobileCondition =
+    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
   const BorderLinearProgress = styled(LinearProgress)(() => ({
     height: 5,
     borderRadius: 5,
@@ -29,7 +32,7 @@ export default function PlayerLinearProgress({
   return (
     <Box
       sx={{
-        padding: device === "Mobile" ? "5px" : "10px",
+        padding: mobileCondition ? "5px" : "10px",
         backgroundColor: "#412968",
         borderRadius: "4px",
         display: "flex",
@@ -44,13 +47,13 @@ export default function PlayerLinearProgress({
           alignItems: "center",
           backgroundColor: "#6D55A3",
           borderRadius: "50%",
-          padding: device === "Mobile" ? "8px" : "10px",
+          padding: mobileCondition ? "8px" : "10px",
           marginRight: "14px",
         }}
       >
         <Box
           sx={
-            device === "Mobile"
+            mobileCondition
               ? { width: "10px", height: "10px" }
               : { width: "12px", height: "12px" }
           }
@@ -74,7 +77,7 @@ export default function PlayerLinearProgress({
             sx={{
               color: "#fff",
               marginLeft: "0px !important",
-              fontSize: device === "Mobile" ? "10px" : "14px",
+              fontSize: mobileCondition ? "10px" : "14px",
             }}
           >
             {type === "subscribe" ? "Players Subscribed" : "Players Registered"}
@@ -83,7 +86,7 @@ export default function PlayerLinearProgress({
             sx={{
               color: "#fff",
               marginLeft: "0px !important",
-              fontSize: device === "Mobile" ? "10px" : "14px",
+              fontSize: mobileCondition ? "10px" : "14px",
             }}
           >
             {currentNumber || 0}/{condition || 0}
