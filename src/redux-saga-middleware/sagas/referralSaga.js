@@ -12,7 +12,6 @@ import {
 } from "../reducers/referralReducer";
 import { toast } from "react-toastify";
 import { images } from "../../utils/images";
-import { useSelector } from "react-redux";
 const referralService = new ReferralService();
 function* getResSubList() {
   try {
@@ -28,6 +27,7 @@ function* getResSubList() {
 function* getListTierReady() {
   try {
     const res = yield call(referralService.tierListCall);
+    yield delay(2000);
     if (res?.data && res.status === 200) {
       yield put(getListTier(res?.data));
     }

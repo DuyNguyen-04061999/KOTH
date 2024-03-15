@@ -465,7 +465,7 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<LazyNewHomePage />} />
+                        <></>
                       )
                     }
                   ></Route>
