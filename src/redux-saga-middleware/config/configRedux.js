@@ -29,6 +29,7 @@ import walletReducer from "../reducers/walletReducer";
 import addFriendReducer from "../reducers/addFriendReducer";
 import commentReducer from "../reducers/commentReducer";
 import likeDislikeReducer from "../reducers/likeDislikeReducer";
+import referralReducer from "../reducers/referralReducer";
 import rootSaga from "../sagas";
 import sagaMiddleware from "./configSaga";
 let rootReducer = combineReducers({
@@ -60,6 +61,7 @@ let rootReducer = combineReducers({
   addFriendReducer,
   commentReducer,
   likeDislikeReducer,
+  referralReducer,
 });
 
 const persistConfig = {
