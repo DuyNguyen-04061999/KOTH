@@ -48,8 +48,8 @@ export default function MyLevelReferral() {
             <Skeleton
               sx={{ bgcolor: "rgba(255,255,255,0.5)", aspectRatio: "1/1" }}
               variant="circular"
-              width={"80px"}
-              height={"80px"}
+              width={mobileCondition ? "50px" : "80px"}
+              height={mobileCondition ? "50px" : "80px"}
             />{" "}
           </Box>
         ) : !currentLevel?.tierName || currentLevel?.tierName === "" ? (

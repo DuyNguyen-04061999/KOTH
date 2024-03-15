@@ -27,7 +27,6 @@ function* getResSubList() {
 function* getListTierReady() {
   try {
     const res = yield call(referralService.tierListCall);
-    yield delay(2000);
     if (res?.data && res.status === 200) {
       yield put(getListTier(res?.data));
     }
