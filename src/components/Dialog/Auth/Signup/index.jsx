@@ -4,7 +4,7 @@ import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { withStyles } from "@mui/styles";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
@@ -125,6 +125,8 @@ export default function Signup(props) {
   const [displaynameValue, setDisplaynameValue] = useState("");
 
   const [gender, setGender] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleChange = (event, newValue) => {
     setGender(Number(event.target.value));
@@ -153,6 +155,24 @@ export default function Signup(props) {
   };
 
   useEffect(() => {
+    // Function to handle clicks outside of dropdown
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Clicked outside the dropdown, so close it
+        setIsOpen(false);
+      }
+    };
+
+    // Add event listener when component mounts
+    document.addEventListener("click", handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
     if (firstName !== "" && lastName !== "") {
       dispatch(
         getListDisplayName({
@@ -160,7 +180,7 @@ export default function Signup(props) {
           lastName: lastName,
         })
       );
-      setPopupList(true);
+      setIsOpen(true);
     }
   }, [firstName, lastName]);
 
@@ -690,35 +710,42 @@ export default function Signup(props) {
               }}
             />{" "}
             <Box
+              ref={dropdownRef}
+              className="dropdown"
               sx={{
-                display: popupList === true ? "inline-block" : "none",
+                display: "inline-block",
                 position: "absolute",
                 top: 40,
                 left: 0,
-                zIndex: 1,
+                zIndex: 10,
                 backgroundColor: "#443565",
                 borderRadius: "8px",
                 width: "100%",
               }}
             >
-              <List>
-                {displayName?.map((e, index) => {
-                  return (
-                    <ListItem
-                      disablePadding
-                      key={index}
-                      onClick={() => {
-                        setDisplaynameValue(e);
-                        setPopupList(false);
-                      }}
-                    >
-                      <ListItemButton>
-                        <ListItemText primary={e} />
-                      </ListItemButton>
-                    </ListItem>
-                  );
-                })}
-              </List>
+              {isOpen && (
+                <Box>
+                  <List>
+                    {displayName?.map((e, index) => {
+                      return (
+                        <ListItem
+                          disablePadding
+                          key={index}
+                          onClick={() => {
+                            setDisplaynameValue(e);
+                            setIsOpen(!isOpen);
+                            // setPopupList(false);
+                          }}
+                        >
+                          <ListItemButton>
+                            <ListItemText primary={e} />
+                          </ListItemButton>
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Box>
+              )}
             </Box>
             {validDisplayName && <CheckIconSVG />}
             {!validDisplayName && (
