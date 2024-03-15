@@ -109,7 +109,7 @@ const BannerTourMobile = (props) => {
               justifyContent: "space-around",
               padding: "5px",
               width: "100%",
-              alignItems: "center",
+              alignItems: "baseline",
             }}
           >
             <Box
