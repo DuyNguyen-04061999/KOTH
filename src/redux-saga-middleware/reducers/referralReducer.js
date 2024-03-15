@@ -101,6 +101,7 @@ const referralReducer = (
     isGetRegisterFail: false,
     //-----------------
     tierList: [],
+    isFetchingTier: false,
     //-----------------
     currentLevel: {},
     //-----------------
@@ -151,6 +152,7 @@ const referralReducer = (
       return {
         ...state,
         tierList: payload,
+        isFetchingTier: false,
       };
     }
     case "UPDATE_TIER_LIST": {
@@ -216,6 +218,13 @@ const referralReducer = (
         totalPotentialBonuses: payload?.totalPotentialBonuses,
       };
     }
+    case "GET_LIST_TIER_READY": {
+      return {
+        ...state,
+        isFetchingTier: true,
+      };
+    }
+
     default:
       return { ...state };
   }

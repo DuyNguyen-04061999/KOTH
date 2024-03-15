@@ -1,11 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import React from "react";
 import PlayerLinearProgress from "../PlayerLinearProgress";
 import { useSelector } from "react-redux";
 import { medalSmallIcon } from "../../../../utils/ReferralMedal";
+import ParagraphLoading from "../../../LoadingComponent/ParagraphLoading";
 
 export default function MyLevelReferral() {
-  const { registerList, currentLevel } = useSelector(
+  const { registerList, currentLevel, isFetchingTier } = useSelector(
     (state) => state.referralReducer
   );
   const { device } = useSelector((state) => state.deviceReducer);
@@ -33,7 +34,25 @@ export default function MyLevelReferral() {
           justifyContent: "center",
         }}
       >
-        {!currentLevel?.tierName || currentLevel?.tierName === "" ? (
+        {isFetchingTier ? (
+          <Box
+            sx={{
+              width: mobileCondition ? "80px" : "106px",
+              height: mobileCondition ? "80px" : "106px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            <Skeleton
+              sx={{ bgcolor: "rgba(255,255,255,0.5)", aspectRatio: "1/1" }}
+              variant="circular"
+              width={mobileCondition ? "50px" : "80px"}
+              height={mobileCondition ? "50px" : "80px"}
+            />{" "}
+          </Box>
+        ) : !currentLevel?.tierName || currentLevel?.tierName === "" ? (
           <Box
             sx={{
               width: mobileCondition ? "80px" : "106px",
@@ -86,17 +105,21 @@ export default function MyLevelReferral() {
           flexGrow: 1,
         }}
       >
-        {currentLevel?.nextSubcribersCondition && (
-          <PlayerLinearProgress
-            currentNumber={
-              registerList?.filter((n) => {
-                return n.hasBuySubscription === true;
-              })?.length || 0
-            }
-            nextTierName={currentLevel?.nextTierName || ""}
-            condition={currentLevel?.nextSubcribersCondition || 0}
-            type="subscribe"
-          />
+        {isFetchingTier ? (
+          <ParagraphLoading lines={2} />
+        ) : (
+          currentLevel?.nextSubcribersCondition && (
+            <PlayerLinearProgress
+              currentNumber={
+                registerList?.filter((n) => {
+                  return n.hasBuySubscription === true;
+                })?.length || 0
+              }
+              nextTierName={currentLevel?.nextTierName || ""}
+              condition={currentLevel?.nextSubcribersCondition || 0}
+              type="subscribe"
+            />
+          )
         )}
 
         {currentLevel?.nextSignUpCondition && (

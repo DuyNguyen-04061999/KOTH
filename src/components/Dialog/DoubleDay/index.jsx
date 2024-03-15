@@ -15,8 +15,6 @@ const DoubleDayDialog = () => {
     (state) => state.appReducer
   );
 
-  console.log(showDoubleDayDialog);
-
   const handleClose = () => {
     dispatch(closeDoubleDayDialog());
   };

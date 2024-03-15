@@ -12,7 +12,6 @@ import {
 } from "../reducers/referralReducer";
 import { toast } from "react-toastify";
 import { images } from "../../utils/images";
-import { useSelector } from "react-redux";
 const referralService = new ReferralService();
 function* getResSubList() {
   try {
