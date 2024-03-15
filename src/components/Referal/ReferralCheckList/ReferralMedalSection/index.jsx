@@ -13,11 +13,8 @@ export default function ReferralMedalSection() {
   useEffect(() => {
     setSelected(currentLevel?.nextTierName || "Bronze");
   }, [currentLevel]);
-  const { orientation } = useSelector((state) => state.gameReducer);
   const mobileCondition = () => {
-    return (
-      device === "Mobile" || (device === "Tablet" && orientation === "portrait")
-    );
+    return device === "Mobile" || device === "Tablet";
   };
   return (
     <>
@@ -79,7 +76,6 @@ export default function ReferralMedalSection() {
                       justifyContent: "center",
                     }}
                   >
-                    {" "}
                     <Box
                       sx={{
                         width: "0px",

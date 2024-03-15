@@ -140,7 +140,7 @@ export default function TotalReferralInfo() {
           style={{
             width: "100%",
             color: "#fff",
-            backgroundColor: "#FF9F38",
+            backgroundColor: "#7848ED",
             padding: "8px",
             border: "none",
             outline: "none",
